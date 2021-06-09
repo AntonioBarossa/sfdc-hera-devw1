@@ -241,6 +241,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             }
         }
 
+        if (this.currentSection.name === 'dateOrdine') {
+            if(event.target.fieldName === 'IsActivationDeferred__c') {
+                this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
+
+                if (event.target.value && this.sectionDataToSubmit.EffectiveDate__c === undefined) {
+                    this.sectionDataToSubmit['EffectiveDate__c'] = this.order.EffectiveDate__c;
+                } else {
+                    delete this.sectionDataToSubmit.EffectiveDate__c;
+                }
+            }
+    
+        }
+
         let draftData = this.sectionDataToSubmit;
         draftData.Id = this.currentSectionRecordId;
 
@@ -286,36 +299,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
 
     }
-
-    applyDateOrdineLogic(){
-        let currentSectionIndex = this.confirmedSteps.findIndex(section => section.name === 'dateOrdine');
-        let nextSection = this.confirmedSteps[currentSectionIndex];
-        let nextSectionName = this.confirmedSteps[currentSectionIndex].name;
-
-            if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
-
-                if(this.order.WaiverRightAfterthought__c == 'Si'){
-                    this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
-                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
-
-                    this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
-                    // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-04-01';
-                } else {
-                    this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
-                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
-
-                    this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
-                    // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
-                }
-
-            } else {
-
-                this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
-                // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
-                // this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
-                //     nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
-            }
-        }
 
     typeVisibility(type){
         let result = true;
@@ -416,7 +399,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         && section.name !== 'datiPrecedenteIntestatario' 
         && section.name !== 'indirizzodiAttivazione' 
         && section.name !== 'indirizzoSpedizione' 
-        && section.name !== 'ivaAccise'));
+        && section.name !== 'ivaAccise'
+        && section.name !== 'dateOrdine'));
 
     }
 
@@ -430,7 +414,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         || section.name === 'datiPrecedenteIntestatario' 
         || section.name === 'indirizzodiAttivazione' 
         || section.name === 'indirizzoSpedizione' 
-        || section.name === 'ivaAccise'));
+        || section.name === 'ivaAccise'
+        || section.name === 'dateOrdine'));
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
     }
 
@@ -568,8 +553,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.handleWrapAddressObjectSpedizione();
         }
 
-        //this.applyDateOrdineLogic();
-        
         if(currentSectionName === 'dettaglioImpianto'){
 
             if(this.template.querySelector("[data-id='WaiverRightAfterthought__c']") !== null 
@@ -1867,7 +1850,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
-                }	
+                },
+                {
+                    'label': 'Servizio Energetico',
+                    'apiname': 'EnergyService__c',
+                    'typeVisibility': this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'),
+                    'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                }
                ]
             },
             {
@@ -2588,7 +2580,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: '',
+                step: 10,
                 label: 'Date ordine',
                 name: 'dateOrdine',
                 objectApiName: 'Order',
@@ -2610,6 +2602,24 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Attivazione Posticipata',
+                        'apiname': 'IsActivationDeferred__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': false,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Data decorrenza',
+                        'apiname': 'EffectiveDate__c',
+                        'typeVisibility': false,
+                        'required': false,
+                        'disabled': false,
                         'value': '',
                         'processVisibility': ''
                     }
