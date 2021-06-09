@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Campo di configurazione che indica se ammettere la modifica del Profilo in fase di modifica.</description>
     <externalId>false</externalId>
-    <label>Ammettere modifica del Profilo in fase d</label>
+    <label>Ammettere modifica del Profilo</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

@@ -16,6 +16,7 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     newTechOfferObj;
     techOffIdToClone;
     @track technicalOfferId;
+    @track techOffToClone;
 
     @track rtObj = {
         id:'',
@@ -29,9 +30,11 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         records: []
     };
     productCodeIsAlreadyPresent = false;
+    editFormMode = '';
 
     connectedCallback(){
         console.log('#### productid on lwc -> ' + this.productid);
+        this.editFormMode = 'insert';
         this.getExistingOfferId();
     }
 
@@ -97,17 +100,12 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
 
                 this.productCodeIsAlreadyPresent = result.data.productCodeIsAlreadyPresent;
                 console.log('>>>>>> productCodeIsAlreadyPresent > ' + this.productCodeIsAlreadyPresent);
+                //console.log('>>>>>> techOffToClone: ' + JSON.stringify(result.data.techOffToClone));
+                //this.techOffToClone = JSON.stringify(result.data.techOffToClone);
                 console.log('>>>>>> techOffIdToClone: ' + result.data.techOffIdToClone);
                 this.techOffIdToClone = result.data.techOffIdToClone;
 
                 this.showWelcom = true;
-
-               //if(result.data.tecnicalOfferId != null && result.data.tecnicalOfferId != '' && result.data.tecnicalOfferId != undefined){
-               //    this.technicalOfferId = result.data.tecnicalOfferId;
-               //    this.showCreateOffer = true;
-               //} else {
-               //    this.showWelcom = true;                
-               //}
 
             } else {
                 console.log('# tecnicalOfferId not success #');
@@ -137,31 +135,20 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
                 actionName: 'view'
             }
         });
-        //this.showWelcom = false;
     }
 
     createNew(event){
         console.log('### Parent createNew ###');
         console.log('>>> rate id > ' + event.detail.rateId + ' - name > ' + event.detail.rateName + ' - ' + event.detail.rateTemplate);
         this.rateObj = event.detail;
-        //this.rateTemplate = event.detail.rateTemplate;
-        //this.rateName = event.detail.rateName;
         this.showWelcom = false;
-
-        if(this.productCodeIsAlreadyPresent){
-            this.showCreateOffer = true;
-        } else {
-            this.showEditForm = true;
-        }
-        
+        this.showEditForm = true;
     }
 
     search(event){
         console.log('### Parent search ###');
         console.log('>>> rate id > ' + event.detail.rateId + ' - name > ' + event.detail.rateName + ' - ' + event.detail.rateTemplate);
         this.rateObj = event.detail;
-        //this.rateTemplate = event.detail.rateTemplate;
-        //this.rateName = event.detail.rateName;
         this.showWelcom = false;
         this.showSearchOffer = true;
     }
@@ -178,6 +165,7 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         };
 
         this.technicalOfferId = techOffId;
+        this.techOffIdToClone = techOffId;
         this.showCreateOffer = true;
         this.showWelcom = false; 
     }
@@ -212,9 +200,30 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
 
     newTechOfferCreated(event){
         console.log('>>> newOfferCreated > ' + event.detail.newTechOfferObj);
-        this.showEditForm = false;
+        //this.showEditForm = false;
         this.newTechOfferObj = event.detail.newTechOfferObj;
         this.showCreateOffer = true;
+    }
+
+    openEdit(){
+        console.log('>>> openEdit');
+        this.editFormMode = 'edit';
+        this.showEditForm = true;
+
+        let i = this.template.querySelector("c-hdt-technical-offer-edit-form");
+        if(i===undefined){
+            console.log('>>> YES IS UNDEFINED');
+        } else {
+            console.log('>>> NO IS REAL');
+            this.template.querySelector("c-hdt-technical-offer-edit-form").handleValueChange();
+        }
+
+        //
+    }
+
+    closeEdit(){
+        //this.showEditForm = false;
+        this.template.querySelector("c-hdt-technical-offer-edit-form").handleValueChange();
     }
 
 }
