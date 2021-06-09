@@ -11,6 +11,14 @@
         if(myPageRef != null && myPageRef.state.c__tab != null){
             tab = myPageRef.state.c__tab;
         }
+        var tabToClose;
+        workspaceAPI.getEnclosingTabId().then(function(tabId) {
+            console.log('# TabId To Close: ' + tabId);
+            tabToClose = tabId;
+        }).catch(function(error) {
+            console.log(error);
+        });
+
         workspaceAPI.getFocusedTabInfo().then(function(responseFocus) {
             console.log('Tab1 ' + responseFocus.pageReference.attributes.objectApiName);
             workspaceAPI.openTab({
@@ -18,6 +26,7 @@
             }).then(function(response) {
                 var i = workspaceAPI.openSubtab({
                     parentTabId: response,
+                    focus:false,
                     pageReference: {
                         type: 'standard__component',
                         attributes: {
@@ -38,14 +47,8 @@
                     tabId: i,
                     icon: 'custom:custom83'
                 });
-
-                var focusedTabId = responseFocus.tabId;
-                console.log('Tab ' + responseFocus.pageReference.attributes.objectApiName);
-                if(responseFocus.pageReference.attributes.objectApiName != 'Case'){
-                    workspaceAPI.closeTab({tabId: focusedTabId}).catch(function(error) {
-                                        console.log(error);}
-                                    );  
-                }
+                workspaceAPI.closeTab({tabId: tabToClose});
+                workspaceAPI.focusTab({tabId: i});
                 
             })
             .catch(function(error) {
