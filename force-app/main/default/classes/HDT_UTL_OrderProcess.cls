@@ -57,12 +57,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
            if(orderMapNew.get(ord) != null){
                order newOrd = orderMapNew.get(ord);
                if(oldOrd.phase__c != newOrd.Phase__c && newOrd.recordtypeid != recordtypeParentId){
+                   String st = newOrd.Status;
+                   if('annullato'.equalsIgnoreCase(st)){
+                       st = 'Chiuso';
+                   }
                    Contact c = null;
                    if(mapContact.get(newOrd.Contact__c) != null){
                        c = mapContact.get(newOrd.Contact__c);
                    }
                    System.debug('**************Eccolo:' + c);
-                   commList.add(commUTL.instanceCommunicationLog('Attivazioni',newOrd.ProcessType__c,newOrd.Phase__c,newOrd.status,newOrd.CancellationReason__c,newOrd.Id,'',newOrd.Contact__c,newOrd.AccountId,c != null ? c.company__c : 'ND',newOrd.CompanyOwner__c));
+                   commList.add(commUTL.instanceCommunicationLog('Attivazioni',newOrd.ProcessType__c,newOrd.Phase__c,st,newOrd.CancellationReason__c,newOrd.Id,'',newOrd.Contact__c,newOrd.AccountId,c != null ? c.company__c : 'ND',newOrd.CompanyOwner__c));
                }
            }
         }
