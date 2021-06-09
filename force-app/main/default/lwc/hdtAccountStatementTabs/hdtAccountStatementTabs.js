@@ -6,7 +6,8 @@ export default class HdtAccountStatementTabs extends LightningElement {
     @track tabContent = '';
     @track statementType;
     @track tabList;
-    @track defaultTab = 'EC';
+    //@track defaultTab = 'EC';
+    @api defaultTab;
     showError = false;
     @track spinnerObj = {
         spinner: false,
@@ -16,6 +17,7 @@ export default class HdtAccountStatementTabs extends LightningElement {
     previousTab = '';
 
     connectedCallback(){
+        console.log('>>>> default tab is >> ' + this.defaultTab);
         this.getTabsMetaData();
         this.statementType = 'ORDINARIO';
         //this.tabList = tabList;
