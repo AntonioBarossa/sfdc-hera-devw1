@@ -37,6 +37,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track modalitaInvio;
     @track signSendMap;
     @track isModalOpen = false;
+    @track showSpinner = false;
     
     connectedCallback(){
         try{
@@ -283,14 +284,16 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
 
     handlePreview(){
         try{
+            this.showSpinner = true;
             var formParams = {
                 sendMode : this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value,
-                signMode : this.template.querySelector("lightning-input[data-id=modalitaInvio]").value,
+                signMode : this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value,
                 telefono : this.template.querySelector("lightning-input[data-id=telefono]").value,      
                 email : this.template.querySelector("lightning-input[data-id=email]").value,      
                 address : this.template.querySelector("lightning-input[data-id=indirizzoRecapito]").value,
                 mode : 'Preview'
             };
+            
             previewDocumentFile({
                 recordId: this.recordId,
                 context: this.context,
@@ -321,7 +324,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.url = blobURL;
                 this.fileName = 'myFileName.pdf';
                 this.showFile = true;
-
+                this.showSpinner = false;
                 this[NavigationMixin.Navigate](
                     {
                         type: 'standard__webPage',
@@ -333,6 +336,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.dispatchEvent(new CustomEvent('previewexecuted'));
             })
             .catch(error => {
+                this.showSpinner = false;
                 console.error(error);
             });
         }catch(error){

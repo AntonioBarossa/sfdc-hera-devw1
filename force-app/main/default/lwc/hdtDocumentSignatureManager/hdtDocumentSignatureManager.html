@@ -1,4 +1,8 @@
 <template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    
     <div class="slds-grid">
         <div class="slds-col slds-size_1-of-3">
             <lightning-combobox name="modalitaFirma" label="Modalità di firma" value={signMode} placeholder="Seleziona una Modalità" onchange={handleChangeSignMode}

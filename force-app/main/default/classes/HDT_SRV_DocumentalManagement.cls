@@ -92,6 +92,7 @@ public class HDT_SRV_DocumentalManagement{
 			sPackageRequest.objectName = context;
 			sPackageRequest.objectId = recordId;
 			sPackageRequest.signMode = signMode;
+			sPackageRequest.mode = mode;
 			for(Map<String,Object> singleMap : driverPayloadListMap){
 				sPackage = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage((List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver>)singleMap.get('driver'),(String)singleMap.get('payload'));
 				sPackageRequest.sPackage.add(sPackage);
