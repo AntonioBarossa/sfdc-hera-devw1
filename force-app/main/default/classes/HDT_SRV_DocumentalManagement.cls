@@ -23,13 +23,8 @@ public class HDT_SRV_DocumentalManagement{
 			driverPayloadMap.put('payload', payload);
 			driverPayloadListMap.add(new Map<String,Object>(driverPayloadMap));
 		}
-		body = composeJson(recordId, driverPayloadListMap);
+		body = composeJson(recordId, driverPayloadListMap,formParamsMap,recordObjectsListMap[0]);
 		System.debug('Body ' + body);
-		//HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
-		//HDT_WS_DocumentalIntegration service = new HDT_WS_DocumentalIntegration();
-		//documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
-		//manageResponseFuture(JSON.serialize(documentalResponse), context);
-		//System.debug(documentalResponse);
 		return body;
 	}
 	@future
@@ -85,24 +80,69 @@ public class HDT_SRV_DocumentalManagement{
 			System.debug('Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
-	private static String composeJson(String recordId, List<Map<String,Object>> driverPayloadListMap){
+	private static String composeJson(String recordId, List<Map<String,Object>> driverPayloadListMap,Map<String,Object> formParams,Map<String,List<sObject>> inputs){
 		HDT_WRP_DocumentalRequest documentalRequest = new HDT_WRP_DocumentalRequest();
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage sPackage = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage();
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDeliverPackageRequest sPackageRequest = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDeliverPackageRequest();
+		String mode = (String) formParams.get('mode');
+		String context = (String) formParams.get('Contesto');
+		String signMode = (String) formParams.get('signMode');
 		try{
 			sPackageRequest.requestId = recordId;
+			sPackageRequest.objectName = context;
+			sPackageRequest.objectId = recordId;
+			sPackageRequest.signMode = signMode;
+			sPackageRequest.mode = mode;
 			for(Map<String,Object> singleMap : driverPayloadListMap){
-				//sPackage.driver = singleMap.get('driver');
-				//sPackage.payload = singleMap.get('payload');
 				sPackage = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage((List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver>)singleMap.get('driver'),(String)singleMap.get('payload'));
-				
 				sPackageRequest.sPackage.add(sPackage);
+			}
+			if(mode.equalsIgnoreCase('Print') && signMode.indexOf('OTP') >-1){
+				sPackageRequest.signInfo = addDocusingInformation(formParams,inputs);
 			}
 			documentalRequest.deliverPackageRequest = sPackageRequest;
 		}catch(Exception ex){
 			System.debug(ex.getMessage() + ' Line: ' + ex.getLineNumber());
 		}
 		return JSON.serialize(documentalRequest);
+	}
+
+	private static HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalSignInfo addDocusingInformation(Map<String,Object> formParams,Map<String,List<sObject>> inputs){
+		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalSignInfo signInfo = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalSignInfo();
+		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalCustomerInfo customerInfo = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalCustomerInfo();
+		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalTemplate templateInfo = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalTemplate();
+		try {
+			//signInfo
+			String telephoneNumber = (String) formParams.get('telefono');
+			DocusignSettings__c docusignCustomSettings = DocusignSettings__c.getInstance();
+			signInfo.customerEnvironmentId = docusignCustomSettings.CustomerEnviromentId__c;
+			signInfo.idCheckConfigurationName = docusignCustomSettings.IdCheckConfigurationName__c;
+			signInfo.pageUrl = docusignCustomSettings.PageUrl__c;
+			signInfo.requireIdLookup = docusignCustomSettings.RequireIdLookup__c;
+			signInfo.status = docusignCustomSettings.Status__c;
+			signInfo.senderProvidedNumbers.add(telephoneNumber);
+			//customerInfo
+			String email = (String) formParams.get('email');
+			String creationUrl = formParams.get('signMode') == 'OTP Remoto'? 'false':'true';
+			String vatCode = HDT_UTL_DocumentalManagement.getValue('Account','VATNumber__c',0,inputs,formParams);
+			String fiscalCode = HDT_UTL_DocumentalManagement.getValue('Account','FiscalCode__c',0,inputs,formParams);
+			String accountName = HDT_UTL_DocumentalManagement.getValue('Account','Name',0,inputs,formParams);
+			String processType = (String) formParams.get('processType');
+			customerInfo.email = email;
+			customerInfo.fiscalCode = fiscalCode;
+			customerInfo.vatNumber = vatCode;
+			customerInfo.creationUrl = creationUrl;
+			customerInfo.emailSubject = 'HERA - ' + processType;
+			signInfo.customerInfo = customerInfo;
+
+			//template
+			templateInfo.sequence = docusignCustomSettings.Sequence__c;
+			templateInfo.templateId = docusignCustomSettings.TemplateId__c;
+			signInfo.template = templateInfo;
+		} catch (Exception ex) {
+			System.debug('Error in method addDocusingInformation ' + ex.getLineNumber() + ' ' + ex.getMessage());
+		}
+		return signInfo;
 	}
 	private static List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> generateDriver(Map<String,List<sObject>> inputs,HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configurations,Map<String,Object> formParams){
 		List<Map<String,String>> driverListMap = new List<Map<String,String>>();

@@ -24,8 +24,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String c = cl.FieldsJSON__c;
         HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse mrrResponse = 
             (HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse) JSON.deserialize(c,HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse.class);
-        System.debug('Case Phase --> '+currentCase.Phase__c);
-        if(currentCase.Phase__c == 'Da Inviare'){
+        System.debug('Case Phase --> '+currentCase.TecnicalPhase__c);
+        if(currentCase.TecnicalPhase__c == 'Da Inviare'){
             return mrrResponse;
         } else {
             return null;
@@ -140,7 +140,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug('SRV_Class_HerokuPracticeCode--> '+herokuCode);
 
             caseNew.Id = currentCase.Id;
-            caseNew.Phase__c = phase;
+            caseNew.TecnicalPhase__c = phase;
             caseNew.Description = errorMessage;
             if(herokuCode != null && herokuCode != ''){
                 caseNew.HerokuPracticeCode__c = herokuCode;
@@ -222,7 +222,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
-            String fatturaSap = reqWrp.requestMap.get('FATTURA');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
             String newDescription = '';
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
@@ -237,9 +236,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(odv != null && odv != ''){
                 newDescription =  nowDateFormat + ': ' + odv + '\n' + newDescription;
-            }
-            if(fatturaSap != null && fatturaSap != ''){
-                newDescription = nowDateFormat + ': ' + fatturaSap + '\n';
             }
             if(String.isNotBlank(newDescription)){
                 currentCase.Description = newDescription + '\n' + currentDescription;

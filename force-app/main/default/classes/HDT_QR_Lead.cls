@@ -11,7 +11,7 @@ public  inherited sharing class HDT_QR_Lead {
 
     public List<Lead> getRecordsById(List<String> ids) {
         
-        String query = 'SELECT  Firstname,LastName,IndividualId FROM Lead WHERE Id IN :ids WITH SECURITY_ENFORCED';
+        String query = 'SELECT  Firstname,LastName,IndividualId, CompanyOwner__c FROM Lead WHERE Id IN :ids WITH SECURITY_ENFORCED';
         List<Lead> leads = Database.query(query);
 
         return leads;

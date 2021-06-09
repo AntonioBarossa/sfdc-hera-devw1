@@ -258,9 +258,22 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     }
 
     handleGoNext() {
+        //inserito momentaneamente per non bloccare il next
+        if(this.availableActions.find(action => action === 'NEXT')){
 
-        if(this.enableNext){
-            if((!this.previewExecuted && this.quoteType.localeCompare('Analitico') != 0)){
+            const navigateNextEvent = new FlowNavigationNextEvent();
+
+            this.dispatchEvent(navigateNextEvent);
+
+        } else {
+
+            const navigateFinish = new FlowNavigationFinishEvent();
+
+            this.dispatchEvent(navigateFinish);
+        }
+        //commentato momentanemanete per non bloccare il next
+        /*if(this.enableNext){
+            if((!this.previewExecuted && this.quoteType && this.quoteType.localeCompare('Analitico') != 0)){
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Errore',
@@ -300,7 +313,7 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                     variant: 'error',
                 }),
             );
-        }
+        }*/
 
     }
 
