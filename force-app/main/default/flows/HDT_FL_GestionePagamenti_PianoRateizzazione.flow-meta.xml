@@ -611,30 +611,6 @@
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
-<<<<<<< HEAD
-        <name>Passa_a_Chiuso_0</name>
-        <label>Passa a &quot;Ko Rilavorato&quot;</label>
-        <locationX>1634</locationX>
-        <locationY>1238</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>Chiuso</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
-=======
->>>>>>> e5c16da0d... [HRADTR-482] fiX class
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>842</locationX>
@@ -1267,8 +1243,6 @@
         <label>Annullamento Prestazione</label>
         <locationX>1106</locationX>
         <locationY>1598</locationY>
-<<<<<<< HEAD
-=======
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1294,7 +1268,6 @@
         <label>Annullamento Prestazione</label>
         <locationX>1634</locationX>
         <locationY>1238</locationY>
->>>>>>> e5c16da0d... [HRADTR-482] fiX class
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
