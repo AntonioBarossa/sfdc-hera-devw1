@@ -93,6 +93,7 @@ public inherited sharing class HDT_QR_Contact {
             Name,
             Email,
             Phone,
+            ContactCode__c,
             MobilePhone,
             IndividualId,
             Fax,
