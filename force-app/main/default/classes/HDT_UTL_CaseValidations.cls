@@ -798,9 +798,15 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
         String reason = getFieldValue(fields, 'Reason__c');
+        String sendMode = getFieldValue(fields, 'SendMode__c');
+        String email = getFieldValue(fields, 'Email__c');
 
         if(reason != null && reason.equals('Permanenza condizioni di disagio') && attachedDocument.size() == 0){
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario allegare autocertificazione del cliente.'));
+        }
+        
+        if (sendMode != null && sendMode.equals('E-Mail') && String.isBlank(email)) {
+            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire una Email a cui inviare la documentazione.'));
         }
             
         return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
