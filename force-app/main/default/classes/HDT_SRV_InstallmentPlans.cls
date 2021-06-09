@@ -42,8 +42,12 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         }
 
         //Callout 'Vista Rate' to calculate installmentPlansUnpaid
-        outputs = HDT_SRV_AccountInstallmentsCheck.execute(inputsCheck);
-        currentCase.ExistingInstallmentsPlanNumber__c = outputs[0].existingInstallmentPlanUnpaid;
+        try{
+            outputs = HDT_SRV_AccountInstallmentsCheck.execute(inputsCheck);
+            currentCase.ExistingInstallmentsPlanNumber__c = outputs[0].existingInstallmentPlanUnpaid;
+        }catch(Exception e){
+            System.debug(e.getMessage());
+        }
 
         //check CA with/without SEPA
         paymentMethod = installmentsQr.getPaymentMethodByCaseId(recordId);
@@ -56,7 +60,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug('SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
 
         //Set AmountToPayInstallments to TotalPay
-        Decimal totalAmount = installmentsQr.getCaseById(recordId).TotalToPay__c;
+        Decimal totalAmount = installmentsQr.getCaseById(recordId).TotalResidue__c;
         currentCase.AmountToPayInInstallments__c = totalAmount;
 
 
