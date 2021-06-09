@@ -178,8 +178,9 @@ public inherited sharing class HDT_QR_Order {
             CommercialProduct__c,                       // @Picchiri Calcolo della date Switch in 31/05/21 
             AnnualConsumption__c,                       // @Picchiri Calcolo della date Switch in 31/05/21 
             Catalog__c,                                 // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
-            ServicePoint__r.AnnualConsumption__c        // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
-
+            ServicePoint__r.AnnualConsumption__c,       // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
+            BillingProfile__r.AccountClass__c,          // @Picchiri Calcolo della date Switch in 08/06/21 
+            Account.CustomerType__c                     // @Picchiri Calcolo della date Switch in 08/06/21 
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

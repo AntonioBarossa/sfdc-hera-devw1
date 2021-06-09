@@ -61,4 +61,72 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         }
         return rep;
     }
+
+    // @Picchiri 08.06.21 Credit Check Annullamento Ordine
+    public static void createActivityForCreditCheck(Map<String,List<Order>> orderMap){
+
+        
+        system.debug('HDT_UTL_ActivityProcess createActivity --> orderMap : ' + JSON.serializePretty(orderMap));
+
+        // 3.1.2 Invio richiesta e ricezione risposta 
+        // Alla ricezione di un esito KO, verrà creata su Salesforce un Activities
+
+        List<wrts_prcgvr__Activity__c> listActivity = new List<wrts_prcgvr__Activity__c>();
+        Id rtOldCustomer = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_KoPrecedeteCliente' limit 1].id;
+        Id rtNewCustomer = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_CreditCheckKO' limit 1].id;
+
+        for(String typeCustomer : orderMap.keyset()){
+            for(Order order : orderMap.get(typeCustomer)){
+                wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+
+                if(typeCustomer == 'oldCustomer'){
+                    activity.RecordTypeId = rtOldCustomer;                     
+                    activity.CreditCheckResults__c = order.OutgoingCreditCheckResult__c;
+                }
+                        
+                if(typeCustomer == 'newCustomer'){
+                    activity.RecordTypeId = rtNewCustomer;                     
+                    activity.CreditCheckResults__c = order.IncomingCreditCheckResult__c;
+                }
+        
+                activity.CreditCheckReason__c = order.CreditCheckDescription__c;
+                activity.Order__c = order.Id;
+                activity.Account__c = order.AccountId;
+                activity.Contact__c = order.Contact__c;
+                                
+                activity.Status__c = 'Creata';                
+                activity.Note__c = order.CommentForDL__c;
+
+                listActivity.add(activity);
+            }
+
+        }
+
+        insert listActivity;
+    
+    }
+
+    // @Picchiri 08.06.21 Credit Check Annullamento Ordine
+    public static void annullamentoActivityCustom(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
+        
+        System.debug('annullamentoActivityCustom');
+        List<Id> orderIdToAnnullamento = new List<Id>();        
+        for(wrts_prcgvr__Activity__c act : newActList){
+
+            if(act.Status__c == 'KO Definitivo'){
+                orderIdToAnnullamento.add(act.Order__c);                
+            }
+        }
+
+        System.debug('orderIdToAnnullamento ----> ' + orderIdToAnnullamento);
+        // Annullamento Ordine
+        List<Order> orderToAnnullamento = [SELECT id,Status FROM Order WHERE id IN :orderIdToAnnullamento];
+        for(Order order : orderToAnnullamento){        
+            order.Status = 'Annullato';                
+        }
+
+        System.debug('orderToAnnullamento ----> ' + orderToAnnullamento);
+        update orderToAnnullamento; 
+    
+    }
 }

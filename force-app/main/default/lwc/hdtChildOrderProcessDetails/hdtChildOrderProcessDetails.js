@@ -2767,6 +2767,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(typeOfCommodity == 'Energia Elettrica'){
             typeOfCommodity = 'ENERGIAELETTRICA';
         }
+        if(typeOfCommodity == 'Gas'){
+            typeOfCommodity = 'GAS'; 
+        }
         let data = {
             sistema: "eEnergy",                                                 //da definire campo SF con business
             caso:"Transazionale",                                               //da definire campo SF con business
@@ -2782,7 +2785,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             secondaryCustomerId:this.order.Account.VATNumber__c,
             bpClass:this.order.Account.CustomerMarking__c,
             bpCategory:this.order.Account.Category__c,
-            bpType:this.order.Account.Type,
+            bpType:this.order.Account.CustomerType__c,
             customerType:"CT0",                                                 //da definire campo SF con business
             address:this.order.ServicePoint__r.SupplyStreetName__c,
             municipality:this.order.ServicePoint__r.SupplyCity__c,
