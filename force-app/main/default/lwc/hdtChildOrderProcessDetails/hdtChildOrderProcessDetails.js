@@ -2763,53 +2763,77 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     getRequest(){
-        return{
-            sistema: "eEnergy",//da definire campo SF con business
-            caso:"Transazionale",//da definire campo SF con business
-            crmEntity:"Order",//da definire campo SF con business
+        var typeOfCommodity = this.order.ServicePoint__r.CommoditySector__c;
+        if(typeOfCommodity == 'Energia Elettrica'){
+            typeOfCommodity = 'ENERGIAELETTRICA';
+        }
+        let data = {
+            sistema: "eEnergy",                                                 //da definire campo SF con business
+            caso:"Transazionale",                                               //da definire campo SF con business
+            crmEntity:"Order",                                                  //da definire campo SF con business
             crmId:this.order.OrderNumber,
             userId: this.order.CreatedById,
-            activationUser:"AccountCommercialePRM",//da definire campo SF con business
+            activationUser:"AccountCommercialePRM",                             //da definire campo SF con business
             account:this.order.AccountId,
             jobTitle:this.order.Channel__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
-            companyName:this.order.SalesCompany__c,//verificare che non sia vuoto
+            companyName:this.order.SalesCompany__c,                             //verificare che non sia vuoto
             externalCustomerId:this.order.Account.FiscalCode__c,
-            secondaryCustomerId:this.order.Account.FiscalCode__c,
+            secondaryCustomerId:this.order.Account.VATNumber__c,
             bpClass:this.order.Account.CustomerMarking__c,
             bpCategory:this.order.Account.Category__c,
             bpType:this.order.Account.Type,
-            customerType:"CT0",//da definire campo SF con business
+            customerType:"CT0",                                                 //da definire campo SF con business
             address:this.order.ServicePoint__r.SupplyStreetName__c,
             municipality:this.order.ServicePoint__r.SupplyCity__c,
             district:this.order.ServicePoint__r.SupplyProvince__c,
             postCode:this.order.ServicePoint__r.SupplyPostalCode__c,
             operation:this.order.ProcessType__c,
-            companyGroup:"Hera S.p.A.",//da definire campo SF con business
+            companyGroup:"Hera S.p.A.",                           
             market:this.order.Market__c,
             offerType:this.order.Catalog__c,
             details:[{
                 totalConsumption:'1.0',//da definire campo SF con business
-                commodity:this.order.ServicePoint__r.CommoditySector__c,
+                commodity:typeOfCommodity,
                 annualConsumption:this.order.ServicePoint__r.AnnualConsumption__c
             }]		
         }
+
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+            data["bpAlternative"] = this.order.ServicePoint__r.Account__r.CustomerCode__c;
+            data["alternativeCustomerId"] = this.order.ServicePoint__r.Account__r.FiscalCode__c;            
+        }
+
+        return data; 
     }
+
+        /**        
+         * CAClass da verificare se inserire o meno         
+         */
 
     connectedCallback(){
 
 
-        console.log('connectedCallback rder ---> ');
+        console.log('connectedCallback Order ---> ');
         console.log(JSON.parse(JSON.stringify(this.order)));
 
         // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
-        var wrp = this.getRequest();// { userId:"CARLA.GASPARINI",sistema:"eEnergy",secondaryCustomerId:"02191860135",postCode:"40128",operation:"Switch In",offerType:"Offerte a progetto",municipality:"BOLOGNA",market:"Libero",jobTitle:"Protocollo",internalCustomerId:"1007052510",externalCustomerId:"02191860135",district:"BO",details:[{totalConsumption:"1.0",commodity:"GAS",annualConsumption:"2000"}],customerType:"CT0",crmId:"TEST_ACP2",crmEntity:"Creazione RDS contrattuale",companyName:"INTEGRATION TEST",companyGroup:"Hera S.p.A.",caso:"Transazionale",bpType:"Organizzazione",bpClass:"Azienda",bpCategory:"Aziende SME",address:"VIA DELLE FONTI|47|3/ A-B|",activationUser:"AccountCommercialePRM",account:"AccountCommercialePRM" };
+        var wrp = this.getRequest();
+        
+        console.log('connectedCallback wrp ---> ');
+        console.log(JSON.parse(JSON.stringify(wrp)));
         this.loading = true;
         callServiceCreditCheck({wrpVals:JSON.stringify(wrp)})
         .then(result => {
             // this.contacts = result;
             // this.error = undefined;
-            console.log('result callServiceCreditCheck ---> : ' + JSON.parse(JSON.stringify(result)));
+            console.log('result callServiceCreditCheck ---> : ');
+            console.log(JSON.parse(JSON.stringify(result)));
+
+            if(result.status == 'failed'){
+                throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
+            }
+
             // console.log(JSON.parse(JSON.strigify(this.fields)));
             let self = this;
             setTimeout(function(){
@@ -2842,14 +2866,18 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             }, 3000)
         })
         .catch(error => {
-            console.log('error callServiceCreditCheck ---> : ' + JSON.parse(JSON.stringify(error)));
+            console.log('error callServiceCreditCheck error ---> : ');
+            console.log(JSON.parse(JSON.stringify(error)));
             // this.error = error;
             // this.contacts = undefined;
-            new ShowToastEvent({
+            let toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: (error.body.message !== undefined) ? error.body.message : error.message,
                 variant: 'error',
+                mode:'sticky'
             });
+            
+            this.dispatchEvent(toastErrorMessage);
             this.loading = false
         })
 

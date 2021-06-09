@@ -2,6 +2,7 @@ public with sharing class HDT_TRH_SolTracking extends HDT_TRH_TriggerHandler {
     
     protected override void beforeInsert() {
         replaceUserTags();
+        HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
     }
 
     /**
