@@ -338,21 +338,19 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String newLastName = getFieldValue(fields, 'LastName__c') != null ? getFieldValue(fields, 'LastName__c') : '';
         String newFiscaleCode = getFieldValue(fields, 'FiscalCode__c') != null ? getFieldValue(fields, 'FiscalCode__c') : '';
         String newVatNumber = getFieldValue(fields, 'VatNumber__c') != null ? getFieldValue(fields, 'VatNumber__c') : '';
-        String newAddress = getFieldValue(fields, 'AlternativeAddress__c') != null ? getFieldValue(fields, 'AlternativeAddress__c') : '';
 
         HDT_QR_Account queryHandler = new HDT_QR_Account();
-        String queryFields = 'FirstName__c,LastName__c,BillingAddressFormula__c,FiscalCode__c,VATNumber__c,CustomerMarking__c';
+        String queryFields = 'FirstName__c,LastName__c,FiscalCode__c,VATNumber__c,CustomerMarking__c';
         Account a = queryHandler.getRecordById(accountId, queryFields);
         String currentFirstName = a.FirstName__c != null ? a.FirstName__c : '';
         String currentLastName = a.LastName__c != null ? a.LastName__c : '';
         String currentFiscaleCode = a.FiscalCode__c != null ? a.FiscalCode__c : '';
         String currentVatNumber = a.VATNumber__c != null ? a.VATNumber__c : '';
-        String currentAddress = a.BillingAddressFormula__c != null ? a.BillingAddressFormula__c : '';
 
         if (String.isBlank(newLastName)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Cognome/Ragione sociale non può essere vuoto.'));
         } else if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscaleCode.equals(currentFiscaleCode)
-            && newVatNumber.equals(currentVatNumber) && newAddress.equals(currentAddress)) {
+            && newVatNumber.equals(currentVatNumber)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un dato fiscale del cliente.'));
         }
 
@@ -810,7 +808,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario allegare autocertificazione del cliente.'));
         }
         
-        if (sendMode != null && sendMode.equals('E-Mail') && String.isBlank(email)) {
+        if (sendMode != null && sendMode.equals('E-mail') && String.isBlank(email)) {
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire una Email a cui inviare la documentazione.'));
         }
             

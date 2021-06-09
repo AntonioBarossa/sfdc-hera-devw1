@@ -251,7 +251,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     delete this.sectionDataToSubmit.EffectiveDate__c;
                 }
             }
-    
+
         }
 
         let draftData = this.sectionDataToSubmit;
@@ -299,6 +299,36 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
 
     }
+
+    applyDateOrdineLogic(){
+        let currentSectionIndex = this.confirmedSteps.findIndex(section => section.name === 'dateOrdine');
+        let nextSection = this.confirmedSteps[currentSectionIndex];
+        let nextSectionName = this.confirmedSteps[currentSectionIndex].name;
+
+            if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
+
+                if(this.order.WaiverRightAfterthought__c == 'Si'){
+                    this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+
+                    this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
+                    // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-04-01';
+                } else {
+                    this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+
+                    this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
+                    // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
+                }
+
+            } else {
+
+                this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
+                // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
+                // this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                //     nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+            }
+        }
 
     typeVisibility(type){
         let result = true;
@@ -553,6 +583,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.handleWrapAddressObjectSpedizione();
         }
 
+        //this.applyDateOrdineLogic();
+        
         if(currentSectionName === 'dettaglioImpianto'){
 
             if(this.template.querySelector("[data-id='WaiverRightAfterthought__c']") !== null 
@@ -2778,7 +2810,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             typeOfCommodity = 'ENERGIAELETTRICA';
         }
         if(typeOfCommodity == 'Gas'){
-            typeOfCommodity = 'GAS'; 
+            typeOfCommodity = 'GAS';
         }
         let data = {
             sistema: "eEnergy",                                                 //da definire campo SF con business

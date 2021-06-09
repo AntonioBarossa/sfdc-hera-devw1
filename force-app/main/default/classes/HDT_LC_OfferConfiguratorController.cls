@@ -48,6 +48,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
             if(prodList.size() > 0 && prodList[0].Technical_Offer__r.size() > 0){
                 respObj.data.productCodeIsAlreadyPresent = true;
+                //respObj.data.techOffToClone = prodList[0].Technical_Offer__r[0];
                 respObj.data.techOffIdToClone = prodList[0].Technical_Offer__r[0].Id;
             } else {
                 respObj.data.productCodeIsAlreadyPresent = false;
@@ -178,7 +179,6 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
             //List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList;
             //offerList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(offerJson, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
             saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(saveResponse, techOffObj, idToClone, offerJson, technicalofferid, productId, rate);
-            HDT_LC_OfferConfiguratorCtrlHelper.updateProductAfterSap(technicalofferid, '', 'draft');
             //if(saveResponse.success && sendToSap && !String.isEmpty(saveResponse.techOffId)){
             //    System.debug('>>> sendToSap');
             //    saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.sendTechOfferToSAP(saveResponse, saveResponse.techOffId);

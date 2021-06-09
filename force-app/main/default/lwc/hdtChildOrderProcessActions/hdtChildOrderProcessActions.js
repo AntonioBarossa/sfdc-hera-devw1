@@ -42,7 +42,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     dateWithMonthsDelay (months) {
         const date = new Date();
         date.setMonth(date.getMonth() + months);
-      
+
         return date;
     }
 
