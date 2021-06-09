@@ -77,6 +77,9 @@
             <property name="selectedReadingValue" type="Integer" label="Lettura Selezionata da cruscotto letture" description="Lettura Selezionata da cruscotto letture, solo per processo Rettifica Consumi" role="inputOnly"/>
             
 
+            <property name="selectedReadingsList" type="String" label="Elenco valori letture selezionate da cruscotto letture" description="Letture Selezionate da cruscotto letture, solo per processo Rettifica Consumi" role="inputOnly"/>
+
+
             <property name="resumedFromDraft" type="Boolean" label="Resumed from Draft?" description="Discriminates if the case has been resumed from Draft" role="inputOnly"/>
             
 
@@ -109,7 +112,8 @@
 
             <property name="disabledReadingDate" type="Boolean" label="Disabled Reading Date" description="If true reading date is disabled" role="inputOnly"/>
             
-            
+
+            <property name="tipizzazioneRettificaConsumi" type="String" label="Tipizzazione Rettifica Consumi" description="La tipizzazione della Rettifica Consumi: Errore Stima Consumi o Errore di Lettura" role="outputOnly"/>
 
 
         </targetConfig>

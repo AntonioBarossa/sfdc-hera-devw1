@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PARTY_ID__c</fullName>
+    <description>PARTY_ID</description>
+    <externalDeveloperName>PARTY_ID</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>PARTY_ID</label>
+    <length>128</length>
+    <referenceTo>SiebelCustomer__x</referenceTo>
+    <relationshipLabel>SiebelContact</relationshipLabel>
+    <relationshipName>SiebelContact</relationshipName>
+    <type>ExternalLookup</type>
+</CustomField>

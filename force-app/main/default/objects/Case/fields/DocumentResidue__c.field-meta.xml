@@ -3,7 +3,7 @@
     <fullName>DocumentResidue__c</fullName>
     <description>Importo Fattura selezionata in Estratto Conto per innescare il processo  di Fatturazione</description>
     <externalId>false</externalId>
-    <label>Residuo Documento</label>
+    <label>Residuo</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

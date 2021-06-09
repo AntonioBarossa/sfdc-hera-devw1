@@ -34,7 +34,6 @@ global with sharing class HDT_SRV_PrescrizioneFattura implements wrts_prcgvr.Int
         HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
         sapIntegration.recordId = recordId;
         sapIntegration.requestType = 'PrescrizioneFattura';
-        sapIntegration = support.submitRequest(sapIntegration);
 
         try {
             sapIntegration = support.submitRequest(sapIntegration);
@@ -56,10 +55,34 @@ global with sharing class HDT_SRV_PrescrizioneFattura implements wrts_prcgvr.Int
                 if (responseOutcome != 'KO') {
                     Case caseToUpdate = new Case();
                     caseToUpdate.Id = sapIntegration.recordId;
-                    caseToUpdate.Phase__c = 'Inviata a SAP';
-                    HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+                    caseToUpdate.Phase__c = 'Blocco Effettuato';
+                    String serializedCase = JSON.serialize(caseToUpdate);
+                    updateFuture(serializedCase);
+
+                } else {
+                    Case caseToUpdate = new Case();
+                    caseToUpdate.Id = sapIntegration.recordId;
+                    caseToUpdate.Phase__c = 'Blocco Non Effettuato';
+                    String serializedCase = JSON.serialize(caseToUpdate);
+                    updateFuture(serializedCase);
                 }
             }
+        } else {
+            Case caseToUpdate = new Case();
+            caseToUpdate.Id = sapIntegration.recordId;
+            caseToUpdate.Phase__c = 'Errore Lavorazione SAP';
+            String serializedCase = JSON.serialize(caseToUpdate);
+            updateFuture(serializedCase);
         }
     }
+
+    @Future
+    private static void updateFuture(String inputString) {
+
+        Case c = (Case) JSON.deserialize(inputString, Case.class);
+
+        HDT_UTL_DatabaseService.updateSObject(c);
+
+    }
+
 }

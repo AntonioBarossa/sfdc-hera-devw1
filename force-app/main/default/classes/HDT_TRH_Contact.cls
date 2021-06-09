@@ -6,6 +6,11 @@ public inherited sharing class HDT_TRH_Contact extends HDT_TRH_TriggerHandler {
     // public override void afterUndelete(){}
 
 
+    public override void beforeInsert(){
+        
+        HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
+    }
+
     public override void afterInsert(){
 
         List<Contact> contList = Trigger.New;

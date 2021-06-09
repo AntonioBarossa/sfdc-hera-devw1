@@ -10,6 +10,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_CategoryTypeClient</valueSetName>
+        <valueSetName>HDT_AccountClass</valueSetName>
     </valueSet>
 </CustomField>

@@ -49,21 +49,13 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
         caseToUpdate.SendDate__c = Date.today();
 
         if (response.success) {
-            caseToUpdate.Phase__c = 'Inviata a SAP';
-        } else {
-            caseToUpdate.Phase__c = 'Non Inviata a SAP';
-        }
-
-        HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
-
-        // SAP a differenza di Heroku non manda esiti inbound, quindi forziamo noi l'avanzamento di fase.
-        if (response.success) {
             caseToUpdate.Phase__c = 'Esito OK da SAP';
         } else {
             caseToUpdate.Phase__c = 'Errore Lavorazione SAP';
         }
 
-        HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+        String serializedCase = JSON.serialize(caseToUpdate);
+        updateFuture(serializedCase);
 
         return response;
     }
@@ -104,6 +96,15 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
         }
         outputList.add(output);
         return outputList;
+    }
+
+    @Future
+    private static void updateFuture(String inputString) {
+
+        Case c = (Case) JSON.deserialize(inputString, Case.class);
+
+        HDT_UTL_DatabaseService.updateSObject(c);
+
     }
 
     public class HDT_WRP_InputBpCaFlow{

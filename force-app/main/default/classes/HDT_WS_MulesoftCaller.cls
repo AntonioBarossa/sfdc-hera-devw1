@@ -17,8 +17,10 @@ public without sharing class HDT_WS_MulesoftCaller {
             req.setEndpoint(httpObj.endPoint);
             req.setMethod(httpObj.httpMethod);
 
-            for(String key : httpObj.headersMap.keySet()){
-                req.setHeader(key, httpObj.headersMap.get(key));
+            if(httpObj.headersMap.keySet().size() > 0){
+                for(String key : httpObj.headersMap.keySet()){
+                    req.setHeader(key, httpObj.headersMap.get(key));
+                }
             }
 
             req.setbody(body);

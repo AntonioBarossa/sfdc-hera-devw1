@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Cluster__c</field>
-        <value xsi:type="xsd:string">Attivazioni</value>
+        <value xsi:type="xsd:string">Voltura</value>
     </values>
     <values>
         <field>Contact__c</field>

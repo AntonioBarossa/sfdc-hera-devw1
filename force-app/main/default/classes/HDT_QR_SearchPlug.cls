@@ -1,5 +1,25 @@
 public inherited sharing class HDT_QR_SearchPlug {
 
+    public static List<Product2> getAllAvailableProducts(List<Product2> prodWithoutCriteria, List<String> familyList, List<String> statusList){
+        prodWithoutCriteria = new List<Product2>();
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('Product2');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+
+        if(objRes.isAccessible()){
+
+            prodWithoutCriteria = [
+                SELECT Id
+                FROM Product2
+                WHERE Status__c IN :statusList AND IsActive = true AND Family IN :familyList
+                WITH SECURITY_ENFORCED
+            ];
+
+        }
+
+        return prodWithoutCriteria;
+    }
+
     public static List<Product2> getEligibilitiesCriteriaFromProduct(List<Product2> prodWithoutCriteria, List<String> familyList, String status){
         prodWithoutCriteria = new List<Product2>();
 
@@ -54,7 +74,7 @@ public inherited sharing class HDT_QR_SearchPlug {
 
             myQuote = [
                 SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c, CampaignName__c,
-                       Market__c, Channel__c, CustomerMarking__c, CategoryTypeClient__c,
+                       Market__c, Channel__c, CustomerMarking__c, CategoryTypeClient__c, SuperUser__c,
                        CompanyOwner__c, ClientAge__c, ConsumptionRangeEE__c, ConsumptionRangeGAS__c, PowerFlow__c,
                        ResidentDeliveryAddress__c, FriendCode__c, NewClient__c, Agency__c, UseCategory__c, MeterType__c
                 FROM SBQQ__Quote__c
@@ -85,31 +105,30 @@ public inherited sharing class HDT_QR_SearchPlug {
                 FROM EligibilityCriteria__c
                 WHERE Product__r.Status__c = 'Vendibile' AND Product__r.IsActive = true AND Product__r.Family IN :familyList AND
 
-                    //(OriginMarket__c includes (:quote.Market__c) OR OriginMarket__c = null) AND
                     (
                         (OriginMarketOperator__c = 'excludesValues' AND OriginMarket__c excludes (:quote.Market__c)) OR
                         (OriginMarketOperator__c = 'includesValues' AND OriginMarket__c includes (:quote.Market__c)) OR
                         (OriginMarketOperator__c = 'includesAll')
                     ) AND 
-                    //(Channel__c includes (:quote.Channel__c) OR Channel__c = null) AND
+
                     (
                         (ChannelOperator__c = 'excludesValues' AND Channel__c excludes (:quote.Channel__c)) OR
                         (ChannelOperator__c = 'includesValues' AND Channel__c includes (:quote.Channel__c)) OR
                         (ChannelOperator__c = 'includesAll')
                     ) AND 
-                    //(ClientMarker__c includes (:quote.ClientMarker__c) OR ClientMarker__c = null) AND
+                    
                     (
                         (ClientMarkerOperator__c = 'excludesValues' AND ClientMarker__c excludes (:quote.CustomerMarking__c)) OR
                         (ClientMarkerOperator__c = 'includesValues' AND ClientMarker__c includes (:quote.CustomerMarking__c)) OR
                         (ClientMarkerOperator__c = 'includesAll')
                     ) AND
-                    //(CategoryTypeClient__c includes (:quote.CategoryTypeClient__c) OR CategoryTypeClient__c = null) AND
+                    
                     (
                         (CategoryTypeClientOperator__c = 'excludesValues' AND CategoryTypeClient__c excludes (:quote.CategoryTypeClient__c)) OR
                         (CategoryTypeClientOperator__c = 'includesValues' AND CategoryTypeClient__c includes (:quote.CategoryTypeClient__c)) OR
                         (CategoryTypeClientOperator__c = 'includesAll')
                     ) AND 
-                    //(CompanyOwner__c includes (:quote.CompanyOwner__c) OR CompanyOwner__c = null) AND
+                    
                     (
                         (CompanyOwnerOperator__c = 'excludesValues' AND CompanyOwner__c excludes (:quote.CompanyOwner__c)) OR
                         (CompanyOwnerOperator__c = 'includesValues' AND CompanyOwner__c includes (:quote.CompanyOwner__c)) OR
@@ -122,13 +141,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                     (EquipmenType__c = :quote.MeterType__c OR EquipmenType__c = null)
 
             ];
-            //Multipicklist
-            //queryString += '(OriginMarket__c includes (\'' + quote.Market__c + '\') OR OriginMarket__c = null) AND ';
-            //queryString += '(Channel__c includes (\'' + quote.Channel__c + '\') OR Channel__c = null) AND ';
-            //queryString += '(ClientMarker__c includes (\'' + quote.ClientMarker__c + '\') OR ClientMarker__c = null) AND ';
-            //queryString += '(CategoryTypeClient__c includes (\'' + quote.CategoryTypeClient__c + '\') OR CategoryTypeClient__c = null) AND ';
-            //queryString += '(CompanyOwner__c includes (\'' + quote.CompanyOwner__c + '\') OR CompanyOwner__c = null)';
-            //eligibilityCriteriaList = Database.query(queryString);
+
         }
 
         return eligibilityCriteriaList;

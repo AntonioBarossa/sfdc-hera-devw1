@@ -27,7 +27,8 @@
         <value xsi:type="xsd:string">{
   &quot;processType&quot;: &quot;Piano Rateizzazione&quot;,
   &quot;recordTypeName&quot;: &quot;HDT_RT_PianoRateizzazione&quot;,
-  &quot;flowName&quot;: &quot;HDT_FL_PostSalesMasterDispatch&quot;
+  &quot;flowName&quot;: &quot;HDT_FL_PostSalesMasterDispatch&quot;,
+  &quot;createDocuments&quot;: true
 }</value>
     </values>
     <values>

@@ -28,7 +28,8 @@
   &quot;context&quot;: &quot;CreditManagement&quot;,
   &quot;processType&quot;: &quot;Informative&quot;,
   &quot;recordTypeName&quot;: &quot;HDT_RT_Informative&quot;,
-  &quot;flowName&quot;: &quot;HDT_FL_PostSalesMasterDispatch&quot;
+  &quot;flowName&quot;: &quot;HDT_FL_PostSalesMasterDispatch&quot;,
+  &quot;createDocuments&quot;: true
 }</value>
     </values>
     <values>

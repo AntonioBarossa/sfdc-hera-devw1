@@ -1,19 +1,33 @@
 public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 	
-    public override void beforeInsert(){}
+    public override void beforeInsert(){
+
+        markCasesFromCurrentUser();
+        HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
+
+    }
+
  	public override void beforeDelete(){}
  	public override void afterDelete(){}
   	public override void afterUndelete(){}
     
     public override void beforeUpdate(){
-        //Check Quotation Type
+        //Check Quotation Type && set technical phase
+
         for(Case caseNew : (List<Case>) Trigger.new)
         {
             Case caseOld = (Case) Trigger.oldMap.get(caseNew.Id);
             if(caseOld.Amount__c != null && caseNew.Amount__c != caseOld.Amount__c && caseOld.QuotationType__c == 'Rapido'){
                 caseNew.QuotationType__c = 'Predeterminabile';
             }
+            if(caseNew.TecnicalPhase__c	!= null
+            && caseNew.TecnicalPhase__c  == caseOld.TecnicalPhase__c
+            /*&& caseNew.Phase__c.containsIgnoreCase('Comunicazione verso Heroku OK ')*/){
+                caseNew.Phase__c = caseNew.TecnicalPhase__c;
+                caseNew.TecnicalPhase__c = null;
+            }
         }
+
         //Checks Phase Transition
         ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
                 .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
@@ -33,6 +47,8 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         ((wrts_prcgvr.Interfaces_1_0.ICalloutUtils) wrts_prcgvr.VersionManager.newClassInstance('CalloutUtils'))
                 .bulkSend(new Map<String,Object>{'newObjects'=>Trigger.new, 'oldObjects' => Trigger.old});
 
+
+        HDT_UTL_CaseProcess.casePhaseManagementAfterUpdate(trigger.new,trigger.old);  
     }
 
     public override void afterInsert(){   
@@ -66,6 +82,39 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
         String[] conflictsString = new List<String>(conflicts);
         return String.join(conflictsString, ', ');
+    }
+
+    /**
+     * Ribalta i campi Canale/Gruppo/Postazione dall'utenza in contesto al Case.
+     */
+    private void markCasesFromCurrentUser() {
+
+        Id currentUserId = UserInfo.getUserId();
+        if (currentUserId == null) {
+            return;
+        }
+
+        User currentUser = HDT_QR_UserQueries.getCurrentUser(currentUserId);
+        if (currentUser == null) {
+            return;
+        }
+
+        for (Case c : (List<Case>) Trigger.new) {
+
+            if (String.isBlank(c.Origin)) {
+                c.Origin = !String.isBlank(currentUser.LoginChannel__c) ? currentUser.LoginChannel__c : 'Telefono Inbound'; // Origin è obbligatorio, prevediamo un default per sicurezza.
+            }
+
+            if (String.isBlank(c.Station__c)) {
+                c.Station__c = currentUser.Station__c;
+
+            }
+
+            if (String.isBlank(c.CreatorGroup__c)) {
+                c.CreatorGroup__c = currentUser.CreatorGroup__c;
+            }
+
+        }
     }
 
 }

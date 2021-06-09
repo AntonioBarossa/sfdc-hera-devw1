@@ -20,23 +20,35 @@ public with sharing class HDT_UTL_Individual {
         List<Contact> contacts = contactQr.getRecordsById(contactIds);
         List<Individual> inds= new List<Individual>();
         List<Contact> updateContacts= new List<Contact>();
+        List<wrapContactIndi> listWrapInd = new List<wrapContactIndi>();
+        Map<String,Individual> mapCheck = new Map<String,individual>();
         for(Contact c: contacts){
             Individual individual =new Individual(LastName = c.LastName,FirstName = c.firstName);
             inds.add(individual);
+            mapCheck.put(c.id,individual);
+            /*wrapContactIndi wr = new wrapContactIndi();
+            wr.c = c;
+            wr.i = individual;*/
         }
-        List<Individual> indv= HDT_SRV_Individual.createRecord(inds);
+        List<Individual> indv= HDT_SRV_Individual.createRecord(mapCheck.values());
         for(Contact c :contacts){
-            for(Individual i: indv){
-                if(c.LastName== c.LastName){
+            if(mapCheck.get(c.Id) != null){
+                c.IndividualId = mapCheck.get(c.Id).id;
+            }
+            /*for(Individual i: indv){
+                if(c.LastName== i.lastname && c.firstname == i.firstname){
                     Contact contact=new Contact(Id=c.Id, IndividualId=i.Id);
                     updateContacts.add(contact);
                 }
-            }
+            }*/
         }
         contactSrv.updateRecord(updateContacts);
         return indv;
     }
-
+    public class wrapContactIndi{
+        public Contact c;
+        public Individual i;
+    }
     /**
      * @author Elfrida Kora(elfrida.kora@dunegroup.it)
      * @description make update,create,check fields

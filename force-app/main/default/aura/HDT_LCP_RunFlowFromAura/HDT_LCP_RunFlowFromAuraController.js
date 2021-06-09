@@ -119,6 +119,7 @@
     },
     
     handleStatusChange : function (component, event) {
+    
        console.log('### EVENT STATUS: ' + event.getParam("status"));
        var workspaceAPI = component.find("workspace");
 
@@ -126,8 +127,25 @@
        || event.getParam("status") === "FINISHED_SCREEN"
        || event.getParam("status") === "ERROR") {
 
-            
+            var accountTabId = component.get("v.accountTabId");
+            var subTabToClose = component.get("v.subTabToClose");
+            var enableRefresh = component.get('v.enableRefresh');
+            var flowfinal = component.find("flowData");
+                
             if(event.getParam("status") === "ERROR"){
+                //Sembra non esserci nella struttura dell'event il messaggio di errore
+                /*event: {
+                    "_name":"",
+                    "_source":{},
+                    "_params":{
+                        "status":"ERROR",
+                        "flowTitle":"Gestione Annullamento",
+                        "showHeader":true,
+                        "guid":"5576e83980290edaf4536891f79f179e6928cf-b934"
+                    },
+                    "target":null,
+                    "currentTarget":null}
+                */
                 console.log('Inside Error condition');
                 var toastEvent = $A.get("e.force:showToast");
                 toastEvent.setParams({
@@ -138,11 +156,9 @@
                 toastEvent.fire();
             }
 
-            var flowfinal = component.find("flowData");
+           
             flowfinal.destroy();
-            var accountTabId = component.get("v.accountTabId");
-            var subTabToClose = component.get("v.subTabToClose");
-            var enableRefresh = component.get('v.enableRefresh');
+
             console.log('# Refresh page -> ' + enableRefresh);
 
             console.log('# close -> ' + subTabToClose + ' - refresh -> ' + accountTabId);
@@ -165,6 +181,35 @@
                 newCaseId=component.get("v.recordid");
             }
 
+            console.log('# outputVariable -> '+outputVariables);
+            console.log('# newCaseId -> '+newCaseId);
+            //Gestione chiusura errore in creazione
+            if(newCaseId == null || newCaseId == undefined){
+                
+                workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                    console.log('# Refresh page -> ' + enableRefresh);
+                    
+                    console.log('# OK Refresh page #');
+                    $A.get('e.force:refreshView').fire();
+                
+    
+                    workspaceAPI.focusTab({tabId : accountTabId}).
+                    then(function(response) {
+                        workspaceAPI.refreshTab({
+                                tabId: accountTabId,
+                                includeAllSubtabs: true
+                            }).catch(function(error) {
+                                console.log(error);
+                            });
+                    });
+    
+                }).catch(function(error) {
+                    console.log(error);
+                });
+
+                return;
+
+            }
             if(!enableRefresh){
                 workspaceAPI.openSubtab({
                     parentTabId: accountTabId,
@@ -214,7 +259,7 @@
                 .then(function(response) {
                     workspaceAPI.closeTab({ tabId: subTabToClose}).then(function(response){
                         console.log('# Refresh page -> ' + enableRefresh);
-                      
+                        
                         console.log('# OK Refresh page #');
                         $A.get('e.force:refreshView').fire();
                     }).catch(function(error){
@@ -224,11 +269,11 @@
                 .catch(function(error) {
                     console.log(error);
                 });
-    
+
 
                 /*workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
                         console.log('# Refresh page -> ' + enableRefresh);
-                      
+                        
                         console.log('# OK Refresh page #');
                         $A.get('e.force:refreshView').fire();
                     

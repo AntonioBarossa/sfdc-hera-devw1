@@ -20,7 +20,18 @@ public with sharing class HDT_QR_DataEnrichmentPostSales {
 
         BillingProfile__c billingProfile = new BillingProfile__c();
 
-        billingProfile = [SELECT Id,BillSendingMethod__c,InvoiceEmailAddress__c,InvoiceCertifiedEmailAddress__c,InvoicingStreetName__c,
+        billingProfile = [SELECT Id,
+        SubjectCode__c,
+        CIG__c,
+        CUP__c,
+        XMLType__c,
+        ElectronicInvoiceCertifiedEmailAddress__c,
+        ElectronicInvoicingMethod__c,
+        SendCertifiedEmailConsentDate__c,
+        BillSendingMethod__c,
+        InvoiceEmailAddress__c,
+        InvoiceCertifiedEmailAddress__c,
+        InvoicingStreetName__c,
         InvoicingStreetNumber__c,
         InvoicingStreetNumberExtension__c,
         InvoicingCity__c,

@@ -1,4 +1,5 @@
 import { LightningElement, track } from 'lwc';
+import imageResource from '@salesforce/resourceUrl/HDT_Service1';
 
 
 const billsColumns = [
@@ -46,12 +47,16 @@ const billsData = [
 
 export default class HdtLastBill extends LightningElement {
 
-    //@track iconUrl = 'https://heravendita--dev4everis.lightning.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Png&versionId=0681x000001xffo&operationContext=CHATTER&contentId=05T1x000006cMX1';
+    @track iconUrl = imageResource;
     @track billsColumns = billsColumns;
     @track billsData = billsData;
 
     get counter(){
         return billsData.length;
+    }
+
+    connectedCallback(){
+        console.log('image url: ' + this.iconUrl);
     }
 
 }

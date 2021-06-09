@@ -3,9 +3,10 @@
     <fullName>PhonePrefix__c</fullName>
     <description>è il prefisso del telefono</description>
     <externalId>false</externalId>
-    <label>Prefisso</label>
+    <label>Prefisso Telefono Fisso</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

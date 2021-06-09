@@ -79,7 +79,7 @@
                         c__processType: paramObj.processType,
                         c__recordTypeName: paramObj.recordTypeName,
                         c__flowName: paramObj.flowName,
-                        c__createDocuments: true
+                        c__createDocuments: paramObj.createDocuments
                     }
                 }
             });

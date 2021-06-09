@@ -6,7 +6,6 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
     //public override void afterUndelete(){}
     private static HDT_QR_AccountContactRelation accoContRelQr = new HDT_QR_AccountContactRelation();
 
-
     public override void afterInsert(){
         List<Lead> listlead = Trigger.New;
         system.debug('test');
@@ -32,6 +31,8 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 }
                 }
         }
+        HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
+
         }
           
         public override void afterUpdate(){

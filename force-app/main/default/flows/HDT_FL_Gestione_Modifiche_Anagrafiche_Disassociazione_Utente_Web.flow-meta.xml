@@ -4,9 +4,12 @@
     <decisions>
         <name>Annullare</name>
         <label>Annullare?</label>
-        <locationX>1282</locationX>
-        <locationY>919</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <locationX>1065</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>Get_Contatto_SOL</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Si</name>
             <conditionLogic>and</conditionLogic>
@@ -24,42 +27,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Associato_a_utente_web</name>
-        <label>Associato a utente web?</label>
-        <locationX>1527</locationX>
-        <locationY>549</locationY>
-        <defaultConnector>
-            <targetReference>Screen_di_errore</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Non Associato</defaultConnectorLabel>
-        <rules>
-            <name>Associato</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Relazione_SOL.ContactId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Login_SOL.EmailAddress</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Screen_di_conferma</targetReference>
-            </connector>
-            <label>Associato</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
-        <locationX>2054</locationX>
-        <locationY>546</locationY>
+        <locationX>2058</locationX>
+        <locationY>548</locationY>
         <defaultConnector>
             <targetReference>Disassocia_Utenza_Web</targetReference>
         </defaultConnector>
@@ -120,7 +91,7 @@
         <locationY>322</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Relazione_SOL</targetReference>
+            <targetReference>Selezione_Contatto_SOL</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -137,8 +108,8 @@
     <recordLookups>
         <name>Get_Contatto_SOL</name>
         <label>Get Contatto SOL</label>
-        <locationX>896</locationX>
-        <locationY>322</locationY>
+        <locationX>1072</locationX>
+        <locationY>326</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Login_SOL</targetReference>
@@ -148,7 +119,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Relazione_SOL.ContactId</elementReference>
+                <elementReference>SelectedSolContactId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -158,8 +129,8 @@
     <recordLookups>
         <name>Get_Login_SOL</name>
         <label>Get Login SOL</label>
-        <locationX>1098</locationX>
-        <locationY>322</locationY>
+        <locationX>1224</locationX>
+        <locationY>327</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_Case</targetReference>
@@ -184,41 +155,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Relazione_SOL</name>
-        <label>Get Relazione SOL</label>
-        <locationX>682</locationX>
-        <locationY>322</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Contatto_SOL</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>AccountId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case.AccountId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>IsManagerSOL__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>AccountContactRelation</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Refresh_Case</name>
         <label>Refresh Case</label>
-        <locationX>1533</locationX>
-        <locationY>322</locationY>
+        <locationX>1549</locationX>
+        <locationY>326</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Associato_a_utente_web</targetReference>
+            <targetReference>Screen_di_conferma</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -252,7 +195,7 @@
             <field>ContactId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Relazione_SOL.ContactId</elementReference>
+                <elementReference>SelectedSolContactId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -266,8 +209,8 @@
     <recordUpdates>
         <name>Set_Completata</name>
         <label>Set Completata</label>
-        <locationX>2682</locationX>
-        <locationY>548</locationY>
+        <locationX>2664</locationX>
+        <locationY>552</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -288,7 +231,7 @@
         <name>Set_In_Lavorazione</name>
         <label>Set In Lavorazione</label>
         <locationX>2489</locationX>
-        <locationY>548</locationY>
+        <locationY>552</locationY>
         <connector>
             <targetReference>Set_Completata</targetReference>
         </connector>
@@ -311,8 +254,8 @@
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>1310</locationX>
-        <locationY>322</locationY>
+        <locationX>1387</locationX>
+        <locationY>326</locationY>
         <connector>
             <targetReference>Refresh_Case</targetReference>
         </connector>
@@ -341,8 +284,8 @@
     <screens>
         <name>Screen_di_conferma</name>
         <label>Screen di conferma</label>
-        <locationX>1815</locationX>
-        <locationY>546</locationY>
+        <locationX>1548</locationX>
+        <locationY>539</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -439,10 +382,10 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Screen_di_errore</name>
-        <label>Screen di errore</label>
-        <locationX>1289</locationX>
-        <locationY>667</locationY>
+        <name>Selezione_Contatto_SOL</name>
+        <label>Selezione Contatto SOL</label>
+        <locationX>683</locationX>
+        <locationY>322</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -450,72 +393,54 @@
             <targetReference>Annullare</targetReference>
         </connector>
         <fields>
-            <name>DT2</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Attenzione!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;L&apos;Account&lt;/span&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt; {!Get_Case.Account.Name}&lt;/b&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; non risulta associato a nessuna utenza web.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>DT3</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Selezionare l&apos;utenza web da disassociare:&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>form2</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <name>hdtContactSelectionFlow</name>
+            <extensionName>c:hdtContactSelectionFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>cancelButton</name>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionType</name>
+                <value>
+                    <stringValue>unused</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showSolContacts</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>draftButton</name>
+                <name>showCancelButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva in bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextStep</name>
-                <value>
-                    <stringValue>NEXT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
+                <name>showBackButton</name>
                 <value>
                     <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>processType</name>
+                <name>nextLabel</name>
                 <value>
-                    <elementReference>Get_Case.Type</elementReference>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>Get_Case.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
+                <name>showDraftButton</name>
                 <value>
                     <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -526,15 +451,19 @@
             </outputParameters>
             <outputParameters>
                 <assignToReference>SaveInDraft</assignToReference>
-                <name>saveInDraft</name>
+                <name>saveDraft</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>SelectedSolContactId</assignToReference>
+                <name>results</name>
             </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>72</locationX>
-        <locationY>300</locationY>
+        <locationX>32</locationX>
+        <locationY>304</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
         </connector>
@@ -543,8 +472,8 @@
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>1903</locationX>
-        <locationY>921</locationY>
+        <locationX>1508</locationX>
+        <locationY>884</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -588,6 +517,13 @@
     <variables>
         <name>SaveInDraft</name>
         <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SelectedSolContactId</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>

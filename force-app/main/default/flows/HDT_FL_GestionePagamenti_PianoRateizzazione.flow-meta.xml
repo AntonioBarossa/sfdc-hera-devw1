@@ -10,6 +10,7 @@
         <connector>
             <targetReference>Regola_Trovata</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -28,6 +29,7 @@
         <connector>
             <targetReference>Screen_Case_Layout</targetReference>
         </connector>
+        <flowTransactionModel>NewTransaction</flowTransactionModel>
         <inputParameters>
             <name>accountId</name>
             <value>
@@ -57,9 +59,10 @@
         <name>Sottometti_ad_Approvazione</name>
         <label>Sottometti ad Approvazione</label>
         <locationX>578</locationX>
-        <locationY>2318</locationY>
+        <locationY>2654</locationY>
         <actionName>HDT_UTL_CaseApprovalProcess</actionName>
         <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>cases</name>
             <value>
@@ -72,7 +75,7 @@
         <name>Assegna_Fase</name>
         <label>Assegna Fase</label>
         <locationX>842</locationX>
-        <locationY>2078</locationY>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -95,7 +98,7 @@
         <name>Assegna_Fase_0</name>
         <label>Assegna Fase</label>
         <locationX>578</locationX>
-        <locationY>2078</locationY>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -141,7 +144,7 @@
         <name>AssegnaCodiceCausale</name>
         <label>AssegnaCodiceCausale</label>
         <locationX>710</locationX>
-        <locationY>1838</locationY>
+        <locationY>2174</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -176,6 +179,38 @@
             <booleanValue>true</booleanValue>
         </value>
     </choices>
+    <decisions>
+        <name>Avanzamento</name>
+        <label>Avanzamento</label>
+        <locationX>710</locationX>
+        <locationY>1718</locationY>
+        <defaultConnector>
+            <targetReference>Annullamento_Prestazione_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Annulla</defaultConnectorLabel>
+        <rules>
+            <name>ConfermaDocumentale</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetCodiceCausale</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
@@ -240,10 +275,10 @@
             <name>Conferma</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>InterrogaRegoleRateizzazione.ClientCategory__c</leftValueReference>
-                <operator>Contains</operator>
+                <leftValueReference>InterrogaRegoleRateizzazione.Category__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>SME</stringValue>
+                    <stringValue>Aziende SME</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -278,7 +313,7 @@
         <name>Processo_Approvativo</name>
         <label>Processo Approvativo?</label>
         <locationX>710</locationX>
-        <locationY>1958</locationY>
+        <locationY>2294</locationY>
         <defaultConnector>
             <targetReference>Assegna_Fase</targetReference>
         </defaultConnector>
@@ -433,8 +468,7 @@
             <label>Annulla</label>
         </rules>
     </decisions>
-    <description>Flow per la Gestione del processo Piano Rateizzazione del Cluster Pagamenti
---&gt; Inserito screen documentale</description>
+    <description>Flow per la Gestione del processo Piano Rateizzazione del Cluster Pagamenti</description>
     <formulas>
         <name>DataPrimaScadenza</name>
         <dataType>Date</dataType>
@@ -507,7 +541,7 @@
         <name>GetCodiceCausale</name>
         <label>GetCodiceCausale</label>
         <locationX>710</locationX>
-        <locationY>1718</locationY>
+        <locationY>2054</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaCodiceCausale</targetReference>
@@ -574,12 +608,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>FirstExpirationDate__c</field>
-            <value>
-                <elementReference>DataPrimaScadenza</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>MaxInstallmentsNumber__c</field>
             <value>
                 <elementReference>InterrogaRegoleRateizzazione.MaxInstallmentsNumber__c</elementReference>
@@ -603,28 +631,13 @@
         <inputAssignments>
             <field>Phase__c</field>
             <value>
-                <stringValue>Chiuso</stringValue>
+                <stringValue>Completata</stringValue>
             </value>
         </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Passa_a_Chiuso_0</name>
-        <label>Passa a &quot;Ko Rilavorato&quot;</label>
-        <locationX>1634</locationX>
-        <locationY>1238</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case.Id</elementReference>
-            </value>
-        </filters>
         <inputAssignments>
-            <field>Phase__c</field>
+            <field>Status</field>
             <value>
-                <stringValue>Chiuso</stringValue>
+                <stringValue>Closed</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -633,7 +646,7 @@
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>842</locationX>
-        <locationY>2198</locationY>
+        <locationY>2534</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -662,7 +675,7 @@
         <inputAssignments>
             <field>Phase__c</field>
             <value>
-                <stringValue>Sospesa</stringValue>
+                <stringValue>Elaborazione Manuale</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -671,19 +684,13 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>SuspensionDate__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
         <name>Passa_In_Attesa_Approvazione</name>
         <label>Passa &quot;In Attesa Approvazione&quot;</label>
         <locationX>578</locationX>
-        <locationY>2198</locationY>
+        <locationY>2534</locationY>
         <connector>
             <targetReference>Sottometti_ad_Approvazione</targetReference>
         </connector>
@@ -758,15 +765,9 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>labelReadOnlySection</name>
-                <value>
-                    <stringValue>Dati di Riepilogo</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -784,19 +785,13 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Piano Rateizzazione Riepilogo	</stringValue>
+                    <stringValue>Piano Rateizzazione Riepilogo</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>recordId</name>
                 <value>
                     <elementReference>Get_Case.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordType</name>
-                <value>
-                    <elementReference>Get_Case.RecordTypeId</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -808,9 +803,16 @@
             <inputParameters>
                 <name>showReadOnly</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -891,6 +893,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -921,6 +924,7 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1013,6 +1017,31 @@
                     <stringValue>Salva In Bozza</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>CaseInput.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1028,7 +1057,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>GetCodiceCausale</targetReference>
+            <targetReference>Avanzamento</targetReference>
         </connector>
         <fields>
             <name>DisplayTextDocumentSignature</name>
@@ -1040,17 +1069,30 @@
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-            <name>nextVariant</name>
-            <value>
-                <stringValue>brand</stringValue>
-            </value>
-            </inputParameters>
-            <inputParameters>
-                <name>processType</name>
+                <name>accountId</name>
                 <value>
-                    <elementReference>CaseInput.Type</elementReference>
+                    <elementReference>CaseInput.Account.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>quoteType</name>
+                <value>
+                    <stringValue>Analitico</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1131,6 +1173,7 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1146,11 +1189,11 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Passa_a_Chiuso_0</targetReference>
+            <targetReference>Annullamento_Prestazione_0_0</targetReference>
         </connector>
         <fields>
             <name>RuleNotFoundMessage</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Regola non Trovata.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Premere il tasto Indietro per modificare i dati; premere Avanti se si desidera chiudere il case in KO&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Piano Rata Non Concedibile.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Premere il tasto Indietro per modificare i dati; &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Alla pressione del tasto avanti il Case verrà Annullato.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1193,6 +1236,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1237,6 +1281,59 @@
         <label>Annullamento Prestazione</label>
         <locationX>1106</locationX>
         <locationY>1598</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annullamento_Prestazione_0_0</name>
+        <label>Annullamento Prestazione</label>
+        <locationX>1634</locationX>
+        <locationY>1238</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annullamento_Prestazione_0_0_0</name>
+        <label>Annullamento Prestazione</label>
+        <locationX>798</locationX>
+        <locationY>1838</locationY>
+        <connector>
+            <targetReference>GetCodiceCausale</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

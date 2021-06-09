@@ -2,12 +2,10 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>Agenzia Mas Srl</name>
-    <queueMembers>
-        <roles>
-            <role>HDT_BackOffice</role>
-        </roles>
-    </queueMembers>
     <queueSobject>
         <sobjectType>Lead</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>wrts_prcgvr__Activity__c</sobjectType>
     </queueSobject>
 </Queue>

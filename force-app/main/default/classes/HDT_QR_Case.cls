@@ -13,7 +13,16 @@ public inherited sharing class HDT_QR_Case {
             Id,
             Status,
             Subject,
-            AccountId
+            Subprocess__c,
+            AccountId,
+            CaseNumber,
+            HerokuPracticeCode__c,
+            ContactId,
+            ServicePoint__c,
+            Contract__c,
+            ContractCode__c,
+            CommodityFormula__c,
+            PODPDRFormula__c
             FROM Case
             where Id = :Id
             WITH SECURITY_ENFORCED
@@ -45,5 +54,11 @@ public inherited sharing class HDT_QR_Case {
 
     }
 
+    public List<Case> getRecordsById(List<String> Ids, String fields) {
+        String query = 'SELECT '+ fields +
+                ' From Case where id IN :Ids';
+        List<Case> cases = Database.query(query);
 
+        return cases;
+    }
 }

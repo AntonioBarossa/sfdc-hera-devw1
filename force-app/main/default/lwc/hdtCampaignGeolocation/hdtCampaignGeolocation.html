@@ -1,0 +1,54 @@
+<template>
+    <lightning-card title="Geolocalizzazione">
+        <div class="slds-card__body slds-m-around--x-small">
+            <div class="slds-grid" style="min-height: 180px;">
+                <template if:false={showSpinner}>
+                    <lightning-record-edit-form class="slds-size--1-of-1" record-id={contactId} id="recordViewForm" object-api-name="Contact"
+                        onsubmit={submitAddress} onsuccess={handleSuccess} autocomplete="off">
+                        <lightning-messages></lightning-messages>
+                        <div class="slds-grid">
+                            <label class="slds-p-left--xx-small slds-form-element__label slds-size--1-of-3"
+                                for="street">
+                                <abbr class="slds-required" title="required">*</abbr> Via</label>
+                            <lightning-input-field class="slds-size--2-of-3" id="street" field-name="MailingStreet"
+                                variant="label-hidden" required>
+                            </lightning-input-field>
+                        </div>
+                        <div class="slds-grid slds-m-bottom--xx-small">
+                            <label class="slds-p-left--xx-small slds-form-element__label slds-size--1-of-3" for="city">
+                                <abbr class="slds-required" title="required">*</abbr> Citta</label>
+                            <lightning-input-field class="slds-size--2-of-3" id="city" field-name="MailingCity"
+                                variant="label-hidden" required>
+                            </lightning-input-field>
+                        </div>
+                        <div class="slds-grid">
+                            <label class="slds-p-left--xx-small slds-form-element__label slds-size--1-of-3"
+                                for="postalcode">
+                                <abbr class="slds-required" title="required">*</abbr> CAP</label>
+                            <lightning-input-field class="slds-size--2-of-3" id="postalcode"
+                                field-name="MailingPostalCode" variant="label-hidden" required></lightning-input-field>
+                        </div>
+                        <div class="slds-m-top--medium slds-align--absolute-center">
+                            <lightning-button type="submit" label="Avvia">
+                            </lightning-button>
+                        </div>
+                    </lightning-record-edit-form>
+                </template>
+                <template if:true={showSpinner}>
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+    <template if:true={showListView}>
+        <article class="slds-card slds-m-top--medium">
+            <div class="slds-card__body slds-m-around--x-small" style="height: 250px;">
+                <lightning-datatable key-field="id" data={dataList} show-row-number-column row-number-offset={rowOffset}
+                    hide-checkbox-column columns={columnsList} onrowaction={handleRowAction}
+                    class="slds-m-vertical--medium">
+                </lightning-datatable>
+            </div>
+        </article>
+    </template>
+
+</template>

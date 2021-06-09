@@ -123,7 +123,7 @@ public inherited sharing class HDT_QR_Order {
             ParentOrder__r.SignedDate__c,
             OrderNumber,
             Phase__c, 
-            // RequestOption__c,
+            RequestOption__c,
             WaiverRightAfterthought__c,
             MaxAfterthoughtDate__c,
             PreviousTrader__c,
@@ -134,6 +134,8 @@ public inherited sharing class HDT_QR_Order {
             SBQQ__Quote__r.OrderReference__c,
             SBQQ__Quote__r.ContractReference__r.ContractNumber,
             SBQQ__Quote__r.OrderReference__r.OrderNumber,
+            SBQQ__Quote__r.AllowChangeUse__c,
+            ProcessType__c,
             SalesCompany__c,
             Campaign__c,
             Campaign__r.Name,
@@ -148,9 +150,50 @@ public inherited sharing class HDT_QR_Order {
             ActivationCountry__c,
             ActivationProvince__c,
             ActivationStreetNumberExtension__c,
-            ActivationStreetNumber__c
+            ActivationStreetNumber__c,
+            ImplantType__c,
+            PowerCommitted__c,
+            ServicePoint__r.MarketOrigin__c,            // @Picchiri Calcolo della date Switch in 21/05/21
+            WizardCompletedDate__c,                     // @Picchiri Calcolo della date Switch in 21/05/21
+            ActivatedDate,                              // @Picchiri Calcolo della date Switch in 21/05/21
+            ServicePoint__r.VoltageLevel__c,            // @Picchiri Calcolo della date Switch in 21/05/21
+            ServicePoint__r.SupplyType__c,              // @Picchiri Calcolo della date Switch in 21/05/21
+            RecessNotice__c,                            // @Picchiri Calcolo della date Switch in 21/05/21
+            CustomerCategory__c,                        // @Picchiri Calcolo della date Switch in 26/05/21
+            Channel__c,                                 // @Picchiri Calcolo della date Switch in 27/05/21
+            Market__c,                                  // @Picchiri Calcolo della date Switch in 26/05/21
+            MarketOrigin__c,                            // @Picchiri Calcolo della date Switch in 27/05/21
+            VoltageLevel__c,                            // @Picchiri Calcolo della date Switch in 27/05/21 
+            SupplyType__c,                              // @Picchiri Calcolo della date Switch in 27/05/21 
+            CreatedById,                                // @Picchiri Calcolo della date Switch in 31/05/21 
+            Account.CustomerCode__c,                    // @Picchiri Calcolo della date Switch in 31/05/21             
+            Account.CustomerMarking__c,                 // @Picchiri Calcolo della date Switch in 31/05/21             
+            Account.Type,                               // @Picchiri Calcolo della date Switch in 31/05/21 
+            ServicePoint__r.SupplyStreetName__c,        // @Picchiri Calcolo della date Switch in 31/05/21 ERRORE
+		    ServicePoint__r.SupplyCity__c,              // @Picchiri Calcolo della date Switch in 31/05/21 
+		    ServicePoint__r.SupplyProvince__c,          // @Picchiri Calcolo della date Switch in 31/05/21 
+		    ServicePoint__r.SupplyPostalCode__c,        // @Picchiri Calcolo della date Switch in 31/05/21
+            ServicePoint__r.Account__r.CustomerCode__c, // @Picchiri Calcolo della date Switch in 08/06/21             
+            ServicePoint__r.Account__r.FiscalCode__c,   // @Picchiri Calcolo della date Switch in 08/06/21             
+            CommercialProduct__c,                       // @Picchiri Calcolo della date Switch in 31/05/21 
+            AnnualConsumption__c,                       // @Picchiri Calcolo della date Switch in 31/05/21 
+            Catalog__c,                                 // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
+            ServicePoint__r.AnnualConsumption__c        // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
+
             FROM Order 
             WHERE Id = :orderId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Order> getOrderByIdForSalesCallout(String id){
+        return [
+            SELECT 
+            Id,
+            Phase__c,
+            PrecheckResultSII__c
+            FROM Order 
+            WHERE Id = :id
             WITH SECURITY_ENFORCED
         ];
     }
@@ -393,7 +436,7 @@ public inherited sharing class HDT_QR_Order {
     }
 
     public List<Order> getRecordByOrderNumber(String orderNumber){
-        return [Select id,phase__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+        return [Select id,phase__c,PrecheckResultSII__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getRecordsByOrdersIdsBulk(List<String> orderIds){

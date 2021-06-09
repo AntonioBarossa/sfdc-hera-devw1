@@ -180,11 +180,6 @@
             <valueName>Clienti servizi regolati</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Contratto Siebel</controllingFieldValue>
-            <controllingFieldValue>Contratto SAP</controllingFieldValue>
-            <valueName>OM</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Energia Elettrica</controllingFieldValue>
             <controllingFieldValue>Gas</controllingFieldValue>
             <valueName>CDO</valueName>

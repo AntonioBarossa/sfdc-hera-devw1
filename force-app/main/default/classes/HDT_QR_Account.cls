@@ -54,10 +54,15 @@ public inherited sharing class HDT_QR_Account {
     }
     
     public Account getAccountByDistributorKey(String globalKeyId){
-        contractSrv.checkReadAccess('Id,GlobalMigrationKey__c');
+        contractSrv.checkReadAccess('Id,Code__c');
         Account ac = new Account();
+        List<Account> listAcc = new List<Account>();
+        listAcc = [SELECT Id FROM Account WHERE Code__c =: globalKeyId];
         //String query = 'SELECT Id,BillingAddress FROM Account WHERE Id ='+accountId;
-        ac= [SELECT Id FROM Account WHERE GlobalMigrationKey__c =: globalKeyId];
+        if(!listAcc.isEmpty()){
+            ac= listAcc[0];
+        }
+        
         //ac = database.query(query);
         system.debug('Account retrieved******'+ ac);
         return ac;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Solicited__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indica se un attività ha ricevuto sollecito da parte del cliente.</description>
+    <externalId>false</externalId>
+    <label>Attività Sollecitata</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

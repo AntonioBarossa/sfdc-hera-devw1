@@ -2,8 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Contact__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
+    <description>Contatto relativo alla chiamata</description>
     <externalId>false</externalId>
-    <label>Contact Cliente</label>
+    <label>Contatto</label>
     <referenceTo>Contact</referenceTo>
     <relationshipLabel>Activities (Custom)</relationshipLabel>
     <relationshipName>Activities_Custom</relationshipName>

@@ -11,7 +11,7 @@ import COMPANY_OWNER from '@salesforce/schema/Account.CompanyOwner__c';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCode';
-//import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
+import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountResidenziale.insertAccount';
 export default class HdtFormAccountResidenziale extends NavigationMixin(LightningElement) {
 
@@ -23,7 +23,13 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     @track mobilePhonePrefixValue;
     @track mobilePhonePrefixOptions;
     @track fiscalCode;
-    currentObjectApiName;
+    @api customerMarkingOptions = [];
+    @api categoryOptions = [];
+    @api customerData = [];
+    @api categoryData = [];
+    @api markingValue;
+    @api categoryValue;
+    currentObjectApiName = 'Account';
     settlementRegion;
     settlementDistrict;
     settlementMunicipality;
@@ -63,10 +69,18 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     };
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOM_MARKING })
-    customerMarkingOptions;
+    customerGetMarkingOptions({error, data}) {
+        if (data){
+            this.customerData = data;
+        }
+    };
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CATEGORY })
-    categoryOptions;
+    categoryGetOptions({error, data}) {
+        if (data){
+            this.categoryData = data;
+        }
+    };
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: GENDER })
     genderOptions;
@@ -82,14 +96,19 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
 
     roleOptions=[
         { label: 'Titolare', value: 'Titolare' },
-        { label: 'Legale rappresentante', value: 'Legale rappresentante' },
-        { label: 'Amministratore condominio', value: 'Amministratore condominio' },
-        { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' },
-        { label: 'Contatto secondario', value: 'Contatto secondario' },
-        { label: 'Delegato', value: 'Delegato' },
-        { label: 'Azienda', value: 'Azienda' }
+        { label: 'Familiare', value: 'Familiare' }
     ];
-
+    handleCompanyOwnerChange(event) {
+        let key = this.customerData.controllerValues[event.target.value];
+        this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.markingValue = '';
+        this.categoryValue = '';
+    }
+    handleCustomerChange(event) {
+        let key = this.categoryData.controllerValues[event.target.value];
+        this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
+        this.categoryValue = '';
+    }
     closeModal() {
         this.showModal = false;
         window.history.back();
@@ -132,9 +151,18 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                                 birthDate: this.birthDate, 
                                 birthPlace: this.birthPlace
                             };
-         /*   calculateFiscalCode({infoData: information}).then((response) => {
-
-                this.fiscalCode.value= response;
+            calculateFiscalCode({infoData: information}).then((response) => {
+                if(response == null){
+                    //this.showError(errorMsg);
+                    const event = new ShowToastEvent({
+                    message: 'Comune inserito NON presente a sistema',
+                    variant: 'error',
+                    mode: 'dismissable'
+                    });
+                    this.dispatchEvent(event);
+                }else{
+                    this.fiscalCode.value= response;
+                }
             }).catch((errorMsg) => { 
                 this.showError(errorMsg);
                 const event = new ShowToastEvent({
@@ -143,7 +171,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                     mode: 'dismissable'
                 });
                 this.dispatchEvent(event);
-            });  */           
+            });            
         }else{
             const event = new ShowToastEvent({
                 message: 'Inserire le Informazioni Mancanti',
@@ -159,6 +187,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
 
             if(this.accountAddress['Via'] != null){
                 this.fieldsToUpdate['BillingStreet'] = this.accountAddress['Via'];
+                this.fieldsToUpdate['BillingStreetName__c'] = this.accountAddress['Via'];
             }
             if(this.accountAddress['Comune'] != null){
                 this.fieldsToUpdate['BillingCity'] = this.accountAddress['Comune'];
@@ -287,17 +316,30 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             }
             isValidated=false;
         }
+        if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
+            if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
+                isValidated=false;
+                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
+            }
+        }
+        console.log('LENGTH:'+ this.fiscalcode + '-:' + this.fiscalCode.value.length);
+        if(!(this.fiscalCode.value=== undefined || this.fiscalCode.value.trim()==='')){
+            if(this.fiscalCode.value.length != 16){
+                isValidated=false;
+                messageError=" Il Codice fiscale deve essere lungo 16 cifre!";
+            }
+        }
 
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
-            if(mobilePhone.value.length<10){
+            if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
                 isValidated=false;
-                messageError=" Il numero di cellulare non può essere meno di 10 cifre!";
+                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
             }
         }
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
-            if(phoneNumber.value.length>11){
+            if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
                 isValidated=false;
-                messageError=" Il numero di telefono non può essere più di 11 cifre!";
+                messageError=" Il numero di telefono deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
         }
         if(!(email.value=== undefined || email.value.trim()==='')){
@@ -342,7 +384,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             "fiscalCode": this.fiscalCode.value.replace(/ /g,""),
                             "phoneNumber": phoneNumber.value,
                             "mobilePhone" : mobilePhone.value,
-                            "name": lastName.value+' '+firstName.value,
+                            "name": firstName.value+' '+lastName.value,
                             "email": email.value,
                             "birthplace": this.birthPlace,
                             "recordTypeId" : this.RecordTypeId,
@@ -402,7 +444,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         "fiscalCode": this.fiscalCode.value.replace(/ /g,""),
                         "phoneNumber": phoneNumber.value,
                         "mobilePhone" : mobilePhone.value,
-                        "name": lastName.value+' '+firstName.value,
+                        "name": firstName.value+' '+lastName.value,
                         "email": email.value,
                         "birthplace": this.birthPlace,
                         "recordTypeId" : this.RecordTypeId,

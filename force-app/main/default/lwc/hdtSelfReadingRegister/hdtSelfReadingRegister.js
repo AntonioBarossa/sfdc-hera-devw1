@@ -130,11 +130,8 @@ export default class HdtSelfReadingRegister extends LightningElement {
     @api
     handleLastReading(readingObj){
 
-        console.log('Method Called Correctly');
-
-        //var readingObj = JSON.parse(jsonReading);
-
-        console.log(JSON.stringify(readingObj));
+        console.log('Gestione lettura: ' + JSON.stringify(readingObj));
+        console.log('rowObj: ' + JSON.stringify(this.rowObj));
 
         if (this.commodity === 'Energia Elettrica') {
             this.isVisible = (this.rowObj.id <= readingObj.length);
@@ -144,7 +141,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         var indexIn = readingObj.findIndex(p => p.register == this.rowObj.number);
 
-        console.log(indexIn);
+        console.log('indexIn: ' + indexIn);
 
         if(indexIn == -1){
 

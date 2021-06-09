@@ -28,16 +28,22 @@ public with sharing class HDT_LC_LeadCalculateFiscalCode {
             validateFields += 'must be completed!';
             return validateFields;
         }else{
+            String checkCitta = HDT_QR_City.getCityCode( l.Birthcity__c.toUpperCase());
             row.put('lastName', l.LastName);
             row.put('firstName', l.FirstName);
             row.put('birthDate', String.valueOf(l.Birthdate__c));
             row.put('gender', l.Gender__c);
             row.put('birthPlace', l.Birthcity__c);
-            System.debug(row);
-            String fiscalCode= HDT_UTL_CalculateFiscalCode.calculateFiscalCode(row);
-            Lead lead= new Lead(Id=leadId,FiscalCode__c=fiscalCode);
-            HDT_SRV_Lead.checkUpdateAccess(lead);
-            HDT_SRV_Lead.updateRecord(lead);
+            if(''.equals(checkCitta)){
+                validateFields='Comune non Presente...';
+            }
+            else{
+                System.debug(row);
+                String fiscalCode= HDT_UTL_CalculateFiscalCode.calculateFiscalCode(row);
+                Lead lead= new Lead(Id=leadId,FiscalCode__c=fiscalCode);
+                HDT_SRV_Lead.checkUpdateAccess(lead);
+                HDT_SRV_Lead.updateRecord(lead);
+            }
             return validateFields;
         }  
     }

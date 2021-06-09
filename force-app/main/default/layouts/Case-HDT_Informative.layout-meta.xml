@@ -50,11 +50,11 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>InformativeCluster__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>InformativeType__c</field>
             </layoutItems>
             <layoutItems>
@@ -151,6 +151,11 @@
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Catalogo_Servizi</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>4</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedContent>
         <relatedContentItems>
@@ -184,8 +189,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>DocumentNumber__c</fields>
         <fields>Amount__c</fields>
+        <fields>DocumentResidue__c</fields>
         <relatedList>DocumentSelected__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>

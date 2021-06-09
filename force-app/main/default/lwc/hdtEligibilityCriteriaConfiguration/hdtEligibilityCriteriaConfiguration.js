@@ -53,6 +53,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
     disableCitySelection = true;
     toggleLabel = 'Valido per tutte le province';
     alreadyLoaded = false;
+    editable = true;
 
     connectedCallback(){
         console.log('>>> eligibilityId > ' + this.eligibilityId);
@@ -96,6 +97,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
             };
 
             if(result.success){
+                this.editable = result.isEditable;
                 toastObj.title = 'Successo';
                 toastObj.message = result.message;
                 toastObj.variant = 'success';

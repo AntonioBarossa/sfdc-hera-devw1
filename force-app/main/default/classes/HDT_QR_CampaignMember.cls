@@ -147,14 +147,26 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    public List<CampaignMember> getUnassignedCampaignMembersSlice(String campaignId, Integer amount){
+        return [
+            SELECT 
+            Id
+            FROM CampaignMember 
+            WHERE CampaignId = :campaignId 
+            AND Agency__c = NULL
+            WITH SECURITY_ENFORCED
+            LIMIT :amount
+        ];
+    }
+
     public List<Account> getAccountsforCampaignMembers(){
         return [
             SELECT 
             Id,
             Name
             FROM Account
+            WHERE RecordType.DeveloperName = 'HDT_RT_Partner'
             WITH SECURITY_ENFORCED
-            LIMIT 10
         ];
     }
     public CampaignMember getAccountAndCampaign(String campaignMemberId) {
@@ -167,6 +179,57 @@ public inherited sharing class HDT_QR_CampaignMember {
             GenericField1__c 
             FROM CampaignMember 
             WHERE Id = :campaignMemberId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public static List<CampaignMember> getCampaignMembersByContacts(List<Contact> contacts){
+        return [
+            SELECT
+            CampaignId
+            FROM
+            CampaignMember
+            where ContactId IN :contacts
+            WITH SECURITY_ENFORCED];
+    }
+
+    
+    public List<CampaignMember> getContactsWithinDistance(Decimal latitude, Decimal longitude, Decimal distanceKm) {
+        Date d = Date.today();
+        return [
+            SELECT CampaignId, 
+            Campaign.Name, 
+            Contact.FirstName, 
+            Contact.LastName, 
+            Contact.Phone, 
+            Contact.Email, 
+            Contact.MailingAddress 
+            FROM CampaignMember 
+            WHERE CampaignId IN 
+            (SELECT Id FROM Campaign WHERE  Channel__c INCLUDES ('Door to Door') AND IsActive = true) 
+            AND DISTANCE(Contact.MailingAddress, GEOLOCATION(:latitude, :longitude), 'km') < :distanceKm
+            AND Campaign.StartDate <= :d
+            AND (Campaign.EndDate >= :d OR Campaign.EndDate = NULL)
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<CampaignMember> getLeadsWithinDistance(Decimal latitude, Decimal longitude, Decimal distanceKm) {
+        Date d = Date.today();
+        return [
+            SELECT CampaignId, 
+            Campaign.Name, 
+            Lead.FirstName, 
+            Lead.LastName, 
+            Lead.Phone, 
+            Lead.Email, 
+            Lead.Address 
+            FROM CampaignMember 
+            WHERE CampaignId IN 
+            (SELECT Id FROM Campaign WHERE  Channel__c INCLUDES ('Door to Door') AND IsActive = true) 
+            AND DISTANCE(Lead.Address, GEOLOCATION(:latitude, :longitude), 'km') < :distanceKm
+            AND Campaign.StartDate <= :d
+            AND (Campaign.EndDate >= :d OR Campaign.EndDate = NULL)
             WITH SECURITY_ENFORCED
         ];
     }

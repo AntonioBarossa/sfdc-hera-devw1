@@ -6,7 +6,10 @@ public inherited sharing class HDT_SRV_CreateGenericCase {
         Map<String, Object> inputMap = new Map<String, Object>();
         List<String> resultList = new List<String>();
 
-        inputMap.put('recordType', inputs[0].recordTypeDevName);
+        HDT_QR_CreateGenericCase rtQueryHandler = new HDT_QR_CreateGenericCase();
+        String recordTypeId = rtQueryHandler.getRecordTypeByDevName(inputs[0].recordTypeDevName)[0].Id;
+        inputMap.put('recordTypeId', recordTypeId);
+
         inputMap.put('type', inputs[0].caseType);
         inputMap.put('cluster', inputs[0].caseCluster);
         inputMap.put('inputSObj', inputs[0].inputSobj);

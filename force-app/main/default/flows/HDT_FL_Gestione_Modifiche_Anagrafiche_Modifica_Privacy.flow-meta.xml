@@ -1,11 +1,320 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>Assegna_Variabili</name>
+        <label>Assegna Variabili</label>
+        <locationX>1073</locationX>
+        <locationY>449</locationY>
+        <assignmentItems>
+            <assignToReference>FlowCase</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndividualId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Contact.IndividualId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Individual</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Variabili_0</name>
+        <label>Assegna Variabili</label>
+        <locationX>1076</locationX>
+        <locationY>729</locationY>
+        <assignmentItems>
+            <assignToReference>FlowCase</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Lead</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndividualId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Lead.IndividualId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Individual</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Campi_Consenso_Marketing</name>
+        <label>Update Campi Consenso Marketing</label>
+        <locationX>2979</locationX>
+        <locationY>291</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Updated_Individual.PrivacyMarketingChoiceDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Updated_Individual.PrivacyMarketingChoiceSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>post-sales</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Consenso_Profilazione_Aggiornato</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Campi_Consenso_Marketing_Campi_Soft_Spam</name>
+        <label>Update Campi Consenso Marketing + Campi Soft Spam</label>
+        <locationX>2997</locationX>
+        <locationY>759</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Updated_Individual.PrivacyMarketingChoiceDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Updated_Individual.PrivacyMarketingChoiceSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>post-sales</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Updated_Individual.HasOptedOutSoftSpam__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Updated_Individual.PrivacySoftSpamChoiceDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Updated_Individual.PrivacySoftSpamChoiceSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>post-sales</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Consenso_Profilazione_Aggiornato</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Campi_Consenso_Profilazione</name>
+        <label>Update Campi Consenso Profilazione</label>
+        <locationX>3207</locationX>
+        <locationY>294</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Updated_Individual.PrivacyProfilingChoiceDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Updated_Individual.PrivacyProfilingChoiceSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>post-sales</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Soft_spam_modificato</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Campi_Soft_Spam</name>
+        <label>Update Campi Soft-Spam</label>
+        <locationX>3446</locationX>
+        <locationY>296</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Updated_Individual.PrivacySoftSpamChoiceDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Updated_Individual.PrivacySoftSpamChoiceSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>post-sales</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Individual</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Consenso_Marketing_Aggiornato</name>
+        <label>Consenso Marketing Aggiornato?</label>
+        <locationX>2887</locationX>
+        <locationY>514</locationY>
+        <defaultConnector>
+            <targetReference>Check_Consenso_Profilazione_Aggiornato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Consenso_Marketing_da_NO_a_SI</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Individual.MarketingPrivacy__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Updated_Individual.MarketingPrivacy__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Campi_Consenso_Marketing_Campi_Soft_Spam</targetReference>
+            </connector>
+            <label>Consenso Marketing da NO a SI</label>
+        </rules>
+        <rules>
+            <name>ConsensoMarketingModificato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Individual.MarketingPrivacy__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Updated_Individual.MarketingPrivacy__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Campi_Consenso_Marketing</targetReference>
+            </connector>
+            <label>Consenso Marketing Modificato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Consenso_Profilazione_Aggiornato</name>
+        <label>Consenso Profilazione Aggiornato?</label>
+        <locationX>3079</locationX>
+        <locationY>505</locationY>
+        <defaultConnector>
+            <targetReference>Check_Soft_spam_modificato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Consenso_Profilazione_Aggiornato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Individual.ProfilingPrivacy__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Updated_Individual.ProfilingPrivacy__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Campi_Consenso_Profilazione</targetReference>
+            </connector>
+            <label>Consenso Profilazione Aggiornato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Modifica_Privacy_Lead</name>
+        <label>Modifica Privacy Lead?</label>
+        <locationX>547</locationX>
+        <locationY>449</locationY>
+        <defaultConnector>
+            <targetReference>Get_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Privacy Account</defaultConnectorLabel>
+        <rules>
+            <name>Privacy_Lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LeadId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_RT_Gestione_Privacy</targetReference>
+            </connector>
+            <label>Privacy Lead</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Soft_spam_modificato</name>
+        <label>Soft-spam modificato?</label>
+        <locationX>3306</locationX>
+        <locationY>506</locationY>
+        <defaultConnector>
+            <targetReference>Update_Individual</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Soft_spam_Modificato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Individual.HasOptedOutSoftSpam__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Updated_Individual.HasOptedOutSoftSpam__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Campi_Soft_Spam</targetReference>
+            </connector>
+            <label>Soft-spam Modificato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Individual_trovato</name>
+        <label>Individual trovato?</label>
+        <locationX>1339</locationX>
+        <locationY>450</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Errore</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Individual.Id</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Next_Step_Processo</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
-        <locationX>1214</locationX>
-        <locationY>281</locationY>
+        <locationX>2483</locationX>
+        <locationY>509</locationY>
+        <defaultConnector>
+            <targetReference>Get_Updated_Individual</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
         <rules>
             <name>Annullamento</name>
@@ -21,6 +330,89 @@
                 <targetReference>Gestione_Annullamento</targetReference>
             </connector>
             <label>Annullamento</label>
+        </rules>
+        <rules>
+            <name>Salva_In_Bozza</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SaveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Salva In Bozza</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Next_Step_0</name>
+        <label>Next Step?</label>
+        <locationX>1916</locationX>
+        <locationY>327</locationY>
+        <defaultConnector>
+            <targetReference>Set_Fase_Attesa_Modulo_Firmato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
+        <rules>
+            <name>Annullamento_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento</targetReference>
+            </connector>
+            <label>Annullamento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Next_Step_Processo</name>
+        <label>Next Step Processo</label>
+        <locationX>1617</locationX>
+        <locationY>455</locationY>
+        <defaultConnector>
+            <targetReference>Inserimento_Dati</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Inserimento Consensi</defaultConnectorLabel>
+        <rules>
+            <name>Stampa</name>
+            <conditionLogic>4 AND (1 OR 2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>FlowCase.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sportello</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FlowCase.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Back office</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FlowCase.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IVR</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FlowCase.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Bozza</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Documentale</targetReference>
+            </connector>
+            <label>Stampa</label>
         </rules>
     </decisions>
     <interviewLabel>Gestione_Modifiche_Anagrafiche_Modifica_Privacy {!$Flow.CurrentDateTime}</interviewLabel>
@@ -44,11 +436,52 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Crea_Case_per_Lead</name>
+        <label>Crea Case per Lead</label>
+        <locationX>689</locationX>
+        <locationY>729</locationY>
+        <assignRecordIdToReference>LeadCaseId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Get_Case_Lead</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Modifiche Anagrafiche</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Lead__c</field>
+            <value>
+                <elementReference>LeadId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Gestione_Privacy.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Modifica Privacy</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordCreates>
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>462</locationX>
-        <locationY>278</locationY>
+        <locationX>764</locationX>
+        <locationY>448</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Contact</targetReference>
@@ -66,13 +499,34 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Contact</name>
-        <label>Get Contact</label>
-        <locationX>617</locationX>
-        <locationY>279</locationY>
+        <name>Get_Case_Lead</name>
+        <label>Get Case Lead</label>
+        <locationX>821</locationX>
+        <locationY>729</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Individual</targetReference>
+            <targetReference>Get_Lead</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>LeadCaseId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Contact</name>
+        <label>Get Contact</label>
+        <locationX>922</locationX>
+        <locationY>448</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Variabili</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -89,29 +543,144 @@
     <recordLookups>
         <name>Get_Individual</name>
         <label>Get Individual</label>
-        <locationX>794</locationX>
-        <locationY>279</locationY>
+        <locationX>1215</locationX>
+        <locationY>448</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Inserimento_Dati</targetReference>
+            <targetReference>Individual_trovato</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Contact.IndividualId</elementReference>
+                <elementReference>IndividualId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Individual</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Lead</name>
+        <label>Get Lead</label>
+        <locationX>939</locationX>
+        <locationY>729</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Variabili_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>LeadId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Lead</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_RT_Gestione_Privacy</name>
+        <label>Get RT Gestione Privacy</label>
+        <locationX>553</locationX>
+        <locationY>728</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_per_Lead</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_GestionePrivacy</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Updated_Individual</name>
+        <label>Get Updated Individual</label>
+        <locationX>2720</locationX>
+        <locationY>512</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Consenso_Marketing_Aggiornato</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>IndividualId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Individual</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Set_Fase_Attesa_Modulo_Firmato</name>
+        <label>Set Fase Attesa Modulo Firmato</label>
+        <locationX>2297</locationX>
+        <locationY>386</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Attesa Modulo Firmato</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Fase</name>
+        <label>Update Fase</label>
+        <locationX>3754</locationX>
+        <locationY>511</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Completata</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Individual</name>
+        <label>Update Individual</label>
+        <locationX>3576</locationX>
+        <locationY>511</locationY>
+        <connector>
+            <targetReference>Update_Fase</targetReference>
+        </connector>
+        <inputReference>Get_Updated_Individual</inputReference>
+    </recordUpdates>
     <screens>
         <name>Inserimento_Dati</name>
         <label>Inserimento Dati</label>
-        <locationX>994</locationX>
-        <locationY>279</locationY>
+        <locationX>2288</locationX>
+        <locationY>507</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -120,7 +689,7 @@
         </connector>
         <fields>
             <name>DT1</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!FlowCase.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -160,7 +729,7 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>Get_Case.Id</elementReference>
+                    <elementReference>FlowCase.Id</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -181,9 +750,20 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>DT2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire i nuovi consensi privacy ed allegare il modulo privacy firmato:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>formIndividual</name>
@@ -240,7 +820,7 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>Get_Individual.Id</elementReference>
+                    <elementReference>IndividualId</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -255,6 +835,82 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>documentRecordId</name>
+                <value>
+                    <elementReference>FlowCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>CancelCase</assignToReference>
+                <name>cancelCase</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>SaveInDraft</assignToReference>
+                <name>saveInDraft</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Documentale</name>
+        <label>Screen Documentale</label>
+        <locationX>1804</locationX>
+        <locationY>325</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Next_Step_0</targetReference>
+        </connector>
+        <fields>
+            <name>DT4</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!FlowCase.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtDocumentSignatureManagerFlow</name>
+            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>FlowCase.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>quoteType</name>
+                <value>
+                    <elementReference>FlowCase.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>FlowCase.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>FlowCase.Id</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -265,24 +921,43 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Screen_Errore</name>
+        <label>Screen Errore</label>
+        <locationX>1347</locationX>
+        <locationY>227</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Gestione_Annullamento</targetReference>
+        </connector>
+        <fields>
+            <name>DT1_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!FlowCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Attenzione! Il contatto del cliente non è agganciato a nessun Individual. Contattare un amministratore di sistema.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Premendo Avanti la pratica verrà Annullata.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationY>429</locationY>
         <connector>
-            <targetReference>Get_Case</targetReference>
+            <targetReference>Check_Modifica_Privacy_Lead</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>1225</locationX>
-        <locationY>19</locationY>
+        <locationX>2410</locationX>
+        <locationY>50</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
             <value>
-                <elementReference>Get_Case.Id</elementReference>
+                <elementReference>FlowCase.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -294,7 +969,7 @@
         <inputAssignments>
             <name>recordToCancell</name>
             <value>
-                <elementReference>Get_Case.Id</elementReference>
+                <elementReference>FlowCase.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -312,10 +987,53 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>FlowCase</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>IndividualId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>LeadCaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>LeadId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>NextPhase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SaveInDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

@@ -144,6 +144,10 @@ public class HDT_WRP_AccountStatement {
         public String fatturaPrescritta;
         public String DEL_569;
         public String documentoPareggio;
+        public List<HDT_WRP_SecondLevelObj> secondoLivelloInformativo;
+    }
+
+    public class HDT_WRP_SecondLevelObj {
     }
 
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WebFormField21__c</fullName>
+    <description>Campo Libero Utilizzato nel WebForm dei Lead</description>
+    <externalId>false</externalId>
+    <label>Campo Web 21</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
