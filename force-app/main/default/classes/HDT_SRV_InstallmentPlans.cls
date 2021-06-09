@@ -45,9 +45,6 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         outputs = HDT_SRV_AccountInstallmentsCheck.execute(inputsCheck);
         currentCase.ExistingInstallmentsPlanNumber__c = outputs[0].existingInstallmentPlanUnpaid;
 
-        //Set AmountToPayInstallments to TotalPay
-        currentCase.AmountToPayInInstallments__c = totalToPay;
-
         //check CA with/without SEPA
         paymentMethod = installmentsQr.getPaymentMethodByCaseId(recordId);
         currentCase.CAWithOrWithoutSEPA__c = (paymentMethod != null && paymentMethod != '' && paymentMethod == 'RID');
@@ -57,6 +54,11 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug('SRV_InstallmentPlans created date -> ' + createdCase);
         currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 20;
         System.debug('SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
+
+        //Set AmountToPayInstallments to TotalPay
+        Decimal totalAmount = installmentsQr.getCaseById(recordId).TotalToPay__c;
+        currentCase.AmountToPayInInstallments__c = totalAmount;
+
 
         HDT_UTL_DatabaseService.updateSObject(currentCase);
 
