@@ -147,14 +147,26 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    public List<CampaignMember> getUnassignedCampaignMembersSlice(String campaignId, Integer amount){
+        return [
+            SELECT 
+            Id
+            FROM CampaignMember 
+            WHERE CampaignId = :campaignId 
+            AND Agency__c = NULL
+            WITH SECURITY_ENFORCED
+            LIMIT :amount
+        ];
+    }
+
     public List<Account> getAccountsforCampaignMembers(){
         return [
             SELECT 
             Id,
             Name
             FROM Account
+            WHERE RecordType.DeveloperName = 'HDT_RT_Partner'
             WITH SECURITY_ENFORCED
-            LIMIT 10
         ];
     }
     public CampaignMember getAccountAndCampaign(String campaignMemberId) {
@@ -218,6 +230,85 @@ public inherited sharing class HDT_QR_CampaignMember {
             AND DISTANCE(Lead.Address, GEOLOCATION(:latitude, :longitude), 'km') < :distanceKm
             AND Campaign.StartDate <= :d
             AND (Campaign.EndDate >= :d OR Campaign.EndDate = NULL)
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<CampaignMember> getCampaignMembersForPaperProcessing(String paperProcessingId) {
+        return [
+            SELECT Id,
+            PaperProcess__c,
+            ContactId, 
+            LeadId, 
+            Contact.Company__c, 
+            Lead.Company__c, 
+            Contact.FirstName, 
+            Contact.LastName,
+            Contact.FiscalCode__c,
+            Lead.FiscalCode__c,
+            Contact.VATNumber__c,
+            Lead.VATNumber__c,  
+            Contact.MailingStreetName__c,
+            Lead.Street,
+            Contact.MailingStreetNumber__c,
+            Lead.StreetNumber__c,
+            Contact.MailingPostalCode,
+            Lead.PostalCode, 
+            Contact.MailingCity, 
+            Lead.City, 
+            Contact.MailingState, 
+            Lead.State,
+            Contact.MailingCountry, 
+            Lead.Country,  
+            ContractReference__c,
+            Campaign.PaperCampaignParameter__r.LetterType__c,
+            Campaign.PaperCampaignParameter__r.ShippingMode__c,
+            Campaign.PaperCampaignParameter__r.Aggregation__c,
+            Campaign.PaperCampaignParameter__r.Lot__c,
+            Campaign.PaperCampaignParameter__r.LotDate__c,
+            Campaign.PaperCampaignParameter__r.Field2__c,
+            Campaign.PaperCampaignParameter__r.Field3__c,
+            Campaign.PaperCampaignParameter__r.Field4__c,
+            Campaign.PaperCampaignParameter__r.Field5__c,
+            Campaign.PaperCampaignParameter__r.Field6__c,
+            Campaign.PaperCampaignParameter__r.Field7__c,
+            Campaign.PaperCampaignParameter__r.Field8__c,
+            Campaign.PaperCampaignParameter__r.Field9__c,
+            Campaign.PaperCampaignParameter__r.Field10__c,
+            Campaign.PaperCampaignParameter__r.Field11__c,
+            Campaign.PaperCampaignParameter__r.Field12__c,
+            Campaign.PaperCampaignParameter__r.Field13__c,
+            Campaign.PaperCampaignParameter__r.Field14__c,
+            Campaign.PaperCampaignParameter__r.Field15__c,
+            Campaign.PaperCampaignParameter__r.Field16__c,
+            Campaign.PaperCampaignParameter__r.Field17__c,
+            Campaign.PaperCampaignParameter__r.Field18__c,
+            Campaign.PaperCampaignParameter__r.Field19__c,
+            Campaign.PaperCampaignParameter__r.Field20__c,
+            Campaign.PaperCampaignParameter__r.Field21__c,
+            Campaign.PaperCampaignParameter__r.Field22__c,
+            Campaign.PaperCampaignParameter__r.Field23__c,
+            Campaign.PaperCampaignParameter__r.Field24__c,
+            Campaign.PaperCampaignParameter__r.Field25__c,
+            Campaign.PaperCampaignParameter__r.Field26__c,
+            Campaign.PaperCampaignParameter__r.Field27__c,
+            Campaign.PaperCampaignParameter__r.Field28__c,
+            Campaign.PaperCampaignParameter__r.Field29__c,
+            Campaign.PaperCampaignParameter__r.Field30__c,
+            Campaign.PaperCampaignParameter__r.Field31__c,
+            Campaign.PaperCampaignParameter__r.Field32__c,
+            Campaign.PaperCampaignParameter__r.Field33__c,
+            Campaign.PaperCampaignParameter__r.Field34__c,
+            Campaign.PaperCampaignParameter__r.Field35__c,
+            Campaign.PaperCampaignParameter__r.Field36__c,
+            Campaign.PaperCampaignParameter__r.Field37__c,
+            Campaign.PaperCampaignParameter__r.Field38__c,
+            Campaign.PaperCampaignParameter__r.Field39__c,
+            Campaign.PaperCampaignParameter__r.Field40__c
+            FROM CampaignMember 
+            WHERE CampaignId 
+            IN (SELECT Campaign__c FROM PaperProcessing__c WHERE id =: paperProcessingId)
+            AND PaperProcess__c = ''
             WITH SECURITY_ENFORCED
         ];
     }
