@@ -43,7 +43,10 @@ public with sharing class HDT_SRV_SalesHandler {
                     if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
                         
                         Order ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
-
+                        //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                        String previousPhase = ordRetrieved.Phase__c;
+                        String finalCancellationPhase = '';
+                        //EVERIS: EMD ANNULLAMENTO/RIPENSAMENTO
                         Order ord = new Order();
                         ord.Id = ordRetrieved.Id;
                         ord.Phase__c = mapRequestFields.get('FASE');
@@ -74,6 +77,26 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.PrecheckResultSII__c = 'OK';
                                 }
                             }
+                            when 'Esito OK da DL/SII'{
+                                //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                                if (previousPhase.indexOf('Annullamento') > -1) {
+                                    ord.Phase__c = 'Annullamento - Esito OK da SII';
+                                    finalCancellationPhase = 'Annullato';
+                                }else if(previousPhase.indexOf('Ripensamento') > -1) {
+                                    ord.Phase__c = 'Ripensamento - Esito OK da SII';
+                                    finalCancellationPhase = 'Ripensato';
+                                }
+                                //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+                            }
+                            when 'Esito KO da DL/SII' {
+                                //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                                if (previousPhase.indexOf('Annullamento') > -1) {
+                                    ord.Phase__c = 'Annullamento - Esito KO da SII';
+                                }else if(previousPhase.indexOf('Ripensamento') > -1) {
+                                    ord.Phase__c = 'Ripensamento - Esito KO da SII';
+                                }
+                                //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+                            }
                             when 'Errore lavorazione SAP' {
                                 ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
@@ -101,7 +124,14 @@ public with sharing class HDT_SRV_SalesHandler {
                         orderSrv.updateRecord(ord);
                     	responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
-                    	responseField.value = 'OK';    
+                    	responseField.value = 'OK';
+
+                        //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                        if (String.isNotBlank(finalCancellationPhase)) {
+                            ord.Phase__c = finalCancellationPhase;
+                            updateFuture(JSON.serialize(ord));
+                        }
+                        //EVERIS: END ANNULLAMENTO/RIPENSAMENTO  
                     }else{
                         responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
@@ -184,5 +214,13 @@ public with sharing class HDT_SRV_SalesHandler {
 
         return mrrResponseItem;
     }
+    
+    //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+    @Future
+    private static void updateFuture(String inputString){
+        Order recordOrder = (Order) JSON.deserialize(inputString, Order.class);
+        HDT_UTL_DatabaseService.updateSObject(recordOrder);
+    }
+    //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
 
 }
