@@ -179,8 +179,8 @@
     <assignments>
         <name>Assegna_Valori_0</name>
         <label>Assegna Valori</label>
-        <locationX>1473</locationX>
-        <locationY>1508</locationY>
+        <locationX>1342</locationX>
+        <locationY>1524</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -199,7 +199,7 @@
             <assignToReference>Get_Input_Case_0.OperationCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calcola_Info_Preventivo.OperationCode__c</elementReference>
+                <elementReference>OperationCodeFormula</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -210,7 +210,7 @@
         <name>AssegnaComponenteFissaVariabile</name>
         <label>AssegnaComponenteFissaVariabile</label>
         <locationX>1053</locationX>
-        <locationY>3325</locationY>
+        <locationY>3326</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.FixedAmount__c</assignToReference>
             <operator>Assign</operator>
@@ -298,8 +298,8 @@
     <assignments>
         <name>AssegnaValori_1</name>
         <label>AssegnaValori</label>
-        <locationX>1266</locationX>
-        <locationY>1204</locationY>
+        <locationX>1279</locationX>
+        <locationY>1170</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.CaliberRequested__c</assignToReference>
             <operator>Assign</operator>
@@ -316,6 +316,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Calcola_Info_Preventivo</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriNoCodOperazione</name>
+        <label>AssegnaValoriNoCodOperazione</label>
+        <locationX>1700</locationX>
+        <locationY>1533</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcola_Info_Preventivo.CausalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.QuotationType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcola_Info_Preventivo.QuoteType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Preventivo_Rapido</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -776,6 +799,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Codice_Operazione_Valorizzato</name>
+        <label>Codice Operazione Valorizzato?</label>
+        <locationX>1534</locationX>
+        <locationY>1420</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaValoriNoCodOperazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Valorizzato</defaultConnectorLabel>
+        <rules>
+            <name>Valorizzato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Calcola_Info_Preventivo.OperationCode__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Valori_0</targetReference>
+            </connector>
+            <label>Valorizzato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Domestico_o_Non_Domestico</name>
         <label>Domestico o Non Domestico</label>
         <locationX>586</locationX>
@@ -859,7 +907,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Valori_0</targetReference>
+                <targetReference>Codice_Operazione_Valorizzato</targetReference>
             </connector>
             <label>Esiste</label>
         </rules>
@@ -1243,6 +1291,11 @@
         <name>FormulaCodicePrestazione</name>
         <dataType>String</dataType>
         <expression>IF(ISNULL({!Calcola_Info_Preventivo.OperationCode__c}),&quot;&quot;,{!Calcola_Info_Preventivo.OperationCode__c} )</expression>
+    </formulas>
+    <formulas>
+        <name>OperationCodeFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Calcola_Info_Preventivo.OperationCode__c}), &quot;&quot;,{!Calcola_Info_Preventivo.OperationCode__c})</expression>
     </formulas>
     <formulas>
         <name>ProcessTypeCommodity</name>
