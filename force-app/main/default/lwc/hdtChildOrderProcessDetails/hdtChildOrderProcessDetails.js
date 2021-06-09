@@ -2765,9 +2765,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     getRequest(){
         var typeOfCommodity = this.order.ServicePoint__r.CommoditySector__c;
         if(typeOfCommodity == 'Energia Elettrica'){
-            var typeOfCommodity = 'ENERGIAELETTRICA';
+            typeOfCommodity = 'ENERGIAELETTRICA';
         }
-        data = {
+        let data = {
             sistema: "eEnergy",                                                 //da definire campo SF con business
             caso:"Transazionale",                                               //da definire campo SF con business
             crmEntity:"Order",                                                  //da definire campo SF con business
@@ -2800,8 +2800,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
 
         if(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            data["bpAlternative"] = this.order.ServicePoint.Account__r.CustomerCode__c;
-            data["alternativeCustomerId"] = this.order.ServicePoint.Account__r.FiscalCode__c;            
+            data["bpAlternative"] = this.order.ServicePoint__r.Account__r.CustomerCode__c;
+            data["alternativeCustomerId"] = this.order.ServicePoint__r.Account__r.FiscalCode__c;            
         }
 
         return data; 
@@ -2814,17 +2814,26 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     connectedCallback(){
 
 
-        console.log('connectedCallback rder ---> ');
+        console.log('connectedCallback Order ---> ');
         console.log(JSON.parse(JSON.stringify(this.order)));
 
         // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
-        var wrp = this.getRequest();// { userId:"CARLA.GASPARINI",sistema:"eEnergy",secondaryCustomerId:"02191860135",postCode:"40128",operation:"Switch In",offerType:"Offerte a progetto",municipality:"BOLOGNA",market:"Libero",jobTitle:"Protocollo",internalCustomerId:"1007052510",externalCustomerId:"02191860135",district:"BO",details:[{totalConsumption:"1.0",commodity:"GAS",annualConsumption:"2000"}],customerType:"CT0",crmId:"TEST_ACP2",crmEntity:"Creazione RDS contrattuale",companyName:"INTEGRATION TEST",companyGroup:"Hera S.p.A.",caso:"Transazionale",bpType:"Organizzazione",bpClass:"Azienda",bpCategory:"Aziende SME",address:"VIA DELLE FONTI|47|3/ A-B|",activationUser:"AccountCommercialePRM",account:"AccountCommercialePRM" };
+        var wrp = this.getRequest();
+        
+        console.log('connectedCallback wrp ---> ');
+        console.log(JSON.parse(JSON.stringify(wrp)));
         this.loading = true;
         callServiceCreditCheck({wrpVals:JSON.stringify(wrp)})
         .then(result => {
             // this.contacts = result;
             // this.error = undefined;
-            console.log('result callServiceCreditCheck ---> : ' + JSON.parse(JSON.stringify(result)));
+            console.log('result callServiceCreditCheck ---> : ');
+            console.log(JSON.parse(JSON.stringify(result)));
+
+            if(result.status == 'failed'){
+                throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
+            }
+
             // console.log(JSON.parse(JSON.strigify(this.fields)));
             let self = this;
             setTimeout(function(){
@@ -2857,14 +2866,18 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             }, 3000)
         })
         .catch(error => {
-            console.log('error callServiceCreditCheck ---> : ' + JSON.parse(JSON.stringify(error)));
+            console.log('error callServiceCreditCheck error ---> : ');
+            console.log(JSON.parse(JSON.stringify(error)));
             // this.error = error;
             // this.contacts = undefined;
-            new ShowToastEvent({
+            let toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: (error.body.message !== undefined) ? error.body.message : error.message,
                 variant: 'error',
+                mode:'sticky'
             });
+            
+            this.dispatchEvent(toastErrorMessage);
             this.loading = false
         })
 
