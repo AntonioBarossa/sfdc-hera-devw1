@@ -45,6 +45,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         Order ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
                         //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                         String previousPhase = ordRetrieved.Phase__c;
+                        String nextPhase = mapRequestFields.get('FASE');
                         String finalCancellationPhase = '';
                         //EVERIS: EMD ANNULLAMENTO/RIPENSAMENTO
                         Order ord = new Order();
@@ -76,6 +77,22 @@ public with sharing class HDT_SRV_SalesHandler {
                                 if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                     ord.PrecheckResultSII__c = 'OK';
                                 }
+                            }
+                            when 'Annullamento - Inviato al DL/SII'{
+                                //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                                if(previousPhase.indexOf('Ripensamento') >-1){
+                                    nextPhase = 'Ripensamento - Inviato al SII';
+                                }
+                                ord.Phase__c = nextPhase;
+                                //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+                            }
+                            when 'Annullamento - Ammissibilità OK', 'Annullamento - Ammissibilità KO' {
+                                //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                                if(previousPhase.indexOf('Ripensamento') >-1){
+                                    nextPhase.replace('Annullamento', 'Ripensamento');
+                                }
+                                ord.Phase__c = nextPhase;
+                                //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
                             }
                             when 'Esito OK da DL/SII'{
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
