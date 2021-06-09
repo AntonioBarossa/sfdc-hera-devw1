@@ -1,15 +1,17 @@
 <template>
-<!--     <div onkeyup={handleKeyUp}>
-        <lightning-input
-            name="enter-search"
-            label={searchLabel}
-            type="search"
-            variant={searchVariant}
-            placeholder={searchPlaceholder}
-            min-length="3"
-        ></lightning-input>
-    </div>
-    </br> -->
+    <template if:true={showAdministrators}>
+        <div onkeyup={handleKeyUp}>
+            <lightning-input
+                name="enter-search"
+                label={searchLabel}
+                type="search"
+                variant={searchVariant}
+                placeholder={searchPlaceholder}
+                min-length="3"
+            ></lightning-input>
+        </div>
+        </br>
+    </template>
     <template if:true={data}>
         <div style="height: 24vh;">
             <lightning-datatable
