@@ -98,7 +98,6 @@ public with sharing class HDT_LC_ContactSelection {
                 writeIfNotNull(gen, 'Phone', contact.Phone);
                 writeIfNotNull(gen, 'MobilePhone', contact.MobilePhone);
                 writeIfNotNull(gen, 'Email', contact.Email);
-                writeIfNotNull(gen, 'ContactCode__c', contact.ContactCode__c);
                 writeIfNotNull(gen, 'Fax', contact.Fax);
                 writeIfNotNull(gen, 'CertifiedEmail__c', contact.CertifiedEmail__c);
                 writeIfNotNull(gen, 'MailingAddressFormula__c', contact.MailingAddressFormula__c);

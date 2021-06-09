@@ -1152,7 +1152,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 variant: 'error'
             });
             this.dispatchEvent(toastErrorMessage);
-            
         });
 									 
     }

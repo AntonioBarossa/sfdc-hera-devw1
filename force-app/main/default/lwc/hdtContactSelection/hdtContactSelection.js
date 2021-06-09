@@ -148,7 +148,6 @@ export default class HdtContactSelection extends LightningElement {
 
         this.administratorColumns = [
             { label: 'Nome Amministratore', fieldName: 'Name', type: 'text' },
-            { label: 'Codice Contatto', fieldName: 'ContactCode__c', type: 'text' },
             { label: 'Indirizzo', fieldName: 'MailingAddressFormula__c', type: 'text' },
             //{ label: 'Telefono', fieldName: 'Phone', type: 'phone' },
             { label: 'Cellulare', fieldName: 'MobilePhone', type: 'phone' }

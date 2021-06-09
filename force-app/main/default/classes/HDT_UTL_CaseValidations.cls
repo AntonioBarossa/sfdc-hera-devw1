@@ -25,7 +25,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         } else if (caseType == 'Variazione Anagrafica Cliente') {
             if (currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
-                result = validateModificaDatiContatto(fields, currentCase.ContactId);
+                result = validateModificaDatiContatto(fields, currentCase);
             } else if (currentCase.Subprocess__c == 'Modifica Dati di Recapito') {
                 result = validateModificaDatiRecapito(fields);
             } else if (currentCase.Subprocess__c == 'Modifica Dati Fiscali') {
@@ -232,7 +232,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    private String validateModificaDatiContatto(String fields, String contactId) {
+    private String validateModificaDatiContatto(String fields, Case currentCase) {
 
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
@@ -241,21 +241,27 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String newPhone = getFieldValue(fields, 'PhoneNumber__c') != null ? getFieldValue(fields, 'PhoneNumber__c') : '';
         String newPec = getFieldValue(fields, 'CertifiedEmail__c') != null ? getFieldValue(fields, 'CertifiedEmail__c') : '';
         String newFax = getFieldValue(fields, 'Fax__c') != null ? getFieldValue(fields, 'Fax__c') : '';
+        String newMarking = getFieldValue(fields, 'CustomerMarking__c') != null ? getFieldValue(fields, 'CustomerMarking__c') : '';
 
         HDT_QR_Contact queryHandler = new HDT_QR_Contact();
-        Contact c = queryHandler.getRecordById(contactId);
+        Contact c = queryHandler.getRecordById(currentCase.ContactId);
+        HDT_QR_Account accountQueryHandler = new HDT_QR_Account();
+        String queryFields = 'FirstName__c,LastName__c,FiscalCode__c,VATNumber__c,CustomerMarking__c';
+        Account a = accountQueryHandler.getRecordById(currentCase.AccountId, queryFields);
+
         String currentEmail = c.Email != null ? c.Email : '';
         String currentMobile = c.MobilePhone != null ? c.MobilePhone : '';
         String currentPhone = c.Phone != null ? c.Phone : '';
         String currentPec = c.CertifiedEmail__c != null ? c.CertifiedEmail__c : '';
         String currentFax = c.Fax != null ? c.Fax : '';
+        String currentMarking = a.CustomerMarking__c != null ? a.CustomerMarking__c : '';
 
         System.debug('validateModificaDatiContatto: current ' + c);
         System.debug('validateModificaDatiContatto: new ' + newEmail + ';' + newPhone + ';' + newMobile + ';' + newFax + ';' + newPec);
 
-        if (newEmail.equals(currentEmail) && newMobile.equals(currentMobile) && newPhone.equals(currentPhone)
+        if (newEmail.equals(currentEmail) && newMobile.equals(currentMobile) && newPhone.equals(currentPhone) && newMarking.equals(currentMarking)
             && newPec.equals(currentPec) && newFax.equals(currentFax)) {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un dato di contatto.'));
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un campo per poter proseguire.'));
             return result;
         }
 
@@ -329,7 +335,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String newLastName = getFieldValue(fields, 'LastName__c') != null ? getFieldValue(fields, 'LastName__c') : '';
         String newFiscaleCode = getFieldValue(fields, 'FiscalCode__c') != null ? getFieldValue(fields, 'FiscalCode__c') : '';
         String newVatNumber = getFieldValue(fields, 'VatNumber__c') != null ? getFieldValue(fields, 'VatNumber__c') : '';
-        String newMarking = getFieldValue(fields, 'CustomerMarking__c') != null ? getFieldValue(fields, 'CustomerMarking__c') : '';
 
         HDT_QR_Account queryHandler = new HDT_QR_Account();
         String queryFields = 'FirstName__c,LastName__c,FiscalCode__c,VATNumber__c,CustomerMarking__c';
@@ -338,12 +343,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String currentLastName = a.LastName__c != null ? a.LastName__c : '';
         String currentFiscaleCode = a.FiscalCode__c != null ? a.FiscalCode__c : '';
         String currentVatNumber = a.VATNumber__c != null ? a.VATNumber__c : '';
-        String currentMarking = a.CustomerMarking__c != null ? a.CustomerMarking__c : '';
 
         if (String.isBlank(newLastName)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Cognome/Ragione sociale non può essere vuoto.'));
         } else if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscaleCode.equals(currentFiscaleCode)
-            && newVatNumber.equals(currentVatNumber) && newMarking.equals(currentMarking)) {
+            && newVatNumber.equals(currentVatNumber)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un dato fiscale del cliente.'));
         }
 
@@ -801,7 +805,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario allegare autocertificazione del cliente.'));
         }
         
-        if (sendMode != null && sendMode.equals('E-mail') && String.isBlank(email)) {
+        if (sendMode != null && sendMode.equals('E-Mail') && String.isBlank(email)) {
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire una Email a cui inviare la documentazione.'));
         }
             

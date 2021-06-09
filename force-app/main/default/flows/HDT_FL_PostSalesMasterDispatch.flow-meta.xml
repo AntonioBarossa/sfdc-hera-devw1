@@ -513,7 +513,7 @@
     </assignments>
     <choices>
         <name>ModificaDatiContattoChoice</name>
-        <choiceText>Modifica Dati di Contatto (Telefono, Email, PEC, Fax, Marcatura)</choiceText>
+        <choiceText>Modifica Dati di Contatto (Telefono, Email, PEC, Fax)</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Modifica Dati di Contatto</stringValue>
@@ -521,7 +521,7 @@
     </choices>
     <choices>
         <name>ModificaDatiFiscaliChoice</name>
-        <choiceText>Modifica Dati Fiscali (Nome, Cognome/Ragione sociale, Codice Fiscale, Partita IVA, Indirizzo Residenza/Sede legale)</choiceText>
+        <choiceText>Modifica Dati Fiscali (Nome, Cognome/Ragione sociale, Codice Fiscale, Partita IVA, Marcatura)</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Modifica Dati Fiscali</stringValue>

@@ -21,9 +21,15 @@
         <groupingString>Activated</groupingString>
     </standardValue>
     <standardValue>
+        <fullName>Completed</fullName>
+        <default>false</default>
+        <label>Completato</label>
+        <groupingString>Draft</groupingString>
+    </standardValue>
+    <standardValue>
         <fullName>Annullato</fullName>
         <default>false</default>
         <label>Annullato</label>
-        <groupingString>Activated</groupingString>
+        <groupingString>Draft</groupingString>
     </standardValue>
 </StandardValueSet>

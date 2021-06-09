@@ -87,7 +87,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
 
         Case currentCase = (Case) inputCase;
-        System.debug('Gestione dati VariazioneAnagraficaCliente da case:' + currentCase.VatNumber__c);
+        System.debug('Gestione dati VariazioneAnagraficaCliente da case:' + currentCase.Id);
         SObject objToUpdate = null;
 
         switch on currentCase.SubProcess__c {
@@ -99,7 +99,6 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.Name = String.isBlank(currentCase.FirstName__c) ? currentCase.LastName__c : currentCase.FirstName__c + ' ' + currentCase.LastName__c;
                 acc.FiscalCode__c = currentCase.FiscalCode__c;
                 acc.VatNumber__c = currentCase.VatNumber__c;
-                acc.CustomerMarking__c = currentCase.CustomerMarking__c;
                 acc.BillingCity = currentCase.BillingCity__c;
                 acc.BillingCityCode__c = currentCase.BillingCityCode__c;
                 acc.BillingCountry = currentCase.BillingCountry__c;
@@ -132,6 +131,11 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 c.CertifiedEmail__c = currentCase.CertifiedEmail__c;
                 c.Fax = currentCase.Fax__c;
                 objToUpdate = c;
+
+                Account acc = new Account();
+                acc.Id = currentCase.AccountId;
+                acc.CustomerMarking__c = currentCase.CustomerMarking__c;
+                HDT_UTL_DatabaseService.updateSObject(acc);
             }
             when 'Modifica Dati di Recapito' {
                 BillingProfile__c bp = new BillingProfile__c();
