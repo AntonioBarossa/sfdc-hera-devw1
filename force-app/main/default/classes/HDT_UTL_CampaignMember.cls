@@ -20,7 +20,7 @@ public with sharing class HDT_UTL_CampaignMember {
         }
         for(Campaign c: campaigns){
             for(HDT_CampaignMemberStatus__mdt cmdt: campaignStatusMdt){
-                CampaignMemberStatus cam= new CampaignMemberStatus(CampaignId= c.Id, Label=cmdt.Label, HasResponded= cmdt.HasResponded__c, IsDefault= cmdt.Default__c);
+                CampaignMemberStatus cam= new CampaignMemberStatus(CampaignId= c.Id, Label=cmdt.MasterLabel, HasResponded= cmdt.HasResponded__c, IsDefault= cmdt.Default__c);
                 campaignMemberStatuses.add(cam);
             }
         }
