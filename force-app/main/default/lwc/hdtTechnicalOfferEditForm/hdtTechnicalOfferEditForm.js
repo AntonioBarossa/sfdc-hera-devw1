@@ -27,6 +27,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         'AdmittingProfileModification__c',
         'OfferToBeModified__c'
     ];
+    @api mode;
 
     connectedCallback(){
         
@@ -105,7 +106,15 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
     }
 
     closeModal(event){
-        const closemodal = new CustomEvent('closemodal', {
+        var closeMode = '';
+
+        if(this.mode === 'edit'){
+            closeMode = 'closeedit';
+        } else if(this.mode === 'insert'){
+            closeMode = 'closemodal';
+        }
+
+        const closemodal = new CustomEvent(closeMode, {
             detail: ''
         });
         // Fire the custom event

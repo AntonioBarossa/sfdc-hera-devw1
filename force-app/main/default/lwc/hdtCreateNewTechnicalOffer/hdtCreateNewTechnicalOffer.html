@@ -30,14 +30,17 @@
             tech-off-id-to-clone={techOffIdToClone}
             rate-obj={rateObj}
             ongoback={closeModal}
+            onopenedit={openEdit}
         ></c-hdt-offer-configurator>
     </template>
 
     <template if:true={showEditForm} >
         <c-hdt-technical-offer-edit-form
+            mode={editFormMode}
             product-id={productid}
             rate-obj={rateObj}
             onclosemodal={closeModal}
+            oncloseedit={closeEdit}
             onnewoffercreated={newTechOfferCreated}
         ></c-hdt-technical-offer-edit-form>
     </template>

@@ -29,9 +29,11 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         records: []
     };
     productCodeIsAlreadyPresent = false;
+    editFormMode = '';
 
     connectedCallback(){
         console.log('#### productid on lwc -> ' + this.productid);
+        this.editFormMode = 'insert';
         this.getExistingOfferId();
     }
 
@@ -215,6 +217,15 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         this.showEditForm = false;
         this.newTechOfferObj = event.detail.newTechOfferObj;
         this.showCreateOffer = true;
+    }
+
+    openEdit(){
+        this.editFormMode = 'edit';
+        this.showEditForm = true;
+    }
+
+    closeEdit(){
+        this.showEditForm = false;
     }
 
 }
