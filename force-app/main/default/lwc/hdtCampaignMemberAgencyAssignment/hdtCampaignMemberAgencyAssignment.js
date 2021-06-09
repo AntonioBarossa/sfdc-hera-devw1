@@ -4,6 +4,7 @@ import { getRecord } from "lightning/uiRecordApi";
 import CHANNEL_FIELD from '@salesforce/schema/Campaign.Channel__c';
 import getUnassignedCampaignMembers from '@salesforce/apex/HDT_LC_CampaignsController.getUnassignedCampaignMembers';
 import getAccountsforCampaignMembers from '@salesforce/apex/HDT_LC_CampaignsController.getAccountsforCampaignMembers';
+import assignCampaignMemberAgency from '@salesforce/apex/HDT_LC_CampaignsController.assignCampaignMemberAgency';
 
 export default class HdtCampaignMemberAgencyAssignment extends LightningElement {
     @api recordId;
@@ -137,15 +138,31 @@ export default class HdtCampaignMemberAgencyAssignment extends LightningElement 
         let totalValues = 0;
         this.agencies.forEach(agency => {
             let val = this.template.querySelector("[data-id='" + agency.id + "']").value;
-            val = this.assignmentType == 'Percentuale' && val > 0 ? Math.floor(val * this.totalResults / 100) : val;
-            totalValues += val;
+            val = this.assignmentType == 'Percentuale' && val > 0 && val != null ? Math.round(val * this.totalResults / 100) : val;
+            console.log(val);
             if (val > 0) {
-                assignedObj.push({id: agency.id, value: val});
+                totalValues += val * 1;
+                for (let i = 0; i < val; i++) {
+                    assignedObj.push(agency.id);
+                }
             }
         });
         console.log(JSON.stringify(assignedObj));
+        console.log(totalValues + ' - ' + this.totalResults);
         if (totalValues > 0 && totalValues <= this.totalResults) {
             //update the agencies
+            assignCampaignMemberAgency({ campaignId: this.recordId, toAssignObj: assignedObj }).then((result) => {
+                //console.log(JSON.stringify(result));
+                if (result.length > 0) {
+                    this.totalResults -= result.length;
+                    let msg = 'Numerazioni assegnati con successo: ' + result.length;
+                    this.dispatchEvent(
+                        new CustomEvent('showSuccess',{detail: { msg }})
+                    );
+                }
+            }).catch((err) => {
+                console.log(JSON.stringify(err));
+            });
             console.log("submited");
         }
     }
