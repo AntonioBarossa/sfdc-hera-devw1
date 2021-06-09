@@ -21,8 +21,8 @@ public with sharing class HDT_SRV_Paperless {
         System.debug('SRV_Paperless Documetns--> '+documents);
 
         Map<String, Object> caseMap = new Map<String, Object>{
-            'codicecliente' => currentCase.AccountCode__c,
-            'contocontrattuale' => currentCase.BillingProfile__r.ContractAccountCode__c,
+            'codiceCliente' => currentCase.AccountCode__c,
+            'contoContrattuale' => currentCase.BillingProfile__r.ContractAccountCode__c,
             'rds' => currentCase.CaseNumber
         };
 

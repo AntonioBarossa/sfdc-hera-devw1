@@ -279,7 +279,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         orderMapNew.put('oldCustomer',orderListOldCustomer);
         orderMapNew.put('newCustomer',orderListNewCustomer);
 
-        HDT_UTL_ActivityProcess.createActivity(orderMapNew);
+        // @Picchiri 08.06.21 Credit Check Annullamento Ordine
+        HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
     }        
     // FINE @Picchiri Credit check Date 04.06.21
 
