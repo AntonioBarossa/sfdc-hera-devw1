@@ -803,7 +803,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario allegare autocertificazione del cliente.'));
         }
         
-        if (sendMode != null && sendMode.equals('E-Mail') && String.isBlank(email)) {
+        if (sendMode != null && sendMode.equals('E-mail') && String.isBlank(email)) {
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire una Email a cui inviare la documentazione.'));
         }
             
