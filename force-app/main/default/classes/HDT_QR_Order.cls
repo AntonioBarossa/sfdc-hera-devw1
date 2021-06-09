@@ -153,6 +153,7 @@ public inherited sharing class HDT_QR_Order {
             ActivationStreetNumber__c,
             ImplantType__c,
             PowerCommitted__c,
+            EffectiveDate__c,
             ServicePoint__r.MarketOrigin__c, // @Picchiri Calcolo della date Switch in 21/05/21
             WizardCompletedDate__c,          // @Picchiri Calcolo della date Switch in 21/05/21
             ActivatedDate,                   // @Picchiri Calcolo della date Switch in 21/05/21
