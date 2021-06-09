@@ -13,19 +13,24 @@ public with sharing class HDT_UTL_CampaignMember {
         for (Campaign cam: newCampaigns){
             Campaign oldCampaign = mapCampaign.get(cam.id);
             if(cam.Status != oldCampaign.Status ){
-                if(oldCampaign.Status== 'Bozze' && cam.Status== 'Pianificata'){
+                if(oldCampaign.Status== 'Bozza' && cam.Status== 'Pianificata'){
                     campaigns.add(cam);
                 }
             }
         }
         for(Campaign c: campaigns){
             for(HDT_CampaignMemberStatus__mdt cmdt: campaignStatusMdt){
-                CampaignMemberStatus cam= new CampaignMemberStatus(CampaignId= c.Id, Label=cmdt.DeveloperName, HasResponded= cmdt.HasResponded__c, IsDefault= cmdt.Default__c);
+                CampaignMemberStatus cam= new CampaignMemberStatus(CampaignId= c.Id, Label=cmdt.Label, HasResponded= cmdt.HasResponded__c, IsDefault= cmdt.Default__c);
                 campaignMemberStatuses.add(cam);
             }
         }
-        HDT_SRV_CampaignMemberStatus.createRecord(campaignMemberStatuses);
-
+        try{
+            HDT_SRV_CampaignMemberStatus.createRecord(campaignMemberStatuses);
+        }
+        catch(Exception e){
+            system.debug('*******:'+ e);
+        }
+        
 
     }
 }
