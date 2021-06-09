@@ -102,7 +102,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
                     if(phase != null){
 
-                        caseToUpdate.Phase__c = phase;
+                        caseToUpdate.TecnicalPhase__c = phase;
 
                     }
 
@@ -122,7 +122,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                     if(process == 'Comunicazione Pagamento'
                     || process == 'Piano Rateizzazione'
                     || process == 'Paperless'){
-                        caseToUpdate.Phase__c = 'Esito KO da SAP';
+                        caseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
                     }
                     createActivity(recordId, errorResponse.errorDetails[0].message, 'Esito KO da SAP');
                     // if(caseToUpdate.Description != null){
@@ -137,7 +137,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
         } else {
 
-            caseToUpdate.Phase__c = 'Esito KO da SAP';
+            caseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
             createActivity(recordId, 'Comunicazione con SAP fallita', 'Esito KO da SAP');
 
         }
@@ -193,6 +193,9 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         String objectName = 'wrts_prcgvr__ActivityTemplate__c';
         List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
         wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c();
+        if(description.length() > 255){
+            description = description.substring(0, 254);
+        }
         if(listRecord.size()>0){
             template = (wrts_prcgvr__ActivityTemplate__c) listRecord[0];
             wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
@@ -204,7 +207,6 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         }
     }
 
-    @Future
     private static void updateFuture(String inputString){
 
         Case c = (Case) JSON.deserialize(inputString, Case.class);

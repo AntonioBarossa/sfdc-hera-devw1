@@ -57,12 +57,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
            if(orderMapNew.get(ord) != null){
                order newOrd = orderMapNew.get(ord);
                if(oldOrd.phase__c != newOrd.Phase__c && newOrd.recordtypeid != recordtypeParentId){
+                   String st = newOrd.Status;
+                   if('annullato'.equalsIgnoreCase(st)){
+                       st = 'Chiuso';
+                   }
                    Contact c = null;
                    if(mapContact.get(newOrd.Contact__c) != null){
                        c = mapContact.get(newOrd.Contact__c);
                    }
                    System.debug('**************Eccolo:' + c);
-                   commList.add(commUTL.instanceCommunicationLog('Attivazioni',newOrd.ProcessType__c,newOrd.Phase__c,newOrd.status,newOrd.CancellationReason__c,newOrd.Id,'',newOrd.Contact__c,newOrd.AccountId,c != null ? c.company__c : 'ND',newOrd.CompanyOwner__c));
+                   commList.add(commUTL.instanceCommunicationLog('Attivazioni',newOrd.ProcessType__c,newOrd.Phase__c,st,newOrd.CancellationReason__c,newOrd.Id,'',newOrd.Contact__c,newOrd.AccountId,c != null ? c.company__c : 'ND',newOrd.CompanyOwner__c));
                }
            }
         }
@@ -70,7 +74,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             commSRV.createRecords(commList);
         }
     }
-    
+
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
     public static void orderCalulateDateUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) {
         system.debug('orderCalulateDateUpdate trigger --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
@@ -94,7 +98,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
     }
     // END @Picchiri HRADTR-77 Calcolo Date 01.06.21
-
+    
     private static List<String> getParentOrders(List<Order> newOrdersList, List<Order> oldOrdersList, Map<String,Order> orderMapNewToOld){
         List<String> orderIds = new List<String>();
         for (Order newOrder : newOrdersList) {
@@ -228,6 +232,56 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         return newOrdersList;
     }
+
+    
+    // START @Picchiri Credit check Date 04.06.21
+    public static void gestioneEsitiCreditCheck(List<Order> newOrdersList, List<Order> oldOrdersList) {
+        system.debug('gestioneEsitiCreditCheck trigger --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
+        system.debug('gestioneEsitiCreditCheck trigger --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
+        Map<String,List<Order>> orderMapNew = new Map<String,List<Order>>();
+        List<Order> orderListOldCustomer = new List<Order>();                        
+        List<Order> orderListNewCustomer = new List<Order>();                        
+        List<Order> orderList = new List<Order>();                        
+        // for (Order newOrder : newOrdersList) {
+        //     for (Order oldOrder : oldOrdersList) {
+        //         if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
+                    
+        //             if(newOrder.CreditCheckDescription__c == 'KO Precedente Cliente' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
+        //                 // cliente uscente
+        //                 orderListOldCustomer.add(newOrder);
+        //             }
+        //             if(newOrder.CreditCheckDescription__c != 'KO Precedente Cliente' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
+        //                 // cliente entrante
+        //                 orderListNewCustomer.add(newOrder);
+        //             }                                      
+        //         }
+        //     }
+        // }
+
+        for (Integer i = 0; i<newOrdersList.size(); i++) {
+            Order newOrder = newOrdersList[i];
+            Order oldOrder = oldOrdersList[i];
+            if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
+                    
+                if(newOrder.CreditCheckDescription__c == 'KO Precedente Cliente' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
+                    // cliente uscente
+                    orderListOldCustomer.add(newOrder);
+                }
+                if(newOrder.CreditCheckDescription__c != 'KO Precedente Cliente' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
+                    // cliente entrante
+                    orderListNewCustomer.add(newOrder);
+                }                                      
+            }
+
+        }
+
+        // Quando un ordine viene aggiornato in ko devono essere create delle activity differenti per ko entrante o uscente    
+        orderMapNew.put('oldCustomer',orderListOldCustomer);
+        orderMapNew.put('newCustomer',orderListNewCustomer);
+
+        HDT_UTL_ActivityProcess.createActivity(orderMapNew);
+    }        
+    // FINE @Picchiri Credit check Date 04.06.21
 
 
 }

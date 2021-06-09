@@ -68,4 +68,34 @@ public inherited sharing class HDT_LC_CampaignsController {
         campaignMemberSrv.checkReadAccess('ContactId,LeadId,CampaignId,GenericField1__c');
         return  campaignMemberQr.getAccountAndCampaign(campaignMemberId);
     }
+
+    @AuraEnabled
+    public static List<CampaignMember> assignCampaignMemberAgency(String campaignId, List<Id> toAssignObj){
+        List<CampaignMember> allUnassignedMembers = campaignMemberQr.getUnassignedCampaignMembers(campaignId);
+        List<CampaignMember> assignedMembers = new List<CampaignMember>();
+        for (Id agencyId : toAssignObj) {
+            CampaignMember cm = allUnassignedMembers[0];
+            cm.Agency__c = agencyId;
+            assignedMembers.add(cm);
+            allUnassignedMembers.remove(0);            
+        }
+
+        campaignMemberSrv.updateRecords(assignedMembers);
+        return assignedMembers;
+    }
+
+    @AuraEnabled
+    public static CampaignMember updateCampaignMemberSurveyResponse(String campaignMemberId, String surveyResponseId){
+        try {
+            CampaignMember cm = new CampaignMember(
+                Id = campaignMemberId,
+                SurveyResponse__c = surveyResponseId
+            );
+            campaignMemberSrv.updateRecord(cm);
+            return cm;
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            return null;
+        }
+    }
 }

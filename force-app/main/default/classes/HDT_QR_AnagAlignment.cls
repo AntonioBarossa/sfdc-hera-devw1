@@ -34,6 +34,7 @@ public with sharing class HDT_QR_AnagAlignment {
             Account.RecordType.Developername,
             Account.Category__c,
             Name,
+            Contact__c,
             RecordTypeId,
             RecordType.Name,
             RecordType.DeveloperName,

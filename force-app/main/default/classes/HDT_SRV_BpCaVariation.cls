@@ -312,7 +312,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         String whereq;
         String fromq = 'Case';
         String queryString;
-        fieldq = 'Id,Account.CustomerCode__c,Contact.LastName,CaseNumber';
+        fieldq = 'Id,Account.CustomerCode__c,Account.Category__c,Contact.LastName,CaseNumber';
         fieldq += ',BillingCity__c,BillingCountry__c,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingPostalCode__c,BillingProvince__c,BillingStreetName__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
@@ -326,6 +326,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.codiceCausale = 'MAA';
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
+        requestBody.account.categoria = (String) acc.get('Category__c');
         requestBody.ordine.destinatarioDivergente.cognome = (String) c.get('LastName');
         // L'indirizzo dell'amministratore deve andare nel nodo ordine, come da specifica del webservice as-is.
         requestBody.ordine.indirizzo.comune = (String) caseRecord.get('BillingCity__c');
