@@ -4059,6 +4059,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CancellationHerokuPracticeCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.CancellationNote__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10995,6 +11000,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.Campaign__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.CancellationHerokuPracticeCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
