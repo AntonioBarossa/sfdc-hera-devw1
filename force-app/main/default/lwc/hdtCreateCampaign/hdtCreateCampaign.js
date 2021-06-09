@@ -144,7 +144,7 @@ export default class HdtCreateCampaign extends LightningElement {
             new ShowToastEvent({
                 title: "Update failed!",
                 message: event.detail.message,
-                variant: "success"
+                variant: "error"
             })
         );
     }
