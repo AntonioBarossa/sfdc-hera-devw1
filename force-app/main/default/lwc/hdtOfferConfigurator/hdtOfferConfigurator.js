@@ -576,6 +576,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     }
 
     showEdit(){
+        console.log('>>> showEdit');
         const openEdit = new CustomEvent("openedit", {
             detail: ''
         });
