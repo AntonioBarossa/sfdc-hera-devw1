@@ -45,12 +45,11 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
                 system.debug(record.getSobjects(process.ChildRelationName__c+'__r'));
                 for(Sobject child : record.getSobjects(process.ChildRelationName__c+'__r') ){
                     if(checkVisibility(section.checkVisibility__c, child)){//We check if the single record section should be visible or not
-                        HDT_WRP_ScriptOutput sectionWrapper = new HDT_WRP_ScriptOutput();
-                        sectionWrapper.sectionLabel=
-                            section.SectionLabel__c +childRecordIdentifier+
-                                ' : '+String.valueOf(child.get(childRecordIdentifier));
-                        sectionWrapper.sectionText=formatText(section.textScript__c, recordId, child);
-                        listSectionWrappers.add(sectionWrapper);
+                        String additionalLabel=childRecordIdentifier+
+                                                ' : '+String.valueOf(child.get(childRecordIdentifier));
+                        listSectionWrappers.add(
+                            createSectionWrapper(section, child, additionalLabel)
+                        );
                     }
                 }
                 continue;
@@ -59,13 +58,23 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
 
 
             if(checkVisibility(section.checkVisibility__c, record)){//We check if the single record section should be visible or not
-                HDT_WRP_ScriptOutput sectionWrapper = new HDT_WRP_ScriptOutput();
-                sectionWrapper.sectionLabel=section.SectionLabel__c;
-                sectionWrapper.sectionText=formatText(section.textScript__c, recordId, record);
-                listSectionWrappers.add(sectionWrapper);
+                listSectionWrappers.add(
+                    createSectionWrapper(section, record)
+                );
             }            
         }
         return listSectionWrappers;
+    }
+
+    private HDT_WRP_ScriptOutput createSectionWrapper(ScriptConfig__c section, SObject record){
+        return createSectionWrapper(section, record, '');
+    }
+
+    private HDT_WRP_ScriptOutput createSectionWrapper(ScriptConfig__c section, SObject record, String additionalLabel){
+        HDT_WRP_ScriptOutput sectionWrapper = new HDT_WRP_ScriptOutput();
+        sectionWrapper.sectionLabel=section.SectionLabel__c+additionalLabel;
+        sectionWrapper.sectionText=formatText(section.textScript__c, record);
+        return sectionWrapper;
     }
 
 

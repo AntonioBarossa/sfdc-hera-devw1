@@ -24,6 +24,10 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         return formatText( textScript,  recordId,  null);
     }
 
+    public String formatText(String textScript, SOBject objectToQueryData){//standard method, call when you haven't already queried the record
+        return formatText( textScript,  '',  objectToQueryData);
+    }
+
 
     public String formatText(String textScript, String recordId, SOBject objectToQueryData){
         //This Function get a Script record, get his text and binds the dynamic data from DB to it
@@ -37,9 +41,9 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 objectToQueryData=getSobject(recordId, fieldsToMatch);
             }
             finalOutput = finalTextScript(scriptTxt, fieldsToMatch, objectToQueryData);
-            return finalOutput.trim().replaceAll('\n', '<br/>');
+            return finalOutput.trim();//.replaceAll('\n', '<br/>');//not needed when input is already rich text
         }
-        return scriptTxt.trim().replaceAll('\n', '<br/>');
+        return scriptTxt.trim();//.replaceAll('\n', '<br/>');
     }
 
 
