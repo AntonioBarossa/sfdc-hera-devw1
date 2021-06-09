@@ -165,7 +165,6 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Quote Lines</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts>
         <lookupDialogsAdditionalFields>SBQQ__Quote__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>SBQQ__Group__c</lookupDialogsAdditionalFields>

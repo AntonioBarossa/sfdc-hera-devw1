@@ -155,7 +155,6 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Configuration Rule</label>
     <nameField>
         <displayFormat>CR-{000000}</displayFormat>
