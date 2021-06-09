@@ -56,7 +56,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug('SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
 
         //Set AmountToPayInstallments to TotalPay
-        Decimal totalAmount = installmentsQr.getCaseById(recordId).TotalToPay__c;
+        Decimal totalAmount = installmentsQr.getCaseById(recordId).TotalResidue__c;
         currentCase.AmountToPayInInstallments__c = totalAmount;
 
 
