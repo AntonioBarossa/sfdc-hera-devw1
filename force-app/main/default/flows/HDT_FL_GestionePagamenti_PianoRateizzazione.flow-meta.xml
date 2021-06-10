@@ -3,7 +3,7 @@
     <actionCalls>
         <name>InterrogaRegoleRateizzazione</name>
         <label>Interroga Regole Rateizzazione</label>
-        <locationX>1089</locationX>
+        <locationX>1073</locationX>
         <locationY>1118</locationY>
         <actionName>HDT_UTL_InstallmentPlans</actionName>
         <actionType>apex</actionType>
@@ -22,7 +22,7 @@
     <actionCalls>
         <name>Predefault_Valori</name>
         <label>Predefault Valori`</label>
-        <locationX>2025</locationX>
+        <locationX>2021</locationX>
         <locationY>398</locationY>
         <actionName>HDT_SRV_InstallmentPlans</actionName>
         <actionType>apex</actionType>
@@ -58,7 +58,7 @@
     <actionCalls>
         <name>Sottometti_ad_Approvazione</name>
         <label>Sottometti ad Approvazione</label>
-        <locationX>578</locationX>
+        <locationX>314</locationX>
         <locationY>2894</locationY>
         <actionName>HDT_UTL_CaseApprovalProcess</actionName>
         <actionType>apex</actionType>
@@ -97,7 +97,7 @@
     <assignments>
         <name>Assegna_Fase_0</name>
         <label>Assegna Fase</label>
-        <locationX>578</locationX>
+        <locationX>314</locationX>
         <locationY>2654</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
@@ -141,9 +141,32 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Fase_0_0_0</name>
+        <label>Assegna Fase</label>
+        <locationX>578</locationX>
+        <locationY>2654</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Elaborazione Manuale</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Passa_In_Attesa_Approvazione_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaCodiceCausale</name>
         <label>AssegnaCodiceCausale</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.CausalCode__c</assignToReference>
@@ -182,7 +205,7 @@
     <decisions>
         <name>Avanzamento</name>
         <label>Avanzamento</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>1958</locationY>
         <defaultConnector>
             <targetReference>Annullamento_Prestazione_0_0_0</targetReference>
@@ -214,12 +237,12 @@
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>2489</locationX>
+        <locationX>2487</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Bozza</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>CaseInput.Phase__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -265,7 +288,7 @@
     <decisions>
         <name>Importo_Superiore_a_50</name>
         <label>Importo Superiore a 50?</label>
-        <locationX>2025</locationX>
+        <locationX>2021</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Screen_Regola_non_Trovata_0</targetReference>
@@ -290,7 +313,7 @@
     <decisions>
         <name>Piano_Rate_Concedibile_SME</name>
         <label>Piano Rate Concedibile? (SME)</label>
-        <locationX>545</locationX>
+        <locationX>512</locationX>
         <locationY>1478</locationY>
         <defaultConnector>
             <targetReference>Inserimento_Allegato_Obbligatorio</targetReference>
@@ -318,26 +341,11 @@
             </connector>
             <label>KO</label>
         </rules>
-        <rules>
-            <name>Sospeso</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Case.TotalResidue__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Passa_a_Sospeso</targetReference>
-            </connector>
-            <label>Sospeso</label>
-        </rules>
     </decisions>
     <decisions>
         <name>Processo_Approvativo</name>
         <label>Processo Approvativo?</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>2534</locationY>
         <defaultConnector>
             <targetReference>Assegna_Fase</targetReference>
@@ -365,11 +373,26 @@
             </connector>
             <label>Da Approvare</label>
         </rules>
+        <rules>
+            <name>Residuo_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.TotalResidue__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Fase_0_0_0</targetReference>
+            </connector>
+            <label>Residuo 0</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Regola_Trovata</name>
         <label>Regola Trovata?</label>
-        <locationX>1089</locationX>
+        <locationX>1073</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Screen_Regola_non_Trovata</targetReference>
@@ -394,7 +417,7 @@
     <decisions>
         <name>Salva_o_Conferma</name>
         <label>Salva o Conferma?</label>
-        <locationX>1625</locationX>
+        <locationX>1617</locationX>
         <locationY>878</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -445,7 +468,7 @@
     <decisions>
         <name>Salva_o_Conferma_0</name>
         <label>Salva o Conferma?</label>
-        <locationX>1040</locationX>
+        <locationX>974</locationX>
         <locationY>1718</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -523,7 +546,7 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>1089</locationX>
+        <locationX>1073</locationX>
         <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -544,7 +567,7 @@
     <recordLookups>
         <name>GetCaseImporto</name>
         <label>GetCaseImporto</label>
-        <locationX>2025</locationX>
+        <locationX>2021</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -586,7 +609,7 @@
     <recordLookups>
         <name>GetCodiceCausale</name>
         <label>GetCodiceCausale</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>2294</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -628,7 +651,7 @@
     <recordUpdates>
         <name>Aggiorna_campi_Regole</name>
         <label>Aggiorna campi Regole</label>
-        <locationX>545</locationX>
+        <locationX>512</locationX>
         <locationY>1358</locationY>
         <connector>
             <targetReference>Piano_Rate_Concedibile_SME</targetReference>
@@ -706,46 +729,26 @@
         <inputReference>GetCaseNonBozza</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Passa_a_Sospeso</name>
-        <label>Passa a Sospeso</label>
-        <locationX>314</locationX>
-        <locationY>1598</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>Elaborazione Manuale</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
         <name>Passa_In_Attesa_Approvazione</name>
         <label>Passa &quot;In Attesa Approvazione&quot;</label>
-        <locationX>578</locationX>
+        <locationX>314</locationX>
         <locationY>2774</locationY>
         <connector>
             <targetReference>Sottometti_ad_Approvazione</targetReference>
         </connector>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>Passa_In_Attesa_Approvazione_0</name>
+        <label>Passa &quot;In Attesa Approvazione&quot;</label>
+        <locationX>578</locationX>
+        <locationY>2774</locationY>
+        <inputReference>Get_Case</inputReference>
+    </recordUpdates>
     <screens>
         <name>Inserimento_Allegato_Obbligatorio</name>
         <label>Inserimento Allegato Obbligatorio</label>
-        <locationX>1040</locationX>
+        <locationX>974</locationX>
         <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -868,7 +871,7 @@
     <screens>
         <name>Inserimento_Documenti</name>
         <label>Inserimento Documenti</label>
-        <locationX>2025</locationX>
+        <locationX>2021</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -980,7 +983,7 @@
     <screens>
         <name>Screen_Case_Layout</name>
         <label>Screen Case Layout</label>
-        <locationX>1625</locationX>
+        <locationX>1617</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1097,7 +1100,7 @@
     <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1309,7 +1312,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>2363</locationX>
+        <locationX>2361</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Il_Case_in_Bozza</targetReference>
@@ -1394,7 +1397,7 @@
     <subflows>
         <name>Annullamento_Prestazione_0_0_0</name>
         <label>Annullamento Prestazione</label>
-        <locationX>798</locationX>
+        <locationX>666</locationX>
         <locationY>2078</locationY>
         <connector>
             <targetReference>GetCodiceCausale</targetReference>
