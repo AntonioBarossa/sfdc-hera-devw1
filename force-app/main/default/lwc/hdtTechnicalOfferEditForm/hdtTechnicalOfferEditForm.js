@@ -121,7 +121,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
             var start = new Date(techOffObj.StartDate__c);
             var end = new Date(techOffObj.EndDate__c);
             if(start >= end){
-                returnObj.message = 'La data di fine vvalidità non può essere inferiore alla data di inizio';
+                returnObj.message = 'La data di fine validità non può essere inferiore alla data di inizio';
                 return returnObj;
             }
             //returnObj.success = true;

@@ -438,11 +438,16 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
     }
 
-    back(event){
+    backToProduct(event){
         console.log('back');
         this.errorObj.showError = false;
-        //this.productid = '';
         this.goBackToRecord();
+    }
+
+    backToMatrix(event){
+        console.log('back');
+        this.errorObj.showError = false;
+        //this.goBackToRecord();
     }
 
     openConfirmation(event){
