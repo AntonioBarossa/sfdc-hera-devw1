@@ -26617,11 +26617,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.FinalReason__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.FiscalCode__c</field>
         <readable>false</readable>
     </fieldPermissions>
