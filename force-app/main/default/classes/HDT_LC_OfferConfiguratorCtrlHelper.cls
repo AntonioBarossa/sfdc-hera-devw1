@@ -109,7 +109,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
         
-            if(objRes.isCreateable()){
+            if(objRes.isCreateable() && objRes.isUpdateable()){
                 upsert tecOff;
                 tecOffId = tecOff.Id;
             } else {
