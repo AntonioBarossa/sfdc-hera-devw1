@@ -12,6 +12,9 @@ export default class HdtCreateNewEligibilityCriteria extends NavigationMixin(Lig
     showSearchOffer = false;
     showCreateOffer = false;
     template;
+    showError = false;
+    errorHeader = '';
+    errorMessage = '';
 
     connectedCallback(){
         console.log('#### productid > ' + this.productid + ' - ' + this.eligibilityId);
@@ -57,20 +60,29 @@ export default class HdtCreateNewEligibilityCriteria extends NavigationMixin(Lig
             if(result.success){
                 console.log('# getEligibilityId success #');
                 console.log('# result.recIsPresent > ' + result.recIsPresent + ' - result.eligibilityId > ' + result.eligibilityId);
+
+                if(result.eligibilityId != null && result.eligibilityId != '' && result.eligibilityId != undefined){
+                    this.eligibilityId = result.eligibilityId;
+                    this.showCreateOffer = true;
+                } else {
+                    this.showWelcom = true;                
+                }
+
             } else {
                 console.log('# getEligibilityId not success #');
+                this.showError = true;
+                this.errorHeader = 'Eleggibilità';
+                this.errorMessage = result.message;
             }
 
-            if(result.eligibilityId != null && result.eligibilityId != '' && result.eligibilityId != undefined){
-                this.eligibilityId = result.eligibilityId;
-                this.showCreateOffer = true;
-            } else {
-                this.showWelcom = true;                
-            }
+
 
         }).catch(error => {
             console.log('# getEligibilityId error #');
             console.log('# resp -> ' + result.message);
+            this.showError = true;
+            this.errorHeader = 'Eleggibilità';
+            this.errorMessage = result.message;
         });
     }
 

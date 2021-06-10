@@ -125,6 +125,11 @@
                 <default>false</default>
                 <label>Aggiunta Sconti o Bonus VAS Gas</label>
             </value>
+            <value>
+                <fullName>VAS</fullName>
+                <default>false</default>
+                <label>VAS</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
