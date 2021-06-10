@@ -195,15 +195,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
 
         try{
-
-            //List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList;
-            //offerList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(offerJson, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
             saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(saveResponse, techOffObj, idToClone, offerJson, technicalofferid, productId, rate);
-            //if(saveResponse.success && sendToSap && !String.isEmpty(saveResponse.techOffId)){
-            //    System.debug('>>> sendToSap');
-            //    saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.sendTechOfferToSAP(saveResponse, saveResponse.techOffId);
-            //}
-
         } catch (Exception ex){
             throw new AuraHandledException(ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']');
         }

@@ -244,7 +244,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
             SELECT Id, ValueDescription__c, DetRate__c, PossibleValue__c
             FROM Info2GroupList__c
             WHERE DetRate__c IN :tariffList
-            AND ValueDescription__c LIKE :searchValue
+            AND (ValueDescription__c LIKE :searchValue OR PossibleValue__c LIKE :searchValue)
             WITH SECURITY_ENFORCED
             LIMIT 100
         ];
