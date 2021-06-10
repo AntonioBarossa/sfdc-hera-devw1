@@ -9,7 +9,7 @@ global inherited sharing class HDT_SRV_PostSalesCriteriaManager implements wrts_
         SObject transition = (SObject) argsMap.get('transition');
         SObject action = (SObject) argsMap.get('action');
         String method = (String) argsMap.get('method');
-        SObject sender = (SObject) argsMap.get('sender');
+        SObject sender = (SObject) argsMap.get('record');
 
         Case currentCase = (Case) sender;
         Boolean result;
