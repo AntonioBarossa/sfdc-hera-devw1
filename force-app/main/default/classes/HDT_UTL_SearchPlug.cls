@@ -191,7 +191,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             return idList;
         }
 
-        if(iAmSalesforceCPQAdmin()){
+        if(iAmSalesforceCpqAdmin()){
             statusList.add(Label.HDT_InDevelopment);//'In Sviluppo'
         }
 
@@ -336,7 +336,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         return sl;
     }
 
-    private static Boolean iAmSalesforceCPQAdmin(){
+    private static Boolean iAmSalesforceCpqAdmin(){
         List<PermissionSetAssignment> assignmentList;
 
         try{
