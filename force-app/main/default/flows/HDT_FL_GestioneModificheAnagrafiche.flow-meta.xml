@@ -546,6 +546,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>Category__c</field>
+            <value>
+                <elementReference>Query_Case.Account.Category__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>CertifiedEmail__c</field>
             <value>
                 <elementReference>Get_Target_Contact.CertifiedEmail__c</elementReference>
