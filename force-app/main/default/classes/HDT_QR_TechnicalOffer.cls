@@ -141,7 +141,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
     public static List<Product2> getProductById(List<Product2> prodList, String productId){
         prodList = new List<Product2>();
         prodList = [
-            SELECT Id, Name, ProductCode, Version__c
+            SELECT Id, Name, ProductCode, Version__c, Family, Status__c
             FROM Product2
             WHERE Id =: productId
             WITH SECURITY_ENFORCED
