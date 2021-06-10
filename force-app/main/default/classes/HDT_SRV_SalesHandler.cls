@@ -41,9 +41,16 @@ public with sharing class HDT_SRV_SalesHandler {
                     }
                     
                     if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
-                        
-                        Order ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
                         //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                        String recordId = mapRequestFields.get('RECORD_ID');
+                        Order ordRetrieved;
+                        if(recordId instanceOf Id){
+                            ordRetrieved = orderQr.getRecordByOrderId(recordId)[0];
+                        }
+                        else {
+                            ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
+                        }
+                        
                         String previousPhase = ordRetrieved.Phase__c;
                         String nextPhase = mapRequestFields.get('FASE');
                         String finalCancellationPhase = '';

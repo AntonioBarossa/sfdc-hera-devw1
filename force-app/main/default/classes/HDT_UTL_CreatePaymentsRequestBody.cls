@@ -78,7 +78,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     }
 
 
-    public void handleResponse(String recordId, String process, HttpResponse response){
+    public void handleResponse(String recordId, String process, String depositMode, HttpResponse response){
 
         Case caseToUpdate = new Case();
         String phase; 
@@ -98,8 +98,13 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
                     System.debug('WS_Payments successResponse--> ' + successResponse);
 
-                    phase = handleSuccessResponse(successResponse, recordId, process);
+                    phase = handleSuccessResponse(successResponse, recordId, process, depositMode);
 
+                    if(successResponse.data.numeroBollettino != null){
+
+                        caseToUpdate.PaperlessCode__c = successResponse.data.numeroBollettino;
+
+                    }
                     if(phase != null){
 
                         caseToUpdate.TecnicalPhase__c = phase;
@@ -146,32 +151,39 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
     }
 
-    public String handleSuccessResponse(HDT_WRP_SuccessResponse response, String recordId, String process){
+    public String handleSuccessResponse(HDT_WRP_SuccessResponse response, String recordId, String process, String depositMode){
 
         String phase = null;
+        String pianoRateCondition = 'Pratica avviata';
+        String comPagCondition = 'Pratica avviata';
+        String paperlessCondition = 'OK';
 
         phase = handlePhaseChange(response, recordId, process, 
-            process ==   'Piano Rateizzazione' 
-                ? 'Pratica avviata' //successCondition
+            process ==   'Piano Rateizzazione'
+                ? pianoRateCondition //successCondition
             : process == 'Comunicazione Pagamento'
-                ? 'Pratica avviata' //successCondition
-            : process == 'Paperless' 
-                ? 'Pratica avviata' //successCondition
-            : null);
+                ? comPagCondition //successCondition
+            : process == 'Paperless'
+                ? paperlessCondition //successCondition
+            : null,
+            depositMode);
 
         return phase;
 
     }
 
-    private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition){
+    private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition, String depositMode){
         
         String phase = null;
-        String successPhase = 'Esito OK da SAP';
+        String successPhase = (process == 'Piano Rateizzazione' && depositMode != null && depositMode != 'Paperless')
+            ? 'Completata'
+            : 'Esito OK da SAP';
         String failedPhase = 'Esito KO da SAP';
 
         if(condition != null){
 
-            if(response.data.tipoAttivita.containsIgnoreCase(condition)){
+            if((response.data.tipoAttivita!= null && response.data.tipoAttivita.containsIgnoreCase(condition))
+                || (response.data.esito!= null && response.data.esito.containsIgnoreCase(condition))){
 
                 phase = successPhase;
 
@@ -244,9 +256,12 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
     public class HDT_WRP_Data{
 
-        public string rdsRdo;
-        public string tipoAttivita;
-        public string note;
+        public String rdsRdo;
+        public String tipoAttivita;
+        public String note;
+        public String numeroBollettino;
+        public Decimal importoTotale;
+        public String esito;
 
     }
 
