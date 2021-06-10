@@ -110,6 +110,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         }
                     }                    
                 } when 'ANNULL'{
+                    herokuCode = responseResult.responseMap.get('requestId');
                     errorMessage = responseResult.responseMap.get('errorMessage');
                     System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
                     switch on responseResult.responseMap.get('result'){
@@ -143,7 +144,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             caseNew.TecnicalPhase__c = phase;
             caseNew.Description = errorMessage;
             if(herokuCode != null && herokuCode != ''){
-                caseNew.HerokuPracticeCode__c = herokuCode;
+                if(currentCase.Phase__c != 'Annullamento - Da inviare'){
+                    caseNew.HerokuPracticeCode__c = herokuCode;
+                }else{
+                    caseNew.CancellationHerokuPracticeCode__c = herokuCode;
+                }
             }
             if(dlCode != null && dlCode != ''){
                 caseNew.DistributorPracticeCode__c = dlCode;
