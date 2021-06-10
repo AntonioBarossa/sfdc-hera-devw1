@@ -265,7 +265,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             throw new HDT_UTL_RichPassException('Method non definito');
         }
         if(numPrev != null && numPrev != ''){
-            currentCase.QuotationNumber__c	= numPrev;
+            currentCase.QuotationNumber__c = numPrev;
         }
         if(expectedExec != null && expectedExec != ''){
             currentCase.ExpectedExecutionTime__c = expectedExec;
