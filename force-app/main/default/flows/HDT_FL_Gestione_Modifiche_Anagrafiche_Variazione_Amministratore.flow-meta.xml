@@ -73,7 +73,7 @@
         <locationX>2345</locationX>
         <locationY>289</locationY>
         <defaultConnector>
-            <targetReference>Set_Fase_Da_Inviare</targetReference>
+            <targetReference>Set_Fase_Da_Inviare_Amministratore</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Conferma Cambio Indirizzo</defaultConnectorLabel>
         <rules>
@@ -111,20 +111,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>CambioAmministratoreChoice</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>CancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>SaveInDraft</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -225,27 +211,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Set_Fase_Da_Inviare</name>
-        <label>Set Fase Da Inviare</label>
-        <locationX>2857</locationX>
-        <locationY>150</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>InputCase</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>Da Inviare</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
         <name>Set_Fase_Da_Inviare2</name>
         <label>Set Fase Da Inviare + Amministratore</label>
         <locationX>2852</locationX>
@@ -262,6 +227,33 @@
             <field>ContactId</field>
             <value>
                 <elementReference>SelectedAdministratorId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Fase_Da_Inviare_Amministratore</name>
+        <label>Set Fase Da Inviare + Amministratore</label>
+        <locationX>2857</locationX>
+        <locationY>150</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Get_Amministratore.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
