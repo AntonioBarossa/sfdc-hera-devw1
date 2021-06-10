@@ -7,6 +7,11 @@
  * Last Modified: Tuesday, 1st June 2021 7:16:25 pm
  * Modified By: fdefelice
  * -----
+ * History:
+ * Last Modified: Thursday, 10th June 2021 4:39:29 pm
+ * Modified By: fdefelice
+ * Changes: 
+ * --END--
  */
 
 
@@ -33,37 +38,43 @@ public class HDT_UTL_FormatTextScriptTest {
         inp.textScript='{{owner.Name}}';
         formattedText =HDT_UTL_FormatTextScriptInvocable.formatScript(new List<HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput>{inp})[0];        
         system.assertEquals(formattedText,'<b>*valore mancante*</b>');
+        system.debug('CPU TIME: '+Limits.getCpuTime());
     }
-/*
+
     @isTest public static void testScriptWithoutDataBinding(){
-        ScriptConfig__c config = new ScriptConfig__c(Name='my Script');
+        Id processTypeId = ((SObject)Type.forName('Schema','ScriptConfig__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Processo').getRecordTypeId();
+        ScriptConfig__c config = new ScriptConfig__c(Name='my Script', RecordTypeId=processTypeId);
         insert config;
         ScriptConfig__c configChild = new ScriptConfig__c(Name='my ChildScript', ParentSection__c=config.id);
         insert configChild;
-        HDT_UTL_FormatTextScript.HDT_WRP_FlowInput inp = new HDT_UTL_FormatTextScript.HDT_WRP_FlowInput();
+        HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput inp = new HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput();
         inp.recordId=configChild.id;
         inp.textScript='test';
-        String formattedText =HDT_UTL_FormatTextScript.formatText(new List<HDT_UTL_FormatTextScript.HDT_WRP_FlowInput>{inp})[0];
+        String formattedText =HDT_UTL_FormatTextScriptInvocable.formatScript(new List<HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput>{inp})[0];
         system.assertEquals(formattedText, 'test');
-        inp.textScript='<<{globaltag.today}>>';
-        formattedText =HDT_UTL_FormatTextScript.formatText(new List<HDT_UTL_FormatTextScript.HDT_WRP_FlowInput>{inp})[0];
+        inp.textScript='{{globaltag.today}}';
+        formattedText =HDT_UTL_FormatTextScriptInvocable.formatScript(new List<HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput>{inp})[0];
 		system.assertEquals(formattedText.replaceAll('<[^>]+>',''), DateTime.now().format('dd/MM/yyyy'));
+        system.debug('CPU TIME: '+Limits.getCpuTime());
+
     }
 
     @isTest public static void testScriptExceptionHandler(){
-        ScriptConfig__c config = new ScriptConfig__c(Name='my Script');
+        Id processTypeId = ((SObject)Type.forName('Schema','ScriptConfig__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Processo').getRecordTypeId();
+        ScriptConfig__c config = new ScriptConfig__c(Name='my Script', RecordTypeId=processTypeId);
         insert config;
         ScriptConfig__c configChild = new ScriptConfig__c(Name='my ChildScript');
         insert configChild;
-        HDT_UTL_FormatTextScript.HDT_WRP_FlowInput inp = new HDT_UTL_FormatTextScript.HDT_WRP_FlowInput('', '');
+        HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput inp = new HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput('', '');
         inp.recordId=configChild.id;
         try{
-            inp.textScript='<<{ test }>>';
-        	String formattedText =HDT_UTL_FormatTextScript.formatText(new List<HDT_UTL_FormatTextScript.HDT_WRP_FlowInput>{inp})[0];
+            inp.textScript='{{ test }}';
+        	String formattedText =HDT_UTL_FormatTextScriptInvocable.formatScript(new List<HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput>{inp})[0];
         }catch(Exception e){
-            system.debug(e.getTypeName());
+            system.assertEquals(e.getTypeName(), 'HDT_UTL_FormatTextScript.HDT_UTL_FormatTextScriptException');
         }
-    } 
-*/
+        system.debug('CPU TIME: '+Limits.getCpuTime());
+	} 
+
     
 }
