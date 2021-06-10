@@ -86,12 +86,19 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug('SRV_InstallmentPlans Documetns--> '+documents);
 
         String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
+        Decimal total;
+        if(currentCase.DepositAmount__c != null){
+            total = currentCase.AmountToPayInInstallments__c - currentCase.DepositAmount__c;
+        }else{
+            total = currentCase.AmountToPayInInstallments__c;
+        }
+       
 
         Map<String, Object> caseMap = new Map<String, Object>{
             'numeroSR' => currentCase.CaseNumber,
             'tipoPiano' => transcodeInstallmentPlan(currentCase.TypeInstallmentPlan__c, currentCase.ApplicationInterests__c),
             'numeroRata' => currentCase.InstallmentNumberRequired__c,
-            'totale' => currentCase.AmountToPayInInstallments__c,
+            'totale' => total,
             'dataInizio' => currentCase.ExpirationDate__c,
             'acconto' => currentCase.DepositAmount__c,
             'contestazioneCliente' => currentCase.Reason__c,
