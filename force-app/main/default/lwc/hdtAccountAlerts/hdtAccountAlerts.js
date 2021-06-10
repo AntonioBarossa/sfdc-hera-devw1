@@ -1,6 +1,7 @@
 import { api, LightningElement, track, wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getContactDetails from '@salesforce/apex/HDT_LC_AccountAlerts.getContactDetails';
 import getAccountAlerts from '@salesforce/apex/HDT_LC_AccountAlerts.getAccountAlerts';
 import getAvailableRules from '@salesforce/apex/HDT_LC_AccountAlerts.getAvailableRulesFor';
 import addAlertToAccount from '@salesforce/apex/HDT_LC_AccountAlerts.addAlertToAccount';
@@ -37,6 +38,9 @@ export default class HdtAccountAlerts extends LightningElement {
     selectedAlert = null;
     showSolContacts = true;
     selectedContactId;
+
+    @wire(getContactDetails,{'accountId':'$recordId'})
+    contactDetails;
 
     @wire(getRecord, { recordId: '$recordId', fields: [ACCOUNT_CATEGORY] })
     wiredAccount({ error, data }) {
@@ -115,6 +119,9 @@ export default class HdtAccountAlerts extends LightningElement {
                 })
                 .then(result => {
                     console.log('getAccountAlerts result: ' + result);
+                    console.log('email: ' + this.contactDetails.data.email);
+                    console.log('mobilePhone: ' + this.contactDetails.data.mobilePhone);
+
                     let parsedResult = JSON.parse(result);
                     // Convertiamo il json per raggiungere il campo Contact__r.Name
                     this.accountAlerts = parsedResult.map(record => {
@@ -236,7 +243,30 @@ export default class HdtAccountAlerts extends LightningElement {
             return;
         }
 
-        // TODO: verificare anche se il cliente ha cellulare/mail/contattoSol per poter ricevere l'alert?
+        // TODO: verificare anche se il cliente ha un contattoSol per poter ricevere l'alert?
+        if (newAlert['IsEmailChannelActive__c'] === true && this.contactDetails.data.email === undefined) {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Modifica Alert non valida',
+                    message: 'Il cliente non ha una Email per poter attivare questo Alert.',
+                    variant: 'error'
+                })
+            );
+            this.draftValues = [];
+            return;
+        }
+
+        if (newAlert['IsSmsChannelActive__c'] === true && this.contactDetails.data.mobilePhone === undefined) {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Modifica Alert non valida',
+                    message: 'Il cliente non ha una numero di cellulare per poter attivare questo Alert.',
+                    variant: 'error'
+                })
+            );
+            this.draftValues = [];
+            return;
+        }
 
         updateAlert({
             alert: JSON.stringify(newAlert)
