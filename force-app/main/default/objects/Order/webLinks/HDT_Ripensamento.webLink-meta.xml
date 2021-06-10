@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__id={!Order.Id}&amp;c__accid={!Order.AccountNumber}&amp;c__flowName=HDT_FL_GestioneAnnullamento&amp;c__processType=Ripensamento</url>
+    <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__id={!Order.Id}&amp;c__accid={!Order.AccountNumber}&amp;c__flowName=HDT_FL_GestioneAnnullamento&amp;c__processType=Ripensamento&amp;c__sObjectRecordToCancell=Order</url>
 </WebLink>
