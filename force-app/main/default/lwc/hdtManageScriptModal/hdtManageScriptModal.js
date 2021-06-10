@@ -16,9 +16,10 @@ import { LightningElement, api, wire } from 'lwc';
 
 export default class HdtManageScriptModal extends LightningElement {
 
-    @api scriptProcessName;//button Label or Process
+    @api scriptProcessName;//Script Process
     @api recordId;//record starting Object
     @api buttonLabel;
+    @api childAdditionalInfo="";//API field of child Record you want to show info in the title
 
     openModal;
 
@@ -42,6 +43,7 @@ export default class HdtManageScriptModal extends LightningElement {
             this.scriptProcessName='Mini Vocal Order';
             this.buttonLabel='OTP';
             this.recordId='8011X000002SkvlQAC';
+            this.childAdditionalInfo='orderNumber';
         }
     }
 
@@ -94,7 +96,11 @@ export default class HdtManageScriptModal extends LightningElement {
 
     async showModal(){
         try{
-            this.htmlScriptList=  await getHTMLScript({processName : this.scriptProcessName, recordId : this.recordId});
+            this.htmlScriptList=  await getHTMLScript({
+                processName : this.scriptProcessName, 
+                recordId : this.recordId, 
+                childRecordIdentifier : this.childAdditionalInfo
+            });
             console.log(this.htmlScriptList);
             this.scriptIndex=0;
             this.openModal=true;

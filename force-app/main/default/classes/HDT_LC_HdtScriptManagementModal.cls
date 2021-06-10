@@ -11,15 +11,17 @@
 
 public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_FormatTextScript {
 
-    String childRecordIdentifier='orderNumber';//Add an Header Identifier to childs sections
+    String childRecordIdentifier='';//Add an Header Identifier to childs sections
 
     //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
     @AuraEnabled
-    public static List<HDT_WRP_ScriptOutput> getScriptSections(String processName, String recordId){
+    public static List<HDT_WRP_ScriptOutput> getScriptSections(String processName, String recordId, String childRecordIdentifier){
         //test method to show each section in a flow-like modal
         //MUST BE NON-CACHEABLE because it's inputs may not change but content can still change
         //for vocal order, you start from order father but some sections must be looped for each child order
-        return new HDT_LC_HdtScriptManagementModal().getScriptTextPages(processName, recordId);
+        HDT_LC_HdtScriptManagementModal scriptFormatter = new HDT_LC_HdtScriptManagementModal();
+        scriptFormatter.childRecordIdentifier=childRecordIdentifier;
+        return scriptFormatter.getScriptTextPages(processName, recordId);
     }
 
     public class HDT_WRP_ScriptOutput{
@@ -45,8 +47,8 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
                 system.debug(record.getSobjects(process.ChildRelationName__c+'__r'));
                 for(Sobject child : record.getSobjects(process.ChildRelationName__c+'__r') ){
                     if(checkVisibility(section.checkVisibility__c, child)){//We check if the single record section should be visible or not
-                        String additionalLabel=childRecordIdentifier+
-                                                ' : '+String.valueOf(child.get(childRecordIdentifier));
+                        String additionalLabel=String.isBlank(childRecordIdentifier)? '' :
+                         ' | '+childRecordIdentifier+ ' : '+String.valueOf(child.get(childRecordIdentifier));
                         listSectionWrappers.add(
                             createSectionWrapper(section, child, additionalLabel)
                         );
@@ -107,6 +109,9 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
             textToFormat +=section.textScript__c;//String with all sections (even those to be eliminated)
         }
 
+        if(String.isNotBlank(childRecordIdentifier) && String.isNotBlank(childScriptTextToFormat)){
+            conditionsForChilds.add(childRecordIdentifier+'!=null');//add child record Identifier to fields to be queryed
+        }
         
 
         List<String> allFieldsToQuery = getDataBinded(textToFormat);//get fields name of binding variables
@@ -124,7 +129,8 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
         String selectStatement = makeSelectStatement(allFieldsToQuery);
 
         return STRING.isNotBlank(selectStatement)?
-            '( '+selectStatement+', '+childRecordIdentifier+' FROM '+childRelation+'__r )' : '';//
+            '( '+selectStatement
+                     +' FROM '+childRelation+'__r )' : '';//
     }
 
 
@@ -158,12 +164,15 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
             for(String condition : arrayConditions){
                 Boolean checkCompare = condition.contains('==');
                 String compareOperator = checkCompare? '==' : '!=';
-
+				
                 List<String> arraySingleCondition = condition.split(compareOperator);
                 fieldName=arraySingleCondition[0];
                 valueToCheck=arraySingleCondition[1];
                 actualFieldValue=getFieldValue(fieldName, record);//method to get field value (String converted) from generic sobject
                 visibility=assertDynamicValues(actualFieldValue, valueToCheck, checkCompare);//this compare those two values
+                if(!visibility){
+                    break;
+                }
             }
 
         }catch(Exception ex ){
