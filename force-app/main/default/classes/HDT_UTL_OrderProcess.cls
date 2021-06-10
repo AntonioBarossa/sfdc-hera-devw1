@@ -224,7 +224,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for (Order newOrder : newOrdersList) {
             if(orderMapOld.get(newOrder.id)!= null){
                 Order old= orderMapOld.get(newOrder.id);
-                if(newOrder.TecnicalPhase__c != null && newOrder.TecnicalPhase__c == old.TecnicalPhase__c && newOrder.Phase__c=='Comunicazione verso Heroku'){
+                if(newOrder.TecnicalPhase__c != null && newOrder.TecnicalPhase__c == old.TecnicalPhase__c && (newOrder.Phase__c=='Comunicazione verso Heroku' || newOrder.Phase__c=='Ripensamento - Da inviare' || newOrder.Phase__c=='Annullamento - Da inviare')){
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }
@@ -279,7 +279,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         orderMapNew.put('oldCustomer',orderListOldCustomer);
         orderMapNew.put('newCustomer',orderListNewCustomer);
 
-        HDT_UTL_ActivityProcess.createActivity(orderMapNew);
+        // @Picchiri 08.06.21 Credit Check Annullamento Ordine
+        HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
     }        
     // FINE @Picchiri Credit check Date 04.06.21
 

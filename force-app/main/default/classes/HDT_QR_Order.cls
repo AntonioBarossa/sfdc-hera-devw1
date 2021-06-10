@@ -153,6 +153,7 @@ public inherited sharing class HDT_QR_Order {
             ActivationStreetNumber__c,
             ImplantType__c,
             PowerCommitted__c,
+            EffectiveDate__c,
             ServicePoint__r.MarketOrigin__c,            // @Picchiri Calcolo della date Switch in 21/05/21
             WizardCompletedDate__c,                     // @Picchiri Calcolo della date Switch in 21/05/21
             ActivatedDate,                              // @Picchiri Calcolo della date Switch in 21/05/21
@@ -178,8 +179,9 @@ public inherited sharing class HDT_QR_Order {
             CommercialProduct__c,                       // @Picchiri Calcolo della date Switch in 31/05/21 
             AnnualConsumption__c,                       // @Picchiri Calcolo della date Switch in 31/05/21 
             Catalog__c,                                 // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
-            ServicePoint__r.AnnualConsumption__c        // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
-
+            ServicePoint__r.AnnualConsumption__c,       // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
+            BillingProfile__r.AccountClass__c,          // @Picchiri Calcolo della date Switch in 08/06/21 
+            Account.CustomerType__c                     // @Picchiri Calcolo della date Switch in 08/06/21 
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -437,6 +439,9 @@ public inherited sharing class HDT_QR_Order {
 
     public List<Order> getRecordByOrderNumber(String orderNumber){
         return [Select id,phase__c,PrecheckResultSII__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+    }
+    public List<Order> getRecordByOrderId(String recordId){
+        return [Select id,phase__c,PrecheckResultSII__c from Order where Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getRecordsByOrdersIdsBulk(List<String> orderIds){

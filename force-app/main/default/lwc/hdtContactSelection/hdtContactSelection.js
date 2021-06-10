@@ -22,17 +22,14 @@ export default class HdtContactSelection extends LightningElement {
     @track isLoading;
     @track queryParamsString;
     @track showNoRecordMessage = false;
+    soslSearchTerm = '';
 
     handleKeyUp(event){
         try{
         if (event.keyCode === 13) {
             var inp=this.template.querySelector("lightning-input");
-            var temp = Object.assign({}, JSON.parse(this.queryParams));
-            if(inp.value != null && inp.value != ""){
-                temp.soslSearchTerm = inp.value;
-            }
-            this.queryParamsString = JSON.stringify(temp);
-            this.getListRecords();
+            this.soslSearchTerm = inp.value;
+            this.getAdministrators();
         }
         }catch(error){
             console.error(error);
@@ -50,7 +47,8 @@ export default class HdtContactSelection extends LightningElement {
     getAdministrators(){
         try{
             getAdministrators({
-                accountId: this.accountId
+                accountId: this.accountId,
+                soslSearchTerm: this.soslSearchTerm
                 })
                 .then(result => {
                     console.log('RESULT: ' + result)
@@ -150,6 +148,7 @@ export default class HdtContactSelection extends LightningElement {
             { label: 'Nome Amministratore', fieldName: 'Name', type: 'text' },
             { label: 'Codice Contatto', fieldName: 'ContactCode__c', type: 'text' },
             { label: 'Indirizzo', fieldName: 'MailingAddressFormula__c', type: 'text' },
+            { label: 'Codice Fiscale', fieldName: 'FiscalCode__c', type: 'text' },
             //{ label: 'Telefono', fieldName: 'Phone', type: 'phone' },
             { label: 'Cellulare', fieldName: 'MobilePhone', type: 'phone' }
             //{ label: 'Email', fieldName: 'Email', type: 'email' },

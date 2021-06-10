@@ -52,18 +52,17 @@ public inherited sharing class HDT_LC_CampaignsController {
         system.debug(newCase);
         return newCase;
     }
-
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<CampaignMember> getUnassignedCampaignMembers(String campaignId) {
         return  campaignMemberQr.getUnassignedCampaignMembers(campaignId);
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<Account> getAccountsforCampaignMembers() {
         return  campaignMemberQr.getAccountsforCampaignMembers();
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static CampaignMember getAccountAndCampaign(String campaignMemberId) {
         campaignMemberSrv.checkReadAccess('ContactId,LeadId,CampaignId,GenericField1__c');
         return  campaignMemberQr.getAccountAndCampaign(campaignMemberId);

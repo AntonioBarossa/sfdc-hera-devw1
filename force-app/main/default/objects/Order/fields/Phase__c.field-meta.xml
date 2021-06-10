@@ -306,6 +306,11 @@
                 <label>Ripensamento -  Comunicazione verso Heroku OK</label>
             </value>
             <value>
+                <fullName>Ripensamento -  Comunicazione verso Heroku KO</fullName>
+                <default>false</default>
+                <label>Ripensamento -  Comunicazione verso Heroku KO</label>
+            </value>
+            <value>
                 <fullName>Ripensamento - Inviato al SII</fullName>
                 <default>false</default>
                 <label>Ripensamento - Inviato al SII</label>
@@ -399,6 +404,11 @@
                 <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
                 <default>false</default>
                 <label>Annullamento - Comunicazione verso Heroku KO</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+                <default>false</default>
+                <label>Annullamento - Comunicazione verso Heroku OK</label>
             </value>
             <value>
                 <fullName>Annullamento - Ammissibilità KO</fullName>

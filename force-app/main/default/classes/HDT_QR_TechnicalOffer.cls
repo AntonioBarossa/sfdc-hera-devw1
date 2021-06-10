@@ -57,7 +57,12 @@ public inherited sharing class HDT_QR_TechnicalOffer {
 
     public static TechnicalOffer__c queryTechnicalOfferRecordWithChild(TechnicalOffer__c techOff, Id recId){
         techOff = [
-            SELECT Id, Name, RateCategory__r.Name, Product__r.Status__c, (
+            SELECT Id, Name, RateCategory__r.Name, Product__r.Status__c, 
+                   Market__c, ProcessType__c, PlacetOffer__c, StartDate__c, EndDate__c, StepAllowed__c,
+                   ContractId__c, NumberTimeExtension__c, UnitTimeExtension__c, NumberDaysMonthsYears__c,
+                   UnitTerminationTime__c, CancellationAllowed__c, RecessAdmitted__c, NumberOfTimeUnits__c,
+                   UnitOfTimeMeasurement__c, AdmittingProfileModification__c, OfferToBeModified__c,
+                (
                     SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,S__c, G__c, TechnicalOffer__c,PriceCodeValue__c,DiscountCodeValue__c, DiscountCode__c,StringValue__c,
                            FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
                     FROM RigheOffertaTecnica__r ORDER BY RowId__c
@@ -136,7 +141,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
     public static List<Product2> getProductById(List<Product2> prodList, String productId){
         prodList = new List<Product2>();
         prodList = [
-            SELECT Id, Name, ProductCode, Version__c
+            SELECT Id, Name, ProductCode, Version__c, Family, Status__c
             FROM Product2
             WHERE Id =: productId
             WITH SECURITY_ENFORCED

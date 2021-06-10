@@ -28,6 +28,23 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
             respObj.errorMessage = '';
             respObj.data = new HDT_WRP_TechnicalOffer.HDT_WRP_TecnicalOfferObj();
 
+            thisProduct = HDT_QR_TechnicalOffer.getProductById(thisProduct, productId);
+
+            if(String.isEmpty(thisProduct[0].Family) || !thisProduct[0].Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
+                respObj.success = false;
+                respObj.errorMessage = 'Questa funzionalità è riservata alle offerte commerciali';
+                return respObj;
+            }
+
+            respObj.data.enableCreate = true;
+            if(String.isEmpty(thisProduct[0].Status__c) || !thisProduct[0].Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
+                respObj.data.enableCreate = false;
+            }
+
+            if(HDT_UTL_ProductStObjProcess.skipTrigger('HDT_ProductStObj')){
+                respObj.data.enableCreate = true;
+            }
+
             tecOffList = HDT_QR_TechnicalOffer.queryTechnicalOfferByProductId(productId, tecOffList);
 
             if(tecOffList != null && tecOffList.size() > 0){
@@ -43,11 +60,11 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                 respObj.data.tecnicalOffers = null;            
             }
 
-            thisProduct = HDT_QR_TechnicalOffer.getProductById(thisProduct, productId);
             prodList = HDT_QR_TechnicalOffer.getProduct2ByCode(prodList, thisProduct[0].ProductCode, productId);
 
             if(prodList.size() > 0 && prodList[0].Technical_Offer__r.size() > 0){
                 respObj.data.productCodeIsAlreadyPresent = true;
+                //respObj.data.techOffToClone = prodList[0].Technical_Offer__r[0];
                 respObj.data.techOffIdToClone = prodList[0].Technical_Offer__r[0].Id;
             } else {
                 respObj.data.productCodeIsAlreadyPresent = false;
@@ -128,8 +145,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
                 techOff = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(techOff, technicalOfferId);
                 
-                if(String.isEmpty(techOff.Product__r.Status__c) || techOff.Product__r.Status__c.equalsIgnoreCase('Vendibile')){
+                if(String.isEmpty(techOff.Product__r.Status__c) || !techOff.Product__r.Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
                     matrixTable.isEditable = false;
+                }
+
+                if(HDT_UTL_ProductStObjProcess.skipTrigger('HDT_ProductStObj')){
+                    matrixTable.isEditable = true;
                 }
 
                 Map<String, TechnicalOfferItem__c> itemsMap = new Map<String, TechnicalOfferItem__c>();
@@ -178,7 +199,6 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
             //List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList;
             //offerList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(offerJson, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
             saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(saveResponse, techOffObj, idToClone, offerJson, technicalofferid, productId, rate);
-            HDT_LC_OfferConfiguratorCtrlHelper.updateProductAfterSap(technicalofferid, '', 'draft');
             //if(saveResponse.success && sendToSap && !String.isEmpty(saveResponse.techOffId)){
             //    System.debug('>>> sendToSap');
             //    saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.sendTechOfferToSAP(saveResponse, saveResponse.techOffId);
