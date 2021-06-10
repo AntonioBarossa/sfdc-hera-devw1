@@ -37,6 +37,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Email__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>SalesCompany__c</field>
             </layoutItems>
             <layoutItems>
@@ -63,12 +67,12 @@
                 <behavior>Readonly</behavior>
                 <field>DepositPaymentDate__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ApplicationInterests__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ExpirationDate__c</field>
