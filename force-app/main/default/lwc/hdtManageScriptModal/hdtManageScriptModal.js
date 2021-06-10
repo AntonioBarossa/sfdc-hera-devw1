@@ -10,7 +10,7 @@
  */
 
 
-import getHTMLScript from '@salesforce/apex/HDT_LC_HdtScriptManagementModal.getScriptSections2';
+import getHTMLScript from '@salesforce/apex/HDT_LC_HdtScriptManagementModal.getScriptSections';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { LightningElement, api, wire } from 'lwc';
 

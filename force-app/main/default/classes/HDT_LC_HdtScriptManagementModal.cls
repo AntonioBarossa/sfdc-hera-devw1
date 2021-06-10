@@ -15,7 +15,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
 
     //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
     @AuraEnabled
-    public static List<HDT_WRP_ScriptOutput> getScriptSections2(String processName, String recordId){
+    public static List<HDT_WRP_ScriptOutput> getScriptSections(String processName, String recordId){
         //test method to show each section in a flow-like modal
         //MUST BE NON-CACHEABLE because it's inputs may not change but content can still change
         //for vocal order, you start from order father but some sections must be looped for each child order
@@ -77,31 +77,6 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
         return sectionWrapper;
     }
 
-
-    //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
-    @AuraEnabled(cacheable=true)
-    public static String getScriptSections(String processName, String recordId){
-         return new HDT_LC_HdtScriptManagementModal().getScriptText(processName, recordId);
-    }
-
-
-    private String getScriptText(String processName, String recordId){
-        ScriptConfig__c process= [select Name,  (Select textScript__c, SectionLabel__c, checkVisibility__c from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' WITH SECURITY_ENFORCED LIMIT 1];
-
-        List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
-
-        String textToFormat='';
-        SObject record = getSobject(recordId, allFieldsToQuery);//this get the generic Sobj
-
-        for(ScriptConfig__c section : process.ChildSections__r){
-            if(checkVisibility(section.checkVisibility__c, record)){//We check if the single record section should be visible or not
-                String sectionLabel = '<<{ globalTag.section__d.'+section.SectionLabel__c.replace(' ', '_')+ ' }>>';
-                textToFormat +=sectionLabel+section.textScript__c;
-            }            
-        }
-        String formattedtext= formatText(textToFormat, recordId, record);//we call again the method to bind the final script to values
-        return formattedtext;   
-    }
 
     /* private override String formatText(String textScript, String recordId){
 
