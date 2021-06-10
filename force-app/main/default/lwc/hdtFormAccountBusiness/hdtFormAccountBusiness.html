@@ -26,10 +26,10 @@
                             <div class="slds-col slds-size_1-of-2">
                                 <div
                                     class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <template if:true={customerMarkingOptions.data}>
+                                    <template if:true={customerMarkingOptions}>
                                         <lightning-combobox data-id="customerMarking" name="customerMarking"
                                             label="Marcatura" placeholder="Seleziona Marcatura"
-                                            value={markingValue} options={customerMarkingOptions.data.values}
+                                            value={markingValue} options={customerMarkingOptions}
                                             onchange={handleChange} required>
                                         </lightning-combobox>
                                     </template>
@@ -63,11 +63,12 @@
                             <div class="slds-col slds-size_1-of-2">
                                 <div
                                     class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
-                                    <template if:true={categoryOptions.data}>
+                                    <template if:true={categoryOptions}>
                                         <lightning-combobox data-id="category" name="category" label="Categoria"
                                             placeholder="Seleziona Categoria" value={categoryValue}
-                                            options={categoryOptions.data.values} required>
+                                            options={categoryOptions} required>
                                         </lightning-combobox>
+                                        <lightning-helptext content='Per completare il campo selezionare prima un valore per "Marcatura"'></lightning-helptext>
                                     </template>
                                 </div>
                                 <div
@@ -79,8 +80,9 @@
                                     class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
                                     <template if:true={companyOwnerOptions.data}>
                                         <lightning-combobox data-id="companyOwner" name="companyOwner"
-                                            label="Silos" placeholder="Seleziona Società"
+                                            label="Silos" placeholder="Seleziona Società" onchange={handleCompanyOwnerChange}
                                             options={companyOwnerOptions.data.values} required>
+                                            <lightning-helptext content='Per completare il campo selezionare prima un valore per "Silos"'></lightning-helptext>
                                         </lightning-combobox>
                                     </template>
                                 </div>

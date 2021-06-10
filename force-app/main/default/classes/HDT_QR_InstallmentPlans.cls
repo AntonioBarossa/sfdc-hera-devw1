@@ -51,6 +51,8 @@ public with sharing class HDT_QR_InstallmentPlans {
         Amount__c,
         CutomerAssisted__c,
         RefundableEscape__c,
+        TotalToPay__c,
+        TotalResidue__c,
         WorkStatus__c,
         ApplicationInterests__c,
         SuspensionInThePastTwelveMonths__c,

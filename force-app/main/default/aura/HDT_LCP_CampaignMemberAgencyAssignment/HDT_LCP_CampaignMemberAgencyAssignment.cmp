@@ -1,0 +1,23 @@
+<aura:component
+    implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+    access="global">
+    <aura:attribute name="minHeight" type="String" default="320px"/>
+    <aura:html tag="style">
+       :root {
+           --minHeight: {!v.minHeight};
+       }
+   </aura:html>
+    <lightning:card>
+        <aura:set attribute="title">
+            Assegnazione Agenzia
+        </aura:set>
+        <aura:set attribute="footer">
+            <lightning:button type="button" name="save" label="Assegna" variant="brand" onclick='{!c.handleSubmit}' />
+            <lightning:button type="button" name="close" label="Chiudi" onclick='{!c.handleClose}' />
+        </aura:set>
+        <c:hdtCampaignMemberAgencyAssignment aura:id="hdtCampaignMemberAgencyAssignment" recordId="{!v.recordId}" onshowError="{!c.showErrorMsg}" onshowSuccess="{!c.showSuccess}">
+        </c:hdtCampaignMemberAgencyAssignment>
+
+    </lightning:card>
+
+</aura:component>
