@@ -78,7 +78,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     }
 
 
-    public void handleResponse(String recordId, String process, HttpResponse response){
+    public void handleResponse(String recordId, String process, String depositMode, HttpResponse response){
 
         Case caseToUpdate = new Case();
         String phase; 
@@ -98,7 +98,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
                     System.debug('WS_Payments successResponse--> ' + successResponse);
 
-                    phase = handleSuccessResponse(successResponse, recordId, process);
+                    phase = handleSuccessResponse(successResponse, recordId, process, depositMode);
 
                     if(successResponse.data.numeroBollettino != null){
 
@@ -151,7 +151,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
     }
 
-    public String handleSuccessResponse(HDT_WRP_SuccessResponse response, String recordId, String process){
+    public String handleSuccessResponse(HDT_WRP_SuccessResponse response, String recordId, String process, String depositMode){
 
         String phase = null;
         String pianoRateCondition = 'Pratica avviata';
@@ -165,16 +165,19 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                 ? comPagCondition //successCondition
             : process == 'Paperless'
                 ? paperlessCondition //successCondition
-            : null);
+            : null,
+            depositMode);
 
         return phase;
 
     }
 
-    private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition){
+    private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition, String depositMode){
         
         String phase = null;
-        String successPhase = 'Esito OK da SAP';
+        String successPhase = (process == 'Piano Rateizzazione' && depositMode != null && depositMode != 'Paperless')
+            ? 'Completata'
+            : 'Esito OK da SAP';
         String failedPhase = 'Esito KO da SAP';
 
         if(condition != null){
