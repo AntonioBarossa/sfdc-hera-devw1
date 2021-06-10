@@ -191,4 +191,11 @@
         <shortDescription>HDT_ProductFamilyTrigger</shortDescription>
         <value>Offerta commerciale</value>
     </labels>
+    <labels>
+        <fullName>HDT_PermissionSetNameForCPQ</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_PermissionSetNameForCPQ</shortDescription>
+        <value>HDT_SalesforceCPQAdmin</value>
+    </labels>
 </CustomLabels>
