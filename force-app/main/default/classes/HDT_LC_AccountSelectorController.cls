@@ -32,7 +32,9 @@ public with sharing class HDT_LC_AccountSelectorController {
 					result.preFilter = activity.ClientNumber__c;
 				}
 
-				if(String.isBlank(activity.Contact__c) && String.isBlank(activity.Lead__c) && String.isNotBlank(result.preFilter)) {
+				if(String.isBlank(activity.Account__c) && String.isNotBlank(activity.Contact__c)) {
+					result.accounts = handleAccount(activity.Contact__c, activity.Id);
+				} else if(String.isBlank(activity.Contact__c) && String.isBlank(activity.Lead__c) && String.isNotBlank(result.preFilter)) {
 					result.contacts = getContacts(result.preFilter);
 					result.leads = getLeads(result.preFilter);
 					if(result.contacts.size() == 1 && result.leads.isEmpty()) {
@@ -45,8 +47,6 @@ public with sharing class HDT_LC_AccountSelectorController {
 						handleLead(leadId, activity.Id);
 						result.leadId = leadId;
 					}
-				} else if(String.isBlank(activity.Account__c)) {
-					result.accounts = handleAccount(activity.Contact__c, activity.Id);
 				}
 			}
 

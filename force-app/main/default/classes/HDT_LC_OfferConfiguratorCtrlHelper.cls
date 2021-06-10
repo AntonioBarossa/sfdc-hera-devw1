@@ -31,30 +31,38 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             }
             when 'infoGroup' {
                 List<Info1GroupList__c> infoOneGroupList;
+                List<Info2GroupList__c> infoTwoGroupList;
+                List<String> tariffList = new List<String>();
+                String searchValueSoql = '';
+
                 infoOneGroupList = HDT_QR_TechnicalOffer.getTariffDetails(infoOneGroupList, rate);
                 
                 if(infoOneGroupList.size() == 0){
                     return infoOneGroupList;
                 }
 
-                List<String> tariffList = new List<String>();
                 for(Info1GroupList__c infoGroup : infoOneGroupList){
-                    tariffList.add('\'' + infoGroup.DetTariffa__c + '\'');
+                    tariffList.add(infoGroup.DetTariffa__c);
                 }
 
-                if(!String.isEmpty(whereCond)){
-                    whereCond += ' AND ';
+                //if(!String.isEmpty(whereCond)){
+                //    whereCond += ' AND ';
+                //} else {
+                //    whereCond = ' WHERE ';
+                //}
+
+                //whereCond += 'DetRate__c IN ' + tariffList;
+
+                if(!String.isEmpty(searchByField) && !String.isEmpty(searchValue)){
+                    searchValueSoql = '%' + searchValue +'%';
+                    infoTwoGroupList = HDT_QR_TechnicalOffer.getInfo2GroupListFiltered(infoTwoGroupList, tariffList, searchValueSoql);
                 } else {
-                    whereCond = ' WHERE ';
+                    infoTwoGroupList = HDT_QR_TechnicalOffer.getInfo2GroupList(infoTwoGroupList, tariffList);
                 }
 
-                whereCond += 'DetRate__c IN ' + tariffList;
-
-                //List<Info2GroupList__c> info2GroupList;
-                //info2GroupList = HDT_QR_TechnicalOffer.getInfo2GroupList(info2GroupList, tariffList);
-                //return info2GroupList;
-                allValues = HDT_QR_TechnicalOffer.getInfo2GroupList(allValues, whereCond);
-                return allValues;
+                return infoTwoGroupList;
+                //allValues = HDT_QR_TechnicalOffer.getInfo2GroupList(allValues, whereCond);
+                //return allValues;
             }
         }
 
@@ -77,18 +85,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         if(!isUpsert){
 
             tecOff = generateTechnicalOfferRecord(tecOff, productId, rate, techOffObj, idToClone);
-            //List<Product2> prodList;
-            //prodList = HDT_QR_TechnicalOffer.getProductById(prodList, productId);
-
-            //List<RateTemplate__c> rateList;
-            //rateList = HDT_QR_TechnicalOffer.getRateByName(rateList, rate);
-            //Id rateId = rateList[0].Id;
-
-            //tecOff = new TechnicalOffer__c();
-            ////Hera Impronta Zero Casa Sole Luna [Versione] [EVVUD]
-            //tecOff.Name = prodList[0].Name + ' [' + prodList[0].Version__c + '] [' + rate + ']';
-            //tecOff.Product__c = productId;
-            //tecOff.RateCategory__c = rateId;
+            tecOff.Status__c = 'Draft';
             
             try{
                 SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
@@ -165,13 +162,13 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             System.debug('# newTechnicalOffer > ' + technicalOffer);
         }
 
-        if(!String.isEmpty(idToClone)){
-            //In this case we have to clone TechnicalOffer__c record using recordId
-            TechnicalOffer__c recToClone;
-            recToClone = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordById(recToClone, idToClone);
-            technicalOffer = recToClone.clone(false, true, false, false);
-            System.debug('# clonedTechnicalOffer > ' + technicalOffer);
-        }
+        //if(!String.isEmpty(idToClone)){
+        //    //In this case we have to clone TechnicalOffer__c record using recordId
+        //    TechnicalOffer__c recToClone;
+        //    recToClone = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordById(recToClone, idToClone);
+        //    technicalOffer = recToClone.clone(false, true, false, false);
+        //    System.debug('# clonedTechnicalOffer > ' + technicalOffer);
+        //}
 
         //Last configuration of the TechnicalOffer__c record
         prodList = HDT_QR_TechnicalOffer.getProductById(prodList, productId);

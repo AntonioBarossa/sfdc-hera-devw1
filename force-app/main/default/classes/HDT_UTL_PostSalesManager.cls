@@ -87,7 +87,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
 
         Case currentCase = (Case) inputCase;
-        System.debug('Gestione dati VariazioneAnagraficaCliente da case:' + currentCase.VatNumber__c);
+        System.debug('Gestione dati VariazioneAnagraficaCliente da case:' + currentCase.Id);
         SObject objToUpdate = null;
 
         switch on currentCase.SubProcess__c {
@@ -99,7 +99,6 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.Name = String.isBlank(currentCase.FirstName__c) ? currentCase.LastName__c : currentCase.FirstName__c + ' ' + currentCase.LastName__c;
                 acc.FiscalCode__c = currentCase.FiscalCode__c;
                 acc.VatNumber__c = currentCase.VatNumber__c;
-                acc.CustomerMarking__c = currentCase.CustomerMarking__c;
                 acc.BillingCity = currentCase.BillingCity__c;
                 acc.BillingCityCode__c = currentCase.BillingCityCode__c;
                 acc.BillingCountry = currentCase.BillingCountry__c;
@@ -132,6 +131,11 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 c.CertifiedEmail__c = currentCase.CertifiedEmail__c;
                 c.Fax = currentCase.Fax__c;
                 objToUpdate = c;
+
+                Account acc = new Account();
+                acc.Id = currentCase.AccountId;
+                acc.CustomerMarking__c = currentCase.CustomerMarking__c;
+                HDT_UTL_DatabaseService.updateSObject(acc);
             }
             when 'Modifica Dati di Recapito' {
                 BillingProfile__c bp = new BillingProfile__c();
@@ -174,6 +178,62 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         if (!currentCase.SubProcess__c.equals('Variazione Gruppo IVA')) {
             List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
             System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+        }
+    }
+
+    public void handleVariazioneAmministratore(SObject inputCase) {
+
+        if (inputCase == null) {
+            System.debug('handleVariazioneAmministratore: null input case.');
+            return;
+        }
+
+        Case currentCase = (Case) inputCase;
+        System.debug('Gestione dati VariazioneAmministratore da case: ' + currentCase.Id);
+
+        switch on currentCase.SubProcess__c {
+            when 'Cambio Amministratore' {
+                String accountId = currentCase.AccountId;
+                String newAdministratorId = currentCase.ContactId;
+                HDT_QR_AccountContactRelation queryHandler = new HDT_QR_AccountContactRelation();
+                AccountContactRelation currentAdminAcr = queryHandler.getActiveAdministratorRelation(accountId);
+                if (currentAdminAcr != null) {
+                    System.debug('Disassociazione Account ' + accountId + ' da Amministratore di condominio: ' + currentAdminAcr.ContactId);
+                    currentAdminAcr.IsActive = False;
+                    HDT_UTL_DatabaseService.updateSObject(currentAdminAcr);
+
+                    AccountContactRelation newAdminAcr = new AccountContactRelation();
+                    newAdminAcr.AccountId = accountId;
+                    newAdminAcr.ContactId = newAdministratorId;
+                    newAdminAcr.IsActive = True;
+                    newAdminAcr.Roles = 'Amministratore condominio';
+                    System.debug('Associazione Account ' + accountId + ' ad Amministratore di condominio: ' + newAdministratorId);
+                    HDT_UTL_DatabaseService.insertSObject(newAdminAcr);
+
+                }
+            }
+            when 'Cambio Intest/Indirizzo Amministratore' {
+                Contact c = new Contact();
+                c.Id = currentCase.ContactId;
+                c.MailingCityCode__c = currentCase.BillingCityCode__c;
+                c.MailingCity = currentCase.BillingCity__c;
+
+                c.MailingCountry = currentCase.BillingCountry__c;
+                c.MailingIsAddressVerified__c = currentCase.BillingIsAddressVerified__c;
+                c.MailingPlace__c = currentCase.BillingPlace__c;
+                c.MailingPostalCode = currentCase.BillingPostalCode__c;
+                c.MailingState = currentCase.BillingProvince__c;
+                c.MailingStreetCode__c = currentCase.BillingStreetCode__c;
+                c.MailingStreetName__c = currentCase.BillingStreetName__c;
+                c.MailingStreetNumberExtension__c = currentCase.BillingStreetNumberExtension__c;
+                c.MailingStreetNumber__c = currentCase.BillingStreetNumber__c;
+                c.MailingStreetToponym__c = currentCase.BillingStreetToponym__c;
+
+                HDT_UTL_DatabaseService.updateSObject(c);
+            }
+            when else {
+                System.debug('Sottoprocesso non supportato: ' + currentCase.SubProcess__c);
+            }
         }
     }
 

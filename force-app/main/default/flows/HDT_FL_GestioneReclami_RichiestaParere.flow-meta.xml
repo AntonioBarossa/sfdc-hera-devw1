@@ -2,6 +2,29 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
     <assignments>
+        <name>AssegnaCollection</name>
+        <label>AssegnaCollection</label>
+        <locationX>314</locationX>
+        <locationY>1550</locationY>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>GetParentCase</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>GetRichiestaParere</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCaseCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValoriEditForm</name>
         <label>AssegnaValoriEditForm</label>
         <locationX>50</locationX>
@@ -20,7 +43,7 @@
     <assignments>
         <name>AssegnaValoriEditForm_0</name>
         <label>AssegnaValoriEditForm</label>
-        <locationX>490</locationX>
+        <locationX>754</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>EditFormProcessType</assignToReference>
@@ -31,6 +54,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Case_Layout</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriEditForm_0_0</name>
+        <label>AssegnaValoriEditForm</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>EditFormProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere Esercizio Diritti Privacy</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaValoriParent_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -52,11 +91,20 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Inserimento_dati_Manuali</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriParent_0_0</name>
+        <label>AssegnaValoriParent</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
-            <assignToReference>CaseCollection</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>GetParentCase.Phase__c</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <elementReference>GetParentCase</elementReference>
+                <stringValue>Sospeso parere interno</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -64,10 +112,56 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssegnaValoriParere</name>
+        <name>AssegnaValoriParere_0</name>
         <label>AssegnaValoriParere</label>
-        <locationX>182</locationX>
-        <locationY>1214</locationY>
+        <locationX>248</locationX>
+        <locationY>2126</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Bozza Annullata</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaParere</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriParere_0_0</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>644</locationX>
+        <locationY>2702</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In attesa risposta parere</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Richiesta_Parere</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriParere_0_0_0</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>50</locationX>
+        <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>GetRichiestaParere.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -139,13 +233,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>CaseCollection</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>GetRichiestaParere</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>GetRichiestaParere.Cluster__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -153,60 +240,86 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaCaseCollection</targetReference>
+            <targetReference>AssegnaCollection</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>AssegnaValoriParere_0</name>
+        <name>AssegnaValoriParere_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
-        <locationX>50</locationX>
-        <locationY>1790</locationY>
+        <locationX>314</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Origin</elementReference>
+            </value>
+        </assignmentItems>
         <assignmentItems>
             <assignToReference>GetRichiestaParere.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Bozza Annullata</stringValue>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetRichiestaParere.Status</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Closed</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AggiornaParere</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssegnaValoriParere_0_0</name>
-        <label>AssegnaValoriParere</label>
-        <locationX>446</locationX>
-        <locationY>2366</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>In attesa risposta parere</stringValue>
+                <stringValue>New</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
+            <assignToReference>GetRichiestaParere.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In Lavorazione</stringValue>
+                <elementReference>GetRecordTypeRichiestaParere.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclami</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case_Richiesta_Parere</targetReference>
+            <targetReference>AssegnaCollection</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Id_Reclamo</name>
         <label>Assegna Id Parere</label>
-        <locationX>182</locationX>
-        <locationY>1454</locationY>
+        <locationX>314</locationX>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>IdParere</assignToReference>
             <operator>Assign</operator>
@@ -221,7 +334,7 @@
     <assignments>
         <name>Id_Reclamo_0</name>
         <label>Assegna Id Parere</label>
-        <locationX>622</locationX>
+        <locationX>886</locationX>
         <locationY>854</locationY>
         <assignmentItems>
             <assignToReference>IdParere</assignToReference>
@@ -237,8 +350,8 @@
     <assignments>
         <name>OutputCase_0</name>
         <label>OutputCase</label>
-        <locationX>446</locationX>
-        <locationY>2606</locationY>
+        <locationX>644</locationX>
+        <locationY>2942</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -250,8 +363,8 @@
     <decisions>
         <name>Avanzamento_0</name>
         <label>Avanzamento</label>
-        <locationX>402</locationX>
-        <locationY>1670</locationY>
+        <locationX>600</locationX>
+        <locationY>2006</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla_0</name>
@@ -329,14 +442,14 @@
     <decisions>
         <name>Il_Parere_esiste</name>
         <label>Il Parere esiste?</label>
-        <locationX>402</locationX>
+        <locationX>600</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Get_Input_Case_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Esiste</defaultConnectorLabel>
         <rules>
-            <name>Esiste</name>
+            <name>NonEsiste</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>ParentRecordId</leftValueReference>
@@ -354,8 +467,8 @@
     <decisions>
         <name>Modalit_Comunicazione</name>
         <label>Modalità Comunicazione</label>
-        <locationX>446</locationX>
-        <locationY>1910</locationY>
+        <locationX>644</locationX>
+        <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>AssegnaValoriParere_0_0</targetReference>
         </defaultConnector>
@@ -379,7 +492,7 @@
     <decisions>
         <name>Quale_Processo_Parent</name>
         <label>Quale Processo Parent?</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Inserimento_dati_Manuali</targetReference>
@@ -400,11 +513,26 @@
             </connector>
             <label>Reclamo Scritto/Rich. Info</label>
         </rules>
+        <rules>
+            <name>Outcome_Esercizio_Diritti_Privacy</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esercizio Diritti Privacy</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValoriEditForm_0_0</targetReference>
+            </connector>
+            <label>Esercizio Diritti Privacy</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Quale_Processo_Parent_0</name>
         <label>Quale Processo Parent?</label>
-        <locationX>622</locationX>
+        <locationX>886</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Case_Layout</targetReference>
@@ -424,6 +552,46 @@
                 <targetReference>AssegnaValoriEditForm_0</targetReference>
             </connector>
             <label>Reclamo Scritto/Rich. Info</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Quale_Processo_Parent_0_0</name>
+        <label>Quale Processo Parent?</label>
+        <locationX>314</locationX>
+        <locationY>1214</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaCollection</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altri processi</defaultConnectorLabel>
+        <rules>
+            <name>Reclamo_Scritto_Rich_Info_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto/Rich. Info</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValoriParere_0_0_0</targetReference>
+            </connector>
+            <label>Reclamo Scritto/Rich. Info</label>
+        </rules>
+        <rules>
+            <name>Outcome_Esercizio_Diritti_Privacy_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esercizio Diritti Privacy</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValoriParere_0_0_0_0</targetReference>
+            </connector>
+            <label>Esercizio Diritti Privacy</label>
         </rules>
     </decisions>
     <description>Flow per la gestione della Richiesta Parere</description>
@@ -456,8 +624,8 @@
     <recordCreates>
         <name>Crea_Activity_Richiesta_Parere</name>
         <label>Crea Activity Richiesta Parere</label>
-        <locationX>314</locationX>
-        <locationY>2150</locationY>
+        <locationX>512</locationX>
+        <locationY>2486</locationY>
         <connector>
             <targetReference>AssegnaValoriParere_0_0</targetReference>
         </connector>
@@ -485,7 +653,7 @@
     <recordLookups>
         <name>Get_Input_Case_0</name>
         <label>Get Input Case</label>
-        <locationX>622</locationX>
+        <locationX>886</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -506,8 +674,8 @@
     <recordLookups>
         <name>Get_Parere_Aggiornato</name>
         <label>Get Parere Aggiornato</label>
-        <locationX>446</locationX>
-        <locationY>1790</locationY>
+        <locationX>644</locationX>
+        <locationY>2126</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Modalit_Comunicazione</targetReference>
@@ -527,8 +695,8 @@
     <recordLookups>
         <name>Get_Template</name>
         <label>Get Template</label>
-        <locationX>314</locationX>
-        <locationY>2030</locationY>
+        <locationX>512</locationX>
+        <locationY>2366</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Richiesta_Parere</targetReference>
@@ -548,7 +716,7 @@
     <recordLookups>
         <name>GetParentCase</name>
         <label>GetParentCase</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -556,7 +724,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>ParentId</field>
+            <field>Id</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -569,7 +737,7 @@
     <recordLookups>
         <name>GetRecordTypeRichiestaParere</name>
         <label>GetRecordTypeRichiestaParere</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -590,11 +758,11 @@
     <recordLookups>
         <name>GetRichiestaParere</name>
         <label>GetRichiestaParere</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>1094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssegnaValoriParere</targetReference>
+            <targetReference>Quale_Processo_Parent_0_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -611,8 +779,8 @@
     <recordUpdates>
         <name>Aggiorna_Case_Richiesta_Parere</name>
         <label>Aggiorna Case Richiesta Parere</label>
-        <locationX>446</locationX>
-        <locationY>2486</locationY>
+        <locationX>644</locationX>
+        <locationY>2822</locationY>
         <connector>
             <targetReference>OutputCase_0</targetReference>
         </connector>
@@ -621,8 +789,8 @@
     <recordUpdates>
         <name>AggiornaCaseCollection</name>
         <label>AggiornaCaseCollection</label>
-        <locationX>182</locationX>
-        <locationY>1334</locationY>
+        <locationX>314</locationX>
+        <locationY>1670</locationY>
         <connector>
             <targetReference>Id_Reclamo</targetReference>
         </connector>
@@ -631,14 +799,14 @@
     <recordUpdates>
         <name>AggiornaParere</name>
         <label>AggiornaParere</label>
-        <locationX>50</locationX>
-        <locationY>1910</locationY>
+        <locationX>248</locationX>
+        <locationY>2246</locationY>
         <inputReference>GetRichiestaParere</inputReference>
     </recordUpdates>
     <screens>
         <name>Case_Layout</name>
         <label>Case Layout</label>
-        <locationX>622</locationX>
+        <locationX>886</locationX>
         <locationY>734</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -731,7 +899,7 @@
     <screens>
         <name>Inserimento_dati_Manuali</name>
         <label>Inserimento dati Manuali</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>974</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -815,15 +983,15 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>recordType</name>
-                <value>
-                    <elementReference>GetRecordTypeRichiestaParere.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>labelDraftButton</name>
                 <value>
                     <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>GetRecordTypeRichiestaParere.Id</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -834,7 +1002,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>276</locationX>
+        <locationX>474</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Il_Parere_esiste</targetReference>

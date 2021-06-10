@@ -1,0 +1,8 @@
+.THIS .slds-card__body{
+    min-height: var(--minHeight);
+}
+.THIS .slds-card__footer{
+    position: sticky;
+    bottom: -1rem;
+    background: #fff;
+}

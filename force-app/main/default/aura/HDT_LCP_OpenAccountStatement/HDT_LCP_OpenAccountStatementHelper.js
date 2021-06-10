@@ -16,7 +16,8 @@
                         componentName: 'c__HDT_LCP_AcctStmtOpenLwc'
                     },
                     state: {
-                        c__recordid: accountId
+                        c__recordid: accountId,
+                        c__tab: 'EC'
                     }
                 }
             });

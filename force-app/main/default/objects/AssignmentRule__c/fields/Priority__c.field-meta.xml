@@ -6,7 +6,7 @@
     <label>Priorità</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Picklist</type>
+    <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
@@ -14,28 +14,19 @@
             <value>
                 <fullName>1</fullName>
                 <default>false</default>
-                <label>1</label>
+                <label>1 - Alta</label>
             </value>
             <value>
                 <fullName>2</fullName>
                 <default>false</default>
-                <label>2</label>
+                <label>2 - Media</label>
             </value>
             <value>
                 <fullName>3</fullName>
                 <default>false</default>
-                <label>3</label>
-            </value>
-            <value>
-                <fullName>4</fullName>
-                <default>false</default>
-                <label>4</label>
-            </value>
-            <value>
-                <fullName>5</fullName>
-                <default>false</default>
-                <label>5</label>
+                <label>3 - Bassa</label>
             </value>
         </valueSetDefinition>
     </valueSet>
+    <visibleLines>3</visibleLines>
 </CustomField>

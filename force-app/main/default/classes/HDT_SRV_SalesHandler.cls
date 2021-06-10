@@ -63,7 +63,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Esito OK da DL' {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
-                                ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.parse(mapRequestFields.get('DT_INIZIO_VERT')) : null;
+                                ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Esito KO da SII' {
