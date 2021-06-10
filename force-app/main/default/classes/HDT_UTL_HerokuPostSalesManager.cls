@@ -176,6 +176,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String codPrestazione = reqWrp.requestMap.get('COD_PRESTAZIONE');
         String codPresa = reqWrp.requestMap.get('COD_PRESA');
         String codPraticaDl = reqWrp.requestMap.get('COD_PRAT_DISTR');
+        HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         //CHECK CROSS MINIMUM FIELD
         if(String.isBlank('method')) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
         
@@ -192,6 +193,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(String.isBlank(codServizio) || String.isBlank(codPrestazione)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Servizio or Codice Prestazione');
             if(String.isBlank(codPresa) && String.isBlank(codPraticaDl)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Presa or Codice Pratica DL');
             currentCase = HDT_SRV_AnagAlignment.handleAnagAlignmentHeroku(reqWrp);
+            currentCase = qrClass.getCaseRecord(currentCase.Id);
             caseUpdate.add(currentCase);
             return caseUpdate;
         }else if(method.equalsIgnoreCase('esito_intermedio')){
