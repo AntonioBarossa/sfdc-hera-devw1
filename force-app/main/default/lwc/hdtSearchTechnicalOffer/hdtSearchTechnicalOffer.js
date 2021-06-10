@@ -147,7 +147,8 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
                 if(result){
                     console.log('# success #');
                     console.log('# Offer cloned id -> ' + result);
-                    this.goToRecord(result, 'TechnicalOffer__c');
+                    //this.goToRecord(result, 'TechnicalOffer__c');
+                    this.goBackToRecord();
                 } else {
                     this.error.show = true;
                     this.error.message = 'An error occurred!';
@@ -243,6 +244,24 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
             console.error('# Message => ' + e.message );
             console.error('# Stack => ' + e.stack );
         }
+    }
+
+    goBackToRecord(){
+        console.log('# goBackToRecord -> ' + this.productid);
+
+        this.dataRows = [];
+
+        console.log('# gotothepage #');
+
+        const goback = new CustomEvent("goback", {
+            detail:  {prodId: this.productid}
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(goback);
+
+        this.goToRecord(this.productid, 'Product2');
+
     }
 
 }
