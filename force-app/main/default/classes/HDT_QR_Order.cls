@@ -168,7 +168,7 @@ public inherited sharing class HDT_QR_Order {
             CreatedById,                                // @Picchiri Calcolo della date Switch in 31/05/21 
             Account.CustomerCode__c,                    // @Picchiri Calcolo della date Switch in 31/05/21             
             Account.CustomerMarking__c,                 // @Picchiri Calcolo della date Switch in 31/05/21             
-            Account.Type,                               // @Picchiri Calcolo della date Switch in 31/05/21 
+            Account.CustomerType__c,                               // @Picchiri Calcolo della date Switch in 31/05/21 
             ServicePoint__r.SupplyStreetName__c,        // @Picchiri Calcolo della date Switch in 31/05/21 ERRORE
 		    ServicePoint__r.SupplyCity__c,              // @Picchiri Calcolo della date Switch in 31/05/21 
 		    ServicePoint__r.SupplyProvince__c,          // @Picchiri Calcolo della date Switch in 31/05/21 

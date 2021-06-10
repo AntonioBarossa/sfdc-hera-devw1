@@ -337,7 +337,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             secondaryCustomerId:this.order.Account.VATNumber__c,
             bpClass:this.order.Account.CustomerMarking__c,
             bpCategory:this.order.Account.Category__c,
-            bpType:this.order.Account.Type,
+            bpType:this.order.Account.CustomerType__c,
             customerType:"CT0",                                                 //da definire campo SF con business
             address:this.order.ServicePoint__r.SupplyStreetName__c,
             municipality:this.order.ServicePoint__r.SupplyCity__c,
