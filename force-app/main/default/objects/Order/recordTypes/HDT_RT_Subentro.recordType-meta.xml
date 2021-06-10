@@ -1984,7 +1984,7 @@
         </values>
         <values>
             <fullName>Bozza Annullata</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>Completata</fullName>
