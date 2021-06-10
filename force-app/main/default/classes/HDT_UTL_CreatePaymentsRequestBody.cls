@@ -100,6 +100,11 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
                     phase = handleSuccessResponse(successResponse, recordId, process);
 
+                    if(successResponse.data.numeroBollettino != null){
+
+                        caseToUpdate.PaperlessCode__c = successResponse.data.numeroBollettino;
+
+                    }
                     if(phase != null){
 
                         caseToUpdate.TecnicalPhase__c = phase;
@@ -149,14 +154,17 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     public String handleSuccessResponse(HDT_WRP_SuccessResponse response, String recordId, String process){
 
         String phase = null;
+        String pianoRateCondition = 'Pratica avviata';
+        String comPagCondition = 'Pratica avviata';
+        String paperlessCondition = 'OK';
 
         phase = handlePhaseChange(response, recordId, process, 
-            process ==   'Piano Rateizzazione' 
+            process ==   pianoRateCondition
                 ? 'Pratica avviata' //successCondition
-            : process == 'Comunicazione Pagamento'
+            : process == comPagCondition
                 ? 'Pratica avviata' //successCondition
-            : process == 'Paperless' 
-                ? 'Pratica avviata' //successCondition
+            : process == paperlessCondition
+                ? 'OK' //successCondition
             : null);
 
         return phase;
@@ -171,7 +179,8 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
         if(condition != null){
 
-            if(response.data.tipoAttivita.containsIgnoreCase(condition)){
+            if(response.data.tipoAttivita.containsIgnoreCase(condition)
+                || response.data.esito.containsIgnoreCase(condition)){
 
                 phase = successPhase;
 
@@ -244,9 +253,12 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
     public class HDT_WRP_Data{
 
-        public string rdsRdo;
-        public string tipoAttivita;
-        public string note;
+        public String rdsRdo;
+        public String tipoAttivita;
+        public String note;
+        public String numeroBollettino;
+        public Decimal importoTotale;
+        public String esito;
 
     }
 
