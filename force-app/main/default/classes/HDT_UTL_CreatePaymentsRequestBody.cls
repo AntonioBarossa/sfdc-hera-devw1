@@ -159,12 +159,12 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         String paperlessCondition = 'OK';
 
         phase = handlePhaseChange(response, recordId, process, 
-            process ==   pianoRateCondition
-                ? 'Pratica avviata' //successCondition
-            : process == comPagCondition
-                ? 'Pratica avviata' //successCondition
-            : process == paperlessCondition
-                ? 'OK' //successCondition
+            process ==   'Piano Rateizzazione'
+                ? pianoRateCondition //successCondition
+            : process == 'Comunicazione Pagamento'
+                ? comPagCondition //successCondition
+            : process == 'Paperless'
+                ? paperlessCondition //successCondition
             : null);
 
         return phase;
@@ -179,8 +179,8 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
         if(condition != null){
 
-            if(response.data.tipoAttivita.containsIgnoreCase(condition)
-                || response.data.esito.containsIgnoreCase(condition)){
+            if((response.data.tipoAttivita!= null && response.data.tipoAttivita.containsIgnoreCase(condition))
+                || (response.data.esito!= null && response.data.esito.containsIgnoreCase(condition))){
 
                 phase = successPhase;
 
