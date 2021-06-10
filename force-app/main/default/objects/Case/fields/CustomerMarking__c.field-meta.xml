@@ -10,7 +10,32 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>Category__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_CustomerMarking</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
+            <valueName>Parti comuni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
+            <valueName>D4 - Parti comuni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aziende Soho</controllingFieldValue>
+            <valueName>Ditta individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aziende Soho</controllingFieldValue>
+            <valueName>D2 - Ditta individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Famiglie</controllingFieldValue>
+            <valueName>Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Famiglie</controllingFieldValue>
+            <valueName>D1 - Persona fisica</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>
