@@ -24,7 +24,19 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
         Map<Id, Integer> technicalOfferMap;
         //allUniqueProductCodeSet = checkProduct2Duplicate(allUniqueProductCodeSet);
 
-        Set<Id> productIds = Trigger.NewMap.keySet();
+        Set<Id> productIds = new  Set<Id>();// = Trigger.NewMap.keySet();
+
+        for(Product2 p : (Product2[])Trigger.New){
+            if(p.Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
+                productIds.add(p.Id);
+            }
+        }
+
+        if(productIds.size()==0){
+            //only Offerta commerciale run trigger
+            return;
+        }
+
         productOptionMap = HDT_UTL_ProductStObjProcess.generateProductOptionMap(productOptionMap, productIds);
         technicalOfferMap = HDT_UTL_ProductStObjProcess.generateTechnicalOfferMap(technicalOfferMap, productIds);
 

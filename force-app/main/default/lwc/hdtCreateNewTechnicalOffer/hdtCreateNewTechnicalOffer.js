@@ -10,12 +10,17 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     showSearchOffer = false;
     showCreateOffer = false;
     showEditForm = false;
+    showError = false;
+    errorHeader = '';
+    errorMessage = '';
     //rateTemplate;
     //rateName;
     rateObj;
     newTechOfferObj;
     techOffIdToClone;
     @track technicalOfferId;
+    @track techOffToClone;
+    @track hiddenClass;
 
     @track rtObj = {
         id:'',
@@ -29,9 +34,11 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         records: []
     };
     productCodeIsAlreadyPresent = false;
+    editFormMode = '';
 
     connectedCallback(){
         console.log('#### productid on lwc -> ' + this.productid);
+        this.editFormMode = 'insert';
         this.getExistingOfferId();
     }
 
@@ -95,33 +102,38 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
                     this.selectionObj.hasRecords = false;
                 }
 
+                this.selectionObj.enableCreate = result.data.enableCreate;
+
                 this.productCodeIsAlreadyPresent = result.data.productCodeIsAlreadyPresent;
                 console.log('>>>>>> productCodeIsAlreadyPresent > ' + this.productCodeIsAlreadyPresent);
+                //console.log('>>>>>> techOffToClone: ' + JSON.stringify(result.data.techOffToClone));
+                //this.techOffToClone = JSON.stringify(result.data.techOffToClone);
                 console.log('>>>>>> techOffIdToClone: ' + result.data.techOffIdToClone);
                 this.techOffIdToClone = result.data.techOffIdToClone;
 
                 this.showWelcom = true;
 
-               //if(result.data.tecnicalOfferId != null && result.data.tecnicalOfferId != '' && result.data.tecnicalOfferId != undefined){
-               //    this.technicalOfferId = result.data.tecnicalOfferId;
-               //    this.showCreateOffer = true;
-               //} else {
-               //    this.showWelcom = true;                
-               //}
-
             } else {
                 console.log('# tecnicalOfferId not success #');
+                this.showError = true;
+                this.errorHeader = 'Offerta tecnica';
+                this.errorMessage = result.errorMessage;
             }
 
         }).catch(error => {
             console.log('# tecnicalOfferId error #');
             console.log('# resp -> ' + result.message);
+            this.showError = true;
+            this.errorHeader = 'Offerta tecnica';
+            this.errorMessage = result.message;
         });
     }
 
     closeModal(event){
         console.log('### Parent closeModal ###');
         console.log('### return to-> ' + this.productid);
+
+        this.showEditForm = false;
 
         const goback = new CustomEvent('goback', {
             detail: {prodId: this.productid}
@@ -137,31 +149,21 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
                 actionName: 'view'
             }
         });
-        //this.showWelcom = false;
     }
 
     createNew(event){
         console.log('### Parent createNew ###');
         console.log('>>> rate id > ' + event.detail.rateId + ' - name > ' + event.detail.rateName + ' - ' + event.detail.rateTemplate);
         this.rateObj = event.detail;
-        //this.rateTemplate = event.detail.rateTemplate;
-        //this.rateName = event.detail.rateName;
         this.showWelcom = false;
-
-        if(this.productCodeIsAlreadyPresent){
-            this.showCreateOffer = true;
-        } else {
-            this.showEditForm = true;
-        }
-        
+        this.showEditForm = true;
+        this.hiddenClass = 'slds-show';
     }
 
     search(event){
         console.log('### Parent search ###');
         console.log('>>> rate id > ' + event.detail.rateId + ' - name > ' + event.detail.rateName + ' - ' + event.detail.rateTemplate);
         this.rateObj = event.detail;
-        //this.rateTemplate = event.detail.rateTemplate;
-        //this.rateName = event.detail.rateName;
         this.showWelcom = false;
         this.showSearchOffer = true;
     }
@@ -178,8 +180,11 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         };
 
         this.technicalOfferId = techOffId;
+        this.techOffIdToClone = techOffId;
         this.showCreateOffer = true;
-        this.showWelcom = false; 
+        this.showWelcom = false;
+        this.showEditForm = true;
+        this.hiddenClass = 'slds-hide';
     }
 
     closeSearch(event){
@@ -212,9 +217,20 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
 
     newTechOfferCreated(event){
         console.log('>>> newOfferCreated > ' + event.detail.newTechOfferObj);
-        this.showEditForm = false;
+        //this.showEditForm = false;
         this.newTechOfferObj = event.detail.newTechOfferObj;
         this.showCreateOffer = true;
+    }
+
+    openEdit(){
+        this.editFormMode = 'edit';
+        //this.showEditForm = true;
+        this.template.querySelector("c-hdt-technical-offer-edit-form").handleValueChange();
+    }
+
+    closeEdit(){
+        //this.showEditForm = false;
+        this.template.querySelector("c-hdt-technical-offer-edit-form").handleValueChange();
     }
 
 }

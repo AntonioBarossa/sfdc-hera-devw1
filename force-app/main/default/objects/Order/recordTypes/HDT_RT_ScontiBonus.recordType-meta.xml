@@ -1938,6 +1938,10 @@
             <default>true</default>
         </values>
         <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Completata</fullName>
             <default>false</default>
         </values>
@@ -2291,6 +2295,10 @@
         <picklist>Status</picklist>
         <values>
             <fullName>Activated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato</fullName>
             <default>false</default>
         </values>
         <values>

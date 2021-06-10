@@ -51,4 +51,11 @@ public inherited sharing class HDT_LC_ComposeBodyResponse{
         return null;
 
     }
+
+    @AuraEnabled
+    public static string stripHtml(String inputHtml){
+        
+        return inputHtml.stripHtmlTags();
+
+    }
 }

@@ -84,11 +84,12 @@ export default class HdtModalDataTable extends LightningElement {
     @track spinner = true;
     modalHeader;
     iconHeader;
-    searchByField = 'Description__c';
+    searchByField = '';
     searchValue = '';
 
     get options() {
         return [
+            { label: 'Descrizione', value: 'ValueDescription__c' },
             { label: 'Descrizione', value: 'Description__c' },
             { label: 'Nome', value: 'Name' },
             { label: 'Stato', value: 'Status__c' },
@@ -98,7 +99,8 @@ export default class HdtModalDataTable extends LightningElement {
     connectedCallback() {
         this.spinner = true;
         console.log('>>> ' + this.relatedToTable + ' - rate cat >>> ' + this.rate);
-
+        this.searchByField = 'Description__c';
+        
         switch (this.relatedToTable) {
 
             case 'FareTypeList__c':

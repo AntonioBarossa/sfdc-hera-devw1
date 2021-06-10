@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_CreditCheck</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND($Permission.HDT_CP_EnableCreditCheck = false ,  AND(ISPICKVAL(Status__c , &apos;KO Forzato&apos;), ISCHANGED(Status__c) ) )</errorConditionFormula>
+    <errorDisplayField>Status__c</errorDisplayField>
+    <errorMessage>This User has no permissions to change the Status in KO Forzato</errorMessage>
+</ValidationRule>

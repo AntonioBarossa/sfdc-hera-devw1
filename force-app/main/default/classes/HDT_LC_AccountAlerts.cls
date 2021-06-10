@@ -39,4 +39,29 @@ public with sharing class HDT_LC_AccountAlerts {
         AlertAccountConfiguration__c alertObj = (AlertAccountConfiguration__c) JSON.deserialize(alert, AlertAccountConfiguration__c.class);
         return HDT_UTL_DatabaseService.updateSObject(alertObj);
     }
+
+    @AuraEnabled(cacheable=true)
+    public static HDT_WRP_AccountContactDetails getContactDetails(String accountId) {
+        HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
+        
+        AccountContactRelation acr = acrQueryHandler.getPrimaryContactRelation(accountId);
+        System.debug('AccountContactRelation: ' + acr);
+        if (acr != null) {
+            return new HDT_WRP_AccountContactDetails(acr.Contact.Email, acr.Contact.MobilePhone);
+        }
+        
+        return new HDT_WRP_AccountContactDetails('', '');
+    }
+
+    public class HDT_WRP_AccountContactDetails {
+        @AuraEnabled
+        public String email { get; set; }
+        @AuraEnabled
+        public String mobilePhone { get; set; }
+
+        public HDT_WRP_AccountContactDetails(String email, String mobilePhone){
+            this.email = email;
+            this.mobilePhone = mobilePhone;
+        }
+    }
 }

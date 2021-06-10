@@ -174,7 +174,7 @@
         <inputParameters>
             <name>method</name>
             <value>
-                <stringValue>manageDocuments</stringValue>
+                <stringValue>manageDocumentsPaperless</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -2699,15 +2699,27 @@
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
                 <name>nextVariant</name>
                 <value>
                     <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>processType</name>
+                <name>recordId</name>
                 <value>
-                    <elementReference>Get_Input_Case.Type</elementReference>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>quoteType</name>
+                <value>
+                    <stringValue>Analitico</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

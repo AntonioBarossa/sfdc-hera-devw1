@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>TotalPaidCustomerToPay__c</fullName>
     <externalId>false</externalId>
-    <formula>TotalPaidCustomer__c - TotalToPay__c</formula>
+    <formula>TotalPaidCustomer__c - TotalResidue__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Totale Pagato Cliente - Totale Da Pagare</label>
     <precision>18</precision>
