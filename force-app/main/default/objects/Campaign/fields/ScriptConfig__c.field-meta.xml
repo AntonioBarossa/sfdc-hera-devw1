@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ScriptConfig__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Campo Lookup con cui un Utente BSN può associare uno Script Processo ad una campagna</description>
+    <externalId>false</externalId>
+    <label>Script Campagna</label>
+    <referenceTo>ScriptConfig__c</referenceTo>
+    <relationshipLabel>Campaigns</relationshipLabel>
+    <relationshipName>Campaigns</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>
