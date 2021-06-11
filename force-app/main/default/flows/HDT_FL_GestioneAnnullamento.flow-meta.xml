@@ -128,13 +128,13 @@
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare</name>
         <label>Aggiorna Fase in Da Inviare</label>
-        <locationX>2313</locationX>
-        <locationY>2617</locationY>
+        <locationX>2311</locationX>
+        <locationY>2620</locationY>
         <assignmentItems>
             <assignToReference>GetRecord.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Comunicazione verso Heroku OK</stringValue>
+                <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -149,6 +149,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>CalcoloCodiceCausale.OperationCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -211,8 +218,8 @@
     <assignments>
         <name>Annullato_0</name>
         <label>Annullato</label>
-        <locationX>4102</locationX>
-        <locationY>3413</locationY>
+        <locationX>4510</locationX>
+        <locationY>3383</locationY>
         <assignmentItems>
             <assignToReference>GetOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -497,8 +504,8 @@
     <assignments>
         <name>AssegnaValori_1</name>
         <label>AssegnaValori</label>
-        <locationX>3791</locationX>
-        <locationY>1033</locationY>
+        <locationX>3656</locationX>
+        <locationY>1072</locationY>
         <assignmentItems>
             <assignToReference>GetOrder.CancellationRequestDate__c</assignToReference>
             <operator>Assign</operator>
@@ -610,6 +617,29 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Ripensato</name>
+        <label>Ripensato</label>
+        <locationX>4214</locationX>
+        <locationY>3312</locationY>
+        <assignmentItems>
+            <assignToReference>GetOrder.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ripensato</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetOrder.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullato</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Order</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Ripristina_Fase_e_Processo</name>
         <label>Ripristina Fase</label>
         <locationX>2939</locationX>
@@ -707,6 +737,21 @@
                 <targetReference>Bozza_Annullata_0</targetReference>
             </connector>
             <label>Bozza</label>
+        </rules>
+        <rules>
+            <name>RipensamentoProcess</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ripensamento</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Ripensato</targetReference>
+            </connector>
+            <label>Ripensamento</label>
         </rules>
     </decisions>
     <decisions>
@@ -2008,7 +2053,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Annullamento prestazione </stringValue>
+                    <stringValue>Annullamento prestazione</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>

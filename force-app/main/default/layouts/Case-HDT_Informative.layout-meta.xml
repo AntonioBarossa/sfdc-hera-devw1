@@ -41,10 +41,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Note__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Commodity__c</field>
             </layoutItems>
         </layoutColumns>
@@ -87,6 +83,19 @@
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Note</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Note__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>

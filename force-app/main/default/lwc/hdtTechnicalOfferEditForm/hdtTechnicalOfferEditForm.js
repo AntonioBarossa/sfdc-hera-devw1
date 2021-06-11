@@ -28,7 +28,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
 
     @api mode;
     @api technicalOfferId;
-    hidden = 'slds-show';
+    @api hidden;
 
     @api handleValueChange() {
         console.log('>>> handleValueChange');
@@ -67,9 +67,21 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         var techOffObj = {};
 
         this.template.querySelectorAll('lightning-input-field').forEach((field) => {
-            console.log('>>> ' + field.fieldName + ' - ' + field.value);
             techOffObj[field.fieldName] = field.value;
         });
+
+        var responseObj = this.checkValue(techOffObj);
+        if(!responseObj.success){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: responseObj.message,
+                    variant: 'warning',
+                    mode: 'sticky'
+                })
+            );
+            return;
+        }
 
         this.hidden = 'slds-hide';
 
@@ -106,18 +118,38 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         };
 
         if(this.checkIsNotNull(techOffObj.StartDate__c) && this.checkIsNotNull(techOffObj.EndDate__c)){
-           
             var start = new Date(techOffObj.StartDate__c);
             var end = new Date(techOffObj.EndDate__c);
-
             if(start >= end){
-                returnObj.message = 'Data fine inferiore dello start';
+                returnObj.message = 'La data di fine validità non può essere inferiore alla data di inizio';
                 return returnObj;
             }
+            //returnObj.success = true;
+            //return returnObj;
+        }
 
-            returnObj.success = true;
-            return returnObj;
+        if(this.checkIsNotNull(techOffObj.NumberTimeExtension__c)){
+            let isnum = /^\d+$/.test(techOffObj.NumberTimeExtension__c);
+            if(!isnum){
+                returnObj.message = 'Numero unità di tempo per proroga può contenere solo dei numeri';
+                return returnObj;
+            }
+        }
 
+        if(this.checkIsNotNull(techOffObj.NumberDaysMonthsYears__c)){
+            let isnum = /^\d+$/.test(techOffObj.NumberDaysMonthsYears__c);
+            if(!isnum){
+                returnObj.message = 'Nº Giorni/Mesi/Anni non può contenere delle lettere';
+                return returnObj;
+            }
+        }
+
+        if(this.checkIsNotNull(techOffObj.NumberOfTimeUnits__c)){
+            let isnum = /^\d+$/.test(techOffObj.NumberOfTimeUnits__c);
+            if(!isnum){
+                returnObj.message = 'Numero unità di tempo non può contenere delle lettere';
+                return returnObj;             
+            }
         }
 
         returnObj.success = true;

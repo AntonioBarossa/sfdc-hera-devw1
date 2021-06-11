@@ -786,6 +786,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.KpiTracking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.LastName__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3132,6 +3137,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Campaign.Required__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Campaign.ScriptConfig__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5713,6 +5723,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.SiebelAttributeData__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.SiebelData__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9497,6 +9512,46 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>KpiTracking__c.AssistedCustomerLastUpdate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.AssistedCustomer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.ChurnkRiskCtrlLastUpdate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.ChurnkRiskCtrl__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.CreditCheckCalled__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.CreditCheckCtrlLastUpdate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.CreditCheckCtrl__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.CustomerCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LandRegistry__c.CodeMissingRegistryData__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12152,7 +12207,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.SiebelData__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.SiebelMainInfo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SiebelOfferData__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SiebelReadingData__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22376,6 +22446,61 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ScriptConfig__c.CheckVisibility__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.ContextObject__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.IsChildLoopEvaluated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.LabelOption1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.LabelOption2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.LabelOption3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.ParentSection__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.SectionLabel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.SectionOrder__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.StartRecording__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.TextScript__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28271,6 +28396,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Sale__c-Vendita Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SBQQ__ErrorCondition__c-CPQ - Error Condition Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Scorecard-Scorecard Layout</layout>

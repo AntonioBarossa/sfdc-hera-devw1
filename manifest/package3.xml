@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Contact_Record_Page</members>
+        <members>HDT_Order_Default</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>Contact</members>
-        <members>LandRegistry__c</members>
+        <members>KpiTracking__c</members>
+        <members>ScriptConfig__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>hdtAccountStatementTabs</members>
-        <members>hdtCampaignMemberAgencyAssignment</members>
-        <members>hdtChildOrderProcessActions</members>
+        <members>Knowledge/Dettagli_versioni_articoli_FVV</members>
+        <members>Knowledge/articoli_parola_chiave_lY8</members>
+        <members>Knowledge/articoli_pi_visualizzati_Fbq</members>
+        <members>Knowledge/articoli_ricercati_Kew</members>
+        <members>Knowledge/articoli_ricercati_media_click_Pb3</members>
+        <name>Report</name>
+    </types>
+    <types>
+        <members>iwsscript</members>
+        <name>StaticResource</name>
+    </types>
+    <types>
+        <members>hdtBillingProfileForm</members>
         <members>hdtChildOrderProcessDetails</members>
-        <members>hdtContactSelection</members>
-        <members>hdtCreateCampaign</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtCreateNewEligibilityCriteria</members>
         <members>hdtCreateNewTechnicalOffer</members>
+        <members>hdtEligibilityCriteriaConfiguration</members>
+        <members>hdtErrorModalMessage</members>
+        <members>hdtModalDataTable</members>
         <members>hdtOfferConfigurator</members>
+        <members>hdtSearchTechnicalOffer</members>
+        <members>hdtTargetObjectCreateForm</members>
         <members>hdtTechnicalOfferEditForm</members>
         <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>Order.HDT_AnnullamentoPrestazione</members>
+        <members>Order.HDT_Ripensamento</members>
+        <name>WebLink</name>
     </types>
     <types>
         <members>Admin</members>
@@ -32,84 +52,149 @@
         <name>Profile</name>
     </types>
     <types>
+        <members>HDT_FL_GestioneAnnullamento</members>
         <members>HDT_FL_GestionePagamenti_PianoRateizzazione</members>
-        <members>HDT_FL_GestionePagamenti_RichiestaDomiciliazione</members>
-        <members>HDT_FL_GestionePagamenti_Rimborso</members>
-        <members>HDT_FL_GestionePagamenti_VariazioneDomiciliazione</members>
         <members>HDT_FL_GestionePreventivi</members>
+        <members>HDT_FL_GestioneVariazioni</members>
         <members>HDT_FL_PostSalesMasterDispatch</members>
         <name>Flow</name>
     </types>
     <types>
-        <members>BillingProfile__c</members>
-        <members>Contact</members>
-        <members>DocumentSendTracking__c</members>
-        <members>DocumentalActivity__c</members>
-        <members>Individual</members>
-        <members>PushTracking__c</members>
-        <members>SBQQ__Subscription__c</members>
-        <members>SMSTracking__c</members>
-        <members>SolTracking__c</members>
-        <members>et4ae5__IndividualEmailResult__c</members>
-        <members>wrts_prcgvr__Activity__c</members>
-        <name>SharingRules</name>
+        <members>CustomLabels</members>
+        <name>CustomLabels</name>
     </types>
     <types>
-        <members>Case-HDT_PianoRateizzazione</members>
+        <members>OpportunityStage-it</members>
+        <name>StandardValueSetTranslation</name>
+    </types>
+    <types>
+        <members>Account.HDT_RT_Other</members>
+        <members>Case.HDT_RT_AltriProcessiPagamenti</members>
+        <members>Case.HDT_RT_Annullamento</members>
+        <members>Case.HDT_RT_CanoneRai</members>
+        <members>Case.HDT_RT_ComportamentoVenditori</members>
+        <members>Case.HDT_RT_ComunicazionePagamento</members>
+        <members>Case.HDT_RT_Disattivazioni</members>
+        <members>Case.HDT_RT_Domiciliazione</members>
+        <members>Case.HDT_RT_Informative</members>
+        <members>Case.HDT_RT_Morosita</members>
+        <members>Case.HDT_RT_PianoRateizzazione</members>
+        <members>Case.HDT_RT_PreventiviEle</members>
+        <members>Case.HDT_RT_PreventiviGas</members>
+        <members>Case.HDT_RT_ReclamiScrittiRichiesteInfo</members>
+        <members>Case.HDT_RT_Rimborso</members>
+        <members>Case.HDT_RT_VariazioniEle</members>
+        <members>Case.HDT_RT_VariazioniGas</members>
+        <members>Case.HDT_RT_VerificaDatiAlDl</members>
+        <members>Case.HDT_RT_VerificheEle</members>
+        <members>Case.HDT_RT_VerificheGas</members>
+        <members>Order.HDT_RT_Attivazione</members>
+        <members>Order.HDT_RT_AttivazioneConModifica</members>
+        <members>Order.HDT_RT_CambioOfferta</members>
+        <members>Order.HDT_RT_CambioUso</members>
+        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
+        <members>Order.HDT_RT_Proroga</members>
+        <members>Order.HDT_RT_RiattivazioniNonMorose</members>
+        <members>Order.HDT_RT_ScontiBonus</members>
+        <members>Order.HDT_RT_Subentro</members>
+        <members>Order.HDT_RT_SwitchIn</members>
+        <members>Order.HDT_RT_SwitchInVolturaTecnica</members>
+        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
+        <members>Order.HDT_RT_VAS</members>
+        <members>Order.HDT_RT_Voltura</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>BillingProfile__c-Profilo di fatturazione</members>
+        <members>Case-HDT_Disattivazioni</members>
+        <members>Case-HDT_Domiciliazione</members>
+        <members>Case-HDT_Informative</members>
         <members>Case-HDT_PreventiviEle</members>
         <members>Case-HDT_PreventiviGas</members>
-        <members>Case-HDT_Rimborso</members>
+        <members>Case-HDT_VerificheEle</members>
+        <members>Case-HDT_VerificheGas</members>
         <members>Contact-Contact Layout</members>
-        <members>wrts_prcgvr__Activity__c-HDT_Call</members>
-        <members>wrts_prcgvr__Activity__c-HDT_Sportello</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_RentProcessRules</members>
+        <members>HDT_AgentMatrixManagement</members>
+        <members>HDT_CampaignManager</members>
+        <members>HDT_EditPublicListView</members>
+        <members>HDT_MarketingCloud</members>
+        <members>HDT_MassiveLoader</members>
+        <members>HDT_SalesforceCPQAdmin</members>
+        <members>HDT_SalesforceCPQPartner</members>
+        <members>HDT_SalesforceCPQUser</members>
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_LC_AccountSelectorController</members>
-        <members>HDT_LC_CampaignsController</members>
-        <members>HDT_LC_ContactSelection</members>
+        <members>HDT_LC_ChildOrderProcess</members>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_LC_EligibilityCriteriaController</members>
         <members>HDT_LC_OfferConfiguratorController</members>
         <members>HDT_LC_OfferConfiguratorCtrlHelper</members>
-        <members>HDT_QR_Contact</members>
-        <members>HDT_SRV_BpCaVariation</members>
-        <members>HDT_SRV_Paperless</members>
-        <members>HDT_UTL_ActivityCustomProcess</members>
-        <members>HDT_UTL_CampaignMember</members>
+        <members>HDT_QR_EligibilityCriteria</members>
+        <members>HDT_QR_InformativeManager</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_SearchPlug</members>
+        <members>HDT_QR_TechnicalOffer</members>
+        <members>HDT_SRV_InstallmentPlans</members>
+        <members>HDT_SRV_PostSalesCriteriaManager</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_TRH_ProductStObj</members>
         <members>HDT_UTL_CaseValidations</members>
+        <members>HDT_UTL_CreatePaymentsRequestBody</members>
         <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_UTL_Order</members>
         <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_PostSalesCriteriaManager</members>
         <members>HDT_UTL_SearchPlug</members>
         <members>HDT_WRP_TechnicalOffer</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Case.CancellationHerokuPracticeCode__c</members>
-        <members>Order.CancellationHerokuPracticeCode__c</members>
-        <members>TechnicalOffer__c.AdmittingProfileModification__c</members>
+        <members>Account.AssistedCustomer__c</members>
+        <members>Account.KpiTracking__c</members>
+        <members>Campaign.ScriptConfig__c</members>
+        <members>Case.SiebelData__c</members>
+        <members>KpiTracking__c.AssistedCustomerLastUpdate__c</members>
+        <members>KpiTracking__c.AssistedCustomer__c</members>
+        <members>KpiTracking__c.ChurnkRiskCtrlLastUpdate__c</members>
+        <members>KpiTracking__c.ChurnkRiskCtrl__c</members>
+        <members>KpiTracking__c.CreditCheckCalled__c</members>
+        <members>KpiTracking__c.CreditCheckCtrlLastUpdate__c</members>
+        <members>KpiTracking__c.CreditCheckCtrl__c</members>
+        <members>KpiTracking__c.CustomerCode__c</members>
+        <members>Order.NotRethinkable__c</members>
+        <members>Order.Phase__c</members>
+        <members>Order.ProcessType__c</members>
+        <members>Order.SiebelData__c</members>
+        <members>Order.SiebelOfferData__c</members>
+        <members>Order.SiebelReadingData__c</members>
+        <members>ScriptConfig__c.CheckVisibility__c</members>
+        <members>ScriptConfig__c.ContextObject__c</members>
+        <members>ScriptConfig__c.IsChildLoopEvaluated__c</members>
+        <members>ScriptConfig__c.LabelOption1__c</members>
+        <members>ScriptConfig__c.LabelOption2__c</members>
+        <members>ScriptConfig__c.LabelOption3__c</members>
+        <members>ScriptConfig__c.ParentSection__c</members>
+        <members>ScriptConfig__c.SectionLabel__c</members>
+        <members>ScriptConfig__c.SectionOrder__c</members>
+        <members>ScriptConfig__c.StartRecording__c</members>
+        <members>ScriptConfig__c.TextScript__c</members>
+        <members>wrts_prcgvr__Activity__c.Type__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>CampaignStatus</members>
+        <members>OpportunityStage</members>
         <name>StandardValueSet</name>
     </types>
     <types>
-        <members>HDT_LCP_AcctStmtOpenLwc</members>
-        <members>HDT_LCP_OpenAccountStatement</members>
-        <members>HDT_LCP_OpenAccountStatementTab</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>HDT_ActivityCustom</members>
-        <name>ApexTrigger</name>
-    </types>
-    <types>
-        <members>HDT_UserInputFlow.Pagamenti_Piano_Rateizzazione</members>
-        <members>HDT_UserInputFlow.Pagamenti_Rimborso_Alternativo</members>
-        <name>CustomMetadata</name>
+        <members>HDT_KnowledgeArticlesVersions</members>
+        <members>HDT_KnowledgeArticlesVersionsWiArticleViewStatisti</members>
+        <members>HDT_KnowledgeSearchActivity</members>
+        <name>ReportType</name>
     </types>
     <version>49</version>
 </Package>

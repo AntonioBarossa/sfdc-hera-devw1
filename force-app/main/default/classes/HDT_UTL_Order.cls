@@ -68,6 +68,15 @@ public inherited sharing class HDT_UTL_Order {
         return result;
     }
 
+    public void cambioOffertaActions(Order ord) {
+        if (isCambioOfferta(ord)) {
+            orderSrv.updateRecord(new Order(
+                Id = ord.Id,
+                ProcessType__c = 'Cambio Offerta'
+            ));
+        }
+    }
+
     public void switchInRipristinatorioAction(Order ord) {
 
         system.debug('HDT_UTL_Order.switchInRipristinatorioAction START');

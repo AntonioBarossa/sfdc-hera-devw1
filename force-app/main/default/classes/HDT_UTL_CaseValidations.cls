@@ -138,7 +138,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     : null;
                 String clientCategory = getFieldValue(fields, 'ClientCategory__c');
                 String reason = getFieldValue(fields, 'Reason__c');
-                Double amountInstall = currentCase.AmountToPayInInstallments__c;
                 Date expDate = getFieldValue(fields, 'DepositExpirationDate__c') == null 
                     ? System.today() + 365
                     : Date.valueOf(getFieldValue(fields, 'DepositExpirationDate__c'));
@@ -165,7 +164,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
                     }
                 
-                }else if(reason.contains('Disagio Rconomico') && ( amountInstall < 50 || expDate < (System.today() + 5))){
+                }else if(reason.contains('Disagio Economico') && (expDate < (System.today() + 5))){
 
                         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'L\'importo non deve essere inferiore a 50 ' + 
                         'o la data scadenza acconto non deve essere inferiore ai 5 giorni'));

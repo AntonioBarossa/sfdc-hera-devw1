@@ -716,6 +716,57 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Avanzamento_1</name>
+        <label>Avanzamento</label>
+        <locationX>1870</locationX>
+        <locationY>480</locationY>
+        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Avanti</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtFLowNavButton.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtFLowNavButton.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValori</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+        <rules>
+            <name>Annulla_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtFLowNavButton.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtFLowNavButton.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Avanzamento_2</name>
         <label>Avanzamento</label>
         <locationX>910</locationX>
@@ -1001,7 +1052,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Calcola_Info_Preventivo.QuoteType__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Rapido</stringValue>
                 </rightValue>
@@ -1503,13 +1554,13 @@
     <screens>
         <name>CommodityScreen</name>
         <label>CommodityAddressScreen</label>
-        <locationX>1698</locationX>
-        <locationY>425</locationY>
+        <locationX>1639</locationX>
+        <locationY>429</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>AssegnaValori</targetReference>
+            <targetReference>Avanzamento_1</targetReference>
         </connector>
         <fields>
             <name>CommodityDisplayText</name>
@@ -1542,6 +1593,50 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
+        <fields>
+            <name>hdtFLowNavButton</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -1564,8 +1659,8 @@
     <screens>
         <name>ErroreImportiScreen</name>
         <label>ErroreImportiScreen</label>
-        <locationX>1311</locationX>
-        <locationY>2099</locationY>
+        <locationX>1284</locationX>
+        <locationY>2176</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2018,8 +2113,8 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>2014</locationX>
-        <locationY>981</locationY>
+        <locationX>1987</locationX>
+        <locationY>877</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

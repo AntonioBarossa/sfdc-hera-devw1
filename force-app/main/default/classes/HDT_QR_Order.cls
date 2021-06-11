@@ -169,7 +169,7 @@ public inherited sharing class HDT_QR_Order {
             CreatedById,                                // @Picchiri Calcolo della date Switch in 31/05/21 
             Account.CustomerCode__c,                    // @Picchiri Calcolo della date Switch in 31/05/21             
             Account.CustomerMarking__c,                 // @Picchiri Calcolo della date Switch in 31/05/21             
-            Account.CustomerType__c,                               // @Picchiri Calcolo della date Switch in 31/05/21 
+            Account.CustomerType__c,                         // @Picchiri Calcolo della date Switch in 31/05/21 
             ServicePoint__r.SupplyStreetName__c,        // @Picchiri Calcolo della date Switch in 31/05/21 ERRORE
 		    ServicePoint__r.SupplyCity__c,              // @Picchiri Calcolo della date Switch in 31/05/21 
 		    ServicePoint__r.SupplyProvince__c,          // @Picchiri Calcolo della date Switch in 31/05/21 
@@ -439,6 +439,9 @@ public inherited sharing class HDT_QR_Order {
 
     public List<Order> getRecordByOrderNumber(String orderNumber){
         return [Select id,phase__c,PrecheckResultSII__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+    }
+    public List<Order> getRecordByOrderId(String recordId){
+        return [Select id,phase__c,PrecheckResultSII__c from Order where Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getRecordsByOrdersIdsBulk(List<String> orderIds){

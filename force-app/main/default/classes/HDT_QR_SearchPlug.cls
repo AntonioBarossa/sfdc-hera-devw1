@@ -20,7 +20,7 @@ public inherited sharing class HDT_QR_SearchPlug {
         return prodWithoutCriteria;
     }
 
-    public static List<Product2> getEligibilitiesCriteriaFromProduct(List<Product2> prodWithoutCriteria, List<String> familyList, String status){
+    public static List<Product2> getEligibilitiesCriteriaFromProduct(List<Product2> prodWithoutCriteria, List<String> statusList, List<String> familyList){
         prodWithoutCriteria = new List<Product2>();
 
         SObjectType objtype = Schema.getGlobalDescribe().get('Product2');
@@ -31,7 +31,7 @@ public inherited sharing class HDT_QR_SearchPlug {
             prodWithoutCriteria = [
                 SELECT Id, (SELECT Id FROM EligibilitiesCriteria__r)
                 FROM Product2
-                WHERE Status__c = :status AND IsActive = true AND Family IN :familyList
+                WHERE Status__c IN :statusList AND IsActive = true AND Family IN :familyList
                 WITH SECURITY_ENFORCED
             ];
 
@@ -40,7 +40,7 @@ public inherited sharing class HDT_QR_SearchPlug {
         return prodWithoutCriteria;
     }
 
-    public static List<EligibleMunicipality__c> findEligibleMunicipality(Set<Id> idToFilterByMunicipalities, List<String> familyList, String supplyCity){
+    public static List<EligibleMunicipality__c> findEligibleMunicipality(Set<Id> idToFilterByMunicipalities, List<String> statusList, List<String> familyList, String supplyCity){
 
         String searchquery = '';
         List<List<SObject>> searchList;
@@ -53,7 +53,8 @@ public inherited sharing class HDT_QR_SearchPlug {
             searchquery += ' RETURNING EligibleMunicipality__c(';
             searchquery += 'EligibilityCriteria__r.Product__c';
             searchquery += ' WHERE';
-            searchquery += ' EligibilityCriteria__r.Product__r.Status__c = \'Vendibile\' AND';
+            //searchquery += ' EligibilityCriteria__r.Product__r.Status__c = \'Vendibile\' AND';
+            searchquery += ' EligibilityCriteria__r.Product__r.Status__c IN :statusList AND';
             searchquery += ' EligibilityCriteria__r.Product__r.IsActive = true AND';
             searchquery += ' EligibilityCriteria__r.Product__r.Family IN :familyList AND';
             searchquery += ' EligibilityCriteria__c IN: idToFilterByMunicipalities)';
@@ -87,7 +88,7 @@ public inherited sharing class HDT_QR_SearchPlug {
         return myQuote;
     }
 
-    public static List<EligibilityCriteria__c> selectEligibleCriteria(List<EligibilityCriteria__c> eligibilityCriteriaList, List<String> familyList, SBQQ__Quote__c quote){
+    public static List<EligibilityCriteria__c> selectEligibleCriteria(List<EligibilityCriteria__c> eligibilityCriteriaList, List<String> statusList, List<String> familyList, SBQQ__Quote__c quote){
         eligibilityCriteriaList = new List<EligibilityCriteria__c>();
 
         SObjectType objtype = Schema.getGlobalDescribe().get('EligibilityCriteria__c');
@@ -103,7 +104,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                        PowerRangeMin__c, PowerRangeMax__c, ResidentDeliveryAddress__c, NewClient__c
 
                 FROM EligibilityCriteria__c
-                WHERE Product__r.Status__c = 'Vendibile' AND Product__r.IsActive = true AND Product__r.Family IN :familyList AND
+                WHERE Product__r.Status__c IN :statusList AND Product__r.IsActive = true AND Product__r.Family IN :familyList AND
 
                     (
                         (OriginMarketOperator__c = 'excludesValues' AND OriginMarket__c excludes (:quote.Market__c)) OR
@@ -154,6 +155,16 @@ public inherited sharing class HDT_QR_SearchPlug {
             FROM LoginGroupItem__c
             WHERE LoginGroup__c = :loginGroupId AND Login__c = :currentUserId
         ];
+    }
+
+    public static List<PermissionSetAssignment> getUserPermissionSets(List<PermissionSetAssignment> assignmentList, Id currentUserId){
+        assignmentList = new List<PermissionSetAssignment>();
+        assignmentList = [
+            SELECT Id, PermissionSetId, PermissionSet.Name, PermissionSet.ProfileId, PermissionSet.Profile.Name, AssigneeId, Assignee.Name
+            FROM PermissionSetAssignment
+            WHERE PermissionSet.Name = :Label.HDT_PermissionSetNameForCPQ AND AssigneeId = :currentUserId
+        ];
+        return assignmentList;
     }
 
 }

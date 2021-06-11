@@ -299,7 +299,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required : mapFieldReq.get(element),
                             value:true,
+
                             disabled: false
+
                         }
                     ) 
                 }

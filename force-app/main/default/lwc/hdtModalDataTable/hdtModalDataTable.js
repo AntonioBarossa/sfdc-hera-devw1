@@ -82,6 +82,7 @@ export default class HdtModalDataTable extends LightningElement {
     @track columns = [];
     @track error = {show: false, message: ''};
     @track spinner = true;
+    emptyTable = true;
     modalHeader;
     iconHeader;
     searchByField = '';
@@ -157,9 +158,11 @@ export default class HdtModalDataTable extends LightningElement {
                     console.log('# success #');
                     this.data = result;
 
+                    this.emptyTable = false; 
                     if(result.length === 0){
-                        this.error.show = true;
-                        this.error.message = 'Non è stato trovato nessun valore';                        
+                        //this.error.show = true;
+                        //this.error.message = 'Non è stato trovato nessun valore';
+                        this.emptyTable = true;                      
                     }
 
                     //var obj = JSON.parse(result);
