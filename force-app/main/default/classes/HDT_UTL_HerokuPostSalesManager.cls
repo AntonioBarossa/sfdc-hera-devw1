@@ -172,6 +172,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String caseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
         String method = reqWrp.requestMap.get('METHOD');
         String caseParam = '';
+        String storno = '';
+        String activity='';
         Case recordCase;
         Datetime nowDate = Datetime.now();
         String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
@@ -195,6 +197,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.Id = recordCase.Id;
             currentPhase = recordCase.Phase__c;
             nextPhase = reqWrp.requestMap.get('FASE');
+            storno = reqWrp.requestMap.get('STORNO');
+            activity = reqWrp.requestMap.get('ATTIVITA');
         }
         if(method.equalsIgnoreCase('aggiornaRCU')){
             if(String.isBlank(codServizio) || String.isBlank(codPrestazione)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Servizio or Codice Prestazione');
@@ -209,7 +213,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 if((nextPhase.equalsIgnoreCase('Esito OK da DL/SII') || nextPhase.equalsIgnoreCase('Esito KO da DL/SII')) &&
                     currentPhase.indexOf('Annullamento') > -1){
                         nextPhase = 'Annullamento - ' + nextPhase;
-                    }
+                }
                 currentCase.Phase__c = nextPhase;
             }
             if(reqWrp.requestMap.get('COD_PRAT_DISTR') != null && reqWrp.requestMap.get('COD_PRAT_DISTR') != ''){
@@ -228,6 +232,17 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String description = recordCase.Description != null?recordCase.Description:'';
                 currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('TESTO_ERRR') + '\n' + description;
             }
+            if(reqWrp.requestMap.get('COD_CAUSALE') != null && reqWrp.requestMap.get('COD_CAUSALE') != ''){
+                currentCase.CancellationReasonCode__c = reqWrp.requestMap.get('COD_CAUSALE');
+            }
+            if(reqWrp.requestMap.get('ANNOTAZIONI_ANN') != null && reqWrp.requestMap.get('ANNOTAZIONI_ANN') != ''){
+                currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('ANNOTAZIONI_ANN');
+            }
+            if(reqWrp.requestMap.get('NOTE_ANN') != null && reqWrp.requestMap.get('NOTE_ANN') != ''){
+                String noteAnn = currentCase.CancellationNote__c != null?currentCase.CancellationNote__c:'';
+                currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
+            }
+            
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
@@ -275,8 +290,32 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII'){
             currentCase.Phase__c = 'Annullato';
             updateFuture(JSON.serialize(currentCase));
+        }else if(currentCase.Phase__c == 'Annullamento SII - Ricezione') {
+            handlePassiveCancellation(currentCase, 'Case', storno, activity);
         }
         return caseUpdate;
+    }
+
+    //se Annullamento SII - Ricezione e Storno N --> Aggiornare in Annullamento SII e dopo in Annullato SII
+    //se Annullamento SII - Ricezione e Attivita Gestione procedurale SAP --> Creazione Activity
+    //se Annullamento SII - Ricezione e Storno null --> No action
+    public void handlePassiveCancellation(SObject recordObj, String objectType, String storno, String activity){
+        Case recordCase;
+        Order recordOrder;
+        
+        if(String.isNotBlank(storno) && storno.equalsIgnoreCase('N')) {
+            recordObj.put('Phase__c', 'Annullato SII');
+            updateFutureSobject(JSON.serialize(recordObj));
+        }else if(String.isNotBlank(activity) && activity.equalsIgnoreCase('Gestione procedurale SAP')){
+            switch on objectType {
+                when 'Case' {
+                    createActivity((String)recordObj.get('Id'),null, '', activity);
+                }
+                when else {
+                    createActivity(null,(String)recordObj.get('Id'), '', activity);
+                }
+            }
+        }
     }
 
     public Case handleRequestRichPass(HDT_WRP_HerokuPostSalesManager reqWrp){
@@ -368,7 +407,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }            
             HDT_UTL_DatabaseService.insertSObject(currentCase);
             if(currentCase.EarlyRecess__c){
-                createActivity(currentCase.Id, '', 'Recesso Anticipato');
+                createActivity(currentCase.Id,null, '', 'Recesso Anticipato');
             }
             dataEnrichment(pod,null,currentCase.Id);
             currentCase = qrClass.getCaseRecord(currentCase.Id);
@@ -430,6 +469,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     }
 
+    @Future
+    private static void updateFutureSobject(String inputString){
+
+        SObject record = (SObject) JSON.deserialize(inputString, SObject.class);
+
+        HDT_UTL_DatabaseService.updateSObject(record);
+
+    }
+
     private void handleEntityUpdate(HDT_WRP_HerokuPostSalesManager wrapper){
         String contractCode = wrapper.requestMap.get('VERTRAG');
         String contractStatus = wrapper.requestMap.get('VERTRAG_ST');
@@ -457,7 +505,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug(LoggingLevel.WARN, ex.getMessage() + ' at line ' + ex.getLineNumber() + ' of HDT_UTL_HerokuPostSalesManager.handleContractUpdate method');
         }
     }
-    private static void createActivity(String recordId, String description, String type){
+    private static void createActivity(String caseId,String orderId, String description, String type){
         String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ type +'\'';
         String objectName = 'wrts_prcgvr__ActivityTemplate__c';
         List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
@@ -466,7 +514,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             template = (wrts_prcgvr__ActivityTemplate__c) listRecord[0];
             wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
             activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
-            activity.Case__c = recordId;
+            activity.Case__c = caseId;
+            activity.Order__c = orderId;
             activity.CausalError__c = description;
             activity.wrts_prcgvr__Description__c = description;
             Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
