@@ -538,18 +538,6 @@
                 <isActive>false</isActive>
                 <label>Registrazione validata  Firmato/Inviato</label>
             </value>
-            <value>
-                <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Ripensamento - Comunicazione verso Heroku KO</label>
-            </value>
-            <value>
-                <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Ripensamento - Comunicazione verso Heroku OK</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
