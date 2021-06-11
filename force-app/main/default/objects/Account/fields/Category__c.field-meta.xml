@@ -185,6 +185,14 @@
             <valueName>Aziende TOP</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>piccoli condomini</controllingFieldValue>
+            <valueName>Parti Comuni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>piccoli condomini</controllingFieldValue>
+            <valueName>MMS parti comuni</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>AAS Condominio</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
             <controllingFieldValue>Azienda</controllingFieldValue>
