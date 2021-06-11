@@ -3,19 +3,28 @@
 function onEventEstablishedInbound(message) {
     sfutil.createActivity(message);
 }
-function onEventMarkDoneInbound(message) {
+// function onEventMarkDoneInbound(message) {
+//     sfutil.closeActivity(message);
+// }
+function onEventReleasedInbound(message) {
     sfutil.closeActivity(message);
 }
 function onEventEstablishedOutbound(message) {
     sfutil.createActivity(message);
 }
-function onEventMarkDoneOutbound(message) {
+// function onEventMarkDoneOutbound(message) {
+//     sfutil.closeActivity(message);
+// }
+function onEventReleasedOutbound(message) {
     sfutil.closeActivity(message);
 }
 function onEventEstablishedInternal(message) {
     handleOperatorSwitch(message);
 }
-function onEventMarkDoneInternal(message) {
+// function onEventMarkDoneInternal(message) {
+//     sfutil.closeActivity(message);
+// }
+function onEventReleasedInternal(message) {
     sfutil.closeActivity(message);
 }
 function onPreSwitchCrmInbound(message) {
@@ -133,13 +142,7 @@ function onEventAttachedDataChangedConsult(message) {
 }
 function onEventAttachedDataChangedOutbound(message) {
 }
-function onEventReleasedInbound(message) {
-}
-function onEventReleasedInternal(message) {
-}
 function onEventReleasedConsult(message) {
-}
-function onEventReleasedOutbound(message) {
 }
 function onEventDialingInternal(message) {
 }
