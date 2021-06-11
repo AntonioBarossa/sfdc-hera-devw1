@@ -2008,7 +2008,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Annullamento prestazione </stringValue>
+                    <stringValue>Annullamento prestazione</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>

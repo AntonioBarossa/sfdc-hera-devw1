@@ -82,6 +82,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
             FROM AccountContactRelation 
             WHERE AccountId IN :ids
             AND Roles  = 'Titolare'
+            AND IsActive = True
             WITH SECURITY_ENFORCED
         ];
 
@@ -97,6 +98,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
             FROM AccountContactRelation 
             WHERE ContactId IN :contactIds
             AND Roles  = 'Titolare'
+            AND IsActive = True
             WITH SECURITY_ENFORCED
         ];
 
@@ -107,11 +109,14 @@ public inherited sharing class HDT_QR_AccountContactRelation {
         List<AccountContactRelation> relations = [
             SELECT 
             AccountId,
-            ContactId, 
+            ContactId,
+            Contact.MobilePhone,
+            Contact.Email,
             Roles
             FROM AccountContactRelation 
             WHERE AccountId = :accountId
             AND Roles  = 'Titolare'
+            AND IsActive = True
             WITH SECURITY_ENFORCED
         ];
 
@@ -131,6 +136,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
             Roles
             FROM AccountContactRelation 
             WHERE Roles INCLUDES ('Amministratore condominio')
+            AND IsActive = True
             WITH SECURITY_ENFORCED
         ];
 
@@ -175,6 +181,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
             WHERE
             AccountId = :accountId
             AND IsManagerSOL__c = True
+            AND IsActive = True
             WITH SECURITY_ENFORCED
         ];
     }

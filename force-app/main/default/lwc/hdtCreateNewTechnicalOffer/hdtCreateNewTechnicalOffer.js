@@ -10,6 +10,9 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     showSearchOffer = false;
     showCreateOffer = false;
     showEditForm = false;
+    showError = false;
+    errorHeader = '';
+    errorMessage = '';
     //rateTemplate;
     //rateName;
     rateObj;
@@ -17,6 +20,7 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     techOffIdToClone;
     @track technicalOfferId;
     @track techOffToClone;
+    @track hiddenClass;
 
     @track rtObj = {
         id:'',
@@ -98,6 +102,8 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
                     this.selectionObj.hasRecords = false;
                 }
 
+                this.selectionObj.enableCreate = result.data.enableCreate;
+
                 this.productCodeIsAlreadyPresent = result.data.productCodeIsAlreadyPresent;
                 console.log('>>>>>> productCodeIsAlreadyPresent > ' + this.productCodeIsAlreadyPresent);
                 //console.log('>>>>>> techOffToClone: ' + JSON.stringify(result.data.techOffToClone));
@@ -109,17 +115,25 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
 
             } else {
                 console.log('# tecnicalOfferId not success #');
+                this.showError = true;
+                this.errorHeader = 'Offerta tecnica';
+                this.errorMessage = result.errorMessage;
             }
 
         }).catch(error => {
             console.log('# tecnicalOfferId error #');
             console.log('# resp -> ' + result.message);
+            this.showError = true;
+            this.errorHeader = 'Offerta tecnica';
+            this.errorMessage = result.message;
         });
     }
 
     closeModal(event){
         console.log('### Parent closeModal ###');
         console.log('### return to-> ' + this.productid);
+
+        this.showEditForm = false;
 
         const goback = new CustomEvent('goback', {
             detail: {prodId: this.productid}
@@ -143,6 +157,7 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         this.rateObj = event.detail;
         this.showWelcom = false;
         this.showEditForm = true;
+        this.hiddenClass = 'slds-show';
     }
 
     search(event){
@@ -167,7 +182,9 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         this.technicalOfferId = techOffId;
         this.techOffIdToClone = techOffId;
         this.showCreateOffer = true;
-        this.showWelcom = false; 
+        this.showWelcom = false;
+        this.showEditForm = true;
+        this.hiddenClass = 'slds-hide';
     }
 
     closeSearch(event){
@@ -206,19 +223,9 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     }
 
     openEdit(){
-        console.log('>>> openEdit');
         this.editFormMode = 'edit';
-        this.showEditForm = true;
-
-        let i = this.template.querySelector("c-hdt-technical-offer-edit-form");
-        if(i===undefined){
-            console.log('>>> YES IS UNDEFINED');
-        } else {
-            console.log('>>> NO IS REAL');
-            this.template.querySelector("c-hdt-technical-offer-edit-form").handleValueChange();
-        }
-
-        //
+        //this.showEditForm = true;
+        this.template.querySelector("c-hdt-technical-offer-edit-form").handleValueChange();
     }
 
     closeEdit(){

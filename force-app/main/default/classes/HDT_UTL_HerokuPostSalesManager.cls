@@ -110,6 +110,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         }
                     }                    
                 } when 'ANNULL'{
+                    herokuCode = responseResult.responseMap.get('requestId');
                     errorMessage = responseResult.responseMap.get('errorMessage');
                     System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
                     switch on responseResult.responseMap.get('result'){
@@ -143,7 +144,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             caseNew.TecnicalPhase__c = phase;
             caseNew.Description = errorMessage;
             if(herokuCode != null && herokuCode != ''){
-                caseNew.HerokuPracticeCode__c = herokuCode;
+                if(currentCase.Phase__c != 'Annullamento - Da inviare'){
+                    caseNew.HerokuPracticeCode__c = herokuCode;
+                }else{
+                    caseNew.CancellationHerokuPracticeCode__c = herokuCode;
+                }
             }
             if(dlCode != null && dlCode != ''){
                 caseNew.DistributorPracticeCode__c = dlCode;
@@ -176,6 +181,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String codPrestazione = reqWrp.requestMap.get('COD_PRESTAZIONE');
         String codPresa = reqWrp.requestMap.get('COD_PRESA');
         String codPraticaDl = reqWrp.requestMap.get('COD_PRAT_DISTR');
+        String numPrev = reqWrp.requestMap.get('NUMPREV');
+        String expectedExec = reqWrp.requestMap.get('TEMP_ES_PREV');
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         //CHECK CROSS MINIMUM FIELD
         if(String.isBlank('method')) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
@@ -257,7 +264,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
         }
-
+        if(numPrev != null && numPrev != ''){
+            currentCase.QuotationNumber__c = numPrev;
+        }
+        if(expectedExec != null && expectedExec != ''){
+            currentCase.ExpectedExecutionTime__c = expectedExec;
+        }
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
         if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII'){

@@ -10,7 +10,6 @@ import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
 //FINE SVILUPPI EVERIS
 
 // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
-import callServiceCreditCheck from '@salesforce/apex/HDT_WS_CreditCheck.callService';
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
 
 export default class hdtChildOrderProcessDetails extends LightningElement {
@@ -24,8 +23,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     isAccountResidential;
     choosenSection = '';
     activeSections = [];
-    @track availableSteps = []; //has steps that are navigated with buttons
-    @track availableStepsFirst = []; //has all available steps for current process
+    @track availableSteps = [];
+    @track availableStepsFirst = []; 
     @track confirmedSteps = [];
     @track pendingSteps = [];
     loading = false;
@@ -39,21 +38,20 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     currentSectionObjectApi = '';
     currentSectionRecordId = '';
     @track fields = {};
-    extraFieldsToSubmit = {}; //fields that are updated before step is advanced
+    extraFieldsToSubmit = {}; 
     @api mainOrderItem;
     wrapAddressObjectAttivazione = {};
     wrapAddressObjectSpedizione = {};
     @api analisiConsumi;
     acceptedFormatsIvaAcciseUpload = ['.pdf', '.png'];
 
-    get previousTraderOptions(){ return [ //Used to set value for PreviousTrader__c field
+    get previousTraderOptions(){ return [
         {"label":"ENEL ENERGIA SPA-10V0000006","value":"ENEL ENERGIA SPA-10V0000006"},
         {"label":"EDISON PER VOI -10V0000017","value":"EDISON PER VOI -10V0000017"},
         {"label":"ENI GAS & POWER-10V0000012","value":"ENI GAS & POWER-10V0000012"}
     ]};
 
     //INIZIO SVILUPPI EVERIS
-
     @track readingCustomerDate;
     @track disabledReadingDate;
     @track isRetroactive = false;
@@ -448,7 +446,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     handleNext(event){
 
         this.loading = true;
-
         let currentSectionName = event.currentTarget.value;
         let currentSection = this.availableSteps.filter(section => section.name === currentSectionName);
         let currentObjectApiName = currentSection[0].objectApiName;
@@ -461,18 +458,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         ? this.availableSteps[currentSectionIndex + 1].step
         : this.availableSteps[currentSectionIndex + 2].step)
         : this.availableSteps[currentSectionIndex + 1].step;
-
         this.isReading = currentSectionName === 'reading';
         //EVERIS AGGIUNTA LOGICA PER SEZIONE AUTOLETTURA
-
-        // [START -- 07/06/2021 alessio.murru@webresults.it - credit check 2021]
-        // if(currentSectionName === 'creditCheck'){
-        //     this.sectionDataToSubmit['IncomingCreditCheckResult__c'] = this.applyCreditCheckLogic('IncomingCreditCheckResult__c');
-        //     this.sectionDataToSubmit['OutgoingCreditCheckResult__c'] = this.applyCreditCheckLogic('OutgoingCreditCheckResult__c');
-        //     this.sectionDataToSubmit['CreditCheckDescription__c'] = this.template.querySelector("[data-id='CreditCheckDescription__c']").value;
-
-        // }
-        // [END -- 07/06/2021 alessio.murru@webresults.it - credit check 2021]
 
         if(currentSectionName === 'indirizzodiAttivazione'){
             this.handleWrapAddressObjectAttivazione();
@@ -481,7 +468,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(currentSectionName === 'indirizzoSpedizione'){
             this.handleWrapAddressObjectSpedizione();
         }
-
+        
         if(currentSectionName === 'dettaglioImpianto'){
 
             if(this.template.querySelector("[data-id='WaiverRightAfterthought__c']") !== null 
@@ -2708,127 +2695,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     }
 
-    getRequest(){
-        var typeOfCommodity = this.order.ServicePoint__r.CommoditySector__c;
-        if(typeOfCommodity == 'Energia Elettrica'){
-            typeOfCommodity = 'ENERGIAELETTRICA';
-        }
-        if(typeOfCommodity == 'Gas'){
-            typeOfCommodity = 'GAS';
-        }
-        let data = {
-            sistema: "eEnergy",                                                 //da definire campo SF con business
-            caso:"Transazionale",                                               //da definire campo SF con business
-            crmEntity:"Order",                                                  //da definire campo SF con business
-            crmId:this.order.OrderNumber,
-            userId: this.order.CreatedById,
-            activationUser:"AccountCommercialePRM",                             //da definire campo SF con business
-            account:this.order.AccountId,
-            jobTitle:this.order.Channel__c,
-            internalCustomerId:this.order.Account.CustomerCode__c,
-            companyName:this.order.SalesCompany__c,                             //verificare che non sia vuoto
-            externalCustomerId:this.order.Account.FiscalCode__c,
-            secondaryCustomerId:this.order.Account.VATNumber__c,
-            bpClass:this.order.Account.CustomerMarking__c,
-            bpCategory:this.order.Account.Category__c,
-            bpType:this.order.Account.CustomerType__c,
-            customerType:"CT0",                                                 //da definire campo SF con business
-            address:this.order.ServicePoint__r.SupplyStreetName__c,
-            municipality:this.order.ServicePoint__r.SupplyCity__c,
-            district:this.order.ServicePoint__r.SupplyProvince__c,
-            postCode:this.order.ServicePoint__r.SupplyPostalCode__c,
-            operation:this.order.ProcessType__c,
-            companyGroup:"Hera S.p.A.",                           
-            market:this.order.Market__c,
-            offerType:this.order.Catalog__c,
-            details:[{
-                totalConsumption:'1.0',//da definire campo SF con business
-                commodity:typeOfCommodity,
-                annualConsumption:this.order.ServicePoint__r.AnnualConsumption__c
-            }]		
-        }
-
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            data["bpAlternative"] = this.order.ServicePoint__r.Account__r.CustomerCode__c;
-            data["alternativeCustomerId"] = this.order.ServicePoint__r.Account__r.FiscalCode__c;            
-        }
-
-        return data; 
-    }
-
-        /**        
-         * CAClass da verificare se inserire o meno         
-         */
-
+    
     connectedCallback(){
 
-
-        console.log('connectedCallback Order ---> ');
-        console.log(JSON.parse(JSON.stringify(this.order)));
-
         // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
-        var wrp = this.getRequest();
-        
-        console.log('connectedCallback wrp ---> ');
-        console.log(JSON.parse(JSON.stringify(wrp)));
-        this.loading = true;
-        callServiceCreditCheck({wrpVals:JSON.stringify(wrp)})
-        .then(result => {
-            // this.contacts = result;
-            // this.error = undefined;
-            console.log('result callServiceCreditCheck ---> : ');
-            console.log(JSON.parse(JSON.stringify(result)));
-
-            if(result.status == 'failed'){
-                throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
-            }
-
-            // console.log(JSON.parse(JSON.strigify(this.fields)));
-            let self = this;
-            setTimeout(function(){
-                console.log('test handle fields');
-
-                retrieveOrderCreditCheck({idOrder: self.order.Id})
-                .then(result=>{
-                    console.log(JSON.parse(JSON.stringify(result)));
-                    for(var i = 0; i < self.fields.length; i++){
-                        console.log(self.fields[i].name)
-                        if(self.fields[i].name == 'creditCheck'){
-                            let creditCheckData = self.fields[i].data
-                            for(let j = 0;  j < creditCheckData.length; j++){
-                                if(creditCheckData[j].apiname == 'IncomingCreditCheckResult__c'){
-                                    creditCheckData[j].value = result['IncomingCreditCheckResult__c']
-                                }
-                                else if(creditCheckData[j].apiname == 'OutgoingCreditCheckResult__c'){
-                                    creditCheckData[j].value = result['OutgoingCreditCheckResult__c'];
-                                }
-                                else if (creditCheckData[j].apiname == 'CreditCheckDescription__c'){
-                                    creditCheckData[j].value = result['CreditCheckDescription__c'];
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    self.loading = false
-                })
-                .catch(error=>{console.log(error)})
-            }, 3000)
-        })
-        .catch(error => {
-            console.log('error callServiceCreditCheck error ---> : ');
-            console.log(JSON.parse(JSON.stringify(error)));
-            // this.error = error;
-            // this.contacts = undefined;
-            let toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
-                variant: 'error',
-                mode:'sticky'
-            });
-            
-            this.dispatchEvent(toastErrorMessage);
-            this.loading = false
-        })
+        this.restryEsitiCreditCheck();
 
         //EVERIS
         console.log('Details Callback Start');
@@ -2870,5 +2741,38 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(this.currentSection.name === 'indirizzoSpedizione'){
             this.handleWrapAddressObjectSpedizioneReverse();
         }
+    }
+
+    
+
+    restryEsitiCreditCheck(){        
+        let self = this;
+        self.loading = true;
+        setTimeout(function(){
+            retrieveOrderCreditCheck({idOrder: self.order.Id})
+            .then(result=>{
+                console.log(JSON.parse(JSON.stringify(result)));
+                for(var i = 0; i < self.fields.length; i++){
+                    console.log(self.fields[i].name)
+                    if(self.fields[i].name == 'creditCheck'){
+                        let creditCheckData = self.fields[i].data
+                        for(let j = 0;  j < creditCheckData.length; j++){
+                            if(creditCheckData[j].apiname == 'IncomingCreditCheckResult__c'){
+                                creditCheckData[j].value = result['IncomingCreditCheckResult__c']
+                            }
+                            else if(creditCheckData[j].apiname == 'OutgoingCreditCheckResult__c'){
+                                creditCheckData[j].value = result['OutgoingCreditCheckResult__c'];
+                            }
+                            else if (creditCheckData[j].apiname == 'CreditCheckDescription__c'){
+                                creditCheckData[j].value = result['CreditCheckDescription__c'];
+                            }
+                        }
+                        break;
+                    }
+                }
+                self.loading = false
+            })
+            .catch(error=>{console.log(error)})
+        }, 3000)
     }
 }

@@ -53,7 +53,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
     disableCitySelection = true;
     toggleLabel = 'Valido per tutte le province';
     alreadyLoaded = false;
-    editable = true;
+    editable = false;
 
     connectedCallback(){
         console.log('>>> eligibilityId > ' + this.eligibilityId);
