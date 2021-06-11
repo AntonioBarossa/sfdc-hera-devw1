@@ -305,7 +305,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     }
 
     //se Annullamento SII - Ricezione e Storno N --> Aggiornare in Annullamento SII e dopo in Annullato SII
-    //se Annullamento SII - Ricezione e Attivita Gestione procedurale SAP --> Creazione Activity
+    //se Annullamento SII - Ricezione e Attivita Eseguire Gestione Manuale SAP --> Creazione Activity
     //se Annullamento SII - Ricezione e Storno null --> No action
     public void handlePassiveCancellation(SObject recordObj, String objectType, String storno, String activity){
         Case recordCase;
@@ -314,7 +314,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if(String.isNotBlank(storno) && storno.equalsIgnoreCase('N')) {
             recordObj.put('Phase__c', 'Annullato SII');
             updateFutureSobject(JSON.serialize(recordObj));
-        }else if(String.isNotBlank(activity) && activity.equalsIgnoreCase('Gestione procedurale SAP')){
+        }else if(String.isNotBlank(activity) && activity.equalsIgnoreCase('Eseguire Gestione Manuale SAP')){
             switch on objectType {
                 when 'Case' {
                     createActivity((String)recordObj.get('Id'),null, '', activity);
