@@ -3,6 +3,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getOptions from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.getOptions';
 import next from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.next';
 
+// @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
+import callServiceCreditCheck from '@salesforce/apex/HDT_WS_CreditCheck.callService';
 export default class hdtChildOrderProcessPrecheck extends LightningElement {
     @api order;
     precheck = false;
@@ -226,7 +228,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     handleNext(){
-        console.log('handleNext: ' + this.order.Id + ' ' + this.selectedProcess);
+        //@Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
+        this.callCreditCheckSAP();
 
         let extraParams = {};
 
@@ -273,4 +276,96 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         console.log('CallBack end');
 
     }
+
+    // START @Picchiri 07/06/21 Credit Check
+    callCreditCheckSAP(){
+        this.loading = true;
+        var wrp = this.getRequest();
+        
+        console.log('connectedCallback wrp ---> ');
+        console.log(JSON.parse(JSON.stringify(wrp)));
+                
+        callServiceCreditCheck({wrpVals:JSON.stringify(wrp)})
+        .then(result => {
+            console.log('result callServiceCreditCheck ---> : ');
+            console.log(JSON.parse(JSON.stringify(result)));
+
+            if(result.status == 'failed'){
+                throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
+            }
+
+            //this.restryEsitiCreditCheck();
+            this.loading = false;
+        })
+        .catch(error => {
+            console.log('error callServiceCreditCheck error ---> : ');
+            console.log(JSON.parse(JSON.stringify(error)));
+            let toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                variant: 'error',
+                mode:'sticky'
+            });
+            
+            this.dispatchEvent(toastErrorMessage);
+            this.loading = false;
+        })        
+    }
+
+    getRequest(){
+        var typeOfCommodity = this.order.ServicePoint__r.CommoditySector__c;
+        var fiscalData = null;
+        if(typeOfCommodity == 'Energia Elettrica'){
+            typeOfCommodity = 'ENERGIAELETTRICA';
+        }
+        if(typeOfCommodity == 'Gas'){
+            typeOfCommodity = 'GAS';
+        }
+        
+        let data = {
+            sistema: "SALESFORCE",
+            caso:"Transazionale",
+            crmEntity:"Order",
+            crmId:this.order.OrderNumber,
+            userId: this.order.CreatedById,
+            activationUser:"AccountCommercialePRM",
+            account:"AccountCommercialePRM",
+            jobTitle:this.order.Channel__c,
+            internalCustomerId:this.order.Account.CustomerCode__c,
+            companyName:this.order.SalesCompany__c,
+            externalCustomerId:this.order.Account.FiscalCode__c,
+            secondaryCustomerId:this.order.Account.VATNumber__c,
+            bpClass:this.order.Account.CustomerMarking__c,
+            bpCategory:this.order.Account.Category__c,
+            bpType:this.order.Account.CustomerType__c,
+            customerType:"CT0",                                                 //da definire campo SF con business
+            address:this.order.ServicePoint__r.SupplyStreetName__c,
+            municipality:this.order.ServicePoint__r.SupplyCity__c,
+            district:this.order.ServicePoint__r.SupplyProvince__c,
+            postCode:this.order.ServicePoint__r.SupplyPostalCode__c,
+            operation:this.order.ProcessType__c,
+            companyGroup:"Hera S.p.A.",
+            market:this.order.Market__c,
+            offerType:this.order.Catalog__c,
+            details:[{
+                commodity:typeOfCommodity,
+                annualConsumption:this.order.ServicePoint__r.AnnualConsumptionStandardM3__c // mettere lo standard
+            }]		
+        }
+
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+            
+            if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
+                fiscalData = this.order.ServicePoint__r.Account__r.FiscalCode__c;
+            }else if(this.order.ServicePoint__r.Account__r.VATNumber__c != null){
+                fiscalData = this.order.ServicePoint__r.Account__r.VATNumber__c;
+            }
+            
+            data["bpAlternative"] = this.order.ServicePoint__r.Account__r.CustomerCode__c; //!null
+            data["alternativeCustomerId"] = fiscalData;            
+        }
+
+        return data; 
+    }
+    // END @Picchiri 07/06/21 Credit Check
 }
