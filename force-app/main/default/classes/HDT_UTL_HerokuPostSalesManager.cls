@@ -254,12 +254,20 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Description = newDescription + '\n' + currentDescription;
             }
         }else if(method.equalsIgnoreCase('AddAttivita')){
-            if(reqWrp.requestMap.get('TIPO_ATTIVITA') != null && reqWrp.requestMap.get('TIPO_ATTIVITA') != ''){
-                currentCase.Phase__c = reqWrp.requestMap.get('TIPO_ATTIVITA'); 
+            String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
+            String message = reqWrp.requestMap.get('MESSAGGIO');
+            // Al momento solo la Prescrizione Fattura prevede un cambio fase da esito async da SAP.
+            if(String.isNotBlank(type) && String.isNotBlank(recordCase.Type) && recordCase.Type.equals('Prescrizione Fatture')){
+                currentCase.Phase__c = type; 
             }
-            if(reqWrp.requestMap.get('MESSAGGIO') != null && reqWrp.requestMap.get('MESSAGGIO') != ''){
-                String description = recordCase.Description != null?recordCase.Description:'';
-                currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('MESSAGGIO') + '\n' + description;
+            if(String.isNotBlank(message)){
+                // Per il piano rate SAP manda TIPO_ATTIVITA=Paperless generato quando genera il codice bollettino paperless.
+                if(type.equals('Paperless generato')){
+                    currentCase.PaperlessCode__c = message;
+                }else{
+                    String description = recordCase.Description != null?recordCase.Description:'';
+                    currentCase.Description = nowDateFormat + ': ' + message + '\n' + description;
+                }
             }
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
