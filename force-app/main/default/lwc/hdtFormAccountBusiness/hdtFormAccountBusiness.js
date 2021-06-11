@@ -30,6 +30,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @track personFiscalCode;
     @track mobilephonePrefix2 = '+39';
     @track phonePrefixValue2 = '+39';
+    @api customerMarkingOptions = [];
+    @api categoryOptions = [];
+    @api customerData = [];
+    @api categoryData = [];
 
     gender;
     birthDate;
@@ -60,10 +64,18 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     };
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOM_MARKING })
-    customerMarkingOptions;
+    customerGetMarkingOptions({error, data}) {
+        if (data){
+            this.customerData = data;
+        }
+    };
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CATEGORY })
-    categoryOptions;
+    categoryGetOptions({error, data}) {
+        if (data){
+            this.categoryData = data;
+        }
+    };
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: GENDER })
     genderOptions;
@@ -80,6 +92,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: COMPANY_OWNER })
     companyOwnerOptions;
 
+    
     get ruoloOptions() {
         return [
             { label: 'Titolare', value: 'Titolare' },
@@ -97,8 +110,23 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         this.currentObjectApiName= 'Account';
     }
 
+    handleCompanyOwnerChange(event) {
+        let key = this.customerData.controllerValues[event.target.value];
+        this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.markingValue = '';
+        this.categoryValue = '';
+    }
+    handleCustomerChange(event) {
+        let key = this.categoryData.controllerValues[event.target.value];
+        this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
+        this.categoryValue = '';
+    }
+
     handleChange(event){
         this.markingValue= event.detail.value;
+        let key = this.categoryData.controllerValues[event.target.value];
+        this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
+        this.categoryValue = '';
         if(this.markingValue=='Ditta individuale'){
         //    this.template.querySelector('[data-id="legalForm"]').value = 'Ditta individuale';
         //    this.template.querySelector('[data-id="legalForm"]').readOnly = true;
@@ -393,7 +421,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
         }
-        
         // if(!(otherPhone.value=== undefined || otherPhone.value.trim()==='')){
         //     if(otherPhone.value.length<10){
         //         isValidated=false;

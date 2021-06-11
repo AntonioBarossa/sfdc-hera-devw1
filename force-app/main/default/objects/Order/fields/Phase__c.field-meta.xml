@@ -301,9 +301,14 @@
                 <label>Ripensamento - Da inviare</label>
             </value>
             <value>
-                <fullName>Ripensamento -  Comunicazione verso Heroku OK</fullName>
+                <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
                 <default>false</default>
-                <label>Ripensamento -  Comunicazione verso Heroku OK</label>
+                <label>Ripensamento - Comunicazione verso Heroku OK</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+                <default>false</default>
+                <label>Ripensamento - Comunicazione verso Heroku KO</label>
             </value>
             <value>
                 <fullName>Ripensamento - Inviato al SII</fullName>
@@ -401,6 +406,11 @@
                 <label>Annullamento - Comunicazione verso Heroku KO</label>
             </value>
             <value>
+                <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+                <default>false</default>
+                <label>Annullamento - Comunicazione verso Heroku OK</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Ammissibilità KO</fullName>
                 <default>false</default>
                 <label>Annullamento - Ammissibilità KO</label>
@@ -436,10 +446,37 @@
                 <label>Annullamento - Revocato</label>
             </value>
             <value>
+                <fullName>Annullato SII</fullName>
+                <default>false</default>
+                <label>Annullato SII</label>
+            </value>
+            <value>
+                <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+                <default>false</default>
+                <label>Annullamento SII - Errore Lavorazione SAP</label>
+            </value>
+            <value>
+                <fullName>Annullamento SII - Ricezione</fullName>
+                <default>false</default>
+                <label>Annullamento SII - Ricezione</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>BL010</label>
+            </value>
+            <value>
+                <fullName>Esito DL KO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Esito DL KO</label>
+            </value>
+            <value>
+                <fullName>Esito DL OK</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Esito DL OK</label>
             </value>
             <value>
                 <fullName>IR010</fullName>
@@ -454,10 +491,52 @@
                 <label>IR020</label>
             </value>
             <value>
+                <fullName>In registrazione</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>In registrazione</label>
+            </value>
+            <value>
+                <fullName>Inviato a DL</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Inviato a DL</label>
+            </value>
+            <value>
+                <fullName>Plico Firmato da validare</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Plico Firmato da validare</label>
+            </value>
+            <value>
+                <fullName>Plico da inviare</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Plico da inviare</label>
+            </value>
+            <value>
+                <fullName>Plico inviato da firmare</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Plico inviato da firmare</label>
+            </value>
+            <value>
+                <fullName>Plico validato Firmato</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Plico validato Firmato</label>
+            </value>
+            <value>
                 <fullName>RC010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>RC010</label>
+            </value>
+            <value>
+                <fullName>Registrazione validata  Firmato/Inviato</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Registrazione validata  Firmato/Inviato</label>
             </value>
         </valueSetDefinition>
     </valueSet>

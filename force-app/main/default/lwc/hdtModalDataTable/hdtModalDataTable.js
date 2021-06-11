@@ -82,13 +82,15 @@ export default class HdtModalDataTable extends LightningElement {
     @track columns = [];
     @track error = {show: false, message: ''};
     @track spinner = true;
+    emptyTable = true;
     modalHeader;
     iconHeader;
-    searchByField = 'Description__c';
+    searchByField = '';
     searchValue = '';
 
     get options() {
         return [
+            { label: 'Descrizione', value: 'ValueDescription__c' },
             { label: 'Descrizione', value: 'Description__c' },
             { label: 'Nome', value: 'Name' },
             { label: 'Stato', value: 'Status__c' },
@@ -98,7 +100,8 @@ export default class HdtModalDataTable extends LightningElement {
     connectedCallback() {
         this.spinner = true;
         console.log('>>> ' + this.relatedToTable + ' - rate cat >>> ' + this.rate);
-
+        this.searchByField = 'Description__c';
+        
         switch (this.relatedToTable) {
 
             case 'FareTypeList__c':
@@ -155,9 +158,11 @@ export default class HdtModalDataTable extends LightningElement {
                     console.log('# success #');
                     this.data = result;
 
+                    this.emptyTable = false; 
                     if(result.length === 0){
-                        this.error.show = true;
-                        this.error.message = 'Non è stato trovato nessun valore';                        
+                        //this.error.show = true;
+                        //this.error.message = 'Non è stato trovato nessun valore';
+                        this.emptyTable = true;                      
                     }
 
                     //var obj = JSON.parse(result);

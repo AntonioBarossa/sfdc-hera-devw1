@@ -203,6 +203,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 ) 
             }
             else if(element=='SAPImplantCode__c')
+
             {
 
                 fieldsDataObject.push(
@@ -215,6 +216,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 ) 
             }
             else if(element=='MeterStatus__c')
+
             {
 
                 fieldsDataObject.push(
@@ -324,6 +326,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             required : mapFieldReq.get(element),
                             value:'Bozza',
                             disabled: true
+
                         }
                     ) 
                 }

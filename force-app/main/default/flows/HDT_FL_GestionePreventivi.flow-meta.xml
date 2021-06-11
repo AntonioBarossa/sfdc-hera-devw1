@@ -156,8 +156,8 @@
     <assignments>
         <name>Assegna_Fase_Attesa_Conferma_Preventivo_Cliente</name>
         <label>Assegna Fase Attesa Conferma Preventivo Cliente</label>
-        <locationX>1140</locationX>
-        <locationY>3952</locationY>
+        <locationX>1145</locationX>
+        <locationY>4114</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -179,8 +179,8 @@
     <assignments>
         <name>Assegna_Valori_0</name>
         <label>Assegna Valori</label>
-        <locationX>1473</locationX>
-        <locationY>1508</locationY>
+        <locationX>1342</locationX>
+        <locationY>1524</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -199,7 +199,7 @@
             <assignToReference>Get_Input_Case_0.OperationCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calcola_Info_Preventivo.OperationCode__c</elementReference>
+                <elementReference>OperationCodeFormula</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -210,7 +210,7 @@
         <name>AssegnaComponenteFissaVariabile</name>
         <label>AssegnaComponenteFissaVariabile</label>
         <locationX>1053</locationX>
-        <locationY>3325</locationY>
+        <locationY>3326</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.FixedAmount__c</assignToReference>
             <operator>Assign</operator>
@@ -234,41 +234,6 @@
         <label>AssegnaDaServicePoint</label>
         <locationX>1269</locationX>
         <locationY>537</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case.SupplyType__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Input_Case.ServicePoint__r.SupplyType__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case.Disconnectable__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Input_Case.ServicePoint__r.Disconnectable__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case.DisconnectibilityType__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Input_Case.ServicePoint__r.DisconnectibilityType__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case.ConnectionType__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Permanente</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case.UseTypeEnergy__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Input_Case.ServicePoint__r.UseTypeEnergy__c</elementReference>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Input_Case.PowerLimitation__c</assignToReference>
             <operator>Assign</operator>
@@ -351,6 +316,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Calcola_Info_Preventivo</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriNoCodOperazione</name>
+        <label>AssegnaValoriNoCodOperazione</label>
+        <locationX>1700</locationX>
+        <locationY>1533</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcola_Info_Preventivo.CausalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.QuotationType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcola_Info_Preventivo.QuoteType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Preventivo_Rapido</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -468,8 +456,8 @@
     <assignments>
         <name>Pratica_non_gestita_per_DL</name>
         <label>Pratica non gestita per DL</label>
-        <locationX>1419</locationX>
-        <locationY>3983</locationY>
+        <locationX>1424</locationX>
+        <locationY>4145</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -498,8 +486,8 @@
     <assignments>
         <name>Preventivo_da_inviare</name>
         <label>Preventivo da Inviare</label>
-        <locationX>828</locationX>
-        <locationY>4041</locationY>
+        <locationX>833</locationX>
+        <locationY>4203</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -728,6 +716,89 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Avanzamento_1</name>
+        <label>Avanzamento</label>
+        <locationX>1870</locationX>
+        <locationY>480</locationY>
+        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Avanti</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtFLowNavButton.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtFLowNavButton.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValori</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+        <rules>
+            <name>Annulla_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtFLowNavButton.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtFLowNavButton.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Avanzamento_2</name>
+        <label>Avanzamento</label>
+        <locationX>910</locationX>
+        <locationY>3519</locationY>
+        <defaultConnector>
+            <targetReference>Annullamento_Prestazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Annulla</defaultConnectorLabel>
+        <rules>
+            <name>Conferma_2</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Prestazione_Distrubutore</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Bozza_o_Continua</name>
         <label>Bozza o Continua?</label>
         <locationX>1763</locationX>
@@ -737,14 +808,14 @@
             <name>Continua</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <leftValueReference>RecordEditFormScreen_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0.saveInDraft</leftValueReference>
+                <leftValueReference>RecordEditFormScreen_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -759,14 +830,14 @@
             <name>Annulla</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <leftValueReference>RecordEditFormScreen_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0.saveInDraft</leftValueReference>
+                <leftValueReference>RecordEditFormScreen_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -776,6 +847,31 @@
                 <targetReference>Annulla_Prestazione</targetReference>
             </connector>
             <label>Annulla</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Codice_Operazione_Valorizzato</name>
+        <label>Codice Operazione Valorizzato?</label>
+        <locationX>1534</locationX>
+        <locationY>1420</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaValoriNoCodOperazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Valorizzato</defaultConnectorLabel>
+        <rules>
+            <name>Valorizzato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Calcola_Info_Preventivo.OperationCode__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Valori_0</targetReference>
+            </connector>
+            <label>Valorizzato</label>
         </rules>
     </decisions>
     <decisions>
@@ -862,7 +958,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Valori_0</targetReference>
+                <targetReference>Codice_Operazione_Valorizzato</targetReference>
             </connector>
             <label>Esiste</label>
         </rules>
@@ -920,8 +1016,8 @@
     <decisions>
         <name>Prestazione_Gestita</name>
         <label>Prestazione Gestita?</label>
-        <locationX>1228</locationX>
-        <locationY>3635</locationY>
+        <locationX>1233</locationX>
+        <locationY>3797</locationY>
         <defaultConnector>
             <targetReference>Pratica_non_gestita_per_DL</targetReference>
         </defaultConnector>
@@ -956,7 +1052,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Calcola_Info_Preventivo.QuoteType__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Rapido</stringValue>
                 </rightValue>
@@ -970,8 +1066,8 @@
     <decisions>
         <name>Preventivo_Rapido_0</name>
         <label>Preventivo Rapido?</label>
-        <locationX>1026</locationX>
-        <locationY>3747</locationY>
+        <locationX>1031</locationX>
+        <locationY>3909</locationY>
         <defaultConnector>
             <targetReference>Preventivo_da_inviare</targetReference>
         </defaultConnector>
@@ -995,8 +1091,8 @@
     <decisions>
         <name>Salva_In_Bozza_O_Conferma</name>
         <label>Salva In Bozza O Conferma</label>
-        <locationX>1284</locationX>
-        <locationY>3513</locationY>
+        <locationX>1297</locationX>
+        <locationY>3515</locationY>
         <defaultConnectorLabel>Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -1008,10 +1104,39 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Screen_Documentale</targetReference>
             </connector>
             <label>Conferma</label>
+        </rules>
+        <rules>
+            <name>Annulla_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annullamento_Prestazione</targetReference>
+            </connector>
+            <label>Annulla</label>
         </rules>
     </decisions>
     <decisions>
@@ -1219,6 +1344,11 @@
         <expression>IF(ISNULL({!Calcola_Info_Preventivo.OperationCode__c}),&quot;&quot;,{!Calcola_Info_Preventivo.OperationCode__c} )</expression>
     </formulas>
     <formulas>
+        <name>OperationCodeFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Calcola_Info_Preventivo.OperationCode__c}), &quot;&quot;,{!Calcola_Info_Preventivo.OperationCode__c})</expression>
+    </formulas>
+    <formulas>
         <name>ProcessTypeCommodity</name>
         <dataType>String</dataType>
         <expression>IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Nuovo Impianto - Aggiunta Attacco&quot;), ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Mod. Imp. - Em. Imp. - Var. Portata&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Rimozione Impianto&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Modifica Impianto&quot;)),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + {!Get_Input_Case.CommodityFormula__c}, TEXT({!Get_Input_Case.Type}))</expression>
@@ -1296,8 +1426,8 @@
         <description>Check if the current service is managed by the local dispatcher</description>
         <name>Prestazione_Distrubutore</name>
         <label>Prestazione Distrubutore</label>
-        <locationX>953</locationX>
-        <locationY>3518</locationY>
+        <locationX>921</locationX>
+        <locationY>3774</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Prestazione_Gestita</targetReference>
@@ -1359,8 +1489,8 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>1170</locationX>
-        <locationY>4194</locationY>
+        <locationX>1175</locationX>
+        <locationY>4356</locationY>
         <inputReference>Get_Input_Case_0</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1413,8 +1543,8 @@
     <recordUpdates>
         <name>AggiornaCaseDaInviare</name>
         <label>AggiornaCaseDaInviare</label>
-        <locationX>844</locationX>
-        <locationY>4203</locationY>
+        <locationX>849</locationX>
+        <locationY>4365</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -1424,13 +1554,13 @@
     <screens>
         <name>CommodityScreen</name>
         <label>CommodityAddressScreen</label>
-        <locationX>1698</locationX>
-        <locationY>425</locationY>
+        <locationX>1639</locationX>
+        <locationY>429</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>AssegnaValori</targetReference>
+            <targetReference>Avanzamento_1</targetReference>
         </connector>
         <fields>
             <name>CommodityDisplayText</name>
@@ -1463,6 +1593,50 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
+        <fields>
+            <name>hdtFLowNavButton</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -1485,8 +1659,8 @@
     <screens>
         <name>ErroreImportiScreen</name>
         <label>ErroreImportiScreen</label>
-        <locationX>1311</locationX>
-        <locationY>2099</locationY>
+        <locationX>1284</locationX>
+        <locationY>2176</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1501,8 +1675,8 @@
     <screens>
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
-        <locationX>975</locationX>
-        <locationY>4363</locationY>
+        <locationX>993</locationX>
+        <locationY>4456</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1635,10 +1809,7 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>SaveInDraft</assignToReference>
-                <name>saveInDraft</name>
-            </outputParameters>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -1646,8 +1817,8 @@
     <screens>
         <name>RiepilogoRapidoScreen</name>
         <label>RiepilogoRapidoScreen</label>
-        <locationX>1439</locationX>
-        <locationY>3427</locationY>
+        <locationX>1454</locationX>
+        <locationY>3405</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1751,13 +1922,13 @@
     <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
-        <locationX>1112</locationX>
-        <locationY>3448</locationY>
+        <locationX>1110</locationX>
+        <locationY>3449</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Prestazione_Distrubutore</targetReference>
+            <targetReference>Avanzamento_2</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_00</name>
@@ -1772,6 +1943,18 @@
                 <name>quoteType</name>
                 <value>
                     <elementReference>Calcola_Info_Preventivo.QuoteType__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Input_Case.AccountId</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1889,7 +2072,7 @@
     <screens>
         <name>Screen_Inserimento_Portata</name>
         <label>Screen Inserimento Portata</label>
-        <locationX>1134</locationX>
+        <locationX>1135</locationX>
         <locationY>993</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1930,8 +2113,8 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>2014</locationX>
-        <locationY>981</locationY>
+        <locationX>1987</locationX>
+        <locationY>877</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1942,7 +2125,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1967,7 +2150,32 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annullamento_Prestazione</name>
+        <label>Annullamento Prestazione</label>
+        <locationX>1132</locationX>
+        <locationY>3605</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

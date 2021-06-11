@@ -24,8 +24,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String c = cl.FieldsJSON__c;
         HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse mrrResponse = 
             (HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse) JSON.deserialize(c,HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse.class);
-        System.debug('Case Phase --> '+currentCase.Phase__c);
-        if(currentCase.Phase__c == 'Da Inviare'){
+        System.debug('Case Phase --> '+currentCase.TecnicalPhase__c);
+        if(currentCase.TecnicalPhase__c == 'Da Inviare'){
             return mrrResponse;
         } else {
             return null;
@@ -110,6 +110,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         }
                     }                    
                 } when 'ANNULL'{
+                    herokuCode = responseResult.responseMap.get('requestId');
                     errorMessage = responseResult.responseMap.get('errorMessage');
                     System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
                     switch on responseResult.responseMap.get('result'){
@@ -140,10 +141,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug('SRV_Class_HerokuPracticeCode--> '+herokuCode);
 
             caseNew.Id = currentCase.Id;
-            caseNew.Phase__c = phase;
+            caseNew.TecnicalPhase__c = phase;
             caseNew.Description = errorMessage;
             if(herokuCode != null && herokuCode != ''){
-                caseNew.HerokuPracticeCode__c = herokuCode;
+                if(currentCase.Phase__c != 'Annullamento - Da inviare'){
+                    caseNew.HerokuPracticeCode__c = herokuCode;
+                }else{
+                    caseNew.CancellationHerokuPracticeCode__c = herokuCode;
+                }
             }
             if(dlCode != null && dlCode != ''){
                 caseNew.DistributorPracticeCode__c = dlCode;
@@ -176,6 +181,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String codPrestazione = reqWrp.requestMap.get('COD_PRESTAZIONE');
         String codPresa = reqWrp.requestMap.get('COD_PRESA');
         String codPraticaDl = reqWrp.requestMap.get('COD_PRAT_DISTR');
+        String numPrev = reqWrp.requestMap.get('NUMPREV');
+        String expectedExec = reqWrp.requestMap.get('TEMP_ES_PREV');
+        HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         //CHECK CROSS MINIMUM FIELD
         if(String.isBlank('method')) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
         
@@ -192,6 +200,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(String.isBlank(codServizio) || String.isBlank(codPrestazione)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Servizio or Codice Prestazione');
             if(String.isBlank(codPresa) && String.isBlank(codPraticaDl)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Presa or Codice Pratica DL');
             currentCase = HDT_SRV_AnagAlignment.handleAnagAlignmentHeroku(reqWrp);
+            currentCase = qrClass.getCaseRecord(currentCase.Id);
             caseUpdate.add(currentCase);
             return caseUpdate;
         }else if(method.equalsIgnoreCase('esito_intermedio')){
@@ -222,6 +231,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
+            String fatturaSap = reqWrp.requestMap.get('FATTURA');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
             String newDescription = '';
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
@@ -237,6 +247,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(odv != null && odv != ''){
                 newDescription =  nowDateFormat + ': ' + odv + '\n' + newDescription;
             }
+            if(fatturaSap != null && fatturaSap != ''){
+                newDescription = nowDateFormat + ': ' + fatturaSap + '\n' + newDescription;
+            }
             if(String.isNotBlank(newDescription)){
                 currentCase.Description = newDescription + '\n' + currentDescription;
             }
@@ -251,7 +264,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
         }
-
+        if(numPrev != null && numPrev != ''){
+            currentCase.QuotationNumber__c = numPrev;
+        }
+        if(expectedExec != null && expectedExec != ''){
+            currentCase.ExpectedExecutionTime__c = expectedExec;
+        }
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
         if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII'){

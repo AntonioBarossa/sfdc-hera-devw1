@@ -12,6 +12,9 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 
         HDT_UTL_ActivityCustomProcess.changeAssignRelatedRecord(trigger.new,trigger.old);
 
+        // @Picchiri 08.06.21 Credit Check Annullamento Ordine
+        HDT_UTL_ActivityCustomProcess.annullamentoActivityCustom(trigger.new,trigger.old);
+
     }
 
     public override void afterInsert(){}   

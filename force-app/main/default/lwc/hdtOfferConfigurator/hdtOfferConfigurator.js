@@ -438,11 +438,16 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
     }
 
-    back(event){
+    backToProduct(event){
         console.log('back');
         this.errorObj.showError = false;
-        //this.productid = '';
         this.goBackToRecord();
+    }
+
+    backToMatrix(event){
+        console.log('back');
+        this.errorObj.showError = false;
+        //this.goBackToRecord();
     }
 
     openConfirmation(event){
@@ -573,6 +578,16 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 mode: toastObj.mode
             })
         );
+    }
+
+    showEdit(){
+        console.log('>>> showEdit');
+        const openEdit = new CustomEvent("openedit", {
+            detail: ''
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(openEdit);
     }
 
 }

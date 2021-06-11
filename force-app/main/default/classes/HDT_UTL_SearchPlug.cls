@@ -176,10 +176,12 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         Set<Id> idList = new Set<Id>();
         Set<Id> idToFilterByMunicipalities = new Set<Id>();
         List<String> familyList = getFamilyList();
-
+        List<String> statusList = new List<String>();
+        statusList.add(Label.HDT_Sold);//'Vendibile'
         
         if(checkIfIamAsuperUser(quote.SuperUser__c)){
-            List<String> statusList = new List<String>{'Vendibile', 'Scaduta'};
+            //List<String> statusList = new List<String>{'Vendibile', 'Scaduta'};
+            statusList.add(Label.HDT_Expired);//'Scaduta
             List<Product2> allAvailableProducts;
             allAvailableProducts = HDT_QR_SearchPlug.getAllAvailableProducts(allAvailableProducts, familyList, statusList);
 
@@ -188,6 +190,12 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             }
             return idList;
         }
+
+        if(iAmSalesforceCpqAdmin()){
+            statusList.add(Label.HDT_InDevelopment);//'In Sviluppo'
+        }
+
+        System.debug('>>>>> statusList ' + statusList);
 
         //>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...
         System.debug('>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...');
@@ -198,7 +206,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         //  - CategoryTypeClient__c     - UseCategory__c
         //  - CompanyOwner__c           - EquipmenType__c
         List<EligibilityCriteria__c> filteredEligibleCriteria;
-        filteredEligibleCriteria = HDT_QR_SearchPlug.selectEligibleCriteria(filteredEligibleCriteria, familyList, quote);
+        filteredEligibleCriteria = HDT_QR_SearchPlug.selectEligibleCriteria(filteredEligibleCriteria, statusList, familyList, quote);
 
         //  Here we filter the NUMBER & checkbox field type
         //  - ClientAgeMin__c             - ClientAgeMax__c
@@ -238,7 +246,8 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             System.debug('>>> FILTER - STEP 2 > FILTER ONLY Municipalities...');
 
             List<EligibleMunicipality__c> eligibleMunicipality;
-            eligibleMunicipality = HDT_QR_SearchPlug.findEligibleMunicipality(idToFilterByMunicipalities, familyList, String.valueOf(quote.SupplyCity__c));
+            String supplyCity = String.valueOf(quote.SupplyCity__c);
+            eligibleMunicipality = HDT_QR_SearchPlug.findEligibleMunicipality(idToFilterByMunicipalities, statusList, familyList, supplyCity.replaceFirst('^0+', ''));
 
             for(EligibleMunicipality__c e : eligibleMunicipality){
                 idList.add(e.EligibilityCriteria__r.Product__c);
@@ -249,7 +258,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         //>>> FILTER - STEP 3 > FILTER ONLY prodUCT Without Criteria...
         System.debug('>>> FILTER - STEP 3 > FILTER ONLY prodUCT Without Criteria...');
         List<Product2> prodWithoutCriteria;
-        prodWithoutCriteria = HDT_QR_SearchPlug.getEligibilitiesCriteriaFromProduct(prodWithoutCriteria, familyList, 'Vendibile');
+        prodWithoutCriteria = HDT_QR_SearchPlug.getEligibilitiesCriteriaFromProduct(prodWithoutCriteria, statusList, familyList);
 
         if(!String.isEmpty(quote.SupplyCity__c)){
             for(Product2 p : prodWithoutCriteria){
@@ -325,6 +334,21 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         sl.add('VAS Prodotto');
         sl.add('VAS Servizio');
         return sl;
+    }
+
+    private static Boolean iAmSalesforceCpqAdmin(){
+        List<PermissionSetAssignment> assignmentList;
+
+        try{
+            assignmentList = HDT_QR_SearchPlug.getUserPermissionSets(assignmentList, UserInfo.getUserId());
+            if(assignmentList.size() > 0){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex){
+            return false;
+        }
     }
 
 }

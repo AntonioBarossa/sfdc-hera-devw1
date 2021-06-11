@@ -73,9 +73,13 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
                 }
 
-                if(String.isEmpty(criteria[0].Product__r.Status__c) || criteria[0].Product__r.Status__c.equalsIgnoreCase('Vendibile')){
+                if(String.isEmpty(criteria[0].Product__r.Status__c) || !criteria[0].Product__r.Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
                     cityZipCodeObj.isEditable = false;
                 } else {
+                    cityZipCodeObj.isEditable = true;
+                }
+    
+                if(HDT_UTL_ProductStObjProcess.skipTrigger('HDT_ProductStObj')){
                     cityZipCodeObj.isEditable = true;
                 }
 
@@ -99,9 +103,18 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
         System.debug('## >> ' + productId);
 
         HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion recObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion();
+        List<Product2> prodList;
 
         try{
             recObj.success = true;
+
+            prodList = HDT_QR_EligibilityCriteria.getProductById(prodList, productId);
+
+            if(String.isEmpty(prodList[0].Family) || !prodList[0].Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
+                recObj.success = false;
+                recObj.message = 'Questa funzionalità è riservata alle offerte commerciali';
+                return recObj;
+            }
 
             List<EligibilityCriteria__c> eliCrit;
             eliCrit = HDT_QR_EligibilityCriteria.getEligibilityCriteriaByProductId(eliCrit, productId);
@@ -114,7 +127,13 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
                 recObj.eligibilityId = eliCrit[0].Id;
             } else {
                 recObj.recIsPresent = false;
-                recObj.eligibilityId = '';      
+                recObj.eligibilityId = '';
+                
+                if(!prodList[0].Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
+                    recObj.success = false;
+                    recObj.message = 'E\' possibile configurare dei criteri solamente nello stato "In Sviluppo"';
+                }
+
             }
 
         } catch (Exception e){
