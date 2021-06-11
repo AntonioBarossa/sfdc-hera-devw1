@@ -27258,12 +27258,16 @@
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-CPQ Account Layout Service Console</layout>
+        <layout>Account-Partner Community</layout>
         <recordType>Account.HDT_RT_Business</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-CPQ Account Layout Service Console</layout>
+        <layout>Account-Partner Community</layout>
         <recordType>Account.HDT_RT_Residenziale</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Partner Community</layout>
+        <recordType>Account.HDT_RT_Partner</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AccountBalance__c-Estratto Conto Layout</layout>
