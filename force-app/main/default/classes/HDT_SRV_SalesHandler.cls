@@ -53,13 +53,16 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
                                 ord.CausalCode__c = mapRequestFields.get('CODERR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                             }
                             when 'Ammissibilità OK' {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                             }
                             when 'Esito OK da DL' {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
@@ -68,11 +71,13 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Esito KO da SII' {
                                 ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                             }
                             when 'Esito OK da SII' {
                                 if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                     ord.PrecheckResultSII__c = 'OK';
                                 }
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                             }
                             when 'Errore lavorazione SAP' {
                                 ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR');
