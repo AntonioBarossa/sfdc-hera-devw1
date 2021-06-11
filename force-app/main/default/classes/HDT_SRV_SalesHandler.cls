@@ -154,7 +154,9 @@ public with sharing class HDT_SRV_SalesHandler {
                                 String annotazioni = ord.CancellationNote__c != null? ord.CancellationNote__c:'';
                                 ord.CancellationNote__c = mapRequestFields.get('NOTE_ANN') +'\n' + annotazioni;
                                 HDT_UTL_HerokuPostSalesManager utlClass = new HDT_UTL_HerokuPostSalesManager();
-                                utlClass.handlePassiveCancellation(ord, 'Order', mapRequestFields.get('STORNO'), mapRequestFields.get('ATTIVITA'));
+                                Order cancellationOrder = new Order();
+                                cancellationOrder.Id = ord.Id;
+                                utlClass.handlePassiveCancellation(cancellationOrder, 'Order', mapRequestFields.get('STORNO'), mapRequestFields.get('ATTIVITA'));
                             }
                         }
 
