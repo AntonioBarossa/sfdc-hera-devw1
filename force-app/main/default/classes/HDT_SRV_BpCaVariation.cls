@@ -296,7 +296,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         HDT_WRP_BpCaVariation requestBody = new HDT_WRP_BpCaVariation();
         requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'CAM';
-        //requestBody.dataCreazione = getFormattedToday();
+        requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
         requestBody.ordine.destinatarioDivergente.nome = (String) c.get('FirstName');
         requestBody.ordine.destinatarioDivergente.cognome = (String) c.get('LastName');
