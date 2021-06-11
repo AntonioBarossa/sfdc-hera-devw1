@@ -2340,7 +2340,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'disabled': false,
                         'value': '',
                         'processVisibility': ''
-                    },
+                    }, 
                     {
                         'label': 'Flag Accise Agevolata',
                         'apiname': 'FacilitationExcise__c',
