@@ -8053,10 +8053,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Chiamata Muta</fullName>
             <default>false</default>
         </values>
@@ -8066,10 +8062,6 @@
         </values>
         <values>
             <fullName>Cliente paga un acconto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
             <default>false</default>
         </values>
         <values>
