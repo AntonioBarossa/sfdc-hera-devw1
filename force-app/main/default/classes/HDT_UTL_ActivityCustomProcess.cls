@@ -38,16 +38,23 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             }
         }
         List<Contact> contactList = contactQr.getRecordsById(listContactId);
+        List<AccountShare> lAccSh = new List<AccountShare>();
         for(Contact c : contactList){
-            if(mapContactIdOwner.get(c.id)!= null){
+            if(mapContactIdOwner.get(c.id)!= null && c.AccountId != null){
+                System.debug('************:'+c.AccountId);
+                lAccSh.add(HDT_UTL_RecordShare.accountShareEditCreate(c.AccountId,mapContactIdOwner.get(c.id)));
                 listAccount.add(new Account(id=c.AccountId,ownerId=mapContactIdOwner.get(c.id)));
             }
         }
+        /*if(lAccSh != null && !lAccSh.isEmpty()){
+            System.debug('PROVAPROVA:' + lAccSh);
+            HDT_SRV_RecordShare.createRecordWithout(lAccSh);
+        }*/
         if(listLead != null && !listLead.isEmpty()){
             HDT_SRV_Lead.updateRecord(listLead);
         }
         if(listAccount != null && !listAccount.isEmpty()){
-            accountSrv.updateRecords(listAccount);
+            accountSrv.updateRecordsNoShare(listAccount);
         }
     }
     private static List<wrts_prcgvr__Activity__c> filterByD2d(List<wrts_prcgvr__Activity__c> li,String recordtypeid){

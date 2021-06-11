@@ -31334,6 +31334,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>SurveyCRM__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>QuoteManagement__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
