@@ -5,12 +5,16 @@
         <literalValue>Informative</literalValue>
     </fieldOverrides>
     <fieldOverrides>
+        <field>CreatorGroup__c</field>
+        <formula>TEXT($User.CreatorGroup__c)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>Origin</field>
         <literalValue>Phone</literalValue>
     </fieldOverrides>
     <fieldOverrides>
         <field>Phase__c</field>
-        <literalValue>Chiuso</literalValue>
+        <literalValue>Completata</literalValue>
     </fieldOverrides>
     <fieldOverrides>
         <field>Status</field>

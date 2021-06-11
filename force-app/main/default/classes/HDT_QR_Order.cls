@@ -192,7 +192,8 @@ public inherited sharing class HDT_QR_Order {
             SELECT 
             Id,
             Phase__c,
-            PrecheckResultSII__c
+            PrecheckResultSII__c,
+            BillingProfile__c
             FROM Order 
             WHERE Id = :id
             WITH SECURITY_ENFORCED
