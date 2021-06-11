@@ -31046,13 +31046,8 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>SBQQ__ProductOption__c.HDT_RT_ProductOptionDefault</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <default>true</default>
-        <recordType>SBQQ__ProductOption__c.HDT_RT_SectionBonusforEEservice</recordType>
+        <recordType>SBQQ__ProductOption__c.HDT_RT_ProductOptionDefault</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
