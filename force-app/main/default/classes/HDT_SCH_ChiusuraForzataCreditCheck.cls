@@ -8,5 +8,5 @@ global class HDT_SCH_ChiusuraForzataCreditCheck  implements Schedulable{
         String query = 'SELECT id,Order__c,Status__c FROM wrts_prcgvr__Activity__c	 WHERE LastModifiedDate != LAST_N_DAYS:'+ lastNDays + ' and CreditCheckResults__c = \'KO\'';
         HDT_VFC_ForzaturaChiusuraCreditCheck chiusuraForzataCreditCheck = new HDT_VFC_ForzaturaChiusuraCreditCheck(query);
         Id batchProcessId = Database.ExecuteBatch(chiusuraForzataCreditCheck);
-    }
+    } 
 }
