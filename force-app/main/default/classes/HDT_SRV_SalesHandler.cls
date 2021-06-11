@@ -108,7 +108,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Esito OK da DL/SII'{
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
-                                if (previousPhase.indexOf('Annullamento') > -1) {
+                                if(previousPhase.indexOf('Annullamento') > -1) {
                                     ord.Phase__c = 'Annullamento - Esito OK da SII';
                                     finalCancellationPhase = 'Annullato';
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
@@ -119,7 +119,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Esito KO da DL/SII' {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
-                                if (previousPhase.indexOf('Annullamento') > -1) {
+                                if(previousPhase.indexOf('Annullamento') > -1) {
                                     ord.Phase__c = 'Annullamento - Esito KO da SII';
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
                                     ord.Phase__c = 'Ripensamento - Esito KO da SII';
@@ -147,6 +147,14 @@ public with sharing class HDT_SRV_SalesHandler {
                                     HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
                                     billingProfileSrv.updateRecord(billingProfile);
                                 }
+                            }
+                            when 'Annullamento SII - Ricezione'{
+                                ord.CancellationReasonCode__c = mapRequestFields.get('COD_CAUSALE');
+                                ord.CancellationNote__c = mapRequestFields.get('ANNOTAZIONI_ANN');
+                                String annotazioni = ord.CancellationNote__c != null? ord.CancellationNote__c:'';
+                                ord.CancellationNote__c = mapRequestFields.get('NOTE_ANN') +'\n' + annotazioni;
+                                HDT_UTL_HerokuPostSalesManager utlClass = new HDT_UTL_HerokuPostSalesManager();
+                                utlClass.handlePassiveCancellation(ord, 'Order', mapRequestFields.get('STORNO'), mapRequestFields.get('ATTIVITA'));
                             }
                         }
 
