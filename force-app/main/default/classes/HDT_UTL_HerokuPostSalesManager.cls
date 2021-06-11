@@ -277,7 +277,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(String.isNotBlank(message)){
                 // Per il piano rate SAP manda TIPO_ATTIVITA=Paperless generato quando genera il codice bollettino paperless.
-                if(type.equals('Paperless generato')){
+                if(type.equalsIgnoreCase('Paperless generato')){
+                    currentCase.Phase__c = 'Paperless Generato';
                     currentCase.PaperlessCode__c = message;
                 }else{
                     String description = recordCase.Description != null?recordCase.Description:'';
