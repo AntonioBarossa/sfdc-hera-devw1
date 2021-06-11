@@ -31,7 +31,40 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ChannelClient__c</picklist>
+        <values>
+            <fullName>TBD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CompanyOwner__c</picklist>
+        <values>
+            <fullName>AAA-EBT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HERA COMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ComponentPCV__c</picklist>
+        <values>
+            <fullName>TBD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ContributionsType__c</picklist>
         <values>
             <fullName>TBD</fullName>
             <default>false</default>
@@ -52,6 +85,17 @@
         </values>
         <values>
             <fullName>Casa Indipendente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EquipmentType__c</picklist>
+        <values>
+            <fullName>Monorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Multiorario</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -87,7 +131,7 @@
     <picklistValues>
         <picklist>PaymentMode__c</picklist>
         <values>
-            <fullName>Bollettino postale</fullName>
+            <fullName>Bollettino</fullName>
             <default>false</default>
         </values>
         <values>
@@ -185,23 +229,22 @@
     <picklistValues>
         <picklist>SendingBillMode__c</picklist>
         <values>
-            <fullName>Bolletta per e-mail</fullName>
+            <fullName>Email</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Bolletta per e-mail %2B Carta</fullName>
+            <fullName>Posta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Typology__c</picklist>
+        <values>
+            <fullName>Prodotto</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cartaceo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fatturazione PA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Invio tramite PEC</fullName>
+            <fullName>Servizio</fullName>
             <default>false</default>
         </values>
     </picklistValues>
