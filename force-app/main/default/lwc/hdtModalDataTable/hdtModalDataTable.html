@@ -68,7 +68,7 @@
                             </div>
                         </div>
 
-                        <div style="height: 300px;">
+                        <div if:false={emptyTable} style="height: 300px;">
                             <lightning-datatable
                                     key-field="id"
                                     data={data}
@@ -78,6 +78,13 @@
                                     >
                             </lightning-datatable>
                         </div>
+                        <div if:true={emptyTable} style="height: 300px;">
+                            <div class="slds-box">
+                                <div class="slds-text-color_error">ATTENZIONE</div>
+                                <div class="slds-text-heading_large">Non è stato trovato nessun risultato</div>
+                            </div>
+                        </div>
+
                     </template>
                 </div> 
                 <!--<p slot="footer">

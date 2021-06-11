@@ -1,5 +1,15 @@
 <template>
 
+    <template if:true={showError} >
+        <c-hdt-error-modal-message
+            header={errorHeader}
+            body-message={errorMessage}
+            header-class="slds-text-heading_large"
+            body-class="slds-text-heading_medium"
+            oncloseerrormodal={closeModal}
+        ></c-hdt-error-modal-message>
+    </template>
+
     <template if:true={showWelcom} >
         <c-hdt-technical-offer-selection
             tiles={selectionObj}
@@ -39,6 +49,7 @@
     <div if:true={showEditForm} >
 
         <c-hdt-technical-offer-edit-form
+            hidden={hiddenClass}
             mode={editFormMode}
             product-id={productid}
             rate-obj={rateObj}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ChurnkRiskCtrlLastUpdate__c</fullName>
+    <description>Necessario per calcolo KPI Propensione abbandono.  Valorizzato da Mulesoft su input di DWH.</description>
+    <externalId>false</externalId>
+    <label>Ultimo Aggiornamento Churn Risk</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>
