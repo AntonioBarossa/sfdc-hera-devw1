@@ -66,7 +66,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     isValid = false;
     isValidFields = false;
     @api isricercainsap;
-
+   // showForm=false;
 
     
     
@@ -299,7 +299,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required : mapFieldReq.get(element),
                             value:true,
-                            disabled: true
+                            disabled: false
                         }
                     ) 
                 }
@@ -504,6 +504,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.allFieldsObject = this.toObject(this.allFieldsData, this.allFieldsDataReq);
     }
 
+
     connectedCallback(){
         this.loading = true;
 
@@ -596,6 +597,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
+       // this.showForm=true;
     }
 
 
@@ -622,6 +624,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Pre-fill Account__c field on render
      */
     renderedCallback(){
+        console.log('renderedCallback START + RECORDTYPEID' + this.recordType);
         if(this.fieldsReady){
             if(this.selectedservicepoint == undefined){
                 let accountField = this.template.querySelector('[data-name="Account__c"]');
@@ -1152,6 +1155,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 variant: 'error'
             });
             this.dispatchEvent(toastErrorMessage);
+
         });
 									 
     }

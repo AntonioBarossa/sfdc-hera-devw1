@@ -285,7 +285,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         String whereq;
         String fromq = 'Case';
         String queryString;
-        fieldq = 'Id,Account.CustomerCode__c,Contact.LastName,CaseNumber';
+        fieldq = 'Id,Account.CustomerCode__c,Contact.FirstName,Contact.LastName,Contact.ContactCode__c,CaseNumber';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
@@ -296,11 +296,11 @@ public with sharing class HDT_SRV_BpCaVariation {
         HDT_WRP_BpCaVariation requestBody = new HDT_WRP_BpCaVariation();
         requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'CAM';
-        requestBody.dataCreazione = getFormattedToday();
+        //requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
+        requestBody.ordine.destinatarioDivergente.nome = (String) c.get('FirstName');
         requestBody.ordine.destinatarioDivergente.cognome = (String) c.get('LastName');
-        // TODO: verificare se ci sono altri campi che servono a sap per il cambio amministratore.
-
+        requestBody.ordine.destinatarioDivergente.idIntegrazione = (String) c.get('ContactCode__c');
         inputParams.requestBody = JSON.serialize(requestBody);
         System.debug('requestBody ' + requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
@@ -312,22 +312,29 @@ public with sharing class HDT_SRV_BpCaVariation {
         String whereq;
         String fromq = 'Case';
         String queryString;
-        fieldq = 'Id,Account.CustomerCode__c,Account.Category__c,Contact.LastName,CaseNumber';
+        fieldq = 'Id, Contact.FirstName,Contact.LastName,Contact.Phone, Contact.ContactCode__c, Contact.FiscalCode__c,CaseNumber';
         fieldq += ',BillingCity__c,BillingCountry__c,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingPostalCode__c,BillingProvince__c,BillingStreetName__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
         Case caseRecord = (Case) sobjectRecordList[0];
-        Account acc = (Account) caseRecord.Account;
         Contact c = (Contact) caseRecord.Contact;
 
         HDT_WRP_BpCaVariation requestBody = new HDT_WRP_BpCaVariation();
         requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'MAA';
         requestBody.dataCreazione = getFormattedToday();
-        requestBody.account.partner = (String) acc.get('CustomerCode__c');
-        requestBody.account.categoria = (String) acc.get('Category__c');
+        requestBody.account.alias = (String) c.get('LastName'); // Non dovrebbe mai essere vuoto.
+        requestBody.account.partner = (String) c.get('ContactCode__c');
+        requestBody.account.telefono = (String) c.get('Phone');
+        requestBody.account.nome = (String) c.get('FirstName');
+        requestBody.account.codiceFiscale = (String) c.get('FiscalCode__c');
+
+        requestBody.ordine.destinatarioDivergente.nome = (String) c.get('FirstName');
         requestBody.ordine.destinatarioDivergente.cognome = (String) c.get('LastName');
+        requestBody.ordine.destinatarioDivergente.codiceFiscale = (String) c.get('FiscalCode__c');
+        requestBody.ordine.destinatarioDivergente.telefono = (String) c.get('Phone');
+        requestBody.ordine.destinatarioDivergente.idIntegrazione = (String) c.get('ContactCode__c');
         // L'indirizzo dell'amministratore deve andare nel nodo ordine, come da specifica del webservice as-is.
         requestBody.ordine.indirizzo.comune = (String) caseRecord.get('BillingCity__c');
         requestBody.ordine.indirizzo.nazione = getFormattedCountry((String) caseRecord.get('BillingCountry__c'));
@@ -337,9 +344,6 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
         requestBody.ordine.indirizzo.via = (String) caseRecord.get('BillingStreetName__c');
         requestBody.ordine.indirizzo.piano = '';
-
-        // TODO: verificare se necessario il campo destinatarioDivergente.idIntegrazione, ad oggi valorizzato con il codice SAP del contatto (es. 1900010349)
-        // TODO: verificare se ci sono altri campi che servono a sap per la modifica dell'indirizzo dell'amministratore.
 
         inputParams.requestBody = JSON.serialize(requestBody);
         System.debug('requestBody ' + requestBody);

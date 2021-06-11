@@ -49,7 +49,7 @@ export default class HdtCampaignMemberAgencyAssignment extends LightningElement 
                         });
                         this.rangeOverflowMessage = `Il valore massimo valido è ${this.maxValue}`;
                         if (this.totalResults == 0) {
-                            let errmsg = "In Attesa del Targeting";
+                            let errmsg = "Non sono presenti CampaignMember da assegnare";
                             this.dispatchEvent(
                                 new CustomEvent(
                                     'showError',

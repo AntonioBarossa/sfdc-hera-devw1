@@ -176,6 +176,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             }
         }
 
+        if (this.currentSection.name === 'dateOrdine') {
+            if(event.target.fieldName === 'IsActivationDeferred__c') {
+                this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
+
+                if (event.target.value && this.sectionDataToSubmit.EffectiveDate__c === undefined) {
+                    this.sectionDataToSubmit['EffectiveDate__c'] = this.order.EffectiveDate__c;
+                } else {
+                    delete this.sectionDataToSubmit.EffectiveDate__c;
+                }
+            }
+
+        }
+
         let draftData = this.sectionDataToSubmit;
         draftData.Id = this.currentSectionRecordId;
 
@@ -351,7 +364,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         && section.name !== 'datiPrecedenteIntestatario' 
         && section.name !== 'indirizzodiAttivazione' 
         && section.name !== 'indirizzoSpedizione' 
-        && section.name !== 'ivaAccise'));
+        && section.name !== 'ivaAccise'
+        && section.name !== 'dateOrdine'));
 
     }
 
@@ -365,7 +379,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         || section.name === 'datiPrecedenteIntestatario' 
         || section.name === 'indirizzodiAttivazione' 
         || section.name === 'indirizzoSpedizione' 
-        || section.name === 'ivaAccise'));
+        || section.name === 'ivaAccise'
+        || section.name === 'dateOrdine'));
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
     }
 
@@ -1789,7 +1804,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
-                }	
+                },
+                {
+                    'label': 'Servizio Energetico',
+                    'apiname': 'EnergyService__c',
+                    'typeVisibility': this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'),
+                    'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                }
                ]
             },
             {
@@ -2510,7 +2534,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: '',
+                step: 10,
                 label: 'Date ordine',
                 name: 'dateOrdine',
                 objectApiName: 'Order',
@@ -2532,6 +2556,24 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Attivazione Posticipata',
+                        'apiname': 'IsActivationDeferred__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': false,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Data decorrenza',
+                        'apiname': 'EffectiveDate__c',
+                        'typeVisibility': false,
+                        'required': false,
+                        'disabled': false,
                         'value': '',
                         'processVisibility': ''
                     }
@@ -2684,7 +2726,54 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     }
 
-    
+    getRequest(){
+        var typeOfCommodity = this.order.ServicePoint__r.CommoditySector__c;
+        if(typeOfCommodity == 'Energia Elettrica'){
+            typeOfCommodity = 'ENERGIAELETTRICA';
+        }
+        if(typeOfCommodity == 'Gas'){
+            typeOfCommodity = 'GAS';
+        }
+        let data = {
+            sistema: "eEnergy",                                                 //da definire campo SF con business
+            caso:"Transazionale",                                               //da definire campo SF con business
+            crmEntity:"Order",                                                  //da definire campo SF con business
+            crmId:this.order.OrderNumber,
+            userId: this.order.CreatedById,
+            activationUser:"AccountCommercialePRM",                             //da definire campo SF con business
+            account:this.order.AccountId,
+            jobTitle:this.order.Channel__c,
+            internalCustomerId:this.order.Account.CustomerCode__c,
+            companyName:this.order.SalesCompany__c,                             //verificare che non sia vuoto
+            externalCustomerId:this.order.Account.FiscalCode__c,
+            secondaryCustomerId:this.order.Account.VATNumber__c,
+            bpClass:this.order.Account.CustomerMarking__c,
+            bpCategory:this.order.Account.Category__c,
+            bpType:this.order.Account.CustomerType__c,
+            customerType:"CT0",                                                 //da definire campo SF con business
+            address:this.order.ServicePoint__r.SupplyStreetName__c,
+            municipality:this.order.ServicePoint__r.SupplyCity__c,
+            district:this.order.ServicePoint__r.SupplyProvince__c,
+            postCode:this.order.ServicePoint__r.SupplyPostalCode__c,
+            operation:this.order.ProcessType__c,
+            companyGroup:"Hera S.p.A.",                           
+            market:this.order.Market__c,
+            offerType:this.order.Catalog__c,
+            details:[{
+                totalConsumption:'1.0',//da definire campo SF con business
+                commodity:typeOfCommodity,
+                annualConsumption:this.order.ServicePoint__r.AnnualConsumption__c
+            }]		
+        }
+
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+            data["bpAlternative"] = this.order.ServicePoint__r.Account__r.CustomerCode__c;
+            data["alternativeCustomerId"] = this.order.ServicePoint__r.Account__r.FiscalCode__c;            
+        }
+
+        return data; 
+    }
+
     connectedCallback(){
 
         // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
