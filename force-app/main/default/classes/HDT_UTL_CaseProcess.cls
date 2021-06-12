@@ -69,7 +69,7 @@ public with sharing class HDT_UTL_CaseProcess {
 		String oldPhase = caseOld.Phase__c;
         DateTime nowDateTime = DateTime.now();
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
-			if(newPhase.indexOf('Annullamento - ') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento - ') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
 				caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
                 return true;
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
