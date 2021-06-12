@@ -67,10 +67,14 @@ public with sharing class HDT_UTL_CaseProcess {
 		Case caseOld = (Case) caseOldMap.get(caseNew.Id);
 		String newPhase = caseNew.Phase__c;
 		String oldPhase = caseOld.Phase__c;
+        DateTime nowDateTime = DateTime.now();
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
 			if(newPhase.indexOf('Annullamento - ') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento - ') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
-				return true;
+				caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
+                return true;
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
+                caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
+
 				return true;
 			}
 		}
