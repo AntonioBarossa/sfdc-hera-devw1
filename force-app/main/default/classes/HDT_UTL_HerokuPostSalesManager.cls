@@ -296,8 +296,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
-        if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII'){
+        if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII' || currentCase.Phase__c == 'Annullato'){
             currentCase.Phase__c = 'Annullato';
+            currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Phase__c == 'Annullamento SII - Ricezione') {
             handlePassiveCancellation(currentCase, 'Case', storno, activity);
