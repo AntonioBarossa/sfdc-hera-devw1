@@ -289,10 +289,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 		Order orderOld = (Order) Trigger.oldMap.get(orderNew.Id);
 		String newPhase = orderNew.Phase__c;
 		String oldPhase = orderOld.Phase__c;
+        DateTime nowDateTime = DateTime.now();
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
 			if(newPhase.indexOf('Annullamento - ') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento - ') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
-				return true;
+				orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+                return true;
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
+                orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
 				return true;
 			}
 		}

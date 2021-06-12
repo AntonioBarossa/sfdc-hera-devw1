@@ -112,7 +112,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.Phase__c = 'Annullamento - ' + nextPhase;
                                     finalCancellationPhase = 'Annullato';
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
-                                   	ord.Phase__c = 'Ripensamento - ' + nextPhase;
+                                   	ord.Phase__c = 'Ripensamento - Esito OK da SII';
                                     finalCancellationPhase = 'Ripensato';
                                 }
                                 //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
@@ -122,7 +122,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 if(previousPhase.indexOf('Annullamento') > -1) {
                                     ord.Phase__c = 'Annullamento - ' + nextPhase;
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
-                                    ord.Phase__c = 'Ripensamento - ' + nextPhase;
+                                    ord.Phase__c = 'Ripensamento - Esito KO da SII';
                                 }
                                 //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
                             }
@@ -168,6 +168,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                         if (String.isNotBlank(finalCancellationPhase)) {
                             ord.Phase__c = finalCancellationPhase;
+                            ord.Status = 'Completed';
                             updateFuture(JSON.serialize(ord));
                         }
                         //EVERIS: END ANNULLAMENTO/RIPENSAMENTO  
