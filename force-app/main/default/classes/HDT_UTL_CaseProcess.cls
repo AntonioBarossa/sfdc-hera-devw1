@@ -62,4 +62,19 @@ public with sharing class HDT_UTL_CaseProcess {
         }
     }
 
+    public static Boolean manageCancellationProcess(List<Case> caseList, Map<Id,SObject> caseOldMap){
+		Case caseNew = caseList[0];
+		Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+		String newPhase = caseNew.Phase__c;
+		String oldPhase = caseOld.Phase__c;
+		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
+			if(newPhase.indexOf('Annullamento - ') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento - ') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+				return true;
+			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
