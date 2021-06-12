@@ -109,10 +109,10 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Esito OK da DL/SII'{
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 if(previousPhase.indexOf('Annullamento') > -1) {
-                                    ord.Phase__c = 'Annullamento - Esito OK da SII';
+                                    ord.Phase__c = 'Annullamento - ' + nextPhase;
                                     finalCancellationPhase = 'Annullato';
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
-                                    ord.Phase__c = 'Ripensamento - Esito OK da SII';
+                                   	ord.Phase__c = 'Ripensamento - ' + nextPhase;
                                     finalCancellationPhase = 'Ripensato';
                                 }
                                 //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
@@ -120,9 +120,9 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Esito KO da DL/SII' {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 if(previousPhase.indexOf('Annullamento') > -1) {
-                                    ord.Phase__c = 'Annullamento - Esito KO da SII';
+                                    ord.Phase__c = 'Annullamento - ' + nextPhase;
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
-                                    ord.Phase__c = 'Ripensamento - Esito KO da SII';
+                                    ord.Phase__c = 'Ripensamento - ' + nextPhase;
                                 }
                                 //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
                             }
