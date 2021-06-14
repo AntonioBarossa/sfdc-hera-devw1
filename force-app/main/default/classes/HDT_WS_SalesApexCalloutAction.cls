@@ -117,31 +117,53 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             ord.CausalCode__c = fieldValueResponse.get('CODERR');
                                             ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.Description = fieldValueResponse.get('ANNOTAZIONI');
                                         }
                                         when 'Ammissibilità OK' {
                                             ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            if( fieldValueResponse.get('DES_ERR_AEEG') != null) {
+                                                ord.DiscardReason__c = fieldValueResponse.get('DES_ERR_AEEG');
+                                                ord.CausalCode__c = fieldValueResponse.get('CODERR_AEEG');
+                                            } else {
+                                                ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
+                                            }
                                         }
                                         when 'Esito KO da DL' {
                                             ord.ReasonDL__c = fieldValueResponse.get('TESTO_ERRR');
                                             ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Esito OK da DL' {
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             ord.SapContractActivationDate__c = fieldValueResponse.get('DT_INIZIO_VERT') != null ? Date.valueOf(fieldValueResponse.get('DT_INIZIO_VERT')) : null;
                                             ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
+                                        }
+                                        when 'Amm. Precheck KO SII' {
+                                            ord.PrecheckReasonSII__c = fieldValueResponse.get('DES_ERR_ES');
+                                            ord.CausalCode__c = fieldValueResponse.get('CODERR_ES');
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                        }
+                                        when 'Amm. Precheck OK SII' {
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
+                                                ord.PrecheckResultSII__c = 'OK';
+                                            }
                                         }
                                         when 'Esito KO da SII' {
                                             ord.PrecheckReasonSII__c = fieldValueResponse.get('TESTO_ERRR');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+			                                ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Esito OK da SII' {
-
-                                            if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
-                                                ord.PrecheckResultSII__c = 'OK';
-                                            }
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+			                                ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Errore lavorazione SAP' {
                                             ord.DiscardReason__c = fieldValueResponse.get('NOTE_ERR');
