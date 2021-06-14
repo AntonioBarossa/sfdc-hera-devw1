@@ -76,16 +76,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }
 
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
+    // Ricalcolo delle date
     public static void orderCalulateDateUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) {
         system.debug('orderCalulateDateUpdate trigger --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
         system.debug('orderCalulateDateUpdate trigger --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
         List<Order> orderList = new List<Order>();                        
         for (Order newOrder : newOrdersList) {
             for (Order oldOrder : oldOrdersList) {
-                if (newOrder.SignedDate__c != oldOrder.SignedDate__c && (newOrder.WizardCompletedDate__c != null || newOrder.WizardCompletedDate__c != oldOrder.WizardCompletedDate__c) ) {                    
+                if (newOrder.SignedDate__c != oldOrder.SignedDate__c && (newOrder.WizardCompletedDate__c != null || newOrder.WizardCompletedDate__c != oldOrder.WizardCompletedDate__c) && newOrder.Status != 'Annullato' ) {
                     Order orderToUpdate = new Order();
-                    orderToUpdate.id = newOrder.Id;
-                    
+                    orderToUpdate.id = newOrder.Id;                    
                     orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(newOrder);
                     orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);                 
                     orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(newOrder);                                                      
@@ -94,7 +94,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }
         
-        update orderList;
+        if(orderList.size() > 0){
+            update orderList;
+        }        
 
     }
     // END @Picchiri HRADTR-77 Calcolo Date 01.06.21
@@ -242,21 +244,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<Order> orderListOldCustomer = new List<Order>();                        
         List<Order> orderListNewCustomer = new List<Order>();                        
         List<Order> orderList = new List<Order>();                        
-        // for (Order newOrder : newOrdersList) {
-        //     for (Order oldOrder : oldOrdersList) {
-        //         if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
-                    
-        //             if(newOrder.CreditCheckDescription__c == 'KO Precedente Cliente' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
-        //                 // cliente uscente
-        //                 orderListOldCustomer.add(newOrder);
-        //             }
-        //             if(newOrder.CreditCheckDescription__c != 'KO Precedente Cliente' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
-        //                 // cliente entrante
-        //                 orderListNewCustomer.add(newOrder);
-        //             }                                      
-        //         }
-        //     }
-        // }
+        
 
         for (Integer i = 0; i<newOrdersList.size(); i++) {
             Order newOrder = newOrdersList[i];
@@ -275,14 +263,30 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         }
 
-        // Quando un ordine viene aggiornato in ko devono essere create delle activity differenti per ko entrante o uscente    
         orderMapNew.put('oldCustomer',orderListOldCustomer);
         orderMapNew.put('newCustomer',orderListNewCustomer);
-
-        // @Picchiri 08.06.21 Credit Check Annullamento Ordine
+        // Creazione Activity per KO entranti e uscenti
         HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
     }        
     // FINE @Picchiri Credit check Date 04.06.21
+
+    public static Boolean manageCancellationProcess(List<Order> orderList, Map<Id,SObject> orderOldMapd){
+		Order orderNew = orderList[0];
+		Order orderOld = (Order) Trigger.oldMap.get(orderNew.Id);
+		String newPhase = orderNew.Phase__c;
+		String oldPhase = orderOld.Phase__c;
+        DateTime nowDateTime = DateTime.now();
+		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
+			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+				orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+                return true;
+			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
+                orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+				return true;
+			}
+		}
+		return false;
+	}
 
 
 }

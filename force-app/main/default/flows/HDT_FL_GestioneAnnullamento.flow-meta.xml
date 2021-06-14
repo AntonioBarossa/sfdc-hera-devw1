@@ -77,7 +77,7 @@
         <inputParameters>
             <name>causalCode</name>
             <value>
-                <elementReference>GetOrder.CausalCode__c</elementReference>
+                <elementReference>GetOrder.ProcessCode__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -2008,7 +2008,10 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>DefaultReason</assignToReference>
+                <name>selectedReason</name>
+            </outputParameters>
         </fields>
         <fields>
             <name>hdtOrderFormFlow</name>

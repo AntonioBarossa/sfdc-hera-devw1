@@ -382,7 +382,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 fiscalData = this.order.ServicePoint__r.Account__r.VATNumber__c;
             }
             
-            data["bpAlternative"] = this.order.ServicePoint__r.Account__r.CustomerCode__c; //!null
+            data["bpAlternative"] = this.order.ServicePoint__r.Account__r.CustomerCode__c;
             data["alternativeCustomerId"] = fiscalData;            
         }
 
