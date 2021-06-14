@@ -25,15 +25,23 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>BillingProfile__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ContactId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>BeneficiaryAccount__c</field>
+                <field>PhoneNumber__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>BillingProfile__c</field>
+                <field>ClientCategory__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>BeneficiaryAccount__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -46,14 +54,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>BankAccountSignatoryFirstName__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PhoneNumber__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ClientCategory__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -100,10 +100,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IbanCodeNumber__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>AlternativeAddress__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
