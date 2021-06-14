@@ -9305,13 +9305,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Nome_cimitero__c</picklist>
-        <values>
-            <fullName>null</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NotJustMotivation__c</picklist>
         <values>
             <fullName>Analisi incompleta</fullName>
@@ -9364,10 +9357,6 @@
         </values>
         <values>
             <fullName>Bonus commerciale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Riattivazione non morose</fullName>
             <default>false</default>
         </values>
         <values>

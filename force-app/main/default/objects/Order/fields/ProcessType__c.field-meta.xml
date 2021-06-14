@@ -36,9 +36,9 @@
                 <label>Prima Attivazione con modifica</label>
             </value>
             <value>
-                <fullName>Cambio Offerta</fullName>
+                <fullName>Cambio Offerta Ele</fullName>
                 <default>false</default>
-                <label>Cambio Offerta</label>
+                <label>Cambio Offerta Ele</label>
             </value>
             <value>
                 <fullName>Cambio Uso</fullName>
@@ -129,6 +129,11 @@
                 <fullName>Temporanea - Nuova Attivazione</fullName>
                 <default>false</default>
                 <label>Temporanea - Nuova Attivazione</label>
+            </value>
+            <value>
+                <fullName>Cambio Offerta Gas</fullName>
+                <default>false</default>
+                <label>Cambio Offerta Gas</label>
             </value>
             <value>
                 <fullName>Aggiunta Sconti o Bonus VAS</fullName>
