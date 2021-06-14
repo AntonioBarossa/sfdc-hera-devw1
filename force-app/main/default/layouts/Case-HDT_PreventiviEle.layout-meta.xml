@@ -41,10 +41,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>AddressFormula__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>PODPDRFormula__c</field>
             </layoutItems>
             <layoutItems>
@@ -199,6 +195,10 @@
         <editHeading>true</editHeading>
         <label>Nuovo Impianto</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ShipmentAddressAssign__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Commodity__c</field>
