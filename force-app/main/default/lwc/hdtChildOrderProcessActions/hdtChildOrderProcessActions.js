@@ -11,6 +11,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     @api draftObjectApiName;
     @api diffDraftObjectApiName;
     @api diffFields;
+    @api lastStepData;
     loading = false;
     isDialogVisible = false;
 
@@ -95,8 +96,8 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         let orderToSave = {};
 
-        if (this.draftObject != null) {
-            let lastStepFields = this.draftObject;
+        if (this.lastStepData != null) {
+            let lastStepFields = this.lastStepData;
 
             orderToSave = {...lastStepFields, ...this.order};
 
