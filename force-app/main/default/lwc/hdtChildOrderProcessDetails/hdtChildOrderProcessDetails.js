@@ -2698,9 +2698,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     
     connectedCallback(){
 
-        // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
-        this.restryEsitiCreditCheck();
-
         //EVERIS
         console.log('Details Callback Start');
         //EVERIS
@@ -2716,6 +2713,34 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.handleShowInviaModulistica();
 
         this.handleFields();
+
+        // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
+        // Da eliminare la condizione nel caso di sistemazione chiamata per vas
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_VAS'){
+            console.log(this.fields.length);
+            for(var i = 0; i < this.fields.length; i++){                
+                console.log(this.fields[i].name);
+                if(this.fields[i].name == 'creditCheck'){
+                    let creditCheckData = this.fields[i].data
+                    for(let j = 0;  j < creditCheckData.length; j++){
+                        if(creditCheckData[j].apiname == 'IncomingCreditCheckResult__c'){
+                            creditCheckData[j].value = 'OK';
+                        }
+                        else if(creditCheckData[j].apiname == 'OutgoingCreditCheckResult__c'){
+                            creditCheckData[j].value = 'OK';
+                        }
+                        else if (creditCheckData[j].apiname == 'CreditCheckDescription__c'){
+                            creditCheckData[j].value = '';
+                        }
+                    }
+                    break;
+                }
+            }
+
+        }else{
+            this.retryEsitiCreditCheck();
+        }        
+
 
         this.applyCreditCheckLogic(); 
 
@@ -2745,7 +2770,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     
 
-    restryEsitiCreditCheck(){        
+    retryEsitiCreditCheck(){        
         let self = this;
         self.loading = true;
         setTimeout(function(){

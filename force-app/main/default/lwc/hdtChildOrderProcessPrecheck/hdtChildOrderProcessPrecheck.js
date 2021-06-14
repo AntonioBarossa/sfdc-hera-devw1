@@ -246,7 +246,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     handleNext(){
         //@Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
-        this.callCreditCheckSAP();
+        // SE VAS al momento non innescare il credit check
+        if(this.selectedProcess !== 'HDT_RT_VAS'){
+            this.callCreditCheckSAP();
+        }
+        
 
         let extraParams = {};
 
@@ -344,7 +348,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         
         let data = {
-            sistema: "SALESFORCE",
+            sistema: "eEnergy",
             caso:"Transazionale",
             crmEntity:"Order",
             crmId:this.order.OrderNumber,
