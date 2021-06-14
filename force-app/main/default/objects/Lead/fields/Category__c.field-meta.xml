@@ -89,6 +89,14 @@
             <valueName>Reseller - Gruppo</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>piccoli condomini</controllingFieldValue>
+            <valueName>Parti Comuni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>piccoli condomini</controllingFieldValue>
+            <valueName>MMS parti comuni</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>MIWA ENERGIA-Persona fisica</controllingFieldValue>
             <controllingFieldValue>NEWENRGGEL-Persona fisica</controllingFieldValue>
             <controllingFieldValue>ONE POWER-Persona fisica</controllingFieldValue>

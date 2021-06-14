@@ -175,9 +175,9 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition, String depositMode){
         
         String phase = null;
-        String successPhase = (process == 'Piano Rateizzazione' && depositMode != null && depositMode != 'Paperless')
-            ? 'Completata'
-            : 'Esito OK da SAP';
+            String successPhase = /*(process == 'Piano Rateizzazione' && depositMode != null && depositMode != 'Paperless')
+                ? 'Completata'
+                :*/ 'Esito OK da SAP';
         String failedPhase = 'Esito KO da SAP';
 
         if(condition != null){
