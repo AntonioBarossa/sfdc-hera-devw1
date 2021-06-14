@@ -3,13 +3,11 @@
     <fullName>AccountRatingCtrl__c</fullName>
     <description>Campo tecnico nascosto. Necessario per calcolo KPI Bontà Cliente.</description>
     <externalId>false</externalId>
-    <formula>KpiTracking__r.AccountRatingCtrl__c</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Bontà Cliente</label>
-    <precision>18</precision>
+    <precision>2</precision>
     <required>false</required>
     <scale>0</scale>
-    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Number</type>
     <unique>false</unique>
 </CustomField>

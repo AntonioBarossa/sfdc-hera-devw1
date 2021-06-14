@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>CancellationReasonDescription__c</field>
-        <value xsi:type="xsd:string">Annullamento RC per disattivazione della fornitura</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Causal_Process_to_Cancell__c</field>
