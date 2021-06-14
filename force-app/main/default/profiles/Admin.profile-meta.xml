@@ -33349,7 +33349,7 @@
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>SBQQ__ProductOption__c.HDT_RT_ProductOptionDefault</recordType>
-        <visible>true</visible> 
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
