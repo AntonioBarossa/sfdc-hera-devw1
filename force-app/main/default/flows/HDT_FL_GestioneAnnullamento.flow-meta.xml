@@ -2008,7 +2008,10 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>DefaultReason</assignToReference>
+                <name>selectedReason</name>
+            </outputParameters>
         </fields>
         <fields>
             <name>hdtOrderFormFlow</name>

@@ -355,14 +355,14 @@
                 <leftValueReference>UpdatedCase.Reason__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</stringValue>
+                    <stringValue>Cessazione al diritto del Bonus fisico per Mortis causa</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>UpdatedCase.Reason__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Cessazione utilizzo apparecchiatura elettromedicale</stringValue>
+                    <stringValue>Cessazione al diritto del Bonus fisico per apparecchiatura elettromedicale</stringValue>
                 </rightValue>
             </conditions>
             <connector>

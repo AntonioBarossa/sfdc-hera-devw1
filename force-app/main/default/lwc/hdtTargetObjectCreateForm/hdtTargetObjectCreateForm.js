@@ -203,6 +203,20 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 ) 
             }
             else if(element=='SAPImplantCode__c')
+
+            {
+
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : mapFieldReq.get(element),
+                        value: this.servicePointRetrievedData[element],
+                        disabled: true
+                    }
+                ) 
+            }
+            else if(element=='MeterStatus__c')
+
             {
 
                 fieldsDataObject.push(
@@ -299,8 +313,19 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required : mapFieldReq.get(element),
                             value:true,
-
                             disabled: false
+                        }
+                    ) 
+                }
+                else if((this.recordtype.label === 'Punto Elettrico'|| this.recordtype.label === 'Punto Gas' ) && element === 'MeterStatus__c'){
+                    console.log('entra in MeterStatus__c');
+                    this.allSubmitedFields.MeterStatus__c = 'Bozza';
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required : mapFieldReq.get(element),
+                            value:'Bozza',
+                            disabled: true
 
                         }
                     ) 

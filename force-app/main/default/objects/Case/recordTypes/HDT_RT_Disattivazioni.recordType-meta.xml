@@ -7871,6 +7871,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
