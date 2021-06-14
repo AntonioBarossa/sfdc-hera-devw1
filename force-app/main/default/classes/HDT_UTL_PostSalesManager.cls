@@ -200,17 +200,18 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 if (currentAdminAcr != null) {
                     System.debug('Disassociazione Account ' + accountId + ' da Amministratore di condominio: ' + currentAdminAcr.ContactId);
                     currentAdminAcr.IsActive = False;
+                    currentAdminAcr.EndDate = Date.today();
                     HDT_UTL_DatabaseService.updateSObject(currentAdminAcr);
-
-                    AccountContactRelation newAdminAcr = new AccountContactRelation();
-                    newAdminAcr.AccountId = accountId;
-                    newAdminAcr.ContactId = newAdministratorId;
-                    newAdminAcr.IsActive = True;
-                    newAdminAcr.Roles = 'Amministratore condominio';
-                    System.debug('Associazione Account ' + accountId + ' ad Amministratore di condominio: ' + newAdministratorId);
-                    HDT_UTL_DatabaseService.insertSObject(newAdminAcr);
-
                 }
+                
+                AccountContactRelation newAdminAcr = new AccountContactRelation();
+                newAdminAcr.AccountId = accountId;
+                newAdminAcr.ContactId = newAdministratorId;
+                newAdminAcr.IsActive = True;
+                newAdminAcr.StartDate = Date.today();
+                newAdminAcr.Roles = 'Amministratore condominio';
+                System.debug('Associazione Account ' + accountId + ' ad Amministratore di condominio: ' + newAdministratorId);
+                HDT_UTL_DatabaseService.insertSObject(newAdminAcr);
             }
             when 'Cambio Intest/Indirizzo Amministratore' {
                 Contact c = new Contact();
