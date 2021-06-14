@@ -77,7 +77,7 @@
         <inputParameters>
             <name>causalCode</name>
             <value>
-                <elementReference>GetOrder.CausalCode__c</elementReference>
+                <elementReference>GetOrder.ProcessCode__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
