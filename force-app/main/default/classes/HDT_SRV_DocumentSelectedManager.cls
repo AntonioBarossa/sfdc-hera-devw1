@@ -355,7 +355,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
     }
 
     public static List<SObject> getDocumentsSelected(Id caseId){
-        String queryString = 'SELECT Id,TotalCommunicationPayment__c,DocumentNumber__c, Bill__c, Type__c, IssueDate__c,ExpirationDate__c,Amount__c,Residue__c,PaymentMode__c,IssuingCompany__c,ContractualAccount__c FROM DocumentSelected__c WHERE Case__c = \''+caseId+'\'';
+        String queryString = 'SELECT Id,TotalCommunicationPayment__c,DocumentNumber__c, TvFeeResidual__c, DocumentResidue__c, Bill__c, Type__c, IssueDate__c,ExpirationDate__c,Amount__c,Residue__c,PaymentMode__c,IssuingCompany__c,ContractualAccount__c FROM DocumentSelected__c WHERE Case__c = \''+caseId+'\'';
         String objectName = 'DocumentSelected__c';
         List<SObject> documentSelected = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
         return documentSelected;
