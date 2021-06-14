@@ -108,20 +108,70 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                     ord.TecnicalPhase__c = fieldValueResponse.get('FASE');
                                     ord.HerokuPracticeCode__c = fieldValueResponse.get('requestId');
 
-                                    switch on fieldValueResponse.get('FASE') {
-                                        when 'Esito OK da SII' {
+                                    HDT_QR_Order orderQr = new HDT_QR_Order();
+                                    Order ordRetrieved = orderQr.getOrderByIdForSalesCallout(ord.id)[0];
 
-                                            HDT_QR_Order orderQr = new HDT_QR_Order();
-                                            Order ordRetrieved = orderQr.getOrderByIdForSalesCallout(ord.id)[0];
+                                    switch on fieldValueResponse.get('FASE') {
+                                        when 'Ammissibilità KO' {
+                                            ord.DiscardReason__c = fieldValueResponse.get('DES_ERR_AEEG');
+                                            ord.CausalCode__c = fieldValueResponse.get('CODERR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                        }
+                                        when 'Ammissibilità OK' {
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                        }
+                                        when 'Esito KO da DL' {
+                                            ord.ReasonDL__c = fieldValueResponse.get('TESTO_ERRR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                        }
+                                        when 'Esito OK da DL' {
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.SapContractActivationDate__c = fieldValueResponse.get('DT_INIZIO_VERT') != null ? Date.valueOf(fieldValueResponse.get('DT_INIZIO_VERT')) : null;
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                        }
+                                        when 'Esito KO da SII' {
+                                            ord.PrecheckReasonSII__c = fieldValueResponse.get('TESTO_ERRR');
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                        }
+                                        when 'Esito OK da SII' {
 
                                             if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                                 ord.PrecheckResultSII__c = 'OK';
+                                            }
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                        }
+                                        when 'Errore lavorazione SAP' {
+                                            ord.DiscardReason__c = fieldValueResponse.get('NOTE_ERR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                        }
+                                        when 'Completata' {
+                                            ord.Description = fieldValueResponse.get('NOTA_HK');
+                                            ord.SAPImplantCode__c = fieldValueResponse.get('ANLAGE');
+                                            ord.OrderODV__c = fieldValueResponse.get('VBELN');
+                                            ord.SapContractCode__c = fieldValueResponse.get('VERTRAG');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+    
+                                            if(fieldValueResponse.get('VKONT') != null) {
+                                                ord.ContractAccountCode__c = fieldValueResponse.get('VKONT');
+    
+                                                BillingProfile__c billingProfile = new BillingProfile__c();
+                                                billingProfile.Id = ordRetrieved.BillingProfile__c;
+                                                billingProfile.ContractAccountCode__c = fieldValueResponse.get('VKONT');
+    
+                                                HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
+                                                billingProfileSrv.updateRecord(billingProfile);
                                             }
                                         }
                                     }
                                 }
                                 System.debug('********AFTER UPDATE');
-                            }
+                            }else if(method.equalsIgnoreCase('Annullamento') || method.equalsIgnoreCase('Ripensamento')){
+                                ord.TecnicalPhase__c = method + ' - Comunicazione verso Heroku OK';
+                                ord.CancellationHerokuPracticeCode__c = fieldValueResponse.get('requestId');
+                            } 
                         }
                         else{
                             //INIZIO SVILUPPI EVERIS

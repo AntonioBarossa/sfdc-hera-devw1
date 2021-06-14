@@ -149,7 +149,7 @@
         <name>Assegna_Case_Id_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
         <locationX>1304</locationX>
-        <locationY>1094</locationY>
+        <locationY>1310</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -158,7 +158,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Arricchimento_Dati_0</targetReference>
+            <targetReference>Nuovo_Impianto_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -435,7 +435,7 @@
         <name>Istanzia_Variabile_RT_Ele_0</name>
         <label>Istanzia Variabile RT Ele</label>
         <locationX>1436</locationX>
-        <locationY>758</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
             <operator>Assign</operator>
@@ -467,7 +467,7 @@
         <name>Istanzia_Variabile_RT_Gas_0</name>
         <label>Istanzia Variabile RT Gas</label>
         <locationX>1172</locationX>
-        <locationY>758</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
             <operator>Assign</operator>
@@ -724,7 +724,7 @@
         <name>CommodityDecision_0</name>
         <label>Commodity?</label>
         <locationX>1304</locationX>
-        <locationY>518</locationY>
+        <locationY>734</locationY>
         <defaultConnector>
             <targetReference>Get_RT_Ele_0</targetReference>
         </defaultConnector>
@@ -768,6 +768,56 @@
                 <targetReference>GetGasRecordType</targetReference>
             </connector>
             <label>Gas</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Nuovo_Impianto</name>
+        <label>Nuovo Impianto/Aggiunt Attacco?</label>
+        <locationX>1304</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Selezione_Fornitura_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Nuovo_Impianto_Aggiunta_Attacco</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuovo Impianto - Aggiunta Attacco</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CommodityDecision_0</targetReference>
+            </connector>
+            <label>Nuovo Impianto/Aggiunta Attacco</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Nuovo_Impianto_0</name>
+        <label>Nuovo Impianto/Aggiunt Attacco?</label>
+        <locationX>1304</locationX>
+        <locationY>1430</locationY>
+        <defaultConnector>
+            <targetReference>Arricchimento_Dati_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Nuovo_Impianto_Aggiunta_Attacco_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuovo Impianto - Aggiunta Attacco</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Preventivi_Subflow</targetReference>
+            </connector>
+            <label>Nuovo Impianto/Aggiunta Attacco</label>
         </rules>
     </decisions>
     <decisions>
@@ -980,21 +1030,21 @@
             <name>Cluster_Preventivi</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Variazione Potenza</stringValue>
+                    <stringValue>HDT_RT_PreventiviEle</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Spostamento Contatore</stringValue>
+                    <stringValue>HDT_RT_PreventiviGas</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Selezione_Fornitura_0_0</targetReference>
+                <targetReference>Nuovo_Impianto</targetReference>
             </connector>
             <label>Cluster Preventivi</label>
         </rules>
@@ -1369,7 +1419,7 @@
         <name>Crea_Case_0_0</name>
         <label>Crea Case</label>
         <locationX>1304</locationX>
-        <locationY>974</locationY>
+        <locationY>1190</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0</targetReference>
         </connector>
@@ -2808,7 +2858,7 @@
         <name>Get_RT_Ele_0</name>
         <label>Get RT Ele</label>
         <locationX>1436</locationX>
-        <locationY>638</locationY>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Istanzia_Variabile_RT_Ele_0</targetReference>
@@ -2871,7 +2921,7 @@
         <name>Get_RT_Gas_0</name>
         <label>Get RT Gas</label>
         <locationX>1172</locationX>
-        <locationY>638</locationY>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Istanzia_Variabile_RT_Gas_0</targetReference>
@@ -3206,8 +3256,8 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>1304</locationX>
-        <locationY>1214</locationY>
+        <locationX>1392</locationX>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>Gestione_Preventivi_Subflow</targetReference>
         </connector>
@@ -3507,7 +3557,7 @@
         <name>Gestione_Preventivi_Subflow</name>
         <label>Gestione Preventivi Subflow</label>
         <locationX>1304</locationX>
-        <locationY>1334</locationY>
+        <locationY>1766</locationY>
         <flowName>HDT_FL_GestionePreventivi</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3656,8 +3706,8 @@
     <subflows>
         <name>Selezione_Fornitura_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>1304</locationX>
-        <locationY>398</locationY>
+        <locationX>1392</locationX>
+        <locationY>518</locationY>
         <connector>
             <targetReference>CommodityDecision_0</targetReference>
         </connector>

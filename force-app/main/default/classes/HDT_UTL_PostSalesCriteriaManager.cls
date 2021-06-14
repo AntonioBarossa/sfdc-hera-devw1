@@ -13,4 +13,10 @@ public inherited sharing class HDT_UTL_PostSalesCriteriaManager {
 
     }
 
+    public Boolean notExecWorks(String phaseStory){
+
+        return !(phaseStory.contains('Dati Tecnici Ricevuti'));
+
+    }
+
 }

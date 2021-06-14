@@ -6,7 +6,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         String whereCond = '';
 
         if(!String.isEmpty(searchByField) && !String.isEmpty(searchValue)){
-            whereCond = ' WHERE ' + searchByField + ' LIKE \'%' + searchValue +'%\'';
+            //whereCond = ' WHERE ' + searchByField + ' LIKE \'%' + searchValue +'%\'';
+            whereCond = ' WHERE (' + searchByField + ' LIKE \'%' + searchValue +'%\' OR PossibleValue__c LIKE \'%' + searchValue +'%\')';
         }
 
         String fieldsApiName = '';

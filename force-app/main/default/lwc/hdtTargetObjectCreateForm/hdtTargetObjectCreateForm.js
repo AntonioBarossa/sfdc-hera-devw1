@@ -66,7 +66,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     isValid = false;
     isValidFields = false;
     @api isricercainsap;
-
+   // showForm=false;
 
     
     
@@ -203,6 +203,20 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 ) 
             }
             else if(element=='SAPImplantCode__c')
+
+            {
+
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : mapFieldReq.get(element),
+                        value: this.servicePointRetrievedData[element],
+                        disabled: true
+                    }
+                ) 
+            }
+            else if(element=='MeterStatus__c')
+
             {
 
                 fieldsDataObject.push(
@@ -299,7 +313,20 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required : mapFieldReq.get(element),
                             value:true,
+                            disabled: false
+                        }
+                    ) 
+                }
+                else if((this.recordtype.label === 'Punto Elettrico'|| this.recordtype.label === 'Punto Gas' ) && element === 'MeterStatus__c'){
+                    console.log('entra in MeterStatus__c');
+                    this.allSubmitedFields.MeterStatus__c = 'Bozza';
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required : mapFieldReq.get(element),
+                            value:'Bozza',
                             disabled: true
+
                         }
                     ) 
                 }
@@ -504,6 +531,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.allFieldsObject = this.toObject(this.allFieldsData, this.allFieldsDataReq);
     }
 
+
     connectedCallback(){
         this.loading = true;
 
@@ -596,6 +624,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
+       // this.showForm=true;
     }
 
 
@@ -622,6 +651,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Pre-fill Account__c field on render
      */
     renderedCallback(){
+        console.log('renderedCallback START + RECORDTYPEID' + this.recordType);
         if(this.fieldsReady){
             if(this.selectedservicepoint == undefined){
                 let accountField = this.template.querySelector('[data-name="Account__c"]');
@@ -1152,6 +1182,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 variant: 'error'
             });
             this.dispatchEvent(toastErrorMessage);
+
         });
 									 
     }

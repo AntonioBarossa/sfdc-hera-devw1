@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ParentSection__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup di tipo gerarchico, alla cima della gerarchia c&apos;è lo script con RT &quot;Processo&quot; al quale agganciamo i record script di tipo sezione.</description>
+    <externalId>false</externalId>
+    <label>Sezione Padre</label>
+    <referenceTo>ScriptConfig__c</referenceTo>
+    <relationshipLabel>Configurazione Scripts</relationshipLabel>
+    <relationshipName>Configurazione_Scripts</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

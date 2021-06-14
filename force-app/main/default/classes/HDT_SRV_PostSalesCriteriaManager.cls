@@ -26,6 +26,11 @@ global inherited sharing class HDT_SRV_PostSalesCriteriaManager implements wrts_
                 result = criteriaUtl.secondAdmissibility(currentCase.PhaseStory__c);
 
             }
+            when 'notExecWorks'{
+
+                result = criteriaUtl.notExecWorks(currentCase.PhaseStory__c);
+            
+            }
 
         }
 

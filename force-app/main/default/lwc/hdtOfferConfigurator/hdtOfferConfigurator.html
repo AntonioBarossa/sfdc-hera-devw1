@@ -17,7 +17,10 @@
 
         <template if:true={errorObj.showError} >
             <p slot="actions" >
-                <lightning-button label="Torna indietro" onclick={back} variant="destructive" ></lightning-button>
+                <lightning-button-group>
+                    <lightning-button label="Torna alla configurazione" onclick={backToMatrix} variant="destructive" ></lightning-button>
+                    <lightning-button label="Chiudi" onclick={backToProduct} variant="destructive-text" ></lightning-button>
+                </lightning-button-group>
             </p>
             <div class="slds-card__body slds-card__body_inner">
                 <div class="slds-box">
