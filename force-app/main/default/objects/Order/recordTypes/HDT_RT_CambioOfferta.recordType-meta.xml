@@ -1844,6 +1844,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>LiftingPeople__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>MarketOrigin__c</picklist>
         <values>
             <fullName>Default</fullName>
@@ -2084,8 +2095,12 @@
     <picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
-            <fullName>Cambio Offerta</fullName>
+            <fullName>Cambio Offerta Ele</fullName>
             <default>true</default>
+        </values>
+        <values>
+            <fullName>Cambio Offerta Gas</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
