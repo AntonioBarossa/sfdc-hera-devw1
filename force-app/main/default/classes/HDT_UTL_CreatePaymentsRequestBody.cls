@@ -100,10 +100,12 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
                     phase = handleSuccessResponse(successResponse, recordId, process, depositMode);
 
-                    if(successResponse.data.numeroBollettino != null){
+                    if(successResponse.data != null){
+                        if(successResponse.data.numeroBollettino != null){
 
-                        caseToUpdate.PaperlessCode__c = successResponse.data.numeroBollettino;
+                            caseToUpdate.PaperlessCode__c = successResponse.data.numeroBollettino;
 
+                        }
                     }
                     if(phase != null){
 
