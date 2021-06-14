@@ -102,7 +102,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                 //ord.Phase__c = fieldValueResponse.get('FASE');
                                 if(method.equalsIgnoreCase('Annullamento') || method.equalsIgnoreCase('Ripensamento')){
                                     ord.TecnicalPhase__c = method + ' - Comunicazione verso Heroku OK';
-                                    ord.CancellationHerokuPracticeCode__c = fieldValueResponse.get('requestId');
+                                    ord.CancellationHerokuPracticeCode__c = responseService.responses[0].header.requestId;
                                 }else{
                                    
                                     ord.TecnicalPhase__c = fieldValueResponse.get('FASE');
@@ -192,7 +192,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                 System.debug('********AFTER UPDATE');
                             }else if(method.equalsIgnoreCase('Annullamento') || method.equalsIgnoreCase('Ripensamento')){
                                 ord.TecnicalPhase__c = method + ' - Comunicazione verso Heroku OK';
-                                ord.CancellationHerokuPracticeCode__c = fieldValueResponse.get('requestId');
+                                ord.CancellationHerokuPracticeCode__c = responseService.responses[0].header.requestId;
                             } 
                         }
                         else{
