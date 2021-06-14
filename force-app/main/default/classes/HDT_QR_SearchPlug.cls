@@ -157,12 +157,12 @@ public inherited sharing class HDT_QR_SearchPlug {
         ];
     }
 
-    public static List<PermissionSetAssignment> getUserPermissionSets(List<PermissionSetAssignment> assignmentList, Id currentUserId){
+    public static List<PermissionSetAssignment> getUserPermissionSets(List<PermissionSetAssignment> assignmentList, Id currentUserId, String permissionToCheck){
         assignmentList = new List<PermissionSetAssignment>();
         assignmentList = [
             SELECT Id, PermissionSetId, PermissionSet.Name, PermissionSet.ProfileId, PermissionSet.Profile.Name, AssigneeId, Assignee.Name
             FROM PermissionSetAssignment
-            WHERE PermissionSet.Name = :Label.HDT_PermissionSetNameForCPQ AND AssigneeId = :currentUserId
+            WHERE PermissionSet.Name = :permissionToCheck AND AssigneeId = :currentUserId
         ];
         return assignmentList;
     }

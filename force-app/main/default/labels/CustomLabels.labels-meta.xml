@@ -198,4 +198,11 @@
         <shortDescription>HDT_PermissionSetNameForCPQ</shortDescription>
         <value>HDT_SalesforceCPQAdmin</value>
     </labels>
+    <labels>
+        <fullName>HDT_SuperUserCPQ</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_SuperUserCPQ</shortDescription>
+        <value>HDT_SuperUserCPQ</value>
+    </labels>
 </CustomLabels>
