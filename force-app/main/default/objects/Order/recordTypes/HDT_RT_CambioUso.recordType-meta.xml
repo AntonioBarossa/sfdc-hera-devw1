@@ -2130,19 +2130,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Ripensamento - Ammissibilità KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
         <values>

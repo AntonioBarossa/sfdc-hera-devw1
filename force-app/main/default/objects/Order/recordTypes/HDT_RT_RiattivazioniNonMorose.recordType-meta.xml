@@ -1987,19 +1987,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Ripensamento - Ammissibilità KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2044,10 +2044,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>ProcessType__c</picklist>
-        <values>
-            <fullName>Aggiunta Sconti o Bonus VAS</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Cambio Offerta</fullName>
             <default>false</default>

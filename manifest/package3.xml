@@ -1,25 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_InformativeCallNotification</members>
-        <name>QuickAction</name>
+        <members>CustomLabels</members>
+        <name>CustomLabels</name>
     </types>
     <types>
-        <members>HDT_Order_Default</members>
-        <name>FlexiPage</name>
+        <members>ForzaturaChiusuraCreditCheck__c</members>
+        <name>CustomObject</name>
     </types>
     <types>
-        <members>SurveyCRM__c</members>
-        <name>CustomTab</name>
+        <members>Case.HDT_RT_Disattivazioni</members>
+        <members>Order.HDT_RT_Attivazione</members>
+        <members>Order.HDT_RT_AttivazioneConModifica</members>
+        <members>Order.HDT_RT_CambioOfferta</members>
+        <members>Order.HDT_RT_CambioUso</members>
+        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
+        <members>Order.HDT_RT_Default</members>
+        <members>Order.HDT_RT_Proroga</members>
+        <members>Order.HDT_RT_RiattivazioniNonMorose</members>
+        <members>Order.HDT_RT_ScontiBonus</members>
+        <members>Order.HDT_RT_Subentro</members>
+        <members>Order.HDT_RT_SwitchIn</members>
+        <members>Order.HDT_RT_SwitchInVolturaTecnica</members>
+        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
+        <members>Order.HDT_RT_VAS</members>
+        <members>Order.HDT_RT_Voltura</members>
+        <name>RecordType</name>
     </types>
     <types>
-        <members>hdtInputFieldComboboxCanellation</members>
-        <members>hdtTargetObjectCreateForm</members>
+        <members>HDT_QR_SearchPlug</members>
+        <members>HDT_SCH_ChiusuraForzataCreditCheck</members>
+        <members>HDT_SRV_AnagAlignment</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_UTL_ActivityCustomProcess</members>
+        <members>HDT_UTL_CaseProcess</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_SearchPlug</members>
+        <members>HDT_VFC_ForzaturaChiusuraCreditCheck</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>ForzaturaChiusuraCreditCheck__c.LAST_N_DAYS__c</members>
+        <members>Order.Phase__c</members>
+        <members>Order.PowerCommitted__c</members>
+        <members>Order.ProcessType__c</members>
+        <members>ServicePoint__c.PowerContractual__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>HDT_LCP_ChildOrderProcess</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>ForzaturaChiusuraCreditCheck__c-it</members>
+        <name>CustomObjectTranslation</name>
+    </types>
+    <types>
+        <members>hdtAccountSelector</members>
+        <members>hdtChildOrderProcessActions</members>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtChildOrderProcessPrecheck</members>
         <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>Order.Ripristina_Annullamento</members>
-        <name>WebLink</name>
     </types>
     <types>
         <members>Admin</members>
@@ -32,65 +74,13 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneAnnullamento</members>
-        <members>HDT_FL_GestionePreventivi</members>
-        <name>Flow</name>
-    </types>
-    <types>
-        <members>Account.CheckBusinessFields</members>
-        <members>Account.CheckResidenzialeFields</members>
-        <name>ValidationRule</name>
-    </types>
-    <types>
-        <members>SBQQ__ProductOption__c.HDT_RT_ProductOptionDefault</members>
-        <name>RecordType</name>
-    </types>
-    <types>
-        <members>Account-Partner Community</members>
-        <members>Campaign-Campaign Layout</members>
-        <members>Order-Prima attivazione con modifica</members>
-        <members>Order-Prima attivazione</members>
-        <members>Order-Subentro</members>
-        <members>Order-Switch in</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>HDT_LC_CampaignsController</members>
-        <members>HDT_LC_EditQuote</members>
-        <members>HDT_QR_HerokuPostSalesManager</members>
-        <members>HDT_QR_Opportunity</members>
-        <members>HDT_SRV_Account</members>
-        <members>HDT_SRV_RecordShare</members>
-        <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_TRH_Case</members>
-        <members>HDT_TRH_Order</members>
-        <members>HDT_UTL_ActivityCustomProcess</members>
-        <members>HDT_UTL_CaseProcess</members>
-        <members>HDT_UTL_CreatePaymentsRequestBody</members>
-        <members>HDT_UTL_DatabaseServiceNoShare</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_QuoteProcess</members>
-        <members>HDT_UTL_RecordShare</members>
-        <members>HDT_UTL_ServicePoint</members>
-        <members>HDT_WS_Payments</members>
-        <members>HDT_WS_SalesApexCalloutAction</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>Account.Category__c</members>
-        <members>Lead.Category__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>HDT_LCP_RunFlowFromAura</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>HDT_ServiceCatalogProfileFilter.ServicePostSales</members>
-        <members>HDT_UserInputFlow.Preventivi_Variazione_Portata</members>
-        <members>HDT_UserInputFlow.Preventivi_Variazione_Potenza</members>
+        <members>HDT_UserInputFlow.Errore_Fatturazione</members>
+        <members>HDT_UserInputFlow.Errore_Fatturazione_No_Obblig</members>
         <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>HDT_FL_GestioneAnnullamento</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>
