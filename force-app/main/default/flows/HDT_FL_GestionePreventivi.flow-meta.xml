@@ -1471,8 +1471,8 @@
     <recordLookups>
         <name>Get_Input_Case_0</name>
         <label>Get Input Case</label>
-        <locationX>1768</locationX>
-        <locationY>830</locationY>
+        <locationX>1769</locationX>
+        <locationY>831</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Bozza_o_Continua</targetReference>
@@ -1493,7 +1493,7 @@
         <description>Check if the current service is managed by the local dispatcher</description>
         <name>Prestazione_Distrubutore</name>
         <label>Prestazione Distrubutore</label>
-        <locationX>921</locationX>
+        <locationX>920</locationX>
         <locationY>3774</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1539,7 +1539,7 @@
             <field>DistributorCode__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Input_Case_0.PODPDRFormula__c</elementReference>
+                <elementReference>Get_Input_Case_0.DistributorCode__c</elementReference>
             </value>
         </filters>
         <filters>
