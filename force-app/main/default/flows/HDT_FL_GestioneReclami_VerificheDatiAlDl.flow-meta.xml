@@ -523,7 +523,7 @@
         <inputAssignments>
             <field>AccountId</field>
             <value>
-                <elementReference>InputCaseReclamo.AccountId</elementReference>
+                <elementReference>GetParentCase.Account.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -553,13 +553,13 @@
         <inputAssignments>
             <field>Origin</field>
             <value>
-                <elementReference>InputCaseReclamo.Origin</elementReference>
+                <elementReference>GetParentCase.Origin</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>ParentId</field>
             <value>
-                <elementReference>InputCaseReclamo.Id</elementReference>
+                <elementReference>GetParentCase.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1364,7 +1364,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1389,7 +1389,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
