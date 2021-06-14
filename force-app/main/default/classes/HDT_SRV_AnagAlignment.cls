@@ -401,6 +401,11 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             }
         }
 
+        // Necessario per valorizzare i campi formula PODPDRFormula__c e ContractCode__c
+        List<Case> anagAlignCases = new List<Case>();
+        anagAlignCases.add(anagAlignCase);
+        Formula.recalculateFormulas(anagAlignCases);
+
         anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
         anagAlignCase.Phase__c = 'Da Inviare';
 
