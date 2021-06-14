@@ -59,10 +59,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Reason__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>AccountholderTypeBeneficiary__c</field>
             </layoutItems>
             <layoutItems>
@@ -71,7 +67,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ShipmentAddressAssign__c</field>
+                <field>DeliveryAddress__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AlternativeAddress__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
