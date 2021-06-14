@@ -178,9 +178,22 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         List<String> familyList = getFamilyList();
         List<String> statusList = new List<String>();
         statusList.add(Label.HDT_Sold);//'Vendibile'
-        
-        if(checkIfIamAsuperUser(quote.SuperUser__c)){
-            //List<String> statusList = new List<String>{'Vendibile', 'Scaduta'};
+
+        Boolean iAmSalesforceCpqAdmin = checkIfIamAsalesforceCpqAdmin();
+        Boolean iAmAsuperUser = checkIfIamAsuperUser(quote.SuperUser__c);
+        System.debug('>>> iAmSalesforceCpqAdmin: ' + iAmSalesforceCpqAdmin + ' - iAmAsuperUser: ' + iAmAsuperUser);
+
+        if(iAmSalesforceCpqAdmin && iAmAsuperUser){
+
+            statusList.add(Label.HDT_InDevelopment);//'In Sviluppo'
+            statusList.add(Label.HDT_Expired);//'Scaduta
+
+        } else if(iAmSalesforceCpqAdmin && !iAmAsuperUser){
+
+            statusList.add(Label.HDT_Expired);//'Scaduta
+
+        } else if(!iAmSalesforceCpqAdmin && iAmAsuperUser){
+
             statusList.add(Label.HDT_Expired);//'Scaduta
             List<Product2> allAvailableProducts;
             allAvailableProducts = HDT_QR_SearchPlug.getAllAvailableProducts(allAvailableProducts, familyList, statusList);
@@ -189,11 +202,24 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
                 idList.add(p.Id);
             }
             return idList;
+            
         }
 
-        if(iAmSalesforceCpqAdmin()){
-            statusList.add(Label.HDT_InDevelopment);//'In Sviluppo'
-        }
+        //if(iAmSalesforceCpqAdmin()){
+        //    statusList.add(Label.HDT_InDevelopment);//'In Sviluppo'
+        //}
+
+        //if(checkIfIamAsuperUser(quote.SuperUser__c)){
+        //    //List<String> statusList = new List<String>{'Vendibile', 'Scaduta'};
+        //    statusList.add(Label.HDT_Expired);//'Scaduta
+        //    List<Product2> allAvailableProducts;
+        //    allAvailableProducts = HDT_QR_SearchPlug.getAllAvailableProducts(allAvailableProducts, familyList, statusList);
+
+        //    for(Product2 p : allAvailableProducts){
+        //        idList.add(p.Id);
+        //    }
+        //    return idList;
+        //}
 
         System.debug('>>>>> statusList ' + statusList);
 
@@ -278,16 +304,6 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
     }
 
-    public static Boolean checkIfIamAsuperUser(String superUser){
-        if(!String.isEmpty(superUser) && superUser.equalsIgnoreCase('Y')){
-            System.debug('>>> I AM A SUPER USER');
-            return true;
-        } else {
-            System.debug('>>> I AM NOT A SUPER USER');
-            return false;
-        }
-    }
-
     public static Boolean checkDecimalCriteria(Decimal min, Decimal max, Decimal value){
  
         if(min != null && max != null && value <= max && value >= min){
@@ -336,17 +352,54 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         return sl;
     }
 
-    private static Boolean iAmSalesforceCpqAdmin(){
+    private static Boolean checkIfIamAsuperUser(String superUser){
+        //Permission set --> HDT_SuperUserCPQ
+        List<PermissionSetAssignment> assignmentList;
+        Boolean superUserQuote;
+        Boolean superUserPermission;
+        
+        if(!String.isEmpty(superUser) && superUser.equalsIgnoreCase('Y')){
+            System.debug('>>> QUOTE IS A SUPER USER');
+            superUserQuote = true;
+        } else {
+            System.debug('>>> QUOTE IS NOT A SUPER USER');
+            superUserQuote = false;
+        }
+
+        try{
+            assignmentList = HDT_QR_SearchPlug.getUserPermissionSets(assignmentList, UserInfo.getUserId(), Label.HDT_SuperUserCPQ);
+            System.debug('>>> PermissionSetList Size: ' + String.valueOf(assignmentList.size()));
+            if(assignmentList.size() > 0){
+                superUserPermission = true;
+            } else {
+                superUserPermission = false;
+            }
+        } catch (Exception ex){
+            System.debug('>>> Exception: ' + ex.getMessage());
+            superUserPermission = false;
+        }
+
+        if(superUserQuote && superUserPermission){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    private static Boolean checkIfIamAsalesforceCpqAdmin(){
         List<PermissionSetAssignment> assignmentList;
 
         try{
-            assignmentList = HDT_QR_SearchPlug.getUserPermissionSets(assignmentList, UserInfo.getUserId());
+            assignmentList = HDT_QR_SearchPlug.getUserPermissionSets(assignmentList, UserInfo.getUserId(), Label.HDT_PermissionSetNameForCPQ);
+            System.debug('>>> PermissionSetList Size: ' + String.valueOf(assignmentList.size()));
             if(assignmentList.size() > 0){
                 return true;
             } else {
                 return false;
             }
         } catch (Exception ex){
+            System.debug('>>> Exception: ' + ex.getMessage());
             return false;
         }
     }
