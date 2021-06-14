@@ -56,11 +56,6 @@
                 <label>Riattivazione non morose</label>
             </value>
             <value>
-                <fullName>Aggiunta Sconti o Bonus VAS</fullName>
-                <default>false</default>
-                <label>Aggiunta Sconti o Bonus VAS</label>
-            </value>
-            <value>
                 <fullName>Subentro Gas</fullName>
                 <default>false</default>
                 <label>Subentro Gas</label>
@@ -129,6 +124,17 @@
                 <fullName>VAS</fullName>
                 <default>false</default>
                 <label>VAS</label>
+            </value>
+            <value>
+                <fullName>Temporanea - Nuova Attivazione</fullName>
+                <default>false</default>
+                <label>Temporanea - Nuova Attivazione</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Aggiunta Sconti o Bonus VAS</label>
             </value>
         </valueSetDefinition>
     </valueSet>
