@@ -1949,10 +1949,6 @@
     <picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
-            <fullName>Aggiunta Sconti o Bonus VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Cambio Offerta</fullName>
             <default>false</default>
         </values>
