@@ -1943,59 +1943,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento - Ammissibilità KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Ammissibilità OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Da inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Revocato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento SII - Ricezione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento dal SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Annullato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullato SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2067,7 +2015,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2131,42 +2087,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Ammissibilità KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Ammissibilità OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Da inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito OK da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Inviato al SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Revocato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Ripensato</fullName>
             <default>false</default>
         </values>
@@ -2188,10 +2108,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>ProcessType__c</picklist>
-        <values>
-            <fullName>Aggiunta Sconti o Bonus VAS</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Cambio Offerta</fullName>
             <default>false</default>

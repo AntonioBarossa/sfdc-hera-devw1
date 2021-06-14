@@ -2060,8 +2060,8 @@
     <picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
-            <fullName>To define</fullName>
-            <default>false</default>
+            <fullName>VAS</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>

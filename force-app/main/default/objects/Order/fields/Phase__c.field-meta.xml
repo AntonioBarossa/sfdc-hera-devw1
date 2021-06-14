@@ -461,6 +461,11 @@
                 <label>Annullamento SII - Ricezione</label>
             </value>
             <value>
+                <fullName>Amm. Precheck OK SII</fullName>
+                <default>false</default>
+                <label>Amm. Precheck OK SII</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -537,6 +542,18 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Registrazione validata  Firmato/Inviato</label>
+            </value>
+            <value>
+                <fullName>Ripensamento -  Comunicazione verso Heroku KO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ripensamento -  Comunicazione verso Heroku KO</label>
+            </value>
+            <value>
+                <fullName>Ripensamento -  Comunicazione verso Heroku OK</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ripensamento -  Comunicazione verso Heroku OK</label>
             </value>
         </valueSetDefinition>
     </valueSet>

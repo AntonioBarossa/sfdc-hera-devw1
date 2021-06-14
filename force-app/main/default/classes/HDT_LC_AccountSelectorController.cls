@@ -77,7 +77,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 	}
 
 	private static List<Account> getAccountByBpCode(String bpCode) {
-		return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE CustomerCode__c LIKE :bpCode WITH SECURITY_ENFORCED];
+		return [SELECT Id, Name, CustomerCode__c, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE CustomerCode__c LIKE :bpCode WITH SECURITY_ENFORCED];
 	}
 
 	private static List<Contact> getContactTitolare(String accountId) {
@@ -166,7 +166,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 	@AuraEnabled
 	public static List<Account> getAccounts(String contactId) {
 		try {
-			return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c  FROM Account WHERE Id IN (SELECT AccountId FROM AccountContactRelation WHERE ContactId =: contactId) WITH SECURITY_ENFORCED];
+			return [SELECT Id, Name, CustomerCode__c, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE Id IN (SELECT AccountId FROM AccountContactRelation WHERE ContactId =: contactId) WITH SECURITY_ENFORCED];
 		} catch (Exception e) {
 			throw new AuraHandledException('ERROR: ' + e.getMessage());
 		}
