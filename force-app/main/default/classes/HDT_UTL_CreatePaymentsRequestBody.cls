@@ -128,7 +128,8 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                     System.debug('WS_Payments errorResponse--> ' + errorResponse);
                     if(process == 'Comunicazione Pagamento'
                     || process == 'Piano Rateizzazione'
-                    || process == 'Paperless'){
+                    || process == 'Paperless'
+                    || process == 'Blocco Sollecito/Interessi'){
                         caseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
                     }
                     createActivity(recordId, errorResponse.errorDetails[0].message, 'Esito KO da SAP');
@@ -159,6 +160,12 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         String pianoRateCondition = 'Pratica avviata';
         String comPagCondition = 'Pratica avviata';
         String paperlessCondition = 'OK';
+
+        //Gestione Blocco Sollecito/Interessi
+        if(process == 'Blocco Sollecito/Interessi'){
+            phase = 'Completata';
+            return phase;
+        }
 
         phase = handlePhaseChange(response, recordId, process, 
             process ==   'Piano Rateizzazione'
