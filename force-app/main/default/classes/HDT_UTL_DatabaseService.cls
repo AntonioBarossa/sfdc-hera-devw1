@@ -11,7 +11,7 @@ public with sharing class HDT_UTL_DatabaseService {
         if (checkBeforeDml(sObjectList, DmlOperation.DML_INSERT)) {
             return false;
         }
-        List<Database.SaveResult> insertResult = Database.insert(sObjectList, true);
+        /*List<Database.SaveResult> insertResult =*/ Database.insert(sObjectList, true);
         return true;
     }
 
@@ -23,7 +23,7 @@ public with sharing class HDT_UTL_DatabaseService {
         if (checkBeforeDml(sObjectList, DmlOperation.DML_UPDATE)) {
             return false;
         }
-        List<Database.SaveResult> updateResult = Database.update(sObjectList, true);
+        /*List<Database.SaveResult> updateResult =*/ Database.update(sObjectList, true);
         return true;
     }
 
@@ -53,7 +53,7 @@ public with sharing class HDT_UTL_DatabaseService {
             return false;
         }
         Schema.SobjectField theField = Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap().get(fieldName);
-        List<Database.UpsertResult> upsertResult = Database.upsert(sObjectList,theField, true);
+        /*List<Database.UpsertResult> upsertResult =*/ Database.upsert(sObjectList,theField, true);
         return true;
     }
 
@@ -65,7 +65,7 @@ public with sharing class HDT_UTL_DatabaseService {
         if (checkBeforeDml(sObjectList, DmlOperation.DML_DELETE)) {
             return false;
         }
-        List<Database.DeleteResult> deleteResult = Database.delete(sObjectList, true);
+        /*List<Database.DeleteResult> deleteResult =*/ Database.delete(sObjectList, true);
         return true;
     }
 
@@ -73,7 +73,7 @@ public with sharing class HDT_UTL_DatabaseService {
         if (checkBeforeDml(sObjectIds, DmlOperation.DML_DELETE)) {
             return false;
         }
-        List<Database.DeleteResult> deleteResult = Database.delete(sObjectIds, true);
+        /*List<Database.DeleteResult> deleteResult =*/ Database.delete(sObjectIds, true);
         return true;
     }
 

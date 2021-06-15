@@ -400,8 +400,40 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
         }
 
-        //Reclami customizations
+        //PianoRata customizations
+        let reasonObj =  !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'Reason__c')).length === 0)
+        ? this.firstColumn.filter(element => element['FieldName'] === 'Reason__c')
+        : this.secondColumn.filter(element => element['FieldName'] === 'Reason__c');
 
+        console.log('#Reason --> ' + JSON.stringify(reasonObj));
+
+        let paymentType = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'PaymentType__c')).length === 0)
+        ? this.firstColumn.filter(element => element['FieldName'] === 'PaymentType__c')
+        : this.secondColumn.filter(element => element['FieldName'] === 'PaymentType__c');
+
+        console.log('#PaymentType --> ' + paymentType);
+
+        if(!(Object.keys(reasonObj).length === 0)){
+
+            let reason = this.template.querySelector('lightning-input-field[data-id="Reason__c"]') != null
+            ?this.template.querySelector('lightning-input-field[data-id="Reason__c"]')
+            :null;
+
+            if(reason != null){
+                console.log('#Valore Reason --> ' + reason.value);
+                if(reason.value && reason.value != ''){
+                    let payType = this.template.querySelector('lightning-input-field[data-id="PaymentType__c"]') != null
+                    ? this.template.querySelector('lightning-input-field[data-id="PaymentType__c"]')
+                    : null;
+                    console.log('#Valore payType -> ' + payType.value);
+                    if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
+                        payType.disabled = false;
+                    } else {
+                        payType.disabled = true;
+                        payType.value = '';
+                    }
+                }
+            }
+        }
     }
- 
 }
