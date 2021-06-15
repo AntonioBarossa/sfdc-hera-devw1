@@ -125,7 +125,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         newOrder.Id = orderId;
         newOrder.RecordTypeId = recordTypeId;
         newOrder.Step__c = 2;
-        newOrder.Deliberation__c = deliberate;
+        newOrder.Deliberation__c = deliberate;        
         newOrder.ProcessType__c = processType;
         newOrder.Phase__c = 'Bozza';
 
