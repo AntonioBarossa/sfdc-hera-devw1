@@ -10587,6 +10587,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.IsChangeSalesCompany__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.Interaction__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11417,6 +11422,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.LiftingPeople__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.LoginGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12133,6 +12143,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SiebelReadingData__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SiebelStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18248,6 +18263,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.FriendCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.IsChangeSalesCompany__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30516,6 +30536,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Case.HDT_RT_RiattivazioniNonMorose</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Case.HDT_RT_RichiestaParere</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -30749,6 +30774,11 @@
         <recordType>Order.HDT_RT_Voltura</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <recordTypeVisibilities>
+		<default>false</default>
+		<recordType>Order.HDT_RT_VolturaConSwitch</recordType>
+		<visible>true</visible>
+	</recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>Reading__c.HDT_RT_LetturaEle</recordType>
