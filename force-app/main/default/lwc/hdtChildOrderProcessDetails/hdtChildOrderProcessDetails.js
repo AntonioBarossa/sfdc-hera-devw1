@@ -44,6 +44,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     wrapAddressObjectSpedizione = {};
     @api analisiConsumi;
     acceptedFormatsIvaAcciseUpload = ['.pdf', '.png'];
+    @track lastStepData = {};
 
     get previousTraderOptions(){ return [
         {"label":"ENEL ENERGIA SPA-10V0000006","value":"ENEL ENERGIA SPA-10V0000006"},
@@ -184,9 +185,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         let draftData = this.sectionDataToSubmit;
         draftData.Id = this.currentSectionRecordId;
 
+        if(this.lastStepNumber === this.currentSection.step) {
+            this.lastStepData = draftData;
+        }
+
         this.dispatchEvent(new CustomEvent('emitdraftdata', {detail: {
             objectApiName: this.currentSectionObjectApi,
-            fields: draftData
+            fields: draftData,
+            lastStepData: this.lastStepData
         }}));
     }
 
@@ -1726,7 +1732,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'SurfaceServed__c',
                     'apiname': 'SurfaceServed__c',
-                    'typeVisibility': this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'),
+                    'typeVisibility': this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'),
                     'required': false,
                     'disabled': false,
                     'value': '',
@@ -2698,9 +2704,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     
     connectedCallback(){
 
-        // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
-        this.restryEsitiCreditCheck();
-
         //EVERIS
         console.log('Details Callback Start');
         //EVERIS
@@ -2716,6 +2719,34 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.handleShowInviaModulistica();
 
         this.handleFields();
+
+        // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
+        // Da eliminare la condizione nel caso di sistemazione chiamata per vas
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_VAS'){
+            console.log(this.fields.length);
+            for(var i = 0; i < this.fields.length; i++){                
+                console.log(this.fields[i].name);
+                if(this.fields[i].name == 'creditCheck'){
+                    let creditCheckData = this.fields[i].data
+                    for(let j = 0;  j < creditCheckData.length; j++){
+                        if(creditCheckData[j].apiname == 'IncomingCreditCheckResult__c'){
+                            creditCheckData[j].value = 'OK';
+                        }
+                        else if(creditCheckData[j].apiname == 'OutgoingCreditCheckResult__c'){
+                            creditCheckData[j].value = 'OK';
+                        }
+                        else if (creditCheckData[j].apiname == 'CreditCheckDescription__c'){
+                            creditCheckData[j].value = '';
+                        }
+                    }
+                    break;
+                }
+            }
+
+        }else{
+            this.retryEsitiCreditCheck();
+        }        
+
 
         this.applyCreditCheckLogic(); 
 
@@ -2745,7 +2776,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     
 
-    restryEsitiCreditCheck(){        
+    retryEsitiCreditCheck(){        
         let self = this;
         self.loading = true;
         setTimeout(function(){
