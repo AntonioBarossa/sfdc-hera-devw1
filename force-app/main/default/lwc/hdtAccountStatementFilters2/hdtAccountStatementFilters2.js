@@ -6,6 +6,7 @@ const filterObject = {};
 
 export default class HdtAccountStatementFilters extends LightningElement {
 
+    @api accountId;
     @api filterType;
     @track filterObject = filterObject;
     @track spinnerObj = {
@@ -26,12 +27,14 @@ export default class HdtAccountStatementFilters extends LightningElement {
         name: '',
         code: ''
     }
+    filterCondition = 'AccountId=';
 
     serviceValues = [];
     stepValues = [];
 
     connectedCallback(){
         console.log('>>> filterType ' + this.filterType);
+        this.filterCondition += '\'' + this.accountId + '\'';
         this.enableDateControll = true;
         this.joinFilterObj = {
             obj1: {enable: false, name: 'contratto', label: 'Contratto', empty: true},
