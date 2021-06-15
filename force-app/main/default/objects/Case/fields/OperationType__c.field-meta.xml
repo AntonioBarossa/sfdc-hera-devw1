@@ -48,6 +48,16 @@
                 <default>false</default>
                 <label>Bonus commerciale</label>
             </value>
+            <value>
+                <fullName>Accollo totale</fullName>
+                <default>false</default>
+                <label>Accollo totale</label>
+            </value>
+            <value>
+                <fullName>Riattivazione non morose</fullName>
+                <default>false</default>
+                <label>Riattivazione non morose</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
