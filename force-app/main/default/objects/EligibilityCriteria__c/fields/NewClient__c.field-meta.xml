@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NewClient__c</fullName>
-    <defaultValue>false</defaultValue>
     <description>Campo di configurazione usato per indicare se deve essere relagato a nuovi clienti (o meno) il record di criterio nella funzionalità di Configurazione Offerta Tecnica</description>
     <externalId>false</externalId>
     <label>Nuovo Cliente</label>
+    <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Checkbox</type>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Si</fullName>
+                <default>false</default>
+                <label>Si</label>
+            </value>
+            <value>
+                <fullName>No</fullName>
+                <default>false</default>
+                <label>No</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>
