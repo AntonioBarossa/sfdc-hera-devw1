@@ -20,7 +20,7 @@ public with sharing class HDT_UTL_Individual {
         List<Contact> contacts = contactQr.getRecordsById(contactIds);
         List<Individual> inds= new List<Individual>();
         List<Contact> updateContacts= new List<Contact>();
-        List<wrapContactIndi> listWrapInd = new List<wrapContactIndi>();
+        //List<wrapContactIndi> listWrapInd = new List<wrapContactIndi>();
         Map<String,Individual> mapCheck = new Map<String,individual>();
         for(Contact c: contacts){
             Individual individual =new Individual(LastName = c.LastName,FirstName = c.firstName);
@@ -104,7 +104,7 @@ public with sharing class HDT_UTL_Individual {
         
                 
         HDT_SRV_Individual.checkCreateAccess(indv);
-        Individual indvid= HDT_SRV_Individual.updateRecord(indv);
+        /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(indv);
 
     }
 
@@ -114,7 +114,7 @@ public with sharing class HDT_UTL_Individual {
         
 
         HDT_SRV_Individual.checkCreateAccess(indv);
-        Individual individ= HDT_SRV_Individual.updateRecord(indv);
+        /*Individual individ=*/ HDT_SRV_Individual.updateRecord(indv);
      }
 
      public static Individual modifyContentPrivacyMarketing(Individual indv,String VersioneInformativaMarketing,String FonteConsensoMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing ){
