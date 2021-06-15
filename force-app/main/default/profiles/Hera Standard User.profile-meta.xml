@@ -31041,11 +31041,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Order.HDT_RT_ScontiBonus</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -31057,11 +31052,6 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Order.HDT_RT_SwitchIn</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
