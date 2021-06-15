@@ -1330,6 +1330,19 @@
             <label>Cluster Notifiche</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>votiveModenaCluster</name>
+        <dataType>String</dataType>
+        <expression>IF( CONTAINS({!ProcessType}, &quot;Votive Modena Contestazione Fattura&quot;), 
+     &quot;Reclami&quot;,
+      IF(CONTAINS({!ProcessType}, &quot;Spostamento Votive Modena&quot;),&quot;Preventivi&quot;,
+      IF(CONTAINS({!ProcessType}, &quot;Votive Modena Pagamenti Morosità&quot;),&quot;Morosità&quot;,
+      IF(CONTAINS({!ProcessType}, &quot;Votive Modena Cessazione&quot;),&quot;Disattivazioni&quot;,&quot;&quot;
+)
+)
+)
+)</expression>
+    </formulas>
     <interviewLabel>HDT_FL_PostSalesMasterDispatch {!$Flow.CurrentDateTime}</interviewLabel>
     <label>PostSales Master Dispatch</label>
     <processMetadataValues>
@@ -1641,7 +1654,7 @@
         <inputAssignments>
             <field>Cluster__c</field>
             <value>
-                <elementReference>Votive_Modena</elementReference>
+                <elementReference>votiveModenaCluster</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1654,12 +1667,6 @@
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Contract__c</field>
-            <value>
-                <elementReference>Contract</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1678,12 +1685,6 @@
             <field>RecordTypeId</field>
             <value>
                 <elementReference>Get_RT_VotiveModena.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ServicePoint__c</field>
-            <value>
-                <elementReference>ServicePointId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
