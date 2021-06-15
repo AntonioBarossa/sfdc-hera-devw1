@@ -16,10 +16,10 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         List<Map<String,String>> results = new List<Map<String,String>>();
         queryString = '%' + queryString + '%';
         if(String.isNotBlank(UserInfo.getUserRoleId())) {
-            UserRole role = [SELECT Id, Name FROM UserRole WHERE Id = :UserInfo.getUserRoleId()];
-            if(role.Name.contains('Supervisore')) {
+            User currentUser = [SELECT Id, UserRole.Name, UserCompany__c FROM User WHERE Id = :UserInfo.getUserId()];
+            if(currentUser.UserRole.Name.contains('Supervisore')) {
                 // WIP WHERE CLAUSE
-                List<User> users = [SELECT Id, Name FROM User WHERE Name LIKE :queryString WITH SECURITY_ENFORCED];
+                List<User> users = [SELECT Id, Name FROM User WHERE UserCompany__c = :currentUser.UserCompany__c AND Name LIKE :queryString WITH SECURITY_ENFORCED];
                 for(User user : users) {
                     results.add(new Map<String,String>{
                         'id' => user.Id,
