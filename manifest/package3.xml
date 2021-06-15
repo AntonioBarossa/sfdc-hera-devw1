@@ -1,79 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_SalesforceCPQAdmin</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>HDT_QR_InstallmentPlans</members>
-        <members>HDT_SRV_DocumentSelectedManager</members>
-        <members>HDT_SRV_InstallmentPlans</members>
-        <members>HDT_UTL_CreatePaymentsRequestBody</members>
+        <members>HDT_UTL_CreateGenericCase</members>
+        <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_WRP_DocusignNotify</members>
+        <members>HDT_WS_DocumentalInboundIntegration</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Account.AccountRatingCtrl__c</members>
-        <members>Account.AccountRating__c</members>
-        <members>Account.ChurnkRiskCtrl__c</members>
-        <members>Account.ChurnkRisk__c</members>
-        <members>Account.CreditCheckCalled__c</members>
-        <members>Account.CreditCheckCtrl__c</members>
-        <members>Account.CreditFormula__c</members>
-        <members>KpiTracking__c.AccountRatingCtrl__c</members>
+        <members>Case.NotJust__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>hdtAccountStatementPicker</members>
-        <members>hdtRecordEditFormFlow</members>
+        <members>hdtConfirmationDialog</members>
+        <members>hdtContentDocumentList</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>Admin</members>
-        <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
-        <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
-        <name>Profile</name>
-    </types>
-    <types>
-        <members>HDT_TechnicalCancellationReason.Annullamento_Prestazione_Disattivaz_16</members>
-        <members>HDT_TechnicalCancellationReason.Config1</members>
-        <members>HDT_TechnicalCancellationReason.Config10</members>
-        <members>HDT_TechnicalCancellationReason.Config11</members>
-        <members>HDT_TechnicalCancellationReason.Config12</members>
-        <members>HDT_TechnicalCancellationReason.Config13</members>
-        <members>HDT_TechnicalCancellationReason.Config14</members>
-        <members>HDT_TechnicalCancellationReason.Config15</members>
-        <members>HDT_TechnicalCancellationReason.Config16</members>
-        <members>HDT_TechnicalCancellationReason.Config17</members>
-        <members>HDT_TechnicalCancellationReason.Config18</members>
-        <members>HDT_TechnicalCancellationReason.Config19</members>
-        <members>HDT_TechnicalCancellationReason.Config2</members>
-        <members>HDT_TechnicalCancellationReason.Config20</members>
-        <members>HDT_TechnicalCancellationReason.Config21</members>
-        <members>HDT_TechnicalCancellationReason.Config22</members>
-        <members>HDT_TechnicalCancellationReason.Config23</members>
-        <members>HDT_TechnicalCancellationReason.Config24</members>
-        <members>HDT_TechnicalCancellationReason.Config25</members>
-        <members>HDT_TechnicalCancellationReason.Config26</members>
-        <members>HDT_TechnicalCancellationReason.Config27</members>
-        <members>HDT_TechnicalCancellationReason.Config28</members>
-        <members>HDT_TechnicalCancellationReason.Config29</members>
-        <members>HDT_TechnicalCancellationReason.Config3</members>
-        <members>HDT_TechnicalCancellationReason.Config4</members>
-        <members>HDT_TechnicalCancellationReason.Config5</members>
-        <members>HDT_TechnicalCancellationReason.Config6</members>
-        <members>HDT_TechnicalCancellationReason.Config7</members>
-        <members>HDT_TechnicalCancellationReason.Config8</members>
-        <members>HDT_TechnicalCancellationReason.Config9</members>
-        <members>HDT_UserInputFlow.Pagamenti_Piano_Rateizzazione</members>
+        <members>HDT_UserInputFlow.Reclami_Rett_Seconda_Classificazione</members>
+        <members>HDT_UserInputFlow.Reclamo_Scritto_Seconda_Classificazione</members>
+        <members>HDT_UserInputFlow.Richiesta_Info_Seconda_Classificazione</members>
         <name>CustomMetadata</name>
     </types>
     <types>
-        <members>Case.HDT_CareOfValidationRule</members>
-        <name>ValidationRule</name>
+        <members>HDT_FL_GestioneReclami</members>
+        <members>HDT_FL_GestioneReclami_ComposizioneCorpoRisposta</members>
+        <members>HDT_FL_GestioneReclami_GestioneReclamiScrittiDue</members>
+        <members>HDT_FL_GestioneReclami_ReclamiScritti</members>
+        <members>HDT_FL_GestioneReclami_VerificheDatiAlDl</members>
+        <members>HDT_FL_GestioneVariazioni</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

@@ -296,16 +296,22 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
+        handleAfterNotify(currentCase,storno,activity);
+        return caseUpdate;
+    }
+    private void handleAfterNotify(Case currentCase, String storno, String activity){
         if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII' || currentCase.Phase__c == 'Annullato'){
             currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Phase__c == 'Annullamento SII - Ricezione') {
             handlePassiveCancellation(currentCase, 'Case', storno, activity);
+        }else if(currentCase.Type == 'Allineamento Anagagrafica' && currentCase.Phase__c == 'Esito OK da SII'){
+            currentCase.Phase__c = 'Completata';
+            currentCase.Status = 'Closed';
+            updateFuture(JSON.serialize(currentCase));
         }
-        return caseUpdate;
     }
-
     //se Annullamento SII - Ricezione e Storno N --> Aggiornare in Annullamento SII e dopo in Annullato SII
     //se Annullamento SII - Ricezione e Attivita Eseguire Gestione Manuale SAP --> Creazione Activity
     //se Annullamento SII - Ricezione e Storno null --> No action
