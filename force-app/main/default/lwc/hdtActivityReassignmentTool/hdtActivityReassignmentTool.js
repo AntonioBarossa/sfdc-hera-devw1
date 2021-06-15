@@ -1,8 +1,8 @@
-import { LightningElement, api } from 'lwc';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { getRecordNotifyChange } from 'lightning/uiRecordApi';
-import getAssignees from '@salesforce/apex/HDT_LC_ActivityReassignmentTool.getAssignees';
-import reassignActivity from '@salesforce/apex/HDT_LC_ActivityReassignmentTool.reassignActivity';
+import { LightningElement, api } from "lwc";
+import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import { getRecordNotifyChange } from "lightning/uiRecordApi";
+import getAssignees from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.getAssignees";
+import reassignActivity from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.reassignActivity";
 
 export default class HdtActivityReassignmentTool extends LightningElement {
     @api recordId;
@@ -23,7 +23,7 @@ export default class HdtActivityReassignmentTool extends LightningElement {
                 this.assigneesSearched = true;
                 this.assignees = await getAssignees({queryString: event.target.value});
             } catch (err) {
-                console.log('### ERROR: ' + err);
+                console.log("### ERROR: " + err);
             }
         }
     }
@@ -31,9 +31,13 @@ export default class HdtActivityReassignmentTool extends LightningElement {
     async handleClick(event) {
         var errorMessage = await reassignActivity({recordId: this.recordId, assigneeId: event.currentTarget.dataset.id});
         if(errorMessage) {
-            this.showToast('error', 'Errore', errorMessage);
+            if(errorMessage.includes("TRANSFER_REQUIRES_READ")) {
+                this.showToast("error", "Riassegnazione fallita", "L'assegnatario selezionato non ha visibilità sul record corrente.");
+            } else {
+                this.showToast("error", "Errore", errorMessage);
+            }
         } else {
-            this.showToast('success', 'Operazione completata', 'Activity riassegnata con successo.');
+            this.showToast("success", "Operazione completata", "Activity riassegnata con successo.");
             this.refreshPage();
         }
     }
