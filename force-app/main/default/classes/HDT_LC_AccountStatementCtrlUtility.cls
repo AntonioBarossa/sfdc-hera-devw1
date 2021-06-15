@@ -27,6 +27,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 }
                 //Tasto Aggrega&Filtri 
                 when 'joinFilter' {
+                    if(String.isEmpty(dbr.aggregazione)){
+                        dbr.aggregazione = '03';
+                    }
+                    dbr.tipoTransazione = 'EC2';
                     dbr.dataFine = convertDateFormat(dbr.dataFine);
                     dbr.dataInizio = convertDateFormat(dbr.dataInizio);
                 }

@@ -58,6 +58,7 @@
 
     <template if:true={showFilters2} >
         <c-hdt-account-statement-filters2
+            account-id={recordid}
             filter-type={filterType}
             onclosemodal={closeModalHandler}
             onsetobjfilter={applyFilter}

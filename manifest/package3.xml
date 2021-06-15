@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_UTL_CreateGenericCase</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_WRP_DocusignNotify</members>
-        <members>HDT_WS_DocumentalInboundIntegration</members>
-        <members>HDT_WS_SalesApexCalloutAction</members>
+        <members>Case-HDT_PagamentiAltriProcessi</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_SalesforceCPQAdmin</members>
+        <members>HDT_SalesforceCPQUser</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_LC_AccountStatementCtrlUtility</members>
+        <members>HDT_LC_LeadChangeRecordType</members>
+        <members>HDT_LC_MassiveLoader</members>
+        <members>HDT_UTL_CreatePaymentsRequestBody</members>
+        <members>HDT_UTL_DatabaseService</members>
+        <members>HDT_UTL_GestionePrivacy</members>
+        <members>HDT_UTL_Individual</members>
+        <members>HDT_WS_MrrRequest</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Case.NotJust__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>hdtConfirmationDialog</members>
-        <members>hdtContentDocumentList</members>
+        <members>hdtAccountStatementFilters2</members>
+        <members>hdtAccountStatementViewer</members>
+        <members>hdtCustomCombobox</members>
+        <members>hdtFilterFirstLevelModal</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_UserInputFlow.Reclami_Rett_Seconda_Classificazione</members>
-        <members>HDT_UserInputFlow.Reclamo_Scritto_Seconda_Classificazione</members>
-        <members>HDT_UserInputFlow.Richiesta_Info_Seconda_Classificazione</members>
-        <name>CustomMetadata</name>
+        <members>Hera Standard User</members>
+        <name>Profile</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneReclami</members>
-        <members>HDT_FL_GestioneReclami_ComposizioneCorpoRisposta</members>
-        <members>HDT_FL_GestioneReclami_GestioneReclamiScrittiDue</members>
-        <members>HDT_FL_GestioneReclami_ReclamiScritti</members>
-        <members>HDT_FL_GestioneReclami_VerificheDatiAlDl</members>
-        <members>HDT_FL_GestioneVariazioni</members>
+        <members>HDT_FL_GestionePagamenti</members>
+        <members>HDT_FL_GestioneVotiveModena</members>
+        <members>HDT_FL_PostSalesMasterDispatch</members>
         <name>Flow</name>
     </types>
     <version>49</version>
