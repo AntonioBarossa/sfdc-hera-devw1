@@ -128,8 +128,11 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                     System.debug('WS_Payments errorResponse--> ' + errorResponse);
                     if(process == 'Comunicazione Pagamento'
                     || process == 'Piano Rateizzazione'
-                    || process == 'Paperless'){
-                        caseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
+                    || process == 'Paperless'
+                    || process == 'Blocco Sollecito/Interessi'){
+                        caseToUpdate.TecnicalPhase__c = process == 'Paperless'
+                        ? 'Paperless Non Generato'
+                        : 'Esito KO da SAP';
                     }
                     createActivity(recordId, errorResponse.errorDetails[0].message, 'Esito KO da SAP');
                     // if(caseToUpdate.Description != null){
@@ -160,6 +163,12 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         String comPagCondition = 'Pratica avviata';
         String paperlessCondition = 'OK';
 
+        //Gestione Blocco Sollecito/Interessi
+        if(process == 'Blocco Sollecito/Interessi'){
+            phase = 'Completata';
+            return phase;
+        }
+
         phase = handlePhaseChange(response, recordId, process, 
             process ==   'Piano Rateizzazione'
                 ? pianoRateCondition //successCondition
@@ -177,10 +186,14 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition, String depositMode){
         
         String phase = null;
-            String successPhase = /*(process == 'Piano Rateizzazione' && depositMode != null && depositMode != 'Paperless')
+            String successPhase = (process == 'Piano Rateizzazione' && depositMode != null && depositMode != 'Paperless')
                 ? 'Completata'
-                :*/ 'Esito OK da SAP';
-        String failedPhase = 'Esito KO da SAP';
+                : process == 'Paperless' 
+                    ? 'Paperless Generato'
+                    : 'Esito OK da SAP';
+        String failedPhase = process == 'Paperless'
+        ? 'Paperless Non Generato'
+        : 'Esito KO da SAP';
 
         if(condition != null){
 

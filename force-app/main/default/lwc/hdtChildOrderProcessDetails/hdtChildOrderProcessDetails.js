@@ -44,6 +44,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     wrapAddressObjectSpedizione = {};
     @api analisiConsumi;
     acceptedFormatsIvaAcciseUpload = ['.pdf', '.png'];
+    @track lastStepData = {};
 
     get previousTraderOptions(){ return [
         {"label":"ENEL ENERGIA SPA-10V0000006","value":"ENEL ENERGIA SPA-10V0000006"},
@@ -184,9 +185,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         let draftData = this.sectionDataToSubmit;
         draftData.Id = this.currentSectionRecordId;
 
+        if(this.lastStepNumber === this.currentSection.step) {
+            this.lastStepData = draftData;
+        }
+
         this.dispatchEvent(new CustomEvent('emitdraftdata', {detail: {
             objectApiName: this.currentSectionObjectApi,
-            fields: draftData
+            fields: draftData,
+            lastStepData: this.lastStepData
         }}));
     }
 
@@ -226,6 +232,36 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
 
     }
+
+    applyDateOrdineLogic(){
+        let currentSectionIndex = this.confirmedSteps.findIndex(section => section.name === 'dateOrdine');
+        let nextSection = this.confirmedSteps[currentSectionIndex];
+        let nextSectionName = this.confirmedSteps[currentSectionIndex].name;
+
+            if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
+
+                if(this.order.WaiverRightAfterthought__c == 'Si'){
+                    this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+
+                    this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
+                    // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-04-01';
+                } else {
+                    this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+
+                    this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
+                    // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
+                }
+
+            } else {
+
+                this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
+                // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
+                // this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                //     nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+            }
+        }
 
     typeVisibility(type){
         let result = true;
@@ -1726,7 +1762,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'SurfaceServed__c',
                     'apiname': 'SurfaceServed__c',
-                    'typeVisibility': this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'),
+                    'typeVisibility': this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'),
                     'required': false,
                     'disabled': false,
                     'value': '',
@@ -2698,9 +2734,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     
     connectedCallback(){
 
-        // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
-        this.restryEsitiCreditCheck();
-
         //EVERIS
         console.log('Details Callback Start');
         //EVERIS
@@ -2716,6 +2749,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.handleShowInviaModulistica();
 
         this.handleFields();
+
+        // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
+        if((this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.OrderReferenceNumber != null && this.order.ContractReference__c != null) || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'){
+            this.retryEsitiCreditCheck();
+        }        
+
 
         this.applyCreditCheckLogic(); 
 
@@ -2745,7 +2784,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     
 
-    restryEsitiCreditCheck(){        
+    retryEsitiCreditCheck(){        
         let self = this;
         self.loading = true;
         setTimeout(function(){

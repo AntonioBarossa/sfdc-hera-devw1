@@ -35,9 +35,11 @@
     handleEmitDraftData : function(component, event, helper){
         component.set("v.draftObjectApiName", event.getParam('objectApiName'));
         component.set("v.draftObject", event.getParam('fields'));
+        component.set("v.lastStepData", event.getParam('lastStepData'));
 
         console.log('handleEmitDraftData: ', component.get("v.draftObjectApiName"));
         console.log('handleEmitDraftData: ', JSON.stringify(component.get("v.draftObject")));
+        console.log('handleEmitDraftData lastStepData: ', JSON.stringify(component.get("v.lastStepData")));
     },
 
     handleEmitDiffDraftData : function(component, event, helper){

@@ -4,7 +4,10 @@ export default class HdtCustomCombobox extends LightningElement {
         
     @api fieldName;
     @api fieldType;
-    @track operator;
+    @track operator = [
+        {label: 'Nessun operatore', value: null}
+    ];
+
     showCombobox = true;
 
     numberOperator = [
@@ -26,15 +29,15 @@ export default class HdtCustomCombobox extends LightningElement {
 
         switch (this.fieldType) {
             case 'text':
-                this.operator = this.textOperator;
+                this.operator = this.operator.concat(this.textOperator);
                 break;
             case 'number':
-                this.operator = this.numberOperator;
+                this.operator = this.operator.concat(this.numberOperator);
                 break;
             case 'checkbox':
                 this.showCombobox = false;
             case 'date':
-                this.operator = this.dateOperator;
+                this.operator = this.operator.concat(this.dateOperator);
         }
 
         if(this.fieldName==='contoContrattuale'){

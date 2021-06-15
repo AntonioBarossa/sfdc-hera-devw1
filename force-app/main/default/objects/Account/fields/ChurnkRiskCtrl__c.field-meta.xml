@@ -3,10 +3,10 @@
     <fullName>ChurnkRiskCtrl__c</fullName>
     <description>Campo tecnico nascosto. Necessario per calcolo KPI Propensione abbandono.  Valorizzato da Mulesoft su input di DWH.</description>
     <externalId>false</externalId>
+    <formula>KpiTracking__r.ChurnkRiskCtrl__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Churn Risk</label>
-    <length>255</length>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>

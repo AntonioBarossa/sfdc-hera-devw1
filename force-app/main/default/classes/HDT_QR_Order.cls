@@ -153,34 +153,35 @@ public inherited sharing class HDT_QR_Order {
             ActivationStreetNumber__c,
             ImplantType__c,
             PowerCommitted__c,
-            EffectiveDate__c,
-            ServicePoint__r.MarketOrigin__c,            // @Picchiri Calcolo della date Switch in 21/05/21
-            WizardCompletedDate__c,                     // @Picchiri Calcolo della date Switch in 21/05/21
-            ActivatedDate,                              // @Picchiri Calcolo della date Switch in 21/05/21
-            ServicePoint__r.VoltageLevel__c,            // @Picchiri Calcolo della date Switch in 21/05/21
-            ServicePoint__r.SupplyType__c,              // @Picchiri Calcolo della date Switch in 21/05/21
-            RecessNotice__c,                            // @Picchiri Calcolo della date Switch in 21/05/21
-            CustomerCategory__c,                        // @Picchiri Calcolo della date Switch in 26/05/21
-            Channel__c,                                 // @Picchiri Calcolo della date Switch in 27/05/21
-            Market__c,                                  // @Picchiri Calcolo della date Switch in 26/05/21
-            MarketOrigin__c,                            // @Picchiri Calcolo della date Switch in 27/05/21
-            VoltageLevel__c,                            // @Picchiri Calcolo della date Switch in 27/05/21 
-            SupplyType__c,                              // @Picchiri Calcolo della date Switch in 27/05/21 
-            CreatedById,                                // @Picchiri Calcolo della date Switch in 31/05/21 
-            Account.CustomerCode__c,                    // @Picchiri Calcolo della date Switch in 31/05/21             
-            Account.CustomerMarking__c,                 // @Picchiri Calcolo della date Switch in 31/05/21             
-            Account.CustomerType__c,                         // @Picchiri Calcolo della date Switch in 31/05/21 
-            ServicePoint__r.SupplyStreetName__c,        // @Picchiri Calcolo della date Switch in 31/05/21 ERRORE
-		    ServicePoint__r.SupplyCity__c,              // @Picchiri Calcolo della date Switch in 31/05/21 
-		    ServicePoint__r.SupplyProvince__c,          // @Picchiri Calcolo della date Switch in 31/05/21 
-		    ServicePoint__r.SupplyPostalCode__c,        // @Picchiri Calcolo della date Switch in 31/05/21
-            ServicePoint__r.Account__r.CustomerCode__c, // @Picchiri Calcolo della date Switch in 08/06/21             
-            ServicePoint__r.Account__r.FiscalCode__c,   // @Picchiri Calcolo della date Switch in 08/06/21             
-            CommercialProduct__c,                       // @Picchiri Calcolo della date Switch in 31/05/21 
-            AnnualConsumption__c,                       // @Picchiri Calcolo della date Switch in 31/05/21 
-            Catalog__c,                                 // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
-            ServicePoint__r.AnnualConsumptionStandardM3__c,       // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
-            BillingProfile__r.AccountClass__c           // @Picchiri Calcolo della date Switch in 08/06/21             
+            ServicePoint__r.MarketOrigin__c,                // @Picchiri 21/05/21
+            WizardCompletedDate__c,                         // @Picchiri 21/05/21
+            ActivatedDate,                                  // @Picchiri 21/05/21
+            ServicePoint__r.VoltageLevel__c,                // @Picchiri 21/05/21
+            ServicePoint__r.SupplyType__c,                  // @Picchiri 21/05/21
+            RecessNotice__c,                                // @Picchiri 21/05/21
+            CustomerCategory__c,                            // @Picchiri 26/05/21
+            Channel__c,                                     // @Picchiri 27/05/21
+            Market__c,                                      // @Picchiri 26/05/21
+            MarketOrigin__c,                                // @Picchiri 27/05/21
+            VoltageLevel__c,                                // @Picchiri 27/05/21 
+            SupplyType__c,                                  // @Picchiri 27/05/21 
+            CreatedById,                                    // @Picchiri 31/05/21 
+            Account.CustomerCode__c,                        // @Picchiri 31/05/21             
+            Account.CustomerMarking__c,                     // @Picchiri 31/05/21             
+            Account.CustomerType__c,                        // @Picchiri 31/05/21 
+            ServicePoint__r.SupplyStreetName__c,            // @Picchiri 31/05/21 ERRORE
+		    ServicePoint__r.SupplyCity__c,                  // @Picchiri 31/05/21 
+		    ServicePoint__r.SupplyProvince__c,              // @Picchiri 31/05/21 
+		    ServicePoint__r.SupplyPostalCode__c,            // @Picchiri 31/05/21
+            ServicePoint__r.Account__r.CustomerCode__c,     // @Picchiri 08/06/21             
+            ServicePoint__r.Account__r.FiscalCode__c,       // @Picchiri 08/06/21             
+            CommercialProduct__c,                           // @Picchiri 31/05/21 
+            AnnualConsumption__c,                           // @Picchiri 31/05/21 
+            Catalog__c,                                     // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
+            ServicePoint__r.AnnualConsumptionStandardM3__c, // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
+            BillingProfile__r.AccountClass__c,              // @Picchiri Calcolo della date Switch in 08/06/21             
+            OwnerId,                                        // @Picchiri  10/06/21
+            OrderReferenceNumber                            // @Picchiri  15/06/21
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

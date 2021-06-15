@@ -17,6 +17,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
                 'Id', 
                 'SystemModstamp', 
                 'Phase__c', 
+                'PhaseStory__c', 
                 'Status',
                 'Cluster__c',
                 'Type',
@@ -36,7 +37,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
             }catch(Exception e){
                 System.debug('Exception--> '+e.getMessage());
 
-            }   
+            }
 
         }
         
