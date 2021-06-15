@@ -130,7 +130,9 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                     || process == 'Piano Rateizzazione'
                     || process == 'Paperless'
                     || process == 'Blocco Sollecito/Interessi'){
-                        caseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
+                        caseToUpdate.TecnicalPhase__c = process == 'Paperless'
+                        ? 'Paperless Non Generato'
+                        : 'Esito KO da SAP';
                     }
                     createActivity(recordId, errorResponse.errorDetails[0].message, 'Esito KO da SAP');
                     // if(caseToUpdate.Description != null){
@@ -186,8 +188,12 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         String phase = null;
             String successPhase = (process == 'Piano Rateizzazione' && depositMode != null && depositMode != 'Paperless')
                 ? 'Completata'
-                : 'Esito OK da SAP';
-        String failedPhase = 'Esito KO da SAP';
+                : process == 'Paperless' 
+                    ? 'Paperless Generato'
+                    : 'Esito OK da SAP';
+        String failedPhase = process == 'Paperless'
+        ? 'Paperless Non Generato'
+        : 'Esito KO da SAP';
 
         if(condition != null){
 
