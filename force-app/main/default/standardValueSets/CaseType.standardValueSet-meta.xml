@@ -626,4 +626,14 @@
         <default>false</default>
         <label>Variazione Portata</label>
     </standardValue>
+    <standardValue>
+        <fullName>Contratti/Bonus Commerciale</fullName>
+        <default>false</default>
+        <label>Contratti/Bonus Commerciale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Riattivazione Non Morose</fullName>
+        <default>false</default>
+        <label>Riattivazione Non Morose</label>
+    </standardValue>
 </StandardValueSet>

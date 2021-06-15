@@ -32,6 +32,7 @@
                                             value={markingValue} options={customerMarkingOptions}
                                             onchange={handleChange} required>
                                         </lightning-combobox>
+                                        <lightning-helptext content='Per completare il campo selezionare prima un valore per "Silos"'></lightning-helptext>
                                     </template>
                                 </div>
                                 <div data-id="hideBusinessName"
@@ -82,7 +83,6 @@
                                         <lightning-combobox data-id="companyOwner" name="companyOwner"
                                             label="Silos" placeholder="Seleziona Società" onchange={handleCompanyOwnerChange}
                                             options={companyOwnerOptions.data.values} required>
-                                            <lightning-helptext content='Per completare il campo selezionare prima un valore per "Silos"'></lightning-helptext>
                                         </lightning-combobox>
                                     </template>
                                 </div>

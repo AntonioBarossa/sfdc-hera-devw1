@@ -50,7 +50,9 @@ public class HDT_WS_CreditCheck {
         Public String operation;           
         Public String companyGroup;        
         Public String market;              
-        Public String offerType;           
+        Public String offerType;  
+        Public String bpAlternative;  
+        Public String alternativeCustomerId;              
         Public List<HDT_VFC_InputWrapperDetail> details;    
     }
 
