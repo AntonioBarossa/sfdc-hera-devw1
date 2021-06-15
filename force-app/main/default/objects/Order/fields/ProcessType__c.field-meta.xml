@@ -51,11 +51,6 @@
                 <label>Connessione con Attivazione</label>
             </value>
             <value>
-                <fullName>Riattivazione non morose</fullName>
-                <default>false</default>
-                <label>Riattivazione non morose</label>
-            </value>
-            <value>
                 <fullName>Subentro Gas</fullName>
                 <default>false</default>
                 <label>Subentro Gas</label>
@@ -134,12 +129,6 @@
                 <fullName>Cambio Offerta Gas</fullName>
                 <default>false</default>
                 <label>Cambio Offerta Gas</label>
-            </value>
-            <value>
-                <fullName>Aggiunta Sconti o Bonus VAS</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Aggiunta Sconti o Bonus VAS</label>
             </value>
         </valueSetDefinition>
     </valueSet>
