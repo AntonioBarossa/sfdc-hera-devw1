@@ -1926,7 +1926,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2048,8 +2060,8 @@
     <picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
-            <fullName>To define</fullName>
-            <default>false</default>
+            <fullName>VAS</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>

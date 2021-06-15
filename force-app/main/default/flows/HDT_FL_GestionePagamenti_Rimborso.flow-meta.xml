@@ -370,7 +370,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Case_Aggiornato.ShipmentAddressAssign__c</assignToReference>
+            <assignToReference>Get_Case_Aggiornato.DeliveryAddress__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Case_Aggiornato.Account.BillingAddressFormula__c</elementReference>
@@ -414,7 +414,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Case_Aggiornato.ShipmentAddressAssign__c</assignToReference>
+            <assignToReference>Get_Case_Aggiornato.DeliveryAddress__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Case_Aggiornato.BeneficiaryAccount__r.BillingAddressFormula__c</elementReference>
@@ -846,14 +846,14 @@
             <name>AnnullaAlt</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditFormAlt_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtFlowNavButtons.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditFormAlt_0.saveInDraft</leftValueReference>
+                <leftValueReference>hdtFlowNavButtons.saveDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -868,14 +868,14 @@
             <name>ConfermaAlt</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditFormAlt_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtFlowNavButtons.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditFormAlt_0.saveInDraft</leftValueReference>
+                <leftValueReference>hdtFlowNavButtons.saveDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -2665,61 +2665,31 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtRecordEditFormAlt_0</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <name>hdtGenericAddressChooser</name>
+            <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>cancelButton</name>
+                <name>accountId</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>CaseInput.AccountId</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>density</name>
+                <name>addressLabel</name>
                 <value>
-                    <stringValue>Comfy</stringValue>
+                    <stringValue>Indirizzo di Recapito Alternativo</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>draftButton</name>
+                <name>addressType</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>Account</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelPreviousButton</name>
-                <value>
-                    <stringValue>Indietro</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
+                <name>nextLabel</name>
                 <value>
                     <stringValue>Avanti</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <stringValue>Rimborso Alternativo</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2728,16 +2698,48 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>hdtFlowNavButtons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>saveButton</name>
+                <name>isCancel</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>labelInputSection</name>
+                <name>isDraft</name>
                 <value>
-                    <stringValue>Variabili di Processo</stringValue>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

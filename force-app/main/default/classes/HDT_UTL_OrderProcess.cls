@@ -270,5 +270,23 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }        
     // FINE @Picchiri Credit check Date 04.06.21
 
+    public static Boolean manageCancellationProcess(List<Order> orderList, Map<Id,SObject> orderOldMapd){
+		Order orderNew = orderList[0];
+		Order orderOld = (Order) Trigger.oldMap.get(orderNew.Id);
+		String newPhase = orderNew.Phase__c;
+		String oldPhase = orderOld.Phase__c;
+        DateTime nowDateTime = DateTime.now();
+		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
+			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+				orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+                return true;
+			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
+                orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 }

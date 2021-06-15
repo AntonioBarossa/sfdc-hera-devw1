@@ -1942,46 +1942,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento - Ammissibilità KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Ammissibilità OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Da inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Revocato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento dal SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
@@ -1991,7 +1951,7 @@
         </values>
         <values>
             <fullName>Bozza</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Bozza Annullata</fullName>
@@ -2011,10 +1971,6 @@
         </values>
         <values>
             <fullName>Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Conferma Appuntamento KO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2042,23 +1998,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esecuzione Appuntamento KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esecuzione Appuntamento OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Esito OK da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione appuntamento su portale DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2070,19 +2014,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In attesa appuntamento DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>In attesa conferma cliente</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>In attesa di quality call</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa esecuzione appuntamento</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2110,14 +2046,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Preventivo Accettato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo rifiutato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Quality Call KO</fullName>
             <default>false</default>
         </values>
@@ -2131,42 +2059,6 @@
         </values>
         <values>
             <fullName>Richiesta preventivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Ammissibilità KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Ammissibilità OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Da inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito OK da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Inviato al SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2193,11 +2085,7 @@
         <picklist>ProcessType__c</picklist>
         <values>
             <fullName>Cambio Offerta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>To define</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>

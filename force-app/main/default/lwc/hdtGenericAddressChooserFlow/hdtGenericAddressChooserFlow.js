@@ -17,7 +17,7 @@ import InvoicingStreetName from '@salesforce/schema/Case.InvoicingStreetName__c'
 import InvoicingCountry from '@salesforce/schema/Case.InvoicingCountry__c';
 import InvoicingStreetToponym from '@salesforce/schema/Case.InvoicingStreetToponym__c';
 import InvoicingProvince from '@salesforce/schema/Case.InvoicingProvince__c';
-import AddressFormula from '@salesforce/schema/Case.AddressFormula__c';
+import ShipmentAddressAssign from '@salesforce/schema/Case.ShipmentAddressAssign__c';
 // INDIRIZZO DI FORNITURA
 import SupplyPostalCode from '@salesforce/schema/Case.SupplyPostalCode__c';
 import SupplyStreetNumber from '@salesforce/schema/Case.SupplyStreetNumber__c';
@@ -294,7 +294,8 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 fields[SupplyCountry.fieldApiName] = this.addressWrapper.Stato;
                 //fields[SupplyStreetToponym.fieldApiName] = this.addressWrapper.
                 fields[SupplyStreetName.fieldApiName] = this.addressWrapper.Via;
-                fields[AddressFormula.fieldApiName] = this.address;
+                console.log('#ServicePoint: Composed Address -> ' + this.address);
+                fields[ShipmentAddressAssign.fieldApiName] = this.address;
             }else if(this.addressType.localeCompare('BillingProfile') == 0){
                 fields[InvoicingPostalCode.fieldApiName] = this.addressWrapper.CAP;
                 fields[InvoicingStreetNumber.fieldApiName] = this.addressWrapper.Civico;

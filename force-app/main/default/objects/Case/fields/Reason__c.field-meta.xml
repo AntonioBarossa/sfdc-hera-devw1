@@ -170,14 +170,14 @@
                 <label>Piano d&apos;autorità</label>
             </value>
             <value>
-                <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
+                <fullName>Cessazione al diritto del Bonus fisico per Mortis causa</fullName>
                 <default>false</default>
-                <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</label>
+                <label>Cessazione al diritto del Bonus fisico per Mortis causa</label>
             </value>
             <value>
-                <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
+                <fullName>Cessazione al diritto del Bonus fisico per apparecchiatura elettromedicale</fullName>
                 <default>false</default>
-                <label>Cessazione utilizzo apparecchiatura elettromedicale</label>
+                <label>Cessazione al diritto del Bonus fisico per apparecchiatura elettromedicale</label>
             </value>
             <value>
                 <fullName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</fullName>
@@ -533,15 +533,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
-            <valueName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</valueName>
+            <valueName>Cessazione al diritto del Bonus fisico per Mortis causa</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
-            <valueName>Cessazione utilizzo apparecchiatura elettromedicale</valueName>
+            <valueName>Cessazione al diritto del Bonus fisico per apparecchiatura elettromedicale</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
             <valueName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>

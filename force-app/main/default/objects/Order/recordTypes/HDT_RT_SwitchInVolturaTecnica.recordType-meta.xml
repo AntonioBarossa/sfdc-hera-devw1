@@ -1923,6 +1923,10 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Amm%2E Precheck OK SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Ammissibilità KO</fullName>
             <default>false</default>
         </values>
@@ -1959,11 +1963,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento dal SII</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2032,10 +2048,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>ProcessType__c</picklist>
-        <values>
-            <fullName>Aggiunta Sconti o Bonus VAS</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Cambio Offerta</fullName>
             <default>false</default>
