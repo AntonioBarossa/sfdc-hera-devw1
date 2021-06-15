@@ -28379,14 +28379,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -31078,11 +31070,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Order.HDT_RT_ScontiBonus</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -31095,11 +31082,6 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Order.HDT_RT_SwitchIn</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
