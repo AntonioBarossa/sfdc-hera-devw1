@@ -9855,31 +9855,7 @@
     <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
-            <fullName>Accesso dei dati</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Agevolazioni non Energy indirette</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Assistenza Sociale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Blocco per frode</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bolletta Fuga H2O</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bolletta Periodica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bonus integrativo solo per non Energy</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9888,10 +9864,6 @@
         </values>
         <values>
             <fullName>CONSEGNA%2FInstallazione RIFIUTATA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Caduta Linea</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9915,15 +9887,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cancellazione dei dati</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Cessazione Contratto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9939,19 +9903,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>DISATTIVATO%2FDISDETTO %28SERVIZIO%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Delibera 655 2016</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9979,6 +9931,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Edif%2E Attesa affitto%2Fvendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edificio in ristrutturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edificio non abitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errata Domiciliazione%2FNon richiesta%3BDomiciliazione non attiva</fullName>
             <default>false</default>
         </values>
@@ -9987,15 +9951,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Errata Emissione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Evasione%2FElusione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fattura Plurim_TLR_Tur %2B 3%2E5%25</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10031,23 +9987,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Limitazione dei dati</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Malfunzionamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Malfunzione Gruppo di misura</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Mancata erogazione Bonus con domanda di attivazione%2Frinnovo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Opposizione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10067,23 +10011,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Portabilità dei dati</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Prima Bolletta</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>RESO %28PRODOTTO%29</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>RIFIUTATO preventivamente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica dati personali</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10095,19 +10027,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Seconda casa</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Segnalazione doppio pagamento non registrato</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sollecito Emissione</fullName>
+            <fullName>Stima errata disguido Hera</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>TARI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TCP Comune no Int</fullName>
+            <fullName>Stima errata per tipo utilizzo</fullName>
             <default>false</default>
         </values>
         <values>
