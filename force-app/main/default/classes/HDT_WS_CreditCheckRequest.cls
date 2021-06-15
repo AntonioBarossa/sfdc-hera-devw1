@@ -29,6 +29,8 @@ public class HDT_WS_CreditCheckRequest  extends HDT_WS_Request {
     @AuraEnabled Public String companyGroup;
     @AuraEnabled Public String market;
     @AuraEnabled Public String offerType;    
+    @AuraEnabled Public String bpAlternative;  
+    @AuraEnabled Public String alternativeCustomerId; 
     @AuraEnabled Public List<HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail> details;
     
     
@@ -59,7 +61,9 @@ public class HDT_WS_CreditCheckRequest  extends HDT_WS_Request {
         this.operation = wrpVals.operation;
         this.companyGroup = wrpVals.companyGroup;
         this.market = wrpVals.market;
-        this.offerType = wrpVals.offerType;        
+        this.offerType = wrpVals.offerType;     
+        this.offerType = bpAlternative;  
+        this.offerType = alternativeCustomerId;    
         this.details = wrpVals.details;        
     }
 
