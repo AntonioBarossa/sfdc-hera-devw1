@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_VolturaConSwitch</fullName>
+    <fullName>HDT_RT_FlyingRequest</fullName>
     <active>true</active>
-    <label>Voltura Con Switch</label>
+    <description>Indica gli order delle pratiche in volo</description>
+    <label>Pratica in volo</label>
     <picklistValues>
         <picklist>AccountholderTypeBeneficiary__c</picklist>
         <values>
@@ -2016,17 +2017,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>LiftingPeople__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>MarketOrigin__c</picklist>
         <values>
             <fullName>Default</fullName>
@@ -2086,6 +2076,10 @@
     <picklistValues>
         <picklist>PaymentMode__c</picklist>
         <values>
+            <fullName>Bollettino postale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RID</fullName>
             <default>false</default>
         </values>
@@ -2113,6 +2107,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Amm%2E Precheck KO SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm%2E Precheck OK SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
@@ -2129,7 +2131,59 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2201,7 +2255,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Dati discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione Gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Documentazione Validata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da firmare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da validare</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2217,7 +2291,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2245,6 +2327,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In attesa di quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa esecuzione appuntamento</fullName>
             <default>false</default>
         </values>
@@ -2258,6 +2344,14 @@
         </values>
         <values>
             <fullName>In sequenzializzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato Precheck al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2297,11 +2391,55 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Quality Call KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Registrazione  da validare</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Richiesta preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2314,6 +2452,10 @@
         </values>
         <values>
             <fullName>Voltura Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura c%2Fo VT</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2343,6 +2485,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>>Cambio Offerta Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cambio Uso</fullName>
             <default>false</default>
         </values>
@@ -2364,6 +2510,10 @@
         </values>
         <values>
             <fullName>Prima Attivazione con modifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione non morose</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2403,7 +2553,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Temporanea - Nuova Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>To define</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VAS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2650,6 +2808,18 @@
     <picklistValues>
         <picklist>SignatureMethod__c</picklist>
         <values>
+            <fullName>Cartacea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTP Coopresenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTP Remoto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Vocal Order</fullName>
             <default>false</default>
         </values>
@@ -2658,6 +2828,14 @@
         <picklist>Status</picklist>
         <values>
             <fullName>Activated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
             <default>false</default>
         </values>
         <values>
