@@ -17776,52 +17776,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__QuoteLineConsumptionRate__c.SBQQ__LowerBound__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__QuoteLineConsumptionRate__c.SBQQ__OriginalPrice__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__QuoteLineConsumptionRate__c.SBQQ__Price__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLineConsumptionRate__c.SBQQ__PricingMethod__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLineConsumptionRate__c.SBQQ__ProcessingOrder__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLineConsumptionRate__c.SBQQ__QuoteLineConsumptionSchedule__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__QuoteLineConsumptionRate__c.SBQQ__UpperBound__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__QuoteLineConsumptionSchedule__c.SBQQ__BillingTermUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__QuoteLineConsumptionSchedule__c.SBQQ__BillingTerm__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__QuoteLineConsumptionSchedule__c.SBQQ__Category__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -17837,21 +17797,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLineConsumptionSchedule__c.SBQQ__MatchingAttribute__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLineConsumptionSchedule__c.SBQQ__QuoteLine__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLineConsumptionSchedule__c.SBQQ__RatingMethod__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLineConsumptionSchedule__c.SBQQ__Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

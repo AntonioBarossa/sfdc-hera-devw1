@@ -27039,6 +27039,10 @@
         <apexPage>SBQQ__sb</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+    <tabVisibilities>
+        <tab>LoginGroup__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
     <tabSettings>
         <tab>SBQQ__AttributeSet__c</tab>
         <visibility>Visible</visibility>
