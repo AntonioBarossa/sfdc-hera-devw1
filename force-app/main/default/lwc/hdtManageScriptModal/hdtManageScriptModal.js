@@ -7,12 +7,14 @@
  * DESCRIPTION: 
  * -----
  * HISTORY:
+ * Last Modified: Tuesday, 15th June 2021 12:57:01 pm
+ * Modified By: fdefelice
+ * Changes: 
+ * --END--
  */
 
 
-import getHTMLScript from '@salesforce/apex/HDT_LC_HdtScriptManagementModal.getScriptSections';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 export default class HdtManageScriptModal extends LightningElement {
 
@@ -20,23 +22,9 @@ export default class HdtManageScriptModal extends LightningElement {
     @api recordId;//record starting Object
     @api buttonLabel;
     @api childAdditionalInfo="";//API field of child Record you want to show info in the title
-
+    @api linkReitek;
     openModal;
-
-    htmlScriptList;
-    scriptIndex;
     
-    showGenericErrorToast() {
-		this.showToast('error', 'Errore', 'Si è verificato un errore. Ricaricare la pagina e riprovare. Se il problema persiste contattare il supporto tecnico.');
-	}
-	
-	showToast(variant, title, message) {
-		this.dispatchEvent(new ShowToastEvent({
-			variant: variant,
-			title: title,
-			message: message
-		}));
-	}
     
     connectedCallback(){// stub parameters for test purpose
         if(!this.scriptProcessName){
@@ -47,82 +35,19 @@ export default class HdtManageScriptModal extends LightningElement {
         }
     }
 
-    _linkReitek;//private var
-    get linkReitek(){
-        return this._linkReitek;
-    }
-    set linkReitek(value){
-        this._linkReitek=value;
-        if(!value){
-            this.enableConfirmButton();
-        }
-    }
-
-    get indexZero(){//check if first page
-        return this.scriptIndex==0;
-    }
-
-    get indexLast(){//check if last page
-        return this.htmlScriptList.length == (this.scriptIndex+1);
-    }
-
-    prevSection(){
-        this.scriptIndex-=1;
-    }
-    nextSection(){
-        this.scriptIndex+=1;
-    }
-
-    get htmlScriptText(){
-        return this.htmlScriptList[this.scriptIndex].sectionText;
-    }
-
-    get htmlScriptTitle(){
-        return this.htmlScriptList[this.scriptIndex].sectionLabel;
-    }
-
-/*     
-    @api
-    get buttonLabel(){
-        return this._buttonLabel;
-    }
-    set buttonLabel(value){
-        this._buttonLabel
-    }
- */
 
     
-    
 
-    async showModal(){
-        try{
-            this.htmlScriptList=  await getHTMLScript({
-                processName : this.scriptProcessName, 
-                recordId : this.recordId, 
-                childRecordIdentifier : this.childAdditionalInfo
-            });
-            console.log(this.htmlScriptList);
-            this.scriptIndex=0;
-            this.openModal=true;
-        }catch(e){
-            console.log(e.body.message);
-            this.showGenericErrorToast();
-        }
+    showModal(){
+        this.openModal=true;
     }
 
     closeModal(){
         this.openModal=false;
     }
-    saveRecLink(){
-        let link= this._linkReitek;
-        //do stuff
-        this.closeModal();
-    }
 
-    enableConfirmButton(){
-        let btConferma = this.template.querySelector('[data-id="scriptModalBt"]');
-        btConferma.disabled=false;
-    }
+
+
 
 
 

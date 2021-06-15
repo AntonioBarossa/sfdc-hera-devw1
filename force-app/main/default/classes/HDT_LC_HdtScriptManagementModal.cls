@@ -24,6 +24,18 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
         return scriptFormatter.getScriptTextPages(processName, recordId);
     }
 
+    @AuraEnabled(cacheable=true)
+    public static void saveReitekLink(String recordId, String reitekLink){
+        if(String.isNotBlank(reitekLink)){
+            String objectName = ((Id) recordId).getSobjectType().getDescribe().getName();
+            SObject genericSObject = (SObject)Type.forName('Schema',objectName).newInstance();
+            genericSObject.put('Id', recordId);
+            genericSObject.put('campo Reitek Link', reitekLink);
+            SObjectAccessDecision decision = Security.stripInaccessible(AccessType.UPDATABLE, new list<SObject>{genericSObject});
+            update decision.getRecords();
+        }
+    }
+
     public class HDT_WRP_ScriptOutput{
         @AuraEnabled public string sectionLabel;
         @AuraEnabled public string sectionText;
