@@ -253,6 +253,14 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             newClient = checkBooleanCriteria(quote.NewClient__c, criteria.NewClient__c);
             login = checkLoginGroup(criteria.LoginGroup__c);
 
+            System.debug('>>> age: ' + age);
+            System.debug('>>> consumptionRangeEe: ' + consumptionRangeEe);
+            System.debug('>>> consumptionRangeGas: ' + consumptionRangeGas);
+            System.debug('>>> powerRange: ' + powerRange);
+            System.debug('>>> residentDeliveryAddress: ' + residentDeliveryAddress);
+            System.debug('>>> newClient: ' + newClient);
+            System.debug('>>> login: ' + login);
+
             if(age && consumptionRangeEe && consumptionRangeGas && powerRange && residentDeliveryAddress && newClient && login){
 
                 if(criteria.EligibleForAllCities__c){
@@ -319,13 +327,22 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         return false;
     }
 
-    public static Boolean checkBooleanCriteria(String booleanString, Boolean checkbox){
+    public static Boolean checkBooleanCriteria(String booleanCriteria, String booleanQuote){
 
-        if(!String.isEmpty(booleanString) && booleanString.equalsIgnoreCase('Y') == checkbox){
+        if(String.isEmpty(booleanQuote) || String.isEmpty(booleanCriteria)){
             return true;
-        } else {
-            return false;
         }
+
+
+        if(booleanQuote.equalsIgnoreCase('Y') && booleanCriteria.equalsIgnoreCase('Si')){
+            return true;
+        }
+        
+        if(booleanQuote.equalsIgnoreCase('N') && booleanCriteria.equalsIgnoreCase('No')){
+            return true;
+        }     
+
+        return false;
 
     }
 
