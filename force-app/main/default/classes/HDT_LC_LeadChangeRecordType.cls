@@ -9,7 +9,7 @@ public with sharing class HDT_LC_LeadChangeRecordType {
         Lead lead=new Lead(Id= leadId);
         lead.RecordTypeId= recordtypeQr.getRecordType('HDT_RT_Main', 'Lead').Id;
         HDT_SRV_Lead.checkUpdateAccess(lead);
-        Lead l=HDT_SRV_Lead.updateRecord(lead);
+        /*Lead l=*/HDT_SRV_Lead.updateRecord(lead);
 		id r = qrRecordtype.getRecordType('HDT_RT_GestionePrivacy', 'Case').id;
    
         Case c=new Case(Subject='Acquisizione Privacy',recordtypeid=r,Type='Modifica Privacy'/*, Category__c= l.Categoria__c, Sottocategoria__c= l.Sottocategoria__c*/);
