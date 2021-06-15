@@ -42,6 +42,9 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 String month = fiscalCode.substring(8,9);
                 String day = fiscalCode.substring(9,11);
                 month =  monthsLetters.get(month);
+                if(month== null || month == ''){
+                    throw new AuraHandledException('Enter a valid fiscal code');
+                }
                 if(Integer.valueOf(day) <=31){
                     gender= 'Maschio';
                 }else{
@@ -90,6 +93,9 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 String month = fiscalCode.substring(8,9);
                 String day = fiscalCode.substring(9,11);
                 month =  monthsLetters.get(month);
+                if(month== null || month == ''){
+                    throw new AuraHandledException('Enter a valid fiscal code');
+                }
                 if(Integer.valueOf(day) <=31){
                     gender= 'Maschio';
                 }else{
