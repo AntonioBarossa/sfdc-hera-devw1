@@ -51,6 +51,11 @@
                 <label>Connessione con Attivazione</label>
             </value>
             <value>
+                <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+                <default>false</default>
+                <label>Aggiunta Sconti o Bonus VAS</label>
+            </value>
+            <value>
                 <fullName>Subentro Gas</fullName>
                 <default>false</default>
                 <label>Subentro Gas</label>
