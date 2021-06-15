@@ -234,6 +234,26 @@ public with sharing class HDT_SRV_SalesHandler {
                 }
 
             }
+            when 'WSLead_Callback'{
+                HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_Winback'{
+                HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_CariBoll'{
+                HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_HVAC'{
+                HDT_UTL_LeadProcess.formHvac(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_SOL'{
+                HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
             when else {
 
                 responseField.fieldType = 'TEXT';
