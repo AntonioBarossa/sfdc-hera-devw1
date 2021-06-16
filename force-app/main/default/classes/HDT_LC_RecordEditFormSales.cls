@@ -12,7 +12,16 @@ public with sharing class HDT_LC_RecordEditFormSales {
             throw new AuraHandledException(e.getMessage());
         }
     }
+    @AuraEnabled
+    public static wrts_prcgvr__Activity__c getActivity(String caseId){
+        List<wrts_prcgvr__Activity__c> obbList = HDT_QR_ActivityCustom.getRecordByCaseId(caseid);
+        wrts_prcgvr__Activity__c res;
+        if(obbList != null && !obbList.isEmpty()){
+            res = obbList[0];
+        }
+        return res;
 
+    }
     @AuraEnabled
     public static Boolean confirmForApproval(String caseId, String accountId){
         try {
