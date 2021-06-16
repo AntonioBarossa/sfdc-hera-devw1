@@ -51,6 +51,7 @@ public inherited sharing class HDT_QR_Account {
         //ac = database.query(query);
         system.debug('Account retrieved******'+ ac);
         return ac;
+        
     }
     
     public Account getAccountByDistributorKey(String globalKeyId){
