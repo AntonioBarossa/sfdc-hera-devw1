@@ -970,7 +970,7 @@
         </connector>
         <fields>
             <name>AddSollecito</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCaseAggiornato.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(62, 62, 60);&quot;&gt;Alla pressione del taso &quot;Conferma Pratica&quot; &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(62, 62, 60);&quot;&gt;verrà inserito un &lt;/span&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(62, 62, 60);&quot;&gt;sollecito&lt;/b&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(62, 62, 60);&quot;&gt; sul Case &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;{!GetInputCaseAggiornato.RelatedCase__r.CaseNumber} &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;mentre il presente Case &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;{!Get_Input_Case.CaseNumber}&lt;/b&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt; verrà &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;Annullato&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCaseAggiornato.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;Alla pressione del tasto &quot;Conferma Pratica&quot; &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;verrà inserito un &lt;/span&gt;&lt;b style=&quot;color: rgb(62, 62, 60); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;sollecito&lt;/b&gt;&lt;span style=&quot;color: rgb(62, 62, 60); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt; sul Case &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;{!GetInputCaseAggiornato.RelatedCase__r.CaseNumber} &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;mentre il presente Case &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;{!Get_Input_Case.CaseNumber}&lt;/b&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt; verrà &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;Annullato&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -998,7 +998,7 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
-                    <stringValue>Annulla</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1269,7 +1269,7 @@
             <targetReference>Get_Input_Case</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
