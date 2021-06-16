@@ -422,15 +422,18 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             if(reason != null){
                 console.log('#Valore Reason --> ' + reason.value);
                 if(reason.value && reason.value != ''){
-                    let payType = this.template.querySelector('lightning-input-field[data-id="PaymentType__c"]') != null
-                    ? this.template.querySelector('lightning-input-field[data-id="PaymentType__c"]')
-                    : null;
-                    console.log('#Valore payType -> ' + payType.value);
-                    if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
-                        payType.disabled = false;
-                    } else {
-                        payType.disabled = true;
-                        payType.value = '';
+                    if(!(Object.keys(paymentType).length === 0)){
+                        console.log('Inside Condition Installments');
+                        let payType = this.template.querySelector('lightning-input-field[data-id="PaymentType__c"]') != null
+                        ? this.template.querySelector('lightning-input-field[data-id="PaymentType__c"]')
+                        : null;
+                        console.log('#Valore payType -> ' + payType.value);
+                        if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
+                            payType.disabled = false;
+                        } else {
+                            payType.disabled = true;
+                            payType.value = '';
+                        }
                     }
                 }
             }
