@@ -64,7 +64,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
                 if(prodOpt > 0){
                     statusResponse.success = false;
-                    statusResponse.message = 'Attenzione devi ricontrollare le Product Option, devono essere tutte nello stato "Confermata" o "Vendibile"';
+                    statusResponse.message = Label.HDT_ErrorOnConfirmProduct;//'Attenzione devi ricontrollare le Product Option, devono essere tutte nello stato "Confermata" o "Vendibile"';
                     return statusResponse;
                 }
 
@@ -75,7 +75,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                 }
 
                 List<String> resp;
-                resp = HDT_UTL_ProductStObjProcess.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
+                resp = checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
                 System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                 if(resp[0]=='KO'){
                     statusResponse.success = false;
@@ -206,7 +206,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                 statusResponse.message = '';
 
                 List<String> resp;
-                resp = HDT_UTL_ProductStObjProcess.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
+                resp = checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
                 System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                 if(resp[0]=='KO'){
                     statusResponse.success = false;
@@ -244,7 +244,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                     }
 
                     List<String> resp;
-                    resp = HDT_UTL_ProductStObjProcess.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
+                    resp = checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
                     System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                     if(resp[0]=='KO'){
                         statusResponse.success = false;
