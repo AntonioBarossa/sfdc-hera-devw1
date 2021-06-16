@@ -237,7 +237,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
     
     // START @Picchiri Credit check Date 04.06.21
-    public static void gestioneEsitiCreditCheck(List<Order> newOrdersList, List<Order> oldOrdersList) {
+    // Viene invocata da una modifica lato ordine
+    // In questo metodo viene invocata la classe per la creazione della Activiti del Credit Check Entanti (Nuovo cliente) e Uscenti (Vecchio cliente)
+    public static void creditCheckManager(List<Order> newOrdersList, List<Order> oldOrdersList) {
         system.debug('gestioneEsitiCreditCheck trigger --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
         system.debug('gestioneEsitiCreditCheck trigger --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
         Map<String,List<Order>> orderMapNew = new Map<String,List<Order>>();
@@ -264,8 +266,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
 
         orderMapNew.put('oldCustomer',orderListOldCustomer);
-        orderMapNew.put('newCustomer',orderListNewCustomer);
-        // Creazione Activity per KO entranti e uscenti
+        orderMapNew.put('newCustomer',orderListNewCustomer);        
         HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
     }        
     // FINE @Picchiri Credit check Date 04.06.21
@@ -287,6 +288,22 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 		}
 		return false;
 	}
+
+    // @Picchiri sbiancamento esito e causale credit check all'interno dell'ordine. 
+    // Per risottomissione credit check
+    public static void cleanCreditCheckOnOrder(List<Id> listOrderId) {
+        List<Order> listOrderToUpdate = orderQr.getRecordsByIds(listOrderId);
+        for (Order order : listOrderToUpdate) {
+            order.IncomingCreditCheckResult__c = '';
+            order.OutgoingCreditCheckResult__c = '';	
+            order.CreditCheckDescription__c	 = '';
+        }
+        if(!listOrderToUpdate.isEmpty()){
+            update listOrderToUpdate;
+        }
+    
+    }
+    // FINE @Picchiri Credit check Date 15.06.21
 
 
 }
