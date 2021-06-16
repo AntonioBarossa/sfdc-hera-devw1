@@ -3,6 +3,7 @@ import cancelCase from '@salesforce/apex/HDT_LC_RecordEditFormSales.cancelCase';
 import confirmForApproval from '@salesforce/apex/HDT_LC_RecordEditFormSales.confirmForApproval';
 import savePractice from '@salesforce/apex/HDT_LC_RecordEditFormSales.savePractice';
 import saveDraft from '@salesforce/apex/HDT_LC_RecordEditFormSales.saveDraft';
+import getActivity from '@salesforce/apex/HDT_LC_RecordEditFormSales.getActivity';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 
@@ -206,9 +207,26 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
         console.log(this.recordid);
         console.log(this.objectName);
         console.log("isFromReturnFlow:" + this.isRunFromFlow);
-        if(this.isRunFromFlow == false){
+        
+        getActivity({caseId: this.recordid}).then(result => {
+            console.log("resu" + JSON.stringify(result));
+            if(result != null ){
+                if(result.Approved__c == 'SI'){
+                    this.statoApp = 'APPROVATO';
+                }else if (result.Approved__c == 'NO'){
+                    this.statoApp = 'RIFIUTATO';
+                }
+                else{
+                    this.statoApp = 'IN ATTESA DI APPROVAZIONE';
+                }
+            }
+            console.log("SONO RIGA 222");
+
+        });
+       /* if(this.isRunFromFlow == false){
+            console.log("PROVACURRENTPAGE:" + JSON.stringify(this.currentPageReference));
             this.recordid= this.currentPageReference.state.c__caseId;
-        }
+        }*/
 
     }
     handleOnLoad(event){
