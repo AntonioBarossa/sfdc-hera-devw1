@@ -239,6 +239,20 @@
                 <elementReference>GetParentCase.Cluster__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.SalesCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.CompanyOwner__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AssegnaCollection</targetReference>
         </connector>
@@ -309,6 +323,20 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Reclami</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.SalesCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.CompanyOwner__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
