@@ -45,17 +45,17 @@ public with sharing class HDT_LC_AdvancedSearch {
 	public static List<Map<String,String>> getIndirizzo(String accountId) {
 		system.debug('ACCOUNTID **********************'+accountId);
 		Map<String,String> outPutIndirizzo = new Map<String,String>();
-		HDT_QR_Contract bp = new HDT_QR_Contract();
-		List<BillingProfile__c> listBp = new List<BillingProfile__c>();
+		HDT_QR_Account qr = new HDT_QR_Account();		
+		Account ac = new Account();
 		
 		if(accountId != null || accountId != ''){
-			listBp = bp.getInd(accountId);
+			ac = qr.getBillingAddressAccount(accountId);
 		}
 		
 		List<Map<String,String>> customBp = new List<Map<String,String>>();
 		
-		if(!listBp.isEmpty()){
-		for (BillingProfile__c BillingProfile : listBp) {
+		if(ac!= null){
+		/*for (BillingProfile__c BillingProfile : listBp) {
             Map<String,String> row = new Map<String, String>();
 			
 				String value = BillingProfile.InvoicingAddressFormula__c;
@@ -64,7 +64,46 @@ public with sharing class HDT_LC_AdvancedSearch {
 				row.put(label,value);
 			
             customBp.add(row);
-		}
+		}*/
+
+	
+            Map<String,String> row = new Map<String, String>();
+
+			String value ;
+			String label = '';
+
+			if(ac.BillingCity != null){
+				value = ac.BillingCity ;
+			}
+			if(ac.BillingStreetName__c != null){
+				value += ','+ac.BillingStreetName__c ;
+			}
+			if(ac.BillingStreetNumber__c != null){
+				value += ','+ac.BillingStreetNumber__c ;
+			}
+			if(ac.BillingStreetNumberExtension__c != null){
+				value += ','+ac.BillingStreetNumberExtension__c ;
+			}
+			if(ac.BillingPostalCode != null){
+				value += ','+ac.BillingPostalCode ;
+			}
+			if(ac.BillingState != null){
+				value += ','+ac.BillingState ;
+			}
+			if(ac.BillingCountry != null){
+				value += ','+ac.BillingCountry ;
+			}
+
+				
+
+				row.put(label,value);
+
+
+			
+            customBp.add(row);
+		
+
+		
 	}
 
 		return customBp;
@@ -79,36 +118,30 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 	if(accountId!=null){
 		ac = qr.getBillingAddressAccount(accountId);
 	}
-	system.debug('BillingAddress******'+ ac.BillingAddressFormula__c);
-	String[] billingAddressSplit = ac.BillingAddressFormula__c.split(',');
+	system.debug('Account retrieved******'+ ac);
+	//String[] billingAddressSplit = ac.BillingAddressFormula__c.split(',');
 
-
-	if(ac.BillingAddressFormula__c!=null){
-		system.debug('entra in if ');
-
-		if(billingAddressSplit[3]!= null){
-			outPut.put('Comune',billingAddressSplit[3]);
+		if(ac.BillingCity != null){
+			outPut.put('Comune',ac.BillingCity);
 		}
-		if(billingAddressSplit[1]!= null){
-			outPut.put('Civico',billingAddressSplit[1]);
+		if(ac.BillingStreetNumber__c != null){
+			outPut.put('Civico',ac.BillingStreetNumber__c);
 		}
-		if(billingAddressSplit[5]!= null){
-			outPut.put('CAP',billingAddressSplit[5]);
+		if(ac.BillingPostalCode != null){
+			outPut.put('CAP',ac.BillingPostalCode);
 		}
-		if(billingAddressSplit[0]!= null){
-			outPut.put('Via',billingAddressSplit[0]);
+		if(ac.BillingStreetName__c != null){
+			outPut.put('Via',ac.BillingStreetName__c );
 		}
-		if(billingAddressSplit[4]!= null){
-			outPut.put('Provincia',billingAddressSplit[4]);
+		if(ac.BillingState != null){
+			outPut.put('Provincia',ac.BillingState);
 		}
-		if(billingAddressSplit[6]!= null){
-			outPut.put('Stato',billingAddressSplit[6]);
+		if(ac.BillingCountry != null){
+			outPut.put('Stato',ac.BillingCountry);
 		}
-		if(billingAddressSplit[2]!= null){
-			outPut.put('Est.Civico',billingAddressSplit[2]);
+		if(ac.BillingStreetNumberExtension__c != null){
+			outPut.put('Est.Civico',ac.BillingStreetNumberExtension__c);
 		}
-	
-	}
 
 	system.debug('outPut *******'+ outPut);
 
@@ -357,6 +390,8 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		system.debug('getForniture START');
 		system.debug('additionalFilter' + additionalFilter);
 		String fieldForniture = customSetting.OutputServicePoint__c;
+		system.debug('fieldForniture : ' + fieldForniture);
+
 		List<String> listField = fieldForniture != null ? fieldForniture.split(',') : new List<String>();
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
