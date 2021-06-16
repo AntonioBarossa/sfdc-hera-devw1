@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ContextObjectFormula__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ParentSection__r.RecordType.DeveloperName = &quot;HDT_RT_Processo&quot;, TEXT(ParentSection__r.contextObject__c), TEXT(contextObject__c))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Oggetto di Riferimento Formula</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

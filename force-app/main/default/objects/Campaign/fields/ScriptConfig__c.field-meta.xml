@@ -2,9 +2,19 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ScriptConfig__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <description>Campo Lookup con cui un Utente BSN può associare uno Script Processo ad una campagna</description>
     <externalId>false</externalId>
-    <label>Script Campagna</label>
+    <label>Script campagna</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Value doesn&apos;t match field criteria: 
+Record Type Script = Processo</errorMessage>
+        <filterItems>
+            <field>ScriptConfig__c.RecordType.DeveloperName</field>
+            <operation>equals</operation>
+            <value>HDT_RT_Processo</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>ScriptConfig__c</referenceTo>
     <relationshipLabel>Campaigns</relationshipLabel>
     <relationshipName>Campaigns</relationshipName>
