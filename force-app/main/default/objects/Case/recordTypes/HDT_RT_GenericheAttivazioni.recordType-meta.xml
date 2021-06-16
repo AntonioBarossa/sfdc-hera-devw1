@@ -8832,6 +8832,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Accollo totale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bonus commerciale</fullName>
             <default>false</default>
         </values>
@@ -12126,6 +12130,10 @@
         </values>
         <values>
             <fullName>Contenzioso In Corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti%2FBonus Commerciale</fullName>
             <default>false</default>
         </values>
         <values>

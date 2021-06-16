@@ -138,7 +138,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                     (CampaignName__c = :quote.CampaignName__c OR CampaignName__c = null) AND
                     (PromoCode__c = :quote.FriendCode__c OR PromoCode__c = null) AND
                     (Agency__c = :quote.Agency__c OR Agency__c = null) AND
-                    (UseCategory__c = :quote.UseCategory__c OR UseCategory__c = null) AND
+                    (UseCategory__c includes (:quote.UseCategory__c) OR UseCategory__c = null) AND
                     (EquipmenType__c = :quote.MeterType__c OR EquipmenType__c = null)
 
             ];

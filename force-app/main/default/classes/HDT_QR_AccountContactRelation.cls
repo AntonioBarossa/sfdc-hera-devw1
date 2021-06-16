@@ -77,6 +77,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
         return [
             SELECT 
             AccountId,
+            Account.CompanyOwner__c,
             ContactId, 
             Roles
             FROM AccountContactRelation 

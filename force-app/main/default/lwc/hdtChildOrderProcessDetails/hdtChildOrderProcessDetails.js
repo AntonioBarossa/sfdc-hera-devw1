@@ -233,6 +233,36 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     }
 
+    applyDateOrdineLogic(){
+        let currentSectionIndex = this.confirmedSteps.findIndex(section => section.name === 'dateOrdine');
+        let nextSection = this.confirmedSteps[currentSectionIndex];
+        let nextSectionName = this.confirmedSteps[currentSectionIndex].name;
+
+            if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
+
+                if(this.order.WaiverRightAfterthought__c == 'Si'){
+                    this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+
+                    this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
+                    // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-04-01';
+                } else {
+                    this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+
+                    this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
+                    // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
+                }
+
+            } else {
+
+                this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
+                // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
+                // this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                //     nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+            }
+        }
+
     typeVisibility(type){
         let result = true;
 
@@ -2721,29 +2751,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.handleFields();
 
         // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
-        // Da eliminare la condizione nel caso di sistemazione chiamata per vas
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_VAS'){
-            console.log(this.fields.length);
-            for(var i = 0; i < this.fields.length; i++){                
-                console.log(this.fields[i].name);
-                if(this.fields[i].name == 'creditCheck'){
-                    let creditCheckData = this.fields[i].data
-                    for(let j = 0;  j < creditCheckData.length; j++){
-                        if(creditCheckData[j].apiname == 'IncomingCreditCheckResult__c'){
-                            creditCheckData[j].value = 'OK';
-                        }
-                        else if(creditCheckData[j].apiname == 'OutgoingCreditCheckResult__c'){
-                            creditCheckData[j].value = 'OK';
-                        }
-                        else if (creditCheckData[j].apiname == 'CreditCheckDescription__c'){
-                            creditCheckData[j].value = '';
-                        }
-                    }
-                    break;
-                }
-            }
-
-        }else{
+        if((this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.OrderReferenceNumber != null && this.order.ContractReference__c != null) || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'){
             this.retryEsitiCreditCheck();
         }        
 
