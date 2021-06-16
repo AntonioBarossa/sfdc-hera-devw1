@@ -46,6 +46,7 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
     public class HDT_WRP_TecnicalOfferObj {
         @auraEnabled public Boolean productCodeIsAlreadyPresent;
         @auraEnabled public String techOffIdToClone;
+        @auraEnabled public Boolean enableCreate;
         @auraEnabled public Boolean offerIsPresent;
         @auraEnabled public List<TechnicalOffer__c> tecnicalOffers;
     }

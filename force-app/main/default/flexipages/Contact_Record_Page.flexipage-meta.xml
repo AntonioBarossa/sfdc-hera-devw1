@@ -26,6 +26,15 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>hdtCampaignsApp</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>hideHeader</name>
+                    <value>false</value>
+                </componentInstanceProperties>
                 <componentName>force:relatedListQuickLinksContainer</componentName>
             </componentInstance>
         </itemInstances>

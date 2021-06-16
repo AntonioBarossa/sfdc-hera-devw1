@@ -253,7 +253,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.AccountRatingCtrl__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -433,7 +433,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.ChurnkRiskCtrl__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -483,12 +483,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.CreditCheckCalled__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.CreditCheckCtrl__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -655,6 +655,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Jigsaw</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.KpiTracking__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3090,6 +3095,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Campaign.Required__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Campaign.ScriptConfig__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5674,6 +5684,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.SiebelData__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.SiebelMainInfo__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5965,6 +5980,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.TotalPaperless__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.TotalRefund__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7740,6 +7760,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentalActivity__c.ErrorDescription__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentalActivity__c.GlobalMigrationKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentalActivity__c.IsMigrated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9544,6 +9574,51 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>KpiTracking__c.AccountRatingCtrl__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.AssistedCustomerLastUpdate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.AssistedCustomer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.ChurnkRiskCtrlLastUpdate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.ChurnkRiskCtrl__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.CreditCheckCalled__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.CreditCheckCtrlLastUpdate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.CreditCheckCtrl__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.CustomerCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LandRegistry__c.CodeMissingRegistryData__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10694,7 +10769,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.IsChangeSalesCompany__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.Interaction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.IsWinback__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11524,6 +11609,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.LiftingPeople__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.LoginGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12224,7 +12314,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.SiebelData__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.SiebelMainInfo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SiebelOfferData__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SiebelReadingData__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SiebelStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19679,6 +19789,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.IsChangeSalesCompany__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.SalesCompanyCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22570,6 +22685,61 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Sale__c.VendorLastName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.CheckVisibility__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.ContextObject__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.IsChildLoopEvaluated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.LabelOption1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.LabelOption2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.LabelOption3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.ParentSection__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.SectionLabel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.SectionOrder__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.StartRecording__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.TextScript__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -26824,6 +26994,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.IsApprovalRequired__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.IsMigrated__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27849,7 +28024,7 @@
         <recordType>Case.HDT_RT_CambioUsoTec</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_ComportamentoVenditori</layout>
         <recordType>Case.HDT_RT_ComportamentoVenditori</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -27877,7 +28052,7 @@
         <recordType>Case.HDT_RT_ProrogaTemporanea</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_ReclamiScrittiRichInfo</layout>
         <recordType>Case.HDT_RT_ReclamiScrittiRichiesteInfo</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -27897,7 +28072,7 @@
         <recordType>Case.HDT_RT_Subentro_GAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_VerificaDatiAlDl</layout>
         <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -28152,14 +28327,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -28227,6 +28394,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Sale__c-Vendita Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SBQQ__ErrorCondition__c-CPQ - Error Condition Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Scorecard-Scorecard Layout</layout>
@@ -28956,6 +29126,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>Info3GroupList__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>KpiTracking__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -30564,6 +30743,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Case.HDT_RT_FlyingRequest</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Case.HDT_RT_GenericheAttivazioni</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -30635,6 +30819,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_ReclamiScrittiRichiesteInfo</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Case.HDT_RT_RiattivazioniNonMorose</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -30824,17 +31013,17 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Order.HDT_RT_FlyingRequest</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Order.HDT_RT_OrderDossier</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Order.HDT_RT_Proroga</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -30855,11 +31044,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -30873,6 +31057,11 @@
         <recordType>Order.HDT_RT_Voltura</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <recordTypeVisibilities>
+		<default>false</default>
+		<recordType>Order.HDT_RT_VolturaConSwitch</recordType>
+		<visible>true</visible>
+	</recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>Reading__c.HDT_RT_LetturaEle</recordType>
@@ -30889,44 +31078,8 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>SBQQ__ProductOption__c.HDT_RT_CompositionVASproductsnotbillable</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>SBQQ__ProductOption__c.HDT_RT_SectionBonusForGasService</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
-        <recordType>SBQQ__ProductOption__c.HDT_RT_SectionBonusforEEservice</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>SBQQ__ProductOption__c.HDT_RT_SectionContributesforEEservice</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>SBQQ__ProductOption__c.HDT_RT_SectionContributesforGasservice</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>SBQQ__ProductOption__c.HDT_RT_VASConsumptionanalysis</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>SBQQ__ProductOption__c.HDT_RT_VASPoductsnotbillable</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>SBQQ__ProductOption__c.HDT_RT_VASServicesnotbillable</recordType>
+        <recordType>SBQQ__ProductOption__c.HDT_RT_ProductOptionDefault</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

@@ -6,7 +6,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         String whereCond = '';
 
         if(!String.isEmpty(searchByField) && !String.isEmpty(searchValue)){
-            whereCond = ' WHERE ' + searchByField + ' LIKE \'%' + searchValue +'%\'';
+            //whereCond = ' WHERE ' + searchByField + ' LIKE \'%' + searchValue +'%\'';
+            whereCond = ' WHERE (' + searchByField + ' LIKE \'%' + searchValue +'%\' OR PossibleValue__c LIKE \'%' + searchValue +'%\')';
         }
 
         String fieldsApiName = '';
@@ -82,49 +83,53 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         Id tecOffId;
         Boolean isUpsert = !String.isEmpty(technicalofferid);
 
-        if(!isUpsert){
+        // if(!isUpsert){ //
 
-            tecOff = generateTechnicalOfferRecord(tecOff, productId, rate, techOffObj, idToClone);
-            //List<Product2> prodList;
-            //prodList = HDT_QR_TechnicalOffer.getProductById(prodList, productId);
+        //     tecOff = generateTechnicalOfferRecord(tecOff, productId, rate, techOffObj, idToClone);
+        //     tecOff.Status__c = 'Draft';
+        //     
+        //     try{ //
 
-            //List<RateTemplate__c> rateList;
-            //rateList = HDT_QR_TechnicalOffer.getRateByName(rateList, rate);
-            //Id rateId = rateList[0].Id;
+        //     } catch{
+        //         
+        //     }
+        //     
+        // } else {
+        //     tecOffId = technicalofferid;
+        // }
 
-            //tecOff = new TechnicalOffer__c();
-            ////Hera Impronta Zero Casa Sole Luna [Versione] [EVVUD]
-            //tecOff.Name = prodList[0].Name + ' [' + prodList[0].Version__c + '] [' + rate + ']';
-            //tecOff.Product__c = productId;
-            //tecOff.RateCategory__c = rateId;
-            
-            try{
-                SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
-                Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-            
-                if(objRes.isCreateable()){
-                    insert tecOff;
-                    tecOffId = tecOff.Id;
-                } else {
-                    saveResponse.success = false;
-                    saveResponse.message = '# ERROR: you don\'t have permission on this obj';
-                    saveResponse.dataError = false;
-                    return saveResponse;                
-                }
 
-            } catch (Exception e){
+        tecOff = generateTechnicalOfferRecord(tecOff, productId, rate, techOffObj, idToClone);
+        tecOff.Status__c = 'Draft';
+
+        if(isUpsert){
+            tecOff.Id = technicalofferid;
+        }
+
+        try{
+            SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
+            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+        
+            if(objRes.isCreateable() && objRes.isUpdateable()){
+                upsert tecOff;
+                tecOffId = tecOff.Id;
+            } else {
                 saveResponse.success = false;
-                saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-                saveResponse.errorData = new List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError>();
-                HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
-                lineError.rowId = '0';
-                lineError.errorMessage = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-                saveResponse.errorData.add(lineError);
+                saveResponse.message = '# ERROR: you don\'t have permission on this obj';
                 saveResponse.dataError = false;
-                return saveResponse;
+                return saveResponse;                
             }
-        } else {
-            tecOffId = technicalofferid;
+
+        } catch (Exception e){
+            saveResponse.success = false;
+            saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+            saveResponse.errorData = new List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError>();
+            HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
+            lineError.rowId = '0';
+            lineError.errorMessage = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+            saveResponse.errorData.add(lineError);
+            saveResponse.dataError = false;
+            return saveResponse;
         }
 
         List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList;
@@ -173,13 +178,13 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             System.debug('# newTechnicalOffer > ' + technicalOffer);
         }
 
-        if(!String.isEmpty(idToClone)){
-            //In this case we have to clone TechnicalOffer__c record using recordId
-            TechnicalOffer__c recToClone;
-            recToClone = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordById(recToClone, idToClone);
-            technicalOffer = recToClone.clone(false, true, false, false);
-            System.debug('# clonedTechnicalOffer > ' + technicalOffer);
-        }
+        //if(!String.isEmpty(idToClone)){
+        //    //In this case we have to clone TechnicalOffer__c record using recordId
+        //    TechnicalOffer__c recToClone;
+        //    recToClone = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordById(recToClone, idToClone);
+        //    technicalOffer = recToClone.clone(false, true, false, false);
+        //    System.debug('# clonedTechnicalOffer > ' + technicalOffer);
+        //}
 
         //Last configuration of the TechnicalOffer__c record
         prodList = HDT_QR_TechnicalOffer.getProductById(prodList, productId);

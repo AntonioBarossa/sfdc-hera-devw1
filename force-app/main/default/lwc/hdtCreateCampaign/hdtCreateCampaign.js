@@ -27,14 +27,13 @@ export default class HdtCreateCampaign extends LightningElement {
     }
 
     handleChangeStatus(event) {
-        let categoryField = this.template.querySelector('.categoryField > lightning-input-field').value;
-        let channelField = this.template.querySelector('.channelField > lightning-input-field').value;
+
+        let categoryField = this.template.querySelector('.categoryField > lightning-input-field') != null ? this.template.querySelector('.categoryField > lightning-input-field').value : '';
+        let channelField = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
         let recurringField = this.template.querySelector('.recurringField > lightning-input-field').value;
         this.statusField = event.detail.value;
-
-        if (event.detail.value === 'Pianificata') {
+        if ("Campagna Contenitore" != categoryField && event.detail.value === 'Pianificata') {
             this.startDateFieldRequired = true;
-
             this.campaignInboundFields = categoryField === 'Campagna CRM' ? true : false;
             this.reitekFieldRequired = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignOutboundFields = channelField.includes('Telefonico Outbound') ? true : false;
@@ -52,7 +51,28 @@ export default class HdtCreateCampaign extends LightningElement {
     }
 
     handleChangeCategory(event) {
-        this.campaignInboundFields = event.detail.value === 'Campagna CRM' ? true : false;
+       // this.campaignInboundFields = event.detail.value === 'Campagna CRM' ? true : false;ù
+        this.statusField = this.template.querySelector('.statusField > lightning-input-field').value;  
+        let categoryField = this.template.querySelector('.categoryField > lightning-input-field').value;
+        let channelField = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
+        let recurringField = this.template.querySelector('.recurringField > lightning-input-field').value;
+       // this.statusField = event.detail.value;
+        if ("Campagna Contenitore" != event.detail.value && this.statusField === 'Pianificata') {
+            this.startDateFieldRequired = true;
+            this.campaignInboundFields = categoryField === 'Campagna CRM' ? true : false;
+            this.reitekFieldRequired = channelField.includes('Telefonico Outbound') ? true : false;
+            this.campaignOutboundFields = channelField.includes('Telefonico Outbound') ? true : false;
+            this.campaignMemberAssignmentTypeRequired = channelField.includes('Telefonico Outbound') ? true : false;
+            this.campaignMemberAssignmentRequired = channelField.includes('Telefonico Outbound') ? true : false;
+            this.campaignBillingFields = channelField.includes('Bolletta') ? true : false;
+            this.recurringCampaignFieldsRequired = recurringField;
+        } else {
+            this.startDateFieldRequired = false;
+            this.recurringCampaignFieldsRequired = false;
+            this.reitekFieldRequired = false;
+            this.campaignMemberAssignmentTypeRequired = false;
+            this.campaignMemberAssignmentRequired = false;
+        }
     }
 
     handleChangeChannel(event) {
@@ -142,7 +162,7 @@ export default class HdtCreateCampaign extends LightningElement {
     handleError(event) {
         this.dispatchEvent(
             new ShowToastEvent({
-                title: "Update failed!",
+                title: "Aggiornamento Fallito",
                 message: event.detail.message,
                 variant: "error"
             })
@@ -152,7 +172,7 @@ export default class HdtCreateCampaign extends LightningElement {
     handleSuccess(event) {
         this.dispatchEvent(
             new ShowToastEvent({
-                title: "Campaign updated",
+                title: "Campagna Aggiornata",
                 message: '',
                 variant: "success"
             })

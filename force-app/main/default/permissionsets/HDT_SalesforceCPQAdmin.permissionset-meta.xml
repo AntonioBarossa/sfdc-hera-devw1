@@ -2014,7 +2014,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.AccountRatingCtrl__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2199,7 +2199,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.ChurnkRiskCtrl__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2249,12 +2249,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.CreditCheckCalled__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.CreditCheckCtrl__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9924,9 +9924,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>LoginGroup__c.NameGroup__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -19785,6 +19785,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.IsChangeSalesCompany__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.LoginGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -25565,11 +25570,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.CreditCheckResultsFinal__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.CreditCheckResults__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -25616,11 +25616,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.EnvelopeId__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.FinalReason__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25924,6 +25919,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>EligibleMunicipality__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>LoginGroup__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -27049,6 +27053,10 @@
         <apexPage>SBQQ__sb</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+    <tabSettings>
+        <tab>LoginGroup__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
     <tabSettings>
         <tab>SBQQ__AttributeSet__c</tab>
         <visibility>Visible</visibility>

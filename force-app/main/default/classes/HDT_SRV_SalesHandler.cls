@@ -41,9 +41,20 @@ public with sharing class HDT_SRV_SalesHandler {
                     }
                     
                     if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
+                        //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                        String recordId = mapRequestFields.get('RECORD_ID');
+                        Order ordRetrieved;
+                        if(recordId instanceOf Id){
+                            ordRetrieved = orderQr.getRecordByOrderId(recordId)[0];
+                        }
+                        else {
+                            ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
+                        }
                         
-                        Order ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
-
+                        String previousPhase = ordRetrieved.Phase__c;
+                        String nextPhase = mapRequestFields.get('FASE');
+                        String finalCancellationPhase = '';
+                        //EVERIS: EMD ANNULLAMENTO/RIPENSAMENTO
                         Order ord = new Order();
                         ord.Id = ordRetrieved.Id;
                         ord.Phase__c = mapRequestFields.get('FASE');
@@ -53,26 +64,85 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
                                 ord.CausalCode__c = mapRequestFields.get('CODERR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.Description = mapRequestFields.get('ANNOTAZIONI');
                             }
                             when 'Ammissibilità OK' {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                             }
                             when 'Esito OK da DL' {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
-                                ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.parse(mapRequestFields.get('DT_INIZIO_VERT')) : null;
+                                ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                            }
+                            when 'Amm. Precheck KO SII' {
+                                ord.PrecheckReasonSII__c = mapRequestFields.get('DES_ERR_ES');
+                                ord.CausalCode__c = mapRequestFields.get('CODERR_ES');
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
-                            when 'Esito KO da SII' {
-                                ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
-                            }
-                            when 'Esito OK da SII' {
+                            when 'Amm. Precheck OK SII' {
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                     ord.PrecheckResultSII__c = 'OK';
                                 }
+                            }
+                            when 'Esito KO da SII' {
+                                ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+			                    ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                            }
+                            when 'Esito OK da SII' {
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+			                    ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                            }
+                            when 'Annullamento - Inviato al DL/SII'{
+                                //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                                if(previousPhase.indexOf('Ripensamento') >-1){
+                                    nextPhase = 'Ripensamento - Inviato al SII';
+                                }
+                                ord.Phase__c = nextPhase;
+                                //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+                            }
+                            when 'Annullamento - Ammissibilità OK', 'Annullamento - Ammissibilità KO' {
+                                //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                                if(previousPhase.indexOf('Ripensamento') >-1){
+                                    nextPhase.replace('Annullamento', 'Ripensamento');
+                                }
+                                ord.Phase__c = nextPhase;
+                                //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+                            }
+                            when 'Esito OK da DL/SII'{
+                                //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                                if(previousPhase.indexOf('Annullamento') > -1) {
+                                    ord.Phase__c = 'Annullamento - ' + nextPhase;
+                                    finalCancellationPhase = 'Annullato';
+                                }else if(previousPhase.indexOf('Ripensamento') > -1) {
+                                   	ord.Phase__c = 'Ripensamento - Esito OK da SII';
+                                    finalCancellationPhase = 'Ripensato';
+                                }
+                                //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+                            }
+                            when 'Esito KO da DL/SII' {
+                                //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                                if(previousPhase.indexOf('Annullamento') > -1) {
+                                    ord.Phase__c = 'Annullamento - ' + nextPhase;
+                                }else if(previousPhase.indexOf('Ripensamento') > -1) {
+                                    ord.Phase__c = 'Ripensamento - Esito KO da SII';
+                                }
+                                //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
                             }
                             when 'Errore lavorazione SAP' {
                                 ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR');
@@ -96,12 +166,30 @@ public with sharing class HDT_SRV_SalesHandler {
                                     billingProfileSrv.updateRecord(billingProfile);
                                 }
                             }
+                            when 'Annullamento SII - Ricezione'{
+                                ord.CancellationReasonCode__c = mapRequestFields.get('COD_CAUSALE');
+                                ord.CancellationNote__c = mapRequestFields.get('ANNOTAZIONI_ANN');
+                                String annotazioni = ord.CancellationNote__c != null? ord.CancellationNote__c:'';
+                                ord.CancellationNote__c = mapRequestFields.get('NOTE_ANN') +'\n' + annotazioni;
+                                HDT_UTL_HerokuPostSalesManager utlClass = new HDT_UTL_HerokuPostSalesManager();
+                                Order cancellationOrder = new Order();
+                                cancellationOrder.Id = ord.Id;
+                                utlClass.handlePassiveCancellation(cancellationOrder, 'Order', mapRequestFields.get('STORNO'), mapRequestFields.get('ATTIVITA'));
+                            }
                         }
 
                         orderSrv.updateRecord(ord);
                     	responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
-                    	responseField.value = 'OK';    
+                    	responseField.value = 'OK';
+
+                        //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                        if (String.isNotBlank(finalCancellationPhase)) {
+                            ord.Phase__c = finalCancellationPhase;
+                            ord.Status = 'Completed';
+                            updateFuture(JSON.serialize(ord));
+                        }
+                        //EVERIS: END ANNULLAMENTO/RIPENSAMENTO  
                     }else{
                         responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
@@ -164,6 +252,26 @@ public with sharing class HDT_SRV_SalesHandler {
                 }
 
             }
+            when 'WSLead_Callback'{
+                HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_Winback'{
+                HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_CariBoll'{
+                HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_HVAC'{
+                HDT_UTL_LeadProcess.formHvac(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_SOL'{
+                HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
             when else {
 
                 responseField.fieldType = 'TEXT';
@@ -184,5 +292,13 @@ public with sharing class HDT_SRV_SalesHandler {
 
         return mrrResponseItem;
     }
+    
+    //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+    @Future
+    private static void updateFuture(String inputString){
+        Order recordOrder = (Order) JSON.deserialize(inputString, Order.class);
+        HDT_UTL_DatabaseService.updateSObject(recordOrder);
+    }
+    //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
 
 }

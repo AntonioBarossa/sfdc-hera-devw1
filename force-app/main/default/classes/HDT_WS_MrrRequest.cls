@@ -37,7 +37,7 @@ global with sharing class HDT_WS_MrrRequest {
         
         HDT_SRV_HerokuPostSalesManager hpsmSrv = new HDT_SRV_HerokuPostSalesManager();
         HDT_WRP_MrrRequest.HDT_WRP_Request postSalesRequest = new HDT_WRP_MrrRequest.HDT_WRP_Request();
-        String result;
+        //String result;
 
         //FINE SVILUPPI EVERIS
 

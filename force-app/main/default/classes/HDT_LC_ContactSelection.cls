@@ -58,13 +58,12 @@ public with sharing class HDT_LC_ContactSelection {
     }
 
     @AuraEnabled(cacheable = false)
-    public static String getAdministrators(String accountId){
+    public static String getAdministrators(String accountId, String soslSearchTerm){
         String recordListString;
         try{
-            System.debug('HDT_LC_ContactSelection: accountId: ' + accountId);
+            System.debug('HDT_LC_ContactSelection: accountId: ' + accountId + ' soslSearchTerm: ' + soslSearchTerm);
 
             List<List<sObject>> recordList = new List<List<sObject>>();
-            Map<Id, String> rolesMap = new Map<Id, String>();
 
             HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
             List<AccountContactRelation> relationList = acrQueryHandler.getAdministratorRelations();
@@ -77,21 +76,42 @@ public with sharing class HDT_LC_ContactSelection {
                     accountAdministratorId = acr.ContactId;
                 }
                 contactIds.add(acr.ContactId);
-                rolesMap.put(acr.ContactId, acr.Roles);
             }
 
             // Rimuoviamo l'Id dell'amministratore attuale dell'Account.
             if (accountAdministratorId != null) {
                 contactIds.remove(accountAdministratorId);
-                rolesMap.remove(accountAdministratorId);
             }
 
-            HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
-            List<Contact> contacts = contactQueryHandler.getRecordsByIds(contactIds);
+            if (contactIds.isEmpty()) {
+                System.debug('HDT_LC_ContactSelection: nessun amministratore di condominio a sistema');
+                return '';
+            }
+
+            List<Id> idsList = new List<Id>();
+            idsList.addAll(contactIds);
+            HDT_QR_GenericRecordSelection soslHandler = new HDT_QR_GenericRecordSelection();
+            String fields = 'Name,Phone,MobilePhone,Email,Fax,CertifiedEmail__c,MailingAddressFormula__c,FirstName,LastName,FiscalCode__c,ContactCode__c';
+            String filters = 'Id IN (\'' + idsList[0] + '\'';
+            for (Integer i = 1; i < idsList.size(); i++) {
+                filters += ',\'' + idsList[i] + '\'';
+            }
+            filters += ')';
+            if (String.isBlank(soslSearchTerm)) {
+                System.debug('HDT_LC_ContactSelection: default search term = 1900*');
+                soslSearchTerm = '1900*'; // tutti i codici contatto SAP iniziano con 1900*
+            }
+
+            List<List<SObject>> contacts = soslHandler.executeQuery(fields, filters, '', soslSearchTerm, 'Contact');
+            if (contacts.isEmpty()) {
+                System.debug('HDT_LC_ContactSelection: nessun amministratore di condominio trovato con il filtro: ' + soslSearchTerm);
+                return '';
+            }
 
             JSONGenerator gen = JSON.createGenerator(false);
             gen.writeStartArray();
-            for (Contact contact : contacts) {
+            for (SObject obj : contacts[0]) {
+                Contact contact = (Contact) obj;
                 gen.writeStartObject();
                 gen.writeStringField('Id', contact.Id);
                 writeIfNotNull(gen, 'Name', contact.Name);
@@ -100,9 +120,9 @@ public with sharing class HDT_LC_ContactSelection {
                 writeIfNotNull(gen, 'Email', contact.Email);
                 writeIfNotNull(gen, 'ContactCode__c', contact.ContactCode__c);
                 writeIfNotNull(gen, 'Fax', contact.Fax);
+                writeIfNotNull(gen, 'FiscalCode__c', contact.FiscalCode__c);
                 writeIfNotNull(gen, 'CertifiedEmail__c', contact.CertifiedEmail__c);
                 writeIfNotNull(gen, 'MailingAddressFormula__c', contact.MailingAddressFormula__c);
-                writeIfNotNull(gen, 'Roles', rolesMap.get(contact.Id));
                 gen.writeEndObject();
             }
 

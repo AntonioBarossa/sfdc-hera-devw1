@@ -47,13 +47,32 @@ public inherited sharing class HDT_LC_CampaignsController {
     }
 
     @AuraEnabled
+    public static List<CampaignMember> updateCampaignMembersStatus(List<String> campaignMemberIds, String statusValue){
+        List<CampaignMember> membersToUpdate = new List<CampaignMember> ();
+        for (String id : campaignMemberIds) {
+            CampaignMember cm = new CampaignMember(
+                Id = id,
+                Status = statusValue
+            );
+            membersToUpdate.add(cm);
+        }
+        try {
+            campaignMemberSrv.updateRecords(membersToUpdate);
+            return membersToUpdate;
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            return null;
+        }
+
+    }
+
+    @AuraEnabled
     public static Case createNewCase(Case c){
         Case newCase = caseSrv.createRecord(c);
         system.debug(newCase);
         return newCase;
     }
-
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<CampaignMember> getUnassignedCampaignMembers(String campaignId) {
         return  campaignMemberQr.getUnassignedCampaignMembers(campaignId);
     }
@@ -63,7 +82,7 @@ public inherited sharing class HDT_LC_CampaignsController {
         return  campaignMemberQr.getAccountsforCampaignMembers();
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static CampaignMember getAccountAndCampaign(String campaignMemberId) {
         campaignMemberSrv.checkReadAccess('ContactId,LeadId,CampaignId,GenericField1__c');
         return  campaignMemberQr.getAccountAndCampaign(campaignMemberId);

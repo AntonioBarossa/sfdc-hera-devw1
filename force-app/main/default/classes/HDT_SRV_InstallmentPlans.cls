@@ -42,8 +42,12 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         }
 
         //Callout 'Vista Rate' to calculate installmentPlansUnpaid
-        outputs = HDT_SRV_AccountInstallmentsCheck.execute(inputsCheck);
-        currentCase.ExistingInstallmentsPlanNumber__c = outputs[0].existingInstallmentPlanUnpaid;
+        try{
+            outputs = HDT_SRV_AccountInstallmentsCheck.execute(inputsCheck);
+            currentCase.ExistingInstallmentsPlanNumber__c = outputs[0].existingInstallmentPlanUnpaid;
+        }catch(Exception e){
+            System.debug(e.getMessage());
+        }
 
         //check CA with/without SEPA
         paymentMethod = installmentsQr.getPaymentMethodByCaseId(recordId);
@@ -56,7 +60,12 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug('SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
 
         //Set AmountToPayInstallments to TotalPay
-        Decimal totalAmount = installmentsQr.getCaseById(recordId).TotalToPay__c;
+        List<DocumentSelected__c> raiFeeDocuments = installmentsQr.getDocumentSelectedByCase(recordId);
+        Decimal totalRaiFeeResidual = 0.0;
+        for(DocumentSelected__c document : raiFeeDocuments){
+            totalRaiFeeResidual += document.TvFeeResidual__c;
+        }
+        Decimal totalAmount = installmentsQr.getCaseById(recordId).TotalResidue__c - totalRaiFeeResidual;
         currentCase.AmountToPayInInstallments__c = totalAmount;
 
 
@@ -82,12 +91,19 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug('SRV_InstallmentPlans Documetns--> '+documents);
 
         String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
+        Decimal total;
+        if(currentCase.DepositAmount__c != null){
+            total = currentCase.AmountToPayInInstallments__c - currentCase.DepositAmount__c;
+        }else{
+            total = currentCase.AmountToPayInInstallments__c;
+        }
+       
 
         Map<String, Object> caseMap = new Map<String, Object>{
             'numeroSR' => currentCase.CaseNumber,
             'tipoPiano' => transcodeInstallmentPlan(currentCase.TypeInstallmentPlan__c, currentCase.ApplicationInterests__c),
             'numeroRata' => currentCase.InstallmentNumberRequired__c,
-            'totale' => currentCase.AmountToPayInInstallments__c,
+            'totale' => total,
             'dataInizio' => currentCase.ExpirationDate__c,
             'acconto' => currentCase.DepositAmount__c,
             'contestazioneCliente' => currentCase.Reason__c,

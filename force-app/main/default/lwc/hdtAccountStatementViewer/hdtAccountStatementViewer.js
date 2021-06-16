@@ -903,6 +903,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
             if(interObj && Object.keys(interObj).length === 0 && interObj.constructor === Object){
                 console.log('>>> no apply filter');
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Non hai inserito nessun parametro',
+                        variant: 'info'
+                    }),
+                );
             } else {
                 this.applyInterrogation(interObj);
             }
