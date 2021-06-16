@@ -20,6 +20,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
         return [
             SELECT
             Id,
+            Approved__c,
             Name
             FROM wrts_prcgvr__Activity__c
             WHERE Case__c= :caseId
