@@ -19,8 +19,9 @@ public inherited sharing class HDT_LC_ResumeCommercialBonus {
         List<Case> cs = caseQr.getRecordsById(new List<String>{id}, 'Id, Status,Phase__c');
         if(cs != null && !cs.isEmpty()){
             results.put('case', cs[0]);
-        }
+        } 
 
+        
         return results;
     }
 }
