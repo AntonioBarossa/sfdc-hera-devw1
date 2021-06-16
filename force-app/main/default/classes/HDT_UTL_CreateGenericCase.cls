@@ -94,6 +94,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
 
         newCase.AccountId = parentOrder.AccountId;
         newCase.ContactId = parentOrder.Contact__c;
+        newCase.CompanyOwner__c = parentOrder.Account.CompanyOwner__c;
         newCase.RecordTypeId = recordTypeId;
         newCase.Type = caseType;
         newCase.Cluster__c = caseCluster;
