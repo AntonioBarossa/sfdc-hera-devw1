@@ -25,6 +25,7 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
         //allUniqueProductCodeSet = checkProduct2Duplicate(allUniqueProductCodeSet);
 
         Set<Id> productIds = new  Set<Id>();// = Trigger.NewMap.keySet();
+        Set<Id> productIdsForProductOption = new  Set<Id>();
         Set<Id> productIdsForTechOff = new  Set<Id>();
         Set<String> familySet = new Set<String>();
         familySet.add('VAS Prodotto');
@@ -37,23 +38,34 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
             if(familySet.contains(p.Family)){
                 productIds.add(p.Id);
 
-                if(p.Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){//Offerta commerciale
-                    productIdsForTechOff.add(p.Id);
-                }
+                Product2 oldProd = (Product2)Trigger.oldMap.get(p.Id);
 
+                // In Sviluppo --> Confermata
+                if(oldProd.Status__c.equalsIgnoreCase(Label.HDT_InDevelopment) && p.Status__c.equalsIgnoreCase(Label.HDT_Confirmed)){
+
+                    productIdsForProductOption.add(p.Id);
+
+                    //Offerta commerciale
+                    if(p.Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
+                        productIdsForTechOff.add(p.Id);
+                    }
+                }
             }
 
         }
 
         System.debug('>>> productIds ' + productIds.size());
+        System.debug('>>> productIdsForProductOption ' + productIdsForProductOption.size());
         System.debug('>>> productIdsForTechOff ' + productIdsForTechOff.size());
 
         if(productIds.size()==0){
-            //only Offerta commerciale run trigger
+            // if not in familySet ship trigger
             return;
         }
 
-        productOptionMap = HDT_UTL_ProductStObjProcess.generateProductOptionMap(productOptionMap, productIds);
+        if(productIdsForProductOption.size()>0){
+            productOptionMap = HDT_UTL_ProductStObjProcess.generateProductOptionMap(productOptionMap, productIdsForProductOption);
+        }
         
         if(productIdsForTechOff.size() > 0){
             technicalOfferMap = HDT_UTL_ProductStObjProcess.generateTechnicalOfferMap(technicalOfferMap, productIdsForTechOff);
@@ -72,7 +84,7 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
             Product2 oldProduct = (Product2)Trigger.OldMap.get(p.Id);
             System.debug('>>> oldStatus: ' + oldProduct.Status__c + ' - NewStatus: ' + p.Status__c);
 
-            if(technicalOfferMap == null){
+            if(technicalOfferMap == null|| !technicalOfferMap.containsKey(p.Id)){
                 technicalOfferNumber = 0;
             } else {
                 technicalOfferNumber = technicalOfferMap.get(p.Id);
