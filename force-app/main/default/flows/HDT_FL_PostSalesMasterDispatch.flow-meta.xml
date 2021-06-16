@@ -1747,6 +1747,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>DistributorCode__c</field>
+            <value>
+                <stringValue>13D1900000</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Email__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
@@ -1768,6 +1774,12 @@
             <field>RecordTypeId</field>
             <value>
                 <elementReference>Get_RT_Pagamenti.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SalesCompanyCode__c</field>
+            <value>
+                <stringValue>13V0000000</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
