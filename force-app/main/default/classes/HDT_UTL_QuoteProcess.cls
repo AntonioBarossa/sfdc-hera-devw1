@@ -86,6 +86,7 @@ public inherited sharing class HDT_UTL_QuoteProcess {
         newQuote.Market__c = oldQuote.Market__c;
         newQuote.SupplyCity__c = oldQuote.SupplyCity__c;
         newQuote.ContractReference__c = oldQuote.ContractReference__c;
+        newQuote.SBQQ__Status__c = 'In Review';
     }
 
     private static list<SBQQ__Quote__c> getSaleAmendOldQuotes(list<SBQQ__Quote__c> newQuoteList){
@@ -176,7 +177,8 @@ public inherited sharing class HDT_UTL_QuoteProcess {
         for (SBQQ__Quote__c quote : newSaleAmendQuotes) {
             oppToUpdate.add(new Opportunity(
                 Id = quote.SBQQ__Opportunity2__c,
-                Sale__c = quote.Sale__c
+                Sale__c = quote.Sale__c,
+                StageName = 'Negotiation'
             ));
         }
 
@@ -244,15 +246,12 @@ public inherited sharing class HDT_UTL_QuoteProcess {
         for (String opp : oldOppList) {
             oppToCancel.add(new Opportunity(
                 Id = opp,
-                StageName = 'Chiusa/Annullata'
+                StageName = 'Closed/Lost'
             ));
         }
 
-        
         oppSrv.updateRecords(oppToCancel);
 
-        // quoteSrv.deleteRecords(oldQuoteList);
-        // oppSrv.deleteRecords(oldQuoteList);
     }
 
 }

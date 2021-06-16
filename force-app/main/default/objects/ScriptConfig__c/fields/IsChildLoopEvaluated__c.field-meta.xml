@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsChildLoopEvaluated__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Nelle sezioni Lista, indica quando le logiche dinamiche della sezione corrente non verranno valutate sull&apos;oggetto di contesto ma per ogni figlio dell&apos;oggetto di contesto.</description>
+    <externalId>false</externalId>
+    <label>Loop Sui Record Figli</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

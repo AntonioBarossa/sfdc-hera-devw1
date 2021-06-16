@@ -19,7 +19,7 @@
                 {
                     &quot;fieldType&quot;: &quot;&quot;,
                     &quot;apiName&quot;: &quot;IsAlertActive__c&quot;,
-                    &quot;label&quot;: &quot;alertAttivo&quot;
+                    &quot;label&quot;: &quot;isAlertAttivo&quot;
                 },
                 {
                     &quot;fieldType&quot;: &quot;&quot;,

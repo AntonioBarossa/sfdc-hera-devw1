@@ -149,4 +149,67 @@
         <shortDescription>Success</shortDescription>
         <value>Success</value>
     </labels>
+    <labels>
+        <fullName>HDT_Canceled</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_Canceled</shortDescription>
+        <value>Annullata</value>
+    </labels>
+    <labels>
+        <fullName>HDT_Confirmed</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_Confirmed</shortDescription>
+        <value>Confermata</value>
+    </labels>
+    <labels>
+        <fullName>HDT_Expired</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_Expired</shortDescription>
+        <value>Scaduta</value>
+    </labels>
+    <labels>
+        <fullName>HDT_InDevelopment</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_InDevelopment</shortDescription>
+        <value>In Sviluppo</value>
+    </labels>
+    <labels>
+        <fullName>HDT_Sold</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_Sold</shortDescription>
+        <value>Vendibile</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ProductFamilyTrigger</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ProductFamilyTrigger</shortDescription>
+        <value>Offerta commerciale</value>
+    </labels>
+    <labels>
+        <fullName>HDT_PermissionSetNameForCPQ</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_PermissionSetNameForCPQ</shortDescription>
+        <value>HDT_SalesforceCPQAdmin</value>
+    </labels>
+    <labels>
+        <fullName>HDT_SuperUserCPQ</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_SuperUserCPQ</shortDescription>
+        <value>HDT_SuperUserCPQ</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnConfirmProduct</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnConfirmProduct</shortDescription>
+        <value>Non è possibile passare in "Confermata" il bundle, ci sono prodotti opzione del bundle in stato "In sviluppo". Per procedre è necessario modificare lo stato dei prodotti opzione in "Confermata" oppure "Annullata".</value>
+    </labels>
 </CustomLabels>

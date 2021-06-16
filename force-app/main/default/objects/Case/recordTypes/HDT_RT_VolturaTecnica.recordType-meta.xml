@@ -2181,6 +2181,44 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>DetailOne__c</picklist>
+        <values>
+            <fullName>E - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ES - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DetailTwo__c</picklist>
+        <values>
+            <fullName>E - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ES - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DisasterType__c</picklist>
         <values>
             <fullName>Emergenza</fullName>
@@ -8136,6 +8174,10 @@
             <fullName>Verifica in laboratorio</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
@@ -8319,10 +8361,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Chiamata Muta</fullName>
             <default>false</default>
         </values>
@@ -8332,10 +8370,6 @@
         </values>
         <values>
             <fullName>Cliente paga un acconto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
             <default>false</default>
         </values>
         <values>

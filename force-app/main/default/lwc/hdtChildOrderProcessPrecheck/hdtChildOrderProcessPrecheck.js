@@ -3,6 +3,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getOptions from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.getOptions';
 import next from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.next';
 
+// @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
+import callServiceCreditCheck from '@salesforce/apex/HDT_WS_CreditCheck.callService';
 export default class hdtChildOrderProcessPrecheck extends LightningElement {
     @api order;
     precheck = false;
@@ -16,13 +18,21 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     disabledDeliberation = false;
     showEsitoCheck = false;
     vasAmendDisabledInput = false;
+    SwitchInRipristinatorioDisabledInput = false;
+    cambioOffertaInput = false;
     
     get value(){
         let result = '';
         console.log('**************************************** ', this.order.RecordType.DeveloperName);
         //COMMENTATO POICHE GENERAVA ERRORE
         if (this.order.RecordType.DeveloperName !== 'Default') {
-            if(this.order.SBQQ__Quote__r.IsVAS__c){
+            if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
+                result = 'HDT_RT_SwitchIn';
+            }
+            else if (this.order.ProcessType__c === 'Cambio Offerta') {
+                result = 'HDT_RT_CambioOfferta';
+            }
+            else if(this.order.SBQQ__Quote__r.IsVAS__c){
                 result = 'HDT_RT_VAS';
             } else if(this.order.SBQQ__Quote__r.AmendmentAllowed__c) {
                 result = 'HDT_RT_ScontiBonus';
@@ -42,7 +52,17 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         let records = [];
 
         //COMMENTATO POICHE GENERAVA ERRORE
-        if(this.order.SBQQ__Quote__r.IsVAS__c){
+        if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
+            records = [
+                {"label":"SwitchIn","value":"HDT_RT_SwitchIn"}
+            ]
+        }
+        else if(this.order.ProcessType__c === 'Cambio Offerta'){
+            records = [
+                {"label":"Cambio Offerta","value":"HDT_RT_CambioOfferta"}
+            ]
+        }
+        else if(this.order.SBQQ__Quote__r.IsVAS__c){
             records = [
                 {"label":"VAS","value":"HDT_RT_VAS"}
             ]
@@ -90,7 +110,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     get disabledInput(){
         let result = true;
         console.log('disabledInput - rcordtype', this.order.RecordType.DeveloperName);
-        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || this.vasAmendDisabledInput){
+        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || this.vasAmendDisabledInput || this.SwitchInRipristinatorioDisabledInput){
             result = true;
         } else {
             result = false;
@@ -142,6 +162,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showDeliberation = false;
 
             this.showEsitoCheck = false;
+
+            if (this.order.ProcessType__c === 'Switch in Ripristinatorio') {
+                this.selectedProcess = 'HDT_RT_SwitchIn';
+            }
         }
         else if(selectedProcess === 'HDT_RT_AttivazioneConModifica')
         {
@@ -153,6 +177,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         else if(selectedProcess === 'HDT_RT_VAS')
         {
             this.selectedProcess = 'HDT_RT_VAS';
+            this.precheck = true;
+            this.compatibilita = true;
+            this.causale = '';
+            this.showDeliberation = false;
+        }
+        else if(selectedProcess === 'HDT_RT_CambioOfferta')
+        {
+            this.selectedProcess = 'HDT_RT_CambioOfferta';
             this.precheck = true;
             this.compatibilita = true;
             this.causale = '';
@@ -213,12 +245,26 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     handleNext(){
-        console.log('handleNext: ' + this.order.Id + ' ' + this.selectedProcess);
+        //@Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
+        /**
+         * La chiamata al credit check va eseguita per queste condizioni
+         * HDT_RT_Subentro , HDT_RT_AttivazioneConModifica, HDT_RT_SwitchIn (solo se process_type diverso da Switch In Ripristinatorio), 
+         * HDT_RT_ConnessioneConAttivazione, HDT_RT_TemporaneaNuovaAtt, HDT_RT_Voltura, 
+         * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
+         */
+        if((this.selectedProcess === 'HDT_RT_VAS' && this.order.OrderReferenceNumber != null && this.order.ContractReference__c != null) || this.selectedProcess === 'HDT_RT_Voltura' ||this.selectedProcess === 'HDT_RT_Subentro' || this.selectedProcess === 'HDT_RT_AttivazioneConModifica' || this.selectedProcess === 'HDT_RT_SwitchIn' || this.selectedProcess === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcess === 'HDT_RT_TemporaneaNuovaAtt'){
+            this.callCreditCheckSAP();
+        }
+        
 
         let extraParams = {};
 
         if(this.order.ServicePoint__r !== undefined){
             extraParams['servicePointType'] = this.order.ServicePoint__r.RecordType.DeveloperName;
+        }
+
+        if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
+            extraParams['switchInRipristinatorio'] = 'true';
         }
 
         if (this.showDeliberation === true) {
@@ -249,7 +295,107 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.vasAmendDisabledInput = true;
         }
         
+        if (this.order.ProcessType__c === 'Switch in Ripristinatorio') {
+            this.SwitchInRipristinatorioDisabledInput = true;
+        }
+
+        if (this.order.ProcessType__c === 'Cambio Offerta') {
+            this.cambioOffertaInput = true;
+        }
+        
         console.log('CallBack end');
 
     }
+
+    // START @Picchiri 07/06/21 Credit Check
+    callCreditCheckSAP(){
+        this.loading = true;
+        var wrp = this.getRequest();
+        
+        console.log('connectedCallback wrp ---> ');
+        console.log(JSON.parse(JSON.stringify(wrp)));
+                
+        callServiceCreditCheck({wrpVals:JSON.stringify(wrp)})
+        .then(result => {
+            console.log('result callServiceCreditCheck ---> : ');
+            console.log(JSON.parse(JSON.stringify(result)));
+
+            if(result.status == 'failed'){
+                throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
+            }
+
+            //this.restryEsitiCreditCheck();
+            this.loading = false;
+        })
+        .catch(error => {
+            console.log('error callServiceCreditCheck error ---> : ');
+            console.log(JSON.parse(JSON.stringify(error)));
+            let toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                variant: 'error',
+                mode:'sticky'
+            });
+            
+            this.dispatchEvent(toastErrorMessage);
+            this.loading = false;
+        })        
+    }
+
+    getRequest(){
+        var typeOfCommodity = this.order.ServicePoint__r.CommoditySector__c;
+        var fiscalData = null;
+        if(typeOfCommodity == 'Energia Elettrica'){
+            typeOfCommodity = 'ENERGIAELETTRICA';
+        }
+        if(typeOfCommodity == 'Gas'){
+            typeOfCommodity = 'GAS';
+        }
+        
+        let data = {
+            sistema: "eEnergy",
+            caso:"Transazionale",
+            crmEntity:"Order",
+            crmId:this.order.OrderNumber,
+            userId: this.order.CreatedById,
+            activationUser:"AccountCommercialePRM",
+            account:"AccountCommercialePRM",
+            jobTitle:this.order.Channel__c,
+            internalCustomerId:this.order.Account.CustomerCode__c,
+            companyName:this.order.SalesCompany__c,
+            externalCustomerId:this.order.Account.FiscalCode__c,
+            secondaryCustomerId:this.order.Account.VATNumber__c,
+            bpClass:this.order.Account.CustomerMarking__c,
+            bpCategory:this.order.Account.Category__c,
+            bpType:this.order.Account.CustomerType__c,
+            customerType:"CT0",                                                 //da definire campo SF con business
+            address:this.order.ServicePoint__r.SupplyStreetName__c,
+            municipality:this.order.ServicePoint__r.SupplyCity__c,
+            district:this.order.ServicePoint__r.SupplyProvince__c,
+            postCode:this.order.ServicePoint__r.SupplyPostalCode__c,
+            operation:this.order.ProcessType__c,
+            companyGroup:"Hera S.p.A.",
+            market:this.order.Market__c,
+            offerType:this.order.Catalog__c,
+            details:[{
+                commodity:typeOfCommodity,
+                annualConsumption:this.order.ServicePoint__r.AnnualConsumptionStandardM3__c // mettere lo standard
+            }]		
+        }
+
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+            
+            if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
+                fiscalData = this.order.ServicePoint__r.Account__r.FiscalCode__c;
+            }else if(this.order.ServicePoint__r.Account__r.VATNumber__c != null){
+                fiscalData = this.order.ServicePoint__r.Account__r.VATNumber__c;
+            }
+            
+            data["bpAlternative"] = this.order.ServicePoint__r.Account__r.CustomerCode__c;
+            data["alternativeCustomerId"] = fiscalData;            
+        }
+
+        return data; 
+    }
+    // END @Picchiri 07/06/21 Credit Check
 }

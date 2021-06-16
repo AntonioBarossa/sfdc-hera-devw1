@@ -17,7 +17,7 @@ const columns = [
     },
     { label: 'Conto Contrattuale', fieldName: 'contoContrattuale'},
     { label: 'Numero Documento', fieldName: 'xblnr'},
-    { label: 'Numero Bollettino', fieldName: 'boll'},
+    { label: 'Numero Bollettino', fieldName: 'bollo'},
     { label: 'Totale Copertina', fieldName: 'totPagare' },
     { label: 'Tipo', fieldName: 'tipoDocDesc' },
     { label: 'Totale Documento', fieldName: 'totFattura'},
@@ -48,7 +48,7 @@ const columnsDocumentSelected = [
     { label: 'Totale Copertina', fieldName: 'TotalCommunicationPayment__c' },
     { label: 'Tipo', fieldName: 'Type__c' },
     { label: 'Totale Documento', fieldName: 'Amount__c'},
-    { label: 'Residuo', fieldName: 'Residue__c'},
+    { label: 'Residuo', fieldName: 'DocumentResidue__c'},
     { label: 'Residuo Canone Rai', fieldName: 'TvFeeResidual__c'},
     { label: 'Modalità di pagamento', fieldName: 'PaymentMode__c'},
     { label: 'Società', fieldName: 'IssuingCompany__c'}
@@ -65,6 +65,11 @@ export default class HdtAccountStatementPicker extends LightningElement {
     @track documents;
     @track wiredDocumentsResult;
     @track showSpinner = true;
+
+    //Added variables to calculate Total Amount w and w/o Fee
+    @track amountWoFee;
+    @track amountWiFee;
+
     data = [];
     columns = columns;
     columnsDocumentSelected = columnsDocumentSelected;
@@ -84,6 +89,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
             console.log(data.length);
             if(data && data.length>0){
                 this.documents = JSON.parse(data);
+                this.calculateAmounts(this.documents);
             }else{
                 this.documents = undefined;
             }
@@ -173,7 +179,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 params.xblnr = numeroDocumento;
             }
             if(numeroBollettino){
-                params.bollo = numeroBollettino;
+                params.bollo = '*' + numeroBollettino;
             }
             console.log(JSON.stringify(params));
             getStatements
@@ -181,12 +187,14 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 params:JSON.stringify(params)
             }).then(data => {
                 console.log(JSON.parse(data));
-                console.log(data.length);
-                if(data && data.length>0){
+                //console.log(data.length);
+                if(data != null && data.length>0){
                     this.data = JSON.parse(data);
                     this.showTable = true;
+                    this.showSpinner=false;
                 }else{
                     this.showTable = false;
+                    this.showSpinner=false;
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Attenzione',
@@ -198,13 +206,15 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 
             }).catch(err => {
                 this.showTable = false;
+                this.showSpinner=false;
                 console.log(err);
             });
             
         }catch(error){
             console.error(error);
+            this.showSpinner=false;
         }
-        this.showSpinner=false;
+        
     }
 
     formatDate(date) {
@@ -411,6 +421,27 @@ export default class HdtAccountStatementPicker extends LightningElement {
             return false;
 
         }
+    }
+
+    //Metodo per Calcolare amountWoFee && amountWiFee
+    calculateAmounts(documents){
+
+        var amount = 0.0;
+        var amountFee = 0.0;
+
+        documents.forEach(document =>{
+            console.log('#CalculateAmount: Residue__c -> ' + document.DocumentResidue__c);
+            console.log('#CalculateAmount: TvFeeResidual__c -> ' + document.TvFeeResidual__c);
+            amount += document.DocumentResidue__c;
+            amountFee += document.TvFeeResidual__c;
+        });
+
+        console.log('#CalculateAmount: amount -> ' + amount);
+        console.log('#CalculateAmount: amountFee -> ' + amountFee);
+
+        this.amountWoFee = amount - amountFee;
+        this.amountWiFee = amount;
+
     }
 
     @api

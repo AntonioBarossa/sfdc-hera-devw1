@@ -568,6 +568,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>PressureLevel__c</picklist>
+        <values>
+            <fullName>AP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MP</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>RequestPhase__c</picklist>
         <values>
             <fullName>Monofase</fullName>

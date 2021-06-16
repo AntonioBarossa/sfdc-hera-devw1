@@ -58,7 +58,7 @@
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Chiuso</stringValue>
+                <stringValue>Completata</stringValue>
             </value>
         </assignmentItems>
         <connector>

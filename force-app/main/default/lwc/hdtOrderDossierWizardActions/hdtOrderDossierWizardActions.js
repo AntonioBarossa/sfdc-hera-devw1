@@ -10,11 +10,18 @@ export default class hdtOrderDossierWizardActions extends LightningElement {
     currentStep = 2;
     loading = false;
     isSaveButtonDisabled = false;
+    isCancelButtonDisabled = false;
     isDialogVisible = false;
+
+    getCancelButtonStatus(){
+        if (this.orderParentRecord.Status === 'Completed') {
+            this.isCancelButtonDisabled = true;
+        }
+    }
 
     getSaveButtonStatus(){
         this.loading = true;
-        isSaveDisabled({orderParentId: this.orderParentRecord.Id}).then(data =>{
+        isSaveDisabled({orderParent: this.orderParentRecord}).then(data =>{
             console.log('isSaveDisabled: ', data);
             this.loading = false;
             this.isSaveButtonDisabled = data;
@@ -48,10 +55,21 @@ export default class hdtOrderDossierWizardActions extends LightningElement {
 
         }).catch(error => {
             this.loading = false;
-            console.log((error.body.message !== undefined) ? error.body.message : error.message);
+
+            let errorMessage = '';
+
+            if (error.body.message !== undefined) {
+                errorMessage = error.body.message;
+            } else if(error.message !== undefined){
+                errorMessage = error.message;
+            } else if(error.body.pageErrors !== undefined){
+                errorMessage = error.body.pageErrors[0].message;
+            }
+
+            console.log('Error: ', errorMessage);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                message: errorMessage,
                 variant: 'error',
                 mode: 'sticky'
             });
@@ -102,6 +120,7 @@ export default class hdtOrderDossierWizardActions extends LightningElement {
 
     connectedCallback(){
         this.getSaveButtonStatus();
+        this.getCancelButtonStatus();
     }
 
 }

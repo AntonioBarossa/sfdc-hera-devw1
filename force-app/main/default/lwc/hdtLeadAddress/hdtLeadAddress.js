@@ -44,9 +44,13 @@ export default class HdtLeadAddress extends LightningElement {
         this.leadAddress=this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
         console.log("PROVAPROVAPROVA_:" + JSON.stringify(this.leadAddress));
         this.updateLeadAdress();
+        console.log("DENTROUPDATELEADADDRES6");
         if(this.isVerified){
+            console.log("DENTROUPDATELEADADDRES7");
             if(this.fieldsToUpdate !=undefined){
+                console.log("DENTROUPDATELEADADDRES8");
                 this.fieldsToUpdate['Id']= this.recordId;
+                console.log("DENTROUPDATELEADADDRES9");
                 console.log(this.fieldsToUpdate);
                 updateLead2({
                     recordid : this.recordId,
@@ -74,7 +78,7 @@ export default class HdtLeadAddress extends LightningElement {
     updateLeadAdress(){
 
         if(this.leadAddress!= undefined){
-
+            console.log("DENTROUPDATELEADADDRESS");
             if(this.leadAddress['Via'] != null){
                 this.fieldsToUpdate['Street'] = this.leadAddress['Via'] + ' ' + this.leadAddress['Civico'];
                 this.fieldsToUpdate['StreetName__c'] = this.leadAddress['Via'];
@@ -103,7 +107,9 @@ export default class HdtLeadAddress extends LightningElement {
             if(this.leadAddress['Civico'] != null){
                 this.fieldsToUpdate['StreetNumber__c'] = this.leadAddress['Civico'];
             }
+            console.log("DENTROUPDATELEADADDRESS3");
             if(this.leadAddress['Flag Verificato'] !=null){
+                console.log("DENTROUPDATELEADADDRESS2");
                 this.isVerified = this.leadAddress['Flag Verificato'];
             }
         }

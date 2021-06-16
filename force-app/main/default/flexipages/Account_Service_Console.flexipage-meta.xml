@@ -109,7 +109,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtCampaignsApp</componentName>
+                <componentName>HDT_LCP_CampaignToAccountList</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -665,6 +665,11 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>hdtAccountTabManagement</componentName>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>hdtLastBill</componentName>

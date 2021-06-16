@@ -22,10 +22,9 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
 
         Map<String, Object> caseMap = new Map<String, Object>{
             'rds' => currentCase.CaseNumber,
-            'totale' => currentCase.TotalPaidCustomer__c,
-            'residuo' => currentCase.TotalResidue__c,
-            'importo' => currentCase.TotalToPay__c,
-            'acconto' => currentCase.Deposit__c
+            'totale' => currentCase.TotalToPay__c,
+            'residuo' => currentCase.TotalToPay__c,
+            'importo' => currentCase.TotalPaidCustomer__c
         };
 
         caseListMap.add(caseMap);
@@ -44,7 +43,6 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                     'numeroFattura1' => '',
                     'rataFattura' => '',
                     'scadenza' => document.ExpirationDate__c,
-                    'pagato' => document.PaidCustomer__c,
                     'infoBlocco' => '',
                     'idProcesso' => '',
                     'numeroDocumento' => document.DocumentNumber__c.startsWith('0') ? '' : document.DocumentNumber__c,

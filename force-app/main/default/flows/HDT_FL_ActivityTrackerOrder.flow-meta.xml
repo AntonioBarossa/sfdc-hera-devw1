@@ -4,8 +4,8 @@
     <assignments>
         <name>Set_Activity</name>
         <label>Set Activity</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationX>308</locationX>
+        <locationY>551</locationY>
         <assignmentItems>
             <assignToReference>$Record.Activity__c</assignToReference>
             <operator>Assign</operator>
@@ -14,13 +14,35 @@
             </value>
         </assignmentItems>
     </assignments>
+    <decisions>
+        <name>activity_found</name>
+        <label>Activity trovata?</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Set_Activity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Si</defaultConnectorLabel>
+        <rules>
+            <name>activity_found_no</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Activity.Id</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No</label>
+        </rules>
+    </decisions>
     <formulas>
         <name>today</name>
         <dataType>DateTime</dataType>
         <expression>DATETIMEVALUE(TODAY())</expression>
     </formulas>
     <interviewLabel>Account Tracker - Order {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Account Tracker - Order</label>
+    <label>Activity Tracker - Order</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -47,9 +69,9 @@
         <locationY>311</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Activity</targetReference>
+            <targetReference>activity_found</targetReference>
         </connector>
-        <filterLogic>1 AND 2 AND 3 AND (4 OR 5)</filterLogic>
+        <filterLogic>1 AND (2 OR (6 AND 7)) AND 3 AND (4 OR 5)</filterLogic>
         <filters>
             <field>wrts_prcgvr__Status__c</field>
             <operator>NotEqualTo</operator>
@@ -83,6 +105,20 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Sportello</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>QAdLogin__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>QAdLogin__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.LoginADN__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

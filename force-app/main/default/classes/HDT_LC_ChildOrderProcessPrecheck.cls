@@ -78,10 +78,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
             }
             when 'HDT_RT_SwitchIn' {
-                if (extraParams.get('servicePointType') == 'HDT_RT_Ele') {
-                    processType = 'Switch in Ele';
-                } else if(extraParams.get('servicePointType') == 'HDT_RT_Gas') {
-                    processType = 'Switch in Gas';
+                if(extraParams.get('switchInRipristinatorio') == null){
+                    if (extraParams.get('servicePointType') == 'HDT_RT_Ele') {
+                        processType = 'Switch in Ele';
+                    } else if(extraParams.get('servicePointType') == 'HDT_RT_Gas') {
+                        processType = 'Switch in Gas';
+                    }
+                } else {
+                    processType = 'Switch in Ripristinatorio';
                 }
             }
             when 'HDT_RT_Attivazione' {
@@ -98,6 +102,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             }
             when 'HDT_RT_AttivazioneConModifica' {
                 processType = 'Prima Attivazione con modifica';
+            }
+            
+            when 'HDT_RT_CambioOfferta' {
+                processType = 'Cambio Offerta';
             }
             //INIZIO SVILUPPI EVERIS
             when 'HDT_RT_Voltura'{
@@ -118,7 +126,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         newOrder.Id = orderId;
         newOrder.RecordTypeId = recordTypeId;
         newOrder.Step__c = 2;
-        newOrder.Deliberation__c = deliberate;
+        newOrder.Deliberation__c = deliberate;        
         newOrder.ProcessType__c = processType;
         newOrder.Phase__c = 'Bozza';
 

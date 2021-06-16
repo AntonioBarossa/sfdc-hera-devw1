@@ -85,15 +85,20 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                     });
                 }
                 
-                if(this.recordId != null){
-                    updateRecord({fields: { Id: this.recordId }}).then(() => {
-                       console.log('Record Refreshato');
-                       console.log('Prima Colonna ' + JSON.stringify(this.firstColumn));
-                       this.variablesLoaded = true;
-                    }).catch(error => {
-                        console.log('Error Refreshing record');
-                        this.error = true;
-                    });
+                if(this.processType.localeCompare('Richiesta Parere') === 0
+                    || this.processType.localeCompare('Richiesta Parere Esercizio Diritti Privacy') === 0){
+                    this.variablesLoaded = true;
+                }else{
+                    if(this.recordId != null){
+                        updateRecord({fields: { Id: this.recordId }}).then(() => {
+                        console.log('Record Refreshato');
+                        console.log('Prima Colonna ' + JSON.stringify(this.firstColumn));
+                        this.variablesLoaded = true;
+                        }).catch(error => {
+                            console.log('Error Refreshing record');
+                            this.error = true;
+                        });
+                    }
                 }
             } else if (error) {
                 this.error = true;
@@ -205,16 +210,24 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.handleGoNext();
     }
     handleOnLoad(event){
+        if(this.recordId != null){
         var record = event.detail.records;
         var fields = record[this.recordId].fields;
         console.log('Edit Form Loaded ' + fields);
+        }
     }
 
     handleError(event){
-        console.log('Error Loading');
+        console.log('Error Loading: ' + JSON.stringify(event.detail));
+        let message = '';
         let obj = event.detail.output.fieldErrors;
- 
-        let message = obj[Object.keys(obj)[0]][0].message;
+        if (Object.keys(obj).length > 0) {
+            message = obj[Object.keys(obj)[0]][0].message;
+        } else {
+            // Errore da validation rules con error location "top of the page"
+            message = event.detail.detail;
+        }
+
         console.log('Error Loading message ' + message);
         this.dispatchEvent(
             new ShowToastEvent({
@@ -224,6 +237,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }),
         );
     }
+
     handleDraft(event){
         console.log('draft handle');
         if(event.target.name === 'draft'){
@@ -272,7 +286,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     handleSubmit(event){
-        if(this.recordId != null){
+        if(this.recordId != null 
+            || this.processType.localeCompare('Richiesta Parere') === 0
+            || this.processType.localeCompare('Richiesta Parere Esercizio Diritti Privacy') === 0){
             event.preventDefault();       // stop the form from submitting
             this.saveInDraft = false;
             this.cancelCase = false;
@@ -384,8 +400,43 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
         }
 
-        //Reclami customizations
+        //PianoRata customizations
+        let reasonObj =  !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'Reason__c')).length === 0)
+        ? this.firstColumn.filter(element => element['FieldName'] === 'Reason__c')
+        : this.secondColumn.filter(element => element['FieldName'] === 'Reason__c');
 
+        console.log('#Reason --> ' + JSON.stringify(reasonObj));
+
+        let paymentType = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'PaymentType__c')).length === 0)
+        ? this.firstColumn.filter(element => element['FieldName'] === 'PaymentType__c')
+        : this.secondColumn.filter(element => element['FieldName'] === 'PaymentType__c');
+
+        console.log('#PaymentType --> ' + paymentType);
+
+        if(!(Object.keys(reasonObj).length === 0)){
+
+            let reason = this.template.querySelector('lightning-input-field[data-id="Reason__c"]') != null
+            ?this.template.querySelector('lightning-input-field[data-id="Reason__c"]')
+            :null;
+
+            if(reason != null){
+                console.log('#Valore Reason --> ' + reason.value);
+                if(reason.value && reason.value != ''){
+                    if(!(Object.keys(paymentType).length === 0)){
+                        console.log('Inside Condition Installments');
+                        let payType = this.template.querySelector('lightning-input-field[data-id="PaymentType__c"]') != null
+                        ? this.template.querySelector('lightning-input-field[data-id="PaymentType__c"]')
+                        : null;
+                        console.log('#Valore payType -> ' + payType.value);
+                        if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
+                            payType.disabled = false;
+                        } else {
+                            payType.disabled = true;
+                            payType.value = '';
+                        }
+                    }
+                }
+            }
+        }
     }
- 
 }

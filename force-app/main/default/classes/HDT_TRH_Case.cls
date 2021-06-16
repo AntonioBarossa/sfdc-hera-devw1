@@ -3,6 +3,7 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
     public override void beforeInsert(){
 
         markCasesFromCurrentUser();
+        HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
 
     }
 
@@ -11,18 +12,28 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
   	public override void afterUndelete(){}
     
     public override void beforeUpdate(){
-        //Check Quotation Type
+        //Check Quotation Type && set technical phase
+
         for(Case caseNew : (List<Case>) Trigger.new)
         {
             Case caseOld = (Case) Trigger.oldMap.get(caseNew.Id);
             if(caseOld.Amount__c != null && caseNew.Amount__c != caseOld.Amount__c && caseOld.QuotationType__c == 'Rapido'){
                 caseNew.QuotationType__c = 'Predeterminabile';
             }
+            if(caseNew.TecnicalPhase__c	!= null
+            && caseNew.TecnicalPhase__c  == caseOld.TecnicalPhase__c
+            /*&& caseNew.Phase__c.containsIgnoreCase('Comunicazione verso Heroku OK ')*/){
+                caseNew.Phase__c = caseNew.TecnicalPhase__c;
+                caseNew.TecnicalPhase__c = null;
+            }
         }
+
+        Boolean skipForCancellation = HDT_UTL_CaseProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
+        if(!skipForCancellation){
         //Checks Phase Transition
-        ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
-                .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
-        
+            ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
+                    .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
+        }
         //Checks Mandatory Activity
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
                 .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});

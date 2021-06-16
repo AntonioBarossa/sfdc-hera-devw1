@@ -43,9 +43,9 @@
                 <label>Contenitore_Gas</label>
             </value>
             <value>
-                <fullName>VAS_prodotti</fullName>
+                <fullName>VAS_Prodotti</fullName>
                 <default>false</default>
-                <label>VAS_prodotti</label>
+                <label>VAS_Prodotti</label>
             </value>
             <value>
                 <fullName>VAS_Servizio</fullName>
@@ -56,6 +56,26 @@
                 <fullName>VAS_Fatturabili</fullName>
                 <default>false</default>
                 <label>VAS_Fatturabili</label>
+            </value>
+            <value>
+                <fullName>VAS_Non_Fatturabili</fullName>
+                <default>false</default>
+                <label>VAS_Non_Fatturabili</label>
+            </value>
+            <value>
+                <fullName>Bonus_EE_Percentuale</fullName>
+                <default>false</default>
+                <label>Bonus_EE_Percentuale</label>
+            </value>
+            <value>
+                <fullName>Bonus_OLD</fullName>
+                <default>false</default>
+                <label>Bonus_OLD</label>
+            </value>
+            <value>
+                <fullName>OptionConfiguration</fullName>
+                <default>false</default>
+                <label>OptionConfiguration</label>
             </value>
         </valueSetDefinition>
     </valueSet>

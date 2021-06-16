@@ -11,6 +11,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     @api draftObjectApiName;
     @api diffDraftObjectApiName;
     @api diffFields;
+    @api lastStepData;
     loading = false;
     isDialogVisible = false;
 
@@ -39,9 +40,76 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         return (this.order.Step__c !== this.lastStepNumber && this.order.RecordType.DeveloperName !== 'HDT_RT_ScontiBonus');
     }
 
+    dateWithMonthsDelay (months) {
+        const date = new Date();
+        date.setMonth(date.getMonth() + months);
+
+        return date;
+    }
+
+    dateCompare(d1, d2){
+
+        let result = '';
+
+        if(d1 > d2){
+            result = 'greater';
+        } else if(d1 < d2){
+            result = 'lower';
+        } else{
+            result = 'equal';
+        }
+
+        return result;
+    }
+
+    validateLastStepFields(lastStepFields){
+
+        let result = true;
+
+        if (lastStepFields.IsActivationDeferred__c !== undefined && lastStepFields.IsActivationDeferred__c) {
+
+            if (lastStepFields.EffectiveDate__c !== undefined) {
+                let effectiveDateInput = new Date(lastStepFields.EffectiveDate__c);
+                let dateToCompare1 = this.dateWithMonthsDelay(1);
+
+                if (this.dateCompare(effectiveDateInput, dateToCompare1) === 'lower' || effectiveDateInput.getDate() !== 1) {
+                    this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Data decorrenza non valida!',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+                    result = false;
+                }
+            }
+
+        }
+
+        return result;
+
+    }
+
     handleSave(){
         this.loading = true;
-        save({order: this.order}).then(data =>{
+
+        let orderToSave = {};
+
+        if (this.lastStepData != null) {
+            let lastStepFields = this.lastStepData;
+
+            orderToSave = {...lastStepFields, ...this.order};
+
+            if (!this.validateLastStepFields(lastStepFields)) {
+                return;
+            }
+
+        } else {
+            orderToSave = this.order;
+        }
+
+        save({order: orderToSave}).then(data =>{
             this.loading = false;
 
             this.dispatchEvent(new CustomEvent('redirecttoparent'));
@@ -55,7 +123,6 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         }).catch(error => {
             this.loading = false;
-            console.log('Error: ', JSON.stringify(error.body.pageErrors[0].message));
 
             let errorMessage = '';
 
@@ -67,6 +134,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                 errorMessage = error.body.pageErrors[0].message;
             }
 
+            console.log('Error: ', errorMessage);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: errorMessage,

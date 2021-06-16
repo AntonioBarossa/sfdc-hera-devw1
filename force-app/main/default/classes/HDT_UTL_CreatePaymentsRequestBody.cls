@@ -78,41 +78,68 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     }
 
 
-    public void handleResponse(String recordId, String process, HttpResponse response){
+    public void handleResponse(String recordId, String process, String depositMode, HttpResponse response){
 
         Case caseToUpdate = new Case();
+        String phase; 
 
         caseToUpdate.Id = recordId;
 
         if(response != null){
 
-            switch on response.getStatusCode(){
+            HDT_WRP_MinWrapper minWrapper = (HDT_WRP_MinWrapper) JSON.deserialize(response.getBody(), HDT_WRP_MinWrapper.class);
 
-                when 200{
+            switch on minWrapper.status{
+
+                when 'success'{
 
                     HDT_WRP_SuccessResponse successResponse = 
                         (HDT_WRP_SuccessResponse) JSON.deserialize(response.getBody(), HDT_WRP_SuccessResponse.class);
 
-                    System.debug('WS_ReminderBlock successResponse--> ' + successResponse);
-                    if(process == 'Comunicazione Pagamento'
-                    || process == 'Piano Rateizzazione'
-                    || process == 'Paperless'){
-                        caseToUpdate.Phase__c = 'Inviata a SAP';
+                    System.debug('WS_Payments successResponse--> ' + successResponse);
+
+                    phase = handleSuccessResponse(successResponse, recordId, process, depositMode);
+
+                    if(successResponse.data != null){
+                        if(successResponse.data.numeroBollettino != null){
+
+                            caseToUpdate.PaperlessCode__c = successResponse.data.numeroBollettino;
+
+                        }
+                    }
+                    if(phase != null){
+
+                        caseToUpdate.TecnicalPhase__c = phase;
+
                     }
 
-                }
-                when else{
+                    // if(process == 'Comunicazione Pagamento'
+                    // || process == 'Piano Rateizzazione'
+                    // || process == 'Paperless'){
+                    //     caseToUpdate.Phase__c = 'Inviata a SAP';
+                    // }
+                    
+                }   
+                when else{ 
 
                     HDT_WRP_ErrorResponse errorResponse = 
                         (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
 
-                    System.debug('WS_ReminderBlock errorResponse--> ' + errorResponse);
+                    System.debug('WS_Payments errorResponse--> ' + errorResponse);
                     if(process == 'Comunicazione Pagamento'
                     || process == 'Piano Rateizzazione'
-                    || process == 'Paperless'){
-                        caseToUpdate.Phase__c = 'Non Inviata a SAP';
+                    || process == 'Paperless'
+                    || process == 'Blocco Sollecito/Interessi'){
+                        caseToUpdate.TecnicalPhase__c = process == 'Paperless'
+                        ? 'Paperless Non Generato'
+                        : 'Esito KO da SAP';
                     }
-                    caseToUpdate.Description = errorResponse.errorDetails[0].message;
+                    createActivity(recordId, errorResponse.errorDetails[0].message, 'Esito KO da SAP');
+                    // if(caseToUpdate.Description != null){
+                    //     caseToUpdate.Description += '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
+                    // }else{
+                    //     caseToUpdate.Description  = '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
+                    // }
 
                 }
 
@@ -120,7 +147,8 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
         } else {
 
-            caseToUpdate.Phase__c = 'Non Inviata a SAP';
+            caseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
+            createActivity(recordId, 'Comunicazione con SAP fallita', 'Esito KO da SAP');
 
         }
 
@@ -128,7 +156,84 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
     }
 
-    @Future
+    public String handleSuccessResponse(HDT_WRP_SuccessResponse response, String recordId, String process, String depositMode){
+
+        String phase = null;
+        String pianoRateCondition = 'Pratica avviata';
+        String comPagCondition = 'Pratica avviata';
+        String paperlessCondition = 'OK';
+
+        //Gestione Blocco Sollecito/Interessi
+        if(process == 'Blocco Sollecito/Interessi'){
+            phase = 'Completata';
+            return phase;
+        }
+
+        phase = handlePhaseChange(response, recordId, process, 
+            process ==   'Piano Rateizzazione'
+                ? pianoRateCondition //successCondition
+            : process == 'Comunicazione Pagamento'
+                ? comPagCondition //successCondition
+            : process == 'Paperless'
+                ? paperlessCondition //successCondition
+            : null,
+            depositMode);
+
+        return phase;
+
+    }
+
+    private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition, String depositMode){
+        
+        String phase = null;
+            String successPhase = (process == 'Piano Rateizzazione' && depositMode != null && depositMode != 'Paperless')
+                ? 'Completata'
+                : process == 'Paperless' 
+                    ? 'Paperless Generato'
+                    : 'Esito OK da SAP';
+        String failedPhase = process == 'Paperless'
+        ? 'Paperless Non Generato'
+        : 'Esito KO da SAP';
+
+        if(condition != null){
+
+            if((response.data.tipoAttivita!= null && response.data.tipoAttivita.containsIgnoreCase(condition))
+                || (response.data.esito!= null && response.data.esito.containsIgnoreCase(condition))){
+
+                phase = successPhase;
+
+            } else {
+
+                phase = failedPhase;
+                createActivity(recordId, response.data.note, 'Esito KO da SAP');
+
+            }
+
+        }
+
+        return phase;
+
+    }
+
+    private static void createActivity(String recordId, String description, String type){
+        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ type +'\'';
+        String objectName = 'wrts_prcgvr__ActivityTemplate__c';
+        List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
+        wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c();
+        if(description.length() > 255){
+            description = description.substring(0, 254);
+        }
+        if(listRecord.size()>0){
+            template = (wrts_prcgvr__ActivityTemplate__c) listRecord[0];
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
+            activity.Case__c = recordId;
+            activity.CausalError__c = description;
+            activity.wrts_prcgvr__Description__c = description;
+            Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
+        }
+    }
+
     private static void updateFuture(String inputString){
 
         Case c = (Case) JSON.deserialize(inputString, Case.class);
@@ -136,7 +241,6 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         HDT_UTL_DatabaseService.updateSObject(c);
 
     }
-
 
 
     public class HDT_UTL_WrapperInput{
@@ -148,11 +252,31 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
     }
 
+    public class HDT_WRP_MinWrapper{
+
+        public String status;
+        public String correlationId;
+        public String timestamp;
+
+    }
+
     public class HDT_WRP_SuccessResponse{
 
         public String status;
         public String correlationId;
         public String timestamp;
+        public HDT_WRP_Data data;
+
+    }
+
+    public class HDT_WRP_Data{
+
+        public String rdsRdo;
+        public String tipoAttivita;
+        public String note;
+        public String numeroBollettino;
+        public Decimal importoTotale;
+        public String esito;
 
     }
 

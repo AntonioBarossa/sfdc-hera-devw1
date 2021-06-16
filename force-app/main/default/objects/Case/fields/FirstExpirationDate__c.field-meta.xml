@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FirstExpirationDate__c</fullName>
     <externalId>false</externalId>
-    <formula>DATEVALUE(CreatedDate) + 15</formula>
+    <formula>DATEVALUE(CreatedDate) + 20</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Data prima scadenza</label>
     <required>false</required>

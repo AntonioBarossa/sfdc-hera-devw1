@@ -580,16 +580,19 @@
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PressureLevel__c</picklist>
         <values>
-            <fullName>G650 Pistoni rot%2E</fullName>
+            <fullName>AP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>G650 Turbina</fullName>
+            <fullName>BP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>G6500</fullName>
+            <fullName>MP</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -35,6 +35,8 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api estensCivico;
     @api codComuneSAP;
     @api codStradarioSAP;
+    @api CodiceLocalita;
+    @api Localita;
     @api IndEstero = false ;
     @api aprimodal = false;
     @api flagVerificato =false;
@@ -100,8 +102,19 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
         this.theRecord['Via']= event.detail['Via'];
     }
     if(event.detail['streetCode'] != null){
+        console.log('entra in streetCode ' + JSON.stringify(event.detail['streetCode']));
         this.codStradarioSAP=event.detail['streetCode'];
         this.theRecord['codStradarioSAP']= event.detail['streetCode'];
+    }
+    if(event.detail['cityPName'] != null){
+        console.log('entra in Localita ' + JSON.stringify(event.detail['cityPName']));
+        this.localita=event.detail['cityPName'];
+        this.theRecord['Localita']= event.detail['cityPName'];
+    }
+    if(event.detail['cityPCode'] != null){
+        console.log('entra in Localita ' + JSON.stringify(event.detail['cityPCode']));
+        this.codicelocalita=event.detail['cityPCode'];
+        this.theRecord['Codice Localita']= event.detail['cityPCode'];
     }
     if(this.codComuneSAP != null && this.codStradarioSAP != null && this.civico != null){
         this.disableVerifIndiButton = false;
@@ -109,7 +122,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     else{
         this.disableVerifIndiButton = true;
     }
-    
+    console.log('handleSelectedValue theRecord : ' + JSON.stringify(this.theRecord));
 
     }
 
@@ -212,6 +225,18 @@ handleAddressValuesIfSap(servicePointRetrievedData){
             console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
             this.flagVerificato = servicePointRetrievedData[key] ;
             this.theRecord['Flag Verificato'] = servicePointRetrievedData[key] ;
+
+            break;
+            case 'SupplyPlace__c':
+
+            this.CodiceLocalita = servicePointRetrievedData[key] ;
+            this.theRecord['Codice Localita'] = servicePointRetrievedData[key] ;
+
+            break;
+            case 'SupplyPlaceCode__c':
+
+            this.Localita = servicePointRetrievedData[key] ;
+            this.theRecord['Localita'] = servicePointRetrievedData[key] ;
 
             break;
 
@@ -804,7 +829,6 @@ handleChangeIndirizz(event){
     if((event.target.value.length==5 && event.target.name =='Via')){
         getAddressInd({street:event.target.value,cityCode:this.codComuneSAP}).then(data =>
             {
-                
                 console.log("******HOLAHOLA:" + JSON.stringify(data));
                 if(data['statusCode'] == 200 && data['prestazione'].length > 0){
                     console.log("Sucessoooooooooooo:" + JSON.stringify(data));
@@ -1225,6 +1249,7 @@ disabledverifyFieldsAddressDisabled(){
                     if(data['statusCode'] == 200 && data['prestazione'].length > 0){
 																				  
                         this.herokuAddressServiceData = data['prestazione'];
+                        this.dispatchEvent(new CustomEvent('herokuaddress', {detail: this.herokuAddressServiceData}));
                         this.headertoshow = 'Comune';
                         
                         this.booleanForm=true;

@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Traccia la disiscrizione del cliente dalle liste di distribuzione attraverso la funzionalità messa a disposizione dal provider Email</description>
     <externalId>false</externalId>
-    <label>Disicritto alle liste di distribuzione</label>
+    <label>Disiscritto alle liste di distribuzione</label>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

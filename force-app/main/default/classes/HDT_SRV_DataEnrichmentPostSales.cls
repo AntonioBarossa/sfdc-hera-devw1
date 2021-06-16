@@ -8,7 +8,7 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
         if(fieldName == 'PhaseTypeAvailable__c'){
 
-            Try{   
+            try{   
                 Decimal phaseCondition = Decimal.valueOf(condition);
                 if(phaseCondition <= 1.0 ){
 
@@ -23,6 +23,16 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
                 System.debug(e.getMessage());
                 return null;
+
+            }
+
+        }
+
+        if(fieldName == 'Taxes__c'){
+
+            if(condition == 'E_IMPOST'){
+
+                condition = 'Imposta usi domestici';
 
             }
 
@@ -327,7 +337,7 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
      */
     public String writeCollectiveBillType(String sapValue, Case currentCase) {
 
-        if (currentCase.Type.equals('Unificazione/Separazione BP-CA-Bolletta')) {
+        if (currentCase.Type != null && currentCase.Type.equals('Unificazione/Separazione BP-CA-Bolletta')) {
             return 'Tipo fattura collettiva: ' + sapValue;
         }
 
@@ -342,7 +352,7 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
     public String writeBlockCode(String sapValue, Case currentCase) {
 
         System.debug('writeBlockCode: ' + sapValue + ' ' + currentCase);
-        if (currentCase.Type.equals('Sollecito Emissione Bolletta')) {
+        if (currentCase.Type != null && currentCase.Type.equals('Sollecito Emissione Bolletta')) {
             return 'Codice Blocco: ' + sapValue;
         }
 

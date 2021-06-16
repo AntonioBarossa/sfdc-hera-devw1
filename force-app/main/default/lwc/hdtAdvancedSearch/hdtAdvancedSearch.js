@@ -39,7 +39,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     @api targetobject;
     @api outputContract=[];
     @api showbuttoncontract ;
-    @api showbuttonforniture ;
+    @api showbuttonforniture=false;
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
         'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
@@ -50,6 +50,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     connectedCallback() {
         if(this.processtype === undefined || this.processtype === ''){
             console.log('processType non popolato');
+            this.showbuttonforniture=true;
         }
         else
         {
@@ -81,6 +82,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 {
                     TipoServizioSplit = data.TipoServizio__c.split(",");
                     console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
+                    this.submitFornitura();
                 }
                 
             }
@@ -128,12 +130,12 @@ export default class HdtAdvancedSearch extends LightningElement {
         console.log('enter in handleAdditionalFilter');
         console.log('processType******************'+JSON.stringify(processT));
 
-        if(processT ==='Voltura Tecnica'){
+       /* if(processT ==='Voltura Tecnica'){
             console.log('entra qui Modifica***************');
           
             this.submitFornitura();
-        }
-        else if(processT==='Annullamento contratti')
+        }*/
+        if(processT==='Annullamento contratti')
         {
             console.log('entra qui Cessazioni***************');
             this.submitContract();

@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ComplaintSeverity__c</fullName>
-    <description>campo activity da matchare.</description>
+    <description>campo activity da matchare</description>
     <externalId>false</externalId>
     <label>Attributo di Criticità Reclami</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Picklist</type>
+    <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>tmp1</fullName>
-                <default>false</default>
-                <label>tmp1</label>
-            </value>
-            <value>
-                <fullName>tmp2</fullName>
-                <default>false</default>
-                <label>tmp2</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_SeverityAttribute</valueSetName>
     </valueSet>
+    <visibleLines>4</visibleLines>
 </CustomField>

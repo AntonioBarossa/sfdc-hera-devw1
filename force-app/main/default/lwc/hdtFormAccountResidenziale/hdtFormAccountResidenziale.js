@@ -10,7 +10,7 @@ import EDUCATIONALQUALIFICATION from '@salesforce/schema/Account.DegreeOfStudies
 import COMPANY_OWNER from '@salesforce/schema/Account.CompanyOwner__c';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
-import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCode';
+import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCodeData';
 import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountResidenziale.insertAccount';
 export default class HdtFormAccountResidenziale extends NavigationMixin(LightningElement) {
@@ -23,6 +23,12 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     @track mobilePhonePrefixValue;
     @track mobilePhonePrefixOptions;
     @track fiscalCode;
+    @api customerMarkingOptions = [];
+    @api categoryOptions = [];
+    @api customerData = [];
+    @api categoryData = [];
+    @api markingValue;
+    @api categoryValue;
     currentObjectApiName = 'Account';
     settlementRegion;
     settlementDistrict;
@@ -63,10 +69,18 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     };
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOM_MARKING })
-    customerMarkingOptions;
+    customerGetMarkingOptions({error, data}) {
+        if (data){
+            this.customerData = data;
+        }
+    };
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CATEGORY })
-    categoryOptions;
+    categoryGetOptions({error, data}) {
+        if (data){
+            this.categoryData = data;
+        }
+    };
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: GENDER })
     genderOptions;
@@ -82,14 +96,19 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
 
     roleOptions=[
         { label: 'Titolare', value: 'Titolare' },
-        { label: 'Legale rappresentante', value: 'Legale rappresentante' },
-        { label: 'Amministratore condominio', value: 'Amministratore condominio' },
-        { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' },
-        { label: 'Contatto secondario', value: 'Contatto secondario' },
-        { label: 'Delegato', value: 'Delegato' },
-        { label: 'Azienda', value: 'Azienda' }
+        { label: 'Familiare', value: 'Familiare' }
     ];
-
+    handleCompanyOwnerChange(event) {
+        let key = this.customerData.controllerValues[event.target.value];
+        this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.markingValue = '';
+        this.categoryValue = '';
+    }
+    handleCustomerChange(event) {
+        let key = this.categoryData.controllerValues[event.target.value];
+        this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
+        this.categoryValue = '';
+    }
     closeModal() {
         this.showModal = false;
         window.history.back();
@@ -297,6 +316,19 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             }
             isValidated=false;
         }
+        if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
+            if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
+                isValidated=false;
+                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
+            }
+        }
+        console.log('LENGTH:'+ this.fiscalcode + '-:' + this.fiscalCode.value.length);
+        if(!(this.fiscalCode.value=== undefined || this.fiscalCode.value.trim()==='')){
+            if(this.fiscalCode.value.length != 16){
+                isValidated=false;
+                messageError=" Il Codice fiscale deve essere lungo 16 cifre!";
+            }
+        }
 
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
             if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
@@ -332,10 +364,13 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                     isEmpty= true;
                 }
                 if(isEmpty){
+
+
+                    
                     getFromFiscalCode({
-                        fiscalCodes : {'Account' : this.fiscalCode.value.replace(/ /g,"")}
+                        fiscalCodes : this.fiscalCode.value.replace(/ /g,"")
                     }).then((response) => {
-                        let fiscData= response.Account;
+                        let fiscData= response;
                         if(this.gender === undefined || this.gender.trim()===''){
                             this.gender= fiscData.gender;
                         }
@@ -412,7 +447,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         "fiscalCode": this.fiscalCode.value.replace(/ /g,""),
                         "phoneNumber": phoneNumber.value,
                         "mobilePhone" : mobilePhone.value,
-                        "name": lastName.value+' '+firstName.value,
+                        "name": firstName.value+' '+lastName.value,
                         "email": email.value,
                         "birthplace": this.birthPlace,
                         "recordTypeId" : this.RecordTypeId,

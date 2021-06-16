@@ -1,4 +1,15 @@
 <template>
+
+    <template if:true={showError} >
+        <c-hdt-error-modal-message
+            header={errorHeader}
+            body-message={errorMessage}
+            header-class="slds-text-heading_large"
+            body-class="slds-text-heading_medium"
+            oncloseerrormodal={closeModal}
+        ></c-hdt-error-modal-message>
+    </template>
+
     <template if:true={showWelcom} >
         <c-hdt-technical-offer-selection
             tiles={selectionObj}
@@ -25,14 +36,28 @@
         <c-hdt-offer-configurator
             productid={productid}
             technicalofferid={technicalOfferId}
+            new-tech-offer-obj={newTechOfferObj}
+            tech-off-id-to-clone={techOffIdToClone}
             rate-obj={rateObj}
             ongoback={closeModal}
+            onopenedit={openEdit}
         ></c-hdt-offer-configurator>
     </template>
 
-<!--
-rate-template={rateTemplate}
-rate-name={rateName}
--->
+    <!--<div class={hidden} >-->
+
+    <div if:true={showEditForm} >
+
+        <c-hdt-technical-offer-edit-form
+            hidden={hiddenClass}
+            mode={editFormMode}
+            product-id={productid}
+            rate-obj={rateObj}
+            technical-offer-id={techOffIdToClone}
+            onclosemodal={closeModal}
+            oncloseedit={closeEdit}
+            onnewoffercreated={newTechOfferCreated}
+        ></c-hdt-technical-offer-edit-form>
+    </div>
 
 </template>

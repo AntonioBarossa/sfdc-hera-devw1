@@ -95,17 +95,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>AssistedCustomer__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>BPSAPModel__c</picklist>
         <values>
             <fullName>CLIENTE MODELLO DA CRM</fullName>
@@ -1446,6 +1435,21 @@
         </values>
         <values>
             <fullName>UNION-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CustomerType__c</picklist>
+        <values>
+            <fullName>Gruppo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Persona Fisica</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -85,7 +85,7 @@
             console.log('# CaseId is NOT NULL');
             //{ name : "InputCase", type : "SObject", value: {"Id" : caseId}}
             inputVariables.push({ name : 'InputCase', type : 'String', value : caseId });
-            if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase'){
+            if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase' || processType === 'Ripensamento'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
             }
 
@@ -119,6 +119,7 @@
     },
     
     handleStatusChange : function (component, event) {
+    
        console.log('### EVENT STATUS: ' + event.getParam("status"));
        var workspaceAPI = component.find("workspace");
 
@@ -132,6 +133,19 @@
             var flowfinal = component.find("flowData");
                 
             if(event.getParam("status") === "ERROR"){
+                //Sembra non esserci nella struttura dell'event il messaggio di errore
+                /*event: {
+                    "_name":"",
+                    "_source":{},
+                    "_params":{
+                        "status":"ERROR",
+                        "flowTitle":"Gestione Annullamento",
+                        "showHeader":true,
+                        "guid":"5576e83980290edaf4536891f79f179e6928cf-b934"
+                    },
+                    "target":null,
+                    "currentTarget":null}
+                */
                 console.log('Inside Error condition');
                 var toastEvent = $A.get("e.force:showToast");
                 toastEvent.setParams({

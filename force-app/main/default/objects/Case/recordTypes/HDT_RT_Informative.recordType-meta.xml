@@ -644,6 +644,10 @@
             <fullName>Volontà estorta</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Gestione Scarto</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Category__c</picklist>
@@ -906,6 +910,10 @@
         </values>
         <values>
             <fullName>Teleriscaldamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Multi</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2152,6 +2160,44 @@
         </values>
         <values>
             <fullName>Totalmente da Istituzioni pubbliche</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DetailOne__c</picklist>
+        <values>
+            <fullName>E - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ES - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DetailTwo__c</picklist>
+        <values>
+            <fullName>E - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ES - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S - Dettaglio 2</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8082,10 +8128,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Chiamata Muta</fullName>
             <default>false</default>
         </values>
@@ -8095,10 +8137,6 @@
         </values>
         <values>
             <fullName>Cliente paga un acconto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
             <default>false</default>
         </values>
         <values>

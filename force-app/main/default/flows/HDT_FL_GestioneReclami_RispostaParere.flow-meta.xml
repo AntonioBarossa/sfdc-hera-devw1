@@ -2,10 +2,40 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>50.0</apiVersion>
     <assignments>
-        <name>AssegnaValori</name>
+        <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationX>50</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCaseAggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completata</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCaseAggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetParentCase.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_Collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValori_0_0</name>
+        <label>AssegnaValori</label>
+        <locationX>314</locationX>
+        <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -27,6 +57,54 @@
                 <stringValue>Risposta Parere Ricevuta</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Assign_To_Collection_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Process_Type</name>
+        <label>Assign Process Type</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessTypeEditForm</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Risposta Parere Esercizio Diritti Privacy</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Inserimento_Risposta</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Process_Type_0</name>
+        <label>Assign Process Type</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessTypeEditForm</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Risposta Parere</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Inserimento_Risposta</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_To_Collection</name>
+        <label>Assign To Collection</label>
+        <locationX>50</locationX>
+        <locationY>1214</locationY>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>GetParentCase</elementReference>
+            </value>
+        </assignmentItems>
         <assignmentItems>
             <assignToReference>CaseCollection</assignToReference>
             <operator>Add</operator>
@@ -34,11 +112,27 @@
                 <elementReference>GetInputCaseAggiornato</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCaseCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_To_Collection_0</name>
+        <label>Assign To Collection</label>
+        <locationX>314</locationX>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>CaseCollection</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>GetParentCase</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>GetInputCaseAggiornato</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -53,6 +147,56 @@
             <stringValue/>
         </value>
     </choices>
+    <decisions>
+        <name>Parent_Process</name>
+        <label>Parent Process?</label>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Process_Type_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Reclamo</defaultConnectorLabel>
+        <rules>
+            <name>Outcome_Esercizio_Diritti_Privacy</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esercizio Diritti Privacy</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Process_Type</targetReference>
+            </connector>
+            <label>Esercizio Diritti Privacy</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Parent_Process_0</name>
+        <label>Parent Process?</label>
+        <locationX>182</locationX>
+        <locationY>974</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaValori_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Reclamo</defaultConnectorLabel>
+        <rules>
+            <name>Outcome_Esercizio_Diritti_Privacy_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esercizio Diritti Privacy</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValori_0</targetReference>
+            </connector>
+            <label>Esercizio Diritti Privacy</label>
+        </rules>
+    </decisions>
     <description>Flow per la gestione della Risposta Parere</description>
     <dynamicChoiceSets>
         <name>MotivoNonFondato</name>
@@ -86,7 +230,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -107,11 +251,11 @@
     <recordLookups>
         <name>GetInputCaseAggiornato</name>
         <label>GetInputCaseAggiornato</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>182</locationX>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssegnaValori</targetReference>
+            <targetReference>Parent_Process_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -128,11 +272,11 @@
     <recordLookups>
         <name>GetParentCase</name>
         <label>GetParentCase</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Inserimento_Risposta</targetReference>
+            <targetReference>Parent_Process</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -149,15 +293,15 @@
     <recordUpdates>
         <name>AggiornaCaseCollection</name>
         <label>AggiornaCaseCollection</label>
-        <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationX>182</locationX>
+        <locationY>1430</locationY>
         <inputReference>CaseCollection</inputReference>
     </recordUpdates>
     <screens>
         <name>Inserimento_Risposta</name>
         <label>Inserimento Risposta</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>182</locationX>
+        <locationY>734</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -200,7 +344,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Risposta Parere</stringValue>
+                    <elementReference>ProcessTypeEditForm</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -236,7 +380,7 @@
             <inputParameters>
                 <name>variantSaveButton</name>
                 <value>
-                    <stringValue>success</stringValue>
+                    <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -253,7 +397,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -273,6 +417,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ProcessTypeEditForm</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

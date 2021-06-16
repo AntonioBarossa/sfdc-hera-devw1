@@ -6,14 +6,17 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 const columns = [
     { label: 'Definizione', fieldName: 'Definition__c' },
+    { label: 'G', fieldName: 'G__c', type: 'boolean'},
     { label: 'M', fieldName: 'M__c', type: 'boolean'},
     { label: 'V', fieldName: 'V__c', type: 'boolean' },
-    { label: 'Tipo tariffa', fieldName: 'FareType__c'},
-    { label: 'Gruppo info', fieldName: 'InfoGroup__c'},
-    { label: 'Valore numerico', fieldName: 'NumericValue__c'},
+    { label: 'S', fieldName: 'S__c', type: 'text' },
+    { label: 'Tariffa', fieldName: 'FareTypeValue__c'},
+    { label: 'Gruppo info', fieldName: 'InfoGroupValue__c'},
+    { label: 'Valore', fieldName: 'NumericValue__c'},
     { label: 'Flag', fieldName: 'Flag__c', type: 'boolean'},
-    { label: 'Codice prezzo', fieldName: 'PriceCode__c'},
-    { label: 'Stringa testuale', fieldName: 'StringValue__c'},
+    { label: 'Prezzo', fieldName: 'PriceCodeValue__c'},
+    { label: 'Sconto', fieldName: 'DiscountCodeValue__c'},
+    { label: 'Stringa', fieldName: 'StringValue__c'},
     { label: 'Nome Tecn.', fieldName: 'Operand__c'}   
 ];
 
@@ -144,7 +147,8 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
                 if(result){
                     console.log('# success #');
                     console.log('# Offer cloned id -> ' + result);
-                    this.goToRecord(result, 'TechnicalOffer__c');
+                    //this.goToRecord(result, 'TechnicalOffer__c');
+                    this.goBackToRecord();
                 } else {
                     this.error.show = true;
                     this.error.message = 'An error occurred!';
@@ -185,9 +189,16 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
     handleSelection(event){
         console.log('# handleSelection #');
         console.log('# set -> ' + event.detail.selectedId + ' - ' + event.detail.code + '- ' + event.detail.selectedObj);
+
+        if(event.detail.selectedId === undefined || event.detail.code === undefined){
+            this.showTable = false;
+            return;
+        }
+
         this.item.selectedId = event.detail.selectedId;
         this.item.name = event.detail.code;
         this.item.code = event.detail.selectedObj;
+        this.searchClick(); 
     }
 
     back(event){
@@ -233,6 +244,24 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
             console.error('# Message => ' + e.message );
             console.error('# Stack => ' + e.stack );
         }
+    }
+
+    goBackToRecord(){
+        console.log('# goBackToRecord -> ' + this.productid);
+
+        this.dataRows = [];
+
+        console.log('# gotothepage #');
+
+        const goback = new CustomEvent("goback", {
+            detail:  {prodId: this.productid}
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(goback);
+
+        this.goToRecord(this.productid, 'Product2');
+
     }
 
 }

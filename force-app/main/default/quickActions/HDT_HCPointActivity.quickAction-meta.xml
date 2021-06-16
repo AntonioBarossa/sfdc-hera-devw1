@@ -5,6 +5,10 @@
         <formula>UPPER($User.FirstName+&apos;.&apos;+$User.LastName)</formula>
     </fieldOverrides>
     <fieldOverrides>
+        <field>QAdTicketCallTime__c</field>
+        <formula>NOW()</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>Type__c</field>
         <literalValue>Sportello</literalValue>
     </fieldOverrides>

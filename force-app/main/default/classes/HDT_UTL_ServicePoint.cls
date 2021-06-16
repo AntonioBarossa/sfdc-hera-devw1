@@ -46,6 +46,22 @@ public with sharing class HDT_UTL_ServicePoint {
 			spNew.RequestPhase__c  = mapRes.get('FASE');
 		}
 */
+
+		if(mapRes.get('STATODEVICE')!=null && spNew.MeterStatus__c  != 'Sospeso'){
+
+            if(mapRes.get('STATODEVICE')== 'A'){
+                spNew.MeterStatus__c  = 'Attivo';
+
+            }
+            else if(mapRes.get('STATODEVICE')== 'I')
+            {
+                spNew.MeterStatus__c  ='Inattivo' ;
+
+            }
+            else{
+                spNew.MeterStatus__c  = 'Bozza';
+            }   
+		}
 		if(mapRes.get('PRESSIONE')!=null && !String.isBlank(mapRes.get('PRESSIONE'))){
 			spNew.Pressure__c  = integer.valueOf(mapRes.get('PRESSIONE'));
 		}
@@ -182,10 +198,22 @@ public with sharing class HDT_UTL_ServicePoint {
 					spNew.IsRemoteManaged__c = 'X'.equalsIgnoreCase(mapRes.get('FLAGTELEGESTIBILE'));
 				}
 				if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
-					spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
+					//spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
+                    Decimal d = integer.valueOf(mapRes.get('POTENZATECNICA'));
+                    System.debug('POTENZACONTRATTUALE****************' + mapRes.get('POTENZACONTRATTUALE'));
+                    spNew.PowerContractual__c = d.setScale(0);
+                    System.debug('POTENZACONTRATTUALE2****************' + spNew.PowerContractual__c );
 				}
 				if(mapRes.get('POTENZATECNICA')!=null && !String.isBlank(mapRes.get('POTENZATECNICA'))){
-					spNew.PowerAvailable__c  =integer.valueOf(mapRes.get('POTENZATECNICA').subString(0,mapRes.get('POTENZATECNICA').indexOf('.')+1)) ;
+
+                    System.debug('POTENZATECNICA1****************' + mapRes.get('POTENZATECNICA'));
+                    
+                    Decimal d = integer.valueOf(mapRes.get('POTENZATECNICA'));
+                    //spNew.PowerAvailable__c  =integer.valueOf(mapRes.get('POTENZATECNICA').subString(0,mapRes.get('POTENZATECNICA').indexOf('.'))) ;
+                    spNew.PowerAvailable__c  =d.setScale(1);
+
+                    System.debug('POTENZATECNICA****************' + d.setScale(1));
+
 				}
 				if(mapRes.get('TENSIONE')!=null && !String.isBlank(mapRes.get('TENSIONE'))){
 		
@@ -262,7 +290,9 @@ public with sharing class HDT_UTL_ServicePoint {
         'SupplySAPStreetCode__c' => 'CodiceViaStradarioSAP',
         'SupplyIsAddressVerified__c' => 'IndirizzoVerificato',
         'SupplyProvince__c' => 'Provincia',
-        'SupplyIsAddressVerified__c' => 'FlagVerificato'
+        'SupplyIsAddressVerified__c' => 'FlagVerificato',
+        'SupplyPlace__c' => 'Localita',
+        'SupplyPlaceCode__c' => 'CodiceLocalita'
         };
 
    
@@ -297,7 +327,7 @@ public with sharing class HDT_UTL_ServicePoint {
 
     }else{     
     
-        result = new HDT_WRP_AddressObject('','','','','','','','','',false,false);
+        result = new HDT_WRP_AddressObject('','','','','','','','','',false,false,'','');
         System.debug('result:' +  result);
     }
 
@@ -352,6 +382,18 @@ public with sharing class HDT_UTL_ServicePoint {
                 if(mapApiName.containsKey(s) && s == 'SupplySAPStreetCode__c'){
                     System.debug('CodiceViaStradarioSAP :' + mapObject.get(s));
                     h.CodiceViaStradarioSAP= mapObject.get(s);
+                }
+                if(mapApiName.containsKey(s) && s == 'SupplySAPStreetCode__c'){
+                    System.debug('CodiceViaStradarioSAP :' + mapObject.get(s));
+                    h.CodiceViaStradarioSAP= mapObject.get(s);
+                }
+                if(mapApiName.containsKey(s) && s == 'SupplyPlace__c'){
+                    System.debug('Localita :' + mapObject.get(s));
+                    h.Localita= mapObject.get(s);
+                }
+                if(mapApiName.containsKey(s) && s == 'SupplyPlaceCode__c'){
+                    System.debug('Codice Localita :' + mapObject.get(s));
+                    h.CodiceLocalita= mapObject.get(s);
                 }
             }
         }

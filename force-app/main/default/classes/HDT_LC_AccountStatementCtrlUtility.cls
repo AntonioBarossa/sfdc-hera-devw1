@@ -27,6 +27,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 }
                 //Tasto Aggrega&Filtri 
                 when 'joinFilter' {
+                    if(String.isEmpty(dbr.aggregazione)){
+                        dbr.aggregazione = '03';
+                    }
+                    dbr.tipoTransazione = 'EC2';
                     dbr.dataFine = convertDateFormat(dbr.dataFine);
                     dbr.dataInizio = convertDateFormat(dbr.dataInizio);
                 }
@@ -141,8 +145,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
             }
             //Note Var. IVA
-            when 'NVI' {
+            when 'EC3' {
                 dbr.aggregazione = '03';
+                //for bug fix
+                dbr.tipoEstrattoConto = 'NVI';
             }
             //Pagamenti e compensazioni
             when 'EC5' {

@@ -13,6 +13,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>CreatorGroup__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Station__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
@@ -51,10 +59,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>AddressFormula__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Subprocess__c</field>
             </layoutItems>
             <layoutItems>
@@ -88,7 +92,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>VATPercentage__c</field>
+                <field>TaxRate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -134,6 +138,20 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>BillSendingMethod__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Variazione Indirizzo di Fornitura</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ShipmentAddressAssign__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -505,8 +523,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>DocumentNumber__c</fields>
         <fields>Amount__c</fields>
+        <fields>DocumentResidue__c</fields>
         <relatedList>DocumentSelected__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>

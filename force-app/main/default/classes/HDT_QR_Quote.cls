@@ -209,6 +209,7 @@ public inherited sharing class HDT_QR_Quote {
             FROM SBQQ__Quote__c
             WHERE Sale__c = :saleId
             AND ContractReference__c = :contractReference
+            AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];
     }
@@ -220,6 +221,7 @@ public inherited sharing class HDT_QR_Quote {
             FROM SBQQ__Quote__c
             WHERE Sale__c = :saleId
             AND OrderReference__c = :orderReference
+            AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];
     }

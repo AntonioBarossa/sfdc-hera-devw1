@@ -5,6 +5,15 @@
     <description>Riferimento Pratica Voltura</description>
     <externalId>false</externalId>
     <label>Riferimento Pratica Voltura</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Order.AccountId</field>
+            <operation>equals</operation>
+            <valueField>$Source.AccountId</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Order</referenceTo>
     <relationshipLabel>Cases</relationshipLabel>
     <relationshipName>Cases</relationshipName>

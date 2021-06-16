@@ -22,6 +22,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
 
         System.debug('saleId: ' + saleId);
         System.debug('paymentMethod: ' + paymentMethod);
+        System.debug('sendingBillMode: ' + sendingBillMode);
 
         quoteLineSrv.checkReadAccess('SBQQ__RequiredBy__c,SBQQ__RequiredBy__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SBQQ__RequiredBy__r.SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
         
@@ -50,25 +51,12 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         
         List<SBQQ__QuoteLine__c> quoteLineListUpdate = new List<SBQQ__QuoteLine__c>();
 
-        List<String> quoteLineIds = new List<String>();
-
         for (SObject quoteLine : quoteLinesToUpdate) {
             SBQQ__QuoteLine__c quoteLineUpdate = new SBQQ__QuoteLine__c(
                 Id = quoteLine.Id,
                 BillingProfile__c = billingProfileId
             );
             quoteLineListUpdate.add(quoteLineUpdate);
-            quoteLineIds.add(quoteLine.Id);
-        }
-
-        List<SBQQ__QuoteLine__c> quoteLineVas = quoteLineQr.getChildAnalisi(quoteLineIds);
-
-        for (SBQQ__QuoteLine__c qlv : quoteLineVas) {
-            SBQQ__QuoteLine__c qlvUpdate = new SBQQ__QuoteLine__c(
-                Id = qlv.Id,
-                BillingProfile__c = billingProfileId
-            );
-            quoteLineListUpdate.add(qlvUpdate);
         }
 
         quoteLineSrv.updateRecords(quoteLineListUpdate);

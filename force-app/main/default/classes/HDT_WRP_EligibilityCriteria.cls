@@ -10,6 +10,7 @@ public inherited sharing class HDT_WRP_EligibilityCriteria {
     public class HDT_WRP_CityZipCode {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
+        @AuraEnabled public Boolean isEditable;
         @AuraEnabled public List<HDT_WRP_Region> regionList;
     }
 
