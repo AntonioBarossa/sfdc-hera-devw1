@@ -93,7 +93,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
     
     if(caseToUpdate != null && caseToUpdate.size() > 0){
         String serializedCase = JSON.serialize(caseToUpdate[0]);
-        updateFuture(serializedCase);
+        //updateFuture(serializedCase);
     }
     
 
