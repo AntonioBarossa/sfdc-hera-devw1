@@ -79,7 +79,9 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 	if(accountId!=null){
 		ac = qr.getBillingAddressAccount(accountId);
 	}
+	
 	system.debug('BillingAddress******'+ ac.BillingAddressFormula__c);
+
 	String[] billingAddressSplit = ac.BillingAddressFormula__c.split(',');
 
 
