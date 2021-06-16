@@ -2307,6 +2307,10 @@
             <fullName>Richiesta info Telefonica</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Reclamo Scritto</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>EnergyService__c</picklist>
