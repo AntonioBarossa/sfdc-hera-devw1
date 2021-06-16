@@ -38,10 +38,10 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
             if(familySet.contains(p.Family)){
                 productIds.add(p.Id);
 
-                Product2 oldP = (Product2)Trigger.oldMap.get(p.Id);
+                Product2 oldProd = (Product2)Trigger.oldMap.get(p.Id);
 
                 // In Sviluppo --> Confermata
-                if(oldP.Status__c.equalsIgnoreCase(Label.HDT_InDevelopment) && p.Status__c.equalsIgnoreCase(Label.HDT_Confirmed)){
+                if(oldProd.Status__c.equalsIgnoreCase(Label.HDT_InDevelopment) && p.Status__c.equalsIgnoreCase(Label.HDT_Confirmed)){
 
                     productIdsForProductOption.add(p.Id);
 
