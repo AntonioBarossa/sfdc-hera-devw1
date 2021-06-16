@@ -10,11 +10,18 @@ export default class hdtOrderDossierWizardActions extends LightningElement {
     currentStep = 2;
     loading = false;
     isSaveButtonDisabled = false;
+    isCancelButtonDisabled = false;
     isDialogVisible = false;
+
+    getCancelButtonStatus(){
+        if (this.orderParentRecord.Status === 'Completed') {
+            this.isCancelButtonDisabled = true;
+        }
+    }
 
     getSaveButtonStatus(){
         this.loading = true;
-        isSaveDisabled({orderParentId: this.orderParentRecord.Id}).then(data =>{
+        isSaveDisabled({orderParent: this.orderParentRecord}).then(data =>{
             console.log('isSaveDisabled: ', data);
             this.loading = false;
             this.isSaveButtonDisabled = data;
@@ -113,6 +120,7 @@ export default class hdtOrderDossierWizardActions extends LightningElement {
 
     connectedCallback(){
         this.getSaveButtonStatus();
+        this.getCancelButtonStatus();
     }
 
 }

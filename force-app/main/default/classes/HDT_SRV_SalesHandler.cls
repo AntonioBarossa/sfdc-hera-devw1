@@ -65,30 +65,48 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.CausalCode__c = mapRequestFields.get('CODERR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.Description = mapRequestFields.get('ANNOTAZIONI');
                             }
                             when 'Ammissibilità OK' {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                             }
                             when 'Esito OK da DL' {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                            }
+                            when 'Amm. Precheck KO SII' {
+                                ord.PrecheckReasonSII__c = mapRequestFields.get('DES_ERR_ES');
+                                ord.CausalCode__c = mapRequestFields.get('CODERR_ES');
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                            }
+                            when 'Amm. Precheck OK SII' {
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
+                                    ord.PrecheckResultSII__c = 'OK';
+                                }
                             }
                             when 'Esito KO da SII' {
                                 ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+			                    ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                             }
                             when 'Esito OK da SII' {
-                                if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
-                                    ord.PrecheckResultSII__c = 'OK';
-                                }
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+			                    ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                             }
                             when 'Annullamento - Inviato al DL/SII'{
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
@@ -233,6 +251,26 @@ public with sharing class HDT_SRV_SalesHandler {
 
                 }
 
+            }
+            when 'WSLead_Callback'{
+                HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_Winback'{
+                HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_CariBoll'{
+                HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_HVAC'{
+                HDT_UTL_LeadProcess.formHvac(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_SOL'{
+                HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
             }
             when else {
 

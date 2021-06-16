@@ -27,6 +27,14 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 }
                 //Tasto Aggrega&Filtri 
                 when 'joinFilter' {
+
+                    if(tObj.tabCode == 'EC'){
+                        if(String.isEmpty(dbr.aggregazione)){
+                            dbr.aggregazione = '03';
+                        }
+                        dbr.tipoTransazione = 'EC2';
+                    }
+
                     dbr.dataFine = convertDateFormat(dbr.dataFine);
                     dbr.dataInizio = convertDateFormat(dbr.dataInizio);
                 }
@@ -107,7 +115,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 }
                 //Tasto Contratto/Servizi
                 when 'contractService' {
-
+                    dbr.tipoTransazione = 'EC2';
                 }
                 //Tasto Filtri-Paperless
                 when 'paperlessFilters' {

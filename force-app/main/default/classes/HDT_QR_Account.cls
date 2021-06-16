@@ -47,7 +47,7 @@ public inherited sharing class HDT_QR_Account {
         contractSrv.checkReadAccess('Id,BillingAddressFormula__c');
         Account ac = new Account();
         //String query = 'SELECT Id,BillingAddress FROM Account WHERE Id ='+accountId;
-        ac= [SELECT Id,BillingAddressFormula__c FROM Account WHERE Id =: AccountId];
+        ac= [SELECT Id,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingStreetName__c,BillingCity,BillingState,BillingPostalCode,BillingCountry FROM Account WHERE Id =: AccountId];
         //ac = database.query(query);
         system.debug('Account retrieved******'+ ac);
         return ac;

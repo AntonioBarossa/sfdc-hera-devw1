@@ -48,7 +48,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
     // }
     public static void createDefaultPrivacyContact(List<String> contactIds, Map<String,List<String>> mapMobilePhone ,Map<String,List<String>> mapPhone ,Map<String,List<String>> mapEmail, Map<String,String> mobilePrefixes, Map<String,String> phonePrefixes) {
 
-        List<Individual> indv = HDT_UTL_Individual.createIndividualContact(contactIds);
+        /*List<Individual> indv =*/ HDT_UTL_Individual.createIndividualContact(contactIds);
         List<Contact> contacts = contactQr.getRecordsById(contactIds);
         Map<String,Contact> contactsOb=new Map<String,Contact>();
         Map<String,String> primaryEmail= new Map<String,String>();
@@ -57,7 +57,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
         Map<String,List<String>> mobiles= new Map<String,List<String>>();
         Map<String,String> primaryPhone= new Map<String,String>();
         Map<String,List<String>> phones= new Map<String,List<String>>();
-        Map<String,List<String>> phonesHome= new Map<String,List<String>>();
+        //Map<String,List<String>> phonesHome= new Map<String,List<String>>();
         boolean check = false;
         List<String> phone= new List<String>();
         for(Contact c: contacts){
@@ -315,7 +315,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
     // }
     public static void createDefaultPrivacyLead(List<String> leadIds, Map<String,List<String>> mapMobilePhone ,Map<String,List<String>> mapPhone ,Map<String,List<String>> mapEmail, Map<String,String> mobilePrefixes, Map<String,String> phonePrefixes) {
 
-        List<Individual> indv = HDT_UTL_Individual.createIndividualLead(leadIds);
+        /*List<Individual> indv =*/ HDT_UTL_Individual.createIndividualLead(leadIds);
         List<Lead> leads = leadQr.getRecordsById(leadIds);
         Map<String,Lead> leadsOb=new Map<String,Lead>();
         Map<String,String> primaryEmail= new Map<String,String>();
@@ -453,7 +453,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
         
                 
         HDT_SRV_Individual.checkCreateAccess(ind);
-        Individual indvid= HDT_SRV_Individual.updateRecord(ind);
+        /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(ind);
 
     }
 
@@ -465,7 +465,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
         
                 
         HDT_SRV_Individual.checkCreateAccess(ind);
-        Individual indvid= HDT_SRV_Individual.updateRecord(ind);
+        /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(ind);
 
     }
 
@@ -475,7 +475,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
         PrivacyMarketingConsentInitiative__c = IniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = DataConsensoMarketing);
 
         HDT_SRV_Individual.checkCreateAccess(ind);
-        Individual indvid= HDT_SRV_Individual.updateRecord(ind);
+        /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(ind);
     }
 
     public static void updatePrivacyConsentFormWebWinback(Id leadId,String VersioneInformativaMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing){
@@ -484,7 +484,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
         PrivacyMarketingConsentInitiative__c = IniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = DataConsensoMarketing);
 
         HDT_SRV_Individual.checkCreateAccess(ind);
-        Individual indvid= HDT_SRV_Individual.updateRecord(ind);
+        /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(ind);
     }
 
     public static void updatePrivacyConsentFormWebCallback(Id leadId,String VersioneInformativaMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing){
@@ -493,7 +493,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
         PrivacyMarketingConsentInitiative__c = IniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = DataConsensoMarketing);
 
         HDT_SRV_Individual.checkCreateAccess(ind);
-        Individual indvid= HDT_SRV_Individual.updateRecord(ind);
+        /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(ind);
     }
 
     public static void updatePrivacyConsentSol(Id contactId,String VersioneInformativaMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing,String email){
@@ -510,7 +510,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
          	HDT_SRV_ContactPointEmail.checkUpdateAccess(contemail);
 
             HDT_SRV_Individual.checkCreateAccess(ind);
-            Individual indvid= HDT_SRV_Individual.updateRecord(ind);
+            /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(ind);
         }
 
         public static void updatePrivacyConsentLeadExternalList(Map<Id,Map<String,Object>> mapLeadIdFieldsValues){

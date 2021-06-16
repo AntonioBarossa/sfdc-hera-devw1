@@ -4472,7 +4472,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>GetInputCase.Type</elementReference>
+                    <elementReference>VariazioneFiscaleProcess</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>

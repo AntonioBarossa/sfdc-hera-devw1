@@ -10,7 +10,7 @@ import EDUCATIONALQUALIFICATION from '@salesforce/schema/Account.DegreeOfStudies
 import COMPANY_OWNER from '@salesforce/schema/Account.CompanyOwner__c';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
-import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCode';
+import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCodeData';
 import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountResidenziale.insertAccount';
 export default class HdtFormAccountResidenziale extends NavigationMixin(LightningElement) {
@@ -364,10 +364,13 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                     isEmpty= true;
                 }
                 if(isEmpty){
+
+
+                    
                     getFromFiscalCode({
-                        fiscalCodes : {'Account' : this.fiscalCode.value.replace(/ /g,"")}
+                        fiscalCodes : this.fiscalCode.value.replace(/ /g,"")
                     }).then((response) => {
-                        let fiscData= response.Account;
+                        let fiscData= response;
                         if(this.gender === undefined || this.gender.trim()===''){
                             this.gender= fiscData.gender;
                         }

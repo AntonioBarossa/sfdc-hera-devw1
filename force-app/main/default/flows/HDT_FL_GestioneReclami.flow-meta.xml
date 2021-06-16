@@ -46,7 +46,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Screen_inserimento_dati</targetReference>
+            <targetReference>Comportamento_HC</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -62,7 +62,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Screen_inserimento_dati</targetReference>
+            <targetReference>Comportamento_HC</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -78,14 +78,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Screen_inserimento_dati</targetReference>
+            <targetReference>Comportamento_HC</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assegna_Valori</name>
         <label>Assegna Valori</label>
         <locationX>1326</locationX>
-        <locationY>3014</locationY>
+        <locationY>4478</locationY>
         <assignmentItems>
             <assignToReference>getCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -102,6 +102,52 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Fase_in_Lavorazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaCollection</name>
+        <label>AssegnaCollection</label>
+        <locationX>710</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_Input_Case</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>GetAccountStessoReclamo</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCaseCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaProcessType</name>
+        <label>AssegnaProcessType</label>
+        <locationX>996</locationX>
+        <locationY>2678</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>HC_InLavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DraftHc</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_inserimento_dati</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -123,22 +169,24 @@
                 <elementReference>IdContenitore</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>AssegnaCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValori_0</name>
+        <label>AssegnaValori</label>
+        <locationX>1194</locationX>
+        <locationY>3470</locationY>
         <assignmentItems>
-            <assignToReference>CaseCollection</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>getCaseAggiornato.Note__c</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <elementReference>Get_Input_Case</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>CaseCollection</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>GetAccountStessoReclamo</elementReference>
+                <elementReference>IncorrectCausalTrackingFormula</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaCaseCollection</targetReference>
+            <targetReference>VolontaEstora_o_FirmaFalsa</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -192,6 +240,88 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Bozza</name>
+        <label>Bozza?</label>
+        <locationX>1128</locationX>
+        <locationY>2558</locationY>
+        <defaultConnector>
+            <targetReference>Screen_inserimento_dati</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Bozza</defaultConnectorLabel>
+        <rules>
+            <name>In_Lavorazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Bozza</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaProcessType</targetReference>
+            </connector>
+            <label>In Lavorazione</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Comportamento_Causale_Modificata</name>
+        <label>Comportamento Causale Modificata?</label>
+        <locationX>1326</locationX>
+        <locationY>3350</locationY>
+        <defaultConnector>
+            <targetReference>VolontaEstora_o_FirmaFalsa</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Modificata</defaultConnectorLabel>
+        <rules>
+            <name>Modificata</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Bozza</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getCaseAggiornato.CausalIncorrectBehavior__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Input_Case.CausalIncorrectBehavior__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValori_0</targetReference>
+            </connector>
+            <label>Modificata</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Comportamento_HC</name>
+        <label>Comportamento HC?</label>
+        <locationX>1282</locationX>
+        <locationY>2438</locationY>
+        <defaultConnector>
+            <targetReference>Screen_inserimento_dati</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altro</defaultConnectorLabel>
+        <rules>
+            <name>Comportamento_HC_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Comportamento Venditori HC</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Bozza</targetReference>
+            </connector>
+            <label>Comportamento HC</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Esiste_Contenitore</name>
         <label>Esiste Contenitore?</label>
         <locationX>710</locationX>
@@ -220,7 +350,7 @@
         <name>Motivazione</name>
         <label>Motivazione?</label>
         <locationX>1326</locationX>
-        <locationY>2678</locationY>
+        <locationY>4142</locationY>
         <defaultConnector>
             <targetReference>Assegna_Valori</targetReference>
         </defaultConnector>
@@ -398,7 +528,7 @@
         <name>Salva_in_Bozza_o_Conferma</name>
         <label>Salva in Bozza o Conferma?</label>
         <locationX>1282</locationX>
-        <locationY>2438</locationY>
+        <locationY>3110</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla_0</name>
@@ -445,7 +575,44 @@
             <label>Conferma</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>VolontaEstora_o_FirmaFalsa</name>
+        <label>VolontaEstora o FirmaFalsa</label>
+        <locationX>1326</locationX>
+        <locationY>3686</locationY>
+        <defaultConnector>
+            <targetReference>Motivazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Activity</defaultConnectorLabel>
+        <rules>
+            <name>Creazione_Activity</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>getCaseAggiornato.CausalIncorrectBehavior__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Firma falsa</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getCaseAggiornato.CausalIncorrectBehavior__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Volontà estorta</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetActivityTemplate</targetReference>
+            </connector>
+            <label>Creazione Activity</label>
+        </rules>
+    </decisions>
     <description>Flow per la gestione del Cluster Reclami</description>
+    <formulas>
+        <name>IncorrectCausalTrackingFormula</name>
+        <dataType>String</dataType>
+        <expression>&quot;[&quot; &amp; TEXT({!$Flow.CurrentDateTime}) &amp; &quot;]: &quot; &amp; TEXT({!Get_Input_Case.CausalIncorrectBehavior__c}) &amp; &quot; --&gt; &quot; &amp; TEXT({!getCaseAggiornato.CausalIncorrectBehavior__c}) &amp; BR() &amp; {!Get_Input_Case.Note__c}</expression>
+    </formulas>
     <interviewLabel>Gestione Reclami {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Reclami</label>
     <processMetadataValues>
@@ -538,6 +705,41 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordCreates>
+        <name>CreaActivty</name>
+        <label>CreaActivty</label>
+        <locationX>1194</locationX>
+        <locationY>3926</locationY>
+        <connector>
+            <targetReference>Motivazione</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__ActivityTemplate__c</field>
+            <value>
+                <elementReference>GetActivityTemplate.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Description__c</field>
+            <value>
+                <elementReference>GetActivityTemplate.wrts_prcgvr__Subject__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Status__c</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
@@ -602,13 +804,34 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetActivityTemplate</name>
+        <label>GetActivityTemplate</label>
+        <locationX>1194</locationX>
+        <locationY>3806</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CreaActivty</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Valutazione Penale</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__ActivityTemplate__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getCaseAggiornato</name>
         <label>getCaseAggiornato</label>
         <locationX>1326</locationX>
-        <locationY>2558</locationY>
+        <locationY>3230</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Motivazione</targetReference>
+            <targetReference>Comportamento_Causale_Modificata</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -626,14 +849,14 @@
         <name>Aggiorna_Fase_in_Lavorazione</name>
         <label>Aggiorna Fase in Lavorazione</label>
         <locationX>1326</locationX>
-        <locationY>3134</locationY>
+        <locationY>4598</locationY>
         <inputReference>getCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCaseCollection</name>
         <label>AggiornaCaseCollection</label>
         <locationX>710</locationX>
-        <locationY>1574</locationY>
+        <locationY>1694</locationY>
         <connector>
             <targetReference>Processo_Reclami_Scritti_Richieste_Info_0</targetReference>
         </connector>
@@ -722,7 +945,7 @@
         <name>Screen_Documenti_Selezionati</name>
         <label>Screen Documenti Selezionati</label>
         <locationX>1194</locationX>
-        <locationY>2798</locationY>
+        <locationY>4262</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -809,7 +1032,7 @@
         <name>Screen_inserimento_dati</name>
         <label>Screen inserimento dati</label>
         <locationX>1282</locationX>
-        <locationY>2318</locationY>
+        <locationY>2990</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -834,7 +1057,7 @@
             <inputParameters>
                 <name>draftButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>DraftHc</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -933,7 +1156,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -947,7 +1170,7 @@
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
         <locationX>930</locationX>
-        <locationY>2558</locationY>
+        <locationY>3230</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -958,7 +1181,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -972,7 +1195,7 @@
         <name>Processo_Reclami_Scritti_Richieste_Info_0</name>
         <label>Processo Reclami Scritti/Richieste Info</label>
         <locationX>1293</locationX>
-        <locationY>1982</locationY>
+        <locationY>2102</locationY>
         <flowName>HDT_FL_GestioneReclami_ReclamiScritti</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1001,6 +1224,16 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>DraftHc</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>IdContenitore</name>

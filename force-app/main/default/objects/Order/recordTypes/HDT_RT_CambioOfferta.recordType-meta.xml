@@ -1844,6 +1844,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>LiftingPeople__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>MarketOrigin__c</picklist>
         <values>
             <fullName>Default</fullName>
@@ -1926,6 +1937,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Amm%2E Precheck OK SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
@@ -2003,7 +2018,7 @@
         </values>
         <values>
             <fullName>Bozza</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Bozza Annullata</fullName>
@@ -2146,19 +2161,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Ripensamento - Ammissibilità KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2204,11 +2219,11 @@
     <picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
-            <fullName>Cambio Offerta</fullName>
-            <default>false</default>
+            <fullName>Cambio Offerta Ele</fullName>
+            <default>true</default>
         </values>
         <values>
-            <fullName>To define</fullName>
+            <fullName>Cambio Offerta Gas</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2982,15 +2997,15 @@
     <picklistValues>
         <picklist>WithdrawalClass__c</picklist>
         <values>
-            <fullName>001 - 7 giorni</fullName>
+            <fullName>001-7 giorni</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>002 - 6 giorni %28no dom%2E %2B fest%29</fullName>
+            <fullName>002-6 giorni %28no dom%2E%2Bfest%2E%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>003 - 5 giorni %28no sab%2E dom%2E fest%29</fullName>
+            <fullName>003-5 giorni%28no sab%2Edom%2Efest%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>

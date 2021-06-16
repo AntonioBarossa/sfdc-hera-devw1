@@ -138,7 +138,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                     (CampaignName__c = :quote.CampaignName__c OR CampaignName__c = null) AND
                     (PromoCode__c = :quote.FriendCode__c OR PromoCode__c = null) AND
                     (Agency__c = :quote.Agency__c OR Agency__c = null) AND
-                    (UseCategory__c = :quote.UseCategory__c OR UseCategory__c = null) AND
+                    (UseCategory__c includes (:quote.UseCategory__c) OR UseCategory__c = null) AND
                     (EquipmenType__c = :quote.MeterType__c OR EquipmenType__c = null)
 
             ];
@@ -157,12 +157,12 @@ public inherited sharing class HDT_QR_SearchPlug {
         ];
     }
 
-    public static List<PermissionSetAssignment> getUserPermissionSets(List<PermissionSetAssignment> assignmentList, Id currentUserId){
+    public static List<PermissionSetAssignment> getUserPermissionSets(List<PermissionSetAssignment> assignmentList, Id currentUserId, String permissionToCheck){
         assignmentList = new List<PermissionSetAssignment>();
         assignmentList = [
             SELECT Id, PermissionSetId, PermissionSet.Name, PermissionSet.ProfileId, PermissionSet.Profile.Name, AssigneeId, Assignee.Name
             FROM PermissionSetAssignment
-            WHERE PermissionSet.Name = :Label.HDT_PermissionSetNameForCPQ AND AssigneeId = :currentUserId
+            WHERE PermissionSet.Name = :permissionToCheck AND AssigneeId = :currentUserId
         ];
         return assignmentList;
     }

@@ -4,7 +4,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
-    private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
+    private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog(); 
     
     public static void salesProcessManagementBefore(list<Order> newOrderList,List<Order> oldOrderList){
         
@@ -237,12 +237,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
     
     // START @Picchiri Credit check Date 04.06.21
-    public static void gestioneEsitiCreditCheck(List<Order> newOrdersList, List<Order> oldOrdersList) {
+    // Viene invocata da una modifica lato ordine
+    // In questo metodo viene invocata la classe per la creazione della Activiti del Credit Check Entanti (Nuovo cliente) e Uscenti (Vecchio cliente)
+    public static void creditCheckManager(List<Order> newOrdersList, List<Order> oldOrdersList) {
         system.debug('gestioneEsitiCreditCheck trigger --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
         system.debug('gestioneEsitiCreditCheck trigger --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
         Map<String,List<Order>> orderMapNew = new Map<String,List<Order>>();
         List<Order> orderListOldCustomer = new List<Order>();                        
-        List<Order> orderListNewCustomer = new List<Order>();                        
+        List<Order> orderListNewCustomer = new List<Order>();   
+        List<Order> orderListcreditCheckPhaseManager = new List<Order>();                        
         List<Order> orderList = new List<Order>();                        
         
 
@@ -260,15 +263,40 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     orderListNewCustomer.add(newOrder);
                 }                                      
             }
+            if(oldOrder.IncomingCreditCheckResult__c.contains('KO') && newOrder.IncomingCreditCheckResult__c.contains('OK')){
+                orderListcreditCheckPhaseManager.add(newOrder);
+            }
 
         }
 
         orderMapNew.put('oldCustomer',orderListOldCustomer);
-        orderMapNew.put('newCustomer',orderListNewCustomer);
-        // Creazione Activity per KO entranti e uscenti
+        orderMapNew.put('newCustomer',orderListNewCustomer);        
         HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
+        if(!orderListcreditCheckPhaseManager.isEmpty()){
+            creditCheckPhaseManager(orderListcreditCheckPhaseManager);                     
+        }        
     }        
     // FINE @Picchiri Credit check Date 04.06.21
+
+    // @Picchiri 16.06.21 chiamata Mulesoft
+    public static void creditCheckPhaseManager(List<Order> orderList){ 
+        List<Order> orderListToUpdate = new List<Order>();         
+        for(Order orderToUpdate : orderList){
+            if(orderToUpdate.ParentOrder__r.Phase__c == 'Documentazione Gestita' && (orderToUpdate.Phase__c == 'Documentazione Validata' || orderToUpdate.Phase__c == 'Documentazione da inviare' )){
+                if(orderToUpdate.recordType.Developername != 'HDT_RT_VAS'){
+                    orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
+                    orderListToUpdate.add(orderToUpdate);
+                }else{
+                    orderToUpdate.Phase__c = 'Comunicazione Motore VAS';
+                    orderListToUpdate.add(orderToUpdate);
+                }
+            }
+        }   
+        if(!orderListToUpdate.isEmpty()){
+            update  orderListToUpdate;                    
+        }             
+        
+    }
 
     public static Boolean manageCancellationProcess(List<Order> orderList, Map<Id,SObject> orderOldMapd){
 		Order orderNew = orderList[0];
@@ -287,6 +315,22 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 		}
 		return false;
 	}
+
+    // @Picchiri sbiancamento esito e causale credit check all'interno dell'ordine. 
+    // Per risottomissione credit check
+    public static void cleanCreditCheckOnOrder(List<Id> listOrderId) {
+        List<Order> listOrderToUpdate = orderQr.getRecordsByIds(listOrderId);
+        for (Order order : listOrderToUpdate) {
+            order.IncomingCreditCheckResult__c = '';
+            order.OutgoingCreditCheckResult__c = '';	
+            order.CreditCheckDescription__c	 = '';
+        }
+        if(!listOrderToUpdate.isEmpty()){
+            update listOrderToUpdate;
+        }
+    
+    }
+    // FINE @Picchiri Credit check Date 15.06.21
 
 
 }

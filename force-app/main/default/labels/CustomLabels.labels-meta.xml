@@ -198,4 +198,18 @@
         <shortDescription>HDT_PermissionSetNameForCPQ</shortDescription>
         <value>HDT_SalesforceCPQAdmin</value>
     </labels>
+    <labels>
+        <fullName>HDT_SuperUserCPQ</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_SuperUserCPQ</shortDescription>
+        <value>HDT_SuperUserCPQ</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnConfirmProduct</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnConfirmProduct</shortDescription>
+        <value>Non è possibile passare in "Confermata" il bundle, ci sono prodotti opzione del bundle in stato "In sviluppo". Per procedre è necessario modificare lo stato dei prodotti opzione in "Confermata" oppure "Annullata".</value>
+    </labels>
 </CustomLabels>
