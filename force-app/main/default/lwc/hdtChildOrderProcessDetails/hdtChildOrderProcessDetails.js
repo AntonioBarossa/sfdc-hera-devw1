@@ -870,15 +870,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': '',
-                        'apiname': 'CommodityFormula__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
                         'apiname': 'AnnualConsumption__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
@@ -916,6 +907,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': '',
                         'apiname': 'ClientCategory__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': '',
+                        'apiname': 'CommodityFormula__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,

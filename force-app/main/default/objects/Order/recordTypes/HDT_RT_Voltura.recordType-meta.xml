@@ -1942,6 +1942,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviato al SII</fullName>
+            <default>false</default>
+        </values>	
+        <values>
             <fullName>Amm%2E Precheck OK SII</fullName>
             <default>false</default>
         </values>
@@ -2954,6 +2958,14 @@
         </values>
         <values>
             <fullName>Ordinaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Continuità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recupero</fullName>
             <default>false</default>
         </values>
     </picklistValues>
