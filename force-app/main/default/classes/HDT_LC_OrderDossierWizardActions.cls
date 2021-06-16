@@ -151,10 +151,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     * @return Boolean
     */
     @AuraEnabled
-    public static Boolean isSaveDisabled(String orderParentId){
+    public static Boolean isSaveDisabled(Order orderParent){
         Boolean result = false;
         
-        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParentId);
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         
         for (Order childOrder : childOrders) {
             if (childOrder.Step__c != 20) {
@@ -163,7 +163,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             }
         }
 
-        return result;
+        return result || orderParent.Status == 'Completed';
     }
 
 }
