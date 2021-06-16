@@ -59,9 +59,12 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         Case currentCase = (Case) inputCase;
         Case parentCase = new Case();
 
-        parentCase = caseQr.getParentCaseById(currentCase.ParentId);
-
-        if(parentCase.Type == 'Variazione indirizzo di fornitura'){
+        try{
+            parentCase = caseQr.getParentCaseById(currentCase.ParentId);
+        }catch(Exception e){
+            System.debug(e.getMessage());
+        }
+        if(parentCase != null && parentCase.Type == 'Variazione indirizzo di fornitura'){
 
             if(currentCase.Phase__c == 'KO definitivo'
             || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) > 0){
@@ -73,9 +76,9 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
             }
 
+            HDT_UTL_DatabaseService.updateSObject(parentCase);
         }
 
-        HDT_UTL_DatabaseService.updateSObject(parentCase);
 
     }
 
