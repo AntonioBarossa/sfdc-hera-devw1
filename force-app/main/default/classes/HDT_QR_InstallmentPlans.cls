@@ -69,6 +69,7 @@ public with sharing class HDT_QR_InstallmentPlans {
 
         return [SELECT Id,
         Bill__c,
+        Amount__c,
         DocumentNumber__c,
         TvFeeResidual__c,
         ExpirationDate__c,

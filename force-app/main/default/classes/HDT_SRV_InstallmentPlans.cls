@@ -60,13 +60,26 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug('SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
 
         //Set AmountToPayInstallments to TotalPay
+        //If totalResidue is Zero amount is DocumentTotalAmount
         List<DocumentSelected__c> raiFeeDocuments = installmentsQr.getDocumentSelectedByCase(recordId);
         Decimal totalRaiFeeResidual = 0.0;
+        Decimal documentTotalAmount = 0.0;
+        Decimal totalResidue = installmentsQr.getCaseById(recordId).TotalResidue__c;
+        Decimal amountInstallment;
+
         for(DocumentSelected__c document : raiFeeDocuments){
             totalRaiFeeResidual += document.TvFeeResidual__c;
         }
-        Decimal totalAmount = installmentsQr.getCaseById(recordId).TotalResidue__c - totalRaiFeeResidual;
-        currentCase.AmountToPayInInstallments__c = totalAmount;
+        if(totalResidue == 0){
+            for(DocumentSelected__c document : raiFeeDocuments){
+                documentTotalAmount += document.Amount__c;
+            }
+            amountInstallment = documentTotalAmount;
+        } else {
+            amountInstallment = totalResidue;
+        }
+
+        currentCase.AmountToPayInInstallments__c = amountInstallment - totalRaiFeeResidual;
 
 
         HDT_UTL_DatabaseService.updateSObject(currentCase);
