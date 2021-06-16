@@ -43,12 +43,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 }
             } else if(order.EffectiveDate__c != null && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
 
-                if(orderQr.getRoleNameByRoleId() != 'CEO'){
+                if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva'))){
 
                     throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
 
                 } else{
-
+                    
                     order.RetroactiveDate__c = order.EffectiveDate__c;
                     order.Subprocess__c = 'Retroattiva';
 
