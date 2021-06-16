@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="processType" type="String" label="Process Type" description="process type passed by the flow" role="inputOnly"/>
+            <property name="recordId" type="String" label="Record Id" description="Id of the record to edit" role="inputOnly"/>
+            <property name="objectName" type="String" label="Object Name" description="Name of the object to edit" role="inputOnly"/>
+            <property name="accountId" type="String" label="Account Id" description="account id" role="inputOnly"/>
+            <property name="saveButton" type="Boolean" label="Save Button" description="Enable Save Button" role="inputOnly"/>
+            <property name="cancelButton" type="Boolean" label="Cancel Button" description="Enable Cancel Button" role="inputOnly"/>           
+            <property name="draftButton" type="Boolean" label="Draft Button" description="Enable Draft Button" role="inputOnly"/>
+            <property name="isRunFromFlow" type="String" label="isRunFromFlow" description="is being executed by the flow" role="inputOnly"/>
+
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
