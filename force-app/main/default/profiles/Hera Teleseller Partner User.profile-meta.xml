@@ -27515,7 +27515,7 @@
         <recordType>Case.HDT_RT_CambioUsoTec</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_ComportamentoVenditori</layout>
         <recordType>Case.HDT_RT_ComportamentoVenditori</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -27543,7 +27543,7 @@
         <recordType>Case.HDT_RT_ProrogaTemporanea</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_ReclamiScrittiRichInfo</layout>
         <recordType>Case.HDT_RT_ReclamiScrittiRichiesteInfo</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -27563,7 +27563,7 @@
         <recordType>Case.HDT_RT_Subentro_GAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_VerificaDatiAlDl</layout>
         <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
     </layoutAssignments>
     <layoutAssignments>
