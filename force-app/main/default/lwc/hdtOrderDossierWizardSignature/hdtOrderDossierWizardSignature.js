@@ -35,7 +35,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
 
     get hiddenEdit(){
         let result = true;
-        if(this.orderParentRecord.Step__c <= this.currentStep){
+        if(this.orderParentRecord.Step__c <= this.currentStep || this.orderParentRecord.Status === 'Completed'){
             result = true;
         } else if(this.orderParentRecord.Step__c > this.currentStep){
             result = false;
