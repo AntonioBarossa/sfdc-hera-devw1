@@ -456,6 +456,10 @@
             <valueName>Errata Domiciliazione/non richiesta</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
+            <valueName>Domiciliazione non attiva</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Assistenza Sociale</valueName>
         </valueSettings>
