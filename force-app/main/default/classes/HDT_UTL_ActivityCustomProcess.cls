@@ -168,7 +168,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                     actListToRecheck.add(act);
                     listOrderBadPayer.add(act.Order__c);
                 } 
-                                // ko uscente e poi ok . chiudere l'activity e rimandare il credict check
+                // ko uscente e poi ok . chiudere l'activity e rimandare il credict check
                 if(act.RecordType.DeveloperName == 'HDT_RT_KoPrecedeteCliente' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK'){
                     actListToUpdate.add(closeActivityCheck(act));
                     actListToRecheck.add(act);
@@ -177,13 +177,13 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 //ko entrante poi ok con causale "Saldo debito cattivo pagatore" verficare l'activity e riportare esito e causale su activity e sbiancare l'esito su order e reinviare la chiamata
                 if(act.RecordType.DeveloperName == 'HDT_RT_CreditCheckKO' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && act.CreditCheckReason__c == 'Saldo debito cattivo pagatore'){                    
                     actListToUpdate.add(closeActivityCheck(act));
-                    orderIdListToCleanCreditCheck.add(act.Order__c);
                     actListToRecheck.add(act);
+                    orderIdListToCleanCreditCheck.add(act.Order__c);
+                    
                 }
                 // in altri casi in cui arriva un ok chiudere l'activity ma non mandare la chiamata a sap
                 if(act.RecordType.DeveloperName != 'HDT_RT_KoPrecedeteCliente' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && act.CreditCheckReason__c != 'Saldo debito cattivo pagatore'){
-                    actListToUpdate.add(closeActivityCheck(act)); 
-                    creditCheckPhaseManager(act.Order__r.ParentOrder__r.Phase__c, act.Order__r.Phase__c,act.Order__r.ParentOrder__c, act.Order__c);                     
+                    actListToUpdate.add(closeActivityCheck(act));                     
                     recheck = false;
                 }                
             
@@ -210,22 +210,6 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 
     }
     // END @Picchiri 14.06.21 Credit Check Richiamata a Mulesoft
-
-    // @Picchiri 16.06.21 chiamata Mulesoft
-    public static void creditCheckPhaseManager(String phaseOrderParent, String phaseOrderChild, Id idOrderParent, Id idOrderChild){
-        
-        if(phaseOrderParent == 'Documentazione Gestita' && (phaseOrderChild == 'Documentazione Validata' || phaseOrderChild == 'Documentazione da inviare' )){
-            Order orderToUpdate = orderQr.getRecordById(idOrderChild);
-            if(orderToUpdate.recordType.Developername != 'HDT_RT_VAS'){
-                orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
-            }else{
-                orderToUpdate.Phase__c = 'Comunicazione Motore VAS';
-            }
-            
-            update  orderToUpdate;
-        }
-
-    }
 
     // @Picchiri 15.06.21 chiamata Mulesoft
     public static void recheckCreditCheck(List<wrts_prcgvr__Activity__c> actListToRecheck){

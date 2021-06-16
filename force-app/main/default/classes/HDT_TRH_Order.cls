@@ -50,7 +50,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         // START @Picchiri Credit Check 04.06.21                
         HDT_UTL_OrderProcess.creditCheckManager(trigger.new,trigger.old);
-        // END @Picchiri Credit Check 04.06.21
+        // END @Picchiri Credit Check 04.06.21        
 
     }
 

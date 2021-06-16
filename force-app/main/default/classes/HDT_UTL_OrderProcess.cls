@@ -244,7 +244,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         system.debug('gestioneEsitiCreditCheck trigger --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
         Map<String,List<Order>> orderMapNew = new Map<String,List<Order>>();
         List<Order> orderListOldCustomer = new List<Order>();                        
-        List<Order> orderListNewCustomer = new List<Order>();                        
+        List<Order> orderListNewCustomer = new List<Order>();   
+        List<Order> orderListcreditCheckPhaseManager = new List<Order>();                        
         List<Order> orderList = new List<Order>();                        
         
 
@@ -262,14 +263,40 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     orderListNewCustomer.add(newOrder);
                 }                                      
             }
+            if(oldOrder.IncomingCreditCheckResult__c.contains('KO') && newOrder.IncomingCreditCheckResult__c.contains('OK')){
+                orderListcreditCheckPhaseManager.add(newOrder);
+            }
 
         }
 
         orderMapNew.put('oldCustomer',orderListOldCustomer);
         orderMapNew.put('newCustomer',orderListNewCustomer);        
         HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
+        if(!orderListcreditCheckPhaseManager.isEmpty()){
+            creditCheckPhaseManager(orderListcreditCheckPhaseManager);                     
+        }        
     }        
     // FINE @Picchiri Credit check Date 04.06.21
+
+    // @Picchiri 16.06.21 chiamata Mulesoft
+    public static void creditCheckPhaseManager(List<Order> orderList){ 
+        List<Order> orderListToUpdate = new List<Order>();         
+        for(Order orderToUpdate : orderList){
+            if(orderToUpdate.ParentOrder__r.Phase__c == 'Documentazione Gestita' && (orderToUpdate.Phase__c == 'Documentazione Validata' || orderToUpdate.Phase__c == 'Documentazione da inviare' )){
+                if(orderToUpdate.recordType.Developername != 'HDT_RT_VAS'){
+                    orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
+                    orderListToUpdate.add(orderToUpdate);
+                }else{
+                    orderToUpdate.Phase__c = 'Comunicazione Motore VAS';
+                    orderListToUpdate.add(orderToUpdate);
+                }
+            }
+        }   
+        if(!orderListToUpdate.isEmpty()){
+            update  orderListToUpdate;                    
+        }             
+        
+    }
 
     public static Boolean manageCancellationProcess(List<Order> orderList, Map<Id,SObject> orderOldMapd){
 		Order orderNew = orderList[0];
