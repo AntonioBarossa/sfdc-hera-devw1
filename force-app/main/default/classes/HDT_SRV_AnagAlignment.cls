@@ -446,10 +446,10 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCases.add(anagAlignCase);
         }
 
-        Boolean outcome = HDT_UTL_DatabaseService.insertSObject(anagAlignCases);
-        if (outcome) {
-            System.debug('createAnagAlignmentCasesModAnagCliente: # Case creati: ' + anagAlignCases.size());
-        }
+        // Boolean outcome = HDT_UTL_DatabaseService.insertSObject(anagAlignCases);
+        // if (outcome) {
+        //     System.debug('createAnagAlignmentCasesModAnagCliente: # Case creati: ' + anagAlignCases.size());
+        // }
 
         // Necessario per valorizzare i campi formula PODPDRFormula__c e ContractCode__c usati dall'arricchimento dati.
         Formula.recalculateFormulas(anagAlignCases);
@@ -472,6 +472,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             contactsMap.put(c.Id, c);
         }
 
+        // ProcessClick non fa partire i job per le callout da contesto trigger o batch,
+        // quindi demandiamo creazione del case + arricchimento dati + callout heroku ad un platform event per ogni Case.
+        List<HDT_PEV_AnagAlignment__e> events = new List<HDT_PEV_AnagAlignment__e>();
         for (Case anagAlignCase : anagAlignCases) {
 
             // DATI INDIRIZZO DI RESIDENZA
@@ -484,6 +487,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.BillingCountry__c = caseAccount.BillingCountry;
             anagAlignCase.BillingCityCode__c = caseAccount.BillingCityCode__c;
 
+            // TODO: aggiungere dati fornitura e dati esazione.
+
             // DATI CLIENTE FINALE
             anagAlignCase.FirstName__c = caseAccount.FirstName__c;
             anagAlignCase.LastName__c = caseAccount.LastName__c;
@@ -493,12 +498,24 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.Mobile__c = caseContact.MobilePhone != null ? caseContact.MobilePhone : caseContact.Phone;
 
             anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
+
+            HDT_PEV_AnagAlignment__e event = new HDT_PEV_AnagAlignment__e();
+            event.SerializedCase__c = JSON.serialize(anagAlignCase);
+            events.add(event);
         }
 
-        HDT_UTL_DatabaseService.updateSObject(anagAlignCases);
 
-        // Queueable per invocare l'arricchimento dati su ogni Case e per inviarli ad heroku.
-        System.enqueueJob(new HDT_QBL_AnagAlignment(anagAlignCases));
+        List<Database.SaveResult> results = EventBus.publish(events);
+        System.debug('Results Size: ' + results.size());
+        for (Database.SaveResult sr : results) {
+            if (sr.isSuccess()) {
+                System.debug('Successfully published event.');
+            } else {
+                for (Database.Error err : sr.getErrors()) {
+                    System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                }
+            }
+        }
 
         return anagAlignCases;
     }
