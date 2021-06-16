@@ -22,6 +22,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
         return res;
 
     }
+    
     @AuraEnabled
     public static Boolean confirmForApproval(String caseId, String accountId){
         try {
@@ -37,9 +38,9 @@ public with sharing class HDT_LC_RecordEditFormSales {
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Contratti/Bonus Commerciale');
                 System.debug(activity);
                 activitySrv.createRecord(activity);
-                return false;
-            }else{
                 return true;
+            }else{
+                return false;
             }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
