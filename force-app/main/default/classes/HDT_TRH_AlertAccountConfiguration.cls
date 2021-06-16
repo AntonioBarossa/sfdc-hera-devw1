@@ -22,6 +22,7 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
         inputsMap.put('type', 'Modifica Alert');
 
         Map<String, String> accountContactsMap = new Map<String, String>();
+        Map<String, String> accountCompanyMap = new Map<String, String>();
         Set<Id> accountIds = new Set<Id>();
         for (AlertAccountConfiguration__c alert : (List<AlertAccountConfiguration__c>) Trigger.new) {
             if (alert.Account__c != null) {
@@ -33,6 +34,7 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
         for (AccountContactRelation acr : relations) {
             if (acr.Roles != null && acr.Roles.contains('Titolare')) {
                 accountContactsMap.put(acr.AccountId, acr.ContactId);
+                accountCompanyMap.put(acr.AccountId, acr.Account.CompanyOwner__c);
             }
         }
 
@@ -54,6 +56,7 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
 
             inputsMap.put('accountId', alert.Account__c);
             inputsMap.put('contactId', accountContactsMap.get(alert.Account__c));
+            inputsMap.put('companyOwner', accountCompanyMap.get(alert.Account__c));
             System.debug('Creazione Case Modifica Alert: parametri di input: ' + inputsMap);
             Case alertCase = caseUtility.createCase(inputsMap);
             if (alertCase != null) {

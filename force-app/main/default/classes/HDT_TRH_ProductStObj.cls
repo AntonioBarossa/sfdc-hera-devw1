@@ -25,12 +25,28 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
         //allUniqueProductCodeSet = checkProduct2Duplicate(allUniqueProductCodeSet);
 
         Set<Id> productIds = new  Set<Id>();// = Trigger.NewMap.keySet();
+        Set<Id> productIdsForTechOff = new  Set<Id>();
+        Set<String> familySet = new Set<String>();
+        familySet.add('VAS Prodotto');
+        familySet.add('VAS Servizio');
+        familySet.add('Promozione');
+        familySet.add('Offerta commerciale');
 
         for(Product2 p : (Product2[])Trigger.New){
-            if(p.Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
+
+            if(familySet.contains(p.Family)){
                 productIds.add(p.Id);
+
+                if(p.Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){//Offerta commerciale
+                    productIdsForTechOff.add(p.Id);
+                }
+
             }
+
         }
+
+        System.debug('>>> productIds ' + productIds.size());
+        System.debug('>>> productIdsForTechOff ' + productIdsForTechOff.size());
 
         if(productIds.size()==0){
             //only Offerta commerciale run trigger
@@ -38,9 +54,14 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
         }
 
         productOptionMap = HDT_UTL_ProductStObjProcess.generateProductOptionMap(productOptionMap, productIds);
-        technicalOfferMap = HDT_UTL_ProductStObjProcess.generateTechnicalOfferMap(technicalOfferMap, productIds);
-
+        
+        if(productIdsForTechOff.size() > 0){
+            technicalOfferMap = HDT_UTL_ProductStObjProcess.generateTechnicalOfferMap(technicalOfferMap, productIdsForTechOff);
+        }
+        
         HDT_WRP_ProductStObjProcess.HDT_WRP_StatusResponse statusResponse;
+        Integer technicalOfferNumber;
+        Integer productOptioNumber;
         for(Product2 p : (Product2[])Trigger.New){
 
             //if(allUniqueProductCodeSet.size() > 0 && allUniqueProductCodeSet.contains(generateUniqueCode(p))){
@@ -50,7 +71,20 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
 
             Product2 oldProduct = (Product2)Trigger.OldMap.get(p.Id);
             System.debug('>>> oldStatus: ' + oldProduct.Status__c + ' - NewStatus: ' + p.Status__c);
-            statusResponse = HDT_UTL_ProductStObjProcess.changeStatusHandler(statusResponse, p.Id, oldProduct, p, productOptionMap.get(p.Id), technicalOfferMap.get(p.Id));
+
+            if(technicalOfferMap == null){
+                technicalOfferNumber = 0;
+            } else {
+                technicalOfferNumber = technicalOfferMap.get(p.Id);
+            }
+
+            if(productOptionMap == null || !productOptionMap.containsKey(p.Id)){
+                productOptioNumber = 0;
+            } else {
+                productOptioNumber = productOptionMap.get(p.Id);
+            }
+
+            statusResponse = HDT_UTL_ProductStObjProcess.changeStatusHandler(statusResponse, p.Id, oldProduct, p, productOptioNumber, technicalOfferNumber);
             System.debug('>>> statusResponse: ' + statusResponse.success + ' - ' + statusResponse.message);
 
             if(!statusResponse.success){

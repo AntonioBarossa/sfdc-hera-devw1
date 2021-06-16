@@ -208,7 +208,8 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                         FlagForzato  : false,
                         FlagVerificato  : this.caseRecord.fields.SupplyIsAddressVerified__c.value //ok
                     }
-                    this.address = this.caseRecord.fields.AddressFormula__c.value; //ok
+                    if(!this.address)              
+                        this.address = this.caseRecord.fields.AddressFormula__c.value; //ok
                     console.log('all inputs succeded');
                 }else if(this.addressType.localeCompare('BillingProfile') == 0){ // Indirizzo di spedizione
                     inputParams = {
@@ -224,7 +225,8 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                         FlagForzato  : false,
                         FlagVerificato  : this.caseRecord.fields.IsInvoicingVerified__c.value
                     }
-                    this.address = this.caseRecord.fields.DeliveryAddress__c.value;
+                    if(!this.address) 
+                        this.address = this.caseRecord.fields.DeliveryAddress__c.value;
                 } else { // Account --> Indirizzo di residenza
                     inputParams = {
                         Stato : this.caseRecord.fields.BillingCountry__c.value,
@@ -239,7 +241,8 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                         FlagForzato  : false,
                         FlagVerificato  : this.caseRecord.fields.BillingIsAddressVerified__c.value
                     }
-                    this.address = this.caseRecord.fields.AlternativeAddress__c.value;
+                    if(!this.address)  
+                        this.address = this.caseRecord.fields.AlternativeAddress__c.value;
                 }
                 console.log(inputParams);
                 this.addressWrapper = inputParams;
