@@ -31,7 +31,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         inputsCheck.add(inputCheck);
         
         //Lookup for cases 'Sospensione Fornitura' with same Account and completed
-        if(installmentsQr.getSuspensionCaseByAccountId(accountId).size() > 0){
+        List<Case> suspensionCases = new List<Case>();
+        suspensionCases = installmentsQr.getSuspensionCaseByAccountId(accountId);
+        if(suspensionCases != null && suspensionCases.size() > 0){
 
             currentCase.SuspensionInThePastTwelveMonths__c = true;
 
