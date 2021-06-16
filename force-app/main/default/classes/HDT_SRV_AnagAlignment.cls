@@ -487,8 +487,6 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.BillingCountry__c = caseAccount.BillingCountry;
             anagAlignCase.BillingCityCode__c = caseAccount.BillingCityCode__c;
 
-            // TODO: aggiungere dati fornitura e dati esazione.
-
             // DATI CLIENTE FINALE
             anagAlignCase.FirstName__c = caseAccount.FirstName__c;
             anagAlignCase.LastName__c = caseAccount.LastName__c;
