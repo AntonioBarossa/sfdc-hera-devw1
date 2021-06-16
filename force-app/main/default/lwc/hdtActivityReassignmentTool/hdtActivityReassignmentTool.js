@@ -38,6 +38,7 @@ export default class HdtActivityReassignmentTool extends LightningElement {
             }
         } else {
             this.showToast("success", "Operazione completata", "Activity riassegnata con successo.");
+            this.closeModal();
             this.refreshPage();
         }
     }
@@ -48,6 +49,10 @@ export default class HdtActivityReassignmentTool extends LightningElement {
 
     refreshPage() {
         getRecordNotifyChange([{recordId: this.recordId}]);
+    }
+
+    closeModal() {
+        this.dispatchEvent(new CustomEvent('close'));
     }
 
     showToast(variant, title, message) {
