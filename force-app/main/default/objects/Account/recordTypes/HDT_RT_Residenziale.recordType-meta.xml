@@ -269,7 +269,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-	<picklistValues>
+    <picklistValues>
         <picklist>CustomerMarking__c</picklist>
         <values>
             <fullName>AAS Parti comuni</fullName>
@@ -312,7 +312,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>D2 - Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D3 - Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>D4 - Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D5 - Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D6 - Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D7 - BP Doppio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D8 - Marcatura nulla</fullName>
             <default>false</default>
         </values>
         <values>
