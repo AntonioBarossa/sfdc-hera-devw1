@@ -46,7 +46,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Screen_inserimento_dati</targetReference>
+            <targetReference>Comportamento_HC</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -62,7 +62,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Screen_inserimento_dati</targetReference>
+            <targetReference>Comportamento_HC</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -78,7 +78,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Screen_inserimento_dati</targetReference>
+            <targetReference>Comportamento_HC</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -608,6 +608,11 @@
         </rules>
     </decisions>
     <description>Flow per la gestione del Cluster Reclami</description>
+    <formulas>
+        <name>IncorrectCausalTrackingFormula</name>
+        <dataType>String</dataType>
+        <expression>&quot;[&quot; &amp; TEXT({!$Flow.CurrentDateTime}) &amp; &quot;]: &quot; &amp; TEXT({!Get_Input_Case.CausalIncorrectBehavior__c}) &amp; &quot; --&gt; &quot; &amp; TEXT({!getCaseAggiornato.CausalIncorrectBehavior__c}) &amp; BR() &amp; {!Get_Input_Case.Note__c}</expression>
+    </formulas>
     <interviewLabel>Gestione Reclami {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Reclami</label>
     <processMetadataValues>
@@ -826,7 +831,7 @@
         <locationY>3230</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Motivazione</targetReference>
+            <targetReference>Comportamento_Causale_Modificata</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1052,7 +1057,7 @@
             <inputParameters>
                 <name>draftButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>DraftHc</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1219,6 +1224,16 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>DraftHc</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>IdContenitore</name>
