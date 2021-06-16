@@ -31,7 +31,10 @@ public inherited sharing class HDT_QR_RecordType {
         
         String query = 'SELECT Id FROM RecordType WHERE DeveloperName = :developerName and SobjectType = :objectType WITH SECURITY_ENFORCED';
         List<RecordType> recordTypes = Database.query(query);
-
-        return recordTypes[0];
+        if(!recordTypes.isEmpty()){
+            return recordTypes[0];
+        }else{
+            return null;
+        }
     }
 }

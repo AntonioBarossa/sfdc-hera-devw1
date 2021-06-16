@@ -15,4 +15,15 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public static List<wrts_prcgvr__Activity__c> getRecordByCaseId(String caseId) {
+        return [
+            SELECT
+            Id,
+            Name
+            FROM wrts_prcgvr__Activity__c
+            WHERE Case__c= :caseId
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }
