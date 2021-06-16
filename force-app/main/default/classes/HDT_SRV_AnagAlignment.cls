@@ -446,11 +446,6 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCases.add(anagAlignCase);
         }
 
-        // Boolean outcome = HDT_UTL_DatabaseService.insertSObject(anagAlignCases);
-        // if (outcome) {
-        //     System.debug('createAnagAlignmentCasesModAnagCliente: # Case creati: ' + anagAlignCases.size());
-        // }
-
         // Necessario per valorizzare i campi formula PODPDRFormula__c e ContractCode__c usati dall'arricchimento dati.
         Formula.recalculateFormulas(anagAlignCases);
 
