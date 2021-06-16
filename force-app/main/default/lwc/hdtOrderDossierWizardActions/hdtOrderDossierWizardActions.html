@@ -7,7 +7,7 @@
             <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="medium"></lightning-spinner>
             <ul class="slds-button-group-list slds-float_right">
                 <li>
-                    <lightning-button onclick={handleCancel} icon-name="utility:cancel_file_request" variant="brand" label="Annulla" title="Cancel action"></lightning-button>
+                    <lightning-button onclick={handleCancel} disabled={isCancelButtonDisabled} icon-name="utility:cancel_file_request" variant="brand" label="Annulla" title="Cancel action"></lightning-button>
                 </li>
                 <li>
                     <!--EVERIS: Bottone riportato in brand come richiesto BSN-->
