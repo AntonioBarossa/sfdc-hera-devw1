@@ -17,9 +17,5 @@
             <fullName>Order</fullName>
             <default>true</default>
         </values>
-        <values>
-            <fullName>Script</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
 </RecordType>
