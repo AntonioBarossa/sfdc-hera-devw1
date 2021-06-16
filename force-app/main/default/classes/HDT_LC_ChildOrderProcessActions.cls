@@ -205,6 +205,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
             if (order.ProcessType__c == 'Switch in Ripristinatorio') {
                 phase = 'Documentazione Gestita';
+                status = 'Completed';
             }
 
             Order orderParentToUpdate = new Order(
