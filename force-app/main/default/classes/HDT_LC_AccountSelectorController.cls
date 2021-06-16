@@ -148,7 +148,6 @@ public with sharing class HDT_LC_AccountSelectorController {
 		}
 	}
 
-	@AuraEnabled
 	public static List<Account> handleAccount(Id contactId, String activityId) {
 		try {
 			List<Account> accounts = getAccounts(contactId);
@@ -161,6 +160,11 @@ public with sharing class HDT_LC_AccountSelectorController {
 		} catch (Exception e) {
 			throw new AuraHandledException('ERROR: ' + e.getMessage());
 		}
+	}
+
+	@AuraEnabled
+	public static String handleAccountSerialized(Id contactId, String activityId) {
+		return JSON.serialize(handleAccount(contactId, activityId));
 	}
 
 	@AuraEnabled
