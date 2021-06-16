@@ -1,7 +1,9 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { NavigationMixin } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getAllCampaigns from '@salesforce/apex/HDT_LC_CampaignsController.getCampaigns';
+import updateCampaignMembersStatus from '@salesforce/apex/HDT_LC_CampaignsController.updateCampaignMembersStatus';
 
 
 const columns = [
@@ -86,5 +88,29 @@ export default class PopoverContainer extends NavigationMixin(LightningElement) 
                 actionName: 'view'
             },
         });
+    }
+
+    @api updateCampaignMemberStatus() {
+        let statusValue = 'Non Proposto Auto';
+        let membersToUpdate = [];
+        this.campaignsResult.data.forEach(elem => {
+            if(elem.Campaign.Required__c == true && elem.Campaign.Category__c == 'Campagna CRM') {
+                membersToUpdate.push(elem.Id);
+            }
+        });
+        console.log(JSON.stringify(membersToUpdate));
+        if (membersToUpdate.length > 0) {
+            updateCampaignMembersStatus({ 'campaignMemberIds': membersToUpdate, 'statusValue': statusValue }).then(data => {
+                console.log("ok " + JSON.stringify(data));
+                this.dispatchEvent(new ShowToastEvent({
+                    title: '',
+                    message: 'Stato impostato a "Non Proposto Auto"',
+                    variant: 'success'
+                }));
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+
     }
 }
