@@ -2,17 +2,22 @@ import { LightningElement, api, track , wire} from 'lwc';
 import cancelCase from '@salesforce/apex/HDT_LC_RecordEditFormSales.cancelCase';
 import confirmForApproval from '@salesforce/apex/HDT_LC_RecordEditFormSales.confirmForApproval';
 import savePractice from '@salesforce/apex/HDT_LC_RecordEditFormSales.savePractice';
+import saveDraft from '@salesforce/apex/HDT_LC_RecordEditFormSales.saveDraft';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 
 export default class HdtRecordEditFormFlowSales extends NavigationMixin(LightningElement){
-    @api processType;
-    @api objectName;
-    @api recordId;
+    @api processtype;
+    @api objectName = 'Case';
+    @api recordid;
     @api accountId;
     @api saveButton;
     @api cancelButton;
     @api draftButton;
+    @api acceptedFormats = ['.pdf', '.png'];
+    @api statoApp = 'Nessuna Richiesta Inviata';
+    @api saveInDraft;
+    @api cancelCase;
     @api isRunFromFlow= false;
     @track showOperationSubType= false;
     @track selectedOperationType;
@@ -78,9 +83,17 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
             cs.OperationSubType__c= operationSubType.value;
         }
         console.log(cs);
-            saveDraft({caseId: this.recordId, accountId: this.accountId, caseob: cs}).then(result => {
+            saveDraft({caseId: this.recordid, accountId: this.accountId, caseob: cs}).then(result => {
                 // const redirect= new CustomEvent('closeTab');
                 // this.dispatchEvent(redirect);
+                const event = new ShowToastEvent({
+                    message: 'Case Salvato con Successo!',
+                    variant: 'success',
+                    mode: 'dismissable'
+                    });
+                    this.dispatchEvent(event);
+                const closeclickedevt = new CustomEvent('closeaction');
+                this.dispatchEvent(closeclickedevt); 
                 console.log(result);
                 }).catch(error => {
                     console.log(error);
@@ -89,8 +102,16 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
 
     }
     handleCancel(){
-        cancelCase({caseId: this.recordId}).then(result => {
+        cancelCase({caseId: this.recordid}).then(result => {
             console.log(result);
+            const event = new ShowToastEvent({
+                message: 'Case Annullato!',
+                variant: 'success',
+                mode: 'dismissable'
+                });
+                this.dispatchEvent(event);
+                    const closeclickedevt = new CustomEvent('closeaction');
+                    this.dispatchEvent(closeclickedevt); 
             }).catch(error => {
                 console.log(error);
             });
@@ -98,7 +119,7 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
 
     submitForApproval(){
         this.preloading= true;
-        confirmForApproval({caseId: this.recordId, accountId: this.accountId}).then(result => {
+        confirmForApproval({caseId: this.recordid, accountId: this.accountId}).then(result => {
             if(result == true){
                 const event = new ShowToastEvent({
                     message: 'Approvazione già richiesta',
@@ -108,6 +129,11 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
                     this.dispatchEvent(event);
                     this.preloading= false;
 
+            }
+            else{
+
+                    const closeclickedevt = new CustomEvent('closeaction');
+                    this.dispatchEvent(closeclickedevt); 
             }
             // const redirect= new CustomEvent('closetab');
             // this.dispatchEvent(redirect);
@@ -136,17 +162,31 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
         },this);
         if(this.selectedOperationType != null && this.selectedOperationType != undefined && this.selectedOperationType!= "" ){
             cs.OperationType__c = this.selectedOperationType;
-            validated= false;        
+                 
+        }
+        else{
+            validated= false;   
         }
         let operationSubType = this.template.querySelector("[data-id='operationSubType']");
+        if(this.selectedOperationType == 'Bonus commerciale' && (operationSubType == null || operationSubType == undefined || operationSubType == "" )){
+            validated= false; 
+        }
         if(operationSubType != undefined){
             cs.OperationSubType__c= operationSubType.value;
         }
         console.log(cs);
         if(validated){
-            savePractice({caseId: this.recordId, accountId: this.accountId, caseob: cs}).then(result => {
+            savePractice({caseId: this.recordid, accountId: this.accountId, caseob: cs}).then(result => {
                 // const redirect= new CustomEvent('closeTab');
                 // this.dispatchEvent(redirect);
+                const event = new ShowToastEvent({
+                    message: 'Case Confermato',
+                    variant: 'success',
+                    mode: 'dismissable'
+                    });
+                    this.dispatchEvent(event);
+                    const closeclickedevt = new CustomEvent('closeaction');
+                    this.dispatchEvent(closeclickedevt); 
                 console.log(result);
                 }).catch(error => {
                     console.log(error);
@@ -163,17 +203,18 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
         
     }
     connectedCallback(){
-        console.log(this.recordId);
+        console.log(this.recordid);
         console.log(this.objectName);
+        console.log("isFromReturnFlow:" + this.isRunFromFlow);
         if(this.isRunFromFlow == false){
-            this.recordId= this.currentPageReference.state.c__caseId;
+            this.recordid= this.currentPageReference.state.c__caseId;
         }
 
     }
     handleOnLoad(event){
-        if(this.recordId != null){
+        if(this.recordid != null){
         var record = event.detail.records;
-        var fields = record[this.recordId].fields;
+        var fields = record[this.recordid].fields;
             if(fields.Phase__c != undefined){
                 if(fields.Phase__c.value == 'In Attesa Approvazione'){
                     this.disableConfirmButton= true;

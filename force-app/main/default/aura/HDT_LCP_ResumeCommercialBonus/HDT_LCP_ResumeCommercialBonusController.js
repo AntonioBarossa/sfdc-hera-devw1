@@ -67,7 +67,7 @@
                                     type: 'standard__component',
                                     
                                     attributes: {
-                                    componentName: 'c:hdtRecordEditFormFlowSales',
+                                    componentName: 'c:HDT_LCP_RecordEditFormFlowSales',
                             
                                     },
                                     state: {
