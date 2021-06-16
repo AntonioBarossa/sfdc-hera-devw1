@@ -4,7 +4,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
-    private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
+    private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog(); 
     
     public static void salesProcessManagementBefore(list<Order> newOrderList,List<Order> oldOrderList){
         

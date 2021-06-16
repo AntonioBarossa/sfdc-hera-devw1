@@ -169,7 +169,7 @@ public inherited sharing class HDT_QR_Order {
             Account.CustomerCode__c,                        // @Picchiri 31/05/21             
             Account.CustomerMarking__c,                     // @Picchiri 31/05/21             
             Account.CustomerType__c,                        // @Picchiri 31/05/21 
-            ServicePoint__r.SupplyStreetName__c,            // @Picchiri 31/05/21 ERRORE
+            ServicePoint__r.SupplyStreetName__c,            // @Picchiri 31/05/21  
 		    ServicePoint__r.SupplyCity__c,                  // @Picchiri 31/05/21 
 		    ServicePoint__r.SupplyProvince__c,              // @Picchiri 31/05/21 
 		    ServicePoint__r.SupplyPostalCode__c,            // @Picchiri 31/05/21

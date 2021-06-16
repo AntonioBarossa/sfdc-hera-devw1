@@ -55,6 +55,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             accountSrv.updateRecordsNoShare(listAccount);
         }
     }
+
     private static List<wrts_prcgvr__Activity__c> filterByD2d(List<wrts_prcgvr__Activity__c> li,String recordtypeid){
         List<wrts_prcgvr__Activity__c> rep = new List<wrts_prcgvr__Activity__c>();
         System.debug('DENTRO HANDLER HANDLER4:');
@@ -158,17 +159,16 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 // Se il nuovo cliente dimostrerà comunque di aver pagato il debito del precedente cliente), 
                 // L’activity verrà chiusa con Stato Lavorazione “KO Risolto” e Motivo “Saldo Pagato”.  
                 // La chiusura dell’activity scatenerà di nuovo il credit check ma sul Nuovo Cliente. 
-                if(act.Status__c != actOld.Status__c && act.RecordType.DeveloperName == 'HDT_RT_CreditCheckKO' &&  (act.Status__c == 'KO Risolto' && act.Reason__c == 'Dimostrata Estraneità' ) || (act.Status__c == 'KO Forzato' && act.Reason__c == 'Saldo pagato' )){                    
+                if( act.RecordType.DeveloperName == 'HDT_RT_CreditCheckKO' &&  (act.Status__c == 'KO Risolto' && act.Reason__c == 'Dimostrata Estraneità' ) || (act.Status__c == 'KO Forzato' && act.Reason__c == 'Saldo pagato' )){                    
                     actListToRecheck.add(act);
                 }
 
                 // punto 2 KO Cattivo Pagatore  ancora in analisi
-                if(act.Status__c != actOld.Status__c && act.Status__c == 'KO Forzato' && causaleCattivoPagatore.contains(act.CreditCheckReason__c)){
+                if(act.Status__c == 'KO Forzato' && causaleCattivoPagatore.contains(act.CreditCheckReason__c)){
                     actListToRecheck.add(act);
                     listOrderBadPayer.add(act.Order__c);
                 } 
-                
-                // ko uscente e poi ok . chiudere l'activity e rimandare il credict check
+                                // ko uscente e poi ok . chiudere l'activity e rimandare il credict check
                 if(act.RecordType.DeveloperName == 'HDT_RT_KoPrecedeteCliente' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK'){
                     actListToUpdate.add(closeActivityCheck(act));
                     actListToRecheck.add(act);
@@ -343,6 +343,10 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     //         ord.BadPayer__c = true;
     //     }
     //     update orderBadP;
+
+
+
+
         
     // }
 
