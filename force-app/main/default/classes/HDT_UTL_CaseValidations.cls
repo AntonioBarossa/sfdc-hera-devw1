@@ -199,7 +199,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             String reason = getFieldValue(fields, 'Reason__c');
 
 
-            if(billingProfile.PaymentMethod__c != 'RID' && reason != 'Domiciliazione Non Attiva'){
+            if(billingProfile.PaymentMethod__c != 'RID' && !(reason.equalsIgnoreCase('Domiciliazione non attiva'))){
                 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per Billing Profile non domiciliati è possibile inseire soltanto \'Domiciliazione Non Attiva\''));
 

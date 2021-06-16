@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LastBillExpirationDate__c</fullName>
+    <description>Campo tecnico nascosto per gestione ultima bolletta.</description>
+    <externalId>false</externalId>
+    <label>Scadenza Ultima Bolletta</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

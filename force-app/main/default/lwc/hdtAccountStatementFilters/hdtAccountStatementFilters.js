@@ -123,12 +123,12 @@ export default class HdtAccountStatementFilters extends LightningElement {
     closeModal(event){
         console.log('# closeModal #');
 
-        //for (var key in this.filterObject) {
-        //    delete this.filterObject[key];
-        //}
+        for (var key in this.filterObject) {
+            delete this.filterObject[key];
+        }
 
         const closeEvent = new CustomEvent("closemodal", {
-            detail:   {booleanVar: 'showFilters'}
+            detail: {booleanVar: 'showFilters'}
         });
 
         // Dispatches the event.

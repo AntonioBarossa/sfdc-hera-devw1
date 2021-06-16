@@ -25,4 +25,47 @@ public inherited sharing class HDT_QR_Task {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public List<Lead> getLeads(Set<Id> ids) {
+        return [
+            SELECT 
+            Id, 
+            CompanyOwner__c,
+            IndividualId
+            FROM Lead 
+            WHERE 
+            Id IN :ids
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<ContactPointPhone> getPrimaryMobilePhone(Set<Id> parentIds) {
+        return [
+            SELECT 
+            Id,
+            ParentId,
+            TelephoneNumber
+            FROM ContactPointPhone 
+            WHERE 
+            ParentId IN :parentIds
+            AND IsPrimary = True
+            AND Type__c = 'Mobile'
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<ContactPointEmail> getCertifiedContactPointEmails(Set<Id> parentIds) {
+        return [
+            SELECT 
+            Id, 
+            ParentId,
+            EmailAddress
+            FROM ContactPointEmail 
+            WHERE 
+            ParentId IN :parentIds
+            AND IsCertifiedEmail__c = True
+            AND Type__c = 'E-mail Anagrafica'
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

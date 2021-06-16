@@ -57,7 +57,7 @@ public inherited sharing class HDT_UTL_PhoneNumbers {
 
     public static Boolean isValidMobileWithPrefix(String phone) {
         // Rimuoviamo il prefisso 39 e verifichiamo se il numero è valido.
-        return phone.startsWith('39') && isValidMobile(phone.substring(2));
+        return phone != null && phone.startsWith('39') && isValidMobile(phone.substring(2));
     }
 
     public static String withInternationPrefix(String phone) {

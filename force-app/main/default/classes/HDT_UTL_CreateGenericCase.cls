@@ -119,6 +119,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         String caseCluster = (String) inputs.get('cluster');
         String accountId = (String) inputs.get('accountId');
         String contactId = (String) inputs.get('contactId');
+        String companyOwner = (String) inputs.get('companyOwner');
         String servicePointId = (String) inputs.get('servicePointId');
         String herokuCode = (String) inputs.get('HerokuPracticeCode__c');
 
@@ -131,6 +132,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
 
         newCase.AccountId = accountId;
         newCase.ContactId = contactId;
+        newCase.CompanyOwner__c = companyOwner;
         newCase.RecordTypeId = recordTypeId;
         newCase.ServicePoint__c = servicePointId;
         newCase.Type = caseType;

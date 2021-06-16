@@ -233,6 +233,36 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     }
 
+    applyDateOrdineLogic(){
+        let currentSectionIndex = this.confirmedSteps.findIndex(section => section.name === 'dateOrdine');
+        let nextSection = this.confirmedSteps[currentSectionIndex];
+        let nextSectionName = this.confirmedSteps[currentSectionIndex].name;
+
+            if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
+
+                if(this.order.WaiverRightAfterthought__c == 'Si'){
+                    this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+
+                    this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
+                    // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-04-01';
+                } else {
+                    this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+
+                    this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
+                    // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
+                }
+
+            } else {
+
+                this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
+                // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
+                // this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                //     nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+            }
+        }
+
     typeVisibility(type){
         let result = true;
 
@@ -1487,6 +1517,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
+                    'label': 'Potenza impegnata',
+                    'apiname': 'PowerCommitted__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': false,
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
                     'label': 'Potenza disponibile',
                     'apiname': 'PowerAvailable__c',
                     'typeVisibility': this.typeVisibility('ele'),
@@ -1496,8 +1535,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Potenza impegnata',
-                    'apiname': 'PowerCommitted__c',
+                    'label': 'Potenza richiesta',
+                    'apiname': 'PowerRequested__c',
                     'typeVisibility': this.typeVisibility('ele'),
                     'required': false,
                     'disabled': true,
@@ -1662,16 +1701,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'RequestOption__c',
                     'typeVisibility': this.typeVisibility('ele'),
                     'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'RequestVoltage__c',
-                    'apiname': 'RequestVoltage__c',
-                    'typeVisibility': this.typeVisibility('ele') && this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica',
-                    'required': false,
-                    'disabled': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1759,7 +1789,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'Esclusione dal deposito cauzionale',
                     'apiname': 'SecurityDepositExcluded__c',
-                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'),
+                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'),
                     'required': false,
                     'disabled': false,
                     'value': '',
@@ -2469,15 +2499,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'value': '',
                         'processVisibility': ''
                     },
-                    {
-                        'label': 'OtherPayer__c',
-                        'apiname': 'OtherPayer__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
+                    // {
+                    //     'label': 'OtherPayer__c',
+                    //     'apiname': 'OtherPayer__c',
+                    //     'typeVisibility': this.typeVisibility('both'),
+                    //     'required': false,
+                    //     'disabled': true,
+                    //     'value': '',
+                    //     'processVisibility': ''
+                    // },
                     {
                         'label': 'Codice Fiscale intestatario c/c',
                         'apiname': 'BankAccountSignatoryFiscalCode__c',

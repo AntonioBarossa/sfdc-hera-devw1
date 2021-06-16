@@ -24,6 +24,8 @@ export default class HdtCustomCombobox extends LightningElement {
         {label: 'uguale a', value: '='},
         {label: 'maggiore di', value: '>'},
     ];
+    
+    value = null;
 
     connectedCallback(){
 

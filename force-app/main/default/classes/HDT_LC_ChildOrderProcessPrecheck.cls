@@ -103,6 +103,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             when 'HDT_RT_AttivazioneConModifica' {
                 processType = 'Prima Attivazione con modifica';
             }
+            
             when 'HDT_RT_CambioOfferta' {
                 processType = 'Cambio Offerta';
             }
