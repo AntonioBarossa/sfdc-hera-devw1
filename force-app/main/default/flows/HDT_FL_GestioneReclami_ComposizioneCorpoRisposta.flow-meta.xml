@@ -20,7 +20,7 @@
     <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
@@ -52,7 +52,7 @@
     <decisions>
         <name>Case_Contenitore_0</name>
         <label>Case Contenitore?</label>
-        <locationX>226</locationX>
+        <locationX>248</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Composizione_Risposta_Reclamo_0_0</targetReference>
@@ -77,7 +77,7 @@
     <decisions>
         <name>Fase_Elaborazione_Risposta</name>
         <label>Fase: Elaborazione Risposta?</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>GetCaseAggiornato</targetReference>
@@ -126,7 +126,7 @@
         <name>CaseContenuti</name>
         <dataType>String</dataType>
         <displayField>CaseNumber</displayField>
-        <filterLogic>and</filterLogic>
+        <filterLogic>1 AND (2 OR 3 OR 4)</filterLogic>
         <filters>
             <field>ParentId</field>
             <operator>EqualTo</operator>
@@ -139,6 +139,20 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Risposta Parere Ricevuta</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Elaborazione Risposta</stringValue>
             </value>
         </filters>
         <object>Case</object>
@@ -224,7 +238,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>226</locationX>
+        <locationX>248</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -245,7 +259,7 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -273,7 +287,7 @@
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>878</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
@@ -319,7 +333,7 @@
     <screens>
         <name>Composizione_Risposta_Reclamo_0_0</name>
         <label>Composizione Risposta Reclamo</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -383,7 +397,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>100</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
