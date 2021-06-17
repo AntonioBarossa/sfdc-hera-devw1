@@ -16,6 +16,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
     private void doValidation() {
 
         Set<Id> contactIds = new Set<Id>();
+        Set<Id> leadIds = new Set<Id>();
 
         for (Task t : (List<Task>) Trigger.new) {
 
@@ -31,11 +32,15 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                 }
                 
                 if (t.WhoId == null && t.PhoneNumber__c == null) {
-                    t.addError('È necessario inserire un Contatto oppure un numero di telefono alternativo.');
+                    t.addError('È necessario inserire un Contatto/Lead oppure un numero di telefono alternativo.');
                 }
                 
                 if (t.WhoId != null) {
-                    contactIds.add(t.WhoId);
+                    if (t.WhoId.getSobjectType() == Contact.getSObjectType()) {
+                        contactIds.add(t.WhoId);
+                    } else {
+                        leadIds.add(t.WhoId);
+                    }
                 }
 
                 if (t.PhoneNumber__c != null) {
@@ -50,7 +55,11 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                     t.addError('È necessario inserire un Contatto oppure un indirizzo PEC alternativo.');
                 } else if (t.WhoId != null && t.PecAddress__c == null) {
                     // Salviamo il WhoId per recuperare la PEC dal Contact.
-                    contactIds.add(t.WhoId);
+                    if (t.WhoId.getSobjectType() == Contact.getSObjectType()) {
+                        contactIds.add(t.WhoId);
+                    } else {
+                        leadIds.add(t.WhoId);
+                    }
                 }
             }
 
@@ -58,20 +67,41 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
         }
 
         List<Contact> contacts = new List<Contact>();
+        Map<Id, String> leadsCompanyMap = new Map<Id, String>();
+        Map<Id, String> leadsMobileMap = new Map<Id, String>();
+        Map<Id, String> leadsPecMap = new Map<Id, String>();
         if (!contactIds.isEmpty()) {
             HDT_QR_Contact queryHandler = new HDT_QR_Contact();
             contacts = queryHandler.getRecordsByIds(contactIds);
-        }
-
-        for (Contact c : contacts) {
-            System.debug('PEC = ' + c.CertifiedEmail__c);
+        } else if (!leadIds.isEmpty()) {
+            HDT_QR_Task queryHandler = new HDT_QR_Task();
+            Set<Id> individualIds = new Set<Id>();
+            List<Lead> leads = queryHandler.getLeads(leadIds);
+            Map<Id, Id> parentsMap = new Map<Id, Id>();
+            for (Lead l : leads) {
+                leadsCompanyMap.put(l.IndividualId, l.Id);
+                individualIds.add(l.IndividualId);
+                parentsMap.put(l.IndividualId, l.Id);
+            }
+            List<ContactPointPhone> mobilePhones = queryHandler.getPrimaryMobilePhone(individualIds);
+            List<ContactPointEmail> certifiedEmails = queryHandler.getCertifiedContactPointEmails(individualIds);
+            for (ContactPointPhone mobile : mobilePhones) {
+                leadsMobileMap.put(parentsMap.get(mobile.ParentId), mobile.TelephoneNumber);
+            }
+            for (ContactPointEmail pec : certifiedEmails) {
+                leadsPecMap.put(parentsMap.get(pec.ParentId), pec.EmailAddress);
+            }
         }
 
         Map<Id, Contact> contactsMap = new Map<Id, Contact>(contacts);
         for (Task t : (List<Task>) Trigger.new) {
             if (t.IsSms__c == True) {
                 if (t.WhoId != null) {
-                    t.CompanyOwner__c = contactsMap.get(t.WhoId).CompanyOwner__c;
+                    if (t.WhoId.getSobjectType() == Contact.getSObjectType()) {
+                        t.CompanyOwner__c = contactsMap.get(t.WhoId).CompanyOwner__c;
+                    } else {
+                        t.CompanyOwner__c = leadsCompanyMap.get(t.WhoId);
+                    }
                 } else {
                     t.CompanyOwner__c = 'HERA COMM'; // Default.
                 }
@@ -79,7 +109,13 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                 if (t.PhoneNumber__c != null) {
                     t.PhoneNumber__c = HDT_UTL_PhoneNumbers.withInternationPrefix(t.PhoneNumber__c);
                 } else if (t.WhoId != null) {
-                    String contactPhone = HDT_UTL_PhoneNumbers.withoutInternationPrefix(contactsMap.get(t.WhoId).MobilePhone);
+                    String contactPhone = '';
+                    if (t.WhoId.getSobjectType() == Contact.getSObjectType()) {
+                        contactPhone = HDT_UTL_PhoneNumbers.withoutInternationPrefix(contactsMap.get(t.WhoId).MobilePhone);
+                    } else {
+                        contactPhone = HDT_UTL_PhoneNumbers.withoutInternationPrefix(leadsMobileMap.get(t.WhoId));
+                    }
+
                     String validateOutcome = HDT_UTL_PhoneNumbers.validateMobileNumber(contactPhone);
                     if (!String.isEmpty(validateOutcome)) {
                         t.addError(validateOutcome + ' Si prega di effettuare una Modifica Anagrafica per correggere il numero di telefono del cliente: ' + contactPhone);
@@ -92,7 +128,11 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                 t.DoxeePecTemplateCode__c = doxeeTemplateCode(t.DoxeePecTemplate__c);
 
                 if (t.PecAddress__c == null && t.WhoId != null) {
-                    t.PecAddress__c = contactsMap.get(t.WhoId).CertifiedEmail__c;
+                    if (t.WhoId.getSobjectType() == Contact.getSObjectType()) {
+                        t.PecAddress__c = contactsMap.get(t.WhoId).CertifiedEmail__c;
+                    } else {
+                        t.PecAddress__c = leadsPecMap.get(t.WhoId);
+                    }
                 }
             }
         }

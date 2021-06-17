@@ -452,6 +452,16 @@
                         <valueListItems>
                             <value>Case.Catalogo_Servizi</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Case.HDT_ResumeCommercialBonus</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Contratti/Bonus Commerciale</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

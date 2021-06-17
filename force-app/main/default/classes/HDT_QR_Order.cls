@@ -153,6 +153,7 @@ public inherited sharing class HDT_QR_Order {
             ActivationStreetNumber__c,
             ImplantType__c,
             PowerCommitted__c,
+            PowerRequested__c,
             ServicePoint__r.MarketOrigin__c,                // @Picchiri 21/05/21
             WizardCompletedDate__c,                         // @Picchiri 21/05/21
             ActivatedDate,                                  // @Picchiri 21/05/21
