@@ -119,7 +119,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Annullamento - Ammissibilità OK', 'Annullamento - Ammissibilità KO' {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 if(previousPhase.indexOf('Ripensamento') >-1){
-                                    nextPhase.replace('Annullamento', 'Ripensamento');
+                                    nextPhase = nextPhase.replace('Annullamento', 'Ripensamento');
                                 }
                                 ord.Phase__c = nextPhase;
                                 //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
