@@ -205,6 +205,7 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
     }
     connectedCallback(){
         console.log(this.recordid);
+        console.log("AccountID:" + this.accountId);
         console.log(this.objectName);
         console.log("isFromReturnFlow:" + this.isRunFromFlow);
         

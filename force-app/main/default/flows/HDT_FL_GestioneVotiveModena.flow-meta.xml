@@ -5,7 +5,7 @@
         <name>Next_Step_VotivaModAnag</name>
         <label>Next Step?</label>
         <locationX>1370</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Set_Fase_In_Lavorazione</targetReference>
         </defaultConnector>
@@ -122,7 +122,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Inserimento_Dati_Votiva</targetReference>
+                <targetReference>Selezione_Billing_Profile</targetReference>
             </connector>
             <label>Modifica Dati di Recapito</label>
         </rules>
@@ -171,10 +171,34 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Set_Billing_Profile</name>
+        <label>Set Billing Profile</label>
+        <locationX>1370</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Inserimento_Dati_Votiva</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCase.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>BillingProfile__c</field>
+            <value>
+                <elementReference>SelectedBillingProfileId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Set_Fase_In_Lavorazione</name>
         <label>Set Fase In Lavorazione</label>
         <locationX>1634</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -195,7 +219,7 @@
         <name>Inserimento_Dati_Votiva</name>
         <label>Inserimento Dati Votiva</label>
         <locationX>1370</locationX>
-        <locationY>398</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -307,6 +331,66 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Selezione_Billing_Profile</name>
+        <label>Selezione Billing Profile</label>
+        <locationX>1370</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Set_Billing_Profile</targetReference>
+        </connector>
+        <fields>
+            <name>DTModAnag_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetCase.Subprocess__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Selezionare il Billing Profile afferente alla Votiva Modena:&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtBillingProfileSelectionFlow</name>
+            <extensionName>c:hdtBillingProfileSelectionFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>GetCase.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>searchVariant</name>
+                <value>
+                    <stringValue>Label-Hidden</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>searchPlaceholder</name>
+                <value>
+                    <stringValue>Affina la ricerca...</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>searchLabel</name>
+                <value>
+                    <stringValue>search</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionType</name>
+                <value>
+                    <stringValue>BillingProfile</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>SelectedBillingProfileId</assignToReference>
+                <name>results</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>848</locationX>
         <locationY>0</locationY>
@@ -359,7 +443,7 @@
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
         <locationX>1106</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -403,6 +487,13 @@
     <variables>
         <name>SaveInDraft</name>
         <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SelectedBillingProfileId</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>

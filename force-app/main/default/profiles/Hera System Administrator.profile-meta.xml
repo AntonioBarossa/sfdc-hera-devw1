@@ -5672,6 +5672,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.SelfCertificationInstance__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.SelfCertificationPesseFailureNotice__c</field>
         <readable>true</readable>
     </fieldPermissions>
