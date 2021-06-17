@@ -233,4 +233,18 @@ public inherited sharing class HDT_QR_CampaignMember {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public List<CampaignMember> getMembersByAccountAndCampaign(List<String> accountIds, List<String> campaignIds) {
+        return [
+            SELECT Id,
+            Contact.AccountId,
+            CampaignId,
+            Status
+            FROM CampaignMember 
+            WHERE HasResponded = false 
+            AND Contact.AccountId IN :accountIds
+            AND CampaignId IN :campaignIds
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }
