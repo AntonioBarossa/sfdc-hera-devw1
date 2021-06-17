@@ -194,6 +194,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             for (var key in this.filterObject) {
                 this.filterObject[key] = '';
             }
+            this.setButtonForFilterApplied(false);
 
             const removeFilter = new CustomEvent("removefilter", {
                 detail:  {filter: 'off'}
@@ -461,6 +462,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                 );
                 return;
             }
+            this.setButtonForFilterApplied(true);
             this.accountdetails = filteredData;
             this.filterApplied = true;
             this.closeModal();
@@ -471,6 +473,18 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             console.error('# Stack => ' + e.stack ); 
         }
 
+    }
+
+    setButtonForFilterApplied(remove){
+        this.template.querySelectorAll('button').forEach(c => {
+            if(c.name === 'interrogation'){
+                if(remove){
+                    c.setAttribute('disabled', '');
+                } else {
+                    c.removeAttribute('disabled');
+                }
+            }
+        });
     }
 
 }
