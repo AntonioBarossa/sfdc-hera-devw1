@@ -4,25 +4,57 @@ const filterObject = {};
 
 export default class HdtDetailFilterModal extends LightningElement {
 
-    @track filterObject = filterObject;
+    @api fieldsToFilter;
+    @track columns = [];
+    @track title = 'Interrogazione';
+    @track filterLabel = 'interroga';
+
+    connectedCallback(){
+
+        this.fieldsToFilter.forEach((element) => {
+            var obj = {fieldName: element.fieldName, label: element.label, detail: {type: 'text'}};
+            this.columns.push(obj);
+        });
+    }
+
+    applyInterFromChild(event){
+        var filterObj = event.detail.value;
+        const applyInt = new CustomEvent("setobjfilter", {
+            detail: {value: filterObj}
+        });
+        // Dispatches the event.
+        this.dispatchEvent(applyInt); 
+    }
+
+    closeModalHandler(){
+        console.log('# closeModal #');
+        const closeModal = new CustomEvent("closemodal", {
+            detail:  {action: ''}
+        });
+        // Dispatches the event.
+        this.dispatchEvent(closeModal); 
+    }
+
+    /*@track filterObject = filterObject;
     @api consider;
     @api fieldsToFilter;
     
     connectedCallback(){
-        if(!this.consider){
-            for (var key in this.fieldsToFilter) {
-                this.filterObject[this.fieldsToFilter[key].fieldName] = '';
-            }          
-        }
+
+        //if(!this.consider){
+        //    for (var key in this.fieldsToFilter) {
+        //        this.filterObject[this.fieldsToFilter[key].fieldName] = '';
+        //    }          
+        //}
     }
 
     closeModal() {
         console.log('# closeModal #');
-        if(!this.consider){
-            for (var key in this.filterObject) {
-                this.filterObject[key] = '';
-            }
-        }
+        //if(!this.consider){
+        //    for (var key in this.filterObject) {
+        //        this.filterObject[key] = '';
+        //    }
+        //}
         const closeModal = new CustomEvent("closemodal", {
             detail:  {action: ''}
         });
@@ -45,6 +77,6 @@ export default class HdtDetailFilterModal extends LightningElement {
         });
         // Dispatches the event.
         this.dispatchEvent(selectedObj);
-    }
+    }*/
 
 }
