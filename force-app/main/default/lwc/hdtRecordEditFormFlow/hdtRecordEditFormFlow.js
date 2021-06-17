@@ -161,9 +161,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             this.formats = this.acceptedFormats.split(";");
             console.log(JSON.stringify(this.formats));
         }
+        console.log('### PreviousButton -> ' +this.previousButton);
         if(this.previousButton && !this.availableActions.find(action => action === 'BACK')){
             this.previousButton = false;
         }
+        console.log('### ProcessType -> ' + this.processType);
+        console.log('### END Connected ###');
         
     }
     /*get formats(){
