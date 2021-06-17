@@ -961,6 +961,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_TRH_AnagAlignmentEvent</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_TRH_TriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
