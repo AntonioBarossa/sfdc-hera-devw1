@@ -85,10 +85,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             for (Order oldOrder : oldOrdersList) {
                 if (newOrder.SignedDate__c != oldOrder.SignedDate__c && (newOrder.WizardCompletedDate__c != null || newOrder.WizardCompletedDate__c != oldOrder.WizardCompletedDate__c) && newOrder.Status != 'Annullato' ) {
                     Order orderToUpdate = new Order();
-                    orderToUpdate.id = newOrder.Id;                    
-                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(newOrder);
+                    orderToUpdate.id = newOrder.Id;                                        
                     orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);                 
                     orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(newOrder);                                                      
+                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(newOrder);
                     orderList.add(orderToUpdate);                    
                 }
             }
@@ -263,14 +263,18 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     orderListNewCustomer.add(newOrder);
                 }                                      
             }
-            if(oldOrder.IncomingCreditCheckResult__c.contains('KO') && newOrder.IncomingCreditCheckResult__c.contains('OK')){
+            if((oldOrder.IncomingCreditCheckResult__c!=null && oldOrder.IncomingCreditCheckResult__c.contains('KO')) && (newOrder.IncomingCreditCheckResult__c != null && newOrder.IncomingCreditCheckResult__c.contains('OK'))){
                 orderListcreditCheckPhaseManager.add(newOrder);
             }
 
         }
 
         orderMapNew.put('oldCustomer',orderListOldCustomer);
-        orderMapNew.put('newCustomer',orderListNewCustomer);        
+        orderMapNew.put('newCustomer',orderListNewCustomer);   
+        
+        system.debug('gestioneEsitiCreditCheck trigger --> orderMapNew : ' + JSON.serializePretty(orderMapNew));
+        system.debug('gestioneEsitiCreditCheck trigger --> orderListcreditCheckPhaseManager : ' + JSON.serializePretty(orderListcreditCheckPhaseManager));
+        
         HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
         if(!orderListcreditCheckPhaseManager.isEmpty()){
             creditCheckPhaseManager(orderListcreditCheckPhaseManager);                     
