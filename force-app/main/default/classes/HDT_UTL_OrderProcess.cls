@@ -85,10 +85,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             for (Order oldOrder : oldOrdersList) {
                 if (newOrder.SignedDate__c != oldOrder.SignedDate__c && (newOrder.WizardCompletedDate__c != null || newOrder.WizardCompletedDate__c != oldOrder.WizardCompletedDate__c) && newOrder.Status != 'Annullato' ) {
                     Order orderToUpdate = new Order();
-                    orderToUpdate.id = newOrder.Id;                    
-                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(newOrder);
+                    orderToUpdate.id = newOrder.Id;                                        
                     orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);                 
                     orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(newOrder);                                                      
+                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(newOrder);
                     orderList.add(orderToUpdate);                    
                 }
             }
@@ -251,26 +251,32 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         for (Integer i = 0; i<newOrdersList.size(); i++) {
             Order newOrder = newOrdersList[i];
-            Order oldOrder = oldOrdersList[i];
-            if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
-                    
-                if(newOrder.CreditCheckDescription__c == 'KO Precedente Cliente' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
-                    // cliente uscente
-                    orderListOldCustomer.add(newOrder);
+            Order oldOrder = oldOrdersList[i];   
+            if((newOrder.RecordType.DeveloperName == 'HDT_RT_VAS' && newOrder.OrderReferenceNumber != null && newOrder.ContractReference__c != null) || newOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' || newOrder.RecordType.DeveloperName == 'HDT_RT_Subentro' || newOrder.RecordType.DeveloperName == 'HDT_RT_AttivazioneConModifica' || newOrder.RecordType.DeveloperName == 'HDT_RT_SwitchIn' || newOrder.RecordType.DeveloperName == 'HDT_RT_ConnessioneConAttivazione' || newOrder.RecordType.DeveloperName == 'HDT_RT_TemporaneaNuovaAtt'){             
+                if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
+                        
+                    if(newOrder.CreditCheckDescription__c == 'KO Precedente Cliente' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
+                        // cliente uscente
+                        orderListOldCustomer.add(newOrder);
+                    }
+                    if(newOrder.CreditCheckDescription__c != 'KO Precedente Cliente' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
+                        // cliente entrante
+                        orderListNewCustomer.add(newOrder);
+                    }                                      
                 }
-                if(newOrder.CreditCheckDescription__c != 'KO Precedente Cliente' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
-                    // cliente entrante
-                    orderListNewCustomer.add(newOrder);
-                }                                      
-            }
-            if(oldOrder.IncomingCreditCheckResult__c.contains('KO') && newOrder.IncomingCreditCheckResult__c.contains('OK')){
-                orderListcreditCheckPhaseManager.add(newOrder);
+                if((oldOrder.IncomingCreditCheckResult__c!=null && oldOrder.IncomingCreditCheckResult__c.contains('KO')) && (newOrder.IncomingCreditCheckResult__c != null && newOrder.IncomingCreditCheckResult__c.contains('OK'))){
+                    orderListcreditCheckPhaseManager.add(newOrder);
+                }
             }
 
         }
 
         orderMapNew.put('oldCustomer',orderListOldCustomer);
-        orderMapNew.put('newCustomer',orderListNewCustomer);        
+        orderMapNew.put('newCustomer',orderListNewCustomer);   
+        
+        system.debug('gestioneEsitiCreditCheck trigger --> orderMapNew : ' + JSON.serializePretty(orderMapNew));
+        system.debug('gestioneEsitiCreditCheck trigger --> orderListcreditCheckPhaseManager : ' + JSON.serializePretty(orderListcreditCheckPhaseManager));
+        
         HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
         if(!orderListcreditCheckPhaseManager.isEmpty()){
             creditCheckPhaseManager(orderListcreditCheckPhaseManager);                     
