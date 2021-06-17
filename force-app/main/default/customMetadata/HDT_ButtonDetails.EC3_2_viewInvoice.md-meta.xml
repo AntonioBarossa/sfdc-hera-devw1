@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>TD pareggio</label>
+    <label>Visualizza Fattura</label>
     <protected>false</protected>
     <values>
-        <field>ColumnOrder__c</field>
-        <value xsi:type="xsd:double">12.0</value>
+        <field>ButtonCode__c</field>
+        <value xsi:type="xsd:string">viewInvoice</value>
     </values>
     <values>
-        <field>FieldName__c</field>
-        <value xsi:type="xsd:string">tdPareggio</value>
+        <field>ButtonLevel__c</field>
+        <value xsi:type="xsd:string">2</value>
     </values>
     <values>
-        <field>InitialWidth__c</field>
-        <value xsi:type="xsd:double">150.0</value>
+        <field>ButtonOrder__c</field>
+        <value xsi:type="xsd:double">2.0</value>
     </values>
     <values>
-        <field>IsFilter__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <field>ButtonType__c</field>
+        <value xsi:type="xsd:string">lwcmethod</value>
     </values>
     <values>
         <field>IsVisible__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
-        <field>Sortable__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <field>Parameters__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Tab__c</field>
-        <value xsi:type="xsd:string">EC</value>
+        <value xsi:type="xsd:string">EC3</value>
     </values>
 </CustomMetadata>

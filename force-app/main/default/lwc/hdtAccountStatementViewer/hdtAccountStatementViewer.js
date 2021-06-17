@@ -672,6 +672,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                        this.handleMulesoftResponse(obj);
                    }
 
+                   this.refreshSecondLevelToChild();
+
                 } else {
                     this.showError = true;
                     this.showErrorMessage = result.message;
@@ -1152,14 +1154,26 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
      
     }
 
-    //refreshSecondLevel(){
-    //    console.log('# refreshSecondLevel #');
-    //    var a = [];
-    //    this.secondLevelList.forEach((i) => {
-    //        a.push(i);
-    //    });
-    //    this.secondLevelList = a;
-    //}
+    refreshSecondLevelToChild(){
+        this.template.querySelector("c-hdt-account-statement-detail-viewer").removeFilterFromParent();
+    }
+
+    refreshSecondLevel(){
+        console.log('# refreshSecondLevel #');
+        try {
+            if(this.secondLevelList != undefined && this.secondLevelList.length > 0){
+                var a = [];
+                this.secondLevelList.forEach((i) => {
+                    a.push(i);
+                });
+                this.secondLevelList = a;
+            }
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
+        }
+    }
 
     modalResponse(event){
         if(event.detail.decision === 'conf'){
@@ -1435,6 +1449,26 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         } catch(e){
             console.log('>>>>>> flop ');
         }        
+    }
+
+    removeAllData(){
+        this.allData = [];
+        this.accountData = [];
+        console.log('# refreshSecondLevel #');
+        try {
+            if(this.secondLevelList != undefined && this.secondLevelList.length > 0){
+                var a = [];
+                this.secondLevelList = a;
+            }
+
+            this.totRecs = 0;
+            this.setPages(0);
+
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
+        }
     }
 
 }
