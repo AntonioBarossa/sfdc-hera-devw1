@@ -18,10 +18,10 @@
 @isTest 
 public class HDT_UTL_FormatTextScriptTest {
 
- 
+  
     @isTest public static void testScriptWithDataBinding(){
-        Id processTypeId = ((SObject)Type.forName('Schema','ScriptConfig__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Processo').getRecordTypeId();
-        ScriptConfig__c config = new ScriptConfig__c(Name='my Script', RecordTypeId=processTypeId);
+        //Id processTypeId = ((SObject)Type.forName('Schema','ScriptConfig__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Processo').getRecordTypeId();
+        ScriptConfig__c config = new ScriptConfig__c(Name='my Script', ScriptType__c='Processo');
         insert config;
         ScriptConfig__c configChild = new ScriptConfig__c(Name='my ChildScript', ParentSection__c=config.id);
         insert configChild;
@@ -42,8 +42,8 @@ public class HDT_UTL_FormatTextScriptTest {
     }
 
     @isTest public static void testScriptWithoutDataBinding(){
-        Id processTypeId = ((SObject)Type.forName('Schema','ScriptConfig__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Processo').getRecordTypeId();
-        ScriptConfig__c config = new ScriptConfig__c(Name='my Script', RecordTypeId=processTypeId);
+        //Id processTypeId = ((SObject)Type.forName('Schema','ScriptConfig__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Processo').getRecordTypeId();
+        ScriptConfig__c config = new ScriptConfig__c(Name='my Script', ScriptType__c='Processo');
         insert config;
         ScriptConfig__c configChild = new ScriptConfig__c(Name='my ChildScript', ParentSection__c=config.id);
         insert configChild;
@@ -60,8 +60,8 @@ public class HDT_UTL_FormatTextScriptTest {
     }
 
     @isTest public static void testScriptExceptionHandler(){
-        Id processTypeId = ((SObject)Type.forName('Schema','ScriptConfig__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Processo').getRecordTypeId();
-        ScriptConfig__c config = new ScriptConfig__c(Name='my Script', RecordTypeId=processTypeId);
+        //Id processTypeId = ((SObject)Type.forName('Schema','ScriptConfig__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Processo').getRecordTypeId();
+        ScriptConfig__c config = new ScriptConfig__c(Name='my Script', ScriptType__c='Processo');
         insert config;
         ScriptConfig__c configChild = new ScriptConfig__c(Name='my ChildScript');
         insert configChild;
@@ -74,7 +74,7 @@ public class HDT_UTL_FormatTextScriptTest {
             system.assertEquals(e.getTypeName(), 'HDT_UTL_FormatTextScript.HDT_UTL_FormatTextScriptException');
         }
         system.debug('CPU TIME: '+Limits.getCpuTime());
-	} 
+	}
 
     
 }

@@ -22764,6 +22764,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ScriptConfig__c.ScriptType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ScriptConfig__c.SectionLabel__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -42,7 +42,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
     }
 
     private List<HDT_WRP_ScriptOutput> getScriptTextPages(String processName, String recordId){
-        ScriptConfig__c process = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' WITH SECURITY_ENFORCED LIMIT 1 ];
+        ScriptConfig__c process = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED LIMIT 1 ];
 
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
         system.debug('fields to query '+allFieldsToQuery);

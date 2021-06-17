@@ -7,11 +7,11 @@
     <lookupFilter>
         <active>true</active>
         <errorMessage>Value doesn&apos;t match field criteria: 
-Record Type Script = Processo</errorMessage>
+Type Script = Processo</errorMessage>
         <filterItems>
-            <field>ScriptConfig__c.RecordType.DeveloperName</field>
+            <field>ScriptConfig__c.ScriptType__c</field>
             <operation>equals</operation>
-            <value>HDT_RT_Processo</value>
+            <value>Processo</value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>

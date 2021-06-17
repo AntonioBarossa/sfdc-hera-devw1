@@ -1,8 +1,8 @@
 @isTest public class HDT_LC_HdtScriptManagementModalTest {
 
     @TestSetup static void makeData(){
-        Id processTypeId = ((SObject)Type.forName('Schema','ScriptConfig__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Processo').getRecordTypeId();
-        ScriptConfig__c process = new ScriptConfig__c(Name='my Script', RecordTypeId=processTypeId, contextObject__c='Script');
+        //Id processTypeId = ((SObject)Type.forName('Schema','ScriptConfig__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Processo').getRecordTypeId();
+        ScriptConfig__c process = new ScriptConfig__c(Name='my Script', ScriptType__c='Processo', contextObject__c='Script');
         insert process;
         List<ScriptConfig__c> sections = new List<ScriptConfig__c>();
 
@@ -50,12 +50,12 @@
         
     }
     @isTest public static void testScriptPagesWithoutChildIdentifier(){
-        ScriptConfig__c process = [select Name from ScriptConfig__c where RecordType.DeveloperName='HDT_RT_Processo'];
+        ScriptConfig__c process = [select Name from ScriptConfig__c where ScriptType__c='Processo'];
         HDT_LC_HdtScriptManagementModal.getScriptSections(process.name, process.id, '');
         List<HDT_LC_HdtScriptManagementModal.HDT_WRP_ScriptOutput>
             output=HDT_LC_HdtScriptManagementModal.getScriptSections(process.name, process.id, 'name');
         system.assertEquals(3, output.size());
-    }
+    } 
     
     
 }
