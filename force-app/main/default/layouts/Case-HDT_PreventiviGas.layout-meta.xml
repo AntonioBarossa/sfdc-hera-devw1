@@ -87,10 +87,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Taxes__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>ExpectedExecutionTime__c</field>
             </layoutItems>
         </layoutColumns>
@@ -148,6 +144,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Distributor__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ShipmentAddressAssign__c</field>
             </layoutItems>
             <layoutItems>
@@ -156,10 +156,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PointToConnect__c</field>
+                <field>TaxRate__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PointToConnect__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Disconnectable__c</field>
@@ -167,6 +171,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>DisconnectibilityType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Taxes__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

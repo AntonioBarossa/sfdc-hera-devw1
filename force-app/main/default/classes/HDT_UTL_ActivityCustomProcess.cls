@@ -94,7 +94,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                     activity.Account__c = order.AccountId; 
                 }
         
-                activity.CreditCheckReason__c = order.CreditCheckDescription__c;
+                //activity.CreditCheckReason__c = order.CreditCheckDescription__c;
                 activity.Order__c = order.Id;                
                 activity.Contact__c = order.Contact__c;                                
                 activity.Status__c = 'Creata';                
@@ -168,13 +168,16 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                     actListToRecheck.add(act);
                     listOrderBadPayer.add(act.Order__c);
                 } 
+                
                 // ko uscente e poi ok . chiudere l'activity e rimandare il credict check
+                // da portare al trigger dell'ordine
                 if(act.RecordType.DeveloperName == 'HDT_RT_KoPrecedeteCliente' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK'){
                     actListToUpdate.add(closeActivityCheck(act));
                     actListToRecheck.add(act);
                 }
 
                 //ko entrante poi ok con causale "Saldo debito cattivo pagatore" verficare l'activity e riportare esito e causale su activity e sbiancare l'esito su order e reinviare la chiamata
+                // da portare al trigger dell'ordine
                 if(act.RecordType.DeveloperName == 'HDT_RT_CreditCheckKO' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && act.CreditCheckReason__c == 'Saldo debito cattivo pagatore'){                    
                     actListToUpdate.add(closeActivityCheck(act));
                     actListToRecheck.add(act);
@@ -182,6 +185,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                     
                 }
                 // in altri casi in cui arriva un ok chiudere l'activity ma non mandare la chiamata a sap
+                // da portare al trigger dell'ordine
                 if(act.RecordType.DeveloperName != 'HDT_RT_KoPrecedeteCliente' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && act.CreditCheckReason__c != 'Saldo debito cattivo pagatore'){
                     actListToUpdate.add(closeActivityCheck(act));                     
                     recheck = false;
