@@ -9,7 +9,7 @@
  * -----
  */
 
-public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_FormatTextScript {
+public inherited sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_FormatTextScript {
 
     String childRecordIdentifier='';//Add an Header Identifier to childs sections
 
