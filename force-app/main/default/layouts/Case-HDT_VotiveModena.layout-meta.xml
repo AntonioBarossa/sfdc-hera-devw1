@@ -61,6 +61,10 @@
                 <behavior>Readonly</behavior>
                 <field>Description</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>BillingProfile__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -136,6 +140,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Origin</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CreatorGroup__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Station__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
