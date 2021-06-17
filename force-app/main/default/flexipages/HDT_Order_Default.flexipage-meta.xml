@@ -32,8 +32,12 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>createQuickActionName</name>
+                    <value>NewContact</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>lookupFieldName</name>
-                    <value>Order.BillToContactId</value>
+                    <value>Order.Contact__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>updateQuickActionName</name>
@@ -187,29 +191,10 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>Order.HDT_ValidazioneDocumentale</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>In attesa validazione</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>CONTAINS</operator>
-                                    <rightValue>HDT_RT_Voltura</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>CustomButton.Order.HDT_InfoTracking</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Order.Validazione_Documenti</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CustomButton.Order.HDT_RiprendiProcesso</value>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Order.HDT_Ripensamento</value>
@@ -295,6 +280,10 @@
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
                     <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numVisibleActions</name>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>

@@ -37,7 +37,7 @@
         <name>Assegna_Process_Type</name>
         <label>Assegna Process Type</label>
         <locationX>850</locationX>
-        <locationY>2894</locationY>
+        <locationY>3014</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +53,7 @@
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
         <locationX>1378</locationX>
-        <locationY>2894</locationY>
+        <locationY>3014</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -69,7 +69,7 @@
         <name>Assegna_Process_Type_0_0</name>
         <label>Assegna Process Type</label>
         <locationX>1114</locationX>
-        <locationY>2894</locationY>
+        <locationY>3014</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -79,6 +79,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Screen_Seconda_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaCollection</name>
+        <label>AssegnaCollection</label>
+        <locationX>182</locationX>
+        <locationY>2270</locationY>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>GetInputCaseAggiornato</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>getCaseReiterato</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCaseCollection</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -116,29 +139,15 @@
                 <elementReference>IdContenitore</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>CaseCollection</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>GetInputCaseAggiornato</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>CaseCollection</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>getCaseReiterato</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>AggiornaCaseCollection</targetReference>
+            <targetReference>AssegnaCollection</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssegnaValori_2</name>
         <label>AssegnaValori</label>
         <locationX>960</locationX>
-        <locationY>3926</locationY>
+        <locationY>4046</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -292,7 +301,7 @@
         <name>Avanzamento_0_0</name>
         <label>Avanzamento</label>
         <locationX>1114</locationX>
-        <locationY>3230</locationY>
+        <locationY>3350</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0</targetReference>
         </defaultConnector>
@@ -324,7 +333,7 @@
         <name>Blocco_Sollecito_0</name>
         <label>Blocco Sollecito? (Fixare al completamento della build DM)</label>
         <locationX>960</locationX>
-        <locationY>3470</locationY>
+        <locationY>3590</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_2</targetReference>
         </defaultConnector>
@@ -456,7 +465,7 @@
         <name>Reclamo_Scritto_Richiesta_Info</name>
         <label>Reclamo Scritto/Richiesta Info?</label>
         <locationX>1114</locationX>
-        <locationY>2774</locationY>
+        <locationY>2894</locationY>
         <defaultConnector>
             <targetReference>Assegna_Process_Type_0</targetReference>
         </defaultConnector>
@@ -588,7 +597,7 @@
         <name>Crea_Activity_Blocco_Sollecito</name>
         <label>Crea Activity Blocco Sollecito</label>
         <locationX>828</locationX>
-        <locationY>3710</locationY>
+        <locationY>3830</locationY>
         <connector>
             <targetReference>AssegnaValori_2</targetReference>
         </connector>
@@ -721,7 +730,7 @@
         <name>GetActivityBloccoSollecito</name>
         <label>Get Activity Blocco Sollecito</label>
         <locationX>828</locationX>
-        <locationY>3590</locationY>
+        <locationY>3710</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Blocco_Sollecito</targetReference>
@@ -749,7 +758,7 @@
         <name>GetCaseAggiornatoSecondaClassificazione</name>
         <label>GetCaseAggiornatoSecondaClassificazione</label>
         <locationX>960</locationX>
-        <locationY>3350</locationY>
+        <locationY>3470</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Blocco_Sollecito_0</targetReference>
@@ -812,7 +821,7 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>960</locationX>
-        <locationY>4046</locationY>
+        <locationY>4166</locationY>
         <inputReference>GetCaseAggiornatoSecondaClassificazione</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -849,7 +858,7 @@
         <name>AggiornaCaseCollection</name>
         <label>AggiornaCaseCollection</label>
         <locationX>182</locationX>
-        <locationY>2270</locationY>
+        <locationY>2390</locationY>
         <connector>
             <targetReference>Reclamo_Scritto_Richiesta_Info</targetReference>
         </connector>
@@ -961,7 +970,7 @@
         </connector>
         <fields>
             <name>AddSollecito</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCaseAggiornato.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(62, 62, 60);&quot;&gt;Alla pressione del taso &quot;Conferma Pratica&quot; &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(62, 62, 60);&quot;&gt;verrà inserito un &lt;/span&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(62, 62, 60);&quot;&gt;sollecito&lt;/b&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(62, 62, 60);&quot;&gt; sul Case &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;{!GetInputCaseAggiornato.RelatedCase__r.CaseNumber} &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;mentre il presente Case &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;{!Get_Input_Case.CaseNumber}&lt;/b&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt; verrà &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;Annullato&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCaseAggiornato.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;Alla pressione del tasto &quot;Conferma Pratica&quot; &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;verrà inserito un &lt;/span&gt;&lt;b style=&quot;color: rgb(62, 62, 60); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;sollecito&lt;/b&gt;&lt;span style=&quot;color: rgb(62, 62, 60); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt; sul Case &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;{!GetInputCaseAggiornato.RelatedCase__r.CaseNumber} &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;mentre il presente Case &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;{!Get_Input_Case.CaseNumber}&lt;/b&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt; verrà &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;Annullato&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -989,7 +998,7 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
-                    <stringValue>Annulla</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1152,7 +1161,7 @@
         <name>Screen_Seconda_Classificazione</name>
         <label>Screen Seconda Classificazione</label>
         <locationX>1114</locationX>
-        <locationY>3110</locationY>
+        <locationY>3230</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1260,7 +1269,7 @@
             <targetReference>Get_Input_Case</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
@@ -1340,7 +1349,7 @@
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1268</locationX>
-        <locationY>3350</locationY>
+        <locationY>3470</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

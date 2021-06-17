@@ -429,12 +429,14 @@ export default class HdtAccountStatementPicker extends LightningElement {
         var amount = 0.0;
         var amountFee = 0.0;
 
-        documents.forEach(document =>{
-            console.log('#CalculateAmount: Residue__c -> ' + document.DocumentResidue__c);
-            console.log('#CalculateAmount: TvFeeResidual__c -> ' + document.TvFeeResidual__c);
-            amount += document.DocumentResidue__c;
-            amountFee += document.TvFeeResidual__c;
-        });
+        if(documents){
+            documents.forEach(document =>{
+                console.log('#CalculateAmount: Residue__c -> ' + document.DocumentResidue__c);
+                console.log('#CalculateAmount: TvFeeResidual__c -> ' + document.TvFeeResidual__c);
+                amount += document.DocumentResidue__c;
+                amountFee += document.TvFeeResidual__c;
+            });
+        }
 
         console.log('#CalculateAmount: amount -> ' + amount);
         console.log('#CalculateAmount: amountFee -> ' + amountFee);
