@@ -98,6 +98,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.RequestPhase__c = servicePoint.RequestPhase__c;
         orderToUpdate.PowerRequested__c = servicePoint.PowerRequested__c;
         orderToUpdate.EnergyService__c = 'No';
+        orderToUpdate.LiftingPeople__c = 'No';
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
