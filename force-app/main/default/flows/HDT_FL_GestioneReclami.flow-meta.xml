@@ -702,6 +702,12 @@
                 <elementReference>Get_Input_Case.SuppliedPhone</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Reclamo Scritto/Rich. Info</stringValue>
+            </value>
+        </inputAssignments>
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
