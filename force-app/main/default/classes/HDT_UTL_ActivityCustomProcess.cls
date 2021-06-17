@@ -94,7 +94,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                     activity.Account__c = order.AccountId; 
                 }
         
-                //activity.CreditCheckReason__c = order.CreditCheckDescription__c;
+                activity.CreditCheckReason__c = order.CreditCheckDescription__c;
                 activity.Order__c = order.Id;                
                 activity.Contact__c = order.Contact__c;                                
                 activity.Status__c = 'Creata';                

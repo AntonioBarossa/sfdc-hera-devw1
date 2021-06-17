@@ -65,7 +65,8 @@ public with sharing class HDT_UTL_SwtichInProcess {
                 }
             
             }else{
-                dateSentToSii = date.today();    
+                dateSentToSii = Date.valueOf(date.today());      
+                
                 /*
                 La data invio richiesta al SII deve essere ricalcolata nel caso in cui il sistema riceva degli esiti di rilavorazione.  
                 Alla rilavorazione, la data di invio richiesta deve assumere la data di rilavorazione della richiesta (la data di ultimo aggiornamento fase).  
@@ -96,14 +97,19 @@ public with sharing class HDT_UTL_SwtichInProcess {
         // }
         // Fine Questa parte è da definire con Ravicini per il campo isReseller
 
+        Date dateToSii = getDateSentToSii(order);
+        //Date dateToSii_tmp = date.valueof(dateToSii.format('yyyy-MM-dd'));
+        
         system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - OriginMarket__c: ' + order.MarketOrigin__c );
         system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - Commodity__c: ' + order.ServicePoint__r.CommoditySector__c  );
         system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - VoltageLevel__c: ' + order.VoltageLevel__c);
         system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - SupplyType__c: ' + order.SupplyType__c );
-        system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - DateSentToSII: ' + getDateSentToSii(order));
+        system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - DateSentToSII: ' + dateToSii);
         system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - Account: ' + order.Account);
+
+
         if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
-            
+
             List<HDT_FulfillmentDateMatrix__c> afterthoughtDays = [
                                                                     SELECT ActivationDate__c 
                                                                     FROM HDT_FulfillmentDateMatrix__c 
@@ -112,10 +118,14 @@ public with sharing class HDT_UTL_SwtichInProcess {
                                                                             AND VoltageLevel__c =: order.VoltageLevel__c 
                                                                             AND ProcessType__c = :processType
                                                                             AND SupplyType__c =: order.SupplyType__c 
-                                                                            AND (FulfillmentDateFrom__c <=: getDateSentToSii(order) AND FulfillmentDateTo__c >=: getDateSentToSii(order))
+                                                                            AND (FulfillmentDateFrom__c <=: dateToSii AND FulfillmentDateTo__c >=: dateToSii)
                                                                             WITH SECURITY_ENFORCED
                 ];
-            effectiveDateTmp = afterthoughtDays[0].ActivationDate__c;
+            if(!afterthoughtDays.isEmpty()){
+                effectiveDateTmp = afterthoughtDays[0].ActivationDate__c;
+            }else{
+                system.debug('Non sono state trovate occorrenze nella tabella di calcolo della data di adempimento');
+            }
         }
         else{
             if(order.RecessNotice__c == null){
@@ -128,13 +138,13 @@ public with sharing class HDT_UTL_SwtichInProcess {
                         AND VoltageLevel__c =: order.VoltageLevel__c 
                         AND ProcessType__c = :processType 
                         AND SupplyType__c =: order.SupplyType__c 
-                        AND (FulfillmentDateFrom__c <= :getDateSentToSii(order) AND FulfillmentDateTo__c >= :getDateSentToSii(order))
+                        AND (FulfillmentDateFrom__c <= :dateToSii AND FulfillmentDateTo__c >= :dateToSii)
                         WITH SECURITY_ENFORCED
                 ];
 
                 effectiveDateTmp = afterthoughtDays2[0].ActivationDate__c;
             }else{
-                dateDecorrenzaTmp = getDateSentToSii(order).addMonths((Integer)order.RecessNotice__c);
+                dateDecorrenzaTmp = dateToSii.addMonths((Integer)order.RecessNotice__c);
                 effectiveDateTmp = dateDecorrenzaTmp.addMonths(1).toStartofMonth();
             }
         }    
