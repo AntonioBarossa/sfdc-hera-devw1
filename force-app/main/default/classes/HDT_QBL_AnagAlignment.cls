@@ -1,3 +1,4 @@
+// CLASSE DEPRECATA
 public inherited sharing class HDT_QBL_AnagAlignment implements Queueable, Database.AllowsCallouts {
     
     private List<Case> anagAlignCases;

@@ -210,6 +210,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         //INIZIO SVILUPPI EVERIS
         else if(selectedProcess === 'HDT_RT_Voltura'){
+            this.selectedProcess = 'HDT_RT_Voltura';
             this.precheck = true;
             this.compatibilita = true;
             this.causale = '';
