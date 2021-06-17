@@ -28505,6 +28505,9 @@
         <layout>ScorecardMetric-Scorecard Metric Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ScriptConfig__c-HDT Layout BSN</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>ServicePoint__c-Service Point Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
