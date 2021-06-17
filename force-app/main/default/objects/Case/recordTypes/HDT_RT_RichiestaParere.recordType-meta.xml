@@ -7782,6 +7782,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
+        <value>
+            <fullName>In attesa risposta Mail</fullName>
+            <default>false</default>
+        </value>
         <values>
             <fullName>Annullato</fullName>
             <default>false</default>
