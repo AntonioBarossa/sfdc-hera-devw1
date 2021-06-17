@@ -254,12 +254,6 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                 caseRecord.BillingProfile__c = billingProfile.Id;
             }
             caseRecord.ContractAccountCode__c = contoContrattuale;
-            //caseRecord.DocumentExpirationDate__c = dataScadenza;
-            //caseRecord.DocumentResidue__c = Double.valueOf(primolivello.get('residuo'));
-            //caseRecord.DocumentAmount__c = Double.valueOf(primolivello.get('importo'));
-            //caseRecord.Amount__c = Double.valueOf(primolivello.get('importo'));
-            //caseRecord.BillNumber__c = numeroFattura != null? numeroFattura:numeroDocumento;
-            //caseRecord.BillNumber__c = numeroDocumento;
             caseRecord.Id = inputs[0].caseId;
             
             response.caseRecord = caseRecord;
@@ -273,7 +267,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     numeroFattura = (String) primolivello.get('numeroFattura');
                     dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
                     dataScadenza = formatDate((String) primolivello.get('dataScadenza'));
-                    singleDocument.DocumentNumber__c = numeroDocumento;
+                    singleDocument.DocumentNumber__c = numeroFattura != null ? numeroFattura : numeroDocumento;
                     singleDocument.Position1__c = (String) primolivello.get('posizione1');
                     singleDocument.Position2__c = (String) primolivello.get('posizione2');
                     singleDocument.Position3__c = (String) primolivello.get('posizione3');
