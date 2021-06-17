@@ -111,7 +111,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Annullamento - Inviato al DL/SII'{
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 if(previousPhase.indexOf('Ripensamento') >-1){
-                                    nextPhase = nextPhase = 'Ripensamento - Inviato al SII';
+                                    nextPhase = 'Ripensamento - Inviato al SII';
                                 }
                                 ord.Phase__c = nextPhase;
                                 //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
