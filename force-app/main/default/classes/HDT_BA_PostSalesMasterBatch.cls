@@ -3,12 +3,13 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
     public List<SObject> start(Database.BatchableContext bc){
 
+        HDT_QR_PostSalesMasterBatch postsalesQr = new HDT_QR_PostSalesMasterBatch();
+
         List<SObject> scope = new List<SObject>();
 
-        scope.addAll([SELECT ExpirationDate__c 
-        FROM Knowledge__kav 
-        WHERE RecordType.DeveloperName = 'HDT_RT_News' 
-        WITH SECURITY_ENFORCED]);
+
+        scope.addAll(postsalesQr.getExpiredArticle());
+        scope.addAll(postsalesQr.getExpiredCase());
 
         return scope;
 
@@ -24,10 +25,9 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
                 when Knowledge__kav article{
 
-                    if(article.ExpirationDate__c != null
-                    && article.ExpirationDate__c >= System.today()){
+                    if(article.ExpirationDate__c != null){
 
-                        article.PublishStatus = 'Archived';
+                        //ADD PUBLISHMANAGEMENT CLASS TO ARCHIVE
 
                     }
 
@@ -35,7 +35,8 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
                 when Case c{
 
-                    //Case Counters
+                    //CREATE THE ARGS MAP FOR THE EXECUTE METHOD OF WS_PAYMENTS
+                    //CALL THE EXECUTE METHOD
 
                 }
 
