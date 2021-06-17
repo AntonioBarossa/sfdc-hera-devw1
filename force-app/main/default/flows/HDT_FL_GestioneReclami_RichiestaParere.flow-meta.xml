@@ -544,10 +544,45 @@
             <name>Assegnazione</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Parere_Aggiornato.ComunicationMode__c</leftValueReference>
-                <operator>Contains</operator>
+                <leftValueReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</leftValueReference>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>Assegnazione</stringValue>
+                    <stringValue>Costing e Forecasting</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Parere Legale</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Privacy</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Parere Normativo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Vendita diretta</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Vendita indiretta</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -609,7 +644,7 @@
             <name>Reclamo_Scritto_Rich_Info_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <leftValueReference>Get_Input_Case_0.Parent.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Reclamo Scritto/Rich. Info</stringValue>
@@ -987,7 +1022,7 @@
             <inputParameters>
                 <name>variantSaveButton</name>
                 <value>
-                    <stringValue>success</stringValue>
+                    <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
