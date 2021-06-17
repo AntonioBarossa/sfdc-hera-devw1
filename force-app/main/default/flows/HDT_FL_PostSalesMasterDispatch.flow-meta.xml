@@ -3573,6 +3573,12 @@
         <locationY>1910</locationY>
         <flowName>HDT_FL_GestioneFatturazione</flowName>
         <inputAssignments>
+            <name>HasPartiteNonFatturate</name>
+            <value>
+                <elementReference>ManageDocumentsFatturazione_0.hasPartiteNonFatturate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>InputCase</name>
             <value>
                 <elementReference>CaseId</elementReference>

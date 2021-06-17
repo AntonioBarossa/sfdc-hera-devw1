@@ -150,7 +150,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
             List<Object> secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativoF2');
             Map<String, Object> secondoLivello = new Map<String, Object>();
-            if(secondoLivelloList != null){
+            if(secondoLivelloList != null && !secondoLivello.isEmpty()){
                 secondoLivello = (Map<String, Object>) secondoLivelloList[0];
             }
 
