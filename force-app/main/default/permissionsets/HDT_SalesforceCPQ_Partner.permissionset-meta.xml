@@ -25336,7 +25336,6 @@
         <field>wrts_prcgvr__Activity__c.vActivityDurationFormula__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    <hasActivationRequired>false</hasActivationRequired>
     <label>HDT_SalesforceCPQ_Partner</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>

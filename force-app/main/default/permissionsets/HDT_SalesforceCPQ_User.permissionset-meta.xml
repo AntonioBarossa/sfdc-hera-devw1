@@ -26334,7 +26334,6 @@
         <field>wrts_prcgvr__Activity__c.vActivityDurationFormula__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    <hasActivationRequired>false</hasActivationRequired>
     <label>HDT_SalesforceCPQ_User</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>

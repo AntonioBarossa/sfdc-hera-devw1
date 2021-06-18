@@ -15664,7 +15664,6 @@
         <field>User.SBQQ__Theme__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <hasActivationRequired>false</hasActivationRequired>
     <label>HDT_SalesforceCPQ_Admin</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
