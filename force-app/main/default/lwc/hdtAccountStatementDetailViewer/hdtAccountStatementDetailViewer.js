@@ -460,6 +460,8 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                         variant: 'warning'
                     }),
                 );
+                this.filterString = '';
+                this.staticObj = {};
                 return;
             }
             this.setButtonForFilterApplied(true);

@@ -836,15 +836,19 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         let perpage = this.perpage;
         let startIndex = (page * perpage) - perpage;
         let endIndex = (page * perpage);
-        
+
         if(this.filterPagination){
-            this.accountData = this.allDataFiltered.slice(startIndex, endIndex);
-            this.firstLevel = this.allDataFiltered[0];
-            this.secondLevelList = this.allDataFiltered[0][this.detailTable];
+            if(this.allDataFiltered != undefined){
+                this.accountData = this.allDataFiltered.slice(startIndex, endIndex);
+                this.firstLevel = this.allDataFiltered[0];
+                this.secondLevelList = this.allDataFiltered[0][this.detailTable];
+            }
         } else {
-            this.accountData = this.allData.slice(startIndex, endIndex);
-            this.firstLevel = this.accountData[0];
-            this.secondLevelList = this.accountData[0][this.detailTable];
+            if(this.allData != undefined && this.accountData[0] != undefined){
+                this.accountData = this.allData.slice(startIndex, endIndex);
+                this.firstLevel = this.accountData[0];
+                this.secondLevelList = this.accountData[0][this.detailTable];
+            }
         }
 
         this.fromRec = (startIndex == 0) ? 1 : startIndex+1;
@@ -1015,17 +1019,38 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     }
 
-    setButtonForFilterApplied(remove){
+    setButtonForFilterApplied(disable){
         this.template.querySelectorAll('button').forEach(c => {
             if(c.name === 'interrogation' || c.name === 'joinFilter'){
-                if(remove){
+                if(disable){
                     c.setAttribute('disabled', '');
                 } else {
                     c.removeAttribute('disabled');
                 }
             }
+
+            if(c.name === 'refreshRecords'){
+                if(disable){
+                    c.removeAttribute('disabled'); 
+                } else {
+                    c.setAttribute('disabled', '');
+                }
+            }
+
         });
     }
+
+    //setButtonForFilterApplied(remove){
+    //    this.template.querySelectorAll('button').forEach(c => {
+    //        if(c.name === 'interrogation' || c.name === 'joinFilter'){
+    //            if(remove){
+    //                c.setAttribute('disabled', '');
+    //            } else {
+    //                c.removeAttribute('disabled');
+    //            }
+    //        }
+    //    });
+    //}
 
     refreshSortButton(){
         this.template.querySelectorAll('lightning-button-icon').forEach((butIco) => {
@@ -1354,6 +1379,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 but.classList.add('slds-button_brand');
             }            
         });
+        this.setButtonForFilterApplied(false);
     }
 
     setNewChoise(event){
