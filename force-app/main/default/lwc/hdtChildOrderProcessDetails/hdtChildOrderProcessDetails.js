@@ -114,7 +114,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         if(result === 1){
                             this.readingDisabled = false;
                         } else {
-                            this.readingDisabled = false;
+                            this.readingDisabled = true;
                         }
                     }).catch(error => {
                         console.log('Error -> ' +error);
@@ -485,15 +485,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         }).catch(error => {
 
-            /*this.loading = false;
+            this.loading = false;
             console.log((error.body.message !== undefined) ? error.body.message : error.message);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: (error.body.message !== undefined) ? error.body.message : error.message,
-                variant: 'error',
-                mode: 'sticky'
+                variant: 'error'
             });
-            this.dispatchEvent(toastErrorMessage);*/
+            this.dispatchEvent(toastErrorMessage);
 
         });
     }
@@ -745,16 +744,18 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
             console.log('Inside reading condition');
 
-            this.template.querySelector('c-hdt-self-reading').handleSaveButton()
-                .then(result => {
-                    console.log(result);
-                }).catch(error => {
-                    console.log(error);
-                    return;
-                });
+            try{
+                this.template.querySelector('c-hdt-self-reading').handleSaveButton();
+            } catch(e){
+                console.log('Inside Exception');
+                console.log('Here');
+                this.loading = false;
+                return;
+            }
+            //console.log('ResultReading -> ' + result);
 
             console.log('isSavedReading--> '+this.isSavedReading);
-
+            
         }
 
         this.updateProcess(currentSectionIndex, nextSectionStep);
@@ -844,7 +845,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'SignedDate__c',
                         'typeVisibility': this.order.ParentOrder__r.SignedDate__c != null,
                         'required': true,
-                        'disabled': false,
+                        'disabled': true,
                         'value': this.order.ParentOrder__r.SignedDate__c,
                         'processVisibility': ''
                     },
