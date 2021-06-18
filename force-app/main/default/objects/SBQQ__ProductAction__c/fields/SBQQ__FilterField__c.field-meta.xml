@@ -30,37 +30,32 @@
             <value>
                 <fullName>Old__c</fullName>
                 <default>false</default>
-                <label>Old__c</label>
+                <label>Old</label>
             </value>
             <value>
                 <fullName>CategoryFamily__c</fullName>
                 <default>false</default>
-                <label>CategoryFamily__c</label>
-            </value>
-            <value>
-                <fullName>ReferenceMarket__c</fullName>
-                <default>false</default>
-                <label>ReferenceMarket__c</label>
+                <label>Categoria Famiglia Offerta</label>
             </value>
             <value>
                 <fullName>Version__c</fullName>
                 <default>false</default>
-                <label>Version__c</label>
+                <label>Versione</label>
             </value>
             <value>
                 <fullName>Service__c</fullName>
                 <default>false</default>
-                <label>Service__c</label>
+                <label>Servizio</label>
             </value>
             <value>
                 <fullName>TypeOffer__c</fullName>
                 <default>false</default>
-                <label>TypeOffer__c</label>
+                <label>Tipo Offerta</label>
             </value>
             <value>
-                <fullName>DescrizioneSAP__c</fullName>
+                <fullName>Status__c</fullName>
                 <default>false</default>
-                <label>DescrizioneSAP__c</label>
+                <label>Stato</label>
             </value>
         </valueSetDefinition>
     </valueSet>
