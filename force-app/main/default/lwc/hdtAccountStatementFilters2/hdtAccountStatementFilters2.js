@@ -56,8 +56,8 @@ export default class HdtAccountStatementFilters extends LightningElement {
                 this.joinFilterObj.obj4.enable = true;
                 this.joinFilterObj.obj5.enable = true;
                 break;
-            case 'lwcmethod':
-                //
+            case 'filterEc7':
+                this.joinFilterObj.obj2.enable = true;
         }
 
         this.getFieldValues('stepValues', 'StepValues');

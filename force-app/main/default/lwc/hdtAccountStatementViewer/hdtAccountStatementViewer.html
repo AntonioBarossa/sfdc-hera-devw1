@@ -38,6 +38,7 @@
 
     <template if:true={showBillList} >
         <c-hdt-bill-list
+            modal-header={billListHeader}
             onclosemodal={closeModalHandler}
         ></c-hdt-bill-list>
     </template>
@@ -83,6 +84,7 @@
                 <!-- menu buttons -->
                 <div class="slds-col">
                     <div class="slds-button-group" role="group">
+                        <button class="slds-button slds-button_neutral mainbutton" name="refreshRecords" onclick={refreshRecord} disabled >Ripristina</button>
                         <template for:each={confObj} for:item="c">
                             <button
                                 key={c.name}
@@ -253,30 +255,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Interrogazione 
-                    <template if:false={showAccountData} >
-                        <tr>
-                            <td data-label="buttongo">
-                                <div class="slds-truncate slds-form-element" title="filter0">
-                                    <lightning-button-icon icon-name="utility:play"
-                                                           variant="brand"
-                                                           alternative-text="Applica interrogazione"
-                                                           onclick={applyInterrogation}
-                                    ></lightning-button-icon>
-                                </div>
-                            </td>
-
-                            <template iterator:c={columns} >
-                                <td key={c.value.fieldName} style="width: 200px; text-align:center">
-                                   <c-hdt-input-field field={c.value.fieldName} field-type={c.value.detail.type} onsettdvalue={setIntParam} ></c-hdt-input-field>
-                                </td>
-                            </template>
-
-                        </tr>                    
-                    </template>-->
-
-                    <!-- Table to show account statement -->
-                    <!-- <template if:true={showAccountData} iterator:it={accountData} > -->
                     <template iterator:it={accountData} >
                         
                         <tr key={it.value.id} data-id={it.value.id} onclick={handleRowAction} >
