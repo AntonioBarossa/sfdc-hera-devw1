@@ -31,7 +31,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             else if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
                 result = 'HDT_RT_SwitchIn';
             }
-            else if (this.order.ProcessType__c === 'Cambio Offerta') {
+            else if (this.order.ProcessType__c === 'Cambio Offerta Ele' || this.order.ProcessType__c === 'Cambio Offerta Gas') {
                 result = 'HDT_RT_CambioOfferta';
             }
             else if(this.order.SBQQ__Quote__r.IsVAS__c){
@@ -64,7 +64,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 {"label":"SwitchIn","value":"HDT_RT_SwitchIn"}
             ]
         }
-        else if(this.order.ProcessType__c === 'Cambio Offerta'){
+        else if(this.order.ProcessType__c === 'Cambio Offerta Ele' || this.order.ProcessType__c === 'Cambio Offerta Gas'){
             records = [
                 {"label":"Cambio Offerta","value":"HDT_RT_CambioOfferta"}
             ]
@@ -314,7 +314,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.disabledSelectProcess = true;
         }
 
-        if (this.order.ProcessType__c === 'Cambio Offerta') {
+        if (this.order.ProcessType__c === 'Cambio Offerta Ele' || this.order.ProcessType__c === 'Cambio Offerta Gas') {
             this.disabledSelectProcess = true;
         }
         
@@ -360,7 +360,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     getRequest(){
         var typeOfCommodity = this.order.ServicePoint__r.CommoditySector__c;
         var fiscalData = null;
-        if(typeOfCommodity == 'Energia Elettrica'){
+        if(typeOfCommodity == 'Energia Elettrica' || this.selectedProcess === 'HDT_RT_VAS'){
             typeOfCommodity = 'ENERGIAELETTRICA';
         }
         if(typeOfCommodity == 'Gas'){
@@ -383,20 +383,25 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             bpClass:this.order.Account.CustomerMarking__c,
             bpCategory:this.order.Account.Category__c,
             bpType:this.order.Account.CustomerType__c,
-            customerType:"CT0",                                                 //da definire campo SF con business
-            address:this.order.ServicePoint__r.SupplyStreetName__c,
-            municipality:this.order.ServicePoint__r.SupplyCity__c,
-            district:this.order.ServicePoint__r.SupplyProvince__c,
-            postCode:this.order.ServicePoint__r.SupplyPostalCode__c,
+            customerType:"CT0",                                                 //da definire campo SF con business            
             operation:this.order.ProcessType__c,
             companyGroup:"Hera S.p.A.",
             market:this.order.Market__c,
             offerType:this.order.Catalog__c,
             details:[{
-                commodity:typeOfCommodity,
-                annualConsumption:this.order.ServicePoint__r.AnnualConsumptionStandardM3__c // mettere lo standard
+                commodity:typeOfCommodity
             }]		
         }
+
+        if(this.selectedProcess !== 'HDT_RT_VAS'){
+            data["address"] = this.order.ServicePoint__r.SupplyStreetName__c;
+            data["municipality"] = this.order.ServicePoint__r.SupplyCity__c;
+            data["district"] = this.order.ServicePoint__r.SupplyProvince__c;
+            data["postCode"] = this.order.ServicePoint__r.SupplyPostalCode__c;
+
+            data["details"]["annualConsumption"] = this.order.ServicePoint__r.AnnualConsumptionStandardM3__c;
+        }
+        
 
         if(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
             

@@ -51,8 +51,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignServicePointFields(Order orderToUpdate, String servicePointId) {
         
-        servicePointSrv.checkReadAccess('PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        servicePointSrv.checkReadAccess('IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
 
@@ -69,7 +69,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.Resident__c = servicePoint.Resident__c;
         orderToUpdate.RemiCode__c = servicePoint.RemiCode__c;
         orderToUpdate.SupplyCity__c = servicePoint.SupplyCity__c;
-        orderToUpdate.SupplyStreet__c = servicePoint.SupplyStreet__c;
         orderToUpdate.SupplyStreetName__c = servicePoint.SupplyStreet__c;
         orderToUpdate.SupplyStreetNumber__c = servicePoint.SupplyStreetNumber__c;
         orderToUpdate.SupplyPlace__c = servicePoint.SupplyPlace__c;
@@ -99,6 +98,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.RequestPhase__c = servicePoint.RequestPhase__c;
         orderToUpdate.PowerRequested__c = servicePoint.PowerRequested__c;
         orderToUpdate.EnergyService__c = 'No';
+        orderToUpdate.LiftingPeople__c = 'No';
+        orderToUpdate.MeterType__c = servicePoint.MeterType__c;
+        orderToUpdate.IsRemoteManaged__c = servicePoint.IsRemoteManaged__c;
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){

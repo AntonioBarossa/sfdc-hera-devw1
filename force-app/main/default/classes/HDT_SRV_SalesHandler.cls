@@ -39,6 +39,20 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                         
                     }
+
+                    if (mapRequestFields.get('ATTIVITA') != null) {
+                        switch on mapRequestFields.get('ATTIVITA'){
+                            when 'Gestione Switch in Ripristinatorio'{
+                                HDT_UTL_ActivityCustom.createActivityWithParams(new Map<String,String>{
+                                    'RecordTypeDeveloperName' => 'HDT_RT_AttivitaGestionali',
+                                    'Type__c'                 => 'Gestione Switch in Ripristinatorio',
+                                    'ServicePointCode__c'     => mapRequestFields.get('COD_PDR'),
+                                    'FiscalCode__c'           => mapRequestFields.get('CODICE_FISCALE'),
+                                    'VATNumber__c'            => mapRequestFields.get('PIVA')
+                                });
+                            }
+                        }
+                    }
                     
                     if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
                         //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
@@ -71,6 +85,16 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                if( mapRequestFields.get('DES_ERR_AEEG') != null) {
+                                    ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
+                                    ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG');
+                                } else {
+                                    ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                }
+
+                                if (mapRequestFields.get('IMP_PREV_DIST') != null) {
+                                    ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
+                                }
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');

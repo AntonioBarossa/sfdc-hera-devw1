@@ -3,12 +3,13 @@
     <fullName>ContextObject__c</fullName>
     <description>Picklist selezione oggetto di riferimento, contiene una lista di oggetti preconcordata, nelle sezioni lista serve ad identificare il nome della relazione</description>
     <externalId>false</externalId>
+    <inlineHelpText>Oggetto di Partenza dei campi variabili</inlineHelpText>
     <label>Oggetto di Riferimento</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
+        <restricted>false</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
