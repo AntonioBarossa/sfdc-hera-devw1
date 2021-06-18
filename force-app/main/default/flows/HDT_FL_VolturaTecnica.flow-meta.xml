@@ -53,7 +53,7 @@
         <locationX>446</locationX>
         <locationY>518</locationY>
         <assignmentItems>
-            <assignToReference>GetInputCase.EffectiveDateInput__c</assignToReference>
+            <assignToReference>GetInputCase.EffectiveDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>EffectiveDateFormula</elementReference>
