@@ -2,7 +2,6 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
 
     HDT_QR_InstallmentPlans installmentsQr = new HDT_QR_InstallmentPlans();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
-    HDT_QR_Payments paymentsQr = new HDT_QR_Payments();
 
 
     @InvocableMethod(label = 'Predefault valori pianoRate')
