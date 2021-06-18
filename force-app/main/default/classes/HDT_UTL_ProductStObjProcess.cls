@@ -43,11 +43,11 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
         statusResponse = new HDT_WRP_ProductStObjProcess.HDT_WRP_StatusResponse();
         statusResponse.success = false;
-        statusResponse.message = 'Cambio stato non consentito';
+        statusResponse.message = Label.HDT_ErrorOnStatus;
 
         if(oldProduct.Status__c == null || newProduct.Status__c == null){
             statusResponse.success = false;
-            statusResponse.message = 'Non puoi inserire questo valore come stato';
+            statusResponse.message = Label.HDT_ErrorOnNullStatus;
             return statusResponse;
         }
 
@@ -70,7 +70,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
                 if(oldProduct.Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger) && techOff == 0){
                     statusResponse.success = false;
-                    statusResponse.message = 'Attenzione, deve essere presente un\'offerta tecnica con relativo codice SAP';
+                    statusResponse.message = Label.HDT_ErrorOnConfirmedTechOff;
                     return statusResponse;
                 }
 
@@ -108,7 +108,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
             if(newStatus.equalsIgnoreCase(confirmed)){
                 statusResponse.success = false;
-                statusResponse.message = 'L\'offerta è ' + confirmed + ', non puoi modificarla';
+                statusResponse.message = Label.HDT_ErrorOnConfirmedEdit;
                 return statusResponse;
             }
 
@@ -118,7 +118,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                     statusResponse.message = 'NoCheckingRequired';
                 } else {
                     statusResponse.success = false;
-                    statusResponse.message = 'Non puoi effettuare questo passaggio manualmente';
+                    statusResponse.message = Label.HDT_ErrorOnManualStatusChange;
                 }
                 return statusResponse;
             }
@@ -146,7 +146,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
             if(newStatus.equalsIgnoreCase(sold)){
                 statusResponse.success = false;
-                statusResponse.message = 'L\'offerta è ' + sold + ', non puoi modificarla';
+                statusResponse.message = Label.HDT_ErrorOnSoldEdit;
                 return statusResponse;
             }
 
@@ -162,7 +162,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                     statusResponse.message = 'NoCheckingRequired';
                 } else {
                     statusResponse.success = false;
-                    statusResponse.message = 'Non puoi effettuare questo passaggio manualmente';
+                    statusResponse.message = Label.HDT_ErrorOnManualStatusChange;
                 }
                 return statusResponse;
             }
@@ -186,7 +186,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
             if(newStatus.equalsIgnoreCase(canceled)){
                 statusResponse.success = false;
-                statusResponse.message = 'L\'offerta è ' + canceled + ', non puoi modificarla';
+                statusResponse.message = Label.HDT_ErrorOnCanceledEdit;
                 return statusResponse;
             }
 
@@ -288,25 +288,25 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
         if(startDate == null){
             resp.add('KO');
-            resp.add('Devi inserire una data inizio');
+            resp.add(Label.HDT_ErrorOnStartDate);
             return resp;
         }
 
         if(endDate == null){
             resp.add('KO');
-            resp.add('Devi inserire una data fine');
+            resp.add(Label.HDT_ErrorOnEndDate);
             return resp;
         }
 
         if(startDate <= Date.today()){
             resp.add('KO');
-            resp.add('La data inizio deve essere maggiore della data attuale');
+            resp.add(Label.HDT_ErrorOnDateDiff1);
             return resp;
         }
 
         if(startDate >= endDate){
             resp.add('KO');
-            resp.add('La data fine non può essere inferiore a quella di fine');
+            resp.add(Label.HDT_ErrorOnDateDiff2);
             return resp;
         }
 

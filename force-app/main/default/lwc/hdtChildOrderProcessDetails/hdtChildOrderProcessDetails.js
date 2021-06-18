@@ -5,6 +5,7 @@ import updateProcessStep from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.
 import updateOrder from '@salesforce/apex/HDT_LC_SelfReading.updateOrder';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import  voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck';
 
 import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
 //FINE SVILUPPI EVERIS
@@ -60,6 +61,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track outputFieldObj = {};
     @track isVolture;
     @track isReading;
+    @track readingDisabled = false;
     //FINE SVILUPPI EVERIS
 
     sysdate(){
@@ -102,7 +104,24 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
 
     handleSectionDataToSubmitCollection(event){
-        
+        //EVERIS
+        if(event.target.fieldName === 'EffectiveDate__c' && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+            if(this.readingDisabled || this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0){
+                console.log('EffectiveDateValue -> ' + event.target.value);
+                voltureEffectiveDateCheck({effectiveDate: event.target.value})
+                    .then(result => {
+                        console.log('Result -> '+result);
+                        if(result === 1){
+                            this.readingDisabled = false;
+                        } else {
+                            this.readingDisabled = false;
+                        }
+                    }).catch(error => {
+                        console.log('Error -> ' +error);
+                    });
+            }
+        }
+        //EVERIS
         if(event.target.fieldName !== undefined){
             this.sectionDataToSubmit[event.target.fieldName] = event.target.value;
         }
@@ -2778,6 +2797,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('IsVolture--> '+this.isVolture);
         console.log('ConfirmedSteps--> '+this.confirmedSteps);
         console.log('Details Callback End');
+        console.log('CommoditySector -> ' + this.order.ServicePoint__r.CommoditySector__c)
+        this.readingDisabled = (this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
+        console.log(this.readingDisabled);
         //EVERIS
     }
 

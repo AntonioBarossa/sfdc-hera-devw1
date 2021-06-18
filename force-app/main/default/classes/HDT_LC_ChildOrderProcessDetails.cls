@@ -58,6 +58,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
                 order.Subprocess__c = 'Con Autolettura';
 
+            } else if(order.VoltureType__c == ''){
+                //TODO ADD ERROR ON GAS VALUES IF ELE
             }
 
             if(readingDate != null && (isReading != null && isReading == true)){
@@ -108,4 +110,23 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         }
     }
     // @END Alessio Murru Credit Check 07.06.21   
+
+    //EVERIS
+    @AuraEnabled
+    public static Integer voltureEffectiveDateCheck(Date effectiveDate){
+
+        Integer successResult = 1;
+        Integer failResult = 0;
+        Integer result;
+
+        if(effectiveDate < orderSrv.addBusinessDay(System.today(),3) && (FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva'))){
+            result = successResult;
+        } else {
+            result = failResult;
+        }
+
+        return result;
+
+    }
+    //EVERIS
 }

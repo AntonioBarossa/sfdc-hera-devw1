@@ -586,7 +586,7 @@
         <defaultConnectorLabel>No Activity</defaultConnectorLabel>
         <rules>
             <name>Creazione_Activity</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>getCaseAggiornato.CausalIncorrectBehavior__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -599,6 +599,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Volontà estorta</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getCaseAggiornato.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Bozza</stringValue>
                 </rightValue>
             </conditions>
             <connector>

@@ -116,6 +116,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
                 updateAnagAlignmentCaseCustomerData(anagAlignCase);
                 anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+                anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
 
                 for (String field : dataEnrichmentFields) {
                     anagAlignCase.put(field, tempCase.get(field));
@@ -138,6 +139,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
                 updateAnagAlignmentCaseCustomerData(anagAlignCase);
                 anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+                anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
 
                 for (String field : dataEnrichmentFields) {
                     anagAlignCase.put(field, tempCase.get(field));
@@ -236,6 +238,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         updateAnagAlignmentCaseCustomerData(inputCase);
 
         inputCase.CausalCode__c = causalCodeAnagAlignment(inputCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.SERVICE_CATALOG);
+        inputCase.OperationCode__c = reasonAnagAlignment(inputCase.CausalCode__c);
 
         return HDT_UTL_DatabaseService.updateSObject(inputCase);
     }
@@ -407,6 +410,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         Formula.recalculateFormulas(anagAlignCases);
 
         anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+        anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
         anagAlignCase.Phase__c = 'Da Inviare';
 
         return HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
@@ -491,6 +495,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.Mobile__c = caseContact.MobilePhone != null ? caseContact.MobilePhone : caseContact.Phone;
 
             anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
+            anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
 
             HDT_PEV_AnagAlignment__e event = new HDT_PEV_AnagAlignment__e();
             event.SerializedCase__c = JSON.serialize(anagAlignCase);
@@ -555,4 +560,22 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         return causalCode;
     }
+
+    /**
+     * Calcola il campo MOTIVAZIONE richiesto dal SII. I valori previsti sono i seguenti:
+     * 
+     * 01: Integrazione dati cliente finale;
+     * 02: Correzione errore;
+     * 03: Integrazione dati;
+     * 04: Correzione a seguito di segnalazione da parte del Gestore
+     * 05: Altro
+     */
+    private static String reasonAnagAlignment(String causalCode) {
+        if (causalCode == null) {
+            return '';
+        }
+
+        return causalCode.equals('AGG') ? '01' : '03';
+    }
+
 }

@@ -29,7 +29,7 @@
                         <!-- Contratto -> apre una tabella per selezionare un record su SF -->
                         <div if:true={joinFilterObj.obj1.enable} class="slds-col slds-size_1-of-2">
                             <div class="slds-form-element slds-m-around_x-small slds-m-bottom_small">
-                                <lightning-helptext content="Select the right choice"></lightning-helptext>
+                                <lightning-helptext content={joinFilterObj.obj1.label} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj1.name} >
                                     {joinFilterObj.obj1.label}
                                 </label>
@@ -53,7 +53,7 @@
                         <!-- Conto contrattuale -> apre una tabella per selezionare un record su SF -->
                         <div if:true={joinFilterObj.obj2.enable} class="slds-col slds-size_1-of-2">
                             <div class="slds-form-element slds-m-around_x-small slds-m-bottom_small">
-                                <lightning-helptext content="Select the right choice"></lightning-helptext>
+                                <lightning-helptext content={joinFilterObj.obj2.label} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj2.name} >
                                     {joinFilterObj.obj2.label}
                                 </label>
@@ -76,7 +76,7 @@
                         <!-- Nr. Fattura -->
                         <div if:true={joinFilterObj.obj3.enable} class="slds-col slds-size_1-of-2">
                             <div class="slds-form-element slds-m-around_x-small slds-m-bottom_small">
-                                <lightning-helptext content="Select the right choice"></lightning-helptext>
+                                <lightning-helptext content={joinFilterObj.obj3.label} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj3.name} >
                                     {joinFilterObj.obj3.label}
                                 </label>
@@ -101,7 +101,7 @@
                         <!-- Servizio -->
                         <div if:true={joinFilterObj.obj4.enable} class="slds-col slds-size_1-of-2">
                             <div class="slds-form-element slds-m-around_x-small slds-m-bottom_small">
-                                <lightning-helptext content="Select the right choice"></lightning-helptext>
+                                <lightning-helptext content={joinFilterObj.obj4.label} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj4.name} >
                                     {joinFilterObj.obj4.label}
                                 </label>
@@ -124,7 +124,7 @@
                         <!-- Step di sollecito -->
                         <div if:true={joinFilterObj.obj5.enable} class="slds-col slds-size_1-of-2">
                             <div class="slds-form-element slds-m-around_x-small slds-m-bottom_small">
-                                <lightning-helptext content="Select the right choice"></lightning-helptext>
+                                <lightning-helptext content={joinFilterObj.obj5.label} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj5.name} >
                                     {joinFilterObj.obj5.label}
                                 </label>
