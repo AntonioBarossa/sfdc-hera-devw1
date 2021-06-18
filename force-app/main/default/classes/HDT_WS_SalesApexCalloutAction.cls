@@ -128,6 +128,10 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             } else {
                                                 ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                             }
+
+                                            if (fieldValueResponse.get('IMP_PREV_DIST') != null) {
+                                                ord.EstimateAmount__c = Decimal.valueOf(fieldValueResponse.get('IMP_PREV_DIST'));
+                                            }
                                         }
                                         when 'Esito KO da DL' {
                                             ord.ReasonDL__c = fieldValueResponse.get('TESTO_ERRR');
