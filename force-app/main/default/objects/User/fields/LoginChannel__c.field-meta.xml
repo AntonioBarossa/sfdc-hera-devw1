@@ -8,7 +8,7 @@
     <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
     <valueSet>
-        <restricted>false</restricted>
+        <restricted>true</restricted>
         <valueSetName>HDT_LoginChannel</valueSetName>
     </valueSet>
 </CustomField>
