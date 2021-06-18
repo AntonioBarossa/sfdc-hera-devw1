@@ -2,8 +2,8 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>HDT_CP_CadutaLinea</name>
+        <name>HDT_CP_CadutaLineaChiamataMuta</name>
     </customPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>HDT_CadutaLinea</label>
+    <label>HDT_CadutaLineaChiamataMuta</label>
 </PermissionSet>
