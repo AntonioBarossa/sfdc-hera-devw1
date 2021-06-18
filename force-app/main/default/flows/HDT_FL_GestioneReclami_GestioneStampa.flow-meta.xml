@@ -4,7 +4,7 @@
         <name>Conferma_Indennizzo</name>
         <label>Conferma Indennizzo</label>
         <locationX>182</locationX>
-        <locationY>614</locationY>
+        <locationY>278</locationY>
         <actionName>HDT_SRV_IndemnityConfirmation</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -45,56 +45,10 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
-        <name>Aggiornamento_Fase</name>
-        <label>Aggiornamento Fase</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
-        <assignmentItems>
-            <assignToReference>GetInputCase.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Risposta Inviata - Attesa Rettifica</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetInputCase.ChangePhaseDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Conferma_Indennizzo</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Aggiornamento_Fase_0</name>
-        <label>Aggiornamento Fase</label>
-        <locationX>314</locationX>
-        <locationY>398</locationY>
-        <assignmentItems>
-            <assignToReference>GetInputCase.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Risposta Inviata</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetInputCase.ChangePhaseDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Conferma_Indennizzo</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assegna_Indennizzo_Confermato</name>
         <label>Assegna Indennizzo Confermato</label>
         <locationX>50</locationX>
-        <locationY>854</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.IndemnityConfirmed__c</assignToReference>
             <operator>Assign</operator>
@@ -110,7 +64,7 @@
         <name>Assegna_Indennizzo_Confermato_0</name>
         <label>Assegna Indennizzo Confermato</label>
         <locationX>314</locationX>
-        <locationY>854</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.IndemnityConfirmed__c</assignToReference>
             <operator>Assign</operator>
@@ -123,32 +77,10 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Diritto_Rettifica</name>
-        <label>Diritto Rettifica?</label>
-        <locationX>182</locationX>
-        <locationY>1430</locationY>
-        <defaultConnectorLabel>Si</defaultConnectorLabel>
-        <rules>
-            <name>No</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>GetCaseAggiornato.CorrectionRight__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>No</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Chiusura_Reclamo</targetReference>
-            </connector>
-            <label>No</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Indennizzo_Confermato</name>
         <label>Indennizzo Confermato?</label>
         <locationX>182</locationX>
-        <locationY>734</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Assegna_Indennizzo_Confermato_0</targetReference>
         </defaultConnector>
@@ -167,45 +99,6 @@
                 <targetReference>Assegna_Indennizzo_Confermato</targetReference>
             </connector>
             <label>Confermato</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Risposta_inviata_o_Attesa_Rettifica</name>
-        <label>Risposta inviata o Attesa Rettifica?</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
-        <defaultConnector>
-            <targetReference>Aggiornamento_Fase_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Risposta Inviata</defaultConnectorLabel>
-        <rules>
-            <name>Attesa_Rettifica</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>GetInputCase.CorrectionRight__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Si</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>GetInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>GetInputCase.IndemnityMotivation__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Aggiornamento_Fase</targetReference>
-            </connector>
-            <label>Attesa Rettifica</label>
         </rules>
     </decisions>
     <description>Flow che simula l&apos;azione del tasto stampa e gestisce l&apos;avanzamento di fase</description>
@@ -234,7 +127,7 @@
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>182</locationX>
-        <locationY>1190</locationY>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Screen_Documentale</targetReference>
@@ -258,7 +151,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Risposta_inviata_o_Attesa_Rettifica</targetReference>
+            <targetReference>Conferma_Indennizzo</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -276,7 +169,7 @@
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>182</locationX>
-        <locationY>1070</locationY>
+        <locationY>734</locationY>
         <connector>
             <targetReference>GetCaseAggiornato</targetReference>
         </connector>
@@ -286,13 +179,10 @@
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
         <locationX>182</locationX>
-        <locationY>1310</locationY>
+        <locationY>974</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Diritto_Rettifica</targetReference>
-        </connector>
         <fields>
             <name>DisplayHeader</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compila manualmente i dati sottostanti&lt;/span&gt;&lt;/p&gt;</fieldText>
@@ -305,13 +195,31 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>nextVariant</name>
                 <value>
                     <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>GetInputCase.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>quoteType</name>
+                <value>
+                    <stringValue>Analtico</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -329,20 +237,6 @@
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Chiusura_Reclamo</name>
-        <label>Chiusura Reclamo</label>
-        <locationX>50</locationX>
-        <locationY>1550</locationY>
-        <flowName>HDT_FL_GestioneReclami_ChiusuraReclamo</flowName>
-        <inputAssignments>
-            <name>InputCase</name>
-            <value>
-                <elementReference>InputCase</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
     <variables>
         <name>IndennizzoNonConfermato</name>
         <dataType>Boolean</dataType>
