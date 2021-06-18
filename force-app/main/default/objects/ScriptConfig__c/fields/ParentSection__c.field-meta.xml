@@ -10,7 +10,7 @@
         <filterItems>
             <field>ScriptConfig__c.ScriptType__c</field>
             <operation>equals</operation>
-            <value>HDT_RT_Processo, Processo, Sezione decisionale</value>
+            <value>Processo, Decisionale</value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>

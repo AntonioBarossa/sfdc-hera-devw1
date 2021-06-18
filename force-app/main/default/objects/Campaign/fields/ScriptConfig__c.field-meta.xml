@@ -3,7 +3,7 @@
     <fullName>ScriptConfig__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Campo Lookup con cui un Utente BSN può associare uno Script Processo ad una campagna</description>
-    <externalId>false</externalId>
+<externalId>false</externalId>
     <label>Script campagna</label>
     <lookupFilter>
         <active>true</active>

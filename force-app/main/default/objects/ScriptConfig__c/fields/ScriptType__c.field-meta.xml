@@ -16,14 +16,14 @@
                 <label>Processo</label>
             </value>
             <value>
-                <fullName>Sezione decisionale</fullName>
+                <fullName>Decisionale</fullName>
                 <default>false</default>
-                <label>Sezione decisionale</label>
+                <label>Decisionale</label>
             </value>
             <value>
-                <fullName>Sezione lista</fullName>
+                <fullName>Lista</fullName>
                 <default>false</default>
-                <label>Sezione lista</label>
+                <label>Lista</label>
             </value>
         </valueSetDefinition>
     </valueSet>
