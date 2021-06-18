@@ -80,6 +80,7 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public String fieldName;
         @AuraEnabled public Boolean sortable;
         @AuraEnabled public Decimal initialWidth;
+        @AuraEnabled public String fieldType;
     }
 
     public class HDT_WRP_ReponseWrapper {

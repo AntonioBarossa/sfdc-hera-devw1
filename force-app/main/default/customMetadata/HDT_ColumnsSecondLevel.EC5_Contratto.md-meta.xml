@@ -11,6 +11,10 @@
         <value xsi:type="xsd:string">contratto</value>
     </values>
     <values>
+        <field>FieldType__c</field>
+        <value xsi:type="xsd:string">text</value>
+    </values>
+    <values>
         <field>InitialWidth__c</field>
         <value xsi:type="xsd:double">150.0</value>
     </values>
