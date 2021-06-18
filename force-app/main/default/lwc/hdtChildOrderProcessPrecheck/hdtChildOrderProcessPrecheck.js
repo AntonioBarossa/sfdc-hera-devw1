@@ -31,7 +31,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             else if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
                 result = 'HDT_RT_SwitchIn';
             }
-            else if (this.order.ProcessType__c === 'Cambio Offerta') {
+            else if (this.order.ProcessType__c === 'Cambio Offerta Ele' || this.order.ProcessType__c === 'Cambio Offerta Gas') {
                 result = 'HDT_RT_CambioOfferta';
             }
             else if(this.order.SBQQ__Quote__r.IsVAS__c){
@@ -64,7 +64,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 {"label":"SwitchIn","value":"HDT_RT_SwitchIn"}
             ]
         }
-        else if(this.order.ProcessType__c === 'Cambio Offerta'){
+        else if(this.order.ProcessType__c === 'Cambio Offerta Ele' || this.order.ProcessType__c === 'Cambio Offerta Gas'){
             records = [
                 {"label":"Cambio Offerta","value":"HDT_RT_CambioOfferta"}
             ]
@@ -314,7 +314,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.disabledSelectProcess = true;
         }
 
-        if (this.order.ProcessType__c === 'Cambio Offerta') {
+        if (this.order.ProcessType__c === 'Cambio Offerta Ele' || this.order.ProcessType__c === 'Cambio Offerta Gas') {
             this.disabledSelectProcess = true;
         }
         

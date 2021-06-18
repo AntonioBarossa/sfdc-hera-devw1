@@ -36,14 +36,14 @@
             <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFirstName__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case_Aggiornato.FirstName__c</elementReference>
+                <elementReference>Get_Case_Aggiornato.Account.FirstName__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryLastName__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case_Aggiornato.LastName__c</elementReference>
+                <elementReference>Get_Case_Aggiornato.Account.LastName__c</elementReference>
             </value>
         </assignmentItems>
         <connector>

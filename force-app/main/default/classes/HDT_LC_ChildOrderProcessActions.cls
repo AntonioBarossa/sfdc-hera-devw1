@@ -51,8 +51,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         // START Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT
                             
                             // START 1 Calcolo Data Max Ripensamento       
-                            try {                             
-                                orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
+                            try { 
+                                if(order.SignedDate__c != null){
+                                    orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
+                                }                                                            
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data massima di ripensamento.');
                             }                                                                 
@@ -64,8 +66,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                                 orderToUpdate.Phase__c = 'In attesa validazione' ;                        
                             }
                 
-                            try {                             
-                                orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                            try {    
+                                if(order.SignedDate__c != null){                         
+                                    orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                                }
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
                             }  
@@ -77,8 +81,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             // END Calcolo data inizio (Data attivazione contratto)
     
                             // START 3 Calcolo Data Decorrenza (EffectiveDate__c)     
-                            try {                             
-                                orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
+                            try {         
+                                if(order.SignedDate__c != null){                    
+                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
+                                }
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
                             }                     
@@ -99,8 +105,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         // START Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT
     
                             // START Calcolo data invio richiesta (Data adempimento).
-                            try {                             
-                                orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                            try {   
+                                if(order.SignedDate__c != null){                          
+                                    orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                                }
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
                             }                                     
@@ -111,8 +119,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             // END Calcolo data inizio (Data attivazione contratto)
                         
                             // START 3 Calcolo Data Decorrenza (EffectiveDate__c) 
-                            try {                             
-                                orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
+                            try {
+                                if(order.SignedDate__c != null){
+                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);    
+                                }                                                             
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
                             }                       
@@ -172,22 +182,23 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Carta d’identità;
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
                     // Documenti relativi alla Legge 80
-                    orderToUpdate.DocumentLow80__c = 'Richiesto';
+                    //orderToUpdate.DocumentLow80__c = 'Richiesto';
                     // Istanza 326
-                    orderToUpdate.Instance326__c = 'Richiesto';
+                    //orderToUpdate.Instance326__c = 'Richiesto';
                     // Accettazione Preventivo rapido.
                     //orderToUpdate.QuickQuote__c = 'Richiesto';
                     orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                 } else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     // Visura camerale
-                    orderToUpdate.ChamberCommerceRegistration__c = 'Richiesto';
-                    // Carta identità
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
+                    //orderToUpdate.ChamberCommerceRegistration__c = 'Richiesto';
+                    // Carta identità
+                    //orderToUpdate.CIAccoutn__c = 'Richiesto';
                     // Accettazione preventivo rapido
                     //orderToUpdate.QuickQuote__c = 'Richiesto';
                     // Istanza 326
-                    orderToUpdate.Instance326__c = 'Richiesto';
-                    orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                    //orderToUpdate.Instance326__c = 'Richiesto';
+                    //orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                 }
                 if(order.RetroactiveDate__c != null){
                     order.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);

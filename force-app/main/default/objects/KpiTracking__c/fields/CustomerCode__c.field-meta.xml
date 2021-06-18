@@ -3,7 +3,7 @@
     <fullName>CustomerCode__c</fullName>
     <caseSensitive>false</caseSensitive>
     <description>External Key per Mulesoft.</description>
-    <externalId>false</externalId>
+    <externalId>true</externalId>
     <label>Codice Cliente</label>
     <length>30</length>
     <required>false</required>

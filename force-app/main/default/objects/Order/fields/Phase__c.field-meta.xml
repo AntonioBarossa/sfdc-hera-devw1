@@ -466,6 +466,11 @@
                 <label>Amm. Precheck OK SII</label>
             </value>
             <value>
+                <fullName>Preventivo scaduto</fullName>
+                <default>false</default>
+                <label>Preventivo scaduto</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

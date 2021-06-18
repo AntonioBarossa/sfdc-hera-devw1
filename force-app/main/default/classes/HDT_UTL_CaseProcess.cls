@@ -4,6 +4,10 @@ public with sharing class HDT_UTL_CaseProcess {
     private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
     private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
 
+    private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
+    private static HDT_SRV_CampaignMember campaignMemberSrv = new HDT_SRV_CampaignMember();
+
+
 
     public static void casePhaseManagementAfterUpdate(List<Case> newCasesList, List<Case> oldCasesList) {
 
@@ -100,5 +104,38 @@ public with sharing class HDT_UTL_CaseProcess {
             Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
         }
     }
+    public static void updateMemberStatusforClosedCases(List<Case> newCasesList, List<Case> oldCasesList) {
+        try{
+            List<Id> closedCaseIds = new List<Id>();
+            Map<String,String> accountIdCase = new Map<String,String> ();
+            Map<String,String> campaignIdCase = new Map<String,String>();
+            for (Case newCase : newCasesList) {
+                if (newCase.IsClosed == true) {
+                    closedCaseIds.add(newCase.Id);
+                    accountIdCase.put(newCase.AccountId, newCase.Id);
+                    campaignIdCase.put(newCase.Campaign__c, newCase.Id);
+                }
+            }
 
+            List<String> accountIds = new List<String>(accountIdCase.keySet());
+            List<String> campaignIds = new List<String>(campaignIdCase.keySet());
+
+            List<CampaignMember> membersToUpdate = new List<CampaignMember>();
+
+            List<CampaignMember> cmembers = campaignMemberQr.getMembersByAccountAndCampaign(accountIds, campaignIds);
+            for (CampaignMember cm : cmembers) {
+                if (accountIdCase.get(cm.Contact.AccountId) == campaignIdCase.get(cm.CampaignId)) {
+                    CampaignMember updateMember = new CampaignMember();
+                    updateMember.Id = cm.Id;
+                    updateMember.Status = 'Positivo';
+                    membersToUpdate.add(updateMember);
+                }
+            }
+        
+			campaignMemberSrv.updateRecords(membersToUpdate);
+		}catch(Exception e)
+		{
+		
+		}
+    }
 }

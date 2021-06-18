@@ -45,8 +45,19 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                     dbr.codiceCliente = tObj.customerCode;
                     dbr.tipoTransazione = tObj.tabCode;
                     dbr.tipoEstrattoConto = 'ORDINARIO';
-                    dbr.dataInizio = convertDateFormat(dbr.dataInizio);
-                    dbr.dataFine = convertDateFormat(dbr.dataFine);
+
+                    if(String.isEmpty(dbr.dataInizio)){
+                        dbr.dataInizio = null;
+                    } else {
+                        dbr.dataInizio = convertDateFormat(dbr.dataInizio);
+                    }
+       
+                    if(String.isEmpty(dbr.dataFine)){
+                        dbr.dataFine = null;
+                    } else {
+                        dbr.dataFine = convertDateFormat(dbr.dataFine);
+                    }
+
                     dbr.numeroFattura = null;
                     dbr.numeroBollettino = dbr.numeroBollettino;
                     dbr.contoContrattuale = null;

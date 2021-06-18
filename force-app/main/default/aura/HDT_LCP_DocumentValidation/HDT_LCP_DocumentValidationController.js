@@ -34,10 +34,11 @@
         // if (CILegalRepresentative == null) {
         //     component.set('v.CILegalRepresentative', false);
         // }
-        // let CIAccoutn = component.find('CIAccoutn').get('v.value');
-        // if (CIAccoutn == null) {
-        //     component.set('v.CIAccoutn', false);
-        // }
+        //EVERIS PER VOLTURA
+        let CIAccoutn = component.find('CIAccoutn').get('v.value');
+         if (CIAccoutn == null) {
+             component.set('v.CIAccoutn', false);
+         }
 
         let QuickQuote = component.find('QuickQuote').get('v.value');
         if (QuickQuote == null) {

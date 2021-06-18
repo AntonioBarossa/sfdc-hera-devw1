@@ -71,6 +71,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                if( mapRequestFields.get('DES_ERR_AEEG') != null) {
+                                    ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
+                                    ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG');
+                                } else {
+                                    ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                }
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
@@ -119,7 +125,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Annullamento - Ammissibilità OK', 'Annullamento - Ammissibilità KO' {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 if(previousPhase.indexOf('Ripensamento') >-1){
-                                    nextPhase.replace('Annullamento', 'Ripensamento');
+                                    nextPhase = nextPhase.replace('Annullamento', 'Ripensamento');
                                 }
                                 ord.Phase__c = nextPhase;
                                 //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
