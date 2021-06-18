@@ -221,13 +221,6 @@
             </value>
         </filters>
         <filters>
-            <field>Subprocess__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetInputCase.Subprocess__c</elementReference>
-            </value>
-        </filters>
-        <filters>
             <field>Commodity__c</field>
             <operator>EqualTo</operator>
             <value>
