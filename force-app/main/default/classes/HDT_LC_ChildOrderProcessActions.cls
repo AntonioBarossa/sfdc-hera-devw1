@@ -200,7 +200,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     //orderToUpdate.Instance326__c = 'Richiesto';
                     //orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                 }
-                if(order.RetroactiveDate__c != null){
+                if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3)){
                     order.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
             }
