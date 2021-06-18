@@ -377,7 +377,31 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>et4ae5__IndividualEmailResult__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>SMSTracking__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>PushTracking__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>Sale__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Status__c</fields>
+        <fields>Reason__c</fields>
+        <fields>Comment__c</fields>
+        <fields>OWNER.ALIAS</fields>
+        <fields>Contact__c</fields>
+        <fields>ProtocolDate__c</fields>
+        <fields>ReceptionDate__c</fields>
+        <fields>OBJECT_ID</fields>
+        <relatedList>Interaction__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
