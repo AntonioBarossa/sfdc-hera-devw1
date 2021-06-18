@@ -87,7 +87,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>VoltureCharge__c</field>
+                <field>Charge__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

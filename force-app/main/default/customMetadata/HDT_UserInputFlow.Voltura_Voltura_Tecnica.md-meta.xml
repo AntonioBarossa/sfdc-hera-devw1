@@ -6,7 +6,7 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;Type&quot;,&quot;Required&quot;:true,&quot;ReadOnly&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;Subprocess__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;VoltureCharge__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1}]</value>
+{&quot;FieldName&quot;:&quot;Charge__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1}]</value>
     </values>
     <values>
         <field>ProcessType__c</field>
