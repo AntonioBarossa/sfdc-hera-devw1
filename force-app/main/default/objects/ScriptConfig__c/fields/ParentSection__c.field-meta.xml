@@ -5,9 +5,18 @@
     <description>Lookup di tipo gerarchico, alla cima della gerarchia c&apos;è lo script con RT &quot;Processo&quot; al quale agganciamo i record script di tipo sezione.</description>
     <externalId>false</externalId>
     <label>Sezione Padre</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>ScriptConfig__c.ScriptType__c</field>
+            <operation>equals</operation>
+            <value>Processo, Decisionale</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>ScriptConfig__c</referenceTo>
-    <relationshipLabel>Configurazione Scripts</relationshipLabel>
-    <relationshipName>Configurazione_Scripts</relationshipName>
+    <relationshipLabel>Scripts Correlati</relationshipLabel>
+    <relationshipName>ChildSections</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>

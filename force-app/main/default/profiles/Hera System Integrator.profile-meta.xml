@@ -22787,8 +22787,18 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ScriptConfig__c.ChildRelationName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ScriptConfig__c.ContextObject__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ScriptConfig__c.ContextObjectFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22814,6 +22824,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ScriptConfig__c.ParentSection__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.ScriptType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -28520,6 +28535,9 @@
         <layout>ScorecardMetric-Scorecard Metric Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ScriptConfig__c-HDT Layout Admin</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>ServicePoint__c-Service Point Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -30146,6 +30164,15 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
+        <object>ScriptConfig__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>ServicePoint__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -31365,6 +31392,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>MassiveLoaderRequest__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>ScriptConfig__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
