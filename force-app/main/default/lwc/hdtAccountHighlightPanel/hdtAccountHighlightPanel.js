@@ -4,6 +4,7 @@ import getAllCampaigns from '@salesforce/apex/HDT_LC_CampaignsController.getCamp
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 
+export default class HdtAccountHighlightPanel extends LightningElement {
     @api objectApiName = 'Account';
     @api recordId;
     @api campaignCategory = 'Campagna CRM';
