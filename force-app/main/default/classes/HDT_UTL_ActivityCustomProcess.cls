@@ -234,7 +234,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             String typeOfCommodity = act.Order__r.ServicePoint__r.CommoditySector__c;
             String fiscalData = null;
             Boolean precedenteCliente = null;
-                        
+
             if(act.Order__r.RecordType.DeveloperName == 'HDT_RT_Subentro' || act.Order__r.RecordType.DeveloperName == 'HDT_RT_Voltura'){
             
                 if(act.Order__r.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
@@ -263,6 +263,12 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             List<HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail> l = new List<HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail>();
             l.add(iwd);
 
+            // da testare 18/6/21 @Picchiri
+            if(act.Order__r.RecordType.DeveloperName == 'HDT_RT_VAS' ){
+                l.remove(0);
+                l.remove(1);
+            }
+
             system.debug('HDT_VFC_InputWrapperDetail 2 ---> ' + JSON.serialize(iwd)); 
 
             HDT_WS_CreditCheck.HDT_VFC_InputWrapper iw = new HDT_WS_CreditCheck.HDT_VFC_InputWrapper();
@@ -282,10 +288,12 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             iw.bpCategory = act.Order__r.Account.Category__c; 
             iw.bpType = act.Order__r.Account.CustomerType__c;
             iw.customerType = 'CT0';
-            iw.address = act.Order__r.ServicePoint__r.SupplyStreetName__c;
-            iw.municipality = act.Order__r.ServicePoint__r.SupplyCity__c;
-            iw.district = act.Order__r.ServicePoint__r.SupplyProvince__c;
-            iw.postCode = act.Order__r.ServicePoint__r.SupplyPostalCode__c;
+            if(act.Order__r.RecordType.DeveloperName == 'HDT_RT_VAS' ){
+                iw.address = act.Order__r.ServicePoint__r.SupplyStreetName__c;
+                iw.municipality = act.Order__r.ServicePoint__r.SupplyCity__c;
+                iw.district = act.Order__r.ServicePoint__r.SupplyProvince__c;
+                iw.postCode = act.Order__r.ServicePoint__r.SupplyPostalCode__c;
+            }            
             iw.operation =  act.Order__r.ProcessType__c;
             iw.companyGroup = 'Hera S.p.A.';
             iw.market = act.Order__r.Market__c;
