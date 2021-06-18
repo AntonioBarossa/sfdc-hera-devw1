@@ -2150,6 +2150,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Richiesta preventivo</fullName>
             <default>false</default>
         </values>

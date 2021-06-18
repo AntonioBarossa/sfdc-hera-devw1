@@ -49,7 +49,7 @@
     </aura:if>
 
     <aura:if isTrue="{!v.order}">
-        <c:hdtChildOrderProcessActions order="{!v.order}" onredirecttoparent="{!c.handleRedirectToParent}" lastStepNumber="{!v.lastStepNumber}" draftObject="{!v.draftObject}" lastStepData="{!v.lastStepData}" draftObjectApiName="{!v.draftObjectApiName}" diffDraftObjectApiName="{!v.diffDraftObjectApiName}" diffFields="{!v.diffFields}"></c:hdtChildOrderProcessActions>
+        <c:hdtChildOrderProcessActions order="{!v.order}" onredirecttoparent="{!c.handleRedirectToParent}" onredirect_attivazione_mod="{!c.handleRedirectAttivazioneMod}" lastStepNumber="{!v.lastStepNumber}" draftObject="{!v.draftObject}" lastStepData="{!v.lastStepData}" draftObjectApiName="{!v.draftObjectApiName}" diffDraftObjectApiName="{!v.diffDraftObjectApiName}" diffFields="{!v.diffFields}"></c:hdtChildOrderProcessActions>
     </aura:if>
 
 </aura:component>

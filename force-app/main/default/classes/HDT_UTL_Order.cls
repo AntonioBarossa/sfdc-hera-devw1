@@ -70,9 +70,18 @@ public inherited sharing class HDT_UTL_Order {
 
     public void cambioOffertaActions(Order ord) {
         if (isCambioOfferta(ord)) {
+
+            String processType = '';
+
+            if(ord.ServicePoint__r.RecordType.DeveloperName == 'HDT_RT_Ele') {
+                processType = 'Cambio Offerta Ele';
+            } else {
+                processType = 'Cambio Offerta Gas';
+            }
+
             orderSrv.updateRecord(new Order(
                 Id = ord.Id,
-                ProcessType__c = 'Cambio Offerta'
+                ProcessType__c = processType
             ));
         }
     }
@@ -134,7 +143,9 @@ public inherited sharing class HDT_UTL_Order {
 
     public void setOrderProcess(Order ord){
         if (ord.RecordType.DeveloperName == 'HDT_RT_Default') {
-            cambioOffertaActions(ord);
+            if (ord.ServicePoint__c != null){
+                cambioOffertaActions(ord);
+            }
             switchInRipristinatorioAction(ord);
             attivazioneConModificaActions(ord);
         }

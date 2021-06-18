@@ -110,6 +110,13 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     
     }
 
+    
+    public static void updateCreditCheckActivity(List<wrts_prcgvr__Activity__c> actListToUpdate){        
+        if(!actListToUpdate.isEmpty()){
+            update actListToUpdate;
+        }
+    }
+
     // @Picchiri 08.06.21 Credit Check 
     // Annullamento Activity di Credit Check e annullamento Ordine in caso di KO Definitvo dell'activity
     public static void annullamentoActivityCustom(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
@@ -159,52 +166,56 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 // Se il nuovo cliente dimostrerà comunque di aver pagato il debito del precedente cliente), 
                 // L’activity verrà chiusa con Stato Lavorazione “KO Risolto” e Motivo “Saldo Pagato”.  
                 // La chiusura dell’activity scatenerà di nuovo il credit check ma sul Nuovo Cliente. 
-                if( act.RecordType.DeveloperName == 'HDT_RT_CreditCheckKO' &&  (act.Status__c == 'KO Risolto' && act.Reason__c == 'Dimostrata Estraneità' ) || (act.Status__c == 'KO Forzato' && act.Reason__c == 'Saldo pagato' )){                    
-                    actListToRecheck.add(act);
-                }
+                // if( act.RecordType.DeveloperName == 'HDT_RT_CreditCheckKO' &&  (act.Status__c == 'KO Risolto' && act.Reason__c == 'Dimostrata Estraneità' ) || (act.Status__c == 'KO Forzato' && act.Reason__c == 'Saldo pagato' )){                    
+                //     actListToRecheck.add(act);
+                // }
 
                 // punto 2 KO Cattivo Pagatore  ancora in analisi
-                if(act.Status__c == 'KO Forzato' && causaleCattivoPagatore.contains(act.CreditCheckReason__c)){
-                    actListToRecheck.add(act);
-                    listOrderBadPayer.add(act.Order__c);
-                } 
+                // if(act.Status__c == 'KO Forzato' && causaleCattivoPagatore.contains(act.CreditCheckReason__c)){
+                //     actListToRecheck.add(act);
+                //     listOrderBadPayer.add(act.Order__c);
+                // } 
+                
                 // ko uscente e poi ok . chiudere l'activity e rimandare il credict check
-                if(act.RecordType.DeveloperName == 'HDT_RT_KoPrecedeteCliente' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK'){
-                    actListToUpdate.add(closeActivityCheck(act));
-                    actListToRecheck.add(act);
-                }
+                // da portare al trigger dell'ordine
+                // if(act.RecordType.DeveloperName == 'HDT_RT_KoPrecedeteCliente' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK'){
+                //     actListToUpdate.add(closeActivityCheck(act));
+                //     actListToRecheck.add(act);
+                // }
 
                 //ko entrante poi ok con causale "Saldo debito cattivo pagatore" verficare l'activity e riportare esito e causale su activity e sbiancare l'esito su order e reinviare la chiamata
-                if(act.RecordType.DeveloperName == 'HDT_RT_CreditCheckKO' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && act.CreditCheckReason__c == 'Saldo debito cattivo pagatore'){                    
-                    actListToUpdate.add(closeActivityCheck(act));
-                    actListToRecheck.add(act);
-                    orderIdListToCleanCreditCheck.add(act.Order__c);
-                    
-                }
+                // da portare al trigger dell'ordine
+                // if(act.RecordType.DeveloperName == 'HDT_RT_CreditCheckKO' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && act.CreditCheckReason__c == 'Saldo debito cattivo pagatore'){                    
+                //     actListToUpdate.add(closeActivityCheck(act));
+                //     actListToRecheck.add(act);
+                //     orderIdListToCleanCreditCheck.add(act.Order__c);                    
+                // }
+                
                 // in altri casi in cui arriva un ok chiudere l'activity ma non mandare la chiamata a sap
-                if(act.RecordType.DeveloperName != 'HDT_RT_KoPrecedeteCliente' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && act.CreditCheckReason__c != 'Saldo debito cattivo pagatore'){
-                    actListToUpdate.add(closeActivityCheck(act));                     
-                    recheck = false;
-                }                
+                // da portare al trigger dell'ordine
+                // if(act.RecordType.DeveloperName != 'HDT_RT_KoPrecedeteCliente' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && act.CreditCheckReason__c != 'Saldo debito cattivo pagatore'){
+                //     actListToUpdate.add(closeActivityCheck(act));                     
+                //     recheck = false;
+                // }                
             
         }
 
-        if(!orderIdListToCleanCreditCheck.isEmpty()){
-            HDT_UTL_OrderProcess.cleanCreditCheckOnOrder(orderIdListToCleanCreditCheck);
-        }
-        if(!actListToUpdate.isEmpty()){
-            update actListToUpdate;
-        }
-        if(!actListToRecheck.isEmpty()){
-            recheckCreditCheck(actListToRecheck);
-        }
-        if(!listOrderBadPayer.isEmpty()){
-            List<Order> orderBadP = [SELECT Id, BadPayer__c FROM Order WHERE Id =:listOrderBadPayer];
-            for(Order ord : orderBadP){
-                ord.BadPayer__c = true;
-            }
-            update orderBadP;           
-        }
+        // if(!orderIdListToCleanCreditCheck.isEmpty()){
+        //     HDT_UTL_OrderProcess.cleanCreditCheckOnOrder(orderIdListToCleanCreditCheck);
+        // }
+        
+        // updateCreditCheckActivity(actListToUpdate);
+        
+        // if(!actListToRecheck.isEmpty()){
+        //     recheckCreditCheck(actListToRecheck);
+        // }
+        // if(!listOrderBadPayer.isEmpty()){
+        //     List<Order> orderBadP = [SELECT Id, BadPayer__c FROM Order WHERE Id =:listOrderBadPayer];
+        //     for(Order ord : orderBadP){
+        //         ord.BadPayer__c = true;
+        //     }
+        //     update orderBadP;           
+        // }
 
         
                 
