@@ -418,6 +418,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.BusinessNameRcuFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.CategoryCode__c</field>
         <readable>true</readable>
@@ -660,6 +665,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.LastName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.LastNameRcuFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12085,7 +12095,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Order.QuoteType__c</field>
+        <field>Order.QuotationType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15180,6 +15190,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Reading__c.Mru__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Reading__c.OrderEle__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15686,6 +15701,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Reading__c.ReadingValueMeter__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Reading__c.SendTo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
