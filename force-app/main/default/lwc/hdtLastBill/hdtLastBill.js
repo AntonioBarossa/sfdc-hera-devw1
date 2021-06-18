@@ -1,62 +1,73 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track,api,wire } from 'lwc';
 import imageResource from '@salesforce/resourceUrl/HDT_Service1';
-
-
-const billsColumns = [
-    { label: 'Numero bolletta', fieldName: 'billNumber'},
-    { label: 'Importo', fieldName: 'amount', type: 'currency'},
-    { label: 'Stato', fieldName: 'status'}
-    /*{ label: 'Data lettura', fieldName: 'lectureDate'},
-    { label: 'Fascia', fieldName: 'slot'},
-    { label: 'Lettura (Interi)', fieldName: 'lectureInt'},
-    { label: 'Lettura (Decimal)', fieldName: 'lectureDecimal'},
-    { label: 'Consumo', fieldName: 'consumed'},
-    { label: 'Codice Apparecchio', fieldName: 'assetCode'},
-    { label: 'Codice Contratto', fieldName: 'contractCode'},
-    { label: 'Stato', fieldName: 'status'},
-    { label: 'Tipo lettura', fieldName: 'lectureType'},
-    { label: 'Causale', fieldName: 'reason'},
-    { label: 'Giorni di fatturazione', fieldName: 'billingDate'},
-    { label: 'Consumo medio', fieldName: 'consumedAvg'},
-    { label: 'Tipo registro', fieldName: 'regType'},
-    { label: 'Consumo', fieldName: 'consumed'},
-    { label: 'Unità di misura', fieldName: 'meters'},
-    { label: 'Tipo di consumo', fieldName: 'consumedType'},
-    { label: 'Settore merceologico', fieldName: 'sector'},
-    { label: 'Flag lettura', fieldName: 'consumed'},
-    { label: 'Motivazione', fieldName: 'reasonWhy'}*/
+import imageResource2 from '@salesforce/resourceUrl/HDT_Service2';
+import getData from '@salesforce/apex/HDT_LC_LastBill.getData';
+import { getRecord } from 'lightning/uiRecordApi';
+const FIELDS = [
+    'Account.CustomerCode__c',
+    'Account.KpiTracking__c'
 ];
-
-const billsData = [
-    {id: '1', billNumber: '012589', amount: '105', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Pagato', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-    {id: '2', billNumber: '098754', amount: '310', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Non pagato', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-    {id: '3', billNumber: '058478', amount: '501', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Non Pagato', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-    /*{id: '4', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Calcolabile', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-    {id: '5', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Calcolabile', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-    {id: '6', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Calcolabile', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-    {id: '7', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Calcolabile', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-    {id: '8', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Calcolabile', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-    {id: '9', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Calcolabile', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-    {id: '10', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Calcolabile', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-    {id: '11', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Calcolabile', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-    {id: '12', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Calcolabile', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-    {id: '13', lectureDate: '31/03/2019', slot: 'Fascia 1', lectureInt: '575', lectureDecimal: '0.0000', consumed: '0.00', assetCode: 'R0010004', contractCode: '300145966', status: 'Calcolabile', lectureType: 'Stima automatica', reason: 'Stima automatica', billingDate: '0', consumedAvg: '0.000', regType: 'Energia attivaa', consumed: '', meters: 'KWH', consumedType: '', sector: 'Energia Elettrica', consumed: '', reasonWhy: ''},
-*/
-];
-
-
 export default class HdtLastBill extends LightningElement {
 
-    @track iconUrl = imageResource;
-    @track billsColumns = billsColumns;
-    @track billsData = billsData;
+    @track eleUrl = imageResource;
+    @track gasUrl = imageResource2;
+    @api customerCode;
+    @api kpiId;
+    @api recordId;
+    @track message;
+    @track error = false;
+    @track amount;
+    @track status;
+    @track expirationDate;
+    @track billNumber;
+    @track commodity;
+    @track energy = false;
+    @track gas = false;
+    @track spinner = true;
 
-    get counter(){
-        return billsData.length;
+    @wire(getRecord, { recordId: '$recordId', fields: FIELDS})
+    wireAccount({data, error}) {
+        if(data) {
+            console.log('data ' + data);
+            console.log('CC ' + data.fields.CustomerCode__c.value);
+            console.log('Kpi ' + data.fields.KpiTracking__c.value);
+            getData({
+                accountCode: data.fields.CustomerCode__c.value,
+                mode: 'KPI',
+                kpiId: data.fields.KpiTracking__c.value
+            }).then(result => {
+                var resultJSON = JSON.parse(result);
+                if(resultJSON.outcome === 'OK'){
+                    this.amount = resultJSON.amount;
+                    this.status = resultJSON.billStatus;
+                    this.expirationDate = resultJSON.expiredDate;
+                    this.billNumber = resultJSON.billNumber;
+                    this.commodity = JSON.parse(resultJSON.commodity);
+                    console.log(this.commodity);
+                    console.log(this.amount);
+                    console.log(this.status);
+                    console.log(this.expirationDate);
+                    console.log(this.billNumber);
+                    this.energy = this.commodity['Energia elettrica'];
+                    console.log(this.energy);
+                    this.spinner = false;
+                }else{
+                    error = true;
+                    this.message = resultJSON.message;
+                    this.spinner = false;
+                }
+            })
+            .catch(error => {
+                //console.log('errore ' +error.body.message);
+                console.log('errore ' + error);
+            });
+        }else{
+            console.log('no data ' + this.recordId);
+        }
     }
 
     connectedCallback(){
-        console.log('image url: ' + this.iconUrl);
+        
     }
 
 }
