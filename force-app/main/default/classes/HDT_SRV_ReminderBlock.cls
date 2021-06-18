@@ -13,6 +13,7 @@ public inherited sharing class HDT_SRV_ReminderBlock {
         List<DocumentSelected__c> documents = new List<DocumentSelected__c>();
         Case currentCase = new Case();
         String pretty;
+        String blockType;
         Integer blockDuration;
 
         currentCase = reminderQr.getCaseById(recordId);
@@ -21,19 +22,21 @@ public inherited sharing class HDT_SRV_ReminderBlock {
         System.debug('SRV_ReminderBlock Case--> '+currentCase);
         System.debug('SRV_ReminderBlock Documetns--> '+documents);
 
-        if(currentCase.BlockType__c == '1'){
+        if(currentCase.BlockType__c.containsIgnoreCase('1')){
 
             blockDuration = 45;
+            blockType = '1';
 
-        } else if(currentCase.BlockType__c == 'W'){
+        } else if(currentCase.BlockType__c.containsIgnoreCase('W')){
 
             blockDuration = 240;
+            blockType = 'W';
 
         }
 
         Map<String, Object> caseMap = new Map<String, Object>{
             'bp' => currentCase.AccountCode__c,
-            'blocco' => currentCase.BlockType__c,
+            'blocco' => blockType,
             'durataBlocco' => blockDuration
         };
 
