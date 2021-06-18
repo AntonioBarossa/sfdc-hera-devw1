@@ -35,8 +35,19 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
                 when Case c{
 
-                    //CREATE THE ARGS MAP FOR THE EXECUTE METHOD OF WS_PAYMENTS
-                    //CALL THE EXECUTE METHOD
+                    SObject transition;
+                    SObject action;
+                    String method = 'HDT_InstallmentPlans';
+                    SOBject sender = c;
+                    Map<String, Object> args = new Map<String,Object>();
+                    args.put('transition', transition);
+                    args.put('action', action);
+                    args.put('method',method);
+                    args.put('sender', sender);
+
+                    HDT_WS_Payments paymentsWs = new HDT_WS_Payments();
+                    wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
+                    responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) paymentsWs.execute(args);
 
                 }
 
