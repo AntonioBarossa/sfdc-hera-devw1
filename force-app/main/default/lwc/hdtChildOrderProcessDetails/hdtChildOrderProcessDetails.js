@@ -745,7 +745,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
             console.log('Inside reading condition');
 
-            this.template.querySelector('c-hdt-self-reading').handleSaveButton();
+            this.template.querySelector('c-hdt-self-reading').handleSaveButton()
+                .then(result => {
+                    console.log(result);
+                }).catch(error => {
+                    console.log(error);
+                    return;
+                });
 
             console.log('isSavedReading--> '+this.isSavedReading);
 
