@@ -34,11 +34,6 @@
                 <label>Agenzia</label>
             </value>
             <value>
-                <fullName>Campaign__c</fullName>
-                <default>false</default>
-                <label>Campagna</label>
-            </value>
-            <value>
                 <fullName>Channel__c</fullName>
                 <default>false</default>
                 <label>Canale</label>
@@ -144,11 +139,6 @@
                 <label>Residente Indirizzo Fornitura</label>
             </value>
             <value>
-                <fullName>Role__c</fullName>
-                <default>false</default>
-                <label>Ruolo</label>
-            </value>
-            <value>
                 <fullName>Surface__c</fullName>
                 <default>false</default>
                 <label>Superficie</label>
@@ -171,7 +161,7 @@
             <value>
                 <fullName>Nome_Bundle__c</fullName>
                 <default>false</default>
-                <label>Nome Bundle</label>
+                <label>Nome Offerta Versione</label>
             </value>
             <value>
                 <fullName>SBQQ__Quantity__c</fullName>
@@ -194,6 +184,16 @@
                 <label>Super User</label>
             </value>
             <value>
+                <fullName>DescriptionSAPBonusContributo__c</fullName>
+                <default>false</default>
+                <label>DescriptionSAPBonusContributo__c</label>
+            </value>
+            <value>
+                <fullName>Role__c</fullName>
+                <default>false</default>
+                <label>Ruolo</label>
+            </value>
+            <value>
                 <fullName>Profile__c</fullName>
                 <default>false</default>
                 <label>Profilo</label>
@@ -203,17 +203,58 @@
                 <default>false</default>
                 <label>Tipo apparecchiatura</label>
             </value>
+            <value>
+                <fullName>CampaignName__c</fullName>
+                <default>false</default>
+                <label>Campagna</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>Group Line Items</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
             <valueName>SBQQ__Type__c</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>SupplyCity__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>OccupantsNumber__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>OwnerAC__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Surface__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>DwellingType__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
             <controllingFieldValue>Product Option</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>SBQQ__Quantity__c</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>SBQQ__PriorQuantity__c</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Product Option</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>SBQQ__ProductFamily__c</valueName>
         </valueSettings>
         <valueSettings>
@@ -230,10 +271,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>Campaign__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>Channel__c</valueName>
         </valueSettings>
         <valueSettings>
@@ -243,10 +280,6 @@
         <valueSettings>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>CompanyOwner__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>SupplyCity__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
@@ -290,19 +323,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>OccupantsNumber__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>NewClient__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>PowerFlow__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>OwnerAC__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
@@ -318,18 +343,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>Role__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>Surface__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>DwellingType__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>CategoryTypeClient__c</valueName>
         </valueSettings>
         <valueSettings>
@@ -339,6 +352,10 @@
         <valueSettings>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>SuperUser__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Role__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
