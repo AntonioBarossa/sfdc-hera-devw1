@@ -100,6 +100,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.EnergyService__c = 'No';
         orderToUpdate.LiftingPeople__c = 'No';
         orderToUpdate.MeterType__c = servicePoint.MeterType__c;
+        orderToUpdate.IsRemoteManaged__c = servicePoint.IsRemoteManaged__c;
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
