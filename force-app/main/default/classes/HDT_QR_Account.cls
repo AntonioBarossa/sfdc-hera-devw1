@@ -67,4 +67,35 @@ public inherited sharing class HDT_QR_Account {
         system.debug('Account retrieved******'+ ac);
         return ac;
     }
+
+    public List<Account> getAccountByFiscalCode(String fiscalCode) {
+        return [
+            SELECT
+            Id
+            FROM Account 
+            WHERE FiscalCode__c = :fiscalCode
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Account> getAccountByVat(String vat) {
+        return [
+            SELECT
+            Id
+            FROM Account 
+            WHERE VATNumber__c = :vat
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Account> getAccountByFiscalCodeAndVat(String fiscalCode, String vat){
+        return [
+            SELECT
+            Id
+            FROM Account 
+            WHERE FiscalCode__c = :fiscalCode
+            AND VATNumber__c = :vat
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

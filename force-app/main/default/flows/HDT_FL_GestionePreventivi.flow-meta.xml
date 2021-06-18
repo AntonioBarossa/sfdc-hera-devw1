@@ -269,6 +269,13 @@
                 <elementReference>Get_Input_Case.ServicePoint__r.UseTypeEnergy__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.SelfCertificationInstance__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCase</targetReference>
         </connector>
