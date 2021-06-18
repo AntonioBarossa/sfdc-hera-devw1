@@ -287,6 +287,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.showFilters2 = true;
     }
 
+    filterEc7(){
+        this.filterType = 'filterEc7';
+        this.showFilters2 = true;
+    }
+
     openFilters(){
         this.showFilters = true;
     }
@@ -672,7 +677,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                        this.handleMulesoftResponse(obj);
                    }
 
-                   this.refreshSecondLevelToChild();
+                   if(this.showSecondLevel){
+                    this.refreshSecondLevelToChild();
+                   }
 
                 } else {
                     this.showError = true;
@@ -1469,6 +1476,16 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             console.error('# Message => ' + e.message );
             console.error('# Stack => ' + e.stack );
         }
+    }
+
+    showRate(event){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Attenzione',
+                message: 'Servizio in sviluppo',
+                variant: 'info'
+            })
+        );
     }
 
 }
