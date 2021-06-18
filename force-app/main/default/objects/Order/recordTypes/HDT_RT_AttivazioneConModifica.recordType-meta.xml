@@ -1845,6 +1845,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>LiftingPeople__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>MarketOrigin__c</picklist>
         <values>
             <fullName>Default</fullName>
@@ -1927,6 +1938,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Amm%2E Precheck OK SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
@@ -1943,7 +1958,59 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2083,7 +2150,47 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Richiesta preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2109,7 +2216,11 @@
     <picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
-            <fullName>Cambio Offerta</fullName>
+            <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Offerta Ele</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2134,10 +2245,6 @@
         </values>
         <values>
             <fullName>Prima Attivazione con modifica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Riattivazione non morose</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2947,15 +3054,15 @@
     <picklistValues>
         <picklist>WithdrawalClass__c</picklist>
         <values>
-            <fullName>001 - 7 giorni</fullName>
+            <fullName>001-7 giorni</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>002 - 6 giorni %28no dom%2E %2B fest%29</fullName>
+            <fullName>002-6 giorni %28no dom%2E%2Bfest%2E%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>003 - 5 giorni %28no sab%2E dom%2E fest%29</fullName>
+            <fullName>003-5 giorni%28no sab%2Edom%2Efest%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>

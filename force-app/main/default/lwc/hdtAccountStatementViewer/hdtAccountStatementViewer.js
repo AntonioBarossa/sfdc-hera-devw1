@@ -661,6 +661,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 if(result.success){
                    var obj = JSON.parse(result.data);
 
+                   //console.log('>>>>> ' + JSON.stringify(obj));
                    console.log('>>> REQUEST TYPE -> ' + this.techObj.requestType);
 
                    if(this.techObj.requestType==='viewResult'){
@@ -670,6 +671,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                        // other requestType logic goes here
                        this.handleMulesoftResponse(obj);
                    }
+
+                   this.refreshSecondLevelToChild();
 
                 } else {
                     this.showError = true;
@@ -903,6 +906,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
             if(interObj && Object.keys(interObj).length === 0 && interObj.constructor === Object){
                 console.log('>>> no apply filter');
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Non hai inserito nessun parametro',
+                        variant: 'info'
+                    }),
+                );
             } else {
                 this.applyInterrogation(interObj);
             }
@@ -919,107 +929,114 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     applyInterrogation(currentFilter){
         console.log('# applyInterrogation # ');
 
-        const columnTypeMap = new Map();
-        this.columns.forEach((col) => {
-            columnTypeMap.set(col.fieldName, col.detail.type);
-        });
-
-        var contoContrArray;
-        if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
-            contoContrArray = currentFilter.contoContrattuale.value.split(',');
-        }
-
-        this.allDataFiltered = this.allData.filter(function(item) {
-            
-            for (var key in currentFilter) {
-
-                const currentType = columnTypeMap.get(key);
-                var filterValue;
-                var tableValueToFilter;
-
-                switch (currentType) {
-                    case 'number':
-                        filterValue = parseFloat(currentFilter[key].value);
-                        tableValueToFilter = parseFloat(item[key]);
-                        break;
-                    case 'date':
-                        var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
-                        filterValue = date.getTime();
-
-                        var cDate = item[key].split('/');
-                        var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
-                        tableValueToFilter = cDate2.getTime();
-
-                        break;
-                    case 'text':
-                        filterValue = currentFilter[key].value;
-                        tableValueToFilter = item[key];
-                }
-
-                switch (currentFilter[key].operator) {
-                    case '='://uguale a
-                        if (tableValueToFilter != filterValue)
-                        return false;
-                        break;
-                    case '>'://maggiore di
-                        if (tableValueToFilter <= filterValue)
-                        return false;
-                        break;
-                    case 'in'://contiene caratteri
-                        if(!tableValueToFilter.includes(filterValue))
-                        return false;
-                        break;
-                    case 'on'://contiene valori
-                        if(!contoContrArray.includes(tableValueToFilter))
-                        return false;
-                }
-
-            }
-            return true;
-        });
-
-        if(this.allDataFiltered.length == 0){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Attenzione',
-                    message: 'Nessun record trovato',
-                    variant: 'warning'
-                }),
-            );
-            return;
-        }
-
-        this.firstLevel = this.allDataFiltered[0];
-        this.secondLevelList = this.allDataFiltered[0][this.detailTable];
-        if(this.amountField != null && this.amountField != ''){
-            this.allDataFiltered.forEach((element) => { this.totAmount +=  parseFloat(element[this.amountField]) });
-        }
-        var firstRowId = this.allDataFiltered[0][this.uniqueId];
-
-        if(this.allDataFiltered.length < this.perpage){
-            //we can use only accountData list
-            this.showPagination = false;
-            this.accountData = this.allDataFiltered;
-            this.allDataFiltered = [];
-        } else {
-            //we need to use allDataFiltered
-            this.filterPagination = true;
-            this.accountData = this.allDataFiltered.slice(0, this.perpage);
-            this.fromRec = 1;
-            this.toRec = this.perpage;
-            this.totRecs = this.allDataFiltered.length;
-            this.setPages(this.totRecs);
-        }
-
-        this.filterOn = true;
-        this.showFilterFirstLevel = false;
-        let element = this.template.querySelector('[data-id="' + firstRowId + '"]');
-        element.style.background = ' #ecebea';
-        
         try{
+
+            const columnTypeMap = new Map();
+            this.columns.forEach((col) => {
+                columnTypeMap.set(col.fieldName, col.detail.type);
+            });
+
+            var contoContrArray;
+            if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
+                contoContrArray = currentFilter.contoContrattuale.value.split(',');
+            }
+
+            this.allDataFiltered = this.allData.filter(function(item) {
+                
+                for (var key in currentFilter) {
+
+                    const currentType = columnTypeMap.get(key);
+                    var filterValue;
+                    var tableValueToFilter;
+
+                    if(item[key] === undefined || item[key] === ''){
+                        return false;
+                    }
+
+                    switch (currentType) {
+                        case 'number':
+                            filterValue = parseFloat(currentFilter[key].value);
+                            tableValueToFilter = parseFloat(item[key]);
+                            break;
+                        case 'date':
+                            var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
+                            filterValue = date.getTime();
+
+                            var cDate = item[key].split('/');
+                            var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
+                            tableValueToFilter = cDate2.getTime();
+
+                            break;
+                        case 'text':
+                            filterValue = currentFilter[key].value;
+                            tableValueToFilter = item[key];
+                    }
+
+                    switch (currentFilter[key].operator) {
+                        case '='://uguale a
+                            if (tableValueToFilter != filterValue)
+                            return false;
+                            break;
+                        case '>'://maggiore di
+                            if (tableValueToFilter <= filterValue)
+                            return false;
+                            break;
+                        case 'in'://contiene caratteri
+                            if(!tableValueToFilter.includes(filterValue))
+                            return false;
+                            break;
+                        case 'on'://contiene valori
+                            if(!contoContrArray.includes(tableValueToFilter))
+                            return false;
+                    }
+
+                }
+                return true;
+            });
+
+            if(this.allDataFiltered.length == 0){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Nessun record trovato',
+                        variant: 'warning'
+                    }),
+                );
+                return;
+            }
+
+            this.firstLevel = this.allDataFiltered[0];
+            this.secondLevelList = this.allDataFiltered[0][this.detailTable];
+            if(this.amountField != null && this.amountField != ''){
+                this.allDataFiltered.forEach((element) => { this.totAmount +=  parseFloat(element[this.amountField]) });
+            }
+            var firstRowId = this.allDataFiltered[0][this.uniqueId];
+
+            if(this.allDataFiltered.length < this.perpage){
+                //we can use only accountData list
+                this.showPagination = false;
+                this.accountData = this.allDataFiltered;
+                this.allDataFiltered = [];
+            } else {
+                //we need to use allDataFiltered
+                this.filterPagination = true;
+                this.accountData = this.allDataFiltered.slice(0, this.perpage);
+                this.fromRec = 1;
+                this.toRec = this.perpage;
+                this.totRecs = this.allDataFiltered.length;
+                this.setPages(this.totRecs);
+            }
+
+            this.filterOn = true;
+            this.showFilterFirstLevel = false;
+            let element = this.template.querySelector('[data-id="' + firstRowId + '"]');
+            element.style.background = ' #ecebea';
+        
             this.setButtonForFilterApplied(true);
         } catch (e){
-            console.log(e);
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack ); 
         }
 
     }
@@ -1137,14 +1154,26 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
      
     }
 
-    //refreshSecondLevel(){
-    //    console.log('# refreshSecondLevel #');
-    //    var a = [];
-    //    this.secondLevelList.forEach((i) => {
-    //        a.push(i);
-    //    });
-    //    this.secondLevelList = a;
-    //}
+    refreshSecondLevelToChild(){
+        this.template.querySelector("c-hdt-account-statement-detail-viewer").removeFilterFromParent();
+    }
+
+    refreshSecondLevel(){
+        console.log('# refreshSecondLevel #');
+        try {
+            if(this.secondLevelList != undefined && this.secondLevelList.length > 0){
+                var a = [];
+                this.secondLevelList.forEach((i) => {
+                    a.push(i);
+                });
+                this.secondLevelList = a;
+            }
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
+        }
+    }
 
     modalResponse(event){
         if(event.detail.decision === 'conf'){
@@ -1420,6 +1449,26 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         } catch(e){
             console.log('>>>>>> flop ');
         }        
+    }
+
+    removeAllData(){
+        this.allData = [];
+        this.accountData = [];
+        console.log('# refreshSecondLevel #');
+        try {
+            if(this.secondLevelList != undefined && this.secondLevelList.length > 0){
+                var a = [];
+                this.secondLevelList = a;
+            }
+
+            this.totRecs = 0;
+            this.setPages(0);
+
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
+        }
     }
 
 }

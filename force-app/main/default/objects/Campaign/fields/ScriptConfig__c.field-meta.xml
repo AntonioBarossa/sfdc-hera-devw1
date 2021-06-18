@@ -3,8 +3,19 @@
     <fullName>ScriptConfig__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Campo Lookup con cui un Utente BSN può associare uno Script Processo ad una campagna</description>
-    <externalId>false</externalId>
-    <label>Script Campagna</label>
+<externalId>false</externalId>
+    <label>Script campagna</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Value doesn&apos;t match field criteria: 
+Type Script = Processo</errorMessage>
+        <filterItems>
+            <field>ScriptConfig__c.ScriptType__c</field>
+            <operation>equals</operation>
+            <value>Processo</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>ScriptConfig__c</referenceTo>
     <relationshipLabel>Campaigns</relationshipLabel>
     <relationshipName>Campaigns</relationshipName>

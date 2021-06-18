@@ -11,16 +11,6 @@
         <label>Back office</label>
     </customValue>
     <customValue>
-        <fullName>Back office Teleselling</fullName>
-        <default>false</default>
-        <label>Back office Teleselling</label>
-    </customValue>
-    <customValue>
-        <fullName>Back office Vendita</fullName>
-        <default>false</default>
-        <label>Back office Vendita</label>
-    </customValue>
-    <customValue>
         <fullName>Callback</fullName>
         <default>false</default>
         <label>Callback</label>
@@ -119,6 +109,11 @@
         <fullName>Vendita TopBusiness</fullName>
         <default>false</default>
         <label>Vendita TopBusiness</label>
+    </customValue>
+    <customValue>
+        <fullName>Social</fullName>
+        <default>false</default>
+        <label>Social</label>
     </customValue>
     <customValue>
         <fullName>SMS</fullName>

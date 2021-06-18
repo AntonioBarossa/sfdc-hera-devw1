@@ -71,6 +71,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                if( mapRequestFields.get('DES_ERR_AEEG') != null) {
+                                    ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
+                                    ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG');
+                                } else {
+                                    ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                }
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
@@ -119,7 +125,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Annullamento - Ammissibilità OK', 'Annullamento - Ammissibilità KO' {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 if(previousPhase.indexOf('Ripensamento') >-1){
-                                    nextPhase.replace('Annullamento', 'Ripensamento');
+                                    nextPhase = nextPhase.replace('Annullamento', 'Ripensamento');
                                 }
                                 ord.Phase__c = nextPhase;
                                 //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
@@ -251,6 +257,26 @@ public with sharing class HDT_SRV_SalesHandler {
 
                 }
 
+            }
+            when 'WSLead_Callback'{
+                HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_Winback'{
+                HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_CariBoll'{
+                HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_HVAC'{
+                HDT_UTL_LeadProcess.formHvac(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
+            }
+            when 'WSLead_SOL'{
+                HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
+                RestContext.response.statusCode = 200;
             }
             when else {
 

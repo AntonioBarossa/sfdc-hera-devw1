@@ -1845,6 +1845,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>LiftingPeople__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>MarketOrigin__c</picklist>
         <values>
             <fullName>Default</fullName>
@@ -1924,6 +1935,10 @@
         <picklist>Phase__c</picklist>
         <values>
             <fullName>Accettazione pagamento a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm%2E Precheck OK SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2063,7 +2078,47 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Richiesta preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2089,8 +2144,84 @@
     <picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
+            <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Offerta Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Uso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connessione con Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione Fuori delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione In delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione con modifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Fittizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Reseller</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Ripristinatorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Winback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in con voltura tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Temporanea - Nuova Attivazione</fullName>
             <default>true</default>
+        </values>
+        <values>
+            <fullName>To define</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura con Switch</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -2863,15 +2994,15 @@
     <picklistValues>
         <picklist>WithdrawalClass__c</picklist>
         <values>
-            <fullName>001 - 7 giorni</fullName>
+            <fullName>001-7 giorni</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>002 - 6 giorni %28no dom%2E %2B fest%29</fullName>
+            <fullName>002-6 giorni %28no dom%2E%2Bfest%2E%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>003 - 5 giorni %28no sab%2E dom%2E fest%29</fullName>
+            <fullName>003-5 giorni%28no sab%2Edom%2Efest%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>

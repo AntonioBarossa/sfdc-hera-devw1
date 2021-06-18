@@ -390,7 +390,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>FlowCase.Origin</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>StartsWith</operator>
                 <rightValue>
                     <stringValue>Back office</stringValue>
                 </rightValue>

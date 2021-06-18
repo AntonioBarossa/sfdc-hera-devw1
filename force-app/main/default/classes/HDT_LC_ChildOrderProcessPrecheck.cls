@@ -103,6 +103,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             when 'HDT_RT_AttivazioneConModifica' {
                 processType = 'Prima Attivazione con modifica';
             }
+            
             when 'HDT_RT_CambioOfferta' {
                 processType = 'Cambio Offerta';
             }
@@ -110,7 +111,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             when 'HDT_RT_Voltura'{
                 processType = 'Voltura';
                 newOrder.Subprocess__c = 'Standard';
-                newOrder.CausalCode__c = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VTE' : 'VTG';
+                newOrder.ProcessCode__c = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
                 newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 //newOrder = orderUtl.enrichOrder(newOrder);
                 //orderSrv.updateRecord(newOrder);
@@ -125,7 +126,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         newOrder.Id = orderId;
         newOrder.RecordTypeId = recordTypeId;
         newOrder.Step__c = 2;
-        newOrder.Deliberation__c = deliberate;
+        newOrder.Deliberation__c = deliberate;        
         newOrder.ProcessType__c = processType;
         newOrder.Phase__c = 'Bozza';
 

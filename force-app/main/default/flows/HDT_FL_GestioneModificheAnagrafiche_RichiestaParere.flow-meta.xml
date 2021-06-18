@@ -4,7 +4,7 @@
     <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
-        <locationX>270</locationX>
+        <locationX>314</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Set_In_Attesa_Risposta_Parere</targetReference>
@@ -62,7 +62,7 @@
     <recordCreates>
         <name>Crea_Richiesta_Parere</name>
         <label>Crea Richiesta Parere</label>
-        <locationX>270</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <assignRecordIdToReference>CaseId</assignRecordIdToReference>
         <connector>
@@ -78,6 +78,12 @@
             <field>Cluster__c</field>
             <value>
                 <stringValue>Reclami</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Get_Parent_Case.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -121,7 +127,7 @@
     <recordLookups>
         <name>Get_Parent_Case</name>
         <label>Get Parent Case</label>
-        <locationX>270</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -142,7 +148,7 @@
     <recordLookups>
         <name>Get_RT_Richiesta_Parere</name>
         <label>Get RT Richiesta Parere</label>
-        <locationX>270</locationX>
+        <locationX>314</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -184,7 +190,7 @@
     <recordUpdates>
         <name>Set_In_Attesa_Risposta_Parere</name>
         <label>Set In Attesa Risposta Parere</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>878</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -205,7 +211,7 @@
     <recordUpdates>
         <name>Sospendi_Parent_Case</name>
         <label>Sospendi Parent Case</label>
-        <locationX>270</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Crea_Richiesta_Parere</targetReference>
@@ -229,7 +235,7 @@
     <screens>
         <name>Inserimento_Parere</name>
         <label>Inserimento Parere</label>
-        <locationX>270</locationX>
+        <locationX>314</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -327,7 +333,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>144</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_RT_Richiesta_Parere</targetReference>
