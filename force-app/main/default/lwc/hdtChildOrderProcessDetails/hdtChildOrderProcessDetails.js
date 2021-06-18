@@ -1611,7 +1611,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'UseTypeEnergy__c',
                     'typeVisibility': this.typeVisibility('ele'),
                     'required': true,
-                    'disabled': false,
+                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1810,6 +1810,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'typeVisibility': this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'),
                     'required': false,
                     'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Tipo Apparechiatura',
+                    'apiname': 'MeterType__c',
+                    'typeVisibility': this.typeVisibility('ele') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    'required': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 }
@@ -2357,14 +2366,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 hasIvaAcciseUploadButton: true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
                 data: [
                     {
                         'label': 'Flag Agevolazione IVA',
                         'apiname': 'VATfacilitationFlag__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': false,
+                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
                         'value': '',
                         'processVisibility': ''
                     },
@@ -2373,7 +2382,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'FacilitationExcise__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': false,
+                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
                         'value': '',
                         'processVisibility': ''
                     },
