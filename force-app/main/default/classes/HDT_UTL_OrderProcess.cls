@@ -415,19 +415,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     // @Picchiri sbiancamento esito e causale credit check all'interno dell'ordine. 
     // Per risottomissione credit check
     public static Map<Id,Order> cleanCreditCheckOnOrder(Map<Id,Order> mapIdToOrderClean,Map<Id,Order> mapIdToOrderUpdate) {
-        Map<Id,Order> mapIdToOrderUpdateTMP = new Map<Id,Order>();
+        Map<Id,Order> mapIdToOrderUpdateTmp = new Map<Id,Order>();
 
         for(Order ord : mapIdToOrderUpdate.values()){
-            Order OrderTmp = new Order();
-            OrderTmp.id = ord.id;
-            OrderTmp.IncomingCreditCheckResult__c = '';
-            OrderTmp.OutgoingCreditCheckResult__c = '';
-            OrderTmp.CreditCheckDescription__c = '';
-            mapIdToOrderUpdateTMP.put(ord.id,OrderTmp);
+            Order orderTmp = new Order();
+            orderTmp.id = ord.id;
+            orderTmp.IncomingCreditCheckResult__c = '';
+            orderTmp.OutgoingCreditCheckResult__c = '';
+            orderTmp.CreditCheckDescription__c = '';
+            mapIdToOrderUpdateTmp.put(ord.id,orderTmp);
 
         }
 
-        return mapIdToOrderUpdateTMP;    
+        return mapIdToOrderUpdateTmp;    
     }
     // FINE @Picchiri Credit check Date 15.06.21
 
