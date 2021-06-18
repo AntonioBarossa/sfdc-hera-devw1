@@ -13,10 +13,10 @@
 
 public with sharing virtual class HDT_UTL_FormatTextScript {
     
-    protected String regEx= '\\{\\{([\\xa0\\s]?)+[A-Za-z0-9_.]+([\\xa0\\s]?)+\\}\\}';
+    protected String regEx= '\\{\\{[\\xa0\\s]?+([A-Za-z0-9_.]+)[\\xa0\\s]?+\\}\\}';
     //'<<\\{([\\s]?)+[A-Za-z0-9_.]+([\\s]?)+\\}>>';
-    protected String leftIncapsulatingData= '{{';
-    protected String rightIncapsulatingData= '}}';
+    //protected String leftIncapsulatingData= '{{';
+    //protected String rightIncapsulatingData= '}}';
 
     private Boolean isFirstSection=true;
 
@@ -140,9 +140,10 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         Matcher matcher=Pattern.compile(regEx).matcher(Text);
          
         while(matcher.find()){
-            String preFormatData = matcher.group(0);
-            preFormatData= preFormatData.removeEnd(rightIncapsulatingData).removeStart(leftIncapsulatingData);
-            bindedFields.add(preFormatData.trim().toLowerCase());
+            //String preFormatData = matcher.group(0);
+            //preFormatData= preFormatData.removeEnd(rightIncapsulatingData).removeStart(leftIncapsulatingData);
+            //bindedFields.add(preFormatData.trim().toLowerCase());
+            bindedFields.add(matcher.group(1).toLowerCase());
         }
         system.debug(bindedFields);
         return bindedFields;
