@@ -1,4 +1,4 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 const columns = [
     { label: 'Numero bolletta', fieldName: 'billNumber' },
@@ -6,6 +6,9 @@ const columns = [
 ];
 
 export default class HdtBillList extends LightningElement {
+
+    @api modalHeader;
+    @api requestType;
 
     data = [];
     columns = columns;

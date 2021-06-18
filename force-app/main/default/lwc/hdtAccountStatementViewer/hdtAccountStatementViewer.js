@@ -80,6 +80,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     title;
     showFilters2 = false;
     filterType;
+    billListHeader;
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -302,48 +303,14 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     billList(event){
+        this.billListHeader = 'Elenco bollette';
         this.showBillList = true;
     }
 
-    //+++ webservice type button
-    /*
-    allRecentItems(event) {
-        var requestType = event.target.name;//event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
+    viewReminders(event){
+        this.billListHeader = 'Visualizza Solleciti';
+        this.showBillList = true;
     }
-
-    home(event) {
-        var requestType = event.target.name;//event.target.name
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    expired(event){
-        var requestType = event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    creditRecovery(event){
-        var requestType = event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    expiredFromDay(event){
-        var requestType = event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    manageableItems(event){
-        var requestType = event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-    */
-    //+++ webservice type button
 
     refreshRecord(){
         //refresh all data in the same service
@@ -1374,7 +1341,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             this.resetFile();
             this.resetIdList();
             this.refreshSortButton();
-
             this.backendCall(requestType, requestObj);// Chiamata in backend
         }
 
@@ -1412,43 +1378,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             new ShowToastEvent({
                 title: 'Visualizza bolletta',
                 message: 'Questo servizio non è ancora disponibile',
-                variant: 'success',
+                variant: 'info',
                 mode: 'sticky'
             })
         );
     }
-
-
-    //ALL CLOSE MODAL LOGIC
-    /*
-    closeBillList(){
-        this.showBillList = false;
-    }
-
-    closeViewResult(){
-        this.showViewResult = false;
-    }
-
-    closeStatementFilters(){
-        this.showFilters = false;
-    }
-
-    closeModal() {
-        this.joinFilterModal = false;
-    }
-
-    closeFirstLevelFilter(event){
-        this.showFilterFirstLevel = false;
-    }
-
-    closeStatementFilters2(){
-        this.showFilters2 = false;
-    }
-
-    closestmtchoise(){
-        this.showAcctStmt = false;
-    }
-    */
    
     closeModalHandler(event){
         try{
@@ -1487,5 +1421,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             })
         );
     }
+
+
 
 }
