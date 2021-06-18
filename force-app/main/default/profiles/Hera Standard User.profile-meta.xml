@@ -550,6 +550,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.BusinessNameRcuFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.CategoryCode__c</field>
         <readable>true</readable>
@@ -792,6 +797,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.LastName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.LastNameRcuFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
