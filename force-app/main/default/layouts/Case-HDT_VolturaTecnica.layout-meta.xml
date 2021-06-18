@@ -83,7 +83,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>VoltureType__c</field>
+                <field>Subprocess__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
