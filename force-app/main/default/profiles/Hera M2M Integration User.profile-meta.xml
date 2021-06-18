@@ -11999,7 +11999,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Order.QuoteType__c</field>
+        <field>Order.QuotationType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
