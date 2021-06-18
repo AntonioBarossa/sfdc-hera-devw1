@@ -187,7 +187,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     //orderToUpdate.Instance326__c = 'Richiesto';
                     // Accettazione Preventivo rapido.
                     //orderToUpdate.QuickQuote__c = 'Richiesto';
-                    orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                    //orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                 } else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     // Visura camerale
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
