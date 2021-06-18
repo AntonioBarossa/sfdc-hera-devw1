@@ -35,6 +35,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
         if(isVolture != null && isVolture == true){
+            Order oldOrder = orderQr.getRecordById(order.Id);
             //Commentato finche non viene creato campo a DM
             if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true){
                 if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0){                
@@ -58,8 +59,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
                 order.Subprocess__c = 'Con Autolettura';
 
-            } else if(order.VoltureType__c == ''){
-                //TODO ADD ERROR ON GAS VALUES IF ELE
+            } else if(order.VoltureType__c != null && (order.VoltureType__c.containsIgnoreCase('In Continuità') || order.VoltureType__c.containsIgnoreCase('Recupero'))
+                && oldOrder.ServicePoint__r.CommoditySector__c.containsIgnoreCase('Energia Elettrica')){
+            
+                    throw new AuraHandledException('Impossibile selezionare il valore \"' + order.VoltureType__c + '\"');
             }
 
             if(readingDate != null && (isReading != null && isReading == true)){
