@@ -46,11 +46,14 @@ public with sharing class HDT_QR_InstallmentPlans {
         CAWithOrWithoutSEPA__c,
         ExistingInstallmentsPlanNumber__c,
         AmountToPayInInstallments__c,
+        InstallmentAmount__c,
         Deposit__c,
         DepositAmount__c,
         Amount__c,
         CutomerAssisted__c,
         RefundableEscape__c,
+        TotalToPay__c,
+        TotalResidue__c,
         WorkStatus__c,
         ApplicationInterests__c,
         SuspensionInThePastTwelveMonths__c,
@@ -67,7 +70,9 @@ public with sharing class HDT_QR_InstallmentPlans {
 
         return [SELECT Id,
         Bill__c,
+        Amount__c,
         DocumentNumber__c,
+        TvFeeResidual__c,
         ExpirationDate__c,
         Type__c
         FROM DocumentSelected__c

@@ -11,9 +11,11 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_OrderProcess.updatePhase(trigger.new,trigger.old);
         
-        
-        ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
-                .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
+        Boolean skipForCancellation = HDT_UTL_OrderProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
+        if(!skipForCancellation){
+            ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
+            .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
+        }
         
         //Checks Mandatory Activity
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
@@ -46,9 +48,9 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         HDT_UTL_OrderProcess.orderCalulateDateUpdate(trigger.new,trigger.old);
         // END @Picchiri HRADTR-77 Calcolo Date 01.06.21
 
-        // START @Picchiri Credit Check 04.06.21        
-        HDT_UTL_OrderProcess.gestioneEsitiCreditCheck(trigger.new,trigger.old);
-        // END @Picchiri Credit Check 04.06.21
+        // START @Picchiri Credit Check 04.06.21                
+        HDT_UTL_OrderProcess.creditCheckManager(trigger.new,trigger.old);
+        // END @Picchiri Credit Check 04.06.21        
 
     }
 

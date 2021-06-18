@@ -175,7 +175,7 @@
         <language>it</language>
         <protected>false</protected>
         <shortDescription>HDT_InDevelopment</shortDescription>
-        <value>In sviluppo</value>
+        <value>In Sviluppo</value>
     </labels>
     <labels>
         <fullName>HDT_Sold</fullName>
@@ -183,5 +183,110 @@
         <protected>false</protected>
         <shortDescription>HDT_Sold</shortDescription>
         <value>Vendibile</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ProductFamilyTrigger</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ProductFamilyTrigger</shortDescription>
+        <value>Offerta commerciale</value>
+    </labels>
+    <labels>
+        <fullName>HDT_PermissionSetNameForCPQ</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_PermissionSetNameForCPQ</shortDescription>
+        <value>HDT_SalesforceCPQAdmin</value>
+    </labels>
+    <labels>
+        <fullName>HDT_SuperUserCPQ</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_SuperUserCPQ</shortDescription>
+        <value>HDT_SuperUserCPQ</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnConfirmProduct</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnConfirmProduct</shortDescription>
+        <value>Non è possibile passare in "Confermata" il bundle, ci sono prodotti opzione del bundle in stato "In sviluppo". Per procedre è necessario modificare lo stato dei prodotti opzione in "Confermata" oppure "Annullata".</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnNullStatus</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnNullStatus</shortDescription>
+        <value>Valore di statao obbligatorio</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnConfirmedTechOff</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnConfirmedTechOff</shortDescription>
+        <value>Attenzione, deve essere presente un'offerta tecnica con relativo codice SAP</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnStatus</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnStatus</shortDescription>
+        <value>Cambio stato non consentito</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnConfirmedEdit</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnConfirmedEdit</shortDescription>
+        <value>Un offerta in stato "Confermata" non può essere modificata. Per modificare l'offerta è necessario cambiare lo stato in "Annullata" e poi in "In sviluppo"</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnManualStatusChange</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnManualStatusChange</shortDescription>
+        <value>Non è possibile effettuare questo passaggio di stato manualmente</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnSoldEdit</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnSoldEdit</shortDescription>
+        <value>Un offerta in stato "Vendibile" non può essere modificata. Per modificare l'offerta è necessario cambiare lo stato in "Annullata" e poi in "In sviluppo"</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnCanceledEdit</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnCanceledEdit</shortDescription>
+        <value>Un offerta in stato "Annullata"" non può essere modificata. Per modificare l'offerta è necessario cambiare lo stato  "In sviluppo"</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnStartDate</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnStartDate</shortDescription>
+        <value>Inserire un Data Inizio</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnEndDate</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnEndDate</shortDescription>
+        <value>Inserire un Data Fine</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnDateDiff1</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnDateDiff1</shortDescription>
+        <value>La data inizio deve essere maggiore della data attuale</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ErrorOnDateDiff2</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ErrorOnDateDiff2</shortDescription>
+        <value>La data fine non può essere inferiore a quella di fine</value>
     </labels>
 </CustomLabels>

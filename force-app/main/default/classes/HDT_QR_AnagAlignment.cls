@@ -25,6 +25,7 @@ public with sharing class HDT_QR_AnagAlignment {
             SELECT 
             AccountId,
             Account.Name,
+            Account.CompanyOwner__c,
             Account.VATNumber__c,
             Account.FiscalCode__c,
             Account.BillingAddress,
@@ -34,6 +35,7 @@ public with sharing class HDT_QR_AnagAlignment {
             Account.RecordType.Developername,
             Account.Category__c,
             Name,
+            Contact__c,
             RecordTypeId,
             RecordType.Name,
             RecordType.DeveloperName,
@@ -92,6 +94,7 @@ public with sharing class HDT_QR_AnagAlignment {
             SELECT 
             AccountId,
             Account.Name,
+            Account.CompanyOwner__c,
             Account.VATNumber__c,
             Account.FiscalCode__c,
             Account.BillingAddress,

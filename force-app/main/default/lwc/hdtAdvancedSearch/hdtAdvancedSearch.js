@@ -82,6 +82,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 {
                     TipoServizioSplit = data.TipoServizio__c.split(",");
                     console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
+                    this.submitFornitura();
                 }
                 
             }
@@ -129,12 +130,12 @@ export default class HdtAdvancedSearch extends LightningElement {
         console.log('enter in handleAdditionalFilter');
         console.log('processType******************'+JSON.stringify(processT));
 
-        if(processT ==='Voltura Tecnica'){
+       /* if(processT ==='Voltura Tecnica'){
             console.log('entra qui Modifica***************');
           
             this.submitFornitura();
-        }
-        else if(processT==='Annullamento contratti')
+        }*/
+        if(processT==='Annullamento contratti')
         {
             console.log('entra qui Cessazioni***************');
             this.submitContract();

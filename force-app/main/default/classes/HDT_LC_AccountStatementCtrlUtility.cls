@@ -27,6 +27,14 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 }
                 //Tasto Aggrega&Filtri 
                 when 'joinFilter' {
+
+                    if(tObj.tabCode == 'EC'){
+                        if(String.isEmpty(dbr.aggregazione)){
+                            dbr.aggregazione = '03';
+                        }
+                        dbr.tipoTransazione = 'EC2';
+                    }
+
                     dbr.dataFine = convertDateFormat(dbr.dataFine);
                     dbr.dataInizio = convertDateFormat(dbr.dataInizio);
                 }
@@ -37,8 +45,19 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                     dbr.codiceCliente = tObj.customerCode;
                     dbr.tipoTransazione = tObj.tabCode;
                     dbr.tipoEstrattoConto = 'ORDINARIO';
-                    dbr.dataInizio = convertDateFormat(dbr.dataInizio);
-                    dbr.dataFine = convertDateFormat(dbr.dataFine);
+
+                    if(String.isEmpty(dbr.dataInizio)){
+                        dbr.dataInizio = null;
+                    } else {
+                        dbr.dataInizio = convertDateFormat(dbr.dataInizio);
+                    }
+       
+                    if(String.isEmpty(dbr.dataFine)){
+                        dbr.dataFine = null;
+                    } else {
+                        dbr.dataFine = convertDateFormat(dbr.dataFine);
+                    }
+
                     dbr.numeroFattura = null;
                     dbr.numeroBollettino = dbr.numeroBollettino;
                     dbr.contoContrattuale = null;
@@ -107,7 +126,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 }
                 //Tasto Contratto/Servizi
                 when 'contractService' {
-
+                    dbr.tipoTransazione = 'EC2';
                 }
                 //Tasto Filtri-Paperless
                 when 'paperlessFilters' {

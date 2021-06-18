@@ -46,6 +46,22 @@ public with sharing class HDT_UTL_ServicePoint {
 			spNew.RequestPhase__c  = mapRes.get('FASE');
 		}
 */
+
+		if(mapRes.get('STATODEVICE')!=null && spNew.MeterStatus__c  != 'Sospeso'){
+
+            if(mapRes.get('STATODEVICE')== 'A'){
+                spNew.MeterStatus__c  = 'Attivo';
+
+            }
+            else if(mapRes.get('STATODEVICE')== 'I')
+            {
+                spNew.MeterStatus__c  ='Inattivo' ;
+
+            }
+            else{
+                spNew.MeterStatus__c  = 'Bozza';
+            }   
+		}
 		if(mapRes.get('PRESSIONE')!=null && !String.isBlank(mapRes.get('PRESSIONE'))){
 			spNew.Pressure__c  = integer.valueOf(mapRes.get('PRESSIONE'));
 		}

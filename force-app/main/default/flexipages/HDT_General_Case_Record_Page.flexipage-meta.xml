@@ -62,6 +62,31 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
+                    <value>ProcessSteps</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
                     <value>Cases</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -394,7 +419,7 @@
                                 <criteria>
                                     <leftValue>{!Record.Phase__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Annullamento - Esito KO da DL</rightValue>
+                                    <rightValue>Annullamento - Esito KO da DL/SII</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -426,6 +451,16 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Case.Catalogo_Servizi</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Case.HDT_ResumeCommercialBonus</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Contratti/Bonus Commerciale</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

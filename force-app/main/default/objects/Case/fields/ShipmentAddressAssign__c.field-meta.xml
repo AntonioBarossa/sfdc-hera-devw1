@@ -3,7 +3,7 @@
     <fullName>ShipmentAddressAssign__c</fullName>
     <description>Campo per indicare l&apos;indirizzo di spedizione dell&apos;assegno nel processo di Rimborso</description>
     <externalId>false</externalId>
-    <label>Indirizzo spedizione assegno</label>
+    <label>Indirizzo di Fornitura</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

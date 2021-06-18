@@ -68,6 +68,24 @@ public inherited sharing class HDT_UTL_Order {
         return result;
     }
 
+    public void cambioOffertaActions(Order ord) {
+        if (isCambioOfferta(ord)) {
+
+            String processType = '';
+
+            if(ord.ServicePoint__r.RecordType.DeveloperName == 'HDT_RT_Ele') {
+                processType = 'Cambio Offerta Ele';
+            } else {
+                processType = 'Cambio Offerta Gas';
+            }
+
+            orderSrv.updateRecord(new Order(
+                Id = ord.Id,
+                ProcessType__c = processType
+            ));
+        }
+    }
+
     public void switchInRipristinatorioAction(Order ord) {
 
         system.debug('HDT_UTL_Order.switchInRipristinatorioAction START');
@@ -99,6 +117,38 @@ public inherited sharing class HDT_UTL_Order {
         }
 
         system.debug('HDT_UTL_Order.switchInRipristinatorioAction END');
+    }
+
+    public void attivazioneConModificaActions(Order ord){
+        system.debug('attivazioneConModificaActions START');
+        system.debug('attivazioneConModificaActions ord.ServicePoint__r.RecordType.DeveloperName ' + ord.ServicePoint__r.RecordType.DeveloperName);
+        system.debug('attivazioneConModificaActions ord.PowerRequested__c ' + ord.PowerRequested__c);
+        system.debug('attivazioneConModificaActions ord.PowerCommitted__c ' + ord.PowerCommitted__c);
+
+
+        if (ord.ServicePoint__c != null 
+            && ord.ServicePoint__r.RecordType.DeveloperName == 'HDT_RT_Ele' 
+            && ord.PowerRequested__c != null 
+            && ord.PowerRequested__c != ord.PowerCommitted__c ) {
+
+                system.debug('attivazioneConModificaActions ENTER');
+            orderSrv.updateRecord(new Order(
+                Id = ord.Id,
+                ProcessType__c = 'Prima Attivazione con modifica'
+            ));
+        }
+
+        system.debug('attivazioneConModificaActions END');
+    }
+
+    public void setOrderProcess(Order ord){
+        if (ord.RecordType.DeveloperName == 'HDT_RT_Default') {
+            if (ord.ServicePoint__c != null){
+                cambioOffertaActions(ord);
+            }
+            switchInRipristinatorioAction(ord);
+            attivazioneConModificaActions(ord);
+        }
     }
 
 }

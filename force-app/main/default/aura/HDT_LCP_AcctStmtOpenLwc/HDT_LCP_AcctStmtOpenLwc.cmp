@@ -6,8 +6,9 @@
     <aura:handler event="lightning:tabClosed" action="{!c.onTabClosed}"/> 
 
     <aura:attribute name="recordid" type="String"/>
+    <aura:attribute name="tab" type="String"/>
     
-    <c:hdtAccountStatementTabs recordId="{!v.recordid}" onauramodalcmp="{!c.openmodal}" ></c:hdtAccountStatementTabs>
+    <c:hdtAccountStatementTabs recordId="{!v.recordid}" defaultTab="{!v.tab}" onauramodalcmp="{!c.openmodal}" ></c:hdtAccountStatementTabs>
 
     <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="modalbox" class="slds-modal">
         <div class="slds-modal__container">

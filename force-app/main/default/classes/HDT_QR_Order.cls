@@ -153,30 +153,36 @@ public inherited sharing class HDT_QR_Order {
             ActivationStreetNumber__c,
             ImplantType__c,
             PowerCommitted__c,
-            ServicePoint__r.MarketOrigin__c, // @Picchiri Calcolo della date Switch in 21/05/21
-            WizardCompletedDate__c,          // @Picchiri Calcolo della date Switch in 21/05/21
-            ActivatedDate,                   // @Picchiri Calcolo della date Switch in 21/05/21
-            ServicePoint__r.VoltageLevel__c, // @Picchiri Calcolo della date Switch in 21/05/21
-            ServicePoint__r.SupplyType__c,   // @Picchiri Calcolo della date Switch in 21/05/21
-            RecessNotice__c,                 // @Picchiri Calcolo della date Switch in 21/05/21
-            CustomerCategory__c,             // @Picchiri Calcolo della date Switch in 26/05/21
-            Channel__c,                      // @Picchiri Calcolo della date Switch in 27/05/21
-            Market__c,                       // @Picchiri Calcolo della date Switch in 26/05/21
-            MarketOrigin__c,                 // @Picchiri Calcolo della date Switch in 27/05/21
-            VoltageLevel__c,                 // @Picchiri Calcolo della date Switch in 27/05/21 
-            SupplyType__c,                   // @Picchiri Calcolo della date Switch in 27/05/21 
-            CreatedById,                     // @Picchiri Calcolo della date Switch in 31/05/21 
-            Account.CustomerCode__c,         // @Picchiri Calcolo della date Switch in 31/05/21             
-            Account.CustomerMarking__c,      // @Picchiri Calcolo della date Switch in 31/05/21             
-            Account.Type,                    // @Picchiri Calcolo della date Switch in 31/05/21 
-            ServicePoint__r.SupplyStreetName__c, // @Picchiri Calcolo della date Switch in 31/05/21 ERRORE
-		    ServicePoint__r.SupplyCity__c,       // @Picchiri Calcolo della date Switch in 31/05/21 
-		    ServicePoint__r.SupplyProvince__c,   // @Picchiri Calcolo della date Switch in 31/05/21 
-		    ServicePoint__r.SupplyPostalCode__c, // @Picchiri Calcolo della date Switch in 31/05/21             
-            CommercialProduct__c,                // @Picchiri Calcolo della date Switch in 31/05/21 
-            AnnualConsumption__c,                 // @Picchiri Calcolo della date Switch in 31/05/21 
-            Catalog__c,                               // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
-            ServicePoint__r.AnnualConsumption__c     // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
+            PowerRequested__c,
+            ServicePoint__r.MarketOrigin__c,                // @Picchiri 21/05/21
+            WizardCompletedDate__c,                         // @Picchiri 21/05/21
+            ActivatedDate,                                  // @Picchiri 21/05/21
+            ServicePoint__r.VoltageLevel__c,                // @Picchiri 21/05/21
+            ServicePoint__r.SupplyType__c,                  // @Picchiri 21/05/21
+            RecessNotice__c,                                // @Picchiri 21/05/21
+            CustomerCategory__c,                            // @Picchiri 26/05/21
+            Channel__c,                                     // @Picchiri 27/05/21
+            Market__c,                                      // @Picchiri 26/05/21
+            MarketOrigin__c,                                // @Picchiri 27/05/21
+            VoltageLevel__c,                                // @Picchiri 27/05/21 
+            SupplyType__c,                                  // @Picchiri 27/05/21 
+            CreatedById,                                    // @Picchiri 31/05/21 
+            Account.CustomerCode__c,                        // @Picchiri 31/05/21             
+            Account.CustomerMarking__c,                     // @Picchiri 31/05/21             
+            Account.CustomerType__c,                        // @Picchiri 31/05/21 
+            ServicePoint__r.SupplyStreetName__c,            // @Picchiri 31/05/21  
+		    ServicePoint__r.SupplyCity__c,                  // @Picchiri 31/05/21 
+		    ServicePoint__r.SupplyProvince__c,              // @Picchiri 31/05/21 
+		    ServicePoint__r.SupplyPostalCode__c,            // @Picchiri 31/05/21
+            ServicePoint__r.Account__r.CustomerCode__c,     // @Picchiri 08/06/21             
+            ServicePoint__r.Account__r.FiscalCode__c,       // @Picchiri 08/06/21             
+            CommercialProduct__c,                           // @Picchiri 31/05/21 
+            AnnualConsumption__c,                           // @Picchiri 31/05/21 
+            Catalog__c,                                     // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
+            ServicePoint__r.AnnualConsumptionStandardM3__c, // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
+            BillingProfile__r.AccountClass__c,              // @Picchiri Calcolo della date Switch in 08/06/21             
+            OwnerId,                                        // @Picchiri  10/06/21
+            OrderReferenceNumber                            // @Picchiri  15/06/21
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -188,7 +194,8 @@ public inherited sharing class HDT_QR_Order {
             SELECT 
             Id,
             Phase__c,
-            PrecheckResultSII__c
+            PrecheckResultSII__c,
+            BillingProfile__c
             FROM Order 
             WHERE Id = :id
             WITH SECURITY_ENFORCED
@@ -205,11 +212,108 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getRecordsByIds(List<String> orderIds){
         return [
             SELECT 
+            AccountId,
+            Account.Name,
+            Account.VATNumber__c,
+            Account.FiscalCode__c,
+            Account.BillingAddress,
+            Account.ShippingAddress,
+            Account.FirstName__c,
+            Account.LastName__c,
+            Account.RecordType.Developername,
+            Account.Category__c,
+            Name,
             RecordTypeId,
             RecordType.Name,
             RecordType.DeveloperName,
-            Phase__c,
-            Status
+            SystemModstamp,
+            Status,
+            ContractSigned__c,
+            SignedDate__c,
+            SignatureMethod__c,
+            DocSendingMethod__c,
+            Sale__c,
+            CreatedDate,
+            Step__c,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            //INIZIO SVILUPPI EVERIS
+            ContractId,
+            ServicePoint__r.CommoditySector__c,
+            //FINE SVILUPPI EVERIS
+            ServicePoint__r.RecordType.DeveloperName,
+            ServicePoint__r.Account__c,
+            ServicePoint__r.MeterClass__c,
+            ServicePoint__r.UseTypeEnergy__c,
+            ServicePoint__r.UseCategory__c,
+            BillingProfile__c,
+            Deliberation__c,
+            ParentOrder__c,
+            ParentOrder__r.Status,
+            ParentOrder__r.Phase__c,
+            ParentOrder__r.ContractSigned__c,
+            ParentOrder__r.SignedDate__c,
+            OrderNumber,
+            Phase__c, 
+            RequestOption__c,
+            WaiverRightAfterthought__c,
+            MaxAfterthoughtDate__c,
+            PreviousTrader__c,
+            VolturaThirdTrader__c,
+            SBQQ__Quote__r.IsVAS__c,
+            SBQQ__Quote__r.AmendmentAllowed__c,
+            SBQQ__Quote__r.ContractReference__c,
+            SBQQ__Quote__r.OrderReference__c,
+            SBQQ__Quote__r.ContractReference__r.ContractNumber,
+            SBQQ__Quote__r.OrderReference__r.OrderNumber,
+            SBQQ__Quote__r.AllowChangeUse__c,
+            ProcessType__c,
+            SalesCompany__c,
+            Campaign__c,
+            Campaign__r.Name,
+            ContractReference__c,
+            ContractReference__r.ServicePoint__c,
+            OrderReference__c,
+            ContractReference__r.ContractNumber,
+            OrderReference__r.OrderNumber,
+            ActivationStreetName__c,
+            ActivationCity__c,
+            ActivationPostalCode__c,
+            ActivationCountry__c,
+            ActivationProvince__c,
+            ActivationStreetNumberExtension__c,
+            ActivationStreetNumber__c,
+            ImplantType__c,
+            PowerCommitted__c,
+            ServicePoint__r.MarketOrigin__c,                
+            WizardCompletedDate__c,                         
+            ActivatedDate,                                  
+            ServicePoint__r.VoltageLevel__c,                
+            ServicePoint__r.SupplyType__c,                  
+            RecessNotice__c,                                
+            CustomerCategory__c,                            
+            Channel__c,                                     
+            Market__c,                                      
+            MarketOrigin__c,                                
+            VoltageLevel__c,                                 
+            SupplyType__c,                                   
+            CreatedById,                                     
+            Account.CustomerCode__c,                                     
+            Account.CustomerMarking__c,                                  
+            Account.CustomerType__c,                         
+            ServicePoint__r.SupplyStreetName__c,             
+		    ServicePoint__r.SupplyCity__c,                   
+		    ServicePoint__r.SupplyProvince__c,               
+		    ServicePoint__r.SupplyPostalCode__c,            
+            ServicePoint__r.Account__r.CustomerCode__c,                  
+            ServicePoint__r.Account__r.FiscalCode__c,                    
+            CommercialProduct__c,                            
+            AnnualConsumption__c,                            
+            Catalog__c,                                     
+            ServicePoint__r.AnnualConsumptionStandardM3__c, 
+            BillingProfile__r.AccountClass__c,                           
+            OwnerId,                                        
+            OrderReferenceNumber 
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -434,6 +538,9 @@ public inherited sharing class HDT_QR_Order {
 
     public List<Order> getRecordByOrderNumber(String orderNumber){
         return [Select id,phase__c,PrecheckResultSII__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+    }
+    public List<Order> getRecordByOrderId(String recordId){
+        return [Select id,phase__c,PrecheckResultSII__c from Order where Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getRecordsByOrdersIdsBulk(List<String> orderIds){

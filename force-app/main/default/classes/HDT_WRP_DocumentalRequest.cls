@@ -20,6 +20,11 @@ public class HDT_WRP_DocumentalRequest{
 
 	public class HDT_WRP_DocumentalDeliverPackageRequest{
 		public String requestId;
+        public String mode;
+        public String signMode;
+        public String objectName;
+        public String objectId;
+        public HDT_WRP_DocumentalSignInfo signInfo;
 		public List<HDT_WRP_DocumentalPackage> sPackage;
 
         public HDT_WRP_DocumentalDeliverPackageRequest(){
@@ -36,6 +41,40 @@ public class HDT_WRP_DocumentalRequest{
         }
         public HDT_WRP_DocumentalDriver(){
             
+        }
+    }
+    public class HDT_WRP_DocumentalCustomerInfo
+    {
+        public string vatNumber { get; set; }
+        public string fiscalCode { get; set; }
+        public string contractCode { get; set; }
+        public string creationUrl { get; set; }
+        public string emailSubject { get; set; }
+        public string email { get; set; }
+        public string name { get; set; }
+    }
+
+    public class HDT_WRP_DocumentalTemplate
+    {
+        public string sequence { get; set; }
+        public string templateId { get; set; }
+    }
+
+    public class HDT_WRP_DocumentalSignInfo
+    {
+        public String customerEnvironmentId { get; set; }
+        public HDT_WRP_DocumentalCustomerInfo customerInfo { get; set; }
+        public String pageUrl { get; set; }
+        public String status { get; set; }
+        public String idCheckConfigurationName { get; set; }
+        public String requireIdLookup { get; set; }
+        public List<String> senderProvidedNumbers { get; set; }
+        public HDT_WRP_DocumentalTemplate template { get; set; }
+
+        public HDT_WRP_DocumentalSignInfo(){
+            this.customerInfo = new HDT_WRP_DocumentalCustomerInfo();
+            this.template = new HDT_WRP_DocumentalTemplate();
+            this.senderProvidedNumbers = new List<String>();
         }
     }
 }

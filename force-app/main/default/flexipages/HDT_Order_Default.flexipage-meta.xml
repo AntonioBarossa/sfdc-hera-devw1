@@ -32,8 +32,12 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>createQuickActionName</name>
+                    <value>NewContact</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>lookupFieldName</name>
-                    <value>Order.BillToContactId</value>
+                    <value>Order.Contact__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>updateQuickActionName</name>
@@ -187,29 +191,77 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>Order.HDT_ValidazioneDocumentale</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>In attesa validazione</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>CONTAINS</operator>
-                                    <rightValue>HDT_RT_Voltura</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>CustomButton.Order.HDT_InfoTracking</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Order.Validazione_Documenti</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CustomButton.Order.HDT_RiprendiProcesso</value>
+                            <value>CustomButton.Order.HDT_Ripensamento</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.ProcessType__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Switch in Gas</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.ProcessType__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Switch in Ele</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NotRethinkable__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Order.HDT_AnnullamentoPrestazione</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.NotCancellable__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Order.Ripristina_Annullamento</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Annullamento - Comunicazione verso Heroku KO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Annullamento - Esito KO da DL/SII</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Annullamento - Ammissibilità KO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ripensamento - Comunicazione verso Heroku KO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ripensamento - Ammissibilità KO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ripensamento - Esito KO da SII</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -228,6 +280,10 @@
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
                     <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numVisibleActions</name>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>

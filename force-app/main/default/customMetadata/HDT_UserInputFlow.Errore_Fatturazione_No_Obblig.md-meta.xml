@@ -60,6 +60,11 @@
         &quot;Column&quot;   : 2
     },
     {
+        &quot;FieldName&quot; : &quot;ContractCode__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
         &quot;FieldName&quot; : &quot;BillNumber__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2

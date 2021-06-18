@@ -43,11 +43,11 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
         statusResponse = new HDT_WRP_ProductStObjProcess.HDT_WRP_StatusResponse();
         statusResponse.success = false;
-        statusResponse.message = 'Cambio stato non consentito';
+        statusResponse.message = Label.HDT_ErrorOnStatus;
 
         if(oldProduct.Status__c == null || newProduct.Status__c == null){
             statusResponse.success = false;
-            statusResponse.message = 'Non puoi inserire questo valore come stato';
+            statusResponse.message = Label.HDT_ErrorOnNullStatus;
             return statusResponse;
         }
 
@@ -64,18 +64,18 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
                 if(prodOpt > 0){
                     statusResponse.success = false;
-                    statusResponse.message = 'Attenzione devi ricontrollare le Product Option';
+                    statusResponse.message = Label.HDT_ErrorOnConfirmProduct;//'Attenzione devi ricontrollare le Product Option, devono essere tutte nello stato "Confermata" o "Vendibile"';
                     return statusResponse;
                 }
 
-                if(techOff == 0){
+                if(oldProduct.Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger) && techOff == 0){
                     statusResponse.success = false;
-                    statusResponse.message = 'Attenzione non esistono offerte tecniche';
+                    statusResponse.message = Label.HDT_ErrorOnConfirmedTechOff;
                     return statusResponse;
                 }
 
                 List<String> resp;
-                resp = HDT_UTL_ProductStObjProcess.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
+                resp = checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
                 System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                 if(resp[0]=='KO'){
                     statusResponse.success = false;
@@ -108,7 +108,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
             if(newStatus.equalsIgnoreCase(confirmed)){
                 statusResponse.success = false;
-                statusResponse.message = 'L\'offerta è ' + confirmed + ', non puoi modificarla';
+                statusResponse.message = Label.HDT_ErrorOnConfirmedEdit;
                 return statusResponse;
             }
 
@@ -118,7 +118,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                     statusResponse.message = 'NoCheckingRequired';
                 } else {
                     statusResponse.success = false;
-                    statusResponse.message = 'Non puoi effettuare questo passaggio manualmente';
+                    statusResponse.message = Label.HDT_ErrorOnManualStatusChange;
                 }
                 return statusResponse;
             }
@@ -146,7 +146,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
             if(newStatus.equalsIgnoreCase(sold)){
                 statusResponse.success = false;
-                statusResponse.message = 'L\'offerta è ' + sold + ', non puoi modificarla';
+                statusResponse.message = Label.HDT_ErrorOnSoldEdit;
                 return statusResponse;
             }
 
@@ -162,7 +162,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                     statusResponse.message = 'NoCheckingRequired';
                 } else {
                     statusResponse.success = false;
-                    statusResponse.message = 'Non puoi effettuare questo passaggio manualmente';
+                    statusResponse.message = Label.HDT_ErrorOnManualStatusChange;
                 }
                 return statusResponse;
             }
@@ -186,7 +186,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
             if(newStatus.equalsIgnoreCase(canceled)){
                 statusResponse.success = false;
-                statusResponse.message = 'L\'offerta è ' + canceled + ', non puoi modificarla';
+                statusResponse.message = Label.HDT_ErrorOnCanceledEdit;
                 return statusResponse;
             }
 
@@ -206,7 +206,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                 statusResponse.message = '';
 
                 List<String> resp;
-                resp = HDT_UTL_ProductStObjProcess.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
+                resp = checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
                 System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                 if(resp[0]=='KO'){
                     statusResponse.success = false;
@@ -244,7 +244,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                     }
 
                     List<String> resp;
-                    resp = HDT_UTL_ProductStObjProcess.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
+                    resp = checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
                     System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                     if(resp[0]=='KO'){
                         statusResponse.success = false;
@@ -288,25 +288,25 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
         if(startDate == null){
             resp.add('KO');
-            resp.add('Devi inserire una data inizio');
+            resp.add(Label.HDT_ErrorOnStartDate);
             return resp;
         }
 
         if(endDate == null){
             resp.add('KO');
-            resp.add('Devi inserire una data fine');
+            resp.add(Label.HDT_ErrorOnEndDate);
             return resp;
         }
 
         if(startDate <= Date.today()){
             resp.add('KO');
-            resp.add('La data inizio deve essere maggiore della data attuale');
+            resp.add(Label.HDT_ErrorOnDateDiff1);
             return resp;
         }
 
         if(startDate >= endDate){
             resp.add('KO');
-            resp.add('La data fine non può essere inferiore a quella di fine');
+            resp.add(Label.HDT_ErrorOnDateDiff2);
             return resp;
         }
 
@@ -364,7 +364,8 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
         }
 
         List<SBQQ__ProductOption__c> productOptionList;
-        productOptionList = getProductOption(productOptionList, product2IdList, 'Confermata');
+        productOptionList = getProductOption(productOptionList, product2IdList, Label.HDT_InDevelopment);//
+        System.debug('>>> productOptionList ' + productOptionList.size());
 
         for(SBQQ__ProductOption__c prodOpt : productOptionList){
             if(productOptionMap.containsKey(prodOpt.SBQQ__ConfiguredSKU__c)){
@@ -382,7 +383,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
             SELECT Id, SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.Status__c
             FROM SBQQ__ProductOption__c
             WHERE SBQQ__ConfiguredSKU__c IN :product2IdList
-            AND SBQQ__OptionalSKU__r.Status__c != :status
+            AND SBQQ__OptionalSKU__r.Status__c = :status
             WITH SECURITY_ENFORCED
         ];
         return productOptionList;

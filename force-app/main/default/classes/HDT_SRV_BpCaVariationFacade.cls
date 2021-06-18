@@ -23,7 +23,7 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
                 if (data != null) {
                     String tipoAttivita = (String) data.get('tipoAttivita');
-                    if (!tipoAttivita.equals('Pratica gestita')){ // ==> tipoAttivita = Errore cons. eBSM ==> riportiamo l'errore nell'activity.
+                    if (tipoAttivita != null && !tipoAttivita.equals('Pratica gestita')){ // ==> tipoAttivita = Errore cons. eBSM ==> riportiamo l'errore nell'activity.
                         System.debug('Creazione activity Errore Lavorazione SAP');
                         HDT_SRV_BpCaVariation.createActivity(recordId,(String)data.get('commenti'),'Errore Lavorazione SAP');
                         response.success = false;

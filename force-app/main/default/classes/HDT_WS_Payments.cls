@@ -18,11 +18,13 @@ global inherited sharing class HDT_WS_Payments implements wrts_prcgvr.Interfaces
         HttpResponse response = new HttpResponse();
         String result;
         String recordId;
+        String depositMode;
         String process;
         String requestBody;
         String endpoint = 'Callout:' + method;
 
         recordId = (String) obj.get('Id');
+        depositMode = (String) obj.get('DepositPaymentMode__c');
         process = (String) obj.get('Type');
         requestBody = paymentsSrv.createRequestBody(method, recordId);
 
@@ -31,7 +33,7 @@ global inherited sharing class HDT_WS_Payments implements wrts_prcgvr.Interfaces
             request.setEndpoint(endpoint);
             request.setMethod('POST');
             request.setBody(requestBody);
-            request.setTimeout(30000);
+            request.setTimeout(120000);
             request.setHeader('Accept','application/json');
             request.setHeader('Content-Type','application/json');
 
@@ -44,7 +46,7 @@ global inherited sharing class HDT_WS_Payments implements wrts_prcgvr.Interfaces
         }
 
         
-        paymentsUtl.handleResponse(recordId, process, response);
+        paymentsUtl.handleResponse(recordId, process, depositMode, response) ;
         
 
         return responseReturn;

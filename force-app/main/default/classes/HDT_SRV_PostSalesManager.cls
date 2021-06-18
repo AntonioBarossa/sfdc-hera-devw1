@@ -60,6 +60,17 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
                 psmUtl.changePaymentMethod(sender);
 
             }
+
+            when 'handleVariazioneAmministratore'{
+
+                psmUtl.handleVariazioneAmministratore(sender);
+
+            }
+            when 'advanceParentCasePhase' {
+
+                psmUtl.advanceParentCasePhase(sender);
+            
+            }
         }
 
         return null;

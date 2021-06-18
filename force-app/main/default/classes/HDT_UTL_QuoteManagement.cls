@@ -100,7 +100,7 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 	private static String getRangeValue(Decimal power){
 		String result = '';
 		if(power != null){
-			List<HDT_PowerRangeValue__mdt> powerRangeValueList = [SELECT Range__c FROM HDT_PowerRangeValue__mdt WHERE Low__c <=: power AND High__c >= :power WITH SECURITY_ENFORCED];
+			List<HDT_PowerRangeValue__mdt> powerRangeValueList = [SELECT Range__c FROM HDT_PowerRangeValue__mdt WHERE Low__c <: power AND High__c >= :power WITH SECURITY_ENFORCED];
 			if(powerRangeValueList.size() > 0){
 				result = powerRangeValueList[0].Range__c;
 			}

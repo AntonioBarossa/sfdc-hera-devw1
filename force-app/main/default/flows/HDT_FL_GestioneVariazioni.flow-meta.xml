@@ -1397,8 +1397,8 @@
     <decisions>
         <name>OutcomeForm_0_0_0_0</name>
         <label>OutcomeForm</label>
-        <locationX>5280</locationX>
-        <locationY>2045</locationY>
+        <locationX>5288</locationX>
+        <locationY>1889</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annullata_0_0_0_0</name>
@@ -1440,7 +1440,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Aggiorna_Fase_in_Da_Inviare_0</targetReference>
+                <targetReference>Seleziona_Documenti</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -1843,10 +1843,10 @@
     <decisions>
         <name>Seleziona_Documenti</name>
         <label>Seleziona Documenti?</label>
-        <locationX>5283</locationX>
-        <locationY>1863</locationY>
+        <locationX>5276</locationX>
+        <locationY>2047</locationY>
         <defaultConnector>
-            <targetReference>OutcomeForm_0_0_0_0</targetReference>
+            <targetReference>Aggiorna_Fase_in_Da_Inviare_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Selezionare documenti</defaultConnectorLabel>
         <rules>
@@ -2397,7 +2397,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationY>1742</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Seleziona_Documenti</targetReference>
+            <targetReference>OutcomeForm_0_0_0_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -4472,7 +4472,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>GetInputCase.Type</elementReference>
+                    <elementReference>VariazioneFiscaleProcess</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -4491,13 +4491,13 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>Seleziona_Documenti_Screen</name>
         <label>Seleziona Documenti Screen</label>
-        <locationX>5607</locationX>
-        <locationY>1962</locationY>
+        <locationX>5579</locationX>
+        <locationY>2134</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>OutcomeForm_0_0_0_0</targetReference>
+            <targetReference>Aggiorna_Fase_in_Da_Inviare_0</targetReference>
         </connector>
         <fields>
             <name>DisplayHeaderDocument</name>
