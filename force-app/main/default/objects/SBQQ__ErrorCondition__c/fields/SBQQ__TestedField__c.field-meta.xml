@@ -206,7 +206,7 @@
             <value>
                 <fullName>CampaignName__c</fullName>
                 <default>false</default>
-                <label>Campagna</label>
+                <label>Nome Campagna</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
