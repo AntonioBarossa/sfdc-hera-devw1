@@ -765,7 +765,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>hdtDocumentSignature_0_0.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
