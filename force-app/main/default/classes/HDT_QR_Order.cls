@@ -565,9 +565,16 @@ public inherited sharing class HDT_QR_Order {
         WHERE Id = :userId
         WITH SECURITY_ENFORCED
         LIMIT 1].UserRole.Name;
-
-
     }
+
+    public List<Order> getRecordsByIdWithFields(List<String> Ids, String fields) {
+        String query = 'SELECT '+ fields +
+                ' From Order where Id IN :Ids';
+        List<Order> orders = Database.query(query);
+
+        return orders;
+    }
+
     //FINE SVILUPPI EVERIS
 
 }
