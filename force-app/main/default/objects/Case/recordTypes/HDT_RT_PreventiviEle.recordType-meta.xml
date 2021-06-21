@@ -9810,6 +9810,22 @@
             <fullName>Non Domestico</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>A-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B-Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C-Aziende di pubblica utilita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D-Altri usi</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SuspensionMotivation__c</picklist>

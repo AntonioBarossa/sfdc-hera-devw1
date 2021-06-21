@@ -114,7 +114,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         if(result === 1){
                             this.readingDisabled = false;
                         } else {
-                            this.readingDisabled = false;
+                            this.readingDisabled = true;
                         }
                     }).catch(error => {
                         console.log('Error -> ' +error);
@@ -485,15 +485,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         }).catch(error => {
 
-            /*this.loading = false;
+            this.loading = false;
             console.log((error.body.message !== undefined) ? error.body.message : error.message);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: (error.body.message !== undefined) ? error.body.message : error.message,
-                variant: 'error',
-                mode: 'sticky'
+                variant: 'error'
             });
-            this.dispatchEvent(toastErrorMessage);*/
+            this.dispatchEvent(toastErrorMessage);
 
         });
     }
@@ -745,10 +744,18 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
             console.log('Inside reading condition');
 
-            this.template.querySelector('c-hdt-self-reading').handleSaveButton();
+            try{
+                this.template.querySelector('c-hdt-self-reading').handleSaveButton();
+            } catch(e){
+                console.log('Inside Exception');
+                console.log('Here');
+                this.loading = false;
+                return;
+            }
+            //console.log('ResultReading -> ' + result);
 
             console.log('isSavedReading--> '+this.isSavedReading);
-
+            
         }
 
         this.updateProcess(currentSectionIndex, nextSectionStep);
@@ -838,7 +845,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'SignedDate__c',
                         'typeVisibility': this.order.ParentOrder__r.SignedDate__c != null,
                         'required': true,
-                        'disabled': false,
+                        'disabled': true,
                         'value': this.order.ParentOrder__r.SignedDate__c,
                         'processVisibility': ''
                     },
@@ -2793,13 +2800,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loadAccordion();
 
         //EVERIS
-        this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura';
-        console.log('IsVolture--> '+this.isVolture);
-        console.log('ConfirmedSteps--> '+this.confirmedSteps);
-        console.log('Details Callback End');
-        console.log('CommoditySector -> ' + this.order.ServicePoint__r.CommoditySector__c)
-        this.readingDisabled = (this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
-        console.log(this.readingDisabled);
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+            this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura';
+            console.log('IsVolture--> '+this.isVolture);
+            console.log('ConfirmedSteps--> '+this.confirmedSteps);
+            console.log('Details Callback End');
+            console.log('CommoditySector -> ' + this.order.ServicePoint__r.CommoditySector__c)
+            this.readingDisabled = (this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
+            console.log('ReadingDisabled? ->' +this.readingDisabled);
+        }
         //EVERIS
     }
 

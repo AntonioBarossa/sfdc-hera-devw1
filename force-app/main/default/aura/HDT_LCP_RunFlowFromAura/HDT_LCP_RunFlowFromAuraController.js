@@ -23,6 +23,9 @@
         //variabile per innesco da altri case
         var parentRecordId = myPageRef.state.c__parentRecordId;
 
+        //variabile per innesco da campagne
+        var campaignId = myPageRef.state.c__campaignId;
+
 
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
@@ -37,6 +40,7 @@
         console.log('# sObjectRecordToCancell -> ' + sObjectRecordToCancell);
         console.log('# context -> '+context);
         console.log('# parentRecordId -> ' +parentRecordId);
+        console.log('# campaignId -> ' + campaignId)
         console.log('# ----------------- #');
 
         var workspaceAPI = component.find("workspace");
@@ -108,7 +112,10 @@
             inputVariables.push({ name : 'serviceCatalogId', type : 'String', value : serviceCatalogId });
         }
         if(parentRecordId != null){
-            inputVariables.push({ name : 'ParentRecordId', type: 'String', value : parentRecordId });
+            inputVariables.push({ name : 'ParentRecordId', type : 'String', value : parentRecordId });
+        }
+        if(campaignId != null){
+            inputVariables.push({ name : 'CampaignId', type : 'String', value : campaignId});
         }
 
         console.log('## inputVariables -> ');
