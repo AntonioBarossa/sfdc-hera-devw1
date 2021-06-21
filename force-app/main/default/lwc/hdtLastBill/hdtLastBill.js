@@ -37,6 +37,7 @@ export default class HdtLastBill extends LightningElement {
                 kpiId: data.fields.KpiTracking__c.value
             }).then(result => {
                 var resultJSON = JSON.parse(result);
+                console.log(result + ' ' + resultJSON);
                 if(resultJSON.outcome === 'OK'){
                     this.amount = resultJSON.amount;
                     this.status = resultJSON.billStatus;
@@ -49,20 +50,26 @@ export default class HdtLastBill extends LightningElement {
                     console.log(this.expirationDate);
                     console.log(this.billNumber);
                     this.energy = this.commodity['Energia elettrica'];
+                    this.gas = this.commodity['Gas'];
                     console.log(this.energy);
                     this.spinner = false;
                 }else{
-                    error = true;
+                    this.error = true;
                     this.message = resultJSON.message;
                     this.spinner = false;
                 }
             })
             .catch(error => {
                 //console.log('errore ' +error.body.message);
-                console.log('errore ' + error);
+                console.log('errore ' + error.body.message);
+                this.error = true;
+                this.spinner = false;
+                this.message = 'Si è verificato un errore inatteso';
             });
         }else{
             console.log('no data ' + this.recordId);
+            //this.spinner = false;
+            //this.message = 'Attenzione! Al momento non è possibile visualizzare l\'ultima bolletta del cliente';
         }
     }
 
