@@ -70,7 +70,7 @@
                                 </lightning-layout>
                              <span class="slds-text-heading_medium slds-hyphenate slds-m-left_xx-large">Indirizzo Recapito</span>
                              <lightning-layout-item padding="around-small" size="12">
-                                 <lightning-datatable selectable-row={disableCheckBoxFatturazione} max-row-selection=1 class="table-section" key-field="id" data={tableData} columns={tableColumns} onrowselection={getSelectedServicePoint} ></lightning-datatable>
+                                 <lightning-datatable selectable-row={disableCheckBoxFatturazione} max-row-selection=1 class="table-section" key-field="id" data={dataAccountAddress} columns={columns} onrowselection={getSelectedServicePoint} ></lightning-datatable>
                                  <div class="slds-grid slds-grid_align-center">
                                     <div class="slds-col">
                                         <button onclick={previousPage} class="slds-button slds-button_neutral pagination-button">
@@ -104,7 +104,7 @@
                                 </lightning-layout>
                                 <span class="slds-text-heading_medium slds-hyphenate slds-m-left_xx-large">Indirizzi Di Fornitura</span>
                                 <lightning-layout-item padding="around-small" size="12">
-                                    <lightning-datatable selectable-row={disableCheckBoxFornitura} max-row-selection=1 class="table-section" key-field="id" data={tableDataFornitura} columns={tableColumnsFornitura} onrowselection={getSelectedAddress} ></lightning-datatable>
+                                    <lightning-datatable selectable-row={disableCheckBoxFornitura} max-row-selection=1 class="table-section" key-field="id" data={tableDataFornitura} columns={columnsFornitura} onrowselection={getSelectedAddress} ></lightning-datatable>
                                     <div class="slds-grid slds-grid_align-center">
                                         <div class="slds-col">
                                             <button onclick={previousPageFornitura} class="slds-button slds-button_neutral pagination-button">

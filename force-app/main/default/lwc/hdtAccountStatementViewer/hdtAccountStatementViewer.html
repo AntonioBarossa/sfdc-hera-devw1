@@ -227,8 +227,8 @@
                             <th key={c.fieldName} >
                                 <div class="slds-m-left_x-small slds-truncate slds-align_absolute-center divheader" title={c.label}><!--slds-cell-fixed-->
                                     <p>{c.label}</p>
-                                    <p if:true={c.showAmount}>
-                                        &nbsp;-&nbsp;
+                                    <p if:true={c.showAmount} class="slds-m-left_xx-small">
+                                        <!--&nbsp;-&nbsp;-->
                                         <lightning-formatted-number
                                             value={totAmount}
                                             format-style="currency"

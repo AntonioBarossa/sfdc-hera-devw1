@@ -83,7 +83,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<Order> orderList = new List<Order>();                        
         for (Order newOrder : newOrdersList) {
             for (Order oldOrder : oldOrdersList) {
-                if (newOrder.SignedDate__c != oldOrder.SignedDate__c && (newOrder.WizardCompletedDate__c != null || newOrder.WizardCompletedDate__c != oldOrder.WizardCompletedDate__c) && newOrder.Status != 'Annullato' ) {
+                if (newOrder.Status == 'In Lavorazione' && newOrder.SignedDate__c != oldOrder.SignedDate__c && (newOrder.WizardCompletedDate__c != null || newOrder.WizardCompletedDate__c != oldOrder.WizardCompletedDate__c) && newOrder.Status != 'Annullato' ) {
                     Order orderToUpdate = new Order();
                     orderToUpdate.id = newOrder.Id;                                        
                     orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);                 
