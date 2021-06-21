@@ -32,9 +32,9 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         Case recordCase = new Case();
         try {
             if(recordId instanceOf Id){
-                recordCase = [SELECT Id,Type, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id,Type,Cluster__c, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
             }else {
-                recordCase = [SELECT Id,Type, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id,Type,Cluster__c, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
             }
             
         } catch (DmlException ex) {
@@ -63,9 +63,8 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
     }
 
     public Contract getContract(String servicePointId){
-        return [SELECT Id,BillingProfile__c, EndDate FROM Contract WHERE ServicePoint__c=:servicePointId AND Status ='Attivo' WITH SECURITY_ENFORCED LIMIT 1];
+        return [SELECT Id,BillingProfile__c,SAPContractCode__c, EndDate FROM Contract WHERE ServicePoint__c=:servicePointId AND Status ='Attivo' WITH SECURITY_ENFORCED LIMIT 1];
     }
-
 
     public wrts_prcgvr__AsyncJob__c getAsyncJobByJobItem(String recordId){
 
