@@ -40,7 +40,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         for(Contact c : contactList){
             if(mapContactIdOwner.get(c.id)!= null && c.AccountId != null){
                 System.debug('************:'+c.AccountId);
-                lAccSh.add(HDT_UTL_RecordShare.accountShareEditCreate(c.AccountId,mapContactIdOwner.get(c.id)));
+                //lAccSh.add(HDT_UTL_RecordShare.accountShareEditCreate(c.AccountId,mapContactIdOwner.get(c.id)));
                 listAccount.add(new Account(id=c.AccountId,ownerId=mapContactIdOwner.get(c.id)));
             }
         }
@@ -148,83 +148,29 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     }
 
     // @Picchiri 14.06.21 Credit Check Gestione Esiti ed eventuali invocazione a chiamata Mulesoft
-    public static void creditCheckEsitiManager(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
-        
-        Boolean recheck = false; // Se true eseguire la chiamata
+    public static void creditCheckKoPrecedenteCliente(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
+        system.debug('Start creditCheckKoPrecedenteCliente --->');
 
-        List<String> causaleCattivoPagatore = new List<String>{'Cattivo Pagatore', 'Andamentale KO, Cattivo Pagatore', 'Black List, Cattivo Pagatore', 'Black List, Andamentale KO, Cattivo Pagatore' };
-        List<wrts_prcgvr__Activity__c> actListToUpdate = new List<wrts_prcgvr__Activity__c>();
+        HDT_QR_Recordtype recQR = new HDT_QR_Recordtype();
+        Id recordtypeid = recQR.getRecordTypeIdByName('HDT_RT_CreditCheckKO');
+        
         List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
-        List<Id> orderIdListToCleanCreditCheck = new List<Id>();
-        Set<Id> listOrderBadPayer = new Set<Id>();
-        
         for(Integer i = 0; i < newActList.size(); i++){
-
-                wrts_prcgvr__Activity__c act = newActList[i];
-                wrts_prcgvr__Activity__c actOld = oldActList[i];
-                // Gestione KO - Punto 1
-                // Se il nuovo cliente dimostrerà che l’importo dovuto non è legalmente attribuibile a lui (dimostrazione di estraneità al debito), 
-                // L’activity verrà chiusa con Stato Lavorazione “KO Risolto” e Motivo “Dimostrata Estraneità”. 
-                // La chiusura dell’activity scatenerà di nuovo il credit check ma sul Nuovo Cliente 
-                // Gestione KO - Punto 2
-                // Se il nuovo cliente dimostrerà comunque di aver pagato il debito del precedente cliente), 
-                // L’activity verrà chiusa con Stato Lavorazione “KO Risolto” e Motivo “Saldo Pagato”.  
-                // La chiusura dell’activity scatenerà di nuovo il credit check ma sul Nuovo Cliente. 
-                // if( act.RecordType.DeveloperName == 'HDT_RT_CreditCheckKO' &&  (act.Status__c == 'KO Risolto' && act.Reason__c == 'Dimostrata Estraneità' ) || (act.Status__c == 'KO Forzato' && act.Reason__c == 'Saldo pagato' )){                    
-                //     actListToRecheck.add(act);
-                // }
-
-                // punto 2 KO Cattivo Pagatore  ancora in analisi
-                // if(act.Status__c == 'KO Forzato' && causaleCattivoPagatore.contains(act.CreditCheckReason__c)){
-                //     actListToRecheck.add(act);
-                //     listOrderBadPayer.add(act.Order__c);
-                // } 
-                
-                // ko uscente e poi ok . chiudere l'activity e rimandare il credict check
-                // da portare al trigger dell'ordine
-                // if(act.RecordType.DeveloperName == 'HDT_RT_KoPrecedeteCliente' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK'){
-                //     actListToUpdate.add(closeActivityCheck(act));
-                //     actListToRecheck.add(act);
-                // }
-
-                //ko entrante poi ok con causale "Saldo debito cattivo pagatore" verficare l'activity e riportare esito e causale su activity e sbiancare l'esito su order e reinviare la chiamata
-                // da portare al trigger dell'ordine
-                // if(act.RecordType.DeveloperName == 'HDT_RT_CreditCheckKO' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && act.CreditCheckReason__c == 'Saldo debito cattivo pagatore'){                    
-                //     actListToUpdate.add(closeActivityCheck(act));
-                //     actListToRecheck.add(act);
-                //     orderIdListToCleanCreditCheck.add(act.Order__c);                    
-                // }
-                
-                // in altri casi in cui arriva un ok chiudere l'activity ma non mandare la chiamata a sap
-                // da portare al trigger dell'ordine
-                // if(act.RecordType.DeveloperName != 'HDT_RT_KoPrecedeteCliente' && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && act.CreditCheckReason__c != 'Saldo debito cattivo pagatore'){
-                //     actListToUpdate.add(closeActivityCheck(act));                     
-                //     recheck = false;
-                // }                
-            
+            wrts_prcgvr__Activity__c act = newActList[i];
+            wrts_prcgvr__Activity__c actOld = oldActList[i];
+            if(act.recordtypeid == recordtypeid && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && (act.CreditCheckResolutionReason__c == 'Dimostrata Estraneità' || act.CreditCheckResolutionReason__c == 'Saldo Pagato') && act.Status__c == 'KO Risolto'){                    
+                actListToRecheck.add(act);                    
+            }
         }
 
-        // if(!orderIdListToCleanCreditCheck.isEmpty()){
-        //     HDT_UTL_OrderProcess.cleanCreditCheckOnOrder(orderIdListToCleanCreditCheck);
-        // }
-        
-        // updateCreditCheckActivity(actListToUpdate);
-        
-        // if(!actListToRecheck.isEmpty()){
-        //     recheckCreditCheck(actListToRecheck);
-        // }
-        // if(!listOrderBadPayer.isEmpty()){
-        //     List<Order> orderBadP = [SELECT Id, BadPayer__c FROM Order WHERE Id =:listOrderBadPayer];
-        //     for(Order ord : orderBadP){
-        //         ord.BadPayer__c = true;
-        //     }
-        //     update orderBadP;           
-        // }
+        system.debug('actListToRecheck' + JSON.serializePretty(actListToRecheck));
 
+        if(!actListToRecheck.isEmpty()){
+            recheckCreditCheck(actListToRecheck);
+        }
         
-                
+    
     }
-    // END @Picchiri 14.06.21 Credit Check Richiamata a Mulesoft
 
     // @Picchiri 15.06.21 chiamata Mulesoft
     public static void recheckCreditCheck(List<wrts_prcgvr__Activity__c> actListToRecheck){
