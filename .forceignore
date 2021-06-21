@@ -22,7 +22,6 @@ package.xml
 **flexipages/HDT_KnowledgeGeneralPage*
 **layout/AccountBrand-Account*
 **experiences/*
-**objects/Account/fields/Category__c*
 **objects/Account/fields/ChannelProgramLevelName*
 **objects/Account/fields/ChannelProgramName*
 **objects/Account/fields/IsPartner*
@@ -30,9 +29,3 @@ package.xml
 **objects/Contract/fields/SBQQ__ActiveContract__c*
 **objects/SBQQ__ProductAction__c/fields/SBQQ__FilterField__c*
 **objects/WorkBadge/WorkBadge*
-**objects/SBQQ__Subscription__c/fields/CompanyOwner__c*
-**objects/SBQQ__Subscription__c/recordTypes/*
-**objects/ServicePoint__c/fields/Disconnectable__c*
-**objects/ServicePoint__c/fields/DisconnectibilityType__c*
-**objects/Account/recordTypes/HDT_RT_Other*
-**objects/SBQQ__Quote__c/fields/Login__c*
