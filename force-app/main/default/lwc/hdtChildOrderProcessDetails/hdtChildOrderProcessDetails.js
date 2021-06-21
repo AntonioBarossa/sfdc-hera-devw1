@@ -2800,13 +2800,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loadAccordion();
 
         //EVERIS
-        this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura';
-        console.log('IsVolture--> '+this.isVolture);
-        console.log('ConfirmedSteps--> '+this.confirmedSteps);
-        console.log('Details Callback End');
-        console.log('CommoditySector -> ' + this.order.ServicePoint__r.CommoditySector__c)
-        this.readingDisabled = (this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
-        console.log(this.readingDisabled);
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+            this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura';
+            console.log('IsVolture--> '+this.isVolture);
+            console.log('ConfirmedSteps--> '+this.confirmedSteps);
+            console.log('Details Callback End');
+            console.log('CommoditySector -> ' + this.order.ServicePoint__r.CommoditySector__c)
+            this.readingDisabled = (this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
+            console.log('ReadingDisabled? ->' +this.readingDisabled);
+        }
         //EVERIS
     }
 
