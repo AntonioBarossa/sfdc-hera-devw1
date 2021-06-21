@@ -65,7 +65,7 @@
             component.set('v.AutorizationVolturaThirdTrader', false);
         }
 
-        if (QuickQuote || ChamberCommerceRegistration || Instance326 || DocumentLow80 || AutorizationVolturaThirdTrader) {
+        if (QuickQuote || ChamberCommerceRegistration || Instance326 || DocumentLow80 || AutorizationVolturaThirdTrader /*Everis*/|| CIAccoutn/*Everis*/) {
             component.set('v.formValid', true);
         } else {
             component.set('v.formValid', false);
@@ -93,7 +93,9 @@
         //component.find("editForm").submit();
         let order = {};
         // let CILegalRepresentative = component.find('CILegalRepresentative').get('v.value');
-        // let CIAccoutn = component.find('CIAccoutn').get('v.value');
+        //Everis
+        let CIAccoutn = component.find('CIAccoutn').get('v.value');
+        //Everis
         let QuickQuote = component.find('QuickQuote').get('v.value');
         let ChamberCommerceRegistration = component.find('ChamberCommerceRegistration').get('v.value');
         let Instance326 = component.find('Instance326').get('v.value');
@@ -101,7 +103,7 @@
         let AutorizationVolturaThirdTrader = component.find('AutorizationVolturaThirdTrader').get('v.value');
 
         // order.CILegalRepresentative__c = CILegalRepresentative;
-        // order.CIAccoutn__c = CIAccoutn;
+        order.CIAccoutn__c = CIAccoutn;
         order.QuickQuote__c = QuickQuote;
         order.ChamberCommerceRegistration__c = ChamberCommerceRegistration;
         order.Instance326__c = Instance326;

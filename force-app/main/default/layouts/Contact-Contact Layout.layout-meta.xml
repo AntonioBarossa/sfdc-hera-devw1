@@ -202,6 +202,31 @@
         <fields>ACCCONRELATION.ROLES</fields>
         <relatedList>RelatedContactAccountRelationList</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>MessageText__c</fields>
+        <fields>Delivered__c</fields>
+        <fields>Sent__c</fields>
+        <fields>CampaignID__c</fields>
+        <relatedList>SMSTracking__c.ContactID__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>et4ae5__DateSent__c</fields>
+        <fields>et4ae5__DateOpened__c</fields>
+        <fields>CampaignID__c</fields>
+        <fields>BounceSubCategory__c</fields>
+        <relatedList>et4ae5__IndividualEmailResult__c.et4ae5__Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>MessageText__c</fields>
+        <fields>CampaignID__c</fields>
+        <fields>MessageOpened__c</fields>
+        <fields>DateTimeSend__c</fields>
+        <fields>OpenDate__c</fields>
+        <relatedList>PushTracking__c.ContactID__c</relatedList>
+    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

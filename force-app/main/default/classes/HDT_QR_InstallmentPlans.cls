@@ -46,6 +46,7 @@ public with sharing class HDT_QR_InstallmentPlans {
         CAWithOrWithoutSEPA__c,
         ExistingInstallmentsPlanNumber__c,
         AmountToPayInInstallments__c,
+        InstallmentAmount__c,
         Deposit__c,
         DepositAmount__c,
         Amount__c,

@@ -140,6 +140,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             colObj.fieldName = colSec_mdt.FieldName__c;
             colObj.sortable = colSec_mdt.Sortable__c;
             colObj.initialWidth = colSec_mdt.InitialWidth__c;
+            colObj.fieldType = colSec_mdt.FieldType__c;
             obj.columnObj.add(colObj);
         }
 

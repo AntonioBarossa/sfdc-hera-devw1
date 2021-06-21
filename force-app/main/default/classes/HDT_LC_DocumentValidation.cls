@@ -15,6 +15,11 @@ public inherited sharing class HDT_LC_DocumentValidation {
         if( ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null || ord.AutorizationVolturaThirdTrader__c != null)
         {
            	check = true;
+            //Per voltura
+            if(ord.CIAccoutn__c != null && !'Validato'.EqualsIgnoreCase(ord.QuickQuote__c)){
+                check = false;
+            }
+            //Per voltura
             if(ord.QuickQuote__c != null && !'Validato'.EqualsIgnoreCase(ord.QuickQuote__c)){
                 check = false;
             }
