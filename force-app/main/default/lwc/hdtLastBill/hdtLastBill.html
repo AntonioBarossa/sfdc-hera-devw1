@@ -13,59 +13,79 @@
 
             </header>
         </div>
-
-        <div class="slds-card__body slds-card__body_inner">
-            <!--<div style="height: 140px;">
-                <lightning-datatable
-                        key-field="name"
-                        data={billsData}
-                        columns={billsColumns}
-                        hide-checkbox-column>
-                </lightning-datatable>
-            </div> -->
-
-            <div class="slds-border_left">
-                <div class="slds-grid slds-gutters slds-m-left_xx-small slds-m-right_xx-small">
-                    <div class="slds-col slds-size_1-of-2">
-                        <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
-                            <b>Numero bolletta:</b>
-                        </div>
-                        <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
-                            <b>Importo:</b>
-                        </div>
-                        <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
-                            <b>Stato:</b>
-                        </div>
-                        <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
-                            <b>Servizio:</b>
-                        </div>                        
-                    </div>
-                    <div class="slds-col slds-size_1-of-2">
-                        <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
-                            098754
-                        </div>
-                        <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
-                            105 €
-                        </div>
-                        <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
-                            Pagato
-                        </div>
-                        <div class="slds-text-body_regular">
-<!--                             <lightning-icon variant="warning" size="small" icon-name="utility:light_bulb" alternative-text="Connected" title="Connected">
-                            </lightning-icon> -->
-                            
-                            <img
-                            class="img-item"
-                            src={iconUrl}
-                            style="width:1.04vw;height:2.36vh;"/>
-
-                        </div>
-                    </div>
-                </div>       
+        <template if:true={spinner}>
+            <div class="exampleHolder">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
             </div>
-
-        </div>
-
+        </template>
+        <template if:false={spinner}>
+            <template if:true={message}>
+                <div class="slds-card__body slds-card__body_inner">
+                    <div class="slds-border_left">
+                        <div  role="alert" class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error">
+                            <span  class="slds-assistive-text">error</span>
+                            <lightning-icon  class="slds-icon-utility-error slds-m-horizontal_x-small slds-icon_container slds-icon_x-small"></lightning-icon>
+                                    <lightning-icon size="small" icon-name="utility:error" alternative-text="Error!" title="Error"></lightning-icon>
+                            <h2> {message}</h2>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:false={message}>
+                <div class="slds-card__body slds-card__body_inner">
+                    <div class="slds-border_left">
+                        <div class="slds-grid slds-gutters slds-m-left_xx-small slds-m-right_xx-small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
+                                    <b>Numero bolletta:</b>
+                                </div>
+                                <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
+                                    <b>Importo:</b>
+                                </div>
+                                <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
+                                    <b>Scadenza:</b>
+                                </div>
+                                <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
+                                    <b>Stato:</b>
+                                </div>
+                                <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
+                                    <b>Servizio:</b>
+                                </div>                        
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
+                                    {billNumber}
+                                </div>
+                                <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
+                                    {amount} €
+                                </div>
+                                <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
+                                    {expirationDate}
+                                </div>
+                                <div class="slds-text-body_regular slds-m-bottom_x-small slds-border_bottom">
+                                    {status}
+                                </div>
+                                <div class="slds-text-body_regular">
+                                    <template if:true={energy}>
+                                        <img
+                                        class="img-item"
+                                        src={eleUrl}
+                                        style="width:1.04vw;height:2.36vh;"/>
+                                    </template>
+                                    
+                                    <template if:true={gas}>
+                                        <img
+                                        class="img-item"
+                                        src={gasUrl}
+                                        style="width:1.04vw;height:2.36vh;"/>
+                                    </template>    
+                                </div>
+                            </div>
+                        </div>       
+                    </div>
+                </div>
+            </template>
+        </template>
         <footer class="slds-card__footer">
             <!--<a class="slds-card__footer-action" href="javascript:void(0);">
                 View All

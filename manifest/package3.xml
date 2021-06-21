@@ -1,41 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Contact.UpdateContactCase</members>
-        <name>QuickAction</name>
-    </types>
-    <types>
-        <members>HDT_Order_Default</members>
-        <name>FlexiPage</name>
-    </types>
-    <types>
-        <members>HDT_PEV_AnagAlignment__e</members>
-        <name>CustomObject</name>
-    </types>
-    <types>
-        <members>hdtChildOrderProcessDetails</members>
-        <members>hdtChildOrderProcessPrecheck</members>
-        <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>Admin</members>
-        <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
-        <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
-        <name>Profile</name>
-    </types>
-    <types>
-        <members>HDT_FL_Gestione_Modifiche_Anagrafiche_Modifica_Privacy</members>
-        <name>Flow</name>
-    </types>
-    <types>
-        <members>Order.HDT_RT_AttivazioneConModifica</members>
-        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
-        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
-        <members>Order.HDT_RT_Voltura</members>
+        <members>Case.HDT_RT_PreventiviEle</members>
+        <members>Case.HDT_RT_PreventiviGas</members>
         <name>RecordType</name>
     </types>
     <types>
@@ -44,44 +11,39 @@
     </types>
     <types>
         <members>HDT_ApexClasses</members>
-        <members>HDT_CampaignManager</members>
-        <members>HDT_SalesforceCPQAdmin</members>
-        <members>HDT_SalesforceCPQPartner</members>
-        <members>HDT_SalesforceCPQUser</members>
         <name>PermissionSet</name>
     </types>
     <types>
+        <members>HDT_LC_CampaignsController</members>
+        <members>HDT_LC_ChildOrderProcessActions</members>
         <members>HDT_LC_ChildOrderProcessDetails</members>
         <members>HDT_LC_ChildOrderProcessPrecheck</members>
-        <members>HDT_QBL_AnagAlignment</members>
-        <members>HDT_SRV_AnagAlignment</members>
-        <members>HDT_SRV_BpCaVariationFacade</members>
-        <members>HDT_SRV_DocumentSelectedManager</members>
-        <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_TRH_AnagAlignmentEvent</members>
-        <members>HDT_UTL_ActivityCustomProcess</members>
-        <members>HDT_UTL_OrderFieldsAlignment</members>
-        <members>HDT_WS_BpCaVariationIntegrationAdapter</members>
+        <members>HDT_QR_Contract</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_ServiceCatalog</members>
+        <members>HDT_UTL_CompanyOwner</members>
+        <members>HDT_UTL_KpiTracking</members>
+        <members>HDT_UTL_Order</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Account.Category__c</members>
-        <members>HDT_PEV_AnagAlignment__e.SerializedCase__c</members>
-        <members>KpiTracking__c.CustomerCode__c</members>
-        <members>Order.BillingProvince__c</members>
-        <members>Order.Phase__c</members>
-        <members>Order.QuoteType__c</members>
-        <members>Order.SupplyStreetName__c</members>
-        <members>Order.VoltureType__c</members>
-        <name>CustomField</name>
+        <members>HDT_LCP_OpenAuraCmp</members>
+        <members>HDT_LCP_RunFlowFromAura</members>
+        <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>HDT_AnagAlignmentEvent</members>
-        <name>ApexTrigger</name>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtLastBill</members>
+        <members>hdtNewCampaignCase</members>
+        <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_Informative_Configuration.Attivazioni_7</members>
+        <members>HDT_UserInputFlow.Variazioni_Cambio_Contatore_No_Reg</members>
         <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>HDT_FL_PostSalesMasterDispatch</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

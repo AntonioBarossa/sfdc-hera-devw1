@@ -11,6 +11,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     private static HDT_UTL_Order orderUtl = new HDT_UTL_Order();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
+    private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -109,10 +110,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             }
             //INIZIO SVILUPPI EVERIS
             when 'HDT_RT_Voltura'{
+                List<Contract> contracts = contractQr.getContractFromServicePoint(newOrder.ServicePoint__c);
                 processType = 'Voltura';
                 newOrder.Subprocess__c = 'Standard';
-                newOrder.ProcessCode__c = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VTE' : 'VTG';
+                newOrder.ProcessCode__c = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
                 newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                newOrder.ContractReference__c = contracts.size() > 0 
+                    ? contracts[0].Id
+                    : null;
                 //newOrder = orderUtl.enrichOrder(newOrder);
                 //orderSrv.updateRecord(newOrder);
 

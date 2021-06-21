@@ -150,7 +150,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
             List<Object> secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativoF2');
             Map<String, Object> secondoLivello = new Map<String, Object>();
-            if(secondoLivelloList != null){
+            if(secondoLivelloList != null && !secondoLivello.isEmpty()){
                 secondoLivello = (Map<String, Object>) secondoLivelloList[0];
             }
 
@@ -267,7 +267,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     numeroFattura = (String) primolivello.get('numeroFattura');
                     dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
                     dataScadenza = formatDate((String) primolivello.get('dataScadenza'));
-                    singleDocument.DocumentNumber__c = numeroFattura != null ? numeroFattura : numeroDocumento;
+                    singleDocument.DocumentNumber__c = numeroDocumento;
                     singleDocument.Position1__c = (String) primolivello.get('posizione1');
                     singleDocument.Position2__c = (String) primolivello.get('posizione2');
                     singleDocument.Position3__c = (String) primolivello.get('posizione3');
@@ -279,10 +279,10 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.TotalCommunicationPayment__c = Double.valueOf(primolivello.get('residuo'));
                     singleDocument.Case__c = inputs[0].caseId;
                     
-                    if(String.isNotBlank(numeroDocumento)){
-                        singleDocument.Name = numeroDocumento;
-                    }else if(String.isNotBlank(numeroFattura)) {
+                    if(String.isNotBlank(numeroFattura)) {
                         singleDocument.Name = numeroFattura;
+                    }else if(String.isNotBlank(numeroDocumento)){
+                        singleDocument.Name = numeroDocumento;
                     }else {
                         singleDocument.Name = String.valueOf(Date.today());
                     }

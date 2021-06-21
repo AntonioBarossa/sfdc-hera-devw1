@@ -37,22 +37,18 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Market__c</field>
+                <field>CommodityFormula__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>CommodityFormula__c</field>
+                <field>Market__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SupplyType__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PODPDRFormula__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ParentId</field>
@@ -64,14 +60,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SecondLevelOpinion__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RecipientStructure__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ComunicationMode__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -196,11 +184,6 @@
             <actionName>Case.HDT_OpinionRequest</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.Catalogo_Servizi</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>

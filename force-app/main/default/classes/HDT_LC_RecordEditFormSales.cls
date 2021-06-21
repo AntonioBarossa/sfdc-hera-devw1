@@ -29,20 +29,23 @@ public with sharing class HDT_LC_RecordEditFormSales {
             Case cs= new Case(Id=caseId,Phase__c='In Attesa Approvazione');
             caseSRV.updateRecord(cs); 
             List<wrts_prcgvr__Activity__c> activities= HDT_QR_ActivityCustom.getRecordByCaseId(caseId);
-            if(activities != null && !activities.isEmpty()){
+            if(activities != null && activities.isEmpty()){
                 Id recTypeId= null;
                 RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
                 if(rc !=null){
                     recTypeId= rc.Id;
                 }
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Contratti/Bonus Commerciale');
+                System.debug('LOG_ACTIVITY_MISSING2:');
                 System.debug(activity);
                 activitySrv.createRecord(activity);
-                return true;
-            }else{
+                System.debug('LOG_ACTIVITY_MISSING2:');
                 return false;
+            }else{
+                return true;
             }
         } catch (Exception e) {
+            System.debug('LOG_ACTIVITY_MISSING:' + e.getMessage());
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -65,7 +68,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
             }
             caseSRV.updateRecord(cs); 
             List<wrts_prcgvr__Activity__c> activities= HDT_QR_ActivityCustom.getRecordByCaseId(caseId);
-            if(activities != null && !activities.isEmpty()){
+            if(activities != null && activities.isEmpty()){
                 Id recTypeId= null;
                 RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
                 if(rc !=null){
@@ -82,7 +85,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
     @AuraEnabled
     public static void saveDraft(String caseId, String accountId, Map<String,Object> caseob){
         try {
-            Case cs= new Case(Id=caseId, Phase__c='Bozza');
+            Case cs= new Case(Id=caseId);
             if(caseob.containsKey('OperationSubType__c')){
                 cs.put('OperationSubType__c',String.valueOf(caseob.get('OperationSubType__c')));
             }
