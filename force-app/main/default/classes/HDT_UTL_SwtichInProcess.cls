@@ -12,12 +12,25 @@ public with sharing class HDT_UTL_SwtichInProcess {
 
         order = orderQr.getRecordById(order.id);
 
-        system.debug('HDT_UTL_SwtichInProcess - getMaxAfterthoughtDate - Channel__c: ' + order.Channel__c );
-        system.debug('HDT_UTL_SwtichInProcess - getMaxAfterthoughtDate - Market__c: ' + order.Market__c  );
-        system.debug('HDT_UTL_SwtichInProcess - getMaxAfterthoughtDate - AccountType__c: ' + order.CustomerCategory__c );
-        system.debug('HDT_UTL_SwtichInProcess - getMaxAfterthoughtDate - SignatureMode__c: ' + order.SignatureMethod__c );
-        system.debug('HDT_UTL_SwtichInProcess - getMaxAfterthoughtDate - DocumentSendingMode__c: ' + order.DocSendingMethod__c );
-        system.debug('HDT_UTL_SwtichInProcess - getMaxAfterthoughtDate - SignedDate: ' + order.SignedDate__c );
+        if(order.Channel__c == null){
+            system.debug('Impossibile calcolare Data Max Ripensamento per mancanza di Channel');
+        }
+        if(order.Market__c == null){
+            system.debug('Impossibile calcolare Data Max Ripensamento per mancanza di Market');
+        }
+        if(order.CustomerCategory__c == null){
+            system.debug('Impossibile calcolare Data Max Ripensamento per mancanza di CustomerCategory__c');
+        }
+        if(order.SignatureMethod__c == null){
+            system.debug('Impossibile calcolare Data Max Ripensamento per mancanza di SignatureMethod__c');
+        }
+        if(order.DocSendingMethod__c == null){
+            system.debug('Impossibile calcolare Data Max Ripensamento per mancanza di DocSendingMethod__c');
+        }
+        if(order.SignedDate__c == null){
+            system.debug('Impossibile calcolare Data Max Ripensamento per mancanza di SignedDate__c');
+        }
+        
 
         Date signedDate = order.SignedDate__c;   
         Date maxAfterthoughtDate = null;  
@@ -32,7 +45,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
                                                                         WITH SECURITY_ENFORCED
                                                             ];     
 
-        system.debug('HDT_UTL_SwtichInProcess - getMaxAfterthoughtDate - AfterthoughtDays__c: ' + (Integer)afterthoughtDays3[0].AfterthoughtDays__c );
+        system.debug('Query Data Max Ripensamento: SELECT AfterthoughtDays__c FROM HDT_AfterthoughtDays__mdt WHERE Channel__c = ' + order.Channel__c + ' AND Market__c = ' + order.Market__c +' AND AccountType__c = ' + order.CustomerCategory__c + ' AND SignatureMode__c = ' + order.SignatureMethod__c + 'AND DocumentSendingMode__c = ' + order.DocSendingMethod__c);
         if(afterthoughtDays3.isEmpty()){
             maxAfterthoughtDate = signedDate;                      
         }else{

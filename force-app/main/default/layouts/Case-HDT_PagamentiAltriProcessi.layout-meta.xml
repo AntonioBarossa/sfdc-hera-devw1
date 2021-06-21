@@ -37,14 +37,22 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>PhoneNumber__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SalesCompany__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Reason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>BlockType__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ExpirationDate__c</field>
@@ -72,14 +80,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>AlternativeAddress__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SalesCompany__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PhoneNumber__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
