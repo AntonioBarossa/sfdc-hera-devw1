@@ -224,6 +224,24 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
                 }
 
+        }else if(caseType == 'Paperless'){
+
+            String sendMode = getFieldValue(fields, 'SendPaperlessCodeMode__c');
+
+            if(sendMode.containsIgnoreCase('SMS') && currentCase.PhoneNumber__c == null){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile selezionare \"SMS\" se Recapito Telefonico non valorizzato'));
+
+            } else if(sendMode.containsIgnoreCase('Email') && currentCase.Email__c == null){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile selezionare \"Email\" se Email non valorizzata'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+
         }else{
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
