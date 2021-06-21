@@ -6,7 +6,7 @@ public with sharing class HDT_UTL_KpiTracking {
         for (Account singleAccount : accountList) {
             if(accountOldMap != null){
                 Account oldAccount = (Account) accountOldMap.get(singleAccount.Id);
-                if((oldAccount.CustomerCode__c != singleAccount.CustomerCode__c &&  singleAccount.CustomerCode__c != '') || (singleAccount.CustomerCode__c != '' &&  singleAccount.KpiTracking__c == '')){
+                if((singleAccount.CustomerCode__c != null && oldAccount.CustomerCode__c != singleAccount.CustomerCode__c) || (singleAccount.CustomerCode__c != null &&  String.isBlank(singleAccount.KpiTracking__c))){
                     accountMap.put(singleAccount.CustomerCode__c, singleAccount);
                     singleKpi = newInstanceRecord(singleAccount);
                     kpiList.add(singleKpi);
