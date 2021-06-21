@@ -73,6 +73,24 @@ public inherited sharing class HDT_LC_CampaignsController {
         return newCase;
     }
     @AuraEnabled
+    public static String getServiceCatalogUrlByCaseType(Case c){
+        //Case newCase = caseSrv.createRecord(c);
+        String s = HDT_QR_ServiceCatalog.getServiceLinkItemAccountRedirectUrlByCategory(c.cluster__c, c.type);
+        String res = '';
+        if(s != null){
+            res = s.replace('{!Id}',c.AccountId);
+            res = res + '&c__campaignId=' + c.Campaign__c;
+            //s = s.replace('', arg1)
+        }
+        else{
+            res = null;
+        }
+
+        return res;
+    }
+
+
+    @AuraEnabled
     public static List<CampaignMember> getUnassignedCampaignMembers(String campaignId) {
         return  campaignMemberQr.getUnassignedCampaignMembers(campaignId);
     }
