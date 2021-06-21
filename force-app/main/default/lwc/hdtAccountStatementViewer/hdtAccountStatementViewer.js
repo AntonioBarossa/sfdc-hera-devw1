@@ -648,6 +648,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                     this.refreshSecondLevelToChild();
                    }
 
+                   this.filterOn = false;
+
                 } else {
                     this.showError = true;
                     this.showErrorMessage = result.message;
