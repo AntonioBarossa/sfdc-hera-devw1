@@ -10,27 +10,107 @@ public with sharing class HDT_LC_AdvancedSearch {
 	
 	
 	@AuraEnabled
-	public static List<Map<String,String>> getIndirizzoFornitura(String accountId) {
+	public static List<Map<String,Object>> getIndirizzoFornitura(String accountId) {
 		system.debug('ACCOUNTID **********************'+accountId);
 		Map<String,String> outPutIndirizzo = new Map<String,String>();
 		HDT_QR_ServicePoint sp = new HDT_QR_ServicePoint();
 		List<ServicePoint__c> listBp = new List<ServicePoint__c>();
-		
+		HDT_WRP_AddressObject wrapObject = new HDT_WRP_AddressObject();
 		if(accountId != null || accountId != ''){
 			listBp = sp.getAddressFornitura(accountId);
 		}
 		
-		List<Map<String,String>> customBp = new List<Map<String,String>>();
+		List<Map<String,Object>> customBp = new List<Map<String,Object>>();
 		
 		if(!listBp.isEmpty()){
 		for (ServicePoint__c servicePoint : listBp) {
-            Map<String,String> row = new Map<String, String>();
+			String[] addressSplit=  servicePoint.SupplyAddress__c.split(',');
+			if(addressSplit[4] !=''){
+				
+				wrapObject.Comune= addressSplit[4] ;
+			}
+			else{
+				
+				wrapObject.Comune=' ';
+			}
+			if(addressSplit[0] !=''){
+
+				wrapObject.Via= addressSplit[0]  ;
+			}
+			else{
+				
+				wrapObject.Via=', ';
+				
+			}
+			if(addressSplit[1] !=''){
+				
+				wrapObject.Civico= addressSplit[1]  ;
+			}
+			else{
+				
+				wrapObject.Civico=', ';
+			}
 			
-				String value = servicePoint.SupplyAddress__c;
-				String label = '';
-				if(value!=',,,,,,,'){
+			if(addressSplit[2] !=''){
+				
+				wrapObject.EstensCivico= addressSplit[2] ;
+			}
+			else{
+				
+				wrapObject.EstensCivico=', ';
+			}
+			if(addressSplit[6] !=''){
+				
+				wrapObject.CAP= addressSplit[6]  ;
+			}
+			else{
+				
+				wrapObject.CAP=', ';
+			}
+			if(addressSplit[5] !=''){
+				
+				wrapObject.Provincia= addressSplit[5] ;
+			}
+			else{
+				
+				wrapObject.Provincia=', ';
+			}
+			if(addressSplit[7] !=''){
+				
+				wrapObject.Stato= addressSplit[7] ;
+			}
+			else{
+				
+				wrapObject.Stato=', ';
+			}
+		/*	if(addressSplit[0] !=''){
+				
+				wrapObject.CodiceViaStradarioSAP= addressSplit[0] ;
+			}
+			else{
+				
+				wrapObject.CodiceViaStradarioSAP=', ';
+			}
+			if(addressSplit[0] !=''){
+				
+				wrapObject.CodiceComuneSAP=addressSplit[0] ;
+			}
+			else{
+				
+				wrapObject.CodiceComuneSAP=', ';
+			}*/
+
+            Map<String,Object> row = new Map<String,Object>();
+			
+			//	String value = servicePoint.SupplyAddress__c;
+
+				String label = 'INDIRIZZOFORNITURA';
+
+				row.put(label,wrapObject);
+
+			/*	if(value!=',,,,,,,'){
 					row.put(label,value);
-				}
+				}*/
 				
 			
             customBp.add(row);
@@ -42,9 +122,11 @@ public with sharing class HDT_LC_AdvancedSearch {
 	}
 
 	@AuraEnabled
-	public static List<Map<String,String>> getIndirizzo(String accountId) {
+	public static List<Map<String,Object>> getIndirizzo(String accountId) {
 		system.debug('ACCOUNTID **********************'+accountId);
-		Map<String,String> outPutIndirizzo = new Map<String,String>();
+
+		HDT_WRP_AddressObject wrapObject = new HDT_WRP_AddressObject();
+		//Map<String,String> outPutIndirizzo = new Map<String,String>();
 		HDT_QR_Account qr = new HDT_QR_Account();		
 		Account ac = new Account();
 		
@@ -52,11 +134,10 @@ public with sharing class HDT_LC_AdvancedSearch {
 			ac = qr.getBillingAddressAccount(accountId);
 		}
 		
-		List<Map<String,String>> customBp = new List<Map<String,String>>();
-		
+		List<Map<String,Object>> customBp = new List<Map<String,Object>>();
 		if(ac!= null){
 		/*for (BillingProfile__c BillingProfile : listBp) {
-            Map<String,String> row = new Map<String, String>();
+          
 			
 				String value = BillingProfile.InvoicingAddressFormula__c;
 				String label = '';
@@ -67,36 +148,89 @@ public with sharing class HDT_LC_AdvancedSearch {
 		}*/
 
 	
-            Map<String,String> row = new Map<String, String>();
+		Map<String,Object> row = new Map<String, Object>();
 
 			String value ;
-			String label = '';
+			String label = ' ';
 
 			if(ac.BillingCity != null){
 				value = ac.BillingCity ;
+				wrapObject.Comune= ac.BillingCity ;
+			}
+			else{
+				value = ' ';
+				wrapObject.Comune=' ';
 			}
 			if(ac.BillingStreetName__c != null){
 				value += ','+ac.BillingStreetName__c ;
+				wrapObject.Via= ac.BillingStreetName__c ;
+			}
+			else{
+				value += ',  ';
+				wrapObject.Via=', ';
+				
 			}
 			if(ac.BillingStreetNumber__c != null){
 				value += ','+ac.BillingStreetNumber__c ;
+				wrapObject.Civico= ac.BillingStreetNumber__c ;
 			}
+			else{
+				value += ',  ';
+				wrapObject.Civico=', ';
+			}
+			
 			if(ac.BillingStreetNumberExtension__c != null){
 				value += ','+ac.BillingStreetNumberExtension__c ;
+				wrapObject.EstensCivico= ac.BillingStreetNumberExtension__c ;
+			}
+			else{
+				value += ',  ';
+				wrapObject.EstensCivico=', ';
 			}
 			if(ac.BillingPostalCode != null){
 				value += ','+ac.BillingPostalCode ;
+				wrapObject.CAP= ac.BillingPostalCode ;
+			}
+			else{
+				value += ',  ';
+				wrapObject.CAP=', ';
 			}
 			if(ac.BillingState != null){
 				value += ','+ac.BillingState ;
+				wrapObject.Provincia= ac.BillingState ;
+			}
+			else{
+				value += ',  ';
+				wrapObject.Provincia=', ';
 			}
 			if(ac.BillingCountry != null){
 				value += ','+ac.BillingCountry ;
+				wrapObject.Stato= ac.BillingCountry ;
+			}
+			else{
+				value += ',  ';
+				wrapObject.Stato=', ';
+			}
+			if(ac.BillingStreetCode__c != null){
+				value += ','+ac.BillingStreetCode__c ;
+				wrapObject.CodiceViaStradarioSAP= ac.BillingStreetCode__c ;
+			}
+			else{
+				value += ',  ';
+				wrapObject.CodiceViaStradarioSAP=', ';
+			}
+			if(ac.BillingCityCode__c != null){
+				value += ','+ac.BillingCityCode__c ;
+				wrapObject.CodiceComuneSAP= ac.BillingCityCode__c ;
+			}
+			else{
+				value += ',  ';
+				wrapObject.CodiceComuneSAP=', ';
 			}
 
 				
 
-				row.put(label,value);
+				row.put(label,wrapObject);
 
 
 			
@@ -579,9 +713,9 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 				if(mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))){
 					spNew.SupplyStreet__c  = mapRes.get('VIA');
 				}
-				if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
+			/*	if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
 					spNew.SupplyStreetToponym__c  = mapRes.get('TIPOVIA');
-				}
+				}*/
 				if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
 					spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
 				}
