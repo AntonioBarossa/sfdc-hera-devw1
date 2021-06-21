@@ -18,7 +18,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         } else if(caseType == 'Doppi Pagamenti/Incassi' || caseType == 'Piano Rateizzazione' || caseType == 'Richiesta Domiciliazione'
         || caseType == 'Variazione Domiciliazione' || caseType == 'Rimborso' || caseType == 'Attivazione Click&Pay' ||
-        caseType == 'Storno Rateizzazione' || caseType == 'Blocco Sollecito/Interessi'){
+        caseType == 'Storno Rateizzazione' || caseType == 'Blocco Sollecito/Interessi' || caseType == 'Paperless'){
 
             result = validatePagamenti(fields, caseType, currentCase);
 
@@ -228,11 +228,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             String sendMode = getFieldValue(fields, 'SendPaperlessCodeMode__c');
 
-            if(sendMode.containsIgnoreCase('SMS') && currentCase.PhoneNumber__c == null){
+            if(sendMode.containsIgnoreCase('SMS') && (currentCase.PhoneNumber__c == null || currentCase.PhoneNumber__c == '')){
 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile selezionare \"SMS\" se Recapito Telefonico non valorizzato'));
 
-            } else if(sendMode.containsIgnoreCase('Email') && currentCase.Email__c == null){
+            } else if(sendMode.containsIgnoreCase('Email') && (currentCase.Email__c == null || currentCase.Email__c == '')){
 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile selezionare \"Email\" se Email non valorizzata'));
 
