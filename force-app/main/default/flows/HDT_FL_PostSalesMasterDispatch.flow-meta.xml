@@ -1410,6 +1410,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Verifiche</stringValue>
@@ -1496,6 +1502,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1594,6 +1606,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Disattivazioni</stringValue>
@@ -1683,6 +1701,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <elementReference>votiveModenaCluster</elementReference>
@@ -1751,6 +1775,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1849,6 +1879,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Annullamento</stringValue>
@@ -1926,6 +1962,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Autolettura</stringValue>
@@ -1988,6 +2030,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2086,6 +2134,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Fatturazione</stringValue>
@@ -2151,6 +2205,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Fatturazione</stringValue>
@@ -2197,6 +2257,12 @@
         <connector>
             <targetReference>Assegna_Case_Id_Informative</targetReference>
         </connector>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Cluster__c</field>
             <value>
@@ -2248,6 +2314,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2325,6 +2397,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2417,6 +2495,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Notifiche</stringValue>
@@ -2491,6 +2575,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2583,6 +2673,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Voltura</stringValue>
@@ -2672,6 +2768,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Variazioni</stringValue>
@@ -2758,6 +2860,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4500,6 +4608,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CampaignId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
