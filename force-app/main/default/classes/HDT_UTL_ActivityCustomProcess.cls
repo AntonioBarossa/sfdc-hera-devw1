@@ -40,7 +40,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         for(Contact c : contactList){
             if(mapContactIdOwner.get(c.id)!= null && c.AccountId != null){
                 System.debug('************:'+c.AccountId);
-                //lAccSh.add(HDT_UTL_RecordShare.accountShareEditCreate(c.AccountId,mapContactIdOwner.get(c.id)));
+                lAccSh.add(HDT_UTL_RecordShare.accountShareEditCreate(c.AccountId,mapContactIdOwner.get(c.id)));
                 listAccount.add(new Account(id=c.AccountId,ownerId=mapContactIdOwner.get(c.id)));
             }
         }
