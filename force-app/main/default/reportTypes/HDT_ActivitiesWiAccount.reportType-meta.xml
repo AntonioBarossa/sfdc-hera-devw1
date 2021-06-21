@@ -680,7 +680,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>BillingAddessIsForeign__c</field>
+            <field>BillingAddressIsForeign__c</field>
             <table>wrts_prcgvr__Activity__c.Accounts__r</table>
         </columns>
         <columns>
