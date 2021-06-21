@@ -101,6 +101,11 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
                 if (triggerOrder != null) {
                     anagAlignCase = createAnagAlignmentCase(triggerOrder);
+                    anagAlignCase.CausalCode__c = causalCodeAnagAlignment(triggerOrder.CommodityFormula__c, context);
+                    anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+                    System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                    anagAlignCase.Phase__c = 'Da Inviare';
+                    HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
                 }
             }
             when 'N02', 'U01' { // Casistica 2: non è possibile linkare a pratica di origine, creiamo solo il Case di Allineamento Anagrafica.
