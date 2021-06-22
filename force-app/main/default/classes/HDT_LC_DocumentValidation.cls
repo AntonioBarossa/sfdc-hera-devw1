@@ -16,7 +16,7 @@ public inherited sharing class HDT_LC_DocumentValidation {
         {
            	check = true;
             //Per voltura
-            if(ord.CIAccoutn__c != null && !'Validato'.EqualsIgnoreCase(ord.QuickQuote__c)){
+            if(ord.CIAccoutn__c != null && !'Validato'.EqualsIgnoreCase(ord.CIAccoutn__c)){
                 check = false;
             }
             //Per voltura

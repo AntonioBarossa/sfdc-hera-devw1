@@ -37,7 +37,7 @@ export default class HdtDocumentalPayloadAdministration extends NavigationMixin(
                 this.showEmpty = false;
                 this.showError = false;
             } else {
-
+                this.showSpinner = false;
             }
 
         }).catch(error => {
