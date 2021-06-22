@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SignalOutcome__c</fullName>
+    <externalId>false</externalId>
+    <label>Esito Segnalazione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Eseguita sostituzione</fullName>
+                <default>false</default>
+                <label>Eseguita sostituzione</label>
+            </value>
+            <value>
+                <fullName>Eseguita riparazione</fullName>
+                <default>false</default>
+                <label>Eseguita riparazione</label>
+            </value>
+            <value>
+                <fullName>Id commerciale venditore</fullName>
+                <default>false</default>
+                <label>Id commerciale venditore</label>
+            </value>
+            <value>
+                <fullName>Respito no cliente</fullName>
+                <default>false</default>
+                <label>Respito no cliente</label>
+            </value>
+            <value>
+                <fullName>Segnalato fornitore</fullName>
+                <default>false</default>
+                <label>Segnalato fornitore</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

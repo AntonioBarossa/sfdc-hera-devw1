@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Unlock_Error</fullName>
+    <active>true</active>
+    <errorConditionFormula>false</errorConditionFormula>
+    <errorDisplayField>Company</errorDisplayField>
+    <errorMessage>Errore</errorMessage>
+</ValidationRule>

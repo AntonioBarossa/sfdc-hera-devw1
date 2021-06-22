@@ -6,11 +6,6 @@
     <columns>CAMPAIGN.END_DATE</columns>
     <columns>CAMPAIGN.CAMPAIGN_TYPE</columns>
     <columns>CAMPAIGN.STATUS</columns>
-    <filterScope>Mine</filterScope>
-    <filters>
-        <field>CAMPAIGN.ACTIVE</field>
-        <operation>equals</operation>
-        <value>1</value>
-    </filters>
+    <filterScope>Everything</filterScope>
     <label>My Active Campaigns</label>
 </ListView>

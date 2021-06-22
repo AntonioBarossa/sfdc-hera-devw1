@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SendCertifiedEmailConsentDate__c</fullName>
+    <description>Nuova data consenso email invio bolletta PEC per sotto-processo Modifica Dati di Recapito</description>
+    <externalId>false</externalId>
+    <label>Data consenso E-mail PEC Invio Bolletta</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

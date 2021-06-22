@@ -1,0 +1,32 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global" >
+    
+    <aura:html tag="style">
+        .slds-button{
+        	display: none;
+        }
+        .slds-button_icon{
+        	display: none;
+        }
+        .slds-modal__close{
+        	display: none;
+        }
+        .closeIcon{
+        	display: none;
+        }
+        .slds-button_icon-bare{
+        	display: none;
+        }
+        .slds-button_icon-inverse{
+        	display: none;
+        }
+    </aura:html>
+
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="recordId" type="String" access="global" />
+    <aura:handler name="init" value="{!this}" action="{!c.openTabWithSubtab}" />
+    
+    <div class="slds-align_absolute-center spinnerBox">
+        <lightning:spinner alternativeText="Loading" size="large" />
+    </div>
+
+ </aura:component>

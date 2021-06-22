@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>includesAll</fullName>
+        <default>true</default>
+        <label>Disponibile per tutti i valori</label>
+    </customValue>
+    <customValue>
+        <fullName>excludesAll</fullName>
+        <default>false</default>
+        <label>Non disponibile per tutti i valori</label>
+    </customValue>
+    <customValue>
+        <fullName>includesValues</fullName>
+        <default>false</default>
+        <label>Disponibile per i valori selezionati</label>
+    </customValue>
+    <customValue>
+        <fullName>excludesValues</fullName>
+        <default>false</default>
+        <label>Non disponibile per i valori selezionati</label>
+    </customValue>
+    <masterLabel>Operatore Parametri Eleggibilità</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

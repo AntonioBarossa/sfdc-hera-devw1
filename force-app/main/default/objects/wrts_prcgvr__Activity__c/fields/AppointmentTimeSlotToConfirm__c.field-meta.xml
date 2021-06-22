@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AppointmentTimeSlotToConfirm__c</fullName>
+    <description>Contiene Fascia dell&apos;appuntamento scelto dal cliente ma ancora non confermato dal DL</description>
+    <externalId>false</externalId>
+    <label>Fascia appuntamento da confermare</label>
+    <length>11</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

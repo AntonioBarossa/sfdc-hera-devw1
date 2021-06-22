@@ -1,0 +1,29 @@
+<template>
+    
+    <c-hdt-contact-selection if:true={showSelector} 
+        account-id={accountId} 
+        show-administrators={showAdministrators}
+        show-sol-contacts={showSolContacts}
+        search-variant={searchVariant} 
+        search-placeholder={searchPlaceholder} 
+        max-row={maxRow} 
+        columns={columns} 
+        query-params={queryParams} 
+        onrecordselected={handleRecordSelection}>
+    </c-hdt-contact-selection>
+    
+    <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+        <div class="actionsLeft">
+        </div>
+        <div class="actionsRight">
+            <c-hdt-flow-navigation-button
+            next-label={nextLabel}
+            next-variant="brand"
+            is-draft={showDraftButton}
+            is-previous={showBackButton}
+            is-cancel={showCancelButton}
+            onnavigation={handleNavigation}>
+            </c-hdt-flow-navigation-button>
+        </div>
+    </div>
+</template>

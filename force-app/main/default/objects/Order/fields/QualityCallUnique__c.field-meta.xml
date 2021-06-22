@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QualityCallUnique__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Unica quality call per tutti gli ordini legati al dossier</description>
+    <externalId>false</externalId>
+    <label>Quality Call Unica</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

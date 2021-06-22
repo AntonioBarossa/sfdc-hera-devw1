@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>BT</fullName>
+        <default>false</default>
+        <label>BT</label>
+    </customValue>
+    <customValue>
+        <fullName>MT</fullName>
+        <default>false</default>
+        <label>MT</label>
+    </customValue>
+    <description>Tensione</description>
+    <masterLabel>Voltage</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

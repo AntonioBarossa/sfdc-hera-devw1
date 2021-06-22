@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActionDateTime__c</fullName>
+    <description>&quot;The actual date/time a deliver or non delivery event was received by the Marketing Cloud.
+
+NOTE Timestamps for delivery receipts are not indicative of when a message was received on a handset. The SMS industry does not support read receipts, and the data returned in this view are based of of when a delivery receipt is returned to our system.&quot;</description>
+    <externalId>false</externalId>
+    <label>ActionDateTime</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

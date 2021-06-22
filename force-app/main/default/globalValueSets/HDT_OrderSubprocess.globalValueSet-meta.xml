@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Standard</fullName>
+        <default>false</default>
+        <label>Standard</label>
+    </customValue>
+    <customValue>
+        <fullName>Con Autolettura</fullName>
+        <default>false</default>
+        <label>Con Autolettura</label>
+    </customValue>
+    <customValue>
+        <fullName>Retroattiva</fullName>
+        <default>false</default>
+        <label>Retroattiva</label>
+    </customValue>
+    <description>Lista Sottoprocessi.</description>
+    <masterLabel>Sottoprocesso Ordine</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

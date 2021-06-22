@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Agency__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Relazione con l’oggetto Account</description>
+    <externalId>false</externalId>
+    <label>Agenzia</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Assegnazioni Campaign Member Item</relationshipLabel>
+    <relationshipName>Assegnazioni_Campaign_Member_Item</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

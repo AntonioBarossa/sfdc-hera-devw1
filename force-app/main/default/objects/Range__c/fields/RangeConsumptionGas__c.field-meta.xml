@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RangeConsumptionGas__c</fullName>
+    <description>Campo di configurazione usato per indicare la fascia di consumo GAS del record dell&apos;oggetto delle Fasce legato alla funzionalità dei Criteri di Eleggiblità</description>
+    <externalId>false</externalId>
+    <label>Range Consumo GAS</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_RangeConsumptionGas</valueSetName>
+    </valueSet>
+</CustomField>

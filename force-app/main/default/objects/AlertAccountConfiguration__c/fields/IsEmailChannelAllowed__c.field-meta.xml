@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsEmailChannelAllowed__c</fullName>
+    <description>Indica se la regola permette il delivery dell&apos;alert sul canale Email</description>
+    <externalId>false</externalId>
+    <formula>AlertConfiguration__r.IsEmailChannelActive__c</formula>
+    <label>Canale Email</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

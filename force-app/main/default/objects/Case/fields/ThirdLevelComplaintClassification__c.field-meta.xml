@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ThirdLevelComplaintClassification__c</fullName>
+    <externalId>false</externalId>
+    <label>3° Livello</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>SecondLevelComplaintClassification__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Altro</fullName>
+                <default>false</default>
+                <label>Altro</label>
+            </value>
+            <value>
+                <fullName>Presunti Contratti non Richiesti</fullName>
+                <default>false</default>
+                <label>Presunti Contratti non Richiesti</label>
+            </value>
+            <value>
+                <fullName>Doppia Fatturazione</fullName>
+                <default>false</default>
+                <label>Doppia Fatturazione</label>
+            </value>
+            <value>
+                <fullName>Fotovoltaico</fullName>
+                <default>false</default>
+                <label>Fotovoltaico</label>
+            </value>
+            <value>
+                <fullName>Periodicità e fattura di chiusura</fullName>
+                <default>false</default>
+                <label>Periodicità e fattura di chiusura</label>
+            </value>
+            <value>
+                <fullName>Consumi stimati errati</fullName>
+                <default>false</default>
+                <label>Consumi stimati errati</label>
+            </value>
+            <value>
+                <fullName>Modulistica</fullName>
+                <default>false</default>
+                <label>Modulistica</label>
+            </value>
+            <value>
+                <fullName>Volture e subentri</fullName>
+                <default>false</default>
+                <label>Volture e subentri</label>
+            </value>
+            <value>
+                <fullName>Privacy</fullName>
+                <default>false</default>
+                <label>Privacy</label>
+            </value>
+            <value>
+                <fullName>Indennizzi</fullName>
+                <default>false</default>
+                <label>Indennizzi</label>
+            </value>
+            <value>
+                <fullName>Servizio clienti (call center, sportelli, altri servizi)</fullName>
+                <default>false</default>
+                <label>Servizio clienti (call center, sportelli, altri servizi)</label>
+            </value>
+            <value>
+                <fullName>Erogazioni</fullName>
+                <default>false</default>
+                <label>Erogazioni</label>
+            </value>
+            <value>
+                <fullName>Cessazioni</fullName>
+                <default>false</default>
+                <label>Cessazioni</label>
+            </value>
+            <value>
+                <fullName>Validazioni</fullName>
+                <default>false</default>
+                <label>Validazioni</label>
+            </value>
+            <value>
+                <fullName>Preventivi/attivazioni/lavori (tempi e costi)</fullName>
+                <default>false</default>
+                <label>Preventivi/attivazioni/lavori (tempi e costi)</label>
+            </value>
+            <value>
+                <fullName>Continuità</fullName>
+                <default>false</default>
+                <label>Continuità</label>
+            </value>
+            <value>
+                <fullName>Mancate letture</fullName>
+                <default>false</default>
+                <label>Mancate letture</label>
+            </value>
+            <value>
+                <fullName>Verifica e ricostruzioni</fullName>
+                <default>false</default>
+                <label>Verifica e ricostruzioni</label>
+            </value>
+            <value>
+                <fullName>Cambio misuratore</fullName>
+                <default>false</default>
+                <label>Cambio misuratore</label>
+            </value>
+            <value>
+                <fullName>Ricalcoli</fullName>
+                <default>false</default>
+                <label>Ricalcoli</label>
+            </value>
+            <value>
+                <fullName>Condizioni economiche nuovi contratti</fullName>
+                <default>false</default>
+                <label>Condizioni economiche nuovi contratti</label>
+            </value>
+            <value>
+                <fullName>Cambio fornitore</fullName>
+                <default>false</default>
+                <label>Cambio fornitore</label>
+            </value>
+            <value>
+                <fullName>Cmor (Corrispettivo morosità pregresse)</fullName>
+                <default>false</default>
+                <label>Cmor (Corrispettivo morosità pregresse)</label>
+            </value>
+            <value>
+                <fullName>Morosità</fullName>
+                <default>false</default>
+                <label>Morosità</label>
+            </value>
+            <value>
+                <fullName>Sospensione e riattivazione</fullName>
+                <default>false</default>
+                <label>Sospensione e riattivazione</label>
+            </value>
+            <value>
+                <fullName>Modifiche unilaterali</fullName>
+                <default>false</default>
+                <label>Modifiche unilaterali</label>
+            </value>
+            <value>
+                <fullName>Recesso</fullName>
+                <default>false</default>
+                <label>Recesso</label>
+            </value>
+            <value>
+                <fullName>Importi per consumi risalenti a più di due anni</fullName>
+                <default>false</default>
+                <label>Importi per consumi risalenti a più di due anni</label>
+            </value>
+            <value>
+                <fullName>Autolettura (uso della)</fullName>
+                <default>false</default>
+                <label>Autolettura (uso della)</label>
+            </value>
+            <value>
+                <fullName>Pagamenti e Rimborsi</fullName>
+                <default>false</default>
+                <label>Pagamenti e Rimborsi</label>
+            </value>
+            <value>
+                <fullName>Sicurezza</fullName>
+                <default>false</default>
+                <label>Sicurezza</label>
+            </value>
+            <value>
+                <fullName>Valori della tensione/pressione</fullName>
+                <default>false</default>
+                <label>Valori della tensione/pressione</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Misura</controllingFieldValue>
+            <controllingFieldValue>Mercato</controllingFieldValue>
+            <controllingFieldValue>Qualità Commerciale</controllingFieldValue>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <controllingFieldValue>Bonus sociale</controllingFieldValue>
+            <controllingFieldValue>Contratti</controllingFieldValue>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Connessioni, lavori e qualità tecnica</controllingFieldValue>
+            <controllingFieldValue>Morosità e sospensione</controllingFieldValue>
+            <valueName>Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Misura</controllingFieldValue>
+            <valueName>Mancate letture</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Misura</controllingFieldValue>
+            <valueName>Verifica e ricostruzioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Misura</controllingFieldValue>
+            <valueName>Cambio misuratore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mercato</controllingFieldValue>
+            <valueName>Presunti Contratti non Richiesti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mercato</controllingFieldValue>
+            <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
+            <valueName>Doppia Fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mercato</controllingFieldValue>
+            <valueName>Condizioni economiche nuovi contratti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mercato</controllingFieldValue>
+            <valueName>Cambio fornitore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità Commerciale</controllingFieldValue>
+            <valueName>Indennizzi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità Commerciale</controllingFieldValue>
+            <valueName>Servizio clienti (call center, sportelli, altri servizi)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Periodicità e fattura di chiusura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Consumi stimati errati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Ricalcoli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Importi per consumi risalenti a più di due anni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Autolettura (uso della)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Pagamenti e Rimborsi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bonus sociale</controllingFieldValue>
+            <valueName>Erogazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bonus sociale</controllingFieldValue>
+            <valueName>Cessazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bonus sociale</controllingFieldValue>
+            <valueName>Validazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratti</controllingFieldValue>
+            <valueName>Volture e subentri</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Fotovoltaico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Modulistica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Privacy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Connessioni, lavori e qualità tecnica</controllingFieldValue>
+            <valueName>Preventivi/attivazioni/lavori (tempi e costi)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Connessioni, lavori e qualità tecnica</controllingFieldValue>
+            <valueName>Continuità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Connessioni, lavori e qualità tecnica</controllingFieldValue>
+            <valueName>Sicurezza</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Connessioni, lavori e qualità tecnica</controllingFieldValue>
+            <valueName>Valori della tensione/pressione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità e sospensione</controllingFieldValue>
+            <valueName>Cmor (Corrispettivo morosità pregresse)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità e sospensione</controllingFieldValue>
+            <valueName>Morosità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità e sospensione</controllingFieldValue>
+            <valueName>Sospensione e riattivazione</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

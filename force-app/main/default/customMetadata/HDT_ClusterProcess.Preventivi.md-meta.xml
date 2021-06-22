@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Preventivi</label>
+    <protected>false</protected>
+    <values>
+        <field>Cluster__c</field>
+        <value xsi:type="xsd:string">Preventivi</value>
+    </values>
+    <values>
+        <field>ProcessType__c</field>
+        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Variazione Fase&quot;,&quot;value&quot;:&quot;Variazione Fase&quot;},
+{&quot;label&quot;:&quot;Variazione Tensione&quot;,&quot;value&quot;:&quot;Variazione Tensione&quot;},
+{&quot;label&quot;:&quot;Variazione Potenza&quot;,&quot;value&quot;:&quot;Variazione Potenza&quot;},
+{&quot;label&quot;:&quot;Unificazione POD&quot;,&quot;value&quot;:&quot;Unificazione POD&quot;},
+{&quot;label&quot;:&quot;Spostamento Contatore - Cavi&quot;,&quot;value&quot;:&quot;Spostamento Contatore - Cavi&quot;},
+{&quot;label&quot;:&quot;Ripristino Fornitura Interrotta&quot;,&quot;value&quot;:&quot;Ripristino Fornitura Interrotta&quot;},
+{&quot;label&quot;:&quot;Rimozione Impianto&quot;,&quot;value&quot;:&quot;Rimozione Impianto&quot;},
+{&quot;label&quot;:&quot;Nuovo Impianto - Aggiunta Attacco&quot;,&quot;value&quot;:&quot;Nuovo Impianto - Aggiunta Attacco&quot;},
+{&quot;label&quot;:&quot;Mod. Imp. - Em. Imp. - Var. Portata&quot;,&quot;value&quot;:&quot;Mod. Imp. - Em. Imp. - Var. Portata&quot;},
+{&quot;label&quot;:&quot;Spostamento Votive Modena&quot;,&quot;value&quot;:&quot;Spostamento Votive Modena&quot;}]</value>
+    </values>
+</CustomMetadata>

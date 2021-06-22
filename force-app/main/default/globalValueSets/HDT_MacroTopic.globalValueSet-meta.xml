@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Info modulistica</fullName>
+        <default>false</default>
+        <label>Info modulistica</label>
+    </customValue>
+    <customValue>
+        <fullName>Info su stato pratica</fullName>
+        <default>false</default>
+        <label>Info su stato pratica</label>
+    </customValue>
+    <customValue>
+        <fullName>Info contratto</fullName>
+        <default>false</default>
+        <label>Info contratto</label>
+    </customValue>
+    <customValue>
+        <fullName>Consulenza offerte</fullName>
+        <default>false</default>
+        <label>Consulenza offerte</label>
+    </customValue>
+    <customValue>
+        <fullName>Info contatto</fullName>
+        <default>false</default>
+        <label>Info contatto</label>
+    </customValue>
+    <customValue>
+        <fullName>Info Consegna e prodotti</fullName>
+        <default>false</default>
+        <label>Info Consegna e prodotti</label>
+    </customValue>
+    <customValue>
+        <fullName>Info Fatturazione</fullName>
+        <default>false</default>
+        <label>Info Fatturazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Info stato pratica</fullName>
+        <default>false</default>
+        <label>Info stato pratica</label>
+    </customValue>
+    <customValue>
+        <fullName>Info modalità</fullName>
+        <default>false</default>
+        <label>Info modalità</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta di approfondimenti</fullName>
+        <default>false</default>
+        <label>Richiesta di approfondimenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Info estratto conto</fullName>
+        <default>false</default>
+        <label>Info estratto conto</label>
+    </customValue>
+    <customValue>
+        <fullName>Info pagamenti</fullName>
+        <default>false</default>
+        <label>Info pagamenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Info dati</fullName>
+        <default>false</default>
+        <label>Info dati</label>
+    </customValue>
+    <customValue>
+        <fullName>Info fattura</fullName>
+        <default>false</default>
+        <label>Info fattura</label>
+    </customValue>
+    <customValue>
+        <fullName>Modalità comunicazione</fullName>
+        <default>false</default>
+        <label>Modalità comunicazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Informazione stato pratica</fullName>
+        <default>false</default>
+        <label>Informazione stato pratica</label>
+    </customValue>
+    <customValue>
+        <fullName>Info servizi</fullName>
+        <default>false</default>
+        <label>Info servizi</label>
+    </customValue>
+    <masterLabel>Macro Argomento</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

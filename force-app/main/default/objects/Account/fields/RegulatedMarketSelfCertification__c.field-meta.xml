@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RegulatedMarketSelfCertification__c</fullName>
+    <externalId>false</externalId>
+    <label>Autocertificazione Maggior Tutela</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Maggior Tutela temporanea</fullName>
+                <default>false</default>
+                <label>Maggior Tutela temporanea</label>
+            </value>
+            <value>
+                <fullName>Maggior Tutela confermata</fullName>
+                <default>false</default>
+                <label>Maggior Tutela confermata</label>
+            </value>
+            <value>
+                <fullName>Inviato primo sollecito</fullName>
+                <default>false</default>
+                <label>Inviato primo sollecito</label>
+            </value>
+            <value>
+                <fullName>Inadempiente</fullName>
+                <default>false</default>
+                <label>Inadempiente</label>
+            </value>
+            <value>
+                <fullName>Salvaguardia</fullName>
+                <default>false</default>
+                <label>Salvaguardia</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

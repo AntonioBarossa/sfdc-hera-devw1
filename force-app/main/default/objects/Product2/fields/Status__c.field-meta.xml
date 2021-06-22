@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <description>Stato</description>
+    <externalId>false</externalId>
+    <label>Stato</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Annullata</fullName>
+                <default>false</default>
+                <label>Annullata</label>
+            </value>
+            <value>
+                <fullName>Confermata</fullName>
+                <default>false</default>
+                <label>Confermata</label>
+            </value>
+            <value>
+                <fullName>In Sviluppo</fullName>
+                <default>false</default>
+                <label>In Sviluppo</label>
+            </value>
+            <value>
+                <fullName>Vendibile</fullName>
+                <default>false</default>
+                <label>Vendibile</label>
+            </value>
+            <value>
+                <fullName>Scaduta</fullName>
+                <default>false</default>
+                <label>Scaduta</label>
+            </value>
+            <value>
+                <fullName>TBD</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>TBD</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

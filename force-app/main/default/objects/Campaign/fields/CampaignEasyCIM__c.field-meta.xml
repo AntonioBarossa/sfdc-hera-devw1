@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CampaignEasyCIM__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Relazione con l’oggetto “Campagna EasyCIM”, obbligatorio per Campagne Outbound con canale Telefonico</description>
+    <externalId>false</externalId>
+    <label>Campagna EasyCIM</label>
+    <referenceTo>CampaignEasyCIM__c</referenceTo>
+    <relationshipLabel>Campaigns</relationshipLabel>
+    <relationshipName>Campaigns</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BillSendingMethod__c</fullName>
+    <description>Nuova modalità invio bolletta per sotto-processo Modifica Dati di Recapito</description>
+    <externalId>false</externalId>
+    <label>Modalità invio bolletta</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_BillSendingMethod</valueSetName>
+    </valueSet>
+</CustomField>

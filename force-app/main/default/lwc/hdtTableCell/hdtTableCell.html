@@ -1,0 +1,26 @@
+<template>
+
+    <template if:true={showField} >
+        {outputvalue}
+    </template>
+
+    <template if:true={showCurrency} >
+        <lightning-formatted-number
+            value={outputvalue}
+            format-style="currency"
+            currency-code="EUR"
+            currency-display-as="symbol"
+        ></lightning-formatted-number>
+    </template>
+
+    <template if:true={showIcon} >
+        <lightning-icon
+            icon-name="utility:record"
+            alternative-text="Utility image"
+            title="Image"
+            size="x-small"
+            class={iconClass}
+        ></lightning-icon>
+    </template>
+
+</template>

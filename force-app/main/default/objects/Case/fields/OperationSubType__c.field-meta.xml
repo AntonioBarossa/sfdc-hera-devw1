@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OperationSubType__c</fullName>
+    <externalId>false</externalId>
+    <label>Sottotipo Operazione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Risarcimenti danni</fullName>
+                <default>false</default>
+                <label>Risarcimenti danni</label>
+            </value>
+            <value>
+                <fullName>Prezzo energia negoziato</fullName>
+                <default>false</default>
+                <label>Prezzo energia negoziato</label>
+            </value>
+            <value>
+                <fullName>Rimborso totale bollette</fullName>
+                <default>false</default>
+                <label>Rimborso totale bollette</label>
+            </value>
+            <value>
+                <fullName>Rimborso parziale bollette</fullName>
+                <default>false</default>
+                <label>Rimborso parziale bollette</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

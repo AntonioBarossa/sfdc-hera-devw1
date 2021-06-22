@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <description>Indica se un attività ha ricevuto sollecito da parte del cliente</description>
+    <externalId>false</externalId>
+    <label>Tipo attività</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Approvazione Quote</fullName>
+                <default>false</default>
+                <label>Approvazione Quote</label>
+            </value>
+            <value>
+                <fullName>Gestione dati discordanti</fullName>
+                <default>false</default>
+                <label>Gestione dati discordanti</label>
+            </value>
+            <value>
+                <fullName>Modifica Contratti PreAttivazione</fullName>
+                <default>false</default>
+                <label>Modifica Contratti PreAttivazione</label>
+            </value>
+            <value>
+                <fullName>Contratti/Bonus Commerciale</fullName>
+                <default>false</default>
+                <label>Contratti/Bonus Commerciale</label>
+            </value>
+            <value>
+                <fullName>Gestione Switch in Ripristinatorio</fullName>
+                <default>false</default>
+                <label>Gestione Switch in Ripristinatorio</label>
+            </value>
+            <value>
+                <fullName>Documentale/Copia Contratto</fullName>
+                <default>false</default>
+                <label>Documentale/Copia Contratto</label>
+            </value>
+            <value>
+                <fullName>Gestione Iva e Accise</fullName>
+                <default>false</default>
+                <label>Gestione Iva e Accise</label>
+            </value>
+            <value>
+                <fullName>Sportello</fullName>
+                <default>false</default>
+                <label>Sportello</label>
+            </value>
+            <value>
+                <fullName>Segnalazioni VAS</fullName>
+                <default>false</default>
+                <label>Segnalazioni VAS</label>
+            </value>
+            <value>
+                <fullName>Annullamento</fullName>
+                <default>false</default>
+                <label>Annullamento</label>
+            </value>
+            <value>
+                <fullName>Presa Appuntamento</fullName>
+                <default>false</default>
+                <label>Presa Appuntamento</label>
+            </value>
+            <value>
+                <fullName>Sollecito Distributore</fullName>
+                <default>false</default>
+                <label>Sollecito Distributore</label>
+            </value>
+            <value>
+                <fullName>Anticipo Appuntamento</fullName>
+                <default>false</default>
+                <label>Anticipo Appuntamento</label>
+            </value>
+            <value>
+                <fullName>Riapertura urgenti Errori DL</fullName>
+                <default>false</default>
+                <label>Riapertura urgenti Errori DL</label>
+            </value>
+            <value>
+                <fullName>Richiesta informazioni appuntamento</fullName>
+                <default>false</default>
+                <label>Richiesta informazioni appuntamento</label>
+            </value>
+            <value>
+                <fullName>Richiesta appuntamento DL (fermo sistemi)</fullName>
+                <default>false</default>
+                <label>Richiesta appuntamento DL (fermo sistemi)</label>
+            </value>
+            <value>
+                <fullName>Comunicazione da DL</fullName>
+                <default>false</default>
+                <label>Comunicazione da DL</label>
+            </value>
+            <value>
+                <fullName>Chiamata Callback</fullName>
+                <default>false</default>
+                <label>Chiamata Callback</label>
+            </value>
+            <value>
+                <fullName>Chiamata inbound</fullName>
+                <default>false</default>
+                <label>Chiamata inbound</label>
+            </value>
+            <value>
+                <fullName>Chiamata outbound</fullName>
+                <default>false</default>
+                <label>Chiamata outbound</label>
+            </value>
+            <value>
+                <fullName>Lavorazione Reclamo Post Survey</fullName>
+                <default>false</default>
+                <label>Lavorazione Reclamo Post Survey</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

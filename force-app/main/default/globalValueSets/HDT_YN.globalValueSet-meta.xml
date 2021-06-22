@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>N</fullName>
+        <default>false</default>
+        <label>N</label>
+    </customValue>
+    <customValue>
+        <fullName>Y</fullName>
+        <default>false</default>
+        <label>Y</label>
+    </customValue>
+    <description>Valori booleani per regole di catalogo</description>
+    <masterLabel>Yes No</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

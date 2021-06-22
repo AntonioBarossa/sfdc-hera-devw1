@@ -1,0 +1,9 @@
+{
+  "activeViewId" : "9c11b07e-15c6-4b31-9252-b3d273b3a682",
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "id" : "a0aa3b7b-2052-4ea6-b170-949e544cdb6e",
+  "label" : "Contact List",
+  "routeType" : "list-003",
+  "type" : "route",
+  "urlPrefix" : "contact"
+}

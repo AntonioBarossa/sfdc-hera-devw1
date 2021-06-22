@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>DocumentalActivity__c$Name</field>
+    </columns>
+    <description>GAP97-109d.</description>
+    <filter>
+        <criteriaItems>
+            <column>DocumentalActivity__c$CaseId__c.Cluster__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Verifiche</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>DocumentalActivity__c$CaseId__c.Status</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Closed</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>DocumentalActivity__c$CaseId__c.FirstName__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>N° plichi stampati</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>HDT_DocumentalActivity__c</reportType>
+    <scope>user</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>DocumentalActivity__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_LASTTHISMONTH</interval>
+    </timeFrameFilter>
+</Report>

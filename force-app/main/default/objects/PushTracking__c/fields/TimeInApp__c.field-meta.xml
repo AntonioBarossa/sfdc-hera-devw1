@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TimeInApp__c</fullName>
+    <description>How long the user spent in the app after opening the message. Measured from the time the subscriber opens the app to the time the app goes into the background.</description>
+    <externalId>false</externalId>
+    <label>TimeInApp</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

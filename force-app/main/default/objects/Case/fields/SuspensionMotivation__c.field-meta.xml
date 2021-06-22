@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SuspensionMotivation__c</fullName>
+    <externalId>false</externalId>
+    <label>Motivazione Sospensione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sospeso parere interno</fullName>
+                <default>false</default>
+                <label>Sospeso parere interno</label>
+            </value>
+            <value>
+                <fullName>Sospeso parere esterno</fullName>
+                <default>false</default>
+                <label>Sospeso parere esterno</label>
+            </value>
+            <value>
+                <fullName>Sospeso contatto cliente</fullName>
+                <default>false</default>
+                <label>Sospeso contatto cliente</label>
+            </value>
+            <value>
+                <fullName>Sospeso per altra richiesta</fullName>
+                <default>false</default>
+                <label>Sospeso per altra richiesta</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

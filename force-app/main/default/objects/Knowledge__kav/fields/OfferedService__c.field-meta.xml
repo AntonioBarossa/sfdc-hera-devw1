@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OfferedService__c</fullName>
+    <description>Campo dove vengono indicati servizi offerti dallo sportello</description>
+    <externalId>false</externalId>
+    <label>Servizi Offerti</label>
+    <length>255</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

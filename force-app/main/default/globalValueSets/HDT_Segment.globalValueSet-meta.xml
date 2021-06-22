@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>AZIENDE Gruppo</fullName>
+        <default>false</default>
+        <label>AZIENDE Gruppo</label>
+    </customValue>
+    <customValue>
+        <fullName>AZIENDE Sme</fullName>
+        <default>false</default>
+        <label>AZIENDE Sme</label>
+    </customValue>
+    <customValue>
+        <fullName>AZIENDE Soho</fullName>
+        <default>false</default>
+        <label>AZIENDE Soho</label>
+    </customValue>
+    <customValue>
+        <fullName>CONDOMINI Small</fullName>
+        <default>false</default>
+        <label>CONDOMINI Small</label>
+    </customValue>
+    <customValue>
+        <fullName>Corporate_IC</fullName>
+        <default>false</default>
+        <label>Corporate_IC</label>
+    </customValue>
+    <customValue>
+        <fullName>Corporate_SME</fullName>
+        <default>false</default>
+        <label>Corporate_SME</label>
+    </customValue>
+    <customValue>
+        <fullName>Corporate_TOP</fullName>
+        <default>false</default>
+        <label>Corporate_TOP</label>
+    </customValue>
+    <customValue>
+        <fullName>FAMIGLIE</fullName>
+        <default>false</default>
+        <label>FAMIGLIE</label>
+    </customValue>
+    <customValue>
+        <fullName>GOLD Aziende Sme</fullName>
+        <default>false</default>
+        <label>GOLD Aziende Sme</label>
+    </customValue>
+    <customValue>
+        <fullName>GOLD Consorzi Sme</fullName>
+        <default>false</default>
+        <label>GOLD Consorzi Sme</label>
+    </customValue>
+    <customValue>
+        <fullName>GOLD Enti</fullName>
+        <default>false</default>
+        <label>GOLD Enti</label>
+    </customValue>
+    <customValue>
+        <fullName>GOLD Top Business</fullName>
+        <default>false</default>
+        <label>GOLD Top Business</label>
+    </customValue>
+    <customValue>
+        <fullName>HCNE_Corporate_SME</fullName>
+        <default>false</default>
+        <label>HCNE_Corporate_SME</label>
+    </customValue>
+    <customValue>
+        <fullName>HCNE_Corporate_TOP</fullName>
+        <default>false</default>
+        <label>HCNE_Corporate_TOP</label>
+    </customValue>
+    <customValue>
+        <fullName>Mui_Default_Aziende</fullName>
+        <default>false</default>
+        <label>Mui_Default_Aziende</label>
+    </customValue>
+    <customValue>
+        <fullName>Mui_Default_Famiglie</fullName>
+        <default>false</default>
+        <label>Mui_Default_Famiglie</label>
+    </customValue>
+    <customValue>
+        <fullName>Mui_Fui_Aziende</fullName>
+        <default>false</default>
+        <label>Mui_Fui_Aziende</label>
+    </customValue>
+    <customValue>
+        <fullName>Mui_Fui_Famiglie</fullName>
+        <default>false</default>
+        <label>Mui_Fui_Famiglie</label>
+    </customValue>
+    <customValue>
+        <fullName>Mui_No SV_Enti</fullName>
+        <default>false</default>
+        <label>Mui_No SV_Enti</label>
+    </customValue>
+    <customValue>
+        <fullName>Mui_SV_Aziende</fullName>
+        <default>false</default>
+        <label>Mui_SV_Aziende</label>
+    </customValue>
+    <customValue>
+        <fullName>Mui_SV_Enti</fullName>
+        <default>false</default>
+        <label>Mui_SV_Enti</label>
+    </customValue>
+    <customValue>
+        <fullName>PLATINUM</fullName>
+        <default>false</default>
+        <label>PLATINUM</label>
+    </customValue>
+    <customValue>
+        <fullName>SALVAGUARDIA</fullName>
+        <default>false</default>
+        <label>SALVAGUARDIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SILVER Aziende Soho</fullName>
+        <default>false</default>
+        <label>SILVER Aziende Soho</label>
+    </customValue>
+    <customValue>
+        <fullName>ZCOD-DA codificare</fullName>
+        <default>false</default>
+        <label>ZCOD-DA codificare</label>
+    </customValue>
+    <customValue>
+        <fullName>GOLD</fullName>
+        <default>false</default>
+        <label>GOLD</label>
+    </customValue>
+    <customValue>
+        <fullName>SILVER</fullName>
+        <default>false</default>
+        <label>SILVER</label>
+    </customValue>
+    <customValue>
+        <fullName>CONDOMINI</fullName>
+        <default>false</default>
+        <label>CONDOMINI</label>
+    </customValue>
+    <customValue>
+        <fullName>ENTI</fullName>
+        <default>false</default>
+        <label>ENTI</label>
+    </customValue>
+    <customValue>
+        <fullName>Corporate_CONSIP</fullName>
+        <default>false</default>
+        <label>Corporate_CONSIP</label>
+    </customValue>
+    <description>Codice Segmento SAP</description>
+    <masterLabel>Segmento</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

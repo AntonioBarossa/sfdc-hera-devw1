@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CustomerMarking__c</fullName>
+    <description>Nuova Marcatura cliente per sotto-processo Modifica Dati di contatto</description>
+    <externalId>false</externalId>
+    <label>Marcatura Cliente</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Category__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>HDT_CustomerMarking</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
+            <valueName>AAS Condominio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
+            <controllingFieldValue>Aziende Soho</controllingFieldValue>
+            <valueName>AAS Parti comuni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
+            <valueName>Condominio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
+            <controllingFieldValue>Aziende Soho</controllingFieldValue>
+            <valueName>Parti comuni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
+            <controllingFieldValue>Aziende Soho</controllingFieldValue>
+            <valueName>D4 - Parti comuni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
+            <valueName>D5 - Condominio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aziende Soho</controllingFieldValue>
+            <valueName>AAS Azienda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aziende Soho</controllingFieldValue>
+            <valueName>AAS Ditta individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aziende Soho</controllingFieldValue>
+            <valueName>Azienda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aziende Soho</controllingFieldValue>
+            <valueName>Ditta individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aziende Soho</controllingFieldValue>
+            <valueName>D2 - Ditta individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aziende Soho</controllingFieldValue>
+            <valueName>D3 - Azienda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Famiglie</controllingFieldValue>
+            <valueName>AAS Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Famiglie</controllingFieldValue>
+            <valueName>Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Famiglie</controllingFieldValue>
+            <valueName>D1 - Persona fisica</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

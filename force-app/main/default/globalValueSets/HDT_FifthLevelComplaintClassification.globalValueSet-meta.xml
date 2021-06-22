@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Comportamento non professionale</fullName>
+        <default>false</default>
+        <label>Comportamento non professionale</label>
+    </customValue>
+    <customValue>
+        <fullName>Firma falsa</fullName>
+        <default>false</default>
+        <label>Firma falsa</label>
+    </customValue>
+    <customValue>
+        <fullName>Procedura/info errata</fullName>
+        <default>false</default>
+        <label>Procedura/info errata</label>
+    </customValue>
+    <customValue>
+        <fullName>Volontà estorta</fullName>
+        <default>false</default>
+        <label>Volontà estorta</label>
+    </customValue>
+    <description>Classificazione Quinto Livello (cluster Reclami)</description>
+    <masterLabel>5° Livello</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

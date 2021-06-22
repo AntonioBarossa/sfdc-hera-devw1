@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EndCustomerRequestType__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipo di richiesta Cliente Finale</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Conciliazione paritetica</fullName>
+                <default>false</default>
+                <label>Conciliazione paritetica</label>
+            </value>
+            <value>
+                <fullName>Reclamo Scritto</fullName>
+                <default>false</default>
+                <label>Reclamo Scritto</label>
+            </value>
+            <value>
+                <fullName>Reclamo Telefonico</fullName>
+                <default>false</default>
+                <label>Reclamo Telefonico</label>
+            </value>
+            <value>
+                <fullName>Richiesta Info Scritta</fullName>
+                <default>false</default>
+                <label>Richiesta Info Scritta</label>
+            </value>
+            <value>
+                <fullName>Richiesta info Telefonica</fullName>
+                <default>false</default>
+                <label>Richiesta info Telefonica</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

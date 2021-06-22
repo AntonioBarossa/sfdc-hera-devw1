@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MeterStatus__c</fullName>
+    <externalId>false</externalId>
+    <label>Stato Apparecchiatura</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Bozza</fullName>
+                <default>false</default>
+                <label>Bozza</label>
+            </value>
+            <value>
+                <fullName>Attivo</fullName>
+                <default>false</default>
+                <label>Attivo</label>
+            </value>
+            <value>
+                <fullName>Inattivo</fullName>
+                <default>false</default>
+                <label>Inattivo</label>
+            </value>
+            <value>
+                <fullName>Sospeso</fullName>
+                <default>false</default>
+                <label>Sospeso</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

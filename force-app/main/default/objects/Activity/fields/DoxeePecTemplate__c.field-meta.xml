@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DoxeePecTemplate__c</fullName>
+    <description>Nome descrittivo del template PEC definito lato Doxee.</description>
+    <externalId>false</externalId>
+    <label>Template PEC Doxee</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Comunicazione Forte Consumo (23)</fullName>
+                <default>false</default>
+                <label>Comunicazione Forte Consumo (23)</label>
+            </value>
+            <value>
+                <fullName>Comunicazione Fuga Accertata (24)</fullName>
+                <default>false</default>
+                <label>Comunicazione Fuga Accertata (24)</label>
+            </value>
+            <value>
+                <fullName>Comunicazione Fuga Presunta (25)</fullName>
+                <default>false</default>
+                <label>Comunicazione Fuga Presunta (25)</label>
+            </value>
+            <value>
+                <fullName>Ultimo Avviso (26)</fullName>
+                <default>false</default>
+                <label>Ultimo Avviso (26)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

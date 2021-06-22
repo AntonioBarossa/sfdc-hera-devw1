@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CancellationReasonDescription__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>CancellationReasonDescription</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Annullamento ACG per errata trasmissione</fullName>
+                <default>true</default>
+                <label>Annullamento ACG per errata trasmissione</label>
+            </value>
+            <value>
+                <fullName>Annullamento RC per disattivazione della fornitura</fullName>
+                <default>false</default>
+                <label>Annullamento RC per disattivazione della fornitura</label>
+            </value>
+            <value>
+                <fullName>Annullamento VSG per errata trasmissione</fullName>
+                <default>false</default>
+                <label>Annullamento VSG per errata trasmissione</label>
+            </value>
+            <value>
+                <fullName>Revoca ai sensi del comma 14.3 del TIMOE</fullName>
+                <default>false</default>
+                <label>Revoca ai sensi del comma 14.3 del TIMOE</label>
+            </value>
+            <value>
+                <fullName>Revoca ai sensi del comma 6.3 del TIMOE</fullName>
+                <default>false</default>
+                <label>Revoca ai sensi del comma 6.3 del TIMOE</label>
+            </value>
+            <value>
+                <fullName>Revoca ai sensi del comma 8.2 del TIMG</fullName>
+                <default>false</default>
+                <label>Revoca ai sensi del comma 8.2 del TIMG</label>
+            </value>
+            <value>
+                <fullName>Revoca risoluzione per errata trasmissione</fullName>
+                <default>false</default>
+                <label>Revoca risoluzione per errata trasmissione</label>
+            </value>
+            <value>
+                <fullName>Revoca risoluzione per pratica errata</fullName>
+                <default>false</default>
+                <label>Revoca risoluzione per pratica errata</label>
+            </value>
+            <value>
+                <fullName>Revoca switching per errata trasmissione</fullName>
+                <default>false</default>
+                <label>Revoca switching per errata trasmissione</label>
+            </value>
+            <value>
+                <fullName>Revoca switching per pratica errata</fullName>
+                <default>false</default>
+                <label>Revoca switching per pratica errata</label>
+            </value>
+            <value>
+                <fullName>Revoca voltura per pratica errata</fullName>
+                <default>false</default>
+                <label>Revoca voltura per pratica errata</label>
+            </value>
+            <value>
+                <fullName>Revoca switching per esercizio del diritto di ripensamento da parte del cliente finale</fullName>
+                <default>false</default>
+                <label>Revoca switching per esercizio del diritto di ripensamento da parte del cliente finale</label>
+            </value>
+            <value>
+                <fullName>Revoca switching per esercizio del diritto di ripensamento da parte del cliente finale Gas</fullName>
+                <default>false</default>
+                <label>Revoca switching per esercizio del diritto di ripensamento da parte del cliente finale Gas</label>
+            </value>
+            <value>
+                <fullName>Risoluzione contrattuale per contratto non richiesto</fullName>
+                <default>false</default>
+                <label>Risoluzione contrattuale per contratto non richiesto</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

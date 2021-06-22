@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CostExemption__c</fullName>
+    <description>Esenzione del costo di servizio</description>
+    <externalId>false</externalId>
+    <formula>TEXT(SBQQ__OptionalSKU__r.CostExemption__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Esenzione costo di servizio</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

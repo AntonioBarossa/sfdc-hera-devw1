@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>ANNUL PER CESSAZIONE</fullName>
+        <default>false</default>
+        <label>ANNUL PER CESSAZIONE</label>
+    </customValue>
+    <customValue>
+        <fullName>ANNUL PER RECESSO</fullName>
+        <default>false</default>
+        <label>ANNUL PER RECESSO</label>
+    </customValue>
+    <customValue>
+        <fullName>ANNUL PER RIPENS</fullName>
+        <default>false</default>
+        <label>ANNUL PER RIPENS</label>
+    </customValue>
+    <customValue>
+        <fullName>ANNULLATO</fullName>
+        <default>false</default>
+        <label>ANNULLATO</label>
+    </customValue>
+    <customValue>
+        <fullName>CESS</fullName>
+        <default>false</default>
+        <label>CESS</label>
+    </customValue>
+    <customValue>
+        <fullName>CHIUSO</fullName>
+        <default>false</default>
+        <label>CHIUSO</label>
+    </customValue>
+    <customValue>
+        <fullName>COFF</fullName>
+        <default>false</default>
+        <label>COFF</label>
+    </customValue>
+    <customValue>
+        <fullName>DIS</fullName>
+        <default>false</default>
+        <label>DIS</label>
+    </customValue>
+    <customValue>
+        <fullName>FAT SD</fullName>
+        <default>false</default>
+        <label>FAT SD</label>
+    </customValue>
+    <customValue>
+        <fullName>FATT</fullName>
+        <default>false</default>
+        <label>FATT</label>
+    </customValue>
+    <customValue>
+        <fullName>FATTURA SD</fullName>
+        <default>false</default>
+        <label>FATTURA SD</label>
+    </customValue>
+    <customValue>
+        <fullName>KO</fullName>
+        <default>false</default>
+        <label>KO</label>
+    </customValue>
+    <customValue>
+        <fullName>KO BONUS</fullName>
+        <default>false</default>
+        <label>KO BONUS</label>
+    </customValue>
+    <customValue>
+        <fullName>KO DIS</fullName>
+        <default>false</default>
+        <label>KO DIS</label>
+    </customValue>
+    <customValue>
+        <fullName>KO ODV</fullName>
+        <default>false</default>
+        <label>KO ODV</label>
+    </customValue>
+    <customValue>
+        <fullName>KO PAREG</fullName>
+        <default>false</default>
+        <label>KO PAREG</label>
+    </customValue>
+    <customValue>
+        <fullName>KO RTZ</fullName>
+        <default>false</default>
+        <label>KO RTZ</label>
+    </customValue>
+    <customValue>
+        <fullName>KO STORN</fullName>
+        <default>false</default>
+        <label>KO STORN</label>
+    </customValue>
+    <customValue>
+        <fullName>OK</fullName>
+        <default>false</default>
+        <label>OK</label>
+    </customValue>
+    <customValue>
+        <fullName>OK ODV</fullName>
+        <default>false</default>
+        <label>OK ODV</label>
+    </customValue>
+    <customValue>
+        <fullName>OK PAREG</fullName>
+        <default>false</default>
+        <label>OK PAREG</label>
+    </customValue>
+    <customValue>
+        <fullName>PAG</fullName>
+        <default>false</default>
+        <label>PAG</label>
+    </customValue>
+    <customValue>
+        <fullName>RECESSO DA FORNITORE</fullName>
+        <default>false</default>
+        <label>RECESSO DA FORNITORE</label>
+    </customValue>
+    <customValue>
+        <fullName>RECL</fullName>
+        <default>false</default>
+        <label>RECL</label>
+    </customValue>
+    <customValue>
+        <fullName>RIPENS</fullName>
+        <default>false</default>
+        <label>RIPENS</label>
+    </customValue>
+    <customValue>
+        <fullName>RTZ</fullName>
+        <default>false</default>
+        <label>RTZ</label>
+    </customValue>
+    <customValue>
+        <fullName>SOL_TAG</fullName>
+        <default>false</default>
+        <label>SOL_TAG</label>
+    </customValue>
+    <customValue>
+        <fullName>SOLL</fullName>
+        <default>false</default>
+        <label>SOLL</label>
+    </customValue>
+    <customValue>
+        <fullName>STORN</fullName>
+        <default>false</default>
+        <label>STORN</label>
+    </customValue>
+    <customValue>
+        <fullName>VO</fullName>
+        <default>false</default>
+        <label>VO</label>
+    </customValue>
+    <description>Elenco stati ricevuti da motore vas.</description>
+    <masterLabel>Stato Motore Vas</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

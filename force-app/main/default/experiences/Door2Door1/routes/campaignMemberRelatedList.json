@@ -1,0 +1,9 @@
+{
+  "activeViewId" : "f6924f00-6d4b-4cbe-9125-b3917a053a2e",
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "id" : "0d2f027a-f118-4072-a4bc-da911dfc74c5",
+  "label" : "Campaign Member Related List",
+  "routeType" : "relatedlist-00v",
+  "type" : "route",
+  "urlPrefix" : "campaignmember"
+}

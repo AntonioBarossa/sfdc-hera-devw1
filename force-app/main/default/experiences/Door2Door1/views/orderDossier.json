@@ -1,0 +1,45 @@
+{
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "id" : "0ad5ed10-75fe-46b9-a3ec-d23c3864d40f",
+  "label" : "OrderDossier",
+  "regions" : [ {
+    "id" : "546195ae-6a4e-4cf3-8eb2-8a3ef6a8dcdf",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:HDT_LCP_OrderDossierWizard",
+      "id" : "a76a9e65-fe6f-4815-852a-f8a25d34bfa9",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "1d692e28-be25-43cf-9516-e63eaaa3e7e9",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "17af5139-e948-44e5-a520-e7a99bd71513",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "description" : "",
+        "metaTags" : "",
+        "title" : "OrderDossier"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "d79f2e60-9501-4765-9cae-adb73ed21d15",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "3d3ce688-8312-4852-bf67-4ec9b644a7af",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-orderdossier"
+}

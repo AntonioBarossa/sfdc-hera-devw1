@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsSap__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Campo tecnico nascosto richiesto dall&apos;integrazione, da valorizzare sempre a True.</description>
+    <externalId>false</externalId>
+    <label>Flag SAP</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

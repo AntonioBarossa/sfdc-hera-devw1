@@ -1,0 +1,754 @@
+{
+  "data": [
+    {
+      "opName": "FACTOR",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "RATETYPE",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": true,
+          "relatedTo": "FareTypeList__c"
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": true,
+          "relatedTo": "infoGroup"
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "AMOUNT",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "TQUANT",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "QUANT",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "QPRICE",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": true,
+          "relatedTo": "PriceListQ__c"
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "TPRICE",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": true,
+          "relatedTo": "PriceListT__c"
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "DEMAND",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "FLAG",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "ADISCPER",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": true,
+          "relatedTo": "DiscountListaA__c"
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "ADISCABS",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": true,
+          "relatedTo": "DiscountListaA__c"
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "PDISCNT",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": true,
+          "relatedTo": "DiscountListP__c"
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "LPRICE",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": true,
+          "relatedTo": "PriceListL__c"
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "USERDEF",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": true,
+          "relatedTo": ""
+        }
+      ]
+    },
+    {
+      "opName": "INTEGER",
+      "fields": [
+        {
+          "fieldName": "startDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "endDate",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "rateType",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "infoGroup",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "numValue",
+          "enabled": true,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "flag",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "stringValue",
+          "enabled": false,
+          "relatedTo": ""
+        }
+      ]
+    }
+  ]
+}

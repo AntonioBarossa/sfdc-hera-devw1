@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ChurnkRiskCtrl__c</fullName>
+    <description>Campo tecnico nascosto. Necessario per calcolo KPI Propensione abbandono.  Valorizzato da Mulesoft su input di DWH.</description>
+    <externalId>false</externalId>
+    <formula>KpiTracking__r.ChurnkRiskCtrl__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Churn Risk</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

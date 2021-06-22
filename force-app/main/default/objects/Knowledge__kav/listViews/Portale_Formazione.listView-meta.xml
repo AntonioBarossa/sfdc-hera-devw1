@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Portale_Formazione</fullName>
+    <columns>TITLE</columns>
+    <columns>ARTICLE_TOTAL_VIEW_COUNT</columns>
+    <columns>ARTICLE_CASE_ATTACH_COUNT</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>ASSIGNEDBY_USER</columns>
+    <columns>ASSIGNEDTO_USER</columns>
+    <columns>LANGUAGE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>PUBLISH_STATUS</field>
+        <operation>equals</operation>
+        <value>2</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Knowledge__kav.HDT_RT_Competitivo</value>
+    </filters>
+    <label>Portale Formazione</label>
+</ListView>

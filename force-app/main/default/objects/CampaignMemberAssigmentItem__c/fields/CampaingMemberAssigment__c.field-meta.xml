@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CampaingMemberAssigment__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Relazione gerarchica con l’oggetto Assegnazione Campagna</description>
+    <externalId>false</externalId>
+    <label>Assegnazione Campaign Member</label>
+    <referenceTo>CampaignMemberAssigment__c</referenceTo>
+    <relationshipLabel>Assegnazioni Campaign Member Item</relationshipLabel>
+    <relationshipName>Assegnazioni_Campaign_Member_Item</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

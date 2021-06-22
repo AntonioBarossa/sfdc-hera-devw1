@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>compreso tra  31 e  65 anni</fullName>
+        <default>false</default>
+        <label>compreso tra  31 e  65 anni</label>
+    </customValue>
+    <customValue>
+        <fullName>maggiore  65 anni</fullName>
+        <default>false</default>
+        <label>maggiore  65 anni</label>
+    </customValue>
+    <customValue>
+        <fullName>Minore o Uguale a 30 anni</fullName>
+        <default>false</default>
+        <label>Minore o Uguale a 30 anni</label>
+    </customValue>
+    <masterLabel>Eta Cliente</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

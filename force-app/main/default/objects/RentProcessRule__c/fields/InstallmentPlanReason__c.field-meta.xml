@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InstallmentPlanReason__c</fullName>
+    <externalId>false</externalId>
+    <label>Motivo Piano Rate</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Assistenza Sociale</fullName>
+                <default>false</default>
+                <label>Assistenza Sociale</label>
+            </value>
+            <value>
+                <fullName>Bolletta Fuga H2O</fullName>
+                <default>false</default>
+                <label>Bolletta Fuga H2O</label>
+            </value>
+            <value>
+                <fullName>Calamità Naturali</fullName>
+                <default>false</default>
+                <label>Calamità Naturali</label>
+            </value>
+            <value>
+                <fullName>Delibera 655 2016</fullName>
+                <default>false</default>
+                <label>Delibera 655 2016</label>
+            </value>
+            <value>
+                <fullName>Disagio Economico</fullName>
+                <default>false</default>
+                <label>Disagio Economico</label>
+            </value>
+            <value>
+                <fullName>Disagio Economico (Bonus Sociale)</fullName>
+                <default>false</default>
+                <label>Disagio Economico (Bonus Sociale)</label>
+            </value>
+            <value>
+                <fullName>Disguido Hera</fullName>
+                <default>false</default>
+                <label>Disguido Hera</label>
+            </value>
+            <value>
+                <fullName>Disoccupato/Cassintegrato</fullName>
+                <default>false</default>
+                <label>Disoccupato/Cassintegrato</label>
+            </value>
+            <value>
+                <fullName>Doc. ricevuto dopo scadenza</fullName>
+                <default>false</default>
+                <label>Doc. ricevuto dopo scadenza</label>
+            </value>
+            <value>
+                <fullName>Evasione/Elusione</fullName>
+                <default>false</default>
+                <label>Evasione/Elusione</label>
+            </value>
+            <value>
+                <fullName>FatturaPlurim_EE (noD1)_GAS</fullName>
+                <default>false</default>
+                <label>FatturaPlurim_EE (noD1)_GAS</label>
+            </value>
+            <value>
+                <fullName>FatturaPlurim_EE SME ML</fullName>
+                <default>false</default>
+                <label>FatturaPlurim_EE SME ML</label>
+            </value>
+            <value>
+                <fullName>FatturaPlurim_Gas&gt;5000</fullName>
+                <default>false</default>
+                <label>FatturaPlurim_Gas&gt;5000</label>
+            </value>
+            <value>
+                <fullName>Fattura Plurim_TLR_Tur + 3.5%</fullName>
+                <default>false</default>
+                <label>Fattura Plurim_TLR_Tur + 3.5%</label>
+            </value>
+            <value>
+                <fullName>Fattura SD</fullName>
+                <default>false</default>
+                <label>Fattura SD</label>
+            </value>
+            <value>
+                <fullName>Fatturazione bloccata plurim</fullName>
+                <default>false</default>
+                <label>Fatturazione bloccata plurim</label>
+            </value>
+            <value>
+                <fullName>Malfunzione Gruppo di misura</fullName>
+                <default>false</default>
+                <label>Malfunzione Gruppo di misura</label>
+            </value>
+            <value>
+                <fullName>Piano d&apos;autorità</fullName>
+                <default>false</default>
+                <label>Piano d&apos;autorità</label>
+            </value>
+            <value>
+                <fullName>TARI</fullName>
+                <default>false</default>
+                <label>TARI</label>
+            </value>
+            <value>
+                <fullName>TCP Comune no Int</fullName>
+                <default>false</default>
+                <label>TCP Comune no Int</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

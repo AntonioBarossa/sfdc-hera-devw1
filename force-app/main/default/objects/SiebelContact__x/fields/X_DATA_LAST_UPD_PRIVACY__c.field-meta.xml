@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X_DATA_LAST_UPD_PRIVACY__c</fullName>
+    <description>X_DATA_LAST_UPD_PRIVACY</description>
+    <externalDeveloperName>X_DATA_LAST_UPD_PRIVACY</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Data consenso privacy</label>
+    <required>false</required>
+    <type>Date</type>
+</CustomField>

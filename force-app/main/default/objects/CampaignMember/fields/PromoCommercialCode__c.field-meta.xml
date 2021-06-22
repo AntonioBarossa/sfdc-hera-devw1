@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PromoCommercialCode__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Relazione con l’oggetto che definisce i codici commerciali. Il campo è gestito in automatico dal sistema e non è editabile dall’utente</description>
+    <externalId>false</externalId>
+    <label>Codice Commerciale</label>
+    <referenceTo>CommercialCode__c</referenceTo>
+    <relationshipLabel>Campaign Members</relationshipLabel>
+    <relationshipName>CampaignMembers</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

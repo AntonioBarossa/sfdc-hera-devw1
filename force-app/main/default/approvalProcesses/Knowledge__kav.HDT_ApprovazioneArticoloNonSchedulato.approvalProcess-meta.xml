@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>true</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>Title</field>
+        <field>ArticleNumber</field>
+        <field>ArticleType</field>
+        <field>ArticleTotalViewCount</field>
+        <field>ProblemType__c</field>
+        <field>Owner</field>
+        <field>ArticleCreatedDate</field>
+        <field>AssignedBy</field>
+        <field>AssignmentDate</field>
+        <field>ArticleCreatedBy</field>
+        <field>CreatedDate</field>
+        <field>LastModifiedBy</field>
+        <field>LastModifiedDate</field>
+        <field>MailArea__c</field>
+        <field>Question__c</field>
+        <field>Answer__c</field>
+        <field>FirstLevelClassification__c</field>
+        <field>SecondLevelClassification__c</field>
+        <field>Language</field>
+        <field>ArticleContent__c</field>
+        <field>FormationDocumentationType__c</field>
+        <field>CommercialDocumentationType__c</field>
+        <field>ValidationStatus</field>
+        <field>PublishStatus</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>Ok_Approvazione</name>
+                <type>FieldUpdate</type>
+            </action>
+        </approvalActions>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <description>prima approvazione dell’articolo da parte dell&apos;Approvatore</description>
+        <label>Approvazione Articolo</label>
+        <name>Approvazione_Articolo</name>
+        <rejectionActions>
+            <action>
+                <name>Ko_Approvazione</name>
+                <type>FieldUpdate</type>
+            </action>
+        </rejectionActions>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <description>il Pubblicatore accetta o rifiuta la pubblicazione dell&apos; articolo</description>
+        <entryCriteria>
+            <criteriaItems>
+                <field>Knowledge__kav.ValidationStatus</field>
+                <operation>equals</operation>
+                <value>Validato Da Approvatore</value>
+            </criteriaItems>
+        </entryCriteria>
+        <label>Pubblicazione Articolo</label>
+        <name>Pubblicazione_Articolo</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <description>Processo Approvativo per la pubblicazione di articoli non schedulati</description>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <formula>ISNULL(ToPublishDate__c)</formula>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Pubblica</name>
+            <type>KnowledgePublish</type>
+        </action>
+        <action>
+            <name>Pubblicazione_Approvata</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Pubblicazione_Non_Approvata</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <label>Approvazione Articolo Non Schedulato</label>
+    <processOrder>2</processOrder>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

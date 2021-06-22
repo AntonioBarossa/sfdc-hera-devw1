@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ExcludeFub__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Determina se la numerazione indicata in “Numero telefonico” deve essere oggetto o meno di verifica FUB. Da processo standard viene valorizzato dall’utente Marketing Cloud</description>
+    <externalId>false</externalId>
+    <label>Escludi FUB</label>
+    <type>Checkbox</type>
+</CustomField>

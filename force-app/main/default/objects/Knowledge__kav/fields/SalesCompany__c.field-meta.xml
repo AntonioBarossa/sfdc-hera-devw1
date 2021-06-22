@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SalesCompany__c</fullName>
+    <description>Società di Vendita</description>
+    <externalId>false</externalId>
+    <label>Società di Vendita</label>
+    <required>false</required>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>HC</fullName>
+                <default>false</default>
+                <label>HC</label>
+            </value>
+            <value>
+                <fullName>EB</fullName>
+                <default>false</default>
+                <label>EB</label>
+            </value>
+            <value>
+                <fullName>EBT</fullName>
+                <default>false</default>
+                <label>EBT</label>
+            </value>
+            <value>
+                <fullName>HCM</fullName>
+                <default>false</default>
+                <label>HCM</label>
+            </value>
+            <value>
+                <fullName>HCNE</fullName>
+                <default>false</default>
+                <label>HCNE</label>
+            </value>
+            <value>
+                <fullName>HSPA</fullName>
+                <default>false</default>
+                <label>HSPA</label>
+            </value>
+            <value>
+                <fullName>MMS</fullName>
+                <default>false</default>
+                <label>MMS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

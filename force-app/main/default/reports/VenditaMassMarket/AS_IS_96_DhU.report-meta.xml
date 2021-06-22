@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Campaign.Orders__r$SignedDate__c</field>
+    </columns>
+    <columns>
+        <field>Campaign.Orders__r$SalesCompany__c</field>
+    </columns>
+    <columns>
+        <field>Campaign.Orders__r$Channel__c</field>
+    </columns>
+    <columns>
+        <field>Campaign$MacroActivityEasyCIM__c</field>
+    </columns>
+    <description>AS IS 96</description>
+    <format>Tabular</format>
+    <name>AS IS 96-Report Multi Prodotto</name>
+    <params>
+        <name>scopeid</name>
+        <value/>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>HDT_CampaignsWiOrders__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Campaign$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

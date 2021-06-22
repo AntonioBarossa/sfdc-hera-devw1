@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PDRCode__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Il codice PDR associato al dato record di asset</description>
+    <externalId>false</externalId>
+    <label>Codice PDR</label>
+    <referenceTo>SaleServiceItem__c</referenceTo>
+    <relationshipLabel>Assets (Codice PDR)</relationshipLabel>
+    <relationshipName>PDRAssets</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BillTypeMessage__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipo Messaggio in Bolletta</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Nessuno</fullName>
+                <default>false</default>
+                <label>Nessuno</label>
+            </value>
+            <value>
+                <fullName>Testo Statico</fullName>
+                <default>false</default>
+                <label>Testo Statico</label>
+            </value>
+            <value>
+                <fullName>Testo Statico e Codice</fullName>
+                <default>false</default>
+                <label>Testo Statico e Codice</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CommercialDocumentationType__c</fullName>
+    <description>Tipologia documentazione Commerciale</description>
+    <externalId>false</externalId>
+    <label>Tipo Documentazione Commerciale</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Offerta Commerciale</fullName>
+                <default>false</default>
+                <label>Offerta Commerciale</label>
+            </value>
+            <value>
+                <fullName>Mobilità Sostenibile</fullName>
+                <default>false</default>
+                <label>Mobilità Sostenibile</label>
+            </value>
+            <value>
+                <fullName>Promozioni</fullName>
+                <default>false</default>
+                <label>Promozioni</label>
+            </value>
+            <value>
+                <fullName>Script per contratti</fullName>
+                <default>false</default>
+                <label>Script per contratti</label>
+            </value>
+            <value>
+                <fullName>Script per preventivi e verifiche</fullName>
+                <default>false</default>
+                <label>Script per preventivi e verifiche</label>
+            </value>
+            <value>
+                <fullName>Script per postvendita</fullName>
+                <default>false</default>
+                <label>Script per postvendita</label>
+            </value>
+            <value>
+                <fullName>Gestione obiezioni</fullName>
+                <default>false</default>
+                <label>Gestione obiezioni</label>
+            </value>
+            <value>
+                <fullName>Gestione Rischio abbandono</fullName>
+                <default>false</default>
+                <label>Gestione Rischio abbandono</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

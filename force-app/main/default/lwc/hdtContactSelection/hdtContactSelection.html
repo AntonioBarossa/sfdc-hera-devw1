@@ -1,0 +1,31 @@
+<template>
+    <template if:true={showAdministrators}>
+        <div onkeyup={handleKeyUp}>
+            <lightning-input
+                name="enter-search"
+                label={searchLabel}
+                type="search"
+                variant={searchVariant}
+                placeholder={searchPlaceholder}
+                min-length="3"
+            ></lightning-input>
+        </div>
+        </br>
+    </template>
+    <template if:true={data}>
+        <div style="height: 24vh;">
+            <lightning-datatable
+                key-field="Id"
+                data={data}
+                columns={shownColumns}
+                onrowaction={handleRowAction}
+                max-row-selection={maxRow}
+                is-loading={isLoading}
+                onrowselection={handleRowSelection}>
+            </lightning-datatable>
+        </div>
+    </template>
+    <template if:true={showNoRecordMessage}>
+        Non sono presenti Contatti selezionabili.
+    </template>
+</template>

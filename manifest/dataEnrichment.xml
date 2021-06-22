@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>HDT_LC_AccountDataEnrichment</members>
+		<members>HDT_LC_AccountDataEnrichmentHelper</members>
+		<members>HDT_QR_AccountDataEnrichment</members>
+		<members>HDT_WRP_AccountDataEnrichment</members>
+		<!-- MeterReading -->
+		<members>HDT_LC_MeterReadingController</members>
+		<members>HDT_LC_MeterReadingControllerHelper</members>
+		<members>HDT_QR_MeterReading</members>
+		<members>HDT_WRP_MeterReading</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>HDT_LCP_OpenCmorSubtab</members>
+		<members>HDT_LCP_ViewLwcSubTab</members>
+		<members>HDT_LCP_OpenRaiFeeSubtab</members>
+		<members>HDT_LCP_OpenSocialBonusSubtab</members>
+		<!-- MeterReading -->
+		<members>HDT_LCP_OpenMeterReadingLwc</members>
+		<members>HDT_LCP_OpenMeterReadingSubtab</members>
+		<name>AuraDefinitionBundle</name>
+	</types>
+	<types>
+		<members>hdtAccountDataEnrichment</members>
+		<members>hdtMeterReading</members>
+		<!-- MeterReading -->
+		<members>hdtMeterReadingDetailTable</members>		
+		<name>LightningComponentBundle</name>
+	</types>
+   	<types>
+		<members>Account.cmor</members>
+		<members>Account.raiFee</members>
+		<members>Account.socialBonus</members>
+		<members>Account.HDT_AccountReadings</members>
+		<name>QuickAction</name>
+	</types>
+	<types>
+		<members>HDT_AccountDataEnrichment__mdt-Account data enrichment Layout</members>
+		<name>Layout</name>
+	</types>
+	<types>
+		<members>AccountDataEnrichment.cmor</members>
+		<members>AccountDataEnrichment.raiFee</members>
+		<members>AccountDataEnrichment.socialBonus</members>
+		<!-- MeterReading -->
+		<members>AccountDataEnrichment.contract</members>
+		<members>AccountDataEnrichment.meterReading</members>		
+		<name>CustomMetadata</name>
+	</types>
+	<types>
+		<members>AccountDataEnrichment__mdt.Authorization__c</members>
+		<members>AccountDataEnrichment__mdt.ColumnData__c</members>
+		<members>AccountDataEnrichment__mdt.Credential__c</members>
+		<members>AccountDataEnrichment__mdt.UseMock__c</members>
+		<name>CustomField</name>
+	</types>
+	<types>
+		<members>AccountDataEnrichment__mdt</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>MockEndPointAccountStatement</members>
+		<members>MockSessionId</members>
+		<name>CustomLabel</name>
+	</types>
+	<types>
+		<members>Mulesoft</members>
+		<name>RemoteSiteSetting</name>
+	</types>
+	<version>50.0</version>
+</Package>

@@ -1,0 +1,25 @@
+<apex:page standardController="EligibilityCriteria__c" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" >
+
+    <script>
+        function redirectBack(){
+        	window.history.back();
+        }
+    </script>
+
+    <apex:slds />
+
+    <div class="slds-scope">
+        <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+              <p>Azione non disponibile</p>
+            </div>
+            <footer class="slds-modal__footer">
+              <button class="slds-button slds-button_brand" onClick="redirectBack()">Chiudi</button>
+            </footer>
+          </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+
+</apex:page>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PercentageAllocation__c</fullName>
+    <description>Definisce la percentuale di Campaign Member che deve essere indirizzata al Teleseller indicato nel campo “Agenzia”</description>
+    <externalId>false</externalId>
+    <label>Percentuale di Assegnazione</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Percent</type>
+</CustomField>

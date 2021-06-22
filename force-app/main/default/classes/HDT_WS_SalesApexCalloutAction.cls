@@ -1,0 +1,234 @@
+/**​
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)​
+* @date 13/04/2021
+* @description HDT_WS_SalesApexCalloutAction – Callout action for custom behavior of Sales Phase Manager
+* @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
+*/
+global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
+    global Object execute(Object args) {
+        Map<String,Object> argsMap = (Map<String,Object>) args;
+        SObject transition = (SObject) argsMap.get('transition'); //phase transition
+        String idTemplate = (String)transition.get('wrts_prcgvr__CalloutTemplate__c');
+        wrts_prcgvr__CalloutTemplate__c tm = [select id, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c, wrts_prcgvr__IncludeNullFields__c,wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c from wrts_prcgvr__CalloutTemplate__c where wrts_prcgvr__Code__c = :idTemplate][0];
+        SObject action = (SObject) argsMap.get('action'); //phase transition detail
+        String method = (String) argsMap.get('method');
+        SObject obj = (sObject) argsMap.get('sender');
+        wrts_prcgvr.MRR_1_0.field headerAddValue = new  wrts_prcgvr.MRR_1_0.field();
+        headerAddValue.fieldType = 'STRING';
+        headerAddValue.name = 'PROCESS_CATEGORY';
+        headerAddValue.value = 'sales';
+        list<wrts_prcgvr.MRR_1_0.field> headerAttributetoAdd = new list<wrts_prcgvr.MRR_1_0.field>{headerAddValue};
+        Object templateMap = argsMap.get('templateMap');
+        Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
+
+        //custom logic ...
+       
+        System.debug('********INPUTFIELD:' + argsMap);
+        
+        System.debug('********tem:' + idTemplate);
+        
+        System.debug('********sender:' + obj);
+        //INIZIO SVILUPPI EVERIS
+        System.debug('********method:' +method);
+        //FINE SVILUPPI EVERIS
+        // Aggiungere if basato su Method e parte static nell header struttura ad oggetto
+        
+        if('Annullamento'.equalsIgnoreCase(method) || 'Ripensamento'.equalsIgnoreCase(method) || 'SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method) || 'SubentroEECreaRich'.equalsIgnoreCase(method) || 'AttivazioneEECreaRich'.equalsIgnoreCase(method) || 'PrecheckEECreaRich'.equalsIgnoreCase(method) || 'SubentroGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneInDeliberaCreaRich'.equalsIgnoreCase(method) || 'AttivazioneFuoriDeliberaCreaRich'.equalsIgnoreCase(method) || 'PrecheckGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneConModCreaRich'.equalsIgnoreCase(method) || 'PreventivoAccettatoSales'.equalsIgnoreCase(method) || 'PreventivoRifiutatoSales'.equalsIgnoreCase(method) || /*Everis: Aggiunto metodo Voltura*/ 'Voltura'.equalsIgnoreCase(method)) {
+            //////////// Recupero endpoint in base a contesto di oggetto
+            wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = ( wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration)  wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
+            String endpoint = endpointUtils.getEndpoint(obj);
+            System.debug('********endpoint:' + endpoint);
+        
+            //////////// genero MRR per il payload del servizio
+            Map<String,Object> inputTemplateFunction = new Map<String,Object>();
+            inputTemplateFunction.put('sender',obj);
+            inputTemplateFunction.put('template',tm);
+            inputTemplateFunction.put('parameters',parameters);
+        
+            wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng templateEngine = (wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng) wrts_prcgvr.VersionManager.newClassInstance('CalloutTemplateMng');
+            Object objTemp = templateEngine.getTemplate(inputTemplateFunction);
+            //inputTemplateFunction.put('templateObject',objTemp);
+            Map<String,Object> templateReturn = (Map<String,Object>)templateEngine.applyTemplate(objTemp);
+            wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = (wrts_prcgvr.MRR_1_0.MultiRequest)templateReturn.get('multirequest');
+            multirequestObj.requests[0].header.fields = headerAttributetoAdd;
+        
+            System.debug('********MRRequest:' + multirequestObj);
+        
+            ///////////// instanzio e effettuo la chiamata con la request
+            Map<String,Object> inputClientFunction = new Map<String,Object>();
+            inputClientFunction.put('endpoint',endpoint);
+            inputClientFunction.put('timeout',120);
+            inputClientFunction.put('payload',multirequestObj);
+            inputClientFunction.put('clientType','REST');
+            inputClientFunction.put('contentType','application/json');
+            wrts_prcgvr.Interfaces_1_0.ICalloutClient client = (wrts_prcgvr.Interfaces_1_0.ICalloutClient) wrts_prcgvr.VersionManager.newClassInstance ('CalloutClient');
+        
+            try{
+
+                map<String,String> fieldValueResponse = new map<String,String>();
+                wrts_prcgvr.MRR_1_0.MultiResponse responseService = (wrts_prcgvr.MRR_1_0.MultiResponse)client.send(inputClientFunction);
+
+                System.debug('********MRRequest:' + responseService);
+                System.debug('********description:' + responseService.responses[0].description);
+                System.debug('********objects:' + responseService.responses[0].objects);
+
+                Order ord = new Order();
+                ord.id = (id)obj.get('Id');
+
+                if (responseService.responses[0].objects == null) {
+                    // ord.DiscardReason__c = responseService.responses[0].description;
+                    //ord.Phase__c = 'Comunicazione verso Heroku KO';
+                    if(method.equalsIgnoreCase('Annullamento') || method.equalsIgnoreCase('Ripensamento')){
+                        ord.TecnicalPhase__c = method + ' - Comunicazione verso Heroku KO';
+                    }else{
+                        ord.TecnicalPhase__c = 'Comunicazione verso Heroku KO';
+                    }
+                    
+                    HDT_SRV_Order ordSrv = new HDT_SRV_Order();
+                    ordSrv.updateRecord(ord);
+                } else {
+
+                    wrts_prcgvr.MRR_1_0.WObject objResponse = responseService.responses[0].objects[0];
+                    for(wrts_prcgvr.MRR_1_0.field field : objResponse.fields){
+                        
+                        fieldValueResponse.put(field.name,field.value);
+                    }
+                    if(fieldValueResponse.get('result') != null){
+                        
+                        if('OK'.equalsIgnoreCase(fieldValueResponse.get('result'))){
+                            System.debug('********INSIDE RESULT OK');
+                            if(fieldValueResponse.get('FASE') != null){
+                                System.debug('********INSIDE FASE NOT NULL');
+                                //ord.Phase__c = fieldValueResponse.get('FASE');
+                                if(method.equalsIgnoreCase('Annullamento') || method.equalsIgnoreCase('Ripensamento')){
+                                    ord.TecnicalPhase__c = method + ' - Comunicazione verso Heroku OK';
+                                    ord.CancellationHerokuPracticeCode__c = responseService.responses[0].header.requestId;
+                                }else{
+                                   
+                                    ord.TecnicalPhase__c = fieldValueResponse.get('FASE');
+                                    ord.HerokuPracticeCode__c = fieldValueResponse.get('requestId');
+
+                                    HDT_QR_Order orderQr = new HDT_QR_Order();
+                                    Order ordRetrieved = orderQr.getOrderByIdForSalesCallout(ord.id)[0];
+
+                                    switch on fieldValueResponse.get('FASE') {
+                                        when 'Ammissibilità KO' {
+                                            ord.DiscardReason__c = fieldValueResponse.get('DES_ERR_AEEG');
+                                            ord.CausalCode__c = fieldValueResponse.get('CODERR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.Description = fieldValueResponse.get('ANNOTAZIONI');
+                                        }
+                                        when 'Ammissibilità OK' {
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            if( fieldValueResponse.get('DES_ERR_AEEG') != null) {
+                                                ord.DiscardReason__c = fieldValueResponse.get('DES_ERR_AEEG');
+                                                ord.CausalCode__c = fieldValueResponse.get('CODERR_AEEG');
+                                            } else {
+                                                ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
+                                            }
+
+                                            if (fieldValueResponse.get('IMP_PREV_DIST') != null) {
+                                                ord.EstimateAmount__c = Decimal.valueOf(fieldValueResponse.get('IMP_PREV_DIST'));
+                                            }
+                                        }
+                                        when 'Esito KO da DL' {
+                                            ord.ReasonDL__c = fieldValueResponse.get('TESTO_ERRR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
+                                        }
+                                        when 'Esito OK da DL' {
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.SapContractActivationDate__c = fieldValueResponse.get('DT_INIZIO_VERT') != null ? Date.valueOf(fieldValueResponse.get('DT_INIZIO_VERT')) : null;
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
+                                        }
+                                        when 'Amm. Precheck KO SII' {
+                                            ord.PrecheckReasonSII__c = fieldValueResponse.get('DES_ERR_ES');
+                                            ord.CausalCode__c = fieldValueResponse.get('CODERR_ES');
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                        }
+                                        when 'Amm. Precheck OK SII' {
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
+                                                ord.PrecheckResultSII__c = 'OK';
+                                            }
+                                        }
+                                        when 'Esito KO da SII' {
+                                            ord.PrecheckReasonSII__c = fieldValueResponse.get('TESTO_ERRR');
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+			                                ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
+                                        }
+                                        when 'Esito OK da SII' {
+                                            ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+			                                ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
+                                        }
+                                        when 'Errore lavorazione SAP' {
+                                            ord.DiscardReason__c = fieldValueResponse.get('NOTE_ERR');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                        }
+                                        when 'Completata' {
+                                            ord.Description = fieldValueResponse.get('NOTA_HK');
+                                            ord.SAPImplantCode__c = fieldValueResponse.get('ANLAGE');
+                                            ord.OrderODV__c = fieldValueResponse.get('VBELN');
+                                            ord.SapContractCode__c = fieldValueResponse.get('VERTRAG');
+                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+    
+                                            if(fieldValueResponse.get('VKONT') != null) {
+                                                ord.ContractAccountCode__c = fieldValueResponse.get('VKONT');
+    
+                                                BillingProfile__c billingProfile = new BillingProfile__c();
+                                                billingProfile.Id = ordRetrieved.BillingProfile__c;
+                                                billingProfile.ContractAccountCode__c = fieldValueResponse.get('VKONT');
+    
+                                                HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
+                                                billingProfileSrv.updateRecord(billingProfile);
+                                            }
+                                        }
+                                    }
+                                }
+                                System.debug('********AFTER UPDATE');
+                            }else if(method.equalsIgnoreCase('Annullamento') || method.equalsIgnoreCase('Ripensamento')){
+                                ord.TecnicalPhase__c = method + ' - Comunicazione verso Heroku OK';
+                                ord.CancellationHerokuPracticeCode__c = responseService.responses[0].header.requestId;
+                            } 
+                        }
+                        else{
+                            //INIZIO SVILUPPI EVERIS
+                            System.debug('Ricevuto KO Start');
+                            ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
+                            //ord.Phase__c = 'Comunicazione verso Heroku KO';
+                            if(method.equalsIgnoreCase('Annullamento') || method.equalsIgnoreCase('Ripensamento')){
+                                ord.TecnicalPhase__c = method + ' - Comunicazione verso Heroku KO';
+                            }else{
+                                ord.TecnicalPhase__c = 'Comunicazione verso Heroku KO';
+                            }
+                            ord.description = fieldValueResponse.get('errorMessage');
+                            System.debug('Ricevuto KO End');
+                            //FINE SVILUPPI EVERIS
+                        }
+                        HDT_SRV_Order ordSrv = new HDT_SRV_Order();
+                        System.debug('Phase aggiorntata--> '+ord);
+                        ordSrv.updateRecord(ord);
+                    }
+                }
+
+            } catch(Exception e ) {
+                System.debug('ERRORE RESPONSE 500');
+                system.debug(e);
+            }
+        }
+        
+       wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
+        response.success = true;
+        response.message = 'OK';
+        return response;
+  		//return responseService;
+    }
+}

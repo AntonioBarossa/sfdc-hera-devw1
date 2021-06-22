@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Multiorario</fullName>
+        <default>false</default>
+        <label>Multiorario</label>
+    </customValue>
+    <customValue>
+        <fullName>Monorario</fullName>
+        <default>false</default>
+        <label>Monorario</label>
+    </customValue>
+    <masterLabel>Tipo Apparecchiatura</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

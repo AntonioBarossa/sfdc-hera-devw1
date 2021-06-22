@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ConventionAssociation__c</fullName>
+    <externalId>false</externalId>
+    <label>Convenzione/Associazione</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AADPG-Associazione Amici di Pi</fullName>
+                <default>false</default>
+                <label>AADPG-Associazione Amici di Pi</label>
+            </value>
+            <value>
+                <fullName>ACTRE-ASS PROV COMM TURIS SERV</fullName>
+                <default>false</default>
+                <label>ACTRE-ASS PROV COMM TURIS SERV</label>
+            </value>
+            <value>
+                <fullName>ALT10-BONUS FEDELTÀ 10%</fullName>
+                <default>false</default>
+                <label>ALT10-BONUS FEDELTÀ 10%</label>
+            </value>
+            <value>
+                <fullName>ALTM5-BONUS FEDELTÀ 5%</fullName>
+                <default>false</default>
+                <label>ALTM5-BONUS FEDELTÀ 5%</label>
+            </value>
+            <value>
+                <fullName>APIAM-API INDUSTRIA ANCONA MAC</fullName>
+                <default>false</default>
+                <label>APIAM-API INDUSTRIA ANCONA MAC</label>
+            </value>
+            <value>
+                <fullName>APIB2-API BOLOGNA  II</fullName>
+                <default>false</default>
+                <label>APIB2-API BOLOGNA  II</label>
+            </value>
+            <value>
+                <fullName>APIB3-API BOLOGNA DUAL II</fullName>
+                <default>false</default>
+                <label>APIB3-API BOLOGNA DUAL II</label>
+            </value>
+            <value>
+                <fullName>ARCBI - ARCI COMITATO DI BIELL</fullName>
+                <default>false</default>
+                <label>ARCBI - ARCI COMITATO DI BIELL</label>
+            </value>
+            <value>
+                <fullName>ARCBO - Arci Bologna</fullName>
+                <default>false</default>
+                <label>ARCBO - Arci Bologna</label>
+            </value>
+            <value>
+                <fullName>ARCFE-ARCI FERRARA</fullName>
+                <default>false</default>
+                <label>ARCFE-ARCI FERRARA</label>
+            </value>
+            <value>
+                <fullName>ARCRM - ARCI ROMA</fullName>
+                <default>false</default>
+                <label>ARCRM - ARCI ROMA</label>
+            </value>
+            <value>
+                <fullName>ARCTE - ARCI TERAMO</fullName>
+                <default>false</default>
+                <label>ARCTE - ARCI TERAMO</label>
+            </value>
+            <value>
+                <fullName>ARCVB- ARCI VERBANIA</fullName>
+                <default>false</default>
+                <label>ARCVB- ARCI VERBANIA</label>
+            </value>
+            <value>
+                <fullName>ARCVI - Arci Viterbo</fullName>
+                <default>false</default>
+                <label>ARCVI - Arci Viterbo</label>
+            </value>
+            <value>
+                <fullName>ARNAC-Arci Nazionale Accoglien</fullName>
+                <default>false</default>
+                <label>ARNAC-Arci Nazionale Accoglien</label>
+            </value>
+            <value>
+                <fullName>ARNSU-Arci Nazionale Start Up</fullName>
+                <default>false</default>
+                <label>ARNSU-Arci Nazionale Start Up</label>
+            </value>
+            <value>
+                <fullName>ASHCM-Associazione Marche</fullName>
+                <default>false</default>
+                <label>ASHCM-Associazione Marche</label>
+            </value>
+            <value>
+                <fullName>ASSFA-ASS. SIND. FARMACIE AR</fullName>
+                <default>false</default>
+                <label>ASSFA-ASS. SIND. FARMACIE AR</label>
+            </value>
+            <value>
+                <fullName>BENEN-Benaco energia spa</fullName>
+                <default>false</default>
+                <label>BENEN-Benaco energia spa</label>
+            </value>
+            <value>
+                <fullName>BPER</fullName>
+                <default>false</default>
+                <label>BPER</label>
+            </value>
+            <value>
+                <fullName>CABMT-Conf Ass Bo Metrop</fullName>
+                <default>false</default>
+                <label>CABMT-Conf Ass Bo Metrop</label>
+            </value>
+            <value>
+                <fullName>CFAPE-Confartigianato Pescara</fullName>
+                <default>false</default>
+                <label>CFAPE-Confartigianato Pescara</label>
+            </value>
+            <value>
+                <fullName>CFIRA-CONFINDUSTRIA RAVENNA</fullName>
+                <default>false</default>
+                <label>CFIRA-CONFINDUSTRIA RAVENNA</label>
+            </value>
+            <value>
+                <fullName>CNAFR CNA Fermo</fullName>
+                <default>false</default>
+                <label>CNAFR CNA Fermo</label>
+            </value>
+            <value>
+                <fullName>CNFVG-CNA REGIONALE FVG</fullName>
+                <default>false</default>
+                <label>CNFVG-CNA REGIONALE FVG</label>
+            </value>
+            <value>
+                <fullName>CONAQ-Confcommercio Aquila</fullName>
+                <default>false</default>
+                <label>CONAQ-Confcommercio Aquila</label>
+            </value>
+            <value>
+                <fullName>CONFI-CONFIMPRESA</fullName>
+                <default>false</default>
+                <label>CONFI-CONFIMPRESA</label>
+            </value>
+            <value>
+                <fullName>CONMO-CONFARTIGIANATO MODENA</fullName>
+                <default>false</default>
+                <label>CONMO-CONFARTIGIANATO MODENA</label>
+            </value>
+            <value>
+                <fullName>CONTE-CONFCOMMERCIO TERAMO</fullName>
+                <default>false</default>
+                <label>CONTE-CONFCOMMERCIO TERAMO</label>
+            </value>
+            <value>
+                <fullName>CSITA-CENTRO SPORTIVO ITALIANO</fullName>
+                <default>false</default>
+                <label>CSITA-CENTRO SPORTIVO ITALIANO</label>
+            </value>
+            <value>
+                <fullName>Dati su cui intervenire: tabel</fullName>
+                <default>false</default>
+                <label>Dati su cui intervenire: tabel</label>
+            </value>
+            <value>
+                <fullName>Energia e Sport</fullName>
+                <default>false</default>
+                <label>Energia e Sport</label>
+            </value>
+            <value>
+                <fullName>FIGCU-Figc Umbria</fullName>
+                <default>false</default>
+                <label>FIGCU-Figc Umbria</label>
+            </value>
+            <value>
+                <fullName>GDAST-Gda Sta - Studio Ta</fullName>
+                <default>false</default>
+                <label>GDAST-Gda Sta - Studio Ta</label>
+            </value>
+            <value>
+                <fullName>HOTFA-ASSHOTEL FANO</fullName>
+                <default>false</default>
+                <label>HOTFA-ASSHOTEL FANO</label>
+            </value>
+            <value>
+                <fullName>LAPRE-Lapam RE</fullName>
+                <default>false</default>
+                <label>LAPRE-Lapam RE</label>
+            </value>
+            <value>
+                <fullName>LECOE-Lega Coop Estense Modena</fullName>
+                <default>false</default>
+                <label>LECOE-Lega Coop Estense Modena</label>
+            </value>
+            <value>
+                <fullName>LPCMM-LEGA PROV COOPERATIVE E</fullName>
+                <default>false</default>
+                <label>LPCMM-LEGA PROV COOPERATIVE E</label>
+            </value>
+            <value>
+                <fullName>OROAS-Tessara Oro Ascom Bologn</fullName>
+                <default>false</default>
+                <label>OROAS-Tessara Oro Ascom Bologn</label>
+            </value>
+            <value>
+                <fullName>ABOMA-ASCOM BO T.ORO</fullName>
+                <default>false</default>
+                <label>ABOMA-ASCOM BO T.ORO</label>
+            </value>
+            <value>
+                <fullName>ABOMF-ASCOM BO T.ORO</fullName>
+                <default>false</default>
+                <label>ABOMF-ASCOM BO T.ORO</label>
+            </value>
+            <value>
+                <fullName>ACLFE-ACLI FERRARA</fullName>
+                <default>false</default>
+                <label>ACLFE-ACLI FERRARA</label>
+            </value>
+            <value>
+                <fullName>ADAC-ADAC</fullName>
+                <default>false</default>
+                <label>ADAC-ADAC</label>
+            </value>
+            <value>
+                <fullName>CONTS-CONFCOMMERCIO TRIESTE</fullName>
+                <default>false</default>
+                <label>CONTS-CONFCOMMERCIO TRIESTE</label>
+            </value>
+            <value>
+                <fullName>AMSME-SCONTO PLUS</fullName>
+                <default>false</default>
+                <label>AMSME-SCONTO PLUS</label>
+            </value>
+            <value>
+                <fullName>ANCBO-ANCEBOLOGNA</fullName>
+                <default>false</default>
+                <label>ANCBO-ANCEBOLOGNA</label>
+            </value>
+            <value>
+                <fullName>ANCRE-ANCESCAO REGGIO EMILIA</fullName>
+                <default>false</default>
+                <label>ANCRE-ANCESCAO REGGIO EMILIA</label>
+            </value>
+            <value>
+                <fullName>ANLA-ANLA</fullName>
+                <default>false</default>
+                <label>ANLA-ANLA</label>
+            </value>
+            <value>
+                <fullName>APLPR-CONFARTIGIANATO APLA Par</fullName>
+                <default>false</default>
+                <label>APLPR-CONFARTIGIANATO APLA Par</label>
+            </value>
+            <value>
+                <fullName>ARCFC-ARCI FC</fullName>
+                <default>false</default>
+                <label>ARCFC-ARCI FC</label>
+            </value>
+            <value>
+                <fullName>ARCI REGGIO EMILIA-ARCI Re</fullName>
+                <default>false</default>
+                <label>ARCI REGGIO EMILIA-ARCI Re</label>
+            </value>
+            <value>
+                <fullName>ARCNA-ARCI NAZIONALE</fullName>
+                <default>false</default>
+                <label>ARCNA-ARCI NAZIONALE</label>
+            </value>
+            <value>
+                <fullName>ARCPC-ARCI PIACENZA</fullName>
+                <default>false</default>
+                <label>ARCPC-ARCI PIACENZA</label>
+            </value>
+            <value>
+                <fullName>ARCPE-ARCI PESCARA</fullName>
+                <default>false</default>
+                <label>ARCPE-ARCI PESCARA</label>
+            </value>
+            <value>
+                <fullName>ARCPI-ARCI PISTOIA</fullName>
+                <default>false</default>
+                <label>ARCPI-ARCI PISTOIA</label>
+            </value>
+            <value>
+                <fullName>ARCI MODENA-ARCI Mo</fullName>
+                <default>false</default>
+                <label>ARCI MODENA-ARCI Mo</label>
+            </value>
+            <value>
+                <fullName>ASCBO-ASCOM BOLOGNA</fullName>
+                <default>false</default>
+                <label>ASCBO-ASCOM BOLOGNA</label>
+            </value>
+            <value>
+                <fullName>ASCCE-ASCOM CESENA</fullName>
+                <default>false</default>
+                <label>ASCCE-ASCOM CESENA</label>
+            </value>
+            <value>
+                <fullName>ASCCV-ASCOM CERVIA</fullName>
+                <default>false</default>
+                <label>ASCCV-ASCOM CERVIA</label>
+            </value>
+            <value>
+                <fullName>ASCFE-ASCOM FERRARA</fullName>
+                <default>false</default>
+                <label>ASCFE-ASCOM FERRARA</label>
+            </value>
+            <value>
+                <fullName>ARCAR-ARCI AREZZO</fullName>
+                <default>false</default>
+                <label>ARCAR-ARCI AREZZO</label>
+            </value>
+            <value>
+                <fullName>ASCIM-ASCOM CONFCOMMERCIO IMOL</fullName>
+                <default>false</default>
+                <label>ASCIM-ASCOM CONFCOMMERCIO IMOL</label>
+            </value>
+            <value>
+                <fullName>ASCRA-ASCOM RAVENNA</fullName>
+                <default>false</default>
+                <label>ASCRA-ASCOM RAVENNA</label>
+            </value>
+            <value>
+                <fullName>ARCAN-ARCI ANCONA</fullName>
+                <default>false</default>
+                <label>ARCAN-ARCI ANCONA</label>
+            </value>
+            <value>
+                <fullName>ASCRE-ASCOM REGGIO EMILIA</fullName>
+                <default>false</default>
+                <label>ASCRE-ASCOM REGGIO EMILIA</label>
+            </value>
+            <value>
+                <fullName>BESTM-BESTEAM</fullName>
+                <default>false</default>
+                <label>BESTM-BESTEAM</label>
+            </value>
+            <value>
+                <fullName>BOFOR-BONUS FORNITORI</fullName>
+                <default>false</default>
+                <label>BOFOR-BONUS FORNITORI</label>
+            </value>
+            <value>
+                <fullName>BPER-BPER</fullName>
+                <default>false</default>
+                <label>BPER-BPER</label>
+            </value>
+            <value>
+                <fullName>BPERC-BPER CLIENTI</fullName>
+                <default>false</default>
+                <label>BPERC-BPER CLIENTI</label>
+            </value>
+            <value>
+                <fullName>BPERD-BPER DIPENDENTI</fullName>
+                <default>false</default>
+                <label>BPERD-BPER DIPENDENTI</label>
+            </value>
+            <value>
+                <fullName>CABM-CONFARTIGIANATO ASSIMPRES</fullName>
+                <default>false</default>
+                <label>CABM-CONFARTIGIANATO ASSIMPRES</label>
+            </value>
+            <value>
+                <fullName>CFAAP-CONFARTIGIANATO IMPRESE</fullName>
+                <default>false</default>
+                <label>CFAAP-CONFARTIGIANATO IMPRESE</label>
+            </value>
+            <value>
+                <fullName>CFACE-CONFARTIGIANATO CESENA</fullName>
+                <default>false</default>
+                <label>CFACE-CONFARTIGIANATO CESENA</label>
+            </value>
+            <value>
+                <fullName>CFAFE-CONFARTIGIANATO FERRARA</fullName>
+                <default>false</default>
+                <label>CFAFE-CONFARTIGIANATO FERRARA</label>
+            </value>
+            <value>
+                <fullName>CFAFO-CONFARTIGIANATO FORLI FE</fullName>
+                <default>false</default>
+                <label>CFAFO-CONFARTIGIANATO FORLI FE</label>
+            </value>
+            <value>
+                <fullName>CFAGR-CONFARTIGIANATO GROSSETO</fullName>
+                <default>false</default>
+                <label>CFAGR-CONFARTIGIANATO GROSSETO</label>
+            </value>
+            <value>
+                <fullName>CFALB-CONSORZIO FIRENZE ALBERG</fullName>
+                <default>false</default>
+                <label>CFALB-CONSORZIO FIRENZE ALBERG</label>
+            </value>
+            <value>
+                <fullName>CFARA-CONFARTIGIANATO RAVENNA</fullName>
+                <default>false</default>
+                <label>CFARA-CONFARTIGIANATO RAVENNA</label>
+            </value>
+            <value>
+                <fullName>CFEAN-CONFESERCENTI REGIONALE</fullName>
+                <default>false</default>
+                <label>CFEAN-CONFESERCENTI REGIONALE</label>
+            </value>
+            <value>
+                <fullName>CFEAP-CONFESERCENTI FERMO - AS</fullName>
+                <default>false</default>
+                <label>CFEAP-CONFESERCENTI FERMO - AS</label>
+            </value>
+            <value>
+                <fullName>CFEAR-CONFESERCENTI AREZZO</fullName>
+                <default>false</default>
+                <label>CFEAR-CONFESERCENTI AREZZO</label>
+            </value>
+            <value>
+                <fullName>CFEBO-CONFESERCENTI BOLOGNA</fullName>
+                <default>false</default>
+                <label>CFEBO-CONFESERCENTI BOLOGNA</label>
+            </value>
+            <value>
+                <fullName>CFEFE-CONFESERCENTI FERRARA</fullName>
+                <default>false</default>
+                <label>CFEFE-CONFESERCENTI FERRARA</label>
+            </value>
+            <value>
+                <fullName>CFEIM-CONFESERCENTI DEL TERRIT</fullName>
+                <default>false</default>
+                <label>CFEIM-CONFESERCENTI DEL TERRIT</label>
+            </value>
+            <value>
+                <fullName>CFEMC-CONFESERCENTI MACERATA</fullName>
+                <default>false</default>
+                <label>CFEMC-CONFESERCENTI MACERATA</label>
+            </value>
+            <value>
+                <fullName>CFEMO-CONFESERCENTI MODENA</fullName>
+                <default>false</default>
+                <label>CFEMO-CONFESERCENTI MODENA</label>
+            </value>
+            <value>
+                <fullName>CFEPO-CONFESERCENTI PRATO</fullName>
+                <default>false</default>
+                <label>CFEPO-CONFESERCENTI PRATO</label>
+            </value>
+            <value>
+                <fullName>CFEPU-CONFESERCENTI PESARO</fullName>
+                <default>false</default>
+                <label>CFEPU-CONFESERCENTI PESARO</label>
+            </value>
+            <value>
+                <fullName>CFESI-CONFESERCENTI SIENA</fullName>
+                <default>false</default>
+                <label>CFESI-CONFESERCENTI SIENA</label>
+            </value>
+            <value>
+                <fullName>CFIFE-CONFESERCENTI FIRENZE</fullName>
+                <default>false</default>
+                <label>CFIFE-CONFESERCENTI FIRENZE</label>
+            </value>
+            <value>
+                <fullName>CFTON-CONFESERCENTI TOSCANA NO</fullName>
+                <default>false</default>
+                <label>CFTON-CONFESERCENTI TOSCANA NO</label>
+            </value>
+            <value>
+                <fullName>CGIL-CGIL</fullName>
+                <default>false</default>
+                <label>CGIL-CGIL</label>
+            </value>
+            <value>
+                <fullName>BPLUS-BONUS ASSOCIAZIONE PLUS</fullName>
+                <default>false</default>
+                <label>BPLUS-BONUS ASSOCIAZIONE PLUS</label>
+            </value>
+            <value>
+                <fullName>CIABO-CIA BOLOGNA</fullName>
+                <default>false</default>
+                <label>CIABO-CIA BOLOGNA</label>
+            </value>
+            <value>
+                <fullName>CIARO-CIA ROMAGNA</fullName>
+                <default>false</default>
+                <label>CIARO-CIA ROMAGNA</label>
+            </value>
+            <value>
+                <fullName>CONPE-CONFCOMMERCIO PESCARA</fullName>
+                <default>false</default>
+                <label>CONPE-CONFCOMMERCIO PESCARA</label>
+            </value>
+            <value>
+                <fullName>CONRE-CONFAGRICOLTURA REGGIO E</fullName>
+                <default>false</default>
+                <label>CONRE-CONFAGRICOLTURA REGGIO E</label>
+            </value>
+            <value>
+                <fullName>CIAFC-CIA FORLI CESENA</fullName>
+                <default>false</default>
+                <label>CIAFC-CIA FORLI CESENA</label>
+            </value>
+            <value>
+                <fullName>CIAFE-CIA FERRARA</fullName>
+                <default>false</default>
+                <label>CIAFE-CIA FERRARA</label>
+            </value>
+            <value>
+                <fullName>ANLA</fullName>
+                <default>false</default>
+                <label>ANLA</label>
+            </value>
+            <value>
+                <fullName>CIAIM-CIA Imola</fullName>
+                <default>false</default>
+                <label>CIAIM-CIA Imola</label>
+            </value>
+            <value>
+                <fullName>COOPE</fullName>
+                <default>false</default>
+                <label>COOPE</label>
+            </value>
+            <value>
+                <fullName>DIPEN</fullName>
+                <default>false</default>
+                <label>DIPEN</label>
+            </value>
+            <value>
+                <fullName>EICON</fullName>
+                <default>false</default>
+                <label>EICON</label>
+            </value>
+            <value>
+                <fullName>ENECH- Energiachiara Srl</fullName>
+                <default>false</default>
+                <label>ENECH- Energiachiara Srl</label>
+            </value>
+            <value>
+                <fullName>FAMIL</fullName>
+                <default>false</default>
+                <label>FAMIL</label>
+            </value>
+            <value>
+                <fullName>CIAMO-CIA MODENA</fullName>
+                <default>false</default>
+                <label>CIAMO-CIA MODENA</label>
+            </value>
+            <value>
+                <fullName>CIAPU-CIA PESARO URBINO</fullName>
+                <default>false</default>
+                <label>CIAPU-CIA PESARO URBINO</label>
+            </value>
+            <value>
+                <fullName>CIARA-CIA RAVENNA</fullName>
+                <default>false</default>
+                <label>CIARA-CIA RAVENNA</label>
+            </value>
+            <value>
+                <fullName>CIARE-CIA REGGIO EMILIA</fullName>
+                <default>false</default>
+                <label>CIARE-CIA REGGIO EMILIA</label>
+            </value>
+            <value>
+                <fullName>FEDUM-FEDERALBERGHI UMBRIA</fullName>
+                <default>false</default>
+                <label>FEDUM-FEDERALBERGHI UMBRIA</label>
+            </value>
+            <value>
+                <fullName>CIAUM-CIA UMBRIA</fullName>
+                <default>false</default>
+                <label>CIAUM-CIA UMBRIA</label>
+            </value>
+            <value>
+                <fullName>CNAAB-CNA ABRUZZO</fullName>
+                <default>false</default>
+                <label>CNAAB-CNA ABRUZZO</label>
+            </value>
+            <value>
+                <fullName>CONGO Confcommercio Gorizia</fullName>
+                <default>false</default>
+                <label>CONGO Confcommercio Gorizia</label>
+            </value>
+            <value>
+                <fullName>CNAAN-CNA ANCONA</fullName>
+                <default>false</default>
+                <label>CNAAN-CNA ANCONA</label>
+            </value>
+            <value>
+                <fullName>CNAAQ-CNA AQUILA</fullName>
+                <default>false</default>
+                <label>CNAAQ-CNA AQUILA</label>
+            </value>
+            <value>
+                <fullName>CNABP-CNA BOLOGNA</fullName>
+                <default>false</default>
+                <label>CNABP-CNA BOLOGNA</label>
+            </value>
+            <value>
+                <fullName>CNACH-CNA CHIETI</fullName>
+                <default>false</default>
+                <label>CNACH-CNA CHIETI</label>
+            </value>
+            <value>
+                <fullName>CNAFC-CNA FORLI/CESENA</fullName>
+                <default>false</default>
+                <label>CNAFC-CNA FORLI/CESENA</label>
+            </value>
+            <value>
+                <fullName>CNAFE-CNA FERRARA</fullName>
+                <default>false</default>
+                <label>CNAFE-CNA FERRARA</label>
+            </value>
+            <value>
+                <fullName>CNAIM-CNA IMOLA</fullName>
+                <default>false</default>
+                <label>CNAIM-CNA IMOLA</label>
+            </value>
+            <value>
+                <fullName>CNAMC-CNA MACERATA</fullName>
+                <default>false</default>
+                <label>CNAMC-CNA MACERATA</label>
+            </value>
+            <value>
+                <fullName>CNAPE-CNA PESCARA</fullName>
+                <default>false</default>
+                <label>CNAPE-CNA PESCARA</label>
+            </value>
+            <value>
+                <fullName>CNAPR-CNA PARMA</fullName>
+                <default>false</default>
+                <label>CNAPR-CNA PARMA</label>
+            </value>
+            <value>
+                <fullName>CNARA-CNA RAVENNA</fullName>
+                <default>false</default>
+                <label>CNARA-CNA RAVENNA</label>
+            </value>
+            <value>
+                <fullName>CNATE-CNA TERAMO</fullName>
+                <default>false</default>
+                <label>CNATE-CNA TERAMO</label>
+            </value>
+            <value>
+                <fullName>COFAN-CONFAPI ANCONA</fullName>
+                <default>false</default>
+                <label>COFAN-CONFAPI ANCONA</label>
+            </value>
+            <value>
+                <fullName>CONRA-CONFINDUSTRIA RAVENNA</fullName>
+                <default>false</default>
+                <label>CONRA-CONFINDUSTRIA RAVENNA</label>
+            </value>
+            <value>
+                <fullName>CSIMO-CSI MODENA Centro Sporti</fullName>
+                <default>false</default>
+                <label>CSIMO-CSI MODENA Centro Sporti</label>
+            </value>
+            <value>
+                <fullName>CUTNO-CUT NORD</fullName>
+                <default>false</default>
+                <label>CUTNO-CUT NORD</label>
+            </value>
+            <value>
+                <fullName>CUTPO-CUT PRATO</fullName>
+                <default>false</default>
+                <label>CUTPO-CUT PRATO</label>
+            </value>
+            <value>
+                <fullName>FACI-F.A.C.I.</fullName>
+                <default>false</default>
+                <label>FACI-F.A.C.I.</label>
+            </value>
+            <value>
+                <fullName>FEDAR-FEDERFARMA AREZZO</fullName>
+                <default>false</default>
+                <label>FEDAR-FEDERFARMA AREZZO</label>
+            </value>
+            <value>
+                <fullName>FEDFI-FEDERFARMA FIRENZE</fullName>
+                <default>false</default>
+                <label>FEDFI-FEDERFARMA FIRENZE</label>
+            </value>
+            <value>
+                <fullName>FEDLU-FEDERFARMA Lucca</fullName>
+                <default>false</default>
+                <label>FEDLU-FEDERFARMA Lucca</label>
+            </value>
+            <value>
+                <fullName>FEDPI-FEDERFARMA PISA</fullName>
+                <default>false</default>
+                <label>FEDPI-FEDERFARMA PISA</label>
+            </value>
+            <value>
+                <fullName>FEDPO-FEDERFARMA PRATO</fullName>
+                <default>false</default>
+                <label>FEDPO-FEDERFARMA PRATO</label>
+            </value>
+            <value>
+                <fullName>FENAP-FE.NA.PI</fullName>
+                <default>false</default>
+                <label>FENAP-FE.NA.PI</label>
+            </value>
+            <value>
+                <fullName>INDSE- Industria Servizi Srl</fullName>
+                <default>false</default>
+                <label>INDSE- Industria Servizi Srl</label>
+            </value>
+            <value>
+                <fullName>LAPMO-CONFARTIGIANATO LAPAM FE</fullName>
+                <default>false</default>
+                <label>LAPMO-CONFARTIGIANATO LAPAM FE</label>
+            </value>
+            <value>
+                <fullName>LNDSE- Lega Nazionale Dilettan</fullName>
+                <default>false</default>
+                <label>LNDSE- Lega Nazionale Dilettan</label>
+            </value>
+            <value>
+                <fullName>LECFE-LEGACOOP FERRARA</fullName>
+                <default>false</default>
+                <label>LECFE-LEGACOOP FERRARA</label>
+            </value>
+            <value>
+                <fullName>LECOO-LEGACOOP MODENA</fullName>
+                <default>false</default>
+                <label>LECOO-LEGACOOP MODENA</label>
+            </value>
+            <value>
+                <fullName>LLAPC-CONFARTIGIANATO LAA SERV</fullName>
+                <default>false</default>
+                <label>LLAPC-CONFARTIGIANATO LAA SERV</label>
+            </value>
+            <value>
+                <fullName>UISFE-UISP Fe</fullName>
+                <default>false</default>
+                <label>UISFE-UISP Fe</label>
+            </value>
+            <value>
+                <fullName>UNIFC-UNINDUSTRIA FORLI CESENA</fullName>
+                <default>false</default>
+                <label>UNIFC-UNINDUSTRIA FORLI CESENA</label>
+            </value>
+            <value>
+                <fullName>FEDMO-FEDERALBERGHI</fullName>
+                <default>false</default>
+                <label>FEDMO-FEDERALBERGHI</label>
+            </value>
+            <value>
+                <fullName> 5/3/21</fullName>
+                <default>false</default>
+                <label> 5/3/21</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

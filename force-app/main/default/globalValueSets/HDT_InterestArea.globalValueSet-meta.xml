@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Green</fullName>
+        <default>false</default>
+        <label>Green</label>
+    </customValue>
+    <customValue>
+        <fullName>Digitale</fullName>
+        <default>false</default>
+        <label>Digitale</label>
+    </customValue>
+    <customValue>
+        <fullName>HVAC</fullName>
+        <default>false</default>
+        <label>HVAC</label>
+    </customValue>
+    <customValue>
+        <fullName>Assicurazioni</fullName>
+        <default>false</default>
+        <label>Assicurazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>E-mobility</fullName>
+        <default>false</default>
+        <label>E-mobility</label>
+    </customValue>
+    <customValue>
+        <fullName>Offerta EE</fullName>
+        <default>false</default>
+        <label>Offerta EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Offerta GAS</fullName>
+        <default>false</default>
+        <label>Offerta GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Offerta Dual</fullName>
+        <default>false</default>
+        <label>Offerta Dual</label>
+    </customValue>
+    <masterLabel>Aree Interessi</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

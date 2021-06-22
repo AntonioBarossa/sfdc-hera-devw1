@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DataEnrichmentLastUpdate__c</fullName>
+    <description>Data/ora ultimo aggiornamento Anagrafiche Cliente tramite webservice di arricchimento dati</description>
+    <externalId>false</externalId>
+    <label>Ultimo Aggiornamento</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>DateTime</type>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>isSandboxRecord__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Necessario a Marketing Cloud per identificare se l’id del record à riferimento ad un ambiente di test o di produzione</description>
+    <externalId>false</externalId>
+    <label>Record di test</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

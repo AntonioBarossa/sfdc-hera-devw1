@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MainArticle__c</fullName>
+    <description>Campo dove viene inserito smart link ad articolo principale</description>
+    <externalId>false</externalId>
+    <label>Articolo Principale</label>
+    <length>1000</length>
+    <type>Html</type>
+    <visibleLines>10</visibleLines>
+</CustomField>

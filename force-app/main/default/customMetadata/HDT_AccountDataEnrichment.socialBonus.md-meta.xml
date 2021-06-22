@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>socialBonus</label>
+    <protected>false</protected>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">[
+  {
+    &quot;tableTitle&quot;: &quot;Bonus Sociale&quot;,
+    &quot;iconName&quot;: &quot;standard:customer_lifecycle_analytics&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;label&quot;: &quot;Descrizione Compensazione&quot;,
+        &quot;fieldName&quot;: &quot;tipoCompDescr&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Data Attivazione Bonus&quot;,
+        &quot;fieldName&quot;: &quot;dataAttBonus&quot;,
+        &quot;sortable&quot;: true
+      },
+      {
+        &quot;label&quot;: &quot;Data Cessazione Bonus&quot;,
+        &quot;fieldName&quot;: &quot;dataCessBonus&quot;,
+        &quot;sortable&quot;: true
+      },
+      {
+        &quot;label&quot;: &quot;POD/PDR&quot;,
+        &quot;fieldName&quot;: &quot;pod&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;label&quot;: &quot;Contratto&quot;,
+        &quot;fieldName&quot;: &quot;contratto&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Settore Merceologico&quot;,
+        &quot;fieldName&quot;: &quot;settoreDescr&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Data Attivazione Contratto&quot;,
+        &quot;fieldName&quot;: &quot;dataAttContr&quot;,
+        &quot;initialWidth&quot;: 220,
+        &quot;sortable&quot;: true
+      },
+      {
+        &quot;label&quot;: &quot;Data Cessazione Contratto&quot;,
+        &quot;fieldName&quot;: &quot;dataCessContr&quot;,
+        &quot;initialWidth&quot;: 220,
+        &quot;sortable&quot;: true
+      },
+      {
+        &quot;label&quot;: &quot;Società&quot;,
+        &quot;fieldName&quot;: &quot;soc&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Codice Cliente&quot;,
+        &quot;fieldName&quot;: &quot;bp&quot;,
+        &quot;initialWidth&quot;: 140
+      }
+    ]
+  }
+]</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">callout:SocialBonus</value>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SignalSubCategory__c</fullName>
+    <externalId>false</externalId>
+    <label>Sottocategoria segnalazione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Consegna difforme</fullName>
+                <default>false</default>
+                <label>Consegna difforme</label>
+            </value>
+            <value>
+                <fullName>Vas non consegnato/non attivato</fullName>
+                <default>false</default>
+                <label>Vas non consegnato/non attivato</label>
+            </value>
+            <value>
+                <fullName>Richiesta documentazione</fullName>
+                <default>false</default>
+                <label>Richiesta documentazione</label>
+            </value>
+            <value>
+                <fullName>Lamentela su prodotto / servizio</fullName>
+                <default>false</default>
+                <label>Lamentela su prodotto / servizio</label>
+            </value>
+            <value>
+                <fullName>Prodotto non funziona</fullName>
+                <default>false</default>
+                <label>Prodotto non funziona</label>
+            </value>
+            <value>
+                <fullName>Vendita scorretta</fullName>
+                <default>false</default>
+                <label>Vendita scorretta</label>
+            </value>
+            <value>
+                <fullName>Informazioni errate</fullName>
+                <default>false</default>
+                <label>Informazioni errate</label>
+            </value>
+            <value>
+                <fullName>Doppia fattura SD</fullName>
+                <default>false</default>
+                <label>Doppia fattura SD</label>
+            </value>
+            <value>
+                <fullName>Errato addebito per cessazione</fullName>
+                <default>false</default>
+                <label>Errato addebito per cessazione</label>
+            </value>
+            <value>
+                <fullName>Errore esposizione bolletta</fullName>
+                <default>false</default>
+                <label>Errore esposizione bolletta</label>
+            </value>
+            <value>
+                <fullName>Modifica  dei dati</fullName>
+                <default>false</default>
+                <label>Modifica  dei dati</label>
+            </value>
+            <value>
+                <fullName>Spiegazione tecnica diario</fullName>
+                <default>false</default>
+                <label>Spiegazione tecnica diario</label>
+            </value>
+            <value>
+                <fullName>Consegna non avvenuta</fullName>
+                <default>false</default>
+                <label>Consegna non avvenuta</label>
+            </value>
+            <value>
+                <fullName>Colonnina/tessera non funziona</fullName>
+                <default>false</default>
+                <label>Colonnina/tessera non funziona</label>
+            </value>
+            <value>
+                <fullName>Form digitale</fullName>
+                <default>false</default>
+                <label>Form digitale</label>
+            </value>
+            <value>
+                <fullName>Richiesta di contatto</fullName>
+                <default>false</default>
+                <label>Richiesta di contatto</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

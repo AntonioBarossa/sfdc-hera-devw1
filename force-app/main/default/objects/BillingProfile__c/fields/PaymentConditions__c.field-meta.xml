@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PaymentConditions__c</fullName>
+    <description>Relativo al CA di SAP</description>
+    <externalId>false</externalId>
+    <label>Condizioni di pagamento</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>MANUALE</fullName>
+                <default>false</default>
+                <label>MANUALE</label>
+            </value>
+            <value>
+                <fullName>20 GG - IS01</fullName>
+                <default>false</default>
+                <label>20 GG - IS01</label>
+            </value>
+            <value>
+                <fullName>30 GG - IS02</fullName>
+                <default>false</default>
+                <label>30 GG - IS02</label>
+            </value>
+            <value>
+                <fullName>45 GG - IS03</fullName>
+                <default>false</default>
+                <label>45 GG - IS03</label>
+            </value>
+            <value>
+                <fullName>60 GG - IS04</fullName>
+                <default>false</default>
+                <label>60 GG - IS04</label>
+            </value>
+            <value>
+                <fullName>90 GG - IS05</fullName>
+                <default>false</default>
+                <label>90 GG - IS05</label>
+            </value>
+            <value>
+                <fullName>10 gg. D.F. F.M. - IS06</fullName>
+                <default>false</default>
+                <label>10 gg. D.F. F.M. - IS06</label>
+            </value>
+            <value>
+                <fullName>15 gg. D.F. F.M. - IS07</fullName>
+                <default>false</default>
+                <label>15 gg. D.F. F.M. - IS07</label>
+            </value>
+            <value>
+                <fullName>20 gg. D.F. F.M. - IS08</fullName>
+                <default>false</default>
+                <label>20 gg. D.F. F.M. - IS08</label>
+            </value>
+            <value>
+                <fullName>30 gg. D.F. F.M. - IS3F</fullName>
+                <default>false</default>
+                <label>30 gg. D.F. F.M. - IS3F</label>
+            </value>
+            <value>
+                <fullName>60 gg. D.F. F.M. - IS6F</fullName>
+                <default>false</default>
+                <label>60 gg. D.F. F.M. - IS6F</label>
+            </value>
+            <value>
+                <fullName>90 gg. D.F. F.M. - IS9F</fullName>
+                <default>false</default>
+                <label>90 gg. D.F. F.M. - IS9F</label>
+            </value>
+            <value>
+                <fullName>D.F. F.M. - ISFM</fullName>
+                <default>false</default>
+                <label>D.F. F.M. - ISFM</label>
+            </value>
+            <value>
+                <fullName>120 gg. D.F. F.M.- IS2F</fullName>
+                <default>false</default>
+                <label>120 gg. D.F. F.M.- IS2F</label>
+            </value>
+            <value>
+                <fullName>15 GG - IS7F</fullName>
+                <default>false</default>
+                <label>15 GG - IS7F</label>
+            </value>
+            <value>
+                <fullName>45 gg. D.F. F.M. - IS10</fullName>
+                <default>false</default>
+                <label>45 gg. D.F. F.M. - IS10</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

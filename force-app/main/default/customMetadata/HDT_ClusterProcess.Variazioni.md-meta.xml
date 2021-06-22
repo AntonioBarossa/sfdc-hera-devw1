@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Variazioni</label>
+    <protected>false</protected>
+    <values>
+        <field>Cluster__c</field>
+        <value xsi:type="xsd:string">Variazioni</value>
+    </values>
+    <values>
+        <field>ProcessType__c</field>
+        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Fiscale&quot;,&quot;value&quot;:&quot;Fiscale&quot;},
+{&quot;label&quot;:&quot;Dichiarazione di Intento&quot;,&quot;value&quot;:&quot;Dichiarazione di Intento&quot;},
+{&quot;label&quot;:&quot;Modifica Portale SOL Gestione Energia&quot;,&quot;value&quot;:&quot;Modifica Portale SOL Gestione Energia&quot;},
+{&quot;label&quot;:&quot;Marcatura/Uso PdR&quot;,&quot;value&quot;:&quot;Marcatura/Uso PdR&quot;},
+{&quot;label&quot;:&quot;Gestione Calamità&quot;,&quot;value&quot;:&quot;Gestione Calamità&quot;},
+{&quot;label&quot;:&quot;VolModifica Tariffa Residente/Non Residentetura&quot;,&quot;value&quot;:&quot;Modifica Tariffa Residente/Non Residente&quot;},
+{&quot;label&quot;:&quot;Condizioni Contrattuali Errate&quot;,&quot;value&quot;:&quot;Condizioni Contrattuali Errate&quot;},
+{&quot;label&quot;:&quot;Split Payment&quot;,&quot;value&quot;:&quot;Split Payment&quot;},
+{&quot;label&quot;:&quot;Modifica Layout di dettaglio&quot;,&quot;value&quot;:&quot;Modifica Layout di dettaglio&quot;},
+{&quot;label&quot;:&quot;Variazione indirizzo di fornitura&quot;,&quot;value&quot;:&quot;Variazione indirizzo di fornitura&quot;},
+{&quot;label&quot;:&quot;Cambio contatore non registrato&quot;,&quot;value&quot;:&quot;Cambio contatore non registrato&quot;},
+{&quot;label&quot;:&quot;Mancata Telelettura/lettura&quot;,&quot;value&quot;:&quot;Mancata Telelettura/lettura&quot;},
+{&quot;label&quot;:&quot;Modifica/Azzeramento Consumo Annuo&quot;,&quot;value&quot;:&quot;Modifica/Azzeramento Consumo Annuo&quot;},
+{&quot;label&quot;:&quot;Dettaglio Bolletta&quot;,&quot;value&quot;:&quot;Dettaglio Bolletta&quot;},
+{&quot;label&quot;:&quot;BP/CA - errata categoria&quot;,&quot;value&quot;:&quot;BP/CA - errata categoria&quot;}]</value>
+    </values>
+</CustomMetadata>

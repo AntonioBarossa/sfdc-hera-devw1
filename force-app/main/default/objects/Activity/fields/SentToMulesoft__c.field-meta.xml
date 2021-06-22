@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SentToMulesoft__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Campo tecnico valorizzato a Y dopo che il record viene inviato a Mulesoft.</description>
+    <externalId>false</externalId>
+    <label>Sent To Mulesoft</label>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ContactReason__c</fullName>
+    <description>Tipo Esigenza del cliente allo sportello HC Point.</description>
+    <externalId>false</externalId>
+    <label>Tipo Esigenza</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Assistenza</fullName>
+                <default>false</default>
+                <label>Assistenza</label>
+            </value>
+            <value>
+                <fullName>Info Commerciali</fullName>
+                <default>false</default>
+                <label>Info Commerciali</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

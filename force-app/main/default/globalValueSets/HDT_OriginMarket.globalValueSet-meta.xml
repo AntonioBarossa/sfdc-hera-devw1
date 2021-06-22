@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Libero</fullName>
+        <default>false</default>
+        <label>Libero</label>
+    </customValue>
+    <customValue>
+        <fullName>Regolamentato</fullName>
+        <default>false</default>
+        <label>Regolamentato</label>
+    </customValue>
+    <description>Libero
+Regolamentato</description>
+    <masterLabel>Mercato Provenienza</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

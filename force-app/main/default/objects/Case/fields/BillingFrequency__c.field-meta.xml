@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BillingFrequency__c</fullName>
+    <description>Periodicità Fatturazione per processo &quot;Ritorno a Fatt. Bimestrale/Mensile&quot;</description>
+    <externalId>false</externalId>
+    <label>Periodicità Fatturazione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Mensile</fullName>
+                <default>false</default>
+                <label>Mensile</label>
+            </value>
+            <value>
+                <fullName>Bimestrale</fullName>
+                <default>false</default>
+                <label>Bimestrale</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FinalStatusDate__c</fullName>
+    <description>Campo gestito in automatico dal CRM, indica la data corrispondente all’aggiornamento del campo Stato con un valore finale (campo Responded)</description>
+    <externalId>false</externalId>
+    <label>Data Stato Finale</label>
+    <required>false</required>
+    <type>Date</type>
+</CustomField>

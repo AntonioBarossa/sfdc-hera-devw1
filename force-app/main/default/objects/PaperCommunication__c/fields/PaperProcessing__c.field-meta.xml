@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PaperProcessing__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Relazione con l’oggetto Lavorazione Cartacea</description>
+    <externalId>false</externalId>
+    <label>Lavorazione Cartacea</label>
+    <referenceTo>PaperProcessing__c</referenceTo>
+    <relationshipLabel>Comunicazioni Cartacee</relationshipLabel>
+    <relationshipName>Comunicazioni_Cartacee</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

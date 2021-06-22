@@ -1,0 +1,36 @@
+<template>
+
+    <lightning-card title="Clona Articolo Inserendo Titolo, Url e Tipologia del nuovo articolo" icon-name="standard:work_type_group">
+    
+        <div class="slds-m-around_medium">
+        
+            <lightning-input label="Titolo" name="Titolo" value={title} onchange={handleTitleChange}></lightning-input>
+        
+        </div>
+
+        <div class="slds-m-around_medium">
+        
+            <lightning-input label="Url" name="URL" value={urlname} onchange={handleUrlChange}></lightning-input>
+        
+        </div>
+
+        <div class="slds-m-around_medium">
+        
+            <lightning-combobox name="RecordType Select"
+                                label="Seleziona tipo di articolo"
+                                value={picklistvalue}
+                                options={options}
+                                onchange={handlePicklistChange}>
+            </lightning-combobox>    
+        
+        </div>
+
+        <div class="slds-m-around_medium">
+
+            <lightning-button variant="brand" label="Clona Articolo" onclick={handleClick}></lightning-button>
+        
+        </div>
+
+    </lightning-card>
+
+</template>

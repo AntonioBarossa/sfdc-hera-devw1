@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BillSendingMethod__c</fullName>
+    <description>Modalità di invio della bottetta</description>
+    <externalId>false</externalId>
+    <label>Modalità Invio Bolletta</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_BillSendingMethod</valueSetName>
+    </valueSet>
+</CustomField>

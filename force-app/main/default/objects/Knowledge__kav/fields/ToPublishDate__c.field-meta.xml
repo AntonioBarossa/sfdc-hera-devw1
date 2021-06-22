@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ToPublishDate__c</fullName>
+    <description>Data per pubblicazione schedulata</description>
+    <externalId>false</externalId>
+    <label>Da pubblicare il giorno</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

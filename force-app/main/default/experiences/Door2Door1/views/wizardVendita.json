@@ -1,0 +1,69 @@
+{
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "componentName" : "siteforce:dynamicLayout",
+  "id" : "2cb1820a-7919-4c9a-878e-f4b1f7db9b85",
+  "label" : "Wizard Vendita",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "02c52f25-cf8b-480c-9d55-a00cf941c17c",
+          "columns" : [ {
+            "UUID" : "42912b0b-ae33-4e71-a61e-a46a59978fe8",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "02c52f25-cf8b-480c-9d55-a00cf941c17c",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "isOnPage" : false
+          },
+          "componentName" : "c:HDT_LCP_SellingWizard",
+          "id" : "00a5e5fb-1c07-4200-8451-0e5833d53d7a",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "42912b0b-ae33-4e71-a61e-a46a59978fe8",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "7ffebff1-2e0c-42b6-9502-f05475cd1ae7",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "description" : "",
+        "metaTags" : "",
+        "title" : "Wizard Vendita"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "a9a29c7e-7ad6-4cdb-8a5d-1bbfdc7ad90e",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "e1f7d343-fb0e-4172-8f64-79f75cec1c33",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-wizard-vendita"
+}

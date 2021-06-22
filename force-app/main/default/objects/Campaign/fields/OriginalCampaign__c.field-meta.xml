@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OriginalCampaign__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Gestito in automatico dal CRM sulle Campagne generate in automatico, contiene la chiave Salesforce della Campagna Originaria di riferimento</description>
+    <externalId>false</externalId>
+    <label>Campaign</label>
+    <referenceTo>Campaign</referenceTo>
+    <relationshipLabel>Campaigns</relationshipLabel>
+    <relationshipName>Campaigns</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

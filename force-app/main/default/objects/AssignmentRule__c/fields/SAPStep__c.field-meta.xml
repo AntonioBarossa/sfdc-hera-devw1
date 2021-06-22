@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SAPStep__c</fullName>
+    <externalId>false</externalId>
+    <label>Step SAP</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CREA_ODV</fullName>
+                <default>false</default>
+                <label>Creazione Ordine di Vendita</label>
+            </value>
+            <value>
+                <fullName>AGG_CA</fullName>
+                <default>false</default>
+                <label>Aggiorna/crea conto contrattuale</label>
+            </value>
+            <value>
+                <fullName>AGG_CONTR</fullName>
+                <default>false</default>
+                <label>Aggiornamento Contratto</label>
+            </value>
+            <value>
+                <fullName>CAMBIOFASE</fullName>
+                <default>false</default>
+                <label>Modifica Fase</label>
+            </value>
+            <value>
+                <fullName>CHK_VAR</fullName>
+                <default>false</default>
+                <label>Check variazione impedita</label>
+            </value>
+            <value>
+                <fullName>CREA_BP</fullName>
+                <default>false</default>
+                <label>Creazione BP</label>
+            </value>
+            <value>
+                <fullName>CREA_IMP_E</fullName>
+                <default>false</default>
+                <label>Creazione o verifica Impianto EE</label>
+            </value>
+            <value>
+                <fullName>MOD_CESS_E</fullName>
+                <default>false</default>
+                <label>Modifica documento di cessazione ele</label>
+            </value>
+            <value>
+                <fullName>MOVE_IN</fullName>
+                <default>false</default>
+                <label>Creazione Move-In</label>
+            </value>
+            <value>
+                <fullName>MOVE_OUT</fullName>
+                <default>false</default>
+                <label>Creazione Move-Out</label>
+            </value>
+            <value>
+                <fullName>RIPR_BONUS</fullName>
+                <default>false</default>
+                <label>Ripristino Bonus Move out - in Tecnico</label>
+            </value>
+            <value>
+                <fullName>STEP_BONUS</fullName>
+                <default>false</default>
+                <label>Gestione Bonus e Contributi</label>
+            </value>
+            <value>
+                <fullName>CK_CREA_BP</fullName>
+                <default>false</default>
+                <label>Verifica esistenza e/o crea BP</label>
+            </value>
+            <value>
+                <fullName>BLOCK</fullName>
+                <default>false</default>
+                <label>Blocco Processo</label>
+            </value>
+            <value>
+                <fullName>CK_CREA_CA</fullName>
+                <default>false</default>
+                <label>Verifica esistenza e/o crea CA</label>
+            </value>
+            <value>
+                <fullName>CREA_CAT_E</fullName>
+                <default>false</default>
+                <label>Creazione catena tecnica ELE</label>
+            </value>
+            <value>
+                <fullName>ONLYCREATE</fullName>
+                <default>false</default>
+                <label>Creazione/determinazione Impianto senza verifiche</label>
+            </value>
+            <value>
+                <fullName>CHECK_TIS</fullName>
+                <default>false</default>
+                <label>Verifica TIS</label>
+            </value>
+            <value>
+                <fullName>CREA_CAT_G</fullName>
+                <default>false</default>
+                <label>Creazione catena tecnica GAS</label>
+            </value>
+            <value>
+                <fullName>CREA_IMP_G</fullName>
+                <default>false</default>
+                <label>Creazione o verifica Impianto GAS</label>
+            </value>
+            <value>
+                <fullName>CREA_IMP2G</fullName>
+                <default>false</default>
+                <label>Creazione o verifica Impianto GAS 2</label>
+            </value>
+            <value>
+                <fullName>UP_DISCD_W</fullName>
+                <default>false</default>
+                <label>Modifica documento di disconnessione- presenza doc non obbl.</label>
+            </value>
+            <value>
+                <fullName>UP_DIS_DOC</fullName>
+                <default>false</default>
+                <label>Modifica documento di disconnessione</label>
+            </value>
+            <value>
+                <fullName>CREA_BP_D</fullName>
+                <default>false</default>
+                <label>Creazione BP divergente</label>
+            </value>
+            <value>
+                <fullName>AGG_CA_DIV</fullName>
+                <default>false</default>
+                <label>Aggiorna conto contrattuale per BP divergente</label>
+            </value>
+            <value>
+                <fullName>ACQ_LETT</fullName>
+                <default>false</default>
+                <label>Acquisizione letture</label>
+            </value>
+            <value>
+                <fullName>ACQ_LETTE</fullName>
+                <default>false</default>
+                <label>Acquisizione letture ELE</label>
+            </value>
+            <value>
+                <fullName>ACQ_LETTG</fullName>
+                <default>false</default>
+                <label>Acquisizione letture GAS</label>
+            </value>
+            <value>
+                <fullName>ADD_BANK</fullName>
+                <default>false</default>
+                <label>Inserisci dati bancari BP</label>
+            </value>
+            <value>
+                <fullName>AGG_CONTR2</fullName>
+                <default>false</default>
+                <label>Aggiornamento Contratto 2</label>
+            </value>
+            <value>
+                <fullName>AGG_MRU</fullName>
+                <default>false</default>
+                <label>Aggiornamento MRU</label>
+            </value>
+            <value>
+                <fullName>BILL_INV</fullName>
+                <default>false</default>
+                <label>Billing e invoicing</label>
+            </value>
+            <value>
+                <fullName>BLOCK_SOLL</fullName>
+                <default>false</default>
+                <label>Ricerca Bollette e Blocco sollecito</label>
+            </value>
+            <value>
+                <fullName>CAMBIOFASM</fullName>
+                <default>false</default>
+                <label>Modifica Fase Multi</label>
+            </value>
+            <value>
+                <fullName>CREACAT_EM</fullName>
+                <default>false</default>
+                <label>Creazione catena tecnica EE segmenti multipli</label>
+            </value>
+            <value>
+                <fullName>CREACAT_GM</fullName>
+                <default>false</default>
+                <label>Creazione catena tecnica GAS segmenti multipli</label>
+            </value>
+            <value>
+                <fullName>CREAIMP_EM</fullName>
+                <default>false</default>
+                <label>Creazione o verifica Impianto EE segmenti multipli</label>
+            </value>
+            <value>
+                <fullName>CREAIMP_GM</fullName>
+                <default>false</default>
+                <label>Creazione o verifica Impianto GAS segmenti multipli</label>
+            </value>
+            <value>
+                <fullName>CREA_BOLLE</fullName>
+                <default>false</default>
+                <label>Ricerca bollette e crea bollettino</label>
+            </value>
+            <value>
+                <fullName>CREA_OFFER</fullName>
+                <default>false</default>
+                <label>Creazione dell&apos;Offerta</label>
+            </value>
+            <value>
+                <fullName>CRE_DOC_CH</fullName>
+                <default>false</default>
+                <label>Creazione documento di chiusura</label>
+            </value>
+            <value>
+                <fullName>GEST_OPER</fullName>
+                <default>false</default>
+                <label>Gestione operandi</label>
+            </value>
+            <value>
+                <fullName>INS_MILEST</fullName>
+                <default>false</default>
+                <label>Inserimento lettura di milestone</label>
+            </value>
+            <value>
+                <fullName>MOD_OPER</fullName>
+                <default>false</default>
+                <label>Modifica Operandi</label>
+            </value>
+            <value>
+                <fullName>UPD_CM</fullName>
+                <default>false</default>
+                <label>Aggiornamento cruscotto morosità </label>
+            </value>
+            <value>
+                <fullName>AG_MOD_PAG</fullName>
+                <default>false</default>
+                <label>Aggiorna modalità  di pagamento</label>
+            </value>
+            <value>
+                <fullName>FAD</fullName>
+                <default>false</default>
+                <label>Attiva modalità  pagamento FAD</label>
+            </value>
+            <value>
+                <fullName>GEST_DISAL</fullName>
+                <default>false</default>
+                <label>Gestione disalimentabilità </label>
+            </value>
+            <value>
+                <fullName>MRU_IMP_E</fullName>
+                <default>false</default>
+                <label>MRU temporanee Impianto EE</label>
+            </value>
+            <value>
+                <fullName>RECESSOVAS</fullName>
+                <default>false</default>
+                <label>Recesso VAS</label>
+            </value>
+            <value>
+                <fullName>SPOST_ATT</fullName>
+                <default>false</default>
+                <label>Ricerca Bollette e spostamento data scadenza x gg per attesa</label>
+            </value>
+            <value>
+                <fullName>SPOST_SCAD</fullName>
+                <default>false</default>
+                <label>Ricerca Bollette e spostamento data scadenza</label>
+            </value>
+            <value>
+                <fullName>STAMPA_OFF</fullName>
+                <default>false</default>
+                <label>Stampa preventivo automatica</label>
+            </value>
+            <value>
+                <fullName>STIMA_LETE</fullName>
+                <default>false</default>
+                <label>Stima letture ee</label>
+            </value>
+            <value>
+                <fullName>STIMA_LETT</fullName>
+                <default>false</default>
+                <label>Stima letture</label>
+            </value>
+            <value>
+                <fullName>STORNO_CTR</fullName>
+                <default>false</default>
+                <label>Storno contratto</label>
+            </value>
+            <value>
+                <fullName>UNLCK_SOLL</fullName>
+                <default>false</default>
+                <label>Ricerca Bollette e Sblocco sollecito</label>
+            </value>
+            <value>
+                <fullName>UPD_INST</fullName>
+                <default>false</default>
+                <label>Aggiornamento impianto</label>
+            </value>
+            <value>
+                <fullName>VER_M_SOST</fullName>
+                <default>false</default>
+                <label>Verifica misuratore sostituto</label>
+            </value>
+            <value>
+                <fullName>BLOCK_MAN</fullName>
+                <default>false</default>
+                <label>Blocco per Attività  procedurale in SAP</label>
+            </value>
+            <value>
+                <fullName>BLOCK_H</fullName>
+                <default>false</default>
+                <label>Blocco Processo Heroku</label>
+            </value>
+            <value>
+                <fullName>RICH_HERO</fullName>
+                <default>false</default>
+                <label>Crea richiesta da Heroku</label>
+            </value>
+            <value>
+                <fullName>MERCATO</fullName>
+                <default>false</default>
+                <label>Determina Mercato</label>
+            </value>
+            <value>
+                <fullName>CREA_CMOR</fullName>
+                <default>false</default>
+                <label>Crea richiesta CMOR</label>
+            </value>
+            <value>
+                <fullName>CHECKSWI</fullName>
+                <default>false</default>
+                <label>Verifica presenza switch-in SDD</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

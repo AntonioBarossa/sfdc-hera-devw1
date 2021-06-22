@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>&lt; 50 MC</fullName>
+        <default>false</default>
+        <label>&lt; 50 MC</label>
+    </customValue>
+    <customValue>
+        <fullName>da 51 a 200 MC</fullName>
+        <default>false</default>
+        <label>da 51 a 200 MC</label>
+    </customValue>
+    <customValue>
+        <fullName>da 201 a 400 MC</fullName>
+        <default>false</default>
+        <label>da 201 a 400 MC</label>
+    </customValue>
+    <customValue>
+        <fullName>&gt; 400 MC</fullName>
+        <default>false</default>
+        <label>&gt; 400 MC</label>
+    </customValue>
+    <masterLabel>Fascia Consumo Gas</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

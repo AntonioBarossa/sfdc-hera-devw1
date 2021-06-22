@@ -1,0 +1,9 @@
+{
+  "activeViewId" : "db39b18a-a8ef-4360-9baa-a3016f94b8a7",
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "id" : "9bf29de0-24e3-46c0-87ae-f5796bff3030",
+  "label" : "Account List",
+  "routeType" : "list-001",
+  "type" : "route",
+  "urlPrefix" : "account"
+}

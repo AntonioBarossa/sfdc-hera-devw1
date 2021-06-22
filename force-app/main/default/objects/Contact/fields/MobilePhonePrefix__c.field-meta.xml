@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MobilePhonePrefix__c</fullName>
+    <description>è il prefisso del Cellulare</description>
+    <externalId>false</externalId>
+    <label>Prefisso Telefono Cellulare</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_PhonePrefix</valueSetName>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FirstLevelOpinion__c</fullName>
+    <externalId>false</externalId>
+    <label>Parere 1° Livello</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Anomalia contratto</fullName>
+                <default>false</default>
+                <label>Anomalia contratto</label>
+            </value>
+            <value>
+                <fullName>Anomalia letture e contatori</fullName>
+                <default>false</default>
+                <label>Anomalia letture e contatori</label>
+            </value>
+            <value>
+                <fullName>Supporto credito Hera Comm</fullName>
+                <default>false</default>
+                <label>Supporto credito Hera Comm</label>
+            </value>
+            <value>
+                <fullName>Supporto HC</fullName>
+                <default>false</default>
+                <label>Supporto HC</label>
+            </value>
+            <value>
+                <fullName>Supporto responsabile HC</fullName>
+                <default>false</default>
+                <label>Supporto responsabile HC</label>
+            </value>
+            <value>
+                <fullName>Costing e Forecasting</fullName>
+                <default>false</default>
+                <label>Costing e Forecasting</label>
+            </value>
+            <value>
+                <fullName>Supporto credito Hera SPA</fullName>
+                <default>false</default>
+                <label>Supporto credito Hera SPA</label>
+            </value>
+            <value>
+                <fullName>Rapporto con i distributori e SII</fullName>
+                <default>false</default>
+                <label>Rapporto con i distributori e SII</label>
+            </value>
+            <value>
+                <fullName>Canone RAI e bonus sociale</fullName>
+                <default>false</default>
+                <label>Canone RAI e bonus sociale</label>
+            </value>
+            <value>
+                <fullName>Fatturazione e pagamenti</fullName>
+                <default>false</default>
+                <label>Fatturazione e pagamenti</label>
+            </value>
+            <value>
+                <fullName>Supporto Fiscale</fullName>
+                <default>false</default>
+                <label>Supporto Fiscale</label>
+            </value>
+            <value>
+                <fullName>Supporto Normativo</fullName>
+                <default>false</default>
+                <label>Supporto Normativo</label>
+            </value>
+            <value>
+                <fullName>Supporto Vendita</fullName>
+                <default>false</default>
+                <label>Supporto Vendita</label>
+            </value>
+            <value>
+                <fullName>Verifica Gestione Front</fullName>
+                <default>false</default>
+                <label>Verifica Gestione Front</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

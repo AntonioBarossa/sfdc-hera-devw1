@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Modifiche Anagrafiche</label>
+    <protected>false</protected>
+    <values>
+        <field>Cluster__c</field>
+        <value xsi:type="xsd:string">Modifiche Anagrafiche</value>
+    </values>
+    <values>
+        <field>ProcessType__c</field>
+        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Allineamento Anagrafica&quot;,&quot;value&quot;:&quot;Allineamento Anagrafica&quot;},
+{&quot;label&quot;:&quot;Esercizio Diritti Privacy&quot;,&quot;value&quot;:&quot;Esercizio Diritti Privacy&quot;},
+{&quot;label&quot;:&quot;Modifica Alert&quot;,&quot;value&quot;:&quot;Modifica Alert&quot;},
+{&quot;label&quot;:&quot;Modifica Privacy&quot;,&quot;value&quot;:&quot;Modifica Privacy&quot;},
+{&quot;label&quot;:&quot;Variazione Anagrafica Cliente&quot;,&quot;value&quot;:&quot;Variazione Anagrafica Cliente&quot;},
+{&quot;label&quot;:&quot;Variazione su Amministratore&quot;,&quot;value&quot;:&quot;Variazione su Amministratore&quot;},
+{&quot;label&quot;:&quot;Disassociazione Utente Web&quot;,&quot;value&quot;:&quot;Disassociazione Utente Web&quot;}]</value>
+    </values>
+</CustomMetadata>

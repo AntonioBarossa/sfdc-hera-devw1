@@ -1,0 +1,10 @@
+{
+  "activeViewId" : "2cb1820a-7919-4c9a-878e-f4b1f7db9b85",
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "id" : "cdd4ba48-d7c5-4ed3-bb37-2e4117ebc1b1",
+  "label" : "Wizard Vendita",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-wizard-vendita",
+  "type" : "route",
+  "urlPrefix" : "wizard-vendita"
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VATPercentage__c</fullName>
+    <description>Indica la percentuale iva applicata in base alla tipologia di cliente</description>
+    <externalId>false</externalId>
+    <label>Percentuale IVA</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_VATPercentage</valueSetName>
+    </valueSet>
+</CustomField>

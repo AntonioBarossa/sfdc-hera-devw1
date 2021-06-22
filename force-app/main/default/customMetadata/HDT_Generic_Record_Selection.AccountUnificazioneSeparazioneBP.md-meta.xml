@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>AccountUnificazioneSeparazioneBP</label>
+    <protected>false</protected>
+    <values>
+        <field>Columns__c</field>
+        <value xsi:type="xsd:string">[
+    { &quot;label&quot;: &quot;Codice Cliente&quot;, &quot;fieldName&quot;: &quot;CustomerCode__c&quot; },
+    { &quot;label&quot;: &quot;Nome&quot;, &quot;fieldName&quot;: &quot;FirstName__c&quot; },
+    { &quot;label&quot;: &quot;Cognome/ragione sociale&quot;, &quot;fieldName&quot;: &quot;LastName__c&quot; }
+]</value>
+    </values>
+    <values>
+        <field>Default_Search_Key__c</field>
+        <value xsi:type="xsd:string">100*</value>
+    </values>
+    <values>
+        <field>Distinct__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Fields__c</field>
+        <value xsi:type="xsd:string">CustomerCode__c,FirstName__c,LastName__c</value>
+    </values>
+    <values>
+        <field>Max_Rows__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>Query_Type__c</field>
+        <value xsi:type="xsd:string">SOSL</value>
+    </values>
+    <values>
+        <field>Row_Limit__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Where_Conditions__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>sObject__c</field>
+        <value xsi:type="xsd:string">Account</value>
+    </values>
+</CustomMetadata>

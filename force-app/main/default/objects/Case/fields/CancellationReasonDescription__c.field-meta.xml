@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CancellationReasonDescription__c</fullName>
+    <description>Calcolata a partire dal campo ProcessCancellationReason__c, indica la causale Normata da inviare nella comunicazione con i sistemi a valle</description>
+    <externalId>false</externalId>
+    <label>Descrizione Causale Annullamento</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_CancellationReasonDescription</valueSetName>
+    </valueSet>
+</CustomField>

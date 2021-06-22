@@ -1,0 +1,6 @@
+<aura:component implements="lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,force:appHostable,flexipage:availableForAllPageTypes">
+
+    <c:hdtMassiveLoader ongotorecord="{!c.handleGoToRecord}">
+    </c:hdtMassiveLoader>
+
+</aura:component>

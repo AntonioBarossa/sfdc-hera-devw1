@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ComplexCategory__c</fullName>
+    <externalId>false</externalId>
+    <label>Categoria Complessa</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Ricostruz. consumi malfunz. del gruppo di misura</fullName>
+                <default>false</default>
+                <label>Ricostruz. consumi malfunz. del gruppo di misura</label>
+            </value>
+            <value>
+                <fullName>Richieste relative a dati di misura per periodi superiori a 2 anni</fullName>
+                <default>false</default>
+                <label>Richieste relative a dati di misura per periodi superiori a 2 anni</label>
+            </value>
+            <value>
+                <fullName>Richieste relative a POD trattati orari</fullName>
+                <default>false</default>
+                <label>Richieste relative a POD trattati orari</label>
+            </value>
+            <value>
+                <fullName>Verifiche dati anag. del POD/PdR con rete gestita da diverso operatore</fullName>
+                <default>false</default>
+                <label>Verifiche dati anag. del POD/PdR con rete gestita da diverso operatore</label>
+            </value>
+            <value>
+                <fullName>Verifiche dati anag. del POD/PdR per richieste aperte più di 12 mesi fa</fullName>
+                <default>false</default>
+                <label>Verifiche dati anag. del POD/PdR per richieste aperte più di 12 mesi fa</label>
+            </value>
+            <value>
+                <fullName>Rich. per interruzioni del servizio di distribuzione</fullName>
+                <default>false</default>
+                <label>Rich. per interruzioni del servizio di distribuzione</label>
+            </value>
+            <value>
+                <fullName>Contestazioni del cliente per esecuzione lavori di aspetti tecnici</fullName>
+                <default>false</default>
+                <label>Contestazioni del cliente per esecuzione lavori di aspetti tecnici</label>
+            </value>
+            <value>
+                <fullName>Richieste relative a PdR con misuratori di classe superiore a G40</fullName>
+                <default>false</default>
+                <label>Richieste relative a PdR con misuratori di classe superiore a G40</label>
+            </value>
+            <value>
+                <fullName>Richieste relative a errato abbinamento PdR/matricola/cliente</fullName>
+                <default>false</default>
+                <label>Richieste relative a errato abbinamento PdR/matricola/cliente</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

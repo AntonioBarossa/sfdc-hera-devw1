@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Approvazione Quote</fullName>
+        <default>false</default>
+        <label>Approvazione Quote</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione dati discordanti</fullName>
+        <default>false</default>
+        <label>Gestione dati discordanti</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Contratti PreAttivazione</fullName>
+        <default>false</default>
+        <label>Modifica Contratti PreAttivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Contratti/Bonus Commerciale</fullName>
+        <default>false</default>
+        <label>Contratti/Bonus Commerciale</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Switch in Ripristinatorio</fullName>
+        <default>false</default>
+        <label>Gestione Switch in Ripristinatorio</label>
+    </customValue>
+    <customValue>
+        <fullName>Documentale/Copia Contratto</fullName>
+        <default>false</default>
+        <label>Documentale/Copia Contratto</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Iva e Accise</fullName>
+        <default>false</default>
+        <label>Gestione Iva e Accise</label>
+    </customValue>
+    <customValue>
+        <fullName>Sportello</fullName>
+        <default>false</default>
+        <label>Sportello</label>
+    </customValue>
+    <customValue>
+        <fullName>Segnalazioni VAS</fullName>
+        <default>false</default>
+        <label>Segnalazioni VAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullamento</fullName>
+        <default>false</default>
+        <label>Annullamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Presa Appuntamento</fullName>
+        <default>false</default>
+        <label>Presa Appuntamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Sollecito Distributore</fullName>
+        <default>false</default>
+        <label>Sollecito Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Anticipo Appuntamento</fullName>
+        <default>false</default>
+        <label>Anticipo Appuntamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Riapertura urgenti Errori DL</fullName>
+        <default>false</default>
+        <label>Riapertura urgenti Errori DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta informazioni appuntamento</fullName>
+        <default>false</default>
+        <label>Richiesta informazioni appuntamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta appuntamento DL (fermo sistemi)</fullName>
+        <default>false</default>
+        <label>Richiesta appuntamento DL (fermo sistemi)</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicazione da DL</fullName>
+        <default>false</default>
+        <label>Comunicazione da DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Chiamata Callback</fullName>
+        <default>false</default>
+        <label>Chiamata Callback</label>
+    </customValue>
+    <customValue>
+        <fullName>Chiamata inbound</fullName>
+        <default>false</default>
+        <label>Chiamata inbound</label>
+    </customValue>
+    <customValue>
+        <fullName>Chiamata outbound</fullName>
+        <default>false</default>
+        <label>Chiamata outbound</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavorazione Reclamo Post Survey</fullName>
+        <default>false</default>
+        <label>Lavorazione Reclamo Post Survey</label>
+    </customValue>
+    <description>Tipi Attività.</description>
+    <masterLabel>Tipo Attività</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

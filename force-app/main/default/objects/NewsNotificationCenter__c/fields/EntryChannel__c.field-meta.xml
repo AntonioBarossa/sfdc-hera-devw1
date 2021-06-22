@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EntryChannel__c</fullName>
+    <description>Data Category Group Canale</description>
+    <externalId>false</externalId>
+    <label>Canale</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sportello</fullName>
+                <default>false</default>
+                <label>Sportello</label>
+            </value>
+            <value>
+                <fullName>Call Center Inbound</fullName>
+                <default>false</default>
+                <label>Call Center Inbound</label>
+            </value>
+            <value>
+                <fullName>SOL e App</fullName>
+                <default>false</default>
+                <label>SOL e App</label>
+            </value>
+            <value>
+                <fullName>Teleselling Outbound</fullName>
+                <default>false</default>
+                <label>Teleselling Outbound</label>
+            </value>
+            <value>
+                <fullName>Agenti D2D</fullName>
+                <default>false</default>
+                <label>Agenti D2D</label>
+            </value>
+            <value>
+                <fullName>Protocollo</fullName>
+                <default>false</default>
+                <label>Protocollo</label>
+            </value>
+            <value>
+                <fullName>Back-office</fullName>
+                <default>false</default>
+                <label>Back-office</label>
+            </value>
+            <value>
+                <fullName>Chat</fullName>
+                <default>false</default>
+                <label>Chat</label>
+            </value>
+            <value>
+                <fullName>Sportello Amministratori Condominio</fullName>
+                <default>false</default>
+                <label>Sportello Amministratori Condominio</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

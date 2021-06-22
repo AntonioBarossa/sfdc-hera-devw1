@@ -1,0 +1,15 @@
+.container{
+    background-color:  white;
+    padding: 16px;
+    max-height: 480px;
+    overflow-y: scroll;
+    display: block;
+}
+
+
+.mylabel{
+
+    font-weight: bold;
+    
+}
+

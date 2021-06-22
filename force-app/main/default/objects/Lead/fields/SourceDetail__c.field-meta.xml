@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SourceDetail__c</fullName>
+    <externalId>false</externalId>
+    <label>Dettaglio Fonte</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ADSALA</fullName>
+                <default>false</default>
+                <label>ADSALA</label>
+            </value>
+            <value>
+                <fullName>ecc</fullName>
+                <default>false</default>
+                <label>ecc</label>
+            </value>
+            <value>
+                <fullName>sito standard</fullName>
+                <default>false</default>
+                <label>sito standard</label>
+            </value>
+            <value>
+                <fullName>sito standard proattivo</fullName>
+                <default>false</default>
+                <label>sito standard proattivo</label>
+            </value>
+            <value>
+                <fullName>chat</fullName>
+                <default>false</default>
+                <label>chat</label>
+            </value>
+            <value>
+                <fullName>prodotti HVAC</fullName>
+                <default>false</default>
+                <label>prodotti HVAC</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

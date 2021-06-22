@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tipology__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipologia</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Quality Call</fullName>
+                <default>false</default>
+                <label>Quality Call</label>
+            </value>
+            <value>
+                <fullName>Comfort Call</fullName>
+                <default>false</default>
+                <label>Comfort Call</label>
+            </value>
+            <value>
+                <fullName>Teleselling</fullName>
+                <default>false</default>
+                <label>Teleselling</label>
+            </value>
+            <value>
+                <fullName>Passaggio a RID</fullName>
+                <default>false</default>
+                <label>Passaggio a RID</label>
+            </value>
+            <value>
+                <fullName>Passaggio a IEB</fullName>
+                <default>false</default>
+                <label>Passaggio a IEB</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

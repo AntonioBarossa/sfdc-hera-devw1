@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Portal__c</fullName>
+    <description>Indica il portale SOL di riferimento.</description>
+    <externalId>false</externalId>
+    <label>Portale SOL</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>SOL Hera</fullName>
+                <default>false</default>
+                <label>SOL Hera</label>
+            </value>
+            <value>
+                <fullName>SOL Hera Base</fullName>
+                <default>false</default>
+                <label>SOL Hera Base</label>
+            </value>
+            <value>
+                <fullName>SOL Acegas</fullName>
+                <default>false</default>
+                <label>SOL Acegas</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

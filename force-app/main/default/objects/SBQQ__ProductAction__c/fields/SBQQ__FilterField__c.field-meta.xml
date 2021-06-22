@@ -22,6 +22,41 @@
                 <default>false</default>
                 <label>Product Family</label>
             </value>
+            <value>
+                <fullName>Family</fullName>
+                <default>false</default>
+                <label>Family</label>
+            </value>
+            <value>
+                <fullName>Old__c</fullName>
+                <default>false</default>
+                <label>Old</label>
+            </value>
+            <value>
+                <fullName>CategoryFamily__c</fullName>
+                <default>false</default>
+                <label>Categoria Famiglia Offerta</label>
+            </value>
+            <value>
+                <fullName>Version__c</fullName>
+                <default>false</default>
+                <label>Versione</label>
+            </value>
+            <value>
+                <fullName>Service__c</fullName>
+                <default>false</default>
+                <label>Servizio</label>
+            </value>
+            <value>
+                <fullName>TypeOffer__c</fullName>
+                <default>false</default>
+                <label>Tipo Offerta</label>
+            </value>
+            <value>
+                <fullName>Status__c</fullName>
+                <default>false</default>
+                <label>Stato</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

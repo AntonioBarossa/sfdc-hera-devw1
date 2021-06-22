@@ -1,0 +1,8 @@
+div.header h1{
+    font-size: 16px;
+    text-align: left;
+}
+
+lightning-record-edit-form lightning-input-field.richTextArea{
+    padding-left: 0;
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NotRegisteredMeterCase__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Flag che permette di segnalare che bisogna innescare il Case di Cambio Contatore non registrato</description>
+    <externalId>false</externalId>
+    <label>Cambio Contatore Non Registrato</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

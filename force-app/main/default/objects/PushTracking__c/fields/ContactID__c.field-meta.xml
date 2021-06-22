@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ContactID__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>ID of the contact that owns the device that received the message but not the ID of the device; one contact could have multiple devices. The SubscriberKey matches the Contacts and Devices ID. The SubscriberKey indicates the subscriber associated with the device when the report is run.</description>
+    <externalId>false</externalId>
+    <label>ContactID</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Push Tracking (ContactID)</relationshipLabel>
+    <relationshipName>PushTrackings</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

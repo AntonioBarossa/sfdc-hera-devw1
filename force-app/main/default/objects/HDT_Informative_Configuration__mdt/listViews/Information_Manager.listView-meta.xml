@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Information_Manager</fullName>
+    <columns>MasterLabel</columns>
+    <columns>DeveloperName</columns>
+    <columns>Cluster__c</columns>
+    <columns>MacroTopic__c</columns>
+    <columns>InformationDetail__c</columns>
+    <columns>Commodity__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Information Manager</label>
+    <language>en_US</language>
+</ListView>

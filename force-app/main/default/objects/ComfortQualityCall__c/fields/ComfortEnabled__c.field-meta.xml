@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ComfortEnabled__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Valorizzata su tutti i processi che prevedono la Comfort call abilitata</description>
+    <externalId>false</externalId>
+    <label>Comfort abilitata</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

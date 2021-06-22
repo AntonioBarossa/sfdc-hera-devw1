@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>HERA SPA-13R0000000</label>
+    <protected>false</protected>
+    <values>
+        <field>DispatcherCode__c</field>
+        <value xsi:type="xsd:string">13D1900000</value>
+    </values>
+    <values>
+        <field>DispatcherDesc__c</field>
+        <value xsi:type="xsd:string">HERA SPA-13R0000000</value>
+    </values>
+</CustomMetadata>

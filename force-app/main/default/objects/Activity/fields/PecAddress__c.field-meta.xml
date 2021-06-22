@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PecAddress__c</fullName>
+    <description>Valorizzato con l&apos;email inserita manualmente dall&apos;utente nel widget di composizione della PEC, o in mancanza di esso con il ContactPointEmail tipizzato PEC del Contact selezionato nel widget.</description>
+    <externalId>false</externalId>
+    <label>Indirizzo PEC Alternativo</label>
+    <required>false</required>
+    <type>Email</type>
+    <unique>false</unique>
+</CustomField>

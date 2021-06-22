@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LitigationType__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipo Contenzioso</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Area</fullName>
+                <default>false</default>
+                <label>Area</label>
+            </value>
+            <value>
+                <fullName>Conciliazione</fullName>
+                <default>false</default>
+                <label>Conciliazione</label>
+            </value>
+            <value>
+                <fullName>Associazione Consumatori</fullName>
+                <default>false</default>
+                <label>Associazione Consumatori</label>
+            </value>
+            <value>
+                <fullName>Causa legale</fullName>
+                <default>false</default>
+                <label>Causa legale</label>
+            </value>
+            <value>
+                <fullName>Avvocato</fullName>
+                <default>false</default>
+                <label>Avvocato</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

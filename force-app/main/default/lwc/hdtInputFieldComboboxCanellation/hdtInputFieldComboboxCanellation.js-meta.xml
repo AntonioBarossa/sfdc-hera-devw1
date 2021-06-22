@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Input Field Combobox Cancellation</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="defaultValue" type="String" label="Default Value" description="Default Value" role="inputOnly"/>
+            <property name="variant" type="String" label="variant" description="variant" role="inputOnly"/>
+            <property name="recordType" type="String" label="recordType" description="recordType" role="inputOnly"/>
+            <property name="commodity" type="String" label="commodity" description="commodity" role="inputOnly"/>
+            <property name="processType" type="String" label="processType" description="processType" role="inputOnly"/>
+            <property name="processTypeToCancell" type="String" label="processTypeToCancell" description="processTypeToCancell" role="inputOnly"/>
+            <property name="recordId" type="String" label="recordId" description="recordId" role="inputOnly"/>
+            <property name="selectedReason" type="String" label="Selected Reason" description="Selecte Reason" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

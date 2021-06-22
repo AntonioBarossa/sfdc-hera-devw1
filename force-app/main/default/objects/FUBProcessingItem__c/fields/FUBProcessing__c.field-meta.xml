@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FUBProcessing__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Relazione gerarchica con l’oggetto Lavorazione FUB</description>
+    <externalId>false</externalId>
+    <label>Lavorazione FUB</label>
+    <referenceTo>FUBProcessing__c</referenceTo>
+    <relationshipLabel>Lavorazione FUB items</relationshipLabel>
+    <relationshipName>Lavorazione_FUB_items</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

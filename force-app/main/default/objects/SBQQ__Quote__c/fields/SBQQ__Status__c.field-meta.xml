@@ -14,39 +14,24 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Draft</fullName>
-                <default>true</default>
-                <label>Draft</label>
-            </value>
-            <value>
                 <fullName>In Review</fullName>
                 <default>false</default>
-                <label>In Review</label>
-            </value>
-            <value>
-                <fullName>Approved</fullName>
-                <default>false</default>
-                <label>Approved</label>
-            </value>
-            <value>
-                <fullName>Denied</fullName>
-                <default>false</default>
-                <label>Denied</label>
-            </value>
-            <value>
-                <fullName>Presented</fullName>
-                <default>false</default>
-                <label>Presented</label>
-            </value>
-            <value>
-                <fullName>Accepted</fullName>
-                <default>false</default>
-                <label>Accepted</label>
+                <label>In Lavorazione</label>
             </value>
             <value>
                 <fullName>Rejected</fullName>
                 <default>false</default>
-                <label>Rejected</label>
+                <label>Rifiutata</label>
+            </value>
+            <value>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+                <label>Annullata</label>
+            </value>
+            <value>
+                <fullName>Accepted</fullName>
+                <default>false</default>
+                <label>Accettata</label>
             </value>
         </valueSetDefinition>
     </valueSet>

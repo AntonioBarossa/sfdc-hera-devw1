@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wrts_prcgvr__All</fullName>
+    <columns>NAME</columns>
+    <columns>wrts_prcgvr__Description__c</columns>
+    <columns>wrts_prcgvr__Status__c</columns>
+    <columns>wrts_prcgvr__StatusIcon__c</columns>
+    <columns>wrts_prcgvr__DueDate__c</columns>
+    <columns>wrts_prcgvr__IsRequired__c</columns>
+    <columns>wrts_prcgvr__ActivityTemplate__c</columns>
+    <columns>OWNER.LAST_NAME</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

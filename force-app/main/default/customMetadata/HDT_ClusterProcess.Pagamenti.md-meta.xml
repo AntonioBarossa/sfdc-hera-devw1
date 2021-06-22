@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Pagamenti</label>
+    <protected>false</protected>
+    <values>
+        <field>Cluster__c</field>
+        <value xsi:type="xsd:string">Pagamenti</value>
+    </values>
+    <values>
+        <field>ProcessType__c</field>
+        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Comunicazione Pagamento&quot;,&quot;value&quot;:&quot;Comunicazione Pagamento&quot;},
+{&quot;label&quot;:&quot;Piano Rateizzazione&quot;,&quot;value&quot;:&quot;Piano Rateizzazione&quot;},
+{&quot;label&quot;:&quot;Richiesta Domiciliazione&quot;,&quot;value&quot;:&quot;Richiesta Domiciliazione&quot;},
+{&quot;label&quot;:&quot;Variazione Domiciliazione&quot;,&quot;value&quot;:&quot;Variazione Domiciliazione&quot;},
+{&quot;label&quot;:&quot;Revoca Domiciliazione&quot;,&quot;value&quot;:&quot;Revoca Domiciliazione&quot;},
+{&quot;label&quot;:&quot;Attivazione Click&amp;Pay&quot;,&quot;value&quot;:&quot;Attivazione Click&amp;Pay&quot;},
+{&quot;label&quot;:&quot;Copia Bolletta/Bollettino&quot;,&quot;value&quot;:&quot;Copia Bolletta/Bollettino&quot;},
+{&quot;label&quot;:&quot;Rimborso&quot;,&quot;value&quot;:&quot;Rimborso&quot;},
+{&quot;label&quot;:&quot;Paperless&quot;,&quot;value&quot;:&quot;Paperless&quot;},
+{&quot;label&quot;:&quot;Blocco Sollecito/Interessi&quot;,&quot;value&quot;:&quot;Blocco Sollecito/Interessi&quot;},
+{&quot;label&quot;:&quot;Storno Rateizzazione&quot;,&quot;value&quot;:&quot;Storno Rateizzazione&quot;},
+{&quot;label&quot;:&quot;Contenzioso In Corso&quot;,&quot;value&quot;:&quot;Contenzioso In Corso&quot;},
+{&quot;label&quot;:&quot;Doppi Pagamenti/Incassi&quot;,&quot;value&quot;:&quot;Doppi Pagamenti/Incassi&quot;}]</value>
+    </values>
+</CustomMetadata>

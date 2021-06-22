@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CompetentOffice__c</fullName>
+    <description>L&apos;ufficio competente inerente il case in oggetto</description>
+    <externalId>false</externalId>
+    <label>Ufficio competente</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>HCM</fullName>
+                <default>false</default>
+                <label>HCM</label>
+            </value>
+            <value>
+                <fullName>Marche Multiservizi SpaMercato</fullName>
+                <default>false</default>
+                <label>Marche Multiservizi SpaMercato</label>
+            </value>
+            <value>
+                <fullName>AziendeMercato aziende InMercato</fullName>
+                <default>false</default>
+                <label>AziendeMercato aziende InMercato</label>
+            </value>
+            <value>
+                <fullName>Aziende outMercato</fullName>
+                <default>false</default>
+                <label>Aziende outMercato</label>
+            </value>
+            <value>
+                <fullName>FamiglieProcedure Concorsuali</fullName>
+                <default>false</default>
+                <label>FamiglieProcedure Concorsuali</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

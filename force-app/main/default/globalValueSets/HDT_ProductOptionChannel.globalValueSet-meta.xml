@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Agente</fullName>
+        <default>false</default>
+        <label>Agente</label>
+    </customValue>
+    <customValue>
+        <fullName>Agenzia</fullName>
+        <default>false</default>
+        <label>Agenzia</label>
+    </customValue>
+    <customValue>
+        <fullName>App</fullName>
+        <default>false</default>
+        <label>App</label>
+    </customValue>
+    <customValue>
+        <fullName>Assistente Web</fullName>
+        <default>false</default>
+        <label>Assistente Web</label>
+    </customValue>
+    <customValue>
+        <fullName>Associazioni</fullName>
+        <default>false</default>
+        <label>Associazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Call Center</fullName>
+        <default>false</default>
+        <label>Call Center</label>
+    </customValue>
+    <customValue>
+        <fullName>Camper</fullName>
+        <default>false</default>
+        <label>Camper</label>
+    </customValue>
+    <customValue>
+        <fullName>Chat</fullName>
+        <default>false</default>
+        <label>Chat</label>
+    </customValue>
+    <customValue>
+        <fullName>CONSIP</fullName>
+        <default>false</default>
+        <label>CONSIP</label>
+    </customValue>
+    <customValue>
+        <fullName>Da PGM</fullName>
+        <default>false</default>
+        <label>Da PGM</label>
+    </customValue>
+    <customValue>
+        <fullName>e-mail</fullName>
+        <default>false</default>
+        <label>e-mail</label>
+    </customValue>
+    <customValue>
+        <fullName>HERA COMM POINT</fullName>
+        <default>false</default>
+        <label>HERA COMM POINT</label>
+    </customValue>
+    <customValue>
+        <fullName>Interno</fullName>
+        <default>false</default>
+        <label>Interno</label>
+    </customValue>
+    <customValue>
+        <fullName>IVR</fullName>
+        <default>false</default>
+        <label>IVR</label>
+    </customValue>
+    <customValue>
+        <fullName>ON-LINE</fullName>
+        <default>false</default>
+        <label>ON-LINE</label>
+    </customValue>
+    <customValue>
+        <fullName>PA</fullName>
+        <default>false</default>
+        <label>PA</label>
+    </customValue>
+    <customValue>
+        <fullName>PARTNER</fullName>
+        <default>false</default>
+        <label>PARTNER</label>
+    </customValue>
+    <customValue>
+        <fullName>Postel</fullName>
+        <default>false</default>
+        <label>Postel</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo</fullName>
+        <default>false</default>
+        <label>Protocollo</label>
+    </customValue>
+    <customValue>
+        <fullName>Punto Hera</fullName>
+        <default>false</default>
+        <label>Punto Hera</label>
+    </customValue>
+    <customValue>
+        <fullName>Reseller</fullName>
+        <default>false</default>
+        <label>Reseller</label>
+    </customValue>
+    <customValue>
+        <fullName>ServiziSociali</fullName>
+        <default>false</default>
+        <label>ServiziSociali</label>
+    </customValue>
+    <customValue>
+        <fullName>SFA</fullName>
+        <default>false</default>
+        <label>SFA</label>
+    </customValue>
+    <customValue>
+        <fullName>SMS</fullName>
+        <default>false</default>
+        <label>SMS</label>
+    </customValue>
+    <customValue>
+        <fullName>Sportello</fullName>
+        <default>false</default>
+        <label>Sportello</label>
+    </customValue>
+    <customValue>
+        <fullName>Sportello amministratori</fullName>
+        <default>false</default>
+        <label>Sportello amministratori</label>
+    </customValue>
+    <customValue>
+        <fullName>SUPPORTO AGENZIE</fullName>
+        <default>false</default>
+        <label>SUPPORTO AGENZIE</label>
+    </customValue>
+    <customValue>
+        <fullName>SUPPORTO GDA</fullName>
+        <default>false</default>
+        <label>SUPPORTO GDA</label>
+    </customValue>
+    <customValue>
+        <fullName>Telefono</fullName>
+        <default>false</default>
+        <label>Telefono</label>
+    </customValue>
+    <customValue>
+        <fullName>Telefono Outbound</fullName>
+        <default>false</default>
+        <label>Telefono Outbound</label>
+    </customValue>
+    <customValue>
+        <fullName>Teleselling</fullName>
+        <default>false</default>
+        <label>Teleselling</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita Condomini</fullName>
+        <default>false</default>
+        <label>Vendita Condomini</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita Diretta</fullName>
+        <default>false</default>
+        <label>Vendita Diretta</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita Indiretta</fullName>
+        <default>false</default>
+        <label>Vendita Indiretta</label>
+    </customValue>
+    <customValue>
+        <fullName>Web</fullName>
+        <default>false</default>
+        <label>Web</label>
+    </customValue>
+    <customValue>
+        <fullName>Web-AAA</fullName>
+        <default>false</default>
+        <label>Web-AAA</label>
+    </customValue>
+    <customValue>
+        <fullName>Web-EB</fullName>
+        <default>false</default>
+        <label>Web-EB</label>
+    </customValue>
+    <customValue>
+        <fullName>Web-MMS</fullName>
+        <default>false</default>
+        <label>Web-MMS</label>
+    </customValue>
+    <masterLabel>Canale Product Option</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

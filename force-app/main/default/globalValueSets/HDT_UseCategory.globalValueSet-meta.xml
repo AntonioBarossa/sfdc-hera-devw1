@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>001-Uso cottura cibi</fullName>
+        <default>false</default>
+        <label>001-Uso cottura cibi</label>
+    </customValue>
+    <customValue>
+        <fullName>002-Prod.acqua calda sanitaria</fullName>
+        <default>false</default>
+        <label>002-Prod.acqua calda sanitaria</label>
+    </customValue>
+    <customValue>
+        <fullName>003-CotturaCibi+AcquaCalda</fullName>
+        <default>false</default>
+        <label>003-CotturaCibi+AcquaCalda</label>
+    </customValue>
+    <customValue>
+        <fullName>004-Uso tecnologico</fullName>
+        <default>false</default>
+        <label>004-Uso tecnologico</label>
+    </customValue>
+    <customValue>
+        <fullName>005-Uso condizionamento</fullName>
+        <default>false</default>
+        <label>005-Uso condizionamento</label>
+    </customValue>
+    <customValue>
+        <fullName>006-Riscald. individ./central.</fullName>
+        <default>false</default>
+        <label>006-Riscald. individ./central.</label>
+    </customValue>
+    <customValue>
+        <fullName>007-Ris.Ind+Cottura+AcquaCalda</fullName>
+        <default>false</default>
+        <label>007-Ris.Ind+Cottura+AcquaCalda</label>
+    </customValue>
+    <customValue>
+        <fullName>008-Ris.Ind.+Cottura Cibi</fullName>
+        <default>false</default>
+        <label>008-Ris.Ind.+Cottura Cibi</label>
+    </customValue>
+    <customValue>
+        <fullName>009-Ris.Ind.+AcquaCalda</fullName>
+        <default>false</default>
+        <label>009-Ris.Ind.+AcquaCalda</label>
+    </customValue>
+    <customValue>
+        <fullName>010-Ris.Cen.+Cott.+AcquaCalda</fullName>
+        <default>false</default>
+        <label>010-Ris.Cen.+Cott.+AcquaCalda</label>
+    </customValue>
+    <customValue>
+        <fullName>011-Ris.Cen.+AcquaCalda</fullName>
+        <default>false</default>
+        <label>011-Ris.Cen.+AcquaCalda</label>
+    </customValue>
+    <customValue>
+        <fullName>012-Uso Tecnologico + Riscald.</fullName>
+        <default>false</default>
+        <label>012-Uso Tecnologico + Riscald.</label>
+    </customValue>
+    <customValue>
+        <fullName>013-Uso Condizionam.+Riscald.</fullName>
+        <default>false</default>
+        <label>013-Uso Condizionam.+Riscald.</label>
+    </customValue>
+    <masterLabel>Categoria duso</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

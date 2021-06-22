@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Error__c</fullName>
+    <externalId>false</externalId>
+    <label>Errore</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>ErrorType__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Offerta errata</fullName>
+                <default>false</default>
+                <label>Offerta errata</label>
+            </value>
+            <value>
+                <fullName>Prezzi errati</fullName>
+                <default>false</default>
+                <label>Prezzi errati</label>
+            </value>
+            <value>
+                <fullName>Versione/Profilo</fullName>
+                <default>false</default>
+                <label>Versione/Profilo</label>
+            </value>
+            <value>
+                <fullName>Data di partenza errata</fullName>
+                <default>false</default>
+                <label>Data di partenza errata</label>
+            </value>
+            <value>
+                <fullName>Altro</fullName>
+                <default>false</default>
+                <label>Altro</label>
+            </value>
+            <value>
+                <fullName>Quota fissa binomia</fullName>
+                <default>false</default>
+                <label>Quota fissa binomia</label>
+            </value>
+            <value>
+                <fullName>Capacità GC</fullName>
+                <default>false</default>
+                <label>Capacità GC</label>
+            </value>
+            <value>
+                <fullName>Bonus RID</fullName>
+                <default>false</default>
+                <label>Bonus RID</label>
+            </value>
+            <value>
+                <fullName>Opzione verde</fullName>
+                <default>false</default>
+                <label>Opzione verde</label>
+            </value>
+            <value>
+                <fullName>Errati addebiti</fullName>
+                <default>false</default>
+                <label>Errati addebiti</label>
+            </value>
+            <value>
+                <fullName>Bonus/Promo/Conversioni</fullName>
+                <default>false</default>
+                <label>Bonus/Promo/Conversioni</label>
+            </value>
+            <value>
+                <fullName>Residente SI/NO</fullName>
+                <default>false</default>
+                <label>Residente SI/NO</label>
+            </value>
+            <value>
+                <fullName>Tariffe distribuzione</fullName>
+                <default>false</default>
+                <label>Tariffe distribuzione</label>
+            </value>
+            <value>
+                <fullName>Scaglioni distribuzione</fullName>
+                <default>false</default>
+                <label>Scaglioni distribuzione</label>
+            </value>
+            <value>
+                <fullName>Energivori</fullName>
+                <default>false</default>
+                <label>Energivori</label>
+            </value>
+            <value>
+                <fullName>Autoproduttori</fullName>
+                <default>false</default>
+                <label>Autoproduttori</label>
+            </value>
+            <value>
+                <fullName>Potenze contrattuali</fullName>
+                <default>false</default>
+                <label>Potenze contrattuali</label>
+            </value>
+            <value>
+                <fullName>Tensione di alimentzione</fullName>
+                <default>false</default>
+                <label>Tensione di alimentzione</label>
+            </value>
+            <value>
+                <fullName>Valore del PCS</fullName>
+                <default>false</default>
+                <label>Valore del PCS</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Offerta</controllingFieldValue>
+            <valueName>Offerta errata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Offerta</controllingFieldValue>
+            <valueName>Prezzi errati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Offerta</controllingFieldValue>
+            <valueName>Versione/Profilo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Offerta</controllingFieldValue>
+            <valueName>Data di partenza errata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Offerta</controllingFieldValue>
+            <controllingFieldValue>Sconti/Condizioni</controllingFieldValue>
+            <controllingFieldValue>Tariffa Distribuzione</controllingFieldValue>
+            <valueName>Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sconti/Condizioni</controllingFieldValue>
+            <valueName>Quota fissa binomia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sconti/Condizioni</controllingFieldValue>
+            <valueName>Capacità GC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sconti/Condizioni</controllingFieldValue>
+            <valueName>Bonus RID</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sconti/Condizioni</controllingFieldValue>
+            <valueName>Opzione verde</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sconti/Condizioni</controllingFieldValue>
+            <valueName>Errati addebiti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sconti/Condizioni</controllingFieldValue>
+            <valueName>Bonus/Promo/Conversioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariffa Distribuzione</controllingFieldValue>
+            <valueName>Residente SI/NO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariffa Distribuzione</controllingFieldValue>
+            <valueName>Tariffe distribuzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariffa Distribuzione</controllingFieldValue>
+            <valueName>Scaglioni distribuzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariffa Distribuzione</controllingFieldValue>
+            <valueName>Energivori</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariffa Distribuzione</controllingFieldValue>
+            <valueName>Autoproduttori</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariffa Distribuzione</controllingFieldValue>
+            <valueName>Potenze contrattuali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariffa Distribuzione</controllingFieldValue>
+            <valueName>Tensione di alimentzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tariffa Distribuzione</controllingFieldValue>
+            <valueName>Valore del PCS</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

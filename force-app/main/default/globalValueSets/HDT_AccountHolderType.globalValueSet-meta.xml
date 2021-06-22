@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Stesso Sottoscrittore</fullName>
+        <default>false</default>
+        <label>Stesso Sottoscrittore</label>
+    </customValue>
+    <customValue>
+        <fullName>Beneficiario Alternativo</fullName>
+        <default>false</default>
+        <label>Beneficiario Alternativo</label>
+    </customValue>
+    <customValue>
+        <fullName>Erede</fullName>
+        <default>false</default>
+        <label>Erede</label>
+    </customValue>
+    <customValue>
+        <fullName>Pagatore Alternativo</fullName>
+        <default>false</default>
+        <label>Pagatore Alternativo</label>
+    </customValue>
+    <masterLabel>Tipologia Intestatario</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

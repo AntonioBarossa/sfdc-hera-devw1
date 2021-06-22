@@ -1,0 +1,10 @@
+{
+  "activeViewId" : "4b7b51f6-df6e-4b81-9abf-0baa8b0972c1",
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "id" : "8d27da9b-a044-43a4-af9f-e72a10cc4b53",
+  "label" : "CPQ Test",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-cpq-test",
+  "type" : "route",
+  "urlPrefix" : "cpq-test"
+}

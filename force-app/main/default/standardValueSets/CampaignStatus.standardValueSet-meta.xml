@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Bozza</fullName>
+        <default>true</default>
+        <label>Bozza</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pianificata</fullName>
+        <default>false</default>
+        <label>Pianificata</label>
+    </standardValue>
+    <standardValue>
+        <fullName>In Corso</fullName>
+        <default>false</default>
+        <label>In Corso</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Completata</fullName>
+        <default>false</default>
+        <label>Completata</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cancellata</fullName>
+        <default>false</default>
+        <label>Cancellata</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bloccata</fullName>
+        <default>false</default>
+        <label>Bloccata</label>
+    </standardValue>
+</StandardValueSet>

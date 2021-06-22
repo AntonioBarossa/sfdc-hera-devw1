@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>001 - 7 giorni</fullName>
+        <default>false</default>
+        <label>001 - 7 giorni</label>
+    </customValue>
+    <customValue>
+        <fullName>002 - 6 giorni (no dom. + fest)</fullName>
+        <default>false</default>
+        <label>002 - 6 giorni (no dom. + fest)</label>
+    </customValue>
+    <customValue>
+        <fullName>003 - 5 giorni (no sab. dom. fest)</fullName>
+        <default>false</default>
+        <label>003 - 5 giorni (no sab. dom. fest)</label>
+    </customValue>
+    <masterLabel>Classe Profilo Prelievo</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
