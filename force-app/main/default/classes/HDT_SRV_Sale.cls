@@ -87,4 +87,12 @@ public inherited sharing class HDT_SRV_Sale {
         HDT_UTL_DatabaseService.updateSObject(sale);
 
     }
+
+    // update list of sale__c records 
+    public void updateRecords(List<Sale__c> sales){
+
+        HDT_UTL_DatabaseService.updateSObject(sales);
+    }
+
 }
+

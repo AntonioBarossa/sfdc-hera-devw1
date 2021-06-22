@@ -83,7 +83,7 @@ export default class HdtAccountStatementFilters extends LightningElement {
 
     dateConfiguration(){
 
-        if((this.joinFilterObj.obj0.empty || this.joinFilterObj.obj1.empty) && this.joinFilterObj.obj2.empty && this.joinFilterObj.obj3.empty){
+        if((!this.joinFilterObj.obj0.empty || !this.joinFilterObj.obj1.empty) && this.joinFilterObj.obj2.empty && this.joinFilterObj.obj3.empty ){
             this.filterObject[this.joinFilterObj.obj2.name] = '';
             this.filterObject[this.joinFilterObj.obj3.name] = '';
             return;

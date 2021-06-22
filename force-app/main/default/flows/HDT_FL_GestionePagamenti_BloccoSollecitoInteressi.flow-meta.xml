@@ -86,8 +86,8 @@
     <formulas>
         <name>ExpirationDateFormula</name>
         <dataType>Date</dataType>
-        <expression>IF(TEXT({!GetCaseAggiornato.BlockType__c}) = &quot;W&quot;,DATEVALUE({!GetCaseAggiornato.CreatedDate})+240,
-     IF(TEXT({!GetCaseAggiornato.BlockType__c}) = &quot;1&quot;,DATEVALUE({!GetCaseAggiornato.CreatedDate})+45,null))</expression>
+        <expression>IF(CONTAINS(TEXT({!GetCaseAggiornato.BlockType__c}),&quot;W&quot;),DATEVALUE({!GetCaseAggiornato.CreatedDate})+240,
+     IF(CONTAINS(TEXT({!GetCaseAggiornato.BlockType__c}),&quot;1&quot;),DATEVALUE({!GetCaseAggiornato.CreatedDate})+45,null))</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_BloccoSollecitoInteressi {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Blocco Sollecito</label>

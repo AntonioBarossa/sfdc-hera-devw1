@@ -9,7 +9,7 @@ public class HDT_SRV_DocumentalManagement{
 		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
 		String documentalContext = HDT_UTL_DocumentalManagement.getDocumentalContext(context);
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure payloadStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration(documentalContext);
-		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure driverStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration('Driver');
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure driverStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration('Driver2');
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject integrationObjConfig =  HDT_UTL_IntegrationObject.getIntegrationObjectConfiguration('HDT_IntegrationObject__mdt', 'Id, JSON__c', 'DeveloperName = \'Documentale_'+ documentalContext + '\'', 'JSON__c');
 		Map<String,String> recordQueryMap = HDT_UTL_IntegrationObject.generateQueryString(integrationObjConfig,recordId); 
 		List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(recordQueryMap.get('queryString'), recordQueryMap.get('parentObject'));
@@ -84,9 +84,9 @@ public class HDT_SRV_DocumentalManagement{
 		HDT_WRP_DocumentalRequest documentalRequest = new HDT_WRP_DocumentalRequest();
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage sPackage = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage();
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDeliverPackageRequest sPackageRequest = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDeliverPackageRequest();
-		String mode = (String) formParams.get('mode');
-		String context = (String) formParams.get('Contesto');
-		String signMode = (String) formParams.get('signMode');
+		String mode = (String) formParams.get('mode') != null? (String) formParams.get('mode'):'';
+		String context = (String) formParams.get('Contesto') != null? (String) formParams.get('Contesto'):'';
+		String signMode = (String) formParams.get('signMode') != null? (String) formParams.get('signMode'):'';
 		try{
 			sPackageRequest.requestId = recordId;
 			sPackageRequest.objectName = context;
@@ -99,6 +99,8 @@ public class HDT_SRV_DocumentalManagement{
 			}
 			if(mode.equalsIgnoreCase('Print') && signMode.indexOf('OTP') >-1){
 				sPackageRequest.signInfo = addDocusingInformation(formParams,inputs);
+			}else{
+				sPackageRequest.signInfo = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalSignInfo();
 			}
 			documentalRequest.deliverPackageRequest = sPackageRequest;
 		}catch(Exception ex){
