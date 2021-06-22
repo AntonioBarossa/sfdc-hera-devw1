@@ -99,7 +99,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
 
         newCase.AccountId = parentOrder.AccountId;
         newCase.ContactId = parentOrder.Contact__c;
-        newCase.CompanyOwner__c = parentOrder.Account.CompanyOwner__c;
+        newCase.CompanyOwner__c = parentOrder.CompanyOwner__c;
         newCase.Order__c = parentOrder.Id;
         // Campi sezione Dati Residenza
         newCase.BillingCity__c = parentOrder.ResidentialCity__c;

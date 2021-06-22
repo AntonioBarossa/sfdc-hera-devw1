@@ -69,6 +69,8 @@ public with sharing class HDT_QR_AnagAlignment {
             SupplyStreetToponym__c,
             // Campi sezione Tributi e Dati Commerciali
             VAT__c,
+            ExciseEle__c,
+            ExciseGAS__c,
             AtecoCode__c,
             Market__c,
             ContractId,
@@ -77,10 +79,10 @@ public with sharing class HDT_QR_AnagAlignment {
             Disconnectable__c,
             SubjectCode__c,
             DistributorCode__c,
-            Account.FirstName__c,
-            Account.LastName__c,
-            Account.VATNumber__c,
-            Account.FiscalCode__c,
+            CustomerName__c,
+            CustomerLastName__c,
+            CustomerVATNumber__c,
+            CustomerFiscalCode__c,
             Resident__c
             FROM Order 
             WHERE DistributorPracticeCode__c = :distributorPracticeCode
@@ -143,6 +145,8 @@ public with sharing class HDT_QR_AnagAlignment {
             SupplyStreetToponym__c,
             // Campi sezione Tributi e Dati Commerciali
             VAT__c,
+            ExciseEle__c,
+            ExciseGAS__c,
             AtecoCode__c,
             Market__c,
             ContractId,

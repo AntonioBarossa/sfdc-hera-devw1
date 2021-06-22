@@ -103,6 +103,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     anagAlignCase = createAnagAlignmentCase(triggerOrder);
                     anagAlignCase.CausalCode__c = causalCodeAnagAlignment(triggerOrder.CommodityFormula__c, context);
                     anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+                    anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
+                    anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
                     System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                     anagAlignCase.Phase__c = 'Da Inviare';
                     HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
@@ -581,6 +583,31 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         }
 
         return causalCode.equals('AGG') ? '01' : '03';
+    }
+
+    /**
+     * Transcodifica le accise raccolte sugli Order nel valore numerico richiesto dal SII.
+     * La transcodifica di default è 0, quindi gestiamo solo le eccezioni che hanno accisa > 0.
+     */
+    private static Double transcodeExcises(Order triggerOrder) {
+        String acc = triggerOrder.ExciseGAS__c != null ? triggerOrder.ExciseGAS__c : triggerOrder.ExciseEle__c;
+        if (acc == null) {
+            return 0;
+        }
+
+        Double transcodedValue = 0;
+        if (acc.contains('G_ICD') || acc.contains('G_ICC')) {
+            transcodedValue = 0.044;
+        } else if (acc.contains('E_IE_L01') || acc.contains('E_IE_M04') || acc.contains('E_IE_L13') || acc.contains('E_IE_13A')) {
+            transcodedValue = 0.0125;
+        }
+
+        return transcodedValue;
+    }
+
+    // Codice venditore cablato essendo cablato anche nel template pclick delle attivazioni.
+    private static String companyCodeTemp(String commodity) {
+        return commodity.equals('Gas') ? '10V0000160' : '13V0000000';
     }
 
 }
