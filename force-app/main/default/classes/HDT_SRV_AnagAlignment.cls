@@ -103,6 +103,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     anagAlignCase = createAnagAlignmentCase(triggerOrder);
                     anagAlignCase.CausalCode__c = causalCodeAnagAlignment(triggerOrder.CommodityFormula__c, context);
                     anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+                    anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
                     System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                     anagAlignCase.Phase__c = 'Da Inviare';
                     HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
@@ -581,6 +582,11 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         }
 
         return causalCode.equals('AGG') ? '01' : '03';
+    }
+
+    // Codice venditore cablato essendo cablato anche nel template pclick delle attivazioni.
+    private static String companyCodeTemp(String commodity) {
+        return commodity.equals('Gas') ? '10V0000160' : '13V0000000';
     }
 
 }
