@@ -232,8 +232,8 @@
     <assignments>
         <name>AssegnaDaServicePoint</name>
         <label>AssegnaDaServicePoint</label>
-        <locationX>1269</locationX>
-        <locationY>537</locationY>
+        <locationX>1253</locationX>
+        <locationY>588</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.PowerLimitation__c</assignToReference>
             <operator>Assign</operator>
@@ -277,7 +277,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaCase</targetReference>
+            <targetReference>Valorizzare_Potenza_Richiesta</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -291,6 +291,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaPotenzaRichiesta</name>
+        <label>AssegnaPotenzaRichiesta</label>
+        <locationX>1016</locationX>
+        <locationY>690</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.PowerRequested__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Input_Case.PowerCommitted__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1301,6 +1317,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Valorizzare_Potenza_Richiesta</name>
+        <label>Valorizzare Potenza Richiesta?</label>
+        <locationX>1124</locationX>
+        <locationY>592</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaPotenzaRichiesta</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Si</defaultConnectorLabel>
+        <rules>
+            <name>No</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Variazione Potenza</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Unificazione POD</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AggiornaCase</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Variazione_Portata</name>
         <label>Variazione Portata?</label>
         <locationX>1475</locationX>
@@ -1612,8 +1660,8 @@
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
-        <locationX>1420</locationX>
-        <locationY>603</locationY>
+        <locationX>1120</locationX>
+        <locationY>799</locationY>
         <connector>
             <targetReference>Processo_Screen</targetReference>
         </connector>
