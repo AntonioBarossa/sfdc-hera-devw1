@@ -52,7 +52,13 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 this.iconName = result.tables[0].iconName;
                 this.columns = result.tables[0].columns;
                 this.height1 = 'singleTable';
-                this.sortedBy = 'dataAgg';
+
+                if(this.type === 'raiFee'){
+                    this.sortedBy = result.tables[0].defaultSortedBy;
+                } else if(this.type === 'socialBonus'){
+                    this.sortedBy = 'dataAttBonus';
+                }
+
             } else {
                 this.showSecondTable = true;
                 this.tableTitle = result.tables[0].tableTitle;
@@ -64,12 +70,8 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 this.iconName2 = result.tables[1].iconName;
                 this.columns2 = result.tables[1].columns;
                 this.height2 = 'bottomTable';
+                this.sortedBy = 'dataAgg';
 
-                if(this.type === 'raiFee'){
-                    this.sortedBy = 'dataScadenza';
-                } else if(this.type === 'socialBonus'){
-                    this.sortedBy = 'dataAttBonus';
-                }
             } 
 
 
@@ -105,7 +107,7 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                     this.data = obj.data.venditoreEntrante;
                     this.data2 = obj.data.venditoreUscente;
                 }
-                this.sortOnComponentLoad(this.sortedBy, this.defaultSortDirection);
+                this.sortingMethod(this.sortedBy, this.defaultSortDirection);
             }
 
             this.showSpinner = false;
@@ -129,10 +131,27 @@ export default class HdtAccountDataEnrichment extends LightningElement {
         try {
             const { fieldName: sortedBy, sortDirection } = event.detail;
             var sortField = sortedBy;
-            
-            const cloneData = [...this.data];
+
+            this.sortingMethod(sortField, sortDirection);
+
+            this.sortDirection = sortDirection;
+            this.sortedBy = sortedBy;
+
+        } catch(e) {
+            console.log(e);
+        }
+     
+    }
+
+    sortingMethod(sortField, sortDirection){
+        console.log('## sortingMethod ## ');
+
+        try {
+
             console.log('>>> sort by: ' + sortField);
             console.log('>>> sortDirection: ' + sortDirection);
+
+            const cloneData = [...this.data];
 
             cloneData.sort(function(a, b) {
                 var dateSplitted = b[sortField].split('/');
@@ -153,57 +172,13 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 }
 
                 if(sortDirection === 'asc'){
-                    return (new Date(data) < new Date(data2)) ? 1 : -1;
-                } else {
                     return (new Date(data) > new Date(data2)) ? 1 : -1;
+                } else {
+                    return (new Date(data) < new Date(data2)) ? 1 : -1;
                 }
 
             });
-
             this.data = cloneData;
-            this.sortDirection = sortDirection;
-            this.sortedBy = sortedBy;
-
-        } catch(e) {
-            console.log(e);
-        }
-     
-    }
-
-    sortOnComponentLoad(sortField, sortDirection){
-        console.log('## sortOnComponentLoad ## ');
-
-        try {
-
-            console.log('>>> sort by: ' + sortField);
-            console.log('>>> sortDirection: ' + sortDirection);
-
-            this.data.sort(function(a, b) {
-                var dateSplitted = b[sortField].split('/');
-
-                var data;
-                if(dateSplitted.length < 3){
-                    data = dateSplitted[1] + '/' + dateSplitted[0] + '/01';
-                } else {
-                    data = dateSplitted[1] + '/' + dateSplitted[0] + '/' + dateSplitted[2];
-                }
-                
-                var dateSplitted2 = a[sortField].split('/');
-                var data2;
-                if(dateSplitted.length < 3){
-                    data2 = dateSplitted2[1] + '/' + dateSplitted2[0] + '/01';
-                } else {
-                    data2 = dateSplitted2[1] + '/' + dateSplitted2[0] + '/' + dateSplitted2[2];
-                }
-
-                if(sortDirection === 'asc'){
-                    return (new Date(data) > new Date(data2)) ? 1 : -1;
-                } else {
-                    return (new Date(data) < new Date(data2)) ? 1 : -1;
-                }
-
-            });
-
         } catch(e) {
             console.log(e);
         }

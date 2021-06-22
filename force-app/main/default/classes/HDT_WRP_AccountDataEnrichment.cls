@@ -9,6 +9,7 @@ public inherited sharing class HDT_WRP_AccountDataEnrichment {
     public class HDT_WRP_TableMetadata {
         @AuraEnabled public String tableTitle;
         @AuraEnabled public String iconName;
+        @AuraEnabled public String defaultSortedBy;
         @AuraEnabled public List<HDT_WRP_ColumnObj> columns;
     }
 
