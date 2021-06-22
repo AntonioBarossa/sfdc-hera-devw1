@@ -456,20 +456,35 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 
             }else {
                 throw new HDT_UTL_RichPassException('POD non valorizzato');
-            }            
+            }
+            //It is not possible to perform DML operations before a callout
+            try{
+                currentCase = dataEnrichment(pod,sapContractCode,currentCase);
+            }catch(Exception e){
+                System.debug('Impossibile arrichire dati: ' + e.getMessage());
+            }           
             HDT_UTL_DatabaseService.insertSObject(currentCase);
             if(currentCase.EarlyRecess__c){
                 createActivity(currentCase.Id,null, '', 'Recesso Anticipato');
             }
-            dataEnrichment(pod,sapContractCode,currentCase.Id,currentCase.Cluster__c);
             currentCase = qrClass.getCaseRecord(currentCase.Id);
+            if(cluster == 'Morosita'){
+                currentCase.Phase__c = 'Da Inviare';
+                currentCase.Status = 'In Lavorazione';
+                HDT_UTL_DatabaseService.updateSObject(currentCase);
+            }
         } catch (Exception ex) {
             throw ex;
         }
         return currentCase;
     }
 
-    @future(callout=true)
+    private static Case dataEnrichment(String pod, String contractCOde, Case currentCase){
+        String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(pod, contractCode);
+        return HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, currentCase);
+    }
+
+    /*@future(callout=true)
     private static void dataEnrichment(String pod, String contractCode,String caseId, String cluster){
         Case currentCase = new Case();
         Case updateCase = new Case();
@@ -495,7 +510,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
         }
         HDT_UTL_DatabaseService.updateSObject(updateCase); 
-    }
+    }*/
 
     @AuraEnabled
     public static String getAsyncJobByJobItem(String recordId){
