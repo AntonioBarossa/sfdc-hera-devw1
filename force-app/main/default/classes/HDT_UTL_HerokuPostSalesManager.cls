@@ -256,6 +256,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String newDescription = '';
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
                 //no action needed
+            }else if(currentPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && nextPhase.equalsIgnoreCase('Completata')){
+                currentCase.Phase__c = 'Inviare preventivo';
             }else{
                 currentCase.Phase__c = nextPhase;
                 handleEntityUpdate(reqWrp);
