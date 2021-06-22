@@ -27,23 +27,22 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
                     if(article.ExpirationDate__c != null){
 
-                        //ADD PUBLISHMANAGEMENT CLASS TO ARCHIVE
+                        KbManagement.PublishingService.archiveOnlineArticle(article.KnowledgeArticleId,null);
 
                     }
 
                 }
 
-                when Case c{
+                when Case currentCase{
 
                     SObject transition;
                     SObject action;
                     String method = 'HDT_InstallmentPlans';
-                    SOBject sender = c;
                     Map<String, Object> args = new Map<String,Object>();
                     args.put('transition', transition);
                     args.put('action', action);
                     args.put('method',method);
-                    args.put('sender', sender);
+                    args.put('sender', currentCase);
 
                     HDT_WS_Payments paymentsWs = new HDT_WS_Payments();
                     wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
