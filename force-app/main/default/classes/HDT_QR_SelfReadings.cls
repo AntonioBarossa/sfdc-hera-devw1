@@ -33,6 +33,23 @@ public inherited sharing class HDT_QR_SelfReadings {
         return null;
     }
 
+    public Contract getContractBySapCode(String contractCode) {
+        List<Contract> contracts = [
+            SELECT 
+            Id,
+            AccountId,
+            ServicePoint__c
+            FROM Contract WHERE SAPContractCode__c = :contractCode
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (!contracts.isEmpty()) {
+            return contracts[0];
+        }
+
+        return null;
+    }
+
     public List<Order> accountOrders(String accountId, String servicePointId, List<Id> recordTypeIds, List<String> badPhases, List<String> badStates) {
 
         List<Order> orders = new List<Order>();
