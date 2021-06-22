@@ -7946,11 +7946,11 @@
             <fullName>SMS Non Inviato</fullName>
             <default>false</default>
         </values>
-        <value>
+        <values>
             <fullName>Pratica In Attesa</fullName>
             <default>false</default>
             <label>Pratica In Attesa</label>
-        </value>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
