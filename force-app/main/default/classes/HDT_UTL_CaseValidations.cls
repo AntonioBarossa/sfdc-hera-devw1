@@ -189,6 +189,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizza Modalita invio Codice Paperless'));
 
+                }else if(sendPaperlessMode.containsIgnoreCase('SMS') && (currentCase.PhoneNumber__c == null || currentCase.PhoneNumber__c == '')){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile selezionare \"' + sendPaperlessMode + '\" se Recapito Telefonico non valorizzato'));
+
+                }else if(sendPaperlessMode.containsIgnoreCase('Email') && (currentCase.Email__c == null || currentCase.Email__c == '')){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile selezionare \"'+ sendPaperlessMode + '\" se Email non valorizzata'));
+
                 } else {
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));

@@ -92,7 +92,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                 }
 
-                                if (mapRequestFields.get('IMP_PREV_DIST') != null) {
+                                if (mapRequestFields.get('IMP_PREV_DIST') != null && !String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
                                 }
                             }
