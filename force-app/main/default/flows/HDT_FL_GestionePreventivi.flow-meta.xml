@@ -232,8 +232,8 @@
     <assignments>
         <name>AssegnaDaServicePoint</name>
         <label>AssegnaDaServicePoint</label>
-        <locationX>1253</locationX>
-        <locationY>588</locationY>
+        <locationX>1159</locationX>
+        <locationY>657</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.PowerLimitation__c</assignToReference>
             <operator>Assign</operator>
@@ -296,8 +296,8 @@
     <assignments>
         <name>AssegnaPotenzaRichiesta</name>
         <label>AssegnaPotenzaRichiesta</label>
-        <locationX>1016</locationX>
-        <locationY>690</locationY>
+        <locationX>913</locationX>
+        <locationY>790</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.PowerRequested__c</assignToReference>
             <operator>Assign</operator>
@@ -1179,6 +1179,56 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Riprendi_Case</name>
+        <label>Riprendi Case</label>
+        <locationX>1443</locationX>
+        <locationY>485</locationY>
+        <defaultConnector>
+            <targetReference>CommodityScreen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Creazione</defaultConnectorLabel>
+        <rules>
+            <name>Riprendi_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Processo_Screen</targetReference>
+            </connector>
+            <label>Riprendi</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>RiprendiCase</name>
+        <label>RiprendiCase?</label>
+        <locationX>1169</locationX>
+        <locationY>498</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaDaServicePoint</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Creazione</defaultConnectorLabel>
+        <rules>
+            <name>Riprendi</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Processo_Screen</targetReference>
+            </connector>
+            <label>Riprendi</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Salva_In_Bozza_O_Conferma</name>
         <label>Salva In Bozza O Conferma</label>
         <locationX>1297</locationX>
@@ -1254,10 +1304,10 @@
     <decisions>
         <name>Tipo_Processo</name>
         <label>Tipo Processo</label>
-        <locationX>1098</locationX>
-        <locationY>395</locationY>
+        <locationX>1076</locationX>
+        <locationY>271</locationY>
         <defaultConnector>
-            <targetReference>AssegnaDaServicePoint</targetReference>
+            <targetReference>RiprendiCase</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Altri Processi</defaultConnectorLabel>
         <rules>
@@ -1286,7 +1336,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>CommodityScreen</targetReference>
+                <targetReference>Riprendi_Case</targetReference>
             </connector>
             <label>Nuovo Impianto - Aggiunta Attacco</label>
         </rules>
@@ -1319,8 +1369,8 @@
     <decisions>
         <name>Valorizzare_Potenza_Richiesta</name>
         <label>Valorizzare Potenza Richiesta?</label>
-        <locationX>1124</locationX>
-        <locationY>592</locationY>
+        <locationX>1026</locationX>
+        <locationY>627</locationY>
         <defaultConnector>
             <targetReference>AssegnaPotenzaRichiesta</targetReference>
         </defaultConnector>
@@ -1655,8 +1705,8 @@
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
-        <locationX>1120</locationX>
-        <locationY>799</locationY>
+        <locationX>1017</locationX>
+        <locationY>899</locationY>
         <connector>
             <targetReference>Processo_Screen</targetReference>
         </connector>
@@ -2570,10 +2620,13 @@
     </variables>
     <variables>
         <name>ResumeFromDraft</name>
-        <dataType>String</dataType>
+        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>SaveInDraft</name>
