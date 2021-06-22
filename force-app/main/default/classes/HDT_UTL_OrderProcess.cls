@@ -78,23 +78,33 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
     // Ricalcolo delle date
     public static void orderCalulateDateUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) {
-        system.debug('orderCalulateDateUpdate trigger --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
-        system.debug('orderCalulateDateUpdate trigger --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
+        system.debug('Ricalcolo delle date da Trigger sugli ordini --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
+        system.debug('Ricalcolo delle date da Trigger sugli ordini --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
         List<Order> orderList = new List<Order>();                        
+        Boolean ricalculateDate = false;
+        
         for (Order newOrder : newOrdersList) {
             for (Order oldOrder : oldOrdersList) {
-                if (newOrder.Status == 'In Lavorazione' && newOrder.SignedDate__c != oldOrder.SignedDate__c && (newOrder.WizardCompletedDate__c != null || newOrder.WizardCompletedDate__c != oldOrder.WizardCompletedDate__c) && newOrder.Status != 'Annullato' ) {
-                    Order orderToUpdate = new Order();
-                    orderToUpdate.id = newOrder.Id;                                        
-                    orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);                 
-                    orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(newOrder);                                                      
-                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(newOrder);
-                    orderList.add(orderToUpdate);                    
+                if((oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku') || (oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku') || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku') || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')){
+                    ricalculateDate = true;
+                }
+                if (newOrder.Status == 'In Lavorazione' && newOrder.SignedDate__c != oldOrder.SignedDate__c && (newOrder.WizardCompletedDate__c != null || newOrder.WizardCompletedDate__c != oldOrder.WizardCompletedDate__c)) {
+                    if(ricalculateDate == true){
+                        system.debug('Esecuzione ricalcolo delle date');
+                        Order orderToUpdate = new Order();
+                        orderToUpdate.id = newOrder.Id;                                        
+                        orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
+                        if(newOrder.ProcessType__c != 'Cambio Offerta'){
+                            orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(newOrder);
+                        }                             
+                        orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(newOrder); // Data di decorrenza
+                        orderList.add(orderToUpdate);                    
+                    }                    
                 }
             }
         }
         
-        if(orderList.size() > 0){
+        if(!orderList.isEmpty()){
             update orderList;
         }        
 

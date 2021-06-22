@@ -19,7 +19,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
      */
     @AuraEnabled
     public static void save(Order order){
-
+        system.debug('START SAVE ORDER');        
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;
         orderToUpdate.Status = 'In lavorazione';
@@ -54,6 +54,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             try { 
                                 if(order.SignedDate__c != null){
                                     orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
+                                    system.debug('Calcolo data max di ripensamento xxx 1');             
                                 }                                                            
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data massima di ripensamento.');
@@ -69,6 +70,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             try {    
                                 if(order.SignedDate__c != null){                         
                                     orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                                    system.debug('Calcolo sii xxx 1');             
                                 }
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
@@ -83,7 +85,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             // START 3 Calcolo Data Decorrenza (EffectiveDate__c)     
                             try {         
                                 if(order.SignedDate__c != null){                    
-                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
+                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);  // Data di decorrenza
+                                    system.debug('Calcolo data max di decorrenza xxx 1');             
                                 }
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
@@ -108,6 +111,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             try {   
                                 if(order.SignedDate__c != null){                          
                                     orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                                    system.debug('Calcolo data siii xxx 2');             
                                 }
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
@@ -121,7 +125,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             // START 3 Calcolo Data Decorrenza (EffectiveDate__c) 
                             try {
                                 if(order.SignedDate__c != null){
-                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);    
+                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);   // Data di decorrenza
+                                    system.debug('Calcolo data decorrenza xxx 2');             
                                 }                                                             
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
@@ -187,7 +192,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     //orderToUpdate.Instance326__c = 'Richiesto';
                     // Accettazione Preventivo rapido.
                     //orderToUpdate.QuickQuote__c = 'Richiesto';
-                    //orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                    orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                 } else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     // Visura camerale
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
@@ -200,8 +205,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     //orderToUpdate.Instance326__c = 'Richiesto';
                     //orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                 }
-                if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3) || order.EffectiveDate__c == null){
-                    orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                if(order.RetroactiveDate__c != null){
+                    order.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
             }
         }
