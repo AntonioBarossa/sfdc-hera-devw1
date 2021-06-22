@@ -276,7 +276,7 @@ handleAddressValuesIfSap(servicePointRetrievedData){
         }*/
 
         if(data!= undefined){
-
+            console.log('data lenght : '+ JSON.stringify(data.length));
             if(data.length>7){
                 this.via= data[0];
                 this.civico= data[1];
@@ -289,18 +289,23 @@ handleAddressValuesIfSap(servicePointRetrievedData){
                 this.codComuneSAP = data[8] !== undefined ? data[8] : '';
                 this.codStradarioSAP = data[9] !== undefined ? data[9] : '';
                 this.IndEstero = data[10] !== undefined ? data[10] : false;
+
+                this.disableVerifIndiButton= false;
+
             }else{
-                this.via= data[0];
-                this.civico= data[1];
-                this.estensCivico= data[2];
-                this.comune=data[3]; 
-                this.provincia=data[4];
-                this.cap=data[5];
-                this.stato=data[6];
+                this.via= data[1];
+                this.civico= data[2];
+                this.estensCivico= data[3];
+                this.comune=data[0]; 
+                this.provincia=data[5];
+                this.cap=data[4];
+                this.stato=data[6].toUpperCase();
 
                 this.codComuneSAP = data[7] !== undefined ? data[7] : '';
                 this.codStradarioSAP = data[8] !== undefined ? data[8] : '';
                 this.IndEstero = data[9] !== undefined ? data[9] : false;
+
+                this.disableVerifIndiButton= false;
             }
 
             this.theRecord['Via']= this.via;
@@ -402,7 +407,7 @@ handleAddressValuesIfSap(servicePointRetrievedData){
             console.log('AccountId *******************'+ JSON.stringify(this.accountid));
             getIndirizzo({accountId:this.accountid}).then(data =>{
 
-                console.log('****getIndirizzo: ', JSON.stringify(data));
+                console.log('****getIndirizzo: '+  JSON.stringify(data));
 
                 this.preloading = false;
                 if (data.length > 0) {

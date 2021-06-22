@@ -870,15 +870,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': '',
-                        'apiname': 'CommodityFormula__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
                         'apiname': 'AnnualConsumption__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
@@ -916,6 +907,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': '',
                         'apiname': 'ClientCategory__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': '',
+                        'apiname': 'CommodityFormula__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
@@ -1517,6 +1517,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
+                    'label': 'Potenza impegnata',
+                    'apiname': 'PowerCommitted__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': false,
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
                     'label': 'Potenza disponibile',
                     'apiname': 'PowerAvailable__c',
                     'typeVisibility': this.typeVisibility('ele'),
@@ -1526,8 +1535,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Potenza impegnata',
-                    'apiname': 'PowerCommitted__c',
+                    'label': 'Potenza richiesta',
+                    'apiname': 'PowerRequested__c',
                     'typeVisibility': this.typeVisibility('ele'),
                     'required': false,
                     'disabled': true,
@@ -1692,16 +1701,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'RequestOption__c',
                     'typeVisibility': this.typeVisibility('ele'),
                     'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'RequestVoltage__c',
-                    'apiname': 'RequestVoltage__c',
-                    'typeVisibility': this.typeVisibility('ele') && this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica',
-                    'required': false,
-                    'disabled': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1789,7 +1789,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'Esclusione dal deposito cauzionale',
                     'apiname': 'SecurityDepositExcluded__c',
-                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'),
+                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'),
                     'required': false,
                     'disabled': false,
                     'value': '',
@@ -2499,15 +2499,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'value': '',
                         'processVisibility': ''
                     },
-                    {
-                        'label': 'OtherPayer__c',
-                        'apiname': 'OtherPayer__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
+                    // {
+                    //     'label': 'OtherPayer__c',
+                    //     'apiname': 'OtherPayer__c',
+                    //     'typeVisibility': this.typeVisibility('both'),
+                    //     'required': false,
+                    //     'disabled': true,
+                    //     'value': '',
+                    //     'processVisibility': ''
+                    // },
                     {
                         'label': 'Codice Fiscale intestatario c/c',
                         'apiname': 'BankAccountSignatoryFiscalCode__c',

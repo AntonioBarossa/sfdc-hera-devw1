@@ -25,6 +25,16 @@
                 <label>Incorporazione societaria</label>
             </value>
             <value>
+                <fullName>In Continuità</fullName>
+                <default>false</default>
+                <label>In Continuità</label>
+            </value>
+            <value>
+                <fullName>Recupero</fullName>
+                <default>false</default>
+                <label>Recupero</label>
+            </value>
+            <value>
                 <fullName>Oridnaria</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

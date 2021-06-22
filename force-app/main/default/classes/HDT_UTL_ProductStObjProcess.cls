@@ -64,18 +64,18 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
                 if(prodOpt > 0){
                     statusResponse.success = false;
-                    statusResponse.message = 'Attenzione devi ricontrollare le Product Option, devono essere tutte nello stato "Confermata" o "Vendibile"';
+                    statusResponse.message = Label.HDT_ErrorOnConfirmProduct;//'Attenzione devi ricontrollare le Product Option, devono essere tutte nello stato "Confermata" o "Vendibile"';
                     return statusResponse;
                 }
 
-                if(techOff == 0){
+                if(oldProduct.Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger) && techOff == 0){
                     statusResponse.success = false;
                     statusResponse.message = 'Attenzione, deve essere presente un\'offerta tecnica con relativo codice SAP';
                     return statusResponse;
                 }
 
                 List<String> resp;
-                resp = HDT_UTL_ProductStObjProcess.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
+                resp = checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
                 System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                 if(resp[0]=='KO'){
                     statusResponse.success = false;
@@ -206,7 +206,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                 statusResponse.message = '';
 
                 List<String> resp;
-                resp = HDT_UTL_ProductStObjProcess.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
+                resp = checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
                 System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                 if(resp[0]=='KO'){
                     statusResponse.success = false;
@@ -244,7 +244,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                     }
 
                     List<String> resp;
-                    resp = HDT_UTL_ProductStObjProcess.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
+                    resp = checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
                     System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                     if(resp[0]=='KO'){
                         statusResponse.success = false;
@@ -365,6 +365,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
         List<SBQQ__ProductOption__c> productOptionList;
         productOptionList = getProductOption(productOptionList, product2IdList, Label.HDT_InDevelopment);//
+        System.debug('>>> productOptionList ' + productOptionList.size());
 
         for(SBQQ__ProductOption__c prodOpt : productOptionList){
             if(productOptionMap.containsKey(prodOpt.SBQQ__ConfiguredSKU__c)){

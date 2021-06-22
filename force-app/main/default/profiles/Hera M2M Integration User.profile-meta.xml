@@ -9619,6 +9619,36 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>KpiTracking__c.LastBillAmount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.LastBillCommodity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.LastBillExpirationDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.LastBillLastUpdate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.LastBillNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>KpiTracking__c.LastBillPaymentStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LandRegistry__c.CodeMissingRegistryData__c</field>
         <readable>true</readable>
     </fieldPermissions>

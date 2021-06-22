@@ -4,7 +4,7 @@ import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import init from '@salesforce/apex/HDT_LC_AccountSelectorController.init';
 import search from '@salesforce/apex/HDT_LC_AccountSelectorController.search';
 import handleLead from '@salesforce/apex/HDT_LC_AccountSelectorController.handleLead';
-import handleAccount from '@salesforce/apex/HDT_LC_AccountSelectorController.handleAccount';
+import handleAccount from '@salesforce/apex/HDT_LC_AccountSelectorController.handleAccountSerialized';
 import updateActivity from '@salesforce/apex/HDT_LC_AccountSelectorController.updateActivity';
 import reset from '@salesforce/apex/HDT_LC_AccountSelectorController.reset';
 
@@ -115,13 +115,14 @@ export default class HdtAccountSelector extends LightningElement {
 				this.contactId = selectedRecordId;
 				handleAccount({contactId: this.contactId, activityId: this.recordId})
 				.then(result => {
-					if(result.length == 1) {
-						this.accountId = result[0].Id;
+					var resultObj = JSON.parse(result);
+					if(resultObj.length == 1) {
+						this.accountId = resultObj[0].Id;
 						this.changesCommitted = true;
 						this.refreshPage();
 						this.showToast('success', 'Account Trovato', 'L\'account è stato automaticamente associato all\'activity corrente.');
 					}
-					this.accounts = result;
+					this.accounts = resultObj;
 				})
 				.catch(error => {
 					// WIP

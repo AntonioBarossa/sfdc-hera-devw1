@@ -58,28 +58,35 @@ export default class HdtFilterFirstLevelModal extends LightningElement {
     }
 
     applyFilter(){
-        var interObj = {};
-        this.filterObj.forEach((element) => {
-            //for (var key in element) {	
-            //    if(element[key] === undefined || element[key] ===''){	
-            //        break;	
-            //    }
-            //}
-            if(this.checkSingleField(element.fieldName) && this.checkSingleField(element.operator) && this.checkSingleField(element.value)){
-                interObj[element.fieldName] = {operator: element.operator, value: element.value};
-            }
-        });
+        try {
+            var interObj = {};
+            this.filterObj.forEach((element) => {
+                //for (var key in element) {	
+                //    if(element[key] === undefined || element[key] ===''){	
+                //        break;	
+                //    }
+                //}
+                if(this.checkSingleField(element.fieldName) && this.checkSingleField(element.operator) && this.checkSingleField(element.value)){
+                    interObj[element.fieldName] = {operator: element.operator, value: element.value};
+                }
+            });
 
-        var filterObj = JSON.stringify(interObj);
+            var filterObj = JSON.stringify(interObj);
 
-        console.log('>>> ' + filterObj);
+            console.log('>>> ' + filterObj);
 
-        const sendApply = new CustomEvent("applyinterrogation", {
-            detail: {value: filterObj}
-        });
-        // Dispatches the event.
-        this.dispatchEvent(sendApply);
-        //this.resetParameters();
+            const sendApply = new CustomEvent("applyinterrogation", {
+                detail: {value: filterObj}
+            });
+            // Dispatches the event.
+            this.dispatchEvent(sendApply);
+            //this.resetParameters();
+
+        } catch (error) {
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );            
+        }
     }
 
     closeModal(){

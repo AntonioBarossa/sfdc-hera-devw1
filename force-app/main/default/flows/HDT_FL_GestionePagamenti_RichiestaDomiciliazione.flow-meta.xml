@@ -28,10 +28,16 @@
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Status</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.CausalCode__c</assignToReference>
@@ -66,6 +72,9 @@
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Status</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
         </assignmentItems>
         <connector>
             <targetReference>Passa_a_Elaborazione_Manuale</targetReference>
