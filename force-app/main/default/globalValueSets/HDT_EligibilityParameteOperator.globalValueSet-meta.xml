@@ -2,7 +2,7 @@
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
         <fullName>includesAll</fullName>
-        <default>false</default>
+        <default>true</default>
         <label>Disponibile per tutti i valori</label>
     </customValue>
     <customValue>
@@ -20,7 +20,6 @@
         <default>false</default>
         <label>Non disponibile per i valori selezionati</label>
     </customValue>
-    <description>Elenco opzioni di selezione dei parametri di eleggibilità.</description>
     <masterLabel>Operatore Parametri Eleggibilità</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
