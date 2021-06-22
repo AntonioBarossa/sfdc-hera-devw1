@@ -13,11 +13,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_QR_PostSalesMasterBatchS</apexClass>
+        <apexClass>HDT_QR_PostSalesMasterBatch</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_SCH_PostSalesMasterBatchS</apexClass>
+        <apexClass>HDT_SCH_PostSalesMasterBatch</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
