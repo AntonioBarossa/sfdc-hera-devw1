@@ -69,6 +69,8 @@ public with sharing class HDT_QR_AnagAlignment {
             SupplyStreetToponym__c,
             // Campi sezione Tributi e Dati Commerciali
             VAT__c,
+            ExciseEle__c,
+            ExciseGAS__c,
             AtecoCode__c,
             Market__c,
             ContractId,
@@ -143,6 +145,8 @@ public with sharing class HDT_QR_AnagAlignment {
             SupplyStreetToponym__c,
             // Campi sezione Tributi e Dati Commerciali
             VAT__c,
+            ExciseEle__c,
+            ExciseGAS__c,
             AtecoCode__c,
             Market__c,
             ContractId,

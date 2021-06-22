@@ -84,9 +84,9 @@ public class HDT_SRV_DocumentalManagement{
 		HDT_WRP_DocumentalRequest documentalRequest = new HDT_WRP_DocumentalRequest();
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage sPackage = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage();
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDeliverPackageRequest sPackageRequest = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDeliverPackageRequest();
-		String mode = (String) formParams.get('mode');
-		String context = (String) formParams.get('Contesto');
-		String signMode = (String) formParams.get('signMode');
+		String mode = (String) formParams.get('mode') != null? (String) formParams.get('mode'):'';
+		String context = (String) formParams.get('Contesto') != null? (String) formParams.get('Contesto'):'';
+		String signMode = (String) formParams.get('signMode') != null? (String) formParams.get('signMode'):'';
 		try{
 			sPackageRequest.requestId = recordId;
 			sPackageRequest.objectName = context;
@@ -99,6 +99,8 @@ public class HDT_SRV_DocumentalManagement{
 			}
 			if(mode.equalsIgnoreCase('Print') && signMode.indexOf('OTP') >-1){
 				sPackageRequest.signInfo = addDocusingInformation(formParams,inputs);
+			}else{
+				sPackageRequest.signInfo = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalSignInfo();
 			}
 			documentalRequest.deliverPackageRequest = sPackageRequest;
 		}catch(Exception ex){
