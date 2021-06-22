@@ -4,7 +4,7 @@
     <description>Valorizzato con i dati di chi paga(intestatario/sottoscrittore): Se c&apos;è un pagatore alternativo questi dati saranno valorizzati con quelli di quest&apos;ultimo</description>
     <externalId>false</externalId>
     <label>Cognome sottoscrittore CC</label>
-    <length>40</length>
+    <length>60</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

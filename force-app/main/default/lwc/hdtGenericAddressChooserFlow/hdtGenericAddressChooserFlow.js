@@ -17,7 +17,7 @@ import InvoicingStreetName from '@salesforce/schema/Case.InvoicingStreetName__c'
 import InvoicingCountry from '@salesforce/schema/Case.InvoicingCountry__c';
 import InvoicingStreetToponym from '@salesforce/schema/Case.InvoicingStreetToponym__c';
 import InvoicingProvince from '@salesforce/schema/Case.InvoicingProvince__c';
-import ShipmentAddressAssign from '@salesforce/schema/Case.ShipmentAddressAssign__c';
+import DeliveryAddress from '@salesforce/schema/Case.DeliveryAddress__c';
 // INDIRIZZO DI FORNITURA
 import SupplyPostalCode from '@salesforce/schema/Case.SupplyPostalCode__c';
 import SupplyStreetNumber from '@salesforce/schema/Case.SupplyStreetNumber__c';
@@ -31,7 +31,7 @@ import SupplyProvince from '@salesforce/schema/Case.SupplyProvince__c';
 import SupplyCountry from '@salesforce/schema/Case.SupplyCountry__c';
 import SupplyStreetToponym from '@salesforce/schema/Case.SupplyStreetToponym__c';
 import SupplyStreetName from '@salesforce/schema/Case.SupplyStreetName__c';
-import DeliveryAddress from '@salesforce/schema/Case.DeliveryAddress__c';
+import ShipmentAddressAssign from '@salesforce/schema/Case.ShipmentAddressAssign__c';
 // INDIRIZZO DI RESIDENZA
 import BillingCity__c from '@salesforce/schema/Case.BillingCity__c';
 import BillingCityCode__c from '@salesforce/schema/Case.BillingCityCode__c';
@@ -74,6 +74,7 @@ const FIELDS = ['Case.InvoicingPostalCode__c',
 				'Case.SupplyStreetToponym__c',
 				'Case.SupplyStreetName__c',
                 'Case.AddressFormula__c',
+                'Case.ShipmentAddressAssign__c',
                 // INDIRIZZO DI RESIDENZA
                 'Case.BillingCity__c',
                 'Case.BillingCityCode__c',
@@ -208,8 +209,15 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                         FlagForzato  : false,
                         FlagVerificato  : this.caseRecord.fields.SupplyIsAddressVerified__c.value //ok
                     }
-                    if(!this.address)              
-                        this.address = this.caseRecord.fields.AddressFormula__c.value; //ok
+                    if(!this.address)
+                        if(this.caseRecord.fields.AddresFormula__c
+                        && this.caseRecord.fields.AddresFormula__c.value != null 
+                        && this.caseRecord.fields.AddresFormula__c.value != undefined
+                        && this.caseRecord.fields.AddresFormula__c.value != ''){
+                            this.address = this.caseRecord.fields.AddresFormula__c.value;
+                        }else{
+                            this.address = this.caseRecord.fields.ShipmentAddressAssign__c.value;
+                        } //ok
                     console.log('all inputs succeded');
                 }else if(this.addressType.localeCompare('BillingProfile') == 0){ // Indirizzo di spedizione
                     inputParams = {
@@ -225,7 +233,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                         FlagForzato  : false,
                         FlagVerificato  : this.caseRecord.fields.IsInvoicingVerified__c.value
                     }
-                    if(!this.address) 
+                    if(!this.address)
                         this.address = this.caseRecord.fields.DeliveryAddress__c.value;
                 } else { // Account --> Indirizzo di residenza
                     inputParams = {

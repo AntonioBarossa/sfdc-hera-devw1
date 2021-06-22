@@ -38,8 +38,12 @@
                         key-field="id"
                         hide-checkbox-column="true"
                         data={data}
-                        columns={columns}>
-                </lightning-datatable>
+                        columns={columns}
+                        default-sort-direction={defaultSortDirection}
+                        sorted-direction={sortDirection}
+                        sorted-by={sortedBy}
+                        onsort={onHandleSort}
+                ></lightning-datatable>
             </div>
         </lightning-card>
 

@@ -11,7 +11,10 @@ public inherited sharing class HDT_QR_SearchPlug {
             prodWithoutCriteria = [
                 SELECT Id
                 FROM Product2
-                WHERE Status__c IN :statusList AND IsActive = true AND Family IN :familyList
+                WHERE Status__c IN :statusList
+                AND IsActive = true
+                AND Family IN :familyList
+                //AND (NOT ProductCode LIKE :Label.HDT_CPQ_TemplateProductCode)
                 WITH SECURITY_ENFORCED
             ];
 
@@ -31,7 +34,10 @@ public inherited sharing class HDT_QR_SearchPlug {
             prodWithoutCriteria = [
                 SELECT Id, (SELECT Id FROM EligibilitiesCriteria__r)
                 FROM Product2
-                WHERE Status__c IN :statusList AND IsActive = true AND Family IN :familyList
+                WHERE Status__c IN :statusList
+                AND IsActive = true
+                AND Family IN :familyList
+                //AND (NOT ProductCode LIKE :Label.HDT_CPQ_TemplateProductCode)
                 WITH SECURITY_ENFORCED
             ];
 
@@ -140,7 +146,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                     (Agency__c = :quote.Agency__c OR Agency__c = null) AND
                     (UseCategory__c includes (:quote.UseCategory__c) OR UseCategory__c = null) AND
                     (EquipmenType__c = :quote.MeterType__c OR EquipmenType__c = null)
-
+                    //AND (NOT Product__r.ProductCode LIKE :Label.HDT_CPQ_TemplateProductCode)
             ];
 
         }

@@ -256,6 +256,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String newDescription = '';
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
                 //no action needed
+            }else if(currentPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && nextPhase.equalsIgnoreCase('Completata')){
+                currentCase.Phase__c = 'Inviare preventivo';
             }else{
                 currentCase.Phase__c = nextPhase;
                 handleEntityUpdate(reqWrp);
@@ -277,7 +279,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
             String message = reqWrp.requestMap.get('MESSAGGIO');
             // Al momento solo la Prescrizione Fattura prevede un cambio fase da esito async da SAP.
-            if(String.isNotBlank(type) && String.isNotBlank(recordCase.Type) && recordCase.Type.equals('Prescrizione Fatture')){
+            if(String.isNotBlank(type) 
+                && String.isNotBlank(recordCase.Type) 
+                && (recordCase.Type.equals('Prescrizione Fatture') || recordCase.Type.equalsIgnoreCase('Piano Rateizzazione'))
+                && !(type.containsIgnoreCase('Esito Rateizzazione OK'))){
                 currentCase.Phase__c = type; 
             }
             if(String.isNotBlank(message)){
@@ -349,10 +354,16 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String codiceCliente = '';
         String pod = '';
         String dataDecorrenza = '';
+        String recapito = '';
+        String ufficioCompetente = '';
+        String codiceContratto = '';
+        String contoContrattuale = '';
+        String sapContractCode = null;
         Contract contract;
         ServicePoint__c sp;
         Account account;
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
+        HDT_UTL_Morosita morUtl = new HDT_UTL_Morosita();
         try {
             tipo = reqWrp.requestMap.get('TIPO_SIEBEL');
             sottotipo = reqWrp.requestMap.get('SOTTOTIPO_SIEBEL');
@@ -362,6 +373,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             codiceCliente = reqWrp.requestMap.get('CODICE_CLIENTE');
             pod = reqWrp.requestMap.get('CODICE_PRESA');
             dataDecorrenza = reqWrp.requestMap.get('DATA_DECORRENZA');
+            recapito = reqWrp.requestMap.get('RECAPTIO');
+            ufficioCompetente = reqWrp.requestMap.get('UFFICIO_COMPETENTE');
+            codiceContratto = reqWrp.requestMap.get('CODICE_CONTRATTO');
+            contoContrattuale = reqWrp.requestMap.get('CONTO_CONTRATTUALE');
             if(String.isNotBlank(pod)){
                 if(String.isNotBlank(codiceCliente))
                     account = qrClass.getAccount(codiceCliente);
@@ -390,14 +405,20 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.ContactId = contact?.Id;
                     currentCase.Mobile__c = contact?.MobilePhone;
                     currentCase.Email__c = contact?.Email;
+                    //Aggiunto PhoneNumber
+                    currentCase.PhoneNumber__c = contact?.MobilePhone;
                     sp = qrClass.getServicePoint(pod);
                     if(sp != null){
                         contract = qrClass.getContract(sp.Id);
                         currentCase.Contract__c = contract?.Id;
                         currentCase.ServicePoint__c = sp.Id;
                         currentCase.BillingProfile__c = Contract?.BillingProfile__c;
+                        sapContractCode = contract?.SAPContractCode__c;
                     }else {
                         throw new HDT_UTL_RichPassException('Non è stato possibile recuperare il Service Point');
+                    }
+                    if(String.isBlank(cluster)){
+                        cluster = sottotipo;
                     }
                     switch on cluster{
                         when 'Disattivazioni'{
@@ -413,8 +434,23 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             currentCase.Status = 'In Lavorazione';
                             currentCase.Phase__c = 'In Lavorazione SAP';
-                        }when 'Morosità'{
+                        }when 'Morosita'{
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Morosita').getRecordTypeId();
+                            currentCase.Cluster__c = 'Morosità';
+                            if(dataDecorrenza != null){
+                                currentCase.EffectiveDate__c = Date.valueOf(dataDecorrenza);
+                            }
+                            if(String.isNotBlank(processType)){
+                                currentCase.Type = morUtl.transcodeProcess(processType);
+                            }
+                            if(currentCase.PhoneNumber__c != null && String.isNotBlank(currentCase.PhoneNumber__c) && String.isNotBlank(recapito)){
+                                currentCase.PhoneNumber__c = recapito;
+                            }
+                            if(String.isNotBlank(ufficioCompetente)){
+                                currentCase.CompetentOffice__c = ufficioCompetente;
+                            }
+                            currentCase.Phase__c = 'Bozza';
+                            currentCase.Status = 'New';
                         }when else{
                             throw new HDT_UTL_RichPassException('Errore tecnico nella definizione del RecordType');
                         }
@@ -425,29 +461,61 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 
             }else {
                 throw new HDT_UTL_RichPassException('POD non valorizzato');
-            }            
+            }
+            //It is not possible to perform DML operations before a callout
+            try{
+                currentCase = dataEnrichment(pod,sapContractCode,currentCase);
+            }catch(Exception e){
+                System.debug('Impossibile arrichire dati: ' + e.getMessage());
+            }           
             HDT_UTL_DatabaseService.insertSObject(currentCase);
             if(currentCase.EarlyRecess__c){
                 createActivity(currentCase.Id,null, '', 'Recesso Anticipato');
             }
-            dataEnrichment(pod,null,currentCase.Id);
             currentCase = qrClass.getCaseRecord(currentCase.Id);
+            if(cluster == 'Morosita'){
+                currentCase.Phase__c = 'Da Inviare';
+                currentCase.Status = 'In Lavorazione';
+                HDT_UTL_DatabaseService.updateSObject(currentCase);
+            }
         } catch (Exception ex) {
             throw ex;
         }
         return currentCase;
     }
 
-    @future(callout=true)
-    private static void dataEnrichment(String pod, String contractCode,String caseId){
-        Case currentCase = new Case();
-        currentCase.Id = caseId;
-        String response = HDT_WS_ArricchimentoDatiTemp.submitRequest(pod, contractCode);
-        Case updateCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(response, currentCase);
-        if (updateCase != null) {
-            HDT_UTL_DatabaseService.updateSObject(updateCase);
-        }
+    private static Case dataEnrichment(String pod, String contractCOde, Case currentCase){
+        String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(pod, contractCode);
+        return HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, currentCase);
     }
+
+    /*@future(callout=true)
+    private static void dataEnrichment(String pod, String contractCode,String caseId, String cluster){
+        Case currentCase = new Case();
+        Case updateCase = new Case();
+        currentCase.Id = caseId;
+        updateCase.Id = caseId;
+        try{
+            String response = HDT_WS_ArricchimentoDatiTemp.submitRequest(pod, contractCode);
+            updateCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(response, currentCase);
+        }catch(Exception e){
+            System.debug(e.getMessage());
+        }
+        if (updateCase != null) {
+            if(cluster.containsIgnoreCase('Morosità')){
+                updateCase.Phase__c = 'Da Inviare';
+                updateCase.Status = 'In Lavorazione';
+            }
+           
+        } else {
+            if(cluster.containsIgnoreCase('Morosità')){
+                updateCase.Phase__c = 'Da Inviare';
+                updateCase.Status = 'In Lavorazione';
+            }
+
+        }
+        HDT_UTL_DatabaseService.updateSObject(updateCase); 
+    }*/
 
     @AuraEnabled
     public static String getAsyncJobByJobItem(String recordId){
