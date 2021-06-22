@@ -4,6 +4,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
         req.setEndpoint('Callout:Engage1');
         req.setMethod('POST');
         req.setBody(body);
+        req.setHeader('Content-Type','application/json');
         Http http = new Http();
         HTTPResponse res = http.send(req);
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();

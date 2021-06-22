@@ -5,94 +5,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_UTL_EmailProtocolReceiver</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-     <classAccesses>
-        <apexClass>HDT_QR_ServiceCatalog</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-     <classAccesses>
-        <apexClass>HDT_LC_ResumeCommercialBonus</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_LC_LastBill</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_LC_RecordEditFormSales</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_QR_UserQueriesWithoutSharing</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_KpiTracking</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_Note</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_QR_Group</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_SRV_Note</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_SRV_IndemnityConfirmation</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_SRV_CommunicationLog</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_CommunicationLog</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_OrderProcess</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_ActivityCustomProcess</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_TRH_ActivityCustom</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_QR_IndemnityConfirmation</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_QR_PostSalesManager</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_CreatePaymentsRequestBody</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_SRV_PostSalesCriteriaManager</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_Morosita</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_PostSalesCriteriaManager</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_BA_MassiveLoader</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -209,39 +121,19 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_LC_DocumentValidation</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_LC_DocumentSignatureManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_SRV_DocumentalManagementFacade</apexClass>
+        <apexClass>HDT_LC_DocumentValidation</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_SRV_DocumentalManagement</apexClass>
+        <apexClass>HDT_LC_DocumentalConfigController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_UTL_DocumentalManagement</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_DocumentalManagementFactory</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_DocumentalManagementInterface</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_WRP_DocumentalRequest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_WRP_DocumentalResponse</apexClass>
+        <apexClass>HDT_LC_DocumentalPhaseHistory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -278,6 +170,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_GestionePrivacyField</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_LastBill</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -345,6 +241,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_RecordEditFormSales</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_ResumeCommercialBonus</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_ResumeSaleController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -393,6 +297,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QBL_DocumentalManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_Account</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -418,10 +326,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_AmountQuote</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_QR_SolManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -469,14 +373,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_SRV_Interaction</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_SRV_ActivityCustom</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_QR_ContactPoint</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -498,6 +394,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_DataEnrichmentPostSales</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_DocumentalConfiguration</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -585,7 +485,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_PayloadManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_PaymentCommunication</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_Payments</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -653,7 +561,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_ServiceCatalog</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_ServicePoint</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_SolManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -777,6 +693,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_DocumentalManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_DocumentalManagementFacade</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_EditAlert</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -825,6 +749,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_Note</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_Opportunity</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -846,10 +774,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_Payments</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_QR_Payments</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -925,6 +849,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_TRH_AnagAlignmentEvent</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_TRH_Campaign</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -942,6 +870,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_TRH_Contract</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_TRH_DocumentSendTracking</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_TRH_DocumentalActivity</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -977,10 +913,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_TRH_AnagAlignmentEvent</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_TRH_TriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1013,6 +945,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_CasePrivacyValidations</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_CaseProcess</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1030,10 +966,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_CaseValidations</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_CasePrivacyValidations</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1093,6 +1025,18 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_DocumentalManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_DocumentalManagementFactory</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_DocumentalManagementInterface</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_ElectronicInvoicing</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1125,6 +1069,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_IntegrationObject</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_KpiTracking</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_Lead</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1137,6 +1089,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_Note</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_Order</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1146,6 +1102,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_OrderProcess</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_PayloadManagement</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1241,6 +1201,22 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_WRP_DocumentalConfiguration</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WRP_DocumentalRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WRP_DocumentalResponse</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WRP_DocusignNotify</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_WRP_EligibilityCriteria</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1258,6 +1234,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WRP_HerokuPostSalesProva</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WRP_IntegrationObject</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1310,6 +1290,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_CertifiedEmail</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_DocumentalInboundIntegration</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_DocumentalIntegration</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
