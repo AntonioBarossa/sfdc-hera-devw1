@@ -27,7 +27,7 @@ global with sharing class HDT_WS_SelfReadings {
             System.debug('Exception: ' + e.getMessage());
             response.statusCode = 500;
             responseWrap.outcome = 'KO';
-            responseWrap.outcomeDescription = e.getMessage();
+            responseWrap.outcomeDescription = 'Error while parsing JSON body: ' + e.getMessage();
         } finally {
             response.responseBody = Blob.valueOf(JSON.serialize(responseWrap));
         }
