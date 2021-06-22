@@ -19,11 +19,13 @@
       },
       {
         &quot;label&quot;: &quot;Data Attivazione Bonus&quot;,
-        &quot;fieldName&quot;: &quot;dataAttBonus&quot;
+        &quot;fieldName&quot;: &quot;dataAttBonus&quot;,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Data Cessazione Bonus&quot;,
-        &quot;fieldName&quot;: &quot;dataCessBonus&quot;
+        &quot;fieldName&quot;: &quot;dataCessBonus&quot;,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;POD/PDR&quot;,
@@ -42,12 +44,14 @@
       {
         &quot;label&quot;: &quot;Data Attivazione Contratto&quot;,
         &quot;fieldName&quot;: &quot;dataAttContr&quot;,
-        &quot;initialWidth&quot;: 220
+        &quot;initialWidth&quot;: 220,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Data Cessazione Contratto&quot;,
         &quot;fieldName&quot;: &quot;dataCessContr&quot;,
-        &quot;initialWidth&quot;: 220
+        &quot;initialWidth&quot;: 220,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Società&quot;,

@@ -75,6 +75,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateVerificaTitolarita(currentCase);
 
+        } else if (caseType == 'Nuovo Impianto - Aggiunta Attacco'){
+
+            result = validateVariazioni(fields, caseType);
+
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -184,6 +188,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 }else if(depositPaymentMode == 'Paperless' && (sendPaperlessMode == null || sendPaperlessMode == '')){
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizza Modalita invio Codice Paperless'));
+
+                }else if(sendPaperlessMode.containsIgnoreCase('SMS') && (currentCase.PhoneNumber__c == null || currentCase.PhoneNumber__c == '')){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile selezionare \"' + sendPaperlessMode + '\" se Recapito Telefonico non valorizzato'));
+
+                }else if(sendPaperlessMode.containsIgnoreCase('Email') && (currentCase.Email__c == null || currentCase.Email__c == '')){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile selezionare \"'+ sendPaperlessMode + '\" se Email non valorizzata'));
 
                 } else {
 
@@ -832,6 +844,30 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }
             
         return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+    }
+
+    private String validateVariazioni(String fields, String caseType){
+
+        String commodity = getFieldValue(fields, 'Commodity__c');
+        String supplyType = getFieldValue(fields, 'SupplyType__c');
+
+        if(caseType == 'Nuovo Impianto - Aggiunta Attacco'){
+            if(commodity.containsIgnoreCase('Energia Elettrica')
+                && supplyType != 'Domestico' && supplyType != 'Non Domestico'){
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valore ' + '\"' + supplyType + '\" ' 
+                        +'Non selezionabile per il servizio ' + commodity));
+            } else if(commodity.containsIgnoreCase('Gas')
+                && (supplyType == 'Domestico' || supplyType == 'Non Domestico')){
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valore ' + '\"' + supplyType + '\" ' 
+                    +'Non selezionabile per il servizio ' + commodity));
+            }else{
+                return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+            }
+        } else {
+            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        }
+
+
     }
 
 
