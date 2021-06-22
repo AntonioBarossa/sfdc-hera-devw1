@@ -7946,6 +7946,10 @@
             <fullName>SMS Non Inviato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Pratica In Attesa</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
