@@ -2,7 +2,16 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_VR_CreditCheck</fullName>
     <active>true</active>
-    <errorConditionFormula>AND($Permission.HDT_CP_EnableCreditCheck = false ,  AND(ISPICKVAL(Status__c , &apos;KO Forzato&apos;), ISCHANGED(Status__c) ) )</errorConditionFormula>
-    <errorDisplayField>Status__c</errorDisplayField>
-    <errorMessage>This User has no permissions to change the Status in KO Forzato</errorMessage>
+    <errorConditionFormula>IF(  OR( 
+				AND( $Permission.HDT_CP_EnableCreditCheck = false,
+								RecordType.DeveloperName = &apos;HDT_RT_CreditCheckKO&apos;, 
+								NOT( ISNEW() ) 
+							), 
+				AND($Permission.HDT_CP_EnableCreditCheck = false,
+								RecordType.DeveloperName = &apos;HDT_RT_CreditCheckKO&apos;,
+								ISNEW(),  
+								NOT( ISPICKVAL( Status__c , &apos;Creata&apos;) )
+							) 
+) , true, false)</errorConditionFormula>
+    <errorMessage>Questo utente non dispone dei permessi per l&apos;activity CreditCheckKO</errorMessage>
 </ValidationRule>
