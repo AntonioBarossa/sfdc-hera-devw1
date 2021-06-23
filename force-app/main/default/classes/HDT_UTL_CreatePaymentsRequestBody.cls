@@ -243,6 +243,36 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
     }
 
+    public Date addBusinessDay(Date startDate, Integer businessDayToAdd){
+
+        Date finalDate = startDate;
+
+        Integer direction = businessDayToAdd < 0 ? -1 : 1;
+
+        while(businessDayToAdd != 0){
+
+            finalDate = finalDate.addDays(direction);
+            
+            if(!isWeekend(finalDate)){
+
+                businessDayToAdd -= direction;
+            
+            }
+
+        }
+
+        return finalDate;
+
+    }
+
+    public Boolean isWeekend(Date myDate){
+
+        String myDateString = Datetime.newInstance(myDate.year(), myDate.month(),myDate.day()).format('EEE');
+
+        return 'Sat'.equals(myDateString) || 'Sun'.equals(myDateString);
+
+    }
+
 
     public class HDT_UTL_WrapperInput{
 
