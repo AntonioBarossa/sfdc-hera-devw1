@@ -7827,6 +7827,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Da inviare a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errore Lavorazione SAP</fullName>
             <default>false</default>
         </values>
@@ -7864,6 +7868,10 @@
         </values>
         <values>
             <fullName>Esito KO pre-MDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione OK da DL</fullName>
             <default>false</default>
         </values>
         <values>
