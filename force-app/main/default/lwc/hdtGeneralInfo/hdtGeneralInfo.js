@@ -63,7 +63,7 @@ export default class HdtGeneralInfo extends LightningElement {
         this.disabledInput = !this.disabledInput;
         this.disabledNext = !this.disabledNext;
         this.hiddenEdit = !this.hiddenEdit;
-        this.disabledAgency = this.disabledAgency == false ? true : this.disabledAgency;
+        this.disabledAgency = this.disabledAgency == false ? true : !this.disabledAgency;
         this.disabledSelezioneAgenzia = !this.disabledSelezioneAgenzia;
     }
 
