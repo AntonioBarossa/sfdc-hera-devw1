@@ -27,7 +27,8 @@
       {
         &quot;fieldName&quot;: &quot;dataScadenza&quot;,
         &quot;label&quot;: &quot;Data Scadenza Rata&quot;,
-        &quot;initialWidth&quot;: 180
+        &quot;initialWidth&quot;: 180,
+        &quot;sortable&quot;: true
       },
       {
         &quot;fieldName&quot;: &quot;soc&quot;,
@@ -62,7 +63,8 @@
       {
         &quot;fieldName&quot;: &quot;periodoRiferimento&quot;,
         &quot;label&quot;: &quot;Periodo Riferimento&quot;,
-        &quot;initialWidth&quot;: 160
+        &quot;initialWidth&quot;: 160,
+        &quot;sortable&quot;: true
       },
       {
         &quot;fieldName&quot;: &quot;numDoc&quot;,
@@ -77,7 +79,8 @@
       {
         &quot;fieldName&quot;: &quot;dataFattura&quot;,
         &quot;label&quot;: &quot;Data Fattura&quot;,
-        &quot;initialWidth&quot;: 160
+        &quot;initialWidth&quot;: 160,
+        &quot;sortable&quot;: true
       },
       {
         &quot;fieldName&quot;: &quot;importoFatturato&quot;,
