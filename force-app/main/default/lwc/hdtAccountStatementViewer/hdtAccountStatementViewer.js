@@ -80,6 +80,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     title;
     showFilters2 = false;
     filterType;
+    billListHeader;
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -287,6 +288,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.showFilters2 = true;
     }
 
+    filterEc7(){
+        this.filterType = 'filterEc7';
+        this.showFilters2 = true;
+    }
+
     openFilters(){
         this.showFilters = true;
     }
@@ -297,48 +303,14 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     billList(event){
+        this.billListHeader = 'Elenco bollette';
         this.showBillList = true;
     }
 
-    //+++ webservice type button
-    /*
-    allRecentItems(event) {
-        var requestType = event.target.name;//event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
+    viewReminders(event){
+        this.billListHeader = 'Visualizza Solleciti';
+        this.showBillList = true;
     }
-
-    home(event) {
-        var requestType = event.target.name;//event.target.name
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    expired(event){
-        var requestType = event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    creditRecovery(event){
-        var requestType = event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    expiredFromDay(event){
-        var requestType = event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    manageableItems(event){
-        var requestType = event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-    */
-    //+++ webservice type button
 
     refreshRecord(){
         //refresh all data in the same service
@@ -672,7 +644,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                        this.handleMulesoftResponse(obj);
                    }
 
-                   this.refreshSecondLevelToChild();
+                   if(this.showSecondLevel){
+                    this.refreshSecondLevelToChild();
+                   }
+
+                   this.filterOn = false;
 
                 } else {
                     this.showError = true;
@@ -862,15 +838,19 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         let perpage = this.perpage;
         let startIndex = (page * perpage) - perpage;
         let endIndex = (page * perpage);
-        
+
         if(this.filterPagination){
-            this.accountData = this.allDataFiltered.slice(startIndex, endIndex);
-            this.firstLevel = this.allDataFiltered[0];
-            this.secondLevelList = this.allDataFiltered[0][this.detailTable];
+            if(this.allDataFiltered != undefined){
+                this.accountData = this.allDataFiltered.slice(startIndex, endIndex);
+                this.firstLevel = this.allDataFiltered[0];
+                this.secondLevelList = this.allDataFiltered[0][this.detailTable];
+            }
         } else {
-            this.accountData = this.allData.slice(startIndex, endIndex);
-            this.firstLevel = this.accountData[0];
-            this.secondLevelList = this.accountData[0][this.detailTable];
+            if(this.allData != undefined && this.accountData[0] != undefined){
+                this.accountData = this.allData.slice(startIndex, endIndex);
+                this.firstLevel = this.accountData[0];
+                this.secondLevelList = this.accountData[0][this.detailTable];
+            }
         }
 
         this.fromRec = (startIndex == 0) ? 1 : startIndex+1;
@@ -1041,17 +1021,39 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     }
 
-    setButtonForFilterApplied(remove){
+    setButtonForFilterApplied(disable){
         this.template.querySelectorAll('button').forEach(c => {
-            if(c.name === 'interrogation' || c.name === 'joinFilter'){
-                if(remove){
+            //if(c.name === 'interrogation' || c.name === 'joinFilter'){
+            if(c.name === 'interrogation'){
+                if(disable){
                     c.setAttribute('disabled', '');
                 } else {
                     c.removeAttribute('disabled');
                 }
             }
+
+            if(c.name === 'refreshRecords'){
+                if(disable){
+                    c.removeAttribute('disabled'); 
+                } else {
+                    c.setAttribute('disabled', '');
+                }
+            }
+
         });
     }
+
+    //setButtonForFilterApplied(remove){
+    //    this.template.querySelectorAll('button').forEach(c => {
+    //        if(c.name === 'interrogation' || c.name === 'joinFilter'){
+    //            if(remove){
+    //                c.setAttribute('disabled', '');
+    //            } else {
+    //                c.removeAttribute('disabled');
+    //            }
+    //        }
+    //    });
+    //}
 
     refreshSortButton(){
         this.template.querySelectorAll('lightning-button-icon').forEach((butIco) => {
@@ -1367,7 +1369,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             this.resetFile();
             this.resetIdList();
             this.refreshSortButton();
-
             this.backendCall(requestType, requestObj);// Chiamata in backend
         }
 
@@ -1381,6 +1382,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 but.classList.add('slds-button_brand');
             }            
         });
+        this.setButtonForFilterApplied(false);
     }
 
     setNewChoise(event){
@@ -1405,43 +1407,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             new ShowToastEvent({
                 title: 'Visualizza bolletta',
                 message: 'Questo servizio non è ancora disponibile',
-                variant: 'success',
+                variant: 'info',
                 mode: 'sticky'
             })
         );
     }
-
-
-    //ALL CLOSE MODAL LOGIC
-    /*
-    closeBillList(){
-        this.showBillList = false;
-    }
-
-    closeViewResult(){
-        this.showViewResult = false;
-    }
-
-    closeStatementFilters(){
-        this.showFilters = false;
-    }
-
-    closeModal() {
-        this.joinFilterModal = false;
-    }
-
-    closeFirstLevelFilter(event){
-        this.showFilterFirstLevel = false;
-    }
-
-    closeStatementFilters2(){
-        this.showFilters2 = false;
-    }
-
-    closestmtchoise(){
-        this.showAcctStmt = false;
-    }
-    */
    
     closeModalHandler(event){
         try{
@@ -1470,5 +1440,17 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             console.error('# Stack => ' + e.stack );
         }
     }
+
+    showRate(event){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Attenzione',
+                message: 'Servizio in sviluppo',
+                variant: 'info'
+            })
+        );
+    }
+
+
 
 }

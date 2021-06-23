@@ -144,12 +144,12 @@
         <name>Assegna_Fase_0_0_0</name>
         <label>Assegna Fase</label>
         <locationX>578</locationX>
-        <locationY>3206</locationY>
+        <locationY>3326</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Elaborazione Manuale</stringValue>
+                <stringValue>Pratica In Attesa</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -157,6 +157,20 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.SuspensionDays__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetSuspensioDays.SuspensionDays__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.SuspensionDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -570,7 +584,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Fase_0_0_0</targetReference>
+                <targetReference>GetSuspensioDays</targetReference>
             </connector>
             <label>Residuo 0</label>
         </rules>
@@ -614,7 +628,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Case.TotalResidue__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <numberValue>0.0</numberValue>
                 </rightValue>
@@ -859,6 +873,34 @@
         <object>HDT_CausalCodeCalculation__mdt</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetSuspensioDays</name>
+        <label>GetSuspensioDays</label>
+        <locationX>578</locationX>
+        <locationY>3206</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Fase_0_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ObjectName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Type</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_SuspensionDays__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
@@ -907,7 +949,7 @@
         <name>Passa_In_Attesa_Approvazione_0</name>
         <label>Passa &quot;In Attesa Approvazione&quot;</label>
         <locationX>578</locationX>
-        <locationY>3326</locationY>
+        <locationY>3446</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <screens>
@@ -1483,7 +1525,7 @@
             <targetReference>Il_Case_in_Bozza</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
