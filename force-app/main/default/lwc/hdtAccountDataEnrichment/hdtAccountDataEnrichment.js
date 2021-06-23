@@ -20,7 +20,7 @@ export default class HdtAccountDataEnrichment extends LightningElement {
     showErrorMessage = '';
     showSpinner = true;
     
-    defaultSortDirection = 'desc';
+    //defaultSortDirection = 'desc';
     sortDirection = 'desc';
     sortedBy;
     //asc = true;
@@ -52,13 +52,6 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 this.iconName = result.tables[0].iconName;
                 this.columns = result.tables[0].columns;
                 this.height1 = 'singleTable';
-
-                if(this.type === 'raiFee'){
-                    this.sortedBy = result.tables[0].defaultSortedBy;
-                } else if(this.type === 'socialBonus'){
-                    this.sortedBy = 'dataAttBonus';
-                }
-
             } else {
                 this.showSecondTable = true;
                 this.tableTitle = result.tables[0].tableTitle;
@@ -70,8 +63,6 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 this.iconName2 = result.tables[1].iconName;
                 this.columns2 = result.tables[1].columns;
                 this.height2 = 'bottomTable';
-                this.sortedBy = 'dataAgg';
-
             } 
 
 
@@ -107,7 +98,6 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                     this.data = obj.data.venditoreEntrante;
                     this.data2 = obj.data.venditoreUscente;
                 }
-                this.sortingMethod(this.sortedBy, this.defaultSortDirection);
             }
 
             this.showSpinner = false;
@@ -132,7 +122,7 @@ export default class HdtAccountDataEnrichment extends LightningElement {
             const { fieldName: sortedBy, sortDirection } = event.detail;
             var sortField = sortedBy;
 
-            this.sortingMethod(sortField, sortDirection);
+            this.sortingMethod(sortField, sortDirection, 'data');
 
             this.sortDirection = sortDirection;
             this.sortedBy = sortedBy;
@@ -143,7 +133,25 @@ export default class HdtAccountDataEnrichment extends LightningElement {
      
     }
 
-    sortingMethod(sortField, sortDirection){
+    onHandleSort2(event){
+        console.log('## sort event ## ');
+
+        try {
+            const { fieldName: sortedBy, sortDirection } = event.detail;
+            var sortField = sortedBy;
+
+            this.sortingMethod(sortField, sortDirection, 'data2');
+
+            this.sortDirection = sortDirection;
+            this.sortedBy = sortedBy;
+
+        } catch(e) {
+            console.log(e);
+        }
+     
+    }
+
+    sortingMethod(sortField, sortDirection, dataTable){
         console.log('## sortingMethod ## ');
 
         try {
@@ -151,7 +159,7 @@ export default class HdtAccountDataEnrichment extends LightningElement {
             console.log('>>> sort by: ' + sortField);
             console.log('>>> sortDirection: ' + sortDirection);
 
-            const cloneData = [...this.data];
+            const cloneData = [...this[dataTable]];
 
             cloneData.sort(function(a, b) {
                 var dateSplitted = b[sortField].split('/');
@@ -178,7 +186,7 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 }
 
             });
-            this.data = cloneData;
+            this[dataTable] = cloneData;
         } catch(e) {
             console.log(e);
         }
