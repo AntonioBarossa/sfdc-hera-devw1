@@ -6,6 +6,7 @@ import getSaleContactRole from '@salesforce/apex/HDT_LC_GeneralInfo.getSaleConta
 export default class HdtGeneralInfo extends LightningElement {
     @api saleRecord = {};
     @api campaignId;
+    @api campaignCommissioningId;
     disabledInput = false;
     disabledNext = false;
     hiddenEdit = true;
@@ -16,13 +17,22 @@ export default class HdtGeneralInfo extends LightningElement {
     currentUserName = '';
     saleContactRoles = '';
     @track isCampaignTableVisible = false;
+    @track isCampaignTableCommissioningVisible = false;
+    @track isOutbound = false;
 
     get isCampaignVisible(){
         return this.isCampaignTableVisible || this.saleRecord.Campaign__c !== undefined;
     }
+    get isCampaignCommissioningVisible(){
+        return this.isCampaignTableCommissioningVisible || this.saleRecord.CommissioningCampaign__c !== undefined;
+    }
 
     get isCampaignInputVisible(){
         return this.disabledInput || (this.campaignId !== '' && this.campaignId !== undefined);
+    }
+
+    get isCampaignInputVisibleCommissioning(){
+        return this.disabledInput || (this.campaignCommissioningId !== '' && this.campaignCommissioningId !== undefined);
     }
 
     toggle(){
@@ -70,8 +80,15 @@ export default class HdtGeneralInfo extends LightningElement {
         this.dataToSubmit['Campaign__c'] = event.detail.campaignId;
     }
 
+    handleEmitCampaignIdEvent2(event){
+        this.dataToSubmit['CommissioningCampaign__c'] = event.detail.campaignId;
+    }
+
     handleCampaignVisibility(event){
         this.isCampaignTableVisible = event.detail.isVisible;
+    }
+    handleCampaignVisibility2(event){
+        this.isCampaignTableCommissioningVisible = event.detail.isVisible;
     }
 
     updateSaleRecord(saleData){

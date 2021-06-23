@@ -13,7 +13,7 @@
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="Agency__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SaleBy__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="FriendCode__c" variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SalesCompany__c" variant="label-stacked"></lightning-input-field>
+                            <!--<lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SalesCompany__c" variant="label-stacked"></lightning-input-field>-->
                         </div>
                     </lightning-record-edit-form>
                 </lightning-layout-item>
@@ -34,7 +34,23 @@
                         </template>
                     </lightning-layout-item>
                 </lightning-layout>
-
+                <template if:true={isOutbound}>
+                <lightning-layout>
+                    <lightning-layout-item padding="horizontal-large" size="12">
+                        <template if:true={isCampaignVisible}>
+                            <div class="slds-text-heading_small slds-m-vertical_small">Selezione campagna Commissioning</div>
+                            <template if:true={isCampaignInputVisibleCommissioning}>
+                                <lightning-record-edit-form record-id={saleRecord.Id} object-api-name="Sale__c">
+                                    <lightning-input-field disabled class="slds-size_1-of-3" value={saleRecord.CommissioningCampaign__c} field-name="CampaignCommissioning__c" variant="label-stacked"></lightning-input-field>
+                                </lightning-record-edit-form>
+                            </template>
+                        </template>
+                        <template if:false={isCampaignInputVisibleCommissioning}>
+                            <c-hdt-campaign-to-account-list campaign-type="sale" object-api-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid={handleEmitCampaignIdEvent2} onemitvisibility={handleCampaignVisibility2} campaign-category='Campagna Outbound' campaign-channel='Telefonico Outbound' ></c-hdt-campaign-to-account-list>
+                        </template>
+                    </lightning-layout-item>
+                </lightning-layout>
+                </template>
             <div class="slds-clearfix slds-p-around_small">
                 <div class="slds-float_right">
                     <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>

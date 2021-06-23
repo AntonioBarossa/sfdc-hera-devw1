@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comune__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Comune</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>HCM</fullName>
+                <default>true</default>
+                <label>HCM</label>
+            </value>
+            <value>
+                <fullName>EENE</fullName>
+                <default>false</default>
+                <label>EENE</label>
+            </value>
+            <value>
+                <fullName>ALTRO</fullName>
+                <default>false</default>
+                <label>ALTRO</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
