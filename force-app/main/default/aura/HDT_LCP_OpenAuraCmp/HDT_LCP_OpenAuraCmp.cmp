@@ -23,6 +23,9 @@
     <!--Attributi per inneschi da altri case-->
     <aura:attribute name="parentRecordId" type="String"/>
 
+    <!--Attributo per innesco da Campagne-->
+    <aura:attribute name="campaignId" type="String"/>
+
     <lightning:workspaceAPI aura:id="workspace" />
     <aura:handler name="init" value="{!this}" action="{!c.openTabWithSubtab}" />
 

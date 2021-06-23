@@ -21,13 +21,15 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     sortedBy;
     bShowModal = false;
     fieldsToFilter = [];
+    staticObj = {};
 
     get accountdetailsToView(){
         console.log('# accountdetails #');
         console.log('# filterApplied: ' + this.filterApplied);
 
         if(this.filterApplied){
-            this.innerFilterMethod();
+            //this.innerFilterMethod();
+            this.applyInterrogation(this.staticObj);
         }
 
         /*if(this.firstLevel === undefined){
@@ -59,14 +61,13 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             if(result.success){
 
                 this.columns = result.columnObj;//columns;
-                console.log('# buttonList: ' + result.buttonList.length);
-
                 this.buttonList = result.buttonList;
-
+                console.log('# buttonList: ' + result.buttonList.length);
+                
                 this.columns.forEach((i) => {
                     filterObject[i.fieldName] = '';
                     if(i.isFilter){
-                        this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label});
+                        this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label, type: i.fieldType});
                     }
                 });
 
@@ -140,9 +141,9 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         this.bShowModal = false;
     }
 
-    applyFilter(event){
+    /*applyFilter(event){
         console.log('# applyFilter #');
-        
+ 
         var s = event.detail.filterobj;
         var o = JSON.parse(s);
 
@@ -150,9 +151,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             filterObject[key] = o[key];
         }
 
-        this.filterString = s;
         this.innerFilterMethod();
-
         this.bShowModal = false;
         this.filterApplied = true;
 
@@ -169,6 +168,8 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             }
         }
 
+        this.filterString = JSON.stringify(currentFilter);
+
         this.accountdetails = this.accountdetails.filter(function(item) {
             for (var key in currentFilter) {
                 if (item[key] === undefined || item[key] != currentFilter[key])
@@ -176,23 +177,34 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             }
             return true;
         });
+    }*/
+
+    @api removeFilterFromParent(){
+        this.removeFilter();
     }
 
     removeFilter(){
         console.log('# removeFilter #');
 
-        this.filterApplied = false;
-        this.filterString = '';
+        try {
+            this.filterApplied = false;
+            this.filterString = '';
 
-        for (var key in this.filterObject) {
-            this.filterObject[key] = '';
+            for (var key in this.filterObject) {
+                this.filterObject[key] = '';
+            }
+            this.setButtonForFilterApplied(false);
+
+            const removeFilter = new CustomEvent("removefilter", {
+                detail:  {filter: 'off'}
+            });
+            // Dispatches the event.
+            this.dispatchEvent(removeFilter);
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
         }
-
-        const removeFilter = new CustomEvent("removefilter", {
-            detail:  {filter: 'off'}
-        });
-        // Dispatches the event.
-        this.dispatchEvent(removeFilter);
     }
 
     serviceCatalog(){
@@ -299,7 +311,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             new ShowToastEvent({
                 title: 'Attenzione',
                 message: 'Servizio in sviluppo',
-                variant: 'success'
+                variant: 'info'
             })
         );
     }
@@ -309,9 +321,174 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             new ShowToastEvent({
                 title: 'Attenzione',
                 message: 'Servizio in sviluppo',
-                variant: 'success'
+                variant: 'info'
             })
         );
+    }
+
+    viewInvoice(event){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Attenzione',
+                message: 'Servizio in sviluppo',
+                variant: 'info'
+            })
+        );
+    }
+
+    generateFilterString(){
+        try {
+
+            for(var i in this.staticObj){
+                this.filterString += i;
+                this.filterString += ' ';
+                for(var n in this.staticObj[i]){
+                    this.filterString += this.staticObj[i][n] + ' ';
+                }
+                this.filterString += ', ';
+            }
+        } catch (error) {
+            this.filterString = JSON.stringify(this.staticObj);
+        }
+    }
+
+    //method to filter record on second level
+    applyInterFromChild(event){
+        console.log('# applyInterFromChild #');
+
+        this.staticObj = JSON.parse(event.detail.value);
+
+        try {
+
+            if(this.staticObj && Object.keys(this.staticObj).length === 0 && this.staticObj.constructor === Object){
+                console.log('>>> no apply filter');
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Non hai inserito nessun parametro',
+                        variant: 'info'
+                    }),
+                );
+            } else {
+                this.applyInterrogation(this.staticObj);
+                this.generateFilterString();
+            }
+
+        } catch (error) {
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );            
+        }
+        
+
+    }
+
+    applyInterrogation(currentFilter){
+        console.log('# applyInterrogation # ');
+
+        try{
+
+            const columnTypeMap = new Map();
+            this.columns.forEach((col) => {
+                columnTypeMap.set(col.fieldName, col.fieldType);
+            });
+
+            var contoContrArray;
+            if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
+                contoContrArray = currentFilter.contoContrattuale.value.split(',');
+            }
+
+            var filteredData = [];
+            filteredData = this.accountdetails.filter(function(item) {
+                
+                for (var key in currentFilter) {
+
+                    const currentType = columnTypeMap.get(key);
+                    var filterValue;
+                    var tableValueToFilter;
+
+                    if(item[key] === undefined || item[key] === ''){
+                        return false;
+                    }
+
+                    switch (currentType) {
+                        case 'number':
+                            filterValue = parseFloat(currentFilter[key].value);
+                            tableValueToFilter = parseFloat(item[key]);
+                            console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
+                            break;
+                        case 'date':
+                            var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
+                            filterValue = date.getTime();
+
+                            var cDate = item[key].split('/');
+                            var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
+                            tableValueToFilter = cDate2.getTime();
+
+                            break;
+                        case 'text':
+                            filterValue = currentFilter[key].value;
+                            tableValueToFilter = item[key];
+                    }
+
+                    switch (currentFilter[key].operator) {
+                        case '='://uguale a
+                            if (tableValueToFilter != filterValue)
+                            return false;
+                            break;
+                        case '>'://maggiore di
+                            if (tableValueToFilter <= filterValue)
+                            return false;
+                            break;
+                        case 'in'://contiene caratteri
+                            if(!tableValueToFilter.includes(filterValue))
+                            return false;
+                            break;
+                        case 'on'://contiene valori
+                            if(!contoContrArray.includes(tableValueToFilter))
+                            return false;
+                    }
+
+                }
+                return true;
+            });
+
+            //if(filteredData.length == 0 && this.bShowModal){
+            //    this.dispatchEvent(
+            //        new ShowToastEvent({
+            //            title: 'Attenzione',
+            //            message: 'Nessun record trovato',
+            //            variant: 'warning'
+            //        }),
+            //    );
+            //    this.filterString = '';
+            //    this.staticObj = {};
+            //    return;
+            //}
+
+            this.setButtonForFilterApplied(true);
+            this.accountdetails = filteredData;
+            this.filterApplied = true;
+            this.closeModal();
+
+        } catch (e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack ); 
+        }
+
+    }
+
+    setButtonForFilterApplied(remove){
+        this.template.querySelectorAll('button').forEach(c => {
+            if(c.name === 'interrogation'){
+                if(remove){
+                    c.setAttribute('disabled', '');
+                } else {
+                    c.removeAttribute('disabled');
+                }
+            }
+        });
     }
 
 }

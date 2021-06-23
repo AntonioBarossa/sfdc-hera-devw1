@@ -2,6 +2,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
 
     HDT_QR_InstallmentPlans installmentsQr = new HDT_QR_InstallmentPlans();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
+    HDT_QR_Payments paymentsQr = new HDT_QR_Payments();
 
 
     @InvocableMethod(label = 'Predefault valori pianoRate')
@@ -82,6 +83,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         }
 
         currentCase.AmountToPayInInstallments__c = amountInstallment - totalRaiFeeResidual;
+        currentCase.InstallmentAmount__c = amountInstallment;
 
 
         HDT_UTL_DatabaseService.updateSObject(currentCase);
@@ -108,9 +110,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
         Decimal total;
         if(currentCase.DepositAmount__c != null){
-            total = currentCase.AmountToPayInInstallments__c - currentCase.DepositAmount__c;
+            total = currentCase.InstallmentAmount__c - currentCase.DepositAmount__c;
         }else{
-            total = currentCase.AmountToPayInInstallments__c;
+            total = currentCase.InstallmentAmount__c;
         }
        
 

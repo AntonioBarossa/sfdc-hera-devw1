@@ -142,8 +142,6 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
                 TechnicalOffer__c techOff;
                 techOff = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(techOff, technicalOfferId);
-
-                techOff = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(techOff, technicalOfferId);
                 
                 if(String.isEmpty(techOff.Product__r.Status__c) || !techOff.Product__r.Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
                     matrixTable.isEditable = false;
@@ -155,13 +153,17 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
                 Map<String, TechnicalOfferItem__c> itemsMap = new Map<String, TechnicalOfferItem__c>();
                 for(TechnicalOfferItem__c item : techOff.RigheOffertaTecnica__r){
-                    itemsMap.put(item.RowId__c, item);
+                    //itemsMap.put(item.RowId__c, item);
+                    itemsMap.put(item.Operand__c, item);
                 }
 
                 TechnicalOfferItem__c tempItem;
                 for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow setSingleRow : matrixTable.rowList){
-                    tempItem = itemsMap.get(setSingleRow.id);
-                    setSingleRow = HDT_LC_OfferConfiguratorCtrlHelper.convertObjectToWrapper(tempItem, setSingleRow);
+                    //tempItem = itemsMap.get(setSingleRow.id);
+                    if(itemsMap.containsKey(setSingleRow.tecName)){
+                        tempItem = itemsMap.get(setSingleRow.tecName);
+                        setSingleRow = HDT_LC_OfferConfiguratorCtrlHelper.convertObjectToWrapper(tempItem, setSingleRow);
+                    }
                 }    
 
             }

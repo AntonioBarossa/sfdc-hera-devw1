@@ -36,14 +36,14 @@
             <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFirstName__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case_Aggiornato.FirstName__c</elementReference>
+                <elementReference>Get_Case_Aggiornato.Account.FirstName__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryLastName__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case_Aggiornato.LastName__c</elementReference>
+                <elementReference>Get_Case_Aggiornato.Account.LastName__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -317,14 +317,14 @@
             <assignToReference>GetCaseAggiornato2.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>CalcolaCodiceCausale.CausalCode__c</elementReference>
+                <elementReference>CalcolaCodiceCausale_0.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.OperationCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>CalcolaCodiceCausale.OperationCode__c</elementReference>
+                <elementReference>CalcolaCodiceCausale_0.OperationCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -354,14 +354,14 @@
             <assignToReference>GetCaseAggiornato2.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>CalcolaCodiceCausale.CausalCode__c</elementReference>
+                <elementReference>CalcolaCodiceCausale_0_0.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.OperationCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>CalcolaCodiceCausale.OperationCode__c</elementReference>
+                <elementReference>CalcolaCodiceCausale_0_0.OperationCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -765,7 +765,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>hdtDocumentSignature_0_0.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
