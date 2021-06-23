@@ -6,12 +6,15 @@ import updateOrder from '@salesforce/apex/HDT_LC_SelfReading.updateOrder';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import  voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck';
+import getDates from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getDates';
 
 import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
+import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
 //FINE SVILUPPI EVERIS
 
 // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
+import ConsumptionsCorrectionType__c from '@salesforce/schema/Case.ConsumptionsCorrectionType__c';
 
 export default class hdtChildOrderProcessDetails extends LightningElement {
 
@@ -69,37 +72,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         return sysdateIso.substr(0, sysdateIso.indexOf('T'));
     }
 
-    @wire(getRecord, { recordId: '$order.Id', fields: RETROACTIVE_DATE })
-    wiredCase({error, data}){
-        if(data){
-
-            this.isRetroactive = getFieldValue(data, RETROACTIVE_DATE) != null ? true : false;
-
-            this.outputFieldObj['RetroactiveDate__c'] = getFieldValue(data, RETROACTIVE_DATE);
-
-            console.log('Wired Retroactive ' +this.isRetroactive)
-
-            this.disabledReadingDate = !this.isRetroactive;
-
-            if(this.isRetroactive){
-
-                this.readingCustomerDate = this.outputFieldObj['RetroactiveDate__c'];
-
-            } else {
-
-                this.readingCustomerDate = this.sysdate();
-
-            }
-
-            console.log('#DisabledReadingDate --> '+this.disabledReadingDate);
-
-        }else if(error){
-
-            console.log(error);
-
-        }    
-
-    }
     //FINE SVILUPPI EVERIS
 
 
@@ -448,6 +420,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('isVolture: '+this.isVolture);
         console.log('isRetroactive: '+this.isRetroactive);
         console.log('isReading: '+this.isReading)
+        let orderId = this.order.Id;
         //FINE SVILUPPI EVERIS
         //INSERITE NUOVE VARIABILI, IsRetroactive e IsReading solo in avanzamento di sezione.  
         updateProcessStep(
@@ -459,6 +432,29 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             isReading: this.isReading,
             readingDate: this.readingCustomerDate
         }).then(data =>{
+            if(this.isVolture){
+                getDates({recordId: orderId})
+                    .then(data => {
+                        let retroactiveDate = null;
+                        let effectiveDate = data.EffectiveDate__c;
+                        if(JSON.stringify(data).includes('RetroactiveDate__c')){
+                            retroactiveDate = data.RetroactiveDate__c;
+                        }
+                        this.isRetroactive =  retroactiveDate != null;
+                        this.disabledReadingDate = !this.isRetroactive;
+                        console.log('#isRetroactive -> ' + this.isRetroactive);
+                        console.log('#EffectiveDate -> ' + effectiveDate);
+                        console.log('#RetroactiveDate -> ' + retroactiveDate);
+                        console.log('#DisabledReading -> ' +this.disabledReadingDate);
+                        if(this.isRetroactive){
+                            this.readingCustomerDate = retroactiveDate;
+                        } else {
+                            this.readingCustomerDate = effectiveDate;
+                        }
+                    }).catch(error => {
+                        console.log('#ErrorGetRecord -> '+JSON.stringify(error));
+                    })
+            }
             this.loading = false;
             //INIZIO SVILUPPI EVERIS
             //LA VARIABILE NEXT INDEX RIPORTA L'INDICE CORRETTO PER ANDARE AVANTI
