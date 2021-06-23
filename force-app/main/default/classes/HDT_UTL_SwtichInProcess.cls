@@ -50,7 +50,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
             maxAfterthoughtDate = signedDate;                      
         }else{
             if(order.ProcessType__c == 'Cambio offerta'){
-                // manca la logica dell'esecuzione anticipata
+                // manca la logica dell'esecuzione anticipata 
                 maxAfterthoughtDate = signedDate;            
             }else{
                 maxAfterthoughtDate = signedDate.addDays((Integer)afterthoughtDays3[0].AfterthoughtDays__c);                      
@@ -68,7 +68,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
 
         Date signedDate = order.SignedDate__c;   
         Date dateSentToSii= null;
-        if(signedDate != null){
+        if(signedDate != null  && order.ProcessType__c != 'Cambio Offerta'){
             if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
 
                 // DIRITTO DI RINUNCIA DI RIPENSAMENTO
@@ -108,7 +108,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
         order = orderQr.getRecordById(order.id);
         Date dateToFrom = null;
         if(order.ProcessType__c == 'Cambio offerta'){
-            dateToFrom = order.SignedDate__c;
+            dateToFrom = order.SignedDate__c; // Per cambio offerta entrare in tabella con la data firma o la data massima di ripensamento se no esecuzione anticipata
         }else{
             dateToFrom = getDateSentToSii(order);
         }
