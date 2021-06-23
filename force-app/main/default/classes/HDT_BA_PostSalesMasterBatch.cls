@@ -48,6 +48,9 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                     wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
                     responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) paymentsWs.execute(args);
 
+                    //TO trigger Technical Phase
+                    HDT_UTL_DatabaseService.updateSObject(currentCase);
+
                 }
 
             }
