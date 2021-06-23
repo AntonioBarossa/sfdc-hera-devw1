@@ -1559,6 +1559,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.Contract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.ContributionsType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10906,6 +10911,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.IsChangeSalesCompany__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.IsSequanzialized__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20495,6 +20505,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.CommercialId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.CommissioningCampaign__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29165,6 +29180,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.EffectiveDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29186,6 +29206,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.GlobalMigrationKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.HerokuPracticeCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
