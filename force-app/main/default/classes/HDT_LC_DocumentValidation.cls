@@ -41,7 +41,11 @@ public inherited sharing class HDT_LC_DocumentValidation {
 
             Order orderRetrive = orderQr.getRecordById(ord.Id);
             if('Documentazione Gestita'.EqualsIgnoreCase(orderRetrive.ParentOrder__r.Phase__c)){
-                ord.Phase__c = 'Comunicazione verso Heroku';
+                if(orderRetrive.RecordType.DeveloperName == 'HDT_RT_Voltura'){
+                    ord.Phase__c = 'Documentazione Validata';
+                } else {
+                   ord.Phase__c = 'Comunicazione verso Heroku';
+                }
             } else {
                 ord.Phase__c = 'Documentazione Validata';
             }
