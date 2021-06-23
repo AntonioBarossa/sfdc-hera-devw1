@@ -317,7 +317,7 @@ public class HDT_SRV_DocumentalManagement{
 			String previousModPagamento = (String)primolivello.get('modalitaPagamentoCA');
 			String previousSocieta = (String)primolivello.get('societa');
 			Double residuoTotale = 0.0;
-			String payloadRecord81 = '';
+			String payloadRecordOttantuno = '';
 			Integer i = -1;
 			
 			for (Object singleRecord : primoLivelloList) {
@@ -422,7 +422,7 @@ public class HDT_SRV_DocumentalManagement{
 				// STESSO CA
 				if (currentCa == previousCa) {
 					residuoTotale += residuo;
-					payloadRecord81 += String.join(recordOttantuno,div);
+					payloadRecordOttantuno += String.join(recordOttantuno,div);
 				}
 
 				// Nuovo E Ultimo CA. Quindi dobbiamo generare DUE record 80.
@@ -436,10 +436,10 @@ public class HDT_SRV_DocumentalManagement{
 					recordOttanta.add(String.valueOf(residuoTotale));
 					recordOttanta.add(fineRiga);
 
-					payload += String.join(recordOttanta,div) + payloadRecord81;
+					payload += String.join(recordOttanta,div) + payloadRecordOttantuno;
 
 					residuoTotale = residuo;
-					payloadRecord81 = String.join(recordOttantuno,div);
+					payloadRecordOttantuno = String.join(recordOttantuno,div);
 
 					recordOttanta = new List<String>();
 					recordOttanta.add('00310');
@@ -450,7 +450,7 @@ public class HDT_SRV_DocumentalManagement{
 					recordOttanta.add(String.valueOf(residuoTotale));
 					recordOttanta.add(fineRiga);
 					
-					payload += String.join(recordOttanta,div) + payloadRecord81;
+					payload += String.join(recordOttanta,div) + payloadRecordOttantuno;
 				} else if (currentCa != previousCa || i == primoLivelloList.size()-1) {
 					// NUOVO CA, oppure il CA è l'ultimo. Quindi siamo pronti per generare il record 80.
 					recordOttanta = new List<String>();
@@ -462,11 +462,11 @@ public class HDT_SRV_DocumentalManagement{
 					recordOttanta.add(String.valueOf(residuoTotale));
 					recordOttanta.add(fineRiga);
 
-					payload += String.join(recordOttanta,div) + payloadRecord81;
+					payload += String.join(recordOttanta,div) + payloadRecordOttantuno;
 
 					// Reset Stringiabili globali che sono concatenate finchè il CA non cambia.
 					residuoTotale = residuo;
-					payloadRecord81 = String.join(recordOttantuno,div);
+					payloadRecordOttantuno = String.join(recordOttantuno,div);
 					// Salviamo il nuovo CA.
 					previousCa = currentCa;
 					previousModPagamento = modPagamento;
@@ -513,7 +513,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			String previousCa = (String)primolivello.get('contoContrattuale');
 			String previousModPagamento = (String)primolivello.get('modalitaPagamentoCA');
 			Double residuoTotale = 0;
-			String payloadRecord81 = '';
+			String payloadRecordOttantuno = '';
 
 			for (Object singleRecord : primoLivelloList) {
 				i++;
@@ -611,7 +611,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 					if (!ordineDiPagamento) {
 						residuoTotale += residuo;
 					}
-					payloadRecord81 += String.join(recordOttantuno,div);
+					payloadRecordOttantuno += String.join(recordOttantuno,div);
 				}
 
 				// Nuovo E Ultimo CA. Quindi dobbiamo generare DUE record 80.
@@ -626,10 +626,10 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 					recordOttanta.add(String.valueOf(residuoTotale));
 					recordOttanta.add(fineRiga);
 
-					payload += String.join(recordOttanta,div) + payloadRecord81;
+					payload += String.join(recordOttanta,div) + payloadRecordOttantuno;
 
 					residuoTotale = residuo;
-					payloadRecord81 = String.join(recordOttantuno,div);
+					payloadRecordOttantuno = String.join(recordOttantuno,div);
 
 					recordOttanta = new List<String>();
 					recordOttanta.add('00310');
@@ -640,7 +640,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 					recordOttanta.add(String.valueOf(residuoTotale));
 					recordOttanta.add(fineRiga);
 					
-					payload += String.join(recordOttanta,div) + payloadRecord81;
+					payload += String.join(recordOttanta,div) + payloadRecordOttantuno;
 				} else if (currentCa != previousCa || i == primoLivelloList.size() - 1) {
 					// NUOVO CA, oppure il CA è l'ultimo. Quindi siamo pronti per generare il record 80.
 					recordOttanta = new List<String>();
@@ -652,11 +652,11 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 					recordOttanta.add(String.valueOf(residuoTotale));
 					recordOttanta.add(fineRiga);
 
-					payload += String.join(recordOttanta,div) + payloadRecord81;
+					payload += String.join(recordOttanta,div) + payloadRecordOttantuno;
 
 					// Reset variabili globali che sono concatenate finchè il CA non cambia.
 					residuoTotale = residuo;
-					payloadRecord81 = String.join(recordOttantuno,div);
+					payloadRecordOttantuno = String.join(recordOttantuno,div);
 					// Salviamo il nuovo CA.
 					previousCa = currentCa;
 					previousModPagamento = modPagamento;
