@@ -192,7 +192,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     //orderToUpdate.Instance326__c = 'Richiesto';
                     // Accettazione Preventivo rapido.
                     //orderToUpdate.QuickQuote__c = 'Richiesto';
-                    orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                    //orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                 } else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     // Visura camerale
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
@@ -205,8 +205,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     //orderToUpdate.Instance326__c = 'Richiesto';
                     //orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                 }
-                if(order.RetroactiveDate__c != null){
-                    order.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3) || order.EffectiveDate__c == null){
+                    orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
             }
         }

@@ -158,18 +158,18 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String endPiva = HDT_UTL_DocumentalManagement.getValue('Account', 'VATGroupEndDate__c', 0, inputs, formParams);//VATGroupEndDate__c
         Date maxDate = date.newInstance(4000, 12, 31);
         if(String.isBlank(flagPiva) || flagPiva.equalsIgnoreCase('false')){
-            return '|';
+            return '';
         }else if(String.isNotBlank(endPiva) && Date.valueOf(endPiva) == maxDate){
             if(Date.today()> Date.valueOf(startPiva)){
                 return gPiva + '|' + HDT_UTL_DocumentalManagement.transformDate(Date.valueOf(startPiva));
             }else {
-                return '|';
+                return '';
             }
         }else{
             if(Date.today() > Date.valueOf(startPiva) && Date.today() < Date.valueOf(endPiva)){
                 return gPiva + '|' + HDT_UTL_DocumentalManagement.transformDate(Date.valueOf(startPiva));
             }else {
-                return '|';
+                return '';
             }
         }
     }

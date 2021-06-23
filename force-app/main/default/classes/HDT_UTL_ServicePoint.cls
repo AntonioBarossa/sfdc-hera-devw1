@@ -232,9 +232,9 @@ public with sharing class HDT_UTL_ServicePoint {
 				if(mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))){
 					spNew.SupplyStreet__c  = mapRes.get('VIA');
 				}
-			/*	if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
+				if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
 					spNew.SupplyStreetToponym__c  = mapRes.get('TIPOVIA');
-				}*/
+				}
 				if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
 					spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
 				}

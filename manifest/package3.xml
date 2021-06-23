@@ -1,127 +1,149 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>CS_DaysToExpiration__c</members>
+        <members>HDT_MatriceSocietaVendita__mdt</members>
+        <members>HDT_SuspensionDays__mdt</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>HDT_DocPayloadAdminTab</members>
-        <name>CustomTab</name>
-    </types>
-    <types>
-        <members>HDT_EligibilityParameteOperator</members>
-        <name>GlobalValueSet</name>
-    </types>
-    <types>
-        <members>hdtAccountDataEnrichment</members>
-        <members>hdtAccountStatementDetailViewer</members>
-        <members>hdtAccountStatementFilters</members>
-        <members>hdtAccountStatementViewer</members>
-        <members>hdtDocumentalPayloadAdministration</members>
-        <members>hdtEligibilityCriteriaParameters</members>
-        <members>hdtGenericAddressChooserFlow</members>
-        <members>hdtOfferConfigurator</members>
-        <members>hdtTargetObjectAddressFields</members>
-        <members>hdtTechnicalOfferSelection</members>
+        <members>hdtConfigureProduct</members>
+        <members>hdtGeneralInfo</members>
+        <members>hdtNewSaleCampaignMemberCommunity</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>Admin</members>
-        <members>Door2Door Profile</members>
         <members>Hera Door2Door Partner User</members>
         <members>Hera M2M Integration User</members>
         <members>Hera Standard User</members>
         <members>Hera System Administrator</members>
         <members>Hera System Integrator</members>
         <members>Hera Teleseller Partner User</members>
-        <members>Partner Community User</members>
         <name>Profile</name>
     </types>
     <types>
-        <members>Hera_Service_Console</members>
-        <name>CustomApplication</name>
-    </types>
-    <types>
-        <members>Case.Approvazione_Piano_Rate</members>
-        <name>ApprovalProcess</name>
-    </types>
-    <types>
-        <members>HDT_FL_GestionePreventivi</members>
-        <members>HDT_FL_GestioneReclami_VerificheDatiAlDl</members>
+        <members>HDT_FL_ActivityAccountLinker</members>
+        <members>HDT_FL_GestionePagamenti_PianoRateizzazione</members>
         <name>Flow</name>
     </types>
     <types>
-        <members>CustomLabels</members>
-        <name>CustomLabels</name>
+        <members>Case.HDT_VR_PianoRata</members>
+        <members>Case.HDT_VatNumberValidationRule</members>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_CreditCheck</members>
+        <name>ValidationRule</name>
     </types>
     <types>
-        <members>Case-HDT_AllineamentoAnagrafica</members>
-        <members>Case-HDT_FatturazioneConsumi</members>
-        <members>Case-HDT_VerificaDatiAlDl</members>
+        <members>HDT_CP_SalesforceCPQAdmin</members>
+        <name>CustomPermission</name>
+    </types>
+    <types>
+        <members>Case.HDT_RT_Autolettura</members>
+        <members>Case.HDT_RT_PianoRateizzazione</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>HDT_SuspensionDays__mdt-Giorno di Sospensione Layout</members>
+        <members>et4ae5__IndividualEmailResult__c-et4ae5__Individual Email Result Layout</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_AgentMatrixManagement</members>
         <members>HDT_ApexClasses</members>
-        <members>HDT_CampaignManager</members>
-        <members>HDT_EditPublicListView</members>
-        <members>HDT_MarketingCloud</members>
-        <members>HDT_MassiveLoader</members>
         <members>HDT_SalesforceCPQAdmin</members>
-        <members>HDT_SalesforceCPQLicense</members>
         <members>HDT_SalesforceCPQPartner</members>
-        <members>HDT_SalesforceCPQTabs</members>
         <members>HDT_SalesforceCPQUser</members>
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_BA_OldDraftSales</members>
-        <members>HDT_BA_OldDraftSalesTest</members>
-        <members>HDT_LC_AdvancedSearch</members>
-        <members>HDT_QR_Account</members>
-        <members>HDT_QR_AnagAlignment</members>
+        <members>HDT_BA_PostSalesMasterBatch</members>
+        <members>HDT_LC_ChildOrderProcessActions</members>
+        <members>HDT_LC_ConfigureProduct</members>
+        <members>HDT_LC_LeadChangeRecordType</members>
+        <members>HDT_LC_OfferConfiguratorCtrlHelper</members>
+        <members>HDT_QR_ActivityCustom</members>
+        <members>HDT_QR_BusinessDate</members>
+        <members>HDT_QR_CaseValidations</members>
+        <members>HDT_QR_City</members>
+        <members>HDT_QR_Contact</members>
         <members>HDT_QR_HerokuPostSalesManager</members>
-        <members>HDT_QR_SearchPlug</members>
+        <members>HDT_QR_MatriceAgenti</members>
+        <members>HDT_QR_PostSalesMasterBatch</members>
+        <members>HDT_QR_QuoteLine</members>
+        <members>HDT_QR_SelfReadings</members>
         <members>HDT_QR_ServicePoint</members>
-        <members>HDT_SCH_OldDraftSalesSchedule</members>
-        <members>HDT_SRV_AnagAlignment</members>
+        <members>HDT_SCH_PostSalesMasterBatch</members>
+        <members>HDT_SRV_ActivityCustom</members>
+        <members>HDT_SRV_Attachment</members>
         <members>HDT_SRV_DocumentalManagement</members>
-        <members>HDT_SRV_Sale</members>
+        <members>HDT_SRV_SaleServiceItem</members>
+        <members>HDT_TRH_Contact</members>
         <members>HDT_UTL_CaseValidations</members>
-        <members>HDT_UTL_CreateGenericCase</members>
+        <members>HDT_UTL_DatabaseService</members>
+        <members>HDT_UTL_GestionePrivacy</members>
         <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_UTL_Individual</members>
         <members>HDT_UTL_Morosita</members>
+        <members>HDT_UTL_PayloadManagement</members>
+        <members>HDT_UTL_Sales</members>
+        <members>HDT_UTL_SelfReadings</members>
+        <members>HDT_UTL_ServiceCatalogProfileCriteria</members>
         <members>HDT_UTL_ServicePoint</members>
-        <members>HDT_WRP_AccountDataEnrichment</members>
-        <members>HDT_WS_SalesApexCalloutAction</members>
+        <members>HDT_WRP_SelfReadings</members>
+        <members>HDT_WS_DocumentalIntegration</members>
+        <members>HDT_WS_SelfReadings</members>
         <name>ApexClass</name>
     </types>
     <types>
         <members>Account.BillingAddressFormula__c</members>
-        <members>BillingProfile__c.BankAccountSignatoryLastName__c</members>
+        <members>Asset.Contract__c</members>
         <members>BillingProfile__c.InvoicingAddressFormula__c</members>
-        <members>CS_DaysToExpiration__c.NumberOfDays__c</members>
-        <members>CS_DaysToExpiration__c.Type__c</members>
-        <members>Case.ExistingInstallmentPlanUnpaid__c</members>
-        <members>KpiTracking__c.AccountRatingCtrlLastUpdate__c</members>
-        <members>OrderItem.DurationVas__c</members>
-        <members>SBQQ__QuoteLine__c.DurationVas__c</members>
-        <members>SBQQ__Subscription__c.DurationVas__c</members>
+        <members>Case.CustomerMarking__c</members>
+        <members>Case.Phase__c</members>
+        <members>City__c.SDV__c</members>
+        <members>City__c.ServiceEle__c</members>
+        <members>City__c.ServiceGas__c</members>
+        <members>HDT_MatriceSocietaVendita__mdt.Comune__c</members>
+        <members>HDT_MatriceSocietaVendita__mdt.Marcatura__c</members>
+        <members>HDT_MatriceSocietaVendita__mdt.Offerta__c</members>
+        <members>HDT_MatriceSocietaVendita__mdt.SalesCompanyCode__c</members>
+        <members>HDT_MatriceSocietaVendita__mdt.SellerCompany__c</members>
+        <members>HDT_MatriceSocietaVendita__mdt.Service__c</members>
+        <members>HDT_MatriceSocietaVendita__mdt.distributor__c</members>
+        <members>HDT_MatriceSocietaVendita__mdt.isActive__c</members>
+        <members>HDT_SuspensionDays__mdt.ObjectName__c</members>
+        <members>HDT_SuspensionDays__mdt.Process__c</members>
+        <members>HDT_SuspensionDays__mdt.SuspensionDays__c</members>
+        <members>Order.CommercialId__c</members>
+        <members>Order.IsSequanzialized__c</members>
+        <members>Order.SaleBy__c</members>
+        <members>SBQQ__Quote__c.CommercialId__c</members>
+        <members>Sale__c.CommercialId__c</members>
+        <members>Sale__c.SaleBy__c</members>
+        <members>ServicePoint__c.SupplyAddress__c</members>
+        <members>wrts_prcgvr__Activity__c.EffectiveDate__c</members>
+        <members>wrts_prcgvr__Activity__c.HerokuPracticeCode__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_LCP_AcctStmtOpenLwc</members>
+        <members>HDT_LCP_SellingWizard</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>HDT_AccountDataEnrichment.cmor</members>
-        <members>HDT_AccountDataEnrichment.raiFee</members>
-        <members>HDT_AccountDataEnrichment.socialBonus</members>
         <members>HDT_IntegrationObject.Documentale_Context1</members>
         <members>HDT_IntegrationObject.Documentale_Context2</members>
-        <members>HDT_UserInputFlow.Preventivi_Nuovo_Impianto_Ele</members>
-        <members>HDT_UserInputFlow.Preventivi_Riepilogo_NI</members>
-        <members>HDT_UserInputFlow.Reclami_Dati_Tecnici_M02</members>
+        <members>HDT_MatriceSocietaVendita.X001</members>
+        <members>HDT_MatriceSocietaVendita.X002</members>
+        <members>HDT_MatriceSocietaVendita.X003</members>
+        <members>HDT_MatriceSocietaVendita.X004</members>
+        <members>HDT_MatriceSocietaVendita.X005</members>
+        <members>HDT_MatriceSocietaVendita.X006</members>
+        <members>HDT_MatriceSocietaVendita.X007</members>
+        <members>HDT_MatriceSocietaVendita.X008</members>
+        <members>HDT_MatriceSocietaVendita.X009</members>
+        <members>HDT_MatriceSocietaVendita.X010</members>
+        <members>HDT_MatriceSocietaVendita.X011</members>
+        <members>HDT_MatriceSocietaVendita.X012</members>
+        <members>HDT_MatriceSocietaVendita.X013</members>
+        <members>HDT_SuspensionDays.Case_Piano_Rateizzazione</members>
         <name>CustomMetadata</name>
     </types>
     <version>49</version>

@@ -3,7 +3,7 @@
     <fullName>SaleBy__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>Venduto da</label>
+    <label>User Vendita</label>
     <referenceTo>User</referenceTo>
     <relationshipName>Orders</relationshipName>
     <required>false</required>
