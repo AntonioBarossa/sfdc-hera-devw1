@@ -105,6 +105,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_PostSalesMasterBatch</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SCH_PostSalesMasterBatch</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_AccountAlerts</apexClass>
         <enabled>true</enabled>
     </classAccesses>
