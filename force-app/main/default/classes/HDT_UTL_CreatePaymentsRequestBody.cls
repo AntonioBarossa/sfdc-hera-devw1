@@ -152,6 +152,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
         }
 
+        caseToUpdate.NotCancellable__c = true;
         updateFuture(JSON.serialize(caseToUpdate));
 
     }
