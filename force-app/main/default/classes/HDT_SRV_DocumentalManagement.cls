@@ -313,7 +313,7 @@ public class HDT_SRV_DocumentalManagement{
 			System.debug(primolivello);
 			
 			//Inizializzo le variabili con i valori del primo record
-			String previousCA = (String)primolivello.get('contoContrattuale');
+			String previousCa = (String)primolivello.get('contoContrattuale');
 			String previousModPagamento = (String)primolivello.get('modalitaPagamentoCA');
 			String previousSocieta = (String)primolivello.get('societa');
 			Double residuoTotale = 0.0;
@@ -325,11 +325,11 @@ public class HDT_SRV_DocumentalManagement{
 				primolivello = (Map<String, Object>) singleRecord;
 				secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
 				
-				String currentCA = (String)primolivello.get('contoContrattuale');
+				String currentCa = (String)primolivello.get('contoContrattuale');
 				Double residuo = Double.valueOf(primolivello.get('residuo'));
 				String modPagamento = (String)primolivello.get('modalitaPagamentoCA');
 				String societa = (String)primolivello.get('societa');
-				String tDPareggio = ''; //TK 633881C
+				String tipoDocPareggio = ''; //TK 633881C
 				String[] record81 = new List<String>();
 				record81.add('00310');
 				record81.add('81');
@@ -356,7 +356,7 @@ public class HDT_SRV_DocumentalManagement{
 					//TK 633881C: cerchiamo al secondo livello il campo TD_PAREGGIO, se valorizzato con 'VC'
 					String tipoDocPareggioSecLivello = (String)secondoLivello.get('tDPareggio');
 					if (String.isNotBlank(tipoDocPareggioSecLivello) && tipoDocPareggioSecLivello == 'VC') {
-						tDPareggio = 'VC';
+						tipoDocPareggio = 'VC';
 					}
 					
 					String servizio = (String)secondoLivello.get('settoreMerceologico');
@@ -414,24 +414,24 @@ public class HDT_SRV_DocumentalManagement{
 				//NUOVI CAMPI aggiunti al tracciato per la Gestione Credito: CONTRATTO e TIPO_DOCUMENTO - Vuoti nell'EC
 				record81.add('');
 				record81.add('');
-				record81.add(tDPareggio); //TK 633881C
+				record81.add(tipoDocPareggio); //TK 633881C
 				record81.add(fineRiga);
 				servizioTlr = '';
 				altriServizi = '';
 				
 				// STESSO CA
-				if (currentCA == previousCA) {
+				if (currentCa == previousCa) {
 					residuoTotale += residuo;
 					payloadRecord81 += String.join(record81,div);
 				}
 
 				// Nuovo E Ultimo CA. Quindi dobbiamo generare DUE record 80.
 				String[] record80 = new List<String>();
-				if (currentCA != previousCA && i == primoLivelloList.size()-1) {
+				if (currentCa != previousCa && i == primoLivelloList.size()-1) {
 					record80.add('00310');
 					record80.add('80');
 					record80.add('1');
-					record80.add(previousCA);
+					record80.add(previousCa);
 					record80.add(previousModPagamento);
 					record80.add(String.valueOf(residuoTotale));
 					record80.add(fineRiga);
@@ -445,19 +445,19 @@ public class HDT_SRV_DocumentalManagement{
 					record80.add('00310');
 					record80.add('80');
 					record80.add('1');
-					record80.add(currentCA);
+					record80.add(currentCa);
 					record80.add(modPagamento);
 					record80.add(String.valueOf(residuoTotale));
 					record80.add(fineRiga);
 					
 					payload += String.join(record80,div) + payloadRecord81;
-				} else if (currentCA != previousCA || i == primoLivelloList.size()-1) {
+				} else if (currentCa != previousCa || i == primoLivelloList.size()-1) {
 					// NUOVO CA, oppure il CA è l'ultimo. Quindi siamo pronti per generare il record 80.
 					record80 = new List<String>();
 					record80.add('00310');
 					record80.add('80');
 					record80.add('1');
-					record80.add(previousCA);
+					record80.add(previousCa);
 					record80.add(previousModPagamento);
 					record80.add(String.valueOf(residuoTotale));
 					record80.add(fineRiga);
@@ -468,7 +468,7 @@ public class HDT_SRV_DocumentalManagement{
 					residuoTotale = residuo;
 					payloadRecord81 = String.join(record81,div);
 					// Salviamo il nuovo CA.
-					previousCA = currentCA;
+					previousCa = currentCa;
 					previousModPagamento = modPagamento;
 				}
 			}
@@ -510,7 +510,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			
 			Boolean ordineDiPagamento = false;
 
-			String previousCA = (String)primolivello.get('contoContrattuale');
+			String previousCa = (String)primolivello.get('contoContrattuale');
 			String previousModPagamento = (String)primolivello.get('modalitaPagamentoCA');
 			Double residuoTotale = 0;
 			String payloadRecord81 = '';
@@ -519,7 +519,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				i++;
 				primolivello = (Map<String, Object>) singleRecord;
 				secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
-				String currentCA = (String)primolivello.get('contoContrattuale');
+				String currentCa = (String)primolivello.get('contoContrattuale');
 				Double residuo = Double.valueOf(primolivello.get('residuo'));
 				String modPagamento = (String)primolivello.get('modalitaPagamentoCA');
 				
@@ -607,7 +607,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				record81.add(fineRiga);
 
 				// STESSO CA
-				if (currentCA == previousCA) {
+				if (currentCa == previousCa) {
 					if (!ordineDiPagamento) {
 						residuoTotale += residuo;
 					}
@@ -616,12 +616,12 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 
 				// Nuovo E Ultimo CA. Quindi dobbiamo generare DUE record 80.
 				String[] record80 = new List<String>();
-				if (currentCA != previousCA && i == primoLivelloList.size() - 1) {
+				if (currentCa != previousCa && i == primoLivelloList.size() - 1) {
 					record80 = new List<String>();
 					record80.add('00310');
 					record80.add('80');
 					record80.add('1');
-					record80.add(previousCA);
+					record80.add(previousCa);
 					record80.add(previousModPagamento);
 					record80.add(String.valueOf(residuoTotale));
 					record80.add(fineRiga);
@@ -635,19 +635,19 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 					record80.add('00310');
 					record80.add('80');
 					record80.add('1');
-					record80.add(currentCA);
+					record80.add(currentCa);
 					record80.add(modPagamento);
 					record80.add(String.valueOf(residuoTotale));
 					record80.add(fineRiga);
 					
 					payload += String.join(record80,div) + payloadRecord81;
-				} else if (currentCA != previousCA || i == primoLivelloList.size() - 1) {
+				} else if (currentCa != previousCa || i == primoLivelloList.size() - 1) {
 					// NUOVO CA, oppure il CA è l'ultimo. Quindi siamo pronti per generare il record 80.
 					record80 = new List<String>();
 					record80.add('00310');
 					record80.add('80');
 					record80.add('1');
-					record80.add(previousCA);
+					record80.add(previousCa);
 					record80.add(previousModPagamento);
 					record80.add(String.valueOf(residuoTotale));
 					record80.add(fineRiga);
@@ -658,7 +658,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 					residuoTotale = residuo;
 					payloadRecord81 = String.join(record81,div);
 					// Salviamo il nuovo CA.
-					previousCA = currentCA;
+					previousCa = currentCa;
 					previousModPagamento = modPagamento;
 				}
 			}
