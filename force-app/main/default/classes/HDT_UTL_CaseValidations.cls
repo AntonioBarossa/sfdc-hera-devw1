@@ -289,7 +289,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String currentMarking = a.CustomerMarking__c != null ? a.CustomerMarking__c : '';
 
         System.debug('validateModificaDatiContatto: current ' + c);
-        System.debug('validateModificaDatiContatto: new ' + newEmail + ';' + newPhone + ';' + newMobile + ';' + newFax + ';' + newPec);
+        System.debug('validateModificaDatiContatto: new ' + newEmail + ';' + newPhone + ';' + newMobile + ';' + newFax + ';' + newPec + ';' + newMarking);
+
+        if (String.isBlank(newMarking)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valorizzare la Marcatura del cliente.'));
+            return result;
+        }
 
         if (newEmail.equals(currentEmail) && newMobile.equals(currentMobile) && newPhone.equals(currentPhone) && newMarking.equals(currentMarking)
             && newPec.equals(currentPec) && newFax.equals(currentFax)) {
