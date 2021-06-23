@@ -12,7 +12,7 @@ public inherited sharing class HDT_LC_DocumentValidation {
         System.debug('**************:'+ord);
         // quelli mostrati ( non null) tutti validati -----> phase --->  Documentazione Validata
    		Boolean check = false;
-        if( ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null || ord.AutorizationVolturaThirdTrader__c != null)
+        if( /*Aggiunta carta identita*/ord.CIAccoutn__c != null || ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null || ord.AutorizationVolturaThirdTrader__c != null)
         {
            	check = true;
             //Per voltura
@@ -41,7 +41,11 @@ public inherited sharing class HDT_LC_DocumentValidation {
 
             Order orderRetrive = orderQr.getRecordById(ord.Id);
             if('Documentazione Gestita'.EqualsIgnoreCase(orderRetrive.ParentOrder__r.Phase__c)){
-                ord.Phase__c = 'Comunicazione verso Heroku';
+                if(orderRetrive.RecordType.DeveloperName == 'HDT_RT_Voltura'){
+                    ord.Phase__c = 'Documentazione Validata';
+                } else {
+                   ord.Phase__c = 'Comunicazione verso Heroku';
+                }
             } else {
                 ord.Phase__c = 'Documentazione Validata';
             }

@@ -11,6 +11,9 @@ public with sharing class HDT_UTL_SwtichInProcess {
     public static Date getMaxAfterthoughtDate(Order order) {
 
         order = orderQr.getRecordById(order.id);
+        
+        Date signedDate = order.SignedDate__c;   
+        Date maxAfterthoughtDate = null;         
 
         if(order.Channel__c == null){
             system.debug('Impossibile calcolare Data Max Ripensamento per mancanza di Channel');
@@ -30,10 +33,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
         if(order.SignedDate__c == null){
             system.debug('Impossibile calcolare Data Max Ripensamento per mancanza di SignedDate__c');
         }
-        
 
-        Date signedDate = order.SignedDate__c;   
-        Date maxAfterthoughtDate = null;  
         List<HDT_AfterthoughtDays__mdt> afterthoughtDays3 = [ // Giorni di ripensamento
                                                                 SELECT AfterthoughtDays__c 
                                                                 FROM HDT_AfterthoughtDays__mdt 
@@ -49,10 +49,15 @@ public with sharing class HDT_UTL_SwtichInProcess {
         if(afterthoughtDays3.isEmpty()){
             maxAfterthoughtDate = signedDate;                      
         }else{
-            maxAfterthoughtDate = signedDate.addDays((Integer)afterthoughtDays3[0].AfterthoughtDays__c);                      
+            if(order.ProcessType__c == 'Cambio offerta'){
+                // manca la logica dell'esecuzione anticipata 
+                maxAfterthoughtDate = signedDate;            
+            }else{
+                maxAfterthoughtDate = signedDate.addDays((Integer)afterthoughtDays3[0].AfterthoughtDays__c);                      
+            }            
         }        
-        system.debug('HDT_UTL_SwtichInProcess - getMaxAfterthoughtDate: ' + MaxAfterthoughtDate);
-        return MaxAfterthoughtDate;
+        system.debug('HDT_UTL_SwtichInProcess - getMaxAfterthoughtDate: ' + maxAfterthoughtDate);
+        return maxAfterthoughtDate;
 
     }
 
@@ -63,7 +68,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
 
         Date signedDate = order.SignedDate__c;   
         Date dateSentToSii= null;
-        if(signedDate != null){
+        if(signedDate != null  && order.ProcessType__c != 'Cambio Offerta'){
             if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
 
                 // DIRITTO DI RINUNCIA DI RIPENSAMENTO
@@ -97,32 +102,20 @@ public with sharing class HDT_UTL_SwtichInProcess {
     // Data di decorrenza
     public static Date getEffectiveDate(Order order) {
 
-        order = orderQr.getRecordById(order.id);
-        
         Date effectiveDateTmp = null;
         Date dateDecorrenzaTmp = null;
         String processType = PROCESSTYPEBYRRECORDTYPEMAP.get(order.RecordType.DeveloperName);
-
-        // Inizio Questa parte è da definire con Ravicini per il campo isReseller
-        // Verificare con luca
-        // if(order.isReseller == true && processType == 'Switch In'){
-        //     processType = processTypeMap.get('isReseller');
-        // }
-        // Fine Questa parte è da definire con Ravicini per il campo isReseller
-
-        Date dateToSii = getDateSentToSii(order);
-        //Date dateToSii_tmp = date.valueof(dateToSii.format('yyyy-MM-dd'));
+        order = orderQr.getRecordById(order.id);
+        Date dateToFrom = null;
+        if(order.ProcessType__c == 'Cambio offerta'){
+            dateToFrom = order.SignedDate__c; // Per cambio offerta entrare in tabella con la data firma o la data massima di ripensamento se no esecuzione anticipata
+        }else{
+            dateToFrom = getDateSentToSii(order);
+        }
         
-        system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - OriginMarket__c: ' + order.MarketOrigin__c );
-        system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - Commodity__c: ' + order.ServicePoint__r.CommoditySector__c  );
-        system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - VoltageLevel__c: ' + order.VoltageLevel__c);
-        system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - SupplyType__c: ' + order.SupplyType__c );
-        system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - DateSentToSII: ' + dateToSii);
-        system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - Account: ' + order.Account);
-
-
+        
         if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
-
+            system.debug('SELECT ActivationDate__c FROM HDT_FulfillmentDateMatrix__c WHERE OriginMarket__c = ' + order.MarketOrigin__c + ' AND Commodity__c = ' + order.ServicePoint__r.CommoditySector__c + ' AND VoltageLevel__c = ' + order.VoltageLevel__c + '  AND ProcessType__c = ' + processType + ' AND SupplyType__c = ' + order.SupplyType__c + ' AND (FulfillmentDateFrom__c <= ' + dateToFrom + ' AND FulfillmentDateTo__c >= ' + dateToFrom + ' )');
             List<HDT_FulfillmentDateMatrix__c> afterthoughtDays = [
                                                                     SELECT ActivationDate__c 
                                                                     FROM HDT_FulfillmentDateMatrix__c 
@@ -131,7 +124,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
                                                                             AND VoltageLevel__c =: order.VoltageLevel__c 
                                                                             AND ProcessType__c = :processType
                                                                             AND SupplyType__c =: order.SupplyType__c 
-                                                                            AND (FulfillmentDateFrom__c <=: dateToSii AND FulfillmentDateTo__c >=: dateToSii)
+                                                                            AND (FulfillmentDateFrom__c <=: dateToFrom AND FulfillmentDateTo__c >=: dateToFrom)
                                                                             WITH SECURITY_ENFORCED
                 ];
             if(!afterthoughtDays.isEmpty()){
@@ -142,7 +135,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
         }
         else{
             if(order.RecessNotice__c == null){
-                system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - RecessNotice__c: ');
+                
                 List<HDT_FulfillmentDateMatrix__c> afterthoughtDays2 = [
                 SELECT ActivationDate__c 
                 FROM HDT_FulfillmentDateMatrix__c 
@@ -151,20 +144,18 @@ public with sharing class HDT_UTL_SwtichInProcess {
                         AND VoltageLevel__c =: order.VoltageLevel__c 
                         AND ProcessType__c = :processType 
                         AND SupplyType__c =: order.SupplyType__c 
-                        AND (FulfillmentDateFrom__c <= :dateToSii AND FulfillmentDateTo__c >= :dateToSii)
+                        AND (FulfillmentDateFrom__c <= :dateToFrom AND FulfillmentDateTo__c >= :dateToFrom)
                         WITH SECURITY_ENFORCED
                 ];
 
                 effectiveDateTmp = afterthoughtDays2[0].ActivationDate__c;
             }else{
-                dateDecorrenzaTmp = dateToSii.addMonths((Integer)order.RecessNotice__c);
+                dateDecorrenzaTmp = dateToFrom.addMonths((Integer)order.RecessNotice__c);
                 effectiveDateTmp = dateDecorrenzaTmp.addMonths(1).toStartofMonth();
             }
-        }    
+        } 
 
-        
-
-        system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate: ' + effectiveDateTmp);
+        system.debug('Data di decorrenza: ' + effectiveDateTmp);
         return effectiveDateTmp;
     }
 
