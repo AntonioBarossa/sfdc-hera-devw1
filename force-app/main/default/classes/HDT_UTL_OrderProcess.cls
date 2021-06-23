@@ -94,7 +94,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         Order orderToUpdate = new Order();
                         orderToUpdate.id = newOrder.Id;                                        
                         orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
-                        if(newOrder.ProcessType__c != 'Cambio Offerta'){
+                        if(newOrder.ProcessType__c != 'Cambio Offerta'){ // Solo per Cambio Offerta
                             orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(newOrder);
                         }                             
                         orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(newOrder); // Data di decorrenza
