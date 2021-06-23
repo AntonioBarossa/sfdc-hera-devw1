@@ -14,6 +14,7 @@
                 var accountId;
                 var saleId;
                 var campaignId;
+                var campaignCommissioningId;
                 component.set('v.isCommunity', res);
 
                 if (res){
@@ -39,6 +40,10 @@
                         if (testParam[0] == 'c__campaignId'){
                             campaignId = testParam[1];
                             component.set("v.campaignId", campaignId);
+                        }
+                        if (testParam[0] == 'c__campaignCommissioningId'){
+                            campaignCommissioningId = testParam[1];
+                            component.set("v.campaignCommissioningId", campaignCommissioningId);
                         }
                         
                     }

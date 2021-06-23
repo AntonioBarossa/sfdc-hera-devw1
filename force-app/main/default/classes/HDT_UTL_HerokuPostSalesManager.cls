@@ -346,6 +346,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     public Case handleRequestRichPass(HDT_WRP_HerokuPostSalesManager reqWrp){
         Case currentCase = new Case();
+        Case relatedCase = new Case();
+        Case containerCase = new Case();
+        List<Case> caseInsertList = new List<Case>();
+        List<Case> caseUpdateList = new List<Case>();
+        HDT_CausalCodeCalculation__mdt causalCodeMdt = new HDT_CausalCodeCalculation__mdt();
         String tipo = '';
         String sottotipo = '';
         String cluster = '';
@@ -359,6 +364,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String codiceContratto = '';
         String contoContrattuale = '';
         String sapContractCode = null;
+        String relatedRecordId = '';
         Contract contract;
         ServicePoint__c sp;
         Account account;
@@ -377,6 +383,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             ufficioCompetente = reqWrp.requestMap.get('UFFICIO_COMPETENTE');
             codiceContratto = reqWrp.requestMap.get('CODICE_CONTRATTO');
             contoContrattuale = reqWrp.requestMap.get('CONTO_CONTRATTUALE');
+            relatedRecordId = reqWrp.requestMap.get('SALESFORCE_KEY');
             if(String.isNotBlank(pod)){
                 if(String.isNotBlank(codiceCliente))
                     account = qrClass.getAccount(codiceCliente);
@@ -449,6 +456,25 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             if(String.isNotBlank(ufficioCompetente)){
                                 currentCase.CompetentOffice__c = ufficioCompetente;
                             }
+                            if(String.isNotBlank(relatedRecordId)){
+                                String containerId;
+                                relatedCase = qrClass.getCaseRecord(relatedRecordId);
+                                if(relatedCase != null){
+                                    currentCase.RelatedCase__c = relatedCase.Id;
+                                    containerId = morUtl.handleContainer(relatedCase);
+                                    //Se c'e il container
+                                    if(String.isNotBlank(containerId)){
+                                        if(containerId instanceOf Id){
+                                            currentCase.ParentId = containerId;
+                                        }else{
+                                            containerCase = (Case) JSON.deserialize(containerId, Case.class);
+                                            caseInsertList.add(containerCase);
+                                        }
+                                    }
+                                }else {
+                                    throw new HDT_UTL_RichPassException('Nessun riferimento SALESFORCE_KEY presente a sistema');
+                                }
+                            }
                             currentCase.Phase__c = 'Bozza';
                             currentCase.Status = 'New';
                         }when else{
@@ -467,16 +493,31 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase = dataEnrichment(pod,sapContractCode,currentCase);
             }catch(Exception e){
                 System.debug('Impossibile arrichire dati: ' + e.getMessage());
-            }           
-            HDT_UTL_DatabaseService.insertSObject(currentCase);
+            }
+            //add causal code
+            causalCodeMdt = qrClass.getCausalCode(currentCase.Cluster__c, currentCase.Type, sp.CommoditySector__c);
+            if(causalCodeMdt != null){
+                currentCase.CausalCode__c = causalCodeMdt.CausalCode__c;
+            }
+            caseInsertList.add(currentCase);           
+            HDT_UTL_DatabaseService.insertSObject(caseInsertList);
             if(currentCase.EarlyRecess__c){
                 createActivity(currentCase.Id,null, '', 'Recesso Anticipato');
             }
             currentCase = qrClass.getCaseRecord(currentCase.Id);
             if(cluster == 'Morosita'){
+                //caso in cui c'e anche il case contenitore quindi serve legare al case referenziato il container creato
+                if(caseInsertList.size() > 1){
+                    relatedCase.ParentId = containerCase.Id;
+                    caseUpdateList.add(relatedCase);
+                }
+                if(currentCase.ParentId == null){
+                    currentCase.ParentId = containerCase.Id;
+                }
                 currentCase.Phase__c = 'Da Inviare';
                 currentCase.Status = 'In Lavorazione';
-                HDT_UTL_DatabaseService.updateSObject(currentCase);
+                caseUpdateList.add(currentCase);
+                HDT_UTL_DatabaseService.updateSObject(caseUpdateList);
             }
         } catch (Exception ex) {
             throw ex;
