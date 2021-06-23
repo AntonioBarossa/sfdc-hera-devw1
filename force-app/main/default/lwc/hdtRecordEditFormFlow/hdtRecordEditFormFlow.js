@@ -416,6 +416,10 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
         console.log('#PaymentType --> ' + paymentType);
 
+        let customerAssisted = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'CutomerAssisted__c')).length === 0)
+        ? this.firstColumn.filter(element => element['FieldName'] === 'CutomerAssisted__c')
+        : this.secondColumn.filter(element => element['FieldName'] === 'CutomerAssisted__c');
+
         if(!(Object.keys(reasonObj).length === 0)){
 
             let reason = this.template.querySelector('lightning-input-field[data-id="Reason__c"]') != null
@@ -436,6 +440,18 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         } else {
                             payType.disabled = true;
                             payType.value = '';
+                        }
+                    }
+                    if(!(Object.keys(customerAssisted).length === 0)){
+                        console.log('Inside customer assistedCondition');
+                        let customerCheck = this.template.querySelector('lightning-input-field[data-id="CutomerAssisted__c"]') != null
+                        ? this.template.querySelector('lightning-input-field[data-id="CutomerAssisted__c"]')
+                        : null;
+                        console.log('#Valore customerCheck -> ' +customerCheck.value);
+                        if(reason.value.localeCompare('Assistenza Sociale') === 0 && customerCheck != null){
+                            customerCheck.value = true;
+                        } else {
+                            customerCheck.value = false;
                         }
                     }
                 }
