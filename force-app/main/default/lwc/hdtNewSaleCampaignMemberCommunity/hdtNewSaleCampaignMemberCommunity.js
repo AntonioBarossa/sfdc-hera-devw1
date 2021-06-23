@@ -26,7 +26,7 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
                     },
                     state: {
                         c__accountId: data.GenericField1__c,
-                        c__campaignId: data.CampaignId,
+                        c__campaignCommissioningId: data.CampaignId,
                     }
                 }).then(url => {
                     window.open(url, "_blank");

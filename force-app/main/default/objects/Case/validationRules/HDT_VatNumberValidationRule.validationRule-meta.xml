@@ -3,5 +3,5 @@
     <fullName>HDT_VatNumberValidationRule</fullName>
     <active>true</active>
     <errorConditionFormula>OR(AND(!ISBLANK(VatNumber__c),!REGEX(VatNumber__c, &quot;[0-9]{11}$&quot;)),AND(!ISBLANK(VATGroup__c),!REGEX(VATGroup__c, &quot;[0-9]{11}$&quot;)))</errorConditionFormula>
-    <errorMessage>La Partita IVA inserita non è corretta</errorMessage>
+    <errorMessage>La Partita IVA deve contenere 11 cifre numeriche.</errorMessage>
 </ValidationRule>
