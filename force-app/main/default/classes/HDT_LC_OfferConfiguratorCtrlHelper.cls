@@ -507,7 +507,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             return mulesoftResponse;
         }
 
-        updateProductAfterSap(technicalOfferId, 'NewSApcode', 'ok');
+        updateProductAfterSap(technicalOfferId, 'NewSapCode', 'ok');
 
         mulesoftResponse.success = true;
         mulesoftResponse.message = 'Offerta inviata a SAP correttamente';
