@@ -83,6 +83,10 @@ public inherited sharing class HDT_QR_Contact {
         }
         return res;
     }
+    
+    public List<Contact> getContactsIdByAccountIdList(List<String> accountIds) {
+        return [Select id from Contact where AccountId IN : accountIds];
+    }
 
     // INIZIO SVILUPPI EVERIS
 

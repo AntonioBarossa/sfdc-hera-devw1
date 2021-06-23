@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CommercialId__c</fullName>
     <externalId>false</externalId>
-    <label>Id Commerciale</label>
+    <label>Venduto Da</label>
     <length>100</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

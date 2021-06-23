@@ -5,6 +5,7 @@ import cancelQuote from '@salesforce/apex/HDT_LC_ConfigureProduct.cancelQuote';
 import updateSaleNext from '@salesforce/apex/HDT_LC_ConfigureProduct.updateSaleNext';
 import updateSalePrevious from '@salesforce/apex/HDT_LC_ConfigureProduct.updateSalePrevious';
 import amendContract from '@salesforce/apex/HDT_LC_ConfigureProduct.amendContract';
+import checkDueProduct from '@salesforce/apex/HDT_LC_ConfigureProduct.checkApprovedProduct';
 
 export default class hdtConfigureProduct extends LightningElement {
     
@@ -207,9 +208,37 @@ export default class hdtConfigureProduct extends LightningElement {
 
     updateSaleRecordNext(saleData){
         this.loaded = false;
-        updateSaleNext({sale: saleData}).then(data =>{
-            this.loaded = true;
-            this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
+        // logica approvazione
+        checkDueProduct({sale: saleData}).then(data =>{
+            let check = data.wrapCheck;
+            let errorM = data.responseError;
+            if(check){
+                updateSaleNext({sale: saleData}).then(data =>{
+                    this.loaded = true;
+                    this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
+                }).catch(error => {
+                    this.loaded = true;
+                    console.log(error.body.message);
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: error.body.message,
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+                });
+            }
+            else{
+                this.loaded = true;
+                console.log(error.body.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'i seguenti prodotti sono scaduti e senza approvazione: ' + errorM,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            }
         }).catch(error => {
             this.loaded = true;
             console.log(error.body.message);
