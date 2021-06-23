@@ -9,7 +9,7 @@ public class HDT_SRV_DocumentalManagement{
 		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
 		String documentalContext = HDT_UTL_DocumentalManagement.getDocumentalContext(context);
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure payloadStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration(documentalContext);
-		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure driverStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration('Driver2');
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure driverStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration('Driver3');
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject integrationObjConfig =  HDT_UTL_IntegrationObject.getIntegrationObjectConfiguration('HDT_IntegrationObject__mdt', 'Id, JSON__c', 'DeveloperName = \'Documentale_'+ documentalContext + '\'', 'JSON__c');
 		Map<String,String> recordQueryMap = HDT_UTL_IntegrationObject.generateQueryString(integrationObjConfig,recordId); 
 		List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(recordQueryMap.get('queryString'), recordQueryMap.get('parentObject'));
@@ -18,6 +18,13 @@ public class HDT_SRV_DocumentalManagement{
 		for(Integer i=0; i < recordObjectsListMap.size(); i++){
 			driver = generateDriver(recordObjectsListMap[i], driverStructure,formParamsMap);
 			payload = generatePayload(recordObjectsListMap[i], payloadStructure,formParamsMap);
+			if(context.equalsIgnoreCase('EC')){
+				payload += generatePayloadEstrattoConto(formParamsMap);
+			}else if(context.equalsIgnoreCase('GC')){
+				payload += generatePayloadGestioneCredito(formParamsMap);
+			}
+			Blob payloadBlob = Blob.valueOf(payload);
+			payload = EncodingUtil.base64Encode(payloadBlob);
 			System.debug('Paylod ' + payload);
 			driverPayloadMap.put('driver', driver);
 			driverPayloadMap.put('payload', payload);
@@ -269,10 +276,403 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}	
 		}
-		Blob payloadBlob = Blob.valueOf(payload);
-		payload = EncodingUtil.base64Encode(payloadBlob);
+		//Blob payloadBlob = Blob.valueOf(payload);
+		//payload = EncodingUtil.base64Encode(payloadBlob);
 		return payload;		
 	}
+
+	/*
+
+		Genera la porzione di payload relativa all'Estratto Conto, in particolare le sezioni 80 e 81.
+		Esempio di stringa generata (con due CA, ognuno con una sezione 81):
+
+		'00310|80|1|200000291833|bollettino postale|28.92|
+		00310|81|2|Hera S.p.A.|X||||0000106000081527|NO|10/01/2006|28.92|28.92|||31/01/2006|
+		00310|80|1|200000585749|bollettino postale|858.41|
+		00310|81|2|HERA Comm Unipersonale|||X||0000406000130632|NO|01/02/2006|858.41|858.41|||23/02/2006|'
+
+		*/
+
+	public static String generatePayloadEstrattoConto(Map<String,Object> formParams){
+		String payload = '';
+		String div='|';
+		String fineRiga='\n';
+		try {
+			String servizioAcqua = 'ACQUA';
+			String servizioEle = 'ENERGIA ELETTRICA';
+			String servizioGas = 'GAS';
+			String servizioAmbiente = 'AMBIENTE';
+			String servizioTlr = '';
+			String altriServizi = '';
+			Boolean storno = false;
+			String documents = (String) formParams.get('EstrattoConto');
+			List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documents);
+			Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
+			List<Object> secondoLivelloList = new List<Object>();
+			Map<String, Object> secondoLivello = new Map<String, Object>();
+			System.debug(primolivello);
+			
+			//Inizializzo le variabili con i valori del primo record
+			String previousCA = (String)primolivello.get('contoContrattuale');
+			String previousModPagamento = (String)primolivello.get('modalitaPagamentoCA');
+			String previousSocieta = (String)primolivello.get('societa');
+			Double residuoTotale = 0.0;
+			String payloadRecord81 = '';
+			Integer i = -1;
+			
+			for (Object singleRecord : primoLivelloList) {
+				i++;
+				primolivello = (Map<String, Object>) singleRecord;
+				secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
+				
+				String currentCA = (String)primolivello.get('contoContrattuale');
+				Double residuo = Double.valueOf(primolivello.get('residuo'));
+				String modPagamento = (String)primolivello.get('modalitaPagamentoCA');
+				String societa = (String)primolivello.get('societa');
+				String tDPareggio = ''; //TK 633881C
+				String[] record81 = new List<String>();
+				record81.add('00310');
+				record81.add('81');
+				record81.add('2');
+				record81.add(societa);
+
+				// Inizializziamo quattro elementi per i 4 flag servizio (Acqua, EE, Gas, Ambiente)
+				for (Integer j = 0; j < 4; j++) {
+					record81.add('');
+				}
+
+				// Per valorizzare i 4 flag servizio bisogna scendere al secondo livello informativo.
+				// TICKET 572291C: tracciamo se al secondo livello il motivo di pareggio è STORNO.
+				
+				for (Object singleRecordSecondoLivello : secondoLivelloList) {
+					secondoLivello = (Map<String, Object>) singleRecordSecondoLivello;
+					Integer n = record81.size();
+					String motivoDiPareggio = (String)secondoLivello.get('motivoDiPareggio');
+					if (motivoDiPareggio == 'STORNO') {
+						storno = true;
+					} else {
+						storno = false;
+					}
+					//TK 633881C: cerchiamo al secondo livello il campo TD_PAREGGIO, se valorizzato con 'VC'
+					String tipoDocPareggioSecLivello = (String)secondoLivello.get('tDPareggio');
+					if (String.isNotBlank(tipoDocPareggioSecLivello) && tipoDocPareggioSecLivello == 'VC') {
+						tDPareggio = 'VC';
+					}
+					
+					String servizio = (String)secondoLivello.get('settoreMerceologico');
+					servizio = servizio != null? servizio.toUpperCase():'';
+					if (servizio == servizioAcqua) {
+						record81[(n-1) - 3] = 'X';
+					} else if (servizio == servizioEle) {
+						record81[(n-1) - 2] = 'X';
+					} else if (servizio == servizioGas) {
+						record81[(n-1) - 1] = 'X';
+					} else if (servizio == servizioAmbiente) {
+						record81[(n-1)] = 'X';
+					} else if (servizio == 'TELERISCALDAMENTO') {
+						servizioTlr = 'X';
+					} else if (servizio != '') {
+						altriServizi = 'X';
+					}
+				}
+				if(String.isNotBlank((String)primolivello.get('numeroDocumento'))){
+					record81.add((String)primolivello.get('numeroDocumento'));
+				}else{
+					String numeroFattura = (String)primolivello.get('numeroFattura') != null? (String)primolivello.get('numeroFattura'):'';
+					for(Integer z = 0; z < numeroFattura.length(); z++){
+						if(numeroFattura.charAt(z) != 0){
+							numeroFattura = numeroFattura.substring(z,numeroFattura.length());
+							record81.add(numeroFattura);
+							break;
+						}
+					}
+					//record81.add(childPrimoLivello.GetProperty('NumeroFattura'));
+				}	
+				record81.add((String)primolivello.get('rateizzato'));
+				if(String.isNotBlank((String)primolivello.get('dataEmissione'))){
+					//String dataEmissione = new Date(childPrimoLivello.GetProperty('DataEmissione'));
+					record81.add((String)primolivello.get('dataEmissione'));
+				}else{
+					record81.add('');
+				}
+				
+				Double importo = Double.valueOf(primolivello.get('importo'));
+				record81.add(String.valueOf(importo));
+				record81.add(String.valueOf(residuo));
+				String docStatus = HDT_UTL_DocumentalManagement.calculateDocumentStatus(importo, residuo, storno);
+				record81.add(docStatus);
+				record81.add((String)primolivello.get('Ceduta'));
+				if(String.isNotBlank((String)primolivello.get('dataScadenza'))){
+					//String dataScadenza = new Date(childPrimoLivello.GetProperty('DataScadenza'));
+					record81.add((String)primolivello.get('dataScadenza'));
+				}else{
+					record81.add('');
+				}
+				//AGGIUNTI FLAG SERVIZI IN CODA PERCHE' PRIMA NON GESTITI
+				record81.add(servizioTlr);
+				record81.add(altriServizi);
+				//NUOVI CAMPI aggiunti al tracciato per la Gestione Credito: CONTRATTO e TIPO_DOCUMENTO - Vuoti nell'EC
+				record81.add('');
+				record81.add('');
+				record81.add(tDPareggio); //TK 633881C
+				record81.add(fineRiga);
+				servizioTlr = '';
+				altriServizi = '';
+				
+				// STESSO CA
+				if (currentCA == previousCA) {
+					residuoTotale += residuo;
+					payloadRecord81 += String.join(record81,div);
+				}
+
+				// Nuovo E Ultimo CA. Quindi dobbiamo generare DUE record 80.
+				String[] record80 = new List<String>();
+				if (currentCA != previousCA && i == primoLivelloList.size()-1) {
+					record80.add('00310');
+					record80.add('80');
+					record80.add('1');
+					record80.add(previousCA);
+					record80.add(previousModPagamento);
+					record80.add(String.valueOf(residuoTotale));
+					record80.add(fineRiga);
+
+					payload += String.join(record80,div) + payloadRecord81;
+
+					residuoTotale = residuo;
+					payloadRecord81 = String.join(record81,div);
+
+					record80 = new List<String>();
+					record80.add('00310');
+					record80.add('80');
+					record80.add('1');
+					record80.add(currentCA);
+					record80.add(modPagamento);
+					record80.add(String.valueOf(residuoTotale));
+					record80.add(fineRiga);
+					
+					payload += String.join(record80,div) + payloadRecord81;
+				} else if (currentCA != previousCA || i == primoLivelloList.size()-1) {
+					// NUOVO CA, oppure il CA è l'ultimo. Quindi siamo pronti per generare il record 80.
+					record80 = new List<String>();
+					record80.add('00310');
+					record80.add('80');
+					record80.add('1');
+					record80.add(previousCA);
+					record80.add(previousModPagamento);
+					record80.add(String.valueOf(residuoTotale));
+					record80.add(fineRiga);
+
+					payload += String.join(record80,div) + payloadRecord81;
+
+					// Reset Stringiabili globali che sono concatenate finchè il CA non cambia.
+					residuoTotale = residuo;
+					payloadRecord81 = String.join(record81,div);
+					// Salviamo il nuovo CA.
+					previousCA = currentCA;
+					previousModPagamento = modPagamento;
+				}
+			}
+
+			// Rimuoviamo lo \n alla fine.
+			//Blob payloadBlob = Blob.valueOf(payload.substring(0, payload.length() - fineRiga.length()));
+			//payload = EncodingUtil.base64Encode(payloadBlob);
+			
+		} catch (Exception ex) {
+			System.debug('Errore nella generazione del Payload EC ' + ex.getMessage() + ' at line: ' + ex.getLineNumber());
+		}
+		return payload.substring(0, payload.length() - fineRiga.length());
+	}
+
+	/*
+
+Genera la porzione di payload relativa alla vista Gestione Credito.
+
+*/
+	public static String generatePayloadGestioneCredito(Map<String,Object> formParams){
+		String payload = '';
+		String div='|';
+		String fineRiga='\n';
+		try {
+			String servizioAcqua = 'ACQUA';
+			String servizioEle = 'ENERGIA ELETTRICA';
+			String servizioGas = 'GAS';
+			String servizioAmbiente = 'AMBIENTE';
+			String servizioTlr = '';
+			String altriServizi = '';
+			
+			Integer i = -1;
+			String documents = (String) formParams.get('GestioneCredito');
+			List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documents);
+			Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
+			List<Object> secondoLivelloList = new List<Object>();
+			Map<String, Object> secondoLivello = new Map<String, Object>();
+			System.debug(primolivello);
+			
+			Boolean ordineDiPagamento = false;
+
+			String previousCA = (String)primolivello.get('contoContrattuale');
+			String previousModPagamento = (String)primolivello.get('modalitaPagamentoCA');
+			Double residuoTotale = 0;
+			String payloadRecord81 = '';
+
+			for (Object singleRecord : primoLivelloList) {
+				i++;
+				primolivello = (Map<String, Object>) singleRecord;
+				secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
+				String currentCA = (String)primolivello.get('contoContrattuale');
+				Double residuo = Double.valueOf(primolivello.get('residuo'));
+				String modPagamento = (String)primolivello.get('modalitaPagamentoCA');
+				
+				if (String.isNotBlank((String)primolivello.get('OrdineDiPagamento'))) {
+					ordineDiPagamento = true;
+				} else {
+					ordineDiPagamento = false;	
+				}
+				
+				String[] record81 = new List<String>();
+				record81.add('00310');
+				record81.add('81');
+				record81.add('2');
+				record81.add(''); // La stampa della Gestione Credito non prevede la società nel pdf.
+
+				// Inizializziamo quattro elementi per i 4 flag servizio (Acqua, EE, Gas, Ambiente)
+				for (Integer j = 0; j < 4; j++) {
+					record81.add('');
+				}
+
+				//Valorizziamo i 4 flag servizio e ci segnamo se siamo nel caso TLR o Altri Servizi.
+				Integer n = record81.size();
+				String servizio = (String)primolivello.get('settoreMerceologico');
+				servizio = servizio != null? servizio.toUpperCase():'';
+				if (servizio == servizioAcqua) {
+					record81[(n-1) - 3] = 'X';
+				} else if (servizio == servizioEle) {
+					record81[(n-1) - 2] = 'X';
+				} else if (servizio == servizioGas) {
+					record81[(n-1) - 1] = 'X';
+				} else if (servizio == servizioAmbiente) {
+					record81[(n-1)] = 'X';
+				} else if (servizio == 'TELERISCALDAMENTO') {
+					servizioTlr = 'X';
+				} else if (servizio == 'ALTRI SERVIZI') {
+					altriServizi = 'X';
+				}
+
+				if(String.isNotBlank((String)primolivello.get('documento'))){
+					record81.add((String)primolivello.get('documento'));
+				}else{
+					String numeroFattura = (String)primoLivello.get('numeroFattura');
+					for(Integer z = 0; z < numeroFattura.length(); z++){
+						if(numeroFattura.charAt(z) != 0){
+							numeroFattura = numeroFattura.substring(z,numeroFattura.length());
+							record81.add(numeroFattura);
+							break;
+						}
+					}
+					//record81.add((String)primoLivello.get('numeroFattura'));
+				}
+				record81.add((String)primoLivello.get('rateizzato'));
+				if(String.isNotBlank((String)primoLivello.get('DataEmissione'))){
+					String dataEmissione = (String)primoLivello.get('dataEmissione');
+					record81.add(dataEmissione);
+				}else{
+					record81.add('');
+				}
+				
+				record81.add('');
+				
+				if (ordineDiPagamento) {
+					record81.add('0');
+				} else {
+					record81.add(String.valueOf(residuo));
+				}
+				String ufficioIncassi = primolivello.get('recuperoCrediti') != null? (String) primolivello.get('recuperoCrediti'):'';
+				String docStatus = HDT_UTL_DocumentalManagement.calculateDocumentStatusGc(ufficioIncassi, residuo, ordineDiPagamento);
+				record81.add(docStatus);
+				record81.add((String)primoLivello.get('Ceduta'));
+				if(String.isNotBlank((String)primoLivello.get('dataScadenza'))){
+					record81.add((String)primoLivello.get('dataScadenza'));
+				}else{
+					record81.add('');
+				}
+				//AGGIUNTI FLAG SERVIZI IN CODA PERCHE' PRIMA NON GESTITI
+				record81.add(servizioTLR);
+				record81.add(altriServizi);
+
+				servizioTLR = '';
+				altriServizi = '';
+				//NUOVI CAMPI aggiunti al tracciato per la Gestione Credito: CONTRATTO e TIPO_DOCUMENTO 
+				record81.add((String)primoLivello.get('contratto'));
+				record81.add((String)primoLivello.get('tipoDoc'));
+				record81.add(fineRiga);
+
+				// STESSO CA
+				if (currentCA == previousCA) {
+					if (!ordineDiPagamento) {
+						residuoTotale += residuo;
+					}
+					payloadRecord81 += String.join(record81,div);
+				}
+
+				// Nuovo E Ultimo CA. Quindi dobbiamo generare DUE record 80.
+				String[] record80 = new List<String>();
+				if (currentCA != previousCA && i == primoLivelloList.size() - 1) {
+					record80 = new List<String>();
+					record80.add('00310');
+					record80.add('80');
+					record80.add('1');
+					record80.add(previousCA);
+					record80.add(previousModPagamento);
+					record80.add(String.valueOf(residuoTotale));
+					record80.add(fineRiga);
+
+					payload += String.join(record80,div) + payloadRecord81;
+
+					residuoTotale = residuo;
+					payloadRecord81 = String.join(record81,div);
+
+					record80 = new List<String>();
+					record80.add('00310');
+					record80.add('80');
+					record80.add('1');
+					record80.add(currentCA);
+					record80.add(modPagamento);
+					record80.add(String.valueOf(residuoTotale));
+					record80.add(fineRiga);
+					
+					payload += String.join(record80,div) + payloadRecord81;
+				} else if (currentCA != previousCA || i == primoLivelloList.size() - 1) {
+					// NUOVO CA, oppure il CA è l'ultimo. Quindi siamo pronti per generare il record 80.
+					record80 = new List<String>();
+					record80.add('00310');
+					record80.add('80');
+					record80.add('1');
+					record80.add(previousCA);
+					record80.add(previousModPagamento);
+					record80.add(String.valueOf(residuoTotale));
+					record80.add(fineRiga);
+
+					payload += String.join(record80,div) + payloadRecord81;
+
+					// Reset variabili globali che sono concatenate finchè il CA non cambia.
+					residuoTotale = residuo;
+					payloadRecord81 = String.join(record81,div);
+					// Salviamo il nuovo CA.
+					previousCA = currentCA;
+					previousModPagamento = modPagamento;
+				}
+			}
+
+			// Rimuoviamo lo \n alla fine.
+			//Blob payloadBlob = Blob.valueOf(payload.substring(0, payload.length() - fineRiga.length()));
+			//payload = EncodingUtil.base64Encode(payloadBlob);
+
+		} catch (Exception ex) {
+			System.debug('Errore nella generazione del Payload GC ' + ex.getMessage() + ' at line: ' + ex.getLineNumber());
+		}
+		return payload.substring(0, payload.length() - fineRiga.length());
+	}
+	
 
 	public static String getSignModeConfiguration(String processType, String source){
         String configurationJson = '';
