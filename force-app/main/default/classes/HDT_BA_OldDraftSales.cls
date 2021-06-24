@@ -8,8 +8,9 @@ public with sharing class HDT_BA_OldDraftSales implements Database.Batchable<sOb
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
         String numberOfDays = setNumberOfDays();
-
-        String query = 'SELECT Id, Status__c, CreatedDate, (SELECT Id, SBQQ__Status__c from Quotes__r), (SELECT Id, StageName from Opportunities__r) from Sale__c where Status__c=\'Bozza\' and CreatedDate <= LAST_N_DAYS:' + numberOfDays;
+        Date d = date.today();
+        Date d2 = d.addDays(-Integer.valueOf(numberOfDays));
+        String query = 'SELECT Id, Status__c, CreatedDate, (SELECT Id, SBQQ__Status__c from Quotes__r where SBQQ__Status__c !=  \'Cancelled\' AND SBQQ__Status__c != \'Rejected\'), (SELECT Id, StageName from Opportunities__r where StageName != \'Closed Lost\' AND stagename != \'Closed Cancelled\') from Sale__c where Status__c=\'Bozza\' and CreatedDate <= :d2';
         return Database.getQueryLocator(query);
         
     }
@@ -25,10 +26,12 @@ public with sharing class HDT_BA_OldDraftSales implements Database.Batchable<sOb
             
             //cancel vendita
             sale.Status__c = 'Annullata';
+            sale.CancellationReason__c = 'No conferma Cliente';
             sales.add(sale); 
             // cancel quote
             for(SBQQ__Quote__c quote : sale.Quotes__r) {
                 quote.SBQQ__Status__c = 'Annullata';
+                quote.CancellationReason__c = 'Volonta cliente';
                 quotes.add(quote);
             }
             // cancel opportunity
