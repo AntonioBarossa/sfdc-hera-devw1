@@ -78,7 +78,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         } else if (caseType == 'Nuovo Impianto - Aggiunta Attacco'){
 
             result = validateVariazioni(fields, caseType);
+        
+        } else if(caseType == 'Voltura Tecnica'){
 
+            result = validateVolturaTecnica(fields);
+ 
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -925,6 +929,24 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
         }
 
+
+    }
+
+    public String validateVolturaTecnica(String fields){
+
+        String result;
+
+        Date effectiveDate = getFieldValue(fields, 'EffectiveDate__c') != null
+            ? Date.valueOf(getFieldValue(fields, 'EffectiveDate__c'))
+            : null;
+        
+        if(effectiveDate < HDT_UTL_Case.addBusinessDay(System.today(), 3)){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile inserire una data inferiore a 3 giorni lavorativi'));
+        } else {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        }
+
+        return result;
 
     }
 
