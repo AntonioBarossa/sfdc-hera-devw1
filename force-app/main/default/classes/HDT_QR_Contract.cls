@@ -140,7 +140,8 @@ public inherited sharing class HDT_QR_Contract {
         return listCon;
     }
 
-
+    public List<Contract> getSupplyAddressByContractNumber(List<String> contractNumbers) {
+        return Database.query('SELECT Id, ContractNumber, ServicePoint__r.SupplyStreet__c, ServicePoint__r.SupplyStreetNumber__c, ServicePoint__r.SupplyPostalCode__c, ServicePoint__r.SupplyCity__c, ServicePoint__r.SupplyProvince__c FROM Contract where ContractNumber In '+ contractNumbers +' AND ServicePoint__c  != \'\' WITH SECURITY_ENFORCED');
 
     public List<Contract> getRecordsWithOrders(List<String> contractIds){
         return [
