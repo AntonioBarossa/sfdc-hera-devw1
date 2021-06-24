@@ -30370,7 +30370,7 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_PraticaInVolo</layout>
-        <recordType>Case.HDT_PraticaInVolo</recordType>
+        <recordType>Case.HDT_RT_FlyingRequest</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_Disattivazioni</layout>
@@ -30604,7 +30604,7 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-HDT_PraticaInVolo</layout>
-        <recordType>Order.HDT_PraticaInVolo</recordType>
+        <recordType>Order.HDT_RT_FlyingRequest</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-Switch in</layout>
