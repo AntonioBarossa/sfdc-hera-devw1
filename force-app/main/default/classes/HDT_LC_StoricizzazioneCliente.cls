@@ -5,17 +5,17 @@
 */
 
 public with sharing class HDT_LC_StoricizzazioneCliente {
-    public class Link{
+    public class HDT_LC_Link{
         @AuraEnabled public String label;
         @AuraEnabled public String value;
 
-        public Link(String label, String value){
+        public HDT_LC_Link(String label, String value){
             this.label = label;
             this.value = value;
         }
     }
     // Start Refactoring post intervento Andrea
-    public class Customer {
+    public class HDT_LC_Customer {
      
         @AuraEnabled public String Nome {get;set;}
         @AuraEnabled public String CodiceFiscale {get;set;}
@@ -25,7 +25,7 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
         @AuraEnabled public String isStoricizzato {get;set;}
         @AuraEnabled public String NomeProprio {get;set;}
  
-        public Customer(String Nome,
+        public HDT_LC_Customer(String Nome,
                         String CodiceFiscale,
                         String IVA,
                         String CodiceCliente,
@@ -45,10 +45,10 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
      // End Refactoring post intervento Andrea
     
     @AuraEnabled
-    public static List<Customer> getExternalCustomer( String searchKey, String sortBy, String sortDirection, String filterby) {
+    public static List<HDT_LC_Customer> getExternalCustomer( String searchKey, String sortBy, String sortDirection, String filterby) {
        System.debug('getExternalCustomer');
         
-        List <Customer> wrapperToreturn = new List <Customer>();
+        List <HDT_LC_Customer> wrapperToreturn = new List <HDT_LC_Customer>();
  
         if ( searchKey != null && searchKey != '' && searchKey.length() > 5) {
             
@@ -81,7 +81,7 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
 
             for(SiebelCustomer__x SiebelCustomer:listSiebelCustomer){
                 wrapperToreturn.add(
-                    new Customer(
+                    new HDT_LC_Customer(
                         SiebelCustomer.ALIAS_NAME__c,                       
                         SiebelCustomer.TAX_IDEN_NUM__c,
                         SiebelCustomer.VAT_REGN_NUM__c,
@@ -95,7 +95,7 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
  
             for(Account sfCustomer:listAccount){
                 wrapperToreturn.add(
-                    new Customer(
+                    new HDT_LC_Customer(
                         sfCustomer.LastName__c,
                         sfCustomer.FiscalCode__c,
                         sfCustomer.VATNumber__c,
