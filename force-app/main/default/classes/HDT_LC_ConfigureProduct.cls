@@ -255,7 +255,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         Map<String,wrts_prcgvr__Activity__c> orderLineActivity = new Map<String,wrts_prcgvr__Activity__c>();
             List<SBQQ__QuoteLine__c> quoteLinesActive = quoteLineQr.getActiveRecords(sale.Id);
             for(SBQQ__QuoteLine__c line : quoteLinesActive){
-                if(line.SBQQ__Product__c != null && (line.SBQQ__Product__r.Status__c == 'Scaduta' ||line.SBQQ__Product__r.EndDate__c < date.today())){//line.SBQQ__Product__r.EndDate__c < date.today()){
+                if(line.SBQQ__Product__c != null && line.SBQQ__Product__r.Status__c == 'Scaduta' ){//line.SBQQ__Product__r.EndDate__c < date.today()){
                     listId.add(line.id);
                     checkIsPresent.put(line.id,true);
                 }
