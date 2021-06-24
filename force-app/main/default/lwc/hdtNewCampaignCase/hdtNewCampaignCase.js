@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import createNewCase from '@salesforce/apex/HDT_LC_CampaignsController.createNewCase';
+import createNewCase from '@salesforce/apex/HDT_LC_CampaignsController.getServiceCatalogUrlByCaseType';
 
 export default class HdtNewCampaignCase extends NavigationMixin(LightningElement) {
     @api accountId;
@@ -24,14 +24,20 @@ export default class HdtNewCampaignCase extends NavigationMixin(LightningElement
         createNewCase({ c: this.caseObj }).then(data => {
             console.log(JSON.stringify(data));
             //navigate to new created case
-            this[NavigationMixin.Navigate]({
-                type: 'standard__recordPage',
-                attributes: {
-                    recordId: data.Id,
-                    objectApiName: 'Case',
-                    actionName: 'view'
-                },
-            });
+            if(data != null){
+                this[NavigationMixin.Navigate]({
+                        type: 'standard__webPage',
+                        attributes: {
+                            url: data
+                        }
+                    /*  type: 'standard__recordPage',
+                    attributes: {
+                        recordId: data.Id,
+                        objectApiName: 'Case',
+                        actionName: 'view'
+                    },*/
+                });
+            }
         }).catch(error => {
             console.log(error);
             this.dispatchEvent(

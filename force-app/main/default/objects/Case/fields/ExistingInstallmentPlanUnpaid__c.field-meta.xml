@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ExistingInstallmentPlanUnpaid__c</fullName>
-    <description>Piani rata già esistenti</description>
+    <description></description>
     <externalId>false</externalId>
-    <label>Piani rata già esistenti</label>
+    <label>Dati tecnici richiesta</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

@@ -84,20 +84,10 @@
     </decisions>
     <description>Flow per la gestione di Blocco Sollecito del cluster Pagamenti</description>
     <formulas>
-        <name>DateOne</name>
-        <dataType>Date</dataType>
-        <expression>DATEVALUE({!InputCase.CreatedDate}) + 45</expression>
-    </formulas>
-    <formulas>
-        <name>DateW</name>
-        <dataType>Date</dataType>
-        <expression>DATEVALUE({!InputCase.CreatedDate}) + 240</expression>
-    </formulas>
-    <formulas>
         <name>ExpirationDateFormula</name>
         <dataType>Date</dataType>
-        <expression>IF({!GetCaseAggiornato.BlockType__c} = &quot;W&quot;,DATEVALUE({!GetCaseAggiornato.CreatedDate})+240,
-     IF({!GetCaseAggiornato.BlockType__c} = &quot;1&quot;,DATEVALUE({!GetCaseAggiornato.CreatedDate})+45,null))</expression>
+        <expression>IF(CONTAINS(TEXT({!GetCaseAggiornato.BlockType__c}),&quot;W&quot;),DATEVALUE({!GetCaseAggiornato.CreatedDate})+240,
+     IF(CONTAINS(TEXT({!GetCaseAggiornato.BlockType__c}),&quot;1&quot;),DATEVALUE({!GetCaseAggiornato.CreatedDate})+45,null))</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_BloccoSollecitoInteressi {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Blocco Sollecito</label>

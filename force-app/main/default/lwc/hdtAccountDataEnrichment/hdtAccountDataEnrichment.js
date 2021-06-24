@@ -20,6 +20,11 @@ export default class HdtAccountDataEnrichment extends LightningElement {
     showErrorMessage = '';
     showSpinner = true;
     
+    //defaultSortDirection = 'desc';
+    sortDirection = 'desc';
+    sortedBy;
+    //asc = true;
+
     @api recordId;
     @api type;
 
@@ -58,7 +63,7 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 this.iconName2 = result.tables[1].iconName;
                 this.columns2 = result.tables[1].columns;
                 this.height2 = 'bottomTable';
-            }
+            } 
 
 
         }).catch(error => {
@@ -108,6 +113,83 @@ export default class HdtAccountDataEnrichment extends LightningElement {
             this.showSpinner = false;
         });
     
+    }
+
+    onHandleSort(event){
+        console.log('## sort event ## ');
+
+        try {
+            const { fieldName: sortedBy, sortDirection } = event.detail;
+            var sortField = sortedBy;
+
+            this.sortingMethod(sortField, sortDirection, 'data');
+
+            this.sortDirection = sortDirection;
+            this.sortedBy = sortedBy;
+
+        } catch(e) {
+            console.log(e);
+        }
+     
+    }
+
+    onHandleSort2(event){
+        console.log('## sort event ## ');
+
+        try {
+            const { fieldName: sortedBy, sortDirection } = event.detail;
+            var sortField = sortedBy;
+
+            this.sortingMethod(sortField, sortDirection, 'data2');
+
+            this.sortDirection = sortDirection;
+            this.sortedBy = sortedBy;
+
+        } catch(e) {
+            console.log(e);
+        }
+     
+    }
+
+    sortingMethod(sortField, sortDirection, dataTable){
+        console.log('## sortingMethod ## ');
+
+        try {
+
+            console.log('>>> sort by: ' + sortField);
+            console.log('>>> sortDirection: ' + sortDirection);
+
+            const cloneData = [...this[dataTable]];
+
+            cloneData.sort(function(a, b) {
+                var dateSplitted = b[sortField].split('/');
+
+                var data;
+                if(dateSplitted.length < 3){
+                    data = dateSplitted[1] + '/' + dateSplitted[0] + '/01';
+                } else {
+                    data = dateSplitted[1] + '/' + dateSplitted[0] + '/' + dateSplitted[2];
+                }
+                
+                var dateSplitted2 = a[sortField].split('/');
+                var data2;
+                if(dateSplitted.length < 3){
+                    data2 = dateSplitted2[1] + '/' + dateSplitted2[0] + '/01';
+                } else {
+                    data2 = dateSplitted2[1] + '/' + dateSplitted2[0] + '/' + dateSplitted2[2];
+                }
+
+                if(sortDirection === 'asc'){
+                    return (new Date(data) > new Date(data2)) ? 1 : -1;
+                } else {
+                    return (new Date(data) < new Date(data2)) ? 1 : -1;
+                }
+
+            });
+            this[dataTable] = cloneData;
+        } catch(e) {
+            console.log(e);
+        }
     }
 
     openKnowledgeArticle(){

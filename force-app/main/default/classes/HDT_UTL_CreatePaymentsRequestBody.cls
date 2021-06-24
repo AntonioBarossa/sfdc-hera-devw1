@@ -152,6 +152,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
         }
 
+        caseToUpdate.NotCancellable__c = true;
         updateFuture(JSON.serialize(caseToUpdate));
 
     }
@@ -239,6 +240,36 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         Case c = (Case) JSON.deserialize(inputString, Case.class);
 
         HDT_UTL_DatabaseService.updateSObject(c);
+
+    }
+
+    public Date addBusinessDay(Date startDate, Integer businessDayToAdd){
+
+        Date finalDate = startDate;
+
+        Integer direction = businessDayToAdd < 0 ? -1 : 1;
+
+        while(businessDayToAdd != 0){
+
+            finalDate = finalDate.addDays(direction);
+            
+            if(!isWeekend(finalDate)){
+
+                businessDayToAdd -= direction;
+            
+            }
+
+        }
+
+        return finalDate;
+
+    }
+
+    public Boolean isWeekend(Date myDate){
+
+        String myDateString = Datetime.newInstance(myDate.year(), myDate.month(),myDate.day()).format('EEE');
+
+        return 'Sat'.equals(myDateString) || 'Sun'.equals(myDateString);
 
     }
 

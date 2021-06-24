@@ -2095,11 +2095,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.BillingAddessIsForeign__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.BillingAddress</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -19736,6 +19731,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.CommissioningCampaign__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.CommercialId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

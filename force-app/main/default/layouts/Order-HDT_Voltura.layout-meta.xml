@@ -13,11 +13,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ContractId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>TotalAmount</field>
+                <field>ContractReference__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -84,6 +80,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EffectiveDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RetroactiveDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SignedDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -271,7 +275,6 @@
         <fields>NAME</fields>
         <relatedList>DocumentalActivity__c.OrderId__c</relatedList>
     </relatedLists>
-    <relatedObjects>ContractId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>

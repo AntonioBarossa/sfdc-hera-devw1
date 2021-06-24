@@ -47,8 +47,8 @@ public with sharing class HDT_UTL_ServicePoint {
 		}
 */
 
-		if(mapRes.get('STATODEVICE')!=null && spNew.MeterStatus__c  != 'Sospeso'){
-
+		if(spNew.MeterStatus__c  != 'Sospeso'){
+            system.debug('entra in stato device');
             if(mapRes.get('STATODEVICE')== 'A'){
                 spNew.MeterStatus__c  = 'Attivo';
 

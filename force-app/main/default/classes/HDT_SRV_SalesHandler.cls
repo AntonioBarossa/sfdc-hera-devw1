@@ -39,6 +39,20 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                         
                     }
+
+                    if (mapRequestFields.get('ATTIVITA') != null) {
+                        switch on mapRequestFields.get('ATTIVITA'){
+                            when 'Gestione Switch in Ripristinatorio'{
+                                HDT_UTL_ActivityCustom.createActivityWithParams(new Map<String,String>{
+                                    'RecordTypeDeveloperName' => 'HDT_RT_AttivitaGestionali',
+                                    'Type__c'                 => 'Gestione Switch in Ripristinatorio',
+                                    'ServicePointCode__c'     => mapRequestFields.get('COD_PDR'),
+                                    'FiscalCode__c'           => mapRequestFields.get('CODICE_FISCALE'),
+                                    'VATNumber__c'            => mapRequestFields.get('PIVA')
+                                });
+                            }
+                        }
+                    }
                     
                     if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
                         //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
@@ -78,7 +92,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                 }
 
-                                if (mapRequestFields.get('IMP_PREV_DIST') != null) {
+                                if (mapRequestFields.get('IMP_PREV_DIST') != null && !String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
                                 }
                             }
