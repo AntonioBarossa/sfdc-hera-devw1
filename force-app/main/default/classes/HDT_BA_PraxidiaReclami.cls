@@ -41,18 +41,18 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
                 fr.acr = '';
                 fr.societa = ca.CompanyOwner__c;
                 fr.assegnatario = assigncaseToActivity.get(ca.id) != null ? assigncaseToActivity.get(ca.id).owner.name : '';
-                fr.gruppo = ca.creatorGroup__c;
-                fr.dataRicevimento = ca.CustomerRequestDate__c+'';
-                fr.dataChiusura = ca.ClosedDate+'';
-                fr.tipo = ca.cluster__c;
-                fr.servizio = ca.commodityFormula__c;
-                fr.tipoFornitura =  ca.SupplyType__c;
-                fr.categoriaCliente = ca.Account.category__c;
-                fr.codiceCliente = ca.Account.customerCode__c;
+                fr.gruppo = ca.creatorGroup__c != null ? ca.creatorGroup__c : '';
+                fr.dataRicevimento = ca.CustomerRequestDate__c != null ? ca.CustomerRequestDate__c+'' : '';
+                fr.dataChiusura = ca.ClosedDate != null ?ca.ClosedDate +'' : '';
+                fr.tipo = ca.cluster__c != null ? ca.cluster__c : '';
+                fr.servizio = ca.commodityFormula__c != null ? ca.commodityFormula__c : '';
+                fr.tipoFornitura =  ca.SupplyType__c != null ? ca.SupplyType__c : '';
+                fr.categoriaCliente = ca.Account.category__c != null ? ca.Account.category__c : '';
+                fr.codiceCliente = ca.Account.customerCode__c != null ? ca.Account.customerCode__c : '';
                 fr.statoPratica = ca.status;
-                fr.canaleDiRicezione = ca.origin;
+                fr.canaleDiRicezione = ca.origin != null ? ca.origin : '';
                 fr.reiterata = ca.IsReiteration__c ? 1 : 0;
-                fr.epSottotipo = ca.subprocess__c;
+                fr.epSottotipo = ca.subprocess__c != null ? ca.subprocess__c : '';
                 fr.epCausale = '';
                 fr.epClassificazione = '';
                 fr.teSol = ca.CustomerRequestNumberDay__c + '';
@@ -60,18 +60,19 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
                 fr.fuoriStdAeegsi = ca.IndemnityConfirmed__c ? '1':'0';
                 fr.chiamata = '';
                 fr.brand = '';
-                fr.segmento = ca.Account.segment__c;
-                fr.comuneCorretto = ca.ServicePoint__r.SupplyCity__c;
-                fr.dirittoRettifica = ca.CorrectionRight__c;
+                fr.segmento = ca.Account.segment__c != null ? ca.Account.segment__c : '';
+                fr.comuneCorretto = ca.ServicePoint__r.SupplyCity__c != null ? ca.ServicePoint__r.SupplyCity__c : '';
+                fr.dirittoRettifica = ca.CorrectionRight__c != null ? ca.CorrectionRight__c : '';
                 fr.flussoPratica = ca.parentId != null ? 'S' : caseParentiIdChild.get(ca.id) != null ? 'M' : 'U';
-                fr.canaleDiUscita = ca.MotivatedResponseSendMode__c;
+                fr.canaleDiUscita = ca.MotivatedResponseSendMode__c != null ? ca.MotivatedResponseSendMode__c : '';
                 fr.emailUscita = '';
-                fr.richiestePareri = ca.phase__c;
+                fr.richiestePareri = ca.phase__c != null ? ca.phase__c : '';
                 wrapReclamiList.add(fr);
             }
 
     }
     public void finish(Database.BatchableContext context) {
+        System.debug('BeforeEnter');
         For(HDT_WRP_CampaignPraxidia.reclami fr : wrapReclamiList){
             String rowFile = '';
             rowFile = fr.idJob = ';';
@@ -107,7 +108,9 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
             rowFile = rowFile + fr.richiestePareri + ';' ; 
             rowFile = rowFile + '\n';
             generateFile += rowFile;
+            System.debug('BeforeEnter2');
         }
+        System.debug('BeforeEnter3');
         Blob generateFileBlob = Blob.valueof(generateFile);
         ContentVersion cv = new ContentVersion();
         cv.ContentLocation = 'S';
@@ -115,14 +118,13 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
         cv.Title = 'PraxidiaReclami';
         cv.PathOnClient = 'PraxidiaReclami.csv';
         HDT_SRV_Attachment.insertContentVersion(cv);
-
+       /* ContentVersion cv2 = [Select id,contentDocumentId from ContentVersion Where id = :cv.id][0];
         ContentDocumentLink cnt = new ContentDocumentLink();
-        cnt.ContentDocumentId = cv.ContentDocumentId;
-        cnt.LinkedEntityId = '0011q00000mvmFkAAI';
-        insert cnt;
+        cnt.ContentDocumentId = cv2.ContentDocumentId;
+        cnt.LinkedEntityId = '0011q00000mvCKdAAM';
+        insert cnt;*/
 
-
-       // HDT_WS_PraxidiaIntegration.callService(cv.id,'Reclami');
+        HDT_WS_PraxidiaIntegration.callService(cv.id,'Reclami');
     }
 
 

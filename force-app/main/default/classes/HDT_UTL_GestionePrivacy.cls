@@ -244,7 +244,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
             Map<String,ContactPointPhone> individualPrimary = new map<String,ContactPointPhone>();
             map<string,String> isAlreadyExistContact = new map<String,String>();
             if(phCheck){
-                List<ContactPointPhone> listCpp = HDT_QR_ContactPoint.getIndividualContactsPhoneList(listIndividual,'id,TelephoneNumber,Status__c,parentid');
+                List<ContactPointPhone> listCpp = HDT_QR_ContactPoint.getIndividualContactsPhoneList(listIndividual,'id,isPrimary,TelephoneNumber,Status__c,parentid');
                 For(ContactPointPhone cp : listCpp){
                     isAlreadyExistContact.put(cp.parentId + '-' + cp.telephoneNumber,cp.id);
                     if(cp.isPrimary){
@@ -288,7 +288,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
                 }
             }
             if(emCheck){
-                List<ContactPointEmail> listCpe = HDT_QR_ContactPoint.getIndividualContactsEmailList(listIndividual,'id,EmailAddress,Status__c,parentid');
+                List<ContactPointEmail> listCpe = HDT_QR_ContactPoint.getIndividualContactsEmailList(listIndividual,'id,isPrimary,EmailAddress,Status__c,parentid');
                 for(ContactPointEmail cp : listCpe){
                     isAlreadyExistContact.put(cp.parentId + '-' + cp.EmailAddress,cp.id);
                     if(mapToUpdateEmail.get(cp.EmailAddress) != null){

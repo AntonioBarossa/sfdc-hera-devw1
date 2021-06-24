@@ -209,13 +209,13 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
         cv.Title = 'PraxidiaFrontOffice';
         cv.PathOnClient = 'PraxidiaFrontOffice.csv';
         HDT_SRV_Attachment.insertContentVersion(cv);
-        ContentVersion cv2 = [Select id,contentDocumentId from ContentVersion Where id = :cv.id][0];
+       /* ContentVersion cv2 = [Select id,contentDocumentId from ContentVersion Where id = :cv.id][0];
         ContentDocumentLink cnt = new ContentDocumentLink();
         cnt.ContentDocumentId = cv2.ContentDocumentId;
         cnt.LinkedEntityId = '0011q00000mvmFkAAI';
-        insert cnt;
+        insert cnt;*/
 
-       // HDT_WS_PraxidiaIntegration.callService(cv.id,'Front Office');
+        HDT_WS_PraxidiaIntegration.callService(cv.id,'Front Office');
     }
 
 
