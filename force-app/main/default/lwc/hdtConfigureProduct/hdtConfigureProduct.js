@@ -210,6 +210,8 @@ export default class hdtConfigureProduct extends LightningElement {
         this.loaded = false;
         // logica approvazione
         checkDueProduct({sale: saleData}).then(data =>{
+            console.log("TESTCHECK:");
+            console.log("TESTCHECK:" + JSON.stringify(data));
             let check = data.wrapCheck;
             let errorM = data.responseError;
             if(check){
@@ -230,7 +232,7 @@ export default class hdtConfigureProduct extends LightningElement {
             }
             else{
                 this.loaded = true;
-                console.log(error.body.message);
+                console.log('***:' + errorM);
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: 'i seguenti prodotti sono scaduti e senza approvazione: ' + errorM,

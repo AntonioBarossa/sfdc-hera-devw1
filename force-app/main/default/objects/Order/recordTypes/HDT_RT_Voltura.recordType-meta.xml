@@ -2402,6 +2402,10 @@
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SecurityDepositExcluded__c</picklist>
