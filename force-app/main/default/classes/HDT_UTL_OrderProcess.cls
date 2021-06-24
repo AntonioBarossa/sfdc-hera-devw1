@@ -264,7 +264,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             Order oldOrder = oldOrdersList[i]; 
             String recordTypeName = rtMap.get(newOrder.RecordTypeId).getDeveloperName();
             system.debug('recordTypeName -->  : ' + recordTypeName);  
-            if((recordTypeName == 'HDT_RT_VAS' && newOrder.OrderReferenceNumber != null && newOrder.ContractReference__c != null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt'){                             
+            if((recordTypeName == 'HDT_RT_VAS' && newOrder.OrderReferenceNumber == null && newOrder.ContractReference__c == null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt'){                             
                 system.debug('xxx 1 ---->');
                 if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
                     system.debug('xxx 2 ---->');
