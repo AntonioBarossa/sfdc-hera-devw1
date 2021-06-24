@@ -567,6 +567,14 @@ public inherited sharing class HDT_QR_Order {
         LIMIT 1].UserRole.Name;
     }
 
+    public Order getDates(String recordId){
+        return [SELECT Id, EffectiveDate__c, RetroactiveDate__c
+        FROM Order
+        WHERE Id = :recordId
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
+    }
+
     public List<Order> getRecordsByIdWithFields(List<String> Ids, String fields) {
         String query = 'SELECT '+ fields +
                 ' From Order where Id IN :Ids';

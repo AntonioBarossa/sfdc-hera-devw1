@@ -358,18 +358,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     getRequest(){
-        var typeOfCommodity = null;
-        console.log("RecordType: " + this.order.RecordType.DeveloperName);
-        console.log("typeOfCommodity: " + typeOfCommodity);
+        var typeOfCommodity = this.order.ServicePoint__r.CommoditySector__c;
         var fiscalData = null;
-        if(this.order.ServicePoint__r.CommoditySector__c == 'Energia Elettrica' || this.selectedProcess === 'HDT_RT_VAS'){
+        if(typeOfCommodity == 'Energia Elettrica' || this.selectedProcess === 'HDT_RT_VAS'){
             typeOfCommodity = 'ENERGIAELETTRICA';
         }
-        if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
+        if(typeOfCommodity == 'Gas'){
             typeOfCommodity = 'GAS';
         }
-        console.log("typeOfCommodity: " + typeOfCommodity);
-        console.log("this.selectedProcess: " + this.selectedProcess);
         
         let data = {
             sistema: "eEnergy",

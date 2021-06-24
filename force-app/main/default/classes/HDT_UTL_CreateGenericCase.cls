@@ -21,6 +21,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
                 'Status',
                 'Cluster__c',
                 'Type',
+                'Subprocess__c',
                 'RecordTypeId'
             };
         Case childCase = new Case();
