@@ -478,9 +478,6 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             contactsMap.put(c.Id, c);
         }
 
-        // ProcessClick non fa partire i job per le callout da contesto trigger o batch,
-        // quindi demandiamo creazione del case + arricchimento dati + callout heroku ad un platform event per ogni Case.
-        List<HDT_PEV_AnagAlignment__e> events = new List<HDT_PEV_AnagAlignment__e>();
         for (Case anagAlignCase : anagAlignCases) {
 
             // DATI INDIRIZZO DI RESIDENZA
@@ -504,23 +501,10 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
             anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
 
-            HDT_PEV_AnagAlignment__e event = new HDT_PEV_AnagAlignment__e();
-            event.SerializedCase__c = JSON.serialize(anagAlignCase);
-            events.add(event);
         }
 
-
-        List<Database.SaveResult> results = EventBus.publish(events);
-        System.debug('Results Size: ' + results.size());
-        for (Database.SaveResult sr : results) {
-            if (sr.isSuccess()) {
-                System.debug('Successfully published event.');
-            } else {
-                for (Database.Error err : sr.getErrors()) {
-                    System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
-                }
-            }
-        }
+        // Queueable per invocare l'arricchimento dati su ogni Case e per inviarli ad heroku.
+        System.enqueueJob(new HDT_QBL_AnagAlignment(anagAlignCases));
 
         return anagAlignCases;
     }
