@@ -5,5 +5,10 @@ public with sharing class HDT_SRV_Campaign {
         
         return lCamp;
     }
-    
+    public static List<Campaign> updateCampaigns(List<Campaign> lCamp){
+       
+        HDT_UTL_DatabaseService.updateSObject(lCamp);
+        
+        return lCamp;
+    }
 }
