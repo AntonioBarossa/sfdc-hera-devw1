@@ -648,6 +648,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                     this.refreshSecondLevelToChild();
                    }
 
+                   this.filterOn = false;
+
                 } else {
                     this.showError = true;
                     this.showErrorMessage = result.message;
@@ -1021,7 +1023,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     setButtonForFilterApplied(disable){
         this.template.querySelectorAll('button').forEach(c => {
-            if(c.name === 'interrogation' || c.name === 'joinFilter'){
+            //if(c.name === 'interrogation' || c.name === 'joinFilter'){
+            if(c.name === 'interrogation'){
                 if(disable){
                     c.setAttribute('disabled', '');
                 } else {

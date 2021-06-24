@@ -338,6 +338,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
     generateFilterString(){
         try {
+
             for(var i in this.staticObj){
                 this.filterString += i;
                 this.filterString += ' ';
@@ -452,18 +453,19 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                 return true;
             });
 
-            if(filteredData.length == 0 && this.bShowModal){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Attenzione',
-                        message: 'Nessun record trovato',
-                        variant: 'warning'
-                    }),
-                );
-                this.filterString = '';
-                this.staticObj = {};
-                return;
-            }
+            //if(filteredData.length == 0 && this.bShowModal){
+            //    this.dispatchEvent(
+            //        new ShowToastEvent({
+            //            title: 'Attenzione',
+            //            message: 'Nessun record trovato',
+            //            variant: 'warning'
+            //        }),
+            //    );
+            //    this.filterString = '';
+            //    this.staticObj = {};
+            //    return;
+            //}
+
             this.setButtonForFilterApplied(true);
             this.accountdetails = filteredData;
             this.filterApplied = true;

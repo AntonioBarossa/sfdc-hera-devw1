@@ -1,4 +1,9 @@
-public with sharing class HDT_UTL_DatabaseService {
+/**
+ * @author 'Lorenzo Gulotta' (lorenzo.gulotta@webresults.it)
+ * @description HDT_UTL_DatabaseService - 
+ */
+
+ public with sharing class HDT_UTL_DatabaseService {
     
     private static final String MAXNUMBERRECORDSEXCEPTION = 'Puoi Passare Massimo 10000 Record in una singola azione di DML.';
     private static final String PERMISSIONEXCEPTION = 'Utente {0} non possiede i permessi per effettuare questa Specifica operazione sull oggetto {1}.';

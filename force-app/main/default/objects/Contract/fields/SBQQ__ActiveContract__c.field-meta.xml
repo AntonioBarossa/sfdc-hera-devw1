@@ -4,7 +4,7 @@
     <deprecated>false</deprecated>
     <description>Determines if this contract is in effect.</description>
     <externalId>false</externalId>
-    <formula>IF(AND(ISPICKVAL(StatusCode,&apos;Activated&apos;), OR(AND(Not(SBQQ__Evergreen__c),EndDate &gt; TODAY()), SBQQ__Evergreen__c)),1,0)</formula>
+    <formula>IF(AND(ISPICKVAL(StatusCode,&apos;Activated&apos;), OR(AND(Not(SBQQ__Evergreen__c), EndDate &gt;= TODAY()), SBQQ__Evergreen__c)),1,0)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <inlineHelpText>Determines if this contract is in effect.</inlineHelpText>
     <label>Active Contract</label>

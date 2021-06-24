@@ -49,6 +49,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 if(companyDesc.equalsIgnoreCase('HERA COMM')){
                     companyDesc = 'Hera Comm S.p.A.';
                 }
+            }when 'EC','GC'{
+                return getCompanyAccountStatement(formParams);
             }
             when else {
                 companyDesc = '';
@@ -67,6 +69,55 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }else {
             return '';
         }
+    }
+
+    private String getCompanyAccountStatement(Map<String,Object> formParams){
+        String result = '1070';
+        try{
+            String documents = (String) formParams.get('EstrattoConto');
+            List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documents);
+            Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
+            List<Object> secondoLivelloList = new List<Object>();
+            Map<String, Object> secondoLivello = new Map<String, Object>();
+            String hcm = 'HERA COMM MARCHE';
+            String newCo = 'ESTENERGY SPA';
+            String oldCo = 'HERA COMM NORDEST';
+            Boolean societaTemp = false;
+            Boolean newCoTemp = false;
+            Boolean oldCoTemp = false;
+            
+            for (Object singleRecord : primoLivelloList) {
+                primolivello = (Map<String, Object>) singleRecord;
+                String societa = primolivello.get('societa') != null? (String)primolivello.get('societa'):'';
+                societa = societa.toUpperCase();
+                if(societa.equalsIgnoreCase(hcm)){
+                    societaTemp = true;
+                }else {
+                    societaTemp = false;
+                }
+                if(societa.equalsIgnoreCase(newCo)){
+                    newCoTemp = true;
+                }else {
+                    newCoTemp = false;
+                }
+                if(societa.equalsIgnoreCase(oldCo)){
+                    oldCoTemp = true;
+                }else {
+                    oldCoTemp = false;
+                }
+            }
+            if(societaTemp)
+                result = '2060';
+            else if(newCoTemp) // Migrazione Ascopiave 2019
+                result = '7030';// 7030 (NewCo)
+            else if(oldCoTemp) // Migrazione Ascopiave 2019
+                result = '7015'; // 7015 (OldCo)
+            else
+                result = '1070';
+        }catch(Exception ex){
+            System.debug('Errore calcolo società per Estratto Conto');
+        }
+        return result;
     }
 
     private String checkQuotationType(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
@@ -158,18 +209,18 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String endPiva = HDT_UTL_DocumentalManagement.getValue('Account', 'VATGroupEndDate__c', 0, inputs, formParams);//VATGroupEndDate__c
         Date maxDate = date.newInstance(4000, 12, 31);
         if(String.isBlank(flagPiva) || flagPiva.equalsIgnoreCase('false')){
-            return '|';
+            return '';
         }else if(String.isNotBlank(endPiva) && Date.valueOf(endPiva) == maxDate){
             if(Date.today()> Date.valueOf(startPiva)){
                 return gPiva + '|' + HDT_UTL_DocumentalManagement.transformDate(Date.valueOf(startPiva));
             }else {
-                return '|';
+                return '';
             }
         }else{
             if(Date.today() > Date.valueOf(startPiva) && Date.today() < Date.valueOf(endPiva)){
                 return gPiva + '|' + HDT_UTL_DocumentalManagement.transformDate(Date.valueOf(startPiva));
             }else {
-                return '|';
+                return '';
             }
         }
     }

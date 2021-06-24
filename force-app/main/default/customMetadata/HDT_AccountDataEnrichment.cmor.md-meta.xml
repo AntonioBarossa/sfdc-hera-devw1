@@ -49,7 +49,8 @@
       {
         &quot;label&quot;: &quot;Data aggiornamento stato&quot;,
         &quot;fieldName&quot;: &quot;dataAgg&quot;,
-        &quot;initialWidth&quot;: 220
+        &quot;initialWidth&quot;: 220,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Settore merceologico&quot;,
@@ -84,7 +85,8 @@
       {
         &quot;label&quot;: &quot;Data comunicazione pratica distributore&quot;,
         &quot;fieldName&quot;: &quot;dataCom&quot;,
-        &quot;initialWidth&quot;: 240
+        &quot;initialWidth&quot;: 240,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Codice Cliente&quot;,
@@ -121,7 +123,8 @@
       {
         &quot;label&quot;: &quot;Data aggiornamento stato&quot;,
         &quot;fieldName&quot;: &quot;dataFlusso&quot;,
-        &quot;initialWidth&quot;: 220
+        &quot;initialWidth&quot;: 220,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Settore merceologico&quot;,
@@ -146,7 +149,8 @@
       {
         &quot;label&quot;: &quot;Data switch out&quot;,
         &quot;fieldName&quot;: &quot;dataSwitch&quot;,
-        &quot;initialWidth&quot;: 160
+        &quot;initialWidth&quot;: 160,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Billing Profile&quot;,
@@ -156,7 +160,8 @@
       {
         &quot;label&quot;: &quot;Data Richiesta SII&quot;,
         &quot;fieldName&quot;: &quot;dataRichiesta&quot;,
-        &quot;initialWidth&quot;: 160
+        &quot;initialWidth&quot;: 160,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Importo Cmor Pregresso&quot;,

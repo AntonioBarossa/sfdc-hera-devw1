@@ -32,9 +32,9 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         Case recordCase = new Case();
         try {
             if(recordId instanceOf Id){
-                recordCase = [SELECT Id,Type, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id,Type,Cluster__c, ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
             }else {
-                recordCase = [SELECT Id,Type, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id,Type,Cluster__c, ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
             }
             
         } catch (DmlException ex) {
@@ -59,13 +59,24 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
     }
 
     public ServicePoint__c getServicePoint(String code){
-        return [SELECT Id FROM ServicePoint__c WHERE ServicePointCode__c=:code WITH SECURITY_ENFORCED LIMIT 1];
+        return [SELECT Id, CommoditySector__c FROM ServicePoint__c WHERE ServicePointCode__c=:code WITH SECURITY_ENFORCED LIMIT 1];
     }
 
     public Contract getContract(String servicePointId){
-        return [SELECT Id,BillingProfile__c, EndDate FROM Contract WHERE ServicePoint__c=:servicePointId AND Status ='Attivo' WITH SECURITY_ENFORCED LIMIT 1];
+        return [SELECT Id,BillingProfile__c,SAPContractCode__c, EndDate FROM Contract WHERE ServicePoint__c=:servicePointId AND Status ='Attivo' WITH SECURITY_ENFORCED LIMIT 1];
     }
 
+    public HDT_CausalCodeCalculation__mdt getCausalCode(String cluster, String process, String commodity){
+        return [SELECT Id, 
+        CausalCode__c,
+        OperationCode__c
+        FROM  HDT_CausalCodeCalculation__mdt
+        WHERE Cluster__c = :cluster
+        AND Process__c = :process
+        AND Commodity__c = :commodity
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
+    }
 
     public wrts_prcgvr__AsyncJob__c getAsyncJobByJobItem(String recordId){
 

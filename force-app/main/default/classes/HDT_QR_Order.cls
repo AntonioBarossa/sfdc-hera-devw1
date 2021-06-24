@@ -565,9 +565,27 @@ public inherited sharing class HDT_QR_Order {
         WHERE Id = :userId
         WITH SECURITY_ENFORCED
         LIMIT 1].UserRole.Name;
-
-
     }
+
+    public Order getDates(String recordId){
+        return [SELECT Id, EffectiveDate__c, RetroactiveDate__c
+        FROM Order
+        WHERE Id = :recordId
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
+    }
+
+    public List<Order> getRecordsByIdWithFields(List<String> Ids, String fields) {
+        String query = 'SELECT '+ fields +
+                ' From Order where Id IN :Ids';
+        List<Order> orders = Database.query(query);
+
+        return orders;
+    }
+
     //FINE SVILUPPI EVERIS
 
+    public List<order> getOrderCreatedYesterday(){
+        return [Select id,Account.Segment__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order limit 100];//where Createddate = Yesterday];
+    }
 }

@@ -20,6 +20,11 @@
         <default>false</default>
         <label>Hera Comm S.p.A.</label>
     </customValue>
+    <customValue>
+        <fullName>EstEnergy S.p.A.</fullName>
+        <default>false</default>
+        <label>EstEnergy S.p.A.</label>
+    </customValue>
     <masterLabel>Societa di vendita</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

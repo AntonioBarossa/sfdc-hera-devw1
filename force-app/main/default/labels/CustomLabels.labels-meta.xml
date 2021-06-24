@@ -289,4 +289,11 @@
         <shortDescription>HDT_ErrorOnDateDiff2</shortDescription>
         <value>La data fine non può essere inferiore a quella di fine</value>
     </labels>
+    <labels>
+        <fullName>HDT_CPQ_TemplateProductCode</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_CPQ_TemplateProductCode</shortDescription>
+        <value>TEMPLATE%</value>
+    </labels>
 </CustomLabels>

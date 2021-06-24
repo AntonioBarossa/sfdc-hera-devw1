@@ -9,6 +9,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
     public static void predefaultInstallmentsValues(List<HDT_UTL_FlowInputs> inputs){
 
         HDT_QR_InstallmentPlans installmentsQr = new HDT_QR_InstallmentPlans();
+        HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
         List<HDT_SRV_AccountInstallmentsCheck.HDT_SRV_AccountInstallmentsCheckInput> inputsCheck = 
             new List<HDT_SRV_AccountInstallmentsCheck.HDT_SRV_AccountInstallmentsCheckInput>();
@@ -56,10 +57,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         paymentMethod = installmentsQr.getPaymentMethodByCaseId(recordId);
         currentCase.CAWithOrWithoutSEPA__c = (paymentMethod != null && paymentMethod != '' && paymentMethod == 'RID');
 
-        //SetExpirationDate at CreatedDate+20
+        //SetExpirationDate at CreatedDate+20businessDay
         DateTime createdCase = installmentsQr.getCaseById(recordId).CreatedDate;
         System.debug('SRV_InstallmentPlans created date -> ' + createdCase);
-        currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 20;
+        currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(Date.valueOf(createdCase), 20);
         System.debug('SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
 
         //Set AmountToPayInstallments to TotalPay
