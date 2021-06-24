@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SR_NUM__c</fullName>
+    <description>SR_NUM</description>
+    <externalDeveloperName>SR_NUM</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Richiesta</label>
+    <length>64</length>
+    <referenceTo>SiebelRds__x</referenceTo>
+    <relationshipLabel>Documenti</relationshipLabel>
+    <relationshipName>SiebelDocumentLink1</relationshipName>
+    <type>ExternalLookup</type>
+</CustomField>

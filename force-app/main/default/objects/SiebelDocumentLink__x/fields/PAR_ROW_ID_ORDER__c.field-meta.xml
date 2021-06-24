@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PAR_ROW_ID_ORDER__c</fullName>
+    <description>PAR_ROW_ID_ORDER</description>
+    <externalDeveloperName>PAR_ROW_ID_ORDER</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Order</label>
+    <length>15</length>
+    <referenceTo>SiebelOrder__x</referenceTo>
+    <relationshipLabel>Documenti</relationshipLabel>
+    <relationshipName>SiebelDocumentLink</relationshipName>
+    <type>ExternalLookup</type>
+</CustomField>

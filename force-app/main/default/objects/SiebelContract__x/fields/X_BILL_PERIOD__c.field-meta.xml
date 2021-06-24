@@ -8,7 +8,7 @@
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Periodicità di fatturazione</label>
-    <precision>10</precision>
+    <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
     <type>Number</type>
