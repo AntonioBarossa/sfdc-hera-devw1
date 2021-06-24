@@ -1,5 +1,5 @@
 import { track, LightningElement, api, wire } from 'lwc';
-import getUrlNameDocumentLink from '@salesforce/apex/HTD_LC_DownloadAttachmentAzure.getUrlNameDocumentLink';
+import getUrlNameDocumentLink from '@salesforce/apex/HDT_LC_DownloadAttachmentAzure.getUrlNameDocumentLink';
 
 export default class Fdt_Alessio_test extends LightningElement {
     @track searchKey= '';

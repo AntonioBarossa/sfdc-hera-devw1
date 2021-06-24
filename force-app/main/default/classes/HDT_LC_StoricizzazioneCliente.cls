@@ -63,7 +63,7 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
             if (sortBy != null && sortDirection != null ) {
                 queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             }
-            List<SiebelCustomer__x> list_SiebelCustomer = Database.query( queryStoricizzati ); 
+            List<SiebelCustomer__x> listSiebelCustomer = Database.query( String.escapeSingleQuotes(queryStoricizzati) ); 
 
             String queryNonStoricizzati = 'select Id, FirstName__c,LastName__c  , FiscalCode__c ,VATNumber__c, CustomerCode__c FROM Account ';   
             if(filterby=='Codice Fiscale'){
@@ -76,10 +76,10 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
             if (sortBy != null && sortDirection != null ) {
                 queryNonStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             } 
-            List<Account> list_Account =  Database.query( queryNonStoricizzati );
+            List<Account> listAccount =  Database.query( String.escapeSingleQuotes(queryNonStoricizzati) );
           
 
-            for(SiebelCustomer__x SiebelCustomer:list_SiebelCustomer){
+            for(SiebelCustomer__x SiebelCustomer:listSiebelCustomer){
                 wrapperToreturn.add(
                     new Customer(
                         SiebelCustomer.ALIAS_NAME__c,                       
@@ -93,7 +93,7 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
                 );
             }
  
-            for(Account sfCustomer:list_Account){
+            for(Account sfCustomer:listAccount){
                 wrapperToreturn.add(
                     new Customer(
                         sfCustomer.LastName__c,

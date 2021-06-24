@@ -1,4 +1,4 @@
-public with sharing class HTD_LC_DownloadAttachmentAzure {
+public with sharing class HDT_LC_DownloadAttachmentAzure {
     
     @AuraEnabled
     public static String getUrlNameDocumentLink(String rId){
