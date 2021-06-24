@@ -29,7 +29,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             } else if (currentCase.Subprocess__c == 'Modifica Dati di Recapito') {
                 result = validateModificaDatiRecapito(fields);
             } else if (currentCase.Subprocess__c == 'Modifica Dati Fiscali') {
-                result = validateModificaDatiFiscali(fields, currentCase.AccountId);
+                result = validateModificaDatiFiscali(fields, currentCase);
             } else if (currentCase.Subprocess__c == 'Variazione Gruppo IVA') {
                 result = validateVariazioneGruppoIva(fields, currentCase.AccountId);
             }
@@ -78,7 +78,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         } else if (caseType == 'Nuovo Impianto - Aggiunta Attacco'){
 
             result = validateVariazioni(fields, caseType);
+        
+        } else if(caseType == 'Voltura Tecnica'){
 
+            result = validateVolturaTecnica(fields);
+ 
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -289,7 +293,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String currentMarking = a.CustomerMarking__c != null ? a.CustomerMarking__c : '';
 
         System.debug('validateModificaDatiContatto: current ' + c);
-        System.debug('validateModificaDatiContatto: new ' + newEmail + ';' + newPhone + ';' + newMobile + ';' + newFax + ';' + newPec);
+        System.debug('validateModificaDatiContatto: new ' + newEmail + ';' + newPhone + ';' + newMobile + ';' + newFax + ';' + newPec + ';' + newMarking);
+
+        if (String.isBlank(newMarking)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valorizzare la Marcatura del cliente.'));
+            return result;
+        }
 
         if (newEmail.equals(currentEmail) && newMobile.equals(currentMobile) && newPhone.equals(currentPhone) && newMarking.equals(currentMarking)
             && newPec.equals(currentPec) && newFax.equals(currentFax)) {
@@ -360,18 +369,20 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
-    private String validateModificaDatiFiscali(String fields, String accountId) {
+    private String validateModificaDatiFiscali(String fields, Case currentCase) {
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
         String newFirstName = getFieldValue(fields, 'FirstName__c') != null ? getFieldValue(fields, 'FirstName__c') : '';
         String newLastName = getFieldValue(fields, 'LastName__c') != null ? getFieldValue(fields, 'LastName__c') : '';
         String newFiscaleCode = getFieldValue(fields, 'FiscalCode__c') != null ? getFieldValue(fields, 'FiscalCode__c') : '';
         String newVatNumber = getFieldValue(fields, 'VatNumber__c') != null ? getFieldValue(fields, 'VatNumber__c') : '';
-        String newAddress = getFieldValue(fields, 'AlternativeAddress__c') != null ? getFieldValue(fields, 'AlternativeAddress__c') : '';
+        // Il nuovo indirizzo non è presente nel json, ma è già committato sul Case.
+        String newAddress = currentCase.AlternativeAddress__c;
+        String marking = currentCase.Account.CustomerMarking__c;
 
         HDT_QR_Account queryHandler = new HDT_QR_Account();
         String queryFields = 'FirstName__c,LastName__c,BillingAddressFormula__c,FiscalCode__c,VATNumber__c,CustomerMarking__c';
-        Account a = queryHandler.getRecordById(accountId, queryFields);
+        Account a = queryHandler.getRecordById(currentCase.AccountId, queryFields);
         String currentFirstName = a.FirstName__c != null ? a.FirstName__c : '';
         String currentLastName = a.LastName__c != null ? a.LastName__c : '';
         String currentFiscaleCode = a.FiscalCode__c != null ? a.FiscalCode__c : '';
@@ -380,11 +391,62 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         if (String.isBlank(newLastName)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Cognome/Ragione sociale non può essere vuoto.'));
-        } else if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscaleCode.equals(currentFiscaleCode)
+            return result;
+        }
+        
+        if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscaleCode.equals(currentFiscaleCode)
             && newVatNumber.equals(currentVatNumber) && newAddress.equals(currentAddress)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un dato fiscale del cliente.'));
+            return result;
         }
 
+        if (marking != null) {
+            if ((marking.contains('Persona fisica') || marking.contains('Condominio') || marking.contains('Parti comuni')) && String.isBlank(newFiscaleCode)) {
+                return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Codice Fiscale è obbligatorio per la marcatura ' + marking));
+            }
+
+            if (marking.contains('Azienda') || marking.contains('Ditta individuale') && String.isBlank(newVatNumber)) {
+                return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Partita IVA è obbligatorio per la marcatura ' + marking));
+            }
+
+            // Marcature che prevedono CF alfanumerico e PIVA blank.
+            if (marking.contains('Persona fisica') || marking.contains('Parti comuni')) {
+                String fiscalCodeValidation = validateFiscalCode(newFiscaleCode);
+                if (String.isNotBlank(fiscalCodeValidation)) {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
+                }
+
+                if (String.isNotBlank(newVatNumber)) {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile inserire una Partita IVA per la marcatura ' + marking));
+                }
+            }
+            // Ditta individuale prevede CF alfanumerico ma PIVA valorizzata.
+            else if (marking.contains('Ditta individuale')) {
+                String fiscalCodeValidation = validateFiscalCode(newFiscaleCode);
+                if (String.isNotBlank(fiscalCodeValidation)) {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
+                }
+            }
+            // Marcature che prevedono CF numerico
+            else if (marking.contains('Azienda') || marking.contains('Condominio')) {
+                String fiscalCodeValidation = validateNumericFiscalCode(newFiscaleCode);
+                if (String.isNotBlank(fiscalCodeValidation)) {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
+                }
+            }
+            // Associazione prevede CF numerico ma PIVA blank.
+            else if (marking.contains('Associazione')) {
+                String fiscalCodeValidation = validateNumericFiscalCode(newFiscaleCode);
+                if (String.isNotBlank(fiscalCodeValidation)) {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
+                }
+
+                if (String.isNotBlank(newVatNumber)) {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile inserire una Partita IVA per la marcatura ' + marking));
+                }
+            }
+        }
+        
         return result;
     }
 
@@ -868,6 +930,48 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }
 
 
+    }
+
+    public String validateVolturaTecnica(String fields){
+
+        String result;
+
+        Date effectiveDate = getFieldValue(fields, 'EffectiveDate__c') != null
+            ? Date.valueOf(getFieldValue(fields, 'EffectiveDate__c'))
+            : null;
+        
+        if(effectiveDate < HDT_UTL_Case.addBusinessDay(System.today(), 3)){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile inserire una data inferiore a 3 giorni lavorativi'));
+        } else {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        }
+
+        return result;
+
+    }
+
+    // Validazione CF. Se il CF è vuoto lo consideriamo valido.
+    public String validateFiscalCode(String fiscalCode) {
+        if (String.isBlank(fiscalCode)) {
+            return '';
+        }
+
+        Pattern pattern = Pattern.compile('^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$');
+        Matcher matcher = pattern.matcher(fiscalCode);
+
+        return matcher.matches() ? '' : 'Il Codice Fiscale inserito non è valido.';
+    }
+
+    // Validazione CF numerico. Se il CF è vuoto lo consideriamo valido.
+    public String validateNumericFiscalCode(String fiscalCode) {
+        if (String.isBlank(fiscalCode)) {
+            return '';
+        }
+
+        Pattern pattern = Pattern.compile('^[0-9]{11}$');
+        Matcher matcher = pattern.matcher(fiscalCode);
+
+        return matcher.matches() ? '' : 'Il Codice Fiscale deve contenere 11 cifre numeriche.';
     }
 
 

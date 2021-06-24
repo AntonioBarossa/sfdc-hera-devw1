@@ -27,4 +27,31 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+    public static List<wrts_prcgvr__Activity__c> getRecordByCaseIdList(List<String> caseId) {
+        return [
+            SELECT
+            Id,
+            Approved__c,
+            case__c,
+            owner.name,
+            Name
+            FROM wrts_prcgvr__Activity__c
+            WHERE Case__c IN :caseId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+    public static List<wrts_prcgvr__Activity__c> getRecordByOrderLine(List<String> quoteLine) {
+        return [
+            SELECT
+            Id,
+            Approved__c,
+            QuoteLine__c,
+            case__c,
+            owner.name,
+            Name
+            FROM wrts_prcgvr__Activity__c
+            WHERE QuoteLine__c IN :quoteLine
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }
