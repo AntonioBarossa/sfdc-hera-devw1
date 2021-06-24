@@ -61,7 +61,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
                    Market__c, ProcessType__c, PlacetOffer__c, StartDate__c, EndDate__c, StepAllowed__c,
                    ContractId__c, NumberTimeExtension__c, UnitTimeExtension__c, NumberDaysMonthsYears__c,
                    UnitTerminationTime__c, CancellationAllowed__c, RecessAdmitted__c, NumberOfTimeUnits__c,
-                   UnitOfTimeMeasurement__c, AdmittingProfileModification__c, OfferToBeModified__c,
+                   UnitOfTimeMeasurement__c, AdmittingProfileModification__c, OfferToBeModified__c, ServiceProduct__c,
                 (
                     SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,S__c, G__c, TechnicalOffer__c,PriceCodeValue__c,DiscountCodeValue__c, DiscountCode__c,StringValue__c,
                            FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
