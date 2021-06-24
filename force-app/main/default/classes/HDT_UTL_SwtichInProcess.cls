@@ -110,7 +110,12 @@ public with sharing class HDT_UTL_SwtichInProcess {
         if(order.ProcessType__c == 'Cambio offerta'){
             dateToFrom = order.SignedDate__c; // Per cambio offerta entrare in tabella con la data firma o la data massima di ripensamento se no esecuzione anticipata
         }else{
-            dateToFrom = getDateSentToSii(order);
+            if(order.IsSequanzialized__c == true){
+                dateToFrom = getDateSentToSii(order);
+            }else{
+                dateToFrom = getMaxAfterthoughtDate(order); // data max di ripensamento
+            }
+            
         }
         
         
