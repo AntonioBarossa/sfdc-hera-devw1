@@ -742,6 +742,11 @@
                 <isActive>false</isActive>
                 <label>Risposta non Ricevuta</label>
             </value>
+            <value>
+                <fullName>Pratica In Attesa</fullName>
+                <default>false</default>
+                <label>Pratica In Attesa</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

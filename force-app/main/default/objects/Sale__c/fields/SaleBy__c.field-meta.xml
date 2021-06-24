@@ -4,7 +4,7 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Lookup all&apos;utente che ha eseguito la vendità</description>
     <externalId>false</externalId>
-    <label>Venduto Da</label>
+    <label>User Vendita</label>
     <referenceTo>User</referenceTo>
     <relationshipName>Vendite</relationshipName>
     <required>false</required>

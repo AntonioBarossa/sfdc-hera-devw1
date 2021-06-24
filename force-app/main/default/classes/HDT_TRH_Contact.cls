@@ -1,4 +1,9 @@
-public inherited sharing class HDT_TRH_Contact extends HDT_TRH_TriggerHandler {
+/**
+ * @author 'Sabina Levonja' (sabina.levonja@dunegroup.it)
+ * @description HDT_TRH_Contact - 
+ */
+
+ public inherited sharing class HDT_TRH_Contact extends HDT_TRH_TriggerHandler {
 
     // public override void beforeInsert(){}
     // public override void beforeDelete(){}

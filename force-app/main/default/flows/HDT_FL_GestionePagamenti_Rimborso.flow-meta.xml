@@ -2671,7 +2671,7 @@
             <inputParameters>
                 <name>accountId</name>
                 <value>
-                    <elementReference>CaseInput.AccountId</elementReference>
+                    <elementReference>CaseInput.BeneficiaryAccount__r.Id</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>

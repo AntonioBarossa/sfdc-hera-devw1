@@ -19,7 +19,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
      */
     @AuraEnabled
     public static void save(Order order){
-
+        system.debug('START SAVE ORDER');        
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;
         orderToUpdate.Status = 'In lavorazione';
@@ -54,6 +54,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             try { 
                                 if(order.SignedDate__c != null){
                                     orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
+                                    system.debug('Calcolo data max di ripensamento xxx 1');             
                                 }                                                            
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data massima di ripensamento.');
@@ -67,8 +68,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             }
                 
                             try {    
-                                if(order.SignedDate__c != null){                         
-                                    orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                                if(order.SignedDate__c != null && order.ProcessType__c != 'Cambio Offerta'){                         
+                                    orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order); 
+                                    system.debug('Calcolo getDateSentToSii x 1');             
                                 }
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
@@ -83,7 +85,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             // START 3 Calcolo Data Decorrenza (EffectiveDate__c)     
                             try {         
                                 if(order.SignedDate__c != null){                    
-                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
+                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);  // Data di decorrenza
+                                    system.debug('Calcolo data max di decorrenza x 1');             
                                 }
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
@@ -106,8 +109,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     
                             // START Calcolo data invio richiesta (Data adempimento).
                             try {   
-                                if(order.SignedDate__c != null){                          
+                                if(order.SignedDate__c != null && order.ProcessType__c != 'Cambio Offerta'){                          
                                     orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                                    system.debug('Calcolo getDateSentToSii x 2');             
                                 }
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
@@ -121,7 +125,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             // START 3 Calcolo Data Decorrenza (EffectiveDate__c) 
                             try {
                                 if(order.SignedDate__c != null){
-                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);    
+                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);   // Data di decorrenza
+                                    system.debug('Calcolo data decorrenza x 2');             
                                 }                                                             
                             } catch (Exception e) { 
                                 throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
@@ -182,15 +187,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Carta d’identità;
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
                     // Documenti relativi alla Legge 80
-                    //orderToUpdate.DocumentLow80__c = 'Richiesto';
+                    orderToUpdate.DocumentLow80__c = 'Richiesto';
                     // Istanza 326
                     //orderToUpdate.Instance326__c = 'Richiesto';
                     // Accettazione Preventivo rapido.
                     //orderToUpdate.QuickQuote__c = 'Richiesto';
                     //orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                 } else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
-                    // Visura camerale
+                    // Carta identità
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
+                    // Documenti relativi alla Legge 80
+                    orderToUpdate.DocumentLow80__c = 'Richiesto';
                     //orderToUpdate.ChamberCommerceRegistration__c = 'Richiesto';
                     // Carta identità
                     //orderToUpdate.CIAccoutn__c = 'Richiesto';
