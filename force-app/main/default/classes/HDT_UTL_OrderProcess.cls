@@ -81,6 +81,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         system.debug('Ricalcolo delle date da Trigger sugli ordini --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
         system.debug('Ricalcolo delle date da Trigger sugli ordini --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
         List<Order> orderList = new List<Order>();                        
+
         Boolean ricalculateDate = false;
         //IsSequanzialized__c
         for (Order newOrder : newOrdersList) {
@@ -105,8 +106,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     }                             
                     orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(newOrder); // Data di decorrenza
                     orderList.add(orderToUpdate);                    
-                }                    
-                
+                }                                   
             }
         }
         

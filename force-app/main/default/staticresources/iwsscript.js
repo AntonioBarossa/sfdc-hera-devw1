@@ -1,7 +1,7 @@
 /********** USED EVENTS **********/
 
 function onEventEstablishedInbound(message) {
-    sfutil.createActivity(message);
+    sfutil.handleEventEstablished(message);
 }
 // function onEventMarkDoneInbound(message) {
 //     sfutil.closeActivity(message);
@@ -10,7 +10,7 @@ function onEventReleasedInbound(message) {
     sfutil.closeActivity(message);
 }
 function onEventEstablishedOutbound(message) {
-    sfutil.createActivity(message);
+    sfutil.handleEventEstablished(message);
 }
 // function onEventMarkDoneOutbound(message) {
 //     sfutil.closeActivity(message);
@@ -18,15 +18,15 @@ function onEventEstablishedOutbound(message) {
 function onEventReleasedOutbound(message) {
     sfutil.closeActivity(message);
 }
-function onEventEstablishedInternal(message) {
-    handleOperatorSwitch(message);
-}
+// function onEventEstablishedInternal(message) {
+//     handleOperatorSwitch(message);
+// }
 // function onEventMarkDoneInternal(message) {
 //     sfutil.closeActivity(message);
 // }
-function onEventReleasedInternal(message) {
-    sfutil.closeActivity(message);
-}
+// function onEventReleasedInternal(message) {
+//     sfutil.closeActivity(message);
+// }
 function onPreSwitchCrmInbound(message) {
     addJSONObjectInMemory(message);
 }
