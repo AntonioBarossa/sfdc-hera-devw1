@@ -3,6 +3,33 @@ public with sharing class HDT_UTL_GestionePrivacy {
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_QR_Lead leadQr = new HDT_QR_Lead();
     private static HDT_SRV_Contact contactSrv = new HDT_SRV_Contact();
+
+    @AuraEnabled
+    public static void checkCloneCompany(List<Contact> contList){
+        map<String,String> contactId = new map<String,string>();
+        map<String,String> contactToCheck = new map<String,string>();
+        for(Contact c : contList){
+            if(c.isClone()){
+                contactId.put(c.id,c.getCloneSourceId());
+            }
+        }
+        if(contactId.values() != null && !contactId.values().isEmpty()){
+            List<Contact> listContaToCheck = contactQr.getRecordsById(contactId.values());
+            for(Contact c : listContaToCheck){
+                contactToCheck.put(c.id,c.company__c);
+            }
+            for(Contact c : contList){
+                if(c.company__c == contactToCheck.get(contactId.get(c.id))){
+                    c.addError('Valorizzare il Company in modo differente');
+                }
+            }
+        }
+    }
+
+
+
+
+
     // @AuraEnabled
     // public static void createDefaultPrivacyContact(Id ContactId,List<String> Email,List<String> Phone) {
        
@@ -48,8 +75,9 @@ public with sharing class HDT_UTL_GestionePrivacy {
     // }
     public static void createDefaultPrivacyContact(List<String> contactIds, Map<String,List<String>> mapMobilePhone ,Map<String,List<String>> mapPhone ,Map<String,List<String>> mapEmail, Map<String,String> mobilePrefixes, Map<String,String> phonePrefixes) {
 
-        /*List<Individual> indv =*/ HDT_UTL_Individual.createIndividualContact(contactIds);
         List<Contact> contacts = contactQr.getRecordsById(contactIds);
+        /*List<Individual> indv =*/ HDT_UTL_Individual.createIndividualContact(contacts);
+       // List<Contact> contacts = contactQr.getRecordsById(contactIds);
         Map<String,Contact> contactsOb=new Map<String,Contact>();
         Map<String,String> primaryEmail= new Map<String,String>();
         Map<String,List<String>> emails= new Map<String,List<String>>();
@@ -73,7 +101,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
                 emails.put(contact.IndividualId, email);
             }
         }
-        HDT_UTL_ContactPoint.createContactPointEmail(primaryEmail, emails);
+        HDT_UTL_ContactPoint.createContactPointEmailContact(primaryEmail, emails);
         Map<String,boolean> mapCheck = new map<String,Boolean>();
         for(String id: mapMobilePhone.keySet()){
             Contact contact= contactsOb.get(id);
@@ -90,7 +118,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
                 mapCheck.put(contact.IndividualId,false);
             }
         }
-        HDT_UTL_ContactPoint.createContactPointPhone(primaryMobile, mobiles,mobilePrefixes, 'Mobile');
+        HDT_UTL_ContactPoint.createContactPointPhoneContact(primaryMobile, mobiles,mobilePrefixes, 'Mobile');
 
         for(String id: mapPhone.keySet()){
             Contact contact= contactsOb.get(id);
@@ -117,7 +145,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
             if(primaryPhone == null){
                 primaryPhone= new Map<String,String>();
             }    
-            HDT_UTL_ContactPoint.createContactPointPhone(primaryPhone,phones ,phonePrefixes ,'Casa');
+            HDT_UTL_ContactPoint.createContactPointPhoneContact(primaryPhone,phones ,phonePrefixes ,'Casa');
             //else{
                // if(phonesHome.size()>0){
               //      phonesHome.remove(primaryPhone);
@@ -127,11 +155,14 @@ public with sharing class HDT_UTL_GestionePrivacy {
         }
     }
 
-     public static void updateContactPointFromObject(List<Lead> leadNew,List<Lead> leadOld){
+     public static void updateContactPointFromObjectLead(List<Lead> leadNew,List<Lead> leadOld){
         
             Map<String,String> mapMobilePhone = new Map<String,String>();
             Map<String,String> mapPhone = new Map<String,String>();
             Map<String,String> mapEmail = new Map<String,String>();
+            Map<String,String> mapMobilePhoneBlank = new Map<String,String>();
+            Map<String,String> mapPhoneBlank = new Map<String,String>();
+            Map<String,String> mapEmailBlank = new Map<String,String>();
             Map<String,String> mapCreateMobilePhone = new Map<String,String>();
             Map<String,String> mapCreatePhone = new Map<String,String>();
             Map<String,String> mobilePrefixesToCreate = new Map<String,String>();
@@ -144,8 +175,8 @@ public with sharing class HDT_UTL_GestionePrivacy {
             map<String,String> mapToUpdateEmail = new Map<String,String>();
             map<String,String> mapLeadInd = new Map<String,String>();
             List<String> listIndividual = new List<String>();
-            Boolean phCheck = false;
-            Boolean emCheck = false;
+            Boolean phCheck = true;
+            Boolean emCheck = true;
             for(Lead l : leadOld){
                 mapMobilePhone.put(l.id,l.mobilePhone == null ? '' : l.mobilePhone);
                 mapPhone.put(l.id,l.phone == null ? '' : l.phone);
@@ -165,6 +196,11 @@ public with sharing class HDT_UTL_GestionePrivacy {
                     	phCheck = true;
                     }
                 }
+                if(mapMobilePhone.get(l.id) != null && mapMobilePhone.get(l.id) != l.MobilePhone && (l.MobilePhone == '' || l.MobilePhone == null)){
+                    mapMobilePhoneBlank.put(mapMobilePhone.get(l.id),l.id);
+                    phCheck = true;
+                    check = true;
+                }
                 if(mapPhone.get(l.id) != null && mapPhone.get(l.id) != l.Phone && l.phone != '' && l.phone != null){
                     if(mapPhone.get(l.id) == ''){
                         mapCreatePhone.put(l.Id,l.Phone);
@@ -178,6 +214,11 @@ public with sharing class HDT_UTL_GestionePrivacy {
     
                     }
                 }
+                if(mapPhone.get(l.id) != null && mapPhone.get(l.id) != l.Phone && (l.phone == '' || l.phone == null)){
+                    mapPhoneBlank.put(mapPhone.get(l.id),l.id);
+                    phCheck = true;
+                    check = true;
+                }
                 if(mapEmail.get(l.id) != null && mapEmail.get(l.id) != l.Email  && l.Email != '' && l.Email != null){
                     if(mapEmail.get(l.id) == ''){
                         mapCreateEmail.put(l.Id,l.Email);
@@ -188,6 +229,11 @@ public with sharing class HDT_UTL_GestionePrivacy {
                     	emCheck = true;
                     }
                 }
+                if(mapEmail.get(l.id) != null && mapEmail.get(l.id) != l.Email  && (l.Email == '' || l.Email == null)){
+                    mapEmailBlank.put(mapEmail.get(l.id),l.id);
+                    check = true;
+                    emCheck = true;
+                }
                 if(check){
                     listIndividual.add(l.individualid);
                 }
@@ -195,9 +241,17 @@ public with sharing class HDT_UTL_GestionePrivacy {
             }
             List<ContactPointPhone> cpToUpdate = new list<ContactPointPhone>();
             List<ContactPointEmail> ceToUpdate = new list<ContactPointEmail>();
+            Map<String,ContactPointPhone> individualPrimary = new map<String,ContactPointPhone>();
+            map<string,String> isAlreadyExistContact = new map<String,String>();
             if(phCheck){
                 List<ContactPointPhone> listCpp = HDT_QR_ContactPoint.getIndividualContactsPhoneList(listIndividual,'id,TelephoneNumber,Status__c,parentid');
                 For(ContactPointPhone cp : listCpp){
+                    isAlreadyExistContact.put(cp.parentId + '-' + cp.telephoneNumber,cp.id);
+                    if(cp.isPrimary){
+                        if(individualPrimary.get(cp.parentId) == null){
+                            individualPrimary.put(cp.parentid,cp);
+                        }
+                    }
                     if(mapToUpdatePhone.get(cp.TelephoneNumber) != null){
                         if(cp.Status__c == 'Non Verificato'){
                             cp.TelephoneNumber = mapToUpdatePhone.get(cp.TelephoneNumber);
@@ -210,7 +264,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
                             cpToUpdate.add(c);
                         }
                     }
-                    if(mapToUpdateMobile.get(cp.TelephoneNumber) != null){
+                    else if(mapToUpdateMobile.get(cp.TelephoneNumber) != null){
                         if(cp.Status__c == 'Non Verificato'){
                             cp.TelephoneNumber = mapToUpdateMobile.get(cp.TelephoneNumber);
                             cp.Prefix__c= mobilePrefixesToUpdate.get(cp.TelephoneNumber);
@@ -222,11 +276,21 @@ public with sharing class HDT_UTL_GestionePrivacy {
                             cpToUpdate.add(c);
                         }
                     }
+                    else if(mapMobilePhoneBlank.get(cp.TelephoneNumber) != null){
+                        cp.IsPrimary = false;
+                        cpToUpdate.add(cp);
+                    }
+                    else if(mapPhoneBlank.get(cp.TelephoneNumber) != null){
+                        cp.IsPrimary = false;
+                        cpToUpdate.add(cp);
+                    }
+
                 }
             }
             if(emCheck){
                 List<ContactPointEmail> listCpe = HDT_QR_ContactPoint.getIndividualContactsEmailList(listIndividual,'id,EmailAddress,Status__c,parentid');
-                For(ContactPointEmail cp : listCpe){
+                for(ContactPointEmail cp : listCpe){
+                    isAlreadyExistContact.put(cp.parentId + '-' + cp.EmailAddress,cp.id);
                     if(mapToUpdateEmail.get(cp.EmailAddress) != null){
                         if(cp.Status__c == 'Non Verificato'){
                             cp.EmailAddress = mapToUpdateEmail.get(cp.EmailAddress);
@@ -238,9 +302,125 @@ public with sharing class HDT_UTL_GestionePrivacy {
                             ceToUpdate.add(c);
                         }
                     }
+                    else if(mapEmailBlank.get(cp.EmailAddress) != null){
+                        cp.IsPrimary = false;
+                        ceToUpdate.add(cp);
+                    }
                 }
             }
-          
+
+
+            if(mapCreateMobilePhone.size() > 0){
+                for(String key : mapCreateMobilePhone.keyset()){
+                    String keyToCheck = mapLeadInd.get(key) + '-' + mapCreateMobilePhone.get(key);
+                    if(isAlreadyExistContact.get(keyToCheck) == null){          
+                        ContactPointPhone c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapCreateMobilePhone.get(key),mobilePrefixesToCreate.get(mapCreateMobilePhone.get(key)), true);
+                        if(individualPrimary.get(mapLeadInd.get(key)) != null){
+                            ContactPointPhone cp1 = new ContactPointPhone();
+                            cp1.id = individualPrimary.get(mapLeadInd.get(key)).id;
+                            cp1.isPrimary = false;
+                            cpToUpdate.add(cp1);
+
+                        }
+                        c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapCreateMobilePhone.get(key),mobilePrefixesToCreate.get(mapCreateMobilePhone.get(key)), true,'Mobile');
+                        c.parentid = mapLeadInd.get(key);
+                        c.SendToMarketingCloud__c = true;
+                        cpToUpdate.add(c);
+                    }
+                    else{
+                        if(individualPrimary.get(mapLeadInd.get(key)) != null){
+                            ContactPointPhone cp2 = new ContactPointPhone();
+                            cp2.id = individualPrimary.get(mapLeadInd.get(key)).id;
+                            cp2.isPrimary = false;
+                            cpToUpdate.add(cp2);
+
+                        }
+                        ContactPointPhone cp1 = new ContactPointPhone();
+                        cp1.id = isAlreadyExistContact.get(keyToCheck);
+                        cp1.isPrimary = true;
+                        cpToUpdate.add(cp1);
+                    }   
+                }
+            }
+            if(mapCreatePhone.size() > 0){
+                 for(String key : mapCreatePhone.keyset()){
+                    String keyToCheck = mapLeadInd.get(key) + '-' + mapCreatePhone.get(key);
+                    if(isAlreadyExistContact.get(keyToCheck) == null){          
+                        boolean ck = false;
+                        if(individualPrimary.get(mapLeadInd.get(key)) == null){
+                            ck = true;
+                        }
+                        ContactPointPhone c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapCreatePhone.get(key),phonePrefixesToCreate.get(mapCreatePhone.get(key)),ck,'Casa');
+                        c.parentid = mapLeadInd.get(key);
+                        c.SendToMarketingCloud__c = true;
+                        cpToUpdate.add(c);
+                    }
+                    else{
+                        if(individualPrimary.get(mapLeadInd.get(key)) == null){
+                            ContactPointPhone cp1 = new ContactPointPhone();
+                            cp1.id = isAlreadyExistContact.get(keyToCheck);
+                            cp1.isPrimary = true;
+                            cpToUpdate.add(cp1);
+                        }
+                    }
+                }
+            }
+            if(mapCreateEmail.size() > 0){
+                 for(String key : mapCreateEmail.keyset()){
+                    String keyToCheck = mapLeadInd.get(key) + '-' + mapCreateEmail.get(key);
+                    if(isAlreadyExistContact.get(keyToCheck) == null){      
+                        ContactPointEmail c = HDT_UTL_ContactPoint.instanceContactPointEmail(mapCreateEmail.get(key),true);
+                        c.parentid = mapLeadInd.get(key);
+                        c.SendToMarketingCloud__c = true;
+                        ceToUpdate.add(c);
+                    }
+                    else{
+                        ContactPointEmail cp1 = new ContactPointEmail();
+                        cp1.id = isAlreadyExistContact.get(keyToCheck);
+                        cp1.isPrimary = true;
+                        ceToUpdate.add(cp1);
+                    }
+                }
+            }
+
+
+            /*if(mapCreateMobilePhone.size() > 0){
+                for(String key : mapCreateMobilePhone.keyset()){
+                    ContactPointPhone c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapCreateMobilePhone.get(key),mobilePrefixesToCreate.get(mapCreateMobilePhone.get(key)), true);
+                    if(individualPrimary.get(mapLeadInd.get(key)) != null){
+                        ContactPointPhone cp1 = new ContactPointPhone();
+                        cp1.id = individualPrimary.get(mapLeadInd.get(key)).id;
+                        cp1.isPrimary = false;
+                        cpToUpdate.add(cp1);
+
+                    }
+                    c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapCreateMobilePhone.get(key),mobilePrefixesToCreate.get(mapCreateMobilePhone.get(key)), true,'Mobile');
+                    c.parentid = mapLeadInd.get(key);
+                    c.SendToMarketingCloud__c = true;
+                    cpToUpdate.add(c);
+                }
+            }
+            if(mapCreatePhone.size() > 0){
+                 for(String key : mapCreatePhone.keyset()){
+                    boolean ck = false;
+                    if(individualPrimary.get(mapLeadInd.get(key)) == null){
+                        ck = true;
+                    }
+                    ContactPointPhone c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapCreatePhone.get(key),phonePrefixesToCreate.get(mapCreatePhone.get(key)),ck,'Casa');
+                    c.parentid = mapLeadInd.get(key);
+                    c.SendToMarketingCloud__c = true;
+                     cpToUpdate.add(c);
+                }
+            }
+            if(mapCreateEmail.size() > 0){
+                 for(String key : mapCreateEmail.keyset()){
+                    ContactPointEmail c = HDT_UTL_ContactPoint.instanceContactPointEmail(mapCreateEmail.get(key),true);
+                    c.parentid = mapLeadInd.get(key);
+                    c.SendToMarketingCloud__c = true;
+                     ceToUpdate.add(c);
+                }
+            } */
+/*
             if(mapCreateMobilePhone.size() > 0){
                 for(String key : mapCreateMobilePhone.keyset()){
                     ContactPointPhone c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapCreateMobilePhone.get(key),mobilePrefixesToCreate.get(mapCreateMobilePhone.get(key)), true);
@@ -262,7 +442,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
                      ceToUpdate.add(c);
                 }
             }
-    
+    */
             if(ceToUpdate != null && ceToUpdate.size() > 0){
                 HDT_SRV_ContactPoint.upsertContactPointEmail(ceToUpdate);
             }
@@ -271,6 +451,266 @@ public with sharing class HDT_UTL_GestionePrivacy {
             }
         }
 
+        public static void updateContactPointFromObjectContact(List<Contact> contactNew,List<contact> contactOld){
+        
+            Map<String,String> mapMobilePhone = new Map<String,String>();
+            Map<String,String> mapPhone = new Map<String,String>();
+            Map<String,String> mapEmail = new Map<String,String>();
+            Map<String,String> mapMobilePhoneBlank = new Map<String,String>();
+            Map<String,String> mapPhoneBlank = new Map<String,String>();
+            Map<String,String> mapEmailBlank = new Map<String,String>();
+            Map<String,String> mapCreateMobilePhone = new Map<String,String>();
+            Map<String,String> mapCreatePhone = new Map<String,String>();
+            Map<String,String> mobilePrefixesToCreate = new Map<String,String>();
+            Map<String,String> phonePrefixesToCreate = new Map<String,String>();
+            Map<String,String> mapCreateEmail = new Map<String,String>();
+            map<String,String> mapToUpdateMobile = new Map<String,String>();
+            map<String,String> mapToUpdatePhone = new Map<String,String>();
+            Map<String,String> mobilePrefixesToUpdate= new Map<String,String>();
+            Map<String,String> phonePrefixesToUpdate = new Map<String,String>();
+            map<String,String> mapToUpdateEmail = new Map<String,String>();
+            map<String,String> mapLeadInd = new Map<String,String>();
+            List<String> listIndividual = new List<String>();
+            Boolean phCheck = true;
+            Boolean emCheck = true;
+            System.debug('*****CONTROL');
+            for(contact l : contactOld){
+                mapMobilePhone.put(l.id,l.mobilePhone == null ? '' : l.mobilePhone);
+                mapPhone.put(l.id,l.phone == null ? '' : l.phone);
+                mapEmail.put(l.id,l.email == null ? '' : l.email);
+            }
+            System.debug('*****CONTROL4:' + mapPhone);
+            for(contact l : contactNew){
+                boolean check = false;
+                if(mapMobilePhone.get(l.id) != null && mapMobilePhone.get(l.id) != l.MobilePhone && l.MobilePhone != '' && l.MobilePhone != null){
+                    if(mapMobilePhone.get(l.id) == ''){
+                        mapCreateMobilePhone.put(l.Id,l.MobilePhone);
+                        mobilePrefixesToCreate.put(l.MobilePhone, l.MobilePhonePrefix__c);
+                        check = true;
+                    }
+                    else{
+                        mapToUpdateMobile.put(mapMobilePhone.get(l.id), l.MobilePhone);
+                        mobilePrefixesToUpdate.put(l.MobilePhone, l.MobilePhonePrefix__c);
+                    	check = true;
+                    	phCheck = true;
+                    }
+                }
+                if(mapMobilePhone.get(l.id) != null && mapMobilePhone.get(l.id) != l.MobilePhone && (l.MobilePhone == '' || l.MobilePhone == null)){
+                    
+                    mapMobilePhoneBlank.put(mapMobilePhone.get(l.id),l.id);
+                    phCheck = true;
+                    check = true;
+                }
+                System.debug('*****CONTROL');
+                if(mapPhone.get(l.id) != null && mapPhone.get(l.id) != l.Phone && l.phone != '' && l.phone != null){
+                    System.debug('*****CONTROL2');
+                    if(mapPhone.get(l.id) == ''){
+                        System.debug('*****CONTRO3');
+                        mapCreatePhone.put(l.Id,l.Phone);
+                        check = true;
+                        phonePrefixesToCreate.put(l.Phone, l.PhonePrefix__c);
+                    }
+                    else{
+                        mapToUpdatePhone.put(mapPhone.get(l.id), l.Phone);
+                        phonePrefixesToUpdate.put(l.Phone, l.PhonePrefix__c);
+                        check = true;
+                        phCheck = true;
+    
+                    }
+                }
+                if(mapPhone.get(l.id) != null && mapPhone.get(l.id) != l.Phone && (l.phone == '' || l.phone == null)){
+                    mapPhoneBlank.put(mapPhone.get(l.id),l.id);
+                    phCheck = true;
+                    check = true;
+                }
+                if(mapEmail.get(l.id) != null && mapEmail.get(l.id) != l.Email  && l.Email != '' && l.Email != null){
+                    if(mapEmail.get(l.id) == ''){
+                        mapCreateEmail.put(l.Id,l.Email);
+                        check = true;
+                    }
+                    else{
+                        mapToUpdateEmail.put(mapEmail.get(l.id), l.Email);
+                    	check = true;
+                    	emCheck = true;
+                    }
+                }
+                if(mapEmail.get(l.id) != null && mapEmail.get(l.id) != l.Email  && (l.Email == '' || l.Email == null)){
+                    mapEmailBlank.put(mapEmail.get(l.id),l.id);
+                    check = true;
+                    emCheck = true;
+                }
+                //if(check){
+                    listIndividual.add(l.individualid);
+                //}
+                mapLeadInd.put(l.id,l.IndividualId);
+            }
+            List<ContactPointPhone> cpToUpdate = new list<ContactPointPhone>();
+            List<ContactPointEmail> ceToUpdate = new list<ContactPointEmail>();
+            map<String,ContactPointPhone> cpToUpdatePrim = new map<String,ContactPointPhone>();
+            map<string,ContactPointEmail> ceToUpdatePrim = new map<string,ContactPointEmail>();
+            map<string,ContactPointPhone> individualPrimary = new map<String,ContactPointPhone>();
+            map<string,String> isAlreadyExistContact = new map<String,String>();
+            if(phCheck){
+                List<ContactPointPhone> listCpp = HDT_QR_ContactPoint.getIndividualContactsPhoneList(listIndividual,'id,TelephoneNumber,isPrimary,Status__c,parentid');
+                For(ContactPointPhone cp : listCpp){
+                    if(cp.isPrimary){
+                        if(individualPrimary.get(cp.parentId)== null){
+                            individualPrimary.put(cp.parentid,cp);
+                        }
+                    }
+                    isAlreadyExistContact.put(cp.parentId + '-' + cp.telephoneNumber,cp.id);
+                    if(mapToUpdatePhone.get(cp.TelephoneNumber) != null){
+                        if(cp.Status__c == 'Non Verificato'){
+                            cp.TelephoneNumber = mapToUpdatePhone.get(cp.TelephoneNumber);
+                            cp.Prefix__c= phonePrefixesToUpdate.get(cp.TelephoneNumber);
+                            cpToUpdate.add(cp);
+                        }
+                        else{
+                            ContactPointPhone c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapToUpdatePhone.get(cp.TelephoneNumber),phonePrefixesToUpdate.get(cp.TelephoneNumber),false);
+                            c.parentid = cp.parentId;
+                            c.isPrimary = cp.isPrimary;
+                            cp.isPrimary = false;
+                            c.SendToMarketingCloud__c = true;
+                            cpToUpdate.add(c);
+                            cpToUpdate.add(cp);
+                            
+                        }
+                    }
+                    else if(mapToUpdateMobile.get(cp.TelephoneNumber) != null){
+                        if(cp.Status__c == 'Non Verificato'){
+                            cp.TelephoneNumber = mapToUpdateMobile.get(cp.TelephoneNumber);
+                            cp.Prefix__c= mobilePrefixesToUpdate.get(cp.TelephoneNumber);
+                            cpToUpdate.add(cp);
+                        }
+                        else{
+                            ContactPointPhone c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapToUpdateMobile.get(cp.TelephoneNumber),mobilePrefixesToUpdate.get(cp.TelephoneNumber),false);
+                            c.parentid = cp.parentId;
+                            c.SendToMarketingCloud__c = true;
+                            c.isPrimary = cp.isPrimary;
+                            cp.isPrimary = false;
+                            c.SendToMarketingCloud__c = true;
+                            cpToUpdate.add(c);
+                            cpToUpdate.add(cp);
+                        }
+                    }
+                    else if(mapMobilePhoneBlank.get(cp.TelephoneNumber) != null){
+                        cp.IsPrimary = false;
+                        cpToUpdate.add(cp);
+                    }
+                    else if(mapPhoneBlank.get(cp.TelephoneNumber) != null){
+                        cp.IsPrimary = false;
+                        cpToUpdate.add(cp);
+                    }
+
+                }
+            }
+            if(emCheck){
+                List<ContactPointEmail> listCpe = HDT_QR_ContactPoint.getIndividualContactsEmailList(listIndividual,'id,EmailAddress,Status__c,parentid');
+                for(ContactPointEmail cp : listCpe){
+                    isAlreadyExistContact.put(cp.parentId + '-' + cp.EmailAddress,cp.id);
+                    if(mapToUpdateEmail.get(cp.EmailAddress) != null){
+                        if(cp.Status__c == 'Non Verificato'){
+                            cp.EmailAddress = mapToUpdateEmail.get(cp.EmailAddress);
+                            ceToUpdate.add(cp);
+                        }
+                        else{
+                            ContactPointEmail c = HDT_UTL_ContactPoint.instanceContactPointEmail(mapToUpdateEmail.get(cp.EmailAddress),false);
+                            c.SendToMarketingCloud__c = true;
+                            c.parentid = cp.parentId;
+                            c.isPrimary = cp.isPrimary;
+                            cp.isPrimary = false;
+                            c.SendToMarketingCloud__c = true;
+                            ceToUpdate.add(c);
+                            ceToUpdate.add(cp);
+                        }
+                    }
+                    else if(mapEmailBlank.get(cp.EmailAddress) != null){
+                        cp.IsPrimary = false;
+                        ceToUpdate.add(cp);
+                    }
+                }
+            }
+          
+            if(mapCreateMobilePhone.size() > 0){
+                for(String key : mapCreateMobilePhone.keyset()){
+                    String keyToCheck = mapLeadInd.get(key) + '-' + mapCreateMobilePhone.get(key);
+                    if(isAlreadyExistContact.get(keyToCheck) == null){          
+                        ContactPointPhone c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapCreateMobilePhone.get(key),mobilePrefixesToCreate.get(mapCreateMobilePhone.get(key)), true);
+                        if(individualPrimary.get(mapLeadInd.get(key)) != null){
+                            ContactPointPhone cp1 = new ContactPointPhone();
+                            cp1.id = individualPrimary.get(mapLeadInd.get(key)).id;
+                            cp1.isPrimary = false;
+                            cpToUpdate.add(cp1);
+
+                        }
+                        c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapCreateMobilePhone.get(key),mobilePrefixesToCreate.get(mapCreateMobilePhone.get(key)), true,'Mobile');
+                        c.parentid = mapLeadInd.get(key);
+                        c.SendToMarketingCloud__c = true;
+                        cpToUpdate.add(c);
+                    }
+                    else{
+                        if(individualPrimary.get(mapLeadInd.get(key)) != null){
+                            ContactPointPhone cp2 = new ContactPointPhone();
+                            cp2.id = individualPrimary.get(mapLeadInd.get(key)).id;
+                            cp2.isPrimary = false;
+                            cpToUpdate.add(cp2);
+
+                        }
+                        ContactPointPhone cp1 = new ContactPointPhone();
+                        cp1.id = isAlreadyExistContact.get(keyToCheck);
+                        cp1.isPrimary = true;
+                        cpToUpdate.add(cp1);
+                    }   
+                }
+            }
+            if(mapCreatePhone.size() > 0){
+                 for(String key : mapCreatePhone.keyset()){
+                    String keyToCheck = mapLeadInd.get(key) + '-' + mapCreatePhone.get(key);
+                    if(isAlreadyExistContact.get(keyToCheck) == null){          
+                        boolean ck = false;
+                        if(individualPrimary.get(mapLeadInd.get(key)) == null){
+                            ck = true;
+                        }
+                        ContactPointPhone c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapCreatePhone.get(key),phonePrefixesToCreate.get(mapCreatePhone.get(key)),ck,'Casa');
+                        c.parentid = mapLeadInd.get(key);
+                        c.SendToMarketingCloud__c = true;
+                        cpToUpdate.add(c);
+                    }
+                    else{
+                        if(individualPrimary.get(mapLeadInd.get(key)) == null){
+                            ContactPointPhone cp1 = new ContactPointPhone();
+                            cp1.id = isAlreadyExistContact.get(keyToCheck);
+                            cp1.isPrimary = true;
+                            cpToUpdate.add(cp1);
+                        }
+                    }
+                }
+            }
+            if(mapCreateEmail.size() > 0){
+                 for(String key : mapCreateEmail.keyset()){
+                    String keyToCheck = mapLeadInd.get(key) + '-' + mapCreateEmail.get(key);
+                    if(isAlreadyExistContact.get(keyToCheck) == null){      
+                        ContactPointEmail c = HDT_UTL_ContactPoint.instanceContactPointEmail(mapCreateEmail.get(key),true);
+                        c.parentid = mapLeadInd.get(key);
+                        c.SendToMarketingCloud__c = true;
+                        ceToUpdate.add(c);
+                    }
+                    else{
+                        ContactPointEmail cp1 = new ContactPointEmail();
+                        cp1.id = isAlreadyExistContact.get(keyToCheck);
+                        cp1.isPrimary = true;
+                        ceToUpdate.add(cp1);
+                    }
+                }
+            }
+    
+            if(ceToUpdate != null && ceToUpdate.size() > 0){
+                HDT_SRV_ContactPoint.upsertContactPointEmail(ceToUpdate);
+            }
+            if(cpToUpdate != null && cpToUpdate.size() > 0){
+                HDT_SRV_ContactPoint.upsertContactPointPhone(cpToUpdate);
+            }
+        }
     // public static void createDefaultPrivacyLead(Id LeadId,List <String> Email,List <String> Phone) {
 
     //     Individual indv = HDT_UTL_Individual.createIndividualLead(LeadId);
@@ -314,9 +754,9 @@ public with sharing class HDT_UTL_GestionePrivacy {
     
     // }
     public static void createDefaultPrivacyLead(List<String> leadIds, Map<String,List<String>> mapMobilePhone ,Map<String,List<String>> mapPhone ,Map<String,List<String>> mapEmail, Map<String,String> mobilePrefixes, Map<String,String> phonePrefixes) {
-
-        /*List<Individual> indv =*/ HDT_UTL_Individual.createIndividualLead(leadIds);
         List<Lead> leads = leadQr.getRecordsById(leadIds);
+        /*List<Individual> indv =*/ HDT_UTL_Individual.createIndividualLead(leads);
+       // List<Lead> leads = leadQr.getRecordsById(leadIds);
         Map<String,Lead> leadsOb=new Map<String,Lead>();
         Map<String,String> primaryEmail= new Map<String,String>();
         Map<String,List<String>> emails= new Map<String,List<String>>();
@@ -599,7 +1039,7 @@ public with sharing class HDT_UTL_GestionePrivacy {
             Map<String,String> mobilePrefixes= new Map<String,String>();
             Map<String,String> phonePrefixes= new Map<String,String>();
             List<String> contactIds= new List<String>(); 
-    
+            System.debug('*******Preparazione Alla Creazione Individual');
             for(Contact contact: contacts){
                 List<String> emails= new List<String>();
                 List<String> mobile = new List<String>();

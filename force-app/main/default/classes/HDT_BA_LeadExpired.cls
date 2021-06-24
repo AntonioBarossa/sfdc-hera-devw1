@@ -9,12 +9,12 @@ public with sharing class HDT_BA_LeadExpired implements Database.Batchable<sObje
     public void execute(Database.BatchableContext bc, List<Lead> scope){
 
         Map<String, Integer>  leadValidityMdt = new Map<String,Integer>();
-        List<HDT_LeadValidityDate__mdt> validityLead= [Select LeadSource__c, ValidityDay__c from HDT_LeadValidityDate__mdt];
+        List<HDT_LeadValidityDate__mdt> validityLead= [Select leadSource, ValidityDay__c from HDT_LeadValidityDate__mdt];
         System.debug(validityLead);
 
 
         for(HDT_LeadValidityDate__mdt v: validityLead){
-            leadValidityMdt.put(v.LeadSource__c, v.ValidityDay__c.intValue());
+            leadValidityMdt.put(v.LeadSource, v.ValidityDay__c.intValue());
         }
         Date todayDate= Date.today();
         for(Lead l: scope){
