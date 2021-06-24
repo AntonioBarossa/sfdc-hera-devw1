@@ -77,6 +77,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String errorMessage = '';
         String comunicationChannel='';
         String responseStatus='';
+        String herokuCancellationCode = '';
         Case caseNew = new Case();
 
 
@@ -110,7 +111,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         }
                     }                    
                 } when 'ANNULL'{
-                    herokuCode = responseResult.responseMap.get('requestId');
+                    herokuCancellationCode = responseResult.responseMap.get('COD_PRAT_UTENTE');
                     errorMessage = responseResult.responseMap.get('errorMessage');
                     System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
                     switch on responseResult.responseMap.get('result'){
@@ -144,17 +145,16 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             caseNew.TecnicalPhase__c = phase;
             caseNew.Description = errorMessage;
             if(herokuCode != null && herokuCode != ''){
-                if(currentCase.Phase__c != 'Annullamento - Da inviare'){
-                    caseNew.HerokuPracticeCode__c = herokuCode;
-                }else{
-                    caseNew.CancellationHerokuPracticeCode__c = herokuCode;
-                }
+                caseNew.HerokuPracticeCode__c = herokuCode;
             }
             if(dlCode != null && dlCode != ''){
                 caseNew.DistributorPracticeCode__c = dlCode;
             }
             if(sendDlDate != null && sendDlDate != ''){
                 caseNew.SendToDistributorDate__c = Date.valueOf(sendDlDate);
+            }
+            if(herokuCancellationCode != null && herokuCancellationCode != ''){
+                caseNew.CancellationHerokuPracticeCode__c = herokuCancellationCode;
             }
 
             caseUpdate.add(caseNew);
