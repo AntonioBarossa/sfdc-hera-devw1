@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldOverrides>
-        <field>Account__c</field>
-        <formula>Account.Id</formula>
+        <field>Lead__c</field>
+        <formula>Lead.Id</formula>
     </fieldOverrides>
     <label>Escalation</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
@@ -34,7 +34,7 @@
         </quickActionLayoutColumns>
     </quickActionLayout>
     <targetObject>wrts_prcgvr__Activity__c</targetObject>
-    <targetParentField>Account__c</targetParentField>
+    <targetParentField>Lead__c</targetParentField>
     <targetRecordType>wrts_prcgvr__Activity__c.HDT_RT_EscalationAccountLead</targetRecordType>
     <type>Create</type>
 </QuickAction>
