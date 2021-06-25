@@ -263,7 +263,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_ConnessioneConAttivazione, HDT_RT_TemporaneaNuovaAtt, HDT_RT_Voltura, 
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
-        if((this.selectedProcess === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcess === 'HDT_RT_Voltura' ||this.selectedProcess === 'HDT_RT_Subentro' || this.selectedProcess === 'HDT_RT_AttivazioneConModifica' || this.selectedProcess === 'HDT_RT_SwitchIn' || this.selectedProcess === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcess === 'HDT_RT_TemporaneaNuovaAtt'){
+        if((this.selectedProcess === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcess === 'HDT_RT_Voltura' ||this.selectedProcess === 'HDT_RT_Subentro' || this.selectedProcess === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcess === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !='Switch in Ripristinatorio') || this.selectedProcess === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcess === 'HDT_RT_TemporaneaNuovaAtt'){
             this.callCreditCheckSAP();
         }
         
@@ -358,16 +358,21 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     getRequest(){ 
-        var typeOfCommodity = null;
-        console.log("RecordType: " + this.order.RecordType.DeveloperName);
+
+        var typeOfCommodity = 'ENERGIAELETTRICA';        
         console.log("typeOfCommodity: " + typeOfCommodity);
         var fiscalData = null;
-        if(this.order.ServicePoint__r.CommoditySector__c == 'Energia Elettrica' || this.selectedProcess === 'HDT_RT_VAS'){
-            typeOfCommodity = 'ENERGIAELETTRICA';
+        if(this.selectedProcess !== 'HDT_RT_VAS'){
+            if(this.order.ServicePoint__r.CommoditySector__c == 'Energia Elettrica'){
+                typeOfCommodity = 'ENERGIAELETTRICA';
+            }
+            if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
+                typeOfCommodity = 'GAS';
+            }
         }
-        if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
-            typeOfCommodity = 'GAS';
-        }
+        console.log("typeOfCommodity: " + typeOfCommodity);
+        console.log("this.selectedProcess: " + this.selectedProcess);
+        
         console.log("typeOfCommodity: " + typeOfCommodity);
         console.log("this.selectedProcess: " + this.selectedProcess);
         
