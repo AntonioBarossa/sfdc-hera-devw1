@@ -18,4 +18,59 @@ public with sharing class HDT_QR_AlertConfiguration {
         return availableAlerts;
     }
 
+    public List<AlertConfiguration__c> getRecordsForAccount(String accountCategory, String accountId) {
+
+        List<Contract> activeContracts = [
+            SELECT
+            Id,
+            BillingProfile__r.BillSendingMethod__c
+            FROM
+            Contract
+            WHERE AccountId = :accountId
+            AND Status IN ('Activated', 'Attivo')
+            WITH SECURITY_ENFORCED
+        ];
+
+        Set<String> accountSendingMethods = new Set<String>();
+        for (Contract c : activeContracts) {
+            accountSendingMethods.add(c.BillingProfile__r.BillSendingMethod__c);
+        }
+        System.debug('accountSendingMethods: ' + accountSendingMethods);
+
+        List<AlertConfiguration__c> alerts = [
+            SELECT 
+            Id,
+            AlertRule__c, AlertType__c,
+            IsActive__c, IsEmailChannelActive__c,
+            IsSmsChannelActive__c, IsPushChannelActive__c,
+            IsSolChannelActive__c,
+            BillSendingMethod__c,
+            Description__c
+            FROM AlertConfiguration__c
+            WHERE AccountCategory__c INCLUDES (:accountCategory)
+            WITH SECURITY_ENFORCED
+        ];
+
+        List<AlertConfiguration__c> availableAlerts = new List<AlertConfiguration__c>();
+
+        for (AlertConfiguration__c alertRule : alerts) {
+            System.debug('BillSendingMethod__c: ' + alertRule.BillSendingMethod__c);
+            // Se la regola ha una o più modalità di invio bolletta configurate, la aggiungiamo solo se il cliente ha almeno un contratto attivo con tale modalità di invio.
+            if (String.isNotBlank(alertRule.BillSendingMethod__c)) {
+                String[] availableMethods = alertRule.BillSendingMethod__c.split(';');
+                System.debug('availableMethods: ' + availableMethods);
+                for (String method : availableMethods) {
+                    System.debug('method: ' + method);
+                    if (accountSendingMethods.contains(method)) {
+                        availableAlerts.add(alertRule);
+                    }
+                }
+            } else {
+                availableAlerts.add(alertRule);
+            }
+        }
+
+        return availableAlerts;
+    }
+
 }
