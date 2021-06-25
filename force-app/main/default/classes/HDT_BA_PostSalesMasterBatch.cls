@@ -1,4 +1,4 @@
-public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.Batchable<SObject> {
+public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.Batchable<SObject>, Database.AllowsCallouts {
 
 
     public List<SObject> start(Database.BatchableContext bc){
@@ -39,6 +39,8 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                     SObject action;
                     String method = 'HDT_InstallmentPlans';
                     Map<String, Object> args = new Map<String,Object>();
+                    Case newCase = new Case();
+                    newCase.Id = currentCase.Id;
                     args.put('transition', transition);
                     args.put('action', action);
                     args.put('method',method);
@@ -49,7 +51,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                     responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) paymentsWs.execute(args);
 
                     //TO trigger Technical Phase
-                    HDT_UTL_DatabaseService.updateSObject(currentCase);
+                    HDT_UTL_DatabaseService.updateSObject(newCase);
 
                 }
 
@@ -57,8 +59,6 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
 
         }
-
-        HDT_UTL_DatabaseService.updateSObject(scope);
 
     }
 

@@ -610,6 +610,18 @@
             </connector>
             <label>Comunicazioni con il DL</label>
         </rules>
+        <rules>
+            <name>Ricostruzione_Consumi</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ricostruzione Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Ricostruzione Consumi</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Next_Step</name>

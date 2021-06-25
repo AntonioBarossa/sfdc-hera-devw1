@@ -30,7 +30,7 @@ public inherited sharing class HDT_QR_Contact {
 
     public List<Contact> getRecordsById(List<String> ids) {
 
-        String query = 'SELECT Firstname, accountId, LastName, IndividualId,Company__c  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
+        String query = 'SELECT Firstname, accountId, LastName, IndividualId,Company__c,CompanyOwner__c  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
         List<Contact> contacts = Database.query(query);
         return contacts;
     }
@@ -85,7 +85,7 @@ public inherited sharing class HDT_QR_Contact {
     }
     
     public List<Contact> getContactsIdByAccountIdList(List<String> accountIds) {
-        return [Select id from Contact where AccountId IN : accountIds];
+        return [Select id,accountId,firstname,lastname,FiscalCode__c,Phone,MobilePhone,Email,Individual.ProfilingCompanyConsent__c from Contact where AccountId IN : accountIds];
     }
 
     // INIZIO SVILUPPI EVERIS
