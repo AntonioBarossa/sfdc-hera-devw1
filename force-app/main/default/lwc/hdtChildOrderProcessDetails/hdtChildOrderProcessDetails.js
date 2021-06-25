@@ -1870,7 +1870,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': 'Via',
-                        'apiname': 'SupplyStreet__c',
+                        'apiname': 'SupplyStreetName__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': true,
                         'disabled': true,
