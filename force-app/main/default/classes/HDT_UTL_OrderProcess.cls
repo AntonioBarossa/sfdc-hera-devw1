@@ -77,7 +77,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
     // Ricalcolo delle date
-    public static void orderCalulateDateUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) {
+    public static void orderCalulateDateUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) { 
         system.debug('Ricalcolo delle date da Trigger sugli ordini --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
         system.debug('Ricalcolo delle date da Trigger sugli ordini --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
         List<Order> orderList = new List<Order>();                        

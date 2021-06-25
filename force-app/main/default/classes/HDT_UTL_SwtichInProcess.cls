@@ -1,7 +1,7 @@
 /**
  * @author alessandro.picchiri@eng.it
  * @date 24/05/2021
- * @description  Classe per la gestione delle date nel processo switch in 
+ * @description  Classe per la gestione delle date nel processo switch in  
 */
 public with sharing class HDT_UTL_SwtichInProcess {
     

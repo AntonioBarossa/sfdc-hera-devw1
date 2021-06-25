@@ -357,7 +357,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         })        
     }
 
-    getRequest(){
+    getRequest(){ 
         var typeOfCommodity = null;
         console.log("RecordType: " + this.order.RecordType.DeveloperName);
         console.log("typeOfCommodity: " + typeOfCommodity);
