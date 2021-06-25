@@ -104,9 +104,12 @@ public with sharing class HDT_UTL_SwtichInProcess {
 
         Date effectiveDateTmp = null;
         Date dateDecorrenzaTmp = null;
-        String processType = PROCESSTYPEBYRRECORDTYPEMAP.get(order.RecordType.DeveloperName);
-        order = orderQr.getRecordById(order.id);
         Date dateToFrom = null;
+
+        order = orderQr.getRecordById(order.id);
+        //String devName = orderQr.getRecordTypesDeveloperNameById(order.RecordTypeId);
+        String processType = PROCESSTYPEBYRRECORDTYPEMAP.get(order.RecordType.DeveloperName);
+        
         if(order.ProcessType__c == 'Cambio offerta'){
             dateToFrom = order.SignedDate__c; // Per cambio offerta entrare in tabella con la data firma o la data massima di ripensamento se no esecuzione anticipata
         }else{
