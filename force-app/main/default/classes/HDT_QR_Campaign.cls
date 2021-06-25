@@ -8,5 +8,43 @@ public with sharing class HDT_QR_Campaign {
         return [Select PaperCampaignParameter__r.CostCenter__c,PaperCampaignParameter__r.LetterType__c,IsDeleted, IsActive, RecurringCampaign__c, Required__c, ExpectedRevenue, BudgetedCost, ActualCost, AmountAllOpportunities, AmountWonOpportunities, HierarchyAmountAllOpportunities, HierarchyAmountWonOpportunities, HierarchyExpectedRevenue, HierarchyBudgetedCost, HierarchyActualCost, StartDate, EndDate, LastActivityDate, DateNextGeneration__c, CodeValidityEndDate__c, CreatedDate, LastModifiedDate, SystemModstamp, LastViewedDate, LastReferencedDate, NumberSent, HierarchyNumberSent, MaxNumberEECodeUse__c, MaxNumberGASCodeUse__c, MaxNumberVASCodeUse__c, GenerationPeriod__c, Priority__c, CodeConventionQuantity__c, Id, NumberOfLeads, NumberOfConvertedLeads, NumberOfContacts, NumberOfResponses, NumberOfOpportunities, NumberOfWonOpportunities, HierarchyNumberOfLeads, HierarchyNumberOfConvertedLeads, HierarchyNumberOfContacts, HierarchyNumberOfResponses, HierarchyNumberOfOpportunities, HierarchyNumberOfWonOpportunities, Channel__c, ExpectedResponse, CampaignMemberPercentageAllocation__c, Type, Status, CompanyOwner__c, Category__c, Segment__c, AssignmentType__c, BillTypeMessage__c, CodeGenerationRule__c, CodeManagementModel__c, ReitekIntegrationTechnology__c, TargetingMode__c, Tipology__c, ProcessType__c, CaseCategory__c, CaseSubCategory__c, ParentId, CampaignImageId, OwnerId, CreatedById, LastModifiedById, CampaignMemberRecordTypeId, CampaignEasyCIM__c, OriginalCampaign__c, MacroActivityEasyCIM__c, CampaignMemberAssigment__c, SurveyCRM__c, ScriptConfig__c, Name, PrefixCode__c, IdCampaignIBMUnica__c, Target__c, StaticTextMessageBill__c, Description, TargetDescription__c from Campaign where id IN :listId];
     }
 
+    public Campaign getRecordById(String Id) {
+        return [
+            SELECT 
+            Id,
+            Name,
+            LavorazioneFUB__c
+            FROM Campaign
+            where Id = :Id
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+    }
+
+    public static Campaign getCampaignId(String campaignName) {
+        String query = 'SELECT Id FROM Campaign WHERE Name = :campaignName';
+        List<Campaign> campaign = Database.query(query);
+
+        return campaign[0];
+
+    }
+
+    public Campaign getSurveyCampaignById(String campaignId) {
+        String query = 'SELECT Id, SurveyCRM__c FROM Campaign WHERE id = :campaignId';
+        List<Campaign> campaign = Database.query(query);
+        return campaign[0];
+    }
+
+    public List<Campaign> getCommercialCode(String commercialCode, String campaignId) {
+        return [
+            SELECT 
+            Id,
+            PrefixCode__c
+            FROM Campaign
+            where PrefixCode__c = :commercialCode
+            AND Id != :campaignId
+            WITH SECURITY_ENFORCED
+        ];
+    }
 
 }
