@@ -214,8 +214,15 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
         cnt.ContentDocumentId = cv2.ContentDocumentId;
         cnt.LinkedEntityId = '0011q00000mvmFkAAI';
         insert cnt;*/
+        system.debug('DOCUMENTO ID:' + cv.id);
+        List<String> listIdToSend = new List<String>();
+        listIdToSend.add(cv.id);
+        HDT_BA_CalloutBatch baSend = new HDT_BA_CalloutBatch();
+        baSend.typeCallout = 'Front Office';
+        baSend.dtos = listIdToSend;
+        Database.executebatch(baSend, 1);
 
-        HDT_WS_PraxidiaIntegration.callService(cv.id,'Front Office');
+        //HDT_WS_PraxidiaIntegration.callService(cv.id,'Front Office');
     }
 
 

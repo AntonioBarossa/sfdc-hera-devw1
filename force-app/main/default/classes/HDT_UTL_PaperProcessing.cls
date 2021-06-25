@@ -1,15 +1,68 @@
 public with sharing class HDT_UTL_PaperProcessing {
+
+
+    public static void createCommunication(List<PaperProcessing__c> newPaper,List<PaperProcessing__c> oldPaper){
+        map<String,PaperProcessing__c> mapOld = new map<String,PaperProcessing__c>();
+        for(PaperProcessing__c p : oldPaper){
+            mapOld.put(p.id,p);
+        }
+        for (PaperProcessing__c pp : newPaper) {
+            if (mapOld.get(pp.id) != null && mapOld.get(pp.id).Status__c != 'Completata' && pp.status__c == 'Completata') {
+                HDT_BA_PaperCampaignClosing ppBatch = new HDT_BA_PaperCampaignClosing(pp.Id);
+                ID batchProcessId = Database.executeBatch(ppBatch);
+            }
+        }
+    }
+
+
+    public static void generateName(List<PaperProcessing__c> newPaper){
+        List<String> idCampaign = new List<String>();
+        map<String,Campaign> mapCampaign = new Map<String,Campaign>();
+        for(PaperProcessing__c p  : newPaper){
+            idCampaign.add(p.Campaign__c);
+        }
+        List<Campaign> listC = HDT_QR_Campaign.getCampaign(idCampaign);
+        for(Campaign c : listC){
+            mapCampaign.put(c.id,c);
+        }
+        for(PaperProcessing__c p : newPaper){
+            Campaign c = mapCampaign.get(p.campaign__c);
+            p.name = c.PaperCampaignParameter__r.LetterType__c + '_' + date.today().year() + date.today().month() + date.today().day() + '_' + c.PaperCampaignParameter__r.CostCenter__c;
+        }
+    }
+
+
+
     //execute batch
-    public static void exportFile(List<PaperProcessing__c> newPaper) {
+    public static void exportFile(List<PaperProcessing__c> newPaper,List<PaperProcessing__c> oldPaper) {
+        map<String,PaperProcessing__c> mapOld = new map<String,PaperProcessing__c>();
+        for(PaperProcessing__c p : oldPaper){
+            mapOld.put(p.id,p);
+        }
+        for (PaperProcessing__c pp : newPaper) {
+            if (mapOld.get(pp.id) != null && mapOld.get(pp.id).TriggerCustomerReport__c == false && pp.TriggerCustomerReport__c == true) {
+                //execute batch
+                HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(pp.Id);
+                ID batchProcessId = Database.executeBatch(ppBatch, 10000);
+                pp.TriggerCustomerReport__c = false;
+                pp.status__c = 'In Corso';
+                System.debug(batchProcessId);
+            }
+        }
+        HDT_SRV_PaperProcessing.updateRecords(newPaper);
+    }
+    public static void exportFileNotTrigger(List<PaperProcessing__c> newPaper) {
         for (PaperProcessing__c pp : newPaper) {
             if (pp.TriggerCustomerReport__c == true) {
                 //execute batch
                 HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(pp.Id);
                 ID batchProcessId = Database.executeBatch(ppBatch, 500);
                 pp.TriggerCustomerReport__c = false;
+                pp.status__c = 'In Corso';
                 System.debug(batchProcessId);
             }
         }
+        HDT_SRV_PaperProcessing.updateRecords(newPaper);
     }
 
     //Generate xls file
@@ -72,7 +125,18 @@ public with sharing class HDT_UTL_PaperProcessing {
 
     //WS Post Call
     public static String postPaperProcessing(String filezipName, String type, String contentVersionId){
-        String nomeApi = 'postPaperProcessing';
+        //String nomeApi = 'postPaperProcessing';
+        HDT_WS_Response wsCall = HDT_WS_PaperProcessing.postPaperProcessing(filezipName, type, contentVersionId);
+        if (wsCall.status == 'OK') {
+            //System.debug('- - - - - ' + wsCall.body);
+            return wsCall.status;
+        } else {
+            System.debug('Error: ' + wsCall.errorDetails);
+            return ((String) wsCall.errorDetails);
+        }
+    }
+    public static String postPaperProcessing(String filezipName, String type, List<String> contentVersionId){
+        //String nomeApi = 'postPaperProcessing';
         HDT_WS_Response wsCall = HDT_WS_PaperProcessing.postPaperProcessing(filezipName, type, contentVersionId);
         if (wsCall.status == 'OK') {
             //System.debug('- - - - - ' + wsCall.body);

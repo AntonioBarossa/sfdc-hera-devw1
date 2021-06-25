@@ -1,40 +1,42 @@
-public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<CampaignMember> {
+public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<sObject> {
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
 
     public String paperProcessingId;
     public List<CampaignMember> campaignMembers;
     public String contentVersionId;
-    public List<Contract> contractList = new List<Contract>();
-    public Map<String, Contract> cmContract = new Map<String, Contract>();
-    public List<HDT_WRP_PaperProcessing> ppWrapList = new List<HDT_WRP_PaperProcessing>();
+    public list<String> contentVersionIdList = new List<String>();
+    //public List<Contract> contractList = new List<Contract>();
+    //public Map<String, Contract> cmContract = new Map<String, Contract>();
+    //public List<HDT_WRP_PaperProcessing> ppWrapList = new List<HDT_WRP_PaperProcessing>();
     public HDT_BA_PaperProcessing(String paperProcessingId) {
         this.paperProcessingId = paperProcessingId;
-        this.campaignMembers = campaignMemberQr.getCampaignMembersForPaperProcessing(paperProcessingId);
-        Map<String, String> cmContractRef = new Map<String, String>();
-        for (CampaignMember cm : this.campaignMembers) {
-            if (cm.ContractReference__c != null) {
-                cmContractRef.put(cm.Id, '\''+ String.join(cm.ContractReference__c.split(','), '\',\'') + '\'');
-            }
-        }
-        String contractRefs = String.join(cmContractRef.values(), ',');
-        if (contractRefs != '') {
-            this.contractList = contractQr.getSupplyAddressByContractNumber(contractRefs.split(','));
-        }
-        System.debug(contractRefs);
-        Map<String, String> cmContractNumber = new Map<String, String>();
-        for (String ref : cmContractRef.values()) {
+      //  this.campaignMembers = campaignMemberQr.getCampaignMembersForPaperProcessing(paperProcessingId);
+      //  Map<String, String> cmContractRef = new Map<String, String>();
+      //  for (CampaignMember cm : this.campaignMembers) {
+      //      if (cm.ContractReference__c != null) {
+      //          cmContractRef.put(cm.Id, '\''+ String.join(cm.ContractReference__c.split(','), '\',\'') + '\'');
+      //      }
+      //  }
+      //  String contractRefs = String.join(cmContractRef.values(), ',');
+      //  if (contractRefs != '') {
+         //   this.contractList = contractQr.getSupplyAddressByContractNumber(contractRefs.split(','));
+       // }
+      //  System.debug(contractRefs);
+      //  Map<String, String> cmContractNumber = new Map<String, String>();
+      ////  for (String ref : cmContractRef.values()) {
             
-        }
-        
+       // }
     }
 
-    public Iterable<CampaignMember> start(Database.BatchableContext bc) {
+    public Database.QueryLocator start(Database.BatchableContext bc) {
         // collect the batches of records or objects to be passed to execute
-        return this.campaignMembers;
+        String query = 'SELECT Id,PaperProcess__c,ContactId,LeadId,Contact.Account.CustomerCode__c,Contact.Company__c,Lead.Company__c,Contact.FirstName,Contact.LastName,Lead.FirstName,Lead.LastName,Contact.FiscalCode__c,Lead.FiscalCode__c,Contact.VATNumber__c,Lead.VATNumber__c,Contact.MailingStreetName__c,Lead.Street,Contact.MailingStreetNumber__c,Lead.StreetNumber__c,Contact.MailingPostalCode,Lead.PostalCode,Contact.MailingCity,Lead.City,Contact.MailingState,Lead.State,Contact.MailingCountry,Lead.Country,ContractReference__c,Campaign.PaperCampaignParameter__r.LetterType__c,Campaign.PaperCampaignParameter__r.ShippingMode__c,Campaign.PaperCampaignParameter__r.Aggregation__c,Campaign.PaperCampaignParameter__r.Lot__c,Campaign.PaperCampaignParameter__r.LotDate__c,Campaign.PaperCampaignParameter__r.Field2__c,Campaign.PaperCampaignParameter__r.Field3__c,Campaign.PaperCampaignParameter__r.Field4__c,Campaign.PaperCampaignParameter__r.Field5__c,Campaign.PaperCampaignParameter__r.Field6__c,Campaign.PaperCampaignParameter__r.Field7__c,Campaign.PaperCampaignParameter__r.Field8__c,Campaign.PaperCampaignParameter__r.Field9__c,Campaign.PaperCampaignParameter__r.Field10__c,Campaign.PaperCampaignParameter__r.Field11__c,Campaign.PaperCampaignParameter__r.Field12__c,Campaign.PaperCampaignParameter__r.Field13__c,Campaign.PaperCampaignParameter__r.Field14__c,Campaign.PaperCampaignParameter__r.Field15__c,Campaign.PaperCampaignParameter__r.Field16__c,Campaign.PaperCampaignParameter__r.Field17__c,Campaign.PaperCampaignParameter__r.Field18__c,Campaign.PaperCampaignParameter__r.Field19__c,Campaign.PaperCampaignParameter__r.Field20__c,Campaign.PaperCampaignParameter__r.Field21__c,Campaign.PaperCampaignParameter__r.Field22__c,Campaign.PaperCampaignParameter__r.Field23__c,Campaign.PaperCampaignParameter__r.Field24__c,Campaign.PaperCampaignParameter__r.Field25__c,Campaign.PaperCampaignParameter__r.Field26__c,Campaign.PaperCampaignParameter__r.Field27__c,Campaign.PaperCampaignParameter__r.Field28__c,Campaign.PaperCampaignParameter__r.Field29__c,Campaign.PaperCampaignParameter__r.Field30__c,Campaign.PaperCampaignParameter__r.Field31__c,Campaign.PaperCampaignParameter__r.Field32__c,Campaign.PaperCampaignParameter__r.Field33__c,Campaign.PaperCampaignParameter__r.Field34__c,Campaign.PaperCampaignParameter__r.Field35__c,Campaign.PaperCampaignParameter__r.Field36__c,Campaign.PaperCampaignParameter__r.Field37__c,Campaign.PaperCampaignParameter__r.Field38__c,Campaign.PaperCampaignParameter__r.Field39__c,Campaign.PaperCampaignParameter__r.Field40__c FROM CampaignMember WHERE CampaignId IN(SELECTCampaign__cFROMPaperProcessing__cWHEREid=:paperProcessingId) AND PaperProcess__c=:paperProcessingId WITH SECURITY_ENFORCED';
+        return Database.getQueryLocator(query);
     }
 
     public void execute(Database.BatchableContext BC, List<CampaignMember> scope) {
+        List<HDT_WRP_PaperProcessing> ppWrapList = new List<HDT_WRP_PaperProcessing>();
         for(CampaignMember cm : scope) { 
             //cm.PaperProcess__c = paperProcessingId;
             //campaignMembers.add(cm);
@@ -109,8 +111,8 @@ public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<C
 
             ppWrapList.add(ppwrap);
         }
-        String fileName = 'campaignPaper';
-        this.contentVersionId = HDT_UTL_PaperProcessing.generateFile(ppWrapList, this.paperProcessingId, fileName);
+        String fileName = 'Report_Clienti_' + this.paperProcessingId + date.today().year() + date.today().month() + date.today().day();
+        contentVersionIdList.add(HDT_UTL_PaperProcessing.generateFile(ppWrapList, this.paperProcessingId, fileName));
         //update campaignMembers;
         System.debug('-------- '+campaignMembers.size());
         System.debug('------ '+ppWrapList.size());
@@ -118,10 +120,18 @@ public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<C
 
     public void finish(Database.BatchableContext bc){
         //ws call
-        // String filezipName = 'comunicazioni';
-        // String type = 'Comunicazione Cartacea';
-        String wsResponse = HDT_UTL_PaperProcessing.postPaperProcessing(filezipName, type, this.contentVersionId);
-        System.debug(wsResponse);
-        System.debug('-------- finish batch');
+        /*List<String> listIdToSend = new List<String>();
+        listIdToSend.add(cv.id);*/
+        HDT_BA_CalloutBatch baSend = new HDT_BA_CalloutBatch();
+        baSend.typeCallout = 'Comunicazione Cartacea';
+        baSend.dtos = contentVersionIdList;
+        baSend.filezipName = 'Lavorazione_Cartacea_'+ paperProcessingId;
+        Database.executebatch(baSend, 100);
+
+        //String filezipName = 'Comunicazioni';
+       // String type = 'Comunicazione Cartacea';
+       // String wsResponse = HDT_UTL_PaperProcessing.postPaperProcessing(filezipName, type, this.contentVersionId);
+        //System.debug(wsResponse);
+      //  System.debug('-------- finish batch');
     }
 }
