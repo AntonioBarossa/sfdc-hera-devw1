@@ -2806,6 +2806,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Campaign.PaperCampaignParameter__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Campaign.SurveyCRM__c</field>
         <readable>true</readable>
     </fieldPermissions>
