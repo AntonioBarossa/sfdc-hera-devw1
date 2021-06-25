@@ -2416,6 +2416,36 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AtecoMatrix__c.AtecoCode__c</field>
+        <readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AtecoMatrix__c.Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AtecoMatrix__c.City__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AtecoMatrix__c.IstatCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AtecoMatrix__c.SubType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AtecoMatrix__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AuthorizationForm.DefaultAuthFormTextId</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27727,7 +27757,7 @@
         <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_VolturaTecnica</layout>
         <recordType>Case.HDT_RT_VolturaTecnica</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -28483,6 +28513,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>Asset</object>
         <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>AtecoMatrix__c</object>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>

@@ -27,7 +27,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         FROM Case
         WHERE Phase__c = :this.phaseInstallments
         AND Type = :this.typeInstallments
-        AND SuspensionEndDate__c < :this.todayDate
+        AND SuspensionEndDate__c <= :this.todayDate
         WITH SECURITY_ENFORCED
         ];
 

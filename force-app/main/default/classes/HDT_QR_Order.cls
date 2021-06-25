@@ -587,4 +587,7 @@ public inherited sharing class HDT_QR_Order {
 
     //FINE SVILUPPI EVERIS
 
+    public List<order> getOrderCreatedYesterday(){
+        return [Select id,Account.Segment__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order limit 100];//where Createddate = Yesterday];
+    }
 }

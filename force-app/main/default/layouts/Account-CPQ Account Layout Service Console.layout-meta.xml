@@ -384,7 +384,7 @@
         <fields>et4ae5__DateOpened__c</fields>
         <fields>CaseID__c</fields>
         <fields>OrderID__c</fields>
-        <fields>BounceSubCategory__c</fields>
+        <fields>BounceType__c</fields>
         <fields>et4ae5__Contact_ID__c</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.Account__c</relatedList>
     </relatedLists>
