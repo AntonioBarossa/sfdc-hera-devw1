@@ -69,4 +69,14 @@
         });
         $A.enqueueAction(action);
     },
+
+    showNotification : function(component, event, helper) {
+        var toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+           // "title": "Success!",
+            "message": this.message,
+            "type": "error"
+        });
+        toastEvent.fire();
+    }
 })

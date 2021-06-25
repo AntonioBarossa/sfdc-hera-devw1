@@ -11,7 +11,7 @@
         },
         {
             label: 'Nome',
-            fieldName: 'nomeProprio',
+            fieldName: 'NomeProprio',
             sortable: true
         },
         {
