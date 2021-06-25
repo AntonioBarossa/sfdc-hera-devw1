@@ -358,6 +358,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     getRequest(){ 
+
         var typeOfCommodity = 'ENERGIAELETTRICA';        
         console.log("typeOfCommodity: " + typeOfCommodity);
         var fiscalData = null;
@@ -369,6 +370,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 typeOfCommodity = 'GAS';
             }
         }
+        console.log("typeOfCommodity: " + typeOfCommodity);
+        console.log("this.selectedProcess: " + this.selectedProcess);
         
         console.log("typeOfCommodity: " + typeOfCommodity);
         console.log("this.selectedProcess: " + this.selectedProcess);
