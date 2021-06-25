@@ -1000,7 +1000,7 @@
             <inputParameters>
                 <name>allowSmallerReading</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1434,7 +1434,7 @@
             <targetReference>Richiesta_Parere_Esterno</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
