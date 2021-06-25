@@ -12,6 +12,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
     private static HDT_SRV_QuoteLine quoteLineSrv = new HDT_SRV_QuoteLine();
+    private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
+    private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
 
     private static void alignBillingProfileFields(Order orderToUpdate, String billingProfileId){
 
@@ -101,6 +103,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.LiftingPeople__c = 'No';
         orderToUpdate.MeterType__c = servicePoint.MeterType__c;
         orderToUpdate.IsRemoteManaged__c = servicePoint.IsRemoteManaged__c;
+        orderToUpdate.CustomerRequestDate__c = Date.today();
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
@@ -166,6 +169,21 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     }
 
+    private static void alignQuote(Order orderToUpdate, String quoteId, Order order) {
+
+        quoteSrv.checkReadAccess('SalesCompanyCode__c,SalesCompany__c');
+        SBQQ__Quote__c quote = quoteQr.getRecordById(quoteId);
+
+        if (order.SalesCompanyCode__c == null) {
+            orderToUpdate.SalesCompanyCode__c = quote.SalesCompanyCode__c;
+        }
+
+        if (order.SalesCompany__c == null) {
+            orderToUpdate.SalesCompany__c = quote.SalesCompany__c;
+        }
+
+    }
+
     public static String calculateRequestedOption(String implantType, Decimal powerContractual){
 
         String result = '';
@@ -225,6 +243,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         if(order.SBQQ__Quote__c != null) {
             alignPrimaryProduct(orderToUpdate, order.SBQQ__Quote__c);
+            alignQuote(orderToUpdate, order.SBQQ__Quote__c, order);
         }
 
         if(order.BillingProfile__c != null) {
