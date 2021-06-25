@@ -1,4 +1,3 @@
-
 public inherited sharing class HDT_QR_Contract {
 
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
@@ -25,8 +24,8 @@ public inherited sharing class HDT_QR_Contract {
             Name,
             AccountId,
             ContractNumber,
-            BillingProfile__c,
             Status,
+            BillingProfile__c,
             SBQQ__Order__r.BillingProfile__c,
             ServicePoint__c,
             ServicePoint__r.RecordType.DeveloperName
@@ -140,8 +139,7 @@ public inherited sharing class HDT_QR_Contract {
         return listCon;
     }
 
-    public List<Contract> getSupplyAddressByContractNumber(List<String> contractNumbers) {
-        return Database.query('SELECT Id, ContractNumber, ServicePoint__r.SupplyStreet__c, ServicePoint__r.SupplyStreetNumber__c, ServicePoint__r.SupplyPostalCode__c, ServicePoint__r.SupplyCity__c, ServicePoint__r.SupplyProvince__c FROM Contract where ContractNumber In '+ contractNumbers +' AND ServicePoint__c  != \'\' WITH SECURITY_ENFORCED');
+
 
     public List<Contract> getRecordsWithOrders(List<String> contractIds){
         return [
@@ -155,7 +153,6 @@ public inherited sharing class HDT_QR_Contract {
             WITH SECURITY_ENFORCED
         ];
     }
-
     public List<Contract> getContractFromServicePoint(String servicePointId){
 
         return [SELECT Id

@@ -13,7 +13,7 @@ public with sharing class HDT_QR_Campaign {
             SELECT 
             Id,
             Name,
-            LavorazioneFUB__c
+          //  LavorazioneFUB__c
             FROM Campaign
             where Id = :Id
             WITH SECURITY_ENFORCED
