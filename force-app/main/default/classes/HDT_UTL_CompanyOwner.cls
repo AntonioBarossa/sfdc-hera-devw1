@@ -39,8 +39,13 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                         }
                     }else if(objectApiName=='Asset' || objectApiName== 'Case' || objectApiName== 'Contact' || objectApiName== 'Opportunity' ){
                         accountIds.add(String.valueOf(s.get('AccountId')));
-                    }else if(objectApiName=='BillingProfile__c' || objectApiName=='SolTracking__c' || objectApiName=='wrts_prcgvr__Activity__c' ||objectApiName=='DocumentSendTracking__c'){
+                    }else if(objectApiName=='BillingProfile__c' || objectApiName=='SolTracking__c' || objectApiName=='DocumentSendTracking__c'){
                         accountIds.add(String.valueOf(s.get('Account__c')));
+                    }else if(objectApiName=='wrts_prcgvr__Activity__c'){
+                        accountIds.add(String.valueOf(s.get('Account__c')));
+                        leadIds.add(String.valueOf(s.get('Lead__c')));
+                        caseIds.add(String.valueOf(s.get('Case__c')));
+                        orderIds.add(String.valueOf(s.get('Order__c')));
                     }else if(objectApiName=='DocumentalActivity__c'){
                         caseIds.add(String.valueOf(s.get('CaseId__c')));
                     }else if(objectApiName=='SBQQ__Quote__c' || objectApiName=='SBQQ__Subscription__c'){
@@ -64,7 +69,7 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                     cases=caseQr.getRecordsById(caseIds, 'Id,CompanyOwner__c,AccountId');
                 }
                 if(orderIds.size()>0){
-                    orders=orderQr.getRecordsByIdWithFields(orderIds, 'Id,AccountId');
+                    orders=orderQr.getRecordsByIdWithFields(orderIds, 'Id,CompanyOwner__c,AccountId');
                 }
                 if(leadIds.size()>0){
                     leads=leadQr.getRecordsById(leadIds);
@@ -94,10 +99,24 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                             Account ac= accountsMap.get(String.valueOf(s.get('AccountId')));
                             s.put('CompanyOwner__c', ac.CompanyOwner__c);
                         }
-                    }else if(objectApiName=='BillingProfile__c' || objectApiName=='SolTracking__c' || objectApiName=='wrts_prcgvr__Activity__c' ||objectApiName=='DocumentSendTracking__c'){
+                    }else if(objectApiName=='BillingProfile__c' || objectApiName=='SolTracking__c' ||objectApiName=='DocumentSendTracking__c'){
                         if(accountsMap.containsKey(String.valueOf(s.get('Account__c')))){
                             Account ac= accountsMap.get(String.valueOf(s.get('Account__c')));
                             s.put('CompanyOwner__c', ac.CompanyOwner__c);
+                        }
+                    }else if(objectApiName=='wrts_prcgvr__Activity__c'){
+                        if(accountsMap.containsKey(String.valueOf(s.get('Account__c')))){
+                            Account ac= accountsMap.get(String.valueOf(s.get('Account__c')));
+                            s.put('CompanyOwner__c', ac.CompanyOwner__c);
+                        }else if(leadsMap.containsKey(String.valueOf(s.get('Lead__c')))){
+                            Lead lead= leadsMap.get(String.valueOf(s.get('Lead__c')));
+                            s.put('CompanyOwner__c', lead.CompanyOwner__c);
+                        }else if (casesMap.containsKey(String.valueOf(s.get('Case__c')))){
+                            Case caseObj = casesMap.get(String.valueOf(s.get('Case__c')));
+                            s.put('CompanyOwner__c', caseObj.CompanyOwner__c);
+                        }else if (ordersMap.containsKey(String.valueOf(s.get('Order__c')))){
+                            Order orderObj = ordersMap.get(String.valueOf(s.get('Order__c')));
+                            s.put('CompanyOwner__c', orderObj.CompanyOwner__c);
                         }
                     }else if(objectApiName=='DocumentalActivity__c'){
                         if(casesMap.containsKey(String.valueOf(s.get('CaseId__c')))){

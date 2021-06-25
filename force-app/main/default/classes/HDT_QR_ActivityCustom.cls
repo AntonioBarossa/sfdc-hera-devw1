@@ -54,4 +54,44 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+     * @author alessandro.picchiri@eng.it
+     * @date 25/06/2021     
+    */
+    public static List<wrts_prcgvr__Activity__c> getActivityListCrediCheck(Set<Id> orderSetId){
+        List<wrts_prcgvr__Activity__c> actList = [SELECT Id,
+                                                             RecordType.DeveloperName,
+                                                             Status__c,
+                                                             CreditCheckResults__c,
+                                                             Order__c,
+                                                             Order__r.OrderNumber,
+                                                             Order__r.CreatedById,
+                                                             Order__r.Channel__c,  
+                                                             Order__r.ProcessType__c,
+                                                             Order__r.Market__c,
+                                                             Order__r.Catalog__c, 
+                                                             Order__r.SalesCompany__c,                                                             
+                                                             Order__r.ServicePoint__r.CommoditySector__c,
+                                                             Order__r.ServicePoint__r.SupplyStreetName__c,
+                                                             Order__r.ServicePoint__r.SupplyCity__c,
+                                                             Order__r.ServicePoint__r.SupplyProvince__c,
+                                                             Order__r.ServicePoint__r.SupplyPostalCode__c,
+                                                             Order__r.ServicePoint__r.Account__r.CustomerCode__c,
+                                                             Order__r.ServicePoint__r.Account__r.VATNumber__c,
+                                                             Order__r.ServicePoint__r.AnnualConsumptionStandardM3__c,
+                                                             Order__r.RecordType.DeveloperName,
+                                                             Order__r.Account.CustomerCode__c,
+                                                             Order__r.Account.FiscalCode__c,
+                                                             Order__r.Account.VATNumber__c,
+                                                             Order__r.Account.CustomerMarking__c,
+                                                             Order__r.Account.Category__c,
+                                                             Order__r.Account.CustomerType__c,
+                                                             Order__r.Account.RecordType.DeveloperName                                                             
+                                                       FROM wrts_prcgvr__Activity__c 
+                                                       WHERE  (RecordType.DeveloperName = 'HDT_RT_CreditCheckKO' or RecordType.DeveloperName = 'HDT_RT_KoPrecedeteCliente') 
+                                                                and Status__c = 'Creata' and Order__c IN :orderSetId];
+
+        return actList;
+    }
 }

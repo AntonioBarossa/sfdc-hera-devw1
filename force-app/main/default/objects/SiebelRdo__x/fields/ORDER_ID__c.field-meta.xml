@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ORDER_ID__c</fullName>
+    <description>ORDER_ID</description>
+    <externalDeveloperName>ORDER_ID</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Order Id</label>
+    <length>15</length>
+    <referenceTo>SiebelOrder__x</referenceTo>
+    <relationshipLabel>Riga d&apos;ordine</relationshipLabel>
+    <relationshipName>SiebelRdo</relationshipName>
+    <type>ExternalLookup</type>
+</CustomField>
