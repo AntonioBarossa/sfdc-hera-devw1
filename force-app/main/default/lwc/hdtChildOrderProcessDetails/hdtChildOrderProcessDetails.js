@@ -57,6 +57,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     ]};
 
     //INIZIO SVILUPPI EVERIS
+    //INIZIO SVILUPPI EVERIS
     @track readingCustomerDate;
     @track disabledReadingDate;
     @track isRetroactive = false;
@@ -93,7 +94,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     });
             }
         }
-        //EVERIS
+        //EVERIS               
         if(event.target.fieldName !== undefined){
             this.sectionDataToSubmit[event.target.fieldName] = event.target.value;
         }
@@ -433,29 +434,29 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             readingDate: this.readingCustomerDate
         }).then(data =>{
             if(this.isVolture){
-                getDates({recordId: orderId})
-                    .then(data => {
-                        let retroactiveDate = null;
-                        let effectiveDate = data.EffectiveDate__c;
-                        if(JSON.stringify(data).includes('RetroactiveDate__c')){
-                            retroactiveDate = data.RetroactiveDate__c;
-                        }
-                        this.isRetroactive =  retroactiveDate != null;
-                        this.disabledReadingDate = !this.isRetroactive;
-                        console.log('#isRetroactive -> ' + this.isRetroactive);
-                        console.log('#EffectiveDate -> ' + effectiveDate);
-                        console.log('#RetroactiveDate -> ' + retroactiveDate);
-                        console.log('#DisabledReading -> ' +this.disabledReadingDate);
-                        if(this.isRetroactive){
-                            this.readingCustomerDate = retroactiveDate;
-                        } else {
-                            this.readingCustomerDate = effectiveDate;
-                        }
-                    }).catch(error => {
-                        console.log('#ErrorGetRecord -> '+JSON.stringify(error));
-                    })
-            }
-            this.loading = false;
+            getDates({recordId: orderId})
+                .then(data => {
+                    let retroactiveDate = null;
+                    let effectiveDate = data.EffectiveDate__c;
+                    if(JSON.stringify(data).includes('RetroactiveDate__c')){
+                        retroactiveDate = data.RetroactiveDate__c;
+                    }
+                    this.isRetroactive =  retroactiveDate != null;
+                    this.disabledReadingDate = !this.isRetroactive;
+                    console.log('#isRetroactive -> ' + this.isRetroactive);
+                    console.log('#EffectiveDate -> ' + effectiveDate);
+                    console.log('#RetroactiveDate -> ' + retroactiveDate);
+                    console.log('#DisabledReading -> ' +this.disabledReadingDate);
+                    if(this.isRetroactive){
+                        this.readingCustomerDate = retroactiveDate;
+                    } else {
+                        this.readingCustomerDate = effectiveDate;
+                    }
+                }).catch(error => {
+                    console.log('#ErrorGetRecord -> '+JSON.stringify(error));
+                })
+        }
+                    this.loading = false;
             //INIZIO SVILUPPI EVERIS
             //LA VARIABILE NEXT INDEX RIPORTA L'INDICE CORRETTO PER ANDARE AVANTI
             let nextIndex = this.availableSteps[currentSectionIndex + 1].step != nextSectionStep
@@ -489,7 +490,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 variant: 'error'
             });
             this.dispatchEvent(toastErrorMessage);
-
+        
         });
     }
 
@@ -521,23 +522,24 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         
         if(currentSectionName === 'dettaglioImpianto'){
 
-            if(this.template.querySelector("[data-id='SurfaceServed__c']") !== null 
-                && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
-                && this.typeVisibility('gas')
-                && (this.template.querySelector("[data-id='SurfaceServed__c']").value === ''
-                    || this.template.querySelector("[data-id='SurfaceServed__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Superficie Servita',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
 
-            if(this.template.querySelector("[data-id='WaiverRightAfterthought__c']") !== null 
+            if(this.template.querySelector("[data-id='SurfaceServed__c']") !== null 
+            && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
+            && this.typeVisibility('gas')
+            && (this.template.querySelector("[data-id='SurfaceServed__c']").value === ''
+                || this.template.querySelector("[data-id='SurfaceServed__c']").value === null)) {
+            this.loading = false;
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Popolare il campo Superficie Servita',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+            this.dispatchEvent(toastErrorMessage);
+            return;
+        }
+
+        if(this.template.querySelector("[data-id='WaiverRightAfterthought__c']") !== null 
                 && (this.template.querySelector("[data-id='WaiverRightAfterthought__c']").value === ''
                     || this.template.querySelector("[data-id='WaiverRightAfterthought__c']").value === null)) {
                 this.loading = false;
@@ -767,7 +769,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             //console.log('ResultReading -> ' + result);
 
             console.log('isSavedReading--> '+this.isSavedReading);
-            
+
         }
 
         this.updateProcess(currentSectionIndex, nextSectionStep);
