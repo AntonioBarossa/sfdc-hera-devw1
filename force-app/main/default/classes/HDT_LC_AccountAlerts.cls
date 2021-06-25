@@ -15,7 +15,7 @@ public with sharing class HDT_LC_AccountAlerts {
 
         HDT_QR_AlertConfiguration queryHandler = new HDT_QR_AlertConfiguration();
         
-        List<AlertConfiguration__c> availableAlerts = queryHandler.getRecordsForAccount(accountCategory, accountId);
+        List<AlertConfiguration__c> availableAlerts = queryHandler.getRecordsForAccount(accountId, accountCategory);
 
         return JSON.serialize(availableAlerts);
     }
