@@ -106,8 +106,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             }
             
             when 'HDT_RT_CambioOfferta' {
-                processType = 'Cambio Offerta';
-
                 if (extraParams.get('servicePointType') == 'HDT_RT_Ele') {
                     processType = 'Cambio Offerta Ele';
                 } else if(extraParams.get('servicePointType') == 'HDT_RT_Gas') {
