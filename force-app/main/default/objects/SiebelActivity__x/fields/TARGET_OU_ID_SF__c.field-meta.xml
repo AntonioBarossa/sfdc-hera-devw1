@@ -10,7 +10,7 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>Reference Cliente Online</label>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>SiebelActivity</relationshipLabel>
+    <relationshipLabel>Attività</relationshipLabel>
     <relationshipName>SiebelActivity</relationshipName>
     <required>false</required>
     <type>Lookup</type>
