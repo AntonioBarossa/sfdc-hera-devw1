@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Type__c</fullName>
-    <description>Indica se un attività ha ricevuto sollecito da parte del cliente</description>
     <externalId>false</externalId>
     <label>Tipo attività</label>
     <required>false</required>
@@ -9,113 +8,128 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Approvazione Quote</fullName>
-                <default>false</default>
-                <label>Approvazione Quote</label>
-            </value>
-            <value>
-                <fullName>Gestione dati discordanti</fullName>
-                <default>false</default>
-                <label>Gestione dati discordanti</label>
-            </value>
-            <value>
-                <fullName>Modifica Contratti PreAttivazione</fullName>
-                <default>false</default>
-                <label>Modifica Contratti PreAttivazione</label>
-            </value>
-            <value>
-                <fullName>Contratti/Bonus Commerciale</fullName>
-                <default>false</default>
-                <label>Contratti/Bonus Commerciale</label>
-            </value>
-            <value>
-                <fullName>Gestione Switch in Ripristinatorio</fullName>
-                <default>false</default>
-                <label>Gestione Switch in Ripristinatorio</label>
-            </value>
-            <value>
-                <fullName>Documentale/Copia Contratto</fullName>
-                <default>false</default>
-                <label>Documentale/Copia Contratto</label>
-            </value>
-            <value>
-                <fullName>Gestione Iva e Accise</fullName>
-                <default>false</default>
-                <label>Gestione Iva e Accise</label>
-            </value>
-            <value>
-                <fullName>Sportello</fullName>
-                <default>false</default>
-                <label>Sportello</label>
-            </value>
-            <value>
-                <fullName>Segnalazioni VAS</fullName>
-                <default>false</default>
-                <label>Segnalazioni VAS</label>
-            </value>
-            <value>
-                <fullName>Annullamento</fullName>
-                <default>false</default>
-                <label>Annullamento</label>
-            </value>
-            <value>
-                <fullName>Presa Appuntamento</fullName>
-                <default>false</default>
-                <label>Presa Appuntamento</label>
-            </value>
-            <value>
-                <fullName>Sollecito Distributore</fullName>
-                <default>false</default>
-                <label>Sollecito Distributore</label>
-            </value>
-            <value>
-                <fullName>Anticipo Appuntamento</fullName>
-                <default>false</default>
-                <label>Anticipo Appuntamento</label>
-            </value>
-            <value>
-                <fullName>Riapertura urgenti Errori DL</fullName>
-                <default>false</default>
-                <label>Riapertura urgenti Errori DL</label>
-            </value>
-            <value>
-                <fullName>Richiesta informazioni appuntamento</fullName>
-                <default>false</default>
-                <label>Richiesta informazioni appuntamento</label>
-            </value>
-            <value>
-                <fullName>Richiesta appuntamento DL (fermo sistemi)</fullName>
-                <default>false</default>
-                <label>Richiesta appuntamento DL (fermo sistemi)</label>
-            </value>
-            <value>
-                <fullName>Comunicazione da DL</fullName>
-                <default>false</default>
-                <label>Comunicazione da DL</label>
-            </value>
-            <value>
-                <fullName>Chiamata Callback</fullName>
-                <default>false</default>
-                <label>Chiamata Callback</label>
-            </value>
-            <value>
-                <fullName>Chiamata inbound</fullName>
-                <default>false</default>
-                <label>Chiamata inbound</label>
-            </value>
-            <value>
-                <fullName>Chiamata outbound</fullName>
-                <default>false</default>
-                <label>Chiamata outbound</label>
-            </value>
-            <value>
-                <fullName>Lavorazione Reclamo Post Survey</fullName>
-                <default>false</default>
-                <label>Lavorazione Reclamo Post Survey</label>
-            </value>
-        </valueSetDefinition>
+        <controllingField>PetitionerAssigneeStructure__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>HDT_ActivityType</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Tesoreria</controllingFieldValue>
+            <valueName>Supporto verifica rimborsi Clienti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tesoreria</controllingFieldValue>
+            <valueName>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione e incassi</controllingFieldValue>
+            <valueName>Supporto documentale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione e incassi</controllingFieldValue>
+            <valueName>Supporto fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione e incassi</controllingFieldValue>
+            <valueName>Supporto layout bollette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione e incassi</controllingFieldValue>
+            <valueName>Supporto pagamenti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>DAFC</controllingFieldValue>
+            <valueName>Supporto credito Credit Management – affidi ADR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>DAFC</controllingFieldValue>
+            <valueName>Supporto credito Credit Management – affidi legale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>DAFC</controllingFieldValue>
+            <valueName>Supporto credito Credit Management – cessioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>DAFC</controllingFieldValue>
+            <valueName>Supporto credito Credit Management – sospensioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sales&amp;Marketing Service</controllingFieldValue>
+            <valueName>Segnalazioni Commissioni Agenzie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canone Rai e Bonus</controllingFieldValue>
+            <valueName>Supporto su Bonus Sociale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canone Rai e Bonus</controllingFieldValue>
+            <valueName>Supporto su Canone Rai</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CVM + Corp Mui</controllingFieldValue>
+            <valueName>Supporto e segnalazioni back office</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>STS x CVM + Corp Mui</controllingFieldValue>
+            <valueName>Supporto Catalogo Prodotti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>STS x CVM + Corp Mui</controllingFieldValue>
+            <valueName>Supporto emissione SD</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Clienti</controllingFieldValue>
+            <valueName>Supporto Anomalia processo/sistema</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Clienti</controllingFieldValue>
+            <valueName>Supporto Esercizio Sistemi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>OM</controllingFieldValue>
+            <valueName>Supporto caricamenti contratti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>OM</controllingFieldValue>
+            <valueName>Supporto Verifiche contratti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>PPT</controllingFieldValue>
+            <valueName>Gestione processi di Misura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>PPT</controllingFieldValue>
+            <valueName>Gestione processi Ultima Istanza</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>PPT</controllingFieldValue>
+            <valueName>Rapporti con i distributori e SII</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reporting</controllingFieldValue>
+            <valueName>Reporting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>VENDITA</controllingFieldValue>
+            <valueName>Supporto Agenzia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CRM</controllingFieldValue>
+            <valueName>Supporto Contact Center</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CRM</controllingFieldValue>
+            <valueName>Supporto Front</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credito HC</controllingFieldValue>
+            <valueName>Morosità Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credito HC</controllingFieldValue>
+            <valueName>Supporto legale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credito HC</controllingFieldValue>
+            <valueName>Verifiche Credito Business</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>
