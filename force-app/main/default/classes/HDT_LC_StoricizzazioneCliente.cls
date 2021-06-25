@@ -82,7 +82,7 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
             for(SiebelCustomer__x SiebelCustomer:listSiebelCustomer){
                 wrapperToreturn.add(
                     new HDT_LC_Customer(
-                        SiebelCustomer.ALIAS_NAME__c,                       
+                        SiebelCustomer.ALIAS_NAME__c,
                         SiebelCustomer.TAX_IDEN_NUM__c,
                         SiebelCustomer.VAT_REGN_NUM__c,
                         SiebelCustomer.OU_NUM__c,
