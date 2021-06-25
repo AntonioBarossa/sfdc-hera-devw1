@@ -28703,6 +28703,42 @@
         <layout>wrts_prcgvr__Activity__c-Visita_D2D</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</recordType>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelActivity__x-SiebelActivity Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelContact__x-SiebelContact Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelContract__x-SiebelContract Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelContractAttribute__x-SiebelContractAttribute Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelCustomer__x-SiebelCustomer Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelDocumentLink__x-SiebelDocumentLink Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelOrder__x-SiebelOrder Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelOrderAttribute__x-SiebelOrderAttribute Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelRdo__x-SiebelRdo Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelRdoAttribute__x-SiebelRdoAttribute Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelRds__x-SiebelRds Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelRdsAttribute__x-SiebelRdsAttribute Layout</layout>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
