@@ -348,7 +348,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             let toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: (error.body.message !== undefined) ? error.body.message : error.message,
-                variant: 'error',
+                variant: 'error', 
                 mode:'sticky'
             });
             
