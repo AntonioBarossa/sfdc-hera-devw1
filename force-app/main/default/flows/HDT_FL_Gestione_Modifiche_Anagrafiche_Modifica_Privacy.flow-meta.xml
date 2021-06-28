@@ -4,8 +4,8 @@
     <assignments>
         <name>Assegna_Variabili</name>
         <label>Assegna Variabili</label>
-        <locationX>1148</locationX>
-        <locationY>362</locationY>
+        <locationX>1208</locationX>
+        <locationY>369</locationY>
         <assignmentItems>
             <assignToReference>FlowCase</assignToReference>
             <operator>Assign</operator>
@@ -27,8 +27,8 @@
     <assignments>
         <name>Assegna_Variabili_0</name>
         <label>Assegna Variabili</label>
-        <locationX>1148</locationX>
-        <locationY>552</locationY>
+        <locationX>1209</locationX>
+        <locationY>553</locationY>
         <assignmentItems>
             <assignToReference>FlowCase</assignToReference>
             <operator>Assign</operator>
@@ -238,7 +238,7 @@
         <locationX>681</locationX>
         <locationY>449</locationY>
         <defaultConnector>
-            <targetReference>Get_Contact</targetReference>
+            <targetReference>Selezione_Contatto</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Privacy Account</defaultConnectorLabel>
         <rules>
@@ -460,8 +460,8 @@
     <recordLookups>
         <name>Get_Contact</name>
         <label>Get Contact</label>
-        <locationX>990</locationX>
-        <locationY>363</locationY>
+        <locationX>1102</locationX>
+        <locationY>369</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Variabili</targetReference>
@@ -471,7 +471,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Case.ContactId</elementReference>
+                <elementReference>SelectedContactId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -502,7 +502,7 @@
     <recordLookups>
         <name>Get_Lead</name>
         <label>Get Lead</label>
-        <locationX>985</locationX>
+        <locationX>875</locationX>
         <locationY>553</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -558,6 +558,30 @@
             <field>Phase__c</field>
             <value>
                 <stringValue>Attesa Modulo Firmato</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_ContactId</name>
+        <label>Update ContactId</label>
+        <locationX>991</locationX>
+        <locationY>369</locationY>
+        <connector>
+            <targetReference>Get_Contact</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>SelectedContactId</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -857,6 +881,78 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Selezione_Contatto</name>
+        <label>Selezione Contatto</label>
+        <locationX>859</locationX>
+        <locationY>368</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Update_ContactId</targetReference>
+        </connector>
+        <fields>
+            <name>DTContact</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!Get_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Seleziona il Contatto del Cliente su cui modificare la privacy:&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtContactSelectionFlow</name>
+            <extensionName>c:hdtContactSelectionFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionType</name>
+                <value>
+                    <stringValue>Account_Contacts</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showAdministrators</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showBackButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showCancelButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showDraftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>SelectedContactId</assignToReference>
+                <name>results</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>429</locationY>
@@ -935,6 +1031,13 @@
     <variables>
         <name>SaveInDraft</name>
         <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SelectedContactId</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
