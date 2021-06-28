@@ -1,0 +1,40 @@
+<aura:component
+    implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+    controller="HDT_LC_FubArchiveImportController">
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="fileName" type="String" default="Carica il file .csv" />
+    <aura:attribute name="loading" type="Boolean" default="false" />
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+    </aura:html>
+
+    <div class="modal-header slds-modal__header slds-size_1-of-1">
+        <h4 class="title slds-text-heading--medium">Importa Archivio FUB</h4>
+    </div>
+    <aura:if isTrue="{! v.loading }">
+        <div class="slds-align_absolute-center spinnerBox">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </div>
+
+        <aura:set attribute="else">
+            <div
+                class="slds-align_absolute-center slds-is-relative slds-modal__content slds-p-around--large slds-size--1-of-2">
+                <lightning:input aura:id="uploadFile" multiple="false" name="file" type="file" label="{!v.fileName}"
+                    accept=".csv" class="slds-col" onchange="{!c.onchange}" />
+            </div>
+        </aura:set>
+    </aura:if>
+    <div class="modal-footer slds-modal__footer slds-size_1-of-1">
+        <lightning:button label="Avvia" onclick="{!c.readFile}" disabled="{! v.loading }" variant="brand" class="slds-align-middle" />
+    </div>
+</aura:component>
