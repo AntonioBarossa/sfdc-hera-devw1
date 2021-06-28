@@ -5,8 +5,13 @@ export default class HdtFilterFirstLevelModal extends LightningElement {
     @api columns;
     @api modalTitle;
     @api confirmLabel;
+    @api firstLevelFilterObj;
     @track filterObj = [];
     error;
+
+    connectedCallback(){
+        console.log('>>> FILTER OBJ ' + JSON.stringify(this.firstLevelFilterObj));
+    }
 
     setOperator(event){
         console.log('>>> operator ' + event.detail.operator);

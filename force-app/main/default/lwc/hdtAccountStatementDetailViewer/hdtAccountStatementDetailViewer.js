@@ -52,6 +52,10 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         this.getTabConfigurationData();
     }
 
+    @api getIfSecondLevelIsFiltered(){
+        return this.filterApplied;
+    }
+
     getTabConfigurationData(){
         getSecondLevelColumns({tabValue: this.tabCode})
         .then(result => {
@@ -388,86 +392,25 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
         try{
 
+            var dataToFilter = [];
+            this.accountdetails.forEach(element => {
+                dataToFilter.push(element);
+            });
+
             const columnTypeMap = new Map();
             this.columns.forEach((col) => {
                 columnTypeMap.set(col.fieldName, col.fieldType);
             });
-
+    
             var contoContrArray;
             if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
                 contoContrArray = currentFilter.contoContrattuale.value.split(',');
             }
 
-            var filteredData = [];
-            filteredData = this.accountdetails.filter(function(item) {
-                
-                for (var key in currentFilter) {
-
-                    const currentType = columnTypeMap.get(key);
-                    var filterValue;
-                    var tableValueToFilter;
-
-                    if(item[key] === undefined || item[key] === ''){
-                        return false;
-                    }
-
-                    switch (currentType) {
-                        case 'number':
-                            filterValue = parseFloat(currentFilter[key].value);
-                            tableValueToFilter = parseFloat(item[key]);
-                            console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
-                            break;
-                        case 'date':
-                            var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
-                            filterValue = date.getTime();
-
-                            var cDate = item[key].split('/');
-                            var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
-                            tableValueToFilter = cDate2.getTime();
-
-                            break;
-                        case 'text':
-                            filterValue = currentFilter[key].value;
-                            tableValueToFilter = item[key];
-                    }
-
-                    switch (currentFilter[key].operator) {
-                        case '='://uguale a
-                            if (tableValueToFilter != filterValue)
-                            return false;
-                            break;
-                        case '>'://maggiore di
-                            if (tableValueToFilter <= filterValue)
-                            return false;
-                            break;
-                        case 'in'://contiene caratteri
-                            if(!tableValueToFilter.includes(filterValue))
-                            return false;
-                            break;
-                        case 'on'://contiene valori
-                            if(!contoContrArray.includes(tableValueToFilter))
-                            return false;
-                    }
-
-                }
-                return true;
-            });
-
-            //if(filteredData.length == 0 && this.bShowModal){
-            //    this.dispatchEvent(
-            //        new ShowToastEvent({
-            //            title: 'Attenzione',
-            //            message: 'Nessun record trovato',
-            //            variant: 'warning'
-            //        }),
-            //    );
-            //    this.filterString = '';
-            //    this.staticObj = {};
-            //    return;
-            //}
+            dataToFilter = this.filterMethod(dataToFilter, currentFilter, columnTypeMap, contoContrArray);
 
             this.setButtonForFilterApplied(true);
-            this.accountdetails = filteredData;
+            this.accountdetails = dataToFilter;
             this.filterApplied = true;
             this.closeModal();
 
@@ -477,6 +420,72 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             console.error('# Stack => ' + e.stack ); 
         }
 
+    }
+
+    @api getSecondLevelList(parentData, currentFilter, columnTypeMap, contoContrArray){
+        var filteredData = [];
+        filteredData = this.filterMethod(parentData, currentFilter, columnTypeMap, contoContrArray);
+        return filteredData;
+    }
+
+    filterMethod(dataToFilter, currentFilter, columnTypeMap, contoContrArray){
+
+        console.log('>>> FILTER METHOD - CHILD NEW');
+
+        dataToFilter = dataToFilter.filter(function(item) {
+                
+            for (var key in currentFilter) {
+
+                const currentType = columnTypeMap.get(key);
+                var filterValue;
+                var tableValueToFilter;
+
+                if(item[key] === undefined || item[key] === ''){
+                    return false;
+                }
+
+                switch (currentType) {
+                    case 'number':
+                        filterValue = parseFloat(currentFilter[key].value);
+                        tableValueToFilter = parseFloat(item[key]);
+                        console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
+                        break;
+                    case 'date':
+                        var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
+                        filterValue = date.getTime();
+
+                        var cDate = item[key].split('/');
+                        var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
+                        tableValueToFilter = cDate2.getTime();
+
+                        break;
+                    case 'text':
+                        filterValue = currentFilter[key].value;
+                        tableValueToFilter = item[key];
+                }
+
+                switch (currentFilter[key].operator) {
+                    case '='://uguale a
+                        if (tableValueToFilter != filterValue)
+                        return false;
+                        break;
+                    case '>'://maggiore di
+                        if (tableValueToFilter <= filterValue)
+                        return false;
+                        break;
+                    case 'in'://contiene caratteri
+                        if(!tableValueToFilter.includes(filterValue))
+                        return false;
+                        break;
+                    case 'on'://contiene valori
+                        if(!contoContrArray.includes(tableValueToFilter))
+                        return false;
+                }
+
+            }
+            return true;
+        });
+        return dataToFilter;
     }
 
     setButtonForFilterApplied(remove){

@@ -30,6 +30,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         spincss: ''
     };
     @track interObj = {};
+    @track firstLevelFilterObj = {};
     techObj = {};
     //secondLevelFilter;
     showError = false;
@@ -215,39 +216,31 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             return false;
         }        
     }
-
     @api reopenTab(){
         console.log('# reopenTab #');
-
         if(this.allData.length == 0){
             if(this.showError){
                 this.showError = false;
             }
             
             this.openMainSpinner();
-
             if(this.checkBeforeOpenTab()){
                 this.openFilters();
                 this.closeMainSpinner();
             } else {
                 this.backendCall('home', '');// Chiamata in backend
             }
-
             this.focusOnButton('home');
         }
-
     }
-
     //button handler section --- START ---
     buttonHandler(event){
         try {
             console.log('>>> BUTTON TYPE > ' + event.currentTarget.dataset.type);
-
             if(event.currentTarget.dataset.type === undefined){
                 console.log('>>> NO BUTTON TYPE SET');
                 return;
             }
-
             switch (event.currentTarget.dataset.type) {
                 case 'webservice':
                     this.handleButtonClick(event.target.name);
@@ -259,7 +252,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 case 'lwcmethod':
                     this[event.target.name](event);
             }
-
         } catch(e){
             console.error('>>> buttonHandler');
             console.error('# Name => ' + e.name );
@@ -267,53 +259,43 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             console.error('# Stack => ' + e.stack );
         }
     }
-
     //+++ openmodal button type
     changeType(){
         this.showAcctStmt = true;
     }
-
     interrogation(event){
         this.title = 'Interrogazione dei dati';
         this.filterLabel = 'Interroga';
         this.showFilterFirstLevel = true;
         this.totAmount = 0;
     }
-
     joinFilter(event) {
         console.log('# joinFilter #');
         this.joinFilterModal = true;
     }
-
     contractService(event){
         this.filterType = 'contractService';
         this.showFilters2 = true;
     }
-
     filterEc7(){
         this.filterType = 'filterEc7';
         this.showFilters2 = true;
     }
-
     openFilters(){
         this.showFilters = true;
     }
-
     paperlessFilters(event){
         this.filterType = 'paperlessFilters';
         this.showFilters2 = true;
     }
-
     billList(event){
         this.billListHeader = 'Elenco bollette';
         this.showBillList = true;
     }
-
     viewReminders(event){
         this.billListHeader = 'Visualizza Solleciti';
         this.showBillList = true;
     }
-
     refreshRecord(){
         //refresh all data in the same service
         this.filterOn = false;
@@ -326,46 +308,36 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.showAccountData = true;
         this.avoidSort = '';
         this.showFile = false;
-
         for (var key in this.interObj) {
             this.interObj[key] = '';
         }
-
         this.resetFile();
         this.resetIdList();
         this.refreshSortButton();
         this.setButtonForFilterApplied(false);
     }
-
     serviceCatalogHandler(){
         this.serviceCatalogBackendHandler('serviceCatalogHandler', null);
     }
-
     runFlowFromAura(event){
         console.log('>>> PARAMETERS: ' + event.currentTarget.dataset.parameters);
         this.serviceCatalogBackendHandler('runFlowFromAura', event.currentTarget.dataset.parameters);
     }
-
     serviceCatalogBackendHandler(serviceOperation, parameters){
         console.log('# serviceCatalogBackendHandler #');
-
         if(idlist.length > 0){
             this.showOperationModal = true;
-
             var selectedRecord = this.allData.filter(function(item) {
                 if(!idlist.includes(item.id))
                     return false;
                 
                 return true;
             });
-
             //selectedRecord.forEach(r => {
             //    r[this.detailTable] = [];
             //});
-
             var recordsString = JSON.stringify(selectedRecord);
             this.serviceCatalogBackendOperation(recordsString, serviceOperation, parameters);
-
         } else {
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -897,6 +869,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log('# applyInterFromChild #');
 
         var interObj = JSON.parse(event.detail.value);
+        this.firstLevelFilterObj = interObj;
 
         try {
 
@@ -1217,6 +1190,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
         var currentFilter = this.template.querySelector("c-hdt-account-statement-detail-viewer").staticObj;
         var secondLevelColumns = this.template.querySelector("c-hdt-account-statement-detail-viewer").columns;
+        var isSecondLevelFiltered = this.template.querySelector("c-hdt-account-statement-detail-viewer").getIfSecondLevelIsFiltered();
 
         const columnTypeMap = new Map();
         secondLevelColumns.forEach((col) => {
@@ -1228,68 +1202,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             contoContrArray = currentFilter.contoContrattuale.value.split(',');
         }
 
+        console.log('# CALL CHILD METHOD #');
+
         this[listToConsider].forEach((r) => {
             //filter second level
-            if(this.showSecondLevel){
-                console.log('secodn list > ' + JSON.stringify(r[this.detailTable]));
-                r[this.detailTable] = r[this.detailTable].filter(function(item) {
-
-                    for (var key in currentFilter) {
-    
-                        const currentType = columnTypeMap.get(key);
-                        var filterValue;
-                        var tableValueToFilter;
-    
-                        if(item[key] === undefined || item[key] === ''){
-                            console.log('return false');
-                            return false;
-                        }
-    
-                        console.log('currentFilter[key].value > ' + currentFilter[key].value);
-                        console.log('item[key] > ' + item[key]);
-
-
-                        switch (currentType) {
-                            case 'number':
-                                filterValue = parseFloat(currentFilter[key].value);
-                                tableValueToFilter = parseFloat(item[key]);
-                                console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
-                                break;
-                            case 'date':
-                                var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
-                                filterValue = date.getTime();
-    
-                                var cDate = item[key].split('/');
-                                var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
-                                tableValueToFilter = cDate2.getTime();
-    
-                                break;
-                            case 'text':
-                                filterValue = currentFilter[key].value;
-                                tableValueToFilter = item[key];
-                        }
-    
-                        switch (currentFilter[key].operator) {
-                            case '='://uguale a
-                                if (tableValueToFilter != filterValue)
-                                return false;
-                                break;
-                            case '>'://maggiore di
-                                if (tableValueToFilter <= filterValue)
-                                return false;
-                                break;
-                            case 'in'://contiene caratteri
-                                if(!tableValueToFilter.includes(filterValue))
-                                return false;
-                                break;
-                            case 'on'://contiene valori
-                                if(!contoContrArray.includes(tableValueToFilter))
-                                return false;
-                        }
-    
-                    }
-                    return true;
-                });
+            if(this.showSecondLevel && isSecondLevelFiltered){
+                r[this.detailTable] = this.template.querySelector("c-hdt-account-statement-detail-viewer").getSecondLevelList(r[this.detailTable], currentFilter, columnTypeMap, contoContrArray);
             }
             listToPrint.push(r);
         });
