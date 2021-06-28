@@ -44,7 +44,7 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
     public void finish(Database.BatchableContext bc){
         System.debug(clonedCampaigns);
         HDT_SRV_Campaign.insertCampaigns(clonedCampaigns);
-        HDT_SRV_Campaign.updateSObject(c);
+        HDT_SRV_Campaign.updateCampaigns(campaignToUpdate);
     }
 }
     
