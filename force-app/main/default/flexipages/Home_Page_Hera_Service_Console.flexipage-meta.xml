@@ -21,6 +21,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>HDT_LCP_AccountGlobalAction</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.HDT_CP_Archive}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>right</name>
