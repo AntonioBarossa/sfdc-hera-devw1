@@ -67,11 +67,12 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     @api cancelCase;
     @api nextLabel;
     @api nextVariant;
+    @api documents;
     caseRecord;
     @track inputParams;
     @track enableNext = false;
     @track previewExecuted = false;
-
+    @track confirmData;
 
     @api
     get variantButton(){
@@ -207,7 +208,7 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     }
     handleConfirmData(event){
         console.log('dati confermati ' + event.detail);
-        
+        this.confirmData = event.detail;
         const fields = {};
         fields[ID_FIELD.fieldApiName] = this.recordId;
         var resultWrapper = JSON.parse(event.detail);
@@ -284,7 +285,12 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
             }else{
                 this.cancelCase = false;
                 var formParams = {
-                    archive:'Y'
+                    sendMode : this.confirmData.sendMode,
+                    signMode : this.confirmData.signMode,
+                    telefono : this.confirmData.telefono,      
+                    email : this.confirmData.email,      
+                    mode : 'Print',
+                    Archiviato : 'N'
                 }
                 sendDocumentFile({
                     recordId: this.recordId,
