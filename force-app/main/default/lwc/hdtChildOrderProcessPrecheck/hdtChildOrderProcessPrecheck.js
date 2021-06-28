@@ -359,6 +359,12 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     getRequest(){ 
         var typeOfCommodity = null;
+        var companyName = null;
+        var secondaryCustomerId = null;
+        var bpType = null;
+        var operation = null;
+        var market = null; 
+        var offerType = null; 
         console.log("RecordType: " + this.order.RecordType.DeveloperName);
         console.log("typeOfCommodity: " + typeOfCommodity);
         var fiscalData = null;
@@ -367,6 +373,24 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
             typeOfCommodity = 'GAS';
+        }
+        if(this.order.SalesCompany__c !== undefined){
+            companyName = this.order.SalesCompany__c;
+        }
+        if(this.order.Account.VATNumber__c !== undefined){
+            secondaryCustomerId = this.order.Account.VATNumber__c;
+        }
+        if(this.order.Account.CustomerType__c !== undefined){
+            bpType = this.order.Account.CustomerType__c;
+        }
+        if(this.order.ProcessType__c !== undefined){
+            operation = this.order.ProcessType__c;
+        }
+        if(this.order.Market__c !== undefined){
+            market = this.order.Market__c;
+        }
+        if(this.order.Catalog__c !== undefined){
+            offerType = this.order.Catalog__c;
         }
         console.log("typeOfCommodity: " + typeOfCommodity);
         console.log("this.selectedProcess: " + this.selectedProcess);
@@ -381,17 +405,17 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             account:"AccountCommercialePRM",
             jobTitle:this.order.Channel__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
-            companyName:this.order.SalesCompany__c,
+            companyName:companyName,
             externalCustomerId:this.order.Account.FiscalCode__c,
-            secondaryCustomerId:this.order.Account.VATNumber__c,
+            secondaryCustomerId:secondaryCustomerId,
             bpClass:this.order.Account.CustomerMarking__c,
             bpCategory:this.order.Account.Category__c,
-            bpType:this.order.Account.CustomerType__c,
+            bpType:bpType,
             customerType:"CT0",                                                 //da definire campo SF con business            
-            operation:this.order.ProcessType__c,
+            operation:operation,
             companyGroup:"Hera S.p.A.",
-            market:this.order.Market__c,
-            offerType:this.order.Catalog__c,
+            market:market,
+            offerType:offerType,
             details:[{
                 commodity:typeOfCommodity
             }]		
