@@ -26,6 +26,9 @@
         //variabile per innesco da campagne
         var campaignId = myPageRef.state.c__campaignId;
 
+        // id del lead oggetto del process.
+        var leadId = myPageRef.state.c__leadId;
+
 
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
@@ -41,6 +44,7 @@
         console.log('# context -> '+context);
         console.log('# parentRecordId -> ' +parentRecordId);
         console.log('# campaignId -> ' + campaignId)
+        console.log('# leadId -> ' + leadId);
         console.log('# ----------------- #');
 
         var workspaceAPI = component.find("workspace");
@@ -116,6 +120,9 @@
         }
         if(campaignId != null){
             inputVariables.push({ name : 'CampaignId', type : 'String', value : campaignId});
+        }
+        if(leadId != null){
+            inputVariables.push({ name : 'LeadId', type : 'String', value : leadId});
         }
 
         console.log('## inputVariables -> ');
