@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X_VAS_DATA_CESSAZIONE__c</fullName>
+    <description>X_VAS_DATA_CESSAZIONE</description>
+    <externalDeveloperName>X_VAS_DATA_CESSAZIONE</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Data cessazione VAS</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

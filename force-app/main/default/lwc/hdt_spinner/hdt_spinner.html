@@ -1,0 +1,10 @@
+<template>	
+	<div class="slds-hide" role="alert" data-id="start"><span class="slds-assistive-text">Caricamento in corso</span>
+	</div>
+	<div class="slds-hide" role="alert" data-id="end"><span class="slds-assistive-text">Caricamento terminato</span>
+	</div>
+	<template if:true={visible}>
+		<lightning-spinner variant={variant} alternative-text="caricamento in corso" size={size} class={cssclass}>
+		</lightning-spinner>
+	</template>
+</template>
