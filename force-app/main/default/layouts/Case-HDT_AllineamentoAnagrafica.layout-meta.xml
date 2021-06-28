@@ -61,10 +61,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SupplyStreetToponym__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>SupplyProvince__c</field>
             </layoutItems>
             <layoutItems>
