@@ -6,6 +6,11 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
     public List<ContactPointPhone> contactPointPhoneNumbers = new List<ContactPointPhone>();
     public List<ContactPointPhone> contactPointPhoneNumbersKO = new List<ContactPointPhone>();
 
+    public HDT_BA_ImportFubFile(String FUBProcessingId,String csvNumbers){
+        this.FUBProcessingId = FUBProcessingId;
+        this.csvNumbers = csvNumbers;
+    }
+
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         String query = 'SELECT Id,Name,PhoneNumber__c,ExcludeFub__c,Contact.IndividualId FROM CampaignMember WHERE ExcludeFub__c != \'Si\' AND CampaignId  IN ( SELECT Campaign__c  FROM FUBProcessingItem__c WHERE FUBProcessing__c = :FUBProcessingId)';
