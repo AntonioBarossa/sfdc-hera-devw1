@@ -42,7 +42,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     totAmountStored = 0;
     totAmount = 0;
     checkboxCount = 0;
-    
+    @track showPrintModal = false;
     //error;
     //showAccountData = true;
     @track modalObj = {
@@ -81,6 +81,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     showFilters2 = false;
     filterType;
     billListHeader;
+    @track context;
+    @track tipoPlico;
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -483,6 +485,20 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.backendCall(event.target.name, JSON.stringify({numeroFattura: nf}));
         //this.focusOnButton(event.target.name);
 
+    }
+    handleClosePrintModal(event){
+        this.showPrintModal = false;
+    }
+    printEstrattoConto(){
+        this.context = 'EC';
+        this.tipoPlico = 'Estratto Conto';
+        this.printFile();
+    }
+
+    printGestioneCredito(){
+        this.context = 'GC';
+        this.tipoPlico = 'Gestione Credito';
+        this.printFile();
     }
 
     printOperation(){
@@ -1187,24 +1203,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     printFile(){
         console.log('# printFile #');
 
-        this.spinnerObj.spinner = true;
-
-        var applySecondFilter = false;
-        var filterString = this.template.querySelector("c-hdt-account-statement-detail-viewer").filterString;
-        var currentFilter = {};
-
-        if(filterString != undefined && filterString != ''){
-            applySecondFilter = true;
-            var myObj = JSON.parse(filterString);
-
-            for (var key in myObj) {
-                if(myObj[key] != undefined && myObj[key] !=''){
-                    currentFilter[key] = myObj[key];
-                }
-            }
-
-        }        
-        
         var listToConsider;
         if(!this.filterOn){
             //Print all data -> allData if filterOn = false
@@ -1217,23 +1215,90 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             listToConsider = 'allDataFiltered';
         }
 
+        var currentFilter = this.template.querySelector("c-hdt-account-statement-detail-viewer").staticObj;
+        var secondLevelColumns = this.template.querySelector("c-hdt-account-statement-detail-viewer").columns;
+
+        const columnTypeMap = new Map();
+        secondLevelColumns.forEach((col) => {
+            columnTypeMap.set(col.fieldName, col.fieldType);
+        });
+
+        var contoContrArray;
+        if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
+            contoContrArray = currentFilter.contoContrattuale.value.split(',');
+        }
+
         this[listToConsider].forEach((r) => {
             //filter second level
-            if(applySecondFilter){
+            if(this.showSecondLevel){
+                console.log('secodn list > ' + JSON.stringify(r[this.detailTable]));
                 r[this.detailTable] = r[this.detailTable].filter(function(item) {
+
                     for (var key in currentFilter) {
-                        if (item[key] === undefined || item[key] != currentFilter[key])
+    
+                        const currentType = columnTypeMap.get(key);
+                        var filterValue;
+                        var tableValueToFilter;
+    
+                        if(item[key] === undefined || item[key] === ''){
+                            console.log('return false');
                             return false;
+                        }
+    
+                        console.log('currentFilter[key].value > ' + currentFilter[key].value);
+                        console.log('item[key] > ' + item[key]);
+
+
+                        switch (currentType) {
+                            case 'number':
+                                filterValue = parseFloat(currentFilter[key].value);
+                                tableValueToFilter = parseFloat(item[key]);
+                                console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
+                                break;
+                            case 'date':
+                                var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
+                                filterValue = date.getTime();
+    
+                                var cDate = item[key].split('/');
+                                var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
+                                tableValueToFilter = cDate2.getTime();
+    
+                                break;
+                            case 'text':
+                                filterValue = currentFilter[key].value;
+                                tableValueToFilter = item[key];
+                        }
+    
+                        switch (currentFilter[key].operator) {
+                            case '='://uguale a
+                                if (tableValueToFilter != filterValue)
+                                return false;
+                                break;
+                            case '>'://maggiore di
+                                if (tableValueToFilter <= filterValue)
+                                return false;
+                                break;
+                            case 'in'://contiene caratteri
+                                if(!tableValueToFilter.includes(filterValue))
+                                return false;
+                                break;
+                            case 'on'://contiene valori
+                                if(!contoContrArray.includes(tableValueToFilter))
+                                return false;
+                        }
+    
                     }
                     return true;
                 });
             }
             listToPrint.push(r);
         });
-
-        this.sendToApex();
+        this.documents = JSON.stringify(listToPrint);
+        console.log('documents ' + this.documents);
+        this.showPrintModal = true;
+        //this.sendToApex();
         listToPrint.splice(0, listToPrint.length);
-        this.spinnerObj.spinner = false;
+        //this.spinnerObj.spinner = false;
         //this.closeMainSpinner();
     }
 

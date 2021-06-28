@@ -11,7 +11,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     @api filterString = '';
     @api tabCode;
     @api accountId;
-    @track columns;// = columns;
+    @api columns;// = columns;
     @track selectedMenuItem;
     @track filterApplied = false;
     @track buttonList;
@@ -21,7 +21,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     sortedBy;
     bShowModal = false;
     fieldsToFilter = [];
-    staticObj = {};
+    @api staticObj = {};
 
     get accountdetailsToView(){
         console.log('# accountdetails #');
