@@ -398,8 +398,8 @@
     <assignments>
         <name>AssegnaValori_00</name>
         <label>AssegnaValori</label>
-        <locationX>1977</locationX>
-        <locationY>312</locationY>
+        <locationX>1934</locationX>
+        <locationY>309</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1127,7 +1127,7 @@
         </rules>
         <rules>
             <name>Heroku_KO_Esecuzione_Lavori</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Input_Case.Phase__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1844,8 +1844,8 @@
     <recordUpdates>
         <name>AggiornaCase_00</name>
         <label>AggiornaCase</label>
-        <locationX>2100</locationX>
-        <locationY>362</locationY>
+        <locationX>2066</locationX>
+        <locationY>365</locationY>
         <connector>
             <targetReference>LoadingSpinner</targetReference>
         </connector>
@@ -2033,7 +2033,7 @@
     <screens>
         <name>LoadingSpinner</name>
         <label>LoadingSpinner</label>
-        <locationX>2213</locationX>
+        <locationX>2199</locationX>
         <locationY>417</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2237,7 +2237,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Preventivi Riepilogo</stringValue>
+                    <elementReference>ProcessTypeRecapFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
