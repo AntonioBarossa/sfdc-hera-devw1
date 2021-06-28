@@ -261,9 +261,9 @@
         <fields>CONTACT.PHONE1</fields>
         <fields>CONTACT.PHONE3</fields>
         <fields>ACCCONRELATION.ROLES</fields>
+        <fields>ContactCode__c</fields>
         <fields>ACCCONRELATION.START_DATE</fields>
         <fields>ACCCONRELATION.END_DATE</fields>
-        <fields>ContactCode__c</fields>
         <relatedList>RelatedAccountContactRelationList</relatedList>
     </relatedLists>
     <relatedLists>
