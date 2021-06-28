@@ -2,15 +2,25 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
     public static String getBase64(String recordId,String context,String formParams){
         String base64 = '';
         String body='';
+        String result='';
+        String responseCode;
+        String responseStatus;
+        Map<String,String> resultMap = new Map<String,String>();
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         try{     
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
             documentalResponse = HDT_SRV_DocumentalManagement.executeCalloutRequest(body,context);
             base64 = documentalResponse.deliverPackageResponse.composedDocument;
+            result = documentalResponse.deliverPackageResponse.result;
+            responseCode = String.valueOf(documentalResponse.responseCode);
+            responseStatus = documentalResponse.responseStatus;
+            resultMap.put('code',responseCode);
+            resultMap.put('base64',base64);
+            resultMap.put('result',result);
         }catch(Exception ex){
-            base64 = ex.getMessage();
+            resultMap.put('code','500');
         }
-        return base64;
+        return JSON.serialize(resultMap);
     }
 
     public static void sendDocument(String recordId,String context,String formParams){
@@ -53,5 +63,20 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             configurationJSON = ex.getMessage();
         }
         return configurationJSON;
+    }
+
+    public static String getInfoAccountStatement(String accountId){
+        Map<String,String> returnMap = new Map<String,String>();
+        HDT_QR_Account accntQuery = new HDT_QR_Account();
+        try {
+            User userRecord = HDT_QR_UserQueries.getCurrentUser(UserInfo.getUserId());
+            Account accountRecord = accntQuery.getRecordById(accountId, 'Id,PrimaryEmail__c,MobilePhone__c');
+            returnMap.put('email', accountRecord.PrimaryEmail__c);
+            returnMap.put('telefono', accountRecord.MobilePhone__c);
+            returnMap.put('source', userRecord.LoginChannel__c);
+        } catch (Exception ex) {
+            
+        }
+        return JSON.serialize(returnMap);
     }
 }
