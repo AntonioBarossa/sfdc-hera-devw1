@@ -2492,6 +2492,11 @@
     </quickActionList>
     <relatedLists>
         <fields>ExternalId</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SiebelOrder__x.SR_ID__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
         <fields>FILE_NAME__c</fields>
         <fields>FILE_DATE__c</fields>
         <fields>X_TIPO_ALLEGATO__c</fields>

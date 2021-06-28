@@ -155,7 +155,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				fromString = 'Case';
 			}
 			when else {
-				fieldString = 'Id, AccountId,SendMode__c ,Email__c';
+				fieldString = 'Id,PrimaryEmail__c';
 				fromString = 'Account';
 			}
 		}
