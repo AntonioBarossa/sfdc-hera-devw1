@@ -12,7 +12,7 @@ public with sharing class HDT_QR_Campaign {
         return [
             SELECT 
             Id,
-            Name,
+            Name
           //  LavorazioneFUB__c
             FROM Campaign
             where Id = :Id
