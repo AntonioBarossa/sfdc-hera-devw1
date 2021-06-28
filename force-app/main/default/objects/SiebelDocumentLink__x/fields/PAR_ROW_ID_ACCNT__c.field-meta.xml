@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PAR_ROW_ID_ACCNT__c</fullName>
+    <description>PAR_ROW_ID_ACCNT</description>
+    <externalDeveloperName>PAR_ROW_ID_ACCNT</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Cliente</label>
+    <length>15</length>
+    <referenceTo>SiebelCustomer__x</referenceTo>
+    <relationshipLabel>Documenti</relationshipLabel>
+    <relationshipName>SiebelDocumentLink</relationshipName>
+    <type>ExternalLookup</type>
+</CustomField>

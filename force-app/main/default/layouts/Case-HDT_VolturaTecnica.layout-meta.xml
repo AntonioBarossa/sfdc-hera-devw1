@@ -29,6 +29,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Email__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PhoneNumber__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ClientCategory__c</field>
             </layoutItems>
             <layoutItems>
@@ -50,10 +58,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CommodityFormula__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PODPDRFormula__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

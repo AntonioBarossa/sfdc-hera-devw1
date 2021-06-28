@@ -185,6 +185,7 @@ public inherited sharing class HDT_QR_Order {
             BillingProfile__r.AccountClass__c,              // @Picchiri Calcolo della date Switch in 08/06/21             
             OwnerId,                                        // @Picchiri  10/06/21
             OrderReferenceNumber,                            // @Picchiri  15/06/21
+            IsSequanzialized__c,                             // @Picchiri  24/06/21
             SalesCompanyCode__c
             FROM Order 
             WHERE Id = :orderId
@@ -317,7 +318,8 @@ public inherited sharing class HDT_QR_Order {
             BillingProfile__r.AccountClass__c,                           
             OwnerId,                                        
             OrderReferenceNumber,
-            SalesCompanyCode__c
+            SalesCompanyCode__c,
+            IsSequanzialized__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -586,7 +588,16 @@ public inherited sharing class HDT_QR_Order {
 
         return orders;
     }
-
+    
     //FINE SVILUPPI EVERIS
+
+    public List<order> getOrderCreatedYesterday(){
+        return [Select id,Account.Segment__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday];
+    }
+
+    public static String getRecordTypesDeveloperNameById(Id id){
+        String devName = [SELECT DeveloperName FROM RecordType WHERE id = :id].DeveloperName;
+        return devName;
+    }
 
 }

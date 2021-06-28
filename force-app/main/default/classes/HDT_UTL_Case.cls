@@ -7,20 +7,58 @@ public inherited sharing class HDT_UTL_Case {
         List<HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_FlowOutputs>();
         HDT_UTL_FlowOutputs output = new HDT_UTL_FlowOutputs();
 
+        String cluster = inputs[0].cluster;
+        String process = inputs[0].process;
         Date effectiveDate = inputs[0].effectiveDate;
+        String implantType = inputs[0].implantType;
+        Decimal powerRequested = inputs[0].powerRequested;
+        String option;
+        
 
-        if(effectiveDate != null){
-            effectiveDate = addBusinessDay(effectiveDate, 3);
-        }else{
-            effectiveDate = addBusinessDay(System.today(), 3);
+        if(process == 'Voltura Tecnica'){
+
+            if(effectiveDate != null){
+                effectiveDate = addBusinessDay(effectiveDate, 3);
+            }else{
+                effectiveDate = addBusinessDay(System.today(), 3);
+            }
+
+            output.effectiveDate = effectiveDate;
+        
+        } else if(cluster == 'Preventivi'){
+            option = calculateOption(implantType, powerRequested);
+            output.option = option;
         }
-
-        output.effectiveDate = effectiveDate;
 
         outputs.add(output);
 
         return outputs;
 
+
+    }
+
+    public class HDT_UTL_FlowInputs{
+
+        @InvocableVariable
+        public String cluster;
+        @InvocableVariable
+        public String process;
+        @InvocableVariable
+        public Date effectiveDate;
+        @InvocableVariable
+        public String implantType;
+        @InvocableVariable
+        public Decimal powerRequested;
+
+
+    }
+
+    public class HDT_UTL_FlowOutputs{
+
+        @InvocableVariable
+        public Date effectiveDate;
+        @InvocableVariable
+        public String option;
 
     }
 
@@ -54,20 +92,59 @@ public inherited sharing class HDT_UTL_Case {
 
     }
 
+    public static String calculateOption(String implantType, Decimal powerRequested){
+        String result;
 
-    public class HDT_UTL_FlowInputs{
+        switch on implantType {
+            when '13A0-Usi di Abitazione BT' {
+                result = 'Domestici-TD';
+            }
+            when '13BB-Illuminazione pubblica BT' {
+                result = 'AEEG Opzione BTIP-E_BTIP';
+            }
+            when '13CB-Non domestici in BT'{
 
-        @InvocableVariable
-        public Date effectiveDate;
+                if(powerRequested > 0 && powerRequested <= 1.5) {
+                    result = 'AEEG Opz BTA1 <= 1,5 kW-E_BTA1';
+                } else if(powerRequested > 1.5 && powerRequested <= 3) {
+                    result = 'AEEG Op BTA2 >1,5<=3 kW-E_BTA2';
+                } else if(powerRequested > 3 && powerRequested <= 6) {
+                    result = 'AEEG Op BTA3 >3 <=6 kW-E_BTA3';
+                } else if(powerRequested > 6 && powerRequested <= 10) {
+                    result = 'AEEG Op BTA4 >6 <=10 kW-E_BTA4';
+                } else if(powerRequested > 10 && powerRequested <= 16.5) {
+                     result = 'AEEG Op BTA5 > 10 kW-E_BTA5';
+                } else if(powerRequested > 16.5) {
+                    result = 'AEEG Op BTA6 olt 16,5kW-E_BTA6';
+                } else {
+                    result = '';
+                }
 
+            }
+            when '13EM-Non domestici MT' {
+                if(powerRequested > 0 && powerRequested <= 100) {
+                    result = 'AEEG Opz MTA1 fin 100kW-E_MTA1';
+                } else if(powerRequested > 100 && powerRequested <= 500) {
+                    result = 'AEEG Op MTA2 >100 <=500-E_MTA2';
+                } else if(powerRequested > 500) {
+                    result = 'AEEG Op MTA3 olt 500kW-E_MTA3';
+                } else {
+                    result = '';
+                }
+            }
+            when '13DM-Illuminazione pubblica MT' {
+                result = 'AEEG Opzione MTIP-E_MTIP';
+            }
+            when '13FM-Non domestici AT' {
+                result = 'AEEG Op ALTA fin 220 kV-E_ALTA';
+            }when else{
+                result = '';
+            }
+        }
+
+        return result;
     }
 
-    public class HDT_UTL_FlowOutputs{
-
-        @InvocableVariable
-        public Date effectiveDate;
-
-    }
 
 
 

@@ -178,7 +178,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_ConnessioneConAttivazione, HDT_RT_TemporaneaNuovaAtt, HDT_RT_Voltura, 
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
-        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcessObject.recordType === 'HDT_RT_Voltura' ||this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_AttivazioneConModifica' || this.selectedProcessObject.recordType === 'HDT_RT_SwitchIn' || this.selectedProcessObject.recordType === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcessObject.recordType === 'HDT_RT_TemporaneaNuovaAtt'){
+        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcessObject.recordType === 'HDT_RT_Voltura' ||this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcessObject.recordType === 'HDT_RT_SwitchIn' && this.order.ProcessType__c != 'Switch in Ripristinatorio') || this.selectedProcessObject.recordType === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcessObject.recordType === 'HDT_RT_TemporaneaNuovaAtt'){
             this.callCreditCheckSAP();
         }
         
@@ -296,7 +296,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             let toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: (error.body.message !== undefined) ? error.body.message : error.message,
-                variant: 'error',
+                variant: 'error', 
                 mode:'sticky'
             });
             
@@ -305,15 +305,43 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         })        
     }
 
-    getRequest(){
-        var typeOfCommodity = this.order.ServicePoint__r.CommoditySector__c;
+    getRequest(){ 
+        var typeOfCommodity = null;
+        var companyName = null;
+        var secondaryCustomerId = null;
+        var bpType = null;
+        var operation = null;
+        var market = null; 
+        var offerType = null; 
+        console.log("RecordType: " + this.order.RecordType.DeveloperName);
+        console.log("typeOfCommodity: " + typeOfCommodity);
         var fiscalData = null;
-        if(typeOfCommodity == 'Energia Elettrica' || this.selectedProcessObject.recordType === 'HDT_RT_VAS'){
+        if(this.order.ServicePoint__r.CommoditySector__c == 'Energia Elettrica' || this.selectedProcessObject.recordType === 'HDT_RT_VAS'){
             typeOfCommodity = 'ENERGIAELETTRICA';
         }
-        if(typeOfCommodity == 'Gas'){
+        if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
             typeOfCommodity = 'GAS';
         }
+        if(this.order.SalesCompany__c !== undefined){
+            companyName = this.order.SalesCompany__c;
+        }
+        if(this.order.Account.VATNumber__c !== undefined){
+            secondaryCustomerId = this.order.Account.VATNumber__c;
+        }
+        if(this.order.Account.CustomerType__c !== undefined){
+            bpType = this.order.Account.CustomerType__c;
+        }
+        if(this.order.ProcessType__c !== undefined){
+            operation = this.order.ProcessType__c;
+        }
+        if(this.order.Market__c !== undefined){
+            market = this.order.Market__c;
+        }
+        if(this.order.Catalog__c !== undefined){
+            offerType = this.order.Catalog__c;
+        }
+        console.log("typeOfCommodity: " + typeOfCommodity);
+        console.log("this.selectedProcess: " + this.selectedProcess);
         
         let data = {
             sistema: "eEnergy",
@@ -325,17 +353,17 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             account:"AccountCommercialePRM",
             jobTitle:this.order.Channel__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
-            companyName:this.order.SalesCompany__c,
+            companyName:companyName,
             externalCustomerId:this.order.Account.FiscalCode__c,
-            secondaryCustomerId:this.order.Account.VATNumber__c,
+            secondaryCustomerId:secondaryCustomerId,
             bpClass:this.order.Account.CustomerMarking__c,
             bpCategory:this.order.Account.Category__c,
-            bpType:this.order.Account.CustomerType__c,
+            bpType:bpType,
             customerType:"CT0",                                                 //da definire campo SF con business            
-            operation:this.order.ProcessType__c,
+            operation:operation,
             companyGroup:"Hera S.p.A.",
-            market:this.order.Market__c,
-            offerType:this.order.Catalog__c,
+            market:market,
+            offerType:offerType,
             details:[{
                 commodity:typeOfCommodity
             }]		

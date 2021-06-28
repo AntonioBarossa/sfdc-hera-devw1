@@ -42,7 +42,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
             HDT_QR_RecordType recordtypeQr= new HDT_QR_RecordType();
             HDT_SRV_AccountContactRelation accoContRelSrv = new HDT_SRV_AccountContactRelation();
 
-            HDT_UTL_GestionePrivacy.updateContactPointFromObject(trigger.new,trigger.old);
+            HDT_UTL_GestionePrivacy.updateContactPointFromObjectLead(trigger.new,trigger.old);
             List<Account> accounts=new List<Account>();
             List<String> accountIdList = new List<String>();
             Map<String,Lead> mapAccountLead = new Map<String,Lead>();

@@ -34,6 +34,92 @@
                 <default>false</default>
                 <label>Passaggio a IEB</label>
             </value>
+            <value>
+                <fullName>Customer Base – Energy</fullName>
+                <default>false</default>
+                <label>Customer Base – Energy</label>
+            </value>
+            <value>
+                <fullName>Customer Base – VAS</fullName>
+                <default>false</default>
+                <label>Customer Base – VAS</label>
+            </value>
+            <value>
+                <fullName>Prospect - Energy</fullName>
+                <default>false</default>
+                <label>Prospect - Energy</label>
+            </value>
+            <value>
+                <fullName>Prospect - VAS</fullName>
+                <default>false</default>
+                <label>Prospect - VAS</label>
+            </value>
+            <value>
+                <fullName>Call Back - Energy</fullName>
+                <default>false</default>
+                <label>Call Back - Energy</label>
+            </value>
+            <value>
+                <fullName>Call Back - VAS</fullName>
+                <default>false</default>
+                <label>Call Back - VAS</label>
+            </value>
+            <value>
+                <fullName>Win back</fullName>
+                <default>false</default>
+                <label>Win back</label>
+            </value>
+            <value>
+                <fullName>Campagne di servizio</fullName>
+                <default>false</default>
+                <label>Campagne di servizio</label>
+            </value>
+            <value>
+                <fullName>Modifiche contrattuali</fullName>
+                <default>false</default>
+                <label>Modifiche contrattuali</label>
+            </value>
+            <value>
+                <fullName>Tracking pratiche</fullName>
+                <default>false</default>
+                <label>Tracking pratiche</label>
+            </value>
+            <value>
+                <fullName>Aggiornamento anagrafiche</fullName>
+                <default>false</default>
+                <label>Aggiornamento anagrafiche</label>
+            </value>
+            <value>
+                <fullName>Engagement</fullName>
+                <default>false</default>
+                <label>Engagement</label>
+            </value>
+            <value>
+                <fullName>Churn Prevention</fullName>
+                <default>false</default>
+                <label>Churn Prevention</label>
+            </value>
+            <value>
+                <fullName>Brand Awarness</fullName>
+                <default>false</default>
+                <label>Brand Awarness</label>
+            </value>
+            <value>
+                <fullName>Eventi</fullName>
+                <default>false</default>
+                <label>Eventi</label>
+            </value>
+            <value>
+                <fullName>Satisfaction</fullName>
+                <default>false</default>
+                <label>Satisfaction</label>
+            </value>
+            <value>
+                <fullName>TBD</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>TBD</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
