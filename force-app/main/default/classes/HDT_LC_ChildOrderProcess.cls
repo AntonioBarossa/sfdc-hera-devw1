@@ -10,7 +10,6 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_SRV_OrderItem orderItemSrv = new HDT_SRV_OrderItem();
-    private static HDT_UTL_Order orderUtl = new HDT_UTL_Order();
     
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -30,9 +29,6 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
             HDT_UTL_OrderFieldsAlignment.alignFields(ord);
             ord = orderQr.getRecordById(orderId);
         }
-
-        orderUtl.setOrderProcess(ord);
-        ord = orderQr.getRecordById(orderId);
 
         orderItemSrv.checkReadAccess('Service_Point__r.Name,Service_Point__r.ServicePointCode__c,OrderId,Product2.name');
         List<OrderItem> orderItemList = orderItemQr.getRecordsByOrderIdFilteredPdrPod(orderId);
