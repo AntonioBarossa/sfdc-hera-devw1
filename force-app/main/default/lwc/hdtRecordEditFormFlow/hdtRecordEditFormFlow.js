@@ -393,7 +393,6 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         console.log('#Reason --> ' + JSON.stringify(reasonObj));
         let paymentType = this.objSelector('PaymentType__c');
         console.log('#PaymentType --> ' + paymentType);
-        let customerAssisted = this.objSelector('CutomerAssisted__c');
         if(!(Object.keys(reasonObj).length === 0)){
             let reason = this.selector('Reason__c');
             if(reason != null){
@@ -408,16 +407,6 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         } else {
                             payType.disabled = true;
                             payType.value = '';
-                        }
-                    }
-                    if(!(Object.keys(customerAssisted).length === 0)){
-                        console.log('Inside customer assistedCondition');
-                        let customerCheck = this.selector('CutomerAssisted__c');
-                        console.log('#Valore customerCheck -> ' +customerCheck.value);
-                        if(reason.value.localeCompare('Assistenza Sociale') === 0 && customerCheck != null){
-                            customerCheck.value = true;
-                        } else {
-                            customerCheck.value = false;
                         }
                     }
                 }
