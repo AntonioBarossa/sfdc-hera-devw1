@@ -1,0 +1,86 @@
+public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SObject> {
+    public String FUBProcessingId;
+    public String csvNumbers;
+    public Date todayDate = Date.today();
+    public List<CampaignMember> campaignMembers = new List<CampaignMember>();
+    public List<ContactPointPhone> contactPointPhoneNumbers = new List<ContactPointPhone>();
+    public List<ContactPointPhone> contactPointPhoneNumbersKO = new List<ContactPointPhone>();
+
+    public HDT_BA_ImportFubFile(String FUBProcessingId,String csvNumbers){
+        this.FUBProcessingId = FUBProcessingId;
+        this.csvNumbers = csvNumbers;
+    }
+
+
+    public Database.QueryLocator start(Database.BatchableContext bc) {
+        String query = 'SELECT Id,Name,PhoneNumber__c,ExcludeFub__c,Contact.IndividualId FROM CampaignMember WHERE ExcludeFub__c != \'Si\' AND CampaignId  IN ( SELECT Campaign__c  FROM FUBProcessingItem__c WHERE FUBProcessing__c = :FUBProcessingId)';
+        return Database.getQueryLocator(query);
+    }
+
+    public void execute(Database.BatchableContext BC, List<CampaignMember> scope) {
+
+        List<String> splitCsv = csvNumbers.split('\r\n');
+        List<String> okList = new List<String>();
+        List<String> koList = new List<String>();
+        Map<String,String> maStr = new Map<String,String>();
+        List<String> contactList = new List<String>();
+        for(String s : splitCsv){
+            maStr.put(s,s);
+        }
+        for(CampaignMember cm : scope) {
+            if(cm.ExcludeFub__c == 'No' && maStr.get(cm.PhoneNumber__c) != null){
+                cm.OutcomeFub__c = 'OK';
+                cm.OutcomeDateFub__c = todayDate;
+                campaignMembers.add(cm);
+                contactList.add(cm.Contact.IndividualId);
+                okList.add(cm.PhoneNumber__c);
+            }
+            else if(cm.ExcludeFub__c == '' || cm.ExcludeFub__c == null)
+            {
+                cm.OutcomeFub__c = 'KO';
+                cm.OutcomeDateFub__c = todayDate;
+                campaignMembers.add(cm);
+                contactList.add(cm.Contact.IndividualId);
+                koList.add(cm.PhoneNumber__c);
+            }
+        }
+        update campaignMembers;
+
+        //iterate ContactPointPhone
+        Database.QueryLocator query = Database.getQueryLocator('SELECT Id, Name FROM ContactPointPhone WHERE individualId IN :contactList TelephoneNumber IN :okList');
+        Database.QueryLocatorIterator it =  query.iterator();
+
+        while (it.hasNext())
+        {
+            ContactPointPhone cpp = (ContactPointPhone)it.next();
+            cpp.LastOutcomeFUB__c = 'OK';
+            cpp.LastResultDateFUB__c = todayDate;
+            contactPointPhoneNumbers.add(cpp);
+        }
+
+        Database.QueryLocator query2 = Database.getQueryLocator('SELECT Id, Name FROM ContactPointPhone WHERE individualId IN :contactList TelephoneNumber IN :koList');
+        Database.QueryLocatorIterator it2 =  query2.iterator();
+
+        while (it2.hasNext())
+        {
+            ContactPointPhone cpp = (ContactPointPhone)it.next();
+            cpp.LastOutcomeFUB__c = 'KO';
+            cpp.LastResultDateFUB__c = todayDate;
+            contactPointPhoneNumbersKO.add(cpp);
+        }
+
+        update contactPointPhoneNumbers;
+    }
+
+    public void finish(Database.BatchableContext bc){
+        //update FUBProcessing Status
+        Database.QueryLocator queryFub = Database.getQueryLocator('SELECT Status__c FROM FUBProcessing__c WHERE Id = '+FUBProcessingId);
+        Database.QueryLocatorIterator itFub =  queryFub.iterator();
+        FUBProcessing__c fubProcessing = new FUBProcessing__c();
+        while (itFub.hasNext()) {
+            fubProcessing = (FUBProcessing__c)itFub.next();
+            fubProcessing.Status__c = 'Archivio FUB importato';
+        }
+        update fubProcessing;
+    }
+}
