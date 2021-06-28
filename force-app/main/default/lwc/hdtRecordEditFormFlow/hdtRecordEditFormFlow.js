@@ -348,92 +348,59 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.dispatchEvent(navigateBackEvent);
     }
 
+    selector(fieldName){
+
+        return this.template.querySelector('lightning-input-field[data-id="'+ fieldName + '"]') != null
+        ?this.template.querySelector('lightning-input-field[data-id="'+ fieldName + '"]')
+        :null;
+
+    }
+
+    objSelector(fieldName){
+        return !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === fieldName)).length === 0) 
+        ? this.firstColumn.filter(element => element['FieldName'] === fieldName)
+        : this.secondColumn.filter(element => element['FieldName'] === fieldName);
+    }
+
     handleChange(event){
 
         //Reclami customizations
 
-        let five = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c')).length === 0)
-        ? this.firstColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c')
-        : this.secondColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c');
-
+        let five = this.objSelector('FithLevelComplaintClassification__c');
         console.log('Five '+five);
-
-        let channel = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'ComplaintEntryChannel__c')).length === 0) 
-        ? this.firstColumn.filter(element => element['FieldName'] === 'ComplaintEntryChannel__c')
-        : this.secondColumn.filter(element => element['FieldName'] === 'ComplaintEntryChannel__c');
-
+        let channel = this.objSelector('ComplaintEntryChannel__c');
         console.log('Channel '+channel);
-
         if(!(Object.keys(five).length === 0)){
-
-            let fifthLevel = this.template.querySelector('lightning-input-field[data-id="FithLevelComplaintClassification__c"]') != null
-            ?this.template.querySelector('lightning-input-field[data-id="FithLevelComplaintClassification__c"]')
-            :null;
-
+            let fifthLevel = this.selector('FithLevelComplaintClassification__c');
             console.log('#Valore quinto livello -->' +fifthLevel.value)
-
             if(fifthLevel != null){
                 if(fifthLevel.value != '' && fifthLevel.value != undefined && fifthLevel != null){
-
-                    let soldBy = this.template.querySelector('lightning-input-field[data-id="SoldBy__c"]');
-                    soldBy.disabled = false;
-
+                    let soldBy = this.selector('SoldBy__c');
                 }
             }
-        
         } else if(!(Object.keys(channel).length === 0)){
-
-            let entryChannel = this.template.querySelector('lightning-input-field[data-id="ComplaintEntryChannel__c"]') != null
-            ?this.template.querySelector('lightning-input-field[data-id="ComplaintEntryChannel__c"]')
-            :null;
-
+            let entryChannel = this.selector('ComplaintEntryChannel__c');
             console.log('#Valore Entry Channel --> ' +entryChannel.value);
-
-            let address = this.template.querySelector('lightning-input-field[data-id="CompliantOriginEmail__c"]');
-
+            let address = this.selector('CompliantOriginEmail__c');
             if(entryChannel.value === 'Email' || entryChannel.value === 'PEC'){
-
                 address.required = true;
-
             } else {
-
                 address.required = false;
-
             }
-
         }
-
         //PianoRata customizations
-        let reasonObj =  !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'Reason__c')).length === 0)
-        ? this.firstColumn.filter(element => element['FieldName'] === 'Reason__c')
-        : this.secondColumn.filter(element => element['FieldName'] === 'Reason__c');
-
+        let reasonObj =  this.objSelector('Reason__c');
         console.log('#Reason --> ' + JSON.stringify(reasonObj));
-
-        let paymentType = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'PaymentType__c')).length === 0)
-        ? this.firstColumn.filter(element => element['FieldName'] === 'PaymentType__c')
-        : this.secondColumn.filter(element => element['FieldName'] === 'PaymentType__c');
-
+        let paymentType = this.objSelector('PaymentType__c');
         console.log('#PaymentType --> ' + paymentType);
-
-        let customerAssisted = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'CutomerAssisted__c')).length === 0)
-        ? this.firstColumn.filter(element => element['FieldName'] === 'CutomerAssisted__c')
-        : this.secondColumn.filter(element => element['FieldName'] === 'CutomerAssisted__c');
-
         if(!(Object.keys(reasonObj).length === 0)){
-
-            let reason = this.template.querySelector('lightning-input-field[data-id="Reason__c"]') != null
-            ?this.template.querySelector('lightning-input-field[data-id="Reason__c"]')
-            :null;
-
+            let reason = this.selector('Reason__c');
             if(reason != null){
                 console.log('#Valore Reason --> ' + reason.value);
                 if(reason.value && reason.value != ''){
                     if(!(Object.keys(paymentType).length === 0)){
                         console.log('Inside Condition Installments');
-                        let payType = this.template.querySelector('lightning-input-field[data-id="PaymentType__c"]') != null
-                        ? this.template.querySelector('lightning-input-field[data-id="PaymentType__c"]')
-                        : null;
+                        let payType = this.selector('PaymentType__c');
                         console.log('#Valore payType -> ' + payType.value);
                         if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
                             payType.disabled = false;
@@ -442,18 +409,29 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                             payType.value = '';
                         }
                     }
-                    if(!(Object.keys(customerAssisted).length === 0)){
-                        console.log('Inside customer assistedCondition');
-                        let customerCheck = this.template.querySelector('lightning-input-field[data-id="CutomerAssisted__c"]') != null
-                        ? this.template.querySelector('lightning-input-field[data-id="CutomerAssisted__c"]')
-                        : null;
-                        console.log('#Valore customerCheck -> ' +customerCheck.value);
-                        if(reason.value.localeCompare('Assistenza Sociale') === 0 && customerCheck != null){
-                            customerCheck.value = true;
-                        } else {
-                            customerCheck.value = false;
-                        }
-                    }
+                }
+            }
+        }
+        let depositObj = this.objSelector('Deposit__c');
+        if(!(Object.keys(depositObj).length === 0)){
+            let deposit = this.selector('Deposit__c');
+            console.log('#Deposit -> ' + deposit.value);
+            if(deposit.value != null && deposit.value != undefined){
+                let depositPaymentMode = this.selector('DepositPaymentMode__c');
+                let sendPaperlessCode = this.selector('SendPaperlessCodeMode__c');
+                let depositamount = this.selector('DepositAmount__c');
+                let depositDate = this.selector('DepositPaymentDate__c');
+                if(!deposit.value){
+                    depositPaymentMode.disabled = true;
+                    depositamount.disabled = true;
+                    depositDate.disabled = true;
+                } else {
+                    depositPaymentMode.disabled = false;
+                    depositamount.disabled = false;
+                    depositDate.disabled = false;
+                }
+                if(depositPaymentMode.value === 'Paperless'){
+                    sendPaperlessCode.disabled = false;
                 }
             }
         }
