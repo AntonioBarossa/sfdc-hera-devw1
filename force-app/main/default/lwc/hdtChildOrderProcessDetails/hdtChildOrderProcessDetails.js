@@ -623,7 +623,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 return;
             }
 
-            if(this.template.querySelector("[data-id='WithdrawalClass__c']") !== null 
+            if(this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.template.querySelector("[data-id='WithdrawalClass__c']") !== null 
                 && (this.template.querySelector("[data-id='WithdrawalClass__c']").value === ''
                     || this.template.querySelector("[data-id='WithdrawalClass__c']").value === null)) {
                 this.loading = false;
@@ -1332,8 +1332,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Classe prelievo',
                     'apiname': 'WithdrawalClass__c',
                     'typeVisibility': this.typeVisibility('gas'),
-                    'required': true,
-                    'disabled': false,
+                    'required': this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta',
+                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
                     'value': '',
                     'processVisibility': ''
                 },
