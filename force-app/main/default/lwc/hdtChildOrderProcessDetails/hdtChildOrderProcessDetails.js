@@ -623,7 +623,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 return;
             }
 
-            if(this.template.querySelector("[data-id='WithdrawalClass__c']") !== null 
+            if(this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.template.querySelector("[data-id='WithdrawalClass__c']") !== null 
                 && (this.template.querySelector("[data-id='WithdrawalClass__c']").value === ''
                     || this.template.querySelector("[data-id='WithdrawalClass__c']").value === null)) {
                 this.loading = false;
@@ -822,11 +822,118 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
 
     handleFields(){
-
-    //INIZIO SVILUPPI EVERIS
-    if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-
+    
         this.fields = [
+            {
+                step: '',
+                label: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' ? 'Riepilogo e Cliente Uscente' : 'Cliente Uscente',
+                name: 'clienteUscente',
+                objectApiName: 'Account',
+                recordId: this.order.ServicePoint__c !== undefined ? this.order.ServicePoint__r.Account__c : '',
+                diffObjApi: 'Order',
+                diffRecordId: this.order.Id,
+                processVisibility: this.order.ServicePoint__c !== undefined && this.order.ServicePoint__r.Account__c !== this.order.AccountId && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'),
+                data: [
+                    {
+                        'label': '',
+                        'apiname': 'Subprocess__c',
+                        'typeVisibility': this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': '',
+                        'diffObjApi' : 'Order'
+                        },
+                    {
+                        'label': 'Nome',
+                        'apiname': 'FirstName__c',
+                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Cognome',
+                        'apiname': 'LastName__c',
+                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Codice Fiscale',
+                        'apiname': 'FiscalCode__c',
+                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Partita IVA',
+                        'apiname': 'VATNumber__c',
+                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Ragione sociale',
+                        'apiname': 'Name',
+                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    }
+                ]
+            },
+            {
+                step: 3,
+                label: 'Credit check',
+                name: 'creditCheck',
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
+                || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VAS'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+                ,
+                data: [
+                    {
+                        'label': 'Esito credit Check Entrante',
+                        'apiname': 'IncomingCreditCheckResult__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Esito credit Check Uscente',
+                        'apiname': 'OutgoingCreditCheckResult__c',
+                        'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_VAS',
+                        'required': false,
+                        'disabled': true,
+                        'value': this.applyCreditCheckLogic('OutgoingCreditCheckResult__c'),
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Descrizione esito',
+                        'apiname': 'CreditCheckDescription__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': this.applyCreditCheckLogic('CreditCheckDescription__c'),
+                        'processVisibility': ''
+                    }
+                ]
+            },
             {
                 step: 3,
                 label: 'Variabili di Processo',
@@ -937,7 +1044,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': '',
-                        'apiname': 'Implant__c',
+                        'apiname': 'Commodity__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
@@ -946,7 +1053,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': '',
-                        'apiname': 'ClientCategory__c',
+                        'apiname': 'ServicePointCode__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
@@ -955,7 +1062,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': '',
-                        'apiname': 'CommodityFormula__c',
+                        'apiname': 'ImplantType__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': '',
+                        'apiname': 'CustomerCategory__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
@@ -971,459 +1087,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: '',
                 recordId: '',
                 isReading: true,
-                processVisibility: true 
-            },
-            {
-                step: 5,
-                label:'Iva e accise',
-                name: 'ivaAccise',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
-                processVisibility:this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
-                data: [
-                    {
-                        'label': 'Flag Agevolazione IVA',
-                        'apiname': 'VATfacilitationFlag__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': false,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Flag Accise Agevolata',
-                        'apiname': 'FacilitationExcise__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': false,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'IVA',
-                        'apiname': 'VAT__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Accise Agevolata Ele',
-                        'apiname': 'ExciseEle__c',
-                        'typeVisibility': this.typeVisibility('ele'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Accise Agevolata Gas',
-                        'apiname': 'ExciseGAS__c',
-                        'typeVisibility': this.typeVisibility('gas'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                ]
-            },
-            {
-                step: '',
-                label: 'Credit check',
-                name: 'creditCheckVolture',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
-                data: [
-                    {
-                        'label': 'Esito credit Check Entrante',
-                        'apiname': 'IncomingCreditCheckResult__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Esito credit Check Uscente',
-                        'apiname': 'OutgoingCreditCheckResult__c',
-                        'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_VAS',
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('OutgoingCreditCheckResult__c'),
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Descrizione esito',
-                        'apiname': 'CreditCheckDescription__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('CreditCheckDescription__c'),
-                        'processVisibility': ''
-                    }
-                ]
-            },
-            {
-                step: '',
-                label: 'Riepilogo e cliente uscente',
-                name: 'recapVolture',
-                objectApiName: 'Order', 
-                recordId: this.order.Id,
-                diffObjApi: 'Account',
-                diffRecordId: this.order.ServicePoint__r.Account__c,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
-                data:[
-                    {
-                    'label': '',
-                    'apiname': 'Subprocess__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': '',
-                    },
-                    {
-                        'label': 'Nome',
-                        'apiname': 'FirstName__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': '',
-                        'diffObjApi': 'Account',
-                    },
-                    {
-                        'label': 'Cognome',
-                        'apiname': 'LastName__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': '',
-                        'diffObjApi': 'Account',
-                    },
-                    {
-                        'label': 'Codice Fiscale',
-                        'apiname': 'FiscalCode__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': '',
-                        'diffObjApi': 'Account',
-                    },
-                    {
-                        'label': 'Partita IVA',
-                        'apiname': 'VATNumber__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': '',
-                        'diffObjApi': 'Account',
-                    }
-                ]
-            }
-        ];
-
-        return;
-
-    }
-    //FINE SVILUPPI EVERIS
-
-    //INIZIO SVILUPPI EVERIS        
-
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){ //Aggiunto perche causa errore per gli altri processi
-            this.voltureField =[
-                {
-    
-                    section: 1,
-                    label: 'Credit Check',
-                    name: 'creditCheck',
-                    reading: false,
-                    readingButton: false,
-                    inputField: false,
-                    active: true,
-                    data:
-                    [
-                        {
-                            label: 'Esito Credit Check Uscente',
-                            apiname: 'OutgoingCreditCheck',
-                            value: 'OK',
-                            type: 'text',
-                            disabled: true,
-                            required:false
-                        },
-                        {
-                            label: 'Esito Credit Check Entrante',
-                            apiname: 'OutgoingCreditCheck',
-                            value: 'OK',
-                            type: 'text',
-                            disabled: true,
-                            required:false
-                        },
-                        {
-                            label: 'Descrizione Esito',
-                            apiname: 'CreditCheckDescription',
-                            value: 'OK',
-                            type: 'text',
-                            disabled: true,
-                            required:false
-                        }
-                    ]
-    
-    
-                },
-                {
-    
-                    section: 2,
-                    label: 'Data Retroattiva',
-                    name: 'retroactiveDate',
-                    reading: false,
-                    readingButton: true,
-                    inputField: true,
-                    recordId:this.order.Id,
-                    objectApiName:'Order',
-                    active: true,
-                    data:
-                    [
-                        {
-                            label: 'Data Retroattiva',
-                            apiname: 'RetroactiveDate__c',
-                            type: 'Date',
-                            value: null,
-                            disabled: false
-                        }
-                    ]
-    
-                },
-                {
-    
-                    section: 3,
-                    label: 'Autolettura',
-                    name: 'reading',
-                    reading: true,
-                    readingButton: false,
-                    inputField: false,
-                    active: true
-    
-                },
-                {
-                    section: 4,
-                    label: 'Variabili di Processo',
-                    name: 'processVariable',
-                    reading:false,
-                    readingButton: false,
-                    inputField:true,
-                    recordId:this.order.Id,
-                    objectApiName:'Order',
-                    active:true,
-                    data:
-                    [
-                        {
-                            apiname: 'VoltureType__c',
-                            required: true,
-                            disabled: false
-                        },
-                        {
-                            apiname: 'SignedDate__c',
-                            required: true,
-                            disabled: false
-                        },
-                        {
-                            apiname: '',
-                            required: true,
-                            disabled: false
-                        },
-                        {
-                            apiname: '',
-                            required: true,
-                            disabled: false
-                        },
-                        {
-                            apiname: 'Volture__c',
-                            required: false,
-                            disabled: true
-                        },
-                        {
-                            apiname: 'AccountId',
-                            required: false,
-                            disabled: true
-                        },
-                        {
-                            apiname: 'PhoneNumber__c',
-                            required: false,
-                            disabled: true
-                        },
-                        {
-                            apiname: 'Email__c',
-                            required: false,
-                            disabled: true
-                        },
-                        {
-                            apiname: 'WithdrawalClass__c',
-                            required: false,
-                            disabled: true
-                        },
-                        {
-                            apiname: 'AnnualConsumption__c',
-                            required: false,
-                            disabled: true
-                        },
-                        {
-                            apiname: 'Market__c',
-                            required: false,
-                            disabled: true
-                        },
-                        {
-                            apiname: 'SupplyType__c',
-                            required: false,
-                            disabled: true
-                        },
-                        {
-                            apiname: 'Implant__c',
-                            required: false,
-                            disabled: true
-                        },
-                        {
-                            apiname: 'ClientCategory__c',
-                            required: false,
-                            disabled: true
-                        }
-                    ]
-                },
-                {
-                    section: 5,
-                    label: 'Cliente Uscente',
-                    name: 'exitingCustomer',
-                    reading:false,
-                    readingButton: false,
-                    inputField:true,
-                    recordId:this.order.ServicePoint__r.Account__c,
-                    objectApiName:'Account',
-                    active:true,
-                    data:
-                    [
-                        {
-                            apiname: 'Name',
-                            required: false,
-                            disabled: true
-                        },
-                        {
-                            apiname: 'FiscalCode__c',
-                            required: false,
-                            disabled: true
-                        },
-                        {
-                            apiname: 'VATNumber__c',
-                            required: false,
-                            disabled: true
-                        }
-                    ]
-                }
-            ];
-        }
-
-    //FINE SVILUPPI EVERIS
-    
-        this.fields = [
-            {
-                step: '',
-                label: 'Cliente Uscente',
-                name: 'clienteUscente',
-                objectApiName: 'Account',
-                recordId: this.order.ServicePoint__c !== undefined ? this.order.ServicePoint__r.Account__c : '',
-                processVisibility: this.order.ServicePoint__c !== undefined && this.order.ServicePoint__r.Account__c !== this.order.AccountId && this.order.RecordType.DeveloperName === 'HDT_RT_Subentro',
-                data: [
-                    {
-                        'label': 'Nome',
-                        'apiname': 'FirstName__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Cognome',
-                        'apiname': 'LastName__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Codice Fiscale',
-                        'apiname': 'FiscalCode__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Partita IVA',
-                        'apiname': 'VATNumber__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Ragione sociale',
-                        'apiname': 'Name',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    }
-                ]
-            },
-            {
-                step: 3,
-                label: 'Credit check',
-                name: 'creditCheck',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
-                || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
-                || this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
-                data: [
-                    {
-                        'label': 'Esito credit Check Entrante',
-                        'apiname': 'IncomingCreditCheckResult__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Esito credit Check Uscente',
-                        'apiname': 'OutgoingCreditCheckResult__c',
-                        'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_VAS',
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('OutgoingCreditCheckResult__c'),
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Descrizione esito',
-                        'apiname': 'CreditCheckDescription__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('CreditCheckDescription__c'),
-                        'processVisibility': ''
-                    }
-                ]
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
             },
             {
                 step: 4,
@@ -1668,8 +1332,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Classe prelievo',
                     'apiname': 'WithdrawalClass__c',
                     'typeVisibility': this.typeVisibility('gas'),
-                    'required': true,
-                    'disabled': false,
+                    'required': this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta',
+                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1875,7 +1539,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
                 data: [
                     {
                         'label': 'Comune',
@@ -1961,7 +1626,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
                 data: [
                     {
                         'label': 'Comune',
@@ -2047,7 +1713,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta')
+                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura')
                 && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
                 data:[
                     {
@@ -2278,7 +1945,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
                 data: [
                     {
                         'label': 'Modalità Invio Bolletta',
@@ -2406,7 +2074,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 hasIvaAcciseUploadButton: true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
                 data: [
                     {
                         'label': 'Flag Agevolazione IVA',
@@ -2465,7 +2133,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
                 data: [
                     {
                         'label': 'Modalità di Pagamento',
@@ -2643,7 +2312,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'),
+                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'),
                 data: [
                     {
                         'label': 'Metodo firma',
