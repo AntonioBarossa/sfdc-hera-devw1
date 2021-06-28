@@ -91,10 +91,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DepositExpirationDate__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>SendMode__c</field>
             </layoutItems>
             <layoutItems>
