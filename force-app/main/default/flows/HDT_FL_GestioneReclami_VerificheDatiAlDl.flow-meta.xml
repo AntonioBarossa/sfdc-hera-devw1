@@ -110,6 +110,29 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaValori_0_0_0</name>
+        <label>AssegnaValori</label>
+        <locationX>314</locationX>
+        <locationY>3182</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Flow_Case_Aggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Elaborazione Manuale</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Flow_Case_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Passa_a_Da_Inviare_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValori_1_0</name>
         <label>AssegnaValori</label>
         <locationX>710</locationX>
@@ -347,7 +370,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetActivityTemplate</targetReference>
+                <targetReference>AssegnaValori_0_0_0</targetReference>
             </connector>
             <label>M03</label>
         </rules>
@@ -671,38 +694,6 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
-    <recordCreates>
-        <name>CreateActivity</name>
-        <label>CreateActivity</label>
-        <locationX>314</locationX>
-        <locationY>3302</locationY>
-        <inputAssignments>
-            <field>Case__c</field>
-            <value>
-                <elementReference>FlowCase.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status__c</field>
-            <value>
-                <stringValue>Creata</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>wrts_prcgvr__ActivityTemplate__c</field>
-            <value>
-                <elementReference>GetActivityTemplate.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>wrts_prcgvr__Description__c</field>
-            <value>
-                <elementReference>GetActivityTemplate.wrts_prcgvr__Subject__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>wrts_prcgvr__Activity__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
@@ -858,27 +849,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>GetActivityTemplate</name>
-        <label>GetActivityTemplate</label>
-        <locationX>314</locationX>
-        <locationY>3182</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>CreateActivity</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Gestione Disco</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>wrts_prcgvr__ActivityTemplate__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>GetCaseFinale</name>
         <label>GetCaseFinale</label>
         <locationX>842</locationX>
@@ -976,6 +946,13 @@
         <locationX>842</locationX>
         <locationY>4358</locationY>
         <inputReference>GetCaseFinale</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Passa_a_Da_Inviare_0</name>
+        <label>AggiornaCase</label>
+        <locationX>314</locationX>
+        <locationY>3302</locationY>
+        <inputReference>Get_Flow_Case_Aggiornato</inputReference>
     </recordUpdates>
     <screens>
         <name>Case_Layout</name>
