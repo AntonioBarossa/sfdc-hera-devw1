@@ -5,6 +5,8 @@ global with sharing class HDT_WS_DocumentalInboundIntegration {
         String body = RestContext.request.requestBody.toString();
 
         HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
-        
+        HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyResponse response = new HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyResponse();
+        RestContext.response.responseBody = Blob.valueOf(JSON.serialize(response));
+        RestContext.response.headers.put('Content-Type', 'application/json');
     }
 }

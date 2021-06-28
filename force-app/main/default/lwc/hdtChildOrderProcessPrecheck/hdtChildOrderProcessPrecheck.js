@@ -1,6 +1,6 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getOptions from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.getOptions';
+import init from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.init';
 import next from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.next';
 
 // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
@@ -10,7 +10,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     precheck = false;
     causale = '';
     causaleCompatibilita = '';
-    selectedProcess = '';
+    selectedProcess = ''; //old processSelector (deprecated)
+    selectedProcessObject = ''; //new processSelector
     compatibilita = false;
     loaded = true;
     deliberation = '';
@@ -19,93 +20,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     showEsitoCheck = false;
     vasAmendDisabledInput = false;
     disabledSelectProcess = false;
-    
-    get value(){
-        let result = '';
-        console.log('**************************************** ', this.order.RecordType.DeveloperName);
-        //COMMENTATO POICHE GENERAVA ERRORE
-        if (this.order.RecordType.DeveloperName !== 'Default') {
-            if(this.order.ProcessType__c === 'Prima Attivazione con modifica'){
-                result = 'HDT_RT_AttivazioneConModifica';
-            }
-            else if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
-                result = 'HDT_RT_SwitchIn';
-            }
-            else if (this.order.ProcessType__c === 'Cambio Offerta Ele' || this.order.ProcessType__c === 'Cambio Offerta Gas') {
-                result = 'HDT_RT_CambioOfferta';
-            }
-            else if(this.order.SBQQ__Quote__r.IsVAS__c){
-                result = 'HDT_RT_VAS';
-            } else if(this.order.SBQQ__Quote__r.AmendmentAllowed__c) {
-                result = 'HDT_RT_ScontiBonus';
-            } else {
-                result = this.order.RecordType.DeveloperName;
-            }
-            this.applySelectionLogic(result);
-        } else {
-            result = '';
-        }
-        //COMMENTATO POICHE GENERAVA ERRORE
-        return result;
-    }
-
-    get options(){
-
-        let records = [];
-
-        //COMMENTATO POICHE GENERAVA ERRORE
-        if(this.order.ProcessType__c === 'Prima Attivazione con modifica'){
-            records = [
-                {"label":"Attivazione con Modifica","value":"HDT_RT_AttivazioneConModifica"}
-            ]
-        }
-        else if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
-            records = [
-                {"label":"SwitchIn","value":"HDT_RT_SwitchIn"}
-            ]
-        }
-        else if(this.order.ProcessType__c === 'Cambio Offerta Ele' || this.order.ProcessType__c === 'Cambio Offerta Gas'){
-            records = [
-                {"label":"Cambio Offerta","value":"HDT_RT_CambioOfferta"}
-            ]
-        }
-        else if(this.order.SBQQ__Quote__r.IsVAS__c){
-            records = [
-                {"label":"VAS","value":"HDT_RT_VAS"}
-            ]
-        } else if(this.order.SBQQ__Quote__r.AmendmentAllowed__c){
-            records = [
-                {"label":"Aggiunta Sconti o Bonus VAS","value":"HDT_RT_ScontiBonus"}
-            ]
-        } else {
-        //COMMENTATO POICHE GENERAVA ERRORE
-            records = [
-                {"label":"Attivazione","value":"HDT_RT_Attivazione"},
-                {"label":"Attivazione con Modifica","value":"HDT_RT_AttivazioneConModifica"},
-                // {"label":"Riattivazione Non Morose","value":"HDT_RT_RiattivazioniNonMorose"},
-                {"label":"Subentro","value":"HDT_RT_Subentro"},
-                {"label":"SwitchIn","value":"HDT_RT_SwitchIn"},
-                //INIZIO SVILUPPI VOLTURA EVERIS
-                {"label":"Voltura","value":"HDT_RT_Voltura"}
-                //FINE SVILUPPI VOLTURA EVERIS
-                // {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"}
-                
-            ]
-        //COMMENTATO POICHE GENERAVA ERRORE    
-        }
-       //COMMENTATO POICHE GENERAVA ERRORE    
-
-        return records;
-    }
-
-    handleShowDeliberation(selectedProcess){
-        this.showDeliberation = (selectedProcess === 'HDT_RT_Attivazione' || selectedProcess === 'HDT_RT_RiattivazioniNonMorose');
-        this.disabledDeliberation = this.order.Deliberation__c !== '';
-    }
+    options;
+    @track processesReference = [];
+    value;
 
     get disabledNext(){
         let result = true;
-        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || (this.selectedProcess === '')){
+        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || (this.selectedProcessObject === '')){
             result = true;
         } else {
             result = false;
@@ -117,7 +38,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     get disabledInput(){
         let result = true;
         console.log('disabledInput - rcordtype', this.order.RecordType.DeveloperName);
-        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || this.vasAmendDisabledInput || this.disabledSelectProcess){
+        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || this.disabledSelectProcess){
             result = true;
         } else {
             result = false;
@@ -131,11 +52,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     applySelectionLogic(selectedProcess){
-        console.log('applySelectionLogic: ', selectedProcess);
+        console.log('applySelectionLogic: ', JSON.stringify(selectedProcess));
 
-        // this.handleShowDeliberation(selectedProcess);
-
-        if(selectedProcess === 'HDT_RT_Attivazione')
+        if(selectedProcess.recordType === 'HDT_RT_Attivazione')
         {
             // this.precheck = false;
             // this.compatibilita = true;
@@ -148,18 +67,18 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
             this.disabledDeliberation = this.order.Step__c !== undefined;
         }
-        else if(selectedProcess === 'HDT_RT_RiattivazioniNonMorose'){
+        else if(selectedProcess.recordType === 'HDT_RT_RiattivazioniNonMorose'){
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
             this.disabledDeliberation = this.order.Step__c !== undefined;
         }
-        else if(selectedProcess === 'HDT_RT_Subentro')
+        else if(selectedProcess.recordType === 'HDT_RT_Subentro')
         {
             this.precheck = true;
             this.compatibilita = true;
             this.causale = '';
             this.showDeliberation = false;
         }
-        else if(selectedProcess === 'HDT_RT_SwitchIn')
+        else if(selectedProcess.recordType === 'HDT_RT_SwitchIn')
         {
             // this.precheck = false;
             this.precheck = true;
@@ -170,47 +89,39 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
             this.showEsitoCheck = false;
 
-            if (this.order.ProcessType__c === 'Switch in Ripristinatorio') {
-                this.selectedProcess = 'HDT_RT_SwitchIn';
-            }
         }
-        else if(selectedProcess === 'HDT_RT_AttivazioneConModifica')
+        else if(selectedProcess.recordType === 'HDT_RT_AttivazioneConModifica')
         {
             this.precheck = true;
             this.compatibilita = true;
             this.causale = '';
             this.showDeliberation = false;
-            if (this.order.ProcessType__c === 'Prima Attivazione con modifica') {
-                this.selectedProcess = 'HDT_RT_AttivazioneConModifica';
-            }
         }
-        else if(selectedProcess === 'HDT_RT_VAS')
+        else if(selectedProcess.recordType === 'HDT_RT_VAS')
         {
-            this.selectedProcess = 'HDT_RT_VAS';
+            this.selectedProcessObject.recordType = 'HDT_RT_VAS';
             this.precheck = true;
             this.compatibilita = true;
             this.causale = '';
             this.showDeliberation = false;
         }
-        else if(selectedProcess === 'HDT_RT_CambioOfferta')
+        else if(selectedProcess.recordType === 'HDT_RT_CambioOfferta')
         {
-            this.selectedProcess = 'HDT_RT_CambioOfferta';
             this.precheck = true;
             this.compatibilita = true;
             this.causale = '';
             this.showDeliberation = false;
         }
-        else if(selectedProcess === 'HDT_RT_ScontiBonus')
+        else if(selectedProcess.recordType === 'HDT_RT_ScontiBonus')
         {
-            this.selectedProcess = 'HDT_RT_ScontiBonus';
             this.precheck = true;
             this.compatibilita = true;
             this.causale = '';
             this.showDeliberation = false;
         }
         //INIZIO SVILUPPI EVERIS
-        else if(selectedProcess === 'HDT_RT_Voltura'){
-            this.selectedProcess = 'HDT_RT_Voltura';
+        else if(selectedProcess.recordType === 'HDT_RT_Voltura'){
+            this.selectedProcessObject.recordType = 'HDT_RT_Voltura';
             this.precheck = true;
             this.compatibilita = true;
             this.causale = '';
@@ -218,12 +129,16 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         //FINE SVILUPPI EVERIS 
 
-
     }
 
     handleSelectProcess(event){
-        this.selectedProcess = event.target.value;
-        this.applySelectionLogic(this.selectedProcess);
+        console.log('handleSelectProcess: ' + JSON.stringify(event.detail));
+
+        this.selectedProcessObject = this.processesReference.filter(el => el.processType === event.target.value)[0];
+
+        console.log('this.selectedProcessObject: ' + JSON.stringify(this.selectedProcessObject));
+
+        this.applySelectionLogic(this.selectedProcessObject);
     }
 
     goToNextStep(extraParams){
@@ -238,7 +153,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         //EVERIS
 
         //EVERIS: Aggiunta variabile Order
-        next({order: this.order,orderId: this.order.Id, selectedProcess: this.selectedProcess, deliberate: this.deliberation, extraParams: extraParams}).then(data =>{
+        next({order: this.order,orderId: this.order.Id, selectedProcessObject: this.selectedProcessObject, deliberate: this.deliberation, extraParams: extraParams}).then(data =>{
             this.loaded = true;
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
 
@@ -263,7 +178,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_ConnessioneConAttivazione, HDT_RT_TemporaneaNuovaAtt, HDT_RT_Voltura, 
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
-        if((this.selectedProcess === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcess === 'HDT_RT_Voltura' ||this.selectedProcess === 'HDT_RT_Subentro' || this.selectedProcess === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcess === 'HDT_RT_SwitchIn' && this.order.ProcessType__c != 'Switch in Ripristinatorio') || this.selectedProcess === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcess === 'HDT_RT_TemporaneaNuovaAtt'){
+        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcessObject.recordType === 'HDT_RT_Voltura' ||this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcessObject.recordType === 'HDT_RT_SwitchIn' && this.order.ProcessType__c != 'Switch in Ripristinatorio') || this.selectedProcessObject.recordType === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcessObject.recordType === 'HDT_RT_TemporaneaNuovaAtt'){
             this.callCreditCheckSAP();
         }
         
@@ -301,25 +216,58 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         console.log('CallBack start');
 
-        if(this.order.SBQQ__Quote__r.IsVAS__c || this.order.SBQQ__Quote__r.AmendmentAllowed__c){
-            this.showEsitoCheck = false;
-            this.vasAmendDisabledInput = true;
-        }
-        
-        if (this.order.ProcessType__c === 'Switch in Ripristinatorio') {
-            this.disabledSelectProcess = true;
+        this.options = [];
+
+        if (this.order.RecordType.DeveloperName === 'HDT_RT_Default') {
+            console.log('enter default');
+            init({order: this.order}).then(data =>{
+                this.loaded = true;
+                console.log('initProcesses: ' + JSON.stringify(data));
+    
+                this.processesReference = data;
+    
+                data.forEach(el => {
+                    this.options.push({label: el.processType, value: el.processType});
+                });
+    
+    
+                if (this.options.length === 1) {
+                    this.selectedProcessObject = this.processesReference[0];
+                    this.value = this.selectedProcessObject.processType;
+                    this.disabledSelectProcess = true;
+                }
+    
+                if (this.options.length === 0) {
+                    if(this.order.SBQQ__Quote__r.IsVAS__c){
+                        this.options.push({label: 'VAS', value: 'VAS'});
+                        this.selectedProcessObject = {processType: 'VAS', recordType: 'HDT_RT_VAS'}
+                        this.value = this.selectedProcessObject.processType;
+                        this.disabledSelectProcess = true;
+                        this.applySelectionLogic(this.selectedProcessObject);
+                    }
+                }
+    
+            }).catch(error => {
+                this.loaded = true;
+                console.log(error.body.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+
+        } else {
+            console.log('enter with value');
+            this.options.push({label: this.order.ProcessType__c, value: this.order.ProcessType__c});
+            this.selectedProcessObject = {processType: this.order.ProcessType__c, recordType: this.order.RecordType.DeveloperName}
+            this.value = this.selectedProcessObject.processType;
+            this.applySelectionLogic(this.selectedProcessObject);
         }
 
-        if (this.order.ProcessType__c === 'Prima Attivazione con modifica') {
-            this.disabledSelectProcess = true;
-        }
-
-        if (this.order.ProcessType__c === 'Cambio Offerta Ele' || this.order.ProcessType__c === 'Cambio Offerta Gas') {
-            this.disabledSelectProcess = true;
-        }
-        
         console.log('CallBack end');
-
     }
 
     // START @Picchiri 07/06/21 Credit Check
@@ -368,7 +316,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         console.log("RecordType: " + this.order.RecordType.DeveloperName);
         console.log("typeOfCommodity: " + typeOfCommodity);
         var fiscalData = null;
-        if(this.order.ServicePoint__r.CommoditySector__c == 'Energia Elettrica' || this.selectedProcess === 'HDT_RT_VAS'){
+        if(this.order.ServicePoint__r.CommoditySector__c == 'Energia Elettrica' || this.selectedProcessObject.recordType === 'HDT_RT_VAS'){
             typeOfCommodity = 'ENERGIAELETTRICA';
         }
         if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
@@ -421,7 +369,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             }]		
         }
 
-        if(this.selectedProcess !== 'HDT_RT_VAS'){
+        if(this.selectedProcessObject.recordType !== 'HDT_RT_VAS'){
             data["address"] = this.order.ServicePoint__r.SupplyStreetName__c;
             data["municipality"] = this.order.ServicePoint__r.SupplyCity__c;
             data["district"] = this.order.ServicePoint__r.SupplyProvince__c;

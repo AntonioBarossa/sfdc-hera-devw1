@@ -1,49 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Case-HDT_AllineamentoAnagrafica</members>
-        <name>Layout</name>
+        <members>Case.HDT_RT_VotiveModena</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</members>
+        <name>RecordType</name>
     </types>
     <types>
-        <members>HDT_FUBjobsManagement</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>HDT_BA_OldDraftSales</members>
-        <members>HDT_BA_PostSalesMasterBatch</members>
-        <members>HDT_BA_PraxidiaFront</members>
-        <members>HDT_BA_PraxidiaReclami</members>
-        <members>HDT_QR_Case</members>
-        <members>HDT_QR_Contact</members>
+        <members>HDT_LC_ChildOrderProcess</members>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_LC_DocumentSignatureManager</members>
+        <members>HDT_QR_ActivityCustom</members>
         <members>HDT_QR_Order</members>
-        <members>HDT_QR_PostSalesMasterBatch</members>
-        <members>HDT_SCH_PostSalesMasterBatch</members>
-        <members>HDT_SCH_PraxidiaFront</members>
-        <members>HDT_SCH_PraxidiaReclami</members>
-        <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_TRH_Contact</members>
-        <members>HDT_TRH_Lead</members>
+        <members>HDT_QR_Quote</members>
+        <members>HDT_SRV_DocumentalManagement</members>
+        <members>HDT_SRV_DocumentalManagementFacade</members>
         <members>HDT_UTL_ActivityCustom</members>
-        <members>HDT_UTL_CompanyOwner</members>
-        <members>HDT_UTL_ContactPoint</members>
-        <members>HDT_UTL_GestionePrivacy</members>
-        <members>HDT_UTL_Individual</members>
-        <members>HDT_WRP_CampaignPraxidia</members>
+        <members>HDT_UTL_DocumentalManagement</members>
+        <members>HDT_UTL_Order</members>
+        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_OrderProcessAssignment</members>
+        <members>HDT_UTL_QuoteManagement</members>
+        <members>HDT_WRP_DocumentalResponse</members>
+        <members>HDT_WS_DocumentalInboundIntegration</members>
+        <members>HDT_WS_DocumentalIntegration</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Account.BillingAddressFormula__c</members>
-        <members>BillingProfile__c.InvoicingAddressFormula__c</members>
-        <members>ServicePoint__c.SupplyAddress__c</members>
+        <members>QuoteManagement__c.AdegPotDisp__c</members>
+        <members>wrts_prcgvr__Activity__c.Process__c</members>
+        <members>wrts_prcgvr__Activity__c.Type__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneFatturazione</members>
-        <name>Flow</name>
+        <members>CaseType</members>
+        <name>StandardValueSet</name>
     </types>
     <types>
-        <members>wrts_prcgvr__Activity__c</members>
-        <name>SharingRules</name>
+        <members>hdtAccountDocumentSignatureManager</members>
+        <members>hdtAccountStatementViewer</members>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtDocumentSignatureManager</members>
+        <members>hdtDocumentSignatureManagerFlow</members>
+        <members>hdtGeneralInfo</members>
+        <members>hdtSaleActions</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>HDT_ButtonDetails.EC_1_print</members>
+        <members>HDT_IntegrationObject.Documentale_Context4</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>HDT_FL_GestionePreventivi</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>
