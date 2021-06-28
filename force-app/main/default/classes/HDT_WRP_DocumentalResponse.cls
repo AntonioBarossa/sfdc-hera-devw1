@@ -1,7 +1,9 @@
 public with sharing class HDT_WRP_DocumentalResponse {
-    public HDT_WRP_DocumentalResponse() {}
-    public String responseCode;
-    public Integer responseStatus;
+    public HDT_WRP_DocumentalResponse() {
+        this.deliverPackageResponse = new HDT_WRP_DocumentalResponseRoot();
+    }
+    public Integer responseCode;
+    public String responseStatus;
     public HDT_WRP_DocumentalResponseRoot deliverPackageResponse;
     
 
@@ -16,6 +18,9 @@ public with sharing class HDT_WRP_DocumentalResponse {
 
     public class HDT_WRP_DocumentalResponseServiceItem{
         public String serviceId;
+        public String attachId;
+        public String attachName;
+        public String attachVersion;
         public List<HDT_WRP_DocumentalResponseAttachment> attachmentList;
     }
 
