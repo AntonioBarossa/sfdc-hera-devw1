@@ -621,7 +621,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 return;
             }
 
-            if(this.template.querySelector("[data-id='WithdrawalClass__c']") !== null 
+            if(this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.template.querySelector("[data-id='WithdrawalClass__c']") !== null 
                 && (this.template.querySelector("[data-id='WithdrawalClass__c']").value === ''
                     || this.template.querySelector("[data-id='WithdrawalClass__c']").value === null)) {
                 this.loading = false;
@@ -1085,7 +1085,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: '',
                 recordId: '',
                 isReading: true,
-                processVisibility: true 
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
             },
             {
                 step: 4,
@@ -1330,8 +1330,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Classe prelievo',
                     'apiname': 'WithdrawalClass__c',
                     'typeVisibility': this.typeVisibility('gas'),
-                    'required': true,
-                    'disabled': false,
+                    'required': this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta',
+                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
                     'value': '',
                     'processVisibility': ''
                 },
@@ -2468,7 +2468,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.handleFields();
 
         // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
-        if((this.selectedProcess === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcess === 'HDT_RT_Voltura' ||this.selectedProcess === 'HDT_RT_Subentro' || this.selectedProcess === 'HDT_RT_AttivazioneConModifica' || this.selectedProcess === 'HDT_RT_SwitchIn' || this.selectedProcess === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcess === 'HDT_RT_TemporaneaNuovaAtt'){
+        if((this.selectedProcess === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcess === 'HDT_RT_Voltura' ||this.selectedProcess === 'HDT_RT_Subentro' || this.selectedProcess === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcess === 'HDT_RT_SwitchIn' && this.order.ProcessType__c != 'Switch in Ripristinatorio') || this.selectedProcess === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcess === 'HDT_RT_TemporaneaNuovaAtt'){
             this.retryEsitiCreditCheck();
         }        
 

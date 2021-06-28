@@ -4,8 +4,8 @@
     <assignments>
         <name>Assegna_Variabili</name>
         <label>Assegna Variabili</label>
-        <locationX>1073</locationX>
-        <locationY>449</locationY>
+        <locationX>1148</locationX>
+        <locationY>362</locationY>
         <assignmentItems>
             <assignToReference>FlowCase</assignToReference>
             <operator>Assign</operator>
@@ -27,13 +27,13 @@
     <assignments>
         <name>Assegna_Variabili_0</name>
         <label>Assegna Variabili</label>
-        <locationX>1076</locationX>
-        <locationY>729</locationY>
+        <locationX>1148</locationX>
+        <locationY>552</locationY>
         <assignmentItems>
             <assignToReference>FlowCase</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case_Lead</elementReference>
+                <elementReference>Get_Case</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -50,7 +50,7 @@
     <assignments>
         <name>Update_Campi_Consenso_Marketing</name>
         <label>Update Campi Consenso Marketing</label>
-        <locationX>2979</locationX>
+        <locationX>3113</locationX>
         <locationY>291</locationY>
         <assignmentItems>
             <assignToReference>Get_Updated_Individual.PrivacyMarketingChoiceDate__c</assignToReference>
@@ -73,7 +73,7 @@
     <assignments>
         <name>Update_Campi_Consenso_Marketing_Campi_Soft_Spam</name>
         <label>Update Campi Consenso Marketing + Campi Soft Spam</label>
-        <locationX>2997</locationX>
+        <locationX>3131</locationX>
         <locationY>759</locationY>
         <assignmentItems>
             <assignToReference>Get_Updated_Individual.PrivacyMarketingChoiceDate__c</assignToReference>
@@ -117,7 +117,7 @@
     <assignments>
         <name>Update_Campi_Consenso_Profilazione</name>
         <label>Update Campi Consenso Profilazione</label>
-        <locationX>3207</locationX>
+        <locationX>3341</locationX>
         <locationY>294</locationY>
         <assignmentItems>
             <assignToReference>Get_Updated_Individual.PrivacyProfilingChoiceDate__c</assignToReference>
@@ -140,7 +140,7 @@
     <assignments>
         <name>Update_Campi_Soft_Spam</name>
         <label>Update Campi Soft-Spam</label>
-        <locationX>3446</locationX>
+        <locationX>3580</locationX>
         <locationY>296</locationY>
         <assignmentItems>
             <assignToReference>Get_Updated_Individual.PrivacySoftSpamChoiceDate__c</assignToReference>
@@ -163,7 +163,7 @@
     <decisions>
         <name>Check_Consenso_Marketing_Aggiornato</name>
         <label>Consenso Marketing Aggiornato?</label>
-        <locationX>2887</locationX>
+        <locationX>3021</locationX>
         <locationY>514</locationY>
         <defaultConnector>
             <targetReference>Check_Consenso_Profilazione_Aggiornato</targetReference>
@@ -210,7 +210,7 @@
     <decisions>
         <name>Check_Consenso_Profilazione_Aggiornato</name>
         <label>Consenso Profilazione Aggiornato?</label>
-        <locationX>3079</locationX>
+        <locationX>3213</locationX>
         <locationY>505</locationY>
         <defaultConnector>
             <targetReference>Check_Soft_spam_modificato</targetReference>
@@ -235,24 +235,24 @@
     <decisions>
         <name>Check_Modifica_Privacy_Lead</name>
         <label>Modifica Privacy Lead?</label>
-        <locationX>547</locationX>
+        <locationX>681</locationX>
         <locationY>449</locationY>
         <defaultConnector>
-            <targetReference>Get_Case</targetReference>
+            <targetReference>Get_Contact</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Privacy Account</defaultConnectorLabel>
         <rules>
             <name>Privacy_Lead</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>LeadId</leftValueReference>
+                <leftValueReference>Get_Case.Lead__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_RT_Gestione_Privacy</targetReference>
+                <targetReference>Get_Lead</targetReference>
             </connector>
             <label>Privacy Lead</label>
         </rules>
@@ -260,7 +260,7 @@
     <decisions>
         <name>Check_Soft_spam_modificato</name>
         <label>Soft-spam modificato?</label>
-        <locationX>3306</locationX>
+        <locationX>3440</locationX>
         <locationY>506</locationY>
         <defaultConnector>
             <targetReference>Update_Individual</targetReference>
@@ -285,7 +285,7 @@
     <decisions>
         <name>Individual_trovato</name>
         <label>Individual trovato?</label>
-        <locationX>1339</locationX>
+        <locationX>1473</locationX>
         <locationY>450</locationY>
         <defaultConnector>
             <targetReference>Screen_Errore</targetReference>
@@ -310,7 +310,7 @@
     <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
-        <locationX>2483</locationX>
+        <locationX>2617</locationX>
         <locationY>509</locationY>
         <defaultConnector>
             <targetReference>Get_Updated_Individual</targetReference>
@@ -347,7 +347,7 @@
     <decisions>
         <name>Next_Step_0</name>
         <label>Next Step?</label>
-        <locationX>1916</locationX>
+        <locationX>2050</locationX>
         <locationY>327</locationY>
         <defaultConnector>
             <targetReference>Set_Fase_Attesa_Modulo_Firmato</targetReference>
@@ -372,7 +372,7 @@
     <decisions>
         <name>Next_Step_Processo</name>
         <label>Next Step Processo</label>
-        <locationX>1617</locationX>
+        <locationX>1751</locationX>
         <locationY>455</locationY>
         <defaultConnector>
             <targetReference>Inserimento_Dati</targetReference>
@@ -436,55 +436,14 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Crea_Case_per_Lead</name>
-        <label>Crea Case per Lead</label>
-        <locationX>689</locationX>
-        <locationY>729</locationY>
-        <assignRecordIdToReference>LeadCaseId</assignRecordIdToReference>
-        <connector>
-            <targetReference>Get_Case_Lead</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Cluster__c</field>
-            <value>
-                <stringValue>Modifiche Anagrafiche</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Lead__c</field>
-            <value>
-                <elementReference>LeadId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>Bozza</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>Get_RT_Gestione_Privacy.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type</field>
-            <value>
-                <stringValue>Modifica Privacy</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordCreates>
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>764</locationX>
-        <locationY>448</locationY>
+        <locationX>499</locationX>
+        <locationY>447</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Contact</targetReference>
+            <targetReference>Check_Modifica_Privacy_Lead</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -499,31 +458,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Case_Lead</name>
-        <label>Get Case Lead</label>
-        <locationX>821</locationX>
-        <locationY>729</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Lead</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>LeadCaseId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Contact</name>
         <label>Get Contact</label>
-        <locationX>922</locationX>
-        <locationY>448</locationY>
+        <locationX>990</locationX>
+        <locationY>363</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Variabili</targetReference>
@@ -543,7 +481,7 @@
     <recordLookups>
         <name>Get_Individual</name>
         <label>Get Individual</label>
-        <locationX>1215</locationX>
+        <locationX>1349</locationX>
         <locationY>448</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -564,8 +502,8 @@
     <recordLookups>
         <name>Get_Lead</name>
         <label>Get Lead</label>
-        <locationX>939</locationX>
-        <locationY>729</locationY>
+        <locationX>985</locationX>
+        <locationY>553</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Variabili_0</targetReference>
@@ -575,7 +513,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>LeadId</elementReference>
+                <elementReference>Get_Case.Lead__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -583,30 +521,9 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_RT_Gestione_Privacy</name>
-        <label>Get RT Gestione Privacy</label>
-        <locationX>553</locationX>
-        <locationY>728</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Crea_Case_per_Lead</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>HDT_RT_GestionePrivacy</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Updated_Individual</name>
         <label>Get Updated Individual</label>
-        <locationX>2720</locationX>
+        <locationX>2854</locationX>
         <locationY>512</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -627,7 +544,7 @@
     <recordUpdates>
         <name>Set_Fase_Attesa_Modulo_Firmato</name>
         <label>Set Fase Attesa Modulo Firmato</label>
-        <locationX>2297</locationX>
+        <locationX>2431</locationX>
         <locationY>386</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -648,7 +565,7 @@
     <recordUpdates>
         <name>Update_Fase</name>
         <label>Update Fase</label>
-        <locationX>3754</locationX>
+        <locationX>3888</locationX>
         <locationY>511</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -669,7 +586,7 @@
     <recordUpdates>
         <name>Update_Individual</name>
         <label>Update Individual</label>
-        <locationX>3576</locationX>
+        <locationX>3710</locationX>
         <locationY>511</locationY>
         <connector>
             <targetReference>Update_Fase</targetReference>
@@ -679,7 +596,7 @@
     <screens>
         <name>Inserimento_Dati</name>
         <label>Inserimento Dati</label>
-        <locationX>2288</locationX>
+        <locationX>2422</locationX>
         <locationY>507</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -864,7 +781,7 @@
     <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
-        <locationX>1804</locationX>
+        <locationX>1938</locationX>
         <locationY>325</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -924,7 +841,7 @@
     <screens>
         <name>Screen_Errore</name>
         <label>Screen Errore</label>
-        <locationX>1347</locationX>
+        <locationX>1481</locationX>
         <locationY>227</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -944,14 +861,14 @@
         <locationX>50</locationX>
         <locationY>429</locationY>
         <connector>
-            <targetReference>Check_Modifica_Privacy_Lead</targetReference>
+            <targetReference>Get_Case</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>2410</locationX>
+        <locationX>2544</locationX>
         <locationY>50</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -1003,20 +920,6 @@
     </variables>
     <variables>
         <name>InputCase</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>LeadCaseId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>LeadId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

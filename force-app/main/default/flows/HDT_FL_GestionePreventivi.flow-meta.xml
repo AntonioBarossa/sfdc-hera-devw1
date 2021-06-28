@@ -71,6 +71,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>phaseAvalaible</name>
+            <value>
+                <elementReference>Get_Input_Case_0.PhaseTypeAvailable__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>phaseType</name>
             <value>
                 <elementReference>Get_Input_Case_0.PhaseTypeRequested__c</elementReference>
@@ -116,6 +122,12 @@
             <name>voltage</name>
             <value>
                 <elementReference>Get_Input_Case_0.VoltageLevelRequested__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>voltageAvailable</name>
+            <value>
+                <elementReference>Get_Input_Case_0.VoltageLevelAvailable__c</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
