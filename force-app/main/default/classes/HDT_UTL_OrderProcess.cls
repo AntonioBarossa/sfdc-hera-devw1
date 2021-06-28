@@ -94,7 +94,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 ){
                     ricalculateDate = true;
                 }
-                
+
                 if(ricalculateDate == true){
                     system.debug('Esecuzione ricalcolo delle date');
                     Order orderToUpdate = new Order();
