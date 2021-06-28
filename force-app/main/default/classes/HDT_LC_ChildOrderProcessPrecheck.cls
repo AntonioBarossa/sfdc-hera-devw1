@@ -15,9 +15,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
 
     @AuraEnabled
     public static List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> init(Order order){
-        system.debug('Keltin: ' + order);
-        system.debug('Keltin2: ' + HDT_UTL_OrderProcessAssignment.getAvailableProcesses(order));
-        return HDT_UTL_OrderProcessAssignment.getAvailableProcesses(order);
+        List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processesList = new List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process>();
+
+        if (order.ServicePoint__c != null) {//returns processes that are different from VAS
+            processesList = HDT_UTL_OrderProcessAssignment.getAvailableProcesses(order);
+        }
+
+        return processesList;
     }
 
     /**
@@ -43,9 +47,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         String processCode = selectedProcessObject.get('processCode');
 
         switch on selectedProcessObject.get('recordType') {
-            when 'HDT_RT_VAS'{
-                processType = 'VAS';
-            }
             //INIZIO SVILUPPI EVERIS
             when 'HDT_RT_Voltura'{
                 List<Contract> contracts = contractQr.getContractFromServicePoint(newOrder.ServicePoint__c);

@@ -216,46 +216,57 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         console.log('CallBack start');
 
-        init({order: this.order}).then(data =>{
-            this.loaded = true;
-            console.log('initProcesses: ' + JSON.stringify(data));
+        this.options = [];
 
-            this.processesReference = data;
-
-            this.options = [];
-
-            data.forEach(el => {
-                this.options.push({label: el.processType, value: el.processType});
-            });
-
-
-            if (this.options.length === 1) {
-                this.selectedProcessObject = this.processesReference[0];
-                this.value = this.selectedProcessObject.processType;
-                this.disabledSelectProcess = true;
-            }
-
-            if (this.options.length === 0) {
-                if(this.order.SBQQ__Quote__r.IsVAS__c){
-                    this.showEsitoCheck = false;
-                    this.selectedProcessObject = {processType: 'VAS', recordType: 'HDT_RT_VAS'}
+        if (this.order.RecordType.DeveloperName === 'HDT_RT_Default') {
+            console.log('enter default');
+            init({order: this.order}).then(data =>{
+                this.loaded = true;
+                console.log('initProcesses: ' + JSON.stringify(data));
+    
+                this.processesReference = data;
+    
+                data.forEach(el => {
+                    this.options.push({label: el.processType, value: el.processType});
+                });
+    
+    
+                if (this.options.length === 1) {
+                    this.selectedProcessObject = this.processesReference[0];
                     this.value = this.selectedProcessObject.processType;
                     this.disabledSelectProcess = true;
                 }
-            }
-
-        }).catch(error => {
-            this.loaded = true;
-            console.log(error.body.message);
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: error.body.message,
-                variant: 'error',
-                mode: 'sticky'
+    
+                if (this.options.length === 0) {
+                    if(this.order.SBQQ__Quote__r.IsVAS__c){
+                        this.options.push({label: 'VAS', value: 'VAS'});
+                        this.selectedProcessObject = {processType: 'VAS', recordType: 'HDT_RT_VAS'}
+                        this.value = this.selectedProcessObject.processType;
+                        this.disabledSelectProcess = true;
+                        this.applySelectionLogic(this.selectedProcessObject);
+                    }
+                }
+    
+            }).catch(error => {
+                this.loaded = true;
+                console.log(error.body.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
             });
-            this.dispatchEvent(toastErrorMessage);
-        });
-        
+
+        } else {
+            console.log('enter with value');
+            this.options.push({label: this.order.ProcessType__c, value: this.order.ProcessType__c});
+            this.selectedProcessObject = {processType: this.order.ProcessType__c, recordType: this.order.RecordType.DeveloperName}
+            this.value = this.selectedProcessObject.processType;
+            this.applySelectionLogic(this.selectedProcessObject);
+        }
+
         console.log('CallBack end');
     }
 
