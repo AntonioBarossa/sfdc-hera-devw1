@@ -374,7 +374,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String newFirstName = getFieldValue(fields, 'FirstName__c') != null ? getFieldValue(fields, 'FirstName__c') : '';
         String newLastName = getFieldValue(fields, 'LastName__c') != null ? getFieldValue(fields, 'LastName__c') : '';
-        String newFiscaleCode = getFieldValue(fields, 'FiscalCode__c') != null ? getFieldValue(fields, 'FiscalCode__c') : '';
+        String newFiscalCode = getFieldValue(fields, 'FiscalCode__c') != null ? getFieldValue(fields, 'FiscalCode__c') : '';
         String newVatNumber = getFieldValue(fields, 'VatNumber__c') != null ? getFieldValue(fields, 'VatNumber__c') : '';
         // Il nuovo indirizzo non è presente nel json, ma è già committato sul Case.
         String newAddress = currentCase.AlternativeAddress__c;
@@ -394,14 +394,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             return result;
         }
         
-        if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscaleCode.equals(currentFiscaleCode)
+        if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscalCode.equals(currentFiscaleCode)
             && newVatNumber.equals(currentVatNumber) && newAddress.equals(currentAddress)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un dato fiscale del cliente.'));
             return result;
         }
 
         if (marking != null) {
-            if ((marking.contains('Persona fisica') || marking.contains('Condominio') || marking.contains('Parti comuni')) && String.isBlank(newFiscaleCode)) {
+            if ((marking.contains('Persona fisica') || marking.contains('Condominio') || marking.contains('Parti comuni')) && String.isBlank(newFiscalCode)) {
                 return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Codice Fiscale è obbligatorio per la marcatura ' + marking));
             }
 
@@ -411,7 +411,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             // Marcature che prevedono CF alfanumerico e PIVA blank.
             if (marking.contains('Persona fisica') || marking.contains('Parti comuni')) {
-                String fiscalCodeValidation = validateFiscalCode(newFiscaleCode);
+                String fiscalCodeValidation = validateFiscalCode(currentFiscaleCode, newFiscalCode);
                 if (String.isNotBlank(fiscalCodeValidation)) {
                     return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
                 }
@@ -422,21 +422,21 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             }
             // Ditta individuale prevede CF alfanumerico ma PIVA valorizzata.
             else if (marking.contains('Ditta individuale')) {
-                String fiscalCodeValidation = validateFiscalCode(newFiscaleCode);
+                String fiscalCodeValidation = validateFiscalCode(currentFiscaleCode, newFiscalCode);
                 if (String.isNotBlank(fiscalCodeValidation)) {
                     return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
                 }
             }
             // Marcature che prevedono CF numerico
             else if (marking.contains('Azienda') || marking.contains('Condominio')) {
-                String fiscalCodeValidation = validateNumericFiscalCode(newFiscaleCode);
+                String fiscalCodeValidation = validateNumericFiscalCode(newFiscalCode);
                 if (String.isNotBlank(fiscalCodeValidation)) {
                     return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
                 }
             }
             // Associazione prevede CF numerico ma PIVA blank.
             else if (marking.contains('Associazione')) {
-                String fiscalCodeValidation = validateNumericFiscalCode(newFiscaleCode);
+                String fiscalCodeValidation = validateNumericFiscalCode(newFiscalCode);
                 if (String.isNotBlank(fiscalCodeValidation)) {
                     return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
                 }
@@ -951,15 +951,35 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     }
 
     // Validazione CF. Se il CF è vuoto lo consideriamo valido.
-    public String validateFiscalCode(String fiscalCode) {
-        if (String.isBlank(fiscalCode)) {
+    public String validateFiscalCode(String oldFiscalCode, String newfiscalCode) {
+        if (String.isBlank(newfiscalCode)) {
             return '';
         }
 
-        Pattern pattern = Pattern.compile('^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$');
-        Matcher matcher = pattern.matcher(fiscalCode);
+        String outcome = '';
 
-        return matcher.matches() ? '' : 'Il Codice Fiscale inserito non è valido.';
+        Pattern pattern = Pattern.compile('^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$');
+        Matcher matcher = pattern.matcher(newfiscalCode);
+
+        outcome = matcher.matches() ? '' : 'Il Codice Fiscale inserito non è valido.';
+
+        if (String.isBlank(outcome) && String.isNotBlank(oldFiscalCode)) {
+            List<Integer> oldChars = oldFiscalCode.toLowerCase().getChars();
+            List<Integer> newChars = newfiscalCode.toLowerCase().getChars();
+            Integer minLength = Math.min(oldChars.size(), newChars.size());
+            Integer changedChars = 0;
+            for(Integer i = 0; i < minLength; i++) {
+                if (newChars[i] != oldChars[i]) {
+                    changedChars++;
+                }
+            }
+
+            if (changedChars > 2) {
+                outcome = 'Per modifiche sostanziali (più di 2 caratteri) al Codice Fiscale è necessario innescare una Voltura.';
+            }
+        }
+
+        return outcome;
     }
 
     // Validazione CF numerico. Se il CF è vuoto lo consideriamo valido.

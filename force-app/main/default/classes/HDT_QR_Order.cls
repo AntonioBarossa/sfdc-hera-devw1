@@ -112,6 +112,8 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.RecordType.DeveloperName,
             ServicePoint__r.Account__c,
             ServicePoint__r.MeterClass__c,
+            ServicePoint__r.MeterStatus__c,
+            ServicePoint__r.PlugPresence__c,
             ServicePoint__r.UseTypeEnergy__c,
             ServicePoint__r.UseCategory__c,
             BillingProfile__c,
@@ -182,8 +184,9 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.AnnualConsumptionStandardM3__c, // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
             BillingProfile__r.AccountClass__c,              // @Picchiri Calcolo della date Switch in 08/06/21             
             OwnerId,                                        // @Picchiri  10/06/21
-            OrderReferenceNumber,                           // @Picchiri  15/06/21
-            IsSequanzialized__c                             // @Picchiri  24/06/21
+            OrderReferenceNumber,                            // @Picchiri  15/06/21
+            IsSequanzialized__c,                             // @Picchiri  24/06/21
+            SalesCompanyCode__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -315,7 +318,8 @@ public inherited sharing class HDT_QR_Order {
             BillingProfile__r.AccountClass__c,                           
             OwnerId,                                        
             OrderReferenceNumber,
-            IsSequanzialized__c  
+            SalesCompanyCode__c,
+            IsSequanzialized__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
