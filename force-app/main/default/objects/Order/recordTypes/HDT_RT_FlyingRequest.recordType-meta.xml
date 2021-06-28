@@ -2017,6 +2017,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>LiftingPeople__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>MarketOrigin__c</picklist>
         <values>
             <fullName>Default</fullName>
@@ -2752,6 +2763,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Hera Comm Marche</fullName>
             <default>false</default>
         </values>
@@ -2761,10 +2776,6 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
     </picklistValues>
