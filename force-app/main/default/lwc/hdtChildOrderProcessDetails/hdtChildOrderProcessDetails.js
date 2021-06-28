@@ -1087,7 +1087,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: '',
                 recordId: '',
                 isReading: true,
-                processVisibility: true 
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
             },
             {
                 step: 4,
