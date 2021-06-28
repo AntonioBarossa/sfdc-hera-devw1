@@ -1379,6 +1379,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AlertConfiguration__c.BillSendingMethod__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AlertConfiguration__c.Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
