@@ -7891,10 +7891,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Pratica Riclassificata</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Elaborazione Manuale</fullName>
             <default>false</default>
         </values>
