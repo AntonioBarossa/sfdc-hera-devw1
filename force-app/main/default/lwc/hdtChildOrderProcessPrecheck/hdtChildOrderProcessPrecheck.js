@@ -216,8 +216,6 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         console.log('CallBack start');
 
-        this.options = [];
-
         if (this.order.RecordType.DeveloperName === 'HDT_RT_Default') {
             console.log('enter default');
             init({order: this.order}).then(data =>{
@@ -225,7 +223,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 console.log('initProcesses: ' + JSON.stringify(data));
     
                 this.processesReference = data;
-    
+
+                this.options = [];
+
                 data.forEach(el => {
                     this.options.push({label: el.processType, value: el.processType});
                 });
@@ -261,6 +261,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         } else {
             console.log('enter with value');
+            this.options = [];
             this.options.push({label: this.order.ProcessType__c, value: this.order.ProcessType__c});
             this.selectedProcessObject = {processType: this.order.ProcessType__c, recordType: this.order.RecordType.DeveloperName}
             this.value = this.selectedProcessObject.processType;
@@ -316,7 +317,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         console.log("RecordType: " + this.order.RecordType.DeveloperName);
         console.log("typeOfCommodity: " + typeOfCommodity);
         var fiscalData = null;
-        if(this.selectedProcess !== 'HDT_RT_VAS'){
+
+        if(this.selectedProcessObject.recordType !== 'HDT_RT_VAS'){
             if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
                 typeOfCommodity = 'GAS';
             }
@@ -340,7 +342,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             offerType = this.order.Catalog__c;
         }
         console.log("typeOfCommodity: " + typeOfCommodity);
-        console.log("this.selectedProcess: " + this.selectedProcess);
+        console.log("this.selectedProcessObject: " + JSON.stringify(this.selectedProcessObject));
         
         let data = {
             sistema: "eEnergy",
