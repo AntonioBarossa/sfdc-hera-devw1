@@ -250,7 +250,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(currentPhase.indexOf('Annullamento') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
                 currentCase.CancellationHerokuPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_UTENTE');
             }
-            if(nextPhase.equalsIgnoreCase('Pratica Riclassificata')){
+            if(nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
                 currentCase.ComplexCategory__c = reqWrp.requestMap.get('NOTE');
             }
             
@@ -289,6 +289,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 && String.isNotBlank(recordCase.Type) 
                 && (recordCase.Type.equals('Prescrizione Fatture') || recordCase.Type.equalsIgnoreCase('Piano Rateizzazione'))
                 && !(type.containsIgnoreCase('Esito Rateizzazione OK'))){
+                    if(type.equalsIgnoreCase('Piano rate OK Acc. pagato')){
+                        type = 'Acconto paperless pagato';
+                    }
                 currentCase.Phase__c = type; 
             }
             if(String.isNotBlank(message)){
