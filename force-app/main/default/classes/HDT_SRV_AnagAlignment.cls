@@ -90,7 +90,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
         switch on codicePrestazione {
-            when 'A01', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
+            when 'A01', 'A40', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
                 Order triggerOrder = null;
                 if (!String.isBlank(codicePraticaDistributore)) {
                     triggerOrder = queryHandlerOrder.findOrderByDistributorPracticeCode(codicePraticaDistributore);
@@ -101,6 +101,13 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
                 if (triggerOrder != null) {
                     anagAlignCase = createAnagAlignmentCase(triggerOrder);
+                    anagAlignCase.CausalCode__c = causalCodeAnagAlignment(triggerOrder.CommodityFormula__c, context);
+                    anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+                    anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
+                    anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
+                    System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                    anagAlignCase.Phase__c = 'Da Inviare';
+                    HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
                 }
             }
             when 'N02', 'U01' { // Casistica 2: non è possibile linkare a pratica di origine, creiamo solo il Case di Allineamento Anagrafica.
@@ -471,9 +478,6 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             contactsMap.put(c.Id, c);
         }
 
-        // ProcessClick non fa partire i job per le callout da contesto trigger o batch,
-        // quindi demandiamo creazione del case + arricchimento dati + callout heroku ad un platform event per ogni Case.
-        List<HDT_PEV_AnagAlignment__e> events = new List<HDT_PEV_AnagAlignment__e>();
         for (Case anagAlignCase : anagAlignCases) {
 
             // DATI INDIRIZZO DI RESIDENZA
@@ -497,23 +501,10 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
             anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
 
-            HDT_PEV_AnagAlignment__e event = new HDT_PEV_AnagAlignment__e();
-            event.SerializedCase__c = JSON.serialize(anagAlignCase);
-            events.add(event);
         }
 
-
-        List<Database.SaveResult> results = EventBus.publish(events);
-        System.debug('Results Size: ' + results.size());
-        for (Database.SaveResult sr : results) {
-            if (sr.isSuccess()) {
-                System.debug('Successfully published event.');
-            } else {
-                for (Database.Error err : sr.getErrors()) {
-                    System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
-                }
-            }
-        }
+        // Queueable per invocare l'arricchimento dati su ogni Case e per inviarli ad heroku.
+        System.enqueueJob(new HDT_QBL_AnagAlignment(anagAlignCases));
 
         return anagAlignCases;
     }
@@ -576,6 +567,31 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         }
 
         return causalCode.equals('AGG') ? '01' : '03';
+    }
+
+    /**
+     * Transcodifica le accise raccolte sugli Order nel valore numerico richiesto dal SII.
+     * La transcodifica di default è 0, quindi gestiamo solo le eccezioni che hanno accisa > 0.
+     */
+    private static Double transcodeExcises(Order triggerOrder) {
+        String acc = triggerOrder.ExciseGAS__c != null ? triggerOrder.ExciseGAS__c : triggerOrder.ExciseEle__c;
+        if (acc == null) {
+            return 0;
+        }
+
+        Double transcodedValue = 0;
+        if (acc.contains('G_ICD') || acc.contains('G_ICC')) {
+            transcodedValue = 0.044;
+        } else if (acc.contains('E_IE_L01') || acc.contains('E_IE_M04') || acc.contains('E_IE_L13') || acc.contains('E_IE_13A')) {
+            transcodedValue = 0.0125;
+        }
+
+        return transcodedValue;
+    }
+
+    // Codice venditore cablato essendo cablato anche nel template pclick delle attivazioni.
+    private static String companyCodeTemp(String commodity) {
+        return commodity.equals('Gas') ? '10V0000160' : '13V0000000';
     }
 
 }

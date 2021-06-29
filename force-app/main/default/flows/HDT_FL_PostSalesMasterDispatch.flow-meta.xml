@@ -290,22 +290,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Case_Id_Modifiche_Anagrafiche</name>
-        <label>Assegna Case Id</label>
-        <locationX>2756</locationX>
-        <locationY>1310</locationY>
-        <assignmentItems>
-            <assignToReference>CaseId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Crea_Case_Modifiche_Anagrafiche</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Check_Arricchimento_Dati_Mod_Anagrafica</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assegna_Case_Id_Modifiche_Anagrafiche_0</name>
         <label>Assegna Case Id</label>
         <locationX>3196</locationX>
@@ -319,6 +303,38 @@
         </assignmentItems>
         <connector>
             <targetReference>Arricchimento_Dati_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_Modifiche_Anagrafiche_Account</name>
+        <label>Assegna Case Id</label>
+        <locationX>2624</locationX>
+        <locationY>1430</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Modifiche_Anagrafiche_Account</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Arricchimento_Dati_Mod_Anagrafica</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_Modifiche_Anagrafiche_Lead</name>
+        <label>Assegna Case Id</label>
+        <locationX>2888</locationX>
+        <locationY>1550</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Modifiche_Anagrafiche_Lead</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Arricchimento_Dati_Mod_Anagrafica</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -351,6 +367,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Arricchimento_Dati_Notifiche</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_Notifiche_0</name>
+        <label>Assegna Case Id</label>
+        <locationX>5748</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Voltura</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Arricchimento_Dati_Notifiche_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -634,7 +666,7 @@
         <name>Check_Arricchimento_Dati_Mod_Anagrafica</name>
         <label>Arricchimento Dati Mod. Anagrafica?</label>
         <locationX>2756</locationX>
-        <locationY>1430</locationY>
+        <locationY>1766</locationY>
         <defaultConnector>
             <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
         </defaultConnector>
@@ -653,6 +685,31 @@
                 <targetReference>Arricchimento_Dati_Mod_Anagrafica</targetReference>
             </connector>
             <label>Con Arricchimento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Contesto_Case</name>
+        <label>Contesto Case?</label>
+        <locationX>2756</locationX>
+        <locationY>1190</locationY>
+        <defaultConnector>
+            <targetReference>Get_Lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Lead</defaultConnectorLabel>
+        <rules>
+            <name>Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Crea_Case_Modifiche_Anagrafiche_Account</targetReference>
+            </connector>
+            <label>Account</label>
         </rules>
     </decisions>
     <decisions>
@@ -965,7 +1022,7 @@
     <decisions>
         <name>Switch_Subflow</name>
         <label>Switch Subflow</label>
-        <locationX>2899</locationX>
+        <locationX>3031</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen_0</targetReference>
@@ -1329,6 +1386,21 @@
             </connector>
             <label>Cluster Notifiche</label>
         </rules>
+        <rules>
+            <name>Cluster_Voltura</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VolturaTecnica</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Fornitura_Notifiche_0_0_0</targetReference>
+            </connector>
+            <label>Cluster Voltura</label>
+        </rules>
     </decisions>
     <formulas>
         <name>votiveModenaCluster</name>
@@ -1376,6 +1448,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1465,6 +1543,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1563,6 +1647,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Disattivazioni</stringValue>
@@ -1652,6 +1742,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <elementReference>votiveModenaCluster</elementReference>
@@ -1720,6 +1816,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1818,6 +1920,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Annullamento</stringValue>
@@ -1895,6 +2003,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Autolettura</stringValue>
@@ -1957,6 +2071,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2055,6 +2175,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Fatturazione</stringValue>
@@ -2120,6 +2246,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Fatturazione</stringValue>
@@ -2167,6 +2299,12 @@
             <targetReference>Assegna_Case_Id_Informative</targetReference>
         </connector>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Informative</stringValue>
@@ -2206,17 +2344,23 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
-        <name>Crea_Case_Modifiche_Anagrafiche</name>
+        <name>Crea_Case_Modifiche_Anagrafiche_Account</name>
         <label>Crea Case</label>
-        <locationX>2756</locationX>
-        <locationY>1190</locationY>
+        <locationX>2624</locationX>
+        <locationY>1310</locationY>
         <connector>
-            <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_Account</targetReference>
         </connector>
         <inputAssignments>
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2283,6 +2427,59 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
+        <name>Crea_Case_Modifiche_Anagrafiche_Lead</name>
+        <label>Crea Case</label>
+        <locationX>2888</locationX>
+        <locationY>1430</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_Lead</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Modifiche Anagrafiche</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Get_Lead.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Lead__c</field>
+            <value>
+                <elementReference>LeadId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Modifiche_Anagrafiche.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <name>Crea_Case_Morosita</name>
         <label>Crea Case</label>
         <locationX>1700</locationX>
@@ -2294,6 +2491,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2386,6 +2589,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Notifiche</stringValue>
@@ -2460,6 +2669,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2538,6 +2753,101 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
+        <name>Crea_Case_Voltura</name>
+        <label>Crea Case</label>
+        <locationX>5748</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_Notifiche_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Voltura</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DistributorNote__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Voltura.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedPhone</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <name>CreaCaseVariazioni</name>
         <label>CreaCaseVariazioni</label>
         <locationX>5220</locationX>
@@ -2549,6 +2859,12 @@
             <field>AccountId</field>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2641,6 +2957,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Variazioni</stringValue>
@@ -2727,7 +3049,7 @@
     <recordLookups>
         <name>Cerca_Contatto_Primario</name>
         <label>Cerca Contatto Primario</label>
-        <locationX>2899</locationX>
+        <locationX>3031</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2785,6 +3107,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Contract</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Lead</name>
+        <label>Get Lead</label>
+        <locationX>2888</locationX>
+        <locationY>1310</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_Modifiche_Anagrafiche_Lead</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>LeadId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Lead</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -3004,7 +3347,7 @@
         <locationY>1070</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Crea_Case_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Check_Contesto_Case</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -3089,6 +3432,27 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_Reclamo</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordTypeName</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_RT_Voltura</name>
+        <label>Get RT Voltura</label>
+        <locationX>5748</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_Voltura</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -3209,7 +3573,7 @@
     <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
-        <locationX>5748</locationX>
+        <locationX>6012</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -3254,7 +3618,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>2773</locationX>
+        <locationX>2905</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Cerca_Contatto_Primario</targetReference>
@@ -3468,7 +3832,7 @@
         <name>Arricchimento_Dati_Mod_Anagrafica</name>
         <label>Arricchimento Dati Mod. Anagrafica</label>
         <locationX>2624</locationX>
-        <locationY>1550</locationY>
+        <locationY>1886</locationY>
         <connector>
             <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
         </connector>
@@ -3482,7 +3846,7 @@
         <inputAssignments>
             <name>InputCase</name>
             <value>
-                <elementReference>Crea_Case_Modifiche_Anagrafiche</elementReference>
+                <elementReference>Crea_Case_Modifiche_Anagrafiche_Account</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3500,6 +3864,35 @@
         <locationY>878</locationY>
         <connector>
             <targetReference>Gestione_Notifiche</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_Notifiche_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>5748</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Gestione_Voltura_Tecnica_SubFlow</targetReference>
         </connector>
         <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
         <inputAssignments>
@@ -3614,7 +4007,7 @@
         <name>Gestione_Modifiche_Anagrafiche</name>
         <label>Gestione Modifiche Anagrafiche</label>
         <locationX>2756</locationX>
-        <locationY>1766</locationY>
+        <locationY>2102</locationY>
         <flowName>HDT_FL_GestioneModificheAnagrafiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3720,6 +4113,19 @@
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Gestione_Voltura_Tecnica_SubFlow</name>
+        <label>Gestione Voltura Tecnica SubFlow</label>
+        <locationX>5748</locationX>
+        <locationY>998</locationY>
+        <flowName>HDT_FL_VolturaTecnica</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Selezione_Fornitura</name>
@@ -4206,6 +4612,46 @@
         </outputAssignments>
     </subflows>
     <subflows>
+        <name>Selezione_Fornitura_Notifiche_0_0_0</name>
+        <label>Selezione Fornitura</label>
+        <locationX>5748</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Get_RT_Voltura</targetReference>
+        </connector>
+        <flowName>HDT_FL_SupplySelection</flowName>
+        <inputAssignments>
+            <name>AccountId</name>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>TargetObject</name>
+            <value>
+                <stringValue>Fornitura</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>Commodity</assignToReference>
+            <name>Commodity</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Contract</assignToReference>
+            <name>Contract</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServicePointId</assignToReference>
+            <name>ServicePointId</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Subflow_Gestione_Disattivazioni</name>
         <label>Subflow Gestione Disattivazioni</label>
         <locationX>644</locationX>
@@ -4280,6 +4726,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>CampaignId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>cancelCase</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -4329,6 +4782,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>LeadId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

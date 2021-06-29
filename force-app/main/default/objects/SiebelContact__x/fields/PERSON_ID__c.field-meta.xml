@@ -7,8 +7,8 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>PERSON_ID</label>
-    <length>128</length>
+    <label>Contatto</label>
+    <length>15</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>

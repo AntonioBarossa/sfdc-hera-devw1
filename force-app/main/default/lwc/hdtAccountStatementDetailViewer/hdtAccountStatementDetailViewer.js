@@ -61,14 +61,13 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             if(result.success){
 
                 this.columns = result.columnObj;//columns;
-                console.log('# buttonList: ' + result.buttonList.length);
-
                 this.buttonList = result.buttonList;
-
+                console.log('# buttonList: ' + result.buttonList.length);
+                
                 this.columns.forEach((i) => {
                     filterObject[i.fieldName] = '';
                     if(i.isFilter){
-                        this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label});
+                        this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label, type: i.fieldType});
                     }
                 });
 
@@ -339,6 +338,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
     generateFilterString(){
         try {
+
             for(var i in this.staticObj){
                 this.filterString += i;
                 this.filterString += ' ';
@@ -390,7 +390,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
             const columnTypeMap = new Map();
             this.columns.forEach((col) => {
-                columnTypeMap.set(col.fieldName, 'text'/*col.detail.type*/);
+                columnTypeMap.set(col.fieldName, col.fieldType);
             });
 
             var contoContrArray;
@@ -415,6 +415,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                         case 'number':
                             filterValue = parseFloat(currentFilter[key].value);
                             tableValueToFilter = parseFloat(item[key]);
+                            console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
                             break;
                         case 'date':
                             var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
@@ -452,16 +453,19 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                 return true;
             });
 
-            if(filteredData.length == 0 && this.bShowModal){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Attenzione',
-                        message: 'Nessun record trovato',
-                        variant: 'warning'
-                    }),
-                );
-                return;
-            }
+            //if(filteredData.length == 0 && this.bShowModal){
+            //    this.dispatchEvent(
+            //        new ShowToastEvent({
+            //            title: 'Attenzione',
+            //            message: 'Nessun record trovato',
+            //            variant: 'warning'
+            //        }),
+            //    );
+            //    this.filterString = '';
+            //    this.staticObj = {};
+            //    return;
+            //}
+
             this.setButtonForFilterApplied(true);
             this.accountdetails = filteredData;
             this.filterApplied = true;

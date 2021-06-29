@@ -1,0 +1,23 @@
+public with sharing class HDT_QR_MatriceAgenti {
+    public static List<HDT_MatriceSocietaVendita__mdt> getAgente(String fornitura,String comune,string marcatura,String offerta){
+        return [SELECT Service__c, isActive__c, Marcatura__c, Comune__c, SellerCompany__c, SalesCompanyCode__c, Offerta__c, QualifiedApiName, Label, NamespacePrefix, DeveloperName, Id 
+                FROM HDT_MatriceSocietaVendita__mdt
+                where Marcatura__c = :marcatura 
+                AND comune__c = :comune
+                AND service__c = :fornitura
+                AND offerta__c = :offerta
+                AND distributor__c = 'ALTRO'
+                ];
+    }
+    public static List<HDT_MatriceSocietaVendita__mdt> getAgenteException(String fornitura,String comune,string marcatura,String offerta,String distributor){
+        String likeCondiction = '%' + distributor + '%';
+        return [SELECT Service__c, isActive__c, Marcatura__c, Comune__c, SellerCompany__c, SalesCompanyCode__c, Offerta__c, QualifiedApiName, Label, NamespacePrefix, DeveloperName, Id 
+                FROM HDT_MatriceSocietaVendita__mdt
+                where Marcatura__c = :marcatura 
+                AND comune__c = :comune
+                AND service__c = :fornitura
+                AND offerta__c = :offerta
+                AND distributor__c LIKE :likeCondiction
+                ];
+    }
+}

@@ -220,6 +220,20 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>CREATED__c</fields>
+        <fields>TODO_CD__c</fields>
+        <fields>EVT_STAT_CD__c</fields>
+        <relatedList>SiebelActivity__x.TARGET_OU_ID_SF__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>ASSET_NUM__c</fields>
+        <fields>END_DT__c</fields>
+        <fields>IMPIANTO_PROD_CATG_CD__c</fields>
+        <relatedList>SiebelContract__x.SERV_ACCT_SALESFORCE__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -247,6 +261,7 @@
         <fields>CONTACT.PHONE1</fields>
         <fields>CONTACT.PHONE3</fields>
         <fields>ACCCONRELATION.ROLES</fields>
+        <fields>ContactCode__c</fields>
         <fields>ACCCONRELATION.START_DATE</fields>
         <fields>ACCCONRELATION.END_DATE</fields>
         <relatedList>RelatedAccountContactRelationList</relatedList>
@@ -278,12 +293,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>wrts_prcgvr__Description__c</fields>
-        <fields>wrts_prcgvr__DueDate__c</fields>
+        <fields>Type__c</fields>
+        <fields>ActivityStartTime__c</fields>
+        <fields>ActivityEndTime__c</fields>
         <fields>wrts_prcgvr__Status__c</fields>
-        <fields>wrts_prcgvr__ActivityTemplate__c</fields>
-        <fields>OWNER.LAST_NAME</fields>
-        <fields>UPDATEDBY_USER</fields>
         <relatedList>wrts_prcgvr__Activity__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -326,6 +339,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>SBQQ__ProductName__c</fields>
+        <fields>SBQQ__StartDate__c</fields>
+        <fields>SBQQ__EndDate__c</fields>
+        <fields>SBQQ__SubscriptionType__c</fields>
         <relatedList>SBQQ__Subscription__c.SBQQ__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -377,18 +394,39 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>et4ae5__DateSent__c</fields>
+        <fields>et4ae5__DateOpened__c</fields>
+        <fields>CaseID__c</fields>
+        <fields>OrderID__c</fields>
+        <fields>BounceType__c</fields>
+        <fields>et4ae5__Contact_ID__c</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>MessageText__c</fields>
+        <fields>Delivered__c</fields>
+        <fields>CaseID__c</fields>
+        <fields>OrderID__c</fields>
+        <fields>ContactID__c</fields>
+        <fields>Sent__c</fields>
         <relatedList>SMSTracking__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>MessageText__c</fields>
+        <fields>MessageOpened__c</fields>
+        <fields>CaseID__c</fields>
+        <fields>OrderID__c</fields>
+        <fields>ContactID__c</fields>
         <relatedList>PushTracking__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Channel__c</fields>
+        <fields>Agency__c</fields>
+        <fields>Status__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Sale__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -396,11 +434,9 @@
         <fields>Status__c</fields>
         <fields>Reason__c</fields>
         <fields>Comment__c</fields>
-        <fields>OWNER.ALIAS</fields>
         <fields>Contact__c</fields>
         <fields>ProtocolDate__c</fields>
         <fields>ReceptionDate__c</fields>
-        <fields>OBJECT_ID</fields>
         <relatedList>Interaction__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -429,6 +465,14 @@
         <fields>EnvelopeId__c</fields>
         <relatedList>DocumentSendTracking__c.Account__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>Rds_CREATED__c</fields>
+        <fields>INS_PRODUCT__c</fields>
+        <fields>SR_AREA__c</fields>
+        <fields>X_ATTRIB_54__c</fields>
+        <relatedList>SiebelRds__x.CST_OU_ID_SALESFORCE__c</relatedList>
+    </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -436,7 +480,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1x000001Zgsk</masterLabel>
+        <masterLabel>00h1j000002So66</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -2,6 +2,7 @@ public inherited sharing class HDT_UTL_CompanyOwner {
 
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_QR_Lead leadQr = new HDT_QR_Lead();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
 
@@ -16,14 +17,17 @@ public inherited sharing class HDT_UTL_CompanyOwner {
 
                 List<String> accountIds= new List<String>();
                 List<String> caseIds= new List<String>();
+                List<String> orderIds= new List<String>();
                 List<String> leadIds= new List<String>();
                 Set<Id> contactIds= new Set<Id>();
                 List<Account> accounts= new List<Account>();
                 List<Case> cases= new List<Case>();
+                List<Order> orders= new List<Order>();
                 List<Lead> leads= new List<Lead>();
                 List<Contact> contacts= new List<Contact>();
                 Map<String,Account> accountsMap=new Map<String,Account>();
                 Map<String,Case> casesMap=new Map<String,Case>();
+                Map<String,Order> ordersMap=new Map<String,Order>();
                 Map<String,Lead> leadsMap=new Map<String,Lead>();
                 Map<String,Contact> contactsMap=new Map<String,Contact>();
 
@@ -35,8 +39,13 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                         }
                     }else if(objectApiName=='Asset' || objectApiName== 'Case' || objectApiName== 'Contact' || objectApiName== 'Opportunity' ){
                         accountIds.add(String.valueOf(s.get('AccountId')));
-                    }else if(objectApiName=='BillingProfile__c' || objectApiName=='SolTracking__c' || objectApiName=='wrts_prcgvr__Activity__c' ||objectApiName=='DocumentSendTracking__c'){
+                    }else if(objectApiName=='BillingProfile__c' || objectApiName=='SolTracking__c' || objectApiName=='DocumentSendTracking__c'){
                         accountIds.add(String.valueOf(s.get('Account__c')));
+                    }else if(objectApiName=='wrts_prcgvr__Activity__c'){
+                        accountIds.add(String.valueOf(s.get('Account__c')));
+                        leadIds.add(String.valueOf(s.get('Lead__c')));
+                        caseIds.add(String.valueOf(s.get('Case__c')));
+                        orderIds.add(String.valueOf(s.get('Order__c')));
                     }else if(objectApiName=='DocumentalActivity__c'){
                         caseIds.add(String.valueOf(s.get('CaseId__c')));
                     }else if(objectApiName=='SBQQ__Quote__c' || objectApiName=='SBQQ__Subscription__c'){
@@ -44,16 +53,23 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                     }else if(objectApiName=='SMSTracking__c' || objectApiName=='PushTracking__c'){
                         leadIds.add(String.valueOf(s.get('LeadID__c')));
                         contactIds.add(String.valueOf(s.get('ContactID__c')));
+                        caseIds.add(String.valueOf(s.get('CaseID__c')));
+                        orderIds.add(String.valueOf(s.get('OrderID__c')));
                     }else if(objectApiName=='et4ae5__IndividualEmailResult__c'){
                         leadIds.add(String.valueOf(s.get('et4ae5__Lead__c')));
                         contactIds.add(String.valueOf(s.get('et4ae5__Contact__c')));
+                        caseIds.add(String.valueOf(s.get('CaseID__c')));
+                        orderIds.add(String.valueOf(s.get('OrderID__c')));
                     }
                 }
                 if(accountIds.size()>0){
                     accounts=accountQr.getRecordsById(accountIds, 'Id,CompanyOwner__c');
                 }
                 if(caseIds.size()>0){
-                    cases=caseQr.getRecordsById(caseIds, 'Id,CompanyOwner__c');
+                    cases=caseQr.getRecordsById(caseIds, 'Id,CompanyOwner__c,AccountId');
+                }
+                if(orderIds.size()>0){
+                    orders=orderQr.getRecordsByIdWithFields(orderIds, 'Id,CompanyOwner__c,AccountId');
                 }
                 if(leadIds.size()>0){
                     leads=leadQr.getRecordsById(leadIds);
@@ -68,6 +84,9 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                 for(Case c:cases){
                     casesMap.put(c.Id,c);
                 }
+                for(Order o:orders){
+                    ordersMap.put(o.Id,o);
+                }
                 for(Lead l:leads){
                     leadsMap.put(l.Id,l);
                 }
@@ -80,10 +99,24 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                             Account ac= accountsMap.get(String.valueOf(s.get('AccountId')));
                             s.put('CompanyOwner__c', ac.CompanyOwner__c);
                         }
-                    }else if(objectApiName=='BillingProfile__c' || objectApiName=='SolTracking__c' || objectApiName=='wrts_prcgvr__Activity__c' ||objectApiName=='DocumentSendTracking__c'){
+                    }else if(objectApiName=='BillingProfile__c' || objectApiName=='SolTracking__c' ||objectApiName=='DocumentSendTracking__c'){
                         if(accountsMap.containsKey(String.valueOf(s.get('Account__c')))){
                             Account ac= accountsMap.get(String.valueOf(s.get('Account__c')));
                             s.put('CompanyOwner__c', ac.CompanyOwner__c);
+                        }
+                    }else if(objectApiName=='wrts_prcgvr__Activity__c'){
+                        if(accountsMap.containsKey(String.valueOf(s.get('Account__c')))){
+                            Account ac= accountsMap.get(String.valueOf(s.get('Account__c')));
+                            s.put('CompanyOwner__c', ac.CompanyOwner__c);
+                        }else if(leadsMap.containsKey(String.valueOf(s.get('Lead__c')))){
+                            Lead lead= leadsMap.get(String.valueOf(s.get('Lead__c')));
+                            s.put('CompanyOwner__c', lead.CompanyOwner__c);
+                        }else if (casesMap.containsKey(String.valueOf(s.get('Case__c')))){
+                            Case caseObj = casesMap.get(String.valueOf(s.get('Case__c')));
+                            s.put('CompanyOwner__c', caseObj.CompanyOwner__c);
+                        }else if (ordersMap.containsKey(String.valueOf(s.get('Order__c')))){
+                            Order orderObj = ordersMap.get(String.valueOf(s.get('Order__c')));
+                            s.put('CompanyOwner__c', orderObj.CompanyOwner__c);
                         }
                     }else if(objectApiName=='DocumentalActivity__c'){
                         if(casesMap.containsKey(String.valueOf(s.get('CaseId__c')))){
@@ -103,6 +136,19 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                             Contact cont= contactsMap.get(String.valueOf(s.get('ContactID__c')));
                             s.put('CompanyOwner__c', cont.CompanyOwner__c);
                         }
+                        // EVERIS: per i soli oggetti di Marketing Cloud, valorizziamo anche l'Id dell'Account recuperato dal Case/Order correlato alla comunicazione.
+                        if (casesMap.containsKey(String.valueOf(s.get('CaseID__c')))){
+                            Case caseObj = casesMap.get(String.valueOf(s.get('CaseID__c')));
+                            if (caseObj != null){
+                                s.put('Account__c', caseObj.AccountId);
+                            }
+                        }else{
+                            Order orderObj = ordersMap.get(String.valueOf(s.get('OrderID__c')));
+                            if (orderObj != null){
+                                s.put('Account__c', orderObj.AccountId);
+                            }
+                        }
+                        // EVERIS END
                     }else if(objectApiName=='et4ae5__IndividualEmailResult__c'){
                         if(leadsMap.containsKey(String.valueOf(s.get('et4ae5__Lead__c')))){
                             Lead lead= leadsMap.get(String.valueOf(s.get('et4ae5__Lead__c')));
@@ -111,6 +157,19 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                             Contact cont= contactsMap.get(String.valueOf(s.get('et4ae5__Contact__c')));
                             s.put('CompanyOwner__c', cont.CompanyOwner__c);
                         }
+                        // EVERIS: per i soli oggetti di Marketing Cloud, valorizziamo anche l'Id dell'Account recuperato dal Case/Order correlato alla comunicazione.
+                        if (casesMap.containsKey(String.valueOf(s.get('CaseID__c')))){
+                            Case caseObj = casesMap.get(String.valueOf(s.get('CaseID__c')));
+                            if (caseObj != null){
+                                s.put('Account__c', caseObj.AccountId);
+                            }
+                        }else{
+                            Order orderObj = ordersMap.get(String.valueOf(s.get('OrderID__c')));
+                            if (orderObj != null){
+                                s.put('Account__c', orderObj.AccountId);
+                            }
+                        }
+                        // EVERIS END
                     }
                 }
             }

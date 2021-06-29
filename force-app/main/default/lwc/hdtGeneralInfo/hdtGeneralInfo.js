@@ -9,6 +9,7 @@ import getSaleContactRole from '@salesforce/apex/HDT_LC_GeneralInfo.getSaleConta
 export default class HdtGeneralInfo extends LightningElement {
     @api saleRecord = {};
     @api campaignId;
+    @api campaignCommissioningId;
     disabledInput = false;
     hiddenEdit = true;
     loading = false;
@@ -24,6 +25,10 @@ export default class HdtGeneralInfo extends LightningElement {
     selectedFromCompleteList = {};
     saleContactRoles = '';
     @track isCampaignTableVisible = false;
+
+    @track isCampaignTableCommissioningVisible = false;
+    @track isOutbound = false;
+
     @track disabledSave = true;
     totalPages = 0;
     totalPages2 = 0;
@@ -50,20 +55,27 @@ export default class HdtGeneralInfo extends LightningElement {
 
 
 
+
     completeListcolumns = [];
     get isCampaignVisible() {
         return this.isCampaignTableVisible || this.saleRecord.Campaign__c !== undefined;
+    }
+    get isCampaignCommissioningVisible(){
+        return this.isCampaignTableCommissioningVisible || this.saleRecord.CommissioningCampaign__c !== undefined;
     }
 
     get isCampaignInputVisible() {
         return this.disabledInput || (this.campaignId !== '' && this.campaignId !== undefined);
     }
 
-    toggle() {
+    get isCampaignInputVisibleCommissioning(){
+        return this.disabledInput || (this.campaignCommissioningId !== '' && this.campaignCommissioningId !== undefined);
+    }
+
+    toggle(){
         this.disabledInput = !this.disabledInput;
         this.disabledNext = !this.disabledNext;
         this.hiddenEdit = !this.hiddenEdit;
-        this.disabledAgency = this.disabledAgency == false ? true : this.disabledAgency;
         this.disabledSelezioneAgenzia = !this.disabledSelezioneAgenzia;
     }
 
@@ -153,8 +165,16 @@ export default class HdtGeneralInfo extends LightningElement {
         this.dataToSubmit['Campaign__c'] = event.detail.campaignId;
     }
 
-    handleCampaignVisibility(event) {
+    handleEmitCampaignIdEvent2(event){
+        this.dataToSubmit['CommissioningCampaign__c'] = event.detail.campaignId;
+    }
+
+    handleCampaignVisibility(event){
+
         this.isCampaignTableVisible = event.detail.isVisible;
+    }
+    handleCampaignVisibility2(event){
+        this.isCampaignTableCommissioningVisible = event.detail.isVisible;
     }
 
     updateSaleRecord(saleData) {
@@ -224,11 +244,13 @@ export default class HdtGeneralInfo extends LightningElement {
 
         this.updateSaleRecord(this.dataToSubmit);
         this.toggle();
+        this.disabledAgency = true;
     }
 
     handleEdit() {
         this.updateSaleRecord({ Id: this.saleRecord.Id, CurrentStep__c: this.currentStep });
         this.toggle();
+        this.disabledAgency = false;
     }
 
     connectedCallback() {

@@ -1,4 +1,3 @@
-
 public inherited sharing class HDT_QR_Contract {
 
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
@@ -25,8 +24,8 @@ public inherited sharing class HDT_QR_Contract {
             Name,
             AccountId,
             ContractNumber,
-            BillingProfile__c,
             Status,
+            BillingProfile__c,
             SBQQ__Order__r.BillingProfile__c,
             ServicePoint__c,
             ServicePoint__r.RecordType.DeveloperName
@@ -153,6 +152,15 @@ public inherited sharing class HDT_QR_Contract {
             WHERE Id IN :contractIds
             WITH SECURITY_ENFORCED
         ];
+    }
+    public List<Contract> getContractFromServicePoint(String servicePointId){
+
+        return [SELECT Id
+        FROM Contract
+        WHERE ServicePoint__c = :servicePointId
+        AND Status = 'Attivo'
+        WITH SECURITY_ENFORCED];
+
     }
 
 }

@@ -46,6 +46,7 @@ public with sharing class HDT_QR_InstallmentPlans {
         CAWithOrWithoutSEPA__c,
         ExistingInstallmentsPlanNumber__c,
         AmountToPayInInstallments__c,
+        InstallmentAmount__c,
         Deposit__c,
         DepositAmount__c,
         Amount__c,
@@ -129,6 +130,16 @@ public with sharing class HDT_QR_InstallmentPlans {
         }
 
         return paymentMethod;
+
+    }
+
+    public String getCustomerAssistedKpi(String accountId){
+
+        return [SELECT AssistedCustomer__c 
+        FROM Account 
+        WHERE Id = :accountId 
+        WITH SECURITY_ENFORCED 
+        LIMIT 1].AssistedCustomer__c;
 
     }
 }

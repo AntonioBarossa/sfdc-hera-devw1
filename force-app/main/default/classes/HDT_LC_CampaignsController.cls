@@ -5,6 +5,8 @@ public inherited sharing class HDT_LC_CampaignsController {
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
+    private static HDT_SRV_CommercialCode commercialCodeSrv = new HDT_SRV_CommercialCode();
+    private static HDT_QR_Campaign campaignQr = new HDT_QR_Campaign();
 
     @AuraEnabled(cacheable=true)
     public static List <CampaignMember> getCampaigns(String id, String objectName, String category, String channel) {
@@ -73,6 +75,24 @@ public inherited sharing class HDT_LC_CampaignsController {
         return newCase;
     }
     @AuraEnabled
+    public static String getServiceCatalogUrlByCaseType(Case c){
+        //Case newCase = caseSrv.createRecord(c);
+        String s = HDT_QR_ServiceCatalog.getServiceLinkItemAccountRedirectUrlByCategory(c.cluster__c, c.type);
+        String res = '';
+        if(s != null){
+            res = s.replace('{!Id}',c.AccountId);
+            res = res + '&c__campaignId=' + c.Campaign__c;
+            //s = s.replace('', arg1)
+        }
+        else{
+            res = null;
+        }
+
+        return res;
+    }
+
+
+    @AuraEnabled
     public static List<CampaignMember> getUnassignedCampaignMembers(String campaignId) {
         return  campaignMemberQr.getUnassignedCampaignMembers(campaignId);
     }
@@ -116,5 +136,39 @@ public inherited sharing class HDT_LC_CampaignsController {
             System.debug(e.getMessage());
             return null;
         }
+    }
+
+    @AuraEnabled
+    public static CommercialCode__c createCommercialCode(String campaignId, String fullCode, Integer maxUsesEE, Integer maxUsesGAS, Integer maxUsesVAS){
+        try {
+            CommercialCode__c cc = new CommercialCode__c (
+                Campaign__c = campaignId,
+                FullCode__c = fullCode,
+                Name = fullCode,
+                MaximalUsesEE__c = maxUsesEE,
+                MaximalUsesGAS__c = maxUsesGAS,
+                MaximalUsesVAS__c = maxUsesVAS,
+                ActualUsesEE__c = 0,
+                ActualUsesGAS__c = 0,
+                ActualUsesVAS__c = 0,
+                RecoveryUsesEE__c = 0,
+                RecoveryUsesGAS__c = 0,
+                RecoveryUsesVAS__c = 0
+            );
+            CommercialCode__c res = commercialCodeSrv.createRecord(cc);
+            return res;
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Boolean checkCommercialCodeUniqueness(String commercialCode, String campaignId) {
+        List<Campaign> campaignsList = campaignQr.getCommercialCode(commercialCode, campaignId);
+        if (campaignsList.size() > 0) {
+            return false;
+        }
+        return true;
     }
 }

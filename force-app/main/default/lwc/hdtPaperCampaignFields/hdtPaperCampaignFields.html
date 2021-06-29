@@ -1,0 +1,191 @@
+<template>
+    <lightning-card title="Parametri Campagna Cartacea" class="slds-col slds-size_1-of-1">
+        <lightning-record-edit-form record-id={paperRecordId} object-api-name="PaperCampaignParameter__c" onload={handleFormLoad}
+        onsubmit={handleSubmit} onerror={handleError} onsuccess={handleSuccess}  class="paperForm">
+            <lightning-messages></lightning-messages>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Name" class="slds-hide nameField"></lightning-input-field>
+                    <lightning-input-field field-name="LetterType__c" class="obb" required="true"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="CostCenter__c" class="obb" required="true"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Lot__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="LotDate__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Aggregation__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="ShippingMode__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field2__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field3__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field4__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field5__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field6__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field7__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field8__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field9__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field10__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field11__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field12__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field13__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field14__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field15__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field16__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field17__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field18__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field19__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field20__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field21__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field22__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field23__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field24__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field25__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field26__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field26__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field28__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field29__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field30__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field31__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field32__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field33__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field34__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field35__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field36__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field37__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field38__c"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field39__c"></lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                    <lightning-input-field field-name="Field40__c"></lightning-input-field>
+                </div>
+            </div>
+
+        </lightning-record-edit-form>
+    </lightning-card>
+</template>

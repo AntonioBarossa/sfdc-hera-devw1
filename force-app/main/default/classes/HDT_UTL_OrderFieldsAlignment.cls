@@ -12,6 +12,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
     private static HDT_SRV_QuoteLine quoteLineSrv = new HDT_SRV_QuoteLine();
+    private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
+    private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
 
     private static void alignBillingProfileFields(Order orderToUpdate, String billingProfileId){
 
@@ -51,8 +53,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignServicePointFields(Order orderToUpdate, String servicePointId) {
         
-        servicePointSrv.checkReadAccess('MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        servicePointSrv.checkReadAccess('CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
 
@@ -92,7 +94,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
         orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? (servicePoint.WithdrawalClass__c != null ? servicePoint.WithdrawalClass__c : '001-7 giorni') : null;
         orderToUpdate.SupplyType__c = servicePoint.SupplyType__c;
-        orderToUpdate.EffectiveDate__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_SwitchIn' ? Date.newInstance(2021, 06, 01) : Date.today(); //to do: with switch in calculation logic
+        //orderToUpdate.EffectiveDate__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_SwitchIn' ? Date.newInstance(2021, 06, 01) : Date.today(); //to do: with switch in calculation logic
         orderToUpdate.DistributorCode__c = servicePoint.Distributor__r.Code__c;
         orderToUpdate.PressureLevel__c = servicePoint.PressureLevel__c;
         orderToUpdate.RequestPhase__c = servicePoint.RequestPhase__c;
@@ -101,6 +103,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.LiftingPeople__c = 'No';
         orderToUpdate.MeterType__c = servicePoint.MeterType__c;
         orderToUpdate.IsRemoteManaged__c = servicePoint.IsRemoteManaged__c;
+        orderToUpdate.CustomerRequestDate__c = Date.today();
+        //Aggiunta valorizzazione Commodity
+        orderToUpdate.Commodity__c = servicePoint.CommoditySector__c;
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
@@ -166,6 +171,21 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     }
 
+    private static void alignQuote(Order orderToUpdate, String quoteId, Order order) {
+
+        quoteSrv.checkReadAccess('SalesCompanyCode__c,SalesCompany__c');
+        SBQQ__Quote__c quote = quoteQr.getRecordById(quoteId);
+
+        if (order.SalesCompanyCode__c == null) {
+            orderToUpdate.SalesCompanyCode__c = quote.SalesCompanyCode__c;
+        }
+
+        if (order.SalesCompany__c == null) {
+            orderToUpdate.SalesCompany__c = quote.SalesCompany__c;
+        }
+
+    }
+
     public static String calculateRequestedOption(String implantType, Decimal powerContractual){
 
         String result = '';
@@ -225,6 +245,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         if(order.SBQQ__Quote__c != null) {
             alignPrimaryProduct(orderToUpdate, order.SBQQ__Quote__c);
+            alignQuote(orderToUpdate, order.SBQQ__Quote__c, order);
         }
 
         if(order.BillingProfile__c != null) {
@@ -237,5 +258,11 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         orderSrv.updateRecord(orderToUpdate);
 
+        if (order.ServicePoint__c != null) {
+            servicePointSrv.updateRecord(new ServicePoint__c(
+                Id = order.ServicePoint__c,
+                PowerRequested__c = null
+            ));
+        }
     }
 }

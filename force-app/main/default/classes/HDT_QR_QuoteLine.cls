@@ -406,6 +406,8 @@ public inherited sharing class HDT_QR_QuoteLine {
             Id,
             Name,
             SBQQ__Product__r.Name,
+            SBQQ__Product__r.EndDate__c,
+            SBQQ__Product__r.Status__c,
             SBQQ__Quote__c,
             SBQQ__Quote__r.Name,
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
