@@ -134,6 +134,7 @@ export default class HdtGeneralInfo extends LightningElement {
                     console.log("************* "+JSON.stringify(data))
                     this.loaded = true;
                     this.template.querySelector("[data-id='Agency__c']").value = data[0].AgencyName__c;
+                    this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
                 }).catch(error => {
                     this.loaded = true;
                     console.log(error.body.message);
