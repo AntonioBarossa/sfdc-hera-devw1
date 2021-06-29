@@ -87,7 +87,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         List<HDT_WRP_Process> availableProcesses = new List<HDT_WRP_Process>();
 
         Boolean isOwnAccount = ord.AccountId == ord.ServicePoint__r.Account__c;
-        Boolean plugPresence = ord.ServicePoint__r.PlugPresence__c != null;
+        Boolean plugPresence = ord.ServicePoint__r.PlugPresence__c == 'Si';
         Boolean isChangeUse = ord.SBQQ__Quote__r.AllowChangeUse__c;
 
         system.debug('getAvailableProcesses - isOwnAccount: ' + isOwnAccount);
