@@ -250,6 +250,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(currentPhase.indexOf('Annullamento') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
                 currentCase.CancellationHerokuPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_UTENTE');
             }
+            if(nextPhase.equalsIgnoreCase('Pratica Riclassificata')){
+                currentCase.ComplexCategory__c = reqWrp.requestMap.get('NOTE');
+            }
             
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
