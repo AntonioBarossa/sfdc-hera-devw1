@@ -5,6 +5,13 @@
 */
 
 public with sharing class HDT_LC_StoricizzazioneCliente {
+    private static  Map<String, List<String>> mappingRoleToMarcatura = new Map<String, List<String>>{
+        'HDT_BackOffice' => new List<String>{},
+        'HDT_FrontOffice_AAAEBT' => new List<String>{'AAS Persona fisica','AAS Ditta individuale','AAS Azienda','AAS Parti comuni','AAS Condominio','AAS Associazione'},
+        'HDT_FrontOffice_HERA_COMM' => new List<String>{'Persona fisica','Ditta individuale','Azienda','Parti comuni','Condominio','Associazione'},
+        'HDT_FrontOffice_MMS' => new List<String>{'MMS Persona fisica','MMS Ditta individuale','MMS Azienda','MMS Parti comuni','MMS Condominio','MMS Associazione'}
+    };
+
     public class HDT_LC_Link{
         @AuraEnabled public String label;
         @AuraEnabled public String value;
@@ -43,6 +50,21 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
                 }             
      }
      // End Refactoring post intervento Andrea
+
+    /*  La funzione restituisce la lista di marcature consentite in base al role dell'account in uso attualmente
+    *
+    *   return:
+    *   null -> il role non è presente nella mappa, nessu risultato consentito
+    *   List<String> vuoto: l'utente non ha alcun filtro
+    *   List<String> popolato: la query verrà filtrata per le marcature restituite
+    */
+    public static List<String> getMarcatureFromRole(){
+        String uRoleId = UserInfo.getUserRoleId();
+
+        String roleDevName = [SELECT DeveloperName FROM UserRole  WHERE Id = :uRoleId LIMIT 1].DeveloperName;
+        
+        return mappingRoleToMarcatura.get(roleDevName);
+    }
     
     @AuraEnabled
     public static List<HDT_LC_Customer> getExternalCustomer( String searchKey, String sortBy, String sortDirection, String filterby) {
@@ -51,6 +73,11 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
         List <HDT_LC_Customer> wrapperToreturn = new List <HDT_LC_Customer>();
  
         if ( searchKey != null && searchKey != '' && searchKey.length() > 5) {
+
+            List<String> marcaturePermesse = getMarcatureFromRole();
+            // se il ruolo non è presente nella mappa allora non ha alcun permesso di visualizzazione sugli account
+            if(marcaturePermesse == null)
+            return wrapperToreturn;
             
             String queryStoricizzati = 'select Id, ALIAS_NAME__c, TAX_IDEN_NUM__c ,VAT_REGN_NUM__c,NAME_1__c , OU_NUM__c FROM SiebelCustomer__x ';   
             if(filterby=='Codice Fiscale'){
@@ -60,6 +87,11 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
             }else if(filterby=='Codice Cliente'){
                 queryStoricizzati += ' WHERE OU_NUM__c = :searchKey';
             }     
+            // filtro marcatura
+            // queryStoricizzati += getQueryMarcaturaString(marcaturePermesse, 'SiebelCustomer__x');
+            if (marcaturePermesse.size() > 0)
+                queryStoricizzati += ' AND X_MARCATURA_CLIENTE__c = :marcaturePermesse ';
+
             if (sortBy != null && sortDirection != null ) {
                 queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             }
@@ -73,6 +105,10 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
             }else if(filterby=='Codice Cliente'){
                 queryNonStoricizzati += ' WHERE CustomerCode__c = :searchKey';
             }     
+            // filtro marcatura
+            if (marcaturePermesse.size() > 0)
+                queryNonStoricizzati += ' AND CustomerMarking__c = :marcaturePermesse ';
+
             if (sortBy != null && sortDirection != null ) {
                 queryNonStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             } 
