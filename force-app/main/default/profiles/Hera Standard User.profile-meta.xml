@@ -2896,6 +2896,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Campaign.PaperCampaignParameter__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Campaign.AmountAllOpportunities</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5948,11 +5953,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.SupplyStreetNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.SupplyStreetToponym__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22991,11 +22991,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ServicePoint__c.SupplyStreetToponym__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>ServicePoint__c.SupplyStreet__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28162,6 +28157,10 @@
         <recordType>Case.HDT_RT_VotiveModena</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_PraticaInVolo</layout>
+        <recordType>Case.HDT_RT_FlyingRequest</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -28500,6 +28499,10 @@
     <layoutAssignments>
         <layout>Order-Switch in</layout>
         <recordType>Order.HDT_RT_SwitchIn</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-HDT_PraticaInVolo</layout>
+        <recordType>Order.HDT_RT_FlyingRequest</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-VAS</layout>

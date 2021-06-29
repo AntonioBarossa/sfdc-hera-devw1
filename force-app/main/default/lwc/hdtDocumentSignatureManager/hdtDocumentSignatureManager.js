@@ -38,12 +38,15 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track signSendMap;
     @track isModalOpen = false;
     @track showSpinner = false;
-    
+    @track showAddress = false;
+    @track documents;
+    @track tipoPlico='';
     connectedCallback(){
         try{
             if(this.params){
                 this.returnWrapper = JSON.parse(this.params);
                 var inputWrapper = JSON.parse(this.params);
+                this.documents = inputWrapper.documents;
                 this.context = inputWrapper.context;
                 this.recordId = inputWrapper.recordId;
                 this.processType = inputWrapper.processType;
@@ -56,10 +59,19 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.address = inputWrapper.addressWrapper.completeAddress;
                 this.signMode = inputWrapper.signMode;
                 this.sendMode = inputWrapper.sendMode;
-                if(this.context.localeCompare('Order') === 0 || this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0){
+                if(inputWrapper.tipoPlico){
+                    this.tipoPlico = inputWrapper.tipoPlico;
+                }
+                if(this.context.localeCompare('Order') === 0 || (this.quoteType != null && this.quoteType != ''  && this.quoteType.localeCompare('Analitico') === 0)){
+                    console.log('Inside if');
                     this.enablePreview = false;
                 }else{
                     this.enablePreview = true;
+                }
+                if(this.context.localeCompare('EC') || this.context.localeCompare('GC')){
+                    this.showAddress = false;
+                }else{
+                    this.showAddress = true;
                 }
                 this.addressWrapper = inputWrapper.addressWrapper;
                 getSignSendMode({
@@ -284,14 +296,18 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
 
     handlePreview(){
         try{
+            
             this.showSpinner = true;
             var formParams = {
-                sendMode : this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value,
-                signMode : this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value,
+                sendMode : this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value,
+                signMode : this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value,
                 telefono : this.template.querySelector("lightning-input[data-id=telefono]").value,      
                 email : this.template.querySelector("lightning-input[data-id=email]").value,      
-                address : this.template.querySelector("lightning-input[data-id=indirizzoRecapito]").value,
-                mode : 'Preview'
+                //address : this.template.querySelector("lightning-input[data-id=indirizzoRecapito]").value,
+                mode : 'Preview',
+                Archiviato : 'N',
+                EstrattoConto:this.documents,
+                TipoPlico:this.tipoPlico
             };
             
             previewDocumentFile({

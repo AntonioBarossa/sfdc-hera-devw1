@@ -71,6 +71,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>phaseAvalaible</name>
+            <value>
+                <elementReference>Get_Input_Case_0.PhaseTypeAvailable__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>phaseType</name>
             <value>
                 <elementReference>Get_Input_Case_0.PhaseTypeRequested__c</elementReference>
@@ -116,6 +122,43 @@
             <name>voltage</name>
             <value>
                 <elementReference>Get_Input_Case_0.VoltageLevelRequested__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>voltageAvailable</name>
+            <value>
+                <elementReference>Get_Input_Case_0.VoltageLevelAvailable__c</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Opzione</name>
+        <label>Predefault_CalcolaOpzione</label>
+        <locationX>1184</locationX>
+        <locationY>3002</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>OptionBlank</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <elementReference>Get_Input_Case_0.Cluster__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>implantType</name>
+            <value>
+                <elementReference>Get_Input_Case_0.ServicePointType__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>powerRequested</name>
+            <value>
+                <elementReference>Get_Input_Case_0.PowerRequested__c</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -225,8 +268,8 @@
     <assignments>
         <name>AssegnaComponenteFissaVariabile</name>
         <label>AssegnaComponenteFissaVariabile</label>
-        <locationX>1053</locationX>
-        <locationY>3326</locationY>
+        <locationX>1101</locationX>
+        <locationY>3324</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.FixedAmount__c</assignToReference>
             <operator>Assign</operator>
@@ -242,7 +285,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case_2</targetReference>
+            <targetReference>Opzione</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -292,6 +335,13 @@
                 <stringValue>No</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.ServicePointType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Input_Case.ServicePoint__r.ImplantType__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Valorizzare_Potenza_Richiesta</targetReference>
         </connector>
@@ -304,6 +354,22 @@
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Amount__c</assignToReference>
             <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Opzione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaOpzione</name>
+        <label>AssegnaOpzione</label>
+        <locationX>1329</locationX>
+        <locationY>3233</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.TensionOption__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Opzione.option</elementReference>
+            </value>
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_2</targetReference>
@@ -344,8 +410,8 @@
     <assignments>
         <name>AssegnaValori_00</name>
         <label>AssegnaValori</label>
-        <locationX>1977</locationX>
-        <locationY>312</locationY>
+        <locationX>1934</locationX>
+        <locationY>309</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1073,7 +1139,7 @@
         </rules>
         <rules>
             <name>Heroku_KO_Esecuzione_Lavori</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Input_Case.Phase__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1142,6 +1208,35 @@
                 <targetReference>Corrispettivo_Placet</targetReference>
             </connector>
             <label>Offerta Placet</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>OptionBlank</name>
+        <label>OptionBlank</label>
+        <locationX>1369</locationX>
+        <locationY>3101</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaOpzione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NotBlank</defaultConnectorLabel>
+        <rules>
+            <name>Blank</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Opzione.option</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Opzione.option</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Case_2</targetReference>
+            </connector>
+            <label>Blank</label>
         </rules>
     </decisions>
     <decisions>
@@ -1714,8 +1809,8 @@
     <recordUpdates>
         <name>Aggiorna_Case_2</name>
         <label>Aggiorna Case</label>
-        <locationX>1263</locationX>
-        <locationY>3307</locationY>
+        <locationX>1678</locationX>
+        <locationY>3277</locationY>
         <connector>
             <targetReference>RiepilogoRapidoScreen</targetReference>
         </connector>
@@ -1761,8 +1856,8 @@
     <recordUpdates>
         <name>AggiornaCase_00</name>
         <label>AggiornaCase</label>
-        <locationX>2100</locationX>
-        <locationY>362</locationY>
+        <locationX>2066</locationX>
+        <locationY>365</locationY>
         <connector>
             <targetReference>LoadingSpinner</targetReference>
         </connector>
@@ -1950,7 +2045,7 @@
     <screens>
         <name>LoadingSpinner</name>
         <label>LoadingSpinner</label>
-        <locationX>2213</locationX>
+        <locationX>2199</locationX>
         <locationY>417</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2154,7 +2249,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Preventivi Riepilogo</stringValue>
+                    <elementReference>ProcessTypeRecapFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>

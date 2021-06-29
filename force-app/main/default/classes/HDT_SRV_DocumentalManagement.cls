@@ -78,7 +78,7 @@ public class HDT_SRV_DocumentalManagement{
 				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response);
 			}
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
-				if(response.responseStatus == 200 || response.responseStatus == 201 ){
+				if(response.responseCode == 200 || response.responseCode == 201 ){
 					HDT_UTL_DocumentalManagement.createDocumentSendTracking(response.deliverPackageResponse.message,response.deliverPackageResponse.requestId, response.deliverPackageResponse.packageIds,processRecord);
 					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response,context);
 				}
@@ -94,9 +94,15 @@ public class HDT_SRV_DocumentalManagement{
 		String mode = (String) formParams.get('mode') != null? (String) formParams.get('mode'):'';
 		String context = (String) formParams.get('Contesto') != null? (String) formParams.get('Contesto'):'';
 		String signMode = (String) formParams.get('signMode') != null? (String) formParams.get('signMode'):'';
+		String pasedContext = '';
 		try{
+			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC')){
+				pasedContext = 'Case';
+			}else {
+				pasedContext=context;
+			}
 			sPackageRequest.requestId = recordId;
-			sPackageRequest.objectName = context;
+			sPackageRequest.objectName = pasedContext;
 			sPackageRequest.objectId = recordId;
 			sPackageRequest.signMode = signMode;
 			sPackageRequest.mode = mode;
@@ -354,7 +360,7 @@ public class HDT_SRV_DocumentalManagement{
 						storno = false;
 					}
 					//TK 633881C: cerchiamo al secondo livello il campo TD_PAREGGIO, se valorizzato con 'VC'
-					String tipoDocPareggioSecLivello = (String)secondoLivello.get('tDPareggio');
+					String tipoDocPareggioSecLivello = (String)secondoLivello.get('tdPareggio');
 					if (String.isNotBlank(tipoDocPareggioSecLivello) && tipoDocPareggioSecLivello == 'VC') {
 						tipoDocPareggio = 'VC';
 					}

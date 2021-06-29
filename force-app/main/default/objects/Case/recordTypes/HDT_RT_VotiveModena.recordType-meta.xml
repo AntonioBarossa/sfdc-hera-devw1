@@ -8244,6 +8244,14 @@
             <fullName>TEL - CLT NON TROVATO</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sollecito Emissione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errata Emissione</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>ReassignmentReason__c</picklist>
@@ -10786,6 +10794,18 @@
         </values>
         <values>
             <fullName>Unificazione%2FSeparazione BP-CA-Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena%2FIntervento Riattivazione luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena%2FNuovo contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena%2FSubentro</fullName>
             <default>false</default>
         </values>
         <values>
