@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CST_OU_ID_SALESFORCE__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>CST_OU_ID_SALESFORCE</description>
+    <externalDeveloperName>CST_OU_ID_SALESFORCE</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>CST_OU_ID_SALESFORCE</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Richieste</relationshipLabel>
+    <relationshipName>SiebelRds</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

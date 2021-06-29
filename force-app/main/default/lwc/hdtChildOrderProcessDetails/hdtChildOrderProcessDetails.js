@@ -57,7 +57,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     ]};
 
     //INIZIO SVILUPPI EVERIS
-    //INIZIO SVILUPPI EVERIS
     @track readingCustomerDate;
     @track disabledReadingDate;
     @track isRetroactive = false;
@@ -94,7 +93,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     });
             }
         }
-        //EVERIS               
+        //EVERIS
         if(event.target.fieldName !== undefined){
             this.sectionDataToSubmit[event.target.fieldName] = event.target.value;
         }
@@ -434,29 +433,29 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             readingDate: this.readingCustomerDate
         }).then(data =>{
             if(this.isVolture){
-            getDates({recordId: orderId})
-                .then(data => {
-                    let retroactiveDate = null;
-                    let effectiveDate = data.EffectiveDate__c;
-                    if(JSON.stringify(data).includes('RetroactiveDate__c')){
-                        retroactiveDate = data.RetroactiveDate__c;
-                    }
-                    this.isRetroactive =  retroactiveDate != null;
-                    this.disabledReadingDate = !this.isRetroactive;
-                    console.log('#isRetroactive -> ' + this.isRetroactive);
-                    console.log('#EffectiveDate -> ' + effectiveDate);
-                    console.log('#RetroactiveDate -> ' + retroactiveDate);
-                    console.log('#DisabledReading -> ' +this.disabledReadingDate);
-                    if(this.isRetroactive){
-                        this.readingCustomerDate = retroactiveDate;
-                    } else {
-                        this.readingCustomerDate = effectiveDate;
-                    }
-                }).catch(error => {
-                    console.log('#ErrorGetRecord -> '+JSON.stringify(error));
-                })
-        }
-                    this.loading = false;
+                getDates({recordId: orderId})
+                    .then(data => {
+                        let retroactiveDate = null;
+                        let effectiveDate = data.EffectiveDate__c;
+                        if(JSON.stringify(data).includes('RetroactiveDate__c')){
+                            retroactiveDate = data.RetroactiveDate__c;
+                        }
+                        this.isRetroactive =  retroactiveDate != null;
+                        this.disabledReadingDate = !this.isRetroactive;
+                        console.log('#isRetroactive -> ' + this.isRetroactive);
+                        console.log('#EffectiveDate -> ' + effectiveDate);
+                        console.log('#RetroactiveDate -> ' + retroactiveDate);
+                        console.log('#DisabledReading -> ' +this.disabledReadingDate);
+                        if(this.isRetroactive){
+                            this.readingCustomerDate = retroactiveDate;
+                        } else {
+                            this.readingCustomerDate = effectiveDate;
+                        }
+                    }).catch(error => {
+                        console.log('#ErrorGetRecord -> '+JSON.stringify(error));
+                    })
+            }
+            this.loading = false;
             //INIZIO SVILUPPI EVERIS
             //LA VARIABILE NEXT INDEX RIPORTA L'INDICE CORRETTO PER ANDARE AVANTI
             let nextIndex = this.availableSteps[currentSectionIndex + 1].step != nextSectionStep
@@ -490,7 +489,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 variant: 'error'
             });
             this.dispatchEvent(toastErrorMessage);
-        
+
         });
     }
 
@@ -522,24 +521,23 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         
         if(currentSectionName === 'dettaglioImpianto'){
 
-
             if(this.template.querySelector("[data-id='SurfaceServed__c']") !== null 
-            && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
-            && this.typeVisibility('gas')
-            && (this.template.querySelector("[data-id='SurfaceServed__c']").value === ''
-                || this.template.querySelector("[data-id='SurfaceServed__c']").value === null)) {
-            this.loading = false;
-                const toastErrorMessage = new ShowToastEvent({
-                    title: 'Errore',
-                    message: 'Popolare il campo Superficie Servita',
-                    variant: 'error',
-                    mode: 'sticky'
-                });
-            this.dispatchEvent(toastErrorMessage);
-            return;
-        }
+                && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
+                && this.typeVisibility('gas')
+                && (this.template.querySelector("[data-id='SurfaceServed__c']").value === ''
+                    || this.template.querySelector("[data-id='SurfaceServed__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Superficie Servita',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
 
-        if(this.template.querySelector("[data-id='WaiverRightAfterthought__c']") !== null 
+            if(this.template.querySelector("[data-id='WaiverRightAfterthought__c']") !== null 
                 && (this.template.querySelector("[data-id='WaiverRightAfterthought__c']").value === ''
                     || this.template.querySelector("[data-id='WaiverRightAfterthought__c']").value === null)) {
                 this.loading = false;
@@ -769,7 +767,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             //console.log('ResultReading -> ' + result);
 
             console.log('isSavedReading--> '+this.isSavedReading);
-
+            
         }
 
         this.updateProcess(currentSectionIndex, nextSectionStep);
@@ -2470,7 +2468,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.handleFields();
 
         // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
-        if((this.selectedProcess === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcess === 'HDT_RT_Voltura' ||this.selectedProcess === 'HDT_RT_Subentro' || this.selectedProcess === 'HDT_RT_AttivazioneConModifica' || this.selectedProcess === 'HDT_RT_SwitchIn' || this.selectedProcess === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcess === 'HDT_RT_TemporaneaNuovaAtt'){
+        if((this.selectedProcess === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcess === 'HDT_RT_Voltura' ||this.selectedProcess === 'HDT_RT_Subentro' || this.selectedProcess === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcess === 'HDT_RT_SwitchIn' && this.order.ProcessType__c != 'Switch in Ripristinatorio') || this.selectedProcess === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcess === 'HDT_RT_TemporaneaNuovaAtt'){
             this.retryEsitiCreditCheck();
         }        
 

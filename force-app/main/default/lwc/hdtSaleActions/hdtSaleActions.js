@@ -77,7 +77,7 @@ export default class hdtSaleActions extends LightningElement {
             this.loading = false;
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
-                message: 'Vendita anullata con successo',
+                message: 'Vendita annullata con successo',
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccessMessage);

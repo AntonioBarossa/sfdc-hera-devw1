@@ -86,6 +86,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         //IsSequanzialized__c
         for (Order newOrder : newOrdersList) {
             for (Order oldOrder : oldOrdersList) {
+
                 if(newOrder.Status == 'In Lavorazione' && newOrder.ProcessType__c != null && (newOrder.ProcessType__c.contains('Switch in') || newOrder.ProcessType__c == 'Cambio Offerta') &&
                     (newOrder.SignedDate__c != oldOrder.SignedDate__c && (newOrder.WizardCompletedDate__c != null || newOrder.WizardCompletedDate__c != oldOrder.WizardCompletedDate__c)) || 
                     ((oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku') || (oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku') || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')) || 
@@ -94,7 +95,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 ){
                     ricalculateDate = true;
                 }
-
+                
                 if(ricalculateDate == true){
                     system.debug('Esecuzione ricalcolo delle date');
                     Order orderToUpdate = new Order();

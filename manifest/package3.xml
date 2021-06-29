@@ -1,49 +1,79 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>Account_Service_Console</members>
+        <members>Home_Page_Hera_Service_Console</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>Product2.SBQQ__SearchFilters</members>
+        <members>Product2.SBQQ__SearchResults</members>
+        <members>SBQQ__ProductOption__c.VAS_Fatturabili</members>
+        <members>SBQQ__ProductOption__c.VAS_Servizio</members>
+        <members>SBQQ__QuoteLine__c.SBQQ__LineEditor</members>
+        <name>FieldSet</name>
+    </types>
+    <types>
+        <members>HDT_CP_Archive</members>
+        <name>CustomPermission</name>
+    </types>
+    <types>
+        <members>Case.HDT_RT_VerificaDatiAlDl</members>
+        <members>Case.HDT_RT_VotiveModena</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>Account-CPQ Account Layout Service Console</members>
         <members>Case-HDT_AllineamentoAnagrafica</members>
+        <members>Case-HDT_PagamentiAltriProcessi</members>
+        <members>Case-HDT_PianoRateizzazione</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_FUBjobsManagement</members>
+        <members>HDT_Archive</members>
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_BA_OldDraftSales</members>
-        <members>HDT_BA_PostSalesMasterBatch</members>
-        <members>HDT_BA_PraxidiaFront</members>
-        <members>HDT_BA_PraxidiaReclami</members>
-        <members>HDT_QR_Case</members>
-        <members>HDT_QR_Contact</members>
-        <members>HDT_QR_Order</members>
-        <members>HDT_QR_PostSalesMasterBatch</members>
-        <members>HDT_SCH_PostSalesMasterBatch</members>
-        <members>HDT_SCH_PraxidiaFront</members>
-        <members>HDT_SCH_PraxidiaReclami</members>
-        <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_TRH_Contact</members>
-        <members>HDT_TRH_Lead</members>
-        <members>HDT_UTL_ActivityCustom</members>
-        <members>HDT_UTL_CompanyOwner</members>
-        <members>HDT_UTL_ContactPoint</members>
-        <members>HDT_UTL_GestionePrivacy</members>
-        <members>HDT_UTL_Individual</members>
-        <members>HDT_WRP_CampaignPraxidia</members>
+        <members>HDT_QR_InstallmentPlans</members>
+        <members>HDT_SRV_InstallmentPlans</members>
+        <members>HDT_UTL_CaseValidations</members>
+        <members>HDT_UTL_CreateGenericCase</members>
+        <members>HDT_UTL_SearchPlug</members>
+        <members>HDT_UTL_ServicePoint</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Account.BillingAddressFormula__c</members>
-        <members>BillingProfile__c.InvoicingAddressFormula__c</members>
-        <members>ServicePoint__c.SupplyAddress__c</members>
+        <members>SBQQ__CustomAction__c.SBQQ__Label__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneFatturazione</members>
-        <name>Flow</name>
+        <members>hdtDisclaimerAccountNoCustomPermissionArchive</members>
+        <members>hdtGenericAddressChooserFlow</members>
+        <members>hdtRecordEditFormFlow</members>
+        <members>hdtTechnicalOfferEditForm</members>
+        <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>wrts_prcgvr__Activity__c</members>
-        <name>SharingRules</name>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>HDT_AccountDataEnrichment.raiFee</members>
+        <members>HDT_UserInputFlow.Pagamenti_Piano_Rateizzazione</members>
+        <members>HDT_UserInputFlow.Preventivi_Variazione_Potenza</members>
+        <members>HDT_UserInputFlow.Reclami_Dati_Tecnici_M01</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>HDT_FL_GestionePagamenti_PianoRateizzazione</members>
+        <members>HDT_FL_GestioneReclami_VerificheDatiAlDl</members>
+        <members>HDT_FL_Gestione_Modifiche_Anagrafiche_Modifica_Privacy</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

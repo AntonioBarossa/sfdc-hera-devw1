@@ -29,7 +29,6 @@ import SupplyIsAddressVerified from '@salesforce/schema/Case.SupplyIsAddressVeri
 import SupplyPlace from '@salesforce/schema/Case.SupplyPlace__c';
 import SupplyProvince from '@salesforce/schema/Case.SupplyProvince__c';
 import SupplyCountry from '@salesforce/schema/Case.SupplyCountry__c';
-import SupplyStreetToponym from '@salesforce/schema/Case.SupplyStreetToponym__c';
 import SupplyStreetName from '@salesforce/schema/Case.SupplyStreetName__c';
 import ShipmentAddressAssign from '@salesforce/schema/Case.ShipmentAddressAssign__c';
 // INDIRIZZO DI RESIDENZA
@@ -71,7 +70,6 @@ const FIELDS = ['Case.InvoicingPostalCode__c',
 				'Case.SupplyPlace__c',
 				'Case.SupplyProvince__c',
 				'Case.SupplyCountry__c',
-				'Case.SupplyStreetToponym__c',
 				'Case.SupplyStreetName__c',
                 'Case.AddressFormula__c',
                 'Case.ShipmentAddressAssign__c',

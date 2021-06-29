@@ -7,10 +7,10 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>PARTY_ID</label>
-    <length>128</length>
+    <label>Cliente</label>
+    <length>15</length>
     <referenceTo>SiebelCustomer__x</referenceTo>
-    <relationshipLabel>SiebelContact</relationshipLabel>
+    <relationshipLabel>Contatti</relationshipLabel>
     <relationshipName>SiebelContact</relationshipName>
     <type>ExternalLookup</type>
 </CustomField>
