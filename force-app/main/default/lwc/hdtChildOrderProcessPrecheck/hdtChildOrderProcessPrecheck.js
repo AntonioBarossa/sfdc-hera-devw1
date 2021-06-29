@@ -306,7 +306,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     getRequest(){ 
-        var typeOfCommodity = null;
+        var typeOfCommodity = 'ENERGIAELETTRICA';
         var companyName = null;
         var secondaryCustomerId = null;
         var bpType = null;
@@ -316,11 +316,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         console.log("RecordType: " + this.order.RecordType.DeveloperName);
         console.log("typeOfCommodity: " + typeOfCommodity);
         var fiscalData = null;
-        if(this.order.ServicePoint__r.CommoditySector__c == 'Energia Elettrica' || this.selectedProcessObject.recordType === 'HDT_RT_VAS'){
-            typeOfCommodity = 'ENERGIAELETTRICA';
-        }
-        if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
-            typeOfCommodity = 'GAS';
+
+        if(this.selectedProcess !== 'HDT_RT_VAS'){
+            if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
+                typeOfCommodity = 'GAS';
+            }
         }
         if(this.order.SalesCompany__c !== undefined){
             companyName = this.order.SalesCompany__c;
