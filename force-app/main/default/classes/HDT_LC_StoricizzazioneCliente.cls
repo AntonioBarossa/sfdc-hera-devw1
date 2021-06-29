@@ -61,6 +61,10 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
     public static List<String> getMarcatureFromRole(){
         String uRoleId = UserInfo.getUserRoleId();
 
+        if (!Schema.sObjectType.UserRole.fields.DeveloperName.isAccessible()){
+            return null;
+        }
+
         String roleDevName = [SELECT DeveloperName FROM UserRole  WHERE Id = :uRoleId LIMIT 1].DeveloperName;
         
         return mappingRoleToMarcatura.get(roleDevName);
