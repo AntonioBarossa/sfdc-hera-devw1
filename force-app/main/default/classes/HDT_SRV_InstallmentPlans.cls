@@ -206,6 +206,40 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         return sapCode;
     }
 
+    /* Returns either a RentProcessRule or a Map */
+    public HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs evaluateRuleList(List<RentProcessRule__c> ruleList, Map<String,Object> criteriaMap){
+
+        RentProcessRule__c foundRule = new RentProcessRule__c();
+        HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs output = new HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs();
+        String errorMessage = '';
+        String fineTuningField;
+
+        for(RentProcessRule__c rule : ruleList){
+            Map<String,Object> notFoundMap = new Map<String,Object>();
+            for(String fieldName : criteriaMap.keySet()){
+                if(fieldName == 'SuspensionInThePastTwelveMonths__c'){
+                    fineTuningField = 'SuspensionInPastTwelveMonths__c';
+                }else{
+                    fineTuningField = fieldName;
+                }
+                if(!(rule.get(fineTuningField) == criteriaMap.get(fieldName))){
+                    notFoundMap.put(fieldName, criteriaMap.get(fieldName));
+                    String fieldLabel = Case.SObjectType.getDescribe().fields.getMap().get(fieldName).getDescribe().getLabel();
+                    errorMessage += '\t' + fieldLabel + ': ' + criteriaMap.get(fieldName) + '(prova invece: '+ rule.get(fineTuningField) + ')\n';
+                }
+            }
+            if(notFoundMap.isEmpty()){
+                foundRule = rule;
+                break;
+            }
+        }
+
+        output.rentRule = foundRule;
+        output.errorMessage = errorMessage;
+        
+        return output;
+    }
+
 
     public class HDT_UTL_FlowInputs{
 
