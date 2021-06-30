@@ -85,7 +85,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.Disconnectable__c = servicePoint.Disconnectable__c != null ? servicePoint.Disconnectable__c : 'Si';
         orderToUpdate.DisconnectibilityType__c = servicePoint.DisconnectibilityType__c;
         orderToUpdate.ConnectionType__c = 'Permanente';
-        orderToUpdate.AtecoCode__c = '999999';
         orderToUpdate.InstanceSelfCertification__c = 'SI';
         orderToUpdate.ConnectionMandate__c = 'SI';
         orderToUpdate.SelfCertificationConnection__c = '02';
@@ -125,6 +124,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CustomerLastName__c = account.LastName__c;
 
             orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
+
+            orderToUpdate.AtecoCode__c = '999999';
         }
 
         orderToUpdate.CustomerFiscalCode__c = account.FiscalCode__c;
@@ -147,8 +148,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignSaleFields(Order orderToUpdate, String saleId){
 
-        saleSrv.checkReadAccess('SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone');
-        Sale__c sale = saleQr.getRecordById(saleId, 'SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone');
+        saleSrv.checkReadAccess('UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone');
+        Sale__c sale = saleQr.getRecordById(saleId, 'UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone');
 
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
@@ -156,6 +157,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.Contact__c = sale.SalesContact__c;
         orderToUpdate.SalesContact__c = sale.SalesContact__c;
         orderToUpdate.CommentForDL__c = sale.SalesContact__c != null ? (sale.SalesContact__r.Phone != null ? sale.SalesContact__r.Phone : sale.SalesContact__r.MobilePhone) : null;
+        orderToUpdate.LowerChannelAgency__c = sale.LowerChannelAgency__c;
+        orderToUpdate.UpperChannelAgency__c = sale.UpperChannelAgency__c;
     }
 
     private static void alignPrimaryProduct(Order orderToUpdate, String quoteId) {
