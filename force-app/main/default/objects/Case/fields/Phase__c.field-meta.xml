@@ -713,6 +713,21 @@
                 <label>Risposta Parere Ricevuta</label>
             </value>
             <value>
+                <fullName>Pratica In Attesa</fullName>
+                <default>false</default>
+                <label>Pratica In Attesa</label>
+            </value>
+            <value>
+                <fullName>Attesa Monitoraggio</fullName>
+                <default>false</default>
+                <label>Attesa Monitoraggio</label>
+            </value>
+            <value>
+                <fullName>Preventivo rifiutato – Amm OK</fullName>
+                <default>false</default>
+                <label>Preventivo rifiutato – Amm OK</label>
+            </value>
+            <value>
                 <fullName>Presa in Carico KO</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -741,16 +756,6 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Risposta non Ricevuta</label>
-            </value>
-            <value>
-                <fullName>Pratica In Attesa</fullName>
-                <default>false</default>
-                <label>Pratica In Attesa</label>
-            </value>
-            <value>
-                <fullName>Attesa Monitoraggio</fullName>
-                <default>false</default>
-                <label>Attesa Monitoraggio</label>
             </value>
         </valueSetDefinition>
     </valueSet>
