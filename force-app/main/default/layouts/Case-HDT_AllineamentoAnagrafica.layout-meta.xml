@@ -18,10 +18,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>BillingStreetToponym__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>BillingProvince__c</field>
             </layoutItems>
             <layoutItems>
@@ -98,10 +94,6 @@
         <editHeading>true</editHeading>
         <label>Dati Esazione</label>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>InvoicingStreetToponym__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>InvoicingProvince__c</field>
