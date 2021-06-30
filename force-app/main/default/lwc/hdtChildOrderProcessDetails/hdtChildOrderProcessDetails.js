@@ -1158,6 +1158,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 hasCalculateButton: this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica',
+                hasCodiceAtecoButton: this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business' || true,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
@@ -2535,5 +2536,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             })
             .catch(error=>{console.log(error)})
         }, 3000)
+    }
+
+    handleUpdateCodAtecoEvent(event){
+        this.template.querySelector("[data-id='AtecoCode__c']").value = event.detail;
     }
 }
