@@ -9,6 +9,7 @@ const timeLimit2y = 63072000000;//2years
 export default class HdtJoinFilterModal extends LightningElement {
 
     @api tabCode;
+    @api recordId;
     @track filterObject = filterObject;
     @track item = {
         selectedId: '',
@@ -37,10 +38,13 @@ export default class HdtJoinFilterModal extends LightningElement {
 
     timeLimit = 0;
     timeDiff = 0;
+    filter;
 
     connectedCallback(){
         
         console.log('>>>>>> join filter modal > ' + this.tabCode);
+
+        this.filter = '(Account__c = \'' + this.recordId + '\' AND ContractAccountCode__c != null)';
 
         switch (this.tabCode) {
             case 'EC':
