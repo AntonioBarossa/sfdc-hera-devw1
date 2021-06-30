@@ -192,8 +192,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String expectedExec = reqWrp.requestMap.get('TEMP_ES_PREV');
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         //CHECK CROSS MINIMUM FIELD
-        if(String.isBlank('method')) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
+        if(String.isBlank(method)) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
         
+        if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita')){
+            //gestione scarti
+            return caseUpdate;
+        }
         //INIT VARIABLE FOR NOTIFICATION ON CASE
         if(method.equalsIgnoreCase('esito_intermedio') || method.equalsIgnoreCase('esito_finale') || method.equalsIgnoreCase('AddAttivita')){
             if(String.isBlank(recordId) && String.isBlank(caseNumber)) throw new HDT_UTL_RichPassException('Required Field Missing: RecordId OR CaseNumber');
