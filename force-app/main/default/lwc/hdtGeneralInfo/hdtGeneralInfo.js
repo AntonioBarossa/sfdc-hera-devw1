@@ -76,7 +76,6 @@ export default class HdtGeneralInfo extends LightningElement {
         this.disabledInput = !this.disabledInput;
         this.disabledNext = !this.disabledNext;
         this.hiddenEdit = !this.hiddenEdit;
-        this.disabledAgency = this.disabledAgency == false ? true : !this.disabledAgency;
         this.disabledSelezioneAgenzia = !this.disabledSelezioneAgenzia;
     }
 
@@ -245,11 +244,13 @@ export default class HdtGeneralInfo extends LightningElement {
 
         this.updateSaleRecord(this.dataToSubmit);
         this.toggle();
+        this.disabledAgency = true;
     }
 
     handleEdit() {
         this.updateSaleRecord({ Id: this.saleRecord.Id, CurrentStep__c: this.currentStep });
         this.toggle();
+        this.disabledAgency = false;
     }
 
     connectedCallback() {

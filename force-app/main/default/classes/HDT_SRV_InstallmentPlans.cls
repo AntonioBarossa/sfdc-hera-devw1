@@ -70,6 +70,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         Decimal documentTotalAmount = 0.0;
         Decimal totalResidue = installmentsQr.getCaseById(recordId).TotalResidue__c;
         Decimal amountInstallment;
+        String customerAssisted;
 
         for(DocumentSelected__c document : raiFeeDocuments){
             totalRaiFeeResidual += document.TvFeeResidual__c;
@@ -86,6 +87,11 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         currentCase.AmountToPayInInstallments__c = amountInstallment - totalRaiFeeResidual;
         currentCase.InstallmentAmount__c = amountInstallment;
 
+        //Set CustomerAssisted
+        customerAssisted = installmentsQr.getCustomerAssistedKpi(accountId);
+        if(customerAssisted != null){
+            currentCase.CutomerAssisted__c = customerAssisted.equalsIgnoreCase('Si');
+        }
 
         HDT_UTL_DatabaseService.updateSObject(currentCase);
 

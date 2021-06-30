@@ -23,6 +23,10 @@
         //variabile per innesco da campagne
         var campaignId = myPageRef.state.c__campaignId;
 
+        // id del lead oggetto del process.
+        var leadId = myPageRef.state.c__leadId;
+
+
         console.log('# context -> '                 + context);
         console.log('# accId -> '                   + accId);
         console.log('# caseId -> '                  + caseId);
@@ -35,6 +39,7 @@
         console.log('# sObjectRecordToCancell -> '  + sObjectRecordToCancell);
         console.log('# parentRecordId --> '         + parentRecordId);
         console.log('# campaignId -> '              + campaignId)
+        console.log('# leadId -> '                  + leadId);
 
                 
         var workspaceAPI = component.find("workspace");
@@ -82,7 +87,8 @@
                         c__createDocuments: createDocuments,
                         c__catalogId: serviceCatalogId,
                         c__parentRecordId: parentRecordId,
-                        c__campaignId: campaignId
+                        c__campaignId: campaignId,
+                        c__leadId: leadId
                     }
                 },
                 focus: true

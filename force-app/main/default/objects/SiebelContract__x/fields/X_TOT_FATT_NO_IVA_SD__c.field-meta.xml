@@ -8,7 +8,7 @@
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Totale fatturato esente IVA SD + IS-U</label>
-    <precision>10</precision>
+    <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
     <type>Number</type>

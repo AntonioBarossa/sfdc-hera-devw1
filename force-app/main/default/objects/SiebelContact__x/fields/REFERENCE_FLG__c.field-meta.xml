@@ -7,8 +7,8 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>REFERENCE_FLG</label>
-    <length>128</length>
+    <label>Flag di Referenza</label>
+    <length>1</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
