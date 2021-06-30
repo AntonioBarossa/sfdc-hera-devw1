@@ -311,6 +311,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         for (var key in this.interObj) {
             this.interObj[key] = '';
         }
+        this.firstLevelFilterObj = {};
         this.resetFile();
         this.resetIdList();
         this.refreshSortButton();
@@ -613,6 +614,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log(JSON.stringify(this.techObj));
         console.log('--------------------------');
 
+        this.firstLevelFilterObj = {};
+
         callMulesoft({techObj: JSON.stringify(this.techObj), requestObj: requestObj})
             .then(result => {
                 console.log('# Mulesoft result #');
@@ -870,6 +873,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
         var interObj = JSON.parse(event.detail.value);
         this.firstLevelFilterObj = interObj;
+        console.log('interObj ' + event.detail.value);
 
         try {
 
@@ -1012,14 +1016,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     setButtonForFilterApplied(disable){
         this.template.querySelectorAll('button').forEach(c => {
-            //if(c.name === 'interrogation' || c.name === 'joinFilter'){
-            if(c.name === 'interrogation'){
-                if(disable){
-                    c.setAttribute('disabled', '');
-                } else {
-                    c.removeAttribute('disabled');
-                }
-            }
+            //if(c.name === 'interrogation'){
+            //    if(disable){
+            //        c.setAttribute('disabled', '');
+            //    } else {
+            //        c.removeAttribute('disabled');
+            //    }
+            //}
 
             if(c.name === 'refreshRecords'){
                 if(disable){
@@ -1031,18 +1034,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
         });
     }
-
-    //setButtonForFilterApplied(remove){
-    //    this.template.querySelectorAll('button').forEach(c => {
-    //        if(c.name === 'interrogation' || c.name === 'joinFilter'){
-    //            if(remove){
-    //                c.setAttribute('disabled', '');
-    //            } else {
-    //                c.removeAttribute('disabled');
-    //            }
-    //        }
-    //    });
-    //}
 
     refreshSortButton(){
         this.template.querySelectorAll('lightning-button-icon').forEach((butIco) => {
@@ -1212,7 +1203,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             listToPrint.push(r);
         });
         this.documents = JSON.stringify(listToPrint);
-        console.log('documents ' + this.documents);
+        //console.log('documents ' + this.documents);
         this.showPrintModal = true;
         //this.sendToApex();
         listToPrint.splice(0, listToPrint.length);

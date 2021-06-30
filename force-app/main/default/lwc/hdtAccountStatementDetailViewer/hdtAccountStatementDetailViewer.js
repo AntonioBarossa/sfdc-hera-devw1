@@ -15,6 +15,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     @track selectedMenuItem;
     @track filterApplied = false;
     @track buttonList;
+    @track firstLevelFilterObj = {};
     showButton = false;
     defaultSortDirection = 'asc';
     sortDirection = 'asc';
@@ -27,7 +28,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         console.log('# accountdetails #');
         console.log('# filterApplied: ' + this.filterApplied);
 
-        if(this.filterApplied){
+        if(this.filterApplied && this.bShowModal === false){
             //this.innerFilterMethod();
             this.applyInterrogation(this.staticObj);
         }
@@ -141,7 +142,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     }
 
     closeModal() {
-        console.log('# closeModal #');
+        console.log('# closeModal DetailViewer #');
         this.bShowModal = false;
     }
 
@@ -193,11 +194,12 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         try {
             this.filterApplied = false;
             this.filterString = '';
+            this.firstLevelFilterObj = {};
 
             for (var key in this.filterObject) {
                 this.filterObject[key] = '';
             }
-            this.setButtonForFilterApplied(false);
+            //this.setButtonForFilterApplied(false);
 
             const removeFilter = new CustomEvent("removefilter", {
                 detail:  {filter: 'off'}
@@ -343,6 +345,8 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     generateFilterString(){
         try {
 
+            this.filterString = '';
+
             for(var i in this.staticObj){
                 this.filterString += i;
                 this.filterString += ' ';
@@ -361,6 +365,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         console.log('# applyInterFromChild #');
 
         this.staticObj = JSON.parse(event.detail.value);
+        this.firstLevelFilterObj = this.staticObj;
 
         try {
 
@@ -409,7 +414,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
             dataToFilter = this.filterMethod(dataToFilter, currentFilter, columnTypeMap, contoContrArray);
 
-            this.setButtonForFilterApplied(true);
+            //this.setButtonForFilterApplied(true);
             this.accountdetails = dataToFilter;
             this.filterApplied = true;
             this.closeModal();
