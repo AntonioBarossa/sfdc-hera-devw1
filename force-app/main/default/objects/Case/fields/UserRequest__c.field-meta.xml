@@ -2,7 +2,11 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>UserRequest__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(NOT(ISBLANK(TEXT(ComplexCategory__c))), &quot;Complessa&quot;, &quot;Semplice&quot;)</formula>
+    <formula>IF(
+				OR(NOT(ISBLANK(TEXT(ComplexCategory__c))),
+						 PaymentDetails__c = &quot;Pratica Riclassificata&quot;) 
+				, &quot;Complessa&quot;
+				, &quot;Semplice&quot;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Richiesta Utente</label>
     <required>false</required>
