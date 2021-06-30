@@ -54,6 +54,7 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		String rangePr = '';
 		String rangePc = '';
 		String voltagePhase = '';
+		String connectionTypeCondition = '';
 		if(powerRequested != null && powerAvailable != null &&  powerRequested * (1.1) < powerAvailable){
 			powerAdjustment = 'N';
 		}
@@ -68,8 +69,17 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		}
 		rangePr = getRangeValue(powerRequested);
 		rangePc = getRangeValue(powerCommitted);
-		if(String.isNotBlank(phaseAvaillable) && String.isNotBlank(voltageAvilable)){
-			voltagePhase = voltageAvilable + '_' + phaseAvaillable.substring(0,1);
+		if(String.isNotBlank(voltageAvilable)){
+			if(String.isNotBlank(phaseAvaillable)){
+				voltagePhase = voltageAvilable + '_' + phaseAvaillable.substring(0,1);
+			}else {
+				voltagePhase = voltageAvilable;
+			}
+		}
+		if(operationType.equalsIgnoreCase('Variazione Potenza') && String.isNotBlank(connectionType) && connectionType.equalsIgnoreCase('Temporanea')){
+			connectionTypeCondition = 'AND ConnectionType__c = \'' + connectionType + '\' ';
+		}else {
+			connectionTypeCondition = 'AND (ConnectionType__c = \'' + connectionType + '\' OR ConnectionType__c = null) ';
 		}
 		String conditions = '(AdegPotDisp__c =\'' + powerAdjustment + '\' OR AdegPotDisp__c = null) '
 		+'AND (Caliber__c = \''+ caliber + '\' OR Caliber__c = null) ' 
@@ -79,7 +89,7 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		+'AND (PowerRequired__c = \'' + rangePr + '\' OR PowerRequired__c = null) '
 		+'AND (GdmMovement__c = \'' + displacementDistance + '\' or GdmMovement__c = null) '
 		+'AND (VoltageRequired__c = \'' + voltage + '\' OR VoltageRequired__c = null) '
-		+'AND (ConnectionType__c = \'' + connectionType + '\' OR ConnectionType__c = null) '
+		+connectionTypeCondition
 		+'AND Operation_type__c = \'' + operationType + '\' '
 		+'AND Commodity__c = \'' + commodity + '\' '
 		+'AND (EnergyUseType__c = \'' + energyUseType + '\' OR EnergyUseType__c = null) '
