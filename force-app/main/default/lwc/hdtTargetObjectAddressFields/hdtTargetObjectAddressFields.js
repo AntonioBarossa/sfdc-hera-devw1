@@ -156,7 +156,7 @@ handleAddressFromAccount()
 			this.estensCivico=data['Est.Civico'];
             this.codComuneSAP='';
             this.codStradarioSAP='';
-            //this.flagVerificato=false;
+            this.flagVerificato=true;
 
             this.theRecord['Via']= data['Via'];
             this.theRecord['Civico']= data['Civico'];
@@ -167,7 +167,8 @@ handleAddressFromAccount()
             this.theRecord['Estens.Civico']= data['Est.Civico'];
             this.theRecord['Codice Comune SAP']= '';
             this.theRecord['Codice Via Stradario SAP']= '';
-            //this.theRecord['Flag Verificato']= false;
+            this.theRecord['Flag Verificato']= true;
+            
 
         }
     });
@@ -244,7 +245,9 @@ handleAddressValuesIfSap(servicePointRetrievedData){
             break;
 
         }
-
+        this.flagVerificato=true;
+        this.theRecord['Flag Verificato'] = this.FlagVerificato;
+        
     });
     console.log('handleAddressValues END ');
 }
@@ -353,6 +356,8 @@ handleAddressValuesIfSap(servicePointRetrievedData){
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         console.log('rowToSend ******' + JSON.stringify(this.rowToSend));
         this.preloading = false;
+        this.flagVerificato=true;
+        this.theRecord['Flag Verificato']= true;
         console.log('getSelectedServicePoint END');
     }
     
@@ -366,6 +371,8 @@ handleAddressValuesIfSap(servicePointRetrievedData){
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         console.log('rowToSend ******' + JSON.stringify(this.rowToSend));
         this.preloading = false;
+        this.flagVerificato=true;
+        this.theRecord['Flag Verificato']= true;
         console.log('getSelectedAddress END');
     }
 
