@@ -20,6 +20,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
                 'PhaseStory__c', 
                 'Status',
                 'Cluster__c',
+                'DistributorNote__c',
                 'Type',
                 'Subprocess__c',
                 'RecordTypeId'
