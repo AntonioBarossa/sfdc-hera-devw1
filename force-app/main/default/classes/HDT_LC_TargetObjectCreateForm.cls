@@ -22,6 +22,9 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     @AuraEnabled
     public static ServicePoint__c createServicePoint(ServicePoint__c servicePoint) {
         system.debug('HDT_LC_TargetObjectCreateForm createServicePoint ' + servicePoint );
+        if(servicePoint.MeterStatus__c == 'Bozza'){
+            servicePoint.Account__c=null;
+        }
         return serviceSp.createRecord(servicePoint);
 
     }
