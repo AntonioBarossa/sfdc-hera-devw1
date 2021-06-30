@@ -4248,11 +4248,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>AssignmentRule__c.QueueSize__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>AssignmentRule__c.QuoteType__c</field>
         <readable>false</readable>
     </fieldPermissions>

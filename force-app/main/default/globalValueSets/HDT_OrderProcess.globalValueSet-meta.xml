@@ -135,7 +135,7 @@
         <default>false</default>
         <label>Cambio Uso Tecnico</label>
     </customValue>
-    <description>Lista Processi.</description>
+    <description>Lista Processi Ordine</description>
     <masterLabel>Processo Ordine</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
