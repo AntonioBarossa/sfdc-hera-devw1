@@ -2018,7 +2018,7 @@
         </values>
         <values>
             <fullName>Bozza</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Bozza Annullata</fullName>
@@ -2026,6 +2026,10 @@
         </values>
         <values>
             <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2394,6 +2398,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Hera Comm Marche</fullName>
             <default>false</default>
         </values>
@@ -2403,10 +2411,6 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
     </picklistValues>

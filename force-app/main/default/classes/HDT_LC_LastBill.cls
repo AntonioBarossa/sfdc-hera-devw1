@@ -108,7 +108,7 @@ public with sharing class HDT_LC_LastBill {
                 Double residuo = 0.0;
                 residuo = Double.valueOf(singleObjMap.get('residuo'));
                 result.put('outcome', 'OK'); 
-                result.put('amount', (String) singleObjMap.get('importo')); 
+                result.put('amount', (String) singleObjMap.get('totaleCopertina')); 
                 result.put('billNumber', (String) singleObjMap.get('numeroFattura'));
                 result.put('expiredDate', (String) singleObjMap.get('dataScadenza'));
                 //se residuo è 0 pagato

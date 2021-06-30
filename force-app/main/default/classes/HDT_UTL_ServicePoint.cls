@@ -232,9 +232,10 @@ public with sharing class HDT_UTL_ServicePoint {
 				if(mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))){
 					spNew.SupplyStreet__c  = mapRes.get('VIA');
 				}
-				if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
-					spNew.SupplyStreetToponym__c  = mapRes.get('TIPOVIA');
-				}
+                // Andrei Necsulescu 28/06/2021 - The code was commented as the SupplyStreetToponym__c needed to be deleted. We didn't delete the piece of code outright as we don't know if this string needs to be moved to another field.
+				// if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
+				// 	spNew.SupplyStreetToponym__c  = mapRes.get('TIPOVIA');
+				// }
 				if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
 					spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
 				}

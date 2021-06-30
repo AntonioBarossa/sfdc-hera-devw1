@@ -396,6 +396,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.AgencyChannel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.AnnualRevenue</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1397,6 +1402,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AlertConfiguration__c.AlertType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AlertConfiguration__c.BillSendingMethod__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5883,11 +5893,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.SupplyStreetNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.SupplyStreetToponym__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22832,11 +22837,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.SupplyStreetNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.SupplyStreetToponym__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
