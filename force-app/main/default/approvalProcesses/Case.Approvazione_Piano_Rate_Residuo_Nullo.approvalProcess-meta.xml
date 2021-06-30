@@ -49,7 +49,7 @@
         </criteriaItems>
         <criteriaItems>
             <field>Case.TotalResidue__c</field>
-            <operation>notEqual</operation>
+            <operation>equals</operation>
             <value>0</value>
         </criteriaItems>
     </entryCriteria>
@@ -67,8 +67,8 @@
         </action>
     </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
-    <label>Approvazione Piano Rate</label>
-    <processOrder>1</processOrder>
+    <label>Approvazione Piano Rate (Residuo 0)</label>
+    <processOrder>2</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

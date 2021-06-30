@@ -580,7 +580,7 @@
         <defaultConnectorLabel>Non Da Approvare</defaultConnectorLabel>
         <rules>
             <name>Da_Approvare</name>
-            <conditionLogic>((2 AND 4) OR 1) AND 3</conditionLogic>
+            <conditionLogic>(1 OR 3) AND 2</conditionLogic>
             <conditions>
                 <leftValueReference>InterrogaRegoleRateizzazione.ApprovalProcess__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -593,13 +593,6 @@
                 <operator>WasSet</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Case.TotalResidue__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <conditions>
