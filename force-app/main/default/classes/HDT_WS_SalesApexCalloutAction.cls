@@ -119,13 +119,13 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             ord.Description = fieldValueResponse.get('ANNOTAZIONI');
 
-                                            if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
-                                                && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                                    || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                                    || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                            )){
-                                                ord.TecnicalPhase__c = 'Annullato';
-                                            }
+                                            // if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
+                                            //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                            //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                            //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                            // )){
+                                            //     ord.TecnicalPhase__c = 'Annullato';
+                                            // }
                                         }
                                         when 'Ammissibilità OK' {
                                             ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
@@ -141,13 +141,13 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                                 ord.EstimateAmount__c = Decimal.valueOf(fieldValueResponse.get('IMP_PREV_DIST'));
                                             }
 
-                                            if(ord.CausalCode__c == '034' 
-                                                && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                                    || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                                    || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                            )){
-                                                ord.TecnicalPhase__c = 'Annullato';
-                                            }
+                                            // if(ord.CausalCode__c == '034' 
+                                            //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                            //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                            //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                            // )){
+                                            //     ord.TecnicalPhase__c = 'Annullato';
+                                            // }
                                         }
                                         when 'Esito KO da DL' {
                                             ord.ReasonDL__c = fieldValueResponse.get('TESTO_ERRR');

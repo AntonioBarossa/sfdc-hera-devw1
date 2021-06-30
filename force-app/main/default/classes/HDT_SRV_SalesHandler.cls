@@ -84,13 +84,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.Description = mapRequestFields.get('ANNOTAZIONI');
 
-                                if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
-                                    && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                        || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                        || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                )){
-                                    ord.TecnicalPhase__c = 'Annullato';
-                                }
+                                // if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
+                                //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                // )){
+                                //     ord.TecnicalPhase__c = 'Annullato';
+                                // }
                             }
                             when 'Ammissibilità OK' {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
@@ -107,13 +107,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
                                 }
 
-                                if(ord.CausalCode__c == '034' 
-                                    && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                        || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                        || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                )){
-                                    ord.TecnicalPhase__c = 'Annullato';
-                                }
+                                // if(ord.CausalCode__c == '034' 
+                                //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                // )){
+                                //     ord.TecnicalPhase__c = 'Annullato';
+                                // }
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
