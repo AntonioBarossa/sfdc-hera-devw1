@@ -3,6 +3,13 @@ class Util {
 		this.mapDelegated = {};
 		this.mapInteractions = {};
 	}
+	handleEventEstablished(message) {
+		if(message.attachdata.sf_activity_id) {
+			this.handleOperatorSwitch(message);
+		} else {
+			this.createActivity(message);
+		}
+	}
 	createActivity(message) {
 		console.log("### iwsutil.createActivity() | MESSAGE: " + JSON.stringify(message));
 		ConnectorEntityController.createActivity(JSON.stringify(message), (result, req) => {

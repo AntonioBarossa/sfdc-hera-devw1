@@ -14,6 +14,78 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>HDT_SR_ActivityCallOutboundHERACOMM</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>HDT_SR_ActivityCallOutboundHERACOMM</label>
+        <sharedTo>
+            <role>HDT_FrontOffice_HERA_COMM</role>
+        </sharedTo>
+        <booleanFilter>1 OR 2 OR 3</booleanFilter>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Chiamata</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>HC Point</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Sportello</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>HDT_SR_ActivityCallOutboundAAAEBT</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>HDT_SR_ActivityCallOutboundAAAEBT</label>
+        <sharedTo>
+            <role>HDT_FrontOffice_AAAEBT</role>
+        </sharedTo>
+        <booleanFilter>1 OR 2 OR 3</booleanFilter>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Chiamata</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>HC Point</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Sportello</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>HDT_SR_ActivityCallOutboundMMS</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>HDT_SR_ActivityCallOutboundMMS</label>
+        <sharedTo>
+            <role>HDT_FrontOffice_MMS</role>
+        </sharedTo>
+        <booleanFilter>1 OR 2 OR 3</booleanFilter>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Chiamata</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>HC Point</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Sportello</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityHERACOMM</fullName>
         <accessLevel>Edit</accessLevel>
         <label>HDT_SR_ActivityHERACOMM</label>

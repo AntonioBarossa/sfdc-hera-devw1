@@ -42,7 +42,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     totAmountStored = 0;
     totAmount = 0;
     checkboxCount = 0;
-    
+    @track showPrintModal = false;
     //error;
     //showAccountData = true;
     @track modalObj = {
@@ -81,6 +81,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     showFilters2 = false;
     filterType;
     billListHeader;
+    @track context;
+    @track tipoPlico;
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -483,6 +485,20 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.backendCall(event.target.name, JSON.stringify({numeroFattura: nf}));
         //this.focusOnButton(event.target.name);
 
+    }
+    handleClosePrintModal(event){
+        this.showPrintModal = false;
+    }
+    printEstrattoConto(){
+        this.context = 'EC';
+        this.tipoPlico = 'Estratto Conto';
+        this.printFile();
+    }
+
+    printGestioneCredito(){
+        this.context = 'GC';
+        this.tipoPlico = 'Gestione Credito';
+        this.printFile();
     }
 
     printOperation(){
@@ -1187,7 +1203,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     printFile(){
         console.log('# printFile #');
 
-        this.spinnerObj.spinner = true;
+        //this.spinnerObj.spinner = true;
 
         var applySecondFilter = false;
         var filterString = this.template.querySelector("c-hdt-account-statement-detail-viewer").filterString;
@@ -1230,10 +1246,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             }
             listToPrint.push(r);
         });
-
-        this.sendToApex();
+        this.documents = JSON.stringify(listToPrint);
+        console.log('documents ' + this.documents);
+        this.showPrintModal = true;
+        //this.sendToApex();
         listToPrint.splice(0, listToPrint.length);
-        this.spinnerObj.spinner = false;
+        //this.spinnerObj.spinner = false;
         //this.closeMainSpinner();
     }
 

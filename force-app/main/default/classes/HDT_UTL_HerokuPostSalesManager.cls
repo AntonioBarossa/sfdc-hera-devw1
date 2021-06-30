@@ -77,6 +77,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String errorMessage = '';
         String comunicationChannel='';
         String responseStatus='';
+        String herokuCancellationCode = '';
         Case caseNew = new Case();
 
 
@@ -110,7 +111,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         }
                     }                    
                 } when 'ANNULL'{
-                    herokuCode = responseResult.responseMap.get('requestId');
+                    herokuCancellationCode = responseResult.responseMap.get('COD_PRAT_UTENTE');
                     errorMessage = responseResult.responseMap.get('errorMessage');
                     System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
                     switch on responseResult.responseMap.get('result'){
@@ -144,17 +145,16 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             caseNew.TecnicalPhase__c = phase;
             caseNew.Description = errorMessage;
             if(herokuCode != null && herokuCode != ''){
-                if(currentCase.Phase__c != 'Annullamento - Da inviare'){
-                    caseNew.HerokuPracticeCode__c = herokuCode;
-                }else{
-                    caseNew.CancellationHerokuPracticeCode__c = herokuCode;
-                }
+                caseNew.HerokuPracticeCode__c = herokuCode;
             }
             if(dlCode != null && dlCode != ''){
                 caseNew.DistributorPracticeCode__c = dlCode;
             }
             if(sendDlDate != null && sendDlDate != ''){
                 caseNew.SendToDistributorDate__c = Date.valueOf(sendDlDate);
+            }
+            if(herokuCancellationCode != null && herokuCancellationCode != ''){
+                caseNew.CancellationHerokuPracticeCode__c = herokuCancellationCode;
             }
 
             caseUpdate.add(caseNew);
@@ -247,6 +247,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String noteAnn = currentCase.CancellationNote__c != null?currentCase.CancellationNote__c:'';
                 currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
             }
+            if(currentPhase.indexOf('Annullamento') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
+                currentCase.CancellationHerokuPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_UTENTE');
+            }
+            if(nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
+                currentCase.ComplexCategory__c = reqWrp.requestMap.get('NOTE');
+            }
             
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
@@ -283,6 +289,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 && String.isNotBlank(recordCase.Type) 
                 && (recordCase.Type.equals('Prescrizione Fatture') || recordCase.Type.equalsIgnoreCase('Piano Rateizzazione'))
                 && !(type.containsIgnoreCase('Esito Rateizzazione OK'))){
+                    if(type.equalsIgnoreCase('Piano rate OK Acc. pagato')){
+                        type = 'Acconto paperless pagato';
+                    }
                 currentCase.Phase__c = type; 
             }
             if(String.isNotBlank(message)){

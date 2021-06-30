@@ -132,4 +132,14 @@ public with sharing class HDT_QR_InstallmentPlans {
         return paymentMethod;
 
     }
+
+    public String getCustomerAssistedKpi(String accountId){
+
+        return [SELECT AssistedCustomer__c 
+        FROM Account 
+        WHERE Id = :accountId 
+        WITH SECURITY_ENFORCED 
+        LIMIT 1].AssistedCustomer__c;
+
+    }
 }

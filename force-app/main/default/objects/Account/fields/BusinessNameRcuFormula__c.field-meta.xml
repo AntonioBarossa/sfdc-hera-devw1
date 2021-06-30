@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>BusinessNameRcuFormula__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(ISNULL(FirstName__c),LastName__c,&apos;&apos; )</formula>
+    <formula>IF(ISBLANK(FirstName__c),LastName__c,&apos;&apos; )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Ragione Sociale RCU</label>
     <required>false</required>

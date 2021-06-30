@@ -8,8 +8,7 @@
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>E-mail</label>
-    <length>255</length>
-    <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <length>350</length>
+    <type>LongTextArea</type>
+    <visibleLines>10</visibleLines>
 </CustomField>

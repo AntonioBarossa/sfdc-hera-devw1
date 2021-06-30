@@ -40,7 +40,7 @@
             <value>
                 <fullName>Quick Save</fullName>
                 <default>false</default>
-                <label>Quick Save</label>
+                <label>Salva</label>
             </value>
             <value>
                 <fullName>Cancel</fullName>

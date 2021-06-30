@@ -193,7 +193,7 @@ public inherited sharing class HDT_QR_ContactPoint {
 
     public static List<ContactPointPhone> getOldContactsPhone (List<String> id,List<String> phone){
 
-        String query = 'SELECT Id,Status__c, ParentId FROM ContactPointPhone WHERE ParentId IN :id AND TelephoneNumber IN :phone';
+        String query = 'SELECT Id,Status__c,isPrimary, ParentId FROM ContactPointPhone WHERE ParentId IN :id AND TelephoneNumber IN :phone';
         List <ContactPointPhone> contphone = Database.query(query);
         return contphone; 
     }

@@ -8,8 +8,6 @@
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Data variazione consenso Profilazione</label>
-    <length>128</length>
     <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>DateTime</type>
 </CustomField>

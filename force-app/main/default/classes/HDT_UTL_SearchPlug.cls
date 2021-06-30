@@ -327,7 +327,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         return false;
     }
 
-    public static Boolean checkBooleanCriteria(String booleanCriteria, String booleanQuote){
+    public static Boolean checkBooleanCriteria(String booleanQuote, String booleanCriteria){
 
         if(String.isEmpty(booleanQuote) || String.isEmpty(booleanCriteria)){
             return true;

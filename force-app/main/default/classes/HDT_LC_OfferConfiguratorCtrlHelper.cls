@@ -81,9 +81,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         TechnicalOffer__c tecOff;
         Id tecOffId;
-        Boolean isUpsert = !String.isEmpty(technicalofferid);
+        Boolean isUpdate = !String.isEmpty(technicalofferid);
 
-        // if(!isUpsert){ //
+        // if(!isUpdate){ //
 
         //     tecOff = generateTechnicalOfferRecord(tecOff, productId, rate, techOffObj, idToClone);
         //     tecOff.Status__c = 'Draft';
@@ -102,7 +102,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOff = generateTechnicalOfferRecord(tecOff, productId, rate, techOffObj, idToClone);
         tecOff.Status__c = 'Draft';
 
-        if(isUpsert){
+        if(isUpdate){
             tecOff.Id = technicalofferid;
         }
 
@@ -140,9 +140,19 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         TechnicalOfferItem__c tecOffItem;
 
         for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine : offerList){
-            tecOffItem = convertWrapperToObject(tecOffItem, offerLine, isUpsert);
+            tecOffItem = convertWrapperToObject(tecOffItem, offerLine, isUpdate, tecOffId);
 
-            if(!isUpsert){
+            //if(!isUpdate){
+            //    tecOffItem.TechnicalOffer__c = tecOffId;
+            //}
+
+            if(isUpdate){
+                if(String.isEmpty(offerLine.rowId)){
+                    tecOffItem.TechnicalOffer__c = tecOffId;
+                } else {
+                    tecOffItem.Id = offerLine.rowId;
+                }
+            } else {
                 tecOffItem.TechnicalOffer__c = tecOffId;
             }
 
@@ -261,25 +271,30 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         return setSingleRow;
     }
 
-    public static TechnicalOfferItem__c convertWrapperToObject(TechnicalOfferItem__c tecOffItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine, Boolean isUpsert){
+    public static TechnicalOfferItem__c convertWrapperToObject(TechnicalOfferItem__c tecOffItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine, Boolean isUpdate, String tecOffId){
         //System.debug('# ' + 
         //'[id = ' + offerLine.id + '] - ' +
+        //'[rowId = ' + offerLine.rowId + '] - ' + 
         //'[M = ' + offerLine.m + '] - ' +
         //'[V = ' + offerLine.v + '] - ' +
         //'[rateType = ' + offerLine.rateType.value + '] - ' +
         //'[infoGroup = ' + offerLine.infoGroup.value + '] - ' +
         //'[numValue = ' + offerLine.numValue.value + '] - ' +
-        //'[flag = ' + offerLine.flag.value + '] - ')
+        //'[flag = ' + offerLine.flag.value + '] - '+
         //'[priceCode = ' + offerLine.priceCode.value + '] - ' +
         //'[stringValue = ' + offerLine.stringValue.value + ']' + 
-        //'[tecName = ' + offerLine.tecName + ']'
-        //);
+        //'[tecName = ' + offerLine.tecName + ']');
+        
         
         tecOffItem = new TechnicalOfferItem__c();
 
-        if(isUpsert){
-            tecOffItem.Id = offerLine.rowId;
-        }
+        //if(isUpdate){
+        //    if(String.isEmpty(offerLine.rowId)){
+        //        tecOffItem.TechnicalOffer__c = tecOffId;
+        //    } else {
+        //        tecOffItem.Id = offerLine.rowId;
+        //    }
+        //}
 
         tecOffItem.RowId__c = offerLine.id;
         tecOffItem.Type__c = offerLine.type;
@@ -472,15 +487,15 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             return mulesoftResponse;  
         }
 
-        HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj;
+        HDT_WS_MulesoftCallerCpq.HDT_WRP_HttpObj httpObj;
         httpObj = setHttpObject(httpObj);
 
         String body = JSON.serialize(bodyObj.header);
         System.debug('>>> body obj > ' + body);
 
-        HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl;
-        responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
-        //responseCtrl = new HDT_WS_MulesoftCaller.HDT_WRP_Response();
+        HDT_WS_MulesoftCallerCpq.HDT_WRP_Response responseCtrl;
+        responseCtrl = HDT_WS_MulesoftCallerCpq.retrieveDataCtrl(body, httpObj);
+        //responseCtrl = new HDT_WS_MulesoftCallerCpq.HDT_WRP_Response();
         //responseCtrl.success = true;
 
         System.debug('>>> responseCtrl > ' + String.valueOf(responseCtrl));
@@ -492,19 +507,38 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             return mulesoftResponse;
         }
 
-        updateProductAfterSap(technicalOfferId, 'NewSApcode', 'ok');
+        HDT_WS_MulesoftCallerCpq.HDT_WRP_MulesoftResponse mulesoftWsResponse;
+        mulesoftWsResponse = (HDT_WS_MulesoftCallerCpq.HDT_WRP_MulesoftResponse)JSON.deserialize(responseCtrl.body, HDT_WS_MulesoftCallerCpq.HDT_WRP_MulesoftResponse.class);
+        
+        if(!mulesoftWsResponse.status.equalsIgnoreCase('success')){
+            updateProductAfterSap(technicalOfferId, responseCtrl.message, 'ko');
+            mulesoftResponse.success = false;
+            mulesoftResponse.message = '';
+            //mulesoftResponse.message = mulesoftWsResponse.errorDetails[0].code + '; ' + mulesoftWsResponse.errorDetails[0].message;
+
+            for(Integer n=0; n < mulesoftWsResponse.errorDetails.size(); n++){
+                mulesoftResponse.message += mulesoftWsResponse.errorDetails[n].message;
+                if(n < (mulesoftWsResponse.errorDetails.size()-1)){
+                    mulesoftResponse.message += ', ';
+                }
+            }
+            
+            return mulesoftResponse;      
+        }
+
+        updateProductAfterSap(technicalOfferId, mulesoftWsResponse.keysap, 'ok');
 
         mulesoftResponse.success = true;
-        mulesoftResponse.message = 'Offerta inviata a SAP correttamente';
-        mulesoftResponse.bodyResponse = '{"newCode": "newValue"}';
+        mulesoftResponse.message = 'Offerta inviata a SAP correttamente, codice Sap: ' + mulesoftWsResponse.keysap;
+        mulesoftResponse.bodyResponse = '{"newCode": "' + mulesoftWsResponse.keysap + '"}';
 
         return mulesoftResponse;
 
     }
 
-    public static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj){
+    public static HDT_WS_MulesoftCallerCpq.HDT_WRP_HttpObj setHttpObject(HDT_WS_MulesoftCallerCpq.HDT_WRP_HttpObj httpObj){
 
-        httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
+        httpObj = new HDT_WS_MulesoftCallerCpq.HDT_WRP_HttpObj();
         httpObj.headersMap = new Map<String, String>();
 
         //httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/CreateNewOffer';

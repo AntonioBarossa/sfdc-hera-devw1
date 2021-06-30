@@ -208,11 +208,6 @@
     </availableFields>
     <description>Fields displayed on Edit Lines page.</description>
     <displayedFields>
-        <field>ProductImage__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </displayedFields>
-    <displayedFields>
         <field>SBQQ__ProductName__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>9sys_eim29p</label>
+    <label>Numero impianto fornitura</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

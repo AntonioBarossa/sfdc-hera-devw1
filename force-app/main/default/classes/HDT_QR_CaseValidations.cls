@@ -14,7 +14,9 @@ public inherited sharing class HDT_QR_CaseValidations {
         AttachmentManagement__c,
         AmountToPayInInstallments__c,
         BillingProfile__c,
+        AlternativeAddress__c,
         AccountId,
+        Account.CustomerMarking__c,
         ContactId
         FROM Case
         WHERE Id = :recordId

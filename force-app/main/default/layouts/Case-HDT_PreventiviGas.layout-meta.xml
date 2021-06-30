@@ -260,7 +260,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DistributorServiceCode__c</field>
+                <field>DistributorPracticeCode__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

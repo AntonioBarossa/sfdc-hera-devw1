@@ -45,14 +45,17 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		String operationType 		= inputs[0].operationtype;
         String commodity 			= inputs[0].commodity;
 		String caliber 				= inputs[0].caliber;
+		String voltageAvilable    	= inputs[0].voltageAvailable;
+		String phaseAvaillable    	= inputs[0].phaseAvalaible;
 		Boolean isInrete 			= checkLocalDispatcher(localDispatcher);
-		Boolean powerAdjustment 	= true;
+		String powerAdjustment 	= 'Y';
 		String vendDist = isInrete ? 'InRete' : 'ExtraRete';
 		String checkPrPc = '';
 		String rangePr = '';
 		String rangePc = '';
+		String voltagePhase = '';
 		if(powerRequested != null && powerAvailable != null &&  powerRequested * (1.1) < powerAvailable){
-			powerAdjustment = false;
+			powerAdjustment = 'N';
 		}
 		if(powerRequested != null && powerCommitted != null ){
 			if(powerRequested > powerCommitted){
@@ -65,8 +68,10 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		}
 		rangePr = getRangeValue(powerRequested);
 		rangePc = getRangeValue(powerCommitted);
-		
-		String conditions = '(AdegPotDisp__c =' + powerAdjustment + ' OR AdegPotDisp__c = null) '
+		if(String.isNotBlank(phaseAvaillable) && String.isNotBlank(voltageAvilable)){
+			voltagePhase = voltageAvilable + '_' + phaseAvaillable.substring(0,1);
+		}
+		String conditions = '(AdegPotDisp__c =\'' + powerAdjustment + '\' OR AdegPotDisp__c = null) '
 		+'AND (Caliber__c = \''+ caliber + '\' OR Caliber__c = null) ' 
 		+'AND (ComparePotRi__c = \'' + checkPrPc + '\' OR ComparePotRi__c = null) '
 		+'AND (RequestedPhase__c = \''+ phaseType + '\' OR RequestedPhase__c = null) '
@@ -78,7 +83,8 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		+'AND Operation_type__c = \'' + operationType + '\' '
 		+'AND Commodity__c = \'' + commodity + '\' '
 		+'AND (EnergyUseType__c = \'' + energyUseType + '\' OR EnergyUseType__c = null) '
-		+'AND (VendDist__c = \'' + vendDist + '\' OR VendDist__c = null)';
+		+'AND (VendDist__c = \'' + vendDist + '\' OR VendDist__c = null) '
+		+'AND (PhaseVoltage__c = \'' + voltagePhase + '\' OR PhaseVoltage__c = null)';
 		String fields = 'Id,CausalCode__c, QuoteType__c,OperationCode__c';
 		
 		return HDT_QR_QuoteManagement.queryString(fields, conditions);
@@ -158,6 +164,12 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		
 		@InvocableVariable
         public String displacementDistance;
+
+		@InvocableVariable
+        public String voltageAvailable;
+
+		@InvocableVariable
+        public String phaseAvalaible;
     }
     
 

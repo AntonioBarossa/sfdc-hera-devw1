@@ -4,7 +4,8 @@
     <description>Formula che raggruppa i campi principali dell&apos;indirizzo</description>
     <externalId>false</externalId>
     <formula>InvoicingStreetName__c&amp;&apos; &apos;&amp;InvoicingStreetNumber__c
-&amp;IF(!ISBLANK(InvoicingStreetNumberExtension__c),InvoicingStreetNumberExtension__c,&apos;&apos;)
+&amp;IF(!ISBLANK(InvoicingStreetNumberExtension__c),&apos;/&apos;&amp; InvoicingStreetNumberExtension__c,&apos;&apos;)
+&amp;IF(!ISBLANK(InvoicingPlace__c),&apos;, &apos;&amp; InvoicingPlace__c,&apos;&apos;)
 &amp;&apos;, &apos;&amp;InvoicingCity__c&amp;&apos; &apos;&amp;InvoicingProvince__c
 &amp;&apos;, &apos;&amp;InvoicingPostalCode__c&amp;&apos; &apos;&amp;InvoicingCountry__c</formula>
     <label>Indirizzo Spedizione/Fatturazione</label>
