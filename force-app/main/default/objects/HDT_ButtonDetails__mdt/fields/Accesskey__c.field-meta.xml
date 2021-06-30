@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SupplyStreetToponym__c</fullName>
-    <description>Contiene il Toponimo dell&apos;indirizzo</description>
+    <fullName>Accesskey__c</fullName>
     <externalId>false</externalId>
-    <label>Toponimo [Fornitura]</label>
-    <length>30</length>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Accesskey</label>
+    <length>1</length>
     <required>false</required>
-    <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

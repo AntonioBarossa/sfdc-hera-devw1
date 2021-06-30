@@ -250,22 +250,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssegnaCodiceOperazione</name>
-        <label>AssegnaCodiceOperazione</label>
-        <locationX>586</locationX>
-        <locationY>3689</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case_0.OperationCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>FT</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AggiornaFT</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>AssegnaComponenteFissaVariabile</name>
         <label>AssegnaComponenteFissaVariabile</label>
         <locationX>1101</locationX>
@@ -1180,7 +1164,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>AssegnaCodiceOperazione</targetReference>
+                <targetReference>Prestazione_Distrubutore</targetReference>
             </connector>
             <label>FT</label>
         </rules>
@@ -1870,16 +1854,6 @@
         <locationY>4365</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
-        </connector>
-        <inputReference>Get_Input_Case_0</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>AggiornaFT</name>
-        <label>AggiornaFT</label>
-        <locationX>739</locationX>
-        <locationY>3809</locationY>
-        <connector>
-            <targetReference>Prestazione_Distrubutore</targetReference>
         </connector>
         <inputReference>Get_Input_Case_0</inputReference>
     </recordUpdates>
