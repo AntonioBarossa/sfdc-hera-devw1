@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SERV_ACCNT_ID</label>
+    <label>Id Cliente Service</label>
     <length>15</length>
     <required>false</required>
     <type>Text</type>

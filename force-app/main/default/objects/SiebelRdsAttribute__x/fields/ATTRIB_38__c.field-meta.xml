@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_38</label>
+    <label>Mod invio bolletta /  Contract account</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

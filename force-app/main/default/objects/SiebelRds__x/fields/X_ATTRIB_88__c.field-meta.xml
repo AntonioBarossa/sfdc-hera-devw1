@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_ATTRIB_88</label>
+    <label>Indirizzo contratto Premise</label>
     <length>250</length>
     <required>false</required>
     <type>Text</type>

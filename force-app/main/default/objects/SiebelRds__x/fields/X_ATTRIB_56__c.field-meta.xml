@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_ATTRIB_56</label>
+    <label>Guid Card</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

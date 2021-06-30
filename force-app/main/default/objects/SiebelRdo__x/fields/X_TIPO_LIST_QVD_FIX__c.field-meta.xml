@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_TIPO_LIST_QVD_FIX</label>
+    <label>Tipo lista QVD Fix</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>
