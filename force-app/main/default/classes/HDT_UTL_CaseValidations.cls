@@ -973,7 +973,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     changedChars++;
                 }
             }
-
+            System.debug('Numero caratteri modificati sul nuovo CF: ' + changedChars);
             if (changedChars > 2) {
                 outcome = 'Per modifiche sostanziali (più di 2 caratteri) al Codice Fiscale è necessario innescare una Voltura.';
             }
