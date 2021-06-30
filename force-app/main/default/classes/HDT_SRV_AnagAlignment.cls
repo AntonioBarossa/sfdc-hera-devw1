@@ -484,6 +484,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.BillingStreetToponym__c = caseAccount.BillingStreetToponym__c;
             anagAlignCase.BillingProvince__c = caseAccount.BillingState;
             anagAlignCase.BillingStreetNumber__c = caseAccount.BillingStreetNumber__c;
+            anagAlignCase.BillingCity__c = caseAccount.BillingCity;
             anagAlignCase.BillingPlace__c = caseAccount.BillingPlace__c;
             anagAlignCase.BillingStreetName__c = caseAccount.BillingStreetName__c;
             anagAlignCase.BillingPostalCode__c = caseAccount.BillingPostalCode;

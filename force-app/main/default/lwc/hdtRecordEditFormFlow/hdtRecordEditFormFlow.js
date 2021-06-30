@@ -425,12 +425,17 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                     depositPaymentMode.disabled = true;
                     depositamount.disabled = true;
                     depositDate.disabled = true;
+                    sendPaperlessCode.disabled = true;
+                    depositPaymentMode.value = '';
+                    depositamount.value = null;
+                    depositDate.value = null;
+                    sendPaperlessCode.value = '';
                 } else {
                     depositPaymentMode.disabled = false;
                     depositamount.disabled = false;
                     depositDate.disabled = false;
                 }
-                if(depositPaymentMode.value === 'Paperless'){
+                if(depositPaymentMode.value === 'Paperless' && !depositPaymentMode.disabled){
                     sendPaperlessCode.disabled = false;
                 }
             }

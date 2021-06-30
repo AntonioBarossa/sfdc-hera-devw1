@@ -172,11 +172,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
                     }
                 
-                }else if(reason.contains('Disagio Economico') && (expDate < (System.today() + 5))){
-
-                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'L\'importo non deve essere inferiore a 50 ' + 
-                        'o la data scadenza acconto non deve essere inferiore ai 5 giorni'));
-
                 }else if(typeInstallmentPlans == 'Straordinario'){
 
                     if(caseValidationQr.getUserSessionRole() != 'CEO'){
