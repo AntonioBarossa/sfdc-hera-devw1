@@ -1,30 +1,38 @@
 public inherited sharing class HDT_UTL_InstallmentPlans {
 
     @InvocableMethod(label = 'checkRateizzazione')
-    public static List<RentProcessRule__c> checkRentProcessRule(List<HDT_UTL_FlowInputs> inputs){
+    public static List<HDT_UTL_FlowOutputs> checkRentProcessRule(List<HDT_UTL_FlowInputs> inputs){
+
+        List<HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_FlowOutputs>();
+        HDT_UTL_FlowOutputs output = new HDT_UTL_FlowOutputs();
 
         HDT_QR_InstallmentPlans installmentsQr = new HDT_QR_InstallmentPlans();
-
-        List<RentProcessRule__c> acceptedRules = new List<RentProcessRule__c>();
-
+        HDT_SRV_InstallmentPlans installmetnsSrv = new HDT_SRV_InstallmentPlans();
+        
         String caseId = inputs[0].caseId;
+        String errorMessge = 'Nella ricerca del Piano Rata tutti o alcuni dei valori non hanno permesso il successo dell\'operazione:\n';
 
         Case c = installmentsQr.getCaseById(caseId);
-
-        RentProcessRule__c returnedRule = HDT_QR_InstallmentPlans.queryRules(c);
-
-        if(returnedRule != null){
-               
-            acceptedRules.add(returnedRule);
-
-            return acceptedRules;
-
-        } else {
-
-            return null;
-
+        List<RentProcessRule__c> ruleList = HDT_QR_InstallmentPlans.queryRules(c);
+        Set<String> criteriaFields = new Set<String>{
+            'ApplicationInterests__c',
+            'CAWithOrWithoutSEPA__c',
+            'SuspensionInThePastTwelveMonths__c',
+            'Deposit__c',
+            'RefundableEscape__c',
+            'WorkStatus__c'};
+        Map<String, Object> criteriaMap = new Map<String, Object>();
+        for(String fieldName : criteriaFields){
+            criteriaMap.put(fieldName, c.get(fieldName));
         }
 
+        output = installmetnsSrv.evaluateRuleList(ruleList, criteriaMap);
+        if(!String.isBlank(output.errorMessage)){
+            output.errorMessage = errorMessge + output.errorMessage;
+        }
+        outputs.add(output);
+
+        return outputs;
 
     }
 
@@ -33,7 +41,14 @@ public inherited sharing class HDT_UTL_InstallmentPlans {
         @InvocableVariable
         public String caseId;
 
-  }
+    }
+
+    public class HDT_UTL_FlowOutputs{
+        @InvocableVariable
+        public RentProcessRule__c rentRule;
+        @InvocableVariable
+        public String errorMessage;
+    }
 
 
 }
