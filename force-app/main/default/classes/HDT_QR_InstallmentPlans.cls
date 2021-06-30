@@ -18,7 +18,6 @@ public with sharing class HDT_QR_InstallmentPlans {
             AND (AmountToPayInInstallmentsTo__c >= :c.AmountToPayInInstallments__c OR AmountToPayInInstallmentsTo__c= null)
             AND SuspensionInPastTwelveMonths__c = :c.SuspensionInThePastTwelveMonths__c
             AND Deposit__c = :c.Deposit__c
-            AND CustomerAssisted__c = :c.CutomerAssisted__c
             AND RefundableEscape__c = :c.RefundableEscape__c
             AND WorkStatus__c= :c.WorkStatus__c
             WITH SECURITY_ENFORCED
