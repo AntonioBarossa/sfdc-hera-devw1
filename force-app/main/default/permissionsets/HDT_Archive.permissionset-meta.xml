@@ -8,6 +8,10 @@
         <apexClass>HDT_LC_DownloadAttachmentAzure</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>HDT_CP_Archive</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelActivity__x.ACTIVITY_UID__c</field>
