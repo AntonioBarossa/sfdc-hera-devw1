@@ -65,7 +65,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SupplyPlace__c</field>
+                <field>SupplyCity__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
