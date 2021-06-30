@@ -1462,7 +1462,6 @@ disabledverifyFieldsAddressDisabled(){
                                 message: 'Non sono presenti Indirizzi corrispondenti ai caratteri inseriti . Digitare nuovamente per effettuare una nuova ricerca.',
                             });
                         }
-                        
                         this.dispatchEvent(event2);
                     }
                     

@@ -199,7 +199,7 @@ public with sharing class HDT_UTL_ServicePoint {
 				}
 				if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
 					//spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
-                    Decimal d = integer.valueOf(mapRes.get('POTENZATECNICA'));
+                    Decimal d = decimal.valueOf(mapRes.get('POTENZATECNICA'));
                     System.debug('POTENZACONTRATTUALE****************' + mapRes.get('POTENZACONTRATTUALE'));
                     spNew.PowerContractual__c = d.setScale(0);
                     System.debug('POTENZACONTRATTUALE2****************' + spNew.PowerContractual__c );
@@ -208,7 +208,7 @@ public with sharing class HDT_UTL_ServicePoint {
 
                     System.debug('POTENZATECNICA1****************' + mapRes.get('POTENZATECNICA'));
                     
-                    Decimal d = integer.valueOf(mapRes.get('POTENZATECNICA'));
+                    Decimal d = decimal.valueOf(mapRes.get('POTENZATECNICA'));
                     //spNew.PowerAvailable__c  =integer.valueOf(mapRes.get('POTENZATECNICA').subString(0,mapRes.get('POTENZATECNICA').indexOf('.'))) ;
                     spNew.PowerAvailable__c  =d.setScale(1);
 
