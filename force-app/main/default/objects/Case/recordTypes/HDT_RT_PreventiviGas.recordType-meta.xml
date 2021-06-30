@@ -7811,6 +7811,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Preventivo rifiutato – Amm OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
