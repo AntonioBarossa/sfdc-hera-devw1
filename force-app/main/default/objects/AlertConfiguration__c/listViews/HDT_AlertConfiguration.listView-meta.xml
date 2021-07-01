@@ -9,7 +9,8 @@
     <columns>IsSmsChannelActive__c</columns>
     <columns>IsSolChannelActive__c</columns>
     <columns>AccountCategory__c</columns>
+    <columns>BillSendingMethod__c</columns>
     <columns>IsActive__c</columns>
     <filterScope>Everything</filterScope>
-    <label>HDT_AlertConfiguration</label>
+    <label>Regole Alert</label>
 </ListView>
