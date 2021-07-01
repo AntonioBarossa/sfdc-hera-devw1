@@ -37,7 +37,7 @@
             onclosemodal={closeModalHandler}
         ></c-hdt-filter-first-level-modal>
     </template>
-    <!--<template if:true={showPrintModal}>
+    <template if:true={showPrintModal}>
         <c-hdt-account-document-signature-manager
             record-id={recordid}
             context={context}
@@ -45,7 +45,7 @@
             tipo-plico={tipoPlico}
             onclosemodal={handleClosePrintModal}
         ></c-hdt-account-document-signature-manager>
-    </template>-->
+    </template>
 
     <template if:true={showBillList} >
         <c-hdt-bill-list
