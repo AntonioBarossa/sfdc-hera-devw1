@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_12</label>
+    <label>Data / Data fattura</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

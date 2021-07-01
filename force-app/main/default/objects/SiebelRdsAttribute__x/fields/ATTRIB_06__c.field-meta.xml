@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_06</label>
+    <label>Numero documento / relazione parentela</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>
