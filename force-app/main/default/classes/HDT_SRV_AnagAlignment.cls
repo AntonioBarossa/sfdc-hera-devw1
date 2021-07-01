@@ -105,6 +105,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
                     anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
                     anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
+                    anagAlignCase.RegionalAdditional__c = 0;
                     System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                     anagAlignCase.Phase__c = 'Da Inviare';
                     HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
