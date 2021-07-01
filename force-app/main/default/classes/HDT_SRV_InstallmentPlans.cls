@@ -225,7 +225,8 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
                 if(!(rule.get(fineTuningField) == criteriaMap.get(fieldName))){
                     notFoundMap.put(fieldName, criteriaMap.get(fieldName));
                     String fieldLabel = Case.SObjectType.getDescribe().fields.getMap().get(fieldName).getDescribe().getLabel();
-                    errorMessage += '\t' + fieldLabel + ': ' + criteriaMap.get(fieldName) + '(prova invece: '+ rule.get(fineTuningField) + ')\n';
+                    //errorMessage += '\t' + fieldLabel + ': ' + criteriaMap.get(fieldName) + '(prova invece: '+ rule.get(fineTuningField) + ')\n';
+                    errorMessage = formattingErrorMessage(errorMessage, fieldLabel, criteriaMap.get(fieldName), rule.get(fineTuningField));
                 }
             }
             if(notFoundMap.isEmpty()){
@@ -238,6 +239,27 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         output.errorMessage = errorMessage;
         
         return output;
+    }
+
+    private String formattingErrorMessage(String errorMessage, String fieldLabel, Object criteriaField, Object ruleField){
+        String fineTuningCriteria = '';
+        String fineTuningRule = '';
+        if(errorMessage.indexOf(fieldLabel) > -1){
+            //Skip 
+        } else {
+            if(criteriaField instanceOf Boolean && Boolean.valueOf(criteriaField) == true){
+                fineTuningCriteria = 'Flaggato';
+                fineTuningRule = 'Non Flaggato'; 
+            } else if(criteriaField instanceOf Boolean && Boolean.valueOf(criteriaField) == false){
+                fineTuningCriteria = 'Non Flaggato';
+                fineTuningRule = 'Flaggato'; 
+            } else {
+                fineTuningCriteria = String.valueOf(criteriaField);
+                fineTuningRule = String.valueOf(ruleField);
+            }
+            errorMessage += '\t' + fieldLabel + ': ' + fineTuningCriteria + ' (prova invece: ' + fineTuningRule + ')\n';
+        }
+        return errorMessage;
     }
 
 

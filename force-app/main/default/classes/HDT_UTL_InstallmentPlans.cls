@@ -27,11 +27,11 @@ public inherited sharing class HDT_UTL_InstallmentPlans {
         }
 
         output = installmetnsSrv.evaluateRuleList(ruleList, criteriaMap);
+        System.debug('Here');
         if(!String.isBlank(output.errorMessage)){
-            output.errorMessage = errorMessge + output.errorMessage;
+            output.errorMessage = (String) (errorMessge + output.errorMessage);
         }
         outputs.add(output);
-
         return outputs;
 
     }
