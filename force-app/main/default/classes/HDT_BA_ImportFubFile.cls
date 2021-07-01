@@ -19,7 +19,8 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
 
     public void execute(Database.BatchableContext BC, List<CampaignMember> scope) {
 
-        List<String> splitCsv = csvNumbers.split('\r\n');
+        List<String> splitCsv = csvNumbers.split(',');
+        System.debug('********:' + splitCsv);
         List<String> okList = new List<String>();
         List<String> koList = new List<String>();
         Map<String,String> maStr = new Map<String,String>();
@@ -27,8 +28,11 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
         for(String s : splitCsv){
             maStr.put(s,s);
         }
+        System.debug('*****:+' + maStr);
         for(CampaignMember cm : scope) {
+            System.debug('*****:+' + cm.PhoneNumber__c);
             if(cm.ExcludeFub__c == 'No' && maStr.get(cm.PhoneNumber__c) != null){
+                System.debug('*****:+' + cm.PhoneNumber__c);
                 cm.OutcomeFub__c = 'OK';
                 cm.OutcomeDateFub__c = todayDate;
                 campaignMembers.add(cm);
@@ -44,10 +48,11 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
                 koList.add(cm.PhoneNumber__c);
             }
         }
+        System.debug('*****:+' + campaignMembers);
         update campaignMembers;
 
         //iterate ContactPointPhone
-        Database.QueryLocator query = Database.getQueryLocator('SELECT Id, Name FROM ContactPointPhone WHERE individualId IN :contactList TelephoneNumber IN :okList');
+        Database.QueryLocator query = Database.getQueryLocator('SELECT Id, Name FROM ContactPointPhone WHERE parentId IN :contactList AND TelephoneNumber IN :okList');
         Database.QueryLocatorIterator it =  query.iterator();
 
         while (it.hasNext())
@@ -58,7 +63,7 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
             contactPointPhoneNumbers.add(cpp);
         }
 
-        Database.QueryLocator query2 = Database.getQueryLocator('SELECT Id, Name FROM ContactPointPhone WHERE individualId IN :contactList TelephoneNumber IN :koList');
+        Database.QueryLocator query2 = Database.getQueryLocator('SELECT Id, Name FROM ContactPointPhone WHERE parentId IN :contactList AND TelephoneNumber IN :koList');
         Database.QueryLocatorIterator it2 =  query2.iterator();
 
         while (it2.hasNext())
@@ -70,11 +75,12 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
         }
 
         update contactPointPhoneNumbers;
+        update contactPointPhoneNumbersKO;
     }
 
     public void finish(Database.BatchableContext bc){
         //update FUBProcessing Status
-        Database.QueryLocator queryFub = Database.getQueryLocator('SELECT Status__c FROM FUBProcessing__c WHERE Id = '+FUBProcessingId);
+        Database.QueryLocator queryFub = Database.getQueryLocator('SELECT Status__c FROM FUBProcessing__c WHERE Id = :FUBProcessingId');
         Database.QueryLocatorIterator itFub =  queryFub.iterator();
         FUBProcessing__c fubProcessing = new FUBProcessing__c();
         while (itFub.hasNext()) {
