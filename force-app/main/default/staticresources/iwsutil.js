@@ -21,13 +21,16 @@ class Util {
 				var resultObj = JSON.parse(cleanResult);
 				iwscommand.SetAttachdataById(message.ConnectionID, {"sf_activity_id": resultObj.activityId});
 				console.log("### iwsutil.createActivity() | ACTIVITY CREATED!");
+				var popTarget;
 				if(resultObj.accountId && resultObj.contactId) {
-					this.screenpop(resultObj.accountId);
+					popTarget = resultObj.accountId;
 				} else if(resultObj.leadId) {
-					this.screenpop(resultObj.leadId);
+					popTarget = resultObj.leadId;
 				} else {
-					this.screenpop(resultObj.activityId);
+					popTarget = resultObj.activityId;
 				}
+				iwscommand.SetAttachdataById(message.ConnectionID, {"sf_pop_target": popTarget});
+				this.screenpop(popTarget);
 			}
 		});
 	}
@@ -43,7 +46,7 @@ class Util {
 	}
 	handleOperatorSwitch(message) {
 		iwscommand.SetAttachdataById(message.ConnectionID, {"operatorChange": true});
-		this.screenpop(ConnectorEntityController.getPopDestination(message.attachdata.sf_activity_id));
+		this.screenpop(message.attachdata.sf_pop_target);
 	}
 	handleCrmSwitch(message) {
 		iwscommand.SetAttachdataById(message.ConnectionID, {"crmChange": true});
