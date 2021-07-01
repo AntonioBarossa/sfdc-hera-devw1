@@ -295,7 +295,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
             String message = reqWrp.requestMap.get('MESSAGGIO');
-            // Al momento solo la Prescrizione Fattura prevede un cambio fase da esito async da SAP.
             if(String.isNotBlank(type) 
                 && String.isNotBlank(recordCase.Type) 
                 && (recordCase.Type.equals('Prescrizione Fatture') || recordCase.Type.equalsIgnoreCase('Piano Rateizzazione'))

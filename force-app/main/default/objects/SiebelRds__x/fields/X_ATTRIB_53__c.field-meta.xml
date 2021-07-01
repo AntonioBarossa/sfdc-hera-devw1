@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_ATTRIB_53</label>
+    <label>Spesa annua / Order Item Status</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

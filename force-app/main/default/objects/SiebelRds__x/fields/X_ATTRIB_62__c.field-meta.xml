@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_ATTRIB_62</label>
+    <label>Tipo cliente / Cod ultima fattura letta</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

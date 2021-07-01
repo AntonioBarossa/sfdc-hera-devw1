@@ -267,7 +267,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.title = 'Interrogazione dei dati';
         this.filterLabel = 'Interroga';
         this.showFilterFirstLevel = true;
-        this.totAmount = 0;
     }
     joinFilter(event) {
         console.log('# joinFilter #');
@@ -874,6 +873,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         var interObj = JSON.parse(event.detail.value);
         this.firstLevelFilterObj = interObj;
         console.log('interObj ' + event.detail.value);
+        this.totAmount = 0;
 
         try {
 

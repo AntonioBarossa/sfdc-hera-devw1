@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_ATTRIB_63</label>
+    <label>Gruppo intervento (Ambiente)</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

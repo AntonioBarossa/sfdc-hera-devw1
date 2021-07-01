@@ -20,7 +20,8 @@
                 var csvNumbers = helper.CSV2JSON(component, csv);
                 csvNumbers = csvNumbers.replace('[', '');
                 csvNumbers = csvNumbers.replace(']', '');
-                csvNumbers = csvNumbers.replaceAll('"', "'");
+                csvNumbers = csvNumbers.replaceAll('"', "");
+                csvNumbers = csvNumbers.replaceAll('\\', "");
                 console.log('result = ' + csvNumbers);
                 //batch execution
                 var action = component.get("c.fubArchiveImportBatch");
