@@ -7,8 +7,8 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>TITLE</label>
-    <length>128</length>
+    <label>Titolo</label>
+    <length>100</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>

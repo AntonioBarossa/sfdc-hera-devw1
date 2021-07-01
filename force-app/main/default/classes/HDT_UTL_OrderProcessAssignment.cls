@@ -1,0 +1,200 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 08/01/2021
+ * @description HDT_UTL_OrderProcessAssignment.cls - Class that holds logic for assigning order processes
+ * @history Keltin Mesonjesi – 23/06/2021 – Created class
+ */
+public inherited sharing class HDT_UTL_OrderProcessAssignment {
+
+    private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
+    private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
+
+    public class HDT_WRP_Process {
+        @AuraEnabled
+        public String processType {get; set;}
+        @AuraEnabled
+        public String recordType {get; set;}
+        @AuraEnabled
+        public String processCode {get; set;}
+        Set<String> meterStatus {get; set;}
+        Set<String> marketOrigin {get; set;}
+        String plugPresence {get; set;} //allacio
+        Boolean isOwnAccount {get; set;}
+        Boolean isChangeUse {get; set;}
+        Boolean isSwitchInRipristinatorio {get; set;}
+        Boolean isAttivazioneConModifica {get; set;}
+        @AuraEnabled
+        public String commodity {get; set;}
+        Boolean isAmendmentAllowed {get; set;}
+
+        public HDT_WRP_Process(
+            String processType,
+            String recordType,
+            String processCode,
+            Set<String> meterStatus,
+            Set<String> marketOrigin,
+            String plugPresence,
+            Boolean isOwnAccount,
+            Boolean isChangeUse,
+            Boolean isSwitchInRipristinatorio,
+            Boolean isAttivazioneConModifica,
+            String commodity,
+            Boolean isAmendmentAllowed
+        ) {
+            this.processType = processType;
+            this.recordType = recordType;
+            this.processCode = processCode;
+            this.meterStatus = meterStatus;
+            this.marketOrigin = marketOrigin;
+            this.plugPresence = plugPresence;
+            this.isOwnAccount = isOwnAccount;
+            this.isChangeUse = isChangeUse;
+            this.isSwitchInRipristinatorio = isSwitchInRipristinatorio;
+            this.isAttivazioneConModifica = isAttivazioneConModifica;
+            this.commodity = commodity;
+            this.isAmendmentAllowed = isAmendmentAllowed;
+        }
+    }
+
+    public static List<HDT_WRP_Process> initProcesses(){
+        return new List<HDT_WRP_Process>{
+            new HDT_WRP_Process('Subentro Gas', 'HDT_RT_Subentro','A01', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas',false),
+            new HDT_WRP_Process('Subentro Ele', 'HDT_RT_Subentro','A10', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele',false),
+            new HDT_WRP_Process('Prima Attivazione Ele', 'HDT_RT_Attivazione','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele',false),
+            new HDT_WRP_Process('Prima Attivazione In delibera', 'HDT_RT_Attivazione','A40', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas',false),
+            new HDT_WRP_Process('Prima Attivazione Fuori delibera', 'HDT_RT_Attivazione','A01', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas',false),
+            new HDT_WRP_Process('Prima Attivazione con modifica', 'HDT_RT_AttivazioneConModifica','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, true, 'HDT_RT_Ele',false),
+            new HDT_WRP_Process('Connessione con Attivazione', 'HDT_RT_ConnessioneConAttivazione','PN1', new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false),
+            new HDT_WRP_Process('Temporanea - Nuova Attivazione', 'HDT_RT_TemporaneaNuovaAtt','PN1', new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false),
+            new HDT_WRP_Process('Cambio Offerta Gas', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Gas', false),
+            new HDT_WRP_Process('Cambio Offerta Ele', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, false, false, false, 'HDT_RT_Ele', false),
+            new HDT_WRP_Process('Cambio Uso', 'HDT_RT_CambioUso','CAU', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, true, false, false, 'HDT_RT_Ele', false),
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', true),
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Gas', true),
+            new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo'}, new Set<String>(), 'Si', true, false, true, false, 'HDT_RT_Ele', false),
+            new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo'}, new Set<String>(), 'Si', true, false, true, false, 'HDT_RT_Gas', false),
+            new HDT_WRP_Process('Switch In Fittizio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', true, false, false, false, null, false),
+            new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', false),
+            new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Gas', false),
+            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false),
+            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false),
+            new HDT_WRP_Process('Switch In Reseller', 'HDT_RT_SwitchIn','', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, null, false),
+            new HDT_WRP_Process('Voltura Ele', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', false, false, false, false, null, false),
+            new HDT_WRP_Process('Voltura Gas', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero','Regolamentato'}, 'Si', false, false, false, false, null, false)
+        };
+    }
+
+    public static List<HDT_WRP_Process> getAvailableProcesses(Order ord){
+        List<HDT_WRP_Process> allProcesses = initProcesses();
+        List<HDT_WRP_Process> availableProcesses = new List<HDT_WRP_Process>();
+
+        Boolean isOwnAccount = ord.AccountId == ord.ServicePoint__r.Account__c;
+        String plugPresence = ord.ServicePoint__r.PlugPresence__c;
+        Boolean isChangeUse = ord.SBQQ__Quote__r.AllowChangeUse__c;
+        Boolean isAmendmentAllowed = ord.SBQQ__Quote__r.AmendmentAllowed__c;
+
+        system.debug('getAvailableProcesses - isOwnAccount: ' + isOwnAccount);
+        system.debug('getAvailableProcesses - plugPresence: ' + plugPresence);
+        system.debug('getAvailableProcesses - isChangeUse: ' + isChangeUse);
+        system.debug('getAvailableProcesses - marketOrigin: ' + ord.MarketOrigin__c);
+        system.debug('getAvailableProcesses - isSwitchInRipristinatorio: ' + isSwitchInRipristinatorio(ord));
+        system.debug('getAvailableProcesses - isAttivazioneConModifica: ' + isAttivazioneConModifica(ord));
+        system.debug('getAvailableProcesses - commodity: ' + ord.ServicePoint__r.RecordType.DeveloperName);
+        system.debug('getAvailableProcesses - meterStatus: ' + ord.ServicePoint__r.MeterStatus__c);
+        system.debug('getAvailableProcesses - isAmendmentAllowed: ' + ord.SBQQ__Quote__r.AmendmentAllowed__c);
+
+
+        for (HDT_WRP_Process process : allProcesses) {
+            if (
+                process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c)
+                && (process.marketOrigin.contains(ord.MarketOrigin__c) || process.marketOrigin.isEmpty())
+                && process.plugPresence == plugPresence
+                && (process.isOwnAccount == isOwnAccount || process.isOwnAccount == null)
+                && process.isChangeUse == isChangeUse
+                && process.isSwitchInRipristinatorio == isSwitchInRipristinatorio(ord)
+                && process.isAttivazioneConModifica == isAttivazioneConModifica(ord)
+                && (process.commodity == ord.ServicePoint__r.RecordType.DeveloperName || process.commodity == null)
+                && process.isAmendmentAllowed == isAmendmentAllowed
+            ) {
+                availableProcesses.add(process);
+            }
+        }
+
+        return availableProcesses;
+    }
+    
+    public static Boolean isCambioOfferta(Order ord){
+
+        system.debug('HDT_UTL_OrderProcessAssignment.isCambioOfferta START');
+
+        List<OrderItem> offertaCommerciale = orderItemQr.getRecordsByOrderIdFilteredPdrPod(ord.Id);
+
+        system.debug('HDT_UTL_OrderProcessAssignment.isCambioOfferta offertaCommerciale: ' + offertaCommerciale);
+        system.debug('HDT_UTL_OrderProcessAssignment.isCambioOfferta ContractReference__c: ' + ord.SBQQ__Quote__r.ContractReference__c);
+
+        Boolean result = !offertaCommerciale.isEmpty() && !ord.SBQQ__Quote__r.AllowChangeUse__c && ord.SBQQ__Quote__r.ContractReference__c != null && !ord.SBQQ__Quote__r.AmendmentAllowed__c;
+
+        system.debug('HDT_UTL_OrderProcessAssignment.isCambioOfferta RESULT: ' + result);
+        
+        system.debug('HDT_UTL_OrderProcessAssignment.isCambioOfferta END');
+
+        return result;
+    }
+
+    public static Boolean isSwitchInRipristinatorio(Order ord){
+        
+        Boolean result = false;
+
+        List<wrts_prcgvr__Activity__c> activityList = new List<wrts_prcgvr__Activity__c>();
+        
+        if (ord.ServicePoint__c != null) {
+            activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePoint('Gestione Switch in Ripristinatorio', 'Creata', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
+        }
+
+        system.debug('HDT_UTL_OrderProcessAssignment.isSwitchInRipristinatorio activityList: ' + activityList);
+        system.debug('HDT_UTL_OrderProcessAssignment.isSwitchInRipristinatorio AmendmentAllowed__c: ' + ord.SBQQ__Quote__r.AmendmentAllowed__c);
+        system.debug('HDT_UTL_OrderProcessAssignment.isSwitchInRipristinatorio AllowChangeUse__c: ' + ord.SBQQ__Quote__r.AllowChangeUse__c);
+
+        if (!activityList.isEmpty() 
+            && !ord.SBQQ__Quote__r.AmendmentAllowed__c 
+            && !ord.SBQQ__Quote__r.AllowChangeUse__c 
+            && !isCambioOfferta(ord)) {
+                result = true;
+        }
+
+        return result;
+    }
+
+    public static void switchInRipristinatorioAction(Order ord) {
+
+        system.debug('HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction START');
+            
+        List<wrts_prcgvr__Activity__c> activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePoint('Gestione Switch in Ripristinatorio', 'Creata', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
+
+        activityCustomSrv.updateRecord(new wrts_prcgvr__Activity__c(
+            Id = activityList[0].Id,
+            Order__c = ord.Id
+        ));
+
+        system.debug('HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction END');
+    }
+
+    public static Boolean isAttivazioneConModifica(Order ord){
+        Boolean result = false;
+
+        system.debug('isAttivazioneConModifica ord.ServicePoint__r.RecordType.DeveloperName ' + ord.ServicePoint__r.RecordType.DeveloperName);
+        system.debug('isAttivazioneConModifica ord.PowerRequested__c ' + ord.PowerRequested__c);
+        system.debug('isAttivazioneConModifica ord.PowerCommitted__c ' + ord.PowerCommitted__c);
+
+        if (ord.ServicePoint__c != null 
+            && ord.ServicePoint__r.RecordType.DeveloperName == 'HDT_RT_Ele' 
+            && ord.PowerRequested__c != null 
+            && ord.PowerRequested__c != ord.PowerCommitted__c ) {
+                result = true;
+        }
+
+        return result;
+    }
+
+}

@@ -116,6 +116,11 @@
                 <default>false</default>
                 <label>Lavorazione Reclamo Post Survey</label>
             </value>
+            <value>
+                <fullName>Gestione Votive</fullName>
+                <default>false</default>
+                <label>Gestione Votive</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

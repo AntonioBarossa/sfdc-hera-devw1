@@ -77,30 +77,37 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
     // Ricalcolo delle date
-    public static void orderCalulateDateUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) {
+    public static void orderCalulateDateUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) { 
         system.debug('Ricalcolo delle date da Trigger sugli ordini --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
         system.debug('Ricalcolo delle date da Trigger sugli ordini --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
         List<Order> orderList = new List<Order>();                        
-        Boolean ricalculateDate = true;
-        
+
+        Boolean ricalculateDate = false;
+        //IsSequanzialized__c
         for (Order newOrder : newOrdersList) {
             for (Order oldOrder : oldOrdersList) {
-                //if((oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku') || (oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku') || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku') || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')){
-                //    ricalculateDate = true;
-                //}
-                if (newOrder.Status == 'In Lavorazione' && newOrder.SignedDate__c != oldOrder.SignedDate__c && (newOrder.WizardCompletedDate__c != null || newOrder.WizardCompletedDate__c != oldOrder.WizardCompletedDate__c)) {
-                    if(ricalculateDate == true){
-                        system.debug('Esecuzione ricalcolo delle date');
-                        Order orderToUpdate = new Order();
-                        orderToUpdate.id = newOrder.Id;                                        
-                        orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
-                        if(newOrder.ProcessType__c != 'Cambio Offerta'){ // Solo per Cambio Offerta
-                            orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(newOrder);
-                        }                             
-                        orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(newOrder); // Data di decorrenza
-                        orderList.add(orderToUpdate);                    
-                    }                    
+
+                if(newOrder.Status == 'In Lavorazione' && newOrder.ProcessType__c != null && (newOrder.ProcessType__c.contains('Switch in') || newOrder.ProcessType__c == 'Cambio Offerta') &&
+                    (newOrder.SignedDate__c != oldOrder.SignedDate__c && (newOrder.WizardCompletedDate__c != null || newOrder.WizardCompletedDate__c != oldOrder.WizardCompletedDate__c)) || 
+                    ((oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku') || (oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku') || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')) || 
+                    (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK') || 
+                    (oldOrder.IsSequanzialized__c == true && newOrder.IsSequanzialized__c == false)
+                ){
+                    ricalculateDate = true;
                 }
+                
+                if(ricalculateDate == true){
+                    system.debug('Esecuzione ricalcolo delle date');
+                    Order orderToUpdate = new Order();
+                    orderToUpdate.id = newOrder.Id;                                        
+                    orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
+                    
+                    if(newOrder.ProcessType__c != 'Cambio Offerta'){ // Solo per Cambio Offerta
+                        orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(newOrder);
+                    }                             
+                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(newOrder); // Data di decorrenza
+                    orderList.add(orderToUpdate);                    
+                }                                   
             }
         }
         
@@ -345,37 +352,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         // Le activity sull'ordine potrebbero essere più di una. Bisogna prendere quella con record type "credit check ko" e Status__c "creata" e CreditCheckReason__c contiene  "Cattivo pagatore"
         if(!orderSetId.isEmpty()){
             system.debug('YYY 6 --->');
-            List<wrts_prcgvr__Activity__c> actList = [SELECT Id,
-                                                             RecordType.DeveloperName,
-                                                             Status__c,
-                                                             CreditCheckResults__c,
-                                                             Order__c,
-                                                             Order__r.OrderNumber,
-                                                             Order__r.CreatedById,
-                                                             Order__r.Channel__c,  
-                                                             Order__r.ProcessType__c,
-                                                             Order__r.Market__c,
-                                                             Order__r.Catalog__c, 
-                                                             Order__r.SalesCompany__c,                                                             
-                                                             Order__r.ServicePoint__r.CommoditySector__c,
-                                                             Order__r.ServicePoint__r.SupplyStreetName__c,
-                                                             Order__r.ServicePoint__r.SupplyCity__c,
-                                                             Order__r.ServicePoint__r.SupplyProvince__c,
-                                                             Order__r.ServicePoint__r.SupplyPostalCode__c,
-                                                             Order__r.ServicePoint__r.Account__r.CustomerCode__c,
-                                                             Order__r.ServicePoint__r.Account__r.VATNumber__c,
-                                                             Order__r.ServicePoint__r.AnnualConsumptionStandardM3__c,
-                                                             Order__r.RecordType.DeveloperName,
-                                                             Order__r.Account.CustomerCode__c,
-                                                             Order__r.Account.FiscalCode__c,
-                                                             Order__r.Account.VATNumber__c,
-                                                             Order__r.Account.CustomerMarking__c,
-                                                             Order__r.Account.Category__c,
-                                                             Order__r.Account.CustomerType__c,
-                                                             Order__r.Account.RecordType.DeveloperName                                                             
-                                                       FROM wrts_prcgvr__Activity__c 
-                                                       WHERE  (RecordType.DeveloperName = 'HDT_RT_CreditCheckKO' or RecordType.DeveloperName = 'HDT_RT_KoPrecedeteCliente') 
-                                                                and Status__c = 'Creata' and Order__c IN :orderSetId];
+            List<wrts_prcgvr__Activity__c> actList = HDT_QR_ActivityCustom.getActivityListCrediCheck(orderSetId);
             for(wrts_prcgvr__Activity__c act : actList){
                 mapIdOrderToActivity.put(act.Order__c,act);
             }

@@ -290,22 +290,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Case_Id_Modifiche_Anagrafiche</name>
-        <label>Assegna Case Id</label>
-        <locationX>2756</locationX>
-        <locationY>1310</locationY>
-        <assignmentItems>
-            <assignToReference>CaseId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Crea_Case_Modifiche_Anagrafiche</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Check_Arricchimento_Dati_Mod_Anagrafica</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assegna_Case_Id_Modifiche_Anagrafiche_0</name>
         <label>Assegna Case Id</label>
         <locationX>3196</locationX>
@@ -319,6 +303,38 @@
         </assignmentItems>
         <connector>
             <targetReference>Arricchimento_Dati_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_Modifiche_Anagrafiche_Account</name>
+        <label>Assegna Case Id</label>
+        <locationX>2624</locationX>
+        <locationY>1430</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Modifiche_Anagrafiche_Account</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Arricchimento_Dati_Mod_Anagrafica</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_Modifiche_Anagrafiche_Lead</name>
+        <label>Assegna Case Id</label>
+        <locationX>2888</locationX>
+        <locationY>1550</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Modifiche_Anagrafiche_Lead</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Arricchimento_Dati_Mod_Anagrafica</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -650,7 +666,7 @@
         <name>Check_Arricchimento_Dati_Mod_Anagrafica</name>
         <label>Arricchimento Dati Mod. Anagrafica?</label>
         <locationX>2756</locationX>
-        <locationY>1430</locationY>
+        <locationY>1766</locationY>
         <defaultConnector>
             <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
         </defaultConnector>
@@ -669,6 +685,31 @@
                 <targetReference>Arricchimento_Dati_Mod_Anagrafica</targetReference>
             </connector>
             <label>Con Arricchimento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Contesto_Case</name>
+        <label>Contesto Case?</label>
+        <locationX>2756</locationX>
+        <locationY>1190</locationY>
+        <defaultConnector>
+            <targetReference>Get_Lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Lead</defaultConnectorLabel>
+        <rules>
+            <name>Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Crea_Case_Modifiche_Anagrafiche_Account</targetReference>
+            </connector>
+            <label>Account</label>
         </rules>
     </decisions>
     <decisions>
@@ -2303,12 +2344,12 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
-        <name>Crea_Case_Modifiche_Anagrafiche</name>
+        <name>Crea_Case_Modifiche_Anagrafiche_Account</name>
         <label>Crea Case</label>
-        <locationX>2756</locationX>
-        <locationY>1190</locationY>
+        <locationX>2624</locationX>
+        <locationY>1310</locationY>
         <connector>
-            <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_Account</targetReference>
         </connector>
         <inputAssignments>
             <field>AccountId</field>
@@ -2374,6 +2415,59 @@
             <field>Subprocess__c</field>
             <value>
                 <elementReference>SubprocessChoice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Crea_Case_Modifiche_Anagrafiche_Lead</name>
+        <label>Crea Case</label>
+        <locationX>2888</locationX>
+        <locationY>1430</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_Lead</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Modifiche Anagrafiche</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Get_Lead.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Lead__c</field>
+            <value>
+                <elementReference>LeadId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Modifiche_Anagrafiche.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3016,6 +3110,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Lead</name>
+        <label>Get Lead</label>
+        <locationX>2888</locationX>
+        <locationY>1310</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_Modifiche_Anagrafiche_Lead</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>LeadId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Lead</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_RT_Annullamento</name>
         <label>Get RT Annullamento</label>
         <locationX>4648</locationX>
@@ -3232,7 +3347,7 @@
         <locationY>1070</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Crea_Case_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Check_Contesto_Case</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -3717,7 +3832,7 @@
         <name>Arricchimento_Dati_Mod_Anagrafica</name>
         <label>Arricchimento Dati Mod. Anagrafica</label>
         <locationX>2624</locationX>
-        <locationY>1550</locationY>
+        <locationY>1886</locationY>
         <connector>
             <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
         </connector>
@@ -3731,7 +3846,7 @@
         <inputAssignments>
             <name>InputCase</name>
             <value>
-                <elementReference>Crea_Case_Modifiche_Anagrafiche</elementReference>
+                <elementReference>Crea_Case_Modifiche_Anagrafiche_Account</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3892,7 +4007,7 @@
         <name>Gestione_Modifiche_Anagrafiche</name>
         <label>Gestione Modifiche Anagrafiche</label>
         <locationX>2756</locationX>
-        <locationY>1766</locationY>
+        <locationY>2102</locationY>
         <flowName>HDT_FL_GestioneModificheAnagrafiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -4667,6 +4782,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>LeadId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

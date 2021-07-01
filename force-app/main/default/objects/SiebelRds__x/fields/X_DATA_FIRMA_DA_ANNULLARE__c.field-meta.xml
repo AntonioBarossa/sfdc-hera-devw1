@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X_DATA_FIRMA_DA_ANNULLARE__c</fullName>
+    <description>X_DATA_FIRMA_DA_ANNULLARE</description>
+    <externalDeveloperName>X_DATA_FIRMA_DA_ANNULLARE</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Data firma cliente da Annullare</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

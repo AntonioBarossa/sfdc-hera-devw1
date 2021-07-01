@@ -33,6 +33,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>ContractAccountCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>PhoneNumber__c</field>
             </layoutItems>
             <layoutItems>
@@ -88,10 +92,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>DepositAmount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>DepositExpirationDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

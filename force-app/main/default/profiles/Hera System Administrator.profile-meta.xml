@@ -367,6 +367,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.AgencyChannel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.AnnualRevenue</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1423,6 +1428,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AlertConfiguration__c.AlertType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AlertConfiguration__c.BillSendingMethod__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2898,6 +2908,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Campaign.ActualCost</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Campaign.PaperCampaignParameter__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5954,11 +5969,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.SupplyStreetNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.SupplyStreetToponym__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25283,11 +25293,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ServicePoint__c.SupplyStreetToponym__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>ServicePoint__c.SupplyStreet__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30454,6 +30459,10 @@
         <recordType>Case.HDT_RT_VotiveModena</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_PraticaInVolo</layout>
+        <recordType>Case.HDT_RT_FlyingRequest</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -30600,6 +30609,10 @@
         <recordType>Order.HDT_RT_VAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Order-HDT_PraticaInVolo</layout>
+        <recordType>Order.HDT_RT_FlyingRequest</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>OrderItem-SBQQ__CPQ Order Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -30736,6 +30749,42 @@
     <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-Visita_D2D</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelActivity__x-SiebelActivity Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelContact__x-SiebelContact Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelContract__x-SiebelContract Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelContractAttribute__x-SiebelContractAttribute Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelCustomer__x-SiebelCustomer Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelDocumentLink__x-SiebelDocumentLink Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelOrder__x-SiebelOrder Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelOrderAttribute__x-SiebelOrderAttribute Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelRdo__x-SiebelRdo Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelRdoAttribute__x-SiebelRdoAttribute Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelRds__x-SiebelRds Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelRdsAttribute__x-SiebelRdsAttribute Layout</layout>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -33709,6 +33758,14 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>FileTemplate__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>FUBProcessingItem__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>FUBProcessing__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>

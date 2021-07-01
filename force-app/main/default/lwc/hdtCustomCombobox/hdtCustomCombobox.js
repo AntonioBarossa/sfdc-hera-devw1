@@ -4,6 +4,7 @@ export default class HdtCustomCombobox extends LightningElement {
         
     @api fieldName;
     @api fieldType;
+    @api defaultOperator;
     @track operator = [
         {label: 'Nessun operatore', value: null}
     ];
@@ -28,6 +29,8 @@ export default class HdtCustomCombobox extends LightningElement {
     value = null;
 
     connectedCallback(){
+
+        this.value = this.defaultOperator;
 
         switch (this.fieldType) {
             case 'text':

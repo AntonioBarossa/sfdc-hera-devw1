@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X_PERIODO_INDICE_TTF_I__c</fullName>
+    <description>X_PERIODO_INDICE_TTF_I</description>
+    <externalDeveloperName>X_PERIODO_INDICE_TTF_I</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Periodo Indice TTF I</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

@@ -464,7 +464,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
         String accountQueryFields = '';
         // DATI INDIRIZZO DI RESIDENZA
-        accountQueryFields += 'BillingStreetToponym__c,BillingState,BillingStreetNumber__c,BillingPlace__c,BillingStreetName__c,BillingPostalCode,BillingCountry,BillingCityCode__c';
+        accountQueryFields += 'BillingStreetToponym__c,BillingState,BillingStreetNumber__c,BillingCity,BillingPlace__c,BillingStreetName__c,BillingPostalCode,BillingCountry,BillingCityCode__c';
         // DATI CLIENTE FINALE
         accountQueryFields += ',FirstName__c,LastName__c,FiscalCode__c,VATNumber__c';
         Account caseAccount = accountQueryHandler.getRecordById(triggerCase.AccountId, accountQueryFields);
@@ -484,6 +484,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.BillingStreetToponym__c = caseAccount.BillingStreetToponym__c;
             anagAlignCase.BillingProvince__c = caseAccount.BillingState;
             anagAlignCase.BillingStreetNumber__c = caseAccount.BillingStreetNumber__c;
+            anagAlignCase.BillingCity__c = caseAccount.BillingCity;
             anagAlignCase.BillingPlace__c = caseAccount.BillingPlace__c;
             anagAlignCase.BillingStreetName__c = caseAccount.BillingStreetName__c;
             anagAlignCase.BillingPostalCode__c = caseAccount.BillingPostalCode;

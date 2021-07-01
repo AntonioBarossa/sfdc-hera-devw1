@@ -38,7 +38,7 @@
                       </div>
                     </div>
 
-                    <template iterator:c={columns} >
+                    <template iterator:c={defaultFilterObj} >
                       <div key={c.value.fieldName} class="slds-grid slds-wrap slds-border_right">
                         <div class="slds-col slds-size_4-of-12 slds-border_left" >
                           <div class="slds-m-around_x-small">
@@ -55,7 +55,8 @@
                             <div class="slds-m-around_x-small">
                               <c-hdt-custom-combobox
                                 field-name={c.value.fieldName}
-                                field-type={c.value.detail.type}
+                                field-type={c.value.type}
+                                default-operator={c.value.filterDetail.operator}
                                 onsetoperator={setOperator}
                               ></c-hdt-custom-combobox>
                             </div>      
@@ -64,7 +65,8 @@
                             <div class="slds-m-around_x-small">
                               <lightning-input id={c.value.fieldName}
                                               name={c.value.fieldName}
-                                              type={c.value.detail.type}
+                                              type={c.value.type}
+                                              value={c.value.filterDetail.value}
                                               formatter="currency"
                                               step="0.01"
                                               label="valore"

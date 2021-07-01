@@ -7,8 +7,8 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_FLG_INCLUDI</label>
-    <length>128</length>
+    <label>Includi</label>
+    <length>1</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
