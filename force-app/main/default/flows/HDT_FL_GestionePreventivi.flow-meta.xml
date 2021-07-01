@@ -348,6 +348,13 @@
                 <elementReference>Get_Input_Case.ServicePoint__r.ImplantType__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.ConnectionType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Permanente</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Valorizzare_Potenza_Richiesta</targetReference>
         </connector>
@@ -414,6 +421,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>GetCaseNuovoImpianto.Contact.Company__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseNuovoImpianto.ConnectionType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Permanente</stringValue>
             </value>
         </assignmentItems>
         <connector>
