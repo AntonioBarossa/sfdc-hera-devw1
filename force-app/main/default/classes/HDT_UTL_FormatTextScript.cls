@@ -89,6 +89,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     protected String getFieldValue(String fieldPath, SObject relation){
         //this method get dinamically field Value from generic sogbject, even from a related parent object
         List<String> relationshipNames = fieldPath.split('\\.');
+        String fieldOrRelation;
         //SObject relation=scriptRecordFull;
         String fieldValue;
         if(relationshipNames[0]=='globaltag'){
@@ -97,7 +98,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
             return getGlobalTagValues(relationshipNames);
         }
         for(Integer indexParentField = 0; indexParentField<relationshipNames.size(); indexParentField++){
-            String fieldOrRelation = relationshipNames[indexParentField];
+            fieldOrRelation = relationshipNames[indexParentField];
 
             if(indexParentField!=relationshipNames.size()-1){
                 relation=relation.getSobject(fieldOrRelation);
@@ -129,6 +130,12 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 
             }
         }
+        return overwriteValue(fieldValue, relation.getSobjectType().getDescribe().getName(), fieldOrRelation);
+    }
+
+    private String overwriteValue(String fieldValue, String sobjectApiName, String fieldApiName){
+        //controlla su CS o CMT se il valore va sovrascritto (ossia se c'è una corrispondenza tra fieldApiName e ObjectApiName),
+        // se sì converti in decimal, aumenta, riconverti in stringa, altrimenti rimanda indietro il valore che ti è arrivato
         return fieldValue;
     }
 
