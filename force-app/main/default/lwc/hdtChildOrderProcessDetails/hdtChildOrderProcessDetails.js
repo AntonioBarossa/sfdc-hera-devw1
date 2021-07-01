@@ -571,7 +571,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
-                        message: 'Popolare il campo Cod Ateco',
+                        message: 'Popolare il campo Cod ISTAT Ateco',
                         variant: 'error',
                         mode: 'sticky'
                     });
@@ -898,8 +898,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
                 || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
                 || this.order.RecordType.DeveloperName === 'HDT_RT_VAS'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
@@ -1081,6 +1079,49 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
+                step: 3,
+                label: 'Credit check',
+                name: 'creditCheck',
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
+                || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
+                data: [
+                    {
+                        'label': 'Esito credit Check Entrante',
+                        'apiname': 'IncomingCreditCheckResult__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': false,
+                        'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Esito credit Check Uscente',
+                        'apiname': 'OutgoingCreditCheckResult__c',
+                        'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_VAS',
+                        'required': false,
+                        'disabled': true,
+                        'value': this.applyCreditCheckLogic('OutgoingCreditCheckResult__c'),
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Descrizione esito',
+                        'apiname': 'CreditCheckDescription__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': false,
+                        'value': this.applyCreditCheckLogic('CreditCheckDescription__c'),
+                        'processVisibility': ''
+                    }
+                ]
+            },
+            {
                 step: 4,
                 label: 'Autolettura',
                 name: 'reading',
@@ -1160,6 +1201,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 hasCalculateButton: this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica',
+                hasCodiceAtecoButton: this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
@@ -1500,7 +1542,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'AtecoCode__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': false,
+                    'disabled': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
                     'value': '',
                     'processVisibility': ''
                 },
@@ -2643,5 +2685,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             })
             .catch(error=>{console.log(error)})
         }, 3000)
+    }
+
+    handleUpdateCodAtecoEvent(event){
+        this.template.querySelector("[data-id='AtecoCode__c']").value = event.detail;
     }
 }

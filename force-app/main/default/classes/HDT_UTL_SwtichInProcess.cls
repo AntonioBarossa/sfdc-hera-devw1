@@ -81,10 +81,10 @@ public with sharing class HDT_UTL_SwtichInProcess {
                     dateSentToSii = date.today();
                 }else{                    
                     if(order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)){
-                        system.debug('order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)'); 
+                        system.debug('order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)');
                         dateSentToSii= order.WizardCompletedDate__c;
                     }else{
-                        system.debug('order.WizardCompletedDate__c < getMaxAfterthoughtDate(order)');
+                        system.debug('order.WizardCompletedDate__c < getMaxAfterthoughtDate(order)'); 
                         dateSentToSii= getMaxAfterthoughtDate(order).addDays(1);
                     }                    
                 }

@@ -161,6 +161,12 @@
                 <elementReference>Get_Input_Case_0.PowerRequested__c</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>Get_Input_Case_0.SalesCompany__c</elementReference>
+            </value>
+        </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>50.0</apiVersion>
@@ -194,6 +200,29 @@
         </assignmentItems>
         <connector>
             <targetReference>AssegnaComponenteFissaVariabile</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AggiornaCodici</name>
+        <label>AggiornaCodici</label>
+        <locationX>2079</locationX>
+        <locationY>3158</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.DistributorCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Input_Case_0.Distributor__r.FiscalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Opzione.salesCompanyCode</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_2</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -285,13 +314,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>PreviousButton</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Get_Input_Case.PhaseTypeRequested__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -326,6 +348,13 @@
                 <elementReference>Get_Input_Case.ServicePoint__r.ImplantType__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.ConnectionType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Permanente</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Valorizzare_Potenza_Richiesta</targetReference>
         </connector>
@@ -346,8 +375,8 @@
     <assignments>
         <name>AssegnaOpzione</name>
         <label>AssegnaOpzione</label>
-        <locationX>1329</locationX>
-        <locationY>3233</locationY>
+        <locationX>1676</locationX>
+        <locationY>2868</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.TensionOption__c</assignToReference>
             <operator>Assign</operator>
@@ -356,7 +385,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case_2</targetReference>
+            <targetReference>Nuovo_Impianto_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -376,26 +405,40 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssegnaValori</name>
-        <label>AssegnaValori</label>
-        <locationX>1684</locationX>
-        <locationY>598</locationY>
+        <name>AssegnaRecordType</name>
+        <label>AssegnaRecordType</label>
+        <locationX>1785</locationX>
+        <locationY>528</locationY>
         <assignmentItems>
-            <assignToReference>PreviousButton</assignToReference>
+            <assignToReference>GetCaseNuovoImpianto.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <elementReference>GetRecordTypePreventivi.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseNuovoImpianto.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseNuovoImpianto.Contact.Company__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseNuovoImpianto.ConnectionType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Permanente</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Processo_Screen</targetReference>
+            <targetReference>AggiornaCaseNuovoImpianto</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssegnaValori_00</name>
         <label>AssegnaValori</label>
-        <locationX>1934</locationX>
-        <locationY>309</locationY>
+        <locationX>2037</locationX>
+        <locationY>269</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -433,8 +476,8 @@
     <assignments>
         <name>AssegnaValoriNoCodOperazione</name>
         <label>AssegnaValoriNoCodOperazione</label>
-        <locationX>1700</locationX>
-        <locationY>1533</locationY>
+        <locationX>1694</locationX>
+        <locationY>1604</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -830,28 +873,28 @@
     <decisions>
         <name>Avanzamento_1</name>
         <label>Avanzamento</label>
-        <locationX>1870</locationX>
-        <locationY>480</locationY>
+        <locationX>2449</locationX>
+        <locationY>649</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Avanti</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtFLowNavButton.cancelCase</leftValueReference>
+                <leftValueReference>hdtCommodityScreen.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtFLowNavButton.saveDraft</leftValueReference>
+                <leftValueReference>hdtCommodityScreen.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>AssegnaValori</targetReference>
+                <targetReference>GetCaseNuovoImpianto</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -859,14 +902,14 @@
             <name>Annulla_3</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtFLowNavButton.cancelCase</leftValueReference>
+                <leftValueReference>hdtCommodityScreen.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtFLowNavButton.saveDraft</leftValueReference>
+                <leftValueReference>hdtCommodityScreen.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -1147,8 +1190,8 @@
     <decisions>
         <name>FT</name>
         <label>FT?</label>
-        <locationX>700</locationX>
-        <locationY>3612</locationY>
+        <locationX>628</locationX>
+        <locationY>3566</locationY>
         <defaultConnector>
             <targetReference>Prestazione_Distrubutore</targetReference>
         </defaultConnector>
@@ -1167,6 +1210,31 @@
                 <targetReference>Prestazione_Distrubutore</targetReference>
             </connector>
             <label>FT</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Nuovo_Impianto_0</name>
+        <label>Nuovo Impianto</label>
+        <locationX>1844</locationX>
+        <locationY>3015</locationY>
+        <defaultConnector>
+            <targetReference>Aggiorna_Case_2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altri processi</defaultConnectorLabel>
+        <rules>
+            <name>NuovoImpianto</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Nuovo Impianto - Aggiunta Attacco</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AggiornaCodici</targetReference>
+            </connector>
+            <label>NuovoImpianto</label>
         </rules>
     </decisions>
     <decisions>
@@ -1197,8 +1265,8 @@
     <decisions>
         <name>OptionBlank</name>
         <label>OptionBlank</label>
-        <locationX>1369</locationX>
-        <locationY>3101</locationY>
+        <locationX>1419</locationX>
+        <locationY>3068</locationY>
         <defaultConnector>
             <targetReference>AssegnaOpzione</targetReference>
         </defaultConnector>
@@ -1218,7 +1286,7 @@
                 <operator>EqualTo</operator>
             </conditions>
             <connector>
-                <targetReference>Aggiorna_Case_2</targetReference>
+                <targetReference>Nuovo_Impianto_0</targetReference>
             </connector>
             <label>Blank</label>
         </rules>
@@ -1646,14 +1714,31 @@
         <expression>IF(ISBLANK({!Calcola_Info_Preventivo.OperationCode__c}), &quot;&quot;,{!Calcola_Info_Preventivo.OperationCode__c})</expression>
     </formulas>
     <formulas>
+        <name>PreviousButtonFormula</name>
+        <dataType>Boolean</dataType>
+        <expression>TEXT({!Get_Input_Case.Type}) = &quot;Nuovo Impianto - Aggiunta Attacco&quot;</expression>
+    </formulas>
+    <formulas>
         <name>ProcessTypeCommodity</name>
         <dataType>String</dataType>
-        <expression>IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Mod. Imp. - Em. Imp. - Var. Portata&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Rimozione Impianto&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Modifica Impianto&quot;)),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + {!Get_Input_Case.CommodityFormula__c}, TEXT({!Get_Input_Case.Type}))</expression>
+        <expression>IF(TEXT({!Get_Input_Case.Type})=&quot;Nuovo Impianto - Aggiunta Attacco&quot; ,TEXT({!Get_Input_Case.Type}) + &quot; &quot; + TEXT({!GetCaseNuovoImpianto.Commodity__c}),
+IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Mod. Imp. - Em. Imp. - Var. Portata&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Rimozione Impianto&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Modifica Impianto&quot;)),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + {!Get_Input_Case.CommodityFormula__c}, TEXT({!Get_Input_Case.Type}))
+)</expression>
     </formulas>
     <formulas>
         <name>ProcessTypeRecapFormula</name>
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!Get_Input_Case.Type},&quot;Nuovo Impianto - Aggiunta Attacco&quot;),&quot;Preventivi Riepilogo Nuovo Impianto&quot;,&quot;Preventivi Riepilogo&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>RecordTypeDevNameFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!GetCaseNuovoImpianto.Commodity__c}) = &quot;Gas&quot;,&quot;HDT_RT_PreventiviGas&quot;,&quot;HDT_RT_PreventiviEle&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>RecordTypeIdFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!Get_Input_Case.Type}) = &quot;Nuovo Impianto - Aggiunta Attacco&quot;,{!GetRecordTypePreventivi.Id},{!Get_Input_Case.RecordType.Id})</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestionePreventivi {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Preventivi</label>
@@ -1720,11 +1805,53 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetCaseNuovoImpianto</name>
+        <label>GetCaseNuovoImpianto</label>
+        <locationX>1911</locationX>
+        <locationY>660</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetRecordTypePreventivi</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetRecordTypePreventivi</name>
+        <label>GetRecordTypePreventivi</label>
+        <locationX>1893</locationX>
+        <locationY>526</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaRecordType</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordTypeDevNameFormula</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <description>Check if the current service is managed by the local dispatcher</description>
         <name>Prestazione_Distrubutore</name>
         <label>Prestazione Distrubutore</label>
-        <locationX>920</locationX>
-        <locationY>3774</locationY>
+        <locationX>886</locationX>
+        <locationY>3724</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Prestazione_Gestita</targetReference>
@@ -1840,8 +1967,8 @@
     <recordUpdates>
         <name>AggiornaCase_00</name>
         <label>AggiornaCase</label>
-        <locationX>2066</locationX>
-        <locationY>365</locationY>
+        <locationX>2169</locationX>
+        <locationY>325</locationY>
         <connector>
             <targetReference>LoadingSpinner</targetReference>
         </connector>
@@ -1856,6 +1983,16 @@
             <targetReference>Loading_Screen</targetReference>
         </connector>
         <inputReference>Get_Input_Case_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCaseNuovoImpianto</name>
+        <label>AggiornaCaseNuovoImpianto</label>
+        <locationX>1780</locationX>
+        <locationY>660</locationY>
+        <connector>
+            <targetReference>Processo_Screen</targetReference>
+        </connector>
+        <inputReference>GetCaseNuovoImpianto</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
@@ -1907,43 +2044,73 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>hdtFLowNavButton</name>
-            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <name>hdtCommodityScreen</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>isCancel</name>
+                <name>cancelButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>isDraft</name>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>isPrevious</name>
+                <name>labelDraftButton</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <stringValue>Salva In Bozza</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>nextLabel</name>
+                <name>labelSaveButton</name>
                 <value>
                     <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>nextVariant</name>
+                <name>objectName</name>
                 <value>
-                    <stringValue>brand</stringValue>
+                    <stringValue>Case</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>standAlone</name>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Nuovo Impianto - Aggiunta Attacco commodity</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -2019,8 +2186,8 @@
     <screens>
         <name>LoadingSpinner</name>
         <label>LoadingSpinner</label>
-        <locationX>2199</locationX>
-        <locationY>417</locationY>
+        <locationX>2302</locationX>
+        <locationY>377</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2050,7 +2217,7 @@
     <screens>
         <name>Processo_Screen</name>
         <label>Input Dati Screen</label>
-        <locationX>1474</locationX>
+        <locationX>1476</locationX>
         <locationY>720</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2094,7 +2261,7 @@
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <elementReference>PreviousButton</elementReference>
+                    <elementReference>PreviousButtonFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2151,6 +2318,12 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>RecordTypeIdFormula</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -2161,8 +2334,8 @@
     <screens>
         <name>Riepilogo_Non_Bozza</name>
         <label>Riepilogo Non Bozza</label>
-        <locationX>1792</locationX>
-        <locationY>255</locationY>
+        <locationX>1895</locationX>
+        <locationY>215</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
