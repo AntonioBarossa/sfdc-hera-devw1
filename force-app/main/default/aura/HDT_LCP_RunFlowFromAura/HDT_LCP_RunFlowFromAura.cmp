@@ -4,6 +4,7 @@
     <aura:attribute name="flowName" type="String"/>
     <aura:attribute name="subTabToClose" type="String"/>
     <aura:attribute name="accountTabId" type="String"/>
+    <aura:attribute name="leadTabId" type="String"/>
     <aura:attribute name="enableRefresh" type="Boolean"/>
     <aura:attribute name="resumeFromDraft" type="Boolean"/>
     <aura:attribute name="createDocuments" type="Boolean"/>
