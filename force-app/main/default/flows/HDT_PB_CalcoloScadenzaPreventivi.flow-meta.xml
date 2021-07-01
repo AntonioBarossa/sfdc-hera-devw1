@@ -240,7 +240,7 @@
                 <stringValue>TODAY() + 90</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A1_1386657704</name>
+        <name>formula_2_myRule_1_A1_5633056480</name>
         <dataType>Date</dataType>
         <expression>TODAY() + 90</expression>
     </formulas>
@@ -248,29 +248,33 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>IF(OR(
-          CONTAINS([Case].DistributorName__c, &quot;E-D&quot;),
-          CONTAINS([Case].Distributor__r.Name , &quot;E-D&quot;)
-          ),  TODAY() + 30,
-     IF(TEXT([Case].VoltageLevelRequested__c )=&quot;BT&quot;, TODAY() + 90, 
-         IF(TEXT([Case].VoltageLevelRequested__c )=&quot;BT&quot;, TODAY() + 180, null)  
-         ) 
-   ) 
+                <stringValue>IF([Case].QuotationType__c != &apos;Analitico&apos;,
+    IF(OR(
+             CONTAINS([Case].DistributorName__c, &quot;E-D&quot;),
+             CONTAINS([Case].Distributor__r.Name , &quot;E-D&quot;)
+             ),  TODAY() + 30,
+        IF(TEXT([Case].VoltageLevelRequested__c )=&quot;BT&quot;, TODAY() + 90, 
+            IF(TEXT([Case].VoltageLevelRequested__c )=&quot;BT&quot;, TODAY() + 180, null)  
+           ) 
+        ) , null
+    )
 </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_5_myRule_4_A1_7804344578</name>
+        <name>formula_5_myRule_4_A1_4462530892</name>
         <dataType>Date</dataType>
-        <expression>IF(OR(
-          CONTAINS({!myVariable_current.DistributorName__c}, &quot;E-D&quot;),
-          CONTAINS({!myVariable_current.Distributor__r.Name} , &quot;E-D&quot;)
-          ),  TODAY() + 30,
-     IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY() + 90, 
-         IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY() + 180, null)  
-         ) 
-   )</expression>
+        <expression>IF({!myVariable_current.QuotationType__c} != &apos;Analitico&apos;,
+    IF(OR(
+             CONTAINS({!myVariable_current.DistributorName__c}, &quot;E-D&quot;),
+             CONTAINS({!myVariable_current.Distributor__r.Name} , &quot;E-D&quot;)
+             ),  TODAY() + 30,
+        IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY() + 90, 
+            IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY() + 180, null)  
+           ) 
+        ) , null
+    )</expression>
     </formulas>
-    <interviewLabel>HDT_PB_CalcoloScadenzaPreventivi-9_InterviewLabel</interviewLabel>
+    <interviewLabel>HDT_PB_CalcoloScadenzaPreventivi-10_InterviewLabel</interviewLabel>
     <label>Calcolo Scadenza Preventivi</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -373,7 +377,7 @@
             </processMetadataValues>
             <field>ExpirationDate__c</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_1386657704</elementReference>
+                <elementReference>formula_2_myRule_1_A1_5633056480</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -454,7 +458,7 @@
             </processMetadataValues>
             <field>QuotationValidityDate__c</field>
             <value>
-                <elementReference>formula_5_myRule_4_A1_7804344578</elementReference>
+                <elementReference>formula_5_myRule_4_A1_4462530892</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
