@@ -253,6 +253,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
                 currentCase.ComplexCategory__c = reqWrp.requestMap.get('NOTE');
             }
+            if(reqWrp.requestMap.get('DT_MAX_PREV') != null){
+                try{
+                    currentCase.QuotationValidityDate__c = Date.valueOf(reqWrp.requestMap.get('DT_MAX_PREV'));
+                } catch(Exception e){
+                    System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
+                }
+            }
             
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
@@ -310,7 +317,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if(numPrev != null && numPrev != ''){
             currentCase.QuotationNumber__c = numPrev;
         }
-        if(expectedExec != null && expectedExec != ''){
+        if(expectedExec != null && expectedExec != '' && nextPhase.containsIgnoreCase('Dati Tenici Ricevuti')){
             currentCase.ExpectedExecutionTime__c = expectedExec;
         }
         caseUpdate.add(currentCase);
