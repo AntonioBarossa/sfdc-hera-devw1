@@ -12,7 +12,7 @@ public inherited sharing class HDT_UTL_Case {
         Date effectiveDate = inputs[0].effectiveDate;
         String implantType = inputs[0].implantType;
         Decimal powerRequested = inputs[0].powerRequested;
-        String option;
+        String salesCompany = inputs[0].salesCompany;
         
 
         if(process == 'Voltura Tecnica'){
@@ -26,9 +26,9 @@ public inherited sharing class HDT_UTL_Case {
             output.effectiveDate = effectiveDate;
         
         } else if(cluster == 'Preventivi'){
-            option = calculateOption(implantType, powerRequested);
-            output.option = option;
-        }
+            output.option = calculateOption(implantType, powerRequested);
+            output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
+        } 
 
         outputs.add(output);
 
@@ -49,6 +49,8 @@ public inherited sharing class HDT_UTL_Case {
         public String implantType;
         @InvocableVariable
         public Decimal powerRequested;
+        @InvocableVariable
+        public String salesCompany;
 
 
     }
@@ -59,6 +61,8 @@ public inherited sharing class HDT_UTL_Case {
         public Date effectiveDate;
         @InvocableVariable
         public String option;
+        @InvocableVariable
+        public String salesCompanyCode;
 
     }
 
@@ -93,7 +97,7 @@ public inherited sharing class HDT_UTL_Case {
     }
 
     public static String calculateOption(String implantType, Decimal powerRequested){
-        String result;
+        String result = '';
 
         switch on implantType {
             when '13A0-Usi di Abitazione BT' {
@@ -143,6 +147,33 @@ public inherited sharing class HDT_UTL_Case {
         }
 
         return result;
+    }
+
+
+    public static string calculateSalesCompanyCode(String salesCompany){
+
+        String result = '';
+
+        if(salesCompany != null){
+            switch on salesCompany{
+                when 'HC'{
+
+                    result = '13V0000000';
+
+                }
+                when 'HCM'{
+
+                    result = '10V0000160';
+
+                }
+                when else{
+                    //No action needed
+                }
+            }
+        }
+
+        return result;
+
     }
 
 
