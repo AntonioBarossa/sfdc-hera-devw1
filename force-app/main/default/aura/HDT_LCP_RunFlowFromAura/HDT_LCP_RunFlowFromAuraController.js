@@ -245,7 +245,7 @@
                 return;
 
             }
-            if(!enableRefresh && accountTabId !== undefined){
+            if(!enableRefresh && accountTabId != null){
                 workspaceAPI.openSubtab({
                     parentTabId: accountTabId,
                     pageReference: {
