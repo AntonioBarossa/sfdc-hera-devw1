@@ -7890,6 +7890,10 @@
             <fullName>Pratica Riclassificata</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Elaborazione Manuale</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>

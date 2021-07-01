@@ -30,7 +30,38 @@ public with sharing class HDT_UTL_ContactPoint {
         //Aggiungere insert della lista 
         HDT_SRV_ContactPoint.upsertContactPointEmail(emailsList);
         return emailsList;
+    }
+    public static List<ContactPointEmail> createContactPointEmailContact(Map<String,String> primaryEmail,Map<String,List<String>> emails){
+        List<ContactPointEmail> emailsList = new List<ContactPointEmail>();
+        
+        for(String id: primaryEmail.keySet()){
+            if( !String.isblank(primaryEmail.get(id))) {
+                ContactPointEmail emailCont= instanceContactPointEmail( primaryEmail.get(id), true);
+                emailCont.ParentId = id;
+                emailCont.SendToMarketingCloud__c = true;
+                emailsList.add(emailCont);
+            }
         }
+
+        for(String id: emails.keySet()){
+            List<String> email= emails.get(id);
+            if(email.size()>0){
+                for(String em: email){
+                    if(!String.isblank(em)){
+                        ContactPointEmail emailContact= instanceContactPointEmail( em, false);
+                        emailContact.ParentId = id;
+                        emailContact.SendToMarketingCloud__c = true;
+                        emailsList.add(emailContact);
+                    }
+                }
+            }
+        }
+    //Aggiungere insert della lista 
+        HDT_SRV_ContactPoint.upsertContactPointEmail(emailsList);
+        return emailsList;
+    }
+
+
         public static List<ContactPointEmail> createContactPointEmail(Map<String,String> primaryEmail,Map<String,List<String>> emails){
             List<ContactPointEmail> emailsList = new List<ContactPointEmail>();
             
@@ -55,14 +86,22 @@ public with sharing class HDT_UTL_ContactPoint {
                 }
             }
         //Aggiungere insert della lista 
-        HDT_SRV_ContactPoint.upsertContactPointEmail(emailsList);
-        return emailsList;
+            HDT_SRV_ContactPoint.upsertContactPointEmail(emailsList);
+            return emailsList;
         }
 
         public static ContactPointPhone instanceContactPointPhone(String phone, String prefix, Boolean isPrimary) {
         
        
             ContactPointPhone contPhone= new ContactPointPhone(TelephoneNumber=phone ,Prefix__c= prefix,IsPrimary = isPrimary);
+            return contPhone;
+    
+        }
+
+        public static ContactPointPhone instanceContactPointPhone(String phone, String prefix, Boolean isPrimary,String type) {
+        
+       
+            ContactPointPhone contPhone= new ContactPointPhone(TelephoneNumber=phone ,Prefix__c= prefix,IsPrimary = isPrimary,type__c =type);
             return contPhone;
     
         }
@@ -103,6 +142,34 @@ public with sharing class HDT_UTL_ContactPoint {
     //     HDT_SRV_ContactPoint.upsertContactPointPhone(phonesList);
     //     return phonesList;
     // }
+    public static List<ContactPointPhone> createContactPointPhoneContact( Map<String,String> primary,Map<String,List<String>> phones,Map<String,String> prefixes,String tipologia){
+        List<ContactPointPhone> phonesList = new List<ContactPointPhone>();
+
+        for(String id: primary.keySet()){
+            ContactPointPhone phoneCont= instanceContactPointPhone( primary.get(id),prefixes.get(primary.get(id)), true);
+            phoneCont.ParentId = id;
+            phoneCont.SendToMarketingCloud__c = true;
+            phoneCont.Type__c = tipologia;
+            phonesList.add(phoneCont);
+        }
+        for(String id: phones.keySet()){
+            List<String> phone= phones.get(id);
+            if(phone.size()>0){
+                for(String p: phone){
+                    if(!String.isblank(p)){
+                        ContactPointPhone phoneContact= instanceContactPointPhone( p, prefixes.get(p), false);
+                        phoneContact.ParentId = id;
+                        phoneContact.Type__c = tipologia;
+                        phoneContact.SendToMarketingCloud__c = true;
+                        phonesList.add(phoneContact);
+                    }
+                }
+            }
+        }
+        HDT_SRV_ContactPoint.upsertContactPointPhone(phonesList);
+        return phonesList;
+
+    }
 
 
     public static List<ContactPointPhone> createContactPointPhone( Map<String,String> primary,Map<String,List<String>> phones,Map<String,String> prefixes,String tipologia){

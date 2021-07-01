@@ -7807,6 +7807,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Monitoraggio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Attesa Modulo Firmato</fullName>
             <default>false</default>
         </values>

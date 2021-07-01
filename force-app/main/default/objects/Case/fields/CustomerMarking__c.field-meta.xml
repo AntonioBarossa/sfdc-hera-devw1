@@ -15,24 +15,6 @@
         <valueSetName>HDT_CustomerMarking</valueSetName>
         <valueSettings>
             <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
-            <valueName>AAS Condominio</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
-            <controllingFieldValue>Aziende Soho</controllingFieldValue>
-            <valueName>AAS Parti comuni</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
-            <valueName>Condominio</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
-            <controllingFieldValue>Aziende Soho</controllingFieldValue>
-            <valueName>Parti comuni</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piccoli Condomini</controllingFieldValue>
             <controllingFieldValue>Aziende Soho</controllingFieldValue>
             <valueName>D4 - Parti comuni</valueName>
         </valueSettings>
@@ -42,35 +24,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Aziende Soho</controllingFieldValue>
-            <valueName>AAS Azienda</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Aziende Soho</controllingFieldValue>
-            <valueName>AAS Ditta individuale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Aziende Soho</controllingFieldValue>
-            <valueName>Azienda</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Aziende Soho</controllingFieldValue>
-            <valueName>Ditta individuale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Aziende Soho</controllingFieldValue>
             <valueName>D2 - Ditta individuale</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Aziende Soho</controllingFieldValue>
             <valueName>D3 - Azienda</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Famiglie</controllingFieldValue>
-            <valueName>AAS Persona fisica</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Famiglie</controllingFieldValue>
-            <valueName>Persona fisica</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Famiglie</controllingFieldValue>

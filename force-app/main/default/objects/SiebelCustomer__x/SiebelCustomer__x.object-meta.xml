@@ -100,6 +100,14 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Arc_SiebelCustomer</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -108,15 +116,15 @@
         <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <deploymentStatus>InDevelopment</deploymentStatus>
+    <deploymentStatus>Deployed</deploymentStatus>
     <description>SiebelCustomer</description>
     <enableFeeds>false</enableFeeds>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>true</enableSearch>
+    <enableSearch>false</enableSearch>
     <externalDataSource>Hera_Archive</externalDataSource>
     <externalName>SiebelCustomer</externalName>
-    <label>SiebelCustomer</label>
-    <pluralLabel>SiebelCustomer</pluralLabel>
-    <searchLayouts/>
+    <label>Cliente Siebel</label>
+    <pluralLabel>Clienti Siebel</pluralLabel>
+    <searchLayouts></searchLayouts>
 </CustomObject>

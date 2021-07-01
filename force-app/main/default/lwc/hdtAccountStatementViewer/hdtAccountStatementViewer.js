@@ -30,6 +30,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         spincss: ''
     };
     @track interObj = {};
+    @track firstLevelFilterObj = {};
     techObj = {};
     //secondLevelFilter;
     showError = false;
@@ -42,7 +43,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     totAmountStored = 0;
     totAmount = 0;
     checkboxCount = 0;
-    
+    @track showPrintModal = false;
     //error;
     //showAccountData = true;
     @track modalObj = {
@@ -81,6 +82,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     showFilters2 = false;
     filterType;
     billListHeader;
+    @track context;
+    @track tipoPlico;
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -213,39 +216,31 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             return false;
         }        
     }
-
     @api reopenTab(){
         console.log('# reopenTab #');
-
         if(this.allData.length == 0){
             if(this.showError){
                 this.showError = false;
             }
             
             this.openMainSpinner();
-
             if(this.checkBeforeOpenTab()){
                 this.openFilters();
                 this.closeMainSpinner();
             } else {
                 this.backendCall('home', '');// Chiamata in backend
             }
-
             this.focusOnButton('home');
         }
-
     }
-
     //button handler section --- START ---
     buttonHandler(event){
         try {
             console.log('>>> BUTTON TYPE > ' + event.currentTarget.dataset.type);
-
             if(event.currentTarget.dataset.type === undefined){
                 console.log('>>> NO BUTTON TYPE SET');
                 return;
             }
-
             switch (event.currentTarget.dataset.type) {
                 case 'webservice':
                     this.handleButtonClick(event.target.name);
@@ -257,7 +252,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 case 'lwcmethod':
                     this[event.target.name](event);
             }
-
         } catch(e){
             console.error('>>> buttonHandler');
             console.error('# Name => ' + e.name );
@@ -265,53 +259,43 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             console.error('# Stack => ' + e.stack );
         }
     }
-
     //+++ openmodal button type
     changeType(){
         this.showAcctStmt = true;
     }
-
     interrogation(event){
         this.title = 'Interrogazione dei dati';
         this.filterLabel = 'Interroga';
         this.showFilterFirstLevel = true;
         this.totAmount = 0;
     }
-
     joinFilter(event) {
         console.log('# joinFilter #');
         this.joinFilterModal = true;
     }
-
     contractService(event){
         this.filterType = 'contractService';
         this.showFilters2 = true;
     }
-
     filterEc7(){
         this.filterType = 'filterEc7';
         this.showFilters2 = true;
     }
-
     openFilters(){
         this.showFilters = true;
     }
-
     paperlessFilters(event){
         this.filterType = 'paperlessFilters';
         this.showFilters2 = true;
     }
-
     billList(event){
         this.billListHeader = 'Elenco bollette';
         this.showBillList = true;
     }
-
     viewReminders(event){
         this.billListHeader = 'Visualizza Solleciti';
         this.showBillList = true;
     }
-
     refreshRecord(){
         //refresh all data in the same service
         this.filterOn = false;
@@ -324,46 +308,37 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.showAccountData = true;
         this.avoidSort = '';
         this.showFile = false;
-
         for (var key in this.interObj) {
             this.interObj[key] = '';
         }
-
+        this.firstLevelFilterObj = {};
         this.resetFile();
         this.resetIdList();
         this.refreshSortButton();
         this.setButtonForFilterApplied(false);
     }
-
     serviceCatalogHandler(){
         this.serviceCatalogBackendHandler('serviceCatalogHandler', null);
     }
-
     runFlowFromAura(event){
         console.log('>>> PARAMETERS: ' + event.currentTarget.dataset.parameters);
         this.serviceCatalogBackendHandler('runFlowFromAura', event.currentTarget.dataset.parameters);
     }
-
     serviceCatalogBackendHandler(serviceOperation, parameters){
         console.log('# serviceCatalogBackendHandler #');
-
         if(idlist.length > 0){
             this.showOperationModal = true;
-
             var selectedRecord = this.allData.filter(function(item) {
                 if(!idlist.includes(item.id))
                     return false;
                 
                 return true;
             });
-
             //selectedRecord.forEach(r => {
             //    r[this.detailTable] = [];
             //});
-
             var recordsString = JSON.stringify(selectedRecord);
             this.serviceCatalogBackendOperation(recordsString, serviceOperation, parameters);
-
         } else {
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -483,6 +458,20 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.backendCall(event.target.name, JSON.stringify({numeroFattura: nf}));
         //this.focusOnButton(event.target.name);
 
+    }
+    handleClosePrintModal(event){
+        this.showPrintModal = false;
+    }
+    printEstrattoConto(){
+        this.context = 'EC';
+        this.tipoPlico = 'Estratto Conto';
+        this.printFile();
+    }
+
+    printGestioneCredito(){
+        this.context = 'GC';
+        this.tipoPlico = 'Gestione Credito';
+        this.printFile();
     }
 
     printOperation(){
@@ -624,6 +613,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log('# -- config to call mulesoft -- #');
         console.log(JSON.stringify(this.techObj));
         console.log('--------------------------');
+
+        this.firstLevelFilterObj = {};
 
         callMulesoft({techObj: JSON.stringify(this.techObj), requestObj: requestObj})
             .then(result => {
@@ -881,6 +872,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log('# applyInterFromChild #');
 
         var interObj = JSON.parse(event.detail.value);
+        this.firstLevelFilterObj = interObj;
+        console.log('interObj ' + event.detail.value);
 
         try {
 
@@ -1023,14 +1016,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     setButtonForFilterApplied(disable){
         this.template.querySelectorAll('button').forEach(c => {
-            //if(c.name === 'interrogation' || c.name === 'joinFilter'){
-            if(c.name === 'interrogation'){
-                if(disable){
-                    c.setAttribute('disabled', '');
-                } else {
-                    c.removeAttribute('disabled');
-                }
-            }
+            //if(c.name === 'interrogation'){
+            //    if(disable){
+            //        c.setAttribute('disabled', '');
+            //    } else {
+            //        c.removeAttribute('disabled');
+            //    }
+            //}
 
             if(c.name === 'refreshRecords'){
                 if(disable){
@@ -1042,18 +1034,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
         });
     }
-
-    //setButtonForFilterApplied(remove){
-    //    this.template.querySelectorAll('button').forEach(c => {
-    //        if(c.name === 'interrogation' || c.name === 'joinFilter'){
-    //            if(remove){
-    //                c.setAttribute('disabled', '');
-    //            } else {
-    //                c.removeAttribute('disabled');
-    //            }
-    //        }
-    //    });
-    //}
 
     refreshSortButton(){
         this.template.querySelectorAll('lightning-button-icon').forEach((butIco) => {
@@ -1187,24 +1167,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     printFile(){
         console.log('# printFile #');
 
-        this.spinnerObj.spinner = true;
-
-        var applySecondFilter = false;
-        var filterString = this.template.querySelector("c-hdt-account-statement-detail-viewer").filterString;
-        var currentFilter = {};
-
-        if(filterString != undefined && filterString != ''){
-            applySecondFilter = true;
-            var myObj = JSON.parse(filterString);
-
-            for (var key in myObj) {
-                if(myObj[key] != undefined && myObj[key] !=''){
-                    currentFilter[key] = myObj[key];
-                }
-            }
-
-        }        
-        
         var listToConsider;
         if(!this.filterOn){
             //Print all data -> allData if filterOn = false
@@ -1217,23 +1179,35 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             listToConsider = 'allDataFiltered';
         }
 
+        var currentFilter = this.template.querySelector("c-hdt-account-statement-detail-viewer").staticObj;
+        var secondLevelColumns = this.template.querySelector("c-hdt-account-statement-detail-viewer").columns;
+        var isSecondLevelFiltered = this.template.querySelector("c-hdt-account-statement-detail-viewer").getIfSecondLevelIsFiltered();
+
+        const columnTypeMap = new Map();
+        secondLevelColumns.forEach((col) => {
+            columnTypeMap.set(col.fieldName, col.fieldType);
+        });
+
+        var contoContrArray;
+        if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
+            contoContrArray = currentFilter.contoContrattuale.value.split(',');
+        }
+
+        console.log('# CALL CHILD METHOD #');
+
         this[listToConsider].forEach((r) => {
             //filter second level
-            if(applySecondFilter){
-                r[this.detailTable] = r[this.detailTable].filter(function(item) {
-                    for (var key in currentFilter) {
-                        if (item[key] === undefined || item[key] != currentFilter[key])
-                            return false;
-                    }
-                    return true;
-                });
+            if(this.showSecondLevel && isSecondLevelFiltered){
+                r[this.detailTable] = this.template.querySelector("c-hdt-account-statement-detail-viewer").getSecondLevelList(r[this.detailTable], currentFilter, columnTypeMap, contoContrArray);
             }
             listToPrint.push(r);
         });
-
-        this.sendToApex();
+        this.documents = JSON.stringify(listToPrint);
+        //console.log('documents ' + this.documents);
+        this.showPrintModal = true;
+        //this.sendToApex();
         listToPrint.splice(0, listToPrint.length);
-        this.spinnerObj.spinner = false;
+        //this.spinnerObj.spinner = false;
         //this.closeMainSpinner();
     }
 

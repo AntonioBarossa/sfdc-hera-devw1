@@ -1,6 +1,6 @@
 public with sharing class HDT_UTL_Sales {
     
-    public static map<String,String> mapMarcatura = new Map<String,String>{'AAS Associazione' => 'AAS','AAS Azienda'=> 'AAS','AAS Condominio'=> 'AAS','AAS Ditta individuale'=> 'AAS','AAS Parti comuni'=> 'AAS','AAS Persona fisica'=> 'AAS'}; 
+    public static map<String,String> mapMarcatura = new Map<String,String>();//'AAS Associazione' => 'AAS','AAS Azienda'=> 'AAS','AAS Condominio'=> 'AAS','AAS Ditta individuale'=> 'AAS','AAS Parti comuni'=> 'AAS','AAS Persona fisica'=> 'AAS'}; 
     public static String getCityAgency(String comune,boolean isEle, boolean isGas){
         String getSDVComune = '';
         
@@ -34,7 +34,7 @@ public with sharing class HDT_UTL_Sales {
         if(service.distributor__c != null){
             listConf = HDT_QR_MatriceAgenti.getAgenteException(Service.CommoditySector__c,comune,marcaturaValue,'ALTRO',service.distributor__r.code__c);
         }
-        if(listConf != null && !listConf.isEmpty()){
+        if(listConf != null && listConf.isEmpty()){
             listConf = HDT_QR_MatriceAgenti.getAgente(Service.CommoditySector__c,comune,marcaturaValue,'ALTRO');
         }
 

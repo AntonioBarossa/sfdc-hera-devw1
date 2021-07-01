@@ -20,4 +20,14 @@ public with sharing class HDT_LC_DocumentSignatureManager {
         }
         return jsonReturn;
     }
+    @AuraEnabled
+    public static string getInfoAccountStatement(String accountId){
+        String jsonReturn;
+        try {
+            jsonReturn = HDT_SRV_DocumentalManagementFacade.getInfoAccountStatement(accountId);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+        return jsonReturn;
+    }
 }

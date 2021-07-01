@@ -41,21 +41,23 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </template>
-    <div class="slds-grid">
-        <div class="slds-col slds-size_4-of-5">
-            <lightning-layout vertical-align="end">
-                <lightning-layout-item flexibility="auto">
-                    <lightning-input type="text" label="Indirizzo di recapito"
-                        value={address} data-id="indirizzoRecapito" disabled></lightning-input>
-                </lightning-layout-item>
+    <template if:true={showAddress}>
+        <div class="slds-grid">
+            <div class="slds-col slds-size_4-of-5">
+                <lightning-layout vertical-align="end">
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input type="text" label="Indirizzo di recapito"
+                            value={address} data-id="indirizzoRecapito" disabled></lightning-input>
+                    </lightning-layout-item>
 
-                <lightning-layout-item>
-                    <lightning-button-icon icon-name="standard:address" variant="brand" class="slds-m-left_xx-small"
-                        data-id="indirizzoRecapito" disabled={enableEdit}  onclick={handleChangeAddress}></lightning-button-icon>
-                </lightning-layout-item>
-            </lightning-layout>
+                    <lightning-layout-item>
+                        <lightning-button-icon icon-name="standard:address" variant="brand" class="slds-m-left_xx-small"
+                            data-id="indirizzoRecapito" disabled={enableEdit}  onclick={handleChangeAddress}></lightning-button-icon>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
         </div>
-    </div>
+    </template>
     <div class="slds-m-top_medium slds-m-bottom_x-large">
             <template if:true={enablePreview}>
                 <lightning-button label="Preview documentazione" title="Approve" icon-name="utility:download" accesskey="p" onclick={handlePreview}></lightning-button>

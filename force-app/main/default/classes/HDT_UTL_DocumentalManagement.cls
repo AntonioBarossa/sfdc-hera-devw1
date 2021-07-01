@@ -7,6 +7,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 			when 'Context2'{
 				return getRecordObjectsListContext2(recordsList);
+			}
+			when 'Context4'{
+				return getRecordObjectsListContext4(recordsList);
 			}when else {
 				return null;
 			}
@@ -152,7 +155,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				fromString = 'Case';
 			}
 			when else {
-				fieldString = 'Id, AccountId,SendMode__c ,Email__c';
+				fieldString = 'Id,PrimaryEmail__c';
 				fromString = 'Account';
 			}
 		}
@@ -208,8 +211,21 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
 		toReturn.add(mapStringObjectRecords);
 		return toReturn;
-
 	}
+
+	private static List<Map<String,List<sObject>>> getRecordObjectsListContext4(List<SObject> recordsList){
+		Account accountObject = (Account) recordsList[0];
+		List<sObject> listAccount = new List<sObject>();
+		listAccount.add(accountObject);
+		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>{
+			'Account' => listAccount
+		};
+		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
+		toReturn.add(mapStringObjectRecords);
+		return toReturn;
+	}
+
+	
 	private static List<Map<String,List<sObject>>> getRecordObjectsListContext1(List<SObject> recordsList){
 		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
 		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>();
@@ -347,7 +363,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				if(inputs.get(objectString)[index].get(fieldString) != null){
 					retVal = String.valueOf(inputs.get(objectString)[index].get(fieldString));
 				}
-			}else if(inputs.get(objectString) != null && objectString.equalsIgnoreCase('FormParameters')){
+			}else if(objectString.equalsIgnoreCase('FormParameters') && formParams != null && formParams.get(fieldString) != null){
 				retVal = String.valueOf(formParams.get(fieldString));
 			}
 		} catch (Exception ex) {
@@ -517,10 +533,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				return 'Context2';
 			}
 			when 'EC' {
-				return 'Context3';
+				return 'Context4';
 			}
 			when 'GC' {
-				return 'Context3';
+				return 'Context4';
 			}
 			when 'Account' {
 				return 'Context4';
@@ -532,5 +548,71 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				return null;
 			}
 		}
+	}
+	// Calcola lo Stato Documento da mandare a EngageOne per le stampe della vista Gestione Credito.
+	public static String calculateDocumentStatusGc(String ufficioIncassi, Double residuo, Boolean ordineDiPagamento){
+		String statoDocumento = '';
+		try {
+			// Verifichiamo se l'ufficio incassi è valorizzato con un BP.
+			// Di solito un BP inizia sempre con 100.
+			if (ufficioIncassi == '' || ufficioIncassi.substring(0, 3) == '100') {
+				if (residuo > 0) {
+					if (ordineDiPagamento) {
+						statoDocumento = 'Pagato';
+					} else {
+						statoDocumento = 'Da pagare';
+					}
+				} else if (residuo < 0) {
+					if (ordineDiPagamento) {
+						statoDocumento = 'Accreditato';
+					} else {
+						statoDocumento = 'Da accreditare';
+					}
+				}
+			} else {
+				switch on ufficioIncassi{
+					when 'BANCASIST1','CESSPASALV', 'CESSPASAL1', 'BANCASIST2', 'BANCASIST3', 'BANCASIST4', 'BANCAFFCT0', 'BANCASIST5', 'BANCAFFCT1', 'BANCASIST6', 'BANCAFFCT2', 'BANCASIST7', 'BANCAFFCT3'{
+						statoDocumento = 'Cessione credito ad altra società';
+					}
+					when 'CESSIONSAL'{
+						statoDocumento = 'Cessione credito a nuovo trader';
+					}
+					when 'CESSKLEIN2','HM_CESS_NP','CESEUROPAF','CREDCEDUTO','CESAAAEURO' {
+						statoDocumento = 'Cessione credito a terzi';
+					}
+				}
+
+				if(String.isBlank(statoDocumento)) {
+					statoDocumento = 'Soc. rec. esterna';
+				}
+			}
+		} catch (Exception ex) {
+			System.debug('Errore calcolo stato documento GC ' + ex.getMessage());
+		}
+		return statoDocumento;
+	}
+
+	public static String calculateDocumentStatus(Double importo, Double residuo, Boolean storno){
+		if (storno == true) {
+			return 'Storno';
+		}
+
+		if (residuo > 0) {
+			return 'Da pagare';
+		}
+		
+		if (importo > 0 && residuo == 0) {
+			return 'Pagato';
+		}
+		
+		if (importo < 0 && residuo == 0) {
+			return 'Accreditato';
+		}
+		
+		if (importo < 0 && residuo < 0) {
+			return 'Da accreditare';
+		}
+		
+		return '';  // Non dovrebbe mai accadere.
 	}
 }

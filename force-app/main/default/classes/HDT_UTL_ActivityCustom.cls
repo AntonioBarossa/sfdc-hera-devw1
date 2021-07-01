@@ -34,7 +34,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             RecordTypeId = getRecordTypeId(params.get('RecordTypeDeveloperName')),
             Type__c = params.get('Type__c'),
             ServicePointCode__c = params.get('ServicePointCode__c'),
-            Account__c = !accountListRetrieved.isEmpty() ? accountListRetrieved[0].Id : null
+            Account__c = !accountListRetrieved.isEmpty() ? accountListRetrieved[0].Id : null,
+            Status__c = params.get('Status__c'),
+            EffectiveDate__c = params.get('EffectiveDate__c') != null ? Date.valueOf(params.get('EffectiveDate__c')) : null,
+            HerokuPracticeCode__c = params.get('HerokuPracticeCode__c')
         ));
 
         system.debug('HDT_UTL_ActivityCustom END');

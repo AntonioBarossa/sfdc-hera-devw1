@@ -20,6 +20,7 @@
     <template if:true={joinFilterModal} >
         <c-hdt-join-filter-modal
                 tab-code={tabCode}
+                record-id={recordid}
                 onclosemodal={closeModalHandler}
                 fields-to-filter={fieldsToFilter}
                 onsetobjfilter={applyFilter}
@@ -31,10 +32,20 @@
             modal-title={title}
             confirm-label={filterLabel}
             columns={columns}
+            first-level-filter-obj={firstLevelFilterObj}
             onapplyinterrogation={applyInterFromChild}
             onclosemodal={closeModalHandler}
         ></c-hdt-filter-first-level-modal>
     </template>
+    <!--<template if:true={showPrintModal}>
+        <c-hdt-account-document-signature-manager
+            record-id={recordid}
+            context={context}
+            documents={documents}
+            tipo-plico={tipoPlico}
+            onclosemodal={handleClosePrintModal}
+        ></c-hdt-account-document-signature-manager>
+    </template>-->
 
     <template if:true={showBillList} >
         <c-hdt-bill-list
@@ -94,6 +105,7 @@
                                 data-parameters={c.parameters}
                                 name={c.name}
                                 onclick={buttonHandler}
+                                accesskey={c.accesskey}
                             >{c.label}</button>
                         </template>
                     </div>

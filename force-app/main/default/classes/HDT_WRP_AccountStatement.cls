@@ -16,6 +16,7 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public Boolean enable;
         @AuraEnabled public String type;
         @AuraEnabled public String parameters;
+        @AuraEnabled public String accesskey;
         
         public HDT_WRP_ButtonObjDetail(String labelTemp, String nameTemp, Boolean enableTemp, String typeTemp, String parametersTemp){
             label = labelTemp;
@@ -23,6 +24,14 @@ public class HDT_WRP_AccountStatement {
             enable = enableTemp;
             type = typeTemp;
             parameters = parametersTemp;
+        }
+        public HDT_WRP_ButtonObjDetail(String labelTemp, String nameTemp, Boolean enableTemp, String typeTemp, String parametersTemp, String accesskeyTemp){
+            label = labelTemp;
+            name = nameTemp;
+            enable = enableTemp;
+            type = typeTemp;
+            parameters = parametersTemp;
+            accesskey = accesskeyTemp;
         }
     }
 

@@ -77,6 +77,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String errorMessage = '';
         String comunicationChannel='';
         String responseStatus='';
+        String herokuCancellationCode = '';
         Case caseNew = new Case();
 
 
@@ -110,7 +111,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         }
                     }                    
                 } when 'ANNULL'{
-                    herokuCode = responseResult.responseMap.get('requestId');
+                    herokuCancellationCode = responseResult.responseMap.get('COD_PRAT_UTENTE');
                     errorMessage = responseResult.responseMap.get('errorMessage');
                     System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
                     switch on responseResult.responseMap.get('result'){
@@ -144,17 +145,16 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             caseNew.TecnicalPhase__c = phase;
             caseNew.Description = errorMessage;
             if(herokuCode != null && herokuCode != ''){
-                if(currentCase.Phase__c != 'Annullamento - Da inviare'){
-                    caseNew.HerokuPracticeCode__c = herokuCode;
-                }else{
-                    caseNew.CancellationHerokuPracticeCode__c = herokuCode;
-                }
+                caseNew.HerokuPracticeCode__c = herokuCode;
             }
             if(dlCode != null && dlCode != ''){
                 caseNew.DistributorPracticeCode__c = dlCode;
             }
             if(sendDlDate != null && sendDlDate != ''){
                 caseNew.SendToDistributorDate__c = Date.valueOf(sendDlDate);
+            }
+            if(herokuCancellationCode != null && herokuCancellationCode != ''){
+                caseNew.CancellationHerokuPracticeCode__c = herokuCancellationCode;
             }
 
             caseUpdate.add(caseNew);
@@ -192,8 +192,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String expectedExec = reqWrp.requestMap.get('TEMP_ES_PREV');
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         //CHECK CROSS MINIMUM FIELD
-        if(String.isBlank('method')) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
+        if(String.isBlank(method)) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
         
+        if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita')){
+            //gestione scarti
+            return caseUpdate;
+        }
         //INIT VARIABLE FOR NOTIFICATION ON CASE
         if(method.equalsIgnoreCase('esito_intermedio') || method.equalsIgnoreCase('esito_finale') || method.equalsIgnoreCase('AddAttivita')){
             if(String.isBlank(recordId) && String.isBlank(caseNumber)) throw new HDT_UTL_RichPassException('Required Field Missing: RecordId OR CaseNumber');
@@ -247,6 +251,19 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String noteAnn = currentCase.CancellationNote__c != null?currentCase.CancellationNote__c:'';
                 currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
             }
+            if(currentPhase.indexOf('Annullamento') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
+                currentCase.CancellationHerokuPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_UTENTE');
+            }
+            if(nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
+                currentCase.ComplexCategory__c = reqWrp.requestMap.get('NOTE');
+            }
+            if(reqWrp.requestMap.get('DT_MAX_PREV') != null){
+                try{
+                    currentCase.QuotationValidityDate__c = Date.valueOf(reqWrp.requestMap.get('DT_MAX_PREV'));
+                } catch(Exception e){
+                    System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
+                }
+            }
             
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
@@ -283,6 +300,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 && String.isNotBlank(recordCase.Type) 
                 && (recordCase.Type.equals('Prescrizione Fatture') || recordCase.Type.equalsIgnoreCase('Piano Rateizzazione'))
                 && !(type.containsIgnoreCase('Esito Rateizzazione OK'))){
+                    if(type.equalsIgnoreCase('Piano rate OK Acc. pagato')){
+                        type = 'Acconto paperless pagato';
+                    }
                 currentCase.Phase__c = type; 
             }
             if(String.isNotBlank(message)){
@@ -301,7 +321,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if(numPrev != null && numPrev != ''){
             currentCase.QuotationNumber__c = numPrev;
         }
-        if(expectedExec != null && expectedExec != ''){
+        if(expectedExec != null && expectedExec != '' && nextPhase.containsIgnoreCase('Dati Tenici Ricevuti')){
             currentCase.ExpectedExecutionTime__c = expectedExec;
         }
         caseUpdate.add(currentCase);
@@ -317,6 +337,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else if(currentCase.Phase__c == 'Annullamento SII - Ricezione') {
             handlePassiveCancellation(currentCase, 'Case', storno, activity);
         }else if(currentCase.Type == 'Allineamento Anagagrafica' && currentCase.Phase__c == 'Esito OK da SII'){
+            currentCase.Phase__c = 'Completata';
+            currentCase.Status = 'Closed';
+            updateFuture(JSON.serialize(currentCase));
+        }else if(currentCase.Phase__c == 'Preventivo rifiutato – Amm OK'){
             currentCase.Phase__c = 'Completata';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
