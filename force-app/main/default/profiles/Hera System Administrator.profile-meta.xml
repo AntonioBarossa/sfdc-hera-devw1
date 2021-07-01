@@ -29298,6 +29298,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
         <field>wrts_prcgvr__Activity__c.MalfunctionDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29306,7 +29311,11 @@
         <field>wrts_prcgvr__Activity__c.MalfunctionDescription__c</field>
         <readable>true</readable>
     </fieldPermissions>
+<<<<<<< Updated upstream
 	 <fieldPermissions>
+=======
+	<fieldPermissions>
+>>>>>>> Stashed changes
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.MalfunctioningFeature__c</field>
         <readable>true</readable>
@@ -29315,7 +29324,10 @@
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.MalfunctionsCount__c</field>
         <readable>true</readable>
-    </fieldPermissions
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+    </fieldPermissions>ygc
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Mobile__c</field>
