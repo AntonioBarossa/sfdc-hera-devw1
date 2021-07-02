@@ -184,6 +184,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
         String currentPhase = '';
         String nextPhase = '';
+        String quotationType = '';
         String codServizio = reqWrp.requestMap.get('COD_SERVIZIO');
         String codPrestazione = reqWrp.requestMap.get('COD_PRESTAZIONE');
         String codPresa = reqWrp.requestMap.get('COD_PRESA');
@@ -205,6 +206,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             recordCase = hpsmQr.getCaseRecord(caseParam);
             currentCase.Id = recordCase.Id;
             currentPhase = recordCase.Phase__c;
+            quotationType = recordCase.QuotationType__c;
             nextPhase = reqWrp.requestMap.get('FASE');
             storno = reqWrp.requestMap.get('STORNO');
             activity = reqWrp.requestMap.get('ATTIVITA');
@@ -225,7 +227,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
                 currentCase.Phase__c = nextPhase;
             }
-            if(reqWrp.requestMap.get('COD_PRAT_DISTR') != null && reqWrp.requestMap.get('COD_PRAT_DISTR') != ''){
+            if(reqWrp.requestMap.get('COD_PRAT_DISTR') != null && reqWrp.requestMap.get('COD_PRAT_DISTR') != '' 
+                && !(currentPhase.indexOf('Annull') > -1)){
                 currentCase.DistributorPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
             }
             if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
@@ -251,7 +254,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String noteAnn = currentCase.CancellationNote__c != null?currentCase.CancellationNote__c:'';
                 currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
             }
-            if(currentPhase.indexOf('Annullamento') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
+            if(currentPhase.indexOf('Annull') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
                 currentCase.CancellationHerokuPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_UTENTE');
             }
             if(nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
@@ -320,8 +323,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if(numPrev != null && numPrev != ''){
             currentCase.QuotationNumber__c = numPrev;
         }
-        if(expectedExec != null && expectedExec != '' && nextPhase.containsIgnoreCase('Dati Tenici Ricevuti')){
-            currentCase.ExpectedExecutionTime__c = expectedExec;
+        if(expectedExec != null && expectedExec != ''){
+            if(quotationType.equalsIgnoreCase('Analitico') && nextPhase.containsIgnoreCase('Dati Tenici Ricevuti')){
+                currentCase.ExpectedExecutionTime__c = expectedExec;
+            }else if(!quotationType.equalsIgnoreCase('Analitico')){
+                currentCase.ExpectedExecutionTime__c = expectedExec;
+            }else{
+                //not saving
+            }
         }
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
