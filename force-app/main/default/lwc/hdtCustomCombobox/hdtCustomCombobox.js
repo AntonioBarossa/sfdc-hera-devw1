@@ -39,6 +39,9 @@ export default class HdtCustomCombobox extends LightningElement {
             case 'number':
                 this.operator = this.operator.concat(this.numberOperator);
                 break;
+            case 'currency':
+                this.operator = this.operator.concat(this.numberOperator);
+                break;
             case 'checkbox':
                 this.showCombobox = false;
             case 'date':
