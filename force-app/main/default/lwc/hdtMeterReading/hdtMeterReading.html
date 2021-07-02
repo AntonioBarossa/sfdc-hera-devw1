@@ -19,7 +19,7 @@
                 <div class="slds-col slds-size_1-of-6">
                     <lightning-input
                         name="enter-search"
-                        label=" "
+                        label="searchContract"
                         variant="label-hidden"
                         type="search"
                         placeholder="Filtro numero contratto..."
@@ -29,8 +29,8 @@
                 </div>
             </div>
 
-            <div class="slds-grid slds-gutters" >
-                <div class="slds-col slds-size_3-of-5 slds-scrollable_y slds-m-left_small slds-border_bottom slds-border_top" style="height: 20vh;">
+            <!--<div class="slds-grid slds-gutters" >
+                <div class="slds-col slds-size_1-of-1 slds-scrollable_y slds-m-left_small slds-border_bottom slds-border_top" style="height: 20vh;">
                     <lightning-datatable
                             key-field="id"
                             data={contractDataToView}
@@ -40,6 +40,17 @@
                             resize-column-disabled
                     ></lightning-datatable>
                 </div>
+            </div>-->
+
+            <div class="slds-scrollable_y slds-m-left_small slds-m-right_small slds-border_bottom slds-border_top" style="height: 20vh;">
+                <lightning-datatable
+                        key-field="id"
+                        data={contractDataToView}
+                        columns={contractColumns}
+                        onrowaction={handleRowAction}
+                        hide-checkbox-column
+                        resize-column-disabled
+                ></lightning-datatable>
             </div>
 
         </lightning-card>

@@ -33,12 +33,14 @@
     {
       &quot;label&quot;: &quot;Data Inizio Contratto&quot;,
       &quot;fieldName&quot;: &quot;startDate&quot;,
-      &quot;initialWidth&quot;: 180
+      &quot;initialWidth&quot;: 180,
+      &quot;type&quot;: &quot;date-local&quot;
     },
     {
       &quot;label&quot;: &quot;Data Fine Contratto&quot;,
       &quot;fieldName&quot;: &quot;endDate&quot;,
-      &quot;initialWidth&quot;: 180
+      &quot;initialWidth&quot;: 180,
+      &quot;type&quot;: &quot;date-local&quot;
     }
   ]
 }</value>
