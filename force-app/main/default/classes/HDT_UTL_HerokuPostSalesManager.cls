@@ -225,7 +225,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
                 currentCase.Phase__c = nextPhase;
             }
-            if(reqWrp.requestMap.get('COD_PRAT_DISTR') != null && reqWrp.requestMap.get('COD_PRAT_DISTR') != ''){
+            if(reqWrp.requestMap.get('COD_PRAT_DISTR') != null && reqWrp.requestMap.get('COD_PRAT_DISTR') != '' && !(currentPhase.indexOf('Annullamento') > -1)){
                 currentCase.DistributorPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
             }
             if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
