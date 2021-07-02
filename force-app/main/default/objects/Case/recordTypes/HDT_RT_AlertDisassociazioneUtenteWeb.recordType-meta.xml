@@ -7839,6 +7839,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Non Inviata a SAP</fullName>
             <default>false</default>
         </values>

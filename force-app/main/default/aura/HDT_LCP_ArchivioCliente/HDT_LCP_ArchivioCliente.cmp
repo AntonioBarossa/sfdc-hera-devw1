@@ -15,6 +15,7 @@
     <aura:attribute name="forcedvaluesAA" type="List" />
     <aura:attribute name="columns" type="List" />
     <aura:attribute name="showTable" type="Boolean" default="false" />
+    <aura:attribute name="noResults" type="Boolean" default="false" />
 
 
     <c:hdt_spinner aura:id="spinner" size="large" />
@@ -42,6 +43,11 @@
             <aura:if isTrue="{!v.showTable}">
                 <lightning:datatable keyField="id" data="{! v.data }" columns="{! v.columns }"
                     hideCheckboxColumn="true" />
+            </aura:if>
+            <aura:if isTrue="{!v.noResults}">
+                <div class="slds-m-top_xx-large slds-m-bottom_medium slds-align_absolute-center">
+                    <p>Non sono stati trovati record per la chiave di ricerca</p>
+                </div>
             </aura:if>
         </div>
     </div>

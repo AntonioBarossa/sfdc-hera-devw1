@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_ASGN_SYS_FLG_SIM</label>
+    <label>Flag assegnamento di sistema SIM</label>
     <length>1</length>
     <required>false</required>
     <type>Text</type>

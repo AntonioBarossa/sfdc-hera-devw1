@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_RESP_TYPE_CD</label>
+    <label>Tipo risposta</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

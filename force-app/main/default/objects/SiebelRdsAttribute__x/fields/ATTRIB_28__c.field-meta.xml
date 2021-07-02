@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_28</label>
+    <label>Data fine</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>
