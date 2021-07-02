@@ -349,7 +349,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 }
             }
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valorizzare la Marcatura del cliente.'));
             return result;
         }
 
