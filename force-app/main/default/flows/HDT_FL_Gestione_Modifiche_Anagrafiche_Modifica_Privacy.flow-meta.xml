@@ -27,8 +27,8 @@
     <assignments>
         <name>Assegna_Variabili_0</name>
         <label>Assegna Variabili</label>
-        <locationX>1209</locationX>
-        <locationY>553</locationY>
+        <locationX>1210</locationX>
+        <locationY>550</locationY>
         <assignmentItems>
             <assignToReference>FlowCase</assignToReference>
             <operator>Assign</operator>
@@ -45,6 +45,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Get_Individual</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Contact_Id</name>
+        <label>Set Contact Id</label>
+        <locationX>999</locationX>
+        <locationY>369</locationY>
+        <assignmentItems>
+            <assignToReference>SelectedContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Contact</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -233,12 +249,37 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Fase_Case</name>
+        <label>Fase Case?</label>
+        <locationX>725</locationX>
+        <locationY>374</locationY>
+        <defaultConnector>
+            <targetReference>Set_Contact_Id</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Contatto già selezionato</defaultConnectorLabel>
+        <rules>
+            <name>Selezione_Contatto_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Bozza</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Contatto</targetReference>
+            </connector>
+            <label>Selezione Contatto</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Modifica_Privacy_Lead</name>
         <label>Modifica Privacy Lead?</label>
-        <locationX>681</locationX>
-        <locationY>449</locationY>
+        <locationX>543</locationX>
+        <locationY>447</locationY>
         <defaultConnector>
-            <targetReference>Selezione_Contatto</targetReference>
+            <targetReference>Check_Fase_Case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Privacy Account</defaultConnectorLabel>
         <rules>
@@ -439,8 +480,8 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>499</locationX>
-        <locationY>447</locationY>
+        <locationX>411</locationX>
+        <locationY>445</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Modifica_Privacy_Lead</targetReference>
@@ -460,7 +501,7 @@
     <recordLookups>
         <name>Get_Contact</name>
         <label>Get Contact</label>
-        <locationX>1102</locationX>
+        <locationX>1107</locationX>
         <locationY>369</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -502,8 +543,8 @@
     <recordLookups>
         <name>Get_Lead</name>
         <label>Get Lead</label>
-        <locationX>875</locationX>
-        <locationY>553</locationY>
+        <locationX>738</locationX>
+        <locationY>550</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Variabili_0</targetReference>
@@ -565,8 +606,8 @@
     <recordUpdates>
         <name>Update_ContactId</name>
         <label>Update ContactId</label>
-        <locationX>991</locationX>
-        <locationY>369</locationY>
+        <locationX>1011</locationX>
+        <locationY>185</locationY>
         <connector>
             <targetReference>Get_Contact</targetReference>
         </connector>
@@ -884,8 +925,8 @@
     <screens>
         <name>Selezione_Contatto</name>
         <label>Selezione Contatto</label>
-        <locationX>859</locationX>
-        <locationY>368</locationY>
+        <locationX>856</locationX>
+        <locationY>184</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -954,8 +995,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>429</locationY>
+        <locationX>9</locationX>
+        <locationY>427</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
         </connector>
