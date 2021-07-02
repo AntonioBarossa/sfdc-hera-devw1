@@ -290,7 +290,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String currentVatNumber = a.VATNumber__c != null ? a.VATNumber__c : '';
 
         System.debug('validateModificaDatiContatto: current ' + c);
-        System.debug('validateModificaDatiContatto: new ' + newEmail + ';' + newPhone + ';' + newMobile + ';' + newFax + ';' + newPec + ';' + newMarking);
 
         if (String.isBlank(newMarking)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valorizzare la Marcatura del cliente.'));
@@ -309,7 +308,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Codice Fiscale è vuoto ed è obbligatorio per poter modificare la marcatura in: ' + marking));
             }
 
-            if (marking.contains('Azienda') || marking.contains('Ditta individuale') && String.isBlank(currentVatNumber)) {
+            if ((marking.contains('Azienda') || marking.contains('Ditta individuale')) && String.isBlank(currentVatNumber)) {
                 return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Partita IVA è vuoto ed è obbligatorio per poter modificare la marcatura in: ' + marking));
             }
 
@@ -453,7 +452,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Codice Fiscale è obbligatorio per la marcatura ' + marking));
             }
 
-            if (marking.contains('Azienda') || marking.contains('Ditta individuale') && String.isBlank(newVatNumber)) {
+            if ((marking.contains('Azienda') || marking.contains('Ditta individuale')) && String.isBlank(newVatNumber)) {
                 return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Partita IVA è obbligatorio per la marcatura ' + marking));
             }
 
