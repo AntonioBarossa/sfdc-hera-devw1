@@ -10,16 +10,23 @@
         <connector>
             <targetReference>activity_update</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <elementReference>email_body</elementReference>
+                <elementReference>email_body_template</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>emailAddresses</name>
             <value>
                 <elementReference>queue_get.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -39,6 +46,7 @@
         <connector>
             <targetReference>activity_update</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>customNotifTypeId</name>
             <value>
@@ -70,6 +78,7 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <apiVersion>52.0</apiVersion>
     <assignments>
         <name>activity_set</name>
         <label>Processa Activity</label>
@@ -142,18 +151,6 @@
         </rules>
     </decisions>
     <formulas>
-        <name>email_body</name>
-        <dataType>String</dataType>
-        <expression>&quot;Gentile utente,&quot; +
-
-&quot;lattività &quot; + {!activity_get.Name} + &quot; è stata recentemente sollecitata: l&apos;attuale numero di solleciti è: &quot; + TEXT({!activity_get.ReminderCount__c}) + &quot;.&quot; +
-&quot;Si prega di evadere l&apos;attività in questione il prima possibile.&quot; +
-&quot;Non rispondere a questa email, in quanto è stata generata automaticamente.&quot; +
-
-&quot;Grazie,&quot; +
-&quot;Salesforce Admin&quot;</expression>
-    </formulas>
-    <formulas>
         <name>notification_body</name>
         <dataType>String</dataType>
         <expression>&quot;Lattività &quot; + {!activity_get.Name} + &quot; è stata sollecitata. Numero di solleciti: &quot; + TEXT({!activity_get.ReminderCount__c})</expression>
@@ -193,6 +190,7 @@
         <connector>
             <targetReference>activity_set</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -217,6 +215,7 @@
         <connector>
             <targetReference>notification_action</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
@@ -238,6 +237,7 @@
         <connector>
             <targetReference>email_send</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -266,6 +266,11 @@
         </connector>
     </start>
     <status>Active</status>
+    <textTemplates>
+        <name>email_body_template</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;Gentile utente,&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;l&apos;attività {!activity_get.Name} è stata recentemente sollecitata: l&apos;attuale numero di solleciti è: {!activity_get.ReminderCount__c}. &lt;span style=&quot;background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255)); color: var(--lwc-colorTextWeak,rgb(62, 62, 60)); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Helvetica, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;);&quot;&gt;Si prega di evadere l&apos;attività in questione il prima possibile.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Non rispondere a questa email, in quanto è stata generata automaticamente.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie,&lt;/p&gt;&lt;p&gt;Salesforce Admin&lt;/p&gt;</text>
+    </textTemplates>
     <variables>
         <name>notification_recipient</name>
         <dataType>String</dataType>
