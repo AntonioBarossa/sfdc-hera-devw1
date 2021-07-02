@@ -149,6 +149,17 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
             System.debug('Billing Profile non presente a sistema');
         }
 
+        //ServicePoint
+        try{
+            ServicePoint__c servicePoint = depsQr.getServicePointData(currentCase.ServicePoint__c);
+            transcodeMap.put('SupplyType__c',ServicePoint.SupplyType__c);
+            transcodeMap.put('Disconnectable__c',ServicePoint.Disconnectable__c);
+            transcodeMap.put('DisconnectibilityType__c',ServicePoint.DisconnectibilityType__c);
+        } catch(Exception e){
+            System.debug('Errore Ereditare campi SP -> ' + e.getMessage());
+        }
+
+
         //SALESCOMPANY
         salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');
         salesCompany = depsSrv.calculateSalesCompany(salesCompanyCode);
