@@ -34,10 +34,42 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaEffectiveDate</name>
+        <label>AssegnaEffectiveDate</label>
+        <locationX>1106</locationX>
+        <locationY>3422</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Flow_Case_Aggiornato.EffectiveDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Flow_Case_Aggiornato.EndDate__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>aggiornaCase_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaEffectiveDate_0</name>
+        <label>AssegnaEffectiveDate</label>
+        <locationX>1370</locationX>
+        <locationY>3422</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Flow_Case_Aggiornato.EffectiveDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CreatedDateFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>aggiornaCase_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>842</locationX>
-        <locationY>4238</locationY>
+        <locationY>4334</locationY>
         <assignmentItems>
             <assignToReference>GetCaseFinale.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -96,7 +128,7 @@
     <assignments>
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
-        <locationX>908</locationX>
+        <locationX>842</locationX>
         <locationY>3422</locationY>
         <assignmentItems>
             <assignToReference>Get_Flow_Case_Aggiornato.ReadingDate__c</assignToReference>
@@ -106,7 +138,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>aggiornaCase_0</targetReference>
+            <targetReference>aggiornaCase_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -332,7 +364,7 @@
         <name>Dati_Tecnici_M03_0</name>
         <label>Dati Tecnici M03?</label>
         <locationX>710</locationX>
-        <locationY>3878</locationY>
+        <locationY>3974</locationY>
         <defaultConnector>
             <targetReference>GetCaseFinale</targetReference>
         </defaultConnector>
@@ -376,12 +408,37 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Fornitura_Cessata_0</name>
+        <label>Fornitura Cessata?</label>
+        <locationX>1238</locationX>
+        <locationY>3302</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaEffectiveDate_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Cessato</defaultConnectorLabel>
+        <rules>
+            <name>Cessato_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Flow_Case_Aggiornato.EndDate__c</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaEffectiveDate</targetReference>
+            </connector>
+            <label>Cessato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>M02</name>
         <label>M02?</label>
         <locationX>1040</locationX>
         <locationY>3182</locationY>
         <defaultConnector>
-            <targetReference>Salva_in_Bozza_o_Conferma</targetReference>
+            <targetReference>Fornitura_Cessata_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>M02</defaultConnectorLabel>
         <rules>
@@ -494,7 +551,7 @@
         <name>Salva_in_Bozza_o_Conferma</name>
         <label>Salva in Bozza o Conferma?</label>
         <locationX>1040</locationX>
-        <locationY>3758</locationY>
+        <locationY>3854</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -574,6 +631,11 @@
         <name>CheckIsBozza</name>
         <dataType>Boolean</dataType>
         <expression>ISPICKVAL({!InputCase.Phase__c}, &apos;Bozza&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>CreatedDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>DATEVALUE({!Get_Flow_Case_Aggiornato.CreatedDate})</expression>
     </formulas>
     <formulas>
         <name>CreatedDateLessThanFifthy</name>
@@ -698,7 +760,7 @@
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
         <locationX>842</locationX>
-        <locationY>4118</locationY>
+        <locationY>4214</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori</targetReference>
@@ -852,7 +914,7 @@
         <name>GetCaseFinale</name>
         <label>GetCaseFinale</label>
         <locationX>842</locationX>
-        <locationY>3998</locationY>
+        <locationY>4094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CalcoloCodiceCausale</targetReference>
@@ -931,10 +993,10 @@
         <inputReference>Get_Flow_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>aggiornaCase_0</name>
+        <name>aggiornaCase_0_0</name>
         <label>aggiornaCase</label>
-        <locationX>908</locationX>
-        <locationY>3542</locationY>
+        <locationX>1040</locationX>
+        <locationY>3734</locationY>
         <connector>
             <targetReference>Salva_in_Bozza_o_Conferma</targetReference>
         </connector>
@@ -944,7 +1006,7 @@
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a Da Inviare</label>
         <locationX>842</locationX>
-        <locationY>4358</locationY>
+        <locationY>4454</locationY>
         <inputReference>GetCaseFinale</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -957,7 +1019,7 @@
     <screens>
         <name>Case_Layout</name>
         <label>Inserimento letture</label>
-        <locationX>908</locationX>
+        <locationX>842</locationX>
         <locationY>3302</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1441,7 +1503,7 @@
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1106</locationX>
-        <locationY>3878</locationY>
+        <locationY>3974</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

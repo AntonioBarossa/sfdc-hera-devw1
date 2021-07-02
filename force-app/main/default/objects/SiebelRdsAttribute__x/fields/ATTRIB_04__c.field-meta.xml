@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_04</label>
+    <label>Servizio</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>
