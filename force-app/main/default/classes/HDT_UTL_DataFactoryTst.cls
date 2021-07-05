@@ -29,6 +29,25 @@ public with sharing class HDT_UTL_DataFactoryTst {
 
         return ld;
     }
-    
-    
+
+    public static List<Opportunity> createOpportunity (Integer amount) {
+
+        List<Opportunity> oppList = new List<Opportunity>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            Opportunity opp = new Opportunity();
+
+            opp.Name = 'testOpportunity'+ i;
+            opp.CloseDate = Date.today().addDays(30);
+            opp.StageName = 'Negotiation';
+
+            oppList.add(opp);
+        }        
+
+        insert oppList;
+
+        return oppList;
+    }
+
 }
