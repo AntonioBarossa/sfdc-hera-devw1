@@ -2492,11 +2492,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AssignmentRule__c.RulePriority__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>AssignmentRule__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
