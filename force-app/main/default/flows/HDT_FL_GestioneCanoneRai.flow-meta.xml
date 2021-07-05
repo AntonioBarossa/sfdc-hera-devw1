@@ -4,7 +4,7 @@
     <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>446</locationX>
+        <locationX>710</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Inserimento_Dati_0</targetReference>
@@ -29,7 +29,7 @@
     <decisions>
         <name>Salva_In_Bozza_o_Conferma</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -42,16 +42,45 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Passa_In_Lavorazione</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
+        <rules>
+            <name>Annulla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento_Subflow</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>710</locationX>
+        <locationX>1106</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -64,10 +93,39 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Passa_In_Lavorazione_0</targetReference>
             </connector>
             <label>Conferma</label>
+        </rules>
+        <rules>
+            <name>Annulla_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento_Subflow_0</targetReference>
+            </connector>
+            <label>Annulla</label>
         </rules>
     </decisions>
     <description>Flow per la gestione del cluster Canone Rai</description>
@@ -95,7 +153,7 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>446</locationX>
+        <locationX>710</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -143,7 +201,7 @@
     <recordUpdates>
         <name>Passa_In_Lavorazione_0</name>
         <label>Passa &quot;In Lavorazione&quot;</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>638</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -170,7 +228,7 @@
     <screens>
         <name>Inserimento_Dati</name>
         <label>Inserimento Dati</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -250,9 +308,16 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -262,7 +327,7 @@
     <screens>
         <name>Inserimento_Dati_0</name>
         <label>Inserimento Dati</label>
-        <locationX>710</locationX>
+        <locationX>1106</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -272,7 +337,12 @@
         </connector>
         <fields>
             <name>DisplayHeader_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compila manualmente i dati sottostanti.&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>displayAddDocument</name>
+            <fieldText>&lt;p&gt;Ricorda di Inserire allegato.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -330,7 +400,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -340,11 +410,24 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>labelReadOnlySection</name>
+                <name>cancelButton</name>
                 <value>
-                    <stringValue>Riepilogo Dati</stringValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -352,13 +435,51 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>320</locationX>
+        <locationX>584</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Gestione_Annullamento_Subflow</name>
+        <label>Gestione Annullamento Subflow</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Annullamento_Subflow_0</name>
+        <label>Gestione Annullamento Subflow</label>
+        <locationX>1106</locationX>
+        <locationY>638</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
