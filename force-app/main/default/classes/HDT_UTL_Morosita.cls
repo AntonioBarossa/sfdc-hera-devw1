@@ -15,19 +15,20 @@ public inherited sharing class HDT_UTL_Morosita {
         return result;
     }
 
-    public String handleContainer(Case relatedCase){
+    public String handleContainer(Case relatedCase, Case currentCase){
         String containerId = '';
-        if(relatedCase.ParentId != null){
-            containerId = relatedCase.ParentId;
+        
+        if(relatedCase != null && relatedCase.ParentId != null){
+            containerId = relatedCase.ParentId; 
         }else{
             Case containerCase = new case();
-            containerCase.Cluster__c = relatedCase.Cluster__c;
-            containerCase.Type = relatedCase.Type;
-            containerCase.AccountId = relatedCase.AccountId;
-            containerCase.ContactId = relatedCase.ContactId;
+            containerCase.Cluster__c = currentCase.Cluster__c;
+            containerCase.Type = currentCase.Type;
+            containerCase.AccountId = currentCase.AccountId;
+            containerCase.ContactId = currentCase.ContactId;
             containerCase.IsContainer__c = true;
-            containerCase.RecordTypeId = relatedCase.RecordTypeId;
-            containerCase.ServicePoint__c = relatedCase.ServicePoint__c;
+            containerCase.RecordTypeId = currentCase.RecordTypeId;
+            containerCase.ServicePoint__c = currentCase.ServicePoint__c;
             containerCase.Phase__c = 'Bozza';
             containerCase.Status = 'New';
             containerId = JSON.serialize(containerCase);

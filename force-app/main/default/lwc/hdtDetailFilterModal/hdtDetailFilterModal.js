@@ -12,7 +12,7 @@ export default class HdtDetailFilterModal extends LightningElement {
 
     connectedCallback(){
         this.fieldsToFilter.forEach((element) => {
-            var obj = {fieldName: element.fieldName, label: element.label, detail: {type: element.type}};
+            var obj = {fieldName: element.fieldName, label: element.label, detail: {type: element.type}, isFilter: true};
             this.columns.push(obj);
         });
     }
