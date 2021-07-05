@@ -17,8 +17,9 @@ public inherited sharing class HDT_UTL_Morosita {
 
     public String handleContainer(Case relatedCase, Case currentCase){
         String containerId = '';
+        
         if(relatedCase != null && relatedCase.ParentId != null){
-            containerId = relatedCase.ParentId;
+            containerId = relatedCase.ParentId; 
         }else{
             Case containerCase = new case();
             containerCase.Cluster__c = currentCase.Cluster__c;
