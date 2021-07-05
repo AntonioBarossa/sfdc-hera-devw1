@@ -2444,11 +2444,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AssignmentRule__c.Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>AtecoMatrix__c.AtecoCode__c</field>
         <readable>true</readable>
 	</fieldPermissions>
