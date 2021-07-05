@@ -13,34 +13,58 @@
     {
       &quot;label&quot;: &quot;Numero Contratto&quot;,
       &quot;fieldName&quot;: &quot;contractNumber&quot;,
-      &quot;initialWidth&quot;: 160
+      &quot;initialWidth&quot;: 160,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;sortable&quot;: true
     },
     {
       &quot;label&quot;: &quot;Stato Contratto&quot;,
       &quot;fieldName&quot;: &quot;status&quot;,
-      &quot;initialWidth&quot;: 140
+      &quot;initialWidth&quot;: 140,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;sortable&quot;: true
     },
     {
       &quot;label&quot;: &quot;Servizio&quot;,
       &quot;fieldName&quot;: &quot;service&quot;,
-      &quot;initialWidth&quot;: 140
-    },
-    {
-      &quot;label&quot;: &quot;Numero Impianto&quot;,
-      &quot;fieldName&quot;: &quot;asset&quot;,
-      &quot;initialWidth&quot;: 160
+      &quot;initialWidth&quot;: 140,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;sortable&quot;: true
     },
     {
       &quot;label&quot;: &quot;Data Inizio Contratto&quot;,
       &quot;fieldName&quot;: &quot;startDate&quot;,
       &quot;initialWidth&quot;: 180,
-      &quot;type&quot;: &quot;date-local&quot;
+      &quot;type&quot;: &quot;date-local&quot;,
+      &quot;sortable&quot;: true
     },
     {
       &quot;label&quot;: &quot;Data Fine Contratto&quot;,
       &quot;fieldName&quot;: &quot;endDate&quot;,
       &quot;initialWidth&quot;: 180,
-      &quot;type&quot;: &quot;date-local&quot;
+      &quot;type&quot;: &quot;date-local&quot;,
+      &quot;sortable&quot;: true
+    },
+    {
+      &quot;label&quot;: &quot;Numero Impianto&quot;,
+      &quot;fieldName&quot;: &quot;asset&quot;,
+      &quot;initialWidth&quot;: 160,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;sortable&quot;: true
+    },
+    {
+      &quot;label&quot;: &quot;Punto di fornitura&quot;,
+      &quot;fieldName&quot;: &quot;servicePoint&quot;,
+      &quot;initialWidth&quot;: 180,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;sortable&quot;: true
+    },
+    {
+      &quot;label&quot;: &quot;Matricola&quot;,
+      &quot;fieldName&quot;: &quot;serialNumber&quot;,
+      &quot;initialWidth&quot;: 160,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;sortable&quot;: true
     }
   ]
 }</value>
