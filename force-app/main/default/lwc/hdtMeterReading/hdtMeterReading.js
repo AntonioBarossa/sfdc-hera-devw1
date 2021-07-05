@@ -3,6 +3,20 @@ import getContractRecords from '@salesforce/apex/HDT_LC_MeterReadingController.g
 import getConfigurationData from '@salesforce/apex/HDT_LC_MeterReadingController.getConfigurationData';
 //import getMeterReadingRecords from '@salesforce/apexContinuation/HDT_LC_AccountStatementController.getMeterReadingRecords';
 
+const contractColumns = [
+    {
+        label: '',
+        type: 'button',
+        initialWidth: 160,
+        typeAttributes: {
+                            label: 'Visualizza Letture',
+                            title: 'Seleziona',
+                            variant: 'border-filled',
+                            alternativeText: 'Seleziona'
+                        }
+    }
+];
+
 export default class HdtMeterReading extends LightningElement {
     
     @api recordid;
@@ -18,6 +32,8 @@ export default class HdtMeterReading extends LightningElement {
     errorMessage = '';
     contractData = [];
     contractDataToView = [];
+    sortDirection = 'desc';
+    sortedBy;
 
     connectedCallback() {
         this.configurationData();
@@ -41,7 +57,7 @@ export default class HdtMeterReading extends LightningElement {
 
         }).catch(error => {
             console.log('>>>> ERROR - catch');
-            console.log(JSON.stringify(error));
+            console.log(error);
         });
     }
 
@@ -61,8 +77,8 @@ export default class HdtMeterReading extends LightningElement {
             }
 
         }).catch(error => {
-            console.log('>>>> ERROR - catch');
-            console.log(JSON.stringify(error));
+            console.log('>>>> ERROR - getContractRecords');
+            console.log(error);
         });
     }
 
@@ -78,9 +94,15 @@ export default class HdtMeterReading extends LightningElement {
         this.contractDataToView = [];
 
         if(event.target.value!=''){
-            var filteredContract = this.contractData.filter(c => { return c.contractNumber.includes(event.target.value) });
+            var filteredContract = this.contractData.filter(c => {
+                if(c.contractNumber.includes(event.target.value) || c.servicePoint.includes(event.target.value)){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
 
-            if(filteredContract.length>0){
+            if(filteredContract.length > 0){
                 this.contractDataToView = filteredContract;
             }
         } else {
@@ -92,24 +114,39 @@ export default class HdtMeterReading extends LightningElement {
         this.spinner = event.detail.spinner;
     }
 
-}
+    onHandleSort(event){
+        console.log('## sort event ## ');
 
-const contractColumns = [
-    {
-        label: '',
-        type: 'button',
-        initialWidth: 160,
-        typeAttributes: {
-                            label: 'Visualizza Letture',
-                            title: 'Seleziona',
-                            variant: 'border-filled',
-                            alternativeText: 'Seleziona'
-                        }
-    }/*,
-    {label: 'Numero Contratto', fieldName: 'contractNumber', initialWidth: 200},
-    {label: 'Stato', fieldName: 'status'},
-    {label: 'Data inizio', fieldName: 'startDate'},
-    {label: 'Data fine', fieldName: 'endDate'},
-    {label: 'Fornitura', fieldName: 'asset'},
-    {label: 'Servizio', fieldName: 'service'}*/
-];
+        try {
+            const { fieldName: sortedBy, sortDirection } = event.detail;
+
+            const cloneData = [...this.contractData];
+            cloneData.sort(this.sortBy(sortedBy, sortDirection === 'asc' ? 1 : -1));
+            this.contractDataToView = cloneData;
+
+            this.sortDirection = sortDirection;
+            this.sortedBy = sortedBy;
+
+        } catch(e) {
+            console.log(e);
+        }
+     
+    }
+
+    sortBy(field, reverse, primer) {
+        const key = primer
+            ? function(x) {
+                  return primer(x[field]);
+              }
+            : function(x) {
+                  return x[field];
+              };
+
+        return function(a, b) {
+            a = key(a);
+            b = key(b);
+            return reverse * ((a > b) - (b > a));
+        };
+    }
+
+}

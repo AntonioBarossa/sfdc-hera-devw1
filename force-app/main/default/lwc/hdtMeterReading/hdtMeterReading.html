@@ -16,13 +16,13 @@
             </div>
             
             <div class="slds-grid slds-gutters slds-m-left_xx-small slds-m-bottom_small">
-                <div class="slds-col slds-size_1-of-6">
+                <div class="slds-col slds-size_2-of-6">
                     <lightning-input
                         name="enter-search"
                         label="searchContract"
                         variant="label-hidden"
                         type="search"
-                        placeholder="Filtro numero contratto..."
+                        placeholder="Filtra numero contratto o punto fornitura..."
                         value={searchValue}
                         onchange={handleSearch}
                     ></lightning-input>
@@ -47,9 +47,11 @@
                         key-field="id"
                         data={contractDataToView}
                         columns={contractColumns}
+                        sorted-direction={sortDirection}
+                        sorted-by={sortedBy}
+                        onsort={onHandleSort}
                         onrowaction={handleRowAction}
                         hide-checkbox-column
-                        resize-column-disabled
                 ></lightning-datatable>
             </div>
 
