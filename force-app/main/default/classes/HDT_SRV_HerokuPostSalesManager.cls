@@ -168,7 +168,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         recordId.name = 'RECORD_ID';
         recordId.value =caseInsert.Id;
         rds.fieldType = 'TEXT';
-        rds.name = 'RDS';
+        rds.name = 'PARENT_RIF_RICH';
         rds.value =caseInsert.CaseNumber;
         responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{rifRich, recordId,rds};
         return responseFieldList;
