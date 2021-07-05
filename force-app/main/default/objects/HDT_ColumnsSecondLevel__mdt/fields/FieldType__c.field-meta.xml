@@ -35,6 +35,11 @@
                 <default>false</default>
                 <label>icon</label>
             </value>
+            <value>
+                <fullName>currency</fullName>
+                <default>false</default>
+                <label>currency</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

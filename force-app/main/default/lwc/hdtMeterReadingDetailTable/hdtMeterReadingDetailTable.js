@@ -11,6 +11,8 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     @track detailTableHeader = 'Letture';
     meterReadingError = false;
     meterReadingErrorMessage = '';
+    sortDirection = 'desc';
+    sortedBy;
 
     connectedCallback(){
         console.log('HdtMeterReadingDetailTable loaded.');
@@ -78,6 +80,41 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
 
         return this.template.querySelector('lightning-datatable').getSelectedRows();
 
+    }
+
+    onHandleSort(event){
+        console.log('## sort event ## ');
+
+        try {
+            const { fieldName: sortedBy, sortDirection } = event.detail;
+
+            const cloneData = [...this.meterReadingData];
+            cloneData.sort(this.sortBy(sortedBy, sortDirection === 'asc' ? 1 : -1));
+            this.meterReadingData = cloneData;
+
+            this.sortDirection = sortDirection;
+            this.sortedBy = sortedBy;
+
+        } catch(e) {
+            console.log(e);
+        }
+     
+    }
+
+    sortBy(field, reverse, primer) {
+        const key = primer
+            ? function(x) {
+                  return primer(x[field]);
+              }
+            : function(x) {
+                  return x[field];
+              };
+
+        return function(a, b) {
+            a = key(a);
+            b = key(b);
+            return reverse * ((a > b) - (b > a));
+        };
     }
 
     /*@api meterReadingBackendCall(contractNumber){
