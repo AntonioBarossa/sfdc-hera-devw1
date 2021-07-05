@@ -554,6 +554,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         } catch (Exception ex) {
             throw ex;
         }
+        //FinalQuery to get parentCase
+        currentCase = qrClass.getCaseRecord(currentCase.Id);
         return currentCase;
     }
 
