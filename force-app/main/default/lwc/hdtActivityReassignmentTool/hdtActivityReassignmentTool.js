@@ -3,6 +3,7 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { getRecordNotifyChange } from "lightning/uiRecordApi";
 import getAssignees from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.getAssignees";
 import reassignActivity from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.reassignActivity";
+import assignToMe from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.assignToMe";
 
 export default class HdtActivityReassignmentTool extends LightningElement {
     @api recordId;
@@ -28,8 +29,15 @@ export default class HdtActivityReassignmentTool extends LightningElement {
         }
     }
 
-    async handleClick(event) {
-        var errorMessage = await reassignActivity({recordId: this.recordId, assigneeId: event.currentTarget.dataset.id});
+    async handleListClick(event) {
+        this.handleErrorMessage(await reassignActivity({recordId: this.recordId, assigneeId: event.currentTarget.dataset.id}));
+    }
+
+    async handleButtonClick() {
+        this.handleErrorMessage(await assignToMe({recordId: this.recordId}));
+    }
+
+    handleErrorMessage(errorMessage) {
         if(errorMessage) {
             if(errorMessage.includes("TRANSFER_REQUIRES_READ")) {
                 this.showToast("error", "Riassegnazione fallita", "L'assegnatario selezionato non ha visibilità sul record corrente.");

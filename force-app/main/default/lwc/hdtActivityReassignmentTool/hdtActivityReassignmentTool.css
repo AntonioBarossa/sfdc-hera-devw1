@@ -1,3 +1,11 @@
+.flex {
+    display: flex;
+}
+
+.grow{
+    flex-grow: 1;
+}
+
 .custom-header {
     display: flex;
     align-items: center;

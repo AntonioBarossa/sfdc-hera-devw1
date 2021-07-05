@@ -53,4 +53,9 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
             return e.getMessage();
         }
     }
+
+    @AuraEnabled
+    public static String assignToMe(String recordId) {
+        return reassignActivity(recordId, UserInfo.getUserId());
+    }
 }
