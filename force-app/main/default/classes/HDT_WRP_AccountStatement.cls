@@ -89,7 +89,7 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public String fieldName;
         @AuraEnabled public Boolean sortable;
         @AuraEnabled public Decimal initialWidth;
-        @AuraEnabled public String fieldType;
+        @AuraEnabled public String type;
     }
 
     public class HDT_WRP_ReponseWrapper {
@@ -125,6 +125,7 @@ public class HDT_WRP_AccountStatement {
         public String servizio;
         public String contratto;
         public String loginId;
+        public String stepSollecito;
     }
 
     public class HDT_WRP_Tabs {

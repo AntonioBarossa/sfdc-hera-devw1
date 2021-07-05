@@ -72,8 +72,11 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                 this.columns.forEach((i) => {
                     filterObject[i.fieldName] = '';
                     if(i.isFilter){
-                        this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label, type: i.fieldType});
+                        this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label, type: i.type});
                     }
+
+                    i.cellAttributes = {};
+                    i.cellAttributes = { alignment: 'left' };
                 });
 
                 this.showButton = true;
@@ -404,7 +407,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
             const columnTypeMap = new Map();
             this.columns.forEach((col) => {
-                columnTypeMap.set(col.fieldName, col.fieldType);
+                columnTypeMap.set(col.fieldName, col.type);
             });
     
             var contoContrArray;
@@ -450,6 +453,11 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                 }
 
                 switch (currentType) {
+                    case 'currency':
+                        filterValue = parseFloat(currentFilter[key].value.replace(',','.'));
+                        tableValueToFilter = parseFloat(item[key]);
+                        console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
+                        break;
                     case 'number':
                         filterValue = parseFloat(currentFilter[key].value);
                         tableValueToFilter = parseFloat(item[key]);
