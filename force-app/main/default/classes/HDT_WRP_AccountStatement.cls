@@ -125,6 +125,7 @@ public class HDT_WRP_AccountStatement {
         public String servizio;
         public String contratto;
         public String loginId;
+        public String stepSollecito;
     }
 
     public class HDT_WRP_Tabs {
