@@ -272,6 +272,7 @@
                                                 label="numValue"
                                                 variant="label-hidden"
                                                 step="0.0000001"
+                                                max-length="16"
                                                 value={d.numValue.value}
                                                 onchange={setParam}
                                             ></lightning-input>
@@ -354,8 +355,9 @@
                                         <template if:true={d.stringValue.enabled} >
                                             <lightning-input
                                                 type="text"
-                                                label="Enter some text"
+                                                label="stringValue"
                                                 variant="label-hidden"
+                                                max-length="10"
                                             ></lightning-input>
                                         </template>
                                         <template if:false={d.stringValue.enabled} >
