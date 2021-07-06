@@ -6,12 +6,12 @@ public inherited sharing class HDT_SRV_AnagAlignment {
     // I possibili contesti di innesco di un Allineamento Anagrafica.
     public enum HDT_ENU_AnagAlignmentContext {
         SERVICE_CATALOG,                    // Innesco manuale da Service Catalog
+        ALLINEAMENTO_CANONE_RAI,            // Innesco automatico alla chiusura del Case del processo di Allineamento Canone RAI
         VARIAZIONI_FISCALE,                 // Innesco automatico alla chiusura del Case del processo di Variazioni - Fiscale
         VARIAZIONI_MARCATURA_USO_PDR,       // Innesco automatico alla chiusura del wizard del processo di Variazioni - Marcatura/Uso PDR
         VARIAZIONI_INDIRIZZO_FORNITURA,     // Innesco automatico alla chiusura del wizard del processo di Variazioni - Indirizzo Fornitura
         VARIAZIONI_TARIFFA_RES_NONRES,      // Innesco automatico alla chiusura del wizard del processo di Variazioni - Modifica Tariffa Residente/Non res.
         VARIAZIONE_ANAGRAFICA_CLIENTE,      // Innesco automatico alla chiusura del wizard del processo di Modifica Anagrafica - Variazione Anagrafica Cliente
-        // TODO: verificare se necessari o se basta la request di heroku.
         VARIAZIONE_STATO_POD,               // Innesco automatico all'arrivo del flusso VS2.0200 dal SII
         VARIAZIONE_STATO_PDR                // Innesco automatico all'arrivo del flusso VSG2.0200 dal SII
     }
@@ -187,7 +187,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                  VARIAZIONI_INDIRIZZO_FORNITURA,
                  VARIAZIONI_TARIFFA_RES_NONRES {
                 Case anagAlignCase = createAnagAlignmentCase(triggerObj);
-                updateAnagAlignmentCaseVariazioni(anagAlignCase, (Case) triggerObj, context);
+                updateAnagAlignmentCasePostSalesDispatcher(anagAlignCase, (Case) triggerObj, context);
                 returnCases.add(anagAlignCase);
             }
             when VARIAZIONE_ANAGRAFICA_CLIENTE {
@@ -391,13 +391,17 @@ public inherited sharing class HDT_SRV_AnagAlignment {
     }
 
     /**
-     * Aggiorna il Case di Variazioni con i dati di anagrafica del cliente e poi lo invia ad Heroku.
+     * Aggiorna il Case di allineamento anagrafica con i dati di anagrafica del cliente ed eventuali logiche specifiche 
+     * del processo che ha originato l'allineamento, e infine invia il Case ad Heroku.
      */
-    private static Boolean updateAnagAlignmentCaseVariazioni(Case anagAlignCase, Case triggerCase, HDT_ENU_AnagAlignmentContext context) {
+    private static Boolean updateAnagAlignmentCasePostSalesDispatcher(Case anagAlignCase, Case triggerCase, HDT_ENU_AnagAlignmentContext context) {
 
         updateAnagAlignmentCaseCustomerData(anagAlignCase);
 
         switch on context {
+            when ALLINEAMENTO_CANONE_RAI {
+                // TODO: aggiungere qui eventuali logiche specifiche per Allineamento Canone RAI
+            }
             when VARIAZIONI_FISCALE {
                 // TODO: aggiungere qui eventuali logiche specifiche per Variazioni/Fiscali
             }
