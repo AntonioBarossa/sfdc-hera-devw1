@@ -65,7 +65,6 @@ public with sharing class HDT_QR_InstallmentPlans {
         return [SELECT 
         CaseNumber,
         DepositPaymentMode__c,
-        InstallmentPlanNumber__c,
         InstallmentNumberRequired__c,
         ClientCategory__c,
         TypeInstallmentPlan__c,
