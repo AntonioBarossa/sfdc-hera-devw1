@@ -200,6 +200,7 @@ public inherited sharing class HDT_QR_Quote {
             AND Sale__c IN :saleIds
             AND ContractReference__c IN :contracts
             AND Id NOT IN :excludedQuotes
+            AND SBQQ__Status__c != 'Cancelled'
             WITH SECURITY_ENFORCED
         ];
     }

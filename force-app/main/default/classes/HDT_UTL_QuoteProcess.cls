@@ -222,7 +222,7 @@ public inherited sharing class HDT_UTL_QuoteProcess {
         List<String> oldOppList = getSaleAmendOldOpp(oldSaleAmendQuotes);
         System.debug('after - oldOppList ' + oldOppList);
         List<String> oldQuoteList = getSaleAmendOldQuote(oldSaleAmendQuotes);
-        System.debug('after - oldQuoteList ' + oldQuoteList);
+        System.debug('after - oldQuoteList ' + oldQuoteList); //old quotes that will be cancelled because amend quote is created
 
         Map<String, SBQQ__Quote__c> mapOldToNew = mapOldAndNewQuotes(oldSaleAmendQuotes, newSaleAmendQuotes);
         System.debug('after - mapOldToNew ' + mapOldToNew);
