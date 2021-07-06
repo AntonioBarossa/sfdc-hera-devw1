@@ -397,7 +397,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String codiceContratto = '';
         String contoContrattuale = '';
         String sapContractCode = null;
-        String relatedRecordId = '';
+        String containerCaseNumber = '';
         String containerId = '';
         Contract contract;
         ServicePoint__c sp;
@@ -418,7 +418,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             ufficioCompetente = reqWrp.requestMap.get('UFFICIO_COMPETENTE');
             codiceContratto = reqWrp.requestMap.get('CODICE_CONTRATTO');
             contoContrattuale = reqWrp.requestMap.get('CONTO_CONTRATTUALE');
-            relatedRecordId = reqWrp.requestMap.get('SALESFORCE_KEY');
+            containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }
@@ -494,15 +494,19 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             if(String.isNotBlank(ufficioCompetente)){
                                 currentCase.CompetentOffice__c = ufficioCompetente;
                             }
-                            if(String.isNotBlank(relatedRecordId)){
-                                relatedCase = qrClass.getCaseRecord(relatedRecordId);
-                                currentCase.RelatedCase__c = relatedCase.Id;
-                            }
-                            containerId = morUtl.handleContainer(relatedCase,currentCase);
-                            if(String.isNotBlank(containerId)){
-                                if(containerId instanceOf Id){
-                                    currentCase.ParentId = containerId;
-                                }else{
+                            //If SALESFORCE_KEY (aka containerCaseNumber) is not null the container exists
+                            if(String.isNotBlank(containerCaseNumber)){
+                                //get container case
+                                containerCase = qrClass.getCaseRecord(containerCaseNumber);
+                                currentCase.ParentId = containerCase.Id;
+                                //get most recently created and not close related record
+                                relatedCase = qrClass.getRelatedCase('WHERE Type = \'Sospensione Fornitura\' ORDER BY CreatedDate DESC');
+                                if(relatedCase != null){
+                                    currentCase.RelatedCase__c = relatedCase.Id;
+                                }
+                            } else { //SALESFORCE_KEY (aka contaienrCaseNumber) is null the container does not exist
+                                containerId = morUtl.handleContainer(currentCase);
+                                if(String.isNotBlank(containerId)){
                                     containerCase = (Case) JSON.deserialize(containerId, Case.class);
                                     caseInsertList.add(containerCase);
                                 }
@@ -538,11 +542,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             currentCase = qrClass.getCaseRecord(currentCase.Id);
             if(cluster == 'Morosita'){
-                //caso in cui c'e anche il case contenitore quindi serve legare al case referenziato il container creato
-                /*if(caseInsertList.size() > 1 ){
-                    relatedCase.ParentId = containerCase.Id;
-                    caseUpdateList.add(relatedCase);
-                }*/
                 if(currentCase.ParentId == null){
                     currentCase.ParentId = containerCase.Id;
                 }

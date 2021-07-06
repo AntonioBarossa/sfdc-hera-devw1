@@ -78,6 +78,15 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         LIMIT 1];
     }
 
+    public Case getRelatedCase(String filter){
+        if(filter == null){
+            filter = '';
+        }
+        String fields = 'Id, Type, Phase__, CreatedDate, ParentId';
+        String query = 'SELECT ' + fields + ' FROM Case ' + filter + ' WITH SECURITY_ENFORCE LIMIT 1';
+        return Database.query(query);
+    }
+
     public wrts_prcgvr__AsyncJob__c getAsyncJobByJobItem(String recordId){
 
         wrts_prcgvr__AsyncJob__c asyncJobRec = new wrts_prcgvr__AsyncJob__c();
