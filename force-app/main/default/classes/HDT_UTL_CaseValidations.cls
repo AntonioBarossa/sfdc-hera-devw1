@@ -68,9 +68,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateUnificazioneSeparazione(fields);
 
-        }else if(caseType == 'Votive Modena Contestazione Fattura'){
+        }else if(caseType == 'Votive Modena Contestazione Fattura' || caseType.equalsIgnoreCase('Spostamento Votive Modena')){
 
-            result= validateVotiveModena(fields);
+            result= validateVotiveModena(fields, caseType);
         } else if (caseType == 'Verifica Titolarità POD/PDR') {
 
             result = validateVerificaTitolarita(currentCase);
@@ -905,19 +905,29 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    private String validateVotiveModena(String fields){
+    private String validateVotiveModena(String fields, String process){
 
-        String billingProfile = getFieldValue(fields, 'BillingProfile__c');
-        String reason = getFieldValue(fields, 'Reason__c');
         String result;
 
-        if(reason == 'Errata Emissione' && (billingProfile == null || billingProfile == '')){
+        if(process.equalsIgnoreCase('Spostamento Votive Modena')){
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Necessario Valorizzare Billing Profile'));
+            String outcome = validateFiscalCode(getFieldValue(fields,'FiscalCode__c'));
+            if(!String.isBlank(outcome)){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error',outcome));
+            } else {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+            }
 
-        } else {
+        } else if(process.equalsIgnoreCase('Votive Modena Contestazione Fattura')){
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+            String billingProfile = getFieldValue(fields, 'BillingProfile__c');
+            String reason = getFieldValue(fields, 'Reason__c');
+
+            if(reason == 'Errata Emissione' && (billingProfile == null || billingProfile == '')){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Necessario Valorizzare Billing Profile'));
+            } else {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+            }
 
         }
 
