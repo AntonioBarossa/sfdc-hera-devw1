@@ -78,13 +78,18 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         LIMIT 1];
     }
 
-    public Case getRelatedCase(String filter){
-        if(filter == null){
-            filter = '';
-        }
-        String fields = 'Id, Type, Phase__, CreatedDate, ParentId';
-        String query = 'SELECT ' + fields + ' FROM Case ' + filter + ' WITH SECURITY_ENFORCE LIMIT 1';
-        return Database.query(query);
+    public Case getRelatedCase(String recordId){
+        return [SELECT Id,
+        Type,
+        Phase__c,
+        CreatedDate,
+        ParentId
+        FROM Case
+        WHERE Type = 'Sospensione Fornitura'
+        AND ParentId = :recordId
+        WITH SECURITY_ENFORCED
+        ORDER BY CreatedDate DESC
+        LIMIT 1];
     }
 
     public wrts_prcgvr__AsyncJob__c getAsyncJobByJobItem(String recordId){

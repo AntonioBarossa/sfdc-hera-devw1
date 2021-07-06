@@ -500,7 +500,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                                 containerCase = qrClass.getCaseRecord(containerCaseNumber);
                                 currentCase.ParentId = containerCase.Id;
                                 //get most recently created and not close related record
-                                relatedCase = qrClass.getRelatedCase('WHERE Type = \'Sospensione Fornitura\' ORDER BY CreatedDate DESC');
+                                relatedCase = qrClass.getRelatedCase(containerCase.Id);
                                 if(relatedCase != null){
                                     currentCase.RelatedCase__c = relatedCase.Id;
                                 }
