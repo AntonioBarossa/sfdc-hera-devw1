@@ -382,6 +382,11 @@
         <label>Risoluzione No Punto Sospeso</label>
     </standardValue>
     <standardValue>
+        <fullName>Risoluzione No Sospensione</fullName>
+        <default>false</default>
+        <label>Risoluzione No Sospensione</label>
+    </standardValue>
+    <standardValue>
         <fullName>Risoluzione Punto Sospeso</fullName>
         <default>false</default>
         <label>Risoluzione Punto Sospeso</label>

@@ -8,9 +8,10 @@
                         key-field="id"
                         data={meterReadingData}
                         columns={columnsobj}
+                        default-sort-direction={defaultSortDirection}
+                        sorted-direction={sortDirection}
                         sorted-by={sortedBy}
-                        onsort={onHandleSort}
-                        onrowaction={handleRowAction}
+                        onsort={sort}
                         hide-checkbox-column
                     ></lightning-datatable>
                     <!--resize-column-disabled-->
@@ -20,8 +21,10 @@
                         key-field="id"
                         data={meterReadingData}
                         columns={columnsobj}
+                        default-sort-direction={defaultSortDirection}
+                        sorted-direction={sortDirection}
                         sorted-by={sortedBy}
-                        onsort={onHandleSort}
+                        onsort={sort}
                         onrowaction={handleRowAction}
                     ></lightning-datatable>
                     <!--resize-column-disabled-->
