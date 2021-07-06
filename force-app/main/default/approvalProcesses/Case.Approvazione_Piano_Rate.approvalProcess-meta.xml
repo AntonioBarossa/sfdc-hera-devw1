@@ -19,7 +19,6 @@
         <field>WorkStatus__c</field>
         <field>Reason__c</field>
         <field>MaxInstallmentsNumber__c</field>
-        <field>InstallmentPlanNumber__c</field>
         <field>ExistingInstallmentsPlanNumber__c</field>
         <field>InstallmentNumberRequired__c</field>
         <field>SuspensionInThePastTwelveMonths__c</field>

@@ -1,66 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Product2.SBQQ__SearchFilters</members>
-        <name>FieldSet</name>
-    </types>
-    <types>
-        <members>Service26Config__c</members>
+        <members>CS_GestioneScript__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>Case.HDT_RT_CanoneRai</members>
         <members>Case.HDT_RT_Morosita</members>
-        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
-        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
         <name>RecordType</name>
     </types>
     <types>
-        <members>Case-HDT_CanoneRai</members>
-        <members>Case-HDT_Morosita</members>
+        <members>Account-CPQ Account Layout Service Console</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_BA_QueueAssignment</members>
-        <members>HDT_LC_AccountStatementCtrlHelper</members>
-        <members>HDT_LC_DocumentSignatureManager</members>
-        <members>HDT_LC_MeterReadingControllerHelper</members>
-        <members>HDT_QR_HerokuPostSalesManager</members>
-        <members>HDT_QR_MeterReading</members>
-        <members>HDT_QR_SearchPlug</members>
-        <members>HDT_SRV_AnagAlignment</members>
-        <members>HDT_SRV_HerokuPostSalesManager</members>
-        <members>HDT_SRV_PostSalesManager</members>
-        <members>HDT_TRH_Case</members>
-        <members>HDT_TRH_Order</members>
-        <members>HDT_UTL_CaseValidations</members>
-        <members>HDT_UTL_FormatTextScript</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_Morosita</members>
+        <members>ConnectorEntityController</members>
+        <members>HDT_LC_AccountStatementControllerTst</members>
+        <members>HDT_QR_InstallmentPlans</members>
+        <members>HDT_QR_Payments</members>
+        <members>HDT_QR_Reimbursement</members>
+        <members>HDT_UTL_CheckDocumentSelected</members>
         <members>HDT_UTL_PostSalesManager</members>
-        <members>HDT_WRP_AccountStatement</members>
-        <members>HDT_WRP_MeterReading</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Account.ActiveServices__c</members>
-        <members>Case.CompetentOffice__c</members>
-        <members>Case.Distributor__c</members>
-        <members>Case.IndemnityMotivation__c</members>
-        <members>HDT_ColumnsSecondLevel__mdt.FieldType__c</members>
-        <members>Order.IsMuc__c</members>
+        <members>CS_GestioneScript__c.FieldApiName__c</members>
+        <members>CS_GestioneScript__c.FieldValue__c</members>
+        <members>CS_GestioneScript__c.SobjectApiName__c</members>
         <members>Order.Phase__c</members>
-        <members>SBQQ__QuoteLine__c.PaymentMode__c</members>
-        <members>Service26Config__c.Field__c</members>
-        <members>Service26Config__c.Occurrence__c</members>
-        <members>Service26Config__c.Operando__c</members>
-        <members>Service26Config__c.ProductFamily__c</members>
-        <members>Service26Config__c.RowName__c</members>
-        <members>Service26Config__c.SapCode__c</members>
-        <members>Service26Config__c.Servizio__c</members>
-        <members>Service26Config__c.Type__c</members>
-        <members>wrts_prcgvr__Activity__c.ConnectionID__c</members>
-        <members>wrts_prcgvr__Activity__c.QAdCallID__c</members>
         <name>CustomField</name>
     </types>
     <types>
@@ -69,14 +35,9 @@
     </types>
     <types>
         <members>hdtAccountStatementDetailViewer</members>
-        <members>hdtCustomCombobox</members>
-        <members>hdtDetailFilterModal</members>
-        <members>hdtFilterFirstLevelModal</members>
-        <members>hdtMeterReading</members>
+        <members>hdtAccountStatementFilters</members>
+        <members>hdtAccountStatementFilters2</members>
         <members>hdtMeterReadingDetailTable</members>
-        <members>hdtModalDataTable</members>
-        <members>hdtOfferConfigurator</members>
-        <members>hdtTargetObjectAddressForFlow</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
@@ -90,158 +51,20 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_AccountDataEnrichment.contract</members>
+        <members>Case.Approvazione_Piano_Rate</members>
+        <members>Case.Approvazione_Piano_Rate_Residuo_Nullo</members>
+        <name>ApprovalProcess</name>
+    </types>
+    <types>
         <members>HDT_AccountDataEnrichment.meterReading</members>
-        <members>HDT_ButtonDetails.EC1_1_showRate</members>
-        <members>HDT_ButtonDetails.EC_2_visualRate</members>
-        <members>HDT_ColumnsFirstLevel.EC1_BloccoAlPagamento</members>
-        <members>HDT_ColumnsFirstLevel.EC1_BloccoAlSollecito</members>
-        <members>HDT_ColumnsFirstLevel.EC1_CanaleIncassoRealTime</members>
-        <members>HDT_ColumnsFirstLevel.EC1_ContoContrattuale</members>
-        <members>HDT_ColumnsFirstLevel.EC1_Contratto</members>
-        <members>HDT_ColumnsFirstLevel.EC1_DataEmissione</members>
-        <members>HDT_ColumnsFirstLevel.EC1_DataEsito</members>
-        <members>HDT_ColumnsFirstLevel.EC1_DataPresuntaSospensione</members>
-        <members>HDT_ColumnsFirstLevel.EC1_DataScadenza</members>
-        <members>HDT_ColumnsFirstLevel.EC1_Documento</members>
-        <members>HDT_ColumnsFirstLevel.EC1_Esito</members>
-        <members>HDT_ColumnsFirstLevel.EC1_ModInvioSollecito</members>
-        <members>HDT_ColumnsFirstLevel.EC1_NumeroFattura</members>
-        <members>HDT_ColumnsFirstLevel.EC1_POD_PDR</members>
-        <members>HDT_ColumnsFirstLevel.EC1_R</members>
-        <members>HDT_ColumnsFirstLevel.EC1_Rateizzato</members>
-        <members>HDT_ColumnsFirstLevel.EC1_RecuperoCrediti</members>
-        <members>HDT_ColumnsFirstLevel.EC1_Residuo</members>
-        <members>HDT_ColumnsFirstLevel.EC1_SettoreMerceologico</members>
-        <members>HDT_ColumnsFirstLevel.EC1_Societa</members>
         <members>HDT_ColumnsFirstLevel.EC1_StatoIconMapCalc</members>
-        <members>HDT_ColumnsFirstLevel.EC1_TipoDoc</members>
-        <members>HDT_ColumnsFirstLevel.EC1_dataIncassoRealTime</members>
-        <members>HDT_ColumnsFirstLevel.EC1_predispPagamento</members>
-        <members>HDT_ColumnsFirstLevel.EC1_stepSollecito</members>
-        <members>HDT_ColumnsFirstLevel.EC4_BloccoAlSollecito</members>
-        <members>HDT_ColumnsFirstLevel.EC4_ContoContrattuale</members>
-        <members>HDT_ColumnsFirstLevel.EC4_Contratto</members>
-        <members>HDT_ColumnsFirstLevel.EC4_DataEmissione</members>
-        <members>HDT_ColumnsFirstLevel.EC4_DataScadenza</members>
-        <members>HDT_ColumnsFirstLevel.EC4_Documento</members>
-        <members>HDT_ColumnsFirstLevel.EC4_DocumentoPareggio</members>
-        <members>HDT_ColumnsFirstLevel.EC4_Importo</members>
-        <members>HDT_ColumnsFirstLevel.EC4_NumeroBollettino</members>
-        <members>HDT_ColumnsFirstLevel.EC4_Residuo</members>
-        <members>HDT_ColumnsFirstLevel.EC4_SettoreMerceologico</members>
-        <members>HDT_ColumnsFirstLevel.EC5_Beneficiario</members>
-        <members>HDT_ColumnsFirstLevel.EC5_DataEmissione</members>
-        <members>HDT_ColumnsFirstLevel.EC5_DataValuta</members>
-        <members>HDT_ColumnsFirstLevel.EC5_DescrizioneCanalePagamento</members>
-        <members>HDT_ColumnsFirstLevel.EC5_DocumentoPareggio</members>
-        <members>HDT_ColumnsFirstLevel.EC5_Importo</members>
-        <members>HDT_ColumnsFirstLevel.EC5_MotivoDiPareggio</members>
-        <members>HDT_ColumnsFirstLevel.EC5_NumeroBollettino</members>
-        <members>HDT_ColumnsFirstLevel.EC5_TD</members>
-        <members>HDT_ColumnsFirstLevel.EC6_DataEmissione</members>
-        <members>HDT_ColumnsFirstLevel.EC6_DataEsito</members>
-        <members>HDT_ColumnsFirstLevel.EC6_DataPresuntaSospensione</members>
-        <members>HDT_ColumnsFirstLevel.EC6_DataScadenza</members>
-        <members>HDT_ColumnsFirstLevel.EC6_Esito</members>
-        <members>HDT_ColumnsFirstLevel.EC6_Importo</members>
-        <members>HDT_ColumnsFirstLevel.EC6_ModInvioSollecito</members>
-        <members>HDT_ColumnsFirstLevel.EC6_NumeroBollettino</members>
-        <members>HDT_ColumnsFirstLevel.EC6_StepSollecito</members>
-        <members>HDT_ColumnsFirstLevel.EC7_Contratto</members>
-        <members>HDT_ColumnsFirstLevel.EC7_DataScadenza</members>
-        <members>HDT_ColumnsFirstLevel.EC7_DocOriginario</members>
-        <members>HDT_ColumnsFirstLevel.EC7_Documento</members>
-        <members>HDT_ColumnsFirstLevel.EC7_Importo</members>
-        <members>HDT_ColumnsFirstLevel.EC7_TipoDoc</members>
-        <members>HDT_ColumnsFirstLevel.EC7_contoContrattuale</members>
-        <members>HDT_ColumnsFirstLevel.EC8_CausaleIndennizzo</members>
-        <members>HDT_ColumnsFirstLevel.EC8_DataEmissione</members>
-        <members>HDT_ColumnsFirstLevel.EC8_DataScadenza</members>
-        <members>HDT_ColumnsFirstLevel.EC8_Importo</members>
-        <members>HDT_ColumnsFirstLevel.EC8_ModalitaPagamento</members>
-        <members>HDT_ColumnsFirstLevel.EC8_NumeroFattura</members>
-        <members>HDT_ColumnsFirstLevel.EC8_RiferimentoFattura</members>
-        <members>HDT_ColumnsFirstLevel.EC8_contoContrattuale</members>
-        <members>HDT_ColumnsFirstLevel.EC9_Contratto</members>
-        <members>HDT_ColumnsFirstLevel.EC9_DataEsito</members>
-        <members>HDT_ColumnsFirstLevel.EC9_DataPresuntaSospensione</members>
-        <members>HDT_ColumnsFirstLevel.EC9_Esito</members>
-        <members>HDT_ColumnsFirstLevel.EC9_Importo</members>
-        <members>HDT_ColumnsFirstLevel.EC9_ModInvioSollecito</members>
-        <members>HDT_ColumnsFirstLevel.EC9_Note</members>
-        <members>HDT_ColumnsFirstLevel.EC9_POD_PDR</members>
-        <members>HDT_ColumnsFirstLevel.EC9_RDS</members>
-        <members>HDT_ColumnsFirstLevel.EC9_Societa</members>
-        <members>HDT_ColumnsFirstLevel.EC9_StepSollecito</members>
-        <members>HDT_ColumnsFirstLevel.EC9_classeConto</members>
-        <members>HDT_ColumnsFirstLevel.EC9_contoContrattuale</members>
-        <members>HDT_ColumnsFirstLevel.EC9_dataScadenza</members>
-        <members>HDT_ColumnsFirstLevel.EC9_messaInMoraScaduta</members>
-        <members>HDT_ColumnsFirstLevel.EC9_presenzaSospensione</members>
-        <members>HDT_ColumnsFirstLevel.EC9_servizio</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_BloccoAlPagamento</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_BloccoAlSollecito</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_CA</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_Contratto</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_DataEmissione</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_DataScadenza</members>
         <members>HDT_ColumnsFirstLevel.Paperless_Indicatore</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_NumeroDocumento</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_NumeroFattura</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_POD_PDR</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_RecuperoCrediti</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_Residuo</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_Servizio</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_Societa</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_StepSollecito</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_TipoDocumento</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_messaInMoraScaduta</members>
-        <members>HDT_ColumnsFirstLevel.npi_ContoContrattuale</members>
-        <members>HDT_ColumnsFirstLevel.npi_DataEmissione</members>
-        <members>HDT_ColumnsFirstLevel.npi_DataScadenza</members>
-        <members>HDT_ColumnsFirstLevel.npi_Importo</members>
-        <members>HDT_ColumnsFirstLevel.npi_NumeroFattura</members>
-        <members>HDT_ColumnsFirstLevel.npi_Societa</members>
-        <members>HDT_ColumnsFirstLevel.npi_TipoDocumento</members>
-        <members>HDT_ColumnsSecondLevel.EC4_Importo</members>
-        <members>HDT_ColumnsSecondLevel.EC5_Importo</members>
-        <members>HDT_ColumnsSecondLevel.EC6_Importo</members>
-        <members>HDT_ColumnsSecondLevel.EC9_Importo</members>
-        <members>HDT_ColumnsSecondLevel.EC_BloccoAlPagamento</members>
-        <members>HDT_ColumnsSecondLevel.EC_BloccoAlSollecito</members>
-        <members>HDT_ColumnsSecondLevel.EC_DataValPareggio</members>
-        <members>HDT_ColumnsSecondLevel.EC_DocPareggio</members>
-        <members>HDT_ColumnsSecondLevel.EC_Importo</members>
-        <members>HDT_ColumnsSecondLevel.EC_MotivoDiPareggio</members>
-        <members>HDT_ColumnsSecondLevel.EC_RecuperoCrediti</members>
-        <members>HDT_ColumnsSecondLevel.EC_StepSollecito</members>
-        <members>HDT_ColumnsSecondLevel.EC_TD_PAREGGIO</members>
-        <members>HDT_ColumnsSecondLevel.EC_TestoDettaglio</members>
-        <members>HDT_ColumnsSecondLevel.npi_DataEmissione</members>
-        <members>HDT_ColumnsSecondLevel.npi_DataRegistrazione</members>
-        <members>HDT_ColumnsSecondLevel.npi_Importo</members>
-        <members>HDT_ColumnsSecondLevel.npi_Scadenza</members>
-        <members>HDT_ColumnsSecondLevel.npi_Societa</members>
-        <members>HDT_ColumnsSecondLevel.npi_riferimentoFattura</members>
-        <members>HDT_UserInputFlow.Canone_Rai_Allineamento_Canone_Rai</members>
-        <members>HDT_UserInputFlow.Canone_Rai_Sospensione_Canone_Rai</members>
-        <members>HDT_UserInputFlow.Canone_Rai_Sospensione_Verifica</members>
-        <members>HDT_UserInputFlow.Preventivi_Spostamento_Votive_Modena</members>
+        <members>HDT_UserInputFlow.Pagamenti_Storno_Rateizzazione</members>
         <name>CustomMetadata</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneCanoneRai</members>
-        <members>HDT_FL_GestioneMorosita</members>
-        <members>HDT_FL_GestionePreventivi</members>
-        <members>HDT_FL_GestioneScript</members>
-        <members>HDT_FL_GestioneVerifiche</members>
-        <members>HDT_FL_PostSalesMasterDispatch</members>
+        <members>HDT_FL_GestionePagamenti_Rimborso</members>
         <name>Flow</name>
-    </types>
-    <types>
-        <members>Product2.ProductCode_length_10</members>
-        <name>ValidationRule</name>
     </types>
     <version>49</version>
 </Package>
