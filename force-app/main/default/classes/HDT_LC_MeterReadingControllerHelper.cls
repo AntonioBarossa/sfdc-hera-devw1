@@ -77,6 +77,8 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         contrWrp.endDate = String.valueOf(c.EndDate);
         contrWrp.asset = c.ServicePoint__r.SAPImplantCode__c;
         contrWrp.service = c.ServicePoint__r.CommoditySector__c;
+        contrWrp.serialNumber = c.ServicePoint__r.MeterSN__c;
+        contrWrp.servicePoint = c.ServicePoint__r.ServicePointCode__c;
         return contrWrp;
     }
 

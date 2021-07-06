@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_ASGN_DT_SIM</label>
+    <label>Data apertura richiesta SIM</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

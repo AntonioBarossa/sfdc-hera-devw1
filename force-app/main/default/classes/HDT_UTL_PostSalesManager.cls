@@ -64,16 +64,18 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }catch(Exception e){
             System.debug(e.getMessage());
         }
-        if(parentCase != null && parentCase.Type == 'Variazione indirizzo di fornitura'){
+        if(parentCase != null){
 
-            if(currentCase.Phase__c == 'KO definitivo'
-            || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) > 0){
-                
-                parentCase.Phase__c = 'Elaborazione Manuale';
-            } else {
+            if(parentCase.Type == 'Variazione indirizzo di fornitura'){
 
+                if(currentCase.Phase__c == 'KO definitivo'
+                || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) > 0){
+                    parentCase.Phase__c = 'Elaborazione Manuale';
+                } else {
+                    parentCase.Phase__c = 'Completata';
+                }
+            } else if(parentCase.Type.equalsIgnoreCase('Allineamento Canone Rai')){
                 parentCase.Phase__c = 'Completata';
-
             }
 
             HDT_UTL_DatabaseService.updateSObject(parentCase);
@@ -251,6 +253,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
         try {
             List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONI_FISCALE);
+            System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+        } catch (Exception ex) {
+            System.debug('# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());
+        }
+    }
+
+    public void innescoAllineamentoAnagraficaCanoneRai(SObject inputCase) {
+        if (inputCase == null) {
+            System.debug('innescoAllineamentoAnagraficaCanoneRai: null input case.');
+            return;
+        }
+
+        System.debug('Innesco Allineamento Anagrafica alla chiusura del Case di Allineamento Canone RAI: ' + inputCase.Id);
+
+        try {
+            List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.ALLINEAMENTO_CANONE_RAI);
             System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
         } catch (Exception ex) {
             System.debug('# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());

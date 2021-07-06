@@ -49,7 +49,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         switch on selectedProcessObject.get('recordType') {
             //INIZIO SVILUPPI EVERIS
             when 'HDT_RT_Voltura'{
-                List<Contract> contracts = contractQr.getContractFromServicePoint(newOrder.ServicePoint__c);
+                List<Contract> contracts = contractQr.getContractFromServicePoint(order.ServicePoint__c);
                 processType = 'Voltura';
                 newOrder.Subprocess__c = 'Standard';
                 processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
@@ -57,6 +57,37 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 newOrder.ContractReference__c = contracts.size() > 0 
                     ? contracts[0].Id
                     : null;
+                String sapCode = contracts.size() > 0
+                    ? contracts[0].SAPContractCode__c
+                    : '';
+                try{
+                    String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(order.SAPImplantCode__c, sapCode);
+                    List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
+                    positions = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
+                            JSON.deserialize(serializedResponse, List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>.class);
+                    
+                    for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni position : positions){
+                        if(position.campo.equalsIgnoreCase('IMPOSTE')){
+                            String condition = position.valore;
+                            if(position.valore.equalsIgnoreCase('E_IMPOST')){
+                                condition = 'Imposta usi domestici';
+                            } 
+                            List<PicklistEntry> entryList =
+                            ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('ExciseEle__c').getDescribe().getPicklistValues();
+                            for(PicklistEntry entry : entryList){
+
+                                if(entry.getValue().containsIgnoreCase(condition)){
+                    
+                                    newOrder.ExciseEle__c = entry.getValue();                    
+                                }
+                            }
+                        }
+                    }
+                } catch(Exception e){
+                    System.debug('Arricchimento Dati fallito -> ' +e.getMessage());
+                } 
+
+
                 //newOrder = orderUtl.enrichOrder(newOrder);
                 //orderSrv.updateRecord(newOrder);
             }

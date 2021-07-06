@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_TOT_COM_PAGAMENTO</label>
+    <label>Totale comunicazione pagamento</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

@@ -5,8 +5,39 @@ export default class HdtFilterFirstLevelModal extends LightningElement {
     @api columns;
     @api modalTitle;
     @api confirmLabel;
+    @api firstLevelFilterObj;
     @track filterObj = [];
+    defaultFilterObj = [];
     error;
+
+    connectedCallback(){
+        console.log('>>> INPUT FILTER OBJ ' + JSON.stringify(this.firstLevelFilterObj));
+
+        this.columns.forEach((element) => {
+            if(element.isFilter){
+                var tempObj = {};
+                tempObj.label = element.label;
+                tempObj.fieldName = element.fieldName;
+                tempObj.type = element.detail.type;
+                tempObj.filterDetail = {};
+
+                if(this.firstLevelFilterObj != undefined && this.firstLevelFilterObj[element.fieldName] != undefined){
+                    tempObj.filterDetail.operator = this.firstLevelFilterObj[element.fieldName].operator;
+                    tempObj.filterDetail.value = this.firstLevelFilterObj[element.fieldName].value;
+                    this.filterObj.push({fieldName: element.fieldName, operator: tempObj.filterDetail.operator, value: tempObj.filterDetail.value});
+                } else {
+                    tempObj.filterDetail.operator = null;
+                    tempObj.filterDetail.value = '';                
+                }
+
+                this.defaultFilterObj.push(tempObj);
+            }
+        });
+
+        console.log('>>> INNER FILTER OBJ ' + JSON.stringify(this.filterObj));
+        console.log('>>> NEW COLUMNS ' + JSON.stringify(this.defaultFilterObj));
+
+    }
 
     setOperator(event){
         console.log('>>> operator ' + event.detail.operator);
@@ -58,14 +89,10 @@ export default class HdtFilterFirstLevelModal extends LightningElement {
     }
 
     applyFilter(){
+        console.log('>>> INNER FILTER OBJ ' + JSON.stringify(this.filterObj));
         try {
             var interObj = {};
             this.filterObj.forEach((element) => {
-                //for (var key in element) {	
-                //    if(element[key] === undefined || element[key] ===''){	
-                //        break;	
-                //    }
-                //}
                 if(this.checkSingleField(element.fieldName) && this.checkSingleField(element.operator) && this.checkSingleField(element.value)){
                     interObj[element.fieldName] = {operator: element.operator, value: element.value};
                 }
@@ -90,7 +117,7 @@ export default class HdtFilterFirstLevelModal extends LightningElement {
     }
 
     closeModal(){
-        console.log('>>> close');
+        console.log('>>> close HdtFilterFirstLevelModal');
         this.closeModalEvent();
         this.resetParameters();
     }

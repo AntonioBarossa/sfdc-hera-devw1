@@ -342,10 +342,38 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         this.sendToApex(true);
     }
 
+    preSaveCheck(){
+        var toastObj = {
+            success: true,
+            title: '',
+            message: '',
+            variant: '',
+            mode: ''
+        }
+
+        if(this.product.productCode.length > 10){
+            toastObj.success = false;
+            toastObj.title = 'ATTENZIONE';
+            toastObj.message = 'Il codice dell\'offerta non può contenere più di 10 caratteri.';
+            toastObj.variant = 'warning'; 
+            toastObj.mode = 'sticky';
+            return toastObj;
+        }
+
+        return toastObj;
+    }
+
     sendToApex(sendToSap){
         console.log('# sendToApex #');
         console.log('# this.technicalofferid > ' + this.technicalofferid);
         console.log('# this.product.rateCategory > ' + this.product.rateCategory);
+
+        var toastObj = {};
+        toastObj = this.preSaveCheck();
+        if(!toastObj.success){
+            this.showToastHandler(toastObj);
+            return;
+        }
 
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';

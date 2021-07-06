@@ -11,23 +11,24 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     @api filterString = '';
     @api tabCode;
     @api accountId;
-    @track columns;// = columns;
+    @api columns;// = columns;
     @track selectedMenuItem;
     @track filterApplied = false;
     @track buttonList;
+    @track firstLevelFilterObj = {};
     showButton = false;
     defaultSortDirection = 'asc';
     sortDirection = 'asc';
     sortedBy;
     bShowModal = false;
     fieldsToFilter = [];
-    staticObj = {};
+    @api staticObj = {};
 
     get accountdetailsToView(){
         console.log('# accountdetails #');
         console.log('# filterApplied: ' + this.filterApplied);
 
-        if(this.filterApplied){
+        if(this.filterApplied && this.bShowModal === false){
             //this.innerFilterMethod();
             this.applyInterrogation(this.staticObj);
         }
@@ -52,6 +53,10 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         this.getTabConfigurationData();
     }
 
+    @api getIfSecondLevelIsFiltered(){
+        return this.filterApplied;
+    }
+
     getTabConfigurationData(){
         getSecondLevelColumns({tabValue: this.tabCode})
         .then(result => {
@@ -67,8 +72,11 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                 this.columns.forEach((i) => {
                     filterObject[i.fieldName] = '';
                     if(i.isFilter){
-                        this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label, type: i.fieldType});
+                        this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label, type: i.type});
                     }
+
+                    i.cellAttributes = {};
+                    i.cellAttributes = { alignment: 'left' };
                 });
 
                 this.showButton = true;
@@ -137,7 +145,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     }
 
     closeModal() {
-        console.log('# closeModal #');
+        console.log('# closeModal DetailViewer #');
         this.bShowModal = false;
     }
 
@@ -189,11 +197,12 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         try {
             this.filterApplied = false;
             this.filterString = '';
+            this.firstLevelFilterObj = {};
 
             for (var key in this.filterObject) {
                 this.filterObject[key] = '';
             }
-            this.setButtonForFilterApplied(false);
+            //this.setButtonForFilterApplied(false);
 
             const removeFilter = new CustomEvent("removefilter", {
                 detail:  {filter: 'off'}
@@ -339,6 +348,8 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     generateFilterString(){
         try {
 
+            this.filterString = '';
+
             for(var i in this.staticObj){
                 this.filterString += i;
                 this.filterString += ' ';
@@ -357,6 +368,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         console.log('# applyInterFromChild #');
 
         this.staticObj = JSON.parse(event.detail.value);
+        this.firstLevelFilterObj = this.staticObj;
 
         try {
 
@@ -388,86 +400,25 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
         try{
 
-            const columnTypeMap = new Map();
-            this.columns.forEach((col) => {
-                columnTypeMap.set(col.fieldName, col.fieldType);
+            var dataToFilter = [];
+            this.accountdetails.forEach(element => {
+                dataToFilter.push(element);
             });
 
+            const columnTypeMap = new Map();
+            this.columns.forEach((col) => {
+                columnTypeMap.set(col.fieldName, col.type);
+            });
+    
             var contoContrArray;
             if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
                 contoContrArray = currentFilter.contoContrattuale.value.split(',');
             }
 
-            var filteredData = [];
-            filteredData = this.accountdetails.filter(function(item) {
-                
-                for (var key in currentFilter) {
+            dataToFilter = this.filterMethod(dataToFilter, currentFilter, columnTypeMap, contoContrArray);
 
-                    const currentType = columnTypeMap.get(key);
-                    var filterValue;
-                    var tableValueToFilter;
-
-                    if(item[key] === undefined || item[key] === ''){
-                        return false;
-                    }
-
-                    switch (currentType) {
-                        case 'number':
-                            filterValue = parseFloat(currentFilter[key].value);
-                            tableValueToFilter = parseFloat(item[key]);
-                            console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
-                            break;
-                        case 'date':
-                            var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
-                            filterValue = date.getTime();
-
-                            var cDate = item[key].split('/');
-                            var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
-                            tableValueToFilter = cDate2.getTime();
-
-                            break;
-                        case 'text':
-                            filterValue = currentFilter[key].value;
-                            tableValueToFilter = item[key];
-                    }
-
-                    switch (currentFilter[key].operator) {
-                        case '='://uguale a
-                            if (tableValueToFilter != filterValue)
-                            return false;
-                            break;
-                        case '>'://maggiore di
-                            if (tableValueToFilter <= filterValue)
-                            return false;
-                            break;
-                        case 'in'://contiene caratteri
-                            if(!tableValueToFilter.includes(filterValue))
-                            return false;
-                            break;
-                        case 'on'://contiene valori
-                            if(!contoContrArray.includes(tableValueToFilter))
-                            return false;
-                    }
-
-                }
-                return true;
-            });
-
-            //if(filteredData.length == 0 && this.bShowModal){
-            //    this.dispatchEvent(
-            //        new ShowToastEvent({
-            //            title: 'Attenzione',
-            //            message: 'Nessun record trovato',
-            //            variant: 'warning'
-            //        }),
-            //    );
-            //    this.filterString = '';
-            //    this.staticObj = {};
-            //    return;
-            //}
-
-            this.setButtonForFilterApplied(true);
-            this.accountdetails = filteredData;
+            //this.setButtonForFilterApplied(true);
+            this.accountdetails = dataToFilter;
             this.filterApplied = true;
             this.closeModal();
 
@@ -477,6 +428,77 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             console.error('# Stack => ' + e.stack ); 
         }
 
+    }
+
+    @api getSecondLevelList(parentData, currentFilter, columnTypeMap, contoContrArray){
+        var filteredData = [];
+        filteredData = this.filterMethod(parentData, currentFilter, columnTypeMap, contoContrArray);
+        return filteredData;
+    }
+
+    filterMethod(dataToFilter, currentFilter, columnTypeMap, contoContrArray){
+
+        console.log('>>> FILTER METHOD - CHILD NEW');
+
+        dataToFilter = dataToFilter.filter(function(item) {
+                
+            for (var key in currentFilter) {
+
+                const currentType = columnTypeMap.get(key);
+                var filterValue;
+                var tableValueToFilter;
+
+                if(item[key] === undefined || item[key] === ''){
+                    return false;
+                }
+
+                switch (currentType) {
+                    case 'currency':
+                        filterValue = parseFloat(currentFilter[key].value.replace(',','.'));
+                        tableValueToFilter = parseFloat(item[key]);
+                        console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
+                        break;
+                    case 'number':
+                        filterValue = parseFloat(currentFilter[key].value);
+                        tableValueToFilter = parseFloat(item[key]);
+                        console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
+                        break;
+                    case 'date':
+                        var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
+                        filterValue = date.getTime();
+
+                        var cDate = item[key].split('/');
+                        var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
+                        tableValueToFilter = cDate2.getTime();
+
+                        break;
+                    case 'text':
+                        filterValue = currentFilter[key].value;
+                        tableValueToFilter = item[key];
+                }
+
+                switch (currentFilter[key].operator) {
+                    case '='://uguale a
+                        if (tableValueToFilter != filterValue)
+                        return false;
+                        break;
+                    case '>'://maggiore di
+                        if (tableValueToFilter <= filterValue)
+                        return false;
+                        break;
+                    case 'in'://contiene caratteri
+                        if(!tableValueToFilter.includes(filterValue))
+                        return false;
+                        break;
+                    case 'on'://contiene valori
+                        if(!contoContrArray.includes(tableValueToFilter))
+                        return false;
+                }
+
+            }
+            return true;
+        });
+        return dataToFilter;
     }
 
     setButtonForFilterApplied(remove){
