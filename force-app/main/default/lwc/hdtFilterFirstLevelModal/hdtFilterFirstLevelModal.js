@@ -14,22 +14,24 @@ export default class HdtFilterFirstLevelModal extends LightningElement {
         console.log('>>> INPUT FILTER OBJ ' + JSON.stringify(this.firstLevelFilterObj));
 
         this.columns.forEach((element) => {
-            var tempObj = {};
-            tempObj.label = element.label;
-            tempObj.fieldName = element.fieldName;
-            tempObj.type = element.detail.type;
-            tempObj.filterDetail = {};
+            if(element.isFilter){
+                var tempObj = {};
+                tempObj.label = element.label;
+                tempObj.fieldName = element.fieldName;
+                tempObj.type = element.detail.type;
+                tempObj.filterDetail = {};
 
-            if(this.firstLevelFilterObj != undefined && this.firstLevelFilterObj[element.fieldName] != undefined){
-                tempObj.filterDetail.operator = this.firstLevelFilterObj[element.fieldName].operator;
-                tempObj.filterDetail.value = this.firstLevelFilterObj[element.fieldName].value;
-                this.filterObj.push({fieldName: element.fieldName, operator: tempObj.filterDetail.operator, value: tempObj.filterDetail.value});
-            } else {
-                tempObj.filterDetail.operator = null;
-                tempObj.filterDetail.value = '';                
+                if(this.firstLevelFilterObj != undefined && this.firstLevelFilterObj[element.fieldName] != undefined){
+                    tempObj.filterDetail.operator = this.firstLevelFilterObj[element.fieldName].operator;
+                    tempObj.filterDetail.value = this.firstLevelFilterObj[element.fieldName].value;
+                    this.filterObj.push({fieldName: element.fieldName, operator: tempObj.filterDetail.operator, value: tempObj.filterDetail.value});
+                } else {
+                    tempObj.filterDetail.operator = null;
+                    tempObj.filterDetail.value = '';                
+                }
+
+                this.defaultFilterObj.push(tempObj);
             }
-
-            this.defaultFilterObj.push(tempObj);
         });
 
         console.log('>>> INNER FILTER OBJ ' + JSON.stringify(this.filterObj));
