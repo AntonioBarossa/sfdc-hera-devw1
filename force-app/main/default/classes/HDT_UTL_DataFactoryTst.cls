@@ -30,6 +30,7 @@ public with sharing class HDT_UTL_DataFactoryTst {
         return ld;
     }
 
+
     public static List<Opportunity> createOpportunity (Integer amount) {
 
         List<Opportunity> oppList = new List<Opportunity>();
@@ -49,5 +50,4 @@ public with sharing class HDT_UTL_DataFactoryTst {
 
         return oppList;
     }
-
 }
