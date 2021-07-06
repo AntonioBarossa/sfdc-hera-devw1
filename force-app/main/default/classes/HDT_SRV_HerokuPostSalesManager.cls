@@ -116,6 +116,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         HDT_WRP_MrrResponse.HDT_WRP_Object responseObject = new HDT_WRP_MrrResponse.HDT_WRP_Object();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+        HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldErrorCode = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
         List<Case> caseUpdate = new List<Case>();
         Case caseInsert = new Case();
@@ -138,18 +139,33 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             responseField.fieldType = 'TEXT';
             responseField.name = 'ESITO';
             responseField.value = 'OK';
+            responseFieldError.fieldType = 'TEXT';
+            responseFieldError.name = 'ERROR_MESSAGE';
+            responseFieldError.value = 'OK';
+            responseFieldErrorCode.fieldType = 'TEXT';
+            responseFieldErrorCode.name = 'ERROR_CODE';
+            responseFieldErrorCode.value = '00';
             responseObject.fields.add(responseField);
+            responseObject.fields.add(responseFieldError);
+            responseObject.fields.add(responseFieldErrorCode);
             RestContext.response.statusCode = 200;
         } catch (Exception ex) {
+
+            HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException customEx = (HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException) ex;
+
             responseField.fieldType = 'TEXT';
             responseField.name = 'ESITO';
             responseField.value = 'KO';
 
             responseFieldError.fieldType = 'TEXT';
             responseFieldError.name = 'ERROR_MESSAGE';
-            responseFieldError.value = 'Errore: ' + ex.getMessage();
+            responseFieldError.value = 'Errore: ' + customEx.getMessage();
 
-            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+            responseFieldErrorCode.fieldType = 'TEXT';
+            responseFieldErrorCode.name = 'ERROR_CODE';
+            responseFieldErrorCode.value = customEx.code;
+
+            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError, responseFieldErrorCode};
             RestContext.response.statusCode = 400;
         }
         return responseObject;

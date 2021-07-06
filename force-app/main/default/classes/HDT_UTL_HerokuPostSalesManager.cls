@@ -460,7 +460,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         currentCase.BillingProfile__c = Contract?.BillingProfile__c;
                         sapContractCode = contract?.SAPContractCode__c;
                     }else {
-                        throw new HDT_UTL_RichPassException('Non è stato possibile recuperare il Service Point');
+                        throw new HDT_UTL_RichPassException('Non è stato possibile recuperare il Service Point', '04');
                     }
                     if(String.isBlank(cluster)){
                         cluster = sottotipo;
@@ -510,15 +510,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             currentCase.Phase__c = 'Bozza';
                             currentCase.Status = 'New';
                         }when else{
-                            throw new HDT_UTL_RichPassException('Errore tecnico nella definizione del RecordType');
+                            throw new HDT_UTL_RichPassException('Errore tecnico nella definizione del RecordType', '04');
                         }
                     }
                 }else {
-                    throw new HDT_UTL_RichPassException('Non è stato possibile recuperare l\'Account di riferimento');
+                    throw new HDT_UTL_RichPassException('Non è stato possibile recuperare l\'Account di riferimento', '04');
                 }
                 
             }else {
-                throw new HDT_UTL_RichPassException('POD non valorizzato');
+                throw new HDT_UTL_RichPassException('POD non valorizzato', '01');
             }
             //It is not possible to perform DML operations before a callout
             try{
@@ -552,7 +552,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 HDT_UTL_DatabaseService.updateSObject(caseUpdateList);
             }
         } catch (Exception ex) {
-            throw ex;
+            throw new HDT_UTL_RichPassException('Errore nella gestione della richiesta', '04');
         }
         //FinalQuery to get parentCase
         currentCase = qrClass.getCaseRecord(currentCase.Id);
@@ -685,5 +685,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
         }
     }
-    public class HDT_UTL_RichPassException extends Exception {}
+    public class HDT_UTL_RichPassException extends Exception {
+        
+        public String code;
+        
+        public HDT_UTL_RichPassException(String message, String code){
+            this(message);
+            this.code = code;
+        }
+
+    }
 }
