@@ -651,4 +651,9 @@
         <default>false</default>
         <label>VOTIVE Modena/Subentro</label>
     </standardValue>
+    <standardValue>
+        <fullName>Indennizzo</fullName>
+        <default>false</default>
+        <label>Indennizzo</label>
+    </standardValue>
 </StandardValueSet>
