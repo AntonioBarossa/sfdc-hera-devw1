@@ -22,7 +22,7 @@ import InvoicingCountry from '@salesforce/schema/Case.InvoicingCountry__c';
 import InvoicingStreetToponym from '@salesforce/schema/Case.InvoicingStreetToponym__c';
 import InvoicingProvince from '@salesforce/schema/Case.InvoicingProvince__c';
 import AddressFormula from '@salesforce/schema/Case.AddressFormula__c';
-import sendDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
+import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
 
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 const FIELDS = ['Case.ContactMobile', 
@@ -258,8 +258,33 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
         }
     }
 
-    handleGoNext() {
-        //inserito momentaneamente per non bloccare il next
+    handleConfirm(){
+        if(this.enableNext){
+            if((!this.previewExecuted && this.quoteType && this.quoteType.localeCompare('Analitico') != 0)){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Errore',
+                        message:'Attenzione! Devi effettuare la preview del documento prima di poter procedere con il Conferma Pratica.',
+                        variant: 'error',
+                    }),
+                );
+            }else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+                this.handleGoNext();
+            }else{
+                console.log('sendDocumentFile');
+                this.sendDocumentFile();
+            }
+        }else{
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Errore',
+                    message:'Attenzione! Devi confermare i dati prima di procedere con il Conferma Pratica.',
+                    variant: 'error',
+                }),
+            );
+        }
+    }
+    handleGoNext(){
         if(this.availableActions.find(action => action === 'NEXT')){
 
             const navigateNextEvent = new FlowNavigationNextEvent();
@@ -272,55 +297,36 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
 
             this.dispatchEvent(navigateFinish);
         }
-        //commentato momentanemanete per non bloccare il next
-        /*if(this.enableNext){
-            if((!this.previewExecuted && this.quoteType && this.quoteType.localeCompare('Analitico') != 0)){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Errore',
-                        message:'Attenzione! Devi effettuare la preview del documento prima di poter procedere con il Conferma Pratica.',
-                        variant: 'error',
-                    }),
-                );
-            }else{
-                this.cancelCase = false;
-                var formParams = {
-                    sendMode : this.confirmData.sendMode,
-                    signMode : this.confirmData.signMode,
-                    telefono : this.confirmData.telefono,      
-                    email : this.confirmData.email,      
-                    mode : 'Print',
-                    Archiviato : 'N'
-                }
-                sendDocumentFile({
-                    recordId: this.recordId,
-                    context: 'Case',
-                    formParams: JSON.stringify(formParams)
-                }).then(result => {});
+    }
 
-                if(this.availableActions.find(action => action === 'NEXT')){
-
-                    const navigateNextEvent = new FlowNavigationNextEvent();
-
-                    this.dispatchEvent(navigateNextEvent);
-
-                } else {
-
-                    const navigateFinish = new FlowNavigationFinishEvent();
-
-                    this.dispatchEvent(navigateFinish);
-                }
+    sendDocumentFile(){
+        try{
+            this.confirmData = JSON.parse(this.confirmData);
+            var sendMode = this.confirmData.sendMode;
+            if(sendMode.localeCompare('Stampa Cartacea')===0){
+                sendMode = 'Sportello';
             }
-        }else{
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Errore',
-                    message:'Attenzione! Devi confermare i dati prima di poter procedere con il Conferma Pratica.',
-                    variant: 'error',
-                }),
-            );
-        }*/
-
+            var formParams = {
+                sendMode : sendMode,
+                signMode : this.confirmData.signMode,
+                telefono : this.confirmData.telefono,      
+                email : this.confirmData.email,      
+                mode : 'Print',
+                Archiviato : 'Y'
+            }
+            sendDocument({
+                recordId: this.recordId,
+                context: 'Case',
+                formParams: JSON.stringify(formParams)
+            }).then(result => {
+                this.handleGoNext();
+            }).catch(error => {
+                this.showToast('Errore nell\'invio del documento al cliente.');
+                console.error(error);
+            });
+        }catch(error){
+            console.error(error);
+        }
     }
 
     handleCancel(){
