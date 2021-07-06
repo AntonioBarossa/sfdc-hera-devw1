@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>NUM_RDO_GAS</label>
+    <label>Cont. RDO Gas</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_26</label>
+    <label>Dilazione scadenza / Data</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

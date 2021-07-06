@@ -2061,6 +2061,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Documentazione Validata</fullName>
             <default>false</default>
         </values>
@@ -2121,6 +2125,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviare preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
@@ -2130,6 +2138,10 @@
         </values>
         <values>
             <fullName>OK SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica non gestita per il DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2146,6 +2158,10 @@
         </values>
         <values>
             <fullName>Registrazione  da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Preventivo extra sistema</fullName>
             <default>false</default>
         </values>
         <values>

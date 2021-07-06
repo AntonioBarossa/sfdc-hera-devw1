@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_47</label>
+    <label>Metodo di pagamento</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

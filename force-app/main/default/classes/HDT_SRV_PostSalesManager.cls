@@ -43,6 +43,12 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
 
             }
 
+            when 'innescoAllineamentoAnagraficaCanoneRai'{
+
+                psmUtl.innescoAllineamentoAnagraficaCanoneRai(sender);
+
+            }
+
             when 'evaluateEffectiveDate'{
 
                 psmUtl.evaluateEffectiveDate(sender);

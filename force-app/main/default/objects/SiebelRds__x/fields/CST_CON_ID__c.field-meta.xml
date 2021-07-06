@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>CST_CON_ID</label>
+    <label>Contatto Siebel</label>
     <length>15</length>
     <referenceTo>SiebelContact__x</referenceTo>
     <relationshipLabel>Richieste</relationshipLabel>

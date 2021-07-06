@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_ATTRIB_52</label>
+    <label>Settore commerciale / Order Item Number</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

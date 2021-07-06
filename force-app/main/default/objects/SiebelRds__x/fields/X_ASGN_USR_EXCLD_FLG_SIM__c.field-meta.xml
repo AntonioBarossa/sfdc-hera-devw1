@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_ASGN_USR_EXCLD_FLG_SIM</label>
+    <label>Flag esclusione assegmaneto utente SIM</label>
     <length>1</length>
     <required>false</required>
     <type>Text</type>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_RESP_ID</label>
+    <label>Id risposta</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

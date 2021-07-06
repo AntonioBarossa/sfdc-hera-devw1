@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_41</label>
+    <label>Codice Fiscale</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

@@ -144,7 +144,11 @@ export default class HdtModalDataTable extends LightningElement {
 
         this.iconHeader = this.icon;
         this.backendCall();
-        
+
+        setTimeout(() => {
+            this.inputAutoFocus();
+        }, 1000);
+
     }
 
     backendCall(){
@@ -190,6 +194,18 @@ export default class HdtModalDataTable extends LightningElement {
 
         // Dispatches the event.
         this.dispatchEvent(closeEvent);        
+    }
+
+    inputAutoFocus(){
+        console.log('>>> inputAutoFocus');
+        try{
+            console.log('>>> setTimeout');
+            let input = this.template.querySelector('lightning-input');
+            console.log('input ' + input.type);
+            input.focus();
+        } catch (e){
+            console.log('>>> error on focus element');
+        }
     }
 
     handleRowAction(event) {

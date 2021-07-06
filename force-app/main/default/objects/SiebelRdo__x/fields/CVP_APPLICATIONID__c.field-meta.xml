@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>CVP_ApplicationId</label>
+    <label>CVP Application Id</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>
