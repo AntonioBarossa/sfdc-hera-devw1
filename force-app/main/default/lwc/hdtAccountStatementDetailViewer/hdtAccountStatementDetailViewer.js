@@ -17,9 +17,9 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     @track buttonList;
     @track firstLevelFilterObj = {};
     showButton = false;
+    sortedBy;
     defaultSortDirection = 'asc';
     sortDirection = 'asc';
-    sortedBy;
     bShowModal = false;
     fieldsToFilter = [];
     @api staticObj = {};
@@ -65,7 +65,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
             if(result.success){
 
-                this.columns = result.columnObj;//columns;
+                this.columns = result.columnObj;
                 this.buttonList = result.buttonList;
                 console.log('# buttonList: ' + result.buttonList.length);
                 
@@ -77,6 +77,12 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
                     i.cellAttributes = {};
                     i.cellAttributes = { alignment: 'left' };
+
+                    if(i.type === 'date'){
+                        i.type = 'text';
+                        i.dateAttribute = 'sortAsDate';
+                    }
+
                 });
 
                 this.showButton = true;
@@ -112,8 +118,80 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         }
     }
 
+    onHandleSort(event){
+        console.log('## sort ## ');
+
+        try {
+            const { fieldName: sortedBy, sortDirection } = event.detail;
+            var sortField = event.detail.fieldName;
+            console.log('>>> sort by: ' + sortField + ' - sortDirection: ' + sortDirection);
+
+            var currentObj = this.columns.filter(c => { return c.fieldName == sortField });
+            const cloneData = [...this.accountdetails];
+
+            var currentFieldType = '';
+            currentFieldType = currentObj[0].type;
+            
+            if(currentObj[0].dateAttribute != undefined && currentObj[0].dateAttribute === 'sortAsDate'){
+                currentFieldType = 'date';
+            }
+
+            console.log('>>> filter type ' + currentFieldType);
+
+            switch (currentFieldType) {
+                case 'text':
+                    if(sortDirection==='asc'){
+                        cloneData.sort((a, b) => (a[sortField] > b[sortField]) ? 1 : -1);
+                    } else {
+                        cloneData.sort((a, b) => (a[sortField] < b[sortField]) ? 1 : -1);
+                    }
+                    break;
+                case 'date':
+
+                    cloneData.sort(function(a, b) {
+
+                        var dateSplitted = b[sortField].split('/');
+                        var data = dateSplitted[1] + '/' + dateSplitted[0] + '/' + dateSplitted[2];
+                        
+                        var dateSplitted2 = a[sortField].split('/');
+                        var data2 = dateSplitted2[1] + '/' + dateSplitted2[0] + '/' + dateSplitted2[2];
+
+                        if(sortDirection==='asc'){
+                            return (new Date(data) < new Date(data2)) ? 1 : -1;
+                        } else {
+                            return (new Date(data) > new Date(data2)) ? 1 : -1;
+                        }
+
+                    });
+
+                    break;
+                case 'currency':
+                    if(sortDirection==='asc'){
+                        cloneData.sort((a, b) => (parseFloat(a[sortField]) > parseFloat(b[sortField])) ? 1 : -1);
+                    } else {
+                        cloneData.sort((a, b) => (parseFloat(a[sortField]) < parseFloat(b[sortField])) ? 1 : -1);
+                    }
+                    break;
+                case 'number':
+                    if(sortDirection==='asc'){
+                        cloneData.sort((a, b) => (parseFloat(a[sortField]) > parseFloat(b[sortField])) ? 1 : -1);
+                    } else {
+                        cloneData.sort((a, b) => (parseFloat(a[sortField]) < parseFloat(b[sortField])) ? 1 : -1);
+                    }
+            }
+
+            this.accountdetails = cloneData;
+            this.sortDirection = sortDirection;
+            this.sortedBy = sortedBy;
+
+        } catch(e) {
+            console.log(e);
+        }
+     
+    }
+
     // Used to sort the 'Age' column
-    sortBy(field, reverse, primer) {
+    /*sortBy(field, reverse, primer) {
         const key = primer
             ? function(x) {
                   return primer(x[field]);
@@ -137,7 +215,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         this.accountdetails = cloneData;
         this.sortDirection = sortDirection;
         this.sortedBy = sortedBy;
-    }
+    }*/
 
     interrogation(event) {
         console.log('# interrogation #');
