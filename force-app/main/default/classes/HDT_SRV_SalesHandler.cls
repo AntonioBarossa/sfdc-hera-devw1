@@ -337,7 +337,7 @@ public with sharing class HDT_SRV_SalesHandler {
         
                         responseFieldError.fieldType = 'TEXT';
                         responseFieldError.name = 'ERROR_MESSAGE';
-                        responseFieldError.value = 'Unsupported requestType';
+                        responseFieldError.value = 'runId cannot be empty';
         
                         responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
                         mrrResponseItem.objects.add(responseObject);
@@ -369,7 +369,7 @@ public with sharing class HDT_SRV_SalesHandler {
         
                         responseFieldError.fieldType = 'TEXT';
                         responseFieldError.name = 'ERROR_MESSAGE';
-                        responseFieldError.value = 'Unsupported requestType';
+                        responseFieldError.value = 'runId cannot be empty';
         
                         responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
                         mrrResponseItem.objects.add(responseObject);
