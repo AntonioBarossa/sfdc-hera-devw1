@@ -94,15 +94,15 @@ public class HDT_SRV_DocumentalManagement{
 		String mode = (String) formParams.get('mode') != null? (String) formParams.get('mode'):'';
 		String context = (String) formParams.get('Contesto') != null? (String) formParams.get('Contesto'):'';
 		String signMode = (String) formParams.get('signMode') != null? (String) formParams.get('signMode'):'';
-		String pasedContext = '';
+		String parsedContext = '';
 		try{
 			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC')){
-				pasedContext = 'Case';
+				parsedContext = 'Case';
 			}else {
-				pasedContext=context;
+				parsedContext=context;
 			}
 			sPackageRequest.requestId = recordId;
-			sPackageRequest.objectName = pasedContext;
+			sPackageRequest.objectName = parsedContext;
 			sPackageRequest.objectId = recordId;
 			sPackageRequest.signMode = signMode;
 			sPackageRequest.mode = mode;
