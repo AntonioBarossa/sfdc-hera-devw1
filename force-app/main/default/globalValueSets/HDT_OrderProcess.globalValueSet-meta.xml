@@ -140,6 +140,11 @@
         <default>false</default>
         <label>Cambio Offerta Ele</label>
     </customValue>
+    <customValue>
+        <fullName>Cambio Offerta Gas</fullName>
+        <default>false</default>
+        <label>Cambio Offerta Gas</label>
+    </customValue>
     <description>Lista Processi.</description>
     <masterLabel>Processo Ordine</masterLabel>
     <sorted>false</sorted>
