@@ -14,24 +14,34 @@ public with sharing class HDT_UTL_DataFactoryTst {
         wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
     }
 
-    public static Lead createLead() {
+    public static List<Lead> createLead(Integer amount, Boolean doInsert) {
 
-        Lead ld = new Lead();
+        List<Lead> leadList = new List<Lead>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            Lead ld = new Lead();
+            
+            ld.FirstName = 'FirstNameTest'+i;
+            ld.LastName = 'LastNameTest';
+            ld.CompanyOwner__c = 'MMS';
+            ld.Company = 'CompanyTest';
+            ld.Status = 'New';
+            ld.Email = 'test@test.com';
+
+            leadList.add(ld);
+
+        }
         
-        ld.FirstName = 'FirstNameTest';
-        ld.LastName = 'LastNameTest';
-        ld.CompanyOwner__c = 'MMS';
-        ld.Company = 'CompanyTest';
-        ld.Status = 'New';
-        ld.Email = 'test@test.com';
+        if (doInsert) {
 
-        insert ld;
+            insert leadList;
+        }
 
-        return ld;
+        return leadList;
     }
-
-
-    public static List<Opportunity> createOpportunity (Integer amount) {
+    
+    public static List<Opportunity> createOpportunity (Integer amount, Boolean doInsert) {
 
         List<Opportunity> oppList = new List<Opportunity>();
 
@@ -46,8 +56,13 @@ public with sharing class HDT_UTL_DataFactoryTst {
             oppList.add(opp);
         }        
 
-        insert oppList;
+        if (doInsert) {
+
+            insert oppList;
+        }
 
         return oppList;
     }
+
+    
 }

@@ -11,9 +11,9 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
 	@TestSetup
 	static void setup() {
 
-        HDT_UTL_DataFactoryTst.createLead();
+        HDT_UTL_DataFactoryTst.createLead(1, true);
 
-        HDT_UTL_DataFactoryTst.createOpportunity(2);
+        HDT_UTL_DataFactoryTst.createOpportunity(2, true);
 
     }
 
