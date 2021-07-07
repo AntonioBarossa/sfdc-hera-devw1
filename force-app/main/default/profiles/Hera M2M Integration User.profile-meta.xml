@@ -868,6 +868,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.SendMode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.ShippingAddress</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7874,6 +7879,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentalActivity__c.ParentProcessId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentalActivity__c.PostelTimestamp__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
