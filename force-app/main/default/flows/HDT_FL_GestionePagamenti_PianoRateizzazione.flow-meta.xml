@@ -10,21 +10,14 @@
         <connector>
             <targetReference>Regola_Trovata</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
                 <elementReference>Get_Case.Id</elementReference>
             </value>
         </inputParameters>
-        <outputParameters>
-            <assignToReference>ErrorMessageOutput</assignToReference>
-            <name>errorMessage</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>RentProcessRuleOutput</assignToReference>
-            <name>rentRule</name>
-        </outputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <name>Predefault_Valori</name>
@@ -226,6 +219,13 @@
                 <elementReference>GetCodiceCausale.OperationCode__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Picklist</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Processo_Approvativo</targetReference>
         </connector>
@@ -239,21 +239,21 @@
             <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>RentProcessRuleOutput.ApprovalProcess__c</elementReference>
+                <elementReference>InterrogaRegoleRateizzazione.ApprovalProcess__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case.MaxInstallmentsNumber__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>RentProcessRuleOutput.MaxInstallmentsNumber__c</elementReference>
+                <elementReference>InterrogaRegoleRateizzazione.MaxInstallmentsNumber__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case.AttachmentManagement__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>RentProcessRuleOutput.AttachmentManagement__c</elementReference>
+                <elementReference>InterrogaRegoleRateizzazione.AttachmentManagement__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -269,14 +269,14 @@
             <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>RentProcessRuleOutput.ApprovalProcess__c</elementReference>
+                <elementReference>InterrogaRegoleRateizzazione.ApprovalProcess__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case.AttachmentManagement__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>RentProcessRuleOutput.AttachmentManagement__c</elementReference>
+                <elementReference>InterrogaRegoleRateizzazione.AttachmentManagement__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -292,14 +292,14 @@
             <assignToReference>Get_Case.MaxInstallmentsNumber__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>RentProcessRuleOutput.MaxInstallmentsNumber__c</elementReference>
+                <elementReference>InterrogaRegoleRateizzazione.MaxInstallmentsNumber__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case.AttachmentManagement__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>RentProcessRuleOutput.AttachmentManagement__c</elementReference>
+                <elementReference>InterrogaRegoleRateizzazione.AttachmentManagement__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -315,7 +315,7 @@
             <assignToReference>Get_Case.AttachmentManagement__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>RentProcessRuleOutput.AttachmentManagement__c</elementReference>
+                <elementReference>InterrogaRegoleRateizzazione.AttachmentManagement__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -352,6 +352,22 @@
         <dataType>Boolean</dataType>
         <value>
             <booleanValue>true</booleanValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RejectValue</name>
+        <choiceText>Cliente respinge la bolletta</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Cliente respinge la bolletta</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RevokeValue</name>
+        <choiceText>Cliente revoca la domiciliazione</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Cliente revoca la domiciliazione</stringValue>
         </value>
     </choices>
     <decisions>
@@ -507,7 +523,7 @@
             <name>Not_Null</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>RentProcessRuleOutput.MaxInstallmentsNumber__c</leftValueReference>
+                <leftValueReference>InterrogaRegoleRateizzazione.MaxInstallmentsNumber__c</leftValueReference>
                 <operator>WasSet</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -532,7 +548,7 @@
             <name>Not_Null_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>RentProcessRuleOutput.MaxInstallmentsNumber__c</leftValueReference>
+                <leftValueReference>InterrogaRegoleRateizzazione.MaxInstallmentsNumber__c</leftValueReference>
                 <operator>WasSet</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -557,14 +573,14 @@
             <name>Conferma</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>RentProcessRuleOutput.Category__c</leftValueReference>
+                <leftValueReference>InterrogaRegoleRateizzazione.Category__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Aziende SME</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>RentProcessRuleOutput.MaxInstallmentsNumber__c</leftValueReference>
+                <leftValueReference>InterrogaRegoleRateizzazione.MaxInstallmentsNumber__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <numberValue>0.0</numberValue>
@@ -587,26 +603,33 @@
         <defaultConnectorLabel>Non Da Approvare</defaultConnectorLabel>
         <rules>
             <name>Da_Approvare</name>
-            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditionLogic>((2 AND 4) OR 1) AND 3</conditionLogic>
             <conditions>
-                <leftValueReference>RentProcessRuleOutput.ApprovalProcess__c</leftValueReference>
+                <leftValueReference>InterrogaRegoleRateizzazione.ApprovalProcess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>RentProcessRuleOutput.MaxInstallmentsNumber__c</leftValueReference>
+                <leftValueReference>InterrogaRegoleRateizzazione.MaxInstallmentsNumber__c</leftValueReference>
                 <operator>WasSet</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
+                <leftValueReference>Get_Case.TotalResidue__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>Get_Case.InstallmentNumberRequired__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <elementReference>RentProcessRuleOutput.MaxInstallmentsNumber__c</elementReference>
+                    <elementReference>InterrogaRegoleRateizzazione.MaxInstallmentsNumber__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -643,7 +666,7 @@
             <name>Trovata</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>RentProcessRuleOutput.Id</leftValueReference>
+                <leftValueReference>InterrogaRegoleRateizzazione.Id</leftValueReference>
                 <operator>WasSet</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -1010,6 +1033,16 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
+            <name>Picklist</name>
+            <choiceReferences>RevokeValue</choiceReferences>
+            <choiceReferences>RejectValue</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>RevokeValue</defaultSelectedChoiceReference>
+            <fieldText>Informazioni Aggiuntive</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
             <name>hdtRecordEditForm_00</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -1101,12 +1134,6 @@
                 <name>showReadOnly</name>
                 <value>
                     <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelInputSection</name>
-                <value>
-                    <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1490,17 +1517,7 @@
         </connector>
         <fields>
             <name>RuleNotFoundMessage</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Piano Rata Non Concedibile.&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>displayErrorMessage</name>
-            <fieldText>&lt;p&gt;{!ErrorMessageOutput}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>displayErrorNavigation</name>
-            <fieldText>&lt;p&gt;Se si desidera correggere i dati utilizzare il tasto &quot;Indietro&quot;, altrimenti alla pressione del tasto &quot;Conferma Pratica&quot; il Case verrà Annullato.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Piano Rata Non Concedibile.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Premere il tasto Indietro per modificare i dati; &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Alla pressione del tasto avanti il Case verrà Annullato.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1528,7 +1545,7 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1576,7 +1593,7 @@
             <targetReference>Il_Case_in_Bozza</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
@@ -1712,21 +1729,6 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
-    </variables>
-    <variables>
-        <name>ErrorMessageOutput</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>RentProcessRuleOutput</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>RentProcessRule__c</objectType>
     </variables>
     <variables>
         <name>SaveOrConfirm</name>
