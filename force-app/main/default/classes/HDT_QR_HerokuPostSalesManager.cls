@@ -78,6 +78,20 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         LIMIT 1];
     }
 
+    public Case getRelatedCase(String recordId){
+        return [SELECT Id,
+        Type,
+        Phase__c,
+        CreatedDate,
+        ParentId
+        FROM Case
+        WHERE Type = 'Sospensione Fornitura'
+        AND ParentId = :recordId
+        WITH SECURITY_ENFORCED
+        ORDER BY CreatedDate DESC
+        LIMIT 1];
+    }
+
     public wrts_prcgvr__AsyncJob__c getAsyncJobByJobItem(String recordId){
 
         wrts_prcgvr__AsyncJob__c asyncJobRec = new wrts_prcgvr__AsyncJob__c();
