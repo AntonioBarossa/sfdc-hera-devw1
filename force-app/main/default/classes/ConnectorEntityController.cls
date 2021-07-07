@@ -82,6 +82,7 @@ global with sharing class ConnectorEntityController {
 				ActivityEndTime__c = Datetime.now(),
 				CallEndTime__c = Datetime.now(),
 				CallDuration__c = (Decimal) message.get('Duration'),
+				RecordingLink__c = (String) attachdata.get('URLREC'),
 				WaitingTime__c = 0 // WIP
 			);
 

@@ -109,9 +109,12 @@ export default class HdtAccountDocumentSignatureManager extends NavigationMixin(
     }
     sendDocumentFile(){
         var sendMode = this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value;
+        if(sendMode.localeCompare('Stampa Cartacea')===0){
+            sendMode = 'Sportello';
+        }
         var email = this.template.querySelector("lightning-input[data-id=email]").value;
         var formParams = {
-            sendMode : this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value,
+            sendMode : sendMode,
             email : this.template.querySelector("lightning-input[data-id=email]").value,      
             mode : 'Print',
             Archiviato : 'Y',

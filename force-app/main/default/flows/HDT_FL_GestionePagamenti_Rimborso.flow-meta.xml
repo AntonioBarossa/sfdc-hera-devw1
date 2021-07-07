@@ -450,6 +450,20 @@
                 <elementReference>GetCodiceCausale_0.OperationCode__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.TriggerPoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Check_Documenti.invoiceList</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.TraceabilityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Check_Documenti.documentList</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0</targetReference>
         </connector>
@@ -464,6 +478,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Check_Documenti.phase</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.TriggerPoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Check_Documenti.invoiceList</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.TraceabilityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Check_Documenti.documentList</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -503,6 +531,20 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.TriggerPoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Check_Documenti_0.invoiceList</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.TraceabilityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Check_Documenti_0.documentList</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0_0</targetReference>
         </connector>
@@ -524,6 +566,20 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.TriggerPoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Check_Documenti_0.invoiceList</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.TraceabilityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Check_Documenti_0.documentList</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -563,6 +619,20 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.TriggerPoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Check_Documenti_1.invoiceList</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.TraceabilityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Check_Documenti_1.documentList</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
@@ -584,6 +654,20 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.TriggerPoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Check_Documenti_1.invoiceList</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.TraceabilityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Check_Documenti_1.documentList</elementReference>
             </value>
         </assignmentItems>
         <connector>
