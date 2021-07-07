@@ -75,7 +75,13 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                     parentCase.Phase__c = 'Completata';
                 }
             } else if(parentCase.Type.equalsIgnoreCase('Allineamento Canone Rai')){
-                parentCase.Phase__c = 'Completata';
+                if(currentCase.Phase__c.equalsIgnoreCase('KO definitivo')){
+                    wrts_prcgvr__Activity__c activity = createActivity('Elaborazione Manuale');
+                    activity.Case__c = currentCase.Id;
+                    HDT_UTL_DatabaseService.insertSObject(activity);
+                } else {
+                    parentCase.Phase__c = 'Completata';
+                }
             }
 
             HDT_UTL_DatabaseService.updateSObject(parentCase);
@@ -292,14 +298,9 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         Case currentCase = (Case) inputCase;
 
         if(currentCase.VulturePracticeReference__c != null){
-
-            wrts_prcgvr__ActivityTemplate__c template = postsalesQr.getActivityTemplate('Sblocco Voltura');
-            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-            activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
+            wrts_prcgvr__Activity__c activity = createActivity('Sblocco Voltura');
             activity.Order__c = currentCase.VulturePracticeReference__c;
-            activity.wrts_prcgvr__Description__c = template.wrts_prcgvr__Subject__c;
             HDT_UTL_DatabaseService.insertSObject(activity);
-        
         }
 
     }
@@ -314,6 +315,16 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
         HDT_UTL_DatabaseService.updateSObject(billingProfile);
 
+    }
+
+    //returns activity and has to be created inside the caller methdo because it has to be linked to an entity first
+    private static wrts_prcgvr__Activity__c createActivity(String templateName){
+        HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
+        wrts_prcgvr__ActivityTemplate__c template = postsalesQr.getActivityTemplate(templateName);
+        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+        activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
+        activity.wrts_prcgvr__Description__c = template.wrts_prcgvr__Subject__c;
+        return activity;
     }
 
 

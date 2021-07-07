@@ -10837,6 +10837,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Risoluzione No Sospensione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Risoluzione Punto Sospeso</fullName>
             <default>false</default>
         </values>

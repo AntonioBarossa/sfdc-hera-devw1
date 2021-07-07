@@ -10,6 +10,8 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
 
         HDT_UTL_FlowOutputs output = new HDT_UTL_FlowOutputs();
         String phase;
+        String invoiceList = '';
+        String documentList = '';
 
         String recordId = inputs[0].recordId;
         String reimburseMethod = inputs[0].reimburseMethod;
@@ -58,6 +60,16 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
                 }
 
                 residualSum += document.DocumentResidue__c;
+
+                // Concatenazione numeri fattura/documento per Heroku.
+                String documentNumber = document.DocumentNumber__c;
+                if(String.isNotBlank(documentNumber)){
+                    if(documentNumber.startsWith('0')){
+                        invoiceList += documentNumber + ';';
+                    } else {
+                        documentList += documentNumber + ';';
+                    }
+                }
 
             }
 
@@ -114,6 +126,8 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
         }
 
         output.phase = phase;
+        output.invoiceList = invoiceList;
+        output.documentList = documentList;
 
         outputs.add(output);
 
@@ -142,6 +156,11 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
         @InvocableVariable
         public String phase;
 
+        @InvocableVariable
+        public String invoiceList;
+
+        @InvocableVariable
+        public String documentList;
     }
 
   
