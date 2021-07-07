@@ -315,6 +315,70 @@ public with sharing class HDT_SRV_SalesHandler {
                 HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
                 RestContext.response.statusCode = 200;
             }
+            when 'CMPDMP_PRV'{
+               
+                if (request.objects.get(0).fields.get(0) != null) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null ){
+                        RestContext.response.statusCode = 200;
+                        // batch
+                    }
+                    else {
+                     
+                        responseField.fieldType = 'TEXT';
+                        responseField.name = 'ESITO';
+                        responseField.value = 'KO';
+        
+                        responseFieldError.fieldType = 'TEXT';
+                        responseFieldError.name = 'ERROR_MESSAGE';
+                        responseFieldError.value = 'Unsupported requestType';
+        
+                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+                        mrrResponseItem.objects.add(responseObject);
+        
+                        RestContext.response.statusCode = 400;
+        
+                    }
+                }
+            }
+
+            when 'CMPDMP_ATTR'{
+                if (request.objects.get(0).fields.get(0) != null) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null ){
+                        RestContext.response.statusCode = 200; // else
+                        // batch
+                    }
+                    else {
+                       
+                        responseField.fieldType = 'TEXT';
+                        responseField.name = 'ESITO';
+                        responseField.value = 'KO';
+        
+                        responseFieldError.fieldType = 'TEXT';
+                        responseFieldError.name = 'ERROR_MESSAGE';
+                        responseFieldError.value = 'Unsupported requestType';
+        
+                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+                        mrrResponseItem.objects.add(responseObject);
+        
+                        RestContext.response.statusCode = 400;
+        
+                    }
+                }
+            }
             when else {
 
                 responseField.fieldType = 'TEXT';
