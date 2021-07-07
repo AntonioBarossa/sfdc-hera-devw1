@@ -60,7 +60,8 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         //SetExpirationDate at CreatedDate+20businessDay
         DateTime createdCase = installmentsQr.getCaseById(recordId).CreatedDate;
         System.debug('SRV_InstallmentPlans created date -> ' + createdCase);
-        currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(Date.valueOf(createdCase), 20);
+        currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 19;
+        currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(currentCase.ExpirationDate__c, 1);
         System.debug('SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
 
         //Set AmountToPayInstallments to TotalPay

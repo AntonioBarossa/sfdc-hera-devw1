@@ -71,10 +71,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>CustomerAssisted__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>RefundableEscape__c</field>
             </layoutItems>
             <layoutItems>
