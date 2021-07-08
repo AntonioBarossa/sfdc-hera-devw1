@@ -42,6 +42,23 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         }
     }
 
+    public class HDT_WRP_DtoServiceTwentySix{
+        public String rdsRdo;
+        public String pod;
+        public String documentKey;
+        public String tipoOperazione;
+        public String tipoFornitura;
+        public List<HDT_WRP_Position> elements;
+        public HDT_WRP_DtoServiceTwentySix(Order order){
+            this.rdsRdo=Order.OrderNumber;
+            this.pod=Order.ServicePointCode__c;
+            this.documentKey=Order.HerokuPracticeCode__c;
+            this.tipoOperazione=order.ActivationMode__c;
+            this.tipoFornitura=order.SupplyType__c;
+        }
+        public HDT_WRP_DtoServiceTwentySix(){}
+    }
+
 
     private static List<Service26Config__c> getConfigs(String serviceType, Set<String> productFamilies){
         //This method get a service type (gas/Elettrico) and a list of product families, 
@@ -55,11 +72,25 @@ public with sharing class HDT_UTL_ServiceTwentySix {
 
 
 
-    public List<HDT_WRP_Position> startProcess(Id OrderId){
+    public HDT_WRP_DtoServiceTwentySix startProcess(Id OrderId){
         //this method starts the process, it gets an OrderId and he queries related OrderItems
         //If there's already a query on order items (or on Order), modify this method to get that list
         
-        List<OrderItem> items =[select Order.CommodityFormula__c, Product2.Family  from OrderItem where OrderId=:OrderId WITH SECURITY_ENFORCED];
+        Order order = [SELECT (SELECT Product2.Family FROM OrderItems), CommodityFormula__c,
+                         OrderNumber, ServicePointCode__c, ActivationMode__c,
+                        HerokuPracticeCode__c, SupplyType__c, SupplyTypeTechnical__c
+                        FROM Order WHERE Id=:OrderId WITH SECURITY_ENFORCED];
+
+        HDT_WRP_DtoServiceTwentySix dto = new HDT_WRP_DtoServiceTwentySix(order);
+
+        List<OrderItem> items = order.OrderItems;
+        if(items.isEmpty()){
+            return dto;
+        }
+            /* [SELECT Order.CommodityFormula__c, Product2.Family, Order.OrderNumber, Order.ServiePointCode__c, 
+                Order.HerokuPracticeCode__c, Order.SupplyType__c, Order.SupplyTypeTechnical__c, Order.ActivationMode__c
+            FROM OrderItem WHERE OrderId=:OrderId WITH SECURITY_ENFORCED]; */
+
         Map<String, List<OrderItem>> familyToOccurrencies = new Map<String, List<OrderItem>>();
         //this map is used to connect a family to a list of items. 
         //This map is not clean because we cannot know at this point 
@@ -71,12 +102,14 @@ public with sharing class HDT_UTL_ServiceTwentySix {
             }
             familyToOccurrencies.get(item.Product2.Family).add(item);
         }
-        List<Service26Config__c> configs = getConfigs(items[0].Order.CommodityFormula__c, familyToOccurrencies.keyset());
+        List<Service26Config__c> configs = getConfigs(order.CommodityFormula__c, familyToOccurrencies.keyset());
         //getting list of configurationObjects, they contains only the families we are interested but 
         //They may have more occurrence than we need
-        return getPositions(configs, familyToOccurrencies);
+        if(!configs.isEmpty()){
+            dto.elements=getPositions(configs, familyToOccurrencies);
+        }
+        return dto;
     }
-
 
 
 
