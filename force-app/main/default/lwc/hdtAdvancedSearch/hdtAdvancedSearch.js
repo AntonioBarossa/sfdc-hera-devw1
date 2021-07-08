@@ -183,6 +183,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     closeModal() {
+        this.confirmButtonDisabled=true;
         this.openmodel = false;
     }
 
