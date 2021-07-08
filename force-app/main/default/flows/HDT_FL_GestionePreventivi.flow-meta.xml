@@ -355,6 +355,13 @@
                 <stringValue>Permanente</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.CaliberRequested__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Input_Case.CaliberAvailable__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Valorizzare_Potenza_Richiesta</targetReference>
         </connector>
