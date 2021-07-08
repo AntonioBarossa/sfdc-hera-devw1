@@ -2579,6 +2579,21 @@ IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICK
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
+            <name>Preventivo_Analitico_Text</name>
+            <fieldText>&lt;p&gt;Attenzione! Qualora il preventivo venga ritipizzato in Predeterminabile, le seguenti modalità di firma e spedizione verranno utilizzate per l&apos;invio della documentazione al cliente.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Calcola_Info_Preventivo.QuoteType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Analitico</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>hdtDocumentSignature</name>
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -2610,6 +2625,12 @@ IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICK
                 <name>source</name>
                 <value>
                     <elementReference>$User.LoginChannel__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>Get_Input_Case.Type</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
