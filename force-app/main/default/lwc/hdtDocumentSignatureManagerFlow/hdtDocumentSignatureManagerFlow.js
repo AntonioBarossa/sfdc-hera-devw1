@@ -73,7 +73,9 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     @track enableNext = false;
     @track previewExecuted = false;
     @track confirmData;
-
+    @track labelConfirm = 'Conferma pratica';
+    @track showConfirmButton = false;
+    @track showPreviewButton = true;
     @api
     get variantButton(){
         if(this.nextVariant != null && this.nextVariant !="" && this.nextVariant != "unedfined")
@@ -91,7 +93,13 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     }
 
     connectedCallback(){
-        //updateRecord({fields: { Id: this.recordId }});
+        if(this.quoteType && (this.quoteType.localeCompare('Analitico') || this.quoteType.localeCompare('Predeterminabile'))){
+            this.labelConfirm = 'Conferma pratica';
+            this.showPreviewButton = false;
+            this.previewExecuted = true;
+        }else{
+            this.labelConfirm = 'Invia documenti';
+        }
     }
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
         wiredCase({ error, data }) {
@@ -206,6 +214,10 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     handlePreviewExecuted(event){
         this.previewExecuted = true;
     }
+
+    handlePreview(event){
+        let returnValue = this.template.querySelector('c-hdt-document-signature-manager').handlePreview();
+    }
     handleConfirmData(event){
         console.log('dati confermati ' + event.detail);
         this.confirmData = event.detail;
@@ -253,11 +265,14 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                     );
                 });
             this.enableNext = true;
+            this.handleConfirm();
         }else{
             this.enableNext = false;
         }
     }
-
+    handleConfirmButton(){
+        let returnValue = this.template.querySelector('c-hdt-document-signature-manager').checkForm();
+    }
     handleConfirm(){
         if(this.enableNext){
             if((!this.previewExecuted && this.quoteType && this.quoteType.localeCompare('Analitico') != 0)){

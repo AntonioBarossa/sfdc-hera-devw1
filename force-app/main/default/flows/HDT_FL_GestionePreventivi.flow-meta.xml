@@ -492,6 +492,10 @@
                 <elementReference>Calcola_Info_Preventivo.QuoteType__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.OperationCode__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
             <targetReference>Preventivo_Rapido</targetReference>
         </connector>
@@ -2600,6 +2604,12 @@ IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICK
                 <name>nextVariant</name>
                 <value>
                     <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>source</name>
+                <value>
+                    <elementReference>$User.LoginChannel__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
