@@ -2731,7 +2731,7 @@
             <inputParameters>
                 <name>addressLabel</name>
                 <value>
-                    <stringValue>Indirizzo di Spedizione</stringValue>
+                    <stringValue>Indirizzo di Recapito</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
