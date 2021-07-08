@@ -329,7 +329,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.QuotationNumber__c = numPrev;
         }
         if(expectedExec != null && expectedExec != ''){
-            if(quotationType.equalsIgnoreCase('Analitico') && nextPhase.containsIgnoreCase('Dati Tenici Ricevuti')){
+            System.debug('#QUOTATIONTYPE -> ' + quotationType);
+            System.debug('#NEXTPHASE -> ' +nextPhase);
+            if(quotationType.equalsIgnoreCase('Analitico') && nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti')){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
             }else if(!quotationType.equalsIgnoreCase('Analitico')){
                 currentCase.ExpectedExecutionTime__c = expectedExec;

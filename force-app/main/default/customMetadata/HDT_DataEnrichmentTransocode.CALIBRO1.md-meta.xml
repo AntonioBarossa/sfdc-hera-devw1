@@ -24,6 +24,6 @@
     </values>
     <values>
         <field>SfdcField__c</field>
-        <value xsi:type="xsd:string">Caliber__c</value>
+        <value xsi:type="xsd:string">CaliberAvailable__c</value>
     </values>
 </CustomMetadata>
