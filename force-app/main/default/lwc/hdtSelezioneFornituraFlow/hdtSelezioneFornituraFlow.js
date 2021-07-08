@@ -1,4 +1,5 @@
 import  SaleVas  from 'c/hdtSaleVas';
+//import SaleVasHtml from 'c/hdtSaleVas/hdtSaleVas.html'
 import { api } from 'lwc';
 //import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
 
@@ -9,6 +10,8 @@ export default class HdtSelezioneFornituraFlow extends SaleVas {
         return this.selectedOrder==undefined? null : this.selectedOrder.Id;
     }
 
+    @api groupOptions;//Ordini in corso;Contratti Attivi;
+
     ordersListcolumns = [
         {label: 'Tipo', fieldName: 'Type', type: 'text'},
         {label: 'Numero Ordine', fieldName: 'OrderNumber', type: 'text'},
@@ -16,6 +19,10 @@ export default class HdtSelezioneFornituraFlow extends SaleVas {
         {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
         {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
     ];
+
+    /* render(){
+        return SaleVasHtml;
+    } */
 
     connectedCallback(){
         this.handleRadioGroupChange({detail:{value:"Ordini in corso"}});
