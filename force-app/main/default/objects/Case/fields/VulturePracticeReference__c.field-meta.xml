@@ -8,9 +8,9 @@
     <lookupFilter>
         <active>true</active>
         <filterItems>
-            <field>Order.AccountId</field>
+            <field>Order.ServicePoint__c</field>
             <operation>equals</operation>
-            <valueField>$Source.AccountId</valueField>
+            <valueField>$Source.ServicePoint__c</valueField>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>

@@ -268,6 +268,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
                 }
             }
+            //Data Annullamento
+            if(reqWrp.requestMap.get('DATA') != null){
+                try{
+                    currentCase.CancellationRequestDate__c	= Date.valueOf(reqWrp.requestMap.get('DATA'));
+                } catch (Exception e){
+                    System.debug('DATA Exception -> ' + e.getMessage());
+                }
+            }
             
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
