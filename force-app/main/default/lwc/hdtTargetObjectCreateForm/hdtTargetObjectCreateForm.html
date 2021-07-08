@@ -43,4 +43,7 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </div>
+    <template if:true={booleanFormDistributor}>
+    <c-hdt-select-distributor-point-code objectapiname={objectApiName} accountid={accountid} retrieveddistributor={retrievedDistributor} onselectdistributor={handleDistributor} onclosedform={closedFormDistributor} ondistributorselected={getDistributorSelected}></c-hdt-select-distributor-point-code>
+    </template>
 </template>
