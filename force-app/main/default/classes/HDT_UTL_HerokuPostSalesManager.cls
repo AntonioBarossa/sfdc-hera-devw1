@@ -273,6 +273,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
             String fatturaSap = reqWrp.requestMap.get('FATTURA');
+            String contractCode = reqWrp.requestMap.get('VERTRAG');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
             String newDescription = '';
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
@@ -295,6 +296,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(String.isNotBlank(newDescription)){
                 currentCase.Description = newDescription + '\n' + currentDescription;
+            }
+            if(contractCode != null || contractCode != ''){
+
             }
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
@@ -662,8 +666,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String objectq = 'Contract';
             List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectq);
             Contract contracRecord = (Contract) recordList[0];
-            contracRecord.Status = contractStatus;
-            contracRecord.EndDate = contractEndDate;
+            if(contractCode != contracRecord.SAPContractCode__c){
+                contracRecord.SAPContractCode__c = contractCode;
+            }
+            if(contractStatus != null && contractStatus != ''){
+                contracRecord.Status = contractStatus;
+            }
+            if(contractEndDate != null){
+                contracRecord.EndDate = contractEndDate;
+            }
             Boolean result = HDT_UTL_DatabaseService.updateSObject(contracRecord);
         }catch(Exception ex){
             System.debug(LoggingLevel.WARN, ex.getMessage() + ' at line ' + ex.getLineNumber() + ' of HDT_UTL_HerokuPostSalesManager.handleContractUpdate method');
