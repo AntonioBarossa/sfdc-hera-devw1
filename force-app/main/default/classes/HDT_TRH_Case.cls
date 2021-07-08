@@ -22,7 +22,7 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
                 }
                 //Inserito questo controllo per gestire la casistica di un Preventivo Analitico che riceve più ammissibilità causa esecuzione lavori.
                 //pertanto se il Preventivo è Analitico, ho già ricevuto un ammissibilità OK e sto ricevendo un importo, non devo riclassificare.
-                if(String.isBlank(caseOld.Amount__c) && String.isNotBlank(caseNew.Amount__c) && caseOld.QuotationType__c != null && caseOld.QuotationType__c.equalsIgnoreCase('Analitico')
+                if(String.isBlank(String.valueOf(caseOld.Amount__c)) && String.isNotBlank(String.valueOf(caseNew.Amount__c)) && caseOld.QuotationType__c != null && caseOld.QuotationType__c.equalsIgnoreCase('Analitico')
                     && !(caseOld.PhaseStory__c != null && caseOld.PhaseStory__c.containsIgnoreCase('Ammissibilità OK'))){
                         caseNew.QuotationType__c = 'Predeterminabile';
                 }
