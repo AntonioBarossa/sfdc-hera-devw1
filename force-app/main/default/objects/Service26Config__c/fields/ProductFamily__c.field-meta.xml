@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ProductFamily__c</fullName>
+    <description>Famiglia di prodotti</description>
+    <externalId>false</externalId>
+    <label>Famiglia Prodotti</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sconto Eur/Giorno</fullName>
+                <default>false</default>
+                <label>Sconto Eur/Giorno</label>
+            </value>
+            <value>
+                <fullName>Bonus Eur/Mese</fullName>
+                <default>false</default>
+                <label>Bonus Eur/Mese</label>
+            </value>
+            <value>
+                <fullName>Bonus Eur/Giorno</fullName>
+                <default>false</default>
+                <label>Bonus Eur/Giorno</label>
+            </value>
+            <value>
+                <fullName>Sconto Esenzione</fullName>
+                <default>false</default>
+                <label>Sconto Esenzione</label>
+            </value>
+            <value>
+                <fullName>Contributo Eur/kWh</fullName>
+                <default>false</default>
+                <label>Contributo Eur/kWh</label>
+            </value>
+            <value>
+                <fullName>Bonus Eur/Kwh</fullName>
+                <default>false</default>
+                <label>Bonus Eur/Kwh</label>
+            </value>
+            <value>
+                <fullName>Bonus Percentuale</fullName>
+                <default>false</default>
+                <label>Bonus Percentuale</label>
+            </value>
+            <value>
+                <fullName>Sconto Percentuale</fullName>
+                <default>false</default>
+                <label>Sconto Percentuale</label>
+            </value>
+            <value>
+                <fullName>Contributo Eur/kW</fullName>
+                <default>false</default>
+                <label>Contributo Eur/kW</label>
+            </value>
+            <value>
+                <fullName>Contributo Eur/Giorno</fullName>
+                <default>false</default>
+                <label>Contributo Eur/Giorno</label>
+            </value>
+            <value>
+                <fullName>Contributo Eur/Mese</fullName>
+                <default>false</default>
+                <label>Contributo Eur/Mese</label>
+            </value>
+            <value>
+                <fullName>VAS Fatturabili</fullName>
+                <default>false</default>
+                <label>VAS Fatturabili</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

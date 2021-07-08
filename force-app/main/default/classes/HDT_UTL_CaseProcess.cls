@@ -107,10 +107,14 @@ public with sharing class HDT_UTL_CaseProcess {
     public static void updateMemberStatusforClosedCases(List<Case> newCasesList, List<Case> oldCasesList) {
         try{
             List<Id> closedCaseIds = new List<Id>();
+            Map<String,Case> oldCaseMap = new Map<String,Case>();
+            for(Case c : oldCasesList){
+                oldCaseMap.put(c.id,c);
+            }
             Map<String,String> accountIdCase = new Map<String,String> ();
             Map<String,String> campaignIdCase = new Map<String,String>();
             for (Case newCase : newCasesList) {
-                if (newCase.IsClosed == true) {
+                if (oldCaseMap.get(newCase.id) != null && oldCaseMap.get(newCase.id).status == 'New' && newCase.Status == 'In Lavorazione') {
                     closedCaseIds.add(newCase.Id);
                     accountIdCase.put(newCase.AccountId, newCase.Id);
                     campaignIdCase.put(newCase.Campaign__c, newCase.Id);

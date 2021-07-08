@@ -382,6 +382,11 @@
         <label>Risoluzione No Punto Sospeso</label>
     </standardValue>
     <standardValue>
+        <fullName>Risoluzione No Sospensione</fullName>
+        <default>false</default>
+        <label>Risoluzione No Sospensione</label>
+    </standardValue>
+    <standardValue>
         <fullName>Risoluzione Punto Sospeso</fullName>
         <default>false</default>
         <label>Risoluzione Punto Sospeso</label>
@@ -650,5 +655,10 @@
         <fullName>VOTIVE Modena/Subentro</fullName>
         <default>false</default>
         <label>VOTIVE Modena/Subentro</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Indennizzo</fullName>
+        <default>false</default>
+        <label>Indennizzo</label>
     </standardValue>
 </StandardValueSet>

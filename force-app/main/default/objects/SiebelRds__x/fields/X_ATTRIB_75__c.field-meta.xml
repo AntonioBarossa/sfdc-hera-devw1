@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_ATTRIB_75</label>
+    <label>Intestatario BP</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

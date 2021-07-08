@@ -32,9 +32,9 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         Case recordCase = new Case();
         try {
             if(recordId instanceOf Id){
-                recordCase = [SELECT Id,Type,Cluster__c, ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id,Type,Cluster__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
             }else {
-                recordCase = [SELECT Id,Type,Cluster__c, ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id,Type,Cluster__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
             }
             
         } catch (DmlException ex) {
@@ -75,6 +75,20 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         AND Process__c = :process
         AND Commodity__c = :commodity
         WITH SECURITY_ENFORCED
+        LIMIT 1];
+    }
+
+    public Case getRelatedCase(String recordId){
+        return [SELECT Id,
+        Type,
+        Phase__c,
+        CreatedDate,
+        ParentId
+        FROM Case
+        WHERE Type = 'Sospensione Fornitura'
+        AND ParentId = :recordId
+        WITH SECURITY_ENFORCED
+        ORDER BY CreatedDate DESC
         LIMIT 1];
     }
 

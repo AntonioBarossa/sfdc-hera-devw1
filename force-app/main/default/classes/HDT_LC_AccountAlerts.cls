@@ -11,11 +11,11 @@ public with sharing class HDT_LC_AccountAlerts {
     }
 
     @AuraEnabled(cacheable=true)
-    public static String getAvailableRulesFor(String accountCategory) {
+    public static String getAvailableRulesFor(String accountCategory, String accountId) {
 
         HDT_QR_AlertConfiguration queryHandler = new HDT_QR_AlertConfiguration();
         
-        List<AlertConfiguration__c> availableAlerts = queryHandler.getRecordsByAccountCategory(accountCategory);
+        List<AlertConfiguration__c> availableAlerts = queryHandler.getRecordsForAccount(accountId, accountCategory);
 
         return JSON.serialize(availableAlerts);
     }

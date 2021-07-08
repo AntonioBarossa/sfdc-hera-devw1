@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_VAS_CONTIN_CAMBIO_OFF</label>
+    <label>CP VAS Cont. Cambio Off.</label>
     <length>1</length>
     <required>false</required>
     <type>Text</type>

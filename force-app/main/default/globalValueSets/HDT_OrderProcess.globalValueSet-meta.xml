@@ -135,6 +135,16 @@
         <default>false</default>
         <label>Cambio Uso Tecnico</label>
     </customValue>
+    <customValue>
+        <fullName>Cambio Offerta Ele</fullName>
+        <default>false</default>
+        <label>Cambio Offerta Ele</label>
+    </customValue>
+    <customValue>
+        <fullName>Cambio Offerta Gas</fullName>
+        <default>false</default>
+        <label>Cambio Offerta Gas</label>
+    </customValue>
     <description>Lista Processi Ordine</description>
     <masterLabel>Processo Ordine</masterLabel>
     <sorted>false</sorted>

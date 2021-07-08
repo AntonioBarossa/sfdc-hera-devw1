@@ -111,7 +111,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         }
 
         for(HDT_ButtonDetails__mdt butMdt : mdtButtonList){
-            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c, butMdt.ButtonType__c, butMdt.Parameters__c));
+            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c, butMdt.ButtonType__c, butMdt.Parameters__c, butMdt.Accesskey__c));
         }
 
         return objDetail;
@@ -140,7 +140,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             colObj.fieldName = colSec_mdt.FieldName__c;
             colObj.sortable = colSec_mdt.Sortable__c;
             colObj.initialWidth = colSec_mdt.InitialWidth__c;
-            colObj.fieldType = colSec_mdt.FieldType__c;
+            colObj.type = colSec_mdt.FieldType__c;
             obj.columnObj.add(colObj);
         }
 
@@ -156,7 +156,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         obj.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
 
         for(HDT_ButtonDetails__mdt button_mdt : mdtButtonList){
-            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c, button_mdt.ButtonType__c, ''));
+            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c, button_mdt.ButtonType__c, '',button_mdt.Accesskey__c));
         }
 
         obj.success = true;

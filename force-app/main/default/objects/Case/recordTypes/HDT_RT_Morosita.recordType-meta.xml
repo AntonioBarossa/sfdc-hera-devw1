@@ -927,26 +927,50 @@
     </picklistValues>
     <picklistValues>
         <picklist>CompetentOffice__c</picklist>
-        <values>
+        <!-- <values>
             <fullName>Aziende outMercato</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>AziendeMercato aziende InMercato</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>FamiglieProcedure Concorsuali</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>HCM</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Marche Multiservizi SpaMercato</fullName>
+            <fullName>Marche Multiservizi Spa</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Mercato Aziende</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mercato Aziende In</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mercato Aziende Out</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mercato Famiglie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Procedure Concorsuali</fullName>
+            <default>false</default>
+        </values>
+        <!-- <values>
+            <fullName>Marche Multiservizi SpaMercato</fullName>
+            <default>false</default>
+        </values> -->
     </picklistValues>
     <picklistValues>
         <picklist>ComplaintEntryChannel__c</picklist>
@@ -10810,6 +10834,10 @@
         </values>
         <values>
             <fullName>Risoluzione No Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Sospensione</fullName>
             <default>false</default>
         </values>
         <values>

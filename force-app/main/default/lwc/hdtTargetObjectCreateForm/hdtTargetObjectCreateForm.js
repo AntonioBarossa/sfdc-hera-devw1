@@ -203,7 +203,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 ) 
             }
             else if(element=='SAPImplantCode__c')
-
             {
 
                 fieldsDataObject.push(
@@ -216,7 +215,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 ) 
             }
             else if(element=='MeterStatus__c')
-
             {
 
                 fieldsDataObject.push(
@@ -326,7 +324,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             required : mapFieldReq.get(element),
                             value:'Bozza',
                             disabled: true
-
                         }
                     ) 
                 }
@@ -936,9 +933,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
 
         //Validate address
+        
         if(!this.theRecord['Indirizzo Estero']){
             console.log('entra in if ind estero');
-            if (!this.theRecord['Flag Verificato']) {
+            if (this.theRecord['Flag Verificato']== false) {
                 console.log('entra in flag verificato false ');
                 isValid = false;
                 this.isValidFields = false;
@@ -1174,6 +1172,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: this.newServicePoint}));
             
         }).catch(error => {
+            
             this.loading = false;
 
             const toastErrorMessage = new ShowToastEvent({

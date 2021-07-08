@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_46</label>
+    <label>Descr mod pagamento / Service point CD</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

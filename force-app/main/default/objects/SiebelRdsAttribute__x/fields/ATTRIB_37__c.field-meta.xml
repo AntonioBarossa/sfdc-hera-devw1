@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_37</label>
+    <label>Emittente</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

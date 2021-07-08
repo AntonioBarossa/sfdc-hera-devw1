@@ -57,6 +57,8 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         //**FINE SVILUPPO */
     }
 
+    //Andrei Necsulescu - 02/07/2021: Commented as it created an exception when importing more than a certain number of Cases at a time.
+    /*
     public override void afterInsert(){   
         wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt ObjectCompatibility =
             (wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt) wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
@@ -89,6 +91,7 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         String[] conflictsString = new List<String>(conflicts);
         return String.join(conflictsString, ', ');
     }
+    */
 
     /**
      * Ribalta i campi Canale/Gruppo/Postazione dall'utenza in contesto al Case.

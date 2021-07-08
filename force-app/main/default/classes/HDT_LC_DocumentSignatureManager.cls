@@ -30,4 +30,14 @@ public with sharing class HDT_LC_DocumentSignatureManager {
         }
         return jsonReturn;
     }
+    
+    @AuraEnabled
+    public static string showOriginalDocument(String documentalActivityId){
+        return '';
+    }
+
+    @AuraEnabled
+    public static string showArchivedAttachment(String documentalActivityId){
+        return '';
+    }
 }
