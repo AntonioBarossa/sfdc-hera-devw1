@@ -226,6 +226,13 @@
                 <elementReference>GetCodiceCausale.OperationCode__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AdditionalInfo</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Processo_Approvativo</targetReference>
         </connector>
@@ -352,6 +359,22 @@
         <dataType>Boolean</dataType>
         <value>
             <booleanValue>true</booleanValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RejectValue</name>
+        <choiceText>Cliente respinge la bolletta</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Cliente respinge la bolletta</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RevokeValue</name>
+        <choiceText>Cliente revoca la domiciliazione</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Cliente revoca la domiciliazione</stringValue>
         </value>
     </choices>
     <decisions>
@@ -1010,6 +1033,15 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
+            <name>AdditionalInfo</name>
+            <choiceReferences>RevokeValue</choiceReferences>
+            <choiceReferences>RejectValue</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Informazioni Aggiuntive</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
             <name>hdtRecordEditForm_00</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -1101,12 +1133,6 @@
                 <name>showReadOnly</name>
                 <value>
                     <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelInputSection</name>
-                <value>
-                    <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1576,7 +1602,7 @@
             <targetReference>Il_Case_in_Bozza</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
