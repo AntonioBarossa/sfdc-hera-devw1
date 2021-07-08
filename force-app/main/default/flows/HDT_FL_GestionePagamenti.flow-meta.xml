@@ -2715,7 +2715,13 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>nextVariant</name>
+                <name>addressLabel</name>
+                <value>
+                    <stringValue>Indirizzo di Recapito</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressType</name>
                 <value>
                     <stringValue>brand</stringValue>
                 </value>
