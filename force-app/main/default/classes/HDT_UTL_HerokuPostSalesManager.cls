@@ -262,7 +262,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(reqWrp.requestMap.get('DT_MAX_PREV') != null){
                 try{
-                    currentCase.QuotationValidityDate__c = Date.valueOf(reqWrp.requestMap.get('DT_MAX_PREV'));
+                    HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
+                    currentCase.QuotationValidityDate__c = enrichSrv.getDateFromString(reqWrp.requestMap.get('DT_MAX_PREV'));
                 } catch(Exception e){
                     System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
                 }
@@ -272,6 +273,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
             String fatturaSap = reqWrp.requestMap.get('FATTURA');
+            String contractCode = reqWrp.requestMap.get('VERTRAG');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
             String newDescription = '';
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
@@ -294,6 +296,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(String.isNotBlank(newDescription)){
                 currentCase.Description = newDescription + '\n' + currentDescription;
+            }
+            if(contractCode != null || contractCode != ''){
+
             }
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
@@ -397,7 +402,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String codiceContratto = '';
         String contoContrattuale = '';
         String sapContractCode = null;
-        String relatedRecordId = '';
+        String containerCaseNumber = '';
         String containerId = '';
         Contract contract;
         ServicePoint__c sp;
@@ -418,7 +423,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             ufficioCompetente = reqWrp.requestMap.get('UFFICIO_COMPETENTE');
             codiceContratto = reqWrp.requestMap.get('CODICE_CONTRATTO');
             contoContrattuale = reqWrp.requestMap.get('CONTO_CONTRATTUALE');
-            relatedRecordId = reqWrp.requestMap.get('SALESFORCE_KEY');
+            containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }
@@ -494,15 +499,19 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             if(String.isNotBlank(ufficioCompetente)){
                                 currentCase.CompetentOffice__c = ufficioCompetente;
                             }
-                            if(String.isNotBlank(relatedRecordId)){
-                                relatedCase = qrClass.getCaseRecord(relatedRecordId);
-                                currentCase.RelatedCase__c = relatedCase.Id;
-                            }
-                            containerId = morUtl.handleContainer(relatedCase,currentCase);
-                            if(String.isNotBlank(containerId)){
-                                if(containerId instanceOf Id){
-                                    currentCase.ParentId = containerId;
-                                }else{
+                            //If SALESFORCE_KEY (aka containerCaseNumber) is not null the container exists
+                            if(String.isNotBlank(containerCaseNumber)){
+                                //get container case
+                                containerCase = qrClass.getCaseRecord(containerCaseNumber);
+                                currentCase.ParentId = containerCase.Id;
+                                //get most recently created and not close related record
+                                relatedCase = qrClass.getRelatedCase(containerCase.Id);
+                                if(relatedCase != null){
+                                    currentCase.RelatedCase__c = relatedCase.Id;
+                                }
+                            } else { //SALESFORCE_KEY (aka contaienrCaseNumber) is null the container does not exist
+                                containerId = morUtl.handleContainer(currentCase);
+                                if(String.isNotBlank(containerId)){
                                     containerCase = (Case) JSON.deserialize(containerId, Case.class);
                                     caseInsertList.add(containerCase);
                                 }
@@ -538,11 +547,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             currentCase = qrClass.getCaseRecord(currentCase.Id);
             if(cluster == 'Morosita'){
-                //caso in cui c'e anche il case contenitore quindi serve legare al case referenziato il container creato
-                /*if(caseInsertList.size() > 1 ){
-                    relatedCase.ParentId = containerCase.Id;
-                    caseUpdateList.add(relatedCase);
-                }*/
                 if(currentCase.ParentId == null){
                     currentCase.ParentId = containerCase.Id;
                 }
@@ -662,8 +666,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String objectq = 'Contract';
             List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectq);
             Contract contracRecord = (Contract) recordList[0];
-            contracRecord.Status = contractStatus;
-            contracRecord.EndDate = contractEndDate;
+            if(contractCode != contracRecord.SAPContractCode__c){
+                contracRecord.SAPContractCode__c = contractCode;
+            }
+            if(contractStatus != null && contractStatus != ''){
+                contracRecord.Status = contractStatus;
+            }
+            if(contractEndDate != null){
+                contracRecord.EndDate = contractEndDate;
+            }
             Boolean result = HDT_UTL_DatabaseService.updateSObject(contracRecord);
         }catch(Exception ex){
             System.debug(LoggingLevel.WARN, ex.getMessage() + ' at line ' + ex.getLineNumber() + ' of HDT_UTL_HerokuPostSalesManager.handleContractUpdate method');
