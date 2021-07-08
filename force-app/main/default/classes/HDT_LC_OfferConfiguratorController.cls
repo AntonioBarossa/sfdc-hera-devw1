@@ -186,13 +186,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String techOffObj, String idToClone, String offerJson, String productId, String technicalofferid, String rate, Boolean sendToSap){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String techOffObj, String idToClone, String offerJson, String productId, String technicalofferid, String rate){
         
         System.debug('# saveNewOfferConfigured #');
         System.debug('# techOffObj > ' + techOffObj);
         System.debug('# idToClone > ' + idToClone);
         System.debug('# technicalofferid > ' + technicalofferid);
-        System.debug('# sendToSap > ' + sendToSap);
 
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
 
