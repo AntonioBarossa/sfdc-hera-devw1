@@ -13,7 +13,7 @@ public class HDT_LC_LeadChangeRecordTypeTst{
 
         HDT_UTL_DataFactoryTst.pClickInstance();
         
-        HDT_UTL_DataFactoryTst.createLead();
+        HDT_UTL_DataFactoryTst.createLead(1, true);
     }
     
     @isTest
@@ -36,17 +36,6 @@ public class HDT_LC_LeadChangeRecordTypeTst{
         String str = HDT_LC_LeadChangeRecordType.changeRecordTypeOfLead(updateLead.Id);
 
         update updateLead;
-
-        //List<Case> lstCases =[SELECT Id, RecordType.Name, Subject, Type FROM Case];
-
-        //Debug to check if 'lstCases' values are correct
-        //System.debug('lstCases = ' +lstCases);
-
-        // System.assertEquals(1, lstCases.size(), 'Case not created');
-        // System.assertEquals('Modifica Privacy', lstCases[0].Type);
-
-        // System.debug(lstCases[0].Type);
-        // System.assertNotEquals('', lstCases[0].Type);
 
         System.assertEquals('', str, 'URL not populated correctly');
 
