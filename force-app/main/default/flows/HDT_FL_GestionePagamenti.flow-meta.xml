@@ -1280,7 +1280,14 @@
             <name>Conferma_0_0_0_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtDocumentSignatureFlow.cancelCase</leftValueReference>
+                <leftValueReference>hdtFlowNavButtonsCopiaBolletta.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtFlowNavButtonsCopiaBolletta.saveDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -1295,10 +1302,17 @@
             <name>Annulla_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtDocumentSignatureFlow.cancelCase</leftValueReference>
+                <leftValueReference>hdtFlowNavButtonsCopiaBolletta.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtFlowNavButtonsCopiaBolletta.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2705,8 +2719,8 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtDocumentSignatureFlow</name>
-            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <name>hdtGenericAddressChooser</name>
+            <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>accountId</name>
@@ -2723,7 +2737,7 @@
             <inputParameters>
                 <name>addressType</name>
                 <value>
-                    <stringValue>brand</stringValue>
+                    <stringValue>BillingProfile</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2732,10 +2746,48 @@
                     <elementReference>Get_Input_Case.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>hdtFlowNavButtonsCopiaBolletta</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>quoteType</name>
+                <name>isCancel</name>
                 <value>
-                    <stringValue>Analitico</stringValue>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
