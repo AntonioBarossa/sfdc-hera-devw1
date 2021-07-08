@@ -325,9 +325,12 @@ public with sharing class HDT_SRV_SalesHandler {
                             localMapRequestFields.put(field.name,field.value);
                         }
                     }
-                    if(localMapRequestFields.get('runId')!= null ){
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''  ){
+
                         RestContext.response.statusCode = 200;
-                        // batch
+		                HDT_BA_ConsentLead ba = new HDT_BA_ConsentLead(localMapRequestFields.get('runId')); 
+		                Id batchprocessid = Database.executeBatch(ba,1000);
+                        
                     }
                     else {
                      
@@ -349,7 +352,7 @@ public with sharing class HDT_SRV_SalesHandler {
             }
 
             when 'CMPDMP_ATTR'{
-                if (request.objects.get(0).fields.get(0) != null) {
+                if (request.objects.get(0).fields.get(0) != null ) {
                     Map<String,String> localMapRequestFields = new Map<String,String>();
 
                     for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
@@ -357,8 +360,8 @@ public with sharing class HDT_SRV_SalesHandler {
                             localMapRequestFields.put(field.name,field.value);
                         }
                     }
-                    if(localMapRequestFields.get('runId')!= null ){
-                        RestContext.response.statusCode = 200; // else
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''){
+                        RestContext.response.statusCode = 200;
                         // batch
                     }
                     else {
