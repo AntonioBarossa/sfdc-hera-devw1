@@ -492,6 +492,10 @@
                 <elementReference>Calcola_Info_Preventivo.QuoteType__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.OperationCode__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
             <targetReference>Preventivo_Rapido</targetReference>
         </connector>

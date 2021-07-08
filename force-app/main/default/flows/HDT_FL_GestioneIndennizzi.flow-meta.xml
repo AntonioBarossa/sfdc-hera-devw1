@@ -513,17 +513,10 @@
             <name>Scaduta</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
-                <operator>LessThan</operator>
-                <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -710,7 +703,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -721,13 +714,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Risposta Inviata - Attesa Rettifica</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
-                <operator>LessThanOrEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -760,17 +746,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
-                <operator>LessThan</operator>
-                <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -803,17 +782,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
-                <operator>LessThan</operator>
-                <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
                 </rightValue>
             </conditions>
             <connector>
