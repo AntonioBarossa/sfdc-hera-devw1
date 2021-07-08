@@ -317,6 +317,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     }
 
+    public void advanceRelatedCase(SObject inputOrder){
+
+        Order currentOrder = (Order) inputOrder;
+        Case relatedCase = postsalesQr.getCaseByServicePoint('Allineamento Canone Rai', currentOrder.ServicePoint__c);
+        if(relatedCase != null){
+            if(!(currentOrder.PhaseStory__c.containsIgnoreCase('Errore Lavorazione SAP'))){
+                relatedCase.Phase__c = 'Completata';
+                HDT_UTL_DatabaseService.updateSObject(relatedCase);
+            }else{
+                wrts_prcgvr__Activity__c activity = createActivity('Elaborazione Manuale');
+                activity.Case__c = relatedCase.Id;
+                HDT_UTL_DatabaseService.insertSObject(activity);
+            }
+        }
+    }
+
     //returns activity and has to be created inside the caller methdo because it has to be linked to an entity first
     private static wrts_prcgvr__Activity__c createActivity(String templateName){
         HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
