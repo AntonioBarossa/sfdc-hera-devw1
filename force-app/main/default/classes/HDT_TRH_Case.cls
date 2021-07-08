@@ -20,6 +20,12 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
             if(caseOld.Amount__c != null && caseNew.Amount__c != caseOld.Amount__c && caseOld.QuotationType__c == 'Rapido'){
                 caseNew.QuotationType__c = 'Predeterminabile';
             }
+            //Riclassificazione Analitico --> Predeterminabile
+            if(caseOld.Amount__c != caseNew.Amount__c 
+                && caseOld.QuotationType__c.containsIgnoreCase('Analitico')
+                && !(caseOld.PhaseStory__c.containsIgnoreCase('Ammissibilità OK'))){
+                    caseNew.QuotationType__c = 'Predeterminabile';
+            }
             if(caseNew.TecnicalPhase__c	!= null
             && caseNew.TecnicalPhase__c  == caseOld.TecnicalPhase__c
             /*&& caseNew.Phase__c.containsIgnoreCase('Comunicazione verso Heroku OK ')*/){
