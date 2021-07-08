@@ -2,9 +2,9 @@ import { LightningElement, track, api, wire } from 'lwc';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import showOriginalDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.showOriginalDocument';
+import showArchivedAttachment from '@salesforce/apex/HDT_LC_DocumentSignatureManager.showArchivedAttachment';
 
-export default class HdtShowOriginalDocument extends NavigationMixin(LightningElement) {
+export default class HdtShowArchivedAttachment extends NavigationMixin(LightningElement) {
 
     @api recordId;
     rendered = false;
@@ -13,24 +13,20 @@ export default class HdtShowOriginalDocument extends NavigationMixin(LightningEl
         // Usiamo this.rendered per assicurarci di chiamare una volta sola il metodo.
         if (this.recordId != undefined && this.rendered === false) {
             this.rendered = true;
-            this.showOriginalDocument();
+            this.showArchivedAttachment();
         }
     }
 
-    showOriginalDocument(){
+    showArchivedAttachment(){
         try{
-            showOriginalDocument({
+            showArchivedAttachment({
                 recordId: this.recordId
             }).then(result => {
                 var resultParsed = JSON.parse(result);
                 if(resultParsed.code === '200'){
                     if(resultParsed.result === '000'){
-                        if (resultParsed.type === 'pdf') {
-                            this.showPdfFromBase64(resultParsed.base64);
-                            this.closeAction();
-                        } else if (resultParsed.type === 'zip') {
-                            // TODO: convertire base64 in zip e farlo scaricare nel browser
-                        }
+                        this.showPdfFromBase64(resultParsed.base64);
+                        this.closeAction();
                     }else{
                         this.showErrorMessage('Impossibile visualizzare il documento archiviato.');
                     }
