@@ -226,7 +226,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         }
         
     }
-    
+    @api
     checkForm(){
         try{
             var modFirma = this.template.querySelector("lightning-combobox[data-id=modalitaFirma]");
@@ -251,7 +251,6 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     }, true);
                     if(!allValid){
                         console.log('KO');
-                        
                     }else{
                         console.log('OK');
                         this.buttonStatefulState = !this.buttonStatefulState
@@ -262,9 +261,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         this.returnWrapper.email = email.value;
                         this.returnWrapper.addressWrapper.completeAddress = address.value;
                         this.returnWrapper.dataConfirmed = true;
-                        // JSON.stringify(this.returnWrapper)
                         this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
-
                     }
                 }
         }catch (error) {
@@ -293,7 +290,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         }  
 
     }
-
+    @api
     handlePreview(){
         try{
             
