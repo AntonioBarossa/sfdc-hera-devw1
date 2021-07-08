@@ -79,4 +79,55 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         }
         return JSON.serialize(returnMap);
     }
+
+    // WIP
+    public static String showOriginalDocument(String recordId){
+        String context;
+        String base64 = '';
+        String body='';
+        String result='';
+        String responseCode;
+        String responseStatus;
+        Map<String,String> resultMap = new Map<String,String>();
+        HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+        try{     
+            body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
+            documentalResponse = HDT_SRV_DocumentalManagement.executeCalloutRequest(body,context);
+            base64 = documentalResponse.deliverPackageResponse.composedDocument;
+            result = documentalResponse.deliverPackageResponse.result;
+            responseCode = String.valueOf(documentalResponse.responseCode);
+            responseStatus = documentalResponse.responseStatus;
+            resultMap.put('code',responseCode);
+            resultMap.put('base64',base64);
+            resultMap.put('result',result);
+        }catch(Exception ex){
+            resultMap.put('code','500');
+        }
+        return JSON.serialize(resultMap);
+    }
+
+    // WIP
+    public static String showArchivedAttachment(String recordId){
+        String base64 = '';
+        String body='';
+        String result='';
+        String responseCode;
+        String responseStatus;
+        Map<String,String> resultMap = new Map<String,String>();
+        HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+        try{     
+            body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
+            documentalResponse = HDT_SRV_DocumentalManagement.executeCalloutRequest(body,context);
+            base64 = documentalResponse.deliverPackageResponse.composedDocument;
+            result = documentalResponse.deliverPackageResponse.result;
+            responseCode = String.valueOf(documentalResponse.responseCode);
+            responseStatus = documentalResponse.responseStatus;
+            resultMap.put('code',responseCode);
+            resultMap.put('base64',base64);
+            resultMap.put('result',result);
+        }catch(Exception ex){
+            resultMap.put('code','500');
+        }
+        return JSON.serialize(resultMap);
+    }
 }
