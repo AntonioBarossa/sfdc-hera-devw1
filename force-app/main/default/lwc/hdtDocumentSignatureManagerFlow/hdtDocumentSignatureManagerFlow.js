@@ -19,7 +19,6 @@ import IsInvoicingVerified from '@salesforce/schema/Case.IsInvoicingVerified__c'
 import InvoicingPlace from '@salesforce/schema/Case.InvoicingPlace__c';
 import InvoicingStreetName from '@salesforce/schema/Case.InvoicingStreetName__c';
 import InvoicingCountry from '@salesforce/schema/Case.InvoicingCountry__c';
-import InvoicingStreetToponym from '@salesforce/schema/Case.InvoicingStreetToponym__c';
 import InvoicingProvince from '@salesforce/schema/Case.InvoicingProvince__c';
 import AddressFormula from '@salesforce/schema/Case.AddressFormula__c';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
@@ -53,7 +52,6 @@ const FIELDS = ['Case.ContactMobile',
 				'Case.InvoicingPlace__c',
 				'Case.InvoicingStreetName__c',
 				'Case.InvoicingCountry__c',
-				'Case.InvoicingStreetToponym__c',
                 'Case.InvoicingProvince__c'];
 
 export default class HdtDocumentSignatureManagerFlow extends LightningElement {
@@ -243,7 +241,6 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
             //fields[InvoicingPlace.fieldApiName] = resultWrapper.addressWrapper.
             fields[InvoicingProvince.fieldApiName] = resultWrapper.addressWrapper.Provincia;
             fields[InvoicingCountry.fieldApiName] = resultWrapper.addressWrapper.Stato;
-            //fields[InvoicingStreetToponym.fieldApiName] = resultWrapper.addressWrapper.
             fields[InvoicingStreetName.fieldApiName] = resultWrapper.addressWrapper.Via;
 
             const recordInput = { fields };
