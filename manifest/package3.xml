@@ -1,4 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>HDT_RegionalAdditional__mdt</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>HDT_RegionalAdditional__mdt-Addizionale Regionale Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_QR_QuoteManagement</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Case.InvoiceList__c</members>
+        <members>HDT_RegionalAdditional__mdt.AdditionalValue__c</members>
+        <members>HDT_RegionalAdditional__mdt.City__c</members>
+        <members>HDT_RegionalAdditional__mdt.Region__c</members>
+        <members>HDT_RegionalAdditional__mdt.Tax__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>HDT_RegionalAdditional.G_I04</members>
+        <members>HDT_RegionalAdditional.G_I15</members>
+        <members>HDT_RegionalAdditional.G_ICC10_ABRUZZO</members>
+        <members>HDT_RegionalAdditional.G_ICC10_MARCHE</members>
+        <members>HDT_RegionalAdditional.G_ICC10_TAVO</members>
+        <members>HDT_RegionalAdditional.G_ICC_ABRUZZO</members>
+        <members>HDT_RegionalAdditional.G_ICC_CORROPOLI</members>
+        <members>HDT_RegionalAdditional.G_ICC_MARCHE</members>
+        <members>HDT_RegionalAdditional.G_ICD_ABRUZZO</members>
+        <members>HDT_RegionalAdditional.G_ICD_MANOPPELLO</members>
+        <members>HDT_RegionalAdditional.G_ICD_MARCHE</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>HDT_FL_GestionePagamenti_Rimborso</members>
+        <members>HDT_FL_GestionePreventivi</members>
+        <name>Flow</name>
+    </types>
     <version>49</version>
 </Package>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>InvoiceList__c</fullName>
-    <description>Recupero dei dati in corso. Attendere alcuni secondi e riprovare a tagliare o copiare.</description>
+    <description>Campo per integrazione con Heroku sul processo di Rimborso</description>
     <externalId>false</externalId>
     <label>Lista Fatture</label>
     <length>255</length>
