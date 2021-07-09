@@ -16,7 +16,9 @@ public with sharing class HDT_LC_AdvancedSearch {
 		HDT_QR_ServicePoint sp = new HDT_QR_ServicePoint();
 		List<ServicePoint__c> listBp = new List<ServicePoint__c>();
 		List<HDT_WRP_AddressObject>  listWrapObject = new List<HDT_WRP_AddressObject>();
-		HDT_WRP_AddressObject wrapObject = new HDT_WRP_AddressObject();
+
+		//HDT_WRP_AddressObject wrapObject = new HDT_WRP_AddressObject();
+
 		
 		if(accountId != null || accountId != ''){
 			listBp = sp.getAddressFornitura(accountId);
@@ -25,7 +27,9 @@ public with sharing class HDT_LC_AdvancedSearch {
 		
 		if(!listBp.isEmpty()){
 		for (ServicePoint__c servicePoint : listBp){
-			
+
+			HDT_WRP_AddressObject wrapObject = new HDT_WRP_AddressObject();
+
 			if(servicePoint.SupplyCity__c !='' && servicePoint.SupplyCity__c != null){
 				
 				wrapObject.Comune=servicePoint.SupplyCity__c ;
@@ -286,6 +290,7 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 	public static List<Map<String, Object>> getServicePoints(String parameter,
 															 String queryType,String additionalFilter) {
 		Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();
+		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		system.debug('queryType' + queryType);
 		system.debug('additionalFilter' + additionalFilter);												
 		switch on queryType {
@@ -355,6 +360,19 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 										customSettingField.substringAfter('.')));
 					}
 				}
+			}
+
+
+			Contract c = contractQr.getSapContractCode(servicePointObject.ServicePointCode__c);
+
+			if(c.SAPContractCode__c!=null){
+			
+				String value = '';
+				String label = '';
+				label='Codice Contratto';
+				value=(String) c.SAPContractCode__c;
+				record.put(label,value);
+				
 			}
 			system.debug('record***********'+record);
 			output.add(new Map<String, Object>(record));
@@ -521,7 +539,7 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		system.debug('additionalFilter' + additionalFilter);
 		String fieldForniture = customSetting.OutputServicePoint__c;
 		system.debug('fieldForniture : ' + fieldForniture);
-
+		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		List<String> listField = fieldForniture != null ? fieldForniture.split(',') : new List<String>();
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
@@ -536,28 +554,54 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		}
 		system.debug('data get acc : ' + servicePoints);
 		String type='ServicePoint__c';
-
+		List<String> servicePointsCodes = new List<String>();
+		for(ServicePoint__c s :servicePoints){
+			servicePointsCodes.add(s.ServicePointCode__c);
+		}
+		List<Contract> c = contractQr.getSapContractCode(servicePointsCodes);
+		Integer i = 0;
 		Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
 		Schema.SObjectType leadSchema = schemaMap.get(type);
 		Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
 
         List<Map<String,String>> customSp = new List<Map<String,String>>();
 		for (ServicePoint__c sp : servicePoints) {
-            Map<String,String> row = new Map<String, String>();
+            Map<String,String> row = new Map<String, String>();	
 			for(String field : listField){
 				String value = '';
 				String label = '';
+				
 				if(field.contains('__r')){
 					List<String> s = field.split('__r.');
 					system.debug('************:' + field + '-' + s);
-					value = (String)sp.getSObject(s[0]+'__r').get(s[1]);
-					label = fieldMap.get(s[0]+'__c').getDescribe().getLabel();
+
+					if(sp.getSObject(s[0]+'__r')!=null){
+
+						
+						value = (String)sp.getSObject(s[0]+'__r').get(s[1]);
+
+						label = fieldMap.get(s[0]+'__c').getDescribe().getLabel();
+					}
+
 				}
 				else{
 					value = (String)sp.get(field);
 					label = fieldMap.get(field).getDescribe().getLabel();
 				}
 				row.put(label,value);
+			}
+			if(!c.isEmpty() ){
+				for(Contract con :c){
+					String value = '';
+					String label = '';
+					if(con.ServicePoint__r.ServicePointCode__c== sp.ServicePointCode__c){
+						label='Codice Contratto';
+						value=(String) con.SAPContractCode__c;
+						row.put(label,value);
+					}
+
+				}
+				
 			}
             customSp.add(row);
 		}
