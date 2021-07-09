@@ -23,15 +23,9 @@ public inherited sharing class HDT_QR_QuoteManagement {
     }
 	
 	public static QuoteManagement__c queryString(String fields, String conditions){
-        QuoteManagement__c quoteConfig = new QuoteManagement__c();
 		String query = 'SELECT ' + fields + ' FROM QuoteManagement__c WHERE ' + conditions + ' WITH SECURITY_ENFORCED LIMIT 1';
         System.debug('Query--> '+query);
-        try{
-            quoteConfig = Database.query(query);
-        } catch(Exception e){
-            System.debug('Config Not Found -> ' + e.getMessage());
-        }
-		return quoteConfig;
+		return Database.query(query);
 		 
 	}
 }
