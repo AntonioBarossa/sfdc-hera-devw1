@@ -424,6 +424,20 @@
                 <elementReference>getInputCase.DistributorCode__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.RateCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.RateCategory__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.CompanyOwner__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AssignVariablesSecond</targetReference>
         </connector>
@@ -522,6 +536,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>getInputCase.DistributorCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.RateCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.RateCategory__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.CompanyOwner__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
