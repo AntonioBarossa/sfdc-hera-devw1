@@ -39,7 +39,7 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
     }
 
     public static List<HDT_SignModeSettings__mdt> getSignModeSettings(String processType,String source){
-        return [SELECT Id, ProcessType__c,Source__c,SignMode__c,SendMode1__c,SendMode2__c,SendMode3__c FROM HDT_SignModeSettings__mdt WHERE Source__c =:source AND ProcessType__c=:processType  WITH SECURITY_ENFORCED];
+        return [SELECT Id, ProcessType__c,Source__c,SignMode__c,SendMode1__c,SendMode2__c,SendMode3__c FROM HDT_SignModeSettings__mdt WHERE (Source__c =:source OR Source__c = '') AND (ProcessType__c=:processType OR ProcessType__c = '')  WITH SECURITY_ENFORCED];
     }
 
 }
