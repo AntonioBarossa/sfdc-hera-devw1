@@ -66,6 +66,11 @@
         <label>Informative</label>
     </customValue>
     <customValue>
+        <fullName>Indennizzi</fullName>
+        <default>false</default>
+        <label>Indennizzi</label>
+    </customValue>
+    <customValue>
         <fullName>Morosità</fullName>
         <default>false</default>
         <label>Morosità</label>

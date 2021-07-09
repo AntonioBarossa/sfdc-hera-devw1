@@ -11336,6 +11336,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.Decision40Link__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.Deliberation__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11537,6 +11542,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.IncomingCreditCheckResult__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.InformationFormLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12177,6 +12187,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SendCertifiedEmailConsentDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SendFormLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
