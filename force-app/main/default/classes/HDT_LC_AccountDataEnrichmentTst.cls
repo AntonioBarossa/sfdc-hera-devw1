@@ -3,9 +3,9 @@ public class HDT_LC_AccountDataEnrichmentTst {
 
     /*
         Test Class for:
-        HDT_QR_AccountDataEnrichment        38%
+        HDT_QR_AccountDataEnrichment        77%
         HDT_LC_AccountDataEnrichment        75%
-        HDT_LC_AccountDataEnrichmentHelper  35%
+        HDT_LC_AccountDataEnrichmentHelper  67%
         HDT_WRP_AccountDataEnrichment       0% 
     */
 
@@ -31,16 +31,23 @@ public class HDT_LC_AccountDataEnrichmentTst {
         ];
 
         Test.startTest();
-        retObj = HDT_LC_AccountDataEnrichment.getTableConfig(account.Id, '');
+        retObj = HDT_LC_AccountDataEnrichment.getTableConfig(account.Id, 'cmor');
         Test.stopTest();
     }
     
     @isTest
     public static void testWebService() {
 
+        Account account = [
+            SELECT Id, CustomerCode__c
+            FROM Account
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
         HDT_LC_AccountDataEnrichment controller = new HDT_LC_AccountDataEnrichment();
         // Invoke the continuation by calling the action method
-        Continuation conti = (Continuation)HDT_LC_AccountDataEnrichment.startRequest('', '');
+        Continuation conti = (Continuation)HDT_LC_AccountDataEnrichment.startRequest(account.Id, 'cmor');
         
         // Verify that the continuation has the proper requests
         Map<String, HttpRequest> requests = conti.getRequests();
