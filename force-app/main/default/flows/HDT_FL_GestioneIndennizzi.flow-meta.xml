@@ -337,14 +337,14 @@
             <assignToReference>FirstIndemnityCase.Cluster__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.Cluster__c</elementReference>
+                <stringValue>Indennizzi</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>FirstIndemnityCase.Type</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Indennizzo</stringValue>
+                <elementReference>getInputCase.Type</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -451,14 +451,14 @@
             <assignToReference>SecondIndemnityCase.Cluster__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.Cluster__c</elementReference>
+                <stringValue>Indennizzi</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>SecondIndemnityCase.Type</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Indennizzo</stringValue>
+                <elementReference>getInputCase.Type</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
