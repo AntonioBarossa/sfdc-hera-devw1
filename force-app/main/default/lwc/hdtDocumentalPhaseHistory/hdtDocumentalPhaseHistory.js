@@ -39,8 +39,10 @@ export default class HdtDocumentalPhaseHistory extends LightningElement {
             recordId: this.recordId,
             objectApiName: this.objectApiName,
         }).then(result => {
-            this.data = result;
-            console.log(JSON.stringify(result));
+            if(result != null && result.length>0)
+                this.data = result;
+            else   
+                this.data = null;
         })
         .catch(error => {
             console.error(error);
