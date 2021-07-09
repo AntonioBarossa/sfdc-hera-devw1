@@ -2,13 +2,11 @@
 public class HDT_LC_OfferConfiguratorControllerTst {
 
     /*
-        HDT_LC_OfferConfiguratorController  63%
-        HDT_LC_OfferConfiguratorCtrlHelper  26%
+        HDT_LC_OfferConfiguratorController  76%
+        HDT_LC_OfferConfiguratorCtrlHelper  65%
         HDT_WRP_TechnicalOffer              0% 
-        HDT_QR_TechnicalOffer               67%
-        HDT_UTL_ProductStObjProcess         3% 
-        HDT_TRH_ProductStObj                8% 
-        HDT_ProductStObj                    100%
+        HDT_QR_TechnicalOffer               82%
+        HDT_WS_MulesoftCallerCpq            87%     
     */
         
     @testSetup
@@ -168,10 +166,10 @@ public class HDT_LC_OfferConfiguratorControllerTst {
 
         TechnicalOffer__c newTechnicalOffer = new TechnicalOffer__c();
         newTechnicalOffer.Name = p.ProductCode + ' [' + p.Version__c + '] [EVVUD]';
-        newTechnicalOffer.NameExternalId__c = technicalOffer.Name;
+        newTechnicalOffer.NameExternalId__c = newTechnicalOffer.Name;
         newTechnicalOffer.Product__c = p.Id;
         newTechnicalOffer.RateCategory__c = rate.Id;
-        insert technicalOffer;
+        insert newTechnicalOffer;
 
         List<TechnicalOfferItem__c> techOffeItems = new List<TechnicalOfferItem__c>();
         TechnicalOfferItem__c tecOffItem = new TechnicalOfferItem__c();
@@ -199,7 +197,125 @@ public class HDT_LC_OfferConfiguratorControllerTst {
 
         //update
         saveResponse = HDT_LC_OfferConfiguratorController.saveNewOfferConfigured(JSON.serialize(technicalOffer), null, '', p.Id, newTechnicalOffer.Id, 'EVVUD');
+        
+        List<TechnicalOfferItem__c> techOffList;
+        techOffList = HDT_LC_OfferConfiguratorController.getTechnicalOfferRecords(newTechnicalOffer.Id);
+        
         Test.stopTest();
 
     }
+
+    @isTest
+    static void sendTechOfferToSap(){
+        HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
+        
+        
+        Product2 p = [
+            SELECT Id, ProductCode, Version__c
+            FROM Product2
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
+        RateTemplate__c rate = [
+            SELECT Id
+            FROM RateTemplate__c
+            WITH SECURITY_ENFORCED
+            LIMIT 1    
+        ];
+
+        TechnicalOffer__c newTechnicalOffer = new TechnicalOffer__c();
+        newTechnicalOffer.Name = p.ProductCode + ' [' + p.Version__c + '] [EVVUD]';
+        newTechnicalOffer.NameExternalId__c = newTechnicalOffer.Name;
+        newTechnicalOffer.Product__c = p.Id;
+        newTechnicalOffer.RateCategory__c = rate.Id;
+        insert newTechnicalOffer;
+
+        List<TechnicalOfferItem__c> techOffeItems = new List<TechnicalOfferItem__c>();
+        TechnicalOfferItem__c tecOffItem = new TechnicalOfferItem__c();
+        tecOffItem.TechnicalOffer__c = newTechnicalOffer.Id;
+        tecOffItem.Type__c = 'PDISCNT';
+        tecOffItem.Definition__c = 'DESCR ES_ADG_GO';
+        tecOffItem.G__c = false;
+        tecOffItem.V__c = false;
+        tecOffItem.M__c = false;
+        tecOffItem.S__c = null;
+        tecOffItem.Operand__c = 'ES_ADG_GO';
+        tecOffItem.FareType__c = 'TEST';
+        tecOffItem.FareTypeValue__c = 'TEST';
+        tecOffItem.InfoGroup__c = 'TEST';
+        tecOffItem.InfoGroupValue__c = 'TEST';
+        tecOffItem.NumericValue__c = '0.00001';
+        tecOffItem.Flag__c = false;
+        tecOffItem.PriceCode__c = 'TEST';
+        tecOffItem.PriceCodeValue__c = 'TEST';
+        tecOffItem.DiscountCode__c = 'TEST';
+        tecOffItem.DiscountCodeValue__c = 'TEST';
+        tecOffItem.StringValue__c = 'TEST';
+        techOffeItems.add(tecOffItem);
+        insert techOffeItems;
+
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_OfferConfiguratorCtrlTstMock());
+
+        Test.startTest();
+        saveResponse = HDT_LC_OfferConfiguratorController.sendTechOfferToSap(newTechnicalOffer.Id);
+        Test.stopTest();
+    }
+    
+
+    @isTest
+    static void cloneRecord(){
+
+        Product2 p = [
+            SELECT Id, ProductCode, Version__c
+            FROM Product2
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
+        RateTemplate__c rate = [
+            SELECT Id
+            FROM RateTemplate__c
+            WITH SECURITY_ENFORCED
+            LIMIT 1    
+        ];
+
+        TechnicalOffer__c newTechnicalOffer = new TechnicalOffer__c();
+        newTechnicalOffer.Name = p.ProductCode + ' [' + p.Version__c + '] [EVVUD]';
+        newTechnicalOffer.NameExternalId__c = newTechnicalOffer.Name;
+        newTechnicalOffer.Product__c = p.Id;
+        newTechnicalOffer.RateCategory__c = rate.Id;
+        insert newTechnicalOffer;
+
+        List<TechnicalOfferItem__c> techOffeItems = new List<TechnicalOfferItem__c>();
+        TechnicalOfferItem__c tecOffItem = new TechnicalOfferItem__c();
+        tecOffItem.TechnicalOffer__c = newTechnicalOffer.Id;
+        tecOffItem.Type__c = 'PDISCNT';
+        tecOffItem.Definition__c = 'DESCR ES_ADG_GO';
+        tecOffItem.G__c = false;
+        tecOffItem.V__c = false;
+        tecOffItem.M__c = false;
+        tecOffItem.S__c = null;
+        tecOffItem.Operand__c = 'ES_ADG_GO';
+        tecOffItem.FareType__c = 'TEST';
+        tecOffItem.FareTypeValue__c = 'TEST';
+        tecOffItem.InfoGroup__c = 'TEST';
+        tecOffItem.InfoGroupValue__c = 'TEST';
+        tecOffItem.NumericValue__c = '0.00001';
+        tecOffItem.Flag__c = false;
+        tecOffItem.PriceCode__c = 'TEST';
+        tecOffItem.PriceCodeValue__c = 'TEST';
+        tecOffItem.DiscountCode__c = 'TEST';
+        tecOffItem.DiscountCodeValue__c = 'TEST';
+        tecOffItem.StringValue__c = 'TEST';
+        techOffeItems.add(tecOffItem);
+        insert techOffeItems;
+
+        Test.startTest();
+        String s = HDT_LC_OfferConfiguratorController.cloneRecord(newTechnicalOffer.Id, p.Id);
+        HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
+        saveResponse = HDT_LC_OfferConfiguratorController.deleteTechnicalOffer(p.Id, newTechnicalOffer.Id);
+        Test.stopTest();
+    }
+
 }
