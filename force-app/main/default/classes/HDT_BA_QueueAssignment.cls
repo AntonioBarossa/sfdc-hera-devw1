@@ -1,14 +1,22 @@
 public inherited sharing class HDT_BA_QueueAssignment implements Database.Batchable<SObject>{
 
+    public List<Account> accts= new List<Account>();
+
+    public HDT_BA_QueueAssignment(List<Account> accounts){
+        this.accts = accounts;
+    }
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-
-        String query = 'SELECT Id, Name From Account where IsPartner = True';
+        Set<Id> accountIds= new Set<Id>();
+        System.debug(this.accts);
+        for (Account ac : this.accts) {
+            accountIds.add(ac.Id);
+        }
+        String query = 'SELECT Id, Name,  DeveloperName, PortalAccountId, PortalRole FROM UserRole WHERE PortalAccountId IN :accountIds AND PortalRole =\'Executive\'';
         return Database.getQueryLocator(query);
     }
 
-    public void execute(Database.BatchableContext bc, List<Account> scope) {
-        Set<Id> accountIds= new Set<Id>();
+    public void execute(Database.BatchableContext bc, List<UserRole> scope) {
         Set<Id> roleIds= new Set<Id>();
         Set<Id> groupIds= new Set<Id>();
         Map<String,String> usRoles= new Map<String,String>();
@@ -21,11 +29,7 @@ public inherited sharing class HDT_BA_QueueAssignment implements Database.Batcha
         List<QueuesObject> queues= new List<QueuesObject>();        
         List<GroupMember> gMembers= new List<GroupMember>();
 
-        for (Account ac : scope) {
-            accountIds.add(ac.Id);
-        }
-        List<UserRole> roles= [SELECT Id, Name,  DeveloperName, PortalAccountId, PortalRole FROM UserRole WHERE PortalAccountId IN :accountIds AND PortalRole ='Executive'];
-        for (UserRole u: roles){
+        for (UserRole u: scope){
             roleIds.add(u.Id);
             usRoles.put(String.valueOf(u.Id),String.valueOf(u.PortalAccountId));
             accRoles.put(String.valueOf(u.PortalAccountId),String.valueOf(u.Id));
@@ -46,7 +50,7 @@ public inherited sharing class HDT_BA_QueueAssignment implements Database.Batcha
         String nameAccount='';
         String name='';
         List<String> nm= new List<String>();
-        for(Account a: scope){
+        for(Account a: this.accts){
             if(!accGroupMembers.containsKey(String.valueOf(a.Id)) && accRoles.containsKey(String.valueOf(a.Id))){
                 nameAccount= a.Name.replace('Agenzia','');
                 nm =nameAccount.split(' ');
@@ -78,7 +82,8 @@ public inherited sharing class HDT_BA_QueueAssignment implements Database.Batcha
     }
 
     public void finish(Database.BatchableContext bc) {
-        
+        AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :BC.getJobId()];
+        System.abortJob(a.id);
     }
 
 }
