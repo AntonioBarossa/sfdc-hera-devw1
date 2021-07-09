@@ -93,7 +93,7 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     }
 
     connectedCallback(){
-        if(this.quoteType && (this.quoteType.localeCompare('Analitico') || this.quoteType.localeCompare('Predeterminabile'))){
+        if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
             this.labelConfirm = 'Conferma pratica';
             this.showPreviewButton = false;
             this.previewExecuted = true;
