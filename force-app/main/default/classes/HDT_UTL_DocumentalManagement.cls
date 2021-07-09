@@ -124,7 +124,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 	public static Boolean updateDocumentalPhase(sObject processRecord, HDT_WRP_DocumentalResponse response ){
 		String archive = response.deliverPackageResponse.archive;
 		String result = response.deliverPackageResponse.result;
-		if(result == 'OK'){
+		if(result == '000'){
 			if(archive != 'Y'){
 				processRecord.put('DocumentalPhase__c','Preview');
 			}else{

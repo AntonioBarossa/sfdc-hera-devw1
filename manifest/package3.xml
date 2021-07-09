@@ -1,69 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>CS_GestioneScript__c</members>
+        <members>HDT_RegionalAdditional__mdt</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>Case.HDT_RT_Morosita</members>
-        <name>RecordType</name>
-    </types>
-    <types>
-        <members>Account-CPQ Account Layout Service Console</members>
+        <members>HDT_RegionalAdditional__mdt-Addizionale Regionale Layout</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>ConnectorEntityController</members>
-        <members>HDT_LC_AccountStatementControllerTst</members>
-        <members>HDT_QR_InstallmentPlans</members>
-        <members>HDT_QR_Payments</members>
-        <members>HDT_QR_Reimbursement</members>
-        <members>HDT_UTL_CheckDocumentSelected</members>
-        <members>HDT_UTL_PostSalesManager</members>
+        <members>HDT_QR_QuoteManagement</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>CS_GestioneScript__c.FieldApiName__c</members>
-        <members>CS_GestioneScript__c.FieldValue__c</members>
-        <members>CS_GestioneScript__c.SobjectApiName__c</members>
-        <members>Order.Phase__c</members>
+        <members>Case.InvoiceList__c</members>
+        <members>HDT_RegionalAdditional__mdt.AdditionalValue__c</members>
+        <members>HDT_RegionalAdditional__mdt.City__c</members>
+        <members>HDT_RegionalAdditional__mdt.Region__c</members>
+        <members>HDT_RegionalAdditional__mdt.Tax__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>CaseType</members>
-        <name>StandardValueSet</name>
-    </types>
-    <types>
-        <members>hdtAccountStatementDetailViewer</members>
-        <members>hdtAccountStatementFilters</members>
-        <members>hdtAccountStatementFilters2</members>
-        <members>hdtMeterReadingDetailTable</members>
-        <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>Admin</members>
-        <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
-        <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
-        <name>Profile</name>
-    </types>
-    <types>
-        <members>Case.Approvazione_Piano_Rate</members>
-        <members>Case.Approvazione_Piano_Rate_Residuo_Nullo</members>
-        <name>ApprovalProcess</name>
-    </types>
-    <types>
-        <members>HDT_AccountDataEnrichment.meterReading</members>
-        <members>HDT_ColumnsFirstLevel.EC1_StatoIconMapCalc</members>
-        <members>HDT_ColumnsFirstLevel.Paperless_Indicatore</members>
-        <members>HDT_UserInputFlow.Pagamenti_Storno_Rateizzazione</members>
+        <members>HDT_RegionalAdditional.G_I04</members>
+        <members>HDT_RegionalAdditional.G_I15</members>
+        <members>HDT_RegionalAdditional.G_ICC10_ABRUZZO</members>
+        <members>HDT_RegionalAdditional.G_ICC10_MARCHE</members>
+        <members>HDT_RegionalAdditional.G_ICC10_TAVO</members>
+        <members>HDT_RegionalAdditional.G_ICC_ABRUZZO</members>
+        <members>HDT_RegionalAdditional.G_ICC_CORROPOLI</members>
+        <members>HDT_RegionalAdditional.G_ICC_MARCHE</members>
+        <members>HDT_RegionalAdditional.G_ICD_ABRUZZO</members>
+        <members>HDT_RegionalAdditional.G_ICD_MANOPPELLO</members>
+        <members>HDT_RegionalAdditional.G_ICD_MARCHE</members>
         <name>CustomMetadata</name>
     </types>
     <types>
         <members>HDT_FL_GestionePagamenti_Rimborso</members>
+        <members>HDT_FL_GestionePreventivi</members>
         <name>Flow</name>
     </types>
     <version>49</version>

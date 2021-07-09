@@ -11,10 +11,27 @@ export default class HdtDocumentalPhaseHistory extends LightningElement {
     @api objectApiName;
     data = [];
     columns = columns;
-
+    @track sendMode;
+    @track signMode;
+    @track email;
+    @track phone;
+    @track address;
+    @track dataLoaded=false;;
     connectedCallback(){
         console.log(this.recordId + ' ' + this.objectApiName);
         this.getHistory();
+        this.setEditFormVariables();
+    }
+
+    setEditFormVariables(){
+        if(this.objectApiName && this.objectApiName.localeCompare('Case') === 0){
+            this.sendMode = 'SendMode__c';
+            this.signMode = 'SignMode__c';
+            this.email = 'Email__c';
+            this.phone = 'PhoneNumber__c';
+            this.address = 'DeliveryAddress__c';
+            this.dataLoaded = true;
+        }
     }
 
     getHistory(){

@@ -268,6 +268,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
                 }
             }
+            //Data Annullamento
+            if(reqWrp.requestMap.get('DATA') != null){
+                try{
+                    currentCase.CancellationRequestDate__c	= Date.valueOf(reqWrp.requestMap.get('DATA'));
+                } catch (Exception e){
+                    System.debug('DATA Exception -> ' + e.getMessage());
+                }
+            }
             
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
@@ -329,7 +337,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.QuotationNumber__c = numPrev;
         }
         if(expectedExec != null && expectedExec != ''){
-            if(quotationType.equalsIgnoreCase('Analitico') && nextPhase.containsIgnoreCase('Dati Tenici Ricevuti')){
+            System.debug('#QUOTATIONTYPE -> ' + quotationType);
+            System.debug('#NEXTPHASE -> ' +nextPhase);
+            if(quotationType.equalsIgnoreCase('Analitico') && nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti')){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
             }else if(!quotationType.equalsIgnoreCase('Analitico')){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
