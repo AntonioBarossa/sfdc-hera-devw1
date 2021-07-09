@@ -1117,10 +1117,10 @@
             <name>Esiste</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Calcola_Info_Preventivo</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>Calcola_Info_Preventivo.Id</leftValueReference>
+                <operator>WasSet</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
