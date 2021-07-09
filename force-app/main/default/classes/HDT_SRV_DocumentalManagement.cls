@@ -75,7 +75,7 @@ public class HDT_SRV_DocumentalManagement{
 		try{
 			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((Id) response.deliverPackageResponse.requestId, context);
 			if(context == 'Order' || context == 'Case'){
-				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response);
+				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
 			}
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
 				if(response.responseCode == 200 || response.responseCode == 201 ){
