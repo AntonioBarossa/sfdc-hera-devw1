@@ -159,8 +159,11 @@ public with sharing class HDT_LC_LastBill {
         Map<String,String> result = new Map<String,String>();
         Map<String,String> commodity = new Map<String,String>();
         String namedCredential = '';
-        HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = HDT_LC_AccountStatementCtrlUtility.setHttpObject('EC', '');
-        namedCredential = String.valueOf(httpObj.endPoint);
+        //HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = HDT_LC_AccountStatementCtrlUtility.setHttpObject('EC', '');
+        //namedCredential = String.valueOf(httpObj.endPoint);
+
+        List<HDT_TabConfiguration__mdt> endPointMdt;
+        endPointMdt = HDT_QR_AccountStatement.getTabConfigurationMetaData(endPointMdt, 'EC');
 
         HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow bodyWrapper = new HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow();
         Datetime now = Datetime.now();
@@ -186,13 +189,9 @@ public with sharing class HDT_LC_LastBill {
         con.state = kpiId;
         // Create callout request
         HttpRequest req = new HttpRequest();
-        req.setEndpoint(namedCredential);
-        req.setMethod(httpObj.httpMethod);
-        if(httpObj.headersMap.keySet().size() > 0){
-            for(String key : httpObj.headersMap.keySet()){
-                req.setHeader(key, httpObj.headersMap.get(key));
-            }
-        }
+        req.setEndpoint(endPointMdt[0].EndpointService__c);
+        req.setMethod('POST');
+        req.setHeader('Content-Type', 'application/json');
         
         req.setbody(body);
         req.setTimeout(120000);
