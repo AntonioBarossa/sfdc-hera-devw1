@@ -499,7 +499,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Morosita').getRecordTypeId();
                             currentCase.Cluster__c = 'Morosità';
                             if(dataDecorrenza != null){
-                                currentCase.EffectiveDate__c = Date.valueOf(dataDecorrenza);
+                                try{
+                                    HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
+                                    currentCase.EffectiveDate__c = enrichSrv.getDateFromString(dataDecorrenza);
+                                } catch(Exception e){
+                                    System.debug('DATA_DECORRENZA Exception -> ' + e.getMessage());
+                                }
                             }
                             if(String.isNotBlank(processType)){
                                 currentCase.Type = morUtl.transcodeProcess(processType);
