@@ -66,7 +66,7 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
 
         if (recordId.getSobjectType() == DocumentalActivity__c.getSObjectType()) {
             List<DocumentalActivity__c> activities = [
-                SELECT Id, EnvelopeId__c, CaseId__r.SignMode__c, OrderId__r.SignatureMethod__c,
+                SELECT Id, EnvelopeId__c, CaseId__r.SignMode__c, OrderId__r.SignatureMethod__c
                 FROM DocumentalActivity__c
                 WHERE Id = :recordId
                 WITH SECURITY_ENFORCED
@@ -77,7 +77,7 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
             }
         } else if (recordId.getSobjectType() == DocumentSendTracking__c.getSObjectType()) {
             List<DocumentSendTracking__c> sends = [
-                SELECT Id, EnvelopeId__c, Case__r.SignMode__c, Order__r.SignatureMethod__c,
+                SELECT Id, EnvelopeId__c, Case__r.SignMode__c, Order__r.SignatureMethod__c
                 FROM DocumentSendTracking__c
                 WHERE Id = :recordId
                 WITH SECURITY_ENFORCED
