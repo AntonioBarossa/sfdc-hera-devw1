@@ -121,7 +121,6 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.BillingStreetName__c = currentCase.BillingStreetName__c;
                 acc.BillingStreetNumber__c = currentCase.BillingStreetNumber__c;
                 acc.BillingStreetNumberExtension__c = currentCase.BillingStreetNumberExtension__c;
-                acc.BillingStreetToponym__c = currentCase.BillingStreetToponym__c;
                 objToUpdate = acc;
             }
             when 'Variazione Gruppo IVA' {
@@ -170,7 +169,6 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 bp.InvoicingPlace__c = currentCase.InvoicingPlace__c;
                 bp.InvoicingStreetName__c = currentCase.InvoicingStreetName__c;
                 bp.InvoicingCountry__c = currentCase.InvoicingCountry__c;
-                bp.InvoicingStreetToponym__c = currentCase.InvoicingStreetToponym__c;
                 bp.InvoicingProvince__c = currentCase.InvoicingProvince__c;
                 bp.ReminderFlag__c = currentCase.ReminderFlag__c;
                 bp.ReminderCertifiedEmailAddress__c = currentCase.ReminderCertifiedEmailAddress__c;
@@ -239,7 +237,6 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 c.MailingStreetName__c = currentCase.BillingStreetName__c;
                 c.MailingStreetNumberExtension__c = currentCase.BillingStreetNumberExtension__c;
                 c.MailingStreetNumber__c = currentCase.BillingStreetNumber__c;
-                c.MailingStreetToponym__c = currentCase.BillingStreetToponym__c;
 
                 HDT_UTL_DatabaseService.updateSObject(c);
             }
@@ -333,6 +330,17 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
     }
 
+    public void updateServicePoint(SObject inputCase){
+
+        Case currentCase = (Case) inputCase;
+        ServicePoint__c servicePoint = new ServicePoint__c();
+        servicePoint.Id             = currentCase.ServicePoint__c;
+        servicePoint.UseCategory__c = currentCase.UseCategory__c;
+        servicePoint.SupplyType__c  = currentCase.SupplyType__c;
+        HDT_UTL_DatabaseService.updateSObject(servicePoint);
+
+    }
+
     //returns activity and has to be created inside the caller methdo because it has to be linked to an entity first
     private static wrts_prcgvr__Activity__c createActivity(String templateName){
         HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
@@ -343,5 +351,11 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         return activity;
     }
 
-
+    public void sendDocumentFile(SObject inputRecord){
+        String recordId = (String)inputRecord.get('Id');
+        Map<String,String> formParams = new Map<String,String>();
+        formParams.put('mode', 'Print');
+        formParams.put('Archiviato', 'Y');
+        HDT_LC_DocumentSignatureManager.sendDocumentFile(recordId, 'Case', JSON.serialize(formParams));
+    }
 }
