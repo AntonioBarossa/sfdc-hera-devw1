@@ -142,7 +142,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
                 TechnicalOffer__c techOff;
                 techOff = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(techOff, technicalOfferId);
-                
+                matrixTable.sapCode = techOff.SapCode__c;
+                matrixTable.sapErrorMessage = techOff.Message__c;
+
                 if(String.isEmpty(techOff.Product__r.Status__c) || !techOff.Product__r.Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
                     matrixTable.isEditable = false;
                 }

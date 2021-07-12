@@ -23,7 +23,7 @@ const columns = [
 export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningElement) {
     data = [];
     columns = columns;
-    detailFields = ['Version__c', 'OfferCode__c'];
+    detailFields = ['Version__c'];
     filter;
     showTable = false;
 
