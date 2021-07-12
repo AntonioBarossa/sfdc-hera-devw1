@@ -65,7 +65,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         //return a list of 'operando' ordered by  Occurrence__c
         return [ select SapCode__c, Field__c, Occurrence__c, ProductFamily__c, (SELECT SapCode__c, Field__c FROM Service26Configs__r )
                     FROM Service26Config__c WHERE 
-                    Type__c='Operando' AND ProductFamily__c IN :productFamilies AND ServiceType__c =:serviceType 
+                    Type__c='Operando' AND ProductFamily__c IN :productFamilies AND Type__c =:serviceType 
                     WITH SECURITY_ENFORCED ORDER BY Occurrence__c ASC
             ];
     }
