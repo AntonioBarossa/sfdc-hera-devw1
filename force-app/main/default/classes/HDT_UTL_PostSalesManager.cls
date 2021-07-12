@@ -330,6 +330,17 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
     }
 
+    public void updateServicePoint(SObject inputCase){
+
+        Case currentCase = (Case) inputCase;
+        ServicePoint__c servicePoint = new ServicePoint__c();
+        servicePoint.Id             = currentCase.ServicePoint__c;
+        servicePoint.UseCategory__c = currentCase.UseCategory__c;
+        servicePoint.SupplyType__c  = currentCase.SupplyType__c;
+        HDT_UTL_DatabaseService.updateSObject(servicePoint);
+
+    }
+
     //returns activity and has to be created inside the caller methdo because it has to be linked to an entity first
     private static wrts_prcgvr__Activity__c createActivity(String templateName){
         HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
