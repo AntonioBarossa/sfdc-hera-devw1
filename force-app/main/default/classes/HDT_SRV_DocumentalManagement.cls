@@ -37,10 +37,17 @@ public class HDT_SRV_DocumentalManagement{
 
 	public static String generateGetAttachmentRequest(String recordId){
 		if (String.isBlank(recordId)) {
-			throw new HDT_UTL_HeraException('Necessario passare un Id valido in input per visualizzare il documento.');
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
 		}
 
 		DocumentalActivity__c actMoga = HDT_QR_DocumentalConfiguration.getDocumentalActivityById(recordId);
+		if (actMoga == null) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
+		}
+
+		if (String.isBlank(actMoga.AttachmentCode__c)) {
+			throw new HDT_UTL_HeraException('Impossibile visualizzare allegato, Codice Allegato non disponibile.');
+		}
 
 		JSONGenerator gen = JSON.createGenerator(false);
 
@@ -95,6 +102,13 @@ public class HDT_SRV_DocumentalManagement{
 		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
 		manageResponseFuture(JSON.serialize(documentalResponse), context);
+		return documentalResponse;
+	}
+
+	public static HDT_WRP_DocumentalResponse executeGetAttachmentCalloutRequest(String body){
+		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+		documentalResponse = HDT_WS_DocumentalIntegration.submitGetAttachmentRequest(body);
+		//manageResponseFuture(JSON.serialize(documentalResponse), context);
 		return documentalResponse;
 	}
 
