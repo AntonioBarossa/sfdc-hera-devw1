@@ -195,7 +195,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         //CHECK CROSS MINIMUM FIELD
         if(String.isBlank(method)) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
         
-        if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita')){
+        if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita') && !method.equalsIgnoreCase('aggiornaRCU')){
             //gestione scarti
             return caseUpdate;
         }
@@ -465,6 +465,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.ContactId = contact?.Id;
                     currentCase.Mobile__c = contact?.MobilePhone;
                     currentCase.Email__c = contact?.Email;
+                    currentCase.CompanyOwner__c = contact?.CompanyOwner__c;
                     //Aggiunto PhoneNumber
                     currentCase.PhoneNumber__c = contact?.MobilePhone;
                     sp = qrClass.getServicePoint(pod);

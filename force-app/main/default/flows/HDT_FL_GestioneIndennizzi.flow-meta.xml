@@ -337,14 +337,14 @@
             <assignToReference>FirstIndemnityCase.Cluster__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.Cluster__c</elementReference>
+                <stringValue>Indennizzi</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>FirstIndemnityCase.Type</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Indennizzo</stringValue>
+                <elementReference>getInputCase.Type</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -410,6 +410,34 @@
                 <elementReference>getIndemnityRecordType.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SalesCompanyCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.DistributorCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.DistributorCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.RateCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.RateCategory__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.CompanyOwner__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AssignVariablesSecond</targetReference>
         </connector>
@@ -437,14 +465,14 @@
             <assignToReference>SecondIndemnityCase.Cluster__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.Cluster__c</elementReference>
+                <stringValue>Indennizzi</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>SecondIndemnityCase.Type</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Indennizzo</stringValue>
+                <elementReference>getInputCase.Type</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -494,6 +522,34 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>getIndemnityRecordType.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SalesCompanyCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.DistributorCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.DistributorCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.RateCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.RateCategory__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.CompanyOwner__c</elementReference>
             </value>
         </assignmentItems>
         <connector>

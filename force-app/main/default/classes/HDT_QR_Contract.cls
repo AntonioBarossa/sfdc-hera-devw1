@@ -18,6 +18,30 @@ public inherited sharing class HDT_QR_Contract {
 		  
 	}
 
+    public Contract getSapContractCode(String code) {
+        contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
+        system.debug('code ******************** : ' + code);
+        String filter = 'Activated';
+        Contract c = new Contract();
+        String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c =: code AND Status=: filter WITH SECURITY_ENFORCED';
+        List<Contract> con = Database.query(query);
+        if(con != null && con.size()> 0){
+            c= con[0];
+        }
+        return c;
+	}
+
+    public List<Contract> getSapContractCode(List<String> codes) {
+        contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
+        system.debug('code ******************** : ' + codes);
+        String filter = 'Activated';
+        Contract c = new Contract();
+        String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c IN :codes AND Status=: filter WITH SECURITY_ENFORCED';
+        List<Contract> con = Database.query(query);
+
+        return con;
+	}
+
     public List<Contract> getRecordById(String contractId){
         return [
             SELECT
