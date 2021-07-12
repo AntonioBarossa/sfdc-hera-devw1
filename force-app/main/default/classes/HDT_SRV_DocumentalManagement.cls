@@ -43,6 +43,10 @@ public class HDT_SRV_DocumentalManagement{
 		DocumentalActivity__c actMoga = HDT_QR_DocumentalConfiguration.getDocumentalActivityById(recordId);
 
 		JSONGenerator gen = JSON.createGenerator(false);
+
+		gen.writeStartObject();
+		gen.writeFieldName('attachmentInfo');
+		gen.writeStartArray();
 		gen.writeStartObject();
 		gen.writeStringField('key', 'pt_numero_plico');
 		gen.writeStringField('value', actMoga.EnvelopeId__c);
@@ -54,6 +58,8 @@ public class HDT_SRV_DocumentalManagement{
 		gen.writeStartObject();
 		gen.writeStringField('key', 'pt_timestamp');
 		gen.writeStringField('value', actMoga.PostelTimestamp__c);
+		gen.writeEndObject();
+		gen.writeEndArray();
 		gen.writeEndObject();
 
 		String body = gen.getAsString();
