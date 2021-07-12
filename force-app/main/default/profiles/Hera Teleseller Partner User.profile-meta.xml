@@ -7543,7 +7543,9 @@
         <field>DataUsePurpose.LegalBasisId</field>
         <readable>true</readable>
     </fieldPermissions>
-    <field>DependenciesMatrix__c.BlockingProcessType__c</field>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>DependenciesMatrix__c.BlockingProcessType__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
