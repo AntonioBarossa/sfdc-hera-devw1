@@ -10,6 +10,8 @@
             <property name="accountId" type="String" role="inputOnly" />
             <property name="selectedOrder" type="@salesforce/schema/Order" role="outputOnly"/>
             <property name="ordId" type="String" role="outputOnly"/>
+            <property name="contrId" type="String" role="outputOnly"/>
+            <property name="groupOption" type="String" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

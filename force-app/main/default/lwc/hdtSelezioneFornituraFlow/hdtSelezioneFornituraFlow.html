@@ -6,6 +6,7 @@
         <div if:true={isOrderListVisible} class="slds-grid slds-m-top_large">
             <div if:true={showEmptyOrdersMessage} class="slds-size_1-of-1">
                 <div class="slds-align_absolute-center" style="height:5rem">Non ci sono ordini attivi</div>
+                <lightning-input type="checkbox" label="Termina Flow" name="input1"></lightning-input>
             </div>
             <div if:false={showEmptyOrdersMessage} class="slds-size_1-of-1">
                 <lightning-datatable hide-checkbox-column={disabledInput} key-field="Id" data={tableData}
@@ -13,6 +14,22 @@
                 </lightning-datatable>
             </div>
         </div>
+        <div if:true={isContractsListVisible} class="slds-grid slds-m-top_large">
+            <div if:true={showEmptyContractsMessage} class="slds-size_1-of-1">
+                <div class="slds-align_absolute-center" style="height:5rem">Non ci sono contratti attivi</div>
+                <lightning-input type="checkbox" label="Termina Flow" name="input1"></lightning-input>  
+            </div>
+            <div if:false={showEmptyContractsMessage} class="slds-size_1-of-1">
+                <lightning-datatable
+                    key-field="Id"
+                    data={tableData}
+                    columns={contractsListcolumns}
+                    max-row-selection=1
+                    onrowselection={getSelectedContract}>
+                </lightning-datatable>
+            </div>
+        </div>
+        
         <template if:true={showPaginationButtons}>
             <div class="slds-grid slds-grid_align-center slds-m-top_small">
                 <div class="slds-col">
