@@ -35,7 +35,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 
 					else {
 						Lead actualLead=mapLeadByEmail.get(tempLead.Email);
-						if ( actualLead.Individual.ProfilingPrivacy__c!=null && tempLead.Individual.PrivacyProfilingChoiceDate__c!=null
+						if ( tempLead.Individual.PrivacyProfilingChoiceDate__c!=null
 							&&(tempLead.Individual.PrivacyProfilingChoiceDate__c>actualLead.Individual.PrivacyProfilingChoiceDate__c)) {
 								mapLeadByEmail.put(tempLead.Email, tempLead);
 						}
@@ -61,7 +61,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 					else {
 						Contact actualContact=mapContactByEmail.get(tempContact.Email);
 
-						if ( actualContact.Individual.ProfilingPrivacy__c!=null && tempContact.Individual.PrivacyProfilingChoiceDate__c!=null
+						if ( tempContact.Individual.PrivacyProfilingChoiceDate__c!=null
 							&&(tempContact.Individual.PrivacyProfilingChoiceDate__c>actualContact.Individual.PrivacyProfilingChoiceDate__c)) {
 								mapContactByEmail.put(tempContact.Email, tempContact);
 						}
@@ -78,13 +78,11 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 
 					for (Contact tempContact : mapContactByEmail.values()) { 
 						// Controllo se il ProfilingPrivacy è presente viene inserito 1 solo se ProfilingPrivacy=SI altrimenti 0
-						String privacyFlag=String.isNotBlank(tempContact.Individual.ProfilingPrivacy__c)&& tempContact.Individual.ProfilingPrivacy__c.equalsIgnoreCase('SI')?'1':'0';
+						String privacyFlag='SI'.equalsIgnoreCase(tempContact.Individual.ProfilingPrivacy__c)?'1':'0';
 						date tmpDate;
 						String privacyProfilingChoiceDateTime;
-						if (tempContact.IndividualId!=null) {
-							tmpDate = tempContact.Individual.PrivacyProfilingChoiceDate__c!=null?tempContact.Individual.PrivacyProfilingChoiceDate__c:tempContact.Individual.CreatedDate.date(); 
-							privacyProfilingChoiceDateTime= String.valueOf(  DateTime.newInstance(tmpDate.year(), tmpDate.month(),tmpDate.day(), 0, 0, 0).getTime());
-						}
+						tmpDate = tempContact.Individual.PrivacyProfilingChoiceDate__c!=null?tempContact.Individual.PrivacyProfilingChoiceDate__c:tempContact.Individual.CreatedDate.date(); 
+						privacyProfilingChoiceDateTime= String.valueOf(  DateTime.newInstance(tmpDate.year(), tmpDate.month(),tmpDate.day(), 0, 0, 0).getTime());
 
 						row=String.isBlank(row)?row:row+'\n';
 						row=row+'bk^email_sha256^'+HDT_UTL_Utils.codingSha256(tempContact.Email)+'^set^gdpr^dc='+privacyFlag+'&tg='+privacyFlag+'&al='+privacyFlag+'&cd='+privacyFlag+'&sh='+privacyFlag+'&re='+privacyFlag+'^'+privacyProfilingChoiceDateTime;
@@ -103,10 +101,11 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 						Lead actualLead=mapLeadByEmail.get(tempLead.Email);
 						if ( mapLeadByEmail.get(tempLead.Email)!=null
 							&&
-							actualLead.Individual.ProfilingPrivacy__c!=null && tempLead.Individual.PrivacyProfilingChoiceDate__c!=null
+							tempLead.Individual.PrivacyProfilingChoiceDate__c!=null
 							&&
 							(tempLead.Individual.PrivacyProfilingChoiceDate__c>actualLead.Individual.PrivacyProfilingChoiceDate__c)) {
-							mapLeadByEmail.put(tempLead.Email, tempLead);
+							//mapLeadByEmail.put(tempLead.Email, tempLead);//
+							mapLeadByEmail.keySet().remove(tempLead.Email); // verrà aggiunto nel prossimo chunk
 						}
 					}
 				}
@@ -114,13 +113,11 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 
 
 				for (Lead tempLead : mapLeadByEmail.values()) { 
-					String privacyFlag=String.isNotBlank(tempLead.Individual.ProfilingPrivacy__c)&& tempLead.Individual.ProfilingPrivacy__c.equalsIgnoreCase('SI')?'1':'0';
+					String privacyFlag='SI'.equalsIgnoreCase(tempLead.Individual.ProfilingPrivacy__c)?'1':'0';
 					date tmpDate;
 					String privacyProfilingChoiceDateTime;
-					if (tempLead.IndividualId!=null) {
-						tmpDate = tempLead.Individual.PrivacyProfilingChoiceDate__c!=null?tempLead.Individual.PrivacyProfilingChoiceDate__c:tempLead.Individual.CreatedDate.date(); 
-						privacyProfilingChoiceDateTime= String.valueOf(  DateTime.newInstance(tmpDate.year(), tmpDate.month(),tmpDate.day(), 0, 0, 0).getTime());
-					}
+					tmpDate = tempLead.Individual.PrivacyProfilingChoiceDate__c!=null?tempLead.Individual.PrivacyProfilingChoiceDate__c:tempLead.Individual.CreatedDate.date(); 
+					privacyProfilingChoiceDateTime= String.valueOf(  DateTime.newInstance(tmpDate.year(), tmpDate.month(),tmpDate.day(), 0, 0, 0).getTime());
 
 					row=String.isBlank(row)?row:row+'\n';
 					row=row+'bk^email_sha256^'+HDT_UTL_Utils.codingSha256(tempLead.Email)+'^set^gdpr^dc='+privacyFlag+'&tg='+privacyFlag+'&al='+privacyFlag+'&cd='+privacyFlag+'&sh='+privacyFlag+'&re='+privacyFlag+'^'+privacyProfilingChoiceDateTime;
