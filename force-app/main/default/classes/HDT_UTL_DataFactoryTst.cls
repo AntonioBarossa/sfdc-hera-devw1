@@ -86,6 +86,7 @@ public with sharing class HDT_UTL_DataFactoryTst {
             acc.BillingCityCode__c = 'Roma';
             acc.BillingStreetName__c = 'via roma';
             acc.BillingStreetNumber__c = '55';
+            acc.LastName__c = 'test account'+i;
 
             accList.add(acc);
 
@@ -114,9 +115,15 @@ public with sharing class HDT_UTL_DataFactoryTst {
 
             ord.RecordTypeId = rt;
             ord.Name = 'testOrderName'+i;
-            ord.Status = 'In Lavorazione';
+            ord.Status = 'Draft';
             ord.EffectiveDate = Date.today();
             ord.AccountId = accId;
+            ord.EstimateAmount__c = 1000;
+            ord.PowerQuote__c = 1000;
+            ord.AdministrativeBurden__c = 1; 
+            ord.EstimatedVAT__c = 1; 
+            ord.ValidityDateEstimate__c = Date.today().addDays(30);
+            ord.Phase__c = 'Bozza';
 
             orderList.add(ord);
         }
