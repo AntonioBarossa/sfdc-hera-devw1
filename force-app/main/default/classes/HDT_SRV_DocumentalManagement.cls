@@ -74,6 +74,39 @@ public class HDT_SRV_DocumentalManagement{
 		return body;
 	}
 
+	public static String generateGetEnvelopeRequest(SObject documentalObject){
+		if (documentalObject == null) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c o DocumentSendTracking__c per visualizzare il documento.');
+		}
+
+		String envelopeId = (String) documentalObject.get('EnvelopeId__c');
+		if (String.isBlank(envelopeId)) {
+			throw new HDT_UTL_HeraException('Impossibile visualizzare il plico archiviato, Id Plico non disponibile.');
+		}
+
+		String body = '';
+		if (getDocumentType(documentalObject) == 'pdf') {
+
+			JSONGenerator gen = JSON.createGenerator(false);
+			gen.writeStartObject();
+			gen.writeFieldName('envelopeInfo');
+			gen.writeStartArray();
+			gen.writeStartObject();
+			gen.writeStringField('key', 'pt_numero_offerta');
+			gen.writeStringField('value', envelopeId);
+			gen.writeEndObject();
+			gen.writeEndArray();
+			gen.writeEndObject();
+			body = gen.getAsString();
+
+		} else {
+			// TODO: generate request per recupero zip da Intesa
+		}
+
+		System.debug('GetEnvelopeRequest body: ' + body);
+		return body;
+	}
+
 	@future
 	public static void createPublicLinkFuture(String recordId,String base64,String fileName){
 		String publicLink = createPublicLink(recordId,base64,fileName);
@@ -109,6 +142,22 @@ public class HDT_SRV_DocumentalManagement{
 		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		documentalResponse = HDT_WS_DocumentalIntegration.submitGetAttachmentRequest(body);
 		//manageResponseFuture(JSON.serialize(documentalResponse), context);
+		return documentalResponse;
+	}
+	
+	public static HDT_WRP_DocumentalResponse executeGetEnvelopeCalloutRequest(String body, String documentType){
+		if (String.isBlank(documentType)) {
+			throw new HDT_UTL_HeraException('Errore interno nel recupero del documento archiviato.');
+		}
+
+		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+		if (documentType == 'pdf') {
+			documentalResponse = HDT_WS_DocumentalIntegration.submitGetEnvelopePostelRequest(body);
+			//manageResponseFuture(JSON.serialize(documentalResponse), context);
+		} else {
+			// TODO: invoke Intesa callout.
+		}
+
 		return documentalResponse;
 	}
 
@@ -726,6 +775,36 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 		return payload.substring(0, payload.length() - fineRiga.length());
 	}
 	
+	// Restituisce il tipo di documento archiviato: 'zip' se il documento è stato firmato con OTP, 'pdf' altrimenti.
+	public static String getDocumentType(SObject documentalObject){
+		if (documentalObject == null) {
+			throw new HDT_UTL_HeraException('Errore interno nel recupero del documento archiviato.');
+		}
+
+		String signMode = '';
+
+		if (documentalObject.getSobjectType() == DocumentalActivity__c.getSObjectType()) {
+			DocumentalActivity__c documentalActivity = (DocumentalActivity__c) documentalObject;
+			if (String.isNotBlank(documentalActivity.CaseId__c)) {
+				Case c = (Case) documentalActivity.CaseId__r;
+				signMode = c.SignMode__c;
+			} else if (String.isNotBlank(documentalActivity.OrderId__c)) {
+				Order o = (Order) documentalActivity.OrderId__r;
+				signMode = o.SignatureMethod__c;
+			}
+		} else if (documentalObject.getSobjectType() == DocumentSendTracking__c.getSObjectType()) {
+			DocumentSendTracking__c documentSendTracking = (DocumentSendTracking__c) documentalObject;
+			if (String.isNotBlank(documentSendTracking.Case__c)) {
+				Case c = (Case) documentSendTracking.Case__r;
+				signMode = c.SignMode__c;
+			} else if (String.isNotBlank(documentSendTracking.Order__c)) {
+				Order o = (Order) documentSendTracking.Order__r;
+				signMode = o.SignatureMethod__c;
+			}
+		}
+
+		return signMode.contains('OTP') ? 'zip' : 'pdf';
+	}
 
 	public static String getSignModeConfiguration(String processType, String source){
         String configurationJson = '';
