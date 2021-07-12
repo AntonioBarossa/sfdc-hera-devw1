@@ -150,8 +150,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             responseObject.fields.add(responseFieldErrorCode);
             RestContext.response.statusCode = 200;
         } catch (Exception ex) {
-
-            HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException customEx = (HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException) ex;
+		
 
             responseField.fieldType = 'TEXT';
             responseField.name = 'ESITO';
@@ -159,11 +158,14 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
             responseFieldError.fieldType = 'TEXT';
             responseFieldError.name = 'ERROR_MESSAGE';
-            responseFieldError.value = 'Errore: ' + customEx.getMessage();
-
-            responseFieldErrorCode.fieldType = 'TEXT';
-            responseFieldErrorCode.name = 'ERROR_CODE';
-            responseFieldErrorCode.value = customEx.code;
+            responseFieldError.value = 'Errore: ' + ex.getMessage();
+			
+            if (ex instanceof HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException) {
+                HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException customEx = (HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException) ex;
+                responseFieldErrorCode.fieldType = 'TEXT';
+            	responseFieldErrorCode.name = 'ERROR_CODE';
+            	responseFieldErrorCode.value = customEx.code;
+            }
 
             responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError, responseFieldErrorCode};
             RestContext.response.statusCode = 400;

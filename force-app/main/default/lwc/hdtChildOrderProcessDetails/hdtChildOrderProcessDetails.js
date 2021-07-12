@@ -823,7 +823,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     
         this.fields = [
             {
-                step: '',
+                step: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' ? 6 : '',
                 label: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' ? 'Riepilogo e Cliente Uscente' : 'Cliente Uscente',
                 name: 'clienteUscente',
                 objectApiName: 'Account',

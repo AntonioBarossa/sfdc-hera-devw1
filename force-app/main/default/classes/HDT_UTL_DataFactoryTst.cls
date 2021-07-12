@@ -14,21 +14,141 @@ public with sharing class HDT_UTL_DataFactoryTst {
         wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
     }
 
-    public static Lead createLead() {
+    public static List<Lead> createLead(Integer amount, Boolean doInsert) {
 
-        Lead ld = new Lead();
+        List<Lead> leadList = new List<Lead>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            Lead ld = new Lead();
+            
+            ld.FirstName = 'FirstNameTest'+i;
+            ld.LastName = 'LastNameTest';
+            ld.CompanyOwner__c = 'MMS';
+            ld.Company = 'CompanyTest';
+            ld.Status = 'New';
+            ld.Email = 'test@test.com';
+
+            leadList.add(ld);
+
+        }
         
-        ld.FirstName = 'FirstNameTest';
-        ld.LastName = 'LastNameTest';
-        ld.CompanyOwner__c = 'MMS';
-        ld.Company = 'CompanyTest';
-        ld.Status = 'New';
-        ld.Email = 'test@test.com';
+        if (doInsert) {
 
-        insert ld;
+            insert leadList;
+        }
 
-        return ld;
+        return leadList;
     }
     
+    public static List<Opportunity> createOpportunity (Integer amount, Boolean doInsert) {
+
+        List<Opportunity> oppList = new List<Opportunity>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            Opportunity opp = new Opportunity();
+
+            opp.Name = 'testOpportunity'+ i;
+            opp.CloseDate = Date.today().addDays(30);
+            opp.StageName = 'Negotiation';
+
+            oppList.add(opp);
+        }        
+
+        if (doInsert) {
+
+            insert oppList;
+        }
+
+        return oppList;
+    }
+
+    public static List<Account> createAccount(Integer amount, Boolean doInsert) {
+        
+        List<Account> accList = new List<Account>();
+
+        Id rt = [SELECT Id 
+                FROM Recordtype 
+                WHERE SobjectType = 'Account' and Developername = 'HDT_RT_Business' 
+                LIMIT 1].Id;
+
+        for (Integer i=0; i<amount; i++) {
+
+            Account acc = new Account();
+
+            acc.RecordTypeId = rt;
+            acc.Name = 'test account'+i;
+            acc.CompanyOwner__c = 'HERA COMM';
+            acc.CustomerMarking__c = 'Azienda';
+            acc.Category__C = 'Aziende SME';
+            acc.VATNumber__c = '12345678901';
+            acc.BillingCityCode__c = 'Roma';
+            acc.BillingStreetName__c = 'via roma';
+            acc.BillingStreetNumber__c = '55';
+
+            accList.add(acc);
+
+        }
+        
+        if (doInsert) {
+
+            insert accList;
+        }
+
+        return accList;
+    }
     
+    public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId) {
+
+        List<Order> orderList = new List<Order>();
+
+        Id rt = [SELECT Id 
+                FROM Recordtype 
+                WHERE SobjectType = 'Order' and Developername = 'HDT_RT_Default' 
+                LIMIT 1].Id;
+
+        for (Integer i=0; i<amount; i++) {
+
+            Order ord = new Order();
+
+            ord.RecordTypeId = rt;
+            ord.Name = 'testOrderName'+i;
+            ord.Status = 'In Lavorazione';
+            ord.EffectiveDate = Date.today();
+            ord.AccountId = accId;
+
+            orderList.add(ord);
+        }
+
+        if (doInsert) {
+
+            insert orderList;
+        }
+
+        return orderList;
+    }
+
+    public static List<Sale__c> createSale (Integer amount, Boolean doInsert, Id accId, String status) {
+
+        List<Sale__c> salesList = new List<Sale__c>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            Sale__c sale = new Sale__c();
+
+            sale.Name = 'testSaleName'+i;
+            sale.Status__c = status;
+            sale.Account__c = accId;
+
+            salesList.add(sale);
+        }
+
+        if (doInsert) {
+
+            insert salesList;
+        }
+
+        return salesList;
+    }
 }

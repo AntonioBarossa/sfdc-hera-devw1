@@ -337,14 +337,14 @@
             <assignToReference>FirstIndemnityCase.Cluster__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.Cluster__c</elementReference>
+                <stringValue>Indennizzi</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>FirstIndemnityCase.Type</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Indennizzo</stringValue>
+                <elementReference>getInputCase.Type</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -410,6 +410,90 @@
                 <elementReference>getIndemnityRecordType.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SalesCompanyCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.DistributorCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.DistributorCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.RateCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.RateCategory__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.CompanyOwner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.BillingProfile__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.BillingProfile__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.SupplyCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.SupplyPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.SupplyCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.SupplyStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.SupplyProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.SupplyStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.SupplyCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyCountry__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AssignVariablesSecond</targetReference>
         </connector>
@@ -437,14 +521,14 @@
             <assignToReference>SecondIndemnityCase.Cluster__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.Cluster__c</elementReference>
+                <stringValue>Indennizzi</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>SecondIndemnityCase.Type</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Indennizzo</stringValue>
+                <elementReference>getInputCase.Type</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -496,6 +580,90 @@
                 <elementReference>getIndemnityRecordType.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SalesCompanyCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.DistributorCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.DistributorCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.RateCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.RateCategory__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.CompanyOwner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.BillingProfile__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.BillingProfile__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.SupplyCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.SupplyPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.SupplyCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.SupplyStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.SupplyProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.SupplyStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.SupplyCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.SupplyCountry__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Switch_Casistica</targetReference>
         </connector>
@@ -513,17 +681,10 @@
             <name>Scaduta</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
-                <operator>LessThan</operator>
-                <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -710,7 +871,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -721,13 +882,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Risposta Inviata - Attesa Rettifica</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
-                <operator>LessThanOrEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -760,17 +914,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
-                <operator>LessThan</operator>
-                <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -803,17 +950,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>getInputCase.CorrectionDocumentEmissionDay__c</leftValueReference>
-                <operator>LessThan</operator>
-                <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -890,6 +1030,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>getInputCase.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Bozza</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>

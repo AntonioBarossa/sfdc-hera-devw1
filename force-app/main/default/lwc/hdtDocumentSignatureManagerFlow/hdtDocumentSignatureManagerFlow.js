@@ -19,7 +19,6 @@ import IsInvoicingVerified from '@salesforce/schema/Case.IsInvoicingVerified__c'
 import InvoicingPlace from '@salesforce/schema/Case.InvoicingPlace__c';
 import InvoicingStreetName from '@salesforce/schema/Case.InvoicingStreetName__c';
 import InvoicingCountry from '@salesforce/schema/Case.InvoicingCountry__c';
-import InvoicingStreetToponym from '@salesforce/schema/Case.InvoicingStreetToponym__c';
 import InvoicingProvince from '@salesforce/schema/Case.InvoicingProvince__c';
 import AddressFormula from '@salesforce/schema/Case.AddressFormula__c';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
@@ -53,7 +52,6 @@ const FIELDS = ['Case.ContactMobile',
 				'Case.InvoicingPlace__c',
 				'Case.InvoicingStreetName__c',
 				'Case.InvoicingCountry__c',
-				'Case.InvoicingStreetToponym__c',
                 'Case.InvoicingProvince__c'];
 
 export default class HdtDocumentSignatureManagerFlow extends LightningElement {
@@ -73,7 +71,9 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     @track enableNext = false;
     @track previewExecuted = false;
     @track confirmData;
-
+    @track labelConfirm = 'Conferma pratica';
+    @track showConfirmButton = false;
+    @track showPreviewButton = true;
     @api
     get variantButton(){
         if(this.nextVariant != null && this.nextVariant !="" && this.nextVariant != "unedfined")
@@ -91,7 +91,13 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     }
 
     connectedCallback(){
-        //updateRecord({fields: { Id: this.recordId }});
+        if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+            this.labelConfirm = 'Conferma pratica';
+            this.showPreviewButton = false;
+            this.previewExecuted = true;
+        }else{
+            this.labelConfirm = 'Invia documenti';
+        }
     }
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
         wiredCase({ error, data }) {
@@ -206,6 +212,10 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     handlePreviewExecuted(event){
         this.previewExecuted = true;
     }
+
+    handlePreview(event){
+        let returnValue = this.template.querySelector('c-hdt-document-signature-manager').handlePreview();
+    }
     handleConfirmData(event){
         console.log('dati confermati ' + event.detail);
         this.confirmData = event.detail;
@@ -231,7 +241,6 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
             //fields[InvoicingPlace.fieldApiName] = resultWrapper.addressWrapper.
             fields[InvoicingProvince.fieldApiName] = resultWrapper.addressWrapper.Provincia;
             fields[InvoicingCountry.fieldApiName] = resultWrapper.addressWrapper.Stato;
-            //fields[InvoicingStreetToponym.fieldApiName] = resultWrapper.addressWrapper.
             fields[InvoicingStreetName.fieldApiName] = resultWrapper.addressWrapper.Via;
 
             const recordInput = { fields };
@@ -253,11 +262,14 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                     );
                 });
             this.enableNext = true;
+            this.handleConfirm();
         }else{
             this.enableNext = false;
         }
     }
-
+    handleConfirmButton(){
+        let returnValue = this.template.querySelector('c-hdt-document-signature-manager').checkForm();
+    }
     handleConfirm(){
         if(this.enableNext){
             if((!this.previewExecuted && this.quoteType && this.quoteType.localeCompare('Analitico') != 0)){

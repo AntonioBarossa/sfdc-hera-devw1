@@ -195,7 +195,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         //CHECK CROSS MINIMUM FIELD
         if(String.isBlank(method)) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
         
-        if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita')){
+        if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita') && !method.equalsIgnoreCase('aggiornaRCU')){
             //gestione scarti
             return caseUpdate;
         }
@@ -257,14 +257,23 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(currentPhase.indexOf('Annull') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
                 currentCase.CancellationHerokuPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_UTENTE');
             }
-            if(nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
+            if(nextPhase != null && nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
                 currentCase.ComplexCategory__c = reqWrp.requestMap.get('NOTE');
             }
             if(reqWrp.requestMap.get('DT_MAX_PREV') != null){
                 try{
-                    currentCase.QuotationValidityDate__c = Date.valueOf(reqWrp.requestMap.get('DT_MAX_PREV'));
+                    HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
+                    currentCase.QuotationValidityDate__c = enrichSrv.getDateFromString(reqWrp.requestMap.get('DT_MAX_PREV'));
                 } catch(Exception e){
                     System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
+                }
+            }
+            //Data Annullamento
+            if(reqWrp.requestMap.get('DATA') != null){
+                try{
+                    currentCase.CancellationRequestDate__c	= Date.valueOf(reqWrp.requestMap.get('DATA'));
+                } catch (Exception e){
+                    System.debug('DATA Exception -> ' + e.getMessage());
                 }
             }
             
@@ -272,6 +281,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
             String fatturaSap = reqWrp.requestMap.get('FATTURA');
+            String contractCode = reqWrp.requestMap.get('VERTRAG');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
             String newDescription = '';
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
@@ -294,6 +304,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(String.isNotBlank(newDescription)){
                 currentCase.Description = newDescription + '\n' + currentDescription;
+            }
+            if(contractCode != null || contractCode != ''){
+
             }
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
@@ -324,7 +337,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.QuotationNumber__c = numPrev;
         }
         if(expectedExec != null && expectedExec != ''){
-            if(quotationType.equalsIgnoreCase('Analitico') && nextPhase.containsIgnoreCase('Dati Tenici Ricevuti')){
+            System.debug('#QUOTATIONTYPE -> ' + quotationType);
+            System.debug('#NEXTPHASE -> ' +nextPhase);
+            if(quotationType.equalsIgnoreCase('Analitico') && nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti')){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
             }else if(!quotationType.equalsIgnoreCase('Analitico')){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
@@ -450,6 +465,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.ContactId = contact?.Id;
                     currentCase.Mobile__c = contact?.MobilePhone;
                     currentCase.Email__c = contact?.Email;
+                    currentCase.CompanyOwner__c = contact?.CompanyOwner__c;
                     //Aggiunto PhoneNumber
                     currentCase.PhoneNumber__c = contact?.MobilePhone;
                     sp = qrClass.getServicePoint(pod);
@@ -483,7 +499,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Morosita').getRecordTypeId();
                             currentCase.Cluster__c = 'Morosità';
                             if(dataDecorrenza != null){
-                                currentCase.EffectiveDate__c = Date.valueOf(dataDecorrenza);
+                                try{
+                                    HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
+                                    currentCase.EffectiveDate__c = enrichSrv.getDateFromString(dataDecorrenza);
+                                } catch(Exception e){
+                                    System.debug('DATA_DECORRENZA Exception -> ' + e.getMessage());
+                                }
                             }
                             if(String.isNotBlank(processType)){
                                 currentCase.Type = morUtl.transcodeProcess(processType);
@@ -661,8 +682,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String objectq = 'Contract';
             List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectq);
             Contract contracRecord = (Contract) recordList[0];
-            contracRecord.Status = contractStatus;
-            contracRecord.EndDate = contractEndDate;
+            if(contractCode != contracRecord.SAPContractCode__c){
+                contracRecord.SAPContractCode__c = contractCode;
+            }
+            if(contractStatus != null && contractStatus != ''){
+                contracRecord.Status = contractStatus;
+            }
+            if(contractEndDate != null){
+                contracRecord.EndDate = contractEndDate;
+            }
             Boolean result = HDT_UTL_DatabaseService.updateSObject(contracRecord);
         }catch(Exception ex){
             System.debug(LoggingLevel.WARN, ex.getMessage() + ' at line ' + ex.getLineNumber() + ' of HDT_UTL_HerokuPostSalesManager.handleContractUpdate method');
