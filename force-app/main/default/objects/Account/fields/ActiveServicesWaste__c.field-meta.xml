@@ -3,7 +3,7 @@
     <fullName>ActiveServicesWaste__c</fullName>
     <description>Campo tecnico nascosto. Necessario per calcolo KPI Servizi attivi.</description>
     <externalId>false</externalId>
-    <label>Numero forniture attive TLR</label>
+    <label>Numero forniture attive Ambiente</label>
     <precision>5</precision>
     <required>false</required>
     <scale>0</scale>
