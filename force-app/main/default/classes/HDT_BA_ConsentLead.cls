@@ -12,7 +12,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 		}
 	
 		public Database.QueryLocator start(Database.BatchableContext bc) {
-			String query = 'SELECT id,Email,IsConverted,IndividualId,Individual.ProfilingPrivacy__c,Individual.CreatedDate,Individual.PrivacyProfilingChoiceDate__c FROM Lead WHERE (IsConverted=false) AND (Email!=null OR Email!=\'\') AND IndividualId!=null ORDER BY Email,Individual.PrivacyProfilingChoiceDate__c,Individual.CreatedDate';
+			String query = 'SELECT id,Email,CreatedDate,IsConverted,IndividualId,Individual.ProfilingPrivacy__c,Individual.CreatedDate,Individual.PrivacyProfilingChoiceDate__c FROM Lead WHERE (IsConverted=false) AND (Email!=null OR Email!=\'\') AND IndividualId!=null ORDER BY Email,Individual.PrivacyProfilingChoiceDate__c,Individual.CreatedDate';
 			return Database.getQueryLocator(query);
 		}
 	
@@ -39,6 +39,9 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 							&&(tempLead.Individual.PrivacyProfilingChoiceDate__c>actualLead.Individual.PrivacyProfilingChoiceDate__c)) {
 								mapLeadByEmail.put(tempLead.Email, tempLead);
 						}
+						else if(tempLead.CreatedDate>actualLead.CreatedDate) {
+							    mapLeadByEmail.put(tempLead.Email, tempLead);
+						}
 					}
 				}
 				// logica duplicati end
@@ -49,7 +52,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 
 				// controllo se sono presenti contact con la stessa email dei lead che sto processando
 				if (!mapLeadByEmail.isEmpty()) {
-					listContacts = [SELECT id,email,IndividualId,Individual.ProfilingPrivacy__c,Individual.CreatedDate,Individual.PrivacyProfilingChoiceDate__c  FROM Contact WHERE Email IN:mapLeadByEmail.keySet() AND IndividualId!=null ORDER BY Email,Individual.PrivacyProfilingChoiceDate__c,Individual.CreatedDate ]; 	
+					listContacts = [SELECT id,email,CreatedDate,IndividualId,Individual.ProfilingPrivacy__c,Individual.CreatedDate,Individual.PrivacyProfilingChoiceDate__c  FROM Contact WHERE Email IN:mapLeadByEmail.keySet() AND IndividualId!=null ORDER BY Email,Individual.PrivacyProfilingChoiceDate__c,Individual.CreatedDate ]; 	
 				}
 			 	
 				// logica duplicati Contact start
@@ -63,7 +66,10 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 
 						if ( tempContact.Individual.PrivacyProfilingChoiceDate__c!=null
 							&&(tempContact.Individual.PrivacyProfilingChoiceDate__c>actualContact.Individual.PrivacyProfilingChoiceDate__c)) {
-								mapContactByEmail.put(tempContact.Email, tempContact);
+							mapContactByEmail.put(tempContact.Email, tempContact);
+						}
+						else if(tempContact.CreatedDate>actualContact.CreatedDate) {
+							mapContactByEmail.put(tempContact.Email, tempContact);
 						}
 					}
 					setEmailContactProcessed.add(tempContact.email);
@@ -94,7 +100,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 				/* controllo se ci sono altri lead nei chunk successivi 
 				   il controllo viene inserito qui perchè nel caso già sia presente un contact viene rimosso dalla mappa mapLeadByEmail 
 				*/
-				List<Lead> listLeadNotInChunk = [SELECT id,Email,IndividualId,IsConverted,Individual.CreatedDate,Individual.ProfilingPrivacy__c,Individual.PrivacyProfilingChoiceDate__c FROM Lead WHERE (IsConverted=false) AND (Email IN:mapLeadByEmail.keySet() AND Id NOT IN :mapLeadByEmail.values()) ORDER BY  Email,Individual.PrivacyProfilingChoiceDate__c,Individual.CreatedDate];
+				List<Lead> listLeadNotInChunk = [SELECT id,Email,CreatedDate,IndividualId,IsConverted,Individual.CreatedDate,Individual.ProfilingPrivacy__c,Individual.PrivacyProfilingChoiceDate__c FROM Lead WHERE (IsConverted=false) AND (Email IN:mapLeadByEmail.keySet() AND Id NOT IN :mapLeadByEmail.values()) ORDER BY  Email,Individual.PrivacyProfilingChoiceDate__c,Individual.CreatedDate];
 
 				if (listLeadNotInChunk!=null && !listLeadNotInChunk.isEmpty()) {	
 					for (Lead tempLead : listLeadNotInChunk) {
@@ -107,6 +113,9 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 							//mapLeadByEmail.put(tempLead.Email, tempLead);//
 							mapLeadByEmail.keySet().remove(tempLead.Email); // verrà aggiunto nel prossimo chunk
 						}
+						else if(tempLead.CreatedDate>actualLead.CreatedDate){
+							mapLeadByEmail.keySet().remove(tempLead.Email); // verrà aggiunto nel prossimo chunk
+						} 
 					}
 				}
 
