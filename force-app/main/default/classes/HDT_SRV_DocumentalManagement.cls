@@ -34,6 +34,33 @@ public class HDT_SRV_DocumentalManagement{
 		System.debug('Body ' + body);
 		return body;
 	}
+
+	public static String generateGetAttachmentRequest(String recordId){
+		if (String.isBlank(recordId)) {
+			throw new HDT_UTL_HeraException('Necessario passare un Id valido in input per visualizzare il documento.');
+		}
+
+		DocumentalActivity__c actMoga = HDT_QR_DocumentalConfiguration.getDocumentalActivityById(recordId);
+
+		JSONGenerator gen = JSON.createGenerator(false);
+		gen.writeStartObject();
+		gen.writeStringField('key', 'pt_numero_plico');
+		gen.writeStringField('value', actMoga.EnvelopeId__c);
+		gen.writeEndObject();
+		gen.writeStartObject();
+		gen.writeStringField('key', 'pt_codice_allegato');
+		gen.writeStringField('value', actMoga.AttachmentCode__c);
+		gen.writeEndObject();
+		gen.writeStartObject();
+		gen.writeStringField('key', 'pt_timestamp');
+		gen.writeStringField('value', actMoga.PostelTimestamp__c);
+		gen.writeEndObject();
+
+		String body = gen.getAsString();
+		System.debug('Postel body: ' + body);
+		return body;
+	}
+
 	@future
 	public static void createPublicLinkFuture(String recordId,String base64,String fileName){
 		String publicLink = createPublicLink(recordId,base64,fileName);
