@@ -29520,7 +29520,7 @@
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
-        <allowRead>false</allowRead>
+        <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>DependenciesMatrix__c</object>
         <viewAllRecords>false</viewAllRecords>
