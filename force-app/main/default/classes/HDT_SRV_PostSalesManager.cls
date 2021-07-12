@@ -85,6 +85,9 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             when 'sendDocumentFile'{
                 psmUtl.sendDocumentFile(sender);
             }
+            when 'updateServicePoint'{
+                psmUtl.updateServicePoint(sender);
+            }
         }
 
         return null;
