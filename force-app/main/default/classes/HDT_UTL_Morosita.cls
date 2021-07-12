@@ -10,6 +10,9 @@ public inherited sharing class HDT_UTL_Morosita {
             when 'Riattivazione Fornitura'{
                 result = 'Riattivazione Fornitura';
             }
+            when else{
+                result = process;
+            }
         }
 
         return result;
