@@ -105,7 +105,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
                     anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
                     anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
-                    anagAlignCase.RegionalAdditional__c = 0; // TODO: transcodificare il campo ExciseGAS__c/ExciseEle__c dell'Order, analogamente alla CX_AMM_ADD_REG in as-is.
+                    anagAlignCase.RegionalAdditional__c = queryHandlerOrder.findRegionalAdditional(triggerOrder.ExciseGAS__c, triggerOrder.SupplyPlace__c, getRegion(triggerOrder.SupplyState__c));
                     System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                     anagAlignCase.Phase__c = 'Da Inviare';
                     HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
@@ -596,6 +596,28 @@ public inherited sharing class HDT_SRV_AnagAlignment {
     // Codice venditore cablato essendo cablato anche nel template pclick delle attivazioni.
     private static String companyCodeTemp(String commodity) {
         return commodity.equals('Gas') ? '10V0000160' : '13V0000000';
+    }
+
+    // Fornisce la regione a partire dalla provincia. Per Wave 1 sono gestite solo MARCHE e ABRUZZO.
+    // TODO WAVE 3: creare un metadato ad-hoc per configurare tutte le province e tutte le regioni.
+    public static String getRegion(String province) {
+        if (String.isBlank(province)) {
+            return '';
+        }
+
+        switch on province.toUpperCase() {
+            when 'AQ', 'CH', 'PE', 'TE' {
+                return 'ABRUZZO';
+            }
+            when 'AN', 'AP', 'FM', 'MC', 'PU' {
+                return 'MARCHE';
+            }
+            when else {
+                System.debug('Provincia non in ambito wave 1: ' + province);
+            }
+        }
+
+        return '';
     }
 
 }
