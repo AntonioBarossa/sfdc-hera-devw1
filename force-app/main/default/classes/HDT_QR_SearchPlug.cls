@@ -14,6 +14,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                 WHERE Status__c IN :statusList
                 AND IsActive = true
                 AND Family IN :familyList
+                AND NoOrderable__c = false
                 //AND (NOT ProductCode LIKE :Label.HDT_CPQ_TemplateProductCode)
                 WITH SECURITY_ENFORCED
             ];
@@ -37,6 +38,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                 WHERE Status__c IN :statusList
                 AND IsActive = true
                 AND Family IN :familyList
+                AND NoOrderable__c = false
                 //AND (NOT ProductCode LIKE :Label.HDT_CPQ_TemplateProductCode)
                 WITH SECURITY_ENFORCED
             ];
@@ -110,7 +112,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                        PowerRangeMin__c, PowerRangeMax__c, ResidentDeliveryAddress__c, NewClient__c
 
                 FROM EligibilityCriteria__c
-                WHERE Product__r.Status__c IN :statusList AND Product__r.IsActive = true AND Product__r.Family IN :familyList AND
+                WHERE Product__r.Status__c IN :statusList AND Product__r.IsActive = true AND Product__r.Family IN :familyList AND Product__r.NoOrderable__c = false AND
 
                     (
                         (OriginMarketOperator__c = 'excludesValues' AND OriginMarket__c excludes (:quote.Market__c)) OR

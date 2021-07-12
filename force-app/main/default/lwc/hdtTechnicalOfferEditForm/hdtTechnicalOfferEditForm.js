@@ -152,6 +152,14 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
             }
         }
 
+        for(var i in techOffObj){
+            if(!this.checkIsNotNull(techOffObj[i])){
+                returnObj.message = 'Tutti i parametri devono essere compilati!';
+                return returnObj;
+            }
+        }
+
+
         returnObj.success = true;
         return returnObj;
     }

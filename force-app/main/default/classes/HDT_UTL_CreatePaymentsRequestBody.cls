@@ -187,11 +187,13 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition, String depositMode){
         
         String phase = null;
-            String successPhase = (process == 'Piano Rateizzazione' && depositMode != 'Paperless')
-                ? 'Completata'
-                : process == 'Paperless' 
-                    ? 'Paperless Generato'
-                    : 'Esito OK da SAP';
+        String successPhase = (process == 'Piano Rateizzazione' && depositMode != 'Paperless') //IF
+                ? 'Completata' //IF TRUE
+                : process == 'Paperless' //ELSE IF
+                    ? 'Paperless Generato' //IF TRUE
+                    : process.containsIgnoreCase('Piano Rateizzazione') && depositMode.containsIgnoreCase('Paperless') //ELSE IF
+                        ? null //IF TRUE
+                        : 'Esito OK da SAP'; //ELSE
         String failedPhase = process == 'Paperless'
         ? 'Paperless Non Generato'
         : 'Esito KO da SAP';
@@ -240,6 +242,36 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         Case c = (Case) JSON.deserialize(inputString, Case.class);
 
         HDT_UTL_DatabaseService.updateSObject(c);
+
+    }
+
+    public Date addBusinessDay(Date startDate, Integer businessDayToAdd){
+
+        Date finalDate = startDate;
+
+        Integer direction = businessDayToAdd < 0 ? -1 : 1;
+
+        while(businessDayToAdd != 0){
+
+            finalDate = finalDate.addDays(direction);
+            
+            if(!isWeekend(finalDate)){
+
+                businessDayToAdd -= direction;
+            
+            }
+
+        }
+
+        return finalDate;
+
+    }
+
+    public Boolean isWeekend(Date myDate){
+
+        String myDateString = Datetime.newInstance(myDate.year(), myDate.month(),myDate.day()).format('EEE');
+
+        return 'Sat'.equals(myDateString) || 'Sun'.equals(myDateString);
 
     }
 

@@ -15,7 +15,6 @@ import IsInvoicingVerified from '@salesforce/schema/Case.IsInvoicingVerified__c'
 import InvoicingPlace from '@salesforce/schema/Case.InvoicingPlace__c';
 import InvoicingStreetName from '@salesforce/schema/Case.InvoicingStreetName__c';
 import InvoicingCountry from '@salesforce/schema/Case.InvoicingCountry__c';
-import InvoicingStreetToponym from '@salesforce/schema/Case.InvoicingStreetToponym__c';
 import InvoicingProvince from '@salesforce/schema/Case.InvoicingProvince__c';
 import DeliveryAddress from '@salesforce/schema/Case.DeliveryAddress__c';
 // INDIRIZZO DI FORNITURA
@@ -29,7 +28,6 @@ import SupplyIsAddressVerified from '@salesforce/schema/Case.SupplyIsAddressVeri
 import SupplyPlace from '@salesforce/schema/Case.SupplyPlace__c';
 import SupplyProvince from '@salesforce/schema/Case.SupplyProvince__c';
 import SupplyCountry from '@salesforce/schema/Case.SupplyCountry__c';
-import SupplyStreetToponym from '@salesforce/schema/Case.SupplyStreetToponym__c';
 import SupplyStreetName from '@salesforce/schema/Case.SupplyStreetName__c';
 import ShipmentAddressAssign from '@salesforce/schema/Case.ShipmentAddressAssign__c';
 // INDIRIZZO DI RESIDENZA
@@ -44,7 +42,6 @@ import BillingStreetCode__c from '@salesforce/schema/Case.BillingStreetCode__c';
 import BillingStreetName__c from '@salesforce/schema/Case.BillingStreetName__c';
 import BillingStreetNumber__c from '@salesforce/schema/Case.BillingStreetNumber__c';
 import BillingStreetNumberExtension__c from '@salesforce/schema/Case.BillingStreetNumberExtension__c';
-import BillingStreetToponym__c from '@salesforce/schema/Case.BillingStreetToponym__c';
 import AlternativeAddress__c from '@salesforce/schema/Case.AlternativeAddress__c';
 
 const FIELDS = ['Case.InvoicingPostalCode__c',
@@ -57,7 +54,6 @@ const FIELDS = ['Case.InvoicingPostalCode__c',
 				'Case.InvoicingPlace__c',
 				'Case.InvoicingStreetName__c',
 				'Case.InvoicingCountry__c',
-				'Case.InvoicingStreetToponym__c',
                 'Case.InvoicingProvince__c',
                 'Case.DeliveryAddress__c',
                 // INDIRIZZO DI FORNITURA
@@ -71,7 +67,6 @@ const FIELDS = ['Case.InvoicingPostalCode__c',
 				'Case.SupplyPlace__c',
 				'Case.SupplyProvince__c',
 				'Case.SupplyCountry__c',
-				'Case.SupplyStreetToponym__c',
 				'Case.SupplyStreetName__c',
                 'Case.AddressFormula__c',
                 'Case.ShipmentAddressAssign__c',
@@ -87,7 +82,6 @@ const FIELDS = ['Case.InvoicingPostalCode__c',
                 'Case.BillingStreetName__c',
                 'Case.BillingStreetNumber__c',
                 'Case.BillingStreetNumberExtension__c',
-                'Case.BillingStreetToponym__c',
                 'Case.AlternativeAddress__c'
             ];
 
@@ -303,7 +297,6 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 //fields[SupplyPlace.fieldApiName] = this.addressWrapper.
                 fields[SupplyProvince.fieldApiName] = this.addressWrapper.Provincia;
                 fields[SupplyCountry.fieldApiName] = this.addressWrapper.Stato;
-                //fields[SupplyStreetToponym.fieldApiName] = this.addressWrapper.
                 fields[SupplyStreetName.fieldApiName] = this.addressWrapper.Via;
                 console.log('#ServicePoint: Composed Address -> ' + this.address);
                 fields[ShipmentAddressAssign.fieldApiName] = this.address;
@@ -318,7 +311,6 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 //fields[InvoicingPlace.fieldApiName] = this.addressWrapper.
                 fields[InvoicingProvince.fieldApiName] = this.addressWrapper.Provincia;
                 fields[InvoicingCountry.fieldApiName] = this.addressWrapper.Stato;
-                //fields[InvoicingStreetToponym.fieldApiName] = this.addressWrapper.
                 fields[InvoicingStreetName.fieldApiName] = this.addressWrapper.Via;
                 fields[DeliveryAddress.fieldApiName] = this.address;
             } else {
@@ -332,7 +324,6 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 //fields[BillingPlace__c.fieldApiName] = this.addressWrapper.
                 fields[BillingProvince__c.fieldApiName] = this.addressWrapper.Provincia;
                 fields[BillingCountry__c.fieldApiName] = this.addressWrapper.Stato;
-                //fields[BillingStreetToponym__c.fieldApiName] = this.addressWrapper.
                 fields[BillingStreetName__c.fieldApiName] = this.addressWrapper.Via;
                 fields[AlternativeAddress__c.fieldApiName] = this.address;
             }

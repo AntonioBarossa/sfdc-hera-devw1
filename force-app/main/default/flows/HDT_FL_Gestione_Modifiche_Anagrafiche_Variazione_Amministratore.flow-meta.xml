@@ -377,12 +377,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>BillingStreetToponym__c</field>
-            <value>
-                <elementReference>Get_Amministratore.MailingStreetToponym__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>Get_Amministratore.Id</elementReference>

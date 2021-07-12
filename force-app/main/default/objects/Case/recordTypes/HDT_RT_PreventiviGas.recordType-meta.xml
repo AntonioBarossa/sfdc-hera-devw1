@@ -7811,6 +7811,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Preventivo rifiutato – Amm OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
@@ -10957,107 +10961,107 @@
     <picklistValues>
         <picklist>UseTypeEnergy__c</picklist>
         <values>
+            <fullName>Ins Lum Pubb (Perm Partic)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imp Risalita (Perm Partic)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Illuminaz Monum (Perm Partic)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non raggiungibile(Perm Partic)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ordinaria (Perm)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inst Non presid (Perm Partic)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ville rifugi simili(Perm Part)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Roulottes simili (Perm Partic)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cottimo (Perm)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest (Temp Straord 6h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest (Temp Straord 8h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spett viagg (Temp Straord 6h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spett viagg (Temp Straord)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripr cine tv(Temp Straord 8h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest (Temp Straord 16h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>For temp abit(Temp Straord 6h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leviga Pavim(Temp Straord 8h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cantiere (Temp)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luminarie (Temp Straord 16h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leviga Pavimenti(Temp Straord)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luminarie (Temp Straord 8h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>03 Illuminazione Pubblica</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cantiere %28Temp%29</fullName>
+            <fullName>Spett viagg (Temp permanente)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cottimo %28Perm%29</fullName>
+            <fullName>Leviga Pavim(Temp permanente)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>For temp abit%28Temp Straord 6h%29</fullName>
+            <fullName>Ripr cine tv(Temp permanente)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Illuminaz Monum %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imp Risalita %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ins Lum Pubb %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inst Non presid %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Leviga Pavim%28Temp Straord 8h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Leviga Pavim%28Temp permanente%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Leviga Pavimenti%28Temp Straord%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Luminarie %28Temp Straord 16h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Luminarie %28Temp Straord 8h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manifest %28Temp Straord 16h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manifest %28Temp Straord 6h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manifest %28Temp Straord 8h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manifest %28Temp permanente%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non raggiungibile%28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ordinaria %28Perm%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripr cine tv%28Temp Straord 8h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripr cine tv%28Temp permanente%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Roulottes simili %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spett viagg %28Temp Straord 6h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spett viagg %28Temp Straord%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spett viagg %28Temp permanente%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ville rifugi simili%28Perm Part%29</fullName>
+            <fullName>Manifest (Temp permanente)</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -55,24 +55,24 @@ global with sharing class HDT_SRV_PrescrizioneFattura implements wrts_prcgvr.Int
                 if (responseOutcome != 'KO') {
                     Case caseToUpdate = new Case();
                     caseToUpdate.Id = sapIntegration.recordId;
-                    caseToUpdate.Phase__c = 'Blocco Effettuato';
-                    String serializedCase = JSON.serialize(caseToUpdate);
-                    updateFuture(serializedCase);
+                    caseToUpdate.TecnicalPhase__c = 'Blocco Effettuato';
+                    HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+
 
                 } else {
                     Case caseToUpdate = new Case();
                     caseToUpdate.Id = sapIntegration.recordId;
-                    caseToUpdate.Phase__c = 'Blocco Non Effettuato';
-                    String serializedCase = JSON.serialize(caseToUpdate);
-                    updateFuture(serializedCase);
+                    caseToUpdate.TecnicalPhase__c = 'Blocco Non Effettuato';
+                    HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+
                 }
             }
         } else {
             Case caseToUpdate = new Case();
             caseToUpdate.Id = sapIntegration.recordId;
-            caseToUpdate.Phase__c = 'Errore Lavorazione SAP';
-            String serializedCase = JSON.serialize(caseToUpdate);
-            updateFuture(serializedCase);
+            caseToUpdate.TecnicalPhase__c = 'Errore Lavorazione SAP';
+            HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+
         }
     }
 

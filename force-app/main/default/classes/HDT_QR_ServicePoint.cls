@@ -22,9 +22,9 @@ public inherited sharing class HDT_QR_ServicePoint {
 
 	public  List<ServicePoint__c> getAddressFornitura(String accountid) {
 		system.debug('accountId : '+ accountId);
-		contractSrv.checkReadAccess('Account__c,SupplyAddress__c');
+		contractSrv.checkReadAccess('Account__c, SupplyStreet__c, SupplyStreetNumber__c, SupplyStreetNumberExtension__c, SupplyPlace__c, SupplyCity__c,SupplyProvince__c, SupplyPostalCode__c, SupplyCountry__c');
 		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
-		return listSp= [SELECT Account__c, SupplyAddress__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
+		return listSp= [SELECT Account__c, SupplyStreet__c, SupplyStreetNumber__c, SupplyStreetNumberExtension__c, SupplyPlace__c, SupplyCity__c,SupplyProvince__c, SupplyPostalCode__c, SupplyCountry__c,SupplySAPCityCode__c,SupplySAPStreetCode__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
 	}
 
 	/*

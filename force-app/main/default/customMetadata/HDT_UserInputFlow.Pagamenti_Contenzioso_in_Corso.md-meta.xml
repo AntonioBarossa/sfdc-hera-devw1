@@ -4,8 +4,7 @@
     <protected>false</protected>
     <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;LitigationType__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;DisputeTerminationDate__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;LitigationOutcome__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}
+        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;LitigationType__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1}
 ]</value>
     </values>
     <values>
@@ -15,6 +14,7 @@
     <values>
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;AccountId&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+{&quot;FieldName&quot;:&quot;BIllingProfile__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;PhoneNumber__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2}
 ]</value>
     </values>

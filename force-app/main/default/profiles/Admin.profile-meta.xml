@@ -184,6 +184,10 @@
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
+        <name>CS_GestioneScript__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
         <name>HDT_WebServiceConfiguration__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
@@ -310,6 +314,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Age__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.AgencyChannel__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -739,6 +748,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.Published__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.Rating</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -850,6 +864,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Segment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.SendMode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1415,6 +1434,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AlertConfiguration__c.AlertType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AlertConfiguration__c.BillSendingMethod__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2519,6 +2543,36 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AtecoMatrix__c.AtecoCode__c</field>
+        <readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AtecoMatrix__c.Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AtecoMatrix__c.City__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AtecoMatrix__c.IstatCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AtecoMatrix__c.SubType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AtecoMatrix__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AuthorizationForm.DefaultAuthFormTextId</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2965,6 +3019,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Campaign.CaseSubCategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Campaign.PaperCampaignParameter__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4669,6 +4728,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.DocumentList__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.DocumentNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5025,6 +5089,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.InvoicesInvolvedByStatement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.InvoiceList__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5961,11 +6030,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.SupplyStreetNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.SupplyStreetToponym__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7916,6 +7980,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentalActivity__c.ParentProcessId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentalActivity__c.PostelTimestamp__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10930,6 +10999,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.IsMuc__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.IsSequanzialized__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11520,6 +11594,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.Decision40Link__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.Deliberation__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11721,6 +11800,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.IncomingCreditCheckResult__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.InformationFormLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12361,6 +12445,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SendCertifiedEmailConsentDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SendFormLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24970,6 +25059,46 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Service26Config__c.Field__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Service26Config__c.Occurrence__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Service26Config__c.Operando__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Service26Config__c.ProductFamily__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Service26Config__c.RowName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Service26Config__c.SapCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Service26Config__c.Servizio__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Service26Config__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -25276,11 +25405,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.SupplyStreetNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.SupplyStreetToponym__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30337,7 +30461,7 @@
         <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_VolturaTecnica</layout>
         <recordType>Case.HDT_RT_VolturaTecnica</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -30367,6 +30491,10 @@
     <layoutAssignments>
         <layout>Case-HDT_ComunicazionePagamento</layout>
         <recordType>Case.HDT_RT_ComunicazionePagamento</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_PraticaInVolo</layout>
+        <recordType>Case.HDT_RT_FlyingRequest</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_Disattivazioni</layout>
@@ -30599,6 +30727,10 @@
         <recordType>Order.HDT_RT_Subentro</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Order-HDT_PraticaInVolo</layout>
+        <recordType>Order.HDT_RT_FlyingRequest</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Order-Switch in</layout>
         <recordType>Order.HDT_RT_SwitchIn</recordType>
     </layoutAssignments>
@@ -30744,6 +30876,42 @@
         <layout>wrts_prcgvr__Activity__c-Visita_D2D</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</recordType>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelActivity__x-SiebelActivity Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelContact__x-SiebelContact Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelContract__x-SiebelContract Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelContractAttribute__x-SiebelContractAttribute Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelCustomer__x-SiebelCustomer Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelDocumentLink__x-SiebelDocumentLink Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelOrder__x-SiebelOrder Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelOrderAttribute__x-SiebelOrderAttribute Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelRdo__x-SiebelRdo Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelRdoAttribute__x-SiebelRdoAttribute Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelRds__x-SiebelRds Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SiebelRdsAttribute__x-SiebelRdsAttribute Layout</layout>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -30751,6 +30919,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>Account</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>AtecoMatrix__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -33235,6 +33412,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Case.HDT_RT_Indennizzo</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Case.HDT_RT_Informative</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -33707,6 +33889,14 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>FileTemplate__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>FUBProcessingItem__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>FUBProcessing__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>

@@ -3,9 +3,10 @@
     <template if:true={bShowModal} >    
         <c-hdt-detail-filter-modal onclosemodal={closeModal}
                                      fields-to-filter={fieldsToFilter}
+                                     first-level-filter-obj={firstLevelFilterObj}
                                      onsetobjfilter={applyInterFromChild}
-                                     consider={filterApplied}
         ></c-hdt-detail-filter-modal>
+        <!--consider={filterApplied}-->
     </template>
 
     <div class="slds-border_top lgc-bg" >
@@ -49,7 +50,6 @@
                     data={accountdetailsToView}
                     columns={columns}
                     resize-column-disabled=true
-                    default-sort-direction={defaultSortDirection}
                     sorted-direction={sortDirection}
                     sorted-by={sortedBy}
                     onsort={onHandleSort}

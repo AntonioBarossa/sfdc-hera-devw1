@@ -1978,6 +1978,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comunicazione verso Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Comunicazione verso Heroku KO</fullName>
             <default>false</default>
         </values>
@@ -2003,6 +2007,10 @@
         </values>
         <values>
             <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2058,6 +2066,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviare preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
@@ -2070,6 +2082,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pratica non gestita per il DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Preventivo Accettato</fullName>
             <default>false</default>
         </values>
@@ -2079,6 +2095,10 @@
         </values>
         <values>
             <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Preventivo extra sistema</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2400,6 +2420,10 @@
         <picklist>SalesCompany__c</picklist>
         <values>
             <fullName>Acegas Aps Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
         <values>

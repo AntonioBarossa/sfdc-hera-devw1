@@ -382,6 +382,11 @@
         <label>Risoluzione No Punto Sospeso</label>
     </standardValue>
     <standardValue>
+        <fullName>Risoluzione No Sospensione</fullName>
+        <default>false</default>
+        <label>Risoluzione No Sospensione</label>
+    </standardValue>
+    <standardValue>
         <fullName>Risoluzione Punto Sospeso</fullName>
         <default>false</default>
         <label>Risoluzione Punto Sospeso</label>
@@ -635,5 +640,25 @@
         <fullName>Riattivazione Non Morose</fullName>
         <default>false</default>
         <label>Riattivazione Non Morose</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VOTIVE Modena/Intervento Riattivazione luce</fullName>
+        <default>false</default>
+        <label>VOTIVE Modena/Intervento Riattivazione luce</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VOTIVE Modena/Nuovo contratto</fullName>
+        <default>false</default>
+        <label>VOTIVE Modena/Nuovo contratto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VOTIVE Modena/Subentro</fullName>
+        <default>false</default>
+        <label>VOTIVE Modena/Subentro</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Indennizzo</fullName>
+        <default>false</default>
+        <label>Indennizzo</label>
     </standardValue>
 </StandardValueSet>
