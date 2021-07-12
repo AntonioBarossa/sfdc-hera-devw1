@@ -7654,7 +7654,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-    <fieldPermissions>
 		<editable>true</editable>
 		<field>DependenciesMatrix__c.BlockingProcessType__c</field>
 		<readable>true</readable>
