@@ -13,7 +13,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 	}
 	
 	public Database.QueryLocator start(Database.BatchableContext bc) {
-		String query ='SELECT id,ContactReason__c,CreatedDate,InterestArea__c,Rating,Status,Email,(SELECT id,Lead__c,ContactId,Contact.Email,Lead__r.email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Cases__r)FROM lead WHERE  (email !=null OR  email!=\'\') AND (IsConverted=false)  ORDER BY Email,CreatedDate';
+		String query ='SELECT id,ContactReason__c,Status,CreatedDate,InterestArea__c,Rating,Email,(SELECT id,Lead__c,ContactId,Contact.Email,Lead__r.email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Cases__r)FROM lead WHERE  (email !=null OR  email!=\'\') AND (IsConverted=false)AND Status!=\'Expired\'  ORDER BY Email,CreatedDate';
 		return Database.getQueryLocator(query);
 	}
 	
@@ -86,7 +86,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 			(SELECT id,ContactId,Contact.Email,Lead__c,Lead__r.email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,
 			ServicePoint__c,Status,SupplyType__c,Type FROM Cases__r)
 			FROM lead
-			WHERE (IsConverted=false) AND (Email IN:mapLeadByEmail.keySet() AND Email NOT IN:setEmailContactProcessed  AND Id NOT IN :mapLeadByEmail.values())  ORDER BY Email,CreatedDate];
+			WHERE (IsConverted=false)AND Status !='Expired' AND (Email IN:mapLeadByEmail.keySet() AND Email NOT IN:setEmailContactProcessed  AND Id NOT IN :mapLeadByEmail.values())  ORDER BY Email,CreatedDate];
 			
 			if (listLeadNotInChunk!=null && !listLeadNotInChunk.isEmpty()) {	
 				for (Lead tempLead : listLeadNotInChunk) {

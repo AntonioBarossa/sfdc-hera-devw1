@@ -12,7 +12,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 		}
 	
 		public Database.QueryLocator start(Database.BatchableContext bc) {
-			String query = 'SELECT id,Email,CreatedDate,IsConverted,IndividualId,Individual.ProfilingPrivacy__c,Individual.CreatedDate,Individual.PrivacyProfilingChoiceDate__c FROM Lead WHERE (IsConverted=false) AND (Email!=null OR Email!=\'\') AND IndividualId!=null ORDER BY Email,Individual.PrivacyProfilingChoiceDate__c,Individual.CreatedDate';
+			String query = 'SELECT id,Email,Status,CreatedDate,IsConverted,IndividualId,Individual.ProfilingPrivacy__c,Individual.CreatedDate,Individual.PrivacyProfilingChoiceDate__c FROM Lead WHERE (IsConverted=false) AND (Email!=null OR Email!=\'\')AND Status!=\'Expired\' AND IndividualId!=null ORDER BY Email,Individual.PrivacyProfilingChoiceDate__c,Individual.CreatedDate';
 			return Database.getQueryLocator(query);
 		}
 	
@@ -100,7 +100,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 				/* controllo se ci sono altri lead nei chunk successivi 
 				   il controllo viene inserito qui perchè nel caso già sia presente un contact viene rimosso dalla mappa mapLeadByEmail 
 				*/
-				List<Lead> listLeadNotInChunk = [SELECT id,Email,CreatedDate,IndividualId,IsConverted,Individual.CreatedDate,Individual.ProfilingPrivacy__c,Individual.PrivacyProfilingChoiceDate__c FROM Lead WHERE (IsConverted=false) AND (Email IN:mapLeadByEmail.keySet() AND Id NOT IN :mapLeadByEmail.values()) ORDER BY  Email,Individual.PrivacyProfilingChoiceDate__c,Individual.CreatedDate];
+				List<Lead> listLeadNotInChunk = [SELECT id,Email,CreatedDate,IndividualId,status,IsConverted,Individual.CreatedDate,Individual.ProfilingPrivacy__c,Individual.PrivacyProfilingChoiceDate__c FROM Lead WHERE (IsConverted=false)AND Status != 'Expired' AND (Email IN:mapLeadByEmail.keySet() AND Id NOT IN :mapLeadByEmail.values()) ORDER BY  Email,Individual.PrivacyProfilingChoiceDate__c,Individual.CreatedDate];
 
 				if (listLeadNotInChunk!=null && !listLeadNotInChunk.isEmpty()) {	
 					for (Lead tempLead : listLeadNotInChunk) {
