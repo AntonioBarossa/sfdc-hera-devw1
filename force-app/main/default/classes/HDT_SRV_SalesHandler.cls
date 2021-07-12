@@ -327,9 +327,9 @@ public with sharing class HDT_SRV_SalesHandler {
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''  ){
 
-                        RestContext.response.statusCode = 200;
 		                HDT_BA_ConsentLead ba = new HDT_BA_ConsentLead(localMapRequestFields.get('runId')); 
 		                Id batchprocessid = Database.executeBatch(ba,1000);
+                        RestContext.response.statusCode = 200;
                         
                     }
                     else {
@@ -360,9 +360,10 @@ public with sharing class HDT_SRV_SalesHandler {
                             localMapRequestFields.put(field.name,field.value);
                         }
                     }
-                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''){
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''){   
+                        HDT_BA_AttributesLead ba = new HDT_BA_AttributesLead(localMapRequestFields.get('runId')); 
+		                Id batchprocessid = Database.executeBatch(ba,1000);
                         RestContext.response.statusCode = 200;
-                        // batch
                     }
                     else {
                        

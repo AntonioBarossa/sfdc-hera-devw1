@@ -159,7 +159,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 			
 			System.debug('Finish HDT_BA_ConsentLead ');
 			HDT_BA_ConsentContact consentContact = new HDT_BA_ConsentContact(runId,status,listIdContentVersion,setEmailContactProcessed); 
-			Id batchprocessid = Database.executeBatch(consentContact);
+			Id batchprocessid = Database.executeBatch(consentContact,1000);
 
 		}
 }
