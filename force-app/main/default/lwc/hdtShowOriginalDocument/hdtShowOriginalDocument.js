@@ -41,9 +41,11 @@ export default class HdtShowOriginalDocument extends NavigationMixin(LightningEl
                 }
             })
             .catch(error => {
+                this.closeAction();
                 console.error('error: ' + JSON.stringify(error));
             });
         }catch(error){
+            this.closeAction();
             console.error('error: ' + JSON.stringify(error));
         }
     }
