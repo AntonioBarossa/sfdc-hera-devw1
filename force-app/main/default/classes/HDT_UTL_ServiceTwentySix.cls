@@ -33,9 +33,9 @@ public with sharing class HDT_UTL_ServiceTwentySix {
     
     private class HDT_WRP_Position {
         //wrapper object to integrate in the callout
-        String Name;
-        String Value;
-        String Flag;
+        String name;
+        String value;
+        String flag;
         public HDT_WRP_Position(String Name, String Value){
             this.Name=Name;
             this.Value=Value;
