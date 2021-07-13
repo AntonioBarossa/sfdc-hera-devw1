@@ -148,6 +148,16 @@
                 <label>Errore Lavorazione SAP</label>
             </value>
             <value>
+                <fullName>Esito KO Riduzione Potenza</fullName>
+                <default>false</default>
+                <label>Esito KO Riduzione Potenza</label>
+            </value>
+            <value>
+                <fullName>Esito OK Riduzione Potenza</fullName>
+                <default>false</default>
+                <label>Esito OK Riduzione Potenza</label>
+            </value>
+            <value>
                 <fullName>Esito KO</fullName>
                 <default>false</default>
                 <label>Esito KO</label>
