@@ -595,6 +595,12 @@
                 <isActive>false</isActive>
                 <label>Ripensamento -  Comunicazione verso Heroku OK</label>
             </value>
+            <value>
+                <fullName>Sospeso</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sospeso</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
