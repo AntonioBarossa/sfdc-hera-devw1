@@ -1203,7 +1203,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             listToPrint.push(r);
         });
         this.documents = JSON.stringify(listToPrint);
-        //console.log('documents ' + this.documents);
+        console.log('documents ' + this.documents);
         this.showPrintModal = true;
         //this.sendToApex();
         listToPrint.splice(0, listToPrint.length);
