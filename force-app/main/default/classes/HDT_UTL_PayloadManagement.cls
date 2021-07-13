@@ -42,6 +42,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
             when 'Case'{
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Case', 'SalesCompany__c', 0, inputs, formParams);
+                city = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyCity__c', 0, inputs, formParams);
+                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city);
+                if (cityExceptionList != null && cityExceptionList.size()>0) {
+                    companyDesc = 'Hera Comm S.p.A.';
+                }
             }
             when 'Account'{
                 //gestire in base al compani owner

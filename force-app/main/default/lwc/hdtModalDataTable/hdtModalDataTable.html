@@ -28,7 +28,7 @@
 
                         <div class="slds-box slds-box_xx-small slds-m-top_small slds-m-bottom_small">
                             <div class="slds-grid slds-gutters">
-                                <div class="slds-col slds-size_1-of-6">
+                                <!--<div class="slds-col slds-size_1-of-6">
                                     <lightning-combobox
                                         name="progress"
                                         label="Filtra per questo campo"
@@ -39,14 +39,22 @@
                                         variant="label-hidden"
                                         disabled
                                     ></lightning-combobox>
-                                </div>
+                                </div>-->
                                 <div class="slds-col slds-size_1-of-6">
-                                    <lightning-input
-                                        type="text"
-                                        label="Cerca questo valore"
-                                        onchange={setFieldValue}
-                                        variant="label-hidden"
-                                    ></lightning-input>
+
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <lightning-helptext content="Cerca per descrizione o valore possibile" ></lightning-helptext>
+                                        
+                                        <div class="slds-form-element__control">
+                                            <lightning-input
+                                                type="text"
+                                                label="Cerca questo valore"
+                                                onchange={setFieldValue}
+                                                variant="label-hidden"
+                                            ></lightning-input>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="slds-col slds-size_1-of-6">
                                     <lightning-button-icon

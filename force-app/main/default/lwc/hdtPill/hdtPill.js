@@ -11,17 +11,22 @@ export default class HdtPill extends LightningElement {
     relatedToTable = '';
     pillIcon;
     pillLabel;
+    pillValue;
 
     connectedCallback(){
+        //console.log('>>> PILL ' + JSON.stringify(this.pillObj));
+
         this.pillIcon = this.icon;
-        if(this.pillObj.label != '' && this.pillObj.label != undefined){
-            //console.log('>>> ' + this.pillObj.label);
+        if(this.pillObj.value != undefined && this.pillObj.value != '' && this.pillObj.label != undefined && this.pillObj.label != ''){
             this.pillLabel = this.pillObj.label;
+            this.pillValue = this.pillObj.value;
             this.showPill = true;
         }
+
         if(this.pillObj.relatedTo != '' && this.pillObj.relatedTo != undefined){
             this.relatedToTable = this.pillObj.relatedTo;
         }
+
     }
 
     handleRemove(event){
@@ -56,6 +61,7 @@ export default class HdtPill extends LightningElement {
             this.dispatchEvent(selectedEvent);
             this.pillIcon = event.detail.icon;
             this.pillLabel = event.detail.label;
+            this.pillValue = event.detail.recId;
             this.showPill = true;
             this.showTable = false;
         } catch (e){

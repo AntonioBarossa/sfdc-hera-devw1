@@ -325,7 +325,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         }
 
         tecOffItem.PriceCode__c = offerLine.priceCode.label;
-        tecOffItem.PriceCodeValue__c = offerLine.infoGroup.value;
+        tecOffItem.PriceCodeValue__c = offerLine.priceCode.value;
         tecOffItem.DiscountCode__c = offerLine.discountCode.label;
         tecOffItem.DiscountCodeValue__c = offerLine.discountCode.value;
         tecOffItem.StringValue__c = offerLine.stringValue.value;
@@ -511,7 +511,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         mulesoftWsResponse = (HDT_WS_MulesoftCallerCpq.HDT_WRP_MulesoftResponse)JSON.deserialize(responseCtrl.body, HDT_WS_MulesoftCallerCpq.HDT_WRP_MulesoftResponse.class);
         
         if(!mulesoftWsResponse.status.equalsIgnoreCase('success')){
-            updateProductAfterSap(technicalOfferId, responseCtrl.message, 'ko');
+            //updateProductAfterSap(technicalOfferId, responseCtrl.message, 'ko');
             mulesoftResponse.success = false;
             mulesoftResponse.message = '';
             //mulesoftResponse.message = mulesoftWsResponse.errorDetails[0].code + '; ' + mulesoftWsResponse.errorDetails[0].message;
@@ -522,7 +522,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                     mulesoftResponse.message += ', ';
                 }
             }
-            
+
+            updateProductAfterSap(technicalOfferId, mulesoftResponse.message, 'ko');
+
             return mulesoftResponse;      
         }
 
@@ -622,6 +624,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             when 'ok' {
                 tecOffList[0].Status__c = 'Status OK';
                 tecOffList[0].SapCode__c = bodyResponse;
+                tecOffList[0].Message__c = '';
             }
             when 'ko' {
                 tecOffList[0].Status__c = 'Status KO';

@@ -195,7 +195,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         //CHECK CROSS MINIMUM FIELD
         if(String.isBlank(method)) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
         
-        if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita')){
+        if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita') && !method.equalsIgnoreCase('aggiornaRCU')){
             //gestione scarti
             return caseUpdate;
         }
@@ -255,9 +255,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
             }
             if(currentPhase.indexOf('Annull') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
-                currentCase.CancellationHerokuPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_UTENTE');
+                if(String.isBlank(recordCase.CancellationHerokuPracticeCode__c)){
+                    currentCase.CancellationHerokuPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_UTENTE');
+                }
             }
-            if(nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
+            if(nextPhase != null && nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
                 currentCase.ComplexCategory__c = reqWrp.requestMap.get('NOTE');
             }
             if(reqWrp.requestMap.get('DT_MAX_PREV') != null){
@@ -465,6 +467,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.ContactId = contact?.Id;
                     currentCase.Mobile__c = contact?.MobilePhone;
                     currentCase.Email__c = contact?.Email;
+                    currentCase.CompanyOwner__c = contact?.CompanyOwner__c;
                     //Aggiunto PhoneNumber
                     currentCase.PhoneNumber__c = contact?.MobilePhone;
                     sp = qrClass.getServicePoint(pod);
@@ -498,7 +501,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Morosita').getRecordTypeId();
                             currentCase.Cluster__c = 'Morosità';
                             if(dataDecorrenza != null){
-                                currentCase.EffectiveDate__c = Date.valueOf(dataDecorrenza);
+                                try{
+                                    HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
+                                    currentCase.EffectiveDate__c = enrichSrv.getDateFromString(dataDecorrenza);
+                                } catch(Exception e){
+                                    System.debug('DATA_DECORRENZA Exception -> ' + e.getMessage());
+                                }
                             }
                             if(String.isNotBlank(processType)){
                                 currentCase.Type = morUtl.transcodeProcess(processType);
