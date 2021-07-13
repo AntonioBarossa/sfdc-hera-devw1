@@ -598,7 +598,7 @@
             <value>
                 <fullName>Sospeso</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>Sospeso</label>
             </value>
         </valueSetDefinition>
