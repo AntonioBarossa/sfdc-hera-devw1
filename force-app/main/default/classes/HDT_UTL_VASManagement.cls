@@ -2,13 +2,15 @@
  * @description       : Generating requests for activating/disactivating VAS
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-07-12
+ * @last modified on  : 2021-07-13
  * @last modified by  : gabriele.rota@webresults.it
  * Modifications Log 
  * Ver   Date         Author                        Modification
  * 1.0   2021-07-12   gabriele.rota@webresults.it   Initial Version
 **/
 public with sharing class HDT_UTL_VASManagement {
+
+    private static final String VAS_STANDALONE_PRICEBOOK = 'VAS STANDALONE';
 
     /**
     * @description Generates VAS activation request
@@ -17,19 +19,8 @@ public with sharing class HDT_UTL_VASManagement {
     * @return HDT_WRP_VASActivationReq 
     **/
     public static HDT_WRP_VASActivationReq getActivationRequest(Id orderId) {
-
-        //getting request data
-        Order currentOrder = [SELECT SalesCompany__c, ContractAccountCode__c, CustomerCode__c, CustomerFiscalCode__c, CustomerVATNumber__c,
-            ServicePointCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c, OrderNumber,
-            VasServiceActivationDate__c, SBQQ__Quote__r.SBQQ__ListAmount__c,
-            SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c, ShippingStreetToponym__c, ShippingStreetName__c, ShippingStreetNumber__c,
-            ShippingCity__c, ShippingPlace__c, ShippingPostalCode__c, PhoneNumber__c, ShippingMail__c, SignedDate__c,
-            (SELECT Product2.Name, Quantity, PriceNet__c, PriceNetDiscounted__c, Percentage__c FROM OrderItems)
-            FROM Order WHERE Id = :orderId];
-
-        //building request
+        Order currentOrder = getOrderData(orderId);
         HDT_WRP_VASActivationReq actReq = new HDT_WRP_VASActivationReq(currentOrder);
-
         return actReq;
     }
 
@@ -40,20 +31,47 @@ public with sharing class HDT_UTL_VASManagement {
     * @return HDT_WRP_VASActivationReq 
     **/
     public static HDT_WRP_VASDisactivationReq getDisactivationRequest(Id orderId) {
-
-        //getting request data
-        Order currentOrder = [SELECT SalesCompany__c, ContractAccountCode__c, CustomerCode__c, CustomerFiscalCode__c, CustomerVATNumber__c,
-            ServicePointCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c, OrderNumber,
-            VasServiceActivationDate__c, SBQQ__Quote__r.SBQQ__ListAmount__c,
-            SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c, ShippingStreetToponym__c, ShippingStreetName__c, ShippingStreetNumber__c,
-            ShippingCity__c, ShippingPlace__c, ShippingPostalCode__c, PhoneNumber__c, ShippingMail__c, SignedDate__c,
-            (SELECT Product2.Name, Quantity, PriceNet__c, PriceNetDiscounted__c, Percentage__c FROM OrderItems)
-            FROM Order WHERE Id = :orderId];
-
-        //building request
+        Order currentOrder = getOrderData(orderId);
         HDT_WRP_VASDisactivationReq disactReq = new HDT_WRP_VASDisactivationReq(currentOrder);
-
         return disactReq;
+    }
+
+    /**
+    * @description Query on Order object and related records
+    * @author gabriele.rota@webresults.it | 2021-07-13 
+    * @param orderId 
+    * @return Order 
+    **/
+    private static Order getOrderData(Id orderId) {
+        //TODO: move query in HDT_QR_Order class
+        return [SELECT SalesCompany__c, ContractAccountCode__c, CustomerCode__c, CustomerFiscalCode__c, CustomerVATNumber__c,
+            ServicePointCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c, OrderNumber,
+            VasServiceActivationDate__c, ShippingStreetToponym__c, ShippingStreetName__c, ShippingStreetNumber__c,
+            ShippingCity__c, ShippingPlace__c, ShippingPostalCode__c, ShippingProvince__c, PhoneNumber__c, ShippingMail__c, SignedDate__c,
+            ContractReference__r.SAPContractCode__c,
+            SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c, SBQQ__Quote__r.SBQQ__PriceBook__r.Name,
+            SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
+            (SELECT Quantity, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
+                DurationDay__c, PaymentMode__c, IVA__c,
+                Product2.Name, Product2.NumberRateMonthly__c
+                FROM OrderItems)
+            FROM Order WHERE Id = :orderId WITH SECURITY_ENFORCED];
+    }
+
+    /**
+    * @description Join given string values e.g. ["Mickey","Mouse"] => "Mickey Mouse"
+    * @author gabriele.rota@webresults.it | 2021-07-13 
+    * @param strValues 
+    * @return String 
+    **/
+    private static String joinStringValues(List<String> strValues) {
+        List<String> finalStrValues = new List<String>();
+        for (String strValue:strValues) {
+            if (String.isNotBlank(strValue)) {
+                finalStrValues.add(strValue);
+            }
+        }
+        return String.join(finalStrValues, ' ');
     }
 
     public virtual class HDT_WRP_VASReq{
@@ -74,11 +92,15 @@ public with sharing class HDT_UTL_VASManagement {
             codFiscale = currentOrder.CustomerFiscalCode__c;
             partitaIva = currentOrder.CustomerVATNumber__c;
             pod = currentOrder.ServicePointCode__c;
-            intestatario = currentOrder.CustomerName__c+' '+currentOrder.CustomerLastName__c;
+
+            List<String> strValues = new List<String>{currentOrder.CustomerName__c, currentOrder.CustomerName__c};
+            intestatario = joinStringValues(strValues);
+
             servizioIp = currentOrder.CommercialProduct__c;
             versione = currentOrder.CommercialProductVersion__c;
             keyServizio = currentOrder.OrderNumber;
-            //dataCessazione = ???;
+
+            //dataCessazione = null
         }
     }
 
@@ -90,7 +112,10 @@ public with sharing class HDT_UTL_VASManagement {
         public HDT_WRP_VASDisactivationReq(Order currentOrder) {
             super(currentOrder);
 
-            //TODO: adding fields mapping
+            nrContrattoIp = currentOrder.ContractReference__r?.SAPContractCode__c;
+
+            //numDocRif = null
+            //statoPratica = Process Type da creare
         }
     }
 
@@ -98,7 +123,7 @@ public with sharing class HDT_UTL_VASManagement {
         
         String contractAccountSap;
         Date dataAttivazione;
-        Integer nrRate;
+        Decimal nrRate;
         Decimal importo;
         Decimal importoIvaInclusa;
         Decimal scontoIvaInclusa;
@@ -113,7 +138,7 @@ public with sharing class HDT_UTL_VASManagement {
         Date dataDecorrenza;
         Date dataFirma;
         String vincoloPermanenza;
-        Integer durataServizioGg;
+        Decimal durataServizioGg;
         Boolean isContCambioOfferta;
         String modalitaPagamento;
         String rfid;
@@ -125,51 +150,54 @@ public with sharing class HDT_UTL_VASManagement {
         public HDT_WRP_VASActivationReq(Order currentOrder) {
             super(currentOrder);
 
+            OrderItem parentOrderItem;
+            items = new List<HDT_WRP_VASActivationReqItem>();
+            for (OrderItem ordItem:currentOrder.OrderItems) {
+                HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
+                items.add(reqItem);
+
+                if (String.isBlank(ordItem.SBQQ__RequiredBy__c)) {
+                    parentOrderItem = ordItem;
+                }
+            }
+
             contractAccountSap = currentOrder.ContractAccountCode__c;
             dataAttivazione = currentOrder.VasServiceActivationDate__c;
+            nrRate = parentOrderItem?.Product2?.NumberRateMonthly__c;
+            importo = currentOrder.SBQQ__Quote__r?.SBQQ__ListAmount__c;
 
-            //nrRate = Product2.NumberRateMonthly__c
+            importoIvaInclusa = currentOrder.SBQQ__Quote__r?.ListAmountVAT__c;
+            scontoIvaInclusa = currentOrder.SBQQ__Quote__r?.TotalDiscountAmountVAT__c;
 
-            importo = currentOrder.SBQQ__Quote__r.SBQQ__ListAmount__c;
-            importoIvaInclusa = currentOrder.SBQQ__Quote__r.SBQQ__ListAmount__c; //+IVA__c
-            scontoIvaInclusa = currentOrder.SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c; //+IVA__c
-
-            indirizzoSpedizione = currentOrder.ShippingStreetToponym__c;
-            indirizzoSpedizione += ' '+currentOrder.ShippingStreetName__c;
-            indirizzoSpedizione += ' '+currentOrder.ShippingStreetNumber__c;
-            indirizzoSpedizione += ' '+currentOrder.ShippingCity__c;
-            indirizzoSpedizione += ' '+currentOrder.ShippingPlace__c;
-            indirizzoSpedizione += ' '+currentOrder.ShippingPostalCode__c;
+            List<String> strValues = new List<String>{
+                currentOrder.ShippingStreetToponym__c,
+                currentOrder.ShippingStreetName__c,
+                currentOrder.ShippingStreetNumber__c,
+                currentOrder.ShippingCity__c,
+                currentOrder.ShippingPlace__c,
+                currentOrder.ShippingPostalCode__c
+            };
+            indirizzoSpedizione = joinStringValues(strValues);
 
             city1 = currentOrder.ShippingCity__c;
             postCode1 = currentOrder.ShippingPostalCode__c;
             region = currentOrder.ShippingProvince__c;
             telefono = currentOrder.PhoneNumber__c;
             mail = currentOrder.ShippingMail__c;
-
-            //perio = ???;
-            //modalitaFatturazione = OrderItem.BillingMode__c
-
-            //dataDecorrenza = OrderItem.VasActivationDate__c
-        
+            modalitaFatturazione = parentOrderItem?.VASBillingMode__c;
+            dataDecorrenza = parentOrderItem?.VasActivationDate__c;
             dataFirma = currentOrder.SignedDate__c;
-
-            //vincoloPermanenza = FORSE OrderItem.DurationVas__c
-
-            //durataServizioGg = OrderItem.DurationDay__c
+            durataServizioGg = parentOrderItem?.DurationDay__c;
+            modalitaPagamento = parentOrderItem?.PaymentMode__c;
+            
+            isVasStandAlone = (currentOrder.SBQQ__Quote__r?.SBQQ__PriceBook__r?.Name?.toUpperCase() == VAS_STANDALONE_PRICEBOOK);
+            
+            //perio = null
+            //vincoloPermanenza = null
+            //rfid = null
 
             //isContCambioOfferta = currentOrder.ContractReference__c ???
-
-            //modalitaPagamento = OrderItem.PaymentMode__c
-            //rfid = ???
-            //isVasStandAlone = ???
             //isVasOmaggio = ???
-
-            items = new List<HDT_WRP_VASActivationReqItem>();
-            for (OrderItem ordItem:currentOrder.OrderItems) {
-                HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
-                items.add(reqItem);
-            }
         }
     }
 
@@ -181,7 +209,7 @@ public with sharing class HDT_UTL_VASManagement {
         Decimal PercentualeIva;
 
         public HDT_WRP_VASActivationReqItem(OrderItem ordItem) {
-            ItemProdotto = ordItem.Product2.Name;
+            ItemProdotto = ordItem.Product2?.Name;
             Quantita = ordItem.Quantity;
             PrezzoNetto = ordItem.PriceNet__c;
             PrezzoNettoScontato = ordItem.PriceNetDiscounted__c;
