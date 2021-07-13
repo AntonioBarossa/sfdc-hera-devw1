@@ -1,0 +1,33 @@
+<aura:component
+    controller="HDT_LC_ComfortQualityCallResult"
+    implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+    access="global">
+
+    <aura:attribute name="HideSpinner" type="Boolean" default="true"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <lightning:card>
+        <aura:set attribute="title">Esito comfort/quality call</aura:set>
+
+        <aura:renderif istrue="{!v.HideSpinner}">
+		    <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:renderif>
+
+        <div class="slds-align_absolute-center" style="height:5rem">
+            <div>
+                <ul class="slds-button-group-list">
+                    <li>
+                        <lightning:button variant="brand" label="Conferma contratto" title="Conferma contratto" onclick="{! c.handleConfirm }" />
+                    </li>
+                    <li class="slds-m-left_small">
+                        <lightning:button variant="brand" label="Annulla Contratti" title="Annulla Contratti" onclick="{! c.handleCancel }" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        
+    </lightning:card>
+
+</aura:component>	

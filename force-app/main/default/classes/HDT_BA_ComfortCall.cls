@@ -1,0 +1,71 @@
+public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObject>, Database.Stateful {
+    public List<wrts_prcgvr__Activity__c> callActivities = new List<wrts_prcgvr__Activity__c>();
+    private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
+
+    public Database.QueryLocator start(Database.BatchableContext bc) {
+        system.debug('HDT_BA_ComfortCall - Start');
+        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,ParentOrder__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId FROM Order Where Phase__c = \'In attesa conferma cliente\' AND QualityCall__c = true';
+        return Database.getQueryLocator(query);
+    }
+
+    public void execute(Database.BatchableContext bc, List<Order> orders){
+
+        Map<String,wrts_prcgvr__Activity__c> mapActivities = new Map<String,wrts_prcgvr__Activity__c>(); //in order not to get duplicate activities associated to same Parent Order
+
+        List<CampaignMember> campaignMembersInsert = new List<CampaignMember>();
+        List<CampaignMember> campaignMembersUpdate = new List<CampaignMember>();
+
+        Map<String,Order> orderMap = new Map<String,Order>();
+        Map<String,wrts_prcgvr__Activity__c> orderActivityMap = new Map<String,wrts_prcgvr__Activity__c>();
+
+        Date dueDate = Date.today();
+
+        for (Order ord : orders) {
+            if (ord.ComfortCallDaysDue__c == dueDate.daysBetween(ord.DateComfortCall__c)) { //check number of days passed after being signed as quality
+                
+                orderMap.put(ord.Id, ord);
+
+                wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
+                    Order__c = ord.ParentOrder__c,
+                    Account__c = ord.AccountId
+                );
+
+                mapActivities.put(ord.ParentOrder__c, activity);
+                orderActivityMap.put(ord.id, activity);
+            }
+        }
+
+        callActivities = mapActivities.values();
+        insert callActivities;
+
+        for (String ordId : orderActivityMap.keySet()) {
+            if ( orderMap.get(ordId).Contact__c != null && orderMap.get(ordId).CommissioningCampaign__c != null) {
+                List<CampaignMember> campaignMembers = campaignMemberQr.getCampaignMemberByCampaingAndContact(orderMap.get(ordId).CommissioningCampaign__c, orderMap.get(ordId).Contact__c);
+                CampaignMember campaignMember = new CampaignMember();
+                
+                if (!campaignMembers.isEmpty()) {
+                    campaignMember = campaignMembers[0];
+
+                    campaignMembersUpdate.add(new CampaignMember(
+                        Id = campaignMember.Id,
+                        RelatedActivity__c = orderActivityMap.get(ordId).Id
+                    ));
+
+                } else {
+                    campaignMembersInsert.add(new CampaignMember(
+                        ContactId = orderMap.get(ordId).Contact__c,
+                        CampaignId = orderMap.get(ordId).CommissioningCampaign__c,
+                        PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
+                        RelatedActivity__c = orderActivityMap.get(ordId).Id
+                    ));
+                }
+            }
+        }
+
+        insert campaignMembersInsert;
+        update campaignMembersUpdate;
+    }
+    public void finish(Database.BatchableContext bc){
+        system.debug('HDT_BA_ComfortCall - end');
+    }
+}

@@ -1,0 +1,45 @@
+public inherited sharing class HDT_QR_ComfortQualityCall {
+    
+    public static List<ComfortQualityCall__c> getRecordByOrderParams(Order order){
+        return [
+            SELECT
+            Id,
+            ComfortEnabled__c,
+            QualityEnabled__c,
+            Process__c,
+            Channel__c,
+            MarketType__c,
+            CustomerType__c,
+            DaysComfort__c,
+            UniqueQuality__c
+            FROM ComfortQualityCall__c
+            WHERE Process__c = :order.ProcessType__c //text
+            AND Channel__c = :order.Channel__c //text
+            AND CustomerType__c = :order.CustomerType__c //text
+            AND MarketType__c = :order.MarketOrigin__c //picklist
+            AND (ComfortSignatureMethod__c = :order.SignatureMethod__c OR QualitySignatureMethod__c = :order.SignatureMethod__c)
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public static List<ComfortQualityCall__c> getRecordsWithDocumentValidation(String canaleInvio){
+        return [
+            SELECT
+            Id,
+            ComfortEnabled__c,
+            QualityEnabled__c,
+            Process__c,
+            Channel__c,
+            MarketType__c,
+            CustomerType__c,
+            DaysComfort__c,
+            UniqueQuality__c
+            FROM ComfortQualityCall__c
+            WHERE DocumentValidation__c = true
+            AND ComfortEnabled__c = true
+            AND DocSendingMethod__c = :canaleInvio
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+}

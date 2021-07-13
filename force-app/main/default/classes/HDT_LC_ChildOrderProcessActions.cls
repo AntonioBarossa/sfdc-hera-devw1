@@ -212,6 +212,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 }
             }
         }
+        
+        //comfort quality call start
+        List<ComfortQualityCall__c> comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
+
+        if (!comfortQualityList.isEmpty()) {
+            orderToUpdate.QualityCall__c = true;
+            orderToUpdate.QualityCallUnique__c = comfortQualityList[0].UniqueQuality__c;
+        }
+        //comfort quality call end
 
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);
         orderSrv.updateRecord(orderToUpdate);

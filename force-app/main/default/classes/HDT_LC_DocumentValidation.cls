@@ -49,6 +49,15 @@ public inherited sharing class HDT_LC_DocumentValidation {
             } else {
                 ord.Phase__c = 'Documentazione Validata';
             }
+
+            //comfort quality call start
+            List<ComfortQualityCall__c> comfortCall = HDT_QR_ComfortQualityCall.getRecordsWithDocumentValidation(orderRetrive.DocSendingMethod__c);
+            if (!comfortCall.isEmpty()) {
+                ord.Phase__c = 'In attesa conferma cliente';
+                ord.ComfortCallDaysDue__c = comfortCall[0].DaysComfort__c; //ComfortCallDaysDue__c nuovo campo per tenere traccia dei giorni a scadere del comfort call
+                ord.DateComfortCall__c = Date.today(); //bisogna verificare se ce gia un altro campo
+            }
+            //comfort quality call end
         }
         System.debug('************:'+ord);
         orderSrv.updateRecord(ord);
