@@ -748,12 +748,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>InvoicingStreetToponym__c</field>
-            <value>
-                <elementReference>Get_Billing_Profile.InvoicingStreetToponym__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>OfficeSubjectCode__c</field>
             <value>
                 <elementReference>Get_Billing_Profile.OfficeSubjectCode__c</elementReference>

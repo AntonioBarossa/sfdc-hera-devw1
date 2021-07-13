@@ -1,43 +1,140 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_RegionalAdditional__mdt</members>
+        <members>DependenciesMatrix__c</members>
+        <members>ServiceRequest__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>HDT_RegionalAdditional__mdt-Addizionale Regionale Layout</members>
+        <members>HDT_ProcessType</members>
+        <name>GlobalValueSet</name>
+    </types>
+    <types>
+        <members>hdtDocumentSignatureManager</members>
+        <members>hdtDocumentSignatureManagerFlow</members>
+        <members>hdtDocumentalPhaseHistory</members>
+        <members>hdtEligibilityCriteriaConfiguration</members>
+        <members>hdtGenericAddressChooserFlow</members>
+        <members>hdtModalDataTable</members>
+        <members>hdtOfferConfigurator</members>
+        <members>hdtPill</members>
+        <members>hdtSearchTechnicalOffer</members>
+        <members>hdtSelezioneFornituraFlow</members>
+        <members>hdtShowArchivedAttachment</members>
+        <members>hdtShowOriginalDocument</members>
+        <members>hdtTargetObjectAddressForFlow</members>
+        <members>hdtTechnicalOfferSelection</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>Case.Riprendi_Processo_Sales</members>
+        <name>WebLink</name>
+    </types>
+    <types>
+        <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>HDT_FL_GestioneModificheAnagrafiche</members>
+        <members>HDT_FL_GestioneVerifiche</members>
+        <members>HDT_FL_Gestione_Modifiche_Anagrafiche_Variazione_Amministratore</members>
+        <members>HDT_FL_ModificaContrattoInPreAttivazione</members>
+        <members>HDT_FL_PostSalesMasterDispatchSales</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Lead.HDT_VR_SilosCheck</members>
+        <name>ValidationRule</name>
+    </types>
+    <types>
+        <members>Case.HDT_RT_VotiveModena</members>
+        <members>Order.HDT_RT_Voltura</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>Case-HDT_AlertDisassociazioneUtenteWeb</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_QR_QuoteManagement</members>
+        <members>HDT_BA_QueueAssignment</members>
+        <members>HDT_LC_AdvancedSearch</members>
+        <members>HDT_LC_ChildOrderProcessActions</members>
+        <members>HDT_LC_OfferConfiguratorController</members>
+        <members>HDT_LC_OfferConfiguratorControllerTst</members>
+        <members>HDT_LC_OfferConfiguratorCtrlHelper</members>
+        <members>HDT_LC_OfferConfiguratorCtrlTstMock</members>
+        <members>HDT_LC_SaleVas</members>
+        <members>HDT_QR_AnagAlignment</members>
+        <members>HDT_QR_Contract</members>
+        <members>HDT_QR_DocumentalConfiguration</members>
+        <members>HDT_QR_HerokuPostSalesManager</members>
+        <members>HDT_QR_PayloadManagement</members>
+        <members>HDT_QR_TechnicalOffer</members>
+        <members>HDT_SRV_AnagAlignment</members>
+        <members>HDT_SRV_BpCaVariation</members>
+        <members>HDT_SRV_DocumentalManagement</members>
+        <members>HDT_SRV_DocumentalManagementFacade</members>
+        <members>HDT_SRV_HerokuPostSalesManager</members>
+        <members>HDT_UTL_CreateGenericCase</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_DocumentalManagement</members>
+        <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_UTL_PayloadManagement</members>
+        <members>HDT_UTL_SearchPlugTst</members>
+        <members>HDT_UTL_ServiceTwentySix</members>
+        <members>HDT_WRP_TechnicalOffer</members>
+        <members>HDT_WS_DocumentalIntegration</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Case.InvoiceList__c</members>
-        <members>HDT_RegionalAdditional__mdt.AdditionalValue__c</members>
-        <members>HDT_RegionalAdditional__mdt.City__c</members>
-        <members>HDT_RegionalAdditional__mdt.Region__c</members>
-        <members>HDT_RegionalAdditional__mdt.Tax__c</members>
+        <members>Account.ActiveServicesTLR__c</members>
+        <members>Account.ActiveServicesWaste__c</members>
+        <members>Case.DocumentalProcessType__c</members>
+        <members>DependenciesMatrix__c.BlockingProcessType__c</members>
+        <members>DependenciesMatrix__c.DependencyNumber__c</members>
+        <members>DependenciesMatrix__c.IncomingProcessType__c</members>
+        <members>DependenciesMatrix__c.MatchingField__c</members>
+        <members>Order.Decision40Link__c</members>
+        <members>Order.InformationFormLink__c</members>
+        <members>Order.Phase__c</members>
+        <members>Order.SendFormLink__c</members>
+        <members>Service26Config__c.Occurrence__c</members>
+        <members>Service26Config__c.Operando__c</members>
+        <members>ServiceRequest__c.Account__c</members>
+        <members>ServiceRequest__c.BillingProfile__c</members>
+        <members>ServiceRequest__c.Case__c</members>
+        <members>ServiceRequest__c.CommoditySector__c</members>
+        <members>ServiceRequest__c.NextPhase__c</members>
+        <members>ServiceRequest__c.Order__c</members>
+        <members>ServiceRequest__c.ProcessType__c</members>
+        <members>ServiceRequest__c.ServicePointCodeFormula__c</members>
+        <members>ServiceRequest__c.ServicePoint__c</members>
+        <members>ServiceRequest__c.ServiceRequestName__c</members>
+        <members>ServiceRequest__c.Status__c</members>
+        <members>ServiceRequest__c.Tipologia__c</members>
+        <members>TechnicalOfferItem__c.NameExternalId__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_RegionalAdditional.G_I04</members>
-        <members>HDT_RegionalAdditional.G_I15</members>
-        <members>HDT_RegionalAdditional.G_ICC10_ABRUZZO</members>
-        <members>HDT_RegionalAdditional.G_ICC10_MARCHE</members>
-        <members>HDT_RegionalAdditional.G_ICC10_TAVO</members>
-        <members>HDT_RegionalAdditional.G_ICC_ABRUZZO</members>
-        <members>HDT_RegionalAdditional.G_ICC_CORROPOLI</members>
-        <members>HDT_RegionalAdditional.G_ICC_MARCHE</members>
-        <members>HDT_RegionalAdditional.G_ICD_ABRUZZO</members>
-        <members>HDT_RegionalAdditional.G_ICD_MANOPPELLO</members>
-        <members>HDT_RegionalAdditional.G_ICD_MARCHE</members>
-        <name>CustomMetadata</name>
+        <members>CaseStatus</members>
+        <members>OrderStatus</members>
+        <name>StandardValueSet</name>
     </types>
     <types>
-        <members>HDT_FL_GestionePagamenti_Rimborso</members>
-        <members>HDT_FL_GestionePreventivi</members>
-        <name>Flow</name>
+        <members>HDT_IntegrationObject.Documentale_Context2</members>
+        <members>HDT_UserInputFlow.Attivazioni_Proroga_Conn_Temp</members>
+        <members>HDT_UserInputFlow.Modifica_Contr_Preattivazione_Bolletta</members>
+        <members>HDT_UserInputFlow.Modifica_Contr_Preattivazione_Pagamento</members>
+        <members>HDT_UserInputFlow.Modifica_Contratto_Preattivazione</members>
+        <members>HDT_UserInputFlow.Modifiche_Anagraf_Allineamento_Anag</members>
+        <members>HDT_UserInputFlow.Votive_Modena_Intervento_Riattivazione</members>
+        <name>CustomMetadata</name>
     </types>
     <version>49</version>
 </Package>

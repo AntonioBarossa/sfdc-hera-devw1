@@ -42,4 +42,53 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
         return [SELECT Id, ProcessType__c,Source__c,SignMode__c,SendMode1__c,SendMode2__c,SendMode3__c FROM HDT_SignModeSettings__mdt WHERE (Source__c =:source OR Source__c = '') AND (ProcessType__c=:processType OR ProcessType__c = '')  WITH SECURITY_ENFORCED];
     }
 
+    public static DocumentalActivity__c getDocumentalActivityById(String recordId){
+
+        List<DocumentalActivity__c> activities = [
+            SELECT Id, AttachmentCode__c, EnvelopeId__c, PostelTimestamp__c
+            FROM DocumentalActivity__c
+            WHERE Id = :recordId
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (!activities.isEmpty()) {
+            return activities[0];
+        }
+
+        return null;
+    }
+
+    // Restituisce un oggetto DocumentalActivity__c o DocumentSendTracking__c a seconda dell'Id passato in input.
+    public static SObject getDocumentalObjectById(Id recordId){
+        if (String.isBlank(recordId)) {
+            return null;
+        }
+
+        if (recordId.getSobjectType() == DocumentalActivity__c.getSObjectType()) {
+            List<DocumentalActivity__c> activities = [
+                SELECT Id, EnvelopeId__c, CaseId__r.SignMode__c, OrderId__r.SignatureMethod__c
+                FROM DocumentalActivity__c
+                WHERE Id = :recordId
+                WITH SECURITY_ENFORCED
+            ];
+
+            if (!activities.isEmpty()) {
+                return activities[0];
+            }
+        } else if (recordId.getSobjectType() == DocumentSendTracking__c.getSObjectType()) {
+            List<DocumentSendTracking__c> sends = [
+                SELECT Id, EnvelopeId__c, Case__r.SignMode__c, Order__r.SignatureMethod__c
+                FROM DocumentSendTracking__c
+                WHERE Id = :recordId
+                WITH SECURITY_ENFORCED
+            ];
+
+            if (!sends.isEmpty()) {
+                return sends[0];
+            }
+        }
+
+        return null;
+    }
+
 }

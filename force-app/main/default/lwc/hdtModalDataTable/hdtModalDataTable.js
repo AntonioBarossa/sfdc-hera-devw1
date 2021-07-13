@@ -216,39 +216,41 @@ export default class HdtModalDataTable extends LightningElement {
         var recordId = '';
         var recordLabel = '';
 
+        console.log(JSON.stringify(this.record));
+
         switch (this.relatedToTable) {
 
             case 'FareTypeList__c':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;
             case 'DiscountListP__c':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;
             case 'DiscountListaA__c':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;                
             case 'PriceListT__c':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;
             case 'PriceListL__c':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;
             case 'PriceListQ__c':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;        
             case 'infoGroup':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['ValueDescription__c'];
                 break;
             case 'priceCode':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;
             case 'RateTemplate__c':
                 recordId = this.record['PossibleValue__c'];
