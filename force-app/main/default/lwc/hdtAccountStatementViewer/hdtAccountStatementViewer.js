@@ -1179,21 +1179,21 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             listToConsider = 'allDataFiltered';
         }
 
-        var currentFilter = this.template.querySelector("c-hdt-account-statement-detail-viewer").staticObj;
-        var secondLevelColumns = this.template.querySelector("c-hdt-account-statement-detail-viewer").columns;
-        var isSecondLevelFiltered = this.template.querySelector("c-hdt-account-statement-detail-viewer").getIfSecondLevelIsFiltered();
+        if(this.showSecondLevel){
+            var currentFilter = this.template.querySelector("c-hdt-account-statement-detail-viewer").staticObj;
+            var secondLevelColumns = this.template.querySelector("c-hdt-account-statement-detail-viewer").columns;
+            var isSecondLevelFiltered = this.template.querySelector("c-hdt-account-statement-detail-viewer").getIfSecondLevelIsFiltered();
 
-        const columnTypeMap = new Map();
-        secondLevelColumns.forEach((col) => {
-            columnTypeMap.set(col.fieldName, col.fieldType);
-        });
+            const columnTypeMap = new Map();
+            secondLevelColumns.forEach((col) => {
+                columnTypeMap.set(col.fieldName, col.fieldType);
+            });
 
-        var contoContrArray;
-        if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
-            contoContrArray = currentFilter.contoContrattuale.value.split(',');
+            var contoContrArray;
+            if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
+                contoContrArray = currentFilter.contoContrattuale.value.split(',');
+            }
         }
-
-        console.log('# CALL CHILD METHOD #');
 
         this[listToConsider].forEach((r) => {
             //filter second level
