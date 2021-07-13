@@ -625,7 +625,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				Double residuo = Double.valueOf(primolivello.get('residuo'));
 				String modPagamento = (String)primolivello.get('modalitaPagamentoCA');
 				
-				if (String.isNotBlank((String)primolivello.get('OrdineDiPagamento'))) {
+				if (String.isNotBlank((String)primolivello.get('ordineDiPagamento'))) {
 					ordineDiPagamento = true;
 				} else {
 					ordineDiPagamento = false;	
