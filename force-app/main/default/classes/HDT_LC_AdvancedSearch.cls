@@ -16,9 +16,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 		HDT_QR_ServicePoint sp = new HDT_QR_ServicePoint();
 		List<ServicePoint__c> listBp = new List<ServicePoint__c>();
 		List<HDT_WRP_AddressObject>  listWrapObject = new List<HDT_WRP_AddressObject>();
-
 		//HDT_WRP_AddressObject wrapObject = new HDT_WRP_AddressObject();
-
 		
 		if(accountId != null || accountId != ''){
 			listBp = sp.getAddressFornitura(accountId);
@@ -27,9 +25,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 		
 		if(!listBp.isEmpty()){
 		for (ServicePoint__c servicePoint : listBp){
-
 			HDT_WRP_AddressObject wrapObject = new HDT_WRP_AddressObject();
-
 			if(servicePoint.SupplyCity__c !='' && servicePoint.SupplyCity__c != null){
 				
 				wrapObject.Comune=servicePoint.SupplyCity__c ;

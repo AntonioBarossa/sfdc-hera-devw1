@@ -37,7 +37,9 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         template: '',
         version: '',
         rateCategory: '',
-        productCode: ''
+        productCode: '',
+        sapCode: '',
+        sapErrorMessage: ''
     };
 
     helpTxtProductCode = 'Codice Prodotto dell\' offerta';
@@ -259,6 +261,10 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 console.log('>>> isEditable: ' + result.isEditable);
                 this.editable = result.isEditable;
                 this.dataRows = result.rowList;
+
+                this.product.sapCode = result.sapCode;
+                this.product.sapErrorMessage = result.sapErrorMessage;
+
             } else {
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
@@ -380,7 +386,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         var toastObj = {success: true, title: '', message: '', variant: '', mode: 'sticky'};
 
-        saveNewOfferConfigured({techOffObj: this.newTechOfferObj, idToClone: this.techOffIdToClone, offerJson: JSON.stringify(this.dataRows), productId: this.productid, technicalofferid: this.technicalofferid, rate: this.product.rateCategory, sendToSap: sendToSap})
+        saveNewOfferConfigured({techOffObj: this.newTechOfferObj, idToClone: this.techOffIdToClone, offerJson: JSON.stringify(this.dataRows), productId: this.productid, technicalofferid: this.technicalofferid, rate: this.product.rateCategory})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + JSON.stringify(result));
