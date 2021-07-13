@@ -51,7 +51,7 @@
 
             <div class="slds-card__body slds-card__body_inner">
                 <div class="slds-grid slds-gutters">
-                    <div class="slds-col">
+                    <div class="slds-col slds-size_1-of-3">
                         
                         <div class="slds-form slds-m-top_x-large " >
 
@@ -80,7 +80,7 @@
                         </div>
                     </div>
 
-                    <div class="slds-col slds-border_left slds-border_right">
+                    <div class="slds-col slds-border_left slds-border_right  slds-size_1-of-3">
                         <div class="slds-form slds-m-top_x-large " >
                             <div class="slds-form-element slds-form-element_horizontal">
                                 <lightning-helptext content={helpTxtRateCategory} ></lightning-helptext>
@@ -107,7 +107,7 @@
                         </div>
                     </div>
 
-                    <div class="slds-col">
+                    <div class="slds-col  slds-size_1-of-3">
                         
                         <div class="slds-form slds-m-top_x-large " >
 
@@ -125,9 +125,12 @@
                                 <lightning-helptext content="Eventuale messaggio di integrazione"></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Notifica SAP</label>
                                 <div class="slds-form-element__control">
-                                    <div class="slds-box slds-box_x-small lgc-bg" >
+                                    <textarea id="textarea-id-01" disabled="" class="slds-textarea">
+                                        {product.sapErrorMessage}
+                                    </textarea>
+                                    <!--<div class="slds-box slds-box_x-small lgc-bg" >
                                         <div class="slds-text-body_regular">{product.sapErrorMessage}</div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
 
@@ -279,6 +282,7 @@
                                                 icon="standard:announcement"
                                                 pill-obj={d.infoGroup}
                                                 rate={product.rateCategory}
+                                                rate-type-value={d.rateType.value}
                                                 onsetvaluetoparent={handleSetvaluetoparent}
                                             ></c-hdt-pill>
                                         </template>
