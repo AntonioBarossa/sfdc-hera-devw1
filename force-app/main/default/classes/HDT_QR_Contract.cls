@@ -84,6 +84,34 @@ public inherited sharing class HDT_QR_Contract {
         ];
     }
 
+
+
+        /**	   
+    * @author Federico de Felice (federico.defelice@webresults.it)
+    * @description Get active records by accountId
+    * @param String accountId
+    * @return List<Contract>
+    */
+    public List<Contract> getTempNewActivationContractsByAccountId(String accountId){
+        contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status'); 
+        return [
+            SELECT
+            Name,
+            AccountId,			
+            ContractNumber,
+            Status,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            ServicePoint__r.SupplyAddress__c
+            FROM
+            Contract
+            WHERE AccountId = :accountId									 
+            AND Status IN ('Activated', 'Attivo')
+            AND SBQQ__Order__r.ProcessType__c = 'Temporanea - Nuova Attivazione'
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
 	    /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get active records by accountId and servicePointId
