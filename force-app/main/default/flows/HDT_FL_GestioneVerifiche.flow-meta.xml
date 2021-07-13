@@ -547,6 +547,12 @@
                 <elementReference>Get_Amount_Quote.Amount__c</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>QuotationType__c</field>
+            <value>
+                <stringValue>Rapido</stringValue>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>

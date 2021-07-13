@@ -262,7 +262,7 @@
     <actionCalls>
         <name>ManageDocuments_6</name>
         <label>ManageDocuments</label>
-        <locationX>7046</locationX>
+        <locationX>7002</locationX>
         <locationY>518</locationY>
         <actionName>HDT_SRV_DocumentSelectedManager</actionName>
         <actionType>apex</actionType>
@@ -348,7 +348,7 @@
     <assignments>
         <name>Assegna_Variabile_0</name>
         <label>Assegna Variabile</label>
-        <locationX>7046</locationX>
+        <locationX>7002</locationX>
         <locationY>854</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeLwc</assignToReference>
@@ -371,7 +371,7 @@
     <assignments>
         <name>Assegna_Variabile_0_0</name>
         <label>Assegna Variabile</label>
-        <locationX>7310</locationX>
+        <locationX>7266</locationX>
         <locationY>854</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeLwc</assignToReference>
@@ -565,29 +565,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssegnaValori_0_0_0_0_0</name>
-        <label>AssegnaValori</label>
-        <locationX>6980</locationX>
-        <locationY>1670</locationY>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato_2.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Completata</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato_2.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Closed</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Passa_a_In_Lavorazione_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>AssegnaValori_Paperless</name>
         <label>AssegnaValoriPaperless</label>
         <locationX>4692</locationX>
@@ -756,7 +733,7 @@
     <decisions>
         <name>CaseInBozza</name>
         <label>CaseInBozza?</label>
-        <locationX>7178</locationX>
+        <locationX>7134</locationX>
         <locationY>734</locationY>
         <defaultConnector>
             <targetReference>Assegna_Variabile_0_0</targetReference>
@@ -784,7 +761,7 @@
         <locationX>6848</locationX>
         <locationY>1550</locationY>
         <defaultConnector>
-            <targetReference>AssegnaValori_0_0_0_0_0</targetReference>
+            <targetReference>Passa_a_In_Lavorazione_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>In Lavorazione</defaultConnectorLabel>
         <rules>
@@ -831,7 +808,7 @@
     <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>4043</locationX>
+        <locationX>3999</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Screen_Inserimento_Dati_0_0_0_0</targetReference>
@@ -1195,7 +1172,7 @@
     <decisions>
         <name>Riprendi_Da_Bozza_0_0_0_0_0_0_0</name>
         <label>Riprendi Da Bozza?</label>
-        <locationX>7178</locationX>
+        <locationX>7134</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>CaseInBozza</targetReference>
@@ -1220,7 +1197,7 @@
     <decisions>
         <name>Salva_in_bozza_o_Conferma</name>
         <label>Salva in bozza o Conferma?</label>
-        <locationX>7178</locationX>
+        <locationX>7134</locationX>
         <locationY>1310</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -1373,7 +1350,7 @@
     <decisions>
         <name>Salva_in_bozza_o_Conferma_0_0_0</name>
         <label>Salva in bozza o Conferma?</label>
-        <locationX>7904</locationX>
+        <locationX>7816</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -1533,7 +1510,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>4043</locationX>
+        <locationX>3999</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1981,7 +1958,7 @@
     <recordUpdates>
         <name>Passa_a_In_Lavorazione</name>
         <label>Passa a In Lavorazione</label>
-        <locationX>7772</locationX>
+        <locationX>7684</locationX>
         <locationY>638</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2239,7 +2216,7 @@
     <screens>
         <name>Screen_Documenti_Selezionati_0_0_0</name>
         <label>Screen Documenti Selezionati</label>
-        <locationX>7046</locationX>
+        <locationX>7002</locationX>
         <locationY>974</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2320,7 +2297,7 @@
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>7178</locationX>
+        <locationX>7134</locationX>
         <locationY>1190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2704,7 +2681,7 @@
     <screens>
         <name>Screen_Inserimento_Dati_0_0_0_0</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>7904</locationX>
+        <locationX>7816</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3208,7 +3185,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>3917</locationX>
+        <locationX>3873</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -3318,7 +3295,7 @@
     <subflows>
         <name>Annulla_Prestazione_0_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>7244</locationX>
+        <locationX>7156</locationX>
         <locationY>1430</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
