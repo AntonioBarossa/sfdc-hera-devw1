@@ -281,7 +281,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 accountSrv.updateRecord((Account)objectToUpdate);
             }
             when 'Order' {
-                orderSrv.updateRecord((Order)objectToUpdate);
+                //EVERIS: customization for 'Voltura/Cambio Contatore Non Registrato'
+                Order draftOrder = (Order)objectToUpdate;
+                if(draftOrder.NotRegisteredMeterCase__c != null && draftOrder.NotRegisteredMeterCase__c == true){
+                    draftOrder.Phase__c = 'Sospeso';
+                }
+                orderSrv.updateRecord(draftOrder);
             }
             when 'ServicePoint__c' {
                 servicePointSrv.updateRecord((ServicePoint__c)objectToUpdate);
