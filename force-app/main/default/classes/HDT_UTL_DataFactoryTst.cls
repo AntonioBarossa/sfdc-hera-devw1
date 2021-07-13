@@ -35,6 +35,9 @@ public with sharing class HDT_UTL_DataFactoryTst {
             ld.Company = 'CompanyTest';
             ld.Status = 'New';
             ld.Email = 'test@test.com';
+            ld.Birthdate__c = date.today();
+            ld.Gender__c = 'Maschio';
+            ld.Birthcity__c = 'Roma';
 
             leadList.add(ld);
 
@@ -46,6 +49,29 @@ public with sharing class HDT_UTL_DataFactoryTst {
         }
 
         return leadList;
+    }
+
+
+    public static List<City__c> createCity(Integer amount, Boolean doInsert) {
+        List<City__c> cityList = new List<City__c>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            City__c ct = new City__c();
+            
+            ct.Name = 'Roma';
+            ct.BelfioreCode__c = 'Bt'+i;
+
+            cityList.add(ct);
+
+        }
+        
+        if (doInsert) {
+
+            insert cityList;
+        }
+
+        return cityList;
     }
     
     public static List<Opportunity> createOpportunity (Integer amount, Boolean doInsert) {
