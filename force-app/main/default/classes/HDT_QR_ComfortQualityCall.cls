@@ -37,7 +37,7 @@ public inherited sharing class HDT_QR_ComfortQualityCall {
             FROM ComfortQualityCall__c
             WHERE DocumentValidation__c = true
             AND ComfortEnabled__c = true
-            AND DocSendingMethod__c = :canaleInvio
+            AND ComfortDocSendingChannel__c = :canaleInvio
             WITH SECURITY_ENFORCED
         ];
     }
