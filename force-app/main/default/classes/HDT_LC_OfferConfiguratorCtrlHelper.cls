@@ -1,6 +1,7 @@
 public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     
-    public static List<sObject> getTableDataHelper(String objectApiName, String rate, String searchByField, String searchValue){
+    public static List<sObject> getTableDataHelper(String objectApiName, String rate, String rateTypeValue, String searchByField, String searchValue){
+        
         List<sObject> allValues;
 
         String whereCond = '';
@@ -36,7 +37,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 List<String> tariffList = new List<String>();
                 String searchValueSoql = '';
 
-                infoOneGroupList = HDT_QR_TechnicalOffer.getTariffDetails(infoOneGroupList, rate);
+                System.debug('>>> rateTypeValue ' + rateTypeValue + ' - rate: '  + rate);
+
+                infoOneGroupList = HDT_QR_TechnicalOffer.getTariffDetails(infoOneGroupList, rate, rateTypeValue);
                 
                 if(infoOneGroupList.size() == 0){
                     return infoOneGroupList;
@@ -478,6 +481,33 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             return mulesoftResponse;
         }
 
+        List<String> fieldToCheck = new List<String>();
+        fieldToCheck.add('Market__c');
+        //fieldToCheck.add('ProcessType__c');
+        fieldToCheck.add('PlacetOffer__c');
+        fieldToCheck.add('StartDate__c');
+        fieldToCheck.add('EndDate__c');
+        fieldToCheck.add('StepAllowed__c');
+        fieldToCheck.add('ContractId__c');
+        fieldToCheck.add('NumberTimeExtension__c');
+        fieldToCheck.add('UnitTimeExtension__c');
+        fieldToCheck.add('NumberDaysMonthsYears__c');
+        fieldToCheck.add('UnitTerminationTime__c');
+        fieldToCheck.add('CancellationAllowed__c');
+        fieldToCheck.add('RecessAdmitted__c');
+        fieldToCheck.add('NumberOfTimeUnits__c');
+        fieldToCheck.add('UnitOfTimeMeasurement__c');
+        fieldToCheck.add('AdmittingProfileModification__c');
+        fieldToCheck.add('OfferToBeModified__c');
+
+        for (String currentField : fieldToCheck) {
+            if(techOff.get(currentField) == null || techOff.get(currentField) == ''){
+                mulesoftResponse.success = false;
+                mulesoftResponse.message = 'Tutti i parametri obbligatori devono essere compilati!';
+                return mulesoftResponse;
+            }
+        }
+
         HDT_WRP_TechnicalOffer.HDT_WRP_TechnicalOfferWebService bodyObj;
         bodyObj = generateHttpBody(bodyObj, techOff);
 
@@ -511,19 +541,18 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         mulesoftWsResponse = (HDT_WS_MulesoftCallerCpq.HDT_WRP_MulesoftResponse)JSON.deserialize(responseCtrl.body, HDT_WS_MulesoftCallerCpq.HDT_WRP_MulesoftResponse.class);
         
         if(!mulesoftWsResponse.status.equalsIgnoreCase('success')){
-            //updateProductAfterSap(technicalOfferId, responseCtrl.message, 'ko');
             mulesoftResponse.success = false;
             mulesoftResponse.message = '';
-            //mulesoftResponse.message = mulesoftWsResponse.errorDetails[0].code + '; ' + mulesoftWsResponse.errorDetails[0].message;
 
+            String errorMessage = '';
             for(Integer n=0; n < mulesoftWsResponse.errorDetails.size(); n++){
-                mulesoftResponse.message += mulesoftWsResponse.errorDetails[n].message;
+                errorMessage += mulesoftWsResponse.errorDetails[n].message;
                 if(n < (mulesoftWsResponse.errorDetails.size()-1)){
-                    mulesoftResponse.message += ', ';
+                    errorMessage += ', ';
                 }
             }
-
-            updateProductAfterSap(technicalOfferId, mulesoftResponse.message, 'ko');
+            mulesoftResponse.message = mulesoftWsResponse.errorDetails[0].code;
+            updateProductAfterSap(technicalOfferId, errorMessage, 'ko');
 
             return mulesoftResponse;      
         }

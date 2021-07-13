@@ -445,15 +445,16 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 toastObj.title = 'Successo';
                 toastObj.message = result.message;
                 toastObj.variant = 'success';
+                this.showToastHandler(toastObj);
+                this.goBackToRecord();
             } else {
                 toastObj.success = false;
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
-                toastObj.variant = 'warning';                  
+                toastObj.variant = 'warning';
+                this.showToastHandler(toastObj);
+                this.getMatrixData();
             }
-
-            this.showToastHandler(toastObj);
-            this.goBackToRecord();
 
         })
         .catch(error => {
