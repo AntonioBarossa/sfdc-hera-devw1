@@ -7927,6 +7927,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Elaborazione Risposta</fullName>
             <default>false</default>
         </values>
