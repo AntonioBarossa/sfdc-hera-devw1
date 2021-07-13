@@ -14,6 +14,13 @@ public with sharing class HDT_UTL_DataFactoryTst {
         wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
     }
 
+    //Metho to avoid PClick for OrderPhase Errors
+    public static void pClickOrderPhase(){
+        wrts_prcgvr.InstallIntegration.install();
+        wrts_prcgvr__PhaseManagerSObjectSetting__c setting = new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name = 'Order', wrts_prcgvr__ObjectType__c = 'Order', wrts_prcgvr__PivotField__c = 'Phase__c');
+        insert setting;
+    }
+
     public static List<Lead> createLead(Integer amount, Boolean doInsert) {
 
         List<Lead> leadList = new List<Lead>();
