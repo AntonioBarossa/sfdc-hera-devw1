@@ -16,10 +16,13 @@ public with sharing class HDT_LC_AccountSelezionaRecordtypeTst {
     @isTest
     public static void testGetRecordTypesForAccount(){
         Test.startTest();
-
-
-
-
+		
+        List<Map<String,String>> listRT = HDT_LC_AccountSelezionaRecordtype.getRecordTypesForAccount();
+        
         Test.stopTest();
+        
+        System.assertEquals(listRT.size() != null, true, 'The List is null!');
+        System.assertNotEquals(listRT.size() == null, true);
+        
     }
 }
