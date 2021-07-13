@@ -2113,6 +2113,10 @@
             <fullName>Voltura Rifiutata</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sospeso</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PressureLevel__c</picklist>
