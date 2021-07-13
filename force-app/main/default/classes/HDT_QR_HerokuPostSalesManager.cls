@@ -32,9 +32,9 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         Case recordCase = new Case();
         try {
             if(recordId instanceOf Id){
-                recordCase = [SELECT Id,Type,Cluster__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id,Type,Cluster__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
             }else {
-                recordCase = [SELECT Id,Type,Cluster__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id,Type,Cluster__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
             }
             
         } catch (DmlException ex) {
@@ -53,7 +53,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         return account;
     }
     public Contact getContact(String accountId){
-        AccountContactRelation rel = [SELECT ContactId,Contact.Email, Contact.Phone, Contact.MobilePhone, Contact.Id FROM AccountContactRelation WHERE AccountId =:accountId AND Roles = 'Titolare' WITH SECURITY_ENFORCED LIMIT 1];
+        AccountContactRelation rel = [SELECT ContactId,Contact.Email, Contact.Phone, Contact.MobilePhone, Contact.Id,Contact.CompanyOwner__c FROM AccountContactRelation WHERE AccountId =:accountId AND Roles = 'Titolare' WITH SECURITY_ENFORCED LIMIT 1];
         Contact contact = rel.Contact;
         return contact;
     }
@@ -75,6 +75,20 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         AND Process__c = :process
         AND Commodity__c = :commodity
         WITH SECURITY_ENFORCED
+        LIMIT 1];
+    }
+
+    public Case getRelatedCase(String recordId){
+        return [SELECT Id,
+        Type,
+        Phase__c,
+        CreatedDate,
+        ParentId
+        FROM Case
+        WHERE Type = 'Sospensione Fornitura'
+        AND ParentId = :recordId
+        WITH SECURITY_ENFORCED
+        ORDER BY CreatedDate DESC
         LIMIT 1];
     }
 

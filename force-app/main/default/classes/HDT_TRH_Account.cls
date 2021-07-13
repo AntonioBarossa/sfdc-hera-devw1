@@ -10,6 +10,10 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
         createKpiExtension();
     }
 
+    public override void afterUpdate(){
+        manageAccountPartnerQueues();
+    }
+
     /**
      * Verifica che il Name degli Account residenziali/aziende rimanga la concatenazione di FirstName + LastName.
      */
@@ -40,6 +44,30 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
             HDT_UTL_KpiTracking.createKpiTracking(Trigger.new, Trigger.oldMap);
         }else if(Trigger.isDelete){
             HDT_UTL_KpiTracking.deleteKpiTracking(Trigger.old);
+        }
+    }
+
+    private void manageAccountPartnerQueues(){
+        List<Account> newAcc= Trigger.new;
+        List<Account> oldAcc= Trigger.old;
+        Map<String,Account> mapAccount = new Map<String,Account>();
+        for(Account ac: oldAcc){
+            mapAccount.put(ac.Id, ac);
+        }
+        List<Account> accts= new List<Account>();
+        for (Account acc : newAcc) {
+            Account oldAccount= mapAccount.get(acc.Id);
+            if(acc.isPartner== true && oldAccount.Published__c== false && acc.Published__c == true){
+                accts.add(acc);
+                
+            }
+        }
+        if(!accts.isEmpty()){
+            Datetime dt= Datetime.now().addMinutes(2);
+            String cron = dt.second() + ' ' + dt.minute() + ' ' + dt.hour() + ' * * ?';
+
+            HDT_SCH_QueueAssignmentScheduler s = new HDT_SCH_QueueAssignmentScheduler(accts); 
+            System.schedule('PartnerQueues ' + String.valueOf(Datetime.now()), cron, s);
         }
     }
 }

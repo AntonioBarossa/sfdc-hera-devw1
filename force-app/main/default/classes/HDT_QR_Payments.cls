@@ -10,7 +10,6 @@ public inherited sharing class HDT_QR_Payments {
         TotalResidue__c,
         Deposit__c,
         DepositPaymentMode__c,
-        InstallmentPlanNumber__c,
         InstallmentNumberRequired__c,
         ClientCategory__c,
         TypeInstallmentPlan__c,

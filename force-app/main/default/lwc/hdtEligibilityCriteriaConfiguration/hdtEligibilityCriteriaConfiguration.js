@@ -454,19 +454,59 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
             this.dataToView.sort(this.compare);
         }
 
-        if(this.dataToView.length>0){
+        if(this.dataToView.length > 0){
             this.showAvailableItems = true;
             this.showEmptyImmage = false;
         }
 
-        if(this.dataRemoved.length===0){
+        if(this.dataRemoved.length === 0){
             this.showRemovedTable = false;
+            this.showEmptyRemovedImmage = true;
         }
         
     }
 
     restoreAllItem(event){
-        console.log('# restoreAllItem #');
+        console.log('# RESTORE FROM ALL ITEM #');
+
+        if(this.showSearchRemovedTable){
+            console.log('# RESTORE FROM SEARCH #');
+            this.searchRemovedTable.forEach((i) => {
+                let alreadyPresent = this.dataToView.find(ele  => ele.value === i.value);
+                if(alreadyPresent == null || alreadyPresent == undefined){
+                    var itemRemoved = { label: i.label, value: i.value, id: i.value};
+                    this.dataToView.push(itemRemoved);
+                }
+
+                let element = this.dataRemoved.find(ele  => ele.value === i.value);
+                var a = this.dataRemoved.indexOf(element);
+                this.dataRemoved.splice(a, 1);
+
+            });
+            this.searchRemovedTable = [];
+        } else if(this.showRemovedTable){
+            this.dataRemoved.forEach((i) => {
+                let alreadyPresent = this.dataToView.find(ele  => ele.value === i.value);
+                if(alreadyPresent == null || alreadyPresent == undefined){
+                    var itemRemoved = { label: i.label, value: i.value, id: i.value};
+                    this.dataToView.push(itemRemoved);
+                }
+            });
+            this.dataRemoved = [];
+        }
+
+        this.dataToView.sort(this.compare);
+
+        if(this.dataToView.length > 0){
+            this.showAvailableItems = true;
+            this.showEmptyImmage = false;
+        }
+    
+        if(this.dataRemoved.length === 0){
+            this.showRemovedTable = false;
+            this.showEmptyRemovedImmage = true;
+        }
+
     }
 
     compare(a, b) {

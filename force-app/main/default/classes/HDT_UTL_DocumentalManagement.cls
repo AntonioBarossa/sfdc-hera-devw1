@@ -121,10 +121,12 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 		return false;
 	}
-	public static Boolean updateDocumentalPhase(sObject processRecord, HDT_WRP_DocumentalResponse response ){
+	public static Boolean updateDocumentalPhase(sObject processRecord, HDT_WRP_DocumentalResponse response,String context){
 		String archive = response.deliverPackageResponse.archive;
 		String result = response.deliverPackageResponse.result;
-		if(result == 'OK'){
+		String cluster = '';
+		String quotationType = '';
+		if(result == '000'){
 			if(archive != 'Y'){
 				processRecord.put('DocumentalPhase__c','Preview');
 			}else{
@@ -132,6 +134,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					processRecord.put('DocumentalPhase__c','Plico in firma');
 				}else {
 					processRecord.put('DocumentalPhase__c','Plico inviato');
+				}
+				if(context.equalsIgnoreCase('Case')){
+					cluster = (String) processRecord.get('Cluster__c');
+					quotationType = (String) processRecord.get('QuotationType__c');
+					if(cluster.equalsIgnoreCase('Preventivi') && String.isNotBlank(quotationType) && quotationType.equalsIgnoreCase('Predeterminabile')){
+						processRecord.put('Phase__c','Attesa conferma preventivo cliente');
+					}
 				}
 			}
 		}else {
@@ -147,11 +156,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String queryString = 'SELECT ';
 		switch on context {
 			when 'Order' {
-				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c';
+				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c';
 				fromString = 'Order';
 			}
 			when 'Case'{
-				fieldString = 'Id, AccountId,SendMode__c ,Email__c,SignMode__c,DocumentalPhase__c';
+				fieldString = 'Id, AccountId,SendMode__c ,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c,QuotationType__c';
 				fromString = 'Case';
 			}
 			when else {
