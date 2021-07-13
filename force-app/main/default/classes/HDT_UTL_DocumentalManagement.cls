@@ -164,7 +164,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				fromString = 'Case';
 			}
 			when else {
-				fieldString = 'Id,PrimaryEmail__c';
+				fieldString = 'Id,PrimaryEmail__c,SendMode__c';
 				fromString = 'Account';
 			}
 		}
@@ -193,6 +193,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				when else {
 					documentalSendTracking.Account__c = (Id) processRecord.get('Id');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
 				}
 			}
 			documentalSendTracking.SendDate__c = Date.today();
