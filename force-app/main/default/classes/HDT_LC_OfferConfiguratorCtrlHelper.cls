@@ -483,7 +483,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         List<String> fieldToCheck = new List<String>();
         fieldToCheck.add('Market__c');
-        fieldToCheck.add('ProcessType__c');
+        //fieldToCheck.add('ProcessType__c');
         fieldToCheck.add('PlacetOffer__c');
         fieldToCheck.add('StartDate__c');
         fieldToCheck.add('EndDate__c');
@@ -501,7 +501,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         fieldToCheck.add('OfferToBeModified__c');
 
         for (String currentField : fieldToCheck) {
-            if(String.isEmpty(techOff.get(currentField))){
+            if(techOff.get(currentField) == null || techOff.get(currentField) == ''){
                 mulesoftResponse.success = false;
                 mulesoftResponse.message = 'Tutti i parametri obbligatori devono essere compilati!';
                 return mulesoftResponse;
