@@ -673,7 +673,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 					//recordOttantuno.add((String)primoLivello.get('numeroFattura'));
 				}
 				recordOttantuno.add((String)primoLivello.get('rateizzato'));
-				if(String.isNotBlank((String)primoLivello.get('DataEmissione'))){
+				if(String.isNotBlank((String)primoLivello.get('dataEmissione'))){
 					String dataEmissione = (String)primoLivello.get('dataEmissione');
 					recordOttantuno.add(dataEmissione);
 				}else{
@@ -704,7 +704,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				altriServizi = '';
 				//NUOVI CAMPI aggiunti al tracciato per la Gestione Credito: CONTRATTO e TIPO_DOCUMENTO 
 				recordOttantuno.add((String)primoLivello.get('contratto'));
-				recordOttantuno.add((String)primoLivello.get('tipoDoc'));
+				recordOttantuno.add((String)primoLivello.get('tipoDocumento'));
 				recordOttantuno.add(fineRiga);
 
 				// STESSO CA

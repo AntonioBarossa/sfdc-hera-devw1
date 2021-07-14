@@ -17,8 +17,14 @@ public class HDT_UTL_IntegrationObject{
 		List<String> relatedQueryList = new List<String>();
 		for(HDT_WRP_IntegrationObject.HDT_WRP_IntegrationRelatedObject singleRelatedObject : jsonStructure.relatedObject){
 			String queryRelString = ',(SELECT ' + singleRelatedObject.fields;
-			String fromRelString = ' FROM '+ singleRelatedObject.relation + ')';
-			relatedQueryList.add(queryRelString+fromRelString);
+			String fromRelString = ' FROM ' + singleRelatedObject.relation;// + ')';
+			String condition = ' WHERE ' + singleRelatedObject.condition + ')';
+			if(String.isBlank(singleRelatedObject.condition)){
+				relatedQueryList.add(queryRelString+fromRelString+')');
+			}else {
+				relatedQueryList.add(queryRelString+fromRelString+condition);
+			}
+				
 		}
 		String relatedQueryString = String.join(relatedQueryList, ',');
 		queryString  = queryString + relatedQueryString + fromString + whereString; 
