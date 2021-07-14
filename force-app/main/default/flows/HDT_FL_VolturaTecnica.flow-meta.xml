@@ -84,6 +84,13 @@
                 <elementReference>PredefaultDataDecorrenza.effectiveDate</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ParentRecordId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCase_0</targetReference>
         </connector>
@@ -428,6 +435,13 @@
     </subflows>
     <variables>
         <name>InputCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ParentRecordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

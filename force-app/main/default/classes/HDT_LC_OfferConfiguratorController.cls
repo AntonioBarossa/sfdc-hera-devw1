@@ -32,7 +32,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
             if(String.isEmpty(thisProduct[0].Family) || !thisProduct[0].Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
                 respObj.success = false;
-                respObj.errorMessage = 'Questa funzionalità è riservata alle offerte commerciali';
+                respObj.errorMessage = Label.HDT_OfferConfig_OfferType;
                 return respObj;
             }
 
