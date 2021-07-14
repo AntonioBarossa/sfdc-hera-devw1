@@ -1248,12 +1248,19 @@
         <defaultConnectorLabel>Altri processi</defaultConnectorLabel>
         <rules>
             <name>NuovoImpianto</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Input_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Nuovo Impianto - Aggiunta Attacco</stringValue>
+                    <stringValue>Nuovo Impianto</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Aggiunta Attacco</stringValue>
                 </rightValue>
             </conditions>
             <connector>
