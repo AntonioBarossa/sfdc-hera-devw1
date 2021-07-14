@@ -359,8 +359,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 record.add('00310');
                 record.add('40');
             }
+            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CreatedDate', i, inputs, formParams)));
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Origin', i, inputs, formParams));         // Canale
-            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CreatedDate', i, inputs, formParams));    // Data ricevimento
+            record.add(createdDate);                                                                                // Data ricevimento
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Type', i, inputs, formParams));           // Sottotipo
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Cluster__c', i, inputs, formParams));     // Tipo
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));     // N. RS
@@ -383,8 +384,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 record.add('00310');
                 record.add('40');
             }
+            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('OrderList', 'CreatedDate', i, inputs, formParams)));
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Channel__c', i, inputs, formParams));        // Canale
-            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'CreatedDate', i, inputs, formParams));       // Data ricevimento
+            record.add(createdDate);                                                                                    // Data ricevimento
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'ProcessType__c', i, inputs, formParams));    // Sottotipo
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Cluster__c', i, inputs, formParams));        // Tipo
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'OrderNumber', i, inputs, formParams));       // N. RS
