@@ -14,6 +14,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return checkGruppoIva(inputs,formParams);
                 }when 'checkCommercialOffer'{
                     return checkCommercialOffer(inputs,formParams);
+                }when 'generateSection20'{
+                    return generateSection20(inputs,formParams);
                 }when 'generateSection40'{
                     return generateSection40(inputs,formParams);
                 }when 'generateSection50'{
@@ -291,6 +293,53 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             result += '|';
         }
         return result;
+    }
+
+    // Genera la sezione di payload ricorsiva 00310|20| per la stampa della Scheda Cliente (sezione "Contratti")
+    private String generateSection20(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        String accountId = HDT_UTL_DocumentalManagement.getValue('Account', 'Id', 0, inputs, formParams);
+
+        String objectName = 'Contract';
+        String queryFields = 'Id,ContractNumber,BillingProfile__r.ContractAccountCode__c,StartDate,ServicePoint__r.SupplyAddress__c,ServicePoint__r.SAPImplantCode__c,ServicePoint__r.CommoditySector__c,Status';
+        String queryString = 'SELECT ' + queryFields;
+        String fromString = ' FROM '+ objectName;
+        String controllingField = 'AccountId';
+        String whereString = ' WHERE ' + controllingField + ' =\''+ accountId + '\'';
+        String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
+        
+        queryString = queryString + relatedQueryString + fromString + whereString; 
+        System.debug('query ' + queryString);
+
+        List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
+        for (Integer i = 0; i < cases.size(); i++) {
+            Contract c = (Contract) obj[i];
+            List<SBQQ__Subscriptions__c> subscriptions = (List<SBQQ__Subscriptions__c>) c.SBQQ__Subscriptions__r;
+
+            String[] record = new List<String>();
+            // Il primo 310|20 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('310');
+                record.add('20');
+            }
+
+            record.add(c.ContractNumber);                               // Numero Documento
+            record.add(c.BillingProfile__r.ContractAccountCode__c);     // Codice Conto Contrattuale
+            record.add(c.StartDate);                                    // Data stipula
+            record.add(c.ServicePoint__r.SupplyAddress__c);             // Indirizzo di fornitura
+            record.add(c.ServicePoint__r.SAPImplantCode__c);            // Codice Impianto
+            record.add('Contratto');                                    // Tipo (cablato, su Siebel invece era campo ad-hoc)
+            record.add(subscriptions[0].SBQQ__ProductName__c);          // Prodotto di servizio
+            record.add(c.ServicePoint__r.CommoditySector__c);           // Settore merceologico
+            record.add(c.Status);                                       // Stato
+            record.add(endLine);
+            payloadSection += String.join(record, div);
+        }
+
+        return payloadSection;
     }
 
     // Genera la sezione di payload ricorsiva 00310|40| per la stampa della Scheda Cliente (sezione "Richieste di Servizio")
