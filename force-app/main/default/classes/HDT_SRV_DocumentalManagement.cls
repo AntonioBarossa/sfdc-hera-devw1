@@ -141,6 +141,9 @@ public class HDT_SRV_DocumentalManagement{
 	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeGetAttachmentCalloutRequest(String body){
 		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
 		postelResponse = HDT_WS_DocumentalIntegration.submitGetAttachmentRequest(body);
+		if (postelResponse.responseCode != 200) {
+			throw new HDT_UTL_HeraException('Errore Postel nel recupero del documento archiviato');
+		}
 		return postelResponse;
 	}
 	
@@ -152,7 +155,9 @@ public class HDT_SRV_DocumentalManagement{
 		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
 		if (documentType == 'pdf') {
 			postelResponse = HDT_WS_DocumentalIntegration.submitGetEnvelopePostelRequest(body);
-			//manageResponseFuture(JSON.serialize(documentalResponse), context);
+			if (postelResponse.responseCode != 200) {
+				throw new HDT_UTL_HeraException('Errore Postel nel recupero del documento archiviato');
+			}
 		} else {
 			// TODO: invoke Intesa callout.
 		}

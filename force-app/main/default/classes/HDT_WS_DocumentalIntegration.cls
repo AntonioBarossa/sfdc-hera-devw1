@@ -34,7 +34,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
             HTTPResponse res = http.send(req);
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('data')) {
-                System.debug(JSON.serialize(responseBodyMap.get('data')));
+                //System.debug(JSON.serialize(responseBodyMap.get('data')));
                 postelResponse = (HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse) JSON.deserialize(JSON.serialize(responseBodyMap.get('data')), HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse.class);
             }
             postelResponse.responseCode = res.getStatusCode();
@@ -57,7 +57,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
             HTTPResponse res = http.send(req);
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('data')) {
-                System.debug(JSON.serialize(responseBodyMap.get('data')));
+                //System.debug(JSON.serialize(responseBodyMap.get('data')));
                 postelResponse = (HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse) JSON.deserialize(JSON.serialize(responseBodyMap.get('data')), HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse.class);
             }
             postelResponse.responseCode = res.getStatusCode();
