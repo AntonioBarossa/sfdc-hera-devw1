@@ -294,9 +294,21 @@
                 <label>Reclamo Scritto/Rich. Info</label>
             </value>
             <value>
+                <fullName>Rettifica Consumi - Errore di Lettura</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Rettifica Consumi - Errore di Lettura</label>
+            </value>
+            <value>
                 <fullName>Rettifica Consumi</fullName>
                 <default>false</default>
                 <label>Rettifica Consumi</label>
+            </value>
+            <value>
+                <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Rettifica Consumi - Errore Stima Consumi</label>
             </value>
             <value>
                 <fullName>Revoca Domiciliazione</fullName>
