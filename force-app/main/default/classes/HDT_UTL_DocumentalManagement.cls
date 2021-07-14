@@ -8,6 +8,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			when 'Context2'{
 				return getRecordObjectsListContext2(recordsList);
 			}
+			when 'Context3'{
+				return getRecordObjectsListContext3(recordsList);
+			}
 			when 'Context4'{
 				return getRecordObjectsListContext4(recordsList);
 			}when else {
@@ -222,6 +225,29 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		toReturn.add(mapStringObjectRecords);
 		return toReturn;
 	}
+
+	private static List<Map<String,List<sObject>>> getRecordObjectsListContext3(List<SObject> recordsList){
+		
+		List<Account> listAccount = new List<Account>();
+		Account accountObject = (Account) recordsList[0];
+		listAccount.add(accountObject);
+
+		List<Case> listCase = (List<Case>) accountObject.Cases;
+		List<Order> listOrder = (List<Order>) accountObject.Orders;
+		List<BillingProfile__c> listBp = (List<BillingProfile__c>) accountObject.BillingProfiles__r;
+		List<AccountContactRelation> listAccContRel = (List<AccountContactRelation>) accountObject.AccountContactRelations;
+		List<Contact> listContact = new List<Contact>();
+		for(AccountContactRelation accConRel : listAccContRel){
+			listContact.add(accConRel.Contact);
+		}
+		
+		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>{
+			'CaseList' => listCase,'OrderList' => listOrder, 'Account' => listAccount, 'ContactList' => listContact, 'BillingProfileList' => listBp, 'AccountContactRelationList' => listAccContRel
+		};
+		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
+		toReturn.add(mapStringObjectRecords);
+		return toReturn;
+	} 
 
 	private static List<Map<String,List<sObject>>> getRecordObjectsListContext4(List<SObject> recordsList){
 		Account accountObject = (Account) recordsList[0];
@@ -549,7 +575,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				return 'Context4';
 			}
 			when 'Account' {
-				return 'Context4';
+				return 'Context3';
 			}
 			when 'DocumentazioneAnticipata'{
 				return 'Context2';

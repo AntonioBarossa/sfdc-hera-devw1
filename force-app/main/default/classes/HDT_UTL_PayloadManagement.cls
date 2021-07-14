@@ -14,6 +14,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return checkGruppoIva(inputs,formParams);
                 }when 'checkCommercialOffer'{
                     return checkCommercialOffer(inputs,formParams);
+                }when 'generateSection40'{
+                    return generateSection40(inputs,formParams);
+                }when 'generateSection50'{
+                    return generateSection50(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -287,5 +291,89 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             result += '|';
         }
         return result;
+    }
+
+    // Genera la sezione di payload ricorsiva 00310|40| per la stampa della Scheda Cliente (sezione "Richieste di Servizio")
+    private String generateSection40(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        List<sObject> cases = inputs.get('Case');
+        for (Integer i = 0; i < cases.size(); i++) {
+            String[] record = new List<String>();
+            record.add('310');
+            record.add('40');
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Origin', i, inputs, formParams));         // Canale
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'CreatedDate', i, inputs, formParams));    // Data ricevimento
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Type', i, inputs, formParams));           // Sottotipo
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', i, inputs, formParams));     // Tipo
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'CaseNumber', i, inputs, formParams));     // N. RS
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Phase__c', i, inputs, formParams));       // Stato
+            record.add(endLine);
+            payloadSection += String.join(record, div);
+        }
+
+        List<sObject> order = inputs.get('Order');
+        for (Integer i = 0; i < order.size(); i++) {
+            String[] record = new List<String>();
+            record.add('310');
+            record.add('40');
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'Channel__c', i, inputs, formParams));        // Canale
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'CreatedDate', i, inputs, formParams));       // Data ricevimento
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'ProcessType__c', i, inputs, formParams));    // Sottotipo
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'Cluster__c', i, inputs, formParams));        // Tipo
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'OrderNumber', i, inputs, formParams));       // N. RS
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'Phase__c', i, inputs, formParams));          // Stato
+            record.add(endLine);
+            payloadSection += String.join(record, div);
+        }
+
+        return payloadSection;
+    }
+
+    // Genera la sezione di payload ricorsiva 00310|50| per la stampa della Scheda Cliente (sezione "Preventivi")
+    private String generateSection50(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        List<sObject> cases = inputs.get('Case');
+        for (Integer i = 0; i < cases.size(); i++) {
+            String[] record = new List<String>();
+            record.add('310');
+            record.add('50');
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'CreatedDate', i, inputs, formParams));            // Data Stato
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Amount__c', i, inputs, formParams));              // Costo
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'CreatedDate', i, inputs, formParams));            // Data Doc
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Id', i, inputs, formParams));                     // Num documento
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'CaseNumber', i, inputs, formParams));             // N. Ordine
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'TensionOption__c', i, inputs, formParams));       // Tipo lavoro
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'CommodityFormula__c', i, inputs, formParams));    // Settore merceologico
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'AddressFormula__c', i, inputs, formParams));      // Indirizzo del lavoro
+            record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Phase__c', i, inputs, formParams));               // Stato
+            record.add(endLine);
+            payloadSection += String.join(record, div);
+        }
+
+        List<sObject> order = inputs.get('Order');
+        for (Integer i = 0; i < order.size(); i++) {
+            String[] record = new List<String>();
+            record.add('310');
+            record.add('50');
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'CreatedDate', i, inputs, formParams));                 // Data Stato
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'EstimateAmount__c', i, inputs, formParams));           // Costo
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'CreatedDate', i, inputs, formParams));                 // Data Doc
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'Id', i, inputs, formParams));                          // Num documento
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'OrderNumber', i, inputs, formParams));                 // N. Ordine
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'RequestOption__c', i, inputs, formParams));            // Tipo lavoro
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'CommodityFormula__c', i, inputs, formParams));         // Settore merceologico
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'SupplyAddressFormula__c', i, inputs, formParams));     // Indirizzo del lavoro
+            record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'Phase__c', i, inputs, formParams));                    // Stato
+            record.add(endLine);
+            payloadSection += String.join(record, div);
+        }
+
+        return payloadSection;
     }
 }
