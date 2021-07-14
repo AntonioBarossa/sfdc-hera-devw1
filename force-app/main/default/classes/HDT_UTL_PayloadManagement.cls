@@ -315,9 +315,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         System.debug('query ' + queryString);
 
         List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
-        for (Integer i = 0; i < cases.size(); i++) {
-            Contract c = (Contract) obj[i];
-            List<SBQQ__Subscriptions__c> subscriptions = (List<SBQQ__Subscriptions__c>) c.SBQQ__Subscriptions__r;
+        for (Integer i = 0; i < recordList.size(); i++) {
+            Contract c = (Contract) recordList[i];
+            List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
 
             String[] record = new List<String>();
             // Il primo 310|20 è già presente, evitiamo di aggiungerlo una seconda volta.
@@ -328,7 +328,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
             record.add(c.ContractNumber);                               // Numero Documento
             record.add(c.BillingProfile__r.ContractAccountCode__c);     // Codice Conto Contrattuale
-            record.add(c.StartDate);                                    // Data stipula
+            record.add(getFormattedDate(c.StartDate));                  // Data stipula
             record.add(c.ServicePoint__r.SupplyAddress__c);             // Indirizzo di fornitura
             record.add(c.ServicePoint__r.SAPImplantCode__c);            // Codice Impianto
             record.add('Contratto');                                    // Tipo (cablato, su Siebel invece era campo ad-hoc)
@@ -438,5 +438,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
 
         return payloadSection;
+    }
+
+    // Restituisce la data nel formato richiesto da Engage1
+    private static String getFormattedDate(Date dateToFormat) {
+        Datetime dt = dateToFormat;
+        String formattedDate = dt.format('dd/MM/y');
+        return formattedDate;
     }
 }
