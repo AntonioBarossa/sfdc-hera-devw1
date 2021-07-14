@@ -23594,7 +23594,7 @@
         <field>ServicePoint__c.WithdrawalClass__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    	<fieldPermissions>
         <editable>true</editable>
         <field>ServiceRequest__c.Account__c</field>
         <readable>true</readable>
@@ -30678,15 +30678,15 @@
         <object>ServicePoint__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>ServiceRequest__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
+    	<objectPermissions>
+		<allowCreate>true</allowCreate>
+		<allowDelete>true</allowDelete>
+		<allowEdit>true</allowEdit>
+		<allowRead>true</allowRead>
+		<modifyAllRecords>true</modifyAllRecords>
+		<object>ServiceRequest__c</object>
+		<viewAllRecords>true</viewAllRecords>
+	</objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
