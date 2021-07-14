@@ -414,8 +414,8 @@
     <assignments>
         <name>AssegnaRecordType</name>
         <label>AssegnaRecordType</label>
-        <locationX>1785</locationX>
-        <locationY>528</locationY>
+        <locationX>1608</locationX>
+        <locationY>564</locationY>
         <assignmentItems>
             <assignToReference>GetCaseNuovoImpianto.RecordTypeId</assignToReference>
             <operator>Assign</operator>
@@ -435,6 +435,20 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Permanente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseNuovoImpianto.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getContract.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseNuovoImpianto.BillingProfile__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getContract.BillingProfile__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1870,13 +1884,41 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>GetRecordTypePreventivi</name>
-        <label>GetRecordTypePreventivi</label>
-        <locationX>1893</locationX>
-        <locationY>526</locationY>
+        <name>getContract</name>
+        <label>getContract</label>
+        <locationX>1808</locationX>
+        <locationY>509</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaRecordType</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.AccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Attivo</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contract</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetRecordTypePreventivi</name>
+        <label>GetRecordTypePreventivi</label>
+        <locationX>1947</locationX>
+        <locationY>543</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getContract</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
