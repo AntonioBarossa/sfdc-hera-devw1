@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+q<?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_Domiciliazione</fullName>
     <active>true</active>
@@ -7326,14 +7326,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore di Lettura</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Revoca Domiciliazione</fullName>
             <default>false</default>
         </values>
@@ -10562,14 +10554,6 @@
         </values>
         <values>
             <fullName>Rettifica Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore di Lettura</fullName>
             <default>false</default>
         </values>
         <values>
