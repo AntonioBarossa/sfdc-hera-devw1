@@ -22,8 +22,8 @@ public with sharing class HDT_WS_DocumentalIntegration {
         return documentalResponse;
    }
 
-    public static HDT_WRP_DocumentalResponse submitGetAttachmentRequest(String body){
-        HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+    public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse submitGetAttachmentRequest(String body){
+        HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
         try{
             HttpRequest req = new HttpRequest();
             req.setEndpoint('Callout:GetAttachmentPostel');
@@ -35,14 +35,14 @@ public with sharing class HDT_WS_DocumentalIntegration {
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('data')) {
                 System.debug(JSON.serialize(responseBodyMap.get('data')));
-                documentalResponse = (HDT_WRP_DocumentalResponse) JSON.deserialize(JSON.serialize(responseBodyMap.get('data')), HDT_WRP_DocumentalResponse.class);
+                postelResponse = (HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse) JSON.deserialize(JSON.serialize(responseBodyMap.get('data')), HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse.class);
             }
-            documentalResponse.responseCode = res.getStatusCode();
-            documentalResponse.responseStatus =  res.getStatus();
+            postelResponse.responseCode = res.getStatusCode();
+            postelResponse.responseStatus =  res.getStatus();
         }catch(Exception ex){
             System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
         }
-        return documentalResponse;
+        return postelResponse;
     }
 
     public static HDT_WRP_DocumentalResponse submitGetEnvelopePostelRequest(String body){
