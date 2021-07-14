@@ -138,27 +138,26 @@ public class HDT_SRV_DocumentalManagement{
 		return documentalResponse;
 	}
 
-	public static HDT_WRP_DocumentalResponse executeGetAttachmentCalloutRequest(String body){
-		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
-		documentalResponse = HDT_WS_DocumentalIntegration.submitGetAttachmentRequest(body);
-		//manageResponseFuture(JSON.serialize(documentalResponse), context);
-		return documentalResponse;
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeGetAttachmentCalloutRequest(String body){
+		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+		postelResponse = HDT_WS_DocumentalIntegration.submitGetAttachmentRequest(body);
+		return postelResponse;
 	}
 	
-	public static HDT_WRP_DocumentalResponse executeGetEnvelopeCalloutRequest(String body, String documentType){
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeGetEnvelopeCalloutRequest(String body, String documentType){
 		if (String.isBlank(documentType)) {
 			throw new HDT_UTL_HeraException('Errore interno nel recupero del documento archiviato.');
 		}
 
-		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
 		if (documentType == 'pdf') {
-			documentalResponse = HDT_WS_DocumentalIntegration.submitGetEnvelopePostelRequest(body);
+			postelResponse = HDT_WS_DocumentalIntegration.submitGetEnvelopePostelRequest(body);
 			//manageResponseFuture(JSON.serialize(documentalResponse), context);
 		} else {
 			// TODO: invoke Intesa callout.
 		}
 
-		return documentalResponse;
+		return postelResponse;
 	}
 
 	@future
@@ -673,7 +672,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 					//recordOttantuno.add((String)primoLivello.get('numeroFattura'));
 				}
 				recordOttantuno.add((String)primoLivello.get('rateizzato'));
-				if(String.isNotBlank((String)primoLivello.get('DataEmissione'))){
+				if(String.isNotBlank((String)primoLivello.get('dataEmissione'))){
 					String dataEmissione = (String)primoLivello.get('dataEmissione');
 					recordOttantuno.add(dataEmissione);
 				}else{
@@ -704,7 +703,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				altriServizi = '';
 				//NUOVI CAMPI aggiunti al tracciato per la Gestione Credito: CONTRATTO e TIPO_DOCUMENTO 
 				recordOttantuno.add((String)primoLivello.get('contratto'));
-				recordOttantuno.add((String)primoLivello.get('tipoDoc'));
+				recordOttantuno.add((String)primoLivello.get('tipoDocumento'));
 				recordOttantuno.add(fineRiga);
 
 				// STESSO CA

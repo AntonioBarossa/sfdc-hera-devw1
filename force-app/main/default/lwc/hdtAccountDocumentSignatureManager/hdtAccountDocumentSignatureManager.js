@@ -31,6 +31,7 @@ export default class HdtAccountDocumentSignatureManager extends NavigationMixin(
         }
     ];
     connectedCallback(){
+        console.log('account ' + this.recordId);
         getInfoAccountStatement({
             accountId: this.recordId
         }).then(result => {

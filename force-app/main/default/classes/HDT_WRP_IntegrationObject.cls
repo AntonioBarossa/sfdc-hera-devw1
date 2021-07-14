@@ -11,6 +11,7 @@ public class HDT_WRP_IntegrationObject{
 		public String objectName;
 		public String relation;
 		public String fields;
+		public String condition;
 	}
 
 	public class HDT_WRP_IntegrationLookupObject{
