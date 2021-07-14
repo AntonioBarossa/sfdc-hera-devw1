@@ -6,24 +6,24 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
     @api productId;
     @api rateObj;
     fieldsList = [
-        'Market__c',
-        'ProcessType__c',
-        'PlacetOffer__c',
-        //'ServiceProduct__c',
-        'StartDate__c',
-        'EndDate__c',
-        'StepAllowed__c',
-        'ContractId__c',
-        'NumberTimeExtension__c',
-        'UnitTimeExtension__c',
-        'NumberDaysMonthsYears__c',
-        'UnitTerminationTime__c',
-        'CancellationAllowed__c',
-        'RecessAdmitted__c',
-        'NumberOfTimeUnits__c',
-        'UnitOfTimeMeasurement__c',
-        'AdmittingProfileModification__c',
-        'OfferToBeModified__c'
+        {fieldName: 'Market__c', required: true},
+        {fieldName: 'ProcessType__c', required: false},
+        {fieldName: 'PlacetOffer__c', required: true},
+        //{fieldName: 'ServiceProduct__c', required: true},
+        {fieldName: 'StartDate__c', required: true},
+        {fieldName: 'EndDate__c', required: true},
+        {fieldName: 'StepAllowed__c', required: true},
+        {fieldName: 'ContractId__c', required: true},
+        {fieldName: 'NumberTimeExtension__c', required: true},
+        {fieldName: 'UnitTimeExtension__c', required: true},
+        {fieldName: 'NumberDaysMonthsYears__c', required: true},
+        {fieldName: 'UnitTerminationTime__c', required: true},
+        {fieldName: 'CancellationAllowed__c', required: true},
+        {fieldName: 'RecessAdmitted__c', required: true},
+        {fieldName: 'NumberOfTimeUnits__c', required: true},
+        {fieldName: 'UnitOfTimeMeasurement__c', required: true},
+        {fieldName: 'AdmittingProfileModification__c', required: false},
+        {fieldName: 'OfferToBeModified__c', required: false}
     ];
 
     @api mode;
@@ -153,9 +153,18 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         }
 
         for(var i in techOffObj){
-            if(!this.checkIsNotNull(techOffObj[i])){
-                returnObj.message = 'Tutti i parametri devono essere compilati!';
-                return returnObj;
+            //console.log('> > > > ' + i + ' - ' + techOffObj[i]);
+            let foundField = this.fieldsList.find(field  => field.fieldName === i);
+            //console.log('>>>> ' + JSON.stringify(foundField));
+            if(!this.checkIsNotNull(techOffObj[i]) && foundField.required){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Tutti i parametri obbligatori devono essere compilati per l\'invio dell\'offerta!',
+                        variant: 'warning',
+                        mode: 'sticky'
+                    })
+                );
             }
         }
 
