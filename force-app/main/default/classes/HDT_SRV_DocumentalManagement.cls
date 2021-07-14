@@ -138,27 +138,26 @@ public class HDT_SRV_DocumentalManagement{
 		return documentalResponse;
 	}
 
-	public static HDT_WRP_DocumentalResponse executeGetAttachmentCalloutRequest(String body){
-		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
-		documentalResponse = HDT_WS_DocumentalIntegration.submitGetAttachmentRequest(body);
-		//manageResponseFuture(JSON.serialize(documentalResponse), context);
-		return documentalResponse;
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeGetAttachmentCalloutRequest(String body){
+		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+		postelResponse = HDT_WS_DocumentalIntegration.submitGetAttachmentRequest(body);
+		return postelResponse;
 	}
 	
-	public static HDT_WRP_DocumentalResponse executeGetEnvelopeCalloutRequest(String body, String documentType){
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeGetEnvelopeCalloutRequest(String body, String documentType){
 		if (String.isBlank(documentType)) {
 			throw new HDT_UTL_HeraException('Errore interno nel recupero del documento archiviato.');
 		}
 
-		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
 		if (documentType == 'pdf') {
-			documentalResponse = HDT_WS_DocumentalIntegration.submitGetEnvelopePostelRequest(body);
+			postelResponse = HDT_WS_DocumentalIntegration.submitGetEnvelopePostelRequest(body);
 			//manageResponseFuture(JSON.serialize(documentalResponse), context);
 		} else {
 			// TODO: invoke Intesa callout.
 		}
 
-		return documentalResponse;
+		return postelResponse;
 	}
 
 	@future
