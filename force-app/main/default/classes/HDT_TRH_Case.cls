@@ -45,6 +45,8 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
                 .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
 
+        HDT_UTL_CaseProcess.salesProcessSequentializationBefore((List<Case>)Trigger.new,(Map<Id,Case>)Trigger.oldMap); 
+
     }
 
     public override void afterUpdate() {

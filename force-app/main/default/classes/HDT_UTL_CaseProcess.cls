@@ -8,6 +8,31 @@ public with sharing class HDT_UTL_CaseProcess {
     private static HDT_SRV_CampaignMember campaignMemberSrv = new HDT_SRV_CampaignMember();
 
 
+    public static void salesProcessSequentializationBefore(List<Case> newCaseList,Map<Id,Case> oldCaseMap){
+
+        List<ServiceRequest__c> incomingProcesses = new List<ServiceRequest__c>();
+        
+        for(Case caseProcess : newCaseList){
+            Case oldCase = oldCaseMap.get(caseProcess.ID);
+            if(!oldCase.Phase__c.equalsIgnoreCase(caseProcess.Phase__c)){//&& AGGIUNGERE CONTROLLO SE caseProcess.Phase__c IN CS
+                try{
+                    ServiceRequest__c sr = [SELECT ID, ProcessType__c, Case__c, Tipologia__c
+                                    FROM ServiceRequest__c 
+                                    WHERE Case__r.ID=: caseProcess.ID
+                                    WITH SECURITY_ENFORCED LIMIT 1];
+                    sr.NextPhase__c = caseProcess.Phase__c;
+                    incomingProcesses.add(sr);
+                    
+                }catch(Exception ex){
+                    System.debug(ex.getMessage());
+                }
+            }
+            if(incomingProcesses.size()>0){
+                HDT_UTL_Dependencies.sequentialization(incomingProcesses);
+            }
+        }
+        
+    } 
 
     public static void casePhaseManagementAfterUpdate(List<Case> newCasesList, List<Case> oldCasesList) {
 
