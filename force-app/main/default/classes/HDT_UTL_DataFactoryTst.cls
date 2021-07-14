@@ -2,7 +2,7 @@
 * @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
 * @date 29/06/2021
 * @description Data Factory for Test Classes
-* @history Lucas da Silva Fernandes – 29/06/2021 – Created class
+* @history Luis Bispo – 13/07/2021 – Created City Object
 */
 
 public with sharing class HDT_UTL_DataFactoryTst {
@@ -157,6 +157,12 @@ public with sharing class HDT_UTL_DataFactoryTst {
             ord.EstimatedVAT__c = 1; 
             ord.ValidityDateEstimate__c = Date.today().addDays(30);
             ord.Phase__c = 'Bozza';
+            ord.CIAccoutn__c = 'Richiesto';
+            ord.QuickQuote__c = 'Richiesto';
+            ord.ChamberCommerceRegistration__c = 'Richiesto';
+            ord.Instance326__c = 'Richiesto';
+            ord.DocumentLow80__c = 'Richiesto';
+            ord.AutorizationVolturaThirdTrader__c = 'Richiesto';
 
             orderList.add(ord);
         }
