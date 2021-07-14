@@ -1138,7 +1138,10 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Check_Documenti_0.phase</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Da Inviare</stringValue>
+                </rightValue>
             </conditions>
             <connector>
                 <targetReference>GetCodiceCausale_0_0</targetReference>
