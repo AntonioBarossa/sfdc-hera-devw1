@@ -13,7 +13,7 @@ public inherited sharing class HDT_QR_ComfortQualityCall {
             DaysComfort__c,
             UniqueQuality__c
             FROM ComfortQualityCall__c
-            WHERE Process__c = :order.ProcessType__c //text
+            WHERE Process__c = :order.RecordType.DeveloperName //text
             AND Channel__c = :order.Channel__c //text
             AND CustomerType__c = :order.CustomerType__c //text
             AND MarketType__c = :order.MarketOrigin__c //picklist
