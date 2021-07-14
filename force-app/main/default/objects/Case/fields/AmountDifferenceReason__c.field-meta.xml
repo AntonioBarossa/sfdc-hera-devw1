@@ -2,7 +2,12 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>AmountDifferenceReason__c</fullName>
     <externalId>false</externalId>
-    <formula>IF( TotalPaidCustomerToPay__c &lt; 0, &quot;Cliente paga un Acconto&quot;, null)</formula>
+    <formula>IF( AND( TEXT(Type) = &quot;Comunicazione Pagamento&quot;, 
+				    Amount__c - TotalResidue__c &lt; 0
+    ), 
+			 &quot;Cliente paga un Acconto&quot;, 
+			 null
+		)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Motivo Differenza Importi</label>
     <required>false</required>
