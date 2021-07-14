@@ -211,7 +211,7 @@
             <assignToReference>Get_Input_Case_0.DistributorCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Input_Case_0.Distributor__r.FiscalCode__c</elementReference>
+                <elementReference>Get_Input_Case_0.Distributor__r.Code__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -1574,7 +1574,14 @@
                 <leftValueReference>Get_Input_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Nuovo Impianto - Aggiunta Attacco</stringValue>
+                    <stringValue>Nuovo Impianto</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Aggiunta Attacco</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1770,21 +1777,28 @@
     <formulas>
         <name>PreviousButtonFormula</name>
         <dataType>Boolean</dataType>
-        <expression>TEXT({!Get_Input_Case.Type}) = &quot;Nuovo Impianto - Aggiunta Attacco&quot;</expression>
+        <expression>OR(
+      TEXT({!Get_Input_Case.Type}) = &quot;Nuovo Impianto&quot;,
+      TEXT({!Get_Input_Case.Type}) = &quot;Aggiunta Attacco&quot;
+)</expression>
     </formulas>
     <formulas>
         <name>ProcessTypeCommodity</name>
         <dataType>String</dataType>
         <expression>IF(
-TEXT({!Get_Input_Case.Type})=&quot;Nuovo Impianto - Aggiunta Attacco&quot; ,
-IF(ISBLANK(TEXT({!GetCaseNuovoImpianto.Commodity__c})),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + TEXT({!Get_Input_Case.Commodity__c}),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + TEXT({!GetCaseNuovoImpianto.Commodity__c})),
+OR(TEXT({!Get_Input_Case.Type})=&quot;Nuovo Impianto&quot; ,TEXT({!Get_Input_Case.Type})=&quot;Aggiunta Attacco&quot; ) ,
+IF(ISBLANK(TEXT({!GetCaseNuovoImpianto.Commodity__c})),
+TEXT({!Get_Input_Case.Type}) + &quot; &quot; + TEXT({!Get_Input_Case.Commodity__c}),
+TEXT({!Get_Input_Case.Type}) + &quot; &quot; + TEXT({!GetCaseNuovoImpianto.Commodity__c})),
 IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Mod. Imp. - Em. Imp. - Var. Portata&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Rimozione Impianto&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Modifica Impianto&quot;)),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + {!Get_Input_Case.CommodityFormula__c}, TEXT({!Get_Input_Case.Type}))
 )</expression>
     </formulas>
     <formulas>
         <name>ProcessTypeRecapFormula</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!Get_Input_Case.Type},&quot;Nuovo Impianto - Aggiunta Attacco&quot;),&quot;Preventivi Riepilogo Nuovo Impianto&quot;,&quot;Preventivi Riepilogo&quot;)</expression>
+        <expression>IF( OR(TEXT({!Get_Input_Case.Type}) = &quot;Nuovo Impianto&quot;,TEXT({!Get_Input_Case.Type}) = &quot;Aggiunta Attacco&quot;),
+&quot;Preventivi Riepilogo Nuovo Impianto&quot;,
+&quot;Preventivi Riepilogo&quot;)</expression>
     </formulas>
     <formulas>
         <name>RecordTypeDevNameFormula</name>
@@ -1794,7 +1808,7 @@ IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICK
     <formulas>
         <name>RecordTypeIdFormula</name>
         <dataType>String</dataType>
-        <expression>IF(TEXT({!Get_Input_Case.Type}) = &quot;Nuovo Impianto - Aggiunta Attacco&quot;,
+        <expression>IF(OR(TEXT({!Get_Input_Case.Type}) = &quot;Nuovo Impianto&quot;,TEXT({!Get_Input_Case.Type}) = &quot;Aggiunta Attacco&quot;),
 IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetRecordTypePreventivi.Id}),
 {!Get_Input_Case.RecordType.Id})</expression>
     </formulas>
