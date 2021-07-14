@@ -9,7 +9,7 @@
         ></c-hdt-confirmation-modal>
     </template>
 
-    <lightning-card title="Configurazione Offerta Tecnica" icon-name="standard:proposition" >
+    <lightning-card title={label.mainTitle} icon-name="standard:proposition" >
         
         <div if:true={spinnerObj.spinner} class="progress">
             <lightning-spinner class={spinnerObj.spincss} alternative-text="Loading" size="large"></lightning-spinner>
