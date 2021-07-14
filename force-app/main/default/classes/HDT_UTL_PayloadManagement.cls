@@ -351,6 +351,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String payloadSection = '';
 
         List<sObject> cases = inputs.get('CaseList');
+        List<sObject> orders = inputs.get('OrderList');
         for (Integer i = 0; i < cases.size(); i++) {
             String[] record = new List<String>();
             // Il primo 310|40 è già presente, evitiamo di aggiungerlo una seconda volta.
@@ -364,12 +365,17 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Cluster__c', i, inputs, formParams));     // Tipo
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));     // N. RS
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Phase__c', i, inputs, formParams));       // Stato
-            record.add(endLine);
+            // Aggiungiamo lo \n finale sempre, tranne quando siamo all'ultimo giro E non abbiamo Order subito dopo.
+            if (i != cases.size() - 1) {
+                record.add(endLine);
+            } else if (i == cases.size() - 1 && !orders.isEmpty()) {
+                record.add(endLine);
+            }
+
             payloadSection += String.join(record, div);
         }
 
-        List<sObject> order = inputs.get('OrderList');
-        for (Integer i = 0; i < order.size(); i++) {
+        for (Integer i = 0; i < orders.size(); i++) {
             String[] record = new List<String>();
             // Il primo 310|40 è già presente, evitiamo di aggiungerlo una seconda volta.
             // Se i = 0 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
@@ -383,7 +389,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Cluster__c', i, inputs, formParams));        // Tipo
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'OrderNumber', i, inputs, formParams));       // N. RS
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Phase__c', i, inputs, formParams));          // Stato
-            if (i < order.size() - 1) {
+            if (i < orders.size() - 1) {
                 record.add(endLine);
             }
             payloadSection += String.join(record, div);
@@ -399,6 +405,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String payloadSection = '';
 
         List<sObject> cases = inputs.get('CaseList');
+        List<sObject> orders = inputs.get('OrderList');
         for (Integer i = 0; i < cases.size(); i++) {
             String[] record = new List<String>();
             // Il primo 310|50 è già presente, evitiamo di aggiungerlo una seconda volta.
@@ -415,11 +422,19 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CommodityFormula__c', i, inputs, formParams));    // Settore merceologico
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'AddressFormula__c', i, inputs, formParams));      // Indirizzo del lavoro
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Phase__c', i, inputs, formParams));               // Stato
-            record.add(endLine);
+            if (orders.isEmpty() && i == cases.size() - 1) {
+                // SKIP \n 
+            }
+            // Aggiungiamo lo \n finale sempre, tranne quando siamo all'ultimo giro E non abbiamo Order subito dopo.
+            if (i != cases.size() - 1) {
+                record.add(endLine);
+            } else if (i == cases.size() - 1 && !orders.isEmpty()) {
+                record.add(endLine);
+            }
+            
             payloadSection += String.join(record, div);
         }
 
-        List<sObject> orders = inputs.get('OrderList');
         for (Integer i = 0; i < orders.size(); i++) {
             String[] record = new List<String>();
             // Il primo 310|540 è già presente, evitiamo di aggiungerlo una seconda volta.
