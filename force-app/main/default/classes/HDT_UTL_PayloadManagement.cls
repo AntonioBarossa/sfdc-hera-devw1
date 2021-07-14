@@ -409,6 +409,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         List<sObject> cases = inputs.get('CaseList');
         List<sObject> orders = inputs.get('OrderList');
         for (Integer i = 0; i < cases.size(); i++) {
+            String cluster = HDT_UTL_DocumentalManagement.getValue('CaseList', 'Cluster__c', i, inputs, formParams);
+            if (cluster != 'Preventivi' || cluster != 'Verifiche') {
+                continue;
+            }
+
             String[] record = new List<String>();
             // Il primo 310|50 è già presente, evitiamo di aggiungerlo una seconda volta.
             if (i > 0) {
@@ -439,6 +444,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
 
         for (Integer i = 0; i < orders.size(); i++) {
+            String processType = HDT_UTL_DocumentalManagement.getValue('OrderList', 'ProcessType__c', i, inputs, formParams);
+            if (processType != 'Prima Attivazione con modifica') {
+                continue;
+            }
+
             String[] record = new List<String>();
             // Il primo 310|540 è già presente, evitiamo di aggiungerlo una seconda volta.
             // Se i = 0 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
