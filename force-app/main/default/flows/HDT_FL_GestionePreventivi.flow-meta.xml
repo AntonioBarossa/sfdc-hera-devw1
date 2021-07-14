@@ -1380,8 +1380,8 @@
     <decisions>
         <name>Riprendi_Case</name>
         <label>Riprendi Case</label>
-        <locationX>1443</locationX>
-        <locationY>485</locationY>
+        <locationX>1430</locationX>
+        <locationY>433</locationY>
         <defaultConnector>
             <targetReference>CommodityScreen</targetReference>
         </defaultConnector>
@@ -1761,7 +1761,9 @@
     <formulas>
         <name>ProcessTypeCommodity</name>
         <dataType>String</dataType>
-        <expression>IF(TEXT({!Get_Input_Case.Type})=&quot;Nuovo Impianto - Aggiunta Attacco&quot; ,TEXT({!Get_Input_Case.Type}) + &quot; &quot; + TEXT({!GetCaseNuovoImpianto.Commodity__c}),
+        <expression>IF(
+TEXT({!Get_Input_Case.Type})=&quot;Nuovo Impianto - Aggiunta Attacco&quot; ,
+IF(ISBLANK(TEXT({!GetCaseNuovoImpianto.Commodity__c})),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + TEXT({!Get_Input_Case.Commodity__c}),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + TEXT({!GetCaseNuovoImpianto.Commodity__c})),
 IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Mod. Imp. - Em. Imp. - Var. Portata&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Rimozione Impianto&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Modifica Impianto&quot;)),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + {!Get_Input_Case.CommodityFormula__c}, TEXT({!Get_Input_Case.Type}))
 )</expression>
     </formulas>
@@ -1778,7 +1780,9 @@ IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICK
     <formulas>
         <name>RecordTypeIdFormula</name>
         <dataType>String</dataType>
-        <expression>IF(TEXT({!Get_Input_Case.Type}) = &quot;Nuovo Impianto - Aggiunta Attacco&quot;,{!GetRecordTypePreventivi.Id},{!Get_Input_Case.RecordType.Id})</expression>
+        <expression>IF(TEXT({!Get_Input_Case.Type}) = &quot;Nuovo Impianto - Aggiunta Attacco&quot;,
+IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetRecordTypePreventivi.Id}),
+{!Get_Input_Case.RecordType.Id})</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestionePreventivi {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Preventivi</label>
@@ -2257,8 +2261,8 @@ IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICK
     <screens>
         <name>Processo_Screen</name>
         <label>Input Dati Screen</label>
-        <locationX>1476</locationX>
-        <locationY>720</locationY>
+        <locationX>1475</locationX>
+        <locationY>719</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2296,12 +2300,6 @@ IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICK
                 <name>objectName</name>
                 <value>
                     <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <elementReference>PreviousButtonFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2362,6 +2360,12 @@ IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICK
                 <name>recordType</name>
                 <value>
                     <elementReference>RecordTypeIdFormula</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <elementReference>PreviousButtonFormula</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
