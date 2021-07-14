@@ -294,19 +294,9 @@
                 <label>Reclamo Scritto/Rich. Info</label>
             </value>
             <value>
-                <fullName>Rettifica Consumi - Errore di Lettura</fullName>
-                <default>false</default>
-                <label>Rettifica Consumi - Errore di Lettura</label>
-            </value>
-            <value>
                 <fullName>Rettifica Consumi</fullName>
                 <default>false</default>
                 <label>Rettifica Consumi</label>
-            </value>
-            <value>
-                <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
-                <default>false</default>
-                <label>Rettifica Consumi - Errore Stima Consumi</label>
             </value>
             <value>
                 <fullName>Revoca Domiciliazione</fullName>
@@ -419,9 +409,9 @@
                 <label>Testo Contratto in Bolletta</label>
             </value>
             <value>
-                <fullName>Unificazione/Separazione CA-Bolletta</fullName>
+                <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
                 <default>false</default>
-                <label>Unificazione/Separazione CA-Bolletta</label>
+                <label>Unificazione/Separazione BP-CA-Bolletta</label>
             </value>
             <value>
                 <fullName>Unificazione POD</fullName>
