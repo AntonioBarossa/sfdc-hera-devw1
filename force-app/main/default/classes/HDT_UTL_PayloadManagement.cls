@@ -299,7 +299,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String div = '|';
         String payloadSection = '';
 
-        List<sObject> cases = inputs.get('Case');
+        List<sObject> cases = inputs.get('CaseList');
         for (Integer i = 0; i < cases.size(); i++) {
             String[] record = new List<String>();
             record.add('310');
@@ -314,7 +314,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             payloadSection += String.join(record, div);
         }
 
-        List<sObject> order = inputs.get('Order');
+        List<sObject> order = inputs.get('OrderList');
         for (Integer i = 0; i < order.size(); i++) {
             String[] record = new List<String>();
             record.add('310');
@@ -338,7 +338,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String div = '|';
         String payloadSection = '';
 
-        List<sObject> cases = inputs.get('Case');
+        List<sObject> cases = inputs.get('CaseList');
         for (Integer i = 0; i < cases.size(); i++) {
             String[] record = new List<String>();
             record.add('310');
@@ -356,7 +356,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             payloadSection += String.join(record, div);
         }
 
-        List<sObject> order = inputs.get('Order');
+        List<sObject> order = inputs.get('OrderList');
         for (Integer i = 0; i < order.size(); i++) {
             String[] record = new List<String>();
             record.add('310');
