@@ -299,11 +299,14 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String div = '|';
         String payloadSection = '';
 
-        List<sObject> cases = inputs.get('Case');
+        List<sObject> cases = inputs.get('CaseList');
         for (Integer i = 0; i < cases.size(); i++) {
             String[] record = new List<String>();
-            record.add('310');
-            record.add('40');
+            // Il primo 310|40 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('310');
+                record.add('40');
+            }
             record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Origin', i, inputs, formParams));         // Canale
             record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'CreatedDate', i, inputs, formParams));    // Data ricevimento
             record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Type', i, inputs, formParams));           // Sottotipo
@@ -314,11 +317,15 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             payloadSection += String.join(record, div);
         }
 
-        List<sObject> order = inputs.get('Order');
+        List<sObject> order = inputs.get('OrderList');
         for (Integer i = 0; i < order.size(); i++) {
             String[] record = new List<String>();
-            record.add('310');
-            record.add('40');
+            // Il primo 310|40 è già presente, evitiamo di aggiungerlo una seconda volta.
+            // Se i = 0 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
+            if (i > 0 || String.isBlank(payloadSection)) {
+                record.add('310');
+                record.add('40');
+            }
             record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'Channel__c', i, inputs, formParams));        // Canale
             record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'CreatedDate', i, inputs, formParams));       // Data ricevimento
             record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'ProcessType__c', i, inputs, formParams));    // Sottotipo
@@ -338,11 +345,14 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String div = '|';
         String payloadSection = '';
 
-        List<sObject> cases = inputs.get('Case');
+        List<sObject> cases = inputs.get('CaseList');
         for (Integer i = 0; i < cases.size(); i++) {
             String[] record = new List<String>();
-            record.add('310');
-            record.add('50');
+            // Il primo 310|50 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('310');
+                record.add('50');
+            }
             record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'CreatedDate', i, inputs, formParams));            // Data Stato
             record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Amount__c', i, inputs, formParams));              // Costo
             record.add(HDT_UTL_DocumentalManagement.getValue('Case', 'CreatedDate', i, inputs, formParams));            // Data Doc
@@ -356,11 +366,15 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             payloadSection += String.join(record, div);
         }
 
-        List<sObject> order = inputs.get('Order');
+        List<sObject> order = inputs.get('OrderList');
         for (Integer i = 0; i < order.size(); i++) {
             String[] record = new List<String>();
-            record.add('310');
-            record.add('50');
+            // Il primo 310|540 è già presente, evitiamo di aggiungerlo una seconda volta.
+            // Se i = 0 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
+            if (i > 0 || String.isBlank(payloadSection)) {
+                record.add('310');
+                record.add('50');
+            }
             record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'CreatedDate', i, inputs, formParams));                 // Data Stato
             record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'EstimateAmount__c', i, inputs, formParams));           // Costo
             record.add(HDT_UTL_DocumentalManagement.getValue('Order', 'CreatedDate', i, inputs, formParams));                 // Data Doc
