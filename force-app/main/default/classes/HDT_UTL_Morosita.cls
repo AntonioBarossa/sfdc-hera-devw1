@@ -23,7 +23,7 @@ public inherited sharing class HDT_UTL_Morosita {
 
         Case containerCase = new case();
         containerCase.Cluster__c = currentCase.Cluster__c;
-        containerCase.Type = currentCase.Type;
+        containerCase.Type = 'Contenitore Morosità';
         containerCase.AccountId = currentCase.AccountId;
         containerCase.ContactId = currentCase.ContactId;
         containerCase.IsContainer__c = true;
