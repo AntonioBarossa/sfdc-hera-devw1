@@ -413,9 +413,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 record.add('00310');
                 record.add('50');
             }
-            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CreatedDate', i, inputs, formParams));            // Data Stato
+            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CreatedDate', i, inputs, formParams)));
+            record.add(createdDate);                                                                                        // Data Stato
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Amount__c', i, inputs, formParams));              // Costo
-            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CreatedDate', i, inputs, formParams));            // Data Doc
+            record.add(createdDate);                                                                                        // Data Doc
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));             // Num documento
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));             // N. Ordine
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'TensionOption__c', i, inputs, formParams));       // Tipo lavoro
@@ -443,9 +444,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 record.add('00310');
                 record.add('50');
             }
-            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'CreatedDate', i, inputs, formParams));                 // Data Stato
+            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('OrderList', 'CreatedDate', i, inputs, formParams)));
+            record.add(createdDate);                                                                                              // Data Stato
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'EstimateAmount__c', i, inputs, formParams));           // Costo
-            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'CreatedDate', i, inputs, formParams));                 // Data Doc
+            record.add(createdDate);                                                                                              // Data Doc
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'OrderNumber', i, inputs, formParams));                 // Num documento
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'OrderNumber', i, inputs, formParams));                 // N. Ordine
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'RequestOption__c', i, inputs, formParams));            // Tipo lavoro
