@@ -1618,28 +1618,28 @@
             <field>Cluster__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>GetCaseAggiornato2.Cluster__c</elementReference>
+                <elementReference>Get_Case_Aggiornato.Cluster__c</elementReference>
             </value>
         </filters>
         <filters>
             <field>Process__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>GetCaseAggiornato2.Type</elementReference>
+                <elementReference>Get_Case_Aggiornato.Type</elementReference>
             </value>
         </filters>
         <filters>
             <field>Subprocess__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>GetCaseAggiornato2.Subprocess__c</elementReference>
+                <elementReference>Get_Case_Aggiornato.Subprocess__c</elementReference>
             </value>
         </filters>
         <filters>
             <field>Commodity__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>GetCaseAggiornato2.CommodityFormula__c</elementReference>
+                <elementReference>Get_Case_Aggiornato.CommodityFormula__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
