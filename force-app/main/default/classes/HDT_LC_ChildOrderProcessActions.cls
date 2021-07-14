@@ -36,6 +36,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Documenti relativi alla Legge 80.
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
+                orderToUpdate.ServiceCost__c = getFixedFee(order, order.RecordType.DeveloperName);
             }
             // Calculate Date @Picchiri 20/05/21
             when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn   
@@ -159,6 +160,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Istanza 326.
                     orderToUpdate.Instance326__c = 'Richiesto';
                 }
+                orderToUpdate.ServiceCost__c = getFixedFee(order, order.RecordType.DeveloperName);
             }
             when 'HDT_RT_AttivazioneConModifica' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
@@ -328,5 +330,33 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             Phase__c = 'Annullato',
             CancellationReason__c = cancellationReason
         ));
+    }
+
+    /**
+     * @author Federico de Felice (federico.defelice@webresults.it)
+     * @date 14/07/2021
+     * @param Order order
+     * @param String cancellationReason
+     * @description Execute child order process cancel actions
+     */
+    private static Decimal getFixedFee(Order ord, String searchKey){
+        decimal fixedFeeExclVat;
+                
+        for( HDT_FixedFeeTable__mdt meta : HDT_FixedFeeTable__mdt.getall().values() ){
+            if(meta.Sottotipo__c==searchKey){
+                fixedFeeExclVat=meta.Value__c;
+                break;
+            }
+        } 
+		system.debug(fixedFeeExclVat);
+        String regex='(\\d*\\.?\\d*)\\%';
+        Matcher matcher=Pattern.compile(regEx).matcher(ord.vat__c);
+        decimal vatNumber=null;
+        if(matcher.find()){
+            vatNumber = Decimal.valueOf(matcher.group(1))*0.01;
+        }else{
+            return fixedFeeExclVat;
+        }
+        return fixedFeeExclVat==null ? 0.0 : fixedFeeExclVat*(1+vatNumber);
     }
 }
