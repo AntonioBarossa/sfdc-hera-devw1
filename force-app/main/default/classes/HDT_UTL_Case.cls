@@ -167,7 +167,7 @@ public inherited sharing class HDT_UTL_Case {
 
                 }
                 when else{
-                    //No action needed
+                    result = '13V0000000';
                 }
             }
         }
