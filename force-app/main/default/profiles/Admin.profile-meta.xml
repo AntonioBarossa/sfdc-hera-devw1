@@ -25768,7 +25768,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ServiceRequest__c.ServiceRequestName__c</field>
         <readable>true</readable>
     </fieldPermissions>
