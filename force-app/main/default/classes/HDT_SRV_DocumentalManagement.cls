@@ -602,7 +602,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			String altriServizi = '';
 			
 			Integer i = -1;
-			String documents = (String) formParams.get('GestioneCredito');
+			String documents = (String) formParams.get('EstrattoConto');
 			List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documents);
 			Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
 			List<Object> secondoLivelloList = new List<Object>();
@@ -619,12 +619,11 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			for (Object singleRecord : primoLivelloList) {
 				i++;
 				primolivello = (Map<String, Object>) singleRecord;
-				secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
 				String currentCa = (String)primolivello.get('contoContrattuale');
 				Double residuo = Double.valueOf(primolivello.get('residuo'));
 				String modPagamento = (String)primolivello.get('modalitaPagamentoCA');
 				
-				if (String.isNotBlank((String)primolivello.get('OrdineDiPagamento'))) {
+				if (String.isNotBlank((String)primolivello.get('ordineDiPagamento'))) {
 					ordineDiPagamento = true;
 				} else {
 					ordineDiPagamento = false;	
@@ -673,7 +672,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 					//recordOttantuno.add((String)primoLivello.get('numeroFattura'));
 				}
 				recordOttantuno.add((String)primoLivello.get('rateizzato'));
-				if(String.isNotBlank((String)primoLivello.get('DataEmissione'))){
+				if(String.isNotBlank((String)primoLivello.get('dataEmissione'))){
 					String dataEmissione = (String)primoLivello.get('dataEmissione');
 					recordOttantuno.add(dataEmissione);
 				}else{
@@ -704,7 +703,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				altriServizi = '';
 				//NUOVI CAMPI aggiunti al tracciato per la Gestione Credito: CONTRATTO e TIPO_DOCUMENTO 
 				recordOttantuno.add((String)primoLivello.get('contratto'));
-				recordOttantuno.add((String)primoLivello.get('tipoDoc'));
+				recordOttantuno.add((String)primoLivello.get('tipoDocumento'));
 				recordOttantuno.add(fineRiga);
 
 				// STESSO CA

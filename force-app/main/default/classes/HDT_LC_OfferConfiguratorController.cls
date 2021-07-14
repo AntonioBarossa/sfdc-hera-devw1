@@ -1,9 +1,9 @@
 public inherited sharing class HDT_LC_OfferConfiguratorController {
 
     @AuraEnabled
-    public static List<sObject> getTableData(String objectApiName, String rate, String searchByField, String searchValue){
+    public static List<sObject> getTableData(String objectApiName, String rate, String rateTypeValue, String searchByField, String searchValue){
         try{
-            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName, rate, searchByField, searchValue);
+            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName, rate, rateTypeValue, searchByField, searchValue);
         } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         } 
