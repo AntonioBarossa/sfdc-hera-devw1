@@ -196,7 +196,7 @@ public class HDT_SRV_DocumentalManagement{
 		String signMode = (String) formParams.get('signMode') != null? (String) formParams.get('signMode'):'';
 		String parsedContext = '';
 		try{
-			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC')){
+			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC') || context.equalsIgnoreCase('Account')){
 				parsedContext = 'Case';
 			}else {
 				parsedContext=context;

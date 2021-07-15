@@ -118,7 +118,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 tecOffId = tecOff.Id;
             } else {
                 saveResponse.success = false;
-                saveResponse.message = '# ERROR: you don\'t have permission on this obj';
+                saveResponse.message = Label.HDT_OfferConfig_ErrorObj;
                 saveResponse.dataError = false;
                 return saveResponse;                
             }
@@ -171,7 +171,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             saveResponse.message = '# ERROR: insert failed';
         } else {
             saveResponse.success = true;
-            saveResponse.message = 'Offerta salvata correttamente';
+            saveResponse.message = Label.HDT_OfferConfig_SaveSuccess;
             saveResponse.techOffId = tecOffId;
         }
         
@@ -363,7 +363,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 insert newTechOff;
             } else {
                 saveResponse.success = false;
-                saveResponse.message = '# ERROR: you don\'t have permission on this obj';
+                saveResponse.message = Label.HDT_OfferConfig_ErrorObj;
                 saveResponse.dataError = false;
                 return saveResponse;                
             }
@@ -390,7 +390,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         if(saveResponse.errorData.size() > 0){
             Database.rollback(sp);
             saveResponse.success = false;
-            saveResponse.message = '# ERROR: insert failed';
+            saveResponse.message = Label.HDT_OfferConfig_SaveError;
         } else {
             saveResponse.success = true;
             saveResponse.techOffId = newTechOff.Id;
@@ -460,7 +460,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             saveResponse.message = '# ERROR: delete failed';
         } else {
             saveResponse.success = true;
-            saveResponse.message = 'Offerta eliminata correttamente';
+            saveResponse.message = Label.HDT_OfferConfig_DeleteComplete;
         }
 
         return saveResponse;
@@ -477,7 +477,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         if(techOff == null){
             mulesoftResponse.success = false;
-            mulesoftResponse.message = 'Nessuna configurazione trovata';
+            mulesoftResponse.message = Label.HDT_OfferConfig_ConfigError;
             return mulesoftResponse;
         }
 
@@ -503,7 +503,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         for (String currentField : fieldToCheck) {
             if(techOff.get(currentField) == null || techOff.get(currentField) == ''){
                 mulesoftResponse.success = false;
-                mulesoftResponse.message = 'Tutti i parametri obbligatori devono essere compilati!';
+                mulesoftResponse.message = Label.HDT_OfferConfig_FieldRequired;
                 return mulesoftResponse;
             }
         }
@@ -513,7 +513,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         if(!bodyObj.success){
             mulesoftResponse.success = false;
-            mulesoftResponse.message = 'Errore nella configurazione chiamata SAP';
+            mulesoftResponse.message = Label.HDT_OfferConfig_WS_Error;
             return mulesoftResponse;  
         }
 
@@ -560,7 +560,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         updateProductAfterSap(technicalOfferId, mulesoftWsResponse.keysap, 'ok');
 
         mulesoftResponse.success = true;
-        mulesoftResponse.message = 'Offerta inviata a SAP correttamente, codice Sap: ' + mulesoftWsResponse.keysap;
+        mulesoftResponse.message = Label.HDT_OfferConfig_WS_Success + mulesoftWsResponse.keysap;
         mulesoftResponse.bodyResponse = '{"newCode": "' + mulesoftWsResponse.keysap + '"}';
 
         return mulesoftResponse;
