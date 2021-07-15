@@ -10377,10 +10377,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambio cont%2E non registrato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Cambio contatore non registrato</fullName>
             <default>false</default>
         </values>
