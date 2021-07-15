@@ -36,7 +36,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 } else {
                     callActivities.add(new wrts_prcgvr__Activity__c(
                         Order__c = ord.Id,
-                        Account__c = ord.AccountId
+                        Account__c = ord.AccountId,
+                        Type__c = 'Quality Call'
                     ));
                 }
             }

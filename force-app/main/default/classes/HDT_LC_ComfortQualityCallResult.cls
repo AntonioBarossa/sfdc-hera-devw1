@@ -1,20 +1,9 @@
 public inherited sharing class HDT_LC_ComfortQualityCallResult {
     
-    private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
-
     @AuraEnabled
-    public static void confirmContract(String ordId){
-        orderSrv.updateRecord(new Order(
-            Id = ordId,
-            Phase__c = 'Comunicazione verso Heroku'
-        ));
-    }
+    public static Boolean init(String activityId){
+       List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getActivityByRecordId(activityId);
 
-    @AuraEnabled
-    public static void cancelContract(String ordId){
-        orderSrv.updateRecord(new Order(
-            Id = ordId,
-            Phase__c = 'Annullato per no conferma cliente'
-        ));
+       return (listActivity[0].Type__c == 'Quality Call' || listActivity[0].Type__c == 'Comfort Call');
     }
 }

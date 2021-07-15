@@ -26,8 +26,10 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
                 orderMap.put(ord.Id, ord);
 
                 wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-                    Order__c = ord.ParentOrder__c,
-                    Account__c = ord.AccountId
+                    Order__c = ord.Id,
+                    Account__c = ord.AccountId,
+                    IsClientInResolution153__c = true,
+                    Type__c = 'Comfort Call'
                 );
 
                 mapActivities.put(ord.ParentOrder__c, activity);

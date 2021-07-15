@@ -7,27 +7,28 @@
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
-    <lightning:card>
-        <aura:set attribute="title">Esito comfort/quality call</aura:set>
+    <c:hdtOrdersForComfortQualityList activityId="{!v.recordId}" onresultevent="{!c.handleResultEvent}"></c:hdtOrdersForComfortQualityList>
 
-        <aura:renderif istrue="{!v.HideSpinner}">
+
+
+
+
+
+
+
+    <!-- <lightning:card > -->
+        <!-- <aura:set attribute="title">Esito comfort/quality call</aura:set> -->
+
+        <!-- <aura:renderif istrue="{!v.HideSpinner}">
 		    <lightning:spinner alternativeText="Loading" size="medium" />
-        </aura:renderif>
-
-        <div class="slds-align_absolute-center" style="height:5rem">
-            <div>
-                <ul class="slds-button-group-list">
-                    <li>
-                        <lightning:button variant="brand" label="Conferma contratto" title="Conferma contratto" onclick="{! c.handleConfirm }" />
-                    </li>
-                    <li class="slds-m-left_small">
-                        <lightning:button variant="brand" label="Annulla Contratti" title="Annulla Contratti" onclick="{! c.handleCancel }" />
-                    </li>
-                </ul>
-            </div>
-        </div>
-
+        </aura:renderif> -->
         
-    </lightning:card>
+        <!-- <div class="slds-align_absolute-center" style="height:5rem"> -->
+            <!-- <aura:if isTrue="{!v.recordId}">
+                <c:hdtOrdersForComfortQualityList activityId="{!v.recordId}"></c:hdtOrdersForComfortQualityList>
+            </aura:if> -->
+        <!-- </div> -->
+
+    <!-- </lightning:card> -->
 
 </aura:component>	

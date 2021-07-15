@@ -1,6 +1,34 @@
 ({
     doInit: function(component, event, helper) {
-        console.log('HDT_LCP_ComfortQualiteCallResultController - init');
+        console.log(component.get("v.recordId"));
+        var action = component.get("c.init");
+        action.setParams({'activityId': component.get("v.recordId")});
+        action.setCallback(this,function(response){
+        	var state = response.getState();
+            if (state === "SUCCESS") {
+            	var res = response.getReturnValue();
+                if(!res){
+                	var resultsToast = $A.get("e.force:showToast");
+                    resultsToast.setParams({
+                        "title": "Error",
+                        "message": "Esito non disponibile per questa activity",
+                        "type" : "error"
+                    });
+                    resultsToast.fire();
+                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                	dismissActionPanel.fire();
+                }
+                
+                // Close the action panel
+            }
+            component.set("v.HideSpinner",false);
+        });
+        $A.enqueueAction(action);  
+    },
+
+    handleResultEvent: function(component, event, helper) {
+        $A.get("e.force:closeQuickAction").fire();
+        $A.get('e.force:refreshView').fire();
     },
 
     handleConfirm: function(component, event, helper) {
