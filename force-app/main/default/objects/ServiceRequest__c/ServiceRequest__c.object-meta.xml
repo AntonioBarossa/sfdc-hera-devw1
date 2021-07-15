@@ -157,8 +157,9 @@
     <gender>Masculine</gender>
     <label>Service Request</label>
     <nameField>
+        <displayFormat>SR-{0000}</displayFormat>
         <label>Service Request</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Service Requests</pluralLabel>
     <searchLayouts/>
