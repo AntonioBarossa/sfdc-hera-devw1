@@ -1,16 +1,4 @@
-public with sharing class HDT_LC_ActivityReassignmentTool {
-    class DTO {
-        String id;
-        String name;
-        String icon;
-
-        public DTO(String id, String name, String icon) {
-            this.id = id;
-            this.name = name;
-            this.icon = icon;
-        }
-    }
-    
+public with sharing class HDT_LC_ActivityReassignmentTool {    
     @AuraEnabled
     public static List<Map<String,String>> getAssignees(String queryString) {
         List<Map<String,String>> results = new List<Map<String,String>>();
@@ -44,10 +32,10 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
     @AuraEnabled
     public static String reassignActivity(String recordId, String assigneeId) {
         try {
-            update new wrts_prcgvr__Activity__c(
+            HDT_UTL_DatabaseService.updateSObject(new wrts_prcgvr__Activity__c(
                 Id = recordId,
                 OwnerId = assigneeId
-            );
+            ));
             return null;
         } catch (Exception e) {
             return e.getMessage();
