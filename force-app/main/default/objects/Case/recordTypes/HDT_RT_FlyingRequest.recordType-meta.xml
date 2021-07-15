@@ -8227,10 +8227,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
         </values>
@@ -8268,10 +8264,6 @@
         </values>
         <values>
             <fullName>Marcatura%2FUso PdR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8352,14 +8344,6 @@
         </values>
         <values>
             <fullName>Reclamo Scritto%2FRich%2E Info</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore di Lettura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8495,7 +8479,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Unificazione%2FSeparazione CA-Bolletta</fullName>
+            <fullName>Unificazione%2FSeparazione BP-CA-Bolletta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12347,10 +12331,6 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Account%2FBilling Profile - errata categoria</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Aggiunta Attacco</fullName>
             <default>false</default>
         </values>
@@ -12400,10 +12380,6 @@
         </values>
         <values>
             <fullName>Cambio Uso Tecnico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cambio cont%2E non registrato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12495,10 +12471,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
         </values>
@@ -12540,10 +12512,6 @@
         </values>
         <values>
             <fullName>Marcatura%2FUso PdR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12640,14 +12608,6 @@
         </values>
         <values>
             <fullName>Rettifica Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore di Lettura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12796,10 +12756,6 @@
         </values>
         <values>
             <fullName>Variazione Tensione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Variazione Tensione - Pressione</fullName>
             <default>false</default>
         </values>
         <values>
