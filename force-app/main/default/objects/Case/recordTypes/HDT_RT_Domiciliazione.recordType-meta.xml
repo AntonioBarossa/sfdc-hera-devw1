@@ -10693,10 +10693,6 @@ q<?xml version="1.0" encoding="UTF-8"?>
             <default>false</default>
         </values>
         <values>
-            <fullName>Variazione Tensione - Pressione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Variazione indirizzo di fornitura</fullName>
             <default>false</default>
         </values>

@@ -10813,10 +10813,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Variazione Tensione - Pressione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Variazione su Amministratore</fullName>
             <default>false</default>
         </values>

@@ -10489,10 +10489,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Variazione Tensione - Pressione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Verifica GDM</fullName>
             <default>false</default>
         </values>

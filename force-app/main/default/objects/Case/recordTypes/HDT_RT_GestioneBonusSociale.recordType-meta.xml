@@ -10629,10 +10629,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Variazione Tensione - Pressione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Variazione indirizzo di fornitura</fullName>
             <default>false</default>
         </values>
