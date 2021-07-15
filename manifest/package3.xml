@@ -1,194 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Account.Scheda_Cliente</members>
-        <name>QuickAction</name>
-    </types>
-    <types>
-        <members>Account_Service_Console</members>
+        <members>Contact_Record_Page</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>Info1GroupList__c</members>
-        <members>ServiceRequest__c</members>
+        <members>HDT_FixedFeeTable__mdt</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>SaleServiceItem__c</members>
-        <name>CustomTab</name>
-    </types>
-    <types>
-        <members>Account</members>
-        <name>Workflow</name>
-    </types>
-    <types>
-        <members>hdtAccountDocumentSignatureManager</members>
-        <members>hdtAccountStatementDetailViewer</members>
-        <members>hdtAccountStatementViewer</members>
-        <members>hdtCreateNewEligibilityCriteria</members>
-        <members>hdtCreateNewTechnicalOffer</members>
-        <members>hdtEligibilityCriteriaConfiguration</members>
-        <members>hdtFilterFirstLevelModal</members>
-        <members>hdtLastBill</members>
-        <members>hdtModalDataTable</members>
-        <members>hdtOfferConfigurator</members>
-        <members>hdtPill</members>
-        <members>hdtSearchEligibilityCriteria</members>
-        <members>hdtSearchTechnicalOffer</members>
-        <members>hdtShowSchedaCliente</members>
-        <members>hdtTechnicalOfferEditForm</members>
-        <members>hdtTechnicalOfferSelection</members>
-        <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>Admin</members>
-        <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
-        <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
-        <name>Profile</name>
-    </types>
-    <types>
-        <members>HDT_FL_GestioneAutoletture</members>
-        <name>Flow</name>
-    </types>
-    <types>
-        <members>SaleServiceItem__c.CPQ_Lookup</members>
-        <name>FieldSet</name>
-    </types>
-    <types>
-        <members>CustomLabels</members>
-        <name>CustomLabels</name>
-    </types>
-    <types>
-        <members>Case.HDT_RT_AlertDisassociazioneUtenteWeb</members>
-        <members>Case.HDT_RT_AllineamentoAnagrafica</members>
-        <members>Case.HDT_RT_AltreInformative</members>
-        <members>Case.HDT_RT_AltriProcessiPagamenti</members>
-        <members>Case.HDT_RT_Annullamento</members>
-        <members>Case.HDT_RT_AttivazionePODVariazionePDR</members>
-        <members>Case.HDT_RT_Autolettura</members>
-        <members>Case.HDT_RT_CambioUsoTec</members>
-        <members>Case.HDT_RT_CanoneRai</members>
-        <members>Case.HDT_RT_ComportamentoVenditori</members>
-        <members>Case.HDT_RT_ComunicazionePagamento</members>
-        <members>Case.HDT_RT_Disattivazioni</members>
-        <members>Case.HDT_RT_DocCopiaContratto</members>
-        <members>Case.HDT_RT_Domiciliazione</members>
-        <members>Case.HDT_RT_FatturazioneConsumi</members>
-        <members>Case.HDT_RT_FlyingRequest</members>
-        <members>Case.HDT_RT_GenericheAttivazioni</members>
-        <members>Case.HDT_RT_GenericheVas</members>
-        <members>Case.HDT_RT_GestioneBolletta</members>
-        <members>Case.HDT_RT_GestioneBonusSociale</members>
-        <members>Case.HDT_RT_GestionePrivacy</members>
-        <members>Case.HDT_RT_Indennizzo</members>
-        <members>Case.HDT_RT_Informative</members>
-        <members>Case.HDT_RT_InversioneContatore</members>
-        <members>Case.HDT_RT_ModContrattoPreAtt</members>
-        <members>Case.HDT_RT_Morosita</members>
-        <members>Case.HDT_RT_PianoRateizzazione</members>
-        <members>Case.HDT_RT_PostSalesVAS</members>
-        <members>Case.HDT_RT_PreventiviEle</members>
-        <members>Case.HDT_RT_PreventiviGas</members>
-        <members>Case.HDT_RT_ProrogaTemporanea</members>
-        <members>Case.HDT_RT_ReclamiScrittiRichiesteInfo</members>
-        <members>Case.HDT_RT_RiattivazioniNonMorose</members>
-        <members>Case.HDT_RT_RichiestaParere</members>
-        <members>Case.HDT_RT_Rimborso</members>
-        <members>Case.HDT_RT_SospensioneRiattivazione</members>
-        <members>Case.HDT_RT_Subentro_EE</members>
-        <members>Case.HDT_RT_Subentro_GAS</members>
-        <members>Case.HDT_RT_UnificazioneSeparazioneCABolletta</members>
-        <members>Case.HDT_RT_VariazioneAmministratore</members>
-        <members>Case.HDT_RT_VariazioneAnagraficaCliente</members>
-        <members>Case.HDT_RT_VariazioniEle</members>
-        <members>Case.HDT_RT_VariazioniGas</members>
-        <members>Case.HDT_RT_VerificaDatiAlDl</members>
-        <members>Case.HDT_RT_VerificaTitolaritaPodPdr</members>
-        <members>Case.HDT_RT_VerificheEle</members>
-        <members>Case.HDT_RT_VerificheGas</members>
-        <members>Case.HDT_RT_VolturaTecnica</members>
-        <members>Case.HDT_RT_VotiveModena</members>
-        <name>RecordType</name>
-    </types>
-    <types>
-        <members>Account-CPQ Account Layout Service Console</members>
-        <members>Case-HDT_PraticaInVolo</members>
-        <members>Case-HDT_PreventiviEle</members>
-        <members>HDT_ClusterProcess__mdt-HDT_ClusterProcess Layout</members>
-        <members>Order-HDT_PraticaInVolo</members>
-        <members>Product2-CPQ Product Layout New</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>HDT_SalesforceCPQAdmin</members>
-        <members>HDT_SalesforceCPQPartner</members>
-        <members>HDT_SalesforceCPQUser</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>HDT_LC_AccountDataEnrichmentTst</members>
-        <members>HDT_LC_AccountSelezionaRecordtypeTst</members>
-        <members>HDT_LC_AccountStatementControllerTst</members>
-        <members>HDT_LC_AccountStatementControllerTstMock</members>
-        <members>HDT_LC_CalculateEstimatedCostTst</members>
-        <members>HDT_LC_CustomLookupControllerTst</members>
-        <members>HDT_LC_DocumentValidationTst</members>
-        <members>HDT_LC_EligibilityCriteriaController</members>
-        <members>HDT_LC_EligibilityCriteriaCtrlHelper</members>
-        <members>HDT_LC_LastBill</members>
-        <members>HDT_LC_LeadCalculateFiscalCodeTst</members>
-        <members>HDT_LC_MeterReadingControllerTst</members>
-        <members>HDT_LC_OfferConfiguratorController</members>
-        <members>HDT_LC_OfferConfiguratorCtrlHelper</members>
-        <members>HDT_QR_TechnicalOffer</members>
-        <members>HDT_SRV_DocumentalManagement</members>
-        <members>HDT_SRV_DocumentalManagementFacade</members>
-        <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_DocumentalManagement</members>
-        <members>HDT_UTL_IntegrationObject</members>
-        <members>HDT_UTL_PayloadManagement</members>
-        <members>HDT_WRP_DocumentalResponse</members>
-        <members>HDT_WRP_IntegrationObject</members>
-        <members>HDT_WS_DocumentalIntegration</members>
+        <members>HDT_LC_ChildOrderProcessActions</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Case.InformativeType__c</members>
-        <members>ComfortQualityCall__c.ComfortDocSendingChannel__c</members>
-        <members>EligibilityCriteria__c.NameExternalId__c</members>
-        <members>EligibleMunicipality__c.NameExternalId__c</members>
-        <members>KpiTracking__c.LastBillAmount__c</members>
-        <members>Order.ComfortCallDaysDue__c</members>
-        <members>Order.DateComfortCall__c</members>
-        <members>Order.ServiceCost__c</members>
-        <members>Product2.VASGift__c</members>
-        <members>SBQQ__LookupQuery__c.SBQQ__TestedField__c</members>
-        <members>ServiceRequest__c.DependOn__c</members>
-        <members>ServiceRequest__c.ServicePointCode__c</members>
-        <members>ServiceRequest__c.Type__c</members>
-        <members>SiebelActivity__x.CREATED__c</members>
-        <members>SiebelActivity__x.LAST_UPD__c</members>
-        <members>SiebelContact__x.CREATED__c</members>
-        <members>SiebelContact__x.X_DATA_LAST_UPD_PRIVACY__c</members>
-        <members>SiebelContract__x.END_DT__c</members>
-        <members>SiebelContract__x.START_DT__c</members>
-        <members>SiebelContract__x.X_END_CONTRACT__c</members>
+        <members>HDT_FixedFeeTable__mdt.Sottotipo__c</members>
+        <members>HDT_FixedFeeTable__mdt.Value__c</members>
         <members>TechnicalOfferItem__c.NameExternalId__c</members>
-        <members>wrts_prcgvr__Activity__c.QAdCallID__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>CaseType</members>
-        <name>StandardValueSet</name>
-    </types>
-    <types>
-        <members>HDT_ButtonDetails.Stampa</members>
-        <members>HDT_ClusterProcess.Fatturazione</members>
-        <members>HDT_IntegrationObject.Documentale_Context3</members>
+        <members>HDT_FixedFeeTable.Prima_Attivazione</members>
+        <members>HDT_FixedFeeTable.Subentro_su_GdM_chiuso</members>
         <name>CustomMetadata</name>
     </types>
     <version>49</version>
