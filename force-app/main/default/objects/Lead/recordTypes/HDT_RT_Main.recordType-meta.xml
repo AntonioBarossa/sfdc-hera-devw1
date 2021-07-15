@@ -171,7 +171,7 @@
             <fullName>Info commerciali</fullName>
             <default>false</default>
         </values>
-        <values>
+    </picklistValues>
     <picklistValues>
         <picklist>CustomerMarking__c</picklist>
         <values>
