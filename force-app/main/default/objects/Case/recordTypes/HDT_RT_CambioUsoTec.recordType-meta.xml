@@ -7254,10 +7254,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Modifica Alert</fullName>
             <default>false</default>
         </values>
@@ -10638,10 +10634,6 @@
         </values>
         <values>
             <fullName>Inversione del Contatore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
             <default>false</default>
         </values>
         <values>

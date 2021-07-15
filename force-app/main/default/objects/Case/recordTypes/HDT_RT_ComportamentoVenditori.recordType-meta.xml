@@ -7234,7 +7234,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
+            <fullName></fullName>
             <default>false</default>
         </values>
         <values>
@@ -10382,10 +10382,6 @@
         </values>
         <values>
             <fullName>Marcatura%2FUso PdR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
             <default>false</default>
         </values>
         <values>
