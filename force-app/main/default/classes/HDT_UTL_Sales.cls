@@ -1,5 +1,7 @@
 public with sharing class HDT_UTL_Sales {
     
+     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
+
     public static map<String,String> mapMarcatura = new Map<String,String>();//'AAS Associazione' => 'AAS','AAS Azienda'=> 'AAS','AAS Condominio'=> 'AAS','AAS Ditta individuale'=> 'AAS','AAS Parti comuni'=> 'AAS','AAS Persona fisica'=> 'AAS'}; 
     public static String getCityAgency(String comune,boolean isEle, boolean isGas){
         String getSDVComune = '';
@@ -46,6 +48,18 @@ public with sharing class HDT_UTL_Sales {
             mapRes.put('codiceAgente','');
         }
         return mapRes;
+    }
+
+    public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
+
+        if(((sale.Account__r.CustomerMarking__c != 'Famiglie' && sale.Account__r.CustomerMarking__c != 'Aziende SME' && sale.Account__r.CustomerMarking__c != 'Piccoli Condomini') ||(!'marche'.equalsIgnoreCase(sp.SupplyCity__c)&& !'abruzzo'.equalsIgnoreCase(sp.SupplyCity__c)))){
+            Sale__c s = new Sale__c(Id=sale.Id);
+            s.isTransition__c=true;
+            saleSrv.updateRecord(s);
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

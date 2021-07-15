@@ -7,6 +7,20 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog(); 
     
     public static void salesProcessManagementBefore(list<Order> newOrderList,List<Order> oldOrderList){
+
+        /*Transitorio
+        */
+        Map<String,Order> mapOrder = new Map<String,Order>();
+        for(Order o: oldOrderList){
+            mapOrder.put(o.Id, o);
+        }
+        for (Order order : newOrderList) {
+            Order oldOrder= mapOrder.get(order.Id);
+            if(order.Phase__c!=oldOrder.Phase__c&&order.Phase__c=='Comunicazione Verso Heroku'&&order.isTransition__c==true){
+                order.Phase__c='Comunicazione  Siebel';
+            }
+        }
+        
         
     }    
     public static void salesProcessManagementAfter(list<Order> newOrderList,List<Order> oldOrderList){
@@ -38,8 +52,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
 
         List<String> orderList = getParentOrders(newOrdersList, oldOrdersList, orderMapNewToOld);
+        List<Order> ordersHeroku = new List<Order>();
+        List<Order> ordersSiebel = new List<Order>();
+
+        for(Order o:orders){
+            if(o.sale__r.isTransition__c==true){
+
+                ordersSiebel.add(o);
+            }else{
+                ordersHeroku.add(o);
+            }
+        }
         //List<id> docVali = filterByRecordTypeAndPhase(orderList,)
-        updateChildOrdersPhase(orderList, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS');
+        updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Comunicazione Siebel','Documentazione Validata','Comunicazione Motore VAS')
+
+        updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS');
 		insertLogForOrderChangedPhase(orderMapOld,orderMapNew);
     }
 	
@@ -191,7 +218,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         
         orderSrv.checkReadAccess('Phase__c');
         List<Order> childOrders = orderQr.getChildOrdersByParentIds(parentOrderIds);
-
+       
         for (Order childOrder : childOrders) {
             if (childOrder.Phase__c == currentPhase) {
                 Order orderToUpdate = new Order(
