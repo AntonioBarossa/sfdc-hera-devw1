@@ -20,7 +20,6 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'UserCreatorGroup__c' => 'Order__r.CreatedBy.CreatorGroup__c IN (###)',
         'SalesChannel__c' => 'Order__r.Channel__c IN (###)',
         'OfferType__c' => 'Order__r.OfferType__c IN (###)',
-        'SalesChannel__c' => 'Order__r.Sale__r.Channel__c IN (###)',
         'Distributor__c' => '(Case__r.DistributorName__c IN (###) OR Order__r.DistributorFormula__c IN (###))',
         'Market__c' => '(Case__r.Market__c IN (###) OR Order__r.Market__c IN (###))',
         'Vendor__c' => '(Case__r.SalesCompany__c IN (###) OR Order__r.SalesCompany__c IN (###))',
