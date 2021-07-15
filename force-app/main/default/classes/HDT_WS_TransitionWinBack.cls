@@ -4,7 +4,7 @@ public with sharing class HDT_WS_TransitionWinBack {
     public static HDT_WS_TransitionWinBackResponse callTransitionCom(String pod){
         
         HDT_WS_TransitionWinBackRequest requ = new HDT_WS_TransitionWinBackRequest(pod);
-        HDT_WS_TransitionWinBackResponse resp = (HDT_WS_TransitionWinBackResponse)HDT_WS_TransitionWinback.sendRequest('TransitorioWinback', requ,HDT_WS_TransitionWinBackResponse.class);
+        HDT_WS_TransitionWinBackResponse resp = (HDT_WS_TransitionWinBackResponse)HDT_WS_HTTPServiceCall.sendRequest('TransitorioWinback', requ,HDT_WS_TransitionWinBackResponse.class);
         
         return resp;
     }  
@@ -24,7 +24,7 @@ public with sharing class HDT_WS_TransitionWinBack {
            // this.transitione.pod1 = pod;
        // }
        @AuraEnabled
-       String pod {get;set;}
+       public String pod {get;set;}
 	}
 
     public class HDT_WS_TransitionWinBackResponse extends HDT_WS_Response{

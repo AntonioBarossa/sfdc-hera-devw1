@@ -51,20 +51,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }
 
-        List<String> orderList = getParentOrders(newOrdersList, oldOrdersList, orderMapNewToOld);
-        List<Order> ordersHeroku = new List<Order>();
-        List<Order> ordersSiebel = new List<Order>();
+        //List<String> orderList = getParentOrders(newOrdersList, oldOrdersList, orderMapNewToOld);
+        List<Order> orders = getParentOrders2(newOrdersList, oldOrdersList, orderMapNewToOld);
+        List<String> ordersHeroku = new List<String>();
+        List<String> ordersSiebel = new List<String>();
 
         for(Order o:orders){
             if(o.sale__r.isTransition__c==true){
 
-                ordersSiebel.add(o);
+                ordersSiebel.add(o.Id);
             }else{
-                ordersHeroku.add(o);
+                ordersHeroku.add(o.Id);
             }
         }
         //List<id> docVali = filterByRecordTypeAndPhase(orderList,)
-        updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Comunicazione Siebel','Documentazione Validata','Comunicazione Motore VAS')
+        updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Comunicazione Siebel','Documentazione Validata','Comunicazione Motore VAS');
 
         updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS');
 		insertLogForOrderChangedPhase(orderMapOld,orderMapNew);
