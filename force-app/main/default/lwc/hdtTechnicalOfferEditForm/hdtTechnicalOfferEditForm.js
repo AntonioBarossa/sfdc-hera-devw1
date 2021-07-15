@@ -1,7 +1,20 @@
 import { LightningElement, api, track} from 'lwc';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import endDateError from '@salesforce/label/c.HDT_LWC_OfferEditForm_EndDateError';
+import numberTimeError from '@salesforce/label/c.HDT_LWC_OfferEditForm_NumberTimeError';
+import numberDaysMonthsYearsError from '@salesforce/label/c.HDT_LWC_OfferEditForm_NumberDaysMonthsYearsError';
+import numberOfTimeUnitsError from '@salesforce/label/c.HDT_LWC_OfferEditForm_NumberOfTimeUnitsError';
+import allFieldRequired from '@salesforce/label/c.HDT_LWC_OfferEditForm_AllFieldRequired';
 
 export default class HdtTechnicalOfferEditForm extends LightningElement {
+
+    label = {
+        endDateError,
+        numberTimeError,
+        numberDaysMonthsYearsError,
+        numberOfTimeUnitsError,
+        allFieldRequired
+    };
 
     @api productId;
     @api rateObj;
@@ -121,7 +134,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
             var start = new Date(techOffObj.StartDate__c);
             var end = new Date(techOffObj.EndDate__c);
             if(start >= end){
-                returnObj.message = 'La data di fine validità non può essere inferiore alla data di inizio';
+                returnObj.message = this.label.endDateError;
                 return returnObj;
             }
             //returnObj.success = true;
@@ -131,7 +144,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         if(this.checkIsNotNull(techOffObj.NumberTimeExtension__c)){
             let isnum = /^\d+$/.test(techOffObj.NumberTimeExtension__c);
             if(!isnum){
-                returnObj.message = 'Numero unità di tempo per proroga può contenere solo dei numeri';
+                returnObj.message = this.label.numberTimeError;
                 return returnObj;
             }
         }
@@ -139,7 +152,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         if(this.checkIsNotNull(techOffObj.NumberDaysMonthsYears__c)){
             let isnum = /^\d+$/.test(techOffObj.NumberDaysMonthsYears__c);
             if(!isnum){
-                returnObj.message = 'Nº Giorni/Mesi/Anni non può contenere delle lettere';
+                returnObj.message = this.label.numberDaysMonthsYearsError;
                 return returnObj;
             }
         }
@@ -147,7 +160,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         if(this.checkIsNotNull(techOffObj.NumberOfTimeUnits__c)){
             let isnum = /^\d+$/.test(techOffObj.NumberOfTimeUnits__c);
             if(!isnum){
-                returnObj.message = 'Numero unità di tempo non può contenere delle lettere';
+                returnObj.message = this.label.numberOfTimeUnitsError;
                 return returnObj;             
             }
         }
@@ -160,7 +173,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Attenzione',
-                        message: 'Tutti i parametri obbligatori devono essere compilati per l\'invio dell\'offerta!',
+                        message: this.label.allFieldRequired,
                         variant: 'warning',
                         mode: 'sticky'
                     })
