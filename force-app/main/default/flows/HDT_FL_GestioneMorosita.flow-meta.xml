@@ -3,7 +3,7 @@
     <actionCalls>
         <name>CreaCaseRiattivazione</name>
         <label>Crea Case Riattivazione</label>
-        <locationX>1469</locationX>
+        <locationX>1403</locationX>
         <locationY>398</locationY>
         <actionName>HDT_SRV_CreateGenericCase</actionName>
         <actionType>apex</actionType>
@@ -43,10 +43,10 @@
     </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
-        <name>AggiornaCreatedCase</name>
+        <name>AggiornaCreatedCase_0_0</name>
         <label>AggiornaCreatedCase</label>
-        <locationX>1469</locationX>
-        <locationY>638</locationY>
+        <locationX>1271</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetCreatedCase.ParentId</assignToReference>
             <operator>Assign</operator>
@@ -58,21 +58,30 @@
             <assignToReference>GetCreatedCase.RelatedCase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getParentCase.Id</elementReference>
+                <elementReference>GetChildSospensione.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCreatedCase.PhoneNumber__c</assignToReference>
+            <assignToReference>GetCreatedCase.DistributorNote__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetCreatedCase.Contact.MobilePhone</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCreatedCase_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AggiornaCreatedCase_0_0_0</name>
+        <label>AggiornaCreatedCase</label>
+        <locationX>1535</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
-            <assignToReference>GetCreatedCase.Email__c</assignToReference>
+            <assignToReference>GetCreatedCase.ParentId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetCreatedCase.Contact.Email</elementReference>
+                <elementReference>getParentCase.ParentId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -90,7 +99,7 @@
         <name>Assegna_Fase_In_Da_Inviare</name>
         <label>Assegna Fase In Da Inviare</label>
         <locationX>842</locationX>
-        <locationY>2294</locationY>
+        <locationY>2630</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -113,7 +122,7 @@
         <name>Assegna_Fase_In_Da_Inviare_0</name>
         <label>Assegna Fase In Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>2294</locationY>
+        <locationY>2630</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -150,7 +159,7 @@
         <name>Assegna_Fase_In_Lavorazione</name>
         <label>Assegna Fase In Lavorazione</label>
         <locationX>578</locationX>
-        <locationY>2294</locationY>
+        <locationY>2630</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -173,7 +182,7 @@
         <name>Assegna_Fase_In_Lavorazione_0</name>
         <label>Assegna Fase In Lavorazione</label>
         <locationX>1370</locationX>
-        <locationY>1934</locationY>
+        <locationY>2270</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -195,8 +204,8 @@
     <assignments>
         <name>AssegnaInputCase</name>
         <label>AssegnaInputCase</label>
-        <locationX>1469</locationX>
-        <locationY>1118</locationY>
+        <locationX>1403</locationX>
+        <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>InputCase</assignToReference>
             <operator>Assign</operator>
@@ -212,7 +221,7 @@
         <name>Assegnazioni</name>
         <label>Assegnazioni</label>
         <locationX>182</locationX>
-        <locationY>1694</locationY>
+        <locationY>2030</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -242,7 +251,7 @@
         <name>Assegnazioni_0</name>
         <label>Assegnazioni</label>
         <locationX>908</locationX>
-        <locationY>1694</locationY>
+        <locationY>2030</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -269,10 +278,35 @@
         </connector>
     </assignments>
     <decisions>
+        <name>CaseTrovato</name>
+        <label>CaseTrovato?</label>
+        <locationX>1403</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>AggiornaCreatedCase_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Trovato</defaultConnectorLabel>
+        <rules>
+            <name>Trovato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetChildSospensione</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AggiornaCreatedCase_0_0</targetReference>
+            </connector>
+            <label>Trovato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>IlCaseInBozza</name>
         <label>Il Case è in Bozza?</label>
         <locationX>1601</locationX>
-        <locationY>1454</locationY>
+        <locationY>1790</locationY>
         <defaultConnector>
             <targetReference>InputDati_0_0_0</targetReference>
         </defaultConnector>
@@ -322,7 +356,7 @@
         <name>QualeProcesso</name>
         <label>Quale Processo?</label>
         <locationX>1040</locationX>
-        <locationY>1574</locationY>
+        <locationY>1910</locationY>
         <defaultConnector>
             <targetReference>ScreenErroreType</targetReference>
         </defaultConnector>
@@ -377,7 +411,7 @@
         <name>SalvaInBozzaOrConferma</name>
         <label>Salva in Bozza o Conferma?</label>
         <locationX>1502</locationX>
-        <locationY>1814</locationY>
+        <locationY>2150</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -399,7 +433,7 @@
         <name>SalvaInBozzaOrConferma_0</name>
         <label>Salva In Bozza O Conferma?</label>
         <locationX>182</locationX>
-        <locationY>2054</locationY>
+        <locationY>2390</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
@@ -421,7 +455,7 @@
         <name>SalvaInBozzaOrConferma_0_0</name>
         <label>Salva In Bozza O Conferma?</label>
         <locationX>908</locationX>
-        <locationY>2054</locationY>
+        <locationY>2390</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0</name>
@@ -443,7 +477,7 @@
         <name>Serivizio_0</name>
         <label>Serivizio?</label>
         <locationX>710</locationX>
-        <locationY>2174</locationY>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>Assegna_Fase_In_Da_Inviare</targetReference>
         </defaultConnector>
@@ -496,7 +530,7 @@
         <name>Calcola_Codice_Causale</name>
         <label>Calcola Codice Causale</label>
         <locationX>50</locationX>
-        <locationY>2174</locationY>
+        <locationY>2510</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Fase_In_Da_Inviare_0</targetReference>
@@ -535,10 +569,45 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetChildSospensione</name>
+        <label>GetChildSospensione</label>
+        <locationX>1403</locationX>
+        <locationY>638</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CaseTrovato</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getParentCase.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sospensione Fornitura</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>GetCreatedCase.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getContract</name>
         <label>getContract</label>
-        <locationX>1469</locationX>
-        <locationY>878</locationY>
+        <locationX>1403</locationX>
+        <locationY>1214</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Arricchimento_Dati</targetReference>
@@ -565,11 +634,11 @@
     <recordLookups>
         <name>GetCreatedCase</name>
         <label>GetCreatedCase</label>
-        <locationX>1469</locationX>
+        <locationX>1403</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AggiornaCreatedCase</targetReference>
+            <targetReference>GetChildSospensione</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -587,7 +656,7 @@
         <name>GetInputCase</name>
         <label>Get Input Case</label>
         <locationX>1601</locationX>
-        <locationY>1334</locationY>
+        <locationY>1670</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>IlCaseInBozza</targetReference>
@@ -607,7 +676,7 @@
     <recordLookups>
         <name>getParentCase</name>
         <label>getParentCase</label>
-        <locationX>1469</locationX>
+        <locationX>1403</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -629,7 +698,7 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>182</locationX>
-        <locationY>1814</locationY>
+        <locationY>2150</locationY>
         <connector>
             <targetReference>InputDati</targetReference>
         </connector>
@@ -639,7 +708,7 @@
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>908</locationX>
-        <locationY>1814</locationY>
+        <locationY>2150</locationY>
         <connector>
             <targetReference>InputDati_0</targetReference>
         </connector>
@@ -649,7 +718,7 @@
         <name>AggiornaCase_0</name>
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
-        <locationY>2414</locationY>
+        <locationY>2750</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -659,7 +728,7 @@
         <name>AggiornaCase_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>2162</locationX>
-        <locationY>1694</locationY>
+        <locationY>2030</locationY>
         <connector>
             <targetReference>Loading_Screen_0_0</targetReference>
         </connector>
@@ -669,21 +738,21 @@
         <name>AggiornaCase_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>578</locationX>
-        <locationY>2414</locationY>
+        <locationY>2750</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>1370</locationX>
-        <locationY>2054</locationY>
+        <locationY>2390</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>842</locationX>
-        <locationY>2414</locationY>
+        <locationY>2750</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
         </connector>
@@ -692,8 +761,8 @@
     <recordUpdates>
         <name>AggiornaCreatedCase_0</name>
         <label>AggiornaCreatedCase</label>
-        <locationX>1469</locationX>
-        <locationY>758</locationY>
+        <locationX>1403</locationX>
+        <locationY>1094</locationY>
         <connector>
             <targetReference>getContract</targetReference>
         </connector>
@@ -703,7 +772,7 @@
         <name>InputDati</name>
         <label>Input Dati</label>
         <locationX>182</locationX>
-        <locationY>1934</locationY>
+        <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -796,7 +865,7 @@
         <name>InputDati_0</name>
         <label>Input Dati</label>
         <locationX>908</locationX>
-        <locationY>1934</locationY>
+        <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -901,7 +970,7 @@
         <name>InputDati_0_0</name>
         <label>Input Dati</label>
         <locationX>1502</locationX>
-        <locationY>1694</locationY>
+        <locationY>2030</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -994,7 +1063,7 @@
         <name>InputDati_0_0_0</name>
         <label>Input Dati</label>
         <locationX>2162</locationX>
-        <locationY>1574</locationY>
+        <locationY>1910</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1087,7 +1156,7 @@
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
         <locationX>50</locationX>
-        <locationY>2534</locationY>
+        <locationY>2870</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1118,7 +1187,7 @@
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
         <locationX>842</locationX>
-        <locationY>2534</locationY>
+        <locationY>2870</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1149,7 +1218,7 @@
         <name>Loading_Screen_0_0</name>
         <label>Loading Screen</label>
         <locationX>2162</locationX>
-        <locationY>1814</locationY>
+        <locationY>2150</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1180,7 +1249,7 @@
         <name>ScreenErroreType</name>
         <label>Screen Errore Type</label>
         <locationX>1898</locationX>
-        <locationY>1694</locationY>
+        <locationY>2030</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1203,8 +1272,8 @@
     <subflows>
         <name>Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
-        <locationX>1469</locationX>
-        <locationY>998</locationY>
+        <locationX>1403</locationX>
+        <locationY>1334</locationY>
         <connector>
             <targetReference>AssegnaInputCase</targetReference>
         </connector>
