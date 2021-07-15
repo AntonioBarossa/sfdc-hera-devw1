@@ -13,9 +13,9 @@
     <template if:true={showWelcom} >
         <c-hdt-welcome-mat-modal
             icon-name="standard:product_service_campaign"
-            main-title-label="Eleggibilità"
-            new-title-label="Crea dei criteri"
-            search-title-label="Cerca e copia un insieme di criteri"
+            main-title-label={label.mainTitle}
+            new-title-label={label.newTitleLabel}
+            search-title-label={label.searchTitleLabel}
             onclosemodal={closeModal}
             oncreatenew={createNew}
             onsearch={search}

@@ -235,6 +235,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		List<Case> listCase = (List<Case>) accountObject.Cases;
 		List<Order> listOrder = (List<Order>) accountObject.Orders;
 		List<BillingProfile__c> listBp = (List<BillingProfile__c>) accountObject.BillingProfiles__r;
+		
 		List<AccountContactRelation> listAccContRel = (List<AccountContactRelation>) accountObject.AccountContactRelations;
 		List<Contact> listContact = new List<Contact>();
 		for(AccountContactRelation accConRel : listAccContRel){
