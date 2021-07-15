@@ -78,6 +78,7 @@ export default class HdtModalDataTable extends LightningElement {
     @api fieldName;
     @api icon;
     @api rate;
+    @api rateTypeValue;
     @track data = [];
     @track columns = [];
     @track error = {show: false, message: ''};
@@ -154,7 +155,7 @@ export default class HdtModalDataTable extends LightningElement {
     backendCall(){
         console.log('# getTableData #');
 
-        getTableData({objectApiName: this.relatedToTable, rate: this.rate, searchByField: this.searchByField, searchValue: this.searchValue})
+        getTableData({objectApiName: this.relatedToTable, rate: this.rate, rateTypeValue: this.rateTypeValue, searchByField: this.searchByField, searchValue: this.searchValue})
             .then(result => {
                 console.log('# call result #');
 

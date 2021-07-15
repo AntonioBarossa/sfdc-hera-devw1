@@ -2,7 +2,7 @@
 * @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
 * @date 29/06/2021
 * @description Data Factory for Test Classes
-* @history Lucas da Silva Fernandes – 29/06/2021 – Created class
+* @history Luis Bispo – 13/07/2021 – Created City Object
 */
 
 public with sharing class HDT_UTL_DataFactoryTst {
@@ -35,6 +35,9 @@ public with sharing class HDT_UTL_DataFactoryTst {
             ld.Company = 'CompanyTest';
             ld.Status = 'New';
             ld.Email = 'test@test.com';
+            ld.Birthdate__c = date.today();
+            ld.Gender__c = 'Maschio';
+            ld.Birthcity__c = 'Roma';
 
             leadList.add(ld);
 
@@ -46,6 +49,29 @@ public with sharing class HDT_UTL_DataFactoryTst {
         }
 
         return leadList;
+    }
+
+
+    public static List<City__c> createCity(Integer amount, Boolean doInsert) {
+        List<City__c> cityList = new List<City__c>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            City__c ct = new City__c();
+            
+            ct.Name = 'Roma';
+            ct.BelfioreCode__c = 'Bt'+i;
+
+            cityList.add(ct);
+
+        }
+        
+        if (doInsert) {
+
+            insert cityList;
+        }
+
+        return cityList;
     }
     
     public static List<Opportunity> createOpportunity (Integer amount, Boolean doInsert) {
@@ -131,6 +157,12 @@ public with sharing class HDT_UTL_DataFactoryTst {
             ord.EstimatedVAT__c = 1; 
             ord.ValidityDateEstimate__c = Date.today().addDays(30);
             ord.Phase__c = 'Bozza';
+            ord.CIAccoutn__c = 'Richiesto';
+            ord.QuickQuote__c = 'Richiesto';
+            ord.ChamberCommerceRegistration__c = 'Richiesto';
+            ord.Instance326__c = 'Richiesto';
+            ord.DocumentLow80__c = 'Richiesto';
+            ord.AutorizationVolturaThirdTrader__c = 'Richiesto';
 
             orderList.add(ord);
         }

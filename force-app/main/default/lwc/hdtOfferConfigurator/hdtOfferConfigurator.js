@@ -6,9 +6,14 @@ import sendTechOfferToSAP from '@salesforce/apex/HDT_LC_OfferConfiguratorControl
 import getOfferMatrix from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getOfferMatrix';
 import deleteTechnicalOffer from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.deleteTechnicalOffer';
 import { getRecord } from 'lightning/uiRecordApi';
+import mainTitle from '@salesforce/label/c.HDT_LWC_OfferConfig_MainTitle';
 
 export default class HdtOfferConfigurator extends NavigationMixin(LightningElement) {
     
+    label = {
+        mainTitle
+    };
+
     @track dataRows = [];
     @track selection;
     @api productid;
@@ -445,15 +450,16 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 toastObj.title = 'Successo';
                 toastObj.message = result.message;
                 toastObj.variant = 'success';
+                this.showToastHandler(toastObj);
+                this.goBackToRecord();
             } else {
                 toastObj.success = false;
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
-                toastObj.variant = 'warning';                  
+                toastObj.variant = 'warning';
+                this.showToastHandler(toastObj);
+                this.getMatrixData();
             }
-
-            this.showToastHandler(toastObj);
-            this.goBackToRecord();
 
         })
         .catch(error => {

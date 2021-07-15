@@ -8930,6 +8930,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>EligibleMunicipality__c.NameExternalId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Event.CompanyOwner__c</field>
         <readable>false</readable>
@@ -25561,6 +25566,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>TechnicalOfferItem__c.M__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOfferItem__c.NameExternalId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

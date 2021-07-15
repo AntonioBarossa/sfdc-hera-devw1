@@ -6,6 +6,7 @@ export default class HdtPill extends LightningElement {
     @api pillObj;
     @api icon;
     @api rate;
+    @api rateTypeValue;
     @track showTable = false;
     @track showPill = false;
     relatedToTable = '';
