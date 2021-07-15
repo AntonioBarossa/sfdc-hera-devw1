@@ -4,7 +4,7 @@
         <fullName>UpdateDistributor</fullName>
         <apiVersion>52.0</apiVersion>
         <description>invia gli aggiornamenti agli account distributori</description>
-        <endpointUrl>https://gh-request-develop-init.herokuapp.com/ws/request/managedistributor</endpointUrl>
+        <endpointUrl>https://dev-heroku:heroku-hera-dev-2021!@gh-request-develop-int.herokuapp.com/ws/request/managedistributor</endpointUrl>
         <fields>Code__c</fields>
         <fields>Commodity__c</fields>
         <fields>Description</fields>
@@ -24,11 +24,7 @@
             <type>OutboundMessage</type>
         </actions>
         <active>true</active>
-        <criteriaItems>
-            <field>Account.Type</field>
-            <operation>equals</operation>
-            <value>Distributore</value>
-        </criteriaItems>
+        <formula>RecordType.DeveloperName = &apos;HDT_RT_Distributore&apos;</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>
