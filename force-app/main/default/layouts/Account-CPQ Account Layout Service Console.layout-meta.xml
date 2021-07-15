@@ -294,10 +294,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Type__c</fields>
         <fields>ActivityStartTime__c</fields>
-        <fields>ActivityEndTime__c</fields>
         <fields>wrts_prcgvr__Status__c</fields>
+        <fields>Type__c</fields>
+        <fields>ActivityEndTime__c</fields>
+        <fields>OWNER.LAST_NAME</fields>
         <relatedList>wrts_prcgvr__Activity__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -348,12 +349,15 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>Phase__c</fields>
+        <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
         <fields>CASES.STATUS</fields>
+        <fields>Cluster__c</fields>
         <fields>CASES.TYPE</fields>
         <fields>Subprocess__c</fields>
-        <fields>Cluster__c</fields>
-        <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
+        <fields>Phase__c</fields>
+        <fields>CASES.ORIGIN</fields>
+        <fields>CREATEDBY_USER.ALIAS</fields>
+        <fields>CASES.CLOSED_DATE</fields>
         <relatedList>RelatedCaseList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -385,7 +389,6 @@
         <fields>SupplyAddress__c</fields>
         <fields>MeterSN__c</fields>
         <fields>CommoditySector__c</fields>
-        <fields>Distributor__c</fields>
         <relatedList>ServicePoint__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

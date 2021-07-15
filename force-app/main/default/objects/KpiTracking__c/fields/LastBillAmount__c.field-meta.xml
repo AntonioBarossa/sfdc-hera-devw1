@@ -4,9 +4,9 @@
     <description>Campo tecnico nascosto per gestione ultima bolletta.</description>
     <externalId>false</externalId>
     <label>Importo Bolletta</label>
-    <precision>2</precision>
+    <precision>18</precision>
     <required>false</required>
-    <scale>0</scale>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
     <type>Number</type>
     <unique>false</unique>

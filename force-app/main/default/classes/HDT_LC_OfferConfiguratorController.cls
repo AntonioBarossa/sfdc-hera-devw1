@@ -1,9 +1,9 @@
 public inherited sharing class HDT_LC_OfferConfiguratorController {
 
     @AuraEnabled
-    public static List<sObject> getTableData(String objectApiName, String rate, String searchByField, String searchValue){
+    public static List<sObject> getTableData(String objectApiName, String rate, String rateTypeValue, String searchByField, String searchValue){
         try{
-            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName, rate, searchByField, searchValue);
+            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName, rate, rateTypeValue, searchByField, searchValue);
         } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         } 
@@ -32,7 +32,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
             if(String.isEmpty(thisProduct[0].Family) || !thisProduct[0].Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
                 respObj.success = false;
-                respObj.errorMessage = 'Questa funzionalità è riservata alle offerte commerciali';
+                respObj.errorMessage = Label.HDT_OfferConfig_OfferType;
                 return respObj;
             }
 
