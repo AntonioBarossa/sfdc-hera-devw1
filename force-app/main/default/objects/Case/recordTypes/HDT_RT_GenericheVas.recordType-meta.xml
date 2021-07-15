@@ -8142,10 +8142,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
         </values>
@@ -12266,10 +12262,6 @@
         </values>
         <values>
             <fullName>Fiscale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
             <default>false</default>
         </values>
         <values>

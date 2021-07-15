@@ -7214,10 +7214,6 @@ q<?xml version="1.0" encoding="UTF-8"?>
             <default>false</default>
         </values>
         <values>
-            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
         </values>
@@ -10394,10 +10390,6 @@ q<?xml version="1.0" encoding="UTF-8"?>
         </values>
         <values>
             <fullName>Fiscale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
             <default>false</default>
         </values>
         <values>
