@@ -8,32 +8,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     
     public static void salesProcessManagementBefore(list<Order> newOrderList,List<Order> oldOrderList){
         
-    }
-
-    public static void salesProcessSequentializationBefore(List<Order> newOrderList,Map<Id,Order> oldOrderMap){
-
-        List<ServiceRequest__c> incomingProcesses = new List<ServiceRequest__c>();
-        
-        for(Order order : newOrderList){
-            Order oldOrder = oldOrderMap.get(order.ID);
-            if(!oldOrder.Phase__c.equalsIgnoreCase(order.Phase__c)){//&& AGGIUNGERE CONTROLLO SE order.Phase__c IN CS
-                try{
-                    ServiceRequest__c sr = [SELECT ID, ProcessType__c, Order__c, Tipologia__c
-                                    FROM ServiceRequest__c 
-                                    WHERE Order__r.ID=: order.ID
-                                    WITH SECURITY_ENFORCED LIMIT 1];
-                    sr.NextPhase__c = order.Phase__c;
-                    incomingProcesses.add(sr);
-                    
-                }catch(Exception ex){
-                    System.debug(ex.getMessage());
-                }
-            }
-            if(incomingProcesses.size()>0){
-                HDT_UTL_Dependencies.sequentialization(incomingProcesses);
-            }
-        }
-        
     }   
      
     public static void salesProcessManagementAfter(list<Order> newOrderList,List<Order> oldOrderList){

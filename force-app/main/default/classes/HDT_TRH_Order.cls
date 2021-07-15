@@ -25,7 +25,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_OrderProcess.salesProcessManagementBefore(trigger.new,trigger.old); 
 
-        HDT_UTL_OrderProcess.salesProcessSequentializationBefore((List<Order>)Trigger.new,(Map<Id,Order>)Trigger.oldMap); 
+        HDT_UTL_Dependencies.processSequentializationBefore(Trigger.new,Trigger.oldMap,'Order'); 
         
     }
     public override void afterUpdate() {
