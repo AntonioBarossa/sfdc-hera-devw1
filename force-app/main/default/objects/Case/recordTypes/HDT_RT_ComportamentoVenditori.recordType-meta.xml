@@ -7230,10 +7230,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName></fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Modifica Alert</fullName>
             <default>false</default>
         </values>
