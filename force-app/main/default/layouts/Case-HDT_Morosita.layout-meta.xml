@@ -401,11 +401,6 @@
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.HDT_SendThirdPartyEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
@@ -414,6 +409,11 @@
             <actionName>HDT_SendCertifiedEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.HDT_SendThirdPartyEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
@@ -442,18 +442,16 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.SUBJECT</fields>
-        <fields>CASES.PRIORITY</fields>
-        <fields>CASES.CREATED_DATE</fields>
+        <fields>CASES.TYPE</fields>
+        <fields>Phase__c</fields>
         <fields>CASES.STATUS</fields>
-        <fields>OWNER_NAME</fields>
         <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.SUBJECT</fields>
-        <fields>CASES.CREATED_DATE</fields>
-        <fields>CASES.PRIORITY</fields>
+        <fields>CASES.TYPE</fields>
+        <fields>Phase__c</fields>
+        <fields>CASES.STATUS</fields>
         <relatedList>Case.RelatedCase__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -471,7 +469,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1x000001XzmI</masterLabel>
+        <masterLabel>00h3N000002LiYS</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
