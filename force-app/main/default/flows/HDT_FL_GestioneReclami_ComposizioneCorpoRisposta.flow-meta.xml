@@ -18,6 +18,38 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaParentCaseToCollection</name>
+        <label>AssegnaParentCaseToCollection</label>
+        <locationX>50</locationX>
+        <locationY>1670</locationY>
+        <assignmentItems>
+            <assignToReference>CaseContenutiRecord</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Contenuti_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaStringCaseContenuti</name>
+        <label>AssegnaStringCaseContenuti</label>
+        <locationX>50</locationX>
+        <locationY>1550</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_Contenitore.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelectedChildCaseId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaParentCaseToCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>578</locationX>
@@ -43,6 +75,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Case_Contenitore.ComplaintBodyResponse__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SelectedChildCaseId</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>{!Aggiorna_Case_Contenuti.Id};</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -171,7 +210,7 @@
             <targetReference>Il_Case_Contenuto_stato_selezionato</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Aggiorna_Case_Contenuti_0</targetReference>
+            <targetReference>AssegnaStringCaseContenuti</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -281,7 +320,7 @@
         <name>Aggiorna_Case_Contenuti_0</name>
         <label>Aggiorna Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>1550</locationY>
+        <locationY>1790</locationY>
         <inputReference>CaseContenutiRecord</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -434,6 +473,13 @@
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SelectedChildCaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
