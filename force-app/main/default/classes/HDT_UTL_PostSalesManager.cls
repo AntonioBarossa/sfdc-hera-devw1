@@ -337,6 +337,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         servicePoint.Id             = currentCase.ServicePoint__c;
         servicePoint.UseCategory__c = currentCase.UseCategory__c;
         servicePoint.SupplyType__c  = currentCase.SupplyType__c;
+        servicePoint.ImplantType__c	= currentCase.ServicePointType__c;
         HDT_UTL_DatabaseService.updateSObject(servicePoint);
 
     }
