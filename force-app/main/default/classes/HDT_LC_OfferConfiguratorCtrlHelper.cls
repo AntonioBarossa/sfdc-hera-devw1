@@ -352,6 +352,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         newTechOff.Name = prodList[0].ProductCode + ' [' + prodList[0].Version__c + '] [' + recToClone.RateCategory__r.Name + ']';
         newTechOff.NameExternalId__c = newTechOff.Name;
         newTechOff.Product__c = productId;
+        newTechOff.SapCode__c = null;
+        newTechOff.OfferCode__c = recIdToClone;
 
         System.debug('# clone this -> ' + newTechOff);
 
@@ -484,7 +486,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         List<String> fieldToCheck = new List<String>();
         fieldToCheck.add('Market__c');
         //fieldToCheck.add('ProcessType__c');
-        fieldToCheck.add('PlacetOffer__c');
+        //fieldToCheck.add('PlacetOffer__c');
         fieldToCheck.add('StartDate__c');
         fieldToCheck.add('EndDate__c');
         fieldToCheck.add('StepAllowed__c');
