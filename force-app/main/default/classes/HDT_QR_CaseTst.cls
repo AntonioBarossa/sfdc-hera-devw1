@@ -11,27 +11,12 @@ public class HDT_QR_CaseTst {
     @TestSetup
     static void setup(){
 
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccount(1, true);
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id);
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-
-
-        Case testCase = new Case();
-        testCase.AccountId = accList[0].id;
-        testCase.Status = 'In Lavorazione';
-        testCase.Subject = 'test';
-        testCase.Type = 'BP/CA - errata categoria';
-        testCase.Subprocess__c = 'Account';
-        testCase.HerokuPracticeCode__c = '21313232132132';
-        testCase.ContactId = contactList[0].Id;
-        testCase.ServicePoint__c = servPointList[0].id;
-        testCase.Contract__c = contractList[0].id;
-        testCase.VulturePracticeReference__c = ordList[0].id;
-        testCase.Cluster__c = 'Pagamenti';
-
-        insert testCase;
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
     }
 
