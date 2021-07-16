@@ -68,9 +68,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateUnificazioneSeparazione(fields);
 
-        }else if(caseType == 'Votive Modena Contestazione Fattura'){
+        }else if(caseType == 'Votive Modena Contestazione Fattura' || caseType.equalsIgnoreCase('Spostamento Votive Modena')){
 
-            result= validateVotiveModena(fields);
+            result= validateVotiveModena(fields, caseType);
         } else if (caseType == 'Verifica Titolarità POD/PDR') {
 
             result = validateVerificaTitolarita(currentCase);
@@ -146,9 +146,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     : null;
                 String clientCategory = getFieldValue(fields, 'ClientCategory__c');
                 String reason = getFieldValue(fields, 'Reason__c');
-                Date expDate = getFieldValue(fields, 'DepositPaymentDate__c') == null 
-                    ? System.today() + 365
-                    : Date.valueOf(getFieldValue(fields, 'DepositPaymentDate__c'));
                 String typeInstallmentPlans = getFieldValue(fields, 'TypeInstallmentPlan__c	');
                 String sendPaperlessMode = getFieldValue(fields, 'SendPaperlessCodeMode__c');
 
@@ -172,11 +169,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
                     }
                 
-                }else if(reason.contains('Disagio Economico') && (expDate < (System.today() + 5))){
-
-                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'L\'importo non deve essere inferiore a 50 ' + 
-                        'o la data scadenza acconto non deve essere inferiore ai 5 giorni'));
-
                 }else if(typeInstallmentPlans == 'Straordinario'){
 
                     if(caseValidationQr.getUserSessionRole() != 'CEO'){
@@ -291,9 +283,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String currentPec = c.CertifiedEmail__c != null ? c.CertifiedEmail__c : '';
         String currentFax = c.Fax != null ? c.Fax : '';
         String currentMarking = a.CustomerMarking__c != null ? a.CustomerMarking__c : '';
+        String currentFiscalCode = a.FiscalCode__c != null ? a.FiscalCode__c : '';
+        String currentVatNumber = a.VATNumber__c != null ? a.VATNumber__c : '';
 
         System.debug('validateModificaDatiContatto: current ' + c);
-        System.debug('validateModificaDatiContatto: new ' + newEmail + ';' + newPhone + ';' + newMobile + ';' + newFax + ';' + newPec + ';' + newMarking);
 
         if (String.isBlank(newMarking)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valorizzare la Marcatura del cliente.'));
@@ -303,6 +296,56 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         if (newEmail.equals(currentEmail) && newMobile.equals(currentMobile) && newPhone.equals(currentPhone) && newMarking.equals(currentMarking)
             && newPec.equals(currentPec) && newFax.equals(currentFax)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un campo per poter proseguire.'));
+            return result;
+        }
+
+        if (String.isNotBlank(newMarking) && !newMarking.equals(currentMarking)) {
+            String marking = newMarking;
+            if ((marking.contains('Persona fisica') || marking.contains('Condominio') || marking.contains('Parti comuni')) && String.isBlank(currentFiscalCode)) {
+                return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Codice Fiscale è vuoto ed è obbligatorio per poter modificare la marcatura in: ' + marking));
+            }
+
+            if ((marking.contains('Azienda') || marking.contains('Ditta individuale')) && String.isBlank(currentVatNumber)) {
+                return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Partita IVA è vuoto ed è obbligatorio per poter modificare la marcatura in: ' + marking));
+            }
+
+            // Marcature che prevedono CF alfanumerico e PIVA blank.
+            if (marking.contains('Persona fisica') || marking.contains('Parti comuni')) {
+                String fiscalCodeValidation = validateFiscalCode(currentFiscalCode);
+                if (String.isNotBlank(fiscalCodeValidation)) {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Codice Fiscale deve essere alfanumerico per poter modificare la marcatura in: ' + marking));
+                }
+
+                if (String.isNotBlank(currentVatNumber)) {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Partita IVA deve essere vuoto per poter modificare la marcatura in: ' + marking));
+                }
+            }
+            // Ditta individuale prevede CF alfanumerico ma PIVA valorizzata.
+            else if (marking.contains('Ditta individuale')) {
+                String fiscalCodeValidation = validateFiscalCode(currentFiscalCode);
+                if (String.isNotBlank(fiscalCodeValidation)) {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Codice Fiscale deve essere alfanumerico per poter modificare la marcatura in: ' + marking));
+                }
+            }
+            // Marcature che prevedono CF numerico
+            else if (marking.contains('Azienda') || marking.contains('Condominio')) {
+                String fiscalCodeValidation = validateNumericFiscalCode(currentFiscalCode);
+                if (String.isNotBlank(fiscalCodeValidation)) {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Codice Fiscale deve essere numerico per poter modificare la marcatura in: ' + marking));
+                }
+            }
+            // Associazione prevede CF numerico ma PIVA blank.
+            else if (marking.contains('Associazione')) {
+                String fiscalCodeValidation = validateNumericFiscalCode(currentFiscalCode);
+                if (String.isNotBlank(fiscalCodeValidation)) {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Codice Fiscale deve essere numerico per poter modificare la marcatura in: ' + marking));
+                }
+
+                if (String.isNotBlank(currentVatNumber)) {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Partita IVA deve essere vuoto per poter modificare la marcatura in: ' + marking));
+                }
+            }
+
             return result;
         }
 
@@ -385,7 +428,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         Account a = queryHandler.getRecordById(currentCase.AccountId, queryFields);
         String currentFirstName = a.FirstName__c != null ? a.FirstName__c : '';
         String currentLastName = a.LastName__c != null ? a.LastName__c : '';
-        String currentFiscaleCode = a.FiscalCode__c != null ? a.FiscalCode__c : '';
+        String currentFiscalCode = a.FiscalCode__c != null ? a.FiscalCode__c : '';
         String currentVatNumber = a.VATNumber__c != null ? a.VATNumber__c : '';
         String currentAddress = a.BillingAddressFormula__c != null ? a.BillingAddressFormula__c : '';
 
@@ -394,7 +437,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             return result;
         }
         
-        if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscalCode.equals(currentFiscaleCode)
+        if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscalCode.equals(currentFiscalCode)
             && newVatNumber.equals(currentVatNumber) && newAddress.equals(currentAddress)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un dato fiscale del cliente.'));
             return result;
@@ -405,13 +448,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Codice Fiscale è obbligatorio per la marcatura ' + marking));
             }
 
-            if (marking.contains('Azienda') || marking.contains('Ditta individuale') && String.isBlank(newVatNumber)) {
+            if ((marking.contains('Azienda') || marking.contains('Ditta individuale')) && String.isBlank(newVatNumber)) {
                 return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Partita IVA è obbligatorio per la marcatura ' + marking));
             }
 
             // Marcature che prevedono CF alfanumerico e PIVA blank.
             if (marking.contains('Persona fisica') || marking.contains('Parti comuni')) {
-                String fiscalCodeValidation = validateFiscalCode(currentFiscaleCode, newFiscalCode);
+                String fiscalCodeValidation = validateFiscalCodeAgainstOld(currentFiscalCode, newFiscalCode);
                 if (String.isNotBlank(fiscalCodeValidation)) {
                     return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
                 }
@@ -422,7 +465,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             }
             // Ditta individuale prevede CF alfanumerico ma PIVA valorizzata.
             else if (marking.contains('Ditta individuale')) {
-                String fiscalCodeValidation = validateFiscalCode(currentFiscaleCode, newFiscalCode);
+                String fiscalCodeValidation = validateFiscalCodeAgainstOld(currentFiscalCode, newFiscalCode);
                 if (String.isNotBlank(fiscalCodeValidation)) {
                     return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
                 }
@@ -859,19 +902,29 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    private String validateVotiveModena(String fields){
+    private String validateVotiveModena(String fields, String process){
 
-        String billingProfile = getFieldValue(fields, 'BillingProfile__c');
-        String reason = getFieldValue(fields, 'Reason__c');
         String result;
 
-        if(reason == 'Errata Emissione' && (billingProfile == null || billingProfile == '')){
+        if(process.equalsIgnoreCase('Spostamento Votive Modena')){
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Necessario Valorizzare Billing Profile'));
+            String outcome = validateFiscalCode(getFieldValue(fields,'FiscalCode__c'));
+            if(!String.isBlank(outcome)){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error',outcome));
+            } else {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+            }
 
-        } else {
+        } else if(process.equalsIgnoreCase('Votive Modena Contestazione Fattura')){
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+            String billingProfile = getFieldValue(fields, 'BillingProfile__c');
+            String reason = getFieldValue(fields, 'Reason__c');
+
+            if(reason == 'Errata Emissione' && (billingProfile == null || billingProfile == '')){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Necessario Valorizzare Billing Profile'));
+            } else {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+            }
 
         }
 
@@ -951,17 +1004,24 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     }
 
     // Validazione CF. Se il CF è vuoto lo consideriamo valido.
-    public String validateFiscalCode(String oldFiscalCode, String newfiscalCode) {
+    public String validateFiscalCode(String fiscalCode) {
+        if (String.isBlank(fiscalCode)) {
+            return '';
+        }
+
+        Pattern pattern = Pattern.compile('^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$');
+        Matcher matcher = pattern.matcher(fiscalCode);
+
+        return matcher.matches() ? '' : 'Il Codice Fiscale inserito non è valido.';
+    }
+
+    // Validazione CF, considerando anche variazioni rispetto al vecchio CF. Se il nuovo CF è vuoto lo consideriamo valido.
+    public String validateFiscalCodeAgainstOld(String oldFiscalCode, String newfiscalCode) {
         if (String.isBlank(newfiscalCode)) {
             return '';
         }
 
-        String outcome = '';
-
-        Pattern pattern = Pattern.compile('^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$');
-        Matcher matcher = pattern.matcher(newfiscalCode);
-
-        outcome = matcher.matches() ? '' : 'Il Codice Fiscale inserito non è valido.';
+        String outcome = validateFiscalCode(newfiscalCode);
 
         if (String.isBlank(outcome) && String.isNotBlank(oldFiscalCode)) {
             List<Integer> oldChars = oldFiscalCode.toLowerCase().getChars();
@@ -973,7 +1033,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     changedChars++;
                 }
             }
-
+            System.debug('Numero caratteri modificati sul nuovo CF: ' + changedChars);
             if (changedChars > 2) {
                 outcome = 'Per modifiche sostanziali (più di 2 caratteri) al Codice Fiscale è necessario innescare una Voltura.';
             }

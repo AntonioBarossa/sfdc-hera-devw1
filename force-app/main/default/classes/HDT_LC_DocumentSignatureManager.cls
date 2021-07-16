@@ -30,4 +30,16 @@ public with sharing class HDT_LC_DocumentSignatureManager {
         }
         return jsonReturn;
     }
+    
+    @AuraEnabled
+    public static string showOriginalDocument(String recordId){
+        String serializedOutput = HDT_SRV_DocumentalManagementFacade.showOriginalDocument(recordId);
+        return serializedOutput;
+    }
+
+    @AuraEnabled
+    public static string showArchivedAttachment(String recordId){
+        String serializedOutput = HDT_SRV_DocumentalManagementFacade.showArchivedAttachment(recordId);
+        return serializedOutput;
+    }
 }

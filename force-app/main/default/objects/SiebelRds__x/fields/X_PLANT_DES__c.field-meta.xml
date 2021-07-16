@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_PLANT_DES</label>
+    <label>Descrizione click plant</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

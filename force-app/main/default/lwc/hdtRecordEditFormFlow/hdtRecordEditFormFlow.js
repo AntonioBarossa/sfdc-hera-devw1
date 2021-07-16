@@ -425,13 +425,34 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                     depositPaymentMode.disabled = true;
                     depositamount.disabled = true;
                     depositDate.disabled = true;
+                    sendPaperlessCode.disabled = true;
+                    depositPaymentMode.value = '';
+                    depositamount.value = null;
+                    depositDate.value = null;
+                    sendPaperlessCode.value = '';
                 } else {
                     depositPaymentMode.disabled = false;
                     depositamount.disabled = false;
                     depositDate.disabled = false;
                 }
-                if(depositPaymentMode.value === 'Paperless'){
+                if(depositPaymentMode.value === 'Paperless' && !depositPaymentMode.disabled){
                     sendPaperlessCode.disabled = false;
+                }
+            }
+        }
+        let installmentTypeObj = this.objSelector('TypeInstallmentPlan__c');
+        if(!(Object.keys(installmentTypeObj).length === 0)){
+            let installmentType = this.selector('TypeInstallmentPlan__c');
+            console.log('#InstallmentType -> ' + installmentType.value);
+            if(installmentType.value !== null && installmentType.value !== undefined){
+                let applicationInterestObj = this.objSelector('ApplicationInterests__c');
+                if(!(Object.keys(installmentTypeObj).length === 0)){
+                    let applicationInterest = this.selector('ApplicationInterests__c');
+                    if(installmentType.value.includes('Solo Piano Mensile')){
+                        applicationInterest.value = true;
+                    } else {
+                        applicationInterest.value = false;
+                    }
                 }
             }
         }

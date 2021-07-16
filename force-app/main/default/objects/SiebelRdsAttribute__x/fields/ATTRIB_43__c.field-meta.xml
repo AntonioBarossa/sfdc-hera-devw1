@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_43</label>
+    <label>Nominativo precedente intestatario</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

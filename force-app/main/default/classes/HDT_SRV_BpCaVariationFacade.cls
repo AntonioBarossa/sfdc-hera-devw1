@@ -49,13 +49,14 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
         caseToUpdate.SendDate__c = Date.today();
 
         if (response.success) {
-            caseToUpdate.Phase__c = 'Esito OK da SAP';
+            caseToUpdate.TecnicalPhase__c = 'Esito OK da SAP';
         } else {
-            caseToUpdate.Phase__c = 'Errore Lavorazione SAP';
+            caseToUpdate.TecnicalPhase__c = 'Errore Lavorazione SAP';
         }
 
-        String serializedCase = JSON.serialize(caseToUpdate);
-        updateFuture(serializedCase);
+        // String serializedCase = JSON.serialize(caseToUpdate);
+        // updateFuture(serializedCase);
+        HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
 
         return response;
     }

@@ -61,6 +61,8 @@
                     //console.log(' PR_> ' + element.pageReference.attributes.recordId);
                     if(element.pageReference.attributes.recordId=== accId){
                         parentId = element.tabId;
+                    } else if(element.pageReference.attributes.recordId === leadId){
+                        parentId = element.tabId;
                     }
                 }
             });

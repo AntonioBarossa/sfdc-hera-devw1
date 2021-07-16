@@ -4,7 +4,7 @@
             <header class="slds-modal__header slds-modal__header_empty">
                 <button onclick={closeModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
                     <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
-                    <span class="slds-assistive-text">Close</span>
+                    <span class="slds-assistive-text">Chiudi</span>
                 </button>
             </header>
             <div class="slds-modal__content" id="welcome-mat-403-content">
@@ -72,7 +72,7 @@
                                             <div class="slds-media__body">
                                                 <div class="slds-welcome-mat__tile-body">
                                                     <h3 class="slds-welcome-mat__tile-title">{rec.name}</h3>
-                                                    <p class="slds-welcome-mat__tile-description">Rate category: {rec.rateTemp}</p>
+                                                    <p class="slds-welcome-mat__tile-description">Template: {rec.rateTemp}</p>
                                                 </div>
                                             </div>
                                         </a>
@@ -86,7 +86,7 @@
                                     <!--variant="label-hidden"-->
                                     <lightning-input
                                         name="enter-search"
-                                        label="Inserisci un nome e premi invio"
+                                        label={label.offerSelection}
                                         type="search"
                                         onchange={handleSearch}
                                     ></lightning-input>

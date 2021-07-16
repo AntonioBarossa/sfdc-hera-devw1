@@ -11,38 +11,25 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     @api filterString = '';
     @api tabCode;
     @api accountId;
-    @track columns;// = columns;
+    @api columns;// = columns;
     @track selectedMenuItem;
     @track filterApplied = false;
     @track buttonList;
+    @track firstLevelFilterObj = {};
     showButton = false;
-    defaultSortDirection = 'asc';
-    sortDirection = 'asc';
     sortedBy;
+    sortDirection;// = 'asc';
     bShowModal = false;
     fieldsToFilter = [];
-    staticObj = {};
+    @api staticObj = {};
 
     get accountdetailsToView(){
         console.log('# accountdetails #');
         console.log('# filterApplied: ' + this.filterApplied);
 
-        if(this.filterApplied){
-            //this.innerFilterMethod();
+        if(this.filterApplied && this.bShowModal === false){
             this.applyInterrogation(this.staticObj);
         }
-
-        /*if(this.firstLevel === undefined){
-            console.log('#### undefined ###');
-            return [];
-        } else {
-            console.log('#### NOT undefined ###');
-            if(this.firstLevel.secondoLivelloInformativo === undefined){
-                return [];
-            } else {
-                return this.firstLevel.secondoLivelloInformativo;
-            }
-        }*/
 
         return this.accountdetails;
     }
@@ -50,6 +37,10 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     connectedCallback(){
         console.log('# DetailViewer connected #');
         this.getTabConfigurationData();
+    }
+
+    @api getIfSecondLevelIsFiltered(){
+        return this.filterApplied;
     }
 
     getTabConfigurationData(){
@@ -60,15 +51,24 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
             if(result.success){
 
-                this.columns = result.columnObj;//columns;
+                this.columns = result.columnObj;
                 this.buttonList = result.buttonList;
                 console.log('# buttonList: ' + result.buttonList.length);
                 
                 this.columns.forEach((i) => {
                     filterObject[i.fieldName] = '';
                     if(i.isFilter){
-                        this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label, type: i.fieldType});
+                        this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label, type: i.type});
                     }
+
+                    i.cellAttributes = {};
+                    i.cellAttributes = { alignment: 'left' };
+
+                    if(i.type === 'date'){
+                        i.type = 'text';
+                        i.dateAttribute = 'sortAsDate';
+                    }
+
                 });
 
                 this.showButton = true;
@@ -104,8 +104,89 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         }
     }
 
+    onHandleSort(event){
+        console.log('## sort ## ');
+
+        try {
+            const { fieldName: sortedBy, sortDirection } = event.detail;
+            var sortField = event.detail.fieldName;
+            console.log('>>> sort by: ' + sortField + ' - sortDirection: ' + sortDirection);
+
+            var currentObj = this.columns.filter(c => { return c.fieldName == sortField });
+            const cloneData = [...this.accountdetails];
+
+            var currentFieldType = '';
+            currentFieldType = currentObj[0].type;
+            
+            if(currentObj[0].dateAttribute != undefined && currentObj[0].dateAttribute === 'sortAsDate'){
+                currentFieldType = 'date';
+            }
+
+            console.log('>>> filter type ' + currentFieldType);
+
+            var isAsc;
+            if(sortDirection === '' || sortDirection === 'asc'){
+                isAsc = true;
+                this.sortDirection = 'asc';
+            } else {
+                isAsc = false;
+                this.sortDirection = 'desc';
+            }
+
+            switch (currentFieldType) {
+                case 'text':
+                    if(isAsc){
+                        cloneData.sort((a, b) => (a[sortField] > b[sortField]) ? 1 : -1);
+                    } else {
+                        cloneData.sort((a, b) => (a[sortField] < b[sortField]) ? 1 : -1);
+                    }
+                    break;
+                case 'date':
+
+                    cloneData.sort(function(a, b) {
+
+                        var dateSplitted = b[sortField].split('/');
+                        var data = dateSplitted[1] + '/' + dateSplitted[0] + '/' + dateSplitted[2];
+                        
+                        var dateSplitted2 = a[sortField].split('/');
+                        var data2 = dateSplitted2[1] + '/' + dateSplitted2[0] + '/' + dateSplitted2[2];
+
+                        if(isAsc){
+                            return (new Date(data) < new Date(data2)) ? 1 : -1;
+                        } else {
+                            return (new Date(data) > new Date(data2)) ? 1 : -1;
+                        }
+
+                    });
+
+                    break;
+                case 'currency':
+                    if(isAsc){
+                        cloneData.sort((a, b) => (parseFloat(a[sortField]) > parseFloat(b[sortField])) ? 1 : -1);
+                    } else {
+                        cloneData.sort((a, b) => (parseFloat(a[sortField]) < parseFloat(b[sortField])) ? 1 : -1);
+                    }
+                    break;
+                case 'number':
+                    if(isAsc){
+                        cloneData.sort((a, b) => (parseFloat(a[sortField]) > parseFloat(b[sortField])) ? 1 : -1);
+                    } else {
+                        cloneData.sort((a, b) => (parseFloat(a[sortField]) < parseFloat(b[sortField])) ? 1 : -1);
+                    }
+            }
+
+            this.accountdetails = cloneData;
+            //this.sortDirection = sortDirection;
+            this.sortedBy = sortedBy;
+
+        } catch(e) {
+            console.log(e);
+        }
+     
+    }
+
     // Used to sort the 'Age' column
-    sortBy(field, reverse, primer) {
+    /*sortBy(field, reverse, primer) {
         const key = primer
             ? function(x) {
                   return primer(x[field]);
@@ -129,7 +210,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         this.accountdetails = cloneData;
         this.sortDirection = sortDirection;
         this.sortedBy = sortedBy;
-    }
+    }*/
 
     interrogation(event) {
         console.log('# interrogation #');
@@ -137,7 +218,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     }
 
     closeModal() {
-        console.log('# closeModal #');
+        console.log('# closeModal DetailViewer #');
         this.bShowModal = false;
     }
 
@@ -189,11 +270,12 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         try {
             this.filterApplied = false;
             this.filterString = '';
+            this.firstLevelFilterObj = {};
 
             for (var key in this.filterObject) {
                 this.filterObject[key] = '';
             }
-            this.setButtonForFilterApplied(false);
+            //this.setButtonForFilterApplied(false);
 
             const removeFilter = new CustomEvent("removefilter", {
                 detail:  {filter: 'off'}
@@ -339,6 +421,8 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     generateFilterString(){
         try {
 
+            this.filterString = '';
+
             for(var i in this.staticObj){
                 this.filterString += i;
                 this.filterString += ' ';
@@ -357,6 +441,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         console.log('# applyInterFromChild #');
 
         this.staticObj = JSON.parse(event.detail.value);
+        this.firstLevelFilterObj = this.staticObj;
 
         try {
 
@@ -388,86 +473,25 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
         try{
 
-            const columnTypeMap = new Map();
-            this.columns.forEach((col) => {
-                columnTypeMap.set(col.fieldName, col.fieldType);
+            var dataToFilter = [];
+            this.accountdetails.forEach(element => {
+                dataToFilter.push(element);
             });
 
+            const columnTypeMap = new Map();
+            this.columns.forEach((col) => {
+                columnTypeMap.set(col.fieldName, col.type);
+            });
+    
             var contoContrArray;
             if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
                 contoContrArray = currentFilter.contoContrattuale.value.split(',');
             }
 
-            var filteredData = [];
-            filteredData = this.accountdetails.filter(function(item) {
-                
-                for (var key in currentFilter) {
+            dataToFilter = this.filterMethod(dataToFilter, currentFilter, columnTypeMap, contoContrArray);
 
-                    const currentType = columnTypeMap.get(key);
-                    var filterValue;
-                    var tableValueToFilter;
-
-                    if(item[key] === undefined || item[key] === ''){
-                        return false;
-                    }
-
-                    switch (currentType) {
-                        case 'number':
-                            filterValue = parseFloat(currentFilter[key].value);
-                            tableValueToFilter = parseFloat(item[key]);
-                            console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
-                            break;
-                        case 'date':
-                            var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
-                            filterValue = date.getTime();
-
-                            var cDate = item[key].split('/');
-                            var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
-                            tableValueToFilter = cDate2.getTime();
-
-                            break;
-                        case 'text':
-                            filterValue = currentFilter[key].value;
-                            tableValueToFilter = item[key];
-                    }
-
-                    switch (currentFilter[key].operator) {
-                        case '='://uguale a
-                            if (tableValueToFilter != filterValue)
-                            return false;
-                            break;
-                        case '>'://maggiore di
-                            if (tableValueToFilter <= filterValue)
-                            return false;
-                            break;
-                        case 'in'://contiene caratteri
-                            if(!tableValueToFilter.includes(filterValue))
-                            return false;
-                            break;
-                        case 'on'://contiene valori
-                            if(!contoContrArray.includes(tableValueToFilter))
-                            return false;
-                    }
-
-                }
-                return true;
-            });
-
-            //if(filteredData.length == 0 && this.bShowModal){
-            //    this.dispatchEvent(
-            //        new ShowToastEvent({
-            //            title: 'Attenzione',
-            //            message: 'Nessun record trovato',
-            //            variant: 'warning'
-            //        }),
-            //    );
-            //    this.filterString = '';
-            //    this.staticObj = {};
-            //    return;
-            //}
-
-            this.setButtonForFilterApplied(true);
-            this.accountdetails = filteredData;
+            //this.setButtonForFilterApplied(true);
+            this.accountdetails = dataToFilter;
             this.filterApplied = true;
             this.closeModal();
 
@@ -477,6 +501,77 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             console.error('# Stack => ' + e.stack ); 
         }
 
+    }
+
+    @api getSecondLevelList(parentData, currentFilter, columnTypeMap, contoContrArray){
+        var filteredData = [];
+        filteredData = this.filterMethod(parentData, currentFilter, columnTypeMap, contoContrArray);
+        return filteredData;
+    }
+
+    filterMethod(dataToFilter, currentFilter, columnTypeMap, contoContrArray){
+
+        console.log('>>> FILTER METHOD - CHILD NEW');
+
+        dataToFilter = dataToFilter.filter(function(item) {
+                
+            for (var key in currentFilter) {
+
+                const currentType = columnTypeMap.get(key);
+                var filterValue;
+                var tableValueToFilter;
+
+                if(item[key] === undefined || item[key] === ''){
+                    return false;
+                }
+
+                switch (currentType) {
+                    case 'currency':
+                        filterValue = parseFloat(currentFilter[key].value.replace(',','.'));
+                        tableValueToFilter = parseFloat(item[key]);
+                        console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
+                        break;
+                    case 'number':
+                        filterValue = parseFloat(currentFilter[key].value);
+                        tableValueToFilter = parseFloat(item[key]);
+                        console.log('>>> ' + currentType + ' - filterValue: ' + filterValue + ', tableValueToFilter ' + tableValueToFilter);
+                        break;
+                    case 'date':
+                        var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
+                        filterValue = date.getTime();
+
+                        var cDate = item[key].split('/');
+                        var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
+                        tableValueToFilter = cDate2.getTime();
+
+                        break;
+                    case 'text':
+                        filterValue = currentFilter[key].value;
+                        tableValueToFilter = item[key];
+                }
+
+                switch (currentFilter[key].operator) {
+                    case '='://uguale a
+                        if (tableValueToFilter != filterValue)
+                        return false;
+                        break;
+                    case '>'://maggiore di
+                        if (tableValueToFilter <= filterValue)
+                        return false;
+                        break;
+                    case 'in'://contiene caratteri
+                        if(!tableValueToFilter.includes(filterValue))
+                        return false;
+                        break;
+                    case 'on'://contiene valori
+                        if(!contoContrArray.includes(tableValueToFilter))
+                        return false;
+                }
+
+            }
+            return true;
+        });
+        return dataToFilter;
     }
 
     setButtonForFilterApplied(remove){

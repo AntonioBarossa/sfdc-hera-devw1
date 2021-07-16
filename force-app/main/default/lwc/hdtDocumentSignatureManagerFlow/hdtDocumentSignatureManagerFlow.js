@@ -19,10 +19,9 @@ import IsInvoicingVerified from '@salesforce/schema/Case.IsInvoicingVerified__c'
 import InvoicingPlace from '@salesforce/schema/Case.InvoicingPlace__c';
 import InvoicingStreetName from '@salesforce/schema/Case.InvoicingStreetName__c';
 import InvoicingCountry from '@salesforce/schema/Case.InvoicingCountry__c';
-import InvoicingStreetToponym from '@salesforce/schema/Case.InvoicingStreetToponym__c';
 import InvoicingProvince from '@salesforce/schema/Case.InvoicingProvince__c';
 import AddressFormula from '@salesforce/schema/Case.AddressFormula__c';
-import sendDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
+import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
 
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 const FIELDS = ['Case.ContactMobile', 
@@ -53,7 +52,6 @@ const FIELDS = ['Case.ContactMobile',
 				'Case.InvoicingPlace__c',
 				'Case.InvoicingStreetName__c',
 				'Case.InvoicingCountry__c',
-				'Case.InvoicingStreetToponym__c',
                 'Case.InvoicingProvince__c'];
 
 export default class HdtDocumentSignatureManagerFlow extends LightningElement {
@@ -73,7 +71,9 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     @track enableNext = false;
     @track previewExecuted = false;
     @track confirmData;
-
+    @track labelConfirm = 'Conferma pratica';
+    @track showConfirmButton = false;
+    @track showPreviewButton = true;
     @api
     get variantButton(){
         if(this.nextVariant != null && this.nextVariant !="" && this.nextVariant != "unedfined")
@@ -91,7 +91,13 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     }
 
     connectedCallback(){
-        //updateRecord({fields: { Id: this.recordId }});
+        if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+            this.labelConfirm = 'Conferma pratica';
+            this.showPreviewButton = false;
+            this.previewExecuted = true;
+        }else{
+            this.labelConfirm = 'Invia documenti';
+        }
     }
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
         wiredCase({ error, data }) {
@@ -206,6 +212,10 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     handlePreviewExecuted(event){
         this.previewExecuted = true;
     }
+
+    handlePreview(event){
+        let returnValue = this.template.querySelector('c-hdt-document-signature-manager').handlePreview();
+    }
     handleConfirmData(event){
         console.log('dati confermati ' + event.detail);
         this.confirmData = event.detail;
@@ -231,7 +241,6 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
             //fields[InvoicingPlace.fieldApiName] = resultWrapper.addressWrapper.
             fields[InvoicingProvince.fieldApiName] = resultWrapper.addressWrapper.Provincia;
             fields[InvoicingCountry.fieldApiName] = resultWrapper.addressWrapper.Stato;
-            //fields[InvoicingStreetToponym.fieldApiName] = resultWrapper.addressWrapper.
             fields[InvoicingStreetName.fieldApiName] = resultWrapper.addressWrapper.Via;
 
             const recordInput = { fields };
@@ -253,13 +262,41 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                     );
                 });
             this.enableNext = true;
+            this.handleConfirm();
         }else{
             this.enableNext = false;
         }
     }
-
-    handleGoNext() {
-        //inserito momentaneamente per non bloccare il next
+    handleConfirmButton(){
+        let returnValue = this.template.querySelector('c-hdt-document-signature-manager').checkForm();
+    }
+    handleConfirm(){
+        if(this.enableNext){
+            if((!this.previewExecuted && this.quoteType && this.quoteType.localeCompare('Analitico') != 0)){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Errore',
+                        message:'Attenzione! Devi effettuare la preview del documento prima di poter procedere con il Conferma Pratica.',
+                        variant: 'error',
+                    }),
+                );
+            }else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+                this.handleGoNext();
+            }else{
+                console.log('sendDocumentFile');
+                this.sendDocumentFile();
+            }
+        }else{
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Errore',
+                    message:'Attenzione! Devi confermare i dati prima di procedere con il Conferma Pratica.',
+                    variant: 'error',
+                }),
+            );
+        }
+    }
+    handleGoNext(){
         if(this.availableActions.find(action => action === 'NEXT')){
 
             const navigateNextEvent = new FlowNavigationNextEvent();
@@ -272,55 +309,36 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
 
             this.dispatchEvent(navigateFinish);
         }
-        //commentato momentanemanete per non bloccare il next
-        /*if(this.enableNext){
-            if((!this.previewExecuted && this.quoteType && this.quoteType.localeCompare('Analitico') != 0)){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Errore',
-                        message:'Attenzione! Devi effettuare la preview del documento prima di poter procedere con il Conferma Pratica.',
-                        variant: 'error',
-                    }),
-                );
-            }else{
-                this.cancelCase = false;
-                var formParams = {
-                    sendMode : this.confirmData.sendMode,
-                    signMode : this.confirmData.signMode,
-                    telefono : this.confirmData.telefono,      
-                    email : this.confirmData.email,      
-                    mode : 'Print',
-                    Archiviato : 'N'
-                }
-                sendDocumentFile({
-                    recordId: this.recordId,
-                    context: 'Case',
-                    formParams: JSON.stringify(formParams)
-                }).then(result => {});
+    }
 
-                if(this.availableActions.find(action => action === 'NEXT')){
-
-                    const navigateNextEvent = new FlowNavigationNextEvent();
-
-                    this.dispatchEvent(navigateNextEvent);
-
-                } else {
-
-                    const navigateFinish = new FlowNavigationFinishEvent();
-
-                    this.dispatchEvent(navigateFinish);
-                }
+    sendDocumentFile(){
+        try{
+            this.confirmData = JSON.parse(this.confirmData);
+            var sendMode = this.confirmData.sendMode;
+            if(sendMode.localeCompare('Stampa Cartacea')===0){
+                sendMode = 'Sportello';
             }
-        }else{
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Errore',
-                    message:'Attenzione! Devi confermare i dati prima di poter procedere con il Conferma Pratica.',
-                    variant: 'error',
-                }),
-            );
-        }*/
-
+            var formParams = {
+                sendMode : sendMode,
+                signMode : this.confirmData.signMode,
+                telefono : this.confirmData.telefono,      
+                email : this.confirmData.email,      
+                mode : 'Print',
+                Archiviato : 'Y'
+            }
+            sendDocument({
+                recordId: this.recordId,
+                context: 'Case',
+                formParams: JSON.stringify(formParams)
+            }).then(result => {
+                this.handleGoNext();
+            }).catch(error => {
+                this.showToast('Errore nell\'invio del documento al cliente.');
+                console.error(error);
+            });
+        }catch(error){
+            console.error(error);
+        }
     }
 
     handleCancel(){

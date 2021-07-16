@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>Set_contactId_variable</name>
+        <label>Set contactId variable</label>
+        <locationX>920</locationX>
+        <locationY>160</locationY>
+        <assignmentItems>
+            <assignToReference>SelectedSolContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Contatto_SOL</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Annullare</name>
         <label>Annullare?</label>
@@ -63,6 +79,31 @@
             <label>Salva in bozza</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Resumed_from_draft</name>
+        <label>Resumed from draft?</label>
+        <locationX>680</locationX>
+        <locationY>162</locationY>
+        <defaultConnector>
+            <targetReference>Selezione_Contatto_SOL</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_contactId_variable</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
     <interviewLabel>Gestione Modifiche Anagrafiche - Esercizio Diritti Privacy {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Modifiche Anagrafiche - Disassociazione Utente Web</label>
     <processMetadataValues>
@@ -87,11 +128,11 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>487</locationX>
-        <locationY>322</locationY>
+        <locationX>356</locationX>
+        <locationY>160</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Selezione_Contatto_SOL</targetReference>
+            <targetReference>Resumed_from_draft</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -108,8 +149,8 @@
     <recordLookups>
         <name>Get_Contatto_SOL</name>
         <label>Get Contatto SOL</label>
-        <locationX>1072</locationX>
-        <locationY>326</locationY>
+        <locationX>1074</locationX>
+        <locationY>327</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Login_SOL</targetReference>
@@ -462,8 +503,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>32</locationX>
-        <locationY>304</locationY>
+        <locationX>133</locationX>
+        <locationY>408</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
         </connector>
@@ -510,6 +551,13 @@
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>

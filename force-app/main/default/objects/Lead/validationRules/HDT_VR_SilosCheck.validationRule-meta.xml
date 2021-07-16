@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_SilosCheck</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( OR( AND( $UserRole.DeveloperName = &apos;HDT_FrontOffice_AAAEBT&apos; , ISNEW() , NOT( ISPICKVAL(CompanyOwner__c, &apos;AAA-EBT&apos;) ) ), AND($UserRole.DeveloperName = &apos;HDT_FrontOffice_MMS&apos;,  ISNEW() ,NOT( ISPICKVAL(CompanyOwner__c, &apos;MMS&apos;) ) ) , AND( OR($UserRole.DeveloperName = &apos;HDT_FrontOffice_HERA_COMM&apos;, ISPICKVAL($User.UserType, &apos;PowerPartner&apos;) ) , ISNEW() , NOT( ISPICKVAL(CompanyOwner__c, &apos;HERA COMM&apos;) ) ) ), true, false)</errorConditionFormula>
+    <errorMessage>Inserire il Silos di appartenenza !</errorMessage>
+</ValidationRule>

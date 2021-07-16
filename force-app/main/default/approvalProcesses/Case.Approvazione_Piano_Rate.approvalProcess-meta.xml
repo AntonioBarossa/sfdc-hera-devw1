@@ -19,7 +19,6 @@
         <field>WorkStatus__c</field>
         <field>Reason__c</field>
         <field>MaxInstallmentsNumber__c</field>
-        <field>InstallmentPlanNumber__c</field>
         <field>ExistingInstallmentsPlanNumber__c</field>
         <field>InstallmentNumberRequired__c</field>
         <field>SuspensionInThePastTwelveMonths__c</field>
@@ -47,10 +46,15 @@
             <operation>equals</operation>
             <value>In Attesa Approvazione</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.TotalResidue__c</field>
+            <operation>notEqual</operation>
+            <value>0</value>
+        </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
         <action>
-            <name>Passa_a_Attesa_Modulo_Firmato</name>
+            <name>Passa_a_Pratica_In_Attesa</name>
             <type>FieldUpdate</type>
         </action>
     </finalApprovalActions>

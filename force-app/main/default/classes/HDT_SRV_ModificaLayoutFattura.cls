@@ -58,11 +58,13 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
 
             if(responseBody.data.attivita == 'Esito OK da SAP'){
 
-                caseToUpdate.Phase__c = 'Inviata a SAP';
+                caseToUpdate.Phase__c = 'Completata';
 
             }else{
 
+
                 caseToUpdate.description = responsebody.data.attivita + ' ' +responseBody.data.note;
+                caseToUpdate.Phase__c = 'Errore Lavorazione SAP';
 
             }
 
@@ -75,6 +77,9 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
             
             HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
 
+        } else {
+            caseToUpdate.Phase__c = 'Errore Lavorazione SAP';
+            caseToUpdate.Description = 'Errore comunicazione con SAP';
         }
     }
 }

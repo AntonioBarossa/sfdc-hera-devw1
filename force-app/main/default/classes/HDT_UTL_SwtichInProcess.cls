@@ -63,10 +63,15 @@ public with sharing class HDT_UTL_SwtichInProcess {
 
     // Data di invio richiesta al SII
     public static Date getDateSentToSii(Order order) {
-
+        system.debug('getDateSentToSii: ');
         order = orderQr.getRecordById(order.id);
-
+        system.debug('getDateSentToSii: ' + JSON.serializePretty(order));
         Date signedDate = order.SignedDate__c;   
+        system.debug('signedDate: ' + signedDate);
+        system.debug('ProcessType__c: ' + order.ProcessType__c);
+        system.debug('DeveloperName: ' + order.Account.RecordType.DeveloperName);
+        system.debug('WaiverRightAfterthought__c: ' + order.WaiverRightAfterthought__c);
+        system.debug('getMaxAfterthoughtDate: ' + getMaxAfterthoughtDate(order));
         Date dateSentToSii= null;
         if(signedDate != null  && order.ProcessType__c != 'Cambio Offerta'){
             if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
@@ -75,9 +80,11 @@ public with sharing class HDT_UTL_SwtichInProcess {
                 if (order.WaiverRightAfterthought__c == 'Si') { 
                     dateSentToSii = date.today();
                 }else{                    
-                    if(order.WizardCompletedDate__c >= getMaxAfterthoughtDate(order)){
+                    if(order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)){
+                        system.debug('order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)');
                         dateSentToSii= order.WizardCompletedDate__c;
                     }else{
+                        system.debug('order.WizardCompletedDate__c < getMaxAfterthoughtDate(order)'); 
                         dateSentToSii= getMaxAfterthoughtDate(order).addDays(1);
                     }                    
                 }

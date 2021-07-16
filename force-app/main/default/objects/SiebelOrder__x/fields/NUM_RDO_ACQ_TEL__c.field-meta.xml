@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>NUM_RDO_ACQ_TEL</label>
+    <label>Cont. RDO Acqua/Teleriscaldamento</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

@@ -8,7 +8,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>CST_OU_ID_SALESFORCE</label>
+    <label>Cliente Salesforce</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Richieste</relationshipLabel>
     <relationshipName>SiebelRds</relationshipName>

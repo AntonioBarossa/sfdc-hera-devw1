@@ -885,14 +885,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>Commodity__c</picklist>
-        <values>
+        <!-- <values>
             <fullName>Acqua</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>Ambiente</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Energia Elettrica</fullName>
             <default>false</default>
@@ -901,10 +901,10 @@
             <fullName>Gas</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Teleriscaldamento</fullName>
             <default>false</default>
-        </values>
+        </values> -->
     </picklistValues>
     <picklistValues>
         <picklist>CompanyOwner__c</picklist>
@@ -7214,10 +7214,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
         </values>
@@ -7255,10 +7251,6 @@
         </values>
         <values>
             <fullName>Marcatura%2FUso PdR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7323,14 +7315,6 @@
         </values>
         <values>
             <fullName>Reclamo Scritto%2FRich%2E Info</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore di Lettura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7426,7 +7410,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Unificazione%2FSeparazione CA-Bolletta</fullName>
+            <fullName>Unificazione%2FSeparazione BP-CA-Bolletta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7808,6 +7792,10 @@
         <picklist>Phase__c</picklist>
         <values>
             <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato – Amm OK</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9810,22 +9798,6 @@
             <fullName>Non Domestico</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>A-Domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>B-Condominio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>C-Aziende di pubblica utilita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>D-Altri usi</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SuspensionMotivation__c</picklist>
@@ -9947,58 +9919,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Taxes__c</picklist>
-        <values>
-            <fullName>Imposta Autotrazione (Cod. G_I09)</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imosta Autopr-Prod EE Industr (Cod. G_I15)</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imposta Processi Metallurgici (Cod. G_I22)</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imposta Processi Mineralogici (Cod. G_I23)</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imposta Forze Armate Nazionali (Cod. G_I24)</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imposta Usi Domestici (Cod. G_ICD)</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imposta usi non domestici iva 10% (Cod. G_ICC10)</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imposta usi non domestici iva 22% (Cod. G_ICC)</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imposta usi industriali (Cod. G_I04)</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imposta Processi Elettrolitici (Cod. G_I21)</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imposta Forze Armate NATO (Cod. G_I25)</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imposta Sedi Diplomatiche - Art.22 (Cod. G_I26)</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Imposta usi domestici</fullName>
             <default>false</default>
@@ -10377,10 +10297,6 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Account%2FBilling Profile - errata categoria</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Aggiunta Attacco</fullName>
             <default>false</default>
         </values>
@@ -10430,10 +10346,6 @@
         </values>
         <values>
             <fullName>Cambio Uso Tecnico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cambio cont%2E non registrato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10525,10 +10437,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
         </values>
@@ -10570,10 +10478,6 @@
         </values>
         <values>
             <fullName>Marcatura%2FUso PdR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10670,14 +10574,6 @@
         </values>
         <values>
             <fullName>Rettifica Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore di Lettura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10829,10 +10725,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Variazione Tensione - Pressione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Variazione indirizzo di fornitura</fullName>
             <default>false</default>
         </values>
@@ -10965,107 +10857,107 @@
     <picklistValues>
         <picklist>UseTypeEnergy__c</picklist>
         <values>
+            <fullName>Ins Lum Pubb (Perm Partic)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imp Risalita (Perm Partic)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Illuminaz Monum (Perm Partic)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non raggiungibile(Perm Partic)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ordinaria (Perm)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inst Non presid (Perm Partic)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ville rifugi simili(Perm Part)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Roulottes simili (Perm Partic)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cottimo (Perm)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest (Temp Straord 6h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest (Temp Straord 8h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spett viagg (Temp Straord 6h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spett viagg (Temp Straord)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripr cine tv(Temp Straord 8h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest (Temp Straord 16h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>For temp abit(Temp Straord 6h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leviga Pavim(Temp Straord 8h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cantiere (Temp)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luminarie (Temp Straord 16h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leviga Pavimenti(Temp Straord)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luminarie (Temp Straord 8h)</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>03 Illuminazione Pubblica</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cantiere %28Temp%29</fullName>
+            <fullName>Spett viagg (Temp permanente)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cottimo %28Perm%29</fullName>
+            <fullName>Leviga Pavim(Temp permanente)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>For temp abit%28Temp Straord 6h%29</fullName>
+            <fullName>Ripr cine tv(Temp permanente)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Illuminaz Monum %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imp Risalita %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ins Lum Pubb %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inst Non presid %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Leviga Pavim%28Temp Straord 8h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Leviga Pavim%28Temp permanente%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Leviga Pavimenti%28Temp Straord%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Luminarie %28Temp Straord 16h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Luminarie %28Temp Straord 8h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manifest %28Temp Straord 16h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manifest %28Temp Straord 6h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manifest %28Temp Straord 8h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manifest %28Temp permanente%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non raggiungibile%28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ordinaria %28Perm%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripr cine tv%28Temp Straord 8h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripr cine tv%28Temp permanente%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Roulottes simili %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spett viagg %28Temp Straord 6h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spett viagg %28Temp Straord%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spett viagg %28Temp permanente%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ville rifugi simili%28Perm Part%29</fullName>
+            <fullName>Manifest (Temp permanente)</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -61,7 +61,14 @@
                 });
                 console.log('AAAA');                
                 cmp.set('v.data',records);
-                cmp.set('v.showTable',true)
+                if(records.length == 0){
+                    cmp.set('v.showTable',false)
+                    cmp.set('v.noResults',true)
+                }
+                else{
+                    cmp.set('v.showTable',true)
+                    cmp.set('v.noResults',false)
+                }
                 console.log('Data')
             }else {
                 console.log("Failed with state: " + state);

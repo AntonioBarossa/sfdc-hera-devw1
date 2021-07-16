@@ -34,6 +34,79 @@ public class HDT_SRV_DocumentalManagement{
 		System.debug('Body ' + body);
 		return body;
 	}
+
+	public static String generateGetAttachmentRequest(String recordId){
+		if (String.isBlank(recordId)) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
+		}
+
+		DocumentalActivity__c actMoga = HDT_QR_DocumentalConfiguration.getDocumentalActivityById(recordId);
+		if (actMoga == null) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
+		}
+
+		if (String.isBlank(actMoga.AttachmentCode__c)) {
+			throw new HDT_UTL_HeraException('Impossibile visualizzare allegato, Codice Allegato non disponibile.');
+		}
+
+		JSONGenerator gen = JSON.createGenerator(false);
+
+		gen.writeStartObject();
+		gen.writeFieldName('attachmentInfo');
+		gen.writeStartArray();
+		gen.writeStartObject();
+		gen.writeStringField('key', 'pt_numero_plico');
+		gen.writeStringField('value', actMoga.EnvelopeId__c);
+		gen.writeEndObject();
+		gen.writeStartObject();
+		gen.writeStringField('key', 'pt_codice_allegato');
+		gen.writeStringField('value', actMoga.AttachmentCode__c);
+		gen.writeEndObject();
+		gen.writeStartObject();
+		gen.writeStringField('key', 'pt_timestamp');
+		gen.writeStringField('value', actMoga.PostelTimestamp__c);
+		gen.writeEndObject();
+		gen.writeEndArray();
+		gen.writeEndObject();
+
+		String body = gen.getAsString();
+		System.debug('Postel body: ' + body);
+		return body;
+	}
+
+	public static String generateGetEnvelopeRequest(SObject documentalObject){
+		if (documentalObject == null) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c o DocumentSendTracking__c per visualizzare il documento.');
+		}
+
+		String envelopeId = (String) documentalObject.get('EnvelopeId__c');
+		if (String.isBlank(envelopeId)) {
+			throw new HDT_UTL_HeraException('Impossibile visualizzare il plico archiviato, Id Plico non disponibile.');
+		}
+
+		String body = '';
+		if (getDocumentType(documentalObject) == 'pdf') {
+
+			JSONGenerator gen = JSON.createGenerator(false);
+			gen.writeStartObject();
+			gen.writeFieldName('envelopeInfo');
+			gen.writeStartArray();
+			gen.writeStartObject();
+			gen.writeStringField('key', 'pt_numero_offerta');
+			gen.writeStringField('value', envelopeId);
+			gen.writeEndObject();
+			gen.writeEndArray();
+			gen.writeEndObject();
+			body = gen.getAsString();
+
+		} else {
+			// TODO: generate request per recupero zip da Intesa
+		}
+
+		System.debug('GetEnvelopeRequest body: ' + body);
+		return body;
+	}
+
 	@future
 	public static void createPublicLinkFuture(String recordId,String base64,String fileName){
 		String publicLink = createPublicLink(recordId,base64,fileName);
@@ -65,6 +138,33 @@ public class HDT_SRV_DocumentalManagement{
 		return documentalResponse;
 	}
 
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeGetAttachmentCalloutRequest(String body){
+		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+		postelResponse = HDT_WS_DocumentalIntegration.submitGetAttachmentRequest(body);
+		if (postelResponse.responseCode != 200) {
+			throw new HDT_UTL_HeraException('Errore Postel nel recupero del documento archiviato');
+		}
+		return postelResponse;
+	}
+	
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeGetEnvelopeCalloutRequest(String body, String documentType){
+		if (String.isBlank(documentType)) {
+			throw new HDT_UTL_HeraException('Errore interno nel recupero del documento archiviato.');
+		}
+
+		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+		if (documentType == 'pdf') {
+			postelResponse = HDT_WS_DocumentalIntegration.submitGetEnvelopePostelRequest(body);
+			if (postelResponse.responseCode != 200) {
+				throw new HDT_UTL_HeraException('Errore Postel nel recupero del documento archiviato');
+			}
+		} else {
+			// TODO: invoke Intesa callout.
+		}
+
+		return postelResponse;
+	}
+
 	@future
 	private static void manageResponseFuture(String responseString, String context){
 		HDT_WRP_DocumentalResponse response = (HDT_WRP_DocumentalResponse) JSON.deserialize(responseString, HDT_WRP_DocumentalResponse.class);
@@ -75,7 +175,7 @@ public class HDT_SRV_DocumentalManagement{
 		try{
 			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((Id) response.deliverPackageResponse.requestId, context);
 			if(context == 'Order' || context == 'Case'){
-				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response);
+				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
 			}
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
 				if(response.responseCode == 200 || response.responseCode == 201 ){
@@ -94,15 +194,15 @@ public class HDT_SRV_DocumentalManagement{
 		String mode = (String) formParams.get('mode') != null? (String) formParams.get('mode'):'';
 		String context = (String) formParams.get('Contesto') != null? (String) formParams.get('Contesto'):'';
 		String signMode = (String) formParams.get('signMode') != null? (String) formParams.get('signMode'):'';
-		String pasedContext = '';
+		String parsedContext = '';
 		try{
-			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC')){
-				pasedContext = 'Case';
+			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC') || context.equalsIgnoreCase('Account')){
+				parsedContext = 'Case';
 			}else {
-				pasedContext=context;
+				parsedContext=context;
 			}
 			sPackageRequest.requestId = recordId;
-			sPackageRequest.objectName = pasedContext;
+			sPackageRequest.objectName = parsedContext;
 			sPackageRequest.objectId = recordId;
 			sPackageRequest.signMode = signMode;
 			sPackageRequest.mode = mode;
@@ -507,7 +607,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			String altriServizi = '';
 			
 			Integer i = -1;
-			String documents = (String) formParams.get('GestioneCredito');
+			String documents = (String) formParams.get('EstrattoConto');
 			List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documents);
 			Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
 			List<Object> secondoLivelloList = new List<Object>();
@@ -524,12 +624,11 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			for (Object singleRecord : primoLivelloList) {
 				i++;
 				primolivello = (Map<String, Object>) singleRecord;
-				secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
 				String currentCa = (String)primolivello.get('contoContrattuale');
 				Double residuo = Double.valueOf(primolivello.get('residuo'));
 				String modPagamento = (String)primolivello.get('modalitaPagamentoCA');
 				
-				if (String.isNotBlank((String)primolivello.get('OrdineDiPagamento'))) {
+				if (String.isNotBlank((String)primolivello.get('ordineDiPagamento'))) {
 					ordineDiPagamento = true;
 				} else {
 					ordineDiPagamento = false;	
@@ -578,7 +677,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 					//recordOttantuno.add((String)primoLivello.get('numeroFattura'));
 				}
 				recordOttantuno.add((String)primoLivello.get('rateizzato'));
-				if(String.isNotBlank((String)primoLivello.get('DataEmissione'))){
+				if(String.isNotBlank((String)primoLivello.get('dataEmissione'))){
 					String dataEmissione = (String)primoLivello.get('dataEmissione');
 					recordOttantuno.add(dataEmissione);
 				}else{
@@ -609,7 +708,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				altriServizi = '';
 				//NUOVI CAMPI aggiunti al tracciato per la Gestione Credito: CONTRATTO e TIPO_DOCUMENTO 
 				recordOttantuno.add((String)primoLivello.get('contratto'));
-				recordOttantuno.add((String)primoLivello.get('tipoDoc'));
+				recordOttantuno.add((String)primoLivello.get('tipoDocumento'));
 				recordOttantuno.add(fineRiga);
 
 				// STESSO CA
@@ -679,6 +778,36 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 		return payload.substring(0, payload.length() - fineRiga.length());
 	}
 	
+	// Restituisce il tipo di documento archiviato: 'zip' se il documento è stato firmato con OTP, 'pdf' altrimenti.
+	public static String getDocumentType(SObject documentalObject){
+		if (documentalObject == null) {
+			throw new HDT_UTL_HeraException('Errore interno nel recupero del documento archiviato.');
+		}
+
+		String signMode = '';
+
+		if (documentalObject.getSobjectType() == DocumentalActivity__c.getSObjectType()) {
+			DocumentalActivity__c documentalActivity = (DocumentalActivity__c) documentalObject;
+			if (String.isNotBlank(documentalActivity.CaseId__c)) {
+				Case c = (Case) documentalActivity.CaseId__r;
+				signMode = c.SignMode__c;
+			} else if (String.isNotBlank(documentalActivity.OrderId__c)) {
+				Order o = (Order) documentalActivity.OrderId__r;
+				signMode = o.SignatureMethod__c;
+			}
+		} else if (documentalObject.getSobjectType() == DocumentSendTracking__c.getSObjectType()) {
+			DocumentSendTracking__c documentSendTracking = (DocumentSendTracking__c) documentalObject;
+			if (String.isNotBlank(documentSendTracking.Case__c)) {
+				Case c = (Case) documentSendTracking.Case__r;
+				signMode = c.SignMode__c;
+			} else if (String.isNotBlank(documentSendTracking.Order__c)) {
+				Order o = (Order) documentSendTracking.Order__r;
+				signMode = o.SignatureMethod__c;
+			}
+		}
+
+		return signMode.contains('OTP') ? 'zip' : 'pdf';
+	}
 
 	public static String getSignModeConfiguration(String processType, String source){
         String configurationJson = '';

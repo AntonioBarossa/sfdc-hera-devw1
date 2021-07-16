@@ -20,6 +20,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
                 'PhaseStory__c', 
                 'Status',
                 'Cluster__c',
+                'DistributorNote__c',
                 'Type',
                 'Subprocess__c',
                 'RecordTypeId'
@@ -112,7 +113,6 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         newCase.BillingProvince__c = parentOrder.ResidentialState__c;
         newCase.BillingStreetName__c = parentOrder.ResidentialStreetName__c;
         newCase.BillingStreetNumber__c = parentOrder.ResidentialStreetNumber__c;
-        newCase.BillingStreetToponym__c = parentOrder.ResidentialStreetToponym__c;
         // Campi sezione Dati Esazione
         newCase.BillingProfile__c = parentOrder.BillingProfile__c;
         newCase.InvoicingCity__c = parentOrder.BillingCity__c;
@@ -124,7 +124,6 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         newCase.InvoicingProvince__c = parentOrder.BillingProvince__c;
         newCase.InvoicingStreetName__c = parentOrder.BillingStreetName__c;
         newCase.InvoicingStreetNumber__c = parentOrder.BillingStreetNumber__c;
-        newCase.InvoicingStreetToponym__c = parentOrder.BillingStreetToponym__c;
         // Campi sezione Dati Fornitura
         newCase.SupplyCity__c = parentOrder.SupplyCity__c;
         newCase.SupplyCityCode__c = parentOrder.SupplyCityCode__c;

@@ -62,6 +62,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
                    ContractId__c, NumberTimeExtension__c, UnitTimeExtension__c, NumberDaysMonthsYears__c,
                    UnitTerminationTime__c, CancellationAllowed__c, RecessAdmitted__c, NumberOfTimeUnits__c,
                    UnitOfTimeMeasurement__c, AdmittingProfileModification__c, OfferToBeModified__c, ServiceProduct__c,
+                   SapCode__c, Message__c,
                 (
                     SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,S__c, G__c, TechnicalOffer__c,PriceCodeValue__c,DiscountCodeValue__c, DiscountCode__c,StringValue__c,
                            FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
@@ -194,12 +195,12 @@ public inherited sharing class HDT_QR_TechnicalOffer {
         return allValues;
     }
 
-    public static List<Info1GroupList__c> getTariffDetails(List<Info1GroupList__c> infoOneGroupList, String rate){
+    public static List<Info1GroupList__c> getTariffDetails(List<Info1GroupList__c> infoOneGroupList, String rate, String rateTypeValue){
         infoOneGroupList = new List<Info1GroupList__c>();
         infoOneGroupList = [
-            SELECT Id, DetTariffa__c, FilterTypeCategory__c
+            SELECT Id, Name, FilterTypeCategory__c, DetTariffa__c
             FROM Info1GroupList__c
-            WHERE FilterTypeCategory__c = :rate
+            WHERE FilterTypeCategory__c = :rate AND Name = :rateTypeValue
             WITH SECURITY_ENFORCED
         ];
         return infoOneGroupList;

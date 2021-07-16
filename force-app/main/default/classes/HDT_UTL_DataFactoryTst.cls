@@ -97,14 +97,13 @@ public with sharing class HDT_UTL_DataFactoryTst {
         return oppList;
     }
 
-    public static List<Account> createAccount(Integer amount, Boolean doInsert) {
+    public static List<Account> createAccountBusiness(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category) {
         
         List<Account> accList = new List<Account>();
 
-        Id rt = [SELECT Id 
-                FROM Recordtype 
-                WHERE SobjectType = 'Account' and Developername = 'HDT_RT_Business' 
-                LIMIT 1].Id;
+        HDT_UTL_Constants constRecordType = new HDT_UTL_Constants();
+
+        Id rt = constRecordType.ACCOUNT_RECORDTYPEID_BUSINESS;
 
         for (Integer i=0; i<amount; i++) {
 
@@ -112,14 +111,15 @@ public with sharing class HDT_UTL_DataFactoryTst {
 
             acc.RecordTypeId = rt;
             acc.Name = 'test account'+i;
-            acc.CompanyOwner__c = 'HERA COMM';
-            acc.CustomerMarking__c = 'Azienda';
-            acc.Category__C = 'Aziende SME';
+            acc.CompanyOwner__c = companyOwner;
+            acc.CustomerMarking__c = customerMarking;
+            acc.Category__C = category;
             acc.VATNumber__c = '12345678901';
             acc.BillingCityCode__c = 'Roma';
             acc.BillingStreetName__c = 'via roma';
             acc.BillingStreetNumber__c = '55';
             acc.LastName__c = 'test account'+i;
+            acc.FiscalCode__c = 'SXSRLA45H28H501K';
 
             accList.add(acc);
 
@@ -132,15 +132,13 @@ public with sharing class HDT_UTL_DataFactoryTst {
 
         return accList;
     }
-    
     public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId) {
 
         List<Order> orderList = new List<Order>();
 
-        Id rt = [SELECT Id 
-                FROM Recordtype 
-                WHERE SobjectType = 'Order' and Developername = 'HDT_RT_Default' 
-                LIMIT 1].Id;
+        HDT_UTL_Constants constRecordType = new HDT_UTL_Constants();
+
+        Id rt = constRecordType.ORDER_RECORDTYPEID_DEFAULT;
 
         for (Integer i=0; i<amount; i++) {
 
@@ -163,6 +161,56 @@ public with sharing class HDT_UTL_DataFactoryTst {
             ord.Instance326__c = 'Richiesto';
             ord.DocumentLow80__c = 'Richiesto';
             ord.AutorizationVolturaThirdTrader__c = 'Richiesto';
+            ord.ContractSigned__c = true;
+            ord.SignedDate__c = Date.today();
+            ord.SignatureMethod__c = 'Vocal Order';
+            ord.DocSendingMethod__c = 'E-mail';
+
+            orderList.add(ord);
+        }
+
+        if (doInsert) {
+
+            insert orderList;
+        }
+
+        return orderList;
+    }
+
+    public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, List<Sale__c> sales) {
+
+        List<Order> orderList = new List<Order>();
+
+        HDT_UTL_Constants constRecordType = new HDT_UTL_Constants();
+
+        Id rt = constRecordType.ORDER_RECORDTYPEID_DEFAULT;
+
+        for (Integer i=0; i<amount; i++) {
+
+            Order ord = new Order();
+
+            ord.RecordTypeId = rt;
+            ord.Name = 'testOrderName'+i;
+            ord.Status = 'Draft';
+            ord.EffectiveDate = Date.today();
+            ord.AccountId = accId;
+            ord.EstimateAmount__c = 1000;
+            ord.PowerQuote__c = 1000;
+            ord.AdministrativeBurden__c = 1; 
+            ord.EstimatedVAT__c = 1; 
+            ord.ValidityDateEstimate__c = Date.today().addDays(30);
+            ord.Phase__c = 'Bozza';
+            ord.CIAccoutn__c = 'Richiesto';
+            ord.QuickQuote__c = 'Richiesto';
+            ord.ChamberCommerceRegistration__c = 'Richiesto';
+            ord.Instance326__c = 'Richiesto';
+            ord.DocumentLow80__c = 'Richiesto';
+            ord.AutorizationVolturaThirdTrader__c = 'Richiesto';
+            ord.ContractSigned__c = true;
+            ord.SignedDate__c = Date.today();
+            ord.SignatureMethod__c = 'Vocal Order';
+            ord.DocSendingMethod__c = 'E-mail';
+            ord.Sale__c = sales[i].Id;
 
             orderList.add(ord);
         }
@@ -197,4 +245,102 @@ public with sharing class HDT_UTL_DataFactoryTst {
 
         return salesList;
     }
+
+
+    public static List<ServicePoint__c> createServicePoint (Integer amount, Boolean doInsert) {
+
+        List<ServicePoint__c> servPointList = new List<ServicePoint__c>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            ServicePoint__c servPoint = new ServicePoint__c();
+
+            servPointList.add(servPoint);
+        }
+
+        if (doInsert) {
+
+            insert servPointList;
+        }
+
+        return servPointList;
+    }
+
+
+    public static List<Contact> createContact (Integer amount, Boolean doInsert, Id accId) {
+
+        List<Contact> contactList = new List<Contact>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            Contact testContact = new Contact();
+            testContact.FirstName = 'test';
+            testContact.LastName = 'tester';
+            testContact.AccountId = accId;
+
+            contactList.add(testContact);
+        }
+
+        if (doInsert) {
+
+            insert contactList;
+        }
+
+        return contactList;
+    }
+
+
+
+    public static List<Contract> createContract (Integer amount, Boolean doInsert, Id accId) {
+
+        List<Contract> contractList = new List<Contract>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            Contract testContract = new Contract();
+            testContract.AccountId = accId;
+
+            contractList.add(testContract);
+        }
+
+        if (doInsert) {
+
+            insert contractList;
+        }
+
+        return contractList;
+    }
+
+
+    public static List<Case> createCase (Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId) {
+
+        List<Case> caseList = new List<Case>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            Case testCase = new Case();
+            testCase.AccountId = accId;
+            testCase.Status = 'In Lavorazione';
+            testCase.Subject = 'test';
+            testCase.Type = 'BP/CA - errata categoria';
+            testCase.Subprocess__c = 'Account';
+            testCase.HerokuPracticeCode__c = '21313232132132';
+            testCase.ContactId = contactId;
+            testCase.ServicePoint__c = servPointId;
+            testCase.Contract__c = contractId;
+            testCase.VulturePracticeReference__c = orderId;
+            testCase.Cluster__c = 'Pagamenti';
+
+
+            caseList.add(testCase);
+        }
+
+        if (doInsert) {
+
+            insert caseList;
+        }
+
+        return caseList;
+    }
+
 }

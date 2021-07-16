@@ -5,14 +5,14 @@ const filterObject = {};
 export default class HdtDetailFilterModal extends LightningElement {
 
     @api fieldsToFilter;
+    @api firstLevelFilterObj;
     @track columns = [];
     @track title = 'Interrogazione';
-    @track filterLabel = 'interroga';
+    @track filterLabel = 'Interroga';
 
     connectedCallback(){
-
         this.fieldsToFilter.forEach((element) => {
-            var obj = {fieldName: element.fieldName, label: element.label, detail: {type: element.type}};
+            var obj = {fieldName: element.fieldName, label: element.label, detail: {type: element.type}, isFilter: true};
             this.columns.push(obj);
         });
     }
@@ -27,7 +27,7 @@ export default class HdtDetailFilterModal extends LightningElement {
     }
 
     closeModalHandler(){
-        console.log('# closeModal #');
+        console.log('# closeModal HdtDetailFilterModal #');
         const closeModal = new CustomEvent("closemodal", {
             detail:  {action: ''}
         });

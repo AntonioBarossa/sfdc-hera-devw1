@@ -43,7 +43,7 @@ class Util {
 	}
 	handleOperatorSwitch(message) {
 		iwscommand.SetAttachdataById(message.ConnectionID, {"operatorChange": true});
-		this.screenpop(ConnectorEntityController.getPopDestination(message.attachdata.sf_activity_id));
+		this.createActivity(message);
 	}
 	handleCrmSwitch(message) {
 		iwscommand.SetAttachdataById(message.ConnectionID, {"crmChange": true});
