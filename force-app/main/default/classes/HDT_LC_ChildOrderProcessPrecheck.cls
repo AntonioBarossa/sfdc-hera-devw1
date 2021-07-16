@@ -109,6 +109,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         newOrder.ProcessCode__c = processCode;
         newOrder.Phase__c = 'Bozza';
 
+        //Logica Superficie Servita Start
+        newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas' && selectedProcessObject.get('recordType') != 'HDT_RT_Voltura') ? 75 : null;
+        //Logica Superficie Servita End
+
         orderSrv.updateRecord(newOrder);
         //EVERIS 
     }

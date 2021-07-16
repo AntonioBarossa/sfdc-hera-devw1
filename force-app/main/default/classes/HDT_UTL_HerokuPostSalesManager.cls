@@ -259,6 +259,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.CancellationHerokuPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_UTENTE');
                 }
             }
+            if(reqWrp.requestMap.get('FATTIB_TEC') != null && reqWrp.requestMap.get('FATTIB_TEC') != ''){
+                if(reqWrp.requestMap.get('FATTIB_TEC').equalsIgnoreCase('SI')){
+                    currentCase.TechnicalFeasibility__c = true;
+                } else {
+                    currentCase.TechnicalFeasibility__c = false;
+                }
+            }
             if(nextPhase != null && nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
                 currentCase.ComplexCategory__c = reqWrp.requestMap.get('NOTE');
             }
@@ -369,7 +376,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.Phase__c = 'Completata';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
-        }
+        }else if(currentCase.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') 
+                && currentCase.Type.equalsIgnoreCase('Variazione Fase')
+                && currentCase.CausalCode__c.equalsIgnoreCase('E02')){
+            currentCase.Phase__c = 'Inviare preventivo';
+            updateFuture(JSON.serialize(currentCase));
+            }
     }
     //se Annullamento SII - Ricezione e Storno N --> Aggiornare in Annullamento SII e dopo in Annullato SII
     //se Annullamento SII - Ricezione e Attivita Eseguire Gestione Manuale SAP --> Creazione Activity
