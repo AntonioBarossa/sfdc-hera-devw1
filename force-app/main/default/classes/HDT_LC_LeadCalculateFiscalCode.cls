@@ -1,8 +1,8 @@
 /**
 * @author Lorenzo (lorenzo.gulotta@webresults.it)
-* @date May/2021
-* @description HDT_LC_LeadCalculateFiscalCode
-* @history Lorenzo – May/2021 – created class
+* @date 12/05/2021
+* @description HDT_BA_OldDraftSales
+* @history Lorenzo – 12/05/2021 – created class
 */
 
 public with sharing class HDT_LC_LeadCalculateFiscalCode {
