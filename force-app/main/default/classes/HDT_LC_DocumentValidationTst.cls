@@ -12,8 +12,8 @@ public with sharing class HDT_LC_DocumentValidationTst {
     @TestSetup
     static void setup(){
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
-        List<Account> acc = HDT_UTL_DataFactoryTst.createAccount(1, true);
-        HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id);
+        List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
     }
 
     @isTest
@@ -33,7 +33,7 @@ public with sharing class HDT_LC_DocumentValidationTst {
     }
 
     @isTest
-    static void testSaveValidation(){
+    static void testSaveValidationSucess(){
         Order ord = [SELECT id, Instance326__c, DocumentLow80__c, ChamberCommerceRegistration__c, AutorizationVolturaThirdTrader__c, CIAccoutn__c, QuickQuote__c,Phase__c From Order LIMIT 1];
         
         Test.startTest();   
@@ -42,4 +42,21 @@ public with sharing class HDT_LC_DocumentValidationTst {
             System.assertNotEquals(null, ord);
         Test.stopTest();
     }
+    // phase error
+    // @isTest
+    // static void testSaveValidationFail(){
+    //     Order ord = [SELECT id, Instance326__c, DocumentLow80__c, ChamberCommerceRegistration__c, AutorizationVolturaThirdTrader__c, CIAccoutn__c, QuickQuote__c,Phase__c From Order LIMIT 1];
+    //     ord.CIAccoutn__c = 'Validato';
+    //     ord.QuickQuote__c = 'Validato';
+    //     ord.ChamberCommerceRegistration__c = 'Validato';
+    //     ord.Instance326__c = 'Validato';
+    //     ord.DocumentLow80__c = 'Validato';
+    //     ord.AutorizationVolturaThirdTrader__c = 'Validato';
+    //     update ord;
+    //     Test.startTest();   
+    //         HDT_LC_DocumentValidation.saveValidation(ord);
+    //         System.assert(ord !=null, 'Order is not null');
+    //         System.assertNotEquals(null, ord);
+    //     Test.stopTest();
+    // }
 }
