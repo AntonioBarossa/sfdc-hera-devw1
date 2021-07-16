@@ -9,7 +9,7 @@ public with sharing class HDT_LC_LeadChangeRecordType {
         Lead lead=new Lead(Id= leadId);
         lead.RecordTypeId= recordtypeQr.getRecordType('HDT_RT_Main', 'Lead').Id;
         HDT_SRV_Lead.checkUpdateAccess(lead);
-      //  HDT_SRV_Lead.updateRecord(lead);
+        HDT_SRV_Lead.updateRecord(lead);
         String res = '';
         String s = HDT_QR_ServiceCatalog.getServiceLinkItemAccountRedirectUrlByCategory('', 'Modifica Privacy');
         if(s != null){

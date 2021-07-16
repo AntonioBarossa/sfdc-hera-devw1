@@ -54,4 +54,18 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+    public static List<wrts_prcgvr__Activity__c> getRecordByOwnerId(List<String> ownerIdList) {
+        return [
+            SELECT
+            Id,
+            Approved__c,
+            QuoteLine__c,
+            case__c,
+            owner.name,
+            Name
+            FROM wrts_prcgvr__Activity__c
+            WHERE OwnerId IN :ownerIdList
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

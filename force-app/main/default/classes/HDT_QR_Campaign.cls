@@ -12,12 +12,43 @@ public with sharing class HDT_QR_Campaign {
         return [
             SELECT 
             Id,
-            Name
-          //  LavorazioneFUB__c
+            Name,
+            LavorazioneFUB__c,
+            AssignmentType__c
             FROM Campaign
             where Id = :Id
             WITH SECURITY_ENFORCED
             LIMIT 1
+        ];
+    }
+
+    public static List<Campaign> getCampaignIds(String Name) {
+        return [
+            SELECT 
+            Id,
+            Name,
+            LavorazioneFUB__c,
+            MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c,
+            AssignmentType__c
+            FROM Campaign
+            where Name = :Name
+          //  WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+    }
+    public List<Campaign> getOutboundCampaigns() {
+        Date d = Date.today();
+        return [
+            SELECT 
+            Id,
+            Name
+            FROM Campaign
+            WHERE isActive = true
+            AND StartDate <= :d
+            AND (EndDate >= :d OR EndDate = NULL)
+            AND Category__c = 'Campagna Outbound'
+            AND Channel__c INCLUDES ('Telefonico Outbound')
+            WITH SECURITY_ENFORCED
         ];
     }
 
