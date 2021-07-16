@@ -97,7 +97,7 @@ public with sharing class HDT_UTL_DataFactoryTst {
         return oppList;
     }
 
-    public static List<Account> createAccount(Integer amount, Boolean doInsert) {
+    public static List<Account> createAccountBusiness(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category) {
         
         List<Account> accList = new List<Account>();
 
@@ -111,14 +111,15 @@ public with sharing class HDT_UTL_DataFactoryTst {
 
             acc.RecordTypeId = rt;
             acc.Name = 'test account'+i;
-            acc.CompanyOwner__c = 'HERA COMM';
-            acc.CustomerMarking__c = 'Azienda';
-            acc.Category__C = 'Aziende SME';
+            acc.CompanyOwner__c = companyOwner;
+            acc.CustomerMarking__c = customerMarking;
+            acc.Category__C = category;
             acc.VATNumber__c = '12345678901';
             acc.BillingCityCode__c = 'Roma';
             acc.BillingStreetName__c = 'via roma';
             acc.BillingStreetNumber__c = '55';
             acc.LastName__c = 'test account'+i;
+            acc.FiscalCode__c = 'SXSRLA45H28H501K';
 
             accList.add(acc);
 
@@ -308,6 +309,38 @@ public with sharing class HDT_UTL_DataFactoryTst {
         }
 
         return contractList;
+    }
+
+
+    public static List<Case> createCase (Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId) {
+
+        List<Case> caseList = new List<Case>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            Case testCase = new Case();
+            testCase.AccountId = accId;
+            testCase.Status = 'In Lavorazione';
+            testCase.Subject = 'test';
+            testCase.Type = 'BP/CA - errata categoria';
+            testCase.Subprocess__c = 'Account';
+            testCase.HerokuPracticeCode__c = '21313232132132';
+            testCase.ContactId = contactId;
+            testCase.ServicePoint__c = servPointId;
+            testCase.Contract__c = contractId;
+            testCase.VulturePracticeReference__c = orderId;
+            testCase.Cluster__c = 'Pagamenti';
+
+
+            caseList.add(testCase);
+        }
+
+        if (doInsert) {
+
+            insert caseList;
+        }
+
+        return caseList;
     }
 
 }
