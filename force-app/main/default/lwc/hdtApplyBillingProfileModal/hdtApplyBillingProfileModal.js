@@ -30,7 +30,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
         getQuoteLineBundle({saleId: this.sale.Id, paymentMethod: paymentMethodToSend, sendingBillMode: this.selectedBillingProfile.BillSendingMethod__c}).then(data =>{
             this.loading = false;
             
-            if(data.listPodPdr.length == 0 && data.listVas.length == 0){
+            if(data.listPodPdr.length == 0 && data.listVas.length == 0 && data.listVasCambioOfferta.length == 0){
                 
                 this.handleCancelEvent();
                 const event = ShowToastEvent({
@@ -65,6 +65,18 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
                     });
                 });
 
+                data.listVasCambioOfferta.forEach(el => {
+                    quoteBundleArray.push({
+                        "Id"                     :el.Id,
+                        "Name"                   :el.Name,
+                        "BillingProfile"         :el.BillingProfile__c !== undefined ? el.BillingProfile__r.Name : '',
+                        "ProductName"            :el.SBQQ__Product__r.Name !== undefined ? el.SBQQ__Product__r.Name : '',
+                        "ServicePointCode"       :el.ServicePoint__c !== undefined ? el.ServicePoint__r.ServicePointCode__c : '',
+                        "IsCambioOfferta"        :true, //not shown on table, used to perform logic later
+                        "BillingProfilePrevious" :el.SBQQ__Quote__r.ContractReference__r.BillingProfile__r.Name //not shown on table, used to perform logic later
+                    });
+                });
+
                 this.quoteBundleData = quoteBundleArray;
             }
 
@@ -88,6 +100,24 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
             
             this.handleCancelEvent();
 
+            let hasBillingProfileChanged = false;
+
+            this.selectedQuoteItems.forEach(el => {
+                if (el.IsCambioOfferta && el.BillingProfilePrevious != this.selectedBillingProfile.Name) {
+                    hasBillingProfileChanged = true;
+                }
+            });
+
+            if (hasBillingProfileChanged) {
+                const evt = new ShowToastEvent({
+                    title: '',
+                    message: "Si sta associando un metodo di pagamento differente. Ricordare al cliente che se ci sono vas associati al vecchio metodo di pagamento dovrà pagare l'importo residuo in unica soluzione.",
+                    variant: 'warning',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(evt);
+            }
+            
             const event = ShowToastEvent({
                 title: '',
                 message:  'Quote line Bundle aggiornati con successo',
