@@ -20,6 +20,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return generateSection40(inputs,formParams);
                 }when 'generateSection50'{
                     return generateSection50(inputs,formParams);
+                }when 'generateSection70'{
+                    return generateSection70(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -391,6 +393,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Cluster__c', i, inputs, formParams));        // Tipo
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'OrderNumber', i, inputs, formParams));       // N. RS
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Phase__c', i, inputs, formParams));          // Stato
+            // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
             if (i < orders.size() - 1) {
                 record.add(endLine);
             }
@@ -430,9 +433,6 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CommodityFormula__c', i, inputs, formParams));    // Settore merceologico
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'AddressFormula__c', i, inputs, formParams));      // Indirizzo del lavoro
             record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Phase__c', i, inputs, formParams));               // Stato
-            if (orders.isEmpty() && i == cases.size() - 1) {
-                // SKIP \n 
-            }
             // Aggiungiamo lo \n finale sempre, tranne quando siamo all'ultimo giro E non abbiamo Order subito dopo.
             if (i != cases.size() - 1) {
                 record.add(endLine);
@@ -466,7 +466,52 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'CommodityFormula__c', i, inputs, formParams));         // Settore merceologico
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'SupplyAddressFormula__c', i, inputs, formParams));     // Indirizzo del lavoro
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Phase__c', i, inputs, formParams));                    // Stato
+            // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
             if (i < orders.size() - 1) {
+                record.add(endLine);
+            }
+            payloadSection += String.join(record, div);
+        }
+
+        return payloadSection;
+    }
+
+    // Genera la sezione di payload ricorsiva 00310|70| per la stampa della Scheda Cliente (sezione "Anagrafiche Collegate")
+    private String generateSection70(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        String accountId = HDT_UTL_DocumentalManagement.getValue('Account', 'Id', 0, inputs, formParams);
+        HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
+        AccountContactRelation acr = acrQueryHandler.getPrimaryContactRelation(accountId);
+        if (acr == null) {
+            System.debug('Nessun contatto titolare trovate per accountId: ' + accountId);
+            return '';
+        }
+
+        List<AccountContactRelation> relations = acrQueryHandler.getRelatedAccounts(acr.ContactId);
+        for (Integer i = 0; i < relations.size(); i++) {
+            AccountContactRelation rel = relations[i];
+            String[] record = new List<String>();
+            // Il primo 310|70 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('00310');
+                record.add('70');
+            }
+
+            record.add(rel.Account.FirstName__c);                  // Nome
+            record.add(rel.Account.LastName__c);                   // Cognome/ragione sociale
+            if (rel.AccountId != accountId) {
+                record.add(rel.Account.FiscalCode__c);             // Codice Fiscale cliente principale
+                record.add(rel.Account.FirstName__c);              // Nome principale
+                record.add(rel.Account.LastName__c);               // Cognome/ragione sociale principale
+                record.add(rel.Account.CustomerCode__c);           // Codice cliente principale
+                record.add(rel.Account.VATNumber__c);              // PIVA cliente principale
+            }
+
+            // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
+            if (i < relations.size() - 1) {
                 record.add(endLine);
             }
             payloadSection += String.join(record, div);

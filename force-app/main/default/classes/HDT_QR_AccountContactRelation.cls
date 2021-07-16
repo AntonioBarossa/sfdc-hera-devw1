@@ -187,6 +187,27 @@ public inherited sharing class HDT_QR_AccountContactRelation {
         ];
     }
 
+    public List<AccountContactRelation> getRelatedAccounts(Id contactId) {
+
+        return [
+            SELECT 
+            AccountId,
+            Account.Name,
+            Account.FirstName__c,
+            Account.LastName__c,
+            Account.FiscalCode__c,
+            Account.VATNumber__c,
+            Account.CustomerCode__c,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE ContactId = :contactId
+            AND IsActive = True
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
     // FINE SVILUPPI EVERIS
 
 }
