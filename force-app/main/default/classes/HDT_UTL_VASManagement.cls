@@ -74,7 +74,7 @@ public with sharing class HDT_UTL_VASManagement {
         return String.join(finalStrValues, ' ');
     }
 
-    public virtual class HDT_WRP_VASReq{
+    public virtual class HDT_WRP_VASReq extends HDT_WS_Request{
         String societa;
         String partner;
         String codFiscale;
@@ -213,7 +213,7 @@ public with sharing class HDT_UTL_VASManagement {
             Quantita = ordItem.Quantity;
             PrezzoNetto = ordItem.PriceNet__c;
             PrezzoNettoScontato = ordItem.PriceNetDiscounted__c;
-            PercentualeIva = ordItem.Percentage__c;
+            PercentualeIva = ordItem.Percentage__c==null? 0.0 : ordItem.Percentage__c;
         }
     }
 }
