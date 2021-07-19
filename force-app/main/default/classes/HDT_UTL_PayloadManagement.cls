@@ -681,16 +681,47 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
         }
         // Info sulle date ricezione del reclamo (incluse sempre nella sezione 310|120)
-        for (Case c : responseCases) {
+        for (Integer i = 0; i < responseCases.size(); i++) {
+            Case c = responseCases[i];
             String[] record = new List<String>();
             record.add('00310');
             record.add('120');
             record.add('Risposta al Reclamo ricevuto in data ' + getFormattedDate(c.SendDate__c) + ' ns Prot ' + c.CaseNumber);
-            record.add(endLine);
+            // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
+            if (i < responseCases.size() - 1) {
+                record.add(endLine);
+            }
             payloadSection += String.join(record, div);
         }
 
-        // TODO: record indennizzi, oppure lo gestiamo nel tabellone?
+        // Record 310|130 per box indennizzi, previsto solo per i reclami scritti (non per le richieste di info).
+        String complaintClassification = HDT_UTL_DocumentalManagement.getValue('Case', 'FirstLevelComplaintClassification__c', 0, inputs, formParams);
+        if (String.isNotBlank(complaintClassification) && complaintClassification != 'Richiesta di informazioni') {
+            Boolean indemnityConfirmed = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityConfirmed__c', 0, inputs, formParams));
+            String indemnityMotivation = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityMotivation__c', 0, inputs, formParams);
+            String indemnityDueSendResponse = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueSendResponse__c', 0, inputs, formParams);
+            String indemnityDueBillingCorrection = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueBilllingCorrection__c', 0, inputs, formParams);
+
+            String[] record = new List<String>();
+            record.add('00310');
+            record.add('130');
+            // Calcolo tipologia di indennizzo attesa da Engage1.
+            if (indemnityConfirmed) {
+                record.add('1');
+            } else if (indemnityMotivation == 'Altro indennizzo stesso anno solare') {
+                record.add('2');
+            } else {
+                record.add('3');
+            }
+            // Importo indennizzo, se presente.
+            if (complaintClassification == 'Reclamo Scritto' && Decimal.valueOf(indemnityDueSendResponse) > 0) {
+                record.add(String.valueOf(indemnityDueSendResponse));
+            } else if (complaintClassification == '	Rettifica Doppia Fatturazione' && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+                record.add(String.valueOf(indemnityDueBillingCorrection));
+            }
+            // Aggiungiamo anche | e l'endLine poichè il record indennizzi è opzionale e il 310|120 non può aggiungere a prenscindere un endline finale.
+            payloadSection += '|' + endLine + String.join(record, div);
+        }
 
         return payloadSection;
     }
