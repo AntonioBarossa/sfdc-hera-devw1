@@ -2,6 +2,38 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
     <decisions>
+        <name>isChangedDecision5_myRule_4_QuotationType_c</name>
+        <label>isChangedDecision5_myRule_4_QuotationType_c</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>isChangedRule_5_myRule_4_QuotationType_c</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>myVariable_old.QuotationType__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>myVariable_current.QuotationType__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myDecision</targetReference>
+            </connector>
+            <label>isChangedRule_5_myRule_4_QuotationType_c</label>
+        </rules>
+    </decisions>
+    <decisions>
         <processMetadataValues>
             <name>index</name>
             <value>
@@ -132,7 +164,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_4</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditionLogic>(1 OR 2) AND (3 OR 4)</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -226,6 +258,37 @@
                     <stringValue>Bozza</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>isChangedRule_5_myRule_4_QuotationType_c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_4_A1</targetReference>
             </connector>
@@ -240,7 +303,7 @@
                 <stringValue>TODAY() + 90</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A1_3997975564</name>
+        <name>formula_2_myRule_1_A1_4419361366</name>
         <dataType>Date</dataType>
         <expression>TODAY() + 90</expression>
     </formulas>
@@ -248,22 +311,33 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>IF(ISBLANK(TEXT([Case].VoltageLevelRequested__c) ) , 
-IF(TEXT([Case].VoltageLevelAvailable__c )=&quot;BT&quot;, TODAY() + 90, 
-         IF(TEXT([Case].VoltageLevelAvailable__c )=&quot;MT&quot;, TODAY() + 180, null) ) , 
-IF(TEXT([Case].VoltageLevelRequested__c )=&quot;BT&quot;, TODAY() + 90, 
-         IF(TEXT([Case].VoltageLevelRequested__c )=&quot;BT&quot;, TODAY() + 180, null)  ) ) </stringValue>
+                <stringValue>IF([Case].QuotationType__c != &apos;Analitico&apos;,
+    IF(OR(
+             CONTAINS([Case].DistributorName__c, &quot;E-D&quot;),
+             CONTAINS([Case].Distributor__r.Name , &quot;E-D&quot;)
+             ),  TODAY() + 30,
+        IF(TEXT([Case].VoltageLevelRequested__c )=&quot;BT&quot;, TODAY() + 90, 
+            IF(TEXT([Case].VoltageLevelRequested__c )=&quot;MT&quot;, TODAY() + 180, null)  
+           ) 
+        ) , null
+    )
+</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_5_myRule_4_A1_4807006775</name>
+        <name>formula_6_myRule_4_A1_1865290259</name>
         <dataType>Date</dataType>
-        <expression>IF(ISBLANK(TEXT({!myVariable_current.VoltageLevelRequested__c}) ) , 
-IF(TEXT({!myVariable_current.VoltageLevelAvailable__c} )=&quot;BT&quot;, TODAY() + 90, 
-         IF(TEXT({!myVariable_current.VoltageLevelAvailable__c} )=&quot;MT&quot;, TODAY() + 180, null) ) , 
-IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY() + 90, 
-         IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY() + 180, null)  ) )</expression>
+        <expression>IF({!myVariable_current.QuotationType__c} != &apos;Analitico&apos;,
+    IF(OR(
+             CONTAINS({!myVariable_current.DistributorName__c}, &quot;E-D&quot;),
+             CONTAINS({!myVariable_current.Distributor__r.Name} , &quot;E-D&quot;)
+             ),  TODAY() + 30,
+        IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY() + 90, 
+            IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;MT&quot;, TODAY() + 180, null)  
+           ) 
+        ) , null
+    )</expression>
     </formulas>
-    <interviewLabel>HDT_PB_CalcoloScadenzaPreventivi-8_InterviewLabel</interviewLabel>
+    <interviewLabel>HDT_PB_CalcoloScadenzaPreventivi-12_InterviewLabel</interviewLabel>
     <label>Calcolo Scadenza Preventivi</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -355,7 +429,7 @@ IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY()
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue></stringValue>
+                    <stringValue/>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -366,7 +440,7 @@ IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY()
             </processMetadataValues>
             <field>ExpirationDate__c</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_3997975564</elementReference>
+                <elementReference>formula_2_myRule_1_A1_4419361366</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -436,7 +510,7 @@ IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY()
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue></stringValue>
+                    <stringValue/>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -447,12 +521,12 @@ IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY()
             </processMetadataValues>
             <field>QuotationValidityDate__c</field>
             <value>
-                <elementReference>formula_5_myRule_4_A1_4807006775</elementReference>
+                <elementReference>formula_6_myRule_4_A1_1865290259</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
-    <startElementReference>myDecision</startElementReference>
+    <startElementReference>isChangedDecision5_myRule_4_QuotationType_c</startElementReference>
     <status>Active</status>
     <variables>
         <name>myVariable_current</name>

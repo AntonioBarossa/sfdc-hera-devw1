@@ -2018,7 +2018,7 @@
         </values>
         <values>
             <fullName>Bozza</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Bozza Annullata</fullName>
@@ -2026,6 +2026,10 @@
         </values>
         <values>
             <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2054,6 +2058,10 @@
         </values>
         <values>
             <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2117,6 +2125,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviare preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
@@ -2126,6 +2138,10 @@
         </values>
         <values>
             <fullName>OK SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica non gestita per il DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2142,6 +2158,10 @@
         </values>
         <values>
             <fullName>Registrazione  da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Preventivo extra sistema</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2391,6 +2411,10 @@
         <picklist>SalesCompany__c</picklist>
         <values>
             <fullName>Acegas Aps Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
         <values>

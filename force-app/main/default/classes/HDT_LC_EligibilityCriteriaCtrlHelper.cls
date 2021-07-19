@@ -22,7 +22,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
                upsert criteria;
            } else {
                saveResponse.success = false;
-               saveResponse.message = '# ERROR: you don\'t have permission on this obj';
+               saveResponse.message = Label.HDT_EligCriteria_ErrorObj;
                saveResponse.dataError = false;
                return saveResponse;                
            }
@@ -40,7 +40,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
             if(!deleteResponse){
                 saveResponse.success = false;
-                saveResponse.message = '# ERROR: delete error';
+                saveResponse.message = Label.HDT_EligCriteria_DeleteError;
                 return saveResponse;
             }
 
@@ -64,7 +64,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             if(saveResponse.errorData.size() > 0){
                 Database.rollback(sp);
                 saveResponse.success = false;
-                saveResponse.message = '# ERROR: insert failed';
+                saveResponse.message = Label.HDT_EligCriteria_SaveError;
             } else {
                 saveResponse.success = true;
                 saveResponse.criteriaId = criteria.Id;
@@ -75,7 +75,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
             if(!deleteResponse){
                 saveResponse.success = false;
-                saveResponse.message = '# ERROR: delete error';
+                saveResponse.message = Label.HDT_EligCriteria_DeleteError;
                 return saveResponse;
             }
 
@@ -125,7 +125,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
                 insert newCriteria;
             } else {
                 saveResponse.success = false;
-                saveResponse.message = '# ERROR: you don\'t have permission on this obj';
+                saveResponse.message = Label.HDT_EligCriteria_ErrorObj;
                 saveResponse.dataError = false;
                 return saveResponse;                
             }
@@ -152,7 +152,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             if(saveResponse.errorData.size() > 0){
                 Database.rollback(sp);
                 saveResponse.success = false;
-                saveResponse.message = '# ERROR: insert failed';
+                saveResponse.message = Label.HDT_EligCriteria_SaveError;
             } else {
                 saveResponse.success = true;
                 saveResponse.criteriaId = newCriteria.Id;
@@ -381,7 +381,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             saveResponse.message = '# ERROR: delete failed';
         } else {
             saveResponse.success = true;
-            saveResponse.message = 'Criterio eliminato correttamente';
+            saveResponse.message = Label.HDT_EligCriteria_DeleteComplete;
         }
 
         return saveResponse;

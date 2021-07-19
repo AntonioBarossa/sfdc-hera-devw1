@@ -3,6 +3,10 @@
     <label>Scaduto &gt; 60 gg</label>
     <protected>false</protected>
     <values>
+        <field>Accesskey__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>ButtonCode__c</field>
         <value xsi:type="xsd:string">expiredFromDay</value>
     </values>

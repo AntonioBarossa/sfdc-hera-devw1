@@ -5,6 +5,15 @@
     <description>Distributore locale da inserire manualmente per nuovi impianti aggiunta attacco</description>
     <externalId>false</externalId>
     <label>Nome Distributore</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.RecordType.DeveloperName</field>
+            <operation>equals</operation>
+            <value>HDT_RT_Distributore</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Cases</relationshipLabel>
     <relationshipName>Cases</relationshipName>

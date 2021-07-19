@@ -947,32 +947,20 @@
             <valueName>Riattivazioni non morose</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <controllingFieldValue>Attivazioni - Generiche</controllingFieldValue>
             <valueName>Proroga Connessione temporanea</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <controllingFieldValue>Attivazioni - Generiche</controllingFieldValue>
             <valueName>Modifica contratto in pre-attivazione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <controllingFieldValue>Attivazioni - Generiche</controllingFieldValue>
             <valueName>Copia contratto firmato o non ricevuto</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <controllingFieldValue>Attivazioni - Generiche</controllingFieldValue>
             <valueName>Bonus commerciale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Attivazioni</controllingFieldValue>
-            <valueName>VOTIVE Modena/Intervento Riattivazione luce</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Attivazioni</controllingFieldValue>
-            <valueName>VOTIVE Modena/Nuovo contratto</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Attivazioni</controllingFieldValue>
-            <valueName>VOTIVE Modena/Subentro</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Autolettura</controllingFieldValue>
@@ -1109,6 +1097,18 @@
         <valueSettings>
             <controllingFieldValue>VOTIVE Modena</controllingFieldValue>
             <valueName>Pagamenti Morosità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>VOTIVE Modena</controllingFieldValue>
+            <valueName>VOTIVE Modena/Intervento Riattivazione luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>VOTIVE Modena</controllingFieldValue>
+            <valueName>VOTIVE Modena/Nuovo contratto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>VOTIVE Modena</controllingFieldValue>
+            <valueName>VOTIVE Modena/Subentro</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>

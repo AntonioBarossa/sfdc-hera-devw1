@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>PredefaultDataDecorrenza</name>
+        <label>PredefaultDataDecorrenza</label>
+        <locationX>446</locationX>
+        <locationY>278</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssegnaValori</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>effectiveDate</name>
+            <value>
+                <elementReference>GetInputCase.EffectiveDate__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <elementReference>GetInputCase.Type</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
         <name>Assegna_a_BO</name>
         <label>Assegna a BO</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -28,7 +53,7 @@
         <name>Assegna_a_Da_Inviare</name>
         <label>Assegna a Da Inviare</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -48,26 +73,33 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Data_Decorrenza</name>
-        <label>Assegna Data Decorrenza</label>
+        <name>AssegnaValori</name>
+        <label>AssegnaValori</label>
         <locationX>446</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.EffectiveDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>EffectiveDateFormula</elementReference>
+                <elementReference>PredefaultDataDecorrenza.effectiveDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ParentRecordId</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Proflo_front</targetReference>
+            <targetReference>AggiornaCase_0</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssegnaVariabili</name>
         <label>AssegnaVariabili</label>
         <locationX>446</locationX>
-        <locationY>1094</locationY>
+        <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -90,7 +122,7 @@
         <name>Proflo_front</name>
         <label>Proflo front?</label>
         <locationX>446</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Assegna_a_Da_Inviare</targetReference>
         </defaultConnector>
@@ -122,7 +154,7 @@
         <name>Quale_Azione</name>
         <label>Quale Azione?</label>
         <locationX>446</locationX>
-        <locationY>398</locationY>
+        <locationY>758</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla</name>
@@ -164,7 +196,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Data_Decorrenza</targetReference>
+                <targetReference>Proflo_front</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -200,7 +232,7 @@
         <name>CalcolaCodiceCausale</name>
         <label>CalcolaCodiceCausale</label>
         <locationX>446</locationX>
-        <locationY>974</locationY>
+        <locationY>1214</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaVariabili</targetReference>
@@ -238,7 +270,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Screen_Input_Dati</targetReference>
+            <targetReference>PredefaultDataDecorrenza</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -256,14 +288,24 @@
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>446</locationX>
-        <locationY>1214</locationY>
+        <locationY>1454</locationY>
+        <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCase_0</name>
+        <label>AggiornaCase</label>
+        <locationX>446</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Screen_Input_Dati</targetReference>
+        </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <screens>
         <name>Screen_Input_Dati</name>
         <label>Screen Input Dati</label>
         <locationX>446</locationX>
-        <locationY>278</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -376,7 +418,7 @@
         <name>Annullamento_Prestazione_SubFlow</name>
         <label>Annullamento Prestazione SubFlow</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>878</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -393,6 +435,13 @@
     </subflows>
     <variables>
         <name>InputCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ParentRecordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

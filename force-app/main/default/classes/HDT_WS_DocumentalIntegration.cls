@@ -1,16 +1,70 @@
 public with sharing class HDT_WS_DocumentalIntegration {
     public static HDT_WRP_DocumentalResponse submitRequest(String body){
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint('Callout:Engage1');
-        req.setMethod('POST');
-        req.setBody(body);
-        req.setHeader('Content-Type','application/json');
-        Http http = new Http();
-        HTTPResponse res = http.send(req);
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
-        documentalResponse = (HDT_WRP_DocumentalResponse) JSON.deserialize(res.getBody(), HDT_WRP_DocumentalResponse.class);
-        documentalResponse.responseCode = res.getBody();
-        documentalResponse.responseStatus =  res.getStatusCode();        
+        try{
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint('Callout:Engage1');
+            req.setMethod('POST');
+            req.setBody(body);
+            req.setHeader('Content-Type','application/json');
+            Http http = new Http();
+            HTTPResponse res = http.send(req);
+            Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+            if (responseBodyMap.containsKey('data')) {
+                System.debug(JSON.serialize(responseBodyMap.get('data')));
+                documentalResponse = (HDT_WRP_DocumentalResponse) JSON.deserialize(JSON.serialize(responseBodyMap.get('data')), HDT_WRP_DocumentalResponse.class);
+            }
+            documentalResponse.responseCode = res.getStatusCode();
+            documentalResponse.responseStatus =  res.getStatus();             
+        }catch(Exception ex){
+            System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+        }     
         return documentalResponse;
    }
+
+    public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse submitGetAttachmentRequest(String body){
+        HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+        try{
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint('Callout:GetAttachmentPostel');
+            req.setMethod('POST');
+            req.setBody(body);
+            req.setHeader('Content-Type','application/json');
+            Http http = new Http();
+            HTTPResponse res = http.send(req);
+            Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+            if (responseBodyMap.containsKey('data')) {
+                //System.debug(JSON.serialize(responseBodyMap.get('data')));
+                postelResponse = (HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse) JSON.deserialize(JSON.serialize(responseBodyMap.get('data')), HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse.class);
+            }
+            postelResponse.responseCode = res.getStatusCode();
+            postelResponse.responseStatus =  res.getStatus();
+        }catch(Exception ex){
+            System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+        }
+        return postelResponse;
+    }
+
+    public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse submitGetEnvelopePostelRequest(String body){
+        HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+        try{
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint('Callout:GetEnvelopePostel');
+            req.setMethod('POST');
+            req.setBody(body);
+            req.setHeader('Content-Type','application/json');
+            Http http = new Http();
+            HTTPResponse res = http.send(req);
+            Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+            if (responseBodyMap.containsKey('data')) {
+                //System.debug(JSON.serialize(responseBodyMap.get('data')));
+                postelResponse = (HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse) JSON.deserialize(JSON.serialize(responseBodyMap.get('data')), HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse.class);
+            }
+            postelResponse.responseCode = res.getStatusCode();
+            postelResponse.responseStatus =  res.getStatus();
+        }catch(Exception ex){
+            System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+        }
+        return postelResponse;
+    }
 }

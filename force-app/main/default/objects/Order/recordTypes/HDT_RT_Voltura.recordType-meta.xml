@@ -1942,10 +1942,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Inviato al SII</fullName>
-            <default>false</default>
-        </values>	
-        <values>
             <fullName>Amm%2E Precheck OK SII</fullName>
             <default>false</default>
         </values>
@@ -2058,6 +2054,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>KO Definitivo</fullName>
             <default>false</default>
         </values>
@@ -2111,6 +2111,10 @@
         </values>
         <values>
             <fullName>Voltura Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2388,6 +2392,10 @@
         <picklist>SalesCompany__c</picklist>
         <values>
             <fullName>Acegas Aps Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2949,6 +2957,10 @@
     <picklistValues>
         <picklist>VoltureType__c</picklist>
         <values>
+            <fullName>In Continuità</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Incorporazione societaria</fullName>
             <default>false</default>
         </values>
@@ -2958,10 +2970,6 @@
         </values>
         <values>
             <fullName>Ordinaria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Continuità</fullName>
             <default>false</default>
         </values>
         <values>

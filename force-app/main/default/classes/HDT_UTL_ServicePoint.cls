@@ -47,8 +47,8 @@ public with sharing class HDT_UTL_ServicePoint {
 		}
 */
 
-		if(mapRes.get('STATODEVICE')!=null && spNew.MeterStatus__c  != 'Sospeso'){
-
+		if(spNew.MeterStatus__c  != 'Sospeso'){
+            system.debug('entra in stato device');
             if(mapRes.get('STATODEVICE')== 'A'){
                 spNew.MeterStatus__c  = 'Attivo';
 
@@ -199,7 +199,7 @@ public with sharing class HDT_UTL_ServicePoint {
 				}
 				if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
 					//spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
-                    Decimal d = integer.valueOf(mapRes.get('POTENZATECNICA'));
+                    Decimal d = decimal.valueOf(mapRes.get('POTENZATECNICA'));
                     System.debug('POTENZACONTRATTUALE****************' + mapRes.get('POTENZACONTRATTUALE'));
                     spNew.PowerContractual__c = d.setScale(0);
                     System.debug('POTENZACONTRATTUALE2****************' + spNew.PowerContractual__c );
@@ -208,7 +208,7 @@ public with sharing class HDT_UTL_ServicePoint {
 
                     System.debug('POTENZATECNICA1****************' + mapRes.get('POTENZATECNICA'));
                     
-                    Decimal d = integer.valueOf(mapRes.get('POTENZATECNICA'));
+                    Decimal d = decimal.valueOf(mapRes.get('POTENZATECNICA'));
                     //spNew.PowerAvailable__c  =integer.valueOf(mapRes.get('POTENZATECNICA').subString(0,mapRes.get('POTENZATECNICA').indexOf('.'))) ;
                     spNew.PowerAvailable__c  =d.setScale(1);
 
@@ -232,9 +232,10 @@ public with sharing class HDT_UTL_ServicePoint {
 				if(mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))){
 					spNew.SupplyStreet__c  = mapRes.get('VIA');
 				}
-			/*	if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
-					spNew.SupplyStreetToponym__c  = mapRes.get('TIPOVIA');
-				}*/
+                // Andrei Necsulescu 28/06/2021 - The code was commented as the SupplyStreetToponym__c needed to be deleted. We didn't delete the piece of code outright as we don't know if this string needs to be moved to another field.
+				// if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
+				// 	spNew.SupplyStreetToponym__c  = mapRes.get('TIPOVIA');
+				// }
 				if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
 					spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
 				}

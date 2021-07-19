@@ -17,6 +17,216 @@
                 <default>false</default>
                 <label>Product Code</label>
             </value>
+            <value>
+                <fullName>NomeBundle__c</fullName>
+                <default>false</default>
+                <label>NomeBundle</label>
+            </value>
+            <value>
+                <fullName>Agency__c</fullName>
+                <default>false</default>
+                <label>Agenzia</label>
+            </value>
+            <value>
+                <fullName>CampaignName__c</fullName>
+                <default>false</default>
+                <label>Nome Campagna</label>
+            </value>
+            <value>
+                <fullName>Channel__c</fullName>
+                <default>false</default>
+                <label>Canale</label>
+            </value>
+            <value>
+                <fullName>UseCategory__c</fullName>
+                <default>false</default>
+                <label>Categoria Uso</label>
+            </value>
+            <value>
+                <fullName>CompanyOwner__c</fullName>
+                <default>false</default>
+                <label>Company Owner</label>
+            </value>
+            <value>
+                <fullName>SupplyCity__c</fullName>
+                <default>false</default>
+                <label>Comune Fornitura</label>
+            </value>
+            <value>
+                <fullName>ConsumptionAnnual__c</fullName>
+                <default>false</default>
+                <label>Consumo Annuo VAS</label>
+            </value>
+            <value>
+                <fullName>DelayEffectiveDate__c</fullName>
+                <default>false</default>
+                <label>Delay Data Decorrenza</label>
+            </value>
+            <value>
+                <fullName>ClientAge__c</fullName>
+                <default>false</default>
+                <label>Età Cliente</label>
+            </value>
+            <value>
+                <fullName>ConsumptionRangeEE__c</fullName>
+                <default>false</default>
+                <label>Fascia consumo EE</label>
+            </value>
+            <value>
+                <fullName>ConsumptionRangeGAS__c</fullName>
+                <default>false</default>
+                <label>Fascia Consumo GAS</label>
+            </value>
+            <value>
+                <fullName>GreenGasOption__c</fullName>
+                <default>false</default>
+                <label>Opzione Gas Verde</label>
+            </value>
+            <value>
+                <fullName>Login__c</fullName>
+                <default>false</default>
+                <label>Login</label>
+            </value>
+            <value>
+                <fullName>LoginGroup__c</fullName>
+                <default>false</default>
+                <label>Gruppo Login</label>
+            </value>
+            <value>
+                <fullName>KeepConsumptionsAnalysis__c</fullName>
+                <default>false</default>
+                <label>Mantieni Analisi Consumi</label>
+            </value>
+            <value>
+                <fullName>PaymentMode__c</fullName>
+                <default>false</default>
+                <label>Metodo di pagamento</label>
+            </value>
+            <value>
+                <fullName>SendingBillMode__c</fullName>
+                <default>false</default>
+                <label>Modalità Invio Bolletta</label>
+            </value>
+            <value>
+                <fullName>VASBillingMode__c</fullName>
+                <default>false</default>
+                <label>Modalità Fatturazione VAS</label>
+            </value>
+            <value>
+                <fullName>OccupantsNumber__c</fullName>
+                <default>false</default>
+                <label>Numero Occupanti</label>
+            </value>
+            <value>
+                <fullName>NewClient__c</fullName>
+                <default>false</default>
+                <label>Nuovo Cliente</label>
+            </value>
+            <value>
+                <fullName>GreenEnergyOption__c</fullName>
+                <default>false</default>
+                <label>Opzione Energia Verde</label>
+            </value>
+            <value>
+                <fullName>PowerFlow__c</fullName>
+                <default>false</default>
+                <label>Potenza/Portata</label>
+            </value>
+            <value>
+                <fullName>PriceFromThirds__c</fullName>
+                <default>false</default>
+                <label>Prezzo Terzi</label>
+            </value>
+            <value>
+                <fullName>OwnerAC__c</fullName>
+                <default>false</default>
+                <label>Proprietario</label>
+            </value>
+            <value>
+                <fullName>Origin__c</fullName>
+                <default>false</default>
+                <label>Mercato Provenienza</label>
+            </value>
+            <value>
+                <fullName>SupplyProvince__c</fullName>
+                <default>false</default>
+                <label>Provincia Fornitura</label>
+            </value>
+            <value>
+                <fullName>ResidentDeliveryAddress__c</fullName>
+                <default>false</default>
+                <label>Residente Indirizzo di fornitura</label>
+            </value>
+            <value>
+                <fullName>Role__c</fullName>
+                <default>false</default>
+                <label>Ruolo</label>
+            </value>
+            <value>
+                <fullName>Service__c</fullName>
+                <default>false</default>
+                <label>Servizio</label>
+            </value>
+            <value>
+                <fullName>Surface__c</fullName>
+                <default>false</default>
+                <label>Superficie</label>
+            </value>
+            <value>
+                <fullName>DwellingType__c</fullName>
+                <default>false</default>
+                <label>Tipo Abitazione</label>
+            </value>
+            <value>
+                <fullName>CategoryTypeClient__c</fullName>
+                <default>false</default>
+                <label>Tipo Cliente categoria</label>
+            </value>
+            <value>
+                <fullName>VasActivationDate__c</fullName>
+                <default>false</default>
+                <label>VAS - Data Attivazione</label>
+            </value>
+            <value>
+                <fullName>Opportunity__c</fullName>
+                <default>false</default>
+                <label>Opportunità</label>
+            </value>
+            <value>
+                <fullName>WaitingPeriod__c</fullName>
+                <default>false</default>
+                <label>Periodo di carenza</label>
+            </value>
+            <value>
+                <fullName>Profile__c</fullName>
+                <default>false</default>
+                <label>Profilo</label>
+            </value>
+            <value>
+                <fullName>CustomerMarking__c</fullName>
+                <default>false</default>
+                <label>CustomerMarking__c</label>
+            </value>
+            <value>
+                <fullName>MeterType__c</fullName>
+                <default>false</default>
+                <label>Tipo apparecchiatura</label>
+            </value>
+            <value>
+                <fullName>ServicePointLinkItem__c</fullName>
+                <default>false</default>
+                <label>ServicePointLinkItem__c</label>
+            </value>
+            <value>
+                <fullName>SuperUser__c</fullName>
+                <default>false</default>
+                <label>Super User</label>
+            </value>
+            <value>
+                <fullName>DurationVAS__c</fullName>
+                <default>false</default>
+                <label>Durata servizio GG - VAS</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

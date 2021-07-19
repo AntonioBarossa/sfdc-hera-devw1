@@ -8,17 +8,26 @@
                         key-field="id"
                         data={meterReadingData}
                         columns={columnsobj}
-                        resize-column-disabled
+                        default-sort-direction={defaultSortDirection}
+                        sorted-direction={sortDirection}
+                        sorted-by={sortedBy}
+                        onsort={sort}
                         hide-checkbox-column
                     ></lightning-datatable>
+                    <!--resize-column-disabled-->
                 </template>
                 <template if:false={hideCheckboxColumn} >
                     <lightning-datatable
                         key-field="id"
                         data={meterReadingData}
                         columns={columnsobj}
-                        resize-column-disabled
+                        default-sort-direction={defaultSortDirection}
+                        sorted-direction={sortDirection}
+                        sorted-by={sortedBy}
+                        onsort={sort}
+                        onrowaction={handleRowAction}
                     ></lightning-datatable>
+                    <!--resize-column-disabled-->
                 </template>                
             </div>
             <div if:false={loadData} style="height: 25vh;" >

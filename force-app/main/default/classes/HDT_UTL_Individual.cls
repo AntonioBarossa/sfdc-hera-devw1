@@ -1,4 +1,9 @@
-public with sharing class HDT_UTL_Individual {
+/**
+ * @author 'Sabina Levonja' (sabina.levonja@dunegroup.it)
+ * @description HDT_UTL_Individual - 
+ */
+
+ public with sharing class HDT_UTL_Individual {
    
     
     // public static Individual createIndividualContact (Id ContactId) {

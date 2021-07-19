@@ -5257,11 +5257,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.SupplyStreetToponym__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.SupplyType__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -18463,11 +18458,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.SupplyStreetNumber__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>ServicePoint__c.SupplyStreetToponym__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

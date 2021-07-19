@@ -1,4 +1,9 @@
-public with sharing class HDT_UTL_GestionePrivacy {
+/**
+ * @author 'Sabina Levonja' (sabina.levonja@dunegroup.it)
+ * @description HDT_UTL_GestionePrivacy - 
+ */
+
+ public with sharing class HDT_UTL_GestionePrivacy {
     
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_QR_Lead leadQr = new HDT_QR_Lead();
