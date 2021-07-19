@@ -13,7 +13,7 @@ public with sharing class HDT_QR_Campaign {
             SELECT 
             Id,
             Name,
-            LavorazioneFUB__c,
+         //   LavorazioneFUB__c,
             AssignmentType__c
             FROM Campaign
             where Id = :Id
@@ -27,7 +27,7 @@ public with sharing class HDT_QR_Campaign {
             SELECT 
             Id,
             Name,
-            LavorazioneFUB__c,
+         //   LavorazioneFUB__c,
             MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c,
             AssignmentType__c
             FROM Campaign
