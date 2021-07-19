@@ -14,14 +14,16 @@ import { NavigationMixin } from 'lightning/navigation';
 import getFromFiscalCode2 from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCodeData';
 import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountBusiness.insertAccount';
-
+import checkRole from '@salesforce/apex/HDT_UTL_Account.checkIsBackoffice';
 export default class HdtFormAccountBusiness extends NavigationMixin(LightningElement) {
 
+    @api showCompanyOwner = false;
     @track showModal= true;
     @track spinner= false;
     @track markingValue;
     @track categoryValue;
     @track errorMessage='';
+    @api companyDefault;
     @track phonePrefixValue;
     @track phonePrefixOptions;
     @track mobilePhonePrefixValue;
@@ -63,6 +65,42 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         }
     };
 
+    inizializeInit(){
+        checkRole({}).then((response) => {
+            if(response == 'HDT_BackOffice'){
+                this.showCompanyOwner = false;
+            }else if(response == 'HDT_FrontOffice_HERACOMM'){
+                this.companyDefault = 'HERA COMM';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['HERA COMM'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }else if(response == 'HDT_FrontOffice_Reseller'){
+                this.companyDefault = 'Reseller';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['Reseller'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }
+            else if(response == 'HDT_FrontOffice_MMS'){
+                this.companyDefault = 'MMS';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['MMS'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }
+            else if(response == 'HDT_FrontOffice_AAAEBT'){
+                this.companyDefault = 'AAA-EBT';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['AAA-EBT'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }
+            else{
+                this.companyDefault = 'HERA COMM';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['HERA COMM'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }
+        });
+    }
+
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOM_MARKING })
     customerGetMarkingOptions({error, data}) {
         if (data){
@@ -74,6 +112,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     categoryGetOptions({error, data}) {
         if (data){
             this.categoryData = data;
+            this.inizializeInit();
         }
     };
 
@@ -244,7 +283,14 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if(this.accountAddress['Civico'] != null){
                 this.fieldsToUpdate['BillingStreetNumber__c'] = this.accountAddress['Civico'];
             }
+            if(this.accountAddress['Localita'] != null){
+                this.fieldsToUpdate['BillingPlace__c'] = this.accountAddress['Localita'];
+            }
+            if(this.accountAddress['Codice Localita'] != null){
+                this.fieldsToUpdate['BillingPlaceCode__c'] = this.accountAddress['Codice Localita'];
+            }
             if(this.accountAddress['Flag Verificato'] !=null){
+                this.fieldsToUpdate['BillingIsAddressVerified__c'] = this.accountAddress['Flag Verificato'];
                 this.isVerified = this.accountAddress['Flag Verificato'];
             }
         }

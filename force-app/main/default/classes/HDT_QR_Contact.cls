@@ -70,6 +70,17 @@ public inherited sharing class HDT_QR_Contact {
         ];
     }
 
+    public Contact getContactsByIndividual(String individualId){
+        return [
+            SELECT
+            Id,
+            Email
+            FROM Contact
+            WHERE IndividualId = :individualId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     public List<String> getContactsIdByAccountId(String accountId) {
         List <AccountContactRelation> accountContact = [
             SELECT ContactId from AccountContactRelation 
