@@ -635,20 +635,54 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
         // Info sulle forniture
         for (Case c : responseCases) {
-            String[] record = new List<String>();
-            record.add('00310');
-            record.add('120');
-            record.add('Servizio: ' + c.CommodityFormula__c);
-            record.add('Tipologia fornitura: ' + c.Market__c);
-            record.add('Tariffa cliente: ' + offersMap.get(c.Contract__c));
-            record.add('Indirizzo di fornitura: ' + c.AddressFormula__c);
-            if ('Gas' == c.CommodityFormula__c) {
-                record.add('PDR: ' + c.PODPDRFormula__c);
-            } else { // TODO WAVE 2: adeguare per le altre commodity.
-                record.add('POD: ' + c.PODPDRFormula__c);
+            {
+                String[] record = new List<String>();
+                record.add('00310');
+                record.add('120');
+                record.add('Servizio: ' + c.CommodityFormula__c);
+                record.add(endLine);
+                payloadSection += String.join(record, div);
             }
-            record.add(endLine);
-            payloadSection += String.join(record, div);
+
+            {
+                String[] record = new List<String>();
+                record.add('00310');
+                record.add('120');
+                record.add('Tipologia fornitura: ' + c.Market__c);
+                record.add(endLine);
+                payloadSection += String.join(record, div);
+            }
+
+            {
+                String[] record = new List<String>();
+                record.add('00310');
+                record.add('120');
+                record.add('Tariffa cliente: ' + offersMap.get(c.Contract__c));
+                record.add(endLine);
+                payloadSection += String.join(record, div);
+            }
+
+            {
+                String[] record = new List<String>();
+                record.add('00310');
+                record.add('120');
+                record.add('Indirizzo di fornitura: ' + c.AddressFormula__c);
+                record.add(endLine);
+                payloadSection += String.join(record, div);
+            }
+
+            {
+                String[] record = new List<String>();
+                record.add('00310');
+                record.add('120');
+                if ('Gas' == c.CommodityFormula__c) {
+                    record.add('PDR: ' + c.PODPDRFormula__c);
+                } else { // TODO WAVE 2: adeguare per le altre commodity.
+                    record.add('POD: ' + c.PODPDRFormula__c);
+                }
+                record.add(endLine);
+                payloadSection += String.join(record, div);
+            }
         }
         // Info sulle date ricezione del reclamo (incluse sempre nella sezione 310|120)
         for (Case c : responseCases) {
