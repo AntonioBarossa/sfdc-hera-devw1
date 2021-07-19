@@ -606,7 +606,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String queryFieldsCase = 'Id,CaseNumber,Contract__c,Market__c,SendDate__c,CommodityFormula__c,AddressFormula__c,PODPDRFormula__c'; // WIP. per aggiungere l'offerta bisogna querare anche i contratti del cliente... :(
         List<Case> responseCases = queryCase.getRecordsById(caseIds, queryFieldsCase);
 
-        List<Id> contractIds = new List<Id>();
+        List<String> contractIds = new List<String>();
         for (Case c : responseCases) {
             contractIds.add(c.Contract__c);
         }
@@ -615,11 +615,17 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String queryString = 'SELECT ' + queryFieldsContract;
         String fromString = ' FROM '+ objectName;
         String controllingField = 'Id';
-        String whereString = ' WHERE ' + controllingField + ' IN :'+ contractIds + '';
+        String whereString = ' WHERE ' + controllingField + ' IN :contractIds';
         String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
         queryString = queryString + relatedQueryString + fromString + whereString; 
         System.debug('contracts query ' + queryString);
-        List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
+        List<sObject> recordList = new List<sObject>();
+        SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe(); 
+        if (objRes.isAccessible()) {
+            recordList = Database.query(queryString);
+        }
+
         Map<Id, String> offersMap = new Map<Id, String>(); // mappa tra id contratto e offerta commerciale del contratto.
         for (Integer i = 0; i < recordList.size(); i++) {
             Contract c = (Contract) recordList[i];
