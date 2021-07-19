@@ -1124,7 +1124,7 @@
     </fieldPermissions>
      <fieldPermissions>
         <editable>true</editable>
-        <field>Sales__c.isTransition__c</field>
+        <field>Sale__c.isTransition__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

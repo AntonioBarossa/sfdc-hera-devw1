@@ -78,4 +78,17 @@ public with sharing class HDT_QR_Campaign {
         ];
     }
 
+    public Campaign getCommercialCodeCampaign(String campaignId) {
+        return [
+            SELECT 
+            Id,
+            PrefixCode__c,
+            MaxNumberEECodeUse__c,
+            MaxNumberGASCodeUse__c,
+            MaxNumberVASCodeUse__c
+            FROM Campaign
+            WHERE Id = :campaignId
+            WITH SECURITY_ENFORCED
+        ];
+}
 }
