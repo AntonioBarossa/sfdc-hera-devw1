@@ -51,7 +51,7 @@
             <assignToReference>GetCreatedCase.ParentId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getParentCase.ParentId</elementReference>
+                <elementReference>getParentCase.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -81,7 +81,7 @@
             <assignToReference>GetCreatedCase.ParentId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getParentCase.ParentId</elementReference>
+                <elementReference>getParentCase.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -208,6 +208,13 @@
         <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>InputCase</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCreatedCase.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetCreatedCase.Id</elementReference>
@@ -1297,6 +1304,13 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>CaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
