@@ -1,418 +1,405 @@
 /**
-* @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
-* @date 29/06/2021
-* @description Data Factory for Test Classes
-* @history Luis Bispo – 13/07/2021 – Created City Object
-*/
+ * @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
+ * @date 29/06/2021
+ * @description Data Factory for Test Classes
+ * @history Luis Bispo – 13/07/2021 – Created City Object
+ */
+public with sharing class HDT_UTL_DataFactoryTst{
+	//Method to avoid 'ObjectCompatibility' errors from ProcessClick
+	public static void pClickInstance(){
 
-public with sharing class HDT_UTL_DataFactoryTst {
+		wrts_prcgvr.InstallIntegration.install();
+		wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
+	}
 
-    //Method to avoid 'ObjectCompatibility' errors from ProcessClick
-    public static void pClickInstance() {
-        
-        wrts_prcgvr.InstallIntegration.install();
-        wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
-    }
+	//Metho to avoid PClick for OrderPhase Errors
+	public static void pClickOrderPhase(){
+		wrts_prcgvr.InstallIntegration.install();
+		wrts_prcgvr__PhaseManagerSObjectSetting__c setting = new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name = 'Order', wrts_prcgvr__ObjectType__c = 'Order', wrts_prcgvr__PivotField__c = 'Phase__c');
+		insert setting;
+	}
 
-    //Metho to avoid PClick for OrderPhase Errors
-    public static void pClickOrderPhase(){
-        wrts_prcgvr.InstallIntegration.install();
-        wrts_prcgvr__PhaseManagerSObjectSetting__c setting = new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name = 'Order', wrts_prcgvr__ObjectType__c = 'Order', wrts_prcgvr__PivotField__c = 'Phase__c');
-        insert setting;
-    }
+	public static List<Lead> createLead(Integer amount, Boolean doInsert){
 
-    public static List<Lead> createLead(Integer amount, Boolean doInsert) {
+		List<Lead> leadList = new List<Lead>();
 
-        List<Lead> leadList = new List<Lead>();
+		for (Integer i = 0; i < amount; i + +){
 
-        for (Integer i=0; i<amount; i++) {
+			Lead ld = new Lead();
 
-            Lead ld = new Lead();
-            
-            ld.FirstName = 'FirstNameTest'+i;
-            ld.LastName = 'LastNameTest';
-            ld.CompanyOwner__c = 'MMS';
-            ld.Company = 'CompanyTest';
-            ld.Status = 'New';
-            ld.Email = 'test@test.com';
-            ld.Birthdate__c = date.today();
-            ld.Gender__c = 'Maschio';
-            ld.Birthcity__c = 'Roma';
+			ld.FirstName = 'FirstNameTest' + i;
+			ld.LastName = 'LastNameTest';
+			ld.CompanyOwner__c = 'MMS';
+			ld.Company = 'CompanyTest';
+			ld.Status = 'New';
+			ld.Email = 'test@test.com';
+			ld.Birthdate__c = date.today();
+			ld.Gender__c = 'Maschio';
+			ld.Birthcity__c = 'Roma';
 
-            leadList.add(ld);
+			leadList.add(ld);
 
-        }
-        
-        if (doInsert) {
+		}
 
-            insert leadList;
-        }
+		if (doInsert){
 
-        return leadList;
-    }
+			insert leadList;
+		}
 
+		return leadList;
+	}
 
-    public static List<City__c> createCity(Integer amount, Boolean doInsert) {
-        List<City__c> cityList = new List<City__c>();
+	public static List<City__c> createCity(Integer amount, Boolean doInsert){
+		List<City__c> cityList = new List<City__c>();
 
-        for (Integer i=0; i<amount; i++) {
+		for (Integer i = 0; i < amount; i + +){
 
-            City__c ct = new City__c();
-            
-            ct.Name = 'Roma';
-            ct.BelfioreCode__c = 'Bt'+i;
+			City__c ct = new City__c();
 
-            cityList.add(ct);
+			ct.Name = 'Roma';
+			ct.BelfioreCode__c = 'Bt' + i;
 
-        }
-        
-        if (doInsert) {
+			cityList.add(ct);
 
-            insert cityList;
-        }
+		}
 
-        return cityList;
-    }
-    
-    public static List<Opportunity> createOpportunity (Integer amount, Boolean doInsert) {
+		if (doInsert){
 
-        List<Opportunity> oppList = new List<Opportunity>();
+			insert cityList;
+		}
 
-        for (Integer i=0; i<amount; i++) {
+		return cityList;
+	}
 
-            Opportunity opp = new Opportunity();
+	public static List<Opportunity> createOpportunity(Integer amount, Boolean doInsert){
 
-            opp.Name = 'testOpportunity'+ i;
-            opp.CloseDate = Date.today().addDays(30);
-            opp.StageName = 'Negotiation';
+		List<Opportunity> oppList = new List<Opportunity>();
 
-            oppList.add(opp);
-        }        
+		for (Integer i = 0; i < amount; i + +){
 
-        if (doInsert) {
+			Opportunity opp = new Opportunity();
 
-            insert oppList;
-        }
+			opp.Name = 'testOpportunity' + i;
+			opp.CloseDate = Date.today().addDays(30);
+			opp.StageName = 'Negotiation';
 
-        return oppList;
-    }
+			oppList.add(opp);
+		}
 
-    public static List<Account> createAccountBusiness(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category) {
-        
-        List<Account> accList = new List<Account>();
+		if (doInsert){
 
-        HDT_UTL_Constants constRecordType = new HDT_UTL_Constants();
+			insert oppList;
+		}
 
-        Id rt = constRecordType.ACCOUNT_RECORDTYPEID_BUSINESS;
-
-        for (Integer i=0; i<amount; i++) {
-
-            Account acc = new Account();
-
-            acc.RecordTypeId = rt;
-            acc.Name = 'test account'+i;
-            acc.CompanyOwner__c = companyOwner;
-            acc.CustomerMarking__c = customerMarking;
-            acc.Category__C = category;
-            acc.VATNumber__c = '12345678901';
-            acc.BillingCityCode__c = 'Roma';
-            acc.BillingStreetName__c = 'via roma';
-            acc.BillingStreetNumber__c = '55';
-            acc.LastName__c = 'test account'+i;
-            acc.FiscalCode__c = 'SXSRLA45H28H501K';
-
-            accList.add(acc);
-
-        }
-        
-        if (doInsert) {
+		return oppList;
+	}
 
-            insert accList;
-        }
+	public static List<Account> createAccountBusiness(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category){
 
-        return accList;
-    }
-    public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, String phase) {
+		List<Account> accList = new List<Account>();
 
-        List<Order> orderList = new List<Order>();
+		HDT_UTL_Constants constRecordType = new HDT_UTL_Constants();
 
-        HDT_UTL_Constants constRecordType = new HDT_UTL_Constants();
+		Id rt = constRecordType.ACCOUNT_RECORDTYPEID_BUSINESS;
 
-        Id rt = constRecordType.ORDER_RECORDTYPEID_DEFAULT;
+		for (Integer i = 0; i < amount; i + +){
 
-        for (Integer i=0; i<amount; i++) {
+			Account acc = new Account();
 
-            Order ord = new Order();
+			acc.RecordTypeId = rt;
+			acc.Name = 'test account' + i;
+			acc.CompanyOwner__c = companyOwner;
+			acc.CustomerMarking__c = customerMarking;
+			acc.Category__C = category;
+			acc.VATNumber__c = '12345678901';
+			acc.BillingCityCode__c = 'Roma';
+			acc.BillingStreetName__c = 'via roma';
+			acc.BillingStreetNumber__c = '55';
+			acc.LastName__c = 'test account' + i;
+			acc.FiscalCode__c = 'SXSRLA45H28H501K';
 
-            ord.RecordTypeId = rt;
-            ord.Name = 'testOrderName'+i;
-            ord.Status = 'Draft';
-            ord.EffectiveDate = Date.today();
-            ord.AccountId = accId;
-            ord.EstimateAmount__c = 1000;
-            ord.PowerQuote__c = 1000;
-            ord.AdministrativeBurden__c = 1; 
-            ord.EstimatedVAT__c = 1; 
-            ord.ValidityDateEstimate__c = Date.today().addDays(30);
-            ord.Phase__c = phase;
-            ord.CIAccoutn__c = 'Richiesto';
-            ord.QuickQuote__c = 'Richiesto';
-            ord.ChamberCommerceRegistration__c = 'Richiesto';
-            ord.Instance326__c = 'Richiesto';
-            ord.DocumentLow80__c = 'Richiesto';
-            ord.AutorizationVolturaThirdTrader__c = 'Richiesto';
-            ord.ContractSigned__c = true;
-            ord.SignedDate__c = Date.today();
-            ord.SignatureMethod__c = 'Vocal Order';
-            ord.DocSendingMethod__c = 'E-mail';
+			accList.add(acc);
 
-            orderList.add(ord);
-        }
+		}
 
-        if (doInsert) {
+		if (doInsert){
 
-            insert orderList;
-        }
+			insert accList;
+		}
 
-        return orderList;
-    }
+		return accList;
+	}
 
-    public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, List<Sale__c> sales) {
+	public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, String phase){
 
-        List<Order> orderList = new List<Order>();
+		List<Order> orderList = new List<Order>();
 
-        HDT_UTL_Constants constRecordType = new HDT_UTL_Constants();
+		HDT_UTL_Constants constRecordType = new HDT_UTL_Constants();
 
-        Id rt = constRecordType.ORDER_RECORDTYPEID_DEFAULT;
+		Id rt = constRecordType.ORDER_RECORDTYPEID_DEFAULT;
 
-        for (Integer i=0; i<amount; i++) {
+		for (Integer i = 0; i < amount; i + +){
 
-            Order ord = new Order();
+			Order ord = new Order();
 
-            ord.RecordTypeId = rt;
-            ord.Name = 'testOrderName'+i;
-            ord.Status = 'Draft';
-            ord.EffectiveDate = Date.today();
-            ord.AccountId = accId;
-            ord.EstimateAmount__c = 1000;
-            ord.PowerQuote__c = 1000;
-            ord.AdministrativeBurden__c = 1; 
-            ord.EstimatedVAT__c = 1; 
-            ord.ValidityDateEstimate__c = Date.today().addDays(30);
-            ord.Phase__c = 'Bozza';
-            ord.CIAccoutn__c = 'Richiesto';
-            ord.QuickQuote__c = 'Richiesto';
-            ord.ChamberCommerceRegistration__c = 'Richiesto';
-            ord.Instance326__c = 'Richiesto';
-            ord.DocumentLow80__c = 'Richiesto';
-            ord.AutorizationVolturaThirdTrader__c = 'Richiesto';
-            ord.ContractSigned__c = true;
-            ord.SignedDate__c = Date.today();
-            ord.SignatureMethod__c = 'Vocal Order';
-            ord.DocSendingMethod__c = 'E-mail';
-            ord.Sale__c = sales[i].Id;
+			ord.RecordTypeId = rt;
+			ord.Name = 'testOrderName' + i;
+			ord.Status = 'Draft';
+			ord.EffectiveDate = Date.today();
+			ord.AccountId = accId;
+			ord.EstimateAmount__c = 1000;
+			ord.PowerQuote__c = 1000;
+			ord.AdministrativeBurden__c = 1;
+			ord.EstimatedVAT__c = 1;
+			ord.ValidityDateEstimate__c = Date.today().addDays(30);
+			ord.Phase__c = phase;
+			ord.CIAccoutn__c = 'Richiesto';
+			ord.QuickQuote__c = 'Richiesto';
+			ord.ChamberCommerceRegistration__c = 'Richiesto';
+			ord.Instance326__c = 'Richiesto';
+			ord.DocumentLow80__c = 'Richiesto';
+			ord.AutorizationVolturaThirdTrader__c = 'Richiesto';
+			ord.ContractSigned__c = true;
+			ord.SignedDate__c = Date.today();
+			ord.SignatureMethod__c = 'Vocal Order';
+			ord.DocSendingMethod__c = 'E-mail';
 
-            orderList.add(ord);
-        }
+			orderList.add(ord);
+		}
 
-        if (doInsert) {
+		if (doInsert){
 
-            insert orderList;
-        }
+			insert orderList;
+		}
 
-        return orderList;
-    }
+		return orderList;
+	}
 
-    public static List<Sale__c> createSale (Integer amount, Boolean doInsert, Id accId, String status) {
+	public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, List<Sale__c> sales){
 
-        List<Sale__c> salesList = new List<Sale__c>();
+		List<Order> orderList = new List<Order>();
 
-        for (Integer i=0; i<amount; i++) {
+		HDT_UTL_Constants constRecordType = new HDT_UTL_Constants();
 
-            Sale__c sale = new Sale__c();
+		Id rt = constRecordType.ORDER_RECORDTYPEID_DEFAULT;
 
-            sale.Name = 'testSaleName'+i;
-            sale.Status__c = status;
-            sale.Account__c = accId;
+		for (Integer i = 0; i < amount; i + +){
 
-            salesList.add(sale);
-        }
+			Order ord = new Order();
 
-        if (doInsert) {
+			ord.RecordTypeId = rt;
+			ord.Name = 'testOrderName' + i;
+			ord.Status = 'Draft';
+			ord.EffectiveDate = Date.today();
+			ord.AccountId = accId;
+			ord.EstimateAmount__c = 1000;
+			ord.PowerQuote__c = 1000;
+			ord.AdministrativeBurden__c = 1;
+			ord.EstimatedVAT__c = 1;
+			ord.ValidityDateEstimate__c = Date.today().addDays(30);
+			ord.Phase__c = 'Bozza';
+			ord.CIAccoutn__c = 'Richiesto';
+			ord.QuickQuote__c = 'Richiesto';
+			ord.ChamberCommerceRegistration__c = 'Richiesto';
+			ord.Instance326__c = 'Richiesto';
+			ord.DocumentLow80__c = 'Richiesto';
+			ord.AutorizationVolturaThirdTrader__c = 'Richiesto';
+			ord.ContractSigned__c = true;
+			ord.SignedDate__c = Date.today();
+			ord.SignatureMethod__c = 'Vocal Order';
+			ord.DocSendingMethod__c = 'E-mail';
+			ord.Sale__c = sales[i].Id;
 
-            insert salesList;
-        }
+			orderList.add(ord);
+		}
 
-        return salesList;
-    }
+		if (doInsert){
 
+			insert orderList;
+		}
 
-    public static List<ServicePoint__c> createServicePoint (Integer amount, Boolean doInsert) {
+		return orderList;
+	}
 
-        List<ServicePoint__c> servPointList = new List<ServicePoint__c>();
+	public static List<Sale__c> createSale(Integer amount, Boolean doInsert, Id accId, String status){
 
-        for (Integer i=0; i<amount; i++) {
+		List<Sale__c> salesList = new List<Sale__c>();
 
-            ServicePoint__c servPoint = new ServicePoint__c();
+		for (Integer i = 0; i < amount; i + +){
 
-            servPoint.Name = 'testServicePoint'+i;
-            servPoint.ServicePointCode__c = 'testServicePointCode';
+			Sale__c sale = new Sale__c();
 
-            servPointList.add(servPoint);
-        }
+			sale.Name = 'testSaleName' + i;
+			sale.Status__c = status;
+			sale.Account__c = accId;
 
-        if (doInsert) {
+			salesList.add(sale);
+		}
 
-            insert servPointList;
-        }
+		if (doInsert){
 
-        return servPointList;
-    }
+			insert salesList;
+		}
 
+		return salesList;
+	}
 
-    public static List<Contact> createContact (Integer amount, Boolean doInsert, Id accId) {
+	public static List<ServicePoint__c> createServicePoint(Integer amount, Boolean doInsert){
 
-        List<Contact> contactList = new List<Contact>();
+		List<ServicePoint__c> servPointList = new List<ServicePoint__c>();
 
-        for (Integer i=0; i<amount; i++) {
+		for (Integer i = 0; i < amount; i + +){
 
-            Contact testContact = new Contact();
-            testContact.FirstName = 'test';
-            testContact.LastName = 'tester';
-            testContact.AccountId = accId;
+			ServicePoint__c servPoint = new ServicePoint__c();
 
-            contactList.add(testContact);
-        }
+			servPoint.Name = 'testServicePoint' + i;
+			servPoint.ServicePointCode__c = 'testServicePointCode';
 
-        if (doInsert) {
+			servPointList.add(servPoint);
+		}
 
-            insert contactList;
-        }
+		if (doInsert){
 
-        return contactList;
-    }
+			insert servPointList;
+		}
 
+		return servPointList;
+	}
 
+	public static List<Contact> createContact(Integer amount, Boolean doInsert, Id accId){
 
-    public static List<Contract> createContract (Integer amount, Boolean doInsert, Id accId) {
+		List<Contact> contactList = new List<Contact>();
 
-        List<Contract> contractList = new List<Contract>();
+		for (Integer i = 0; i < amount; i + +){
 
-        for (Integer i=0; i<amount; i++) {
+			Contact testContact = new Contact();
+			testContact.FirstName = 'test';
+			testContact.LastName = 'tester';
+			testContact.AccountId = accId;
 
-            Contract testContract = new Contract();
-            testContract.AccountId = accId;
+			contactList.add(testContact);
+		}
 
-            contractList.add(testContract);
-        }
+		if (doInsert){
 
-        if (doInsert) {
+			insert contactList;
+		}
 
-            insert contractList;
-        }
+		return contactList;
+	}
 
-        return contractList;
-    }
+	public static List<Contract> createContract(Integer amount, Boolean doInsert, Id accId){
 
+		List<Contract> contractList = new List<Contract>();
 
-    public static List<Case> createCase (Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId) {
+		for (Integer i = 0; i < amount; i + +){
 
-        List<Case> caseList = new List<Case>();
+			Contract testContract = new Contract();
+			testContract.AccountId = accId;
 
-        for (Integer i=0; i<amount; i++) {
+			contractList.add(testContract);
+		}
 
-            Case testCase = new Case();
-            testCase.AccountId = accId;
-            testCase.Status = 'In Lavorazione';
-            testCase.Subject = 'test';
-            testCase.Type = 'BP/CA - errata categoria';
-            testCase.Subprocess__c = 'Account';
-            testCase.HerokuPracticeCode__c = '21313232132132';
-            testCase.ContactId = contactId;
-            testCase.ServicePoint__c = servPointId;
-            testCase.Contract__c = contractId;
-            testCase.VulturePracticeReference__c = orderId;
-            testCase.Cluster__c = 'Pagamenti';
+		if (doInsert){
 
+			insert contractList;
+		}
 
-            caseList.add(testCase);
-        }
+		return contractList;
+	}
 
-        if (doInsert) {
+	public static List<Case> createCase(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
 
-            insert caseList;
-        }
+		List<Case> caseList = new List<Case>();
 
-        return caseList;
-    }
+		for (Integer i = 0; i < amount; i + +){
 
+			Case testCase = new Case();
+			testCase.AccountId = accId;
+			testCase.Status = 'In Lavorazione';
+			testCase.Subject = 'test';
+			testCase.Type = 'BP/CA - errata categoria';
+			testCase.Subprocess__c = 'Account';
+			testCase.HerokuPracticeCode__c = '21313232132132';
+			testCase.ContactId = contactId;
+			testCase.ServicePoint__c = servPointId;
+			testCase.Contract__c = contractId;
+			testCase.VulturePracticeReference__c = orderId;
+			testCase.Cluster__c = 'Pagamenti';
 
-    public static List<OrderItem> createOrderItem (Integer amount, Boolean doInsert, Id orderId, Id servicePointId, Id product2Id) {
 
-        List<OrderItem> orderItemsList = new List<OrderItem>();
+			caseList.add(testCase);
+		}
 
-        for (Integer i=0; i<amount; i++) {
+		if (doInsert){
 
-            OrderItem orderItem = new orderItem();
+			insert caseList;
+		}
 
-            orderItem.ServicePoint__c = servicePointId;
-            orderItem.OrderId = orderId;
-            orderItem.Product2Id = product2Id;
+		return caseList;
+	}
 
-            orderItemsList.add(orderItem);
-        }
+	public static List<OrderItem> createOrderItem(Integer amount, Boolean doInsert, Id orderId, Id servicePointId, Id product2Id){
 
-        if (doInsert) {
+		List<OrderItem> orderItemsList = new List<OrderItem>();
 
-            insert orderItemsList;
-        }
+		for (Integer i = 0; i < amount; i + +){
 
-        return orderItemsList;
-        
-    }
+			OrderItem orderItem = new orderItem();
 
-    public static List<Product2> createProduct2 (Integer amount, Boolean doInsert) {
+			orderItem.ServicePoint__c = servicePointId;
+			orderItem.OrderId = orderId;
+			orderItem.Product2Id = product2Id;
 
-        List<Product2> productList = new List<Product2>();
+			orderItemsList.add(orderItem);
+		}
 
-        for (Integer i=0; i<amount; i++) {
+		if (doInsert){
 
-            Product2 product = new Product2();
+			insert orderItemsList;
+		}
 
-            product.Name = 'testProduct2Name'+i;
+		return orderItemsList;
+	}
 
-            productList.add(product);
-        }
+	public static List<Product2> createProduct2(Integer amount, Boolean doInsert){
 
-        if (doInsert) {
+		List<Product2> productList = new List<Product2>();
 
-            insert productList;
-        }
+		for (Integer i = 0; i < amount; i + +){
 
-        return productList;
-    }
+			Product2 product = new Product2();
 
+			product.Name = 'testProduct2Name' + i;
 
-    public static List<AgentMatrix__c> createAgentMatrix (Integer amount, Boolean doInsert, String channel) {
+			productList.add(product);
+		}
 
-        List<AgentMatrix__c> agentMatrixList = new List<AgentMatrix__c>();
+		if (doInsert){
 
-        for (Integer i=0; i<amount; i++) {
+			insert productList;
+		}
 
-            AgentMatrix__c testAgentMatrix = new AgentMatrix__c();
-            testAgentMatrix.Channel__c = channel;
+		return productList;
+	}
 
-            agentMatrixList.add(testAgentMatrix);
-        }
+	public static List<AgentMatrix__c> createAgentMatrix(Integer amount, Boolean doInsert, String channel){
 
-        if (doInsert) {
+		List<AgentMatrix__c> agentMatrixList = new List<AgentMatrix__c>();
 
-            insert agentMatrixList;
-        }
+		for (Integer i = 0; i < amount; i + +){
 
-        return agentMatrixList;
-    }
+			AgentMatrix__c testAgentMatrix = new AgentMatrix__c();
+			testAgentMatrix.Channel__c = channel;
 
+			agentMatrixList.add(testAgentMatrix);
+		}
 
+		if (doInsert){
 
+			insert agentMatrixList;
+		}
+
+		return agentMatrixList;
+	}
 }
