@@ -28864,6 +28864,9 @@
         <layout>SiebelActivity__x-SiebelActivity Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>SiebelIntegDoc__x-SiebelIntegDoc Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>SiebelContact__x-SiebelContact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
