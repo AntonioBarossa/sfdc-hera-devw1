@@ -1,3 +1,8 @@
+/**
+* @author Andrea Arosio (andrea.arosio@webresults.it)
+* @date 13/07/2021
+* @description HDT_UTL_Dependencies – Classe di utilità per la gestione della sequenzializzazione dei processi
+*/
 public inherited sharing class HDT_UTL_Dependencies {
     
     public static final String STATUS_BOZZA = 'In Bozza';
@@ -13,13 +18,25 @@ public inherited sharing class HDT_UTL_Dependencies {
     public static final String TIPOLOGY_SALES = 'Order';
     public static final String TIPOLOGY_POSTSALES = 'Case';
 
+    /**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 13/07/2021
+    * @param1 List<ServiceRequest> struttura oggetti tecnici da sequenzializzare
+    * @param2 Map<Id, sObject> mappa degli oggetti con i vecchi valori
+    * @param3 String tipology : tipologia process Case|Order
+    * @return void
+    */
     public static void processSequentializationBefore(List<SObject> newSObjectList,Map<Id,SObject> oldSObjectMap, String tipology){
 
         List<ServiceRequest__c> incomingProcesses = new List<ServiceRequest__c>();
+        List<String> dependenciesCheckCS = new List<String>();
+        for(CS_DependecyPhaseCheck__c dependecyPhaseCheck : CS_DependecyPhaseCheck__c.getAll().values()){
+            dependenciesCheckCS.add(dependecyPhaseCheck.Phase__c);
+        }
         if(tipology.equalsIgnoreCase(TIPOLOGY_SALES)){
             for(Order order : (List<Order>)newSObjectList){
                 Order oldOrder = (Order)oldSObjectMap.get(order.ID);
-                if(!oldOrder.Phase__c.equalsIgnoreCase(order.Phase__c)){//&& AGGIUNGERE CONTROLLO SE order.Phase__c IN CS
+                if(!oldOrder.Phase__c.equalsIgnoreCase(order.Phase__c) && dependenciesCheckCS.contains(order.Phase__c)){
                     try{
                         ServiceRequest__c sr = [SELECT ID, ProcessType__c, Order__c, Type__c
                                         FROM ServiceRequest__c 
@@ -57,6 +74,12 @@ public inherited sharing class HDT_UTL_Dependencies {
         }
     }
 
+    /**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 13/07/2021
+    * @param1 List<ServiceRequest> struttura oggetti tecnici da sequenzializzare
+    * @return void
+    */
     public static void sequentialization(List<ServiceRequest__c> incomingProcesses){
         try {
 
@@ -98,6 +121,13 @@ public inherited sharing class HDT_UTL_Dependencies {
         }
     }
 
+    /**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 13/07/2021
+    * @param1 List<ServiceRequest> struttura oggetti tecnici da sequenzializzare
+    * @param2 Map<String,List<List<String>>> mappa delle dipendence
+    * @return List<List<SObject>> Struttura dati processi da aggiornare
+    */
     public static List<List<SObject>> getProcessesToUpdate(List<ServiceRequest__c> incomingProcesses, Map<String,List<List<String>>> dependenciesMap){
         
         List<List<SObject>> results = new List<List<SObject>>();
@@ -168,6 +198,14 @@ public inherited sharing class HDT_UTL_Dependencies {
         return results;
     }
 
+    /**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 13/07/2021
+    * @param1 List<ServiceRequest__c> serviceRequestsToBeSequenced
+    * @param2 List<Order> ordersToBeUpdated
+    * @param3 List<Case> casesToBeUpdated
+    * @return void
+    */
     public static void updateProcesses(List<ServiceRequest__c> serviceRequestsToBeSequenced, List<Order> ordersToBeUpdated, List<Case> casesToBeUpdated){
         
         Savepoint sp = Database.setSavePoint();

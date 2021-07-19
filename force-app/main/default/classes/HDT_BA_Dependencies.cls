@@ -1,3 +1,8 @@
+/**
+* @author Andrea Arosio (andrea.arosio@webresults.it)
+* @date 15/07/2021
+* @description HDT_BA_Dependencies – Batch per lo sblocco dei processi sequenzializzati
+*/
 public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObject> {
     List<ServiceRequest__c> serviceRequestsToBeSequenced = new List<ServiceRequest__c>();
     List<Order> ordersToBeUpdated = new List<Order>();
