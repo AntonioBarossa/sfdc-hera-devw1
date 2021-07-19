@@ -1,26 +1,101 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Contact_Record_Page</members>
-        <name>FlexiPage</name>
+        <members>Interaction__c.Catalogo_Servizi</members>
+        <name>QuickAction</name>
     </types>
     <types>
-        <members>HDT_FixedFeeTable__mdt</members>
+        <members>DependenciesMatrix__c</members>
         <name>CustomObject</name>
     </types>
     <types>
+        <members>BillingProfile__c</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>Interaction__c-Interazione Layout</members>
+        <members>Reading__c-HDT_LetturaEle</members>
+        <members>Reading__c-HDT_LetturaGas</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_SalesforceCPQAdmin</members>
+        <members>HDT_SalesforceCPQPartner</members>
+        <members>HDT_SalesforceCPQUser</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_BA_AttributesContact</members>
+        <members>HDT_BA_AttributesLead</members>
+        <members>HDT_BA_AttributesTest</members>
+        <members>HDT_BA_ConsentContact</members>
+        <members>HDT_BA_ConsentLead</members>
+        <members>HDT_BA_OldDraftSales</members>
+        <members>HDT_HDT_BA_ConsentContactTest</members>
+        <members>HDT_LC_AccountSelezionaRecordtype</members>
+        <members>HDT_LC_AccountSelezionaRecordtypeTst</members>
+        <members>HDT_LC_CalculateEstimatedCost</members>
+        <members>HDT_LC_CalculateEstimatedCostTst</members>
         <members>HDT_LC_ChildOrderProcessActions</members>
+        <members>HDT_LC_DocumentValidation</members>
+        <members>HDT_LC_DocumentValidationTst</members>
+        <members>HDT_LC_GeneralInfoTst</members>
+        <members>HDT_LC_LeadCalculateFiscalCode</members>
+        <members>HDT_LC_OfferConfiguratorCtrlHelper</members>
+        <members>HDT_QR_AccountContactRelation</members>
+        <members>HDT_QR_CaseTst</members>
+        <members>HDT_QR_HerokuPostSalesManager</members>
+        <members>HDT_QR_Lead</members>
+        <members>HDT_QR_LeadTst</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_TechnicalOffer</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_UTL_Constants</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_PayloadManagement</members>
+        <members>HDT_UTL_Utils</members>
+        <members>HDT_WRP_Attributes</members>
+        <members>HDT_WS_CampagenDmDmp</members>
+        <members>HDT_WS_CampagenDmDmpDataRequest</members>
+        <members>HDT_WS_CampagenDmDmpDataResponse</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_FixedFeeTable__mdt.Sottotipo__c</members>
-        <members>HDT_FixedFeeTable__mdt.Value__c</members>
-        <members>TechnicalOfferItem__c.NameExternalId__c</members>
+        <members>HDT_CancellationReason</members>
+        <name>GlobalValueSet</name>
+    </types>
+    <types>
+        <members>Case.Phase__c</members>
+        <members>Case.ProblemDescription__c</members>
+        <members>DependenciesMatrix__c.CheckingPhase__c</members>
+        <members>Lead.Category__c</members>
+        <members>Lead.CustomerMarking__c</members>
+        <members>Order.Phase__c</members>
+        <members>Order.ShipToDifferentAddress__c</members>
+        <members>SBQQ__QuoteLine__c.ListTotalVAT__c</members>
+        <members>SBQQ__QuoteLine__c.TotalDiscountAmountVAT__c</members>
+        <members>SBQQ__Quote__c.ListAmountVAT__c</members>
+        <members>SBQQ__Quote__c.TotalDiscountAmountVAT__c</members>
+        <members>TechnicalOffer__c.OfferCode__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_FixedFeeTable.Prima_Attivazione</members>
-        <members>HDT_FixedFeeTable.Subentro_su_GdM_chiuso</members>
+        <members>hdtAccountStatementViewer</members>
+        <members>hdtTechnicalOfferEditForm</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>HDT_IntegrationObject.Documentale_Context3</members>
         <name>CustomMetadata</name>
     </types>
     <version>49</version>

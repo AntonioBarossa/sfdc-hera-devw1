@@ -1,3 +1,10 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 12/05/2021
+* @description HDT_BA_OldDraftSales
+* @history Lorenzo – 12/05/2021 – created class
+*/
+
 public with sharing class HDT_LC_LeadCalculateFiscalCode {
     public static HDT_QR_Lead leadQR = new HDT_QR_Lead();
     @AuraEnabled
