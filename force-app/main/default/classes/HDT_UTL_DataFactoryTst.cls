@@ -97,7 +97,7 @@ public with sharing class HDT_UTL_DataFactoryTst {
         return oppList;
     }
 
-    public static List<Account> createAccount(Integer amount, Boolean doInsert) {
+    public static List<Account> createAccountBusiness(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category) {
         
         List<Account> accList = new List<Account>();
 
@@ -111,14 +111,15 @@ public with sharing class HDT_UTL_DataFactoryTst {
 
             acc.RecordTypeId = rt;
             acc.Name = 'test account'+i;
-            acc.CompanyOwner__c = 'HERA COMM';
-            acc.CustomerMarking__c = 'Azienda';
-            acc.Category__C = 'Aziende SME';
+            acc.CompanyOwner__c = companyOwner;
+            acc.CustomerMarking__c = customerMarking;
+            acc.Category__C = category;
             acc.VATNumber__c = '12345678901';
             acc.BillingCityCode__c = 'Roma';
             acc.BillingStreetName__c = 'via roma';
             acc.BillingStreetNumber__c = '55';
             acc.LastName__c = 'test account'+i;
+            acc.FiscalCode__c = 'SXSRLA45H28H501K';
 
             accList.add(acc);
 
@@ -131,7 +132,7 @@ public with sharing class HDT_UTL_DataFactoryTst {
 
         return accList;
     }
-    public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId) {
+    public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, String phase) {
 
         List<Order> orderList = new List<Order>();
 
@@ -153,7 +154,7 @@ public with sharing class HDT_UTL_DataFactoryTst {
             ord.AdministrativeBurden__c = 1; 
             ord.EstimatedVAT__c = 1; 
             ord.ValidityDateEstimate__c = Date.today().addDays(30);
-            ord.Phase__c = 'Bozza';
+            ord.Phase__c = phase;
             ord.CIAccoutn__c = 'Richiesto';
             ord.QuickQuote__c = 'Richiesto';
             ord.ChamberCommerceRegistration__c = 'Richiesto';
@@ -254,6 +255,9 @@ public with sharing class HDT_UTL_DataFactoryTst {
 
             ServicePoint__c servPoint = new ServicePoint__c();
 
+            servPoint.Name = 'testServicePoint'+i;
+            servPoint.ServicePointCode__c = 'testServicePointCode';
+
             servPointList.add(servPoint);
         }
 
@@ -309,5 +313,106 @@ public with sharing class HDT_UTL_DataFactoryTst {
 
         return contractList;
     }
+
+
+    public static List<Case> createCase (Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId) {
+
+        List<Case> caseList = new List<Case>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            Case testCase = new Case();
+            testCase.AccountId = accId;
+            testCase.Status = 'In Lavorazione';
+            testCase.Subject = 'test';
+            testCase.Type = 'BP/CA - errata categoria';
+            testCase.Subprocess__c = 'Account';
+            testCase.HerokuPracticeCode__c = '21313232132132';
+            testCase.ContactId = contactId;
+            testCase.ServicePoint__c = servPointId;
+            testCase.Contract__c = contractId;
+            testCase.VulturePracticeReference__c = orderId;
+            testCase.Cluster__c = 'Pagamenti';
+
+
+            caseList.add(testCase);
+        }
+
+        if (doInsert) {
+
+            insert caseList;
+        }
+
+        return caseList;
+    }
+
+
+    public static List<OrderItem> createOrderItem (Integer amount, Boolean doInsert, Id orderId, Id servicePointId, Id product2Id) {
+
+        List<OrderItem> orderItemsList = new List<OrderItem>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            OrderItem orderItem = new orderItem();
+
+            orderItem.ServicePoint__c = servicePointId;
+            orderItem.OrderId = orderId;
+            orderItem.Product2Id = product2Id;
+
+            orderItemsList.add(orderItem);
+        }
+
+        if (doInsert) {
+
+            insert orderItemsList;
+        }
+
+        return orderItemsList;
+        
+    }
+
+    public static List<Product2> createProduct2 (Integer amount, Boolean doInsert) {
+
+        List<Product2> productList = new List<Product2>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            Product2 product = new Product2();
+
+            product.Name = 'testProduct2Name'+i;
+
+            productList.add(product);
+        }
+
+        if (doInsert) {
+
+            insert productList;
+        }
+
+        return productList;
+    }
+
+
+    public static List<AgentMatrix__c> createAgentMatrix (Integer amount, Boolean doInsert, String channel) {
+
+        List<AgentMatrix__c> agentMatrixList = new List<AgentMatrix__c>();
+
+        for (Integer i=0; i<amount; i++) {
+
+            AgentMatrix__c testAgentMatrix = new AgentMatrix__c();
+            testAgentMatrix.Channel__c = channel;
+
+            agentMatrixList.add(testAgentMatrix);
+        }
+
+        if (doInsert) {
+
+            insert agentMatrixList;
+        }
+
+        return agentMatrixList;
+    }
+
+
 
 }

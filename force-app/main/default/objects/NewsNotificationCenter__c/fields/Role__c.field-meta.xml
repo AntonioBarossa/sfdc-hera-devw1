@@ -12,6 +12,31 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Back Office</fullName>
+                <default>false</default>
+                <label>Back Office</label>
+            </value>
+            <value>
+                <fullName>Front Office AAA-EBT</fullName>
+                <default>false</default>
+                <label>Front Office AAA-EBT</label>
+            </value>
+            <value>
+                <fullName>Front Office HERA COMM</fullName>
+                <default>false</default>
+                <label>Front Office HERA COMM</label>
+            </value>
+            <value>
+                <fullName>Front Office MMS</fullName>
+                <default>false</default>
+                <label>Front Office MMS</label>
+            </value>
+            <value>
+                <fullName>Front Office Reseller</fullName>
+                <default>false</default>
+                <label>Front Office Reseller</label>
+            </value>
+            <!-- <value>
                 <fullName>Specialista Aggiornamento Operativo</fullName>
                 <default>false</default>
                 <label>Specialista Aggiornamento Operativo</label>
@@ -265,7 +290,7 @@
                 <fullName>Responsabile Vendita</fullName>
                 <default>false</default>
                 <label>Responsabile Vendita</label>
-            </value>
+            </value> -->
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>
