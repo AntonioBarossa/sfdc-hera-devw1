@@ -712,7 +712,7 @@
         <inputAssignments>
             <field>Type</field>
             <value>
-                <stringValue>Reclamo Scritto/Rich. Info</stringValue>
+                <stringValue>Contenitore Reclami</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
