@@ -574,7 +574,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>BrandSalesCompany__c.MarketingType__c</field>
+        <field>BrandSalesCompany__c.MarketType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
