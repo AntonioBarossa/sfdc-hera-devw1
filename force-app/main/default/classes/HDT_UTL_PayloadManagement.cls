@@ -22,6 +22,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return generateSection50(inputs,formParams);
                 }when 'generateSection70'{
                     return generateSection70(inputs,formParams);
+                }when 'generateSectionReclami'{
+                    return generateSectionReclami(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -516,6 +518,143 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
             payloadSection += String.join(record, div);
         }
+
+        return payloadSection;
+    }
+
+    /*
+    Genera la sezione di payload per la stampa della risposta motivata dei reclami (corpo della risposta).
+    Esempio di payload: 
+
+        00310|100|Gentile cliente|
+        00310|100|come anticipato nella telefonata del 12/07, le confermiamo di aver trasmesso al Distributore INRETE l’autolettura di mc 300|
+        00310|100|...
+        ...
+        00310|110|Simone Fazio|
+        00310|120|Servizio: Gas|
+        00310|120|Tipologia fornitura: mercato libero|
+        00310|120|Tariffa cliente: Hera Impronta Zero Casa Gas|
+        00310|120|Indirizzo di fornitura: VIA ZENA 5 LOIANO (BO)|
+        00310|120|PDR: 03081000247066|
+        00310|120|Servizio: Gas|
+        00310|120|Tipologia fornitura: mercato libero|
+        00310|120|Tariffa cliente: Hera Impronta Zero Casa Gas|
+        00310|120|Indirizzo di fornitura: VIA FELSINA 37 BOLOGNA (BO)|
+        00310|120|PDR: 03081000243674|
+        00310|130|1|25|
+    */
+    private String generateSectionReclami(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        String context = (String) formParams.get('Contesto');
+        if (context != 'Case') {
+            return '';
+        }
+
+        String cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
+        if (String.isNotBlank(cluster) && cluster != 'Reclami') {
+            return '';
+        }
+
+        String htmlResponse = HDT_UTL_DocumentalManagement.getValue('Case', 'ComplaintBodyResponse__c', 0, inputs, formParams);
+        if (String.isBlank(htmlResponse)) {
+            return '';
+        }
+
+        String plainTextResponse = htmlResponse.stripHtmlTags();
+        String[] splittedResponse = plainTextResponse.split('\n');
+        
+        // Sezione ricorsiva 310|100 con il corpo della risposta.
+        for (Integer i = 0; i < splittedResponse.size(); i++) {
+            String[] record = new List<String>();
+            // Il primo 310|100 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('00310');
+                record.add('100');
+            }
+            record.add(splittedResponse[i]);
+            record.add(endLine);
+
+            payloadSection += String.join(record, div);
+        }
+
+        // Record 310|110 con riferimento operatore che ha lavorato la pratica.
+        String[] userRecord = new List<String>();
+        userRecord.add('00310');
+        userRecord.add('110');
+        userRecord.add(UserInfo.getFirstName() + ' ' + UserInfo.getLastName());
+        userRecord.add(endLine);
+        payloadSection += String.join(userRecord, div);
+
+        // Sezione ricorsiva 310|120 con le info sulle forniture incluse nella risposta del reclamo.
+        List<String> caseIds = new List<String>();
+        String isContainer = HDT_UTL_DocumentalManagement.getValue('Case', 'IsContainer__c', 0, inputs, formParams);
+        if (Boolean.valueOf(isContainer)) {
+            String selectedChildCases = HDT_UTL_DocumentalManagement.getValue('Case', 'Note__c', 0, inputs, formParams);
+            if (String.isNotBlank(selectedChildCases)) {
+                for (String caseId : selectedChildCases.split(';')) {
+                    caseIds.add(caseId);
+                }
+            }
+        } else {
+            caseIds.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Id', 0, inputs, formParams));
+        }
+
+        HDT_QR_Case queryCase = new HDT_QR_Case();
+        String queryFieldsCase = 'Id,CaseNumber,Contract__c,Market__c,SendDate__c,CommodityFormula__c,AddressFormula__c,PODPDRFormula__c'; // WIP. per aggiungere l'offerta bisogna querare anche i contratti del cliente... :(
+        List<Case> responseCases = queryCase.getRecordsById(caseIds, queryFieldsCase);
+
+        List<Id> contractIds = new List<Id>();
+        for (Case c : responseCases) {
+            contractIds.add(c.Contract__c);
+        }
+        String objectName = 'Contract';
+        String queryFieldsContract = 'Id';
+        String queryString = 'SELECT ' + queryFieldsContract;
+        String fromString = ' FROM '+ objectName;
+        String controllingField = 'Id';
+        String whereString = ' WHERE ' + controllingField + ' IN :'+ contractIds + '';
+        String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
+        queryString = queryString + relatedQueryString + fromString + whereString; 
+        System.debug('contracts query ' + queryString);
+        List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
+        Map<Id, String> offersMap = new Map<Id, String>(); // mappa tra id contratto e offerta commerciale del contratto.
+        for (Integer i = 0; i < recordList.size(); i++) {
+            Contract c = (Contract) recordList[i];
+            List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
+            offersMap.put(c.Id, subscriptions[0].SBQQ__ProductName__c);
+        }
+
+        // Info sulle forniture
+        for (Case c : responseCases) {
+            String[] record = new List<String>();
+            record.add('00310');
+            record.add('120');
+            record.add('Servizio: ' + c.CommodityFormula__c);
+            record.add('Tipologia fornitura: ' + c.Market__c);
+            record.add('Tariffa cliente: ' + offersMap.get(c.Contract__c));
+            record.add('Indirizzo di fornitura: ' + c.AddressFormula__c);
+            if ('Gas' == c.CommodityFormula__c) {
+                record.add('PDR: ' + c.PODPDRFormula__c);
+            } else { // TODO WAVE 2: adeguare per le altre commodity.
+                record.add('POD: ' + c.PODPDRFormula__c);
+            }
+            record.add(endLine);
+            payloadSection += String.join(record, div);
+        }
+        // Info sulle date ricezione del reclamo (incluse sempre nella sezione 310|120)
+        for (Case c : responseCases) {
+            String[] record = new List<String>();
+            record.add('00310');
+            record.add('120');
+            record.add('Risposta al Reclamo ricevuto in data ' + c.SendDate__c + ' ns Prot ' + c.CaseNumber);
+            record.add(endLine);
+            payloadSection += String.join(record, div);
+        }
+
+        // TODO: record indennizzi, oppure lo gestiamo nel tabellone?
 
         return payloadSection;
     }
