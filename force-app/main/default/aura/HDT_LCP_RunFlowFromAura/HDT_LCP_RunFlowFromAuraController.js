@@ -26,6 +26,9 @@
         //variabile per innesco da campagne
         var campaignId = myPageRef.state.c__campaignId;
 
+        // id del lead oggetto del process.
+        var leadId = myPageRef.state.c__leadId;
+
 
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
@@ -41,6 +44,7 @@
         console.log('# context -> '+context);
         console.log('# parentRecordId -> ' +parentRecordId);
         console.log('# campaignId -> ' + campaignId)
+        console.log('# leadId -> ' + leadId);
         console.log('# ----------------- #');
 
         var workspaceAPI = component.find("workspace");
@@ -57,6 +61,7 @@
         workspaceAPI.getAllTabInfo().then(function(response) {
             console.log('----------');
             var accountTabId;
+            var leadTabId;
             response.forEach((element) => {
                 if(element.pageReference.type === 'standard__recordPage'){                    
                     if(element.pageReference.attributes.recordId===accId){
@@ -66,12 +71,17 @@
                         //        subTabToRefresh = sub.tabId;
                         //    }
                         //});
+                    } else if(element.pageReference.attributes.recordId===leadId){
+                        leadTabId = element.tabId;
                     }
                 }
             });
             console.log('----------');
             console.log('# accountTabId: ' + accountTabId);
             component.set("v.accountTabId", accountTabId);
+
+            console.log('# leadTabId: ' + leadTabId);
+            component.set("v.leadTabId", leadTabId);
             
             console.log('# subTabToClose: ' + subTabToClose);
             component.set("v.subTabToClose", subTabToClose);
@@ -81,7 +91,9 @@
 
         if(caseId === null || caseId === 'undefined' || caseId === undefined){
             console.log('# CaseId is NULL');
-            inputVariables.push({ name : 'AccountId', type : 'String', value : accId });
+            if (accId != null){
+                inputVariables.push({ name : 'AccountId', type : 'String', value : accId });
+            }
             inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
             inputVariables.push({ name : 'RecordTypeName', type : 'String', value : recordTypeName });
             component.set('v.enableRefresh', false);
@@ -117,6 +129,9 @@
         if(campaignId != null){
             inputVariables.push({ name : 'CampaignId', type : 'String', value : campaignId});
         }
+        if(leadId != null){
+            inputVariables.push({ name : 'LeadId', type : 'String', value : leadId});
+        }
 
         console.log('## inputVariables -> ');
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
@@ -135,6 +150,7 @@
        || event.getParam("status") === "ERROR") {
 
             var accountTabId = component.get("v.accountTabId");
+            var leadTabId = component.get("v.leadTabId");
             var subTabToClose = component.get("v.subTabToClose");
             var enableRefresh = component.get('v.enableRefresh');
             var flowfinal = component.find("flowData");
@@ -153,7 +169,8 @@
                     "target":null,
                     "currentTarget":null}
                 */
-                console.log('Inside Error condition');
+                console.log('Inside Error condition: ' + JSON.stringify(event));
+
                 var toastEvent = $A.get("e.force:showToast");
                 toastEvent.setParams({
                     "title": "Errore",
@@ -199,17 +216,28 @@
                     console.log('# OK Refresh page #');
                     $A.get('e.force:refreshView').fire();
                 
-    
-                    workspaceAPI.focusTab({tabId : accountTabId}).
-                    then(function(response) {
-                        workspaceAPI.refreshTab({
-                                tabId: accountTabId,
-                                includeAllSubtabs: true
-                            }).catch(function(error) {
-                                console.log(error);
-                            });
-                    });
-    
+                    if(accountTabId != null){
+                        workspaceAPI.focusTab({tabId : accountTabId}).
+                        then(function(response) {
+                            workspaceAPI.refreshTab({
+                                    tabId: accountTabId,
+                                    includeAllSubtabs: true
+                                }).catch(function(error) {
+                                    console.log(error);
+                                });
+                        });
+                    } else if(leadTabId != null){
+                        workspaceAPI.focusTab({tabId : leadTabId}).
+                        then(function(response) {
+                            workspaceAPI.refreshTab({
+                                    tabId: leadTabId,
+                                    includeAllSubtabs: true
+                                }).catch(function(error) {
+                                    console.log(error);
+                                });
+                        });
+                    }
+
                 }).catch(function(error) {
                     console.log(error);
                 });
@@ -217,7 +245,7 @@
                 return;
 
             }
-            if(!enableRefresh){
+            if(!enableRefresh && accountTabId != null){
                 workspaceAPI.openSubtab({
                     parentTabId: accountTabId,
                     pageReference: {

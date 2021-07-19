@@ -97,7 +97,8 @@ export default class HdtAccountAlerts extends LightningElement {
     getAvailableRules(){
         try{
             getAvailableRules({
-                accountCategory: this.accountCategory
+                accountCategory: this.accountCategory,
+                accountId: this.recordId
                 })
                 .then(result => {
                     //console.log('result: ' + result);

@@ -148,6 +148,16 @@
                 <label>Errore Lavorazione SAP</label>
             </value>
             <value>
+                <fullName>Esito KO Riduzione Potenza</fullName>
+                <default>false</default>
+                <label>Esito KO Riduzione Potenza</label>
+            </value>
+            <value>
+                <fullName>Esito OK Riduzione Potenza</fullName>
+                <default>false</default>
+                <label>Esito OK Riduzione Potenza</label>
+            </value>
+            <value>
                 <fullName>Esito KO</fullName>
                 <default>false</default>
                 <label>Esito KO</label>
@@ -336,6 +346,11 @@
                 <fullName>RC010</fullName>
                 <default>false</default>
                 <label>RC010</label>
+            </value>
+            <value>
+                <fullName>Sequenzializzato</fullName>
+                <default>false</default>
+                <label>Sequenzializzato</label>
             </value>
             <value>
                 <fullName>SMS Inviato</fullName>
@@ -713,6 +728,21 @@
                 <label>Risposta Parere Ricevuta</label>
             </value>
             <value>
+                <fullName>Pratica In Attesa</fullName>
+                <default>false</default>
+                <label>Pratica In Attesa</label>
+            </value>
+            <value>
+                <fullName>Attesa Monitoraggio</fullName>
+                <default>false</default>
+                <label>Attesa Monitoraggio</label>
+            </value>
+            <value>
+                <fullName>Preventivo rifiutato – Amm OK</fullName>
+                <default>false</default>
+                <label>Preventivo rifiutato – Amm OK</label>
+            </value>
+            <value>
                 <fullName>Presa in Carico KO</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -741,11 +771,6 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Risposta non Ricevuta</label>
-            </value>
-            <value>
-                <fullName>Pratica In Attesa</fullName>
-                <default>false</default>
-                <label>Pratica In Attesa</label>
             </value>
         </valueSetDefinition>
     </valueSet>

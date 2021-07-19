@@ -42,16 +42,24 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                     throw new AuraHandledException('Necessario completare un Case di \'Cambio Contatore Non Registrato\'');
                 
                 }
-            } else if(order.EffectiveDate__c != null && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
+            } else if(order.EffectiveDate__c != null){
 
-                if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva'))){
+                if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
 
-                    throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
+                    if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva'))){
 
-                } else{
-                    
-                    order.RetroactiveDate__c = order.EffectiveDate__c;
-                    order.Subprocess__c = 'Retroattiva';
+                        throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
+
+                    } else{
+                        
+                        order.RetroactiveDate__c = order.EffectiveDate__c;
+                        order.Subprocess__c = 'Retroattiva';
+
+                    }
+                } else {
+
+                    order.RetroactiveDate__c = null;
+                    order.Subprocess__c = 'Standard';
 
                 }
 
@@ -61,9 +69,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
             } else if(order.VoltureType__c != null && (order.VoltureType__c.containsIgnoreCase('In Continuità') || order.VoltureType__c.containsIgnoreCase('Recupero'))
                 && oldOrder.ServicePoint__r.CommoditySector__c.containsIgnoreCase('Energia Elettrica')){
-            
                     throw new AuraHandledException('Impossibile selezionare il valore \"' + order.VoltureType__c + '\"');
-            }
+            } //else if((order.VoltureType__c == null || order.VoltureType__c == '') && (order.Step__c == 4 || order.Step__c == 8)){
+            //         throw new AuraHandledException('Valorizzare Campi Obbligatori');
+            // }
 
             if(readingDate != null && (isReading != null && isReading == true)){
 
@@ -130,6 +139,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         return result;
 
+    }
+
+    @AuraEnabled
+    public static Order getDates(String recordId){
+        Order ord = new Order();
+        ord = orderQr.getDates(recordId);
+
+        return ord;
     }
     //EVERIS
 }

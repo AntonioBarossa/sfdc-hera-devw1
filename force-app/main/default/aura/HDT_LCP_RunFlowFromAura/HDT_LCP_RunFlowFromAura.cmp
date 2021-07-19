@@ -4,6 +4,7 @@
     <aura:attribute name="flowName" type="String"/>
     <aura:attribute name="subTabToClose" type="String"/>
     <aura:attribute name="accountTabId" type="String"/>
+    <aura:attribute name="leadTabId" type="String"/>
     <aura:attribute name="enableRefresh" type="Boolean"/>
     <aura:attribute name="resumeFromDraft" type="Boolean"/>
     <aura:attribute name="createDocuments" type="Boolean"/>
@@ -26,6 +27,9 @@
 
     <!--Attributo per innesco da Campagne-->
     <aura:attribute name="campaignId" type="String"/>
+
+    <!-- id del Lead oggetto del processo. -->
+    <aura:attribute name="leadId" type="String"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <lightning:workspaceAPI aura:id="workspace" />

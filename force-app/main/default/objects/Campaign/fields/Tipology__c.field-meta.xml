@@ -20,11 +20,6 @@
                 <label>Comfort Call</label>
             </value>
             <value>
-                <fullName>Teleselling</fullName>
-                <default>false</default>
-                <label>Teleselling</label>
-            </value>
-            <value>
                 <fullName>Passaggio a RID</fullName>
                 <default>false</default>
                 <label>Passaggio a RID</label>

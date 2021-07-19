@@ -7214,10 +7214,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
         </values>
@@ -7255,10 +7251,6 @@
         </values>
         <values>
             <fullName>Marcatura%2FUso PdR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7323,14 +7315,6 @@
         </values>
         <values>
             <fullName>Reclamo Scritto%2FRich%2E Info</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore di Lettura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7426,7 +7410,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Unificazione%2FSeparazione CA-Bolletta</fullName>
+            <fullName>Unificazione%2FSeparazione BP-CA-Bolletta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7807,79 +7791,15 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Revocato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa Modulo Firmato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Bozza</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Chiuso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Elaborazione Risposta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Errore invio a DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Errore tecnico invio a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO tentativo riattivazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Flusso bloccato in assenza del precedente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Attesa Allineamento Anagrafica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RC010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito OK da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Inviato al SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Revocato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risposta Parere Ricevuta</fullName>
+            <fullName>In Lavorazione</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10317,10 +10237,6 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Account%2FBilling Profile - errata categoria</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Aggiunta Attacco</fullName>
             <default>false</default>
         </values>
@@ -10370,10 +10286,6 @@
         </values>
         <values>
             <fullName>Cambio Uso Tecnico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cambio cont%2E non registrato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10465,10 +10377,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
         </values>
@@ -10510,10 +10418,6 @@
         </values>
         <values>
             <fullName>Marcatura%2FUso PdR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10610,14 +10514,6 @@
         </values>
         <values>
             <fullName>Rettifica Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore di Lettura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10766,10 +10662,6 @@
         </values>
         <values>
             <fullName>Variazione Tensione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Variazione Tensione - Pressione</fullName>
             <default>false</default>
         </values>
         <values>

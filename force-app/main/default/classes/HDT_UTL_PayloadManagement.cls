@@ -14,6 +14,14 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return checkGruppoIva(inputs,formParams);
                 }when 'checkCommercialOffer'{
                     return checkCommercialOffer(inputs,formParams);
+                }when 'generateSection20'{
+                    return generateSection20(inputs,formParams);
+                }when 'generateSection40'{
+                    return generateSection40(inputs,formParams);
+                }when 'generateSection50'{
+                    return generateSection50(inputs,formParams);
+                }when 'generateSection70'{
+                    return generateSection70(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -42,6 +50,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
             when 'Case'{
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Case', 'SalesCompany__c', 0, inputs, formParams);
+                city = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyCity__c', 0, inputs, formParams);
+                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city);
+                if (cityExceptionList != null && cityExceptionList.size()>0) {
+                    companyDesc = 'Hera Comm S.p.A.';
+                }
             }
             when 'Account'{
                 //gestire in base al compani owner
@@ -49,6 +62,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 if(companyDesc.equalsIgnoreCase('HERA COMM')){
                     companyDesc = 'Hera Comm S.p.A.';
                 }
+            }when 'EC','GC'{
+                return getCompanyAccountStatement(formParams);
             }
             when else {
                 companyDesc = '';
@@ -67,6 +82,55 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }else {
             return '';
         }
+    }
+
+    private String getCompanyAccountStatement(Map<String,Object> formParams){
+        String result = '1070';
+        try{
+            String documents = (String) formParams.get('EstrattoConto');
+            List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documents);
+            Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
+            List<Object> secondoLivelloList = new List<Object>();
+            Map<String, Object> secondoLivello = new Map<String, Object>();
+            String hcm = 'HERA COMM MARCHE';
+            String newCo = 'ESTENERGY SPA';
+            String oldCo = 'HERA COMM NORDEST';
+            Boolean societaTemp = false;
+            Boolean newCoTemp = false;
+            Boolean oldCoTemp = false;
+            
+            for (Object singleRecord : primoLivelloList) {
+                primolivello = (Map<String, Object>) singleRecord;
+                String societa = primolivello.get('societa') != null? (String)primolivello.get('societa'):'';
+                societa = societa.toUpperCase();
+                if(societa.equalsIgnoreCase(hcm)){
+                    societaTemp = true;
+                }else {
+                    societaTemp = false;
+                }
+                if(societa.equalsIgnoreCase(newCo)){
+                    newCoTemp = true;
+                }else {
+                    newCoTemp = false;
+                }
+                if(societa.equalsIgnoreCase(oldCo)){
+                    oldCoTemp = true;
+                }else {
+                    oldCoTemp = false;
+                }
+            }
+            if(societaTemp)
+                result = '2060';
+            else if(newCoTemp) // Migrazione Ascopiave 2019
+                result = '7030';// 7030 (NewCo)
+            else if(oldCoTemp) // Migrazione Ascopiave 2019
+                result = '7015'; // 7015 (OldCo)
+            else
+                result = '1070';
+        }catch(Exception ex){
+            System.debug('Errore calcolo società per Estratto Conto');
+        }
+        return result;
     }
 
     private String checkQuotationType(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
@@ -231,5 +295,235 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             result += '|';
         }
         return result;
+    }
+
+    // Genera la sezione di payload ricorsiva 00310|20| per la stampa della Scheda Cliente (sezione "Contratti")
+    private String generateSection20(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        String accountId = HDT_UTL_DocumentalManagement.getValue('Account', 'Id', 0, inputs, formParams);
+
+        String objectName = 'Contract';
+        String queryFields = 'Id,ContractNumber,BillingProfile__r.ContractAccountCode__c,StartDate,ServicePoint__r.SupplyAddress__c,ServicePoint__r.SAPImplantCode__c,ServicePoint__r.CommoditySector__c,Status';
+        String queryString = 'SELECT ' + queryFields;
+        String fromString = ' FROM '+ objectName;
+        String controllingField = 'AccountId';
+        String whereString = ' WHERE ' + controllingField + ' =\''+ accountId + '\'';
+        String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
+        
+        queryString = queryString + relatedQueryString + fromString + whereString; 
+        System.debug('query ' + queryString);
+
+        List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
+        for (Integer i = 0; i < recordList.size(); i++) {
+            Contract c = (Contract) recordList[i];
+            List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
+
+            String[] record = new List<String>();
+            // Il primo 310|20 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('00310');
+                record.add('20');
+            }
+
+            record.add(c.ContractNumber);                               // Numero Documento
+            record.add(c.BillingProfile__r.ContractAccountCode__c);     // Codice Conto Contrattuale
+            record.add(getFormattedDate(c.StartDate));                  // Data stipula
+            record.add(c.ServicePoint__r.SupplyAddress__c);             // Indirizzo di fornitura
+            record.add(c.ServicePoint__r.SAPImplantCode__c);            // Codice Impianto
+            record.add('Contratto');                                    // Tipo (cablato, su Siebel invece era campo ad-hoc)
+            record.add(subscriptions[0].SBQQ__ProductName__c);          // Prodotto di servizio
+            record.add(c.ServicePoint__r.CommoditySector__c);           // Settore merceologico
+            record.add(c.Status);                                       // Stato
+            if (i < recordList.size() - 1) {
+                record.add(endLine);
+            }
+            payloadSection += String.join(record, div);
+        }
+
+        return payloadSection;
+    }
+
+    // Genera la sezione di payload ricorsiva 00310|40| per la stampa della Scheda Cliente (sezione "Richieste di Servizio")
+    private String generateSection40(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        List<sObject> cases = inputs.get('CaseList');
+        List<sObject> orders = inputs.get('OrderList');
+        for (Integer i = 0; i < cases.size(); i++) {
+            String[] record = new List<String>();
+            // Il primo 310|40 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('00310');
+                record.add('40');
+            }
+            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CreatedDate', i, inputs, formParams)));
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Origin', i, inputs, formParams));         // Canale
+            record.add(createdDate);                                                                                // Data ricevimento
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Type', i, inputs, formParams));           // Sottotipo
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Cluster__c', i, inputs, formParams));     // Tipo
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));     // N. RS
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Phase__c', i, inputs, formParams));       // Stato
+            // Aggiungiamo lo \n finale sempre, tranne quando siamo all'ultimo giro E non abbiamo Order subito dopo.
+            if (i != cases.size() - 1) {
+                record.add(endLine);
+            } else if (i == cases.size() - 1 && !orders.isEmpty()) {
+                record.add(endLine);
+            }
+
+            payloadSection += String.join(record, div);
+        }
+
+        for (Integer i = 0; i < orders.size(); i++) {
+            String[] record = new List<String>();
+            // Il primo 310|40 è già presente, evitiamo di aggiungerlo una seconda volta.
+            // Se i = 0 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
+            if (i > 0 || String.isNotBlank(payloadSection)) {
+                record.add('00310');
+                record.add('40');
+            }
+            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('OrderList', 'CreatedDate', i, inputs, formParams)));
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Channel__c', i, inputs, formParams));        // Canale
+            record.add(createdDate);                                                                                    // Data ricevimento
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'ProcessType__c', i, inputs, formParams));    // Sottotipo
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Cluster__c', i, inputs, formParams));        // Tipo
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'OrderNumber', i, inputs, formParams));       // N. RS
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Phase__c', i, inputs, formParams));          // Stato
+            // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
+            if (i < orders.size() - 1) {
+                record.add(endLine);
+            }
+            payloadSection += String.join(record, div);
+        }
+
+        return payloadSection;
+    }
+
+    // Genera la sezione di payload ricorsiva 00310|50| per la stampa della Scheda Cliente (sezione "Preventivi")
+    private String generateSection50(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        List<sObject> cases = inputs.get('CaseList');
+        List<sObject> orders = inputs.get('OrderList');
+        for (Integer i = 0; i < cases.size(); i++) {
+            String cluster = HDT_UTL_DocumentalManagement.getValue('CaseList', 'Cluster__c', i, inputs, formParams);
+            if (cluster != 'Preventivi' || cluster != 'Verifiche') {
+                continue;
+            }
+
+            String[] record = new List<String>();
+            // Il primo 310|50 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('00310');
+                record.add('50');
+            }
+            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CreatedDate', i, inputs, formParams)));
+            record.add(createdDate);                                                                                        // Data Stato
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Amount__c', i, inputs, formParams));              // Costo
+            record.add(createdDate);                                                                                        // Data Doc
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));             // Num documento
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));             // N. Ordine
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'TensionOption__c', i, inputs, formParams));       // Tipo lavoro
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CommodityFormula__c', i, inputs, formParams));    // Settore merceologico
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'AddressFormula__c', i, inputs, formParams));      // Indirizzo del lavoro
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Phase__c', i, inputs, formParams));               // Stato
+            // Aggiungiamo lo \n finale sempre, tranne quando siamo all'ultimo giro E non abbiamo Order subito dopo.
+            if (i != cases.size() - 1) {
+                record.add(endLine);
+            } else if (i == cases.size() - 1 && !orders.isEmpty()) {
+                record.add(endLine);
+            }
+            
+            payloadSection += String.join(record, div);
+        }
+
+        for (Integer i = 0; i < orders.size(); i++) {
+            String processType = HDT_UTL_DocumentalManagement.getValue('OrderList', 'ProcessType__c', i, inputs, formParams);
+            if (processType != 'Prima Attivazione con modifica') {
+                continue;
+            }
+
+            String[] record = new List<String>();
+            // Il primo 310|540 è già presente, evitiamo di aggiungerlo una seconda volta.
+            // Se i = 0 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
+            if (i > 0 || String.isNotBlank(payloadSection)) {
+                record.add('00310');
+                record.add('50');
+            }
+            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('OrderList', 'CreatedDate', i, inputs, formParams)));
+            record.add(createdDate);                                                                                              // Data Stato
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'EstimateAmount__c', i, inputs, formParams));           // Costo
+            record.add(createdDate);                                                                                              // Data Doc
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'OrderNumber', i, inputs, formParams));                 // Num documento
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'OrderNumber', i, inputs, formParams));                 // N. Ordine
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'RequestOption__c', i, inputs, formParams));            // Tipo lavoro
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'CommodityFormula__c', i, inputs, formParams));         // Settore merceologico
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'SupplyAddressFormula__c', i, inputs, formParams));     // Indirizzo del lavoro
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Phase__c', i, inputs, formParams));                    // Stato
+            // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
+            if (i < orders.size() - 1) {
+                record.add(endLine);
+            }
+            payloadSection += String.join(record, div);
+        }
+
+        return payloadSection;
+    }
+
+    // Genera la sezione di payload ricorsiva 00310|70| per la stampa della Scheda Cliente (sezione "Anagrafiche Collegate")
+    private String generateSection70(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        String accountId = HDT_UTL_DocumentalManagement.getValue('Account', 'Id', 0, inputs, formParams);
+        HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
+        AccountContactRelation acr = acrQueryHandler.getPrimaryContactRelation(accountId);
+        if (acr == null) {
+            System.debug('Nessun contatto titolare trovate per accountId: ' + accountId);
+            return '';
+        }
+
+        List<AccountContactRelation> relations = acrQueryHandler.getRelatedAccounts(acr.ContactId);
+        for (Integer i = 0; i < relations.size(); i++) {
+            AccountContactRelation rel = relations[i];
+            String[] record = new List<String>();
+            // Il primo 310|70 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('00310');
+                record.add('70');
+            }
+
+            record.add(rel.Account.FirstName__c);                  // Nome
+            record.add(rel.Account.LastName__c);                   // Cognome/ragione sociale
+            if (rel.AccountId != accountId) {
+                record.add(rel.Account.FiscalCode__c);             // Codice Fiscale cliente principale
+                record.add(rel.Account.FirstName__c);              // Nome principale
+                record.add(rel.Account.LastName__c);               // Cognome/ragione sociale principale
+                record.add(rel.Account.CustomerCode__c);           // Codice cliente principale
+                record.add(rel.Account.VATNumber__c);              // PIVA cliente principale
+            }
+
+            // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
+            if (i < relations.size() - 1) {
+                record.add(endLine);
+            }
+            payloadSection += String.join(record, div);
+        }
+
+        return payloadSection;
+    }
+
+    // Restituisce la data nel formato richiesto da Engage1
+    private static String getFormattedDate(Date dateToFormat) {
+        Datetime dt = dateToFormat;
+        String formattedDate = dt.format('dd/MM/y');
+        return formattedDate;
     }
 }

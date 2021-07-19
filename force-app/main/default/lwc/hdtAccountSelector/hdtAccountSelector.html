@@ -25,7 +25,6 @@
 					variant="label-hidden"
 					data-id="search_bar_anagrafica"
 					name="search_bar_anagrafica"
-					placeholder="Cerca per nome, numero di telefono o email e digita invio"
 					type="search"
 				></lightning-input>
 			</div>
@@ -33,7 +32,7 @@
 				<template if:false={searchResults}>
 					<span class="slds-p-horizontal_medium slds-p-top_medium slds-text-align_center">
 						Nessuna corrispondenza. <br>
-						E possibile ricercare per codice cliente, nome, email, numero di telefono, codice fiscale e partita IVA.
+						Effettua la ricerca per codice cliente, nome, email, numero di telefono, codice fiscale, e partita IVA e premi invio.
 					</span>
 				</template>
 				<template if:true={contactsFound}>

@@ -532,19 +532,12 @@
         <defaultConnectorLabel>In Lavorazione</defaultConnectorLabel>
         <rules>
             <name>Elaborazione_Manuale</name>
-            <conditionLogic>1 OR 2 OR 3 OR (4 AND 5)</conditionLogic>
+            <conditionLogic>1 OR 2 OR 2 OR (3 AND 4)</conditionLogic>
             <conditions>
                 <leftValueReference>Query_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Errore di Fatturazione</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Query_Case.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Ricostruzione Consumi</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -616,6 +609,18 @@
                 <targetReference>Set_Phase_Comunicazioni_con_il_DL</targetReference>
             </connector>
             <label>Comunicazioni con il DL</label>
+        </rules>
+        <rules>
+            <name>Ricostruzione_Consumi</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ricostruzione Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Ricostruzione Consumi</label>
         </rules>
     </decisions>
     <decisions>

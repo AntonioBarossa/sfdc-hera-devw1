@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BillSendingMethod__c</fullName>
+    <description>Modalità invio bolletta per la quale la regola è valida</description>
+    <externalId>false</externalId>
+    <label>Modalità invio bolletta</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_BillSendingMethod</valueSetName>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

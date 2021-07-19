@@ -100,11 +100,14 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <type>Default</type>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Contratto_Siebel_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -113,15 +116,15 @@
         <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <deploymentStatus>InDevelopment</deploymentStatus>
+    <deploymentStatus>Deployed</deploymentStatus>
     <description>SiebelContract</description>
     <enableFeeds>false</enableFeeds>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>true</enableSearch>
+    <enableSearch>false</enableSearch>
     <externalDataSource>Hera_Archive</externalDataSource>
     <externalName>SiebelContract</externalName>
-    <label>SiebelContract</label>
-    <pluralLabel>SiebelContract</pluralLabel>
-    <searchLayouts/>
+    <label>Contratto Siebel</label>
+    <pluralLabel>Contratti Siebel</pluralLabel>
+    <searchLayouts></searchLayouts>
 </CustomObject>

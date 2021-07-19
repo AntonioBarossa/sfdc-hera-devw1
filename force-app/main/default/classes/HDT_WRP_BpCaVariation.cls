@@ -95,6 +95,8 @@ public class HDT_WRP_BpCaVariation {
 		public String creaNuovoCa;
 		public String pecInvioBolletta;
 		public String modInvioBolletta;
+		public String emailPec;
+		public String flagAttivazPec;
 		public HDT_WRP_BpCaVariationBancari datiBancari;
 		public HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt indirizzo;
 		public HDT_WRP_BpCaVariationDestinatarioDivergente destinatarioDivergente;

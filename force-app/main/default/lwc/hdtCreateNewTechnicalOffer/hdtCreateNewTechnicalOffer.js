@@ -2,8 +2,15 @@ import { LightningElement, wire, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 //import { getRecord } from 'lightning/uiRecordApi';
 import getExistingOffer from '@salesforce/apex/HDT_LC_OfferConfiguratorController.getExistingOffer';
+import newTitleLabel from '@salesforce/label/c.HDT_LWC_CreateOffer_NewOffer';
+import searchTitleLabel from '@salesforce/label/c.HDT_LWC_CreateOffer_SearchOffer';
 
 export default class HdtCreateNewTechnicalOffer extends NavigationMixin(LightningElement) {
+
+    label = {
+        newTitleLabel,
+        searchTitleLabel
+    };
 
     @api productid;
     showWelcom = false;

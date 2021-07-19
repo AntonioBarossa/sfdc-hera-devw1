@@ -1,7 +1,7 @@
 /**
  * @author alessandro.picchiri@eng.it
  * @date 24/05/2021
- * @description  Classe per la gestione delle date nel processo switch in 
+ * @description  Classe per la gestione delle date nel processo switch in  
 */
 public with sharing class HDT_UTL_SwtichInProcess {
     
@@ -63,10 +63,15 @@ public with sharing class HDT_UTL_SwtichInProcess {
 
     // Data di invio richiesta al SII
     public static Date getDateSentToSii(Order order) {
-
+        system.debug('getDateSentToSii: ');
         order = orderQr.getRecordById(order.id);
-
+        system.debug('getDateSentToSii: ' + JSON.serializePretty(order));
         Date signedDate = order.SignedDate__c;   
+        system.debug('signedDate: ' + signedDate);
+        system.debug('ProcessType__c: ' + order.ProcessType__c);
+        system.debug('DeveloperName: ' + order.Account.RecordType.DeveloperName);
+        system.debug('WaiverRightAfterthought__c: ' + order.WaiverRightAfterthought__c);
+        system.debug('getMaxAfterthoughtDate: ' + getMaxAfterthoughtDate(order));
         Date dateSentToSii= null;
         if(signedDate != null  && order.ProcessType__c != 'Cambio Offerta'){
             if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
@@ -75,9 +80,11 @@ public with sharing class HDT_UTL_SwtichInProcess {
                 if (order.WaiverRightAfterthought__c == 'Si') { 
                     dateSentToSii = date.today();
                 }else{                    
-                    if(order.WizardCompletedDate__c >= getMaxAfterthoughtDate(order)){
+                    if(order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)){
+                        system.debug('order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)');
                         dateSentToSii= order.WizardCompletedDate__c;
                     }else{
+                        system.debug('order.WizardCompletedDate__c < getMaxAfterthoughtDate(order)'); 
                         dateSentToSii= getMaxAfterthoughtDate(order).addDays(1);
                     }                    
                 }
@@ -104,13 +111,21 @@ public with sharing class HDT_UTL_SwtichInProcess {
 
         Date effectiveDateTmp = null;
         Date dateDecorrenzaTmp = null;
-        String processType = PROCESSTYPEBYRRECORDTYPEMAP.get(order.RecordType.DeveloperName);
-        order = orderQr.getRecordById(order.id);
         Date dateToFrom = null;
+
+        order = orderQr.getRecordById(order.id);
+        //String devName = orderQr.getRecordTypesDeveloperNameById(order.RecordTypeId);
+        String processType = PROCESSTYPEBYRRECORDTYPEMAP.get(order.RecordType.DeveloperName);
+        
         if(order.ProcessType__c == 'Cambio offerta'){
             dateToFrom = order.SignedDate__c; // Per cambio offerta entrare in tabella con la data firma o la data massima di ripensamento se no esecuzione anticipata
         }else{
-            dateToFrom = getDateSentToSii(order);
+            if(order.IsSequanzialized__c == true){
+                dateToFrom = getDateSentToSii(order);
+            }else{
+                dateToFrom = getMaxAfterthoughtDate(order); // data max di ripensamento
+            }
+            
         }
         
         

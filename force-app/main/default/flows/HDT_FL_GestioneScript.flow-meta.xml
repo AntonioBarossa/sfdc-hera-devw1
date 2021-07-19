@@ -3,8 +3,8 @@
     <actionCalls>
         <name>formatTextAction</name>
         <label>formatTextAction</label>
-        <locationX>1328</locationX>
-        <locationY>667</locationY>
+        <locationX>1327</locationX>
+        <locationY>837</locationY>
         <actionName>HDT_UTL_FormatTextScriptInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -13,10 +13,11 @@
         <faultConnector>
             <targetReference>ERRORE</targetReference>
         </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
             <value>
-                <elementReference>GetChildScripts.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -35,7 +36,7 @@
         <name>Do_Another_Loop</name>
         <label>Do Another Loop</label>
         <locationX>1144</locationX>
-        <locationY>816</locationY>
+        <locationY>986</locationY>
         <assignmentItems>
             <assignToReference>fakeListForWhileLoop</assignToReference>
             <operator>Add</operator>
@@ -58,7 +59,7 @@
         <name>Initialize_Fake_List</name>
         <label>Initialize Fake List</label>
         <locationX>550</locationX>
-        <locationY>203</locationY>
+        <locationY>373</locationY>
         <assignmentItems>
             <assignToReference>fakeListForWhileLoop</assignToReference>
             <operator>Add</operator>
@@ -98,7 +99,7 @@
         <name>check_Script_Record</name>
         <label>check Script Record</label>
         <locationX>1293</locationX>
-        <locationY>182</locationY>
+        <locationY>352</locationY>
         <defaultConnector>
             <targetReference>EndCall_Screen</targetReference>
         </defaultConnector>
@@ -123,7 +124,7 @@
         <name>Check_While_Condition</name>
         <label>Check While Condition</label>
         <locationX>817</locationX>
-        <locationY>678</locationY>
+        <locationY>848</locationY>
         <defaultConnector>
             <targetReference>While_Loop</targetReference>
         </defaultConnector>
@@ -170,7 +171,7 @@
         <name>Why_Loop_Ended</name>
         <label>Why Loop Ended</label>
         <locationX>301</locationX>
-        <locationY>328</locationY>
+        <locationY>498</locationY>
         <defaultConnectorLabel>End Flow</defaultConnectorLabel>
         <rules>
             <name>Prosegui_Registrazione</name>
@@ -208,7 +209,7 @@
         <name>While_Loop</name>
         <label>While Loop</label>
         <locationX>556</locationX>
-        <locationY>326</locationY>
+        <locationY>496</locationY>
         <collectionReference>fakeListForWhileLoop</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -241,7 +242,7 @@
         <name>GetChildScripts</name>
         <label>GetChildScripts</label>
         <locationX>1081</locationX>
-        <locationY>161</locationY>
+        <locationY>331</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>check_Script_Record</targetReference>
@@ -268,11 +269,34 @@
         <object>ScriptConfig__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>getProcessScript</name>
+        <label>getProcessScript</label>
+        <locationX>550</locationX>
+        <locationY>227</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Initialize_Fake_List</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ScriptProcessName</elementReference>
+            </value>
+        </filters>
+        <object>ScriptConfig__c</object>
+        <outputAssignments>
+            <assignToReference>ParentScriptId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
     <screens>
         <name>EndCall_Screen</name>
         <label>Termina Chiamata Screen</label>
         <locationX>963</locationX>
-        <locationY>408</locationY>
+        <locationY>578</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -291,7 +315,7 @@
         <name>ERRORE</name>
         <label>ERRORE</label>
         <locationX>1168</locationX>
-        <locationY>516</locationY>
+        <locationY>686</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -310,7 +334,7 @@
         <name>Registra_Chiamata_Screen</name>
         <label>Registra Chiamata Screen</label>
         <locationX>50</locationX>
-        <locationY>324</locationY>
+        <locationY>494</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -338,7 +362,7 @@
         <name>Script_Decision_Screen</name>
         <label>Script Decision Screen</label>
         <locationX>456</locationX>
-        <locationY>824</locationY>
+        <locationY>994</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -450,10 +474,10 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>423</locationX>
-        <locationY>47</locationY>
+        <locationX>424</locationX>
+        <locationY>50</locationY>
         <connector>
-            <targetReference>Initialize_Fake_List</targetReference>
+            <targetReference>getProcessScript</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -466,6 +490,20 @@
     </variables>
     <variables>
         <name>ParentScriptId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ScriptProcessName</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

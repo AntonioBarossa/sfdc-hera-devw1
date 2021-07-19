@@ -1,4 +1,9 @@
-public with sharing class HDT_LC_LeadChangeRecordType {
+/**
+ * @author 'Sabina Levonja' (sabina.levonja@dunegroup.it)
+ * @description HDT_LC_LeadChangeRecordType - 
+ */
+
+ public with sharing class HDT_LC_LeadChangeRecordType {
 
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
 	private static HDT_QR_Recordtype qrRecordtype = new HDT_QR_Recordtype();
