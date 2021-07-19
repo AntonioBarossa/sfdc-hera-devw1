@@ -1,3 +1,10 @@
+/**
+* @author Sabina Levonja (sabina.levonja@dunegroup.it)
+* @date May/2021
+* @description HDT_LC_AccountSelezionaRecordtype
+* @history Sabina Levonja – May/2021 – created class
+*/
+
 public inherited sharing class HDT_LC_AccountSelezionaRecordtype {
     @AuraEnabled
     public static List<Map<String,String>> getRecordTypesForAccount(){

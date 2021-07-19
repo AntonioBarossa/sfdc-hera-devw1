@@ -348,6 +348,11 @@
                 <label>RC010</label>
             </value>
             <value>
+                <fullName>Sequenzializzato</fullName>
+                <default>false</default>
+                <label>Sequenzializzato</label>
+            </value>
+            <value>
                 <fullName>SMS Inviato</fullName>
                 <default>false</default>
                 <label>SMS Inviato</label>
