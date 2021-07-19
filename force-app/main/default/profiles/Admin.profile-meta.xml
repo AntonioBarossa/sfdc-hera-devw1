@@ -7933,6 +7933,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>DocumentSendTracking__c.DocumentalSystem__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>DocumentSendTracking__c.EnvelopeId__c</field>
         <readable>true</readable>
@@ -8000,6 +8005,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentalActivity__c.CompanyOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DocumentalActivity__c.DocumentalSystem__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
