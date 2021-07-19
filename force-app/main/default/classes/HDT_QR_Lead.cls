@@ -1,3 +1,9 @@
+/**
+* @author Sabina Levonja (sabina.levonja@dunegroup.it)
+* @date 21/04/2021
+* @description HDT_QR_Lead 
+* @history Sabina Levonja – 21/04/2021 – created class 
+*/
 public  inherited sharing class HDT_QR_Lead {
     
     public Lead getRecordById(String id) {
