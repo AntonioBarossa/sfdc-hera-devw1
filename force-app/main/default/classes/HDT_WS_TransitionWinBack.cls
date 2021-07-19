@@ -19,10 +19,11 @@ public with sharing class HDT_WS_TransitionWinBack {
     
     public class HDT_WS_TransitionWinBackRequest extends HDT_WS_Request{
         //@AuraEnabled public HDT_WS_TransitionReqObj transitione{get;set;}
-        //public HDT_WS_TransitionWinBackRequest(String pod){
+        public HDT_WS_TransitionWinBackRequest(String pod){
             //this.transitione = new HDT_WS_TransitionReqObj();
            // this.transitione.pod1 = pod;
-       // }
+           this.pod = pod;
+        }
        @AuraEnabled
        public String pod {get;set;}
 	}
@@ -34,10 +35,10 @@ public with sharing class HDT_WS_TransitionWinBack {
         @AuraEnabled public String stato {get;set;}  
 	}
 
-    public class HDT_WS_TransitioneObj{
+    /*public class HDT_WS_TransitioneObj{
         @AuraEnabled public String pod {get;set;}
         @AuraEnabled public String dataDecorreza {get;set;}
         @AuraEnabled public String stato {get;set;}       
        
-    }
+    }*/
 }

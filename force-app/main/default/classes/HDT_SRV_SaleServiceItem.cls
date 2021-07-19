@@ -200,7 +200,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 FriendCode__c = sale.FriendCode__c,
                 CampaignCode__c = sale.CampaignCode__c,
                 CreatedBy__c = sale.CreatedBy__c,
-                SalesCompany__c = sale.SalesCompany__c,
+                //SalesCompany__c = sale.SalesCompany__c,
                 BrandLogo__c = brand,
                 Campaign__c = sale.Campaign__c,
                 SupplyCity__c = servicePoint.SupplySAPCityCode__c,
