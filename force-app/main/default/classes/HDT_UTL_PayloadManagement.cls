@@ -643,7 +643,6 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 record.add(endLine);
                 payloadSection += String.join(record, div);
             }
-
             {
                 String[] record = new List<String>();
                 record.add('00310');
@@ -652,7 +651,6 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 record.add(endLine);
                 payloadSection += String.join(record, div);
             }
-
             {
                 String[] record = new List<String>();
                 record.add('00310');
@@ -661,7 +659,6 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 record.add(endLine);
                 payloadSection += String.join(record, div);
             }
-
             {
                 String[] record = new List<String>();
                 record.add('00310');
@@ -670,7 +667,6 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 record.add(endLine);
                 payloadSection += String.join(record, div);
             }
-
             {
                 String[] record = new List<String>();
                 record.add('00310');
@@ -689,7 +685,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             String[] record = new List<String>();
             record.add('00310');
             record.add('120');
-            record.add('Risposta al Reclamo ricevuto in data ' + c.SendDate__c + ' ns Prot ' + c.CaseNumber);
+            record.add('Risposta al Reclamo ricevuto in data ' + getFormattedDate(c.SendDate__c) + ' ns Prot ' + c.CaseNumber);
             record.add(endLine);
             payloadSection += String.join(record, div);
         }
