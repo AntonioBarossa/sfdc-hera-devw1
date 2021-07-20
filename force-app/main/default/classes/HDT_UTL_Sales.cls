@@ -54,7 +54,8 @@ public with sharing class HDT_UTL_Sales {
 
     public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
 
-        if(((sale.Account__r.CustomerMarking__c != 'Famiglie' && sale.Account__r.CustomerMarking__c != 'Aziende SME' && sale.Account__r.CustomerMarking__c != 'Piccoli Condomini') ||(!'marche'.equalsIgnoreCase(sp.SupplyCity__c)&& !'abruzzo'.equalsIgnoreCase(sp.SupplyCity__c)))){
+        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        if(((sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende SME' && sale.Account__r.Category__c != 'Piccoli Condomini') ||(!stabbedData.contains(sp.SupplyProvince__c)))){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
             saleSrv.updateRecord(s);
