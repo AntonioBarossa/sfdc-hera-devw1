@@ -339,6 +339,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.Description = nowDateFormat + ': ' + message + '\n' + description;
                 }
             }
+            updateFuture(JSON.serialize(currentCase));
+            return caseUpdate;
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
         }
