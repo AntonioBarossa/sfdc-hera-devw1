@@ -31,9 +31,9 @@
         <label>Annullamento Prestazione</label>
     </customValue>
     <customValue>
-        <fullName>Attivazione Click&amp;Pay</fullName>
+        <fullName>Attivazione ClickPay</fullName>
         <default>false</default>
-        <label>Attivazione Click&amp;Pay</label>
+        <label>Attivazione ClickPay</label>
     </customValue>
     <customValue>
         <fullName>Attivazione VAS (billabile)</fullName>
@@ -61,9 +61,9 @@
         <label>Autolettura da cliente/da processo - GAS</label>
     </customValue>
     <customValue>
-        <fullName>Blocco Sollecito/Interessi</fullName>
+        <fullName>Blocco al sollecito ed interessi</fullName>
         <default>false</default>
-        <label>Blocco Sollecito/Interessi</label>
+        <label>Blocco al sollecito ed interessi</label>
     </customValue>
     <customValue>
         <fullName>BP/CA - errata categoria</fullName>
