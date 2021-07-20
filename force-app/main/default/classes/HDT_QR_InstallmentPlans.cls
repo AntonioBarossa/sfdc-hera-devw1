@@ -118,7 +118,7 @@ public with sharing class HDT_QR_InstallmentPlans {
 
             cases = [SELECT Id
             FROM Case
-            WHERE Type = 'Sospesione Fornitura'
+            WHERE Type = 'Sospensione Fornitura'
             AND Phase__c = 'Completata'
             AND CreatedDate >= :pastTwelveMonth
             AND AccountId = :accountId

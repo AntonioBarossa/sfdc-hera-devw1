@@ -56,6 +56,21 @@ public inherited sharing class HDT_QR_ActivityCustom {
         ];
     }
 
+    public static List<wrts_prcgvr__Activity__c> getRecordByOwnerId(List<String> ownerIdList) {
+        return [
+            SELECT
+            Id,
+            Approved__c,
+            QuoteLine__c,
+            case__c,
+            owner.name,
+            Name
+            FROM wrts_prcgvr__Activity__c
+            WHERE OwnerId IN :ownerIdList
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     /**
      * @author alessandro.picchiri@eng.it
      * @date 25/06/2021     
@@ -94,5 +109,6 @@ public inherited sharing class HDT_QR_ActivityCustom {
                                                                 and Status__c = 'Creata' and Order__c IN :orderSetId];
 
         return actList;
+
     }
 }

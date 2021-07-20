@@ -36,7 +36,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Documenti relativi alla Legge 80.
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
-                orderToUpdate.ServiceCost__c = getFixedFee(order, order.RecordType.DeveloperName).setScale(2);
+                orderToUpdate.ServiceCost__c = getFixedFee(order.id, order.RecordType.DeveloperName).setScale(2);
             }
             // Calculate Date @Picchiri 20/05/21
             when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn   
@@ -160,7 +160,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Istanza 326.
                     orderToUpdate.Instance326__c = 'Richiesto';
                 }
-                orderToUpdate.ServiceCost__c = getFixedFee(order, order.RecordType.DeveloperName).setScale(2);
+                orderToUpdate.ServiceCost__c = getFixedFee(order.Id, order.RecordType.DeveloperName).setScale(2);
             }
             when 'HDT_RT_AttivazioneConModifica' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
@@ -339,10 +339,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
      * @param String cancellationReason
      * @description Execute child order process cancel actions
      */
-    private static Decimal getFixedFee(Order ord, String searchKey){
+    private static Decimal getFixedFee(Id orderId, String searchKey){
         decimal fixedFeeExclVat;
-                
-        for( HDT_FixedFeeTable__mdt meta : HDT_FixedFeeTable__mdt.getall().values() ){
+        Order ord = new HDT_QR_Order().getRecordByOrderId(orderId)[0];  
+        //for( HDT_FixedFeeTable__mdt meta : HDT_FixedFeeTable__mdt.getall().values() ){
+        for( HDT_FixedFeeTable__mdt meta : [select Sottotipo__c, Value__c from HDT_FixedFeeTable__mdt] ){
             if(meta.Sottotipo__c==searchKey){
                 fixedFeeExclVat=meta.Value__c;
                 break;
@@ -350,6 +351,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         } 
 		system.debug(fixedFeeExclVat);
         String regex='(\\d*\\.?\\d*)\\%';
+        if(String.isBlank(ord.vat__c) || fixedFeeExclVat==null){ return null;}
         Matcher matcher=Pattern.compile(regEx).matcher(ord.vat__c);
         decimal vatNumber=null;
         if(matcher.find()){
@@ -357,6 +359,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }else{
             return fixedFeeExclVat;
         }
-        return fixedFeeExclVat==null ? 0.0 : fixedFeeExclVat*(1+vatNumber);
+        return fixedFeeExclVat==null ? null : fixedFeeExclVat*(1+vatNumber);
     }
 }

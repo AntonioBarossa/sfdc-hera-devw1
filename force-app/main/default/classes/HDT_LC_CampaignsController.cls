@@ -32,7 +32,10 @@ public inherited sharing class HDT_LC_CampaignsController {
             return null;
         }
     }
-
+    @AuraEnabled(cacheable=true)
+    public static List<Campaign> getOutboundCampaigns() {
+        return  campaignQr.getOutboundCampaigns();
+    }
     @AuraEnabled
     public static CampaignMember updateCampaignMemberStatus(String campaignMemberId, String statusValue){
         try {
