@@ -619,6 +619,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.IsTechnicalTransfer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.isTransition__c</field>
         <readable>true</readable>
     </fieldPermissions>
