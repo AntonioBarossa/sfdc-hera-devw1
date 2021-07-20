@@ -82,7 +82,7 @@
                                     <template if:true={companyOwnerOptions.data}>
                                         <lightning-combobox data-id="companyOwner" name="companyOwner"
                                             label="Silos" placeholder="Seleziona Società" onchange={handleCompanyOwnerChange}
-                                            options={companyOwnerOptions.data.values} required>
+                                            options={companyOwnerOptions.data.values}  disabled={showCompanyOwner} value={companyDefault} required>
                                         </lightning-combobox>
                                     </template>
                                 </div>
