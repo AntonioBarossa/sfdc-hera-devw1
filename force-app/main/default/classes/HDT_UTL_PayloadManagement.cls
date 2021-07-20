@@ -574,7 +574,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 record.add('00310');
                 record.add('100');
             }
-            record.add(splittedResponse[i]);
+            String cleanResponseLine = HDT_UTL_DocumentalManagement.removeSpecialChar(splittedResponse[i]);
+            record.add(cleanResponseLine);
             record.add(endLine);
 
             payloadSection += String.join(record, div);
