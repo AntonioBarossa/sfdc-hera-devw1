@@ -79,6 +79,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
           /*** get Agency User and Code */
         System.debug('******SalesAgent');
           Map<String,String> agc = HDT_UTL_Sales.getAgentNameAndCode(servicePoint,sale.Account__r.CustomerMarking__c);
+          //String brand =  HDT_UTL_BrandSalesCompany.getFieldsMatrice(String comune,String servizio,String societaVendita,String tipoMercato);
 
 
           /***end */
@@ -97,6 +98,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 allowChangeUse = true;
             }
         }
+
+        Boolean isTransition = HDT_UTL_Sales.isTransition(servicePoint, sale);
         //Needed logic end
 
         //Start userRoleProfile logic
@@ -149,6 +152,9 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         calculatedDecimalValues.put('consumptionRangeEle', consumptionRangeEle);
         calculatedDecimalValues.put('consumptionRangeGas', consumptionRangeGas);
         calculatedDecimalValues.put('powerFlow', powerFlow);
+        String brand =  HDT_UTL_BrandSalesCompany.getFieldsMatrice(Servicepoint.SupplyCity__c,Servicepoint.CommoditySector__c,agc.get('nomeAgente'),Servicepoint.MarketOrigin__c);
+        
+
 
         checkReadAccess('Opportunity__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.RecordType.Name,ServicePoint__r.RecordType.DeveloperName,ServicePoint__r.RecordType.MarketOrigin__c,Opportunity__r.Sale__c');
         List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(sale, servicePoint, calculatedStringValues, calculatedDecimalValues);
@@ -194,10 +200,12 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 FriendCode__c = sale.FriendCode__c,
                 CampaignCode__c = sale.CampaignCode__c,
                 CreatedBy__c = sale.CreatedBy__c,
-              //  SalesCompany__c = sale.SalesCompany__c,
+                //SalesCompany__c = sale.SalesCompany__c,
+                BrandLogo__c = brand,
                 Campaign__c = sale.Campaign__c,
                 SupplyCity__c = servicePoint.SupplySAPCityCode__c,
-                AmendmentAllowed__c = amendmentAllowed,
+                AmendmentAllowed__c = amendmentAllowed && !isTransition,
+                isTransition__c = isTransition,
                 ContractReference__c = contractReference,
                 AllowChangeUse__c = allowChangeUse,
                 UseCategory__c = servicePoint.UseCategory__c,
@@ -234,6 +242,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         return newSaleServiceItem;
     }
+
 
     public void updateRecords(List<SaleServiceItem__c> records){
         HDT_UTL_DatabaseService.updateSObject(records);

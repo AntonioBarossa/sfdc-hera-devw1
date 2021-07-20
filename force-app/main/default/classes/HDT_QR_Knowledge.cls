@@ -72,20 +72,24 @@ public inherited sharing class HDT_QR_Knowledge {
 
     }
 
-    public NewsNotificationCenter__c getRolesToNotificate(List<String> cluster, List<String> channel){
+    public List<NewsNotificationCenter__c> getRolesToNotificate(){
 
-        NewsNotificationCenter__c news = new NewsNotificationCenter__c();
+        List<NewsNotificationCenter__c> newsList = new List<NewsNotificationCenter__c>();
 
-        news = [SELECT Role__c 
-        FROM NewsNotificationCenter__c 
-        WHERE Cluster__c IN :cluster
-        AND EntryChannel__c IN :channel
-        AND Active__c = true
-        WITH SECURITY_ENFORCED
-        LIMIT 1
-        ];
+        try{
+            newsList = [SELECT Id,
+            Role__c,
+            Cluster__c,
+            EntryChannel__c 
+            FROM NewsNotificationCenter__c 
+            WHERE Active__c = true
+            WITH SECURITY_ENFORCED
+            ];
+        } catch(Exception e){
+            System.debug('No rules found: ' + e.getMessage());
+        }
 
-        return news;
+        return newsList;
 
     }
 

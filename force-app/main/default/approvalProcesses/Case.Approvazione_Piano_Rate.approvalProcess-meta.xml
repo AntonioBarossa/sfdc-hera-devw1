@@ -54,7 +54,7 @@
     </entryCriteria>
     <finalApprovalActions>
         <action>
-            <name>Passa_a_Pratica_In_Attesa</name>
+            <name>Passa_a_Attesa_Modulo_Firmato</name>
             <type>FieldUpdate</type>
         </action>
     </finalApprovalActions>
@@ -67,7 +67,7 @@
     </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
     <label>Approvazione Piano Rate</label>
-    <processOrder>1</processOrder>
+    <processOrder>2</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

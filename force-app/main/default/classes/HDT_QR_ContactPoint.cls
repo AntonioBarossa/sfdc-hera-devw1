@@ -131,6 +131,20 @@ public inherited sharing class HDT_QR_ContactPoint {
         return res;
     }
 
+    public static ContactPointEmail searchContactPointEmailSOL (String email){
+        ContactPointEmail res;
+        String query = 'SELECT Id,parentid FROM ContactPointEmail WHERE EmailAddress  = :email AND Type__c = \'E-mail SOL\' ';
+        List <ContactPointEmail> contemail = Database.query(query);
+        
+        if(contEmail != null && contEmail.size() > 0){
+			res = contemail[0];
+		}
+		else{
+			res = null;
+		}
+        return res;
+    }
+
     public static List<ContactPointPhone> searchPointPhone (String ParentId){
         
         String query = 'SELECT Id FROM ContactPointPhone WHERE ParentId  = :ParentId';
