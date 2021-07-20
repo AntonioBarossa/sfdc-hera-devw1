@@ -9,7 +9,7 @@ public without sharing class HDT_BA_ConsentContact  implements Database.Batchabl
 	
 	public HDT_BA_ConsentContact(String paramRunId,String paramStatus,List<Id> paramListIdContentVersion,Set<String> paramsetEmailContactProcessed){
 		this.runId = paramRunId;
-		this.status=paramStatus;
+		this.status=String.isBlank(paramStatus)?'success':paramStatus;
 		this.listIdContentVersion.addAll(paramListIdContentVersion);
 		this.setEmailContactProcessed=paramsetEmailContactProcessed;
 	}

@@ -1,6 +1,6 @@
-trigger HDT_Lead on Lead (before insert, after update, after insert) {
+trigger HDT_Lead on Lead (before insert, after update,before update ,after insert) {
     new HDT_TRH_Lead().run();
-   //HDT_TRH_Lead handler = new HDT_TRH_Lead();
+   //HDT_TRH_Lead handler = new HDT_TRH_Lead(); 
 
 
    //  if(Trigger.isUpdate && Trigger.isAfter){
