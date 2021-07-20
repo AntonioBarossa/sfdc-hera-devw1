@@ -261,7 +261,7 @@
             <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.IndemnityDueSendResponse__c</elementReference>
+                <elementReference>getInputCase.IndemnityDueBilllingCorrection__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -284,7 +284,7 @@
             <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.IndemnityDueSendResponse__c</elementReference>
+                <elementReference>getInputCase.IndemnityDueBilllingCorrection__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -307,7 +307,7 @@
             <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.IndemnityDueSendResponse__c</elementReference>
+                <elementReference>getInputCase.IndemnityDueBilllingCorrection__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
