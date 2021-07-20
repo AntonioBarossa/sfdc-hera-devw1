@@ -8,7 +8,7 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
     public Set<String> setEmailProcessed = new Set<String>();
     public HDT_BA_AttributesContact(String paramRunId,String paramStatus,List<id> paramListIdContentVersion,Set<String> paramSetEmailProcessed ){
        this.runId=paramRunId;
-       this.status=paramStatus;
+	   this.status=String.isBlank(paramStatus)?'success':paramStatus;
        this.listIdContentVersion.addAll(paramListIdContentVersion);
        this.setEmailProcessed.addAll(paramSetEmailProcessed);
     }

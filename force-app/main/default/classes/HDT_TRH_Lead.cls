@@ -1,6 +1,5 @@
 public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
    
-    //public override void beforeInsert(){}
     //public override void beforeDelete(){}
     //public override void afterInsert(){}
     //public override void afterUndelete(){}
@@ -19,8 +18,41 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){
         List<Lead> listlead = Trigger.New;
-
-        for(Lead l : listlead){
+        Map<String,String> mapResBlacklist = HDT_UTL_Lead.getBlackListMap();
+        List<Lead> listNew = trigger.new;
+       // List<Lead> leadToCheck = new List<Lead>();
+        //Map<String,String> leadDomain = new Map<String,String>();
+        for(Lead L : listNew){
+            if(l.email != null){
+                String s = l.email.split('@')[1];
+                if(mapResBlacklist.get(s) != null){
+                    l.addError('Error:' + mapResBlacklist.get(s));
+                }
+                else{
+                    if('Default'.equals(l.company)){
+                        if(String.isBlank(l.FirstName))
+                        {
+                            l.company = l.lastname;    
+                        }
+                        else{
+                            l.company = l.firstname + ' '  + l.lastname; 
+                        }
+                        }
+                }
+            }
+            else{
+                if('Default'.equals(l.company)){
+                    if(String.isBlank(l.FirstName))
+                    {
+                        l.company = l.lastname;    
+                    }
+                    else{
+                        l.company = l.firstname + ' '  + l.lastname; 
+                    }
+                    }
+            }
+        }
+      /*  for(Lead l : listlead){
             if('Default'.equals(l.company)){
                 if(String.isBlank(l.FirstName))
                 {
@@ -30,7 +62,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     l.company = l.firstname + ' '  + l.lastname; 
                 }
                 }
-        }
+        }*/
         HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
 
         }
@@ -95,7 +127,10 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 for(AccountContactRelation acc : listAccCon){
                     acc.Roles='Azienda';
                 }
-                accoContRelSrv.upsertRecord(listAccCon);       
+                accoContRelSrv.upsertRecord(listAccCon);
+                HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
+                ba.dtos = accToUpdate;  
+                Database.executeBatch(ba,80);
             }
             
         }
