@@ -634,6 +634,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
 
         // Info sulle forniture
+        String emptyLine = '00310|120| |' + endLine;
         for (Case c : responseCases) {
             {
                 String[] record = new List<String>();
@@ -678,9 +679,14 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }
                 record.add(endLine);
                 payloadSection += String.join(record, div);
+                payloadSection += emptyLine;
             }
         }
+
         // Info sulle date ricezione del reclamo (incluse sempre nella sezione 310|120)
+        for (Integer i = 0; i < 4; i++) {
+            payloadSection += emptyLine;
+        }
         for (Integer i = 0; i < responseCases.size(); i++) {
             Case c = responseCases[i];
             String[] record = new List<String>();
