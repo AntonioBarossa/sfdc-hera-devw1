@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_ScheduledPublicationDate</fullName>
+    <active>true</active>
+    <description>Se il campo per la data di pubblicazione Schedulata è inferiore uguale ad ORA</description>
+    <errorConditionFormula>AND
+(
+     NOT(ISNULL(ToPublishDate__c)),
+				 ToPublishDate__c &lt;  NOW() 
+)</errorConditionFormula>
+    <errorMessage>Non è possibile inserire una Data/Ora inferiore ad Oggi</errorMessage>
+</ValidationRule>

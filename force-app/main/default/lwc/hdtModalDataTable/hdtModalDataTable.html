@@ -28,8 +28,8 @@
 
                         <div class="slds-box slds-box_xx-small slds-m-top_small slds-m-bottom_small">
                             <div class="slds-grid slds-gutters">
-                                <div class="slds-col slds-size_1-of-6">
-                                    <lightning-combobox
+                                <div class="slds-col slds-size_2-of-9">
+                                    <!--<lightning-combobox
                                         name="progress"
                                         label="Filtra per questo campo"
                                         value={searchByField}
@@ -38,17 +38,18 @@
                                         onchange={handleFieldChange}
                                         variant="label-hidden"
                                         disabled
-                                    ></lightning-combobox>
+                                    ></lightning-combobox>-->
+                                    <div class="slds-text-heading_small">Cerca per descrizione o valore possibile</div>
                                 </div>
-                                <div class="slds-col slds-size_1-of-6">
+                                <div class="slds-col slds-size_2-of-9">
                                     <lightning-input
                                         type="text"
-                                        label="Cerca questo valore"
+                                        label="Cerca per descrizione o valore possibile"
                                         onchange={setFieldValue}
                                         variant="label-hidden"
                                     ></lightning-input>
                                 </div>
-                                <div class="slds-col slds-size_1-of-6">
+                                <div class="slds-col slds-size_1-of-9">
                                     <lightning-button-icon
                                         icon-name="utility:search"
                                         variant="neutral"

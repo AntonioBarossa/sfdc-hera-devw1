@@ -185,7 +185,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             when VARIAZIONI_FISCALE,
                  VARIAZIONI_MARCATURA_USO_PDR,
                  VARIAZIONI_INDIRIZZO_FORNITURA,
-                 VARIAZIONI_TARIFFA_RES_NONRES {
+                 VARIAZIONI_TARIFFA_RES_NONRES,
+                 ALLINEAMENTO_CANONE_RAI{
                 Case anagAlignCase = createAnagAlignmentCase(triggerObj);
                 updateAnagAlignmentCasePostSalesDispatcher(anagAlignCase, (Case) triggerObj, context);
                 returnCases.add(anagAlignCase);

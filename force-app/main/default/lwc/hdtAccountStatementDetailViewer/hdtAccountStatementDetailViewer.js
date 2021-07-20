@@ -18,8 +18,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     @track firstLevelFilterObj = {};
     showButton = false;
     sortedBy;
-    defaultSortDirection = 'asc';
-    sortDirection = 'asc';
+    sortDirection;// = 'asc';
     bShowModal = false;
     fieldsToFilter = [];
     @api staticObj = {};
@@ -29,21 +28,8 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         console.log('# filterApplied: ' + this.filterApplied);
 
         if(this.filterApplied && this.bShowModal === false){
-            //this.innerFilterMethod();
             this.applyInterrogation(this.staticObj);
         }
-
-        /*if(this.firstLevel === undefined){
-            console.log('#### undefined ###');
-            return [];
-        } else {
-            console.log('#### NOT undefined ###');
-            if(this.firstLevel.secondoLivelloInformativo === undefined){
-                return [];
-            } else {
-                return this.firstLevel.secondoLivelloInformativo;
-            }
-        }*/
 
         return this.accountdetails;
     }
@@ -138,9 +124,18 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
             console.log('>>> filter type ' + currentFieldType);
 
+            var isAsc;
+            if(sortDirection === '' || sortDirection === 'asc'){
+                isAsc = true;
+                this.sortDirection = 'asc';
+            } else {
+                isAsc = false;
+                this.sortDirection = 'desc';
+            }
+
             switch (currentFieldType) {
                 case 'text':
-                    if(sortDirection==='asc'){
+                    if(isAsc){
                         cloneData.sort((a, b) => (a[sortField] > b[sortField]) ? 1 : -1);
                     } else {
                         cloneData.sort((a, b) => (a[sortField] < b[sortField]) ? 1 : -1);
@@ -156,7 +151,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                         var dateSplitted2 = a[sortField].split('/');
                         var data2 = dateSplitted2[1] + '/' + dateSplitted2[0] + '/' + dateSplitted2[2];
 
-                        if(sortDirection==='asc'){
+                        if(isAsc){
                             return (new Date(data) < new Date(data2)) ? 1 : -1;
                         } else {
                             return (new Date(data) > new Date(data2)) ? 1 : -1;
@@ -166,14 +161,14 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
                     break;
                 case 'currency':
-                    if(sortDirection==='asc'){
+                    if(isAsc){
                         cloneData.sort((a, b) => (parseFloat(a[sortField]) > parseFloat(b[sortField])) ? 1 : -1);
                     } else {
                         cloneData.sort((a, b) => (parseFloat(a[sortField]) < parseFloat(b[sortField])) ? 1 : -1);
                     }
                     break;
                 case 'number':
-                    if(sortDirection==='asc'){
+                    if(isAsc){
                         cloneData.sort((a, b) => (parseFloat(a[sortField]) > parseFloat(b[sortField])) ? 1 : -1);
                     } else {
                         cloneData.sort((a, b) => (parseFloat(a[sortField]) < parseFloat(b[sortField])) ? 1 : -1);
@@ -181,7 +176,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             }
 
             this.accountdetails = cloneData;
-            this.sortDirection = sortDirection;
+            //this.sortDirection = sortDirection;
             this.sortedBy = sortedBy;
 
         } catch(e) {

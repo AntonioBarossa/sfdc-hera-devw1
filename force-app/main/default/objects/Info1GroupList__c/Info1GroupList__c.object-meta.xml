@@ -157,9 +157,8 @@
     <gender>Feminine</gender>
     <label>Lista Grouppo Info1</label>
     <nameField>
-        <displayFormat>FIG-{00000000}</displayFormat>
-        <label>Lista Grouppo Info1 Name</label>
-        <type>AutoNumber</type>
+        <label>Filtro tipo tariffa</label>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Lista Grouppi Info1</pluralLabel>
     <searchLayouts/>

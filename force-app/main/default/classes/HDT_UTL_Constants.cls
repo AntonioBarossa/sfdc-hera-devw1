@@ -24,4 +24,18 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String MASSIVLOADER_PHASE_FILEPROCESSATO = 'File processato';
 
+    //Account RecordType
+    @AuraEnabled
+    public final String ACCOUNT_RECORDTYPE_DEVELOPERNAME_BUSINESS = 'HDT_RT_Business';
+    @AuraEnabled
+    public final String ACCOUNT_RECORDTYPEID_BUSINESS =
+    Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(ACCOUNT_RECORDTYPE_DEVELOPERNAME_BUSINESS).getRecordTypeId();
+
+
+    //Order RecordType
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Default';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_DEFAULT =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT).getRecordTypeId();
 }

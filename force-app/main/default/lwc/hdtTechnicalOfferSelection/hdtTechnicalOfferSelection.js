@@ -1,8 +1,13 @@
 import { LightningElement, api, wire } from 'lwc';
 import getRateList from '@salesforce/apex/HDT_LC_OfferConfiguratorController.getRateList';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import offerSelection from '@salesforce/label/c.HDT_LWC_OfferSelectionLabel';
 
 export default class HdtTechnicalOfferSelection extends LightningElement {
+
+    label = {
+        offerSelection
+    };
 
     @api tiles;
     @api iconName;

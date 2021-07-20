@@ -77,7 +77,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             } else if(parentCase.Type.equalsIgnoreCase('Allineamento Canone Rai')){
                 if(currentCase.Phase__c.equalsIgnoreCase('KO definitivo')){
                     wrts_prcgvr__Activity__c activity = createActivity('Elaborazione Manuale');
-                    activity.Case__c = currentCase.Id;
+                    activity.Case__c = parentCase.Id;
                     HDT_UTL_DatabaseService.insertSObject(activity);
                 } else {
                     parentCase.Phase__c = 'Completata';
@@ -328,6 +328,18 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 HDT_UTL_DatabaseService.insertSObject(activity);
             }
         }
+    }
+
+    public void updateServicePoint(SObject inputCase){
+
+        Case currentCase = (Case) inputCase;
+        ServicePoint__c servicePoint = new ServicePoint__c();
+        servicePoint.Id             = currentCase.ServicePoint__c;
+        servicePoint.UseCategory__c = currentCase.UseCategory__c;
+        servicePoint.SupplyType__c  = currentCase.SupplyType__c;
+        servicePoint.ImplantType__c	= currentCase.ServicePointType__c;
+        HDT_UTL_DatabaseService.updateSObject(servicePoint);
+
     }
 
     //returns activity and has to be created inside the caller methdo because it has to be linked to an entity first
