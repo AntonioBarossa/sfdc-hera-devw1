@@ -210,7 +210,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         if(!transitionlist.isEmpty()){
             serpoint = transitionlist[0];
            }
-        if((serpoint.PlugPresence__c== 'NO')||serpoint.PowerRequested__c!= serpoint.PowerContractual__c){
+        if((serpoint.PlugPresence__c== 'NO')||( serpoint.PowerRequested__c!=null && serpoint.PowerRequested__c != serpoint.PowerContractual__c )){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
             saleSrv.updateRecord(s);
