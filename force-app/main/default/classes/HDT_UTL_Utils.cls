@@ -32,4 +32,24 @@ public with sharing class HDT_UTL_Utils {
 
         return result;
     }
+    /**​
+    * @author Enrico Capozzo (enrico.capozzo@webresults.it)​
+    * @date 15/04/2021
+    * @description HDT_UTL_Utils.codingSha256(...) – encodes the input string to Sha256
+    * @param stringToCoding String to encoding
+    * @return String EncodingUtil.convertToHex
+    */
+    public static String codingSha256(String stringToCoding){
+        System.debug('method codingSha256 - param : ' + stringToCoding);
+        String hashToString='';
+        if (String.isNotBlank(stringToCoding)) {
+            Blob targetBlob = Blob.valueOf(stringToCoding);
+            Blob hash = Crypto.generateDigest('SHA-256', targetBlob);
+            hashToString = EncodingUtil.convertToHex(hash);
+            //String hashString = EncodingUtil.base64Encode(hash);
+            System.debug('hashToString : '+hashToString);
+        }
+        return hashToString;
+    }
+  
 }

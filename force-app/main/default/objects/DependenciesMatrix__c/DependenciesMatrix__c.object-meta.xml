@@ -157,8 +157,9 @@
     <gender>Feminine</gender>
     <label>Matrice delle dipendenze</label>
     <nameField>
-        <label>Matrice delle dipendenze</label>
-        <type>Text</type>
+        <displayFormat>DN-{0000}</displayFormat>
+        <label>Dependency Number</label>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Dependency Matrices</pluralLabel>
     <searchLayouts/>
