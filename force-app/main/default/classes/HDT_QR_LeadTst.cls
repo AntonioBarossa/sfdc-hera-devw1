@@ -45,7 +45,7 @@ public class HDT_QR_LeadTst{
 		System.debug('testLead = ' + testLead);
 
 
-		System.assertEquals('Italy', testLead.Country, 'Lead Country is wrong correctly');
+		System.assertEquals('Italy', testLead.Country, 'Lead Country is wrong');
 
 		System.assertNotEquals('', testLead.Country);
 

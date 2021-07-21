@@ -11,7 +11,7 @@
 &quot;relatedObject&quot;: [
 {
 &quot;objectName&quot;: &quot;AccountContactRelation&quot;,
-&quot;fields&quot;: &quot;Id, Roles,EndDate,Contact.Name, Contact.SAPIntegrationID__c ,Contact.LastName, Contact.FirstName, Contact.MobilePhone, Contact.Email, Contact.Fax, Contact.FiscalCode__c, Contact.CertifiedEmail__c&quot;,
+&quot;fields&quot;: &quot;Id, Roles,EndDate,Contact.Name, Contact.SAPIntegrationID__c ,Contact.LastName, Contact.FirstName, Contact.MobilePhone, Contact.Phone, Contact.Email, Contact.Fax, Contact.FiscalCode__c, Contact.CertifiedEmail__c&quot;,
 &quot;relation&quot;: &quot;AccountContactRelations&quot;
 },
 {

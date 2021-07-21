@@ -26,7 +26,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         System.debug('********INPUTFIELD:' + argsMap);
         
         System.debug('********tem:' + idTemplate);
-        
+        System.debug('********TM:' + tm);
         System.debug('********sender:' + obj);
         //INIZIO SVILUPPI EVERIS
         System.debug('********method:' +method);
@@ -48,12 +48,51 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng templateEngine = (wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng) wrts_prcgvr.VersionManager.newClassInstance('CalloutTemplateMng');
             Object objTemp = templateEngine.getTemplate(inputTemplateFunction);
             //inputTemplateFunction.put('templateObject',objTemp);
+            system.debug('*********OBJTEMP:' + ((Map<String,Object>)objTemp).get('templateObject'));
+            system.debug('*********inputTemplateFunction:' + inputTemplateFunction);
             Map<String,Object> templateReturn = (Map<String,Object>)templateEngine.applyTemplate(objTemp);
             wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = (wrts_prcgvr.MRR_1_0.MultiRequest)templateReturn.get('multirequest');
             multirequestObj.requests[0].header.fields = headerAttributetoAdd;
         
             System.debug('********MRRequest:' + multirequestObj);
-        
+            Integer count = 0;
+            List<Integer> indexOfObjectToRemove = new List<Integer>();
+            Map<Integer,Integer> indexOffieldToRemove = new Map<Integer,Integer>();
+            for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
+                    
+                if(w.objectType == 'OrderItem'){
+                    boolean find = false;
+                    Integer k = 0;
+                    for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
+                        System.debug('************Enterfield:' + f.name);
+                        if(f.name == 'Fam_Prod'){
+                            if(f.value != null && f.value != '' && f.value== 'Offerta commerciale' ){
+                                find = true;
+                                System.debug('************EnterFIND');
+                                indexOffieldToRemove.put(count,k);
+                                break;
+                            }
+                            else{
+                                indexOffieldToRemove.put(count,k);
+                            }
+                        }
+                    }
+                    if(!find){
+                        System.debug('************EnterRemove');
+                        indexOfObjectToRemove.add(count);
+                    }
+                }
+                count++;
+            }
+            for(integer i : indexOffieldToRemove.keyset())
+            {
+                multirequestObj.requests[0].objects[i].fields.remove(indexOffieldToRemove.get(i));
+            }
+            for(integer i : indexOfObjectToRemove)
+            {
+                multirequestObj.requests[0].objects.remove(i);
+            }
+
             ///////////// instanzio e effettuo la chiamata con la request
             Map<String,Object> inputClientFunction = new Map<String,Object>();
             inputClientFunction.put('endpoint',endpoint);
@@ -71,7 +110,12 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 System.debug('********MRRequest:' + responseService);
                 System.debug('********description:' + responseService.responses[0].description);
                 System.debug('********objects:' + responseService.responses[0].objects);
-
+                //for()
+             //   responseService.responses[0].objects[0].objects[0].objectType == 'OrderItem'
+             //   responseService.responses[0].objects[0].objects[0].fields[0].name = 'TEMPLATENAME'
+             //   responseService.responses[0].objects[0].objects[0].remove().fields[0].name = 'TEMPLATENAME'
+               System.debug('************Before');
+                
                 Order ord = new Order();
                 ord.id = (id)obj.get('Id');
 
