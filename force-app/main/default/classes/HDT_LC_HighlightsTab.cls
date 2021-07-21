@@ -1,4 +1,4 @@
-public with sharing class HDT_LC_hdtHighlightsTab {
+public with sharing class HDT_LC_HighlightsTab {
     @AuraEnabled
     public static Map<String,Object> getKpis(String accountId){
         try {

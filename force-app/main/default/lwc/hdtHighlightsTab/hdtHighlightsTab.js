@@ -6,7 +6,7 @@ import EE_CLC from '@salesforce/schema/Account.CustomerLifeCycleEle__c';
 import GAS_CLC from '@salesforce/schema/Account.CustomerLifeCycleGas__c';
 import VAS_CLC from '@salesforce/schema/Account.CustomerLifeCycleVAS__c';
 
-import getKpis from '@salesforce/apex/HDT_LC_hdtHighlightsTab.getKpis';
+import getKpis from '@salesforce/apex/HDT_LC_HighlightsTab.getKpis';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const fields = [

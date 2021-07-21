@@ -1,4 +1,4 @@
-public with sharing class HDT_LC_hdtHighlightsPanel {
+public with sharing class HDT_LC_HighlightsPanel {
     @AuraEnabled
     public static String updateKPIs(String accountId) {
         try {
@@ -13,7 +13,7 @@ public with sharing class HDT_LC_hdtHighlightsPanel {
                 oldAccount.Recaller__c != newAccount.Recaller__c ||
                 oldAccount.ComplaintRateNum__c != newAccount.ComplaintRateNum__c
             ) {
-                update newAccount;
+                HDT_UTL_DatabaseService.updateSObject(newAccount);
             }
 
             return null;

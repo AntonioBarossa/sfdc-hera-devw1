@@ -1,5 +1,5 @@
 import { LightningElement, track, api } from 'lwc';
-import updateKPIs from '@salesforce/apex/HDT_LC_hdtHighlightsPanel.updateKPIs';
+import updateKPIs from '@salesforce/apex/HDT_LC_HighlightsPanel.updateKPIs';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 const fields = [
