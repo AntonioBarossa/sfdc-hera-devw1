@@ -99,14 +99,13 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
 
     public static wrts_prcgvr.ObjectCompatibility_1_0.CheckResult checkCompatibility(ServiceRequest__c srRequest){
         try {
-            wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt ObjectCompatibility =
+            wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt objectCompatibility =
             (wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt) wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
             //API call
-            System.debug(ObjectCompatibility);
 
             wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result =
             (wrts_prcgvr.ObjectCompatibility_1_0.CheckResult)
-            ObjectCompatibility.check(new Map<String,Object>{
+            objectCompatibility.check(new Map<String,Object>{
             'sObject' => srRequest
             });
             return result;
@@ -114,7 +113,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             throw new AuraHandledException(e.getMessage());
         }
     }
-    private static String getIncompatibilityMessage(ServiceRequest__c[] incomps){
+    public static String getIncompatibilityMessage(ServiceRequest__c[] incomps){
         Set<Id> conflictIds = new Set<Id>();
         Set<String> conflicts = new Set<String>();
 
