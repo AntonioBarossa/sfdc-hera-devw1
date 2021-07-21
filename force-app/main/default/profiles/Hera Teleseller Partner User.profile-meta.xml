@@ -11870,6 +11870,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.DocumentalProcessType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Order.DocusignURL__c</field>
         <readable>true</readable>
@@ -12697,6 +12702,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.ShippingAddress</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.ShippingAddressFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
