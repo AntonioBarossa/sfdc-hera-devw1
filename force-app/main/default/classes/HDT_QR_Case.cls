@@ -80,6 +80,7 @@ public inherited sharing class HDT_QR_Case {
         try{
             childCases = [SELECT Id,
             CaseNumber,
+            Status,
             Phase__c
             FROM Case
             WHERE ParentId = :parentId
