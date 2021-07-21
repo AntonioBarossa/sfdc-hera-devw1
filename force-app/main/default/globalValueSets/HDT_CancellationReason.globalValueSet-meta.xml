@@ -125,6 +125,16 @@
         <default>false</default>
         <label>Gestione Scarto</label>
     </customValue>
+    <customValue>
+        <fullName>Annullato per no conferma cliente</fullName>
+        <default>false</default>
+        <label>Annullato per no conferma cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Il cliente rinuncia</fullName>
+        <default>false</default>
+        <label>Il cliente rinuncia</label>
+    </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

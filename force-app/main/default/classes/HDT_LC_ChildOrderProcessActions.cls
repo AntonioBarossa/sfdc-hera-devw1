@@ -6,6 +6,7 @@
  */
 public inherited sharing class HDT_LC_ChildOrderProcessActions {
     
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_SRV_ServicePoint servicePointSrv= new HDT_SRV_ServicePoint();
     private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
@@ -228,9 +229,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
         if (!comfortQualityList.isEmpty()) {
             system.debug('quality log 3: enter quality marker');
-            orderToUpdate.QualityCall__c = comfortQualityList[0].QualityEnabled__c;
-            orderToUpdate.QualityCallUnique__c = comfortQualityList[0].UniqueQuality__c;
+            orderToUpdate.QualityCall__c = true;
+
+            List<Order> orderChildComfort = orderQr.getChildOrdersByParentId(order.ParentOrder__c);
+
+            if(orderChildComfort.size() > 1){ //if more than 1 child group activity comfort/quality by Parent
+                orderToUpdate.QualityCallUnique__c = true;
+            }
+
             orderToUpdate.ComfortCallDaysDue__c = comfortQualityList[0].DaysComfort__c;
+            orderToUpdate.DateComfortCall__c = Date.today();
         }
 
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);

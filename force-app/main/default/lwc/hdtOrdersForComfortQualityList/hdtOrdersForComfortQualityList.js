@@ -8,7 +8,8 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
     
     @api activityId;
     ordersList = [];
-    orderId;
+    activity;
+    order;
     action;
     loading = false;
     isDialogVisible = false;
@@ -28,22 +29,25 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
                  tooltip: 'Open order page'
              }},
             // {label: 'Status', fieldName: 'Status', type: 'text'},
+            // {label: 'Status Esito', fieldName: 'StatusEsito', type: 'text'},
             // {label: 'Phase', fieldName: 'Phase__c', type: 'text'},
             // {label: 'Tipologia', fieldName: 'recordtypename', type: 'text'},
             {type:  'button',typeAttributes:{
-                    iconName: 'utility:edit',
-                    label: 'Conferma contratto', 
+                    iconName: {fieldName: 'confirmIcon'},
+                    label: {fieldName: 'confirmText'}, 
                     name: 'confirmContract', 
                     title: 'Conferma contratto',
-                    value: 'confirmContract'
+                    value: 'confirmContract',
+                    disabled: {fieldName :'disabledActionButton'}
                 }
             },
             {type:  'button',typeAttributes:{
-                iconName: 'utility:edit',
-                label: 'Annulla contratto', 
+                iconName: {fieldName: 'cancelIcon'},
+                label: {fieldName: 'cancelText'}, 
                 name: 'cancelContract', 
                 title: 'Annulla contratto',
-                value: 'cancelContract'
+                value: 'cancelContract',
+                disabled: {fieldName :'disabledActionButton'}
              }
             }
         ];
@@ -51,7 +55,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
 
     get cancellationOptions() {
         return [
-            { label: 'Annullamento da cliente', value: 'Annullamento da cliente' },
+            { label: 'Il cliente rinuncia', value: 'Il cliente rinuncia' },
             { label: 'Firma falsa', value: 'Firma falsa' },
             { label: 'Volontà estorta', value: 'Volontà estorta' }
         ];
@@ -67,14 +71,41 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
             
             this.ordersList = data;
 
-            this.ordersList.forEach(el => {
-                el.Id = el.Order__c;
-                el.CustomerName__c = '/lightning/r/Order/' + el.Order__c + '/view';
-                el.Status = el.Order__r.Status;
-                el.Phase__c = el.Order__r.Phase__c;
-                el.recordtypename = el.Order__r.RecordType.Name;
-                el.OrderNumber = el.Order__r.OrderNumber;
-            });
+            if (data[0].Order__c != undefined) {
+                this.ordersList.forEach(el => {
+                    el.Id = el.Order__c;
+                    el.CustomerName__c = '/lightning/r/Order/' + el.Order__c + '/view';
+                    el.Status = el.Order__r.Status;
+                    el.Phase__c = el.Order__r.Phase__c;
+                    el.recordtypename = el.Order__r.RecordType.Name;
+                    el.OrderNumber = el.Order__r.OrderNumber;
+                    el.DateComfortCall__c = el.Order__r.DateComfortCall__c;
+                    el.disabledActionButton = el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined;
+                    el.confirmText = el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Conferma contratto';
+                    el.cancelText = el.Order__r.CancellationReason__c !== undefined ? 'Annullato' : 'Annulla contratto';
+                    el.confirmIcon = el.Order__r.ConfirmCustomerContract__c !== undefined ? '' : 'utility:edit';
+                    el.cancelIcon = el.Order__r.CancellationReason__c !== undefined ? '' : 'utility:edit';
+                    el.StatusEsito =  (el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined) ? (el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa'
+                });
+            } else {
+                this.ordersList.forEach(el => {
+                    el.Id = el.Id;
+                    el.CustomerName__c = '/lightning/r/Order/' + el.Id + '/view';
+                    el.Status = el.Status;
+                    el.Phase__c = el.Phase__c;
+                    el.recordtypename = el.RecordType.Name;
+                    el.OrderNumber = el.OrderNumber;
+                    el.DateComfortCall__c = el.DateComfortCall__c;
+                    el.disabledActionButton = el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined;
+                    el.confirmText = el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Conferma contratto';
+                    el.cancelText = el.CancellationReason__c !== undefined ? 'Annullato' : 'Annulla contratto';
+                    el.confirmIcon = el.ConfirmCustomerContract__c !== undefined ? '' : 'utility:edit';
+                    el.cancelIcon = el.CancellationReason__c !== undefined ? '' : 'utility:edit';
+                    el.StatusEsito =  (el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined) ? (el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa'
+                });
+            }
+
+            
 
         }).catch(error => {
             this.loaded = true;
@@ -87,9 +118,9 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         });
     }
 
-    confirmContractAction(){
+    confirmContractAction(type){
         this.loading = true;
-        confirmContract({ordId: this.orderId}).then(data =>{
+        confirmContract({ordId: this.orderId, activityId: this.activityId, type: type}).then(data =>{
 
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
@@ -98,7 +129,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
             });
             this.dispatchEvent(toastSuccessMessage);
 
-            this.dispatchEvent(new CustomEvent('resultevent'));
+            this.dispatchEvent(new CustomEvent('resultevent',{detail: {orderId: this.orderId}}));
 
         }).catch(error => {
             this.loading = false;
@@ -126,7 +157,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
 
     cancelContractAction(cancellationReason){
         this.loading = true;
-        cancelContract({ordId: this.orderId, causal: cancellationReason}).then(data =>{
+        cancelContract({ordId: this.orderId, activityId: this.activityId, causal: cancellationReason}).then(data =>{
             this.loading = false;
 
             const toastSuccessMessage = new ShowToastEvent({
@@ -136,7 +167,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
             });
             this.dispatchEvent(toastSuccessMessage);
 
-            this.dispatchEvent(new CustomEvent('resultevent'));
+            this.dispatchEvent(new CustomEvent('resultevent',{detail: {orderId: this.orderId}}));
 
         }).catch(error => {
             this.loading = false;
@@ -169,13 +200,20 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         this.orderId = row.Id;
         this.action = action.value;
 
+        let type = row.DateComfortCall__c !== undefined ? 'Comfort' : 'Quality';
+
+        console.log('call type: ' + type);
         console.log('comfort/quality action: ' + this.action);
 
         if (this.action === 'confirmContract') {
             console.log('this.orderId: ' + this.orderId);
-            this.confirmContractAction();
+            this.confirmContractAction(type);
         } else {
-            this.isDialogVisible = true;
+            if (type === 'Quality') {
+                this.isDialogVisible = true;
+            } else {
+                this.cancelContractAction('Annullato per no conferma cliente');
+            }
         }
 
     }

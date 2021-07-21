@@ -3,6 +3,8 @@
     implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
     access="global">
 
+    <lightning:workspaceAPI aura:id="workspace"/>
+
     <aura:attribute name="HideSpinner" type="Boolean" default="true"/>
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />

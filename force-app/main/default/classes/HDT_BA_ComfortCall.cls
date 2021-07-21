@@ -29,7 +29,8 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
                     Order__c = ord.Id,
                     Account__c = ord.AccountId,
                     IsClientInResolution153__c = true,
-                    Type__c = 'Comfort Call'
+                    Type__c = 'Comfort Call',
+                    Status__c = 'Creata'
                 );
 
                 mapActivities.put(ord.ParentOrder__c, activity);

@@ -6,7 +6,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         system.debug('HDT_BA_QualityCall - Start');
-        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId FROM Order Where Phase__c != \'In attesa conferma cliente\' AND QualityCall__c = true';
+        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId FROM Order Where Phase__c != \'In attesa conferma cliente\' AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
         return Database.getQueryLocator(query);
     }
 
@@ -29,16 +29,20 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     QualityCall__c = false
                 ));
             } else {
-                if (ord.QualityCallUnique__c) {
-                    mapActivitiesParent.put(ord.ParentOrder__c, new wrts_prcgvr__Activity__c(
-                        Order__c = ord.ParentOrder__c
-                    ));
-                } else {
-                    callActivities.add(new wrts_prcgvr__Activity__c(
-                        Order__c = ord.Id,
+
+                wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
+                        RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
                         Account__c = ord.AccountId,
-                        Type__c = 'Quality Call'
-                    ));
+                        Type__c = 'Quality Call',
+                        Status__c = 'Creata'
+                );
+
+                if (ord.QualityCallUnique__c) {
+                    activity.Order__c = ord.ParentOrder__c;
+                    mapActivitiesParent.put(ord.ParentOrder__c, activity);
+                } else {
+                    activity.Order__c = ord.Id;
+                    callActivities.add(activity);
                 }
             }
         }
