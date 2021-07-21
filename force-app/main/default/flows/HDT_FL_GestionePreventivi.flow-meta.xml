@@ -1250,7 +1250,7 @@
             <name>FT_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Input_Case_0.EndDate__c</leftValueReference>
+                <leftValueReference>Get_Input_Case.EndDate__c</leftValueReference>
                 <operator>LessThan</operator>
                 <rightValue>
                     <dateValue>4000-12-31</dateValue>
