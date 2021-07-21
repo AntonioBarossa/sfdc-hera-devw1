@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>TotalPaidCustomer__c</fullName>
     <externalId>false</externalId>
-    <label>Totale Pagato Cliente</label>
-    <summarizedField>DocumentSelected__c.PaidCustomer__c</summarizedField>
+    <label>Totale Residuo Canone Rai</label>
+    <summarizedField>DocumentSelected__c.TvFeeResidual__c</summarizedField>
     <summaryForeignKey>DocumentSelected__c.Case__c</summaryForeignKey>
     <summaryOperation>sum</summaryOperation>
     <trackHistory>false</trackHistory>
