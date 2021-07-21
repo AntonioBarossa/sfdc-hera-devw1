@@ -1256,10 +1256,10 @@
             <name>Cluster_Morosit</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Riattivazione Fornitura</stringValue>
+                    <stringValue>HDT_RT_Morosita</stringValue>
                 </rightValue>
             </conditions>
             <connector>
