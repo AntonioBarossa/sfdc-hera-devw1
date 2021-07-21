@@ -31,6 +31,13 @@ export default class HdtDocumentalPhaseHistory extends LightningElement {
             this.phone = 'PhoneNumber__c';
             this.address = 'DeliveryAddress__c';
             this.dataLoaded = true;
+        }else if(this.objectApiName && this.objectApiName.localeCompare('Order') === 0){
+            this.sendMode = 'DocSendingMethod__c';
+            this.signMode = 'SignatureMethod__c';
+            this.email = 'ShippingMail__c';
+            this.phone = 'PhoneNumber__c';
+            this.address = 'ShippingStreetName__c';
+            this.dataLoaded = true;
         }
     }
 
