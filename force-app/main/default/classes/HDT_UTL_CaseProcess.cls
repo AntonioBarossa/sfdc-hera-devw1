@@ -55,7 +55,7 @@ public with sharing class HDT_UTL_CaseProcess {
                    if(mapAccount.get(newCase.AccountId) != null){
                        a = mapAccount.get(newCase.AccountId);
                    }
-                   if(a != null && c != null){
+                   if(a != null && c != null && newCase.Lead__c == null){
                     commList.add(commUTL.instanceCommunicationLog(newCase.cluster__c,newCase.type,newCase.Phase__c,newCase.status,newCase.CancellationReasonDescription__c,'',newCase.id,newCase.ContactId,newCase.AccountId,c != null ? c.company__c : 'ND',a != null ? a.CompanyOwner__c : ''));
                    }  
                }
@@ -75,9 +75,24 @@ public with sharing class HDT_UTL_CaseProcess {
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
 			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
 				caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
+                //Variazione Indirizzzo di Fornitura
                 if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura')){
                     System.debug('Inside Condition');
                     createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento');
+                }
+                //Annullamento Case di Richiesta Parere legati al case di Reclamo
+                if(caseNew.Type.equalsIgnoreCase('Reclamo Scritto/Rich. Info')){
+                    HDT_QR_Case caseQr = new HDT_QR_Case();
+                    List<Case> childCases = new List<Case>();
+                    childCases = caseQr.getChildCase(caseNew.Id);
+                    if(childCases != null){
+                        for(Case child : childCases){
+                            if(!(child.Phase__c.equalsIgnoreCase('Completata'))){
+                                child.Phase__c = 'Annullato';
+                            }
+                        }
+                        HDT_UTL_DatabaseService.updateSObject(childCases);
+                    }
                 }
                 return true;
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){

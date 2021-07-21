@@ -21,7 +21,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
     fieldsList = [
         {fieldName: 'Market__c', required: true},
         {fieldName: 'ProcessType__c', required: false},
-        {fieldName: 'PlacetOffer__c', required: true},
+        {fieldName: 'PlacetOffer__c', required: false},
         //{fieldName: 'ServiceProduct__c', required: true},
         {fieldName: 'StartDate__c', required: true},
         {fieldName: 'EndDate__c', required: true},

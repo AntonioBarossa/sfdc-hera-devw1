@@ -705,7 +705,7 @@
         <inputAssignments>
             <field>Type</field>
             <value>
-                <elementReference>GetInputCaseAggiornato.Type</elementReference>
+                <stringValue>Contenitore Reclami</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>

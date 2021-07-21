@@ -78,6 +78,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
                 order.ReadingCustomerDate__c = readingDate;
 
+            }if(order.VoltureType__c != null && String.isBlank(order.VoltureType__c)){
+                throw new AuraHandledException('Valorizzare campi obbligatori');
             }
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 

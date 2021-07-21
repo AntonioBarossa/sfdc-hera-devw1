@@ -14,6 +14,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 	//Metho to avoid PClick for OrderPhase Errors
 	public static void pClickOrderPhase(){
+
 		wrts_prcgvr.InstallIntegration.install();
 		wrts_prcgvr__PhaseManagerSObjectSetting__c setting=new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name='Order', wrts_prcgvr__ObjectType__c='Order', wrts_prcgvr__PivotField__c='Phase__c');
 		insert setting;
@@ -101,6 +102,42 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
 
 		Id rt=constRecordType.ACCOUNT_RECORDTYPEID_BUSINESS;
+
+		for (Integer i=0; i<amount; i++){
+
+			Account acc=new Account();
+
+			acc.RecordTypeId=rt;
+			acc.Name='test account'+i;
+			acc.CompanyOwner__c=companyOwner;
+			acc.CustomerMarking__c=customerMarking;
+			acc.Category__C=category;
+			acc.VATNumber__c='12345678901';
+			acc.BillingCityCode__c='Roma';
+			acc.BillingStreetName__c='via roma';
+			acc.BillingStreetNumber__c='55';
+			acc.LastName__c='test account'+i;
+			acc.FiscalCode__c='SXSRLA45H28H501K';
+
+			accList.add(acc);
+
+		}
+
+		if (doInsert){
+
+			insert accList;
+		}
+
+		return accList;
+	}
+
+	public static List<Account> createAccountResidenziale(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category){
+
+		List<Account> accList=new List<Account>();
+
+		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
+
+		Id rt=constRecordType.ACCOUNT_RECORDTYPEID_RESINDEZIALE;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -468,5 +505,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return agentMatrixList;
+	}
+
+	public static List<BillingProfile__c> createBillingProfile(Integer amount, Boolean doInsert, Id Account){
+
+		List<BillingProfile__c> tstBillingProfileList=new List<BillingProfile__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			BillingProfile__c testBillingProfile=new BillingProfile__c();
+			testBillingProfile.Account__c=Account;
+
+			tstBillingProfileList.add(testBillingProfile);
+		}
+
+		if (doInsert){
+
+			insert tstBillingProfileList;
+		}
+
+		return tstBillingProfileList;
 	}
 }
