@@ -319,8 +319,16 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             AccountStatementFilter__c serviceCatalog = new AccountStatementFilter__c();
             serviceCatalog.User__c = currentUserId;
 
+            List<HDT_TabConfiguration__mdt> mdtTabConfList;
+            mdtTabConfList = HDT_QR_AccountStatement.getTabConfMetadataList(mdtTabConfList, tabValue);
+
             List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> recordsList;
             recordsList = (List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj>) JSON.deserialize(records, List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj>.class);
+
+            /*Map<String, Object> seconLevelMap = (Map<String, Object>)JSON.deserializeUntyped(records);
+            List<Object> seconLevelList = (List<Object>)seconLevelMap.get(mdtTabConfList[0].SecondLevelAPI_Name__c);
+
+            System.debug('>>> secondLevelList ' + String.valueOf(seconLevelList));*/
 
             //set context field
             if(level.equalsIgnoreCase('1')){
@@ -372,10 +380,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             //if(recordsList.size() > 1){
             if(firstLevelSize > 1 || secondLevelSize > 1){
                 System.debug('>>> Multiple Records');
-                serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForMultipleRecords(recordsList, serviceCatalog);
+                serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForMultipleRecords(recordsList, serviceCatalog, tabValue);
             } else {
                 System.debug('>>> Single Records');
-                serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForSingleRecord(recordsList[0], serviceCatalog);
+                serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForSingleRecord(recordsList[0], serviceCatalog, tabValue);
             }
 
             serviceCatalog.DocumentSelected__c = records;
