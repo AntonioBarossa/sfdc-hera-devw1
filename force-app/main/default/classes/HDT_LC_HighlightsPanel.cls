@@ -1,6 +1,6 @@
 public with sharing class HDT_LC_HighlightsPanel {
     @AuraEnabled
-    public static String updateKPIs(String accountId) {
+    public static String updateKpis(String accountId) {
         try {
             Account oldAccount = [SELECT Id, Recaller__c, ComplaintRateNum__c FROM Account WHERE Id = :accountId WITH SECURITY_ENFORCED];
             Account newAccount = new Account(
