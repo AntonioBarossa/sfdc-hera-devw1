@@ -376,7 +376,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		text = text.replaceAll('É','E\'');
 		text = text.replaceAll('Ì','I\'');
 		text = text.replaceAll('Í','I\'');
-		
+		text = text.replaceAll('[’‘“”]','\'');
+		text = text.replaceAll('·', '-');
+		text = text.replaceAll('\u00A0', ' ');  // 00A0 = carattere unicode "No-Break Space"
+
 		return text;
 	}
 	

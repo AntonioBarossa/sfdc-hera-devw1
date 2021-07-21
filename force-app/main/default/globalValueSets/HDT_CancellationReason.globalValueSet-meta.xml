@@ -71,6 +71,11 @@
         <label>Pratica errata</label>
     </customValue>
     <customValue>
+        <fullName>Processo incompatibile</fullName>
+        <default>false</default>
+        <label>Processo incompatibile</label>
+    </customValue>
+    <customValue>
         <fullName>Quality - Annullo cambio offerta</fullName>
         <default>false</default>
         <label>Quality - Annullo cambio offerta</label>

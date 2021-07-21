@@ -12,6 +12,11 @@
             <operation>equals</operation>
             <valueField>$Source.ServicePoint__c</valueField>
         </filterItems>
+        <filterItems>
+            <field>Order.NotRegisteredMeterCase__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>
     <referenceTo>Order</referenceTo>
