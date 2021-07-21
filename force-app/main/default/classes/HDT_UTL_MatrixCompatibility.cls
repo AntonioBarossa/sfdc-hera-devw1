@@ -58,32 +58,32 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             ServiceRequest__c srvRequest= new ServiceRequest__c();
             if(entityType == Case.sObjectType){
                 Case cs= (Case) obj;
-                srvReq.ServicePointCode__c= cs.PODPDRFormula__c;
-                srvReq.Status__c= cs.Status;
-                srvReq.CommoditySector__c= cs.CommodityFormula__c;
-                srvReq.Type__c= 'Case';
+                srvRequest.ServicePointCode__c= cs.PODPDRFormula__c;
+                srvRequest.Status__c= cs.Status;
+                srvRequest.CommoditySector__c= cs.CommodityFormula__c;
+                srvRequest.Type__c= 'Case';
                 if(cs.ServicePoint__c != null){
-                    srvReq.ServicePoint__c= cs.ServicePoint__c;
+                    srvRequest.ServicePoint__c= cs.ServicePoint__c;
                 }else{
-                    srvReq.Account__c= cs.Account__c;
-                    srvReq.BillingProfile__c= cs.BillingProfile__c;
+                    srvRequest.Account__c= cs.Account__c;
+                    srvRequest.BillingProfile__c= cs.BillingProfile__c;
                 }
-                srvReq.ProcessType__c= getProcessTypeCase(cs.Type, cs.CommodityFormula__c);
+                srvRequest.ProcessType__c= getProcessTypeCase(cs.Type, cs.CommodityFormula__c);
             }
             // }else{
             //     Order ord= (Order) obj;
-            //     srvReq.ServicePointCode__c= ord.ServicePointCodeFormula__c;
-            //     srvReq.Status__c= ord.Status;
-            //     srvReq.CommoditySector__c= ord.CommodityFormula__c;
-            //     srvReq.Type__c= 'Order';
+            //     srvRequest.ServicePointCode__c= ord.ServicePointCodeFormula__c;
+            //     srvRequest.Status__c= ord.Status;
+            //     srvRequest.CommoditySector__c= ord.CommodityFormula__c;
+            //     srvRequest.Type__c= 'Order';
             //     if(ord.ServicePoint__c != null){
-            //         srvReq.ServicePoint__c= ord.ServicePoint__c;
+            //         srvRequest.ServicePoint__c= ord.ServicePoint__c;
             //     }else{
-            //         srvReq.Account__c= ord.Account__c;
-            //         srvReq.BillingProfile__c= ord.BillingProfile__c;
+            //         srvRequest.Account__c= ord.Account__c;
+            //         srvRequest.BillingProfile__c= ord.BillingProfile__c;
             //     }
-                //srvReq.ProcessType__c= getProcessType(ord.ProcessType__c, Object commoditySector);
-                ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(srRequest);
+                //srvRequest.ProcessType__c= getProcessType(ord.ProcessType__c, Object commoditySector);
+                ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(srvRequest);
                 wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = checkCompatibility(sReq);
                 //list of incompatible records
                 if(!result.incompatibilities.isEmpty()){
@@ -229,11 +229,13 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             }when 'Caduta Linea/Chiamata Muta' {
                 processType = 'Caduta Linea / Chiamata Muta';
             }when 'Cambio cont. non registrato' {
-                processType = 'Cambio contatore non registrato - EE';
-            }when 'Cambio cont. non registrato' {
-                processType = 'Cambio contatore non registrato - GAS';
-            }when 'Comportamento Altri Venditori' {
-                processType = 'Comportamento altri venditori - EE';
+                if(comodity !=null){
+                    if(comodity== 'Energia Elettrica'){
+                        processType = 'Cambio contatore non registrato - EE';
+                    }else if(comodity == 'Gas'){
+                        processType = 'Cambio contatore non registrato - GAS';
+                    }
+                }
             }when 'Comunicazione di Fallimento' {
                 processType = 'Comunicazione di Fallimento';
             }when 'Comunicazione Pagamento' {
@@ -275,7 +277,13 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             } when 'Notifica Attivazione POD' {
                 processType = 'Notifica attivazione POD - EE';
             } when 'Verifica Tensione - Pressione' {
-                processType = 'Verifica Pressione - GAS';
+                if(comodity !=null){
+                    if(comodity== 'Energia Elettrica'){
+                        processType = 'Verifica Tensione - EE';
+                    }else if(comodity == 'Gas'){
+                        processType = 'Verifica Pressione - GAS';
+                    }
+                }
             } when 'Notifica Variazione Stato PDR SII' {
                 processType = 'Notifica variazione Stato PDR SII (VSG2.0200) - GAS';
             } when 'Nuovo Impianto - Aggiunta Attacco' {
@@ -340,8 +348,6 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                 processType = 'Verifica dati al DL';
             } when 'Verifica Pareggio Fittizio Canone Rai' {
                 processType = 'Verifica pareggio Fittizio Canone RAI - EE';
-            } when 'Verifica Tensione - Pressione' {
-                processType = 'Verifica Tensione - EE';
             } when 'Votive Modena Cessazione' {
                 processType = 'Votive Modena / Cessazione - EE';
             } when 'Votive Modena Pagamenti Morosità' {
