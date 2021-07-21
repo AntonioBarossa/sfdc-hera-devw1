@@ -7811,17 +7811,12 @@
     </fieldPermissions>
     	<fieldPermissions>
 		<editable>true</editable>
-    <field>DependenciesMatrix__c.BlockingProcessType__c</field>
+    	<field>DependenciesMatrix__c.BlockingProcessType__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
     	<fieldPermissions>
 		<editable>true</editable>
 		<field>DependenciesMatrix__c.CheckingPhase__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>DependenciesMatrix__c.DependencyNumber__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
