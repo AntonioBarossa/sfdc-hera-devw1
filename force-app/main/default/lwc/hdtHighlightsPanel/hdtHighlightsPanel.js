@@ -1,5 +1,5 @@
 import { LightningElement, track, api } from 'lwc';
-import updateRecallerCount from '@salesforce/apex/HDT_LC_hdtHighlightsPanel.updateRecallerCount';
+import updateKPIs from '@salesforce/apex/HDT_LC_hdtHighlightsPanel.updateKPIs';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 const fields = [
@@ -20,11 +20,11 @@ export default class HdtHighlightsPanel extends LightningElement {
         var arraySize = fields.length + 2; // + 2 per i servizi attivi e per il KPI Campagne Attive
         this.gridClass = 'slds-col slds-size_1-of-' + arraySize.toString();
         console.log(this.gridClass);
-        this.doUpdateRecallerCount();
+        this.doupdateKPIs();
     }
 
-    async doUpdateRecallerCount() {
-        const error = await updateRecallerCount({accountId: this.recordId});
+    async doupdateKPIs() {
+        const error = await updateKPIs({accountId: this.recordId});
         if(error) {
             this.dispatchEvent(new ShowToastEvent({
                 variant: 'error',

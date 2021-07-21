@@ -1,26 +1,50 @@
 public with sharing class HDT_LC_hdtHighlightsPanel {
     @AuraEnabled
-    public static string updateRecallerCount(String accountId){
-        Integer x = 0;
-        Integer y;
+    public static String updateKPIs(String accountId) {
         try {
-            Account account = [SELECT Id, Recaller__c FROM Account WHERE Id = :accountId WITH SECURITY_ENFORCED];
-            for(AggregateResult ar : [SELECT COUNT(Id) FROM Case WHERE AccountId = :accountId AND CreatedDate = LAST_N_DAYS:15 AND Origin IN ('Web','Chat','Sportello','Telefono Inbound') WITH SECURITY_ENFORCED GROUP BY Cluster__c,ProcessType__c,Subprocess__c]) {
-                y = (Integer) ar.get('expr0');
-                if(y > x) {
-                    x = y;
-                }
-            }
+            Account oldAccount = [SELECT Id, Recaller__c, ComplaintRateNum__c FROM Account WHERE Id = :accountId WITH SECURITY_ENFORCED];
+            Account newAccount = new Account(
+                Id = accountId,
+                Recaller__c = getRecallerCount(accountId),
+                ComplaintRateNum__c = getComplaintRate(accountId)
+            );
 
-            x = (x > 0 ? x - 1 : 0);
-            if(account.Recaller__c != x) {
-                account.Recaller__c = x;
-                update account;
+            if(
+                oldAccount.Recaller__c != newAccount.Recaller__c ||
+                oldAccount.ComplaintRateNum__c != newAccount.ComplaintRateNum__c
+            ) {
+                update newAccount;
             }
 
             return null;
         } catch (Exception e) {
             return e.getMessage();
+        }
+    }
+
+    private static Integer getRecallerCount(String accountId){
+        Integer x = 0;
+        Integer y;
+        try {
+            for(AggregateResult result : [SELECT COUNT(Id) FROM Case WHERE AccountId = :accountId AND CreatedDate = LAST_N_DAYS:15 AND Origin IN ('Web','Chat','Sportello','Telefono Inbound') WITH SECURITY_ENFORCED GROUP BY Cluster__c,ProcessType__c,Subprocess__c]) {
+                y = (Integer) result.get('expr0');
+                if(y > x) {
+                    x = y;
+                }
+            }
+
+            return (x > 0 ? x - 1 : 0);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    private static Integer getComplaintRate(String accountId) {
+        try {
+            AggregateResult result = [SELECT COUNT(Id) FROM Case WHERE AccountId = :accountId AND Cluster__c = 'Reclami' AND CreatedDate = LAST_N_MONTHS:12 WITH SECURITY_ENFORCED];
+            return (Integer) result.get('expr0');
+        } catch (Exception e) {
+            throw e;
         }
     }
 }
