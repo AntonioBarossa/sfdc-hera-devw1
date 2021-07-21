@@ -406,7 +406,7 @@
     <assignments>
         <name>Assegna_Stato</name>
         <label>Assegna Stato</label>
-        <locationX>1532</locationX>
+        <locationX>1677</locationX>
         <locationY>2440</locationY>
         <assignmentItems>
             <assignToReference>Annulla_Attivita.Status__c</assignToReference>
@@ -423,7 +423,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Annulla_Attivita</targetReference>
+            <targetReference>AssegnaACollection</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -443,6 +443,38 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaACollection_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaACollection</name>
+        <label>AssegnaACollection</label>
+        <locationX>1636</locationX>
+        <locationY>2296</locationY>
+        <assignmentItems>
+            <assignToReference>ActivityCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Annulla_Attivita</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Annulla_Attivita</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaACollection_0</name>
+        <label>AssegnaACollection</label>
+        <locationX>4557</locationX>
+        <locationY>2663</locationY>
+        <assignmentItems>
+            <assignToReference>ActivityCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Annulla_Attivita_0</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1477,17 +1509,17 @@
         <connector>
             <targetReference>Fase</targetReference>
         </connector>
-        <inputReference>Get_Activities</inputReference>
+        <inputReference>ActivityCollection</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Attivita_0</name>
         <label>Update Attivita</label>
-        <locationX>4199</locationX>
-        <locationY>2904</locationY>
+        <locationX>4198</locationX>
+        <locationY>2905</locationY>
         <connector>
             <targetReference>Fase_0</targetReference>
         </connector>
-        <inputReference>Get_Activities_0</inputReference>
+        <inputReference>ActivityCollection</inputReference>
     </recordUpdates>
     <screens>
         <name>Loading_Spinner_Screen</name>
@@ -2112,6 +2144,14 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>ActivityCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>wrts_prcgvr__Activity__c</objectType>
+    </variables>
     <variables>
         <name>cluster</name>
         <dataType>String</dataType>

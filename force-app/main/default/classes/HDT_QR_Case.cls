@@ -91,4 +91,22 @@ public inherited sharing class HDT_QR_Case {
         return childCases;
     }
 
+    public List<wrts_prcgvr__Activity__c> getCaseActivities(List<String> caseIds){
+
+        List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
+        try{
+            activities = [SELECT Id,
+            wrts_prcgvr__Status__c,
+            Status__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE wrts_prcgvr__Status__c = 'Not Started'
+            AND Case__c IN :caseIds
+            WITH SECURITY_ENFORCED
+            ];
+        }catch(Exception e){
+            System.debug('ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+        }
+        return activities;
+    }
+
 }

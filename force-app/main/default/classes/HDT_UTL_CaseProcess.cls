@@ -81,18 +81,34 @@ public with sharing class HDT_UTL_CaseProcess {
                     createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento');
                 }
                 //Annullamento Case di Richiesta Parere legati al case di Reclamo
+                //Annullamento activities legate al case di Richiesta Parere
                 if(caseNew.Type.equalsIgnoreCase('Reclamo Scritto/Rich. Info')){
                     HDT_QR_Case caseQr = new HDT_QR_Case();
                     List<Case> childCases = new List<Case>();
+                    List<String> caseIds = new List<String>();
+                    List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
+                    List<SObject> updateList = new List<SObject>();
                     childCases = caseQr.getChildCase(caseNew.Id);
                     if(childCases != null){
                         for(Case child : childCases){
                             if(!(child.Phase__c.equalsIgnoreCase('Completata'))){
+                                caseIds.add(child.Id);
                                 child.Phase__c = 'Annullato';
                                 child.Status = 'Closed';
                             }
                         }
-                        HDT_UTL_DatabaseService.updateSObject(childCases);
+                        if(caseIds != null){
+                            activities = caseQr.getCaseActivities(caseIds);
+                            if(activities != null){
+                                for(wrts_prcgvr__Activity__c activity : activities){
+                                    activity.wrts_prcgvr__Status__c = 'Completed';
+                                    activity.Status__c = 'Annullata';
+                                }
+                                updateList.addAll(activities);
+                            }
+                        }
+                        updateList.addAll(childCases);
+                        HDT_UTL_DatabaseService.updateSObject(updateList);
                     }
                 }
                 return true;
