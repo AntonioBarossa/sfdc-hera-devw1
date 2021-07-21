@@ -5260,6 +5260,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.IsExportCMOR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.IsInvoicingVerified__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5942,6 +5947,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.ShipmentAddressAssign__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Sie173Mark__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
