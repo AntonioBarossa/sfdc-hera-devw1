@@ -65,7 +65,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                 if(cs.ServicePoint__c != null){
                     srvRequest.ServicePoint__c= cs.ServicePoint__c;
                 }else{
-                    srvRequest.Account__c= cs.Account__c;
+                    srvRequest.Account__c= cs.AccountId;
                     srvRequest.BillingProfile__c= cs.BillingProfile__c;
                 }
                 srvRequest.ProcessType__c= getProcessTypeCase(cs.Type, cs.CommodityFormula__c);
