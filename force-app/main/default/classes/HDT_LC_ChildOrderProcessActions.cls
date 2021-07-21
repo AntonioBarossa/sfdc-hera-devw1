@@ -216,6 +216,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
         
         //comfort quality call start
+        system.debug('quality log 1 recordtype developername: ' + order.RecordType.DeveloperName);
+        system.debug('quality log 1 Channel__c: ' + order.Channel__c);
         system.debug('quality log 1 MarketType__c: ' + order.MarketOrigin__c);
         system.debug('quality log 1 CustomerCategory__c: ' + order.CustomerCategory__c);
         system.debug('quality log 1 MarketOrigin__c: ' + order.MarketOrigin__c);
@@ -223,6 +225,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         List<ComfortQualityCall__c> comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
 
         system.debug('quality log 2: ' + comfortQualityList);
+
         if (!comfortQualityList.isEmpty()) {
             system.debug('quality log 3: enter quality marker');
             orderToUpdate.QualityCall__c = comfortQualityList[0].QualityEnabled__c;
