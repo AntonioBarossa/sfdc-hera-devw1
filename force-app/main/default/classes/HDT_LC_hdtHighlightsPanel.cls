@@ -26,7 +26,7 @@ public with sharing class HDT_LC_hdtHighlightsPanel {
         Integer x = 0;
         Integer y;
         try {
-            for(AggregateResult result : [SELECT COUNT(Id) FROM Case WHERE AccountId = :accountId AND CreatedDate = LAST_N_DAYS:15 AND Origin IN ('Web','Chat','Sportello','Telefono Inbound') WITH SECURITY_ENFORCED GROUP BY Cluster__c,ProcessType__c,Subprocess__c]) {
+            for(AggregateResult result : [SELECT COUNT(Id) FROM Case WHERE AccountId = :accountId AND CreatedDate = LAST_N_DAYS:15 AND Origin IN ('Web','Chat','Sportello','Telefono Inbound') WITH SECURITY_ENFORCED GROUP BY Cluster__c,Type,Subprocess__c]) {
                 y = (Integer) result.get('expr0');
                 if(y > x) {
                     x = y;
