@@ -7745,6 +7745,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contract.TerminationReason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contract.TerminationTimeUnitNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
