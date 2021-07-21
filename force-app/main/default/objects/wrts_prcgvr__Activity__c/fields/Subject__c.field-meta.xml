@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Subject__c</fullName>
+    <externalId>false</externalId>
+    <label>Argomento</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>TCP</fullName>
+                <default>false</default>
+                <label>TCP</label>
+            </value>
+            <value>
+                <fullName>C_Malfunzionamento processi</fullName>
+                <default>false</default>
+                <label>C_Malfunzionamento processi</label>
+            </value>
+            <value>
+                <fullName>C_Malfunzionamento sistemi/funzionalità</fullName>
+                <default>false</default>
+                <label>C_Malfunzionamento sistemi/funzionalità</label>
+            </value>
+            <value>
+                <fullName>C_Post avvio progetti</fullName>
+                <default>false</default>
+                <label>C_Post avvio progetti</label>
+            </value>
+            <value>
+                <fullName>Amministrazione Assegnatore regole</fullName>
+                <default>false</default>
+                <label>Amministrazione Assegnatore regole</label>
+            </value>
+            <value>
+                <fullName>Amministrazione Attività - campi</fullName>
+                <default>false</default>
+                <label>Amministrazione Attività - campi</label>
+            </value>
+            <value>
+                <fullName>Amministrazione Sistemi</fullName>
+                <default>false</default>
+                <label>Amministrazione Sistemi</label>
+            </value>
+            <value>
+                <fullName>Attività concordate</fullName>
+                <default>false</default>
+                <label>Attività concordate</label>
+            </value>
+            <value>
+                <fullName>Famiglie</fullName>
+                <default>false</default>
+                <label>Famiglie</label>
+            </value>
+            <value>
+                <fullName>VAS</fullName>
+                <default>false</default>
+                <label>VAS</label>
+            </value>
+            <value>
+                <fullName>Business</fullName>
+                <default>false</default>
+                <label>Business</label>
+            </value>
+            <value>
+                <fullName>Reseller</fullName>
+                <default>false</default>
+                <label>Reseller</label>
+            </value>
+            <value>
+                <fullName>Consip</fullName>
+                <default>false</default>
+                <label>Consip</label>
+            </value>
+            <value>
+                <fullName>Scarti ribaltamento SF vs SBL (temporaneo)</fullName>
+                <default>false</default>
+                <label>Scarti ribaltamento SF vs SBL (temporaneo)</label>
+            </value>
+            <value>
+                <fullName>Incongruenze SAP</fullName>
+                <default>false</default>
+                <label>Incongruenze SAP</label>
+            </value>
+            <value>
+                <fullName>Switch Ripristinatorio</fullName>
+                <default>false</default>
+                <label>Switch Ripristinatorio</label>
+            </value>
+            <value>
+                <fullName>Mancato pagamento</fullName>
+                <default>false</default>
+                <label>Mancato pagamento</label>
+            </value>
+            <value>
+                <fullName>Verifica colonnine</fullName>
+                <default>false</default>
+                <label>Verifica colonnine</label>
+            </value>
+            <value>
+                <fullName>Fidelizzazione mancante</fullName>
+                <default>false</default>
+                <label>Fidelizzazione mancante</label>
+            </value>
+            <value>
+                <fullName>Verifica Canvass</fullName>
+                <default>false</default>
+                <label>Verifica Canvass</label>
+            </value>
+            <value>
+                <fullName>Storno non dovuto</fullName>
+                <default>false</default>
+                <label>Storno non dovuto</label>
+            </value>
+            <value>
+                <fullName>Bonus mancante</fullName>
+                <default>false</default>
+                <label>Bonus mancante</label>
+            </value>
+            <value>
+                <fullName>Invito a fatturare non ricevuto</fullName>
+                <default>false</default>
+                <label>Invito a fatturare non ricevuto</label>
+            </value>
+            <value>
+                <fullName>Comprensione voci invito a fatturare</fullName>
+                <default>false</default>
+                <label>Comprensione voci invito a fatturare</label>
+            </value>
+            <value>
+                <fullName>Report operativo da Normativa</fullName>
+                <default>false</default>
+                <label>Report operativo da Normativa</label>
+            </value>
+            <value>
+                <fullName>Report operativo una tantum</fullName>
+                <default>false</default>
+                <label>Report operativo una tantum</label>
+            </value>
+            <value>
+                <fullName>Report operativo ricorrente</fullName>
+                <default>false</default>
+                <label>Report operativo ricorrente</label>
+            </value>
+            <value>
+                <fullName>Report costi</fullName>
+                <default>false</default>
+                <label>Report costi</label>
+            </value>
+            <value>
+                <fullName>MPI Profilazione Utente-Anomalie</fullName>
+                <default>false</default>
+                <label>MPI Profilazione Utente-Anomalie</label>
+            </value>
+            <value>
+                <fullName>Permessi File Server rptcomfs.hdc.local</fullName>
+                <default>false</default>
+                <label>Permessi File Server rptcomfs.hdc.local</label>
+            </value>
+            <value>
+                <fullName>Supporto analisi survey</fullName>
+                <default>false</default>
+                <label>Supporto analisi survey</label>
+            </value>
+            <value>
+                <fullName>Assistenza procedurale e gestione pratiche</fullName>
+                <default>false</default>
+                <label>Assistenza procedurale e gestione pratiche</label>
+            </value>
+            <value>
+                <fullName>Clienti senza fornitura, urgenza attività</fullName>
+                <default>false</default>
+                <label>Clienti senza fornitura, urgenza attività</label>
+            </value>
+            <value>
+                <fullName>Probabile Reclamo</fullName>
+                <default>false</default>
+                <label>Probabile Reclamo</label>
+            </value>
+            <value>
+                <fullName>Pratica gestita ma problema non risolto</fullName>
+                <default>false</default>
+                <label>Pratica gestita ma problema non risolto</label>
+            </value>
+            <value>
+                <fullName>Comunicazioni urgenti Linea Diretta</fullName>
+                <default>false</default>
+                <label>Comunicazioni urgenti Linea Diretta</label>
+            </value>
+            <value>
+                <fullName>Comunicazioni urgenti Supporto Agenzie</fullName>
+                <default>false</default>
+                <label>Comunicazioni urgenti Supporto Agenzie</label>
+            </value>
+            <value>
+                <fullName>Contratti</fullName>
+                <default>false</default>
+                <label>Contratti</label>
+            </value>
+            <value>
+                <fullName>Fatturazione</fullName>
+                <default>false</default>
+                <label>Fatturazione</label>
+            </value>
+            <value>
+                <fullName>Preventivi</fullName>
+                <default>false</default>
+                <label>Preventivi</label>
+            </value>
+            <value>
+                <fullName>Credito Morosità</fullName>
+                <default>false</default>
+                <label>Credito Morosità</label>
+            </value>
+            <value>
+                <fullName>Problemi tecnici Sistemi</fullName>
+                <default>false</default>
+                <label>Problemi tecnici Sistemi</label>
+            </value>
+            <value>
+                <fullName>Sollecito pratica esistente</fullName>
+                <default>false</default>
+                <label>Sollecito pratica esistente</label>
+            </value>
+            <value>
+                <fullName>Contatore chiuso - intervento straordinario</fullName>
+                <default>false</default>
+                <label>Contatore chiuso - intervento straordinario</label>
+            </value>
+            <value>
+                <fullName>Ambiente</fullName>
+                <default>false</default>
+                <label>Ambiente</label>
+            </value>
+            <value>
+                <fullName>TARI</fullName>
+                <default>false</default>
+                <label>TARI</label>
+            </value>
+            <value>
+                <fullName>Cliente senza servizio</fullName>
+                <default>false</default>
+                <label>Cliente senza servizio</label>
+            </value>
+            <value>
+                <fullName>Pratica gestita ma cliente insoddisfatto</fullName>
+                <default>false</default>
+                <label>Pratica gestita ma cliente insoddisfatto</label>
+            </value>
+            <value>
+                <fullName>Cliente critico</fullName>
+                <default>false</default>
+                <label>Cliente critico</label>
+            </value>
+            <value>
+                <fullName>Sollecito reiterato</fullName>
+                <default>false</default>
+                <label>Sollecito reiterato</label>
+            </value>
+            <value>
+                <fullName>Analisi Reclamo Operatività CC</fullName>
+                <default>false</default>
+                <label>Analisi Reclamo Operatività CC</label>
+            </value>
+            <value>
+                <fullName>Verifiche contratti</fullName>
+                <default>false</default>
+                <label>Verifiche contratti</label>
+            </value>
+            <value>
+                <fullName>Verifica errore gestione</fullName>
+                <default>false</default>
+                <label>Verifica errore gestione</label>
+            </value>
+            <value>
+                <fullName>Errori ambiente</fullName>
+                <default>false</default>
+                <label>Errori ambiente</label>
+            </value>
+            <value>
+                <fullName>Errori Tari</fullName>
+                <default>false</default>
+                <label>Errori Tari</label>
+            </value>
+            <value>
+                <fullName>Errori TCP</fullName>
+                <default>false</default>
+                <label>Errori TCP</label>
+            </value>
+            <value>
+                <fullName>Segnalazione urgenza nel recupero del credito</fullName>
+                <default>false</default>
+                <label>Segnalazione urgenza nel recupero del credito</label>
+            </value>
+            <value>
+                <fullName>Diffide da protocollo</fullName>
+                <default>false</default>
+                <label>Diffide da protocollo</label>
+            </value>
+            <value>
+                <fullName>Contestaz cliente a diffida legale</fullName>
+                <default>false</default>
+                <label>Contestaz cliente a diffida legale</label>
+            </value>
+            <value>
+                <fullName>Richiesta visura</fullName>
+                <default>false</default>
+                <label>Richiesta visura</label>
+            </value>
+            <value>
+                <fullName>Copia documentazione</fullName>
+                <default>false</default>
+                <label>Copia documentazione</label>
+            </value>
+            <value>
+                <fullName>Verifiche estratto conto</fullName>
+                <default>false</default>
+                <label>Verifiche estratto conto</label>
+            </value>
+            <value>
+                <fullName>Fatturazione spese legali</fullName>
+                <default>false</default>
+                <label>Fatturazione spese legali</label>
+            </value>
+            <value>
+                <fullName>Verifica fatturazione elettronica</fullName>
+                <default>false</default>
+                <label>Verifica fatturazione elettronica</label>
+            </value>
+            <value>
+                <fullName>Verifiche stato utenze</fullName>
+                <default>false</default>
+                <label>Verifiche stato utenze</label>
+            </value>
+            <value>
+                <fullName>Acceso Piattaforme documentali</fullName>
+                <default>false</default>
+                <label>Acceso Piattaforme documentali</label>
+            </value>
+            <value>
+                <fullName>Richiesta informazioni su stato pratica</fullName>
+                <default>false</default>
+                <label>Richiesta informazioni su stato pratica</label>
+            </value>
+            <value>
+                <fullName>Allineamento portafoglio</fullName>
+                <default>false</default>
+                <label>Allineamento portafoglio</label>
+            </value>
+            <value>
+                <fullName>Ritorni evidenze MAI PARTITI</fullName>
+                <default>false</default>
+                <label>Ritorni evidenze MAI PARTITI</label>
+            </value>
+            <value>
+                <fullName>Verifica Documentazione</fullName>
+                <default>false</default>
+                <label>Verifica Documentazione</label>
+            </value>
+            <value>
+                <fullName>Verifiche SAP</fullName>
+                <default>false</default>
+                <label>Verifiche SAP</label>
+            </value>
+            <value>
+                <fullName>Gestione attività di processo</fullName>
+                <default>false</default>
+                <label>Gestione attività di processo</label>
+            </value>
+            <value>
+                <fullName>Controllo dati contrattuali SAP vs SISTEMI 3° (RCU, etc)</fullName>
+                <default>false</default>
+                <label>Controllo dati contrattuali SAP vs SISTEMI 3° (RCU, etc)</label>
+            </value>
+            <value>
+                <fullName>Gestione Blocchi al Calcolo</fullName>
+                <default>false</default>
+                <label>Gestione Blocchi al Calcolo</label>
+            </value>
+            <value>
+                <fullName>Salvaguardia</fullName>
+                <default>false</default>
+                <label>Salvaguardia</label>
+            </value>
+            <value>
+                <fullName>Default</fullName>
+                <default>false</default>
+                <label>Default</label>
+            </value>
+            <value>
+                <fullName>FUI</fullName>
+                <default>false</default>
+                <label>FUI</label>
+            </value>
+            <value>
+                <fullName>Welcome Letter</fullName>
+                <default>false</default>
+                <label>Welcome Letter</label>
+            </value>
+            <value>
+                <fullName>Rapporti con i Distributori e il Sistema Informativo Integrato (SII)</fullName>
+                <default>false</default>
+                <label>Rapporti con i Distributori e il Sistema Informativo Integrato (SII)</label>
+            </value>
+            <value>
+                <fullName>Info Bollette</fullName>
+                <default>false</default>
+                <label>Info Bollette</label>
+            </value>
+            <value>
+                <fullName>Invio PEC al DL</fullName>
+                <default>false</default>
+                <label>Invio PEC al DL</label>
+            </value>
+            <value>
+                <fullName>Solleciti di pratica</fullName>
+                <default>false</default>
+                <label>Solleciti di pratica</label>
+            </value>
+            <value>
+                <fullName>Problemi catalogo prodotti</fullName>
+                <default>false</default>
+                <label>Problemi catalogo prodotti</label>
+            </value>
+            <value>
+                <fullName>Info andamento contrattuale</fullName>
+                <default>false</default>
+                <label>Info andamento contrattuale</label>
+            </value>
+            <value>
+                <fullName>Info KO</fullName>
+                <default>false</default>
+                <label>Info KO</label>
+            </value>
+            <value>
+                <fullName>Allineamenti Contrattuali richiesti dal Distributore Locale</fullName>
+                <default>false</default>
+                <label>Allineamenti Contrattuali richiesti dal Distributore Locale</label>
+            </value>
+            <value>
+                <fullName>Sportello Consumatore: Contestazione mancata erogazione Bonus</fullName>
+                <default>false</default>
+                <label>Sportello Consumatore: Contestazione mancata erogazione Bonus</label>
+            </value>
+            <value>
+                <fullName>Pre check Consip</fullName>
+                <default>false</default>
+                <label>Pre check Consip</label>
+            </value>
+            <value>
+                <fullName>Sportello Consumatore: Contestazione Importo Bonus erogato</fullName>
+                <default>false</default>
+                <label>Sportello Consumatore: Contestazione Importo Bonus erogato</label>
+            </value>
+            <value>
+                <fullName>Sportello Consumatore: Contestazione Importo Bonus stornato</fullName>
+                <default>false</default>
+                <label>Sportello Consumatore: Contestazione Importo Bonus stornato</label>
+            </value>
+            <value>
+                <fullName>Sportello Consumatore: Comunicazione cessazione Bonus fisico</fullName>
+                <default>false</default>
+                <label>Sportello Consumatore: Comunicazione cessazione Bonus fisico</label>
+            </value>
+            <value>
+                <fullName>mancata erogazione Bonus</fullName>
+                <default>false</default>
+                <label>mancata erogazione Bonus</label>
+            </value>
+            <value>
+                <fullName>Verifica importo Bonus erogato</fullName>
+                <default>false</default>
+                <label>Verifica importo Bonus erogato</label>
+            </value>
+            <value>
+                <fullName>Verifica importo Bonus stornato</fullName>
+                <default>false</default>
+                <label>Verifica importo Bonus stornato</label>
+            </value>
+            <value>
+                <fullName>Mancato addebito con SII allineato</fullName>
+                <default>false</default>
+                <label>Mancato addebito con SII allineato</label>
+            </value>
+            <value>
+                <fullName>Verifica per accertamento Agenzia Entrate</fullName>
+                <default>false</default>
+                <label>Verifica per accertamento Agenzia Entrate</label>
+            </value>
+            <value>
+                <fullName>Verifica doppio addebito</fullName>
+                <default>false</default>
+                <label>Verifica doppio addebito</label>
+            </value>
+            <value>
+                <fullName>Contestazione addebito con dichiarazione di non detenzione/esenzione</fullName>
+                <default>false</default>
+                <label>Contestazione addebito con dichiarazione di non detenzione/esenzione</label>
+            </value>
+            <value>
+                <fullName>Addebito su fornitura diversa da domestica residente</fullName>
+                <default>false</default>
+                <label>Addebito su fornitura diversa da domestica residente</label>
+            </value>
+            <value>
+                <fullName>Mancata rateizzazione</fullName>
+                <default>false</default>
+                <label>Mancata rateizzazione</label>
+            </value>
+            <value>
+                <fullName>Chiarimento su importo o numero rate</fullName>
+                <default>false</default>
+                <label>Chiarimento su importo o numero rate</label>
+            </value>
+            <value>
+                <fullName>Sollecito rimborso</fullName>
+                <default>false</default>
+                <label>Sollecito rimborso</label>
+            </value>
+            <value>
+                <fullName>SD_Extrabilling massiva</fullName>
+                <default>false</default>
+                <label>SD_Extrabilling massiva</label>
+            </value>
+            <value>
+                <fullName>Misure EE</fullName>
+                <default>false</default>
+                <label>Misure EE</label>
+            </value>
+            <value>
+                <fullName>Misure GAS</fullName>
+                <default>false</default>
+                <label>Misure GAS</label>
+            </value>
+            <value>
+                <fullName>Cessione credito</fullName>
+                <default>false</default>
+                <label>Cessione credito</label>
+            </value>
+            <value>
+                <fullName>Volture/subentri/legale</fullName>
+                <default>false</default>
+                <label>Volture/subentri/legale</label>
+            </value>
+            <value>
+                <fullName>Clienti TOP Business/Grandi Condomini</fullName>
+                <default>false</default>
+                <label>Clienti TOP Business/Grandi Condomini</label>
+            </value>
+            <value>
+                <fullName>Piani di rientro</fullName>
+                <default>false</default>
+                <label>Piani di rientro</label>
+            </value>
+            <value>
+                <fullName>Gestione cliente a portafoglio</fullName>
+                <default>false</default>
+                <label>Gestione cliente a portafoglio</label>
+            </value>
+            <value>
+                <fullName>Phone collection esterna</fullName>
+                <default>false</default>
+                <label>Phone collection esterna</label>
+            </value>
+            <value>
+                <fullName>Sospens.fornitura</fullName>
+                <default>false</default>
+                <label>Sospens.fornitura</label>
+            </value>
+            <value>
+                <fullName>Riattivaz.fornitura</fullName>
+                <default>false</default>
+                <label>Riattivaz.fornitura</label>
+            </value>
+            <value>
+                <fullName>Default Verifiche</fullName>
+                <default>false</default>
+                <label>Default Verifiche</label>
+            </value>
+            <value>
+                <fullName>Estremi rimborso con assegno FAD</fullName>
+                <default>false</default>
+                <label>Estremi rimborso con assegno FAD</label>
+            </value>
+            <value>
+                <fullName>Estremi rimborso con bonifico bancario</fullName>
+                <default>false</default>
+                <label>Estremi rimborso con bonifico bancario</label>
+            </value>
+            <value>
+                <fullName>Estremi rimborso con bonifico domiciliato postale</fullName>
+                <default>false</default>
+                <label>Estremi rimborso con bonifico domiciliato postale</label>
+            </value>
+            <value>
+                <fullName>Comportamento della Banca (Bollettino, CBILL etc)</fullName>
+                <default>false</default>
+                <label>Comportamento della Banca (Bollettino, CBILL etc)</label>
+            </value>
+            <value>
+                <fullName>Comportamento della Provider (Sisal, Lottomatica, Coop, etc)</fullName>
+                <default>false</default>
+                <label>Comportamento della Provider (Sisal, Lottomatica, Coop, etc)</label>
+            </value>
+            <value>
+                <fullName>Recapito Bollette/Solleciti</fullName>
+                <default>false</default>
+                <label>Recapito Bollette/Solleciti</label>
+            </value>
+            <value>
+                <fullName>Mancata archiviazione documenti di fatturazione (PDF/XML)</fullName>
+                <default>false</default>
+                <label>Mancata archiviazione documenti di fatturazione (PDF/XML)</label>
+            </value>
+            <value>
+                <fullName>Stampa bollette</fullName>
+                <default>false</default>
+                <label>Stampa bollette</label>
+            </value>
+            <value>
+                <fullName>Verifica anomalie layout bollette</fullName>
+                <default>false</default>
+                <label>Verifica anomalie layout bollette</label>
+            </value>
+            <value>
+                <fullName>Modifica MRU BIDONE e/o periodicità mercato Retail e Business</fullName>
+                <default>false</default>
+                <label>Modifica MRU BIDONE e/o periodicità mercato Retail e Business</label>
+            </value>
+            <value>
+                <fullName>Fatturazione elettronica XML_BI_VT_SD_RS</fullName>
+                <default>false</default>
+                <label>Fatturazione elettronica XML_BI_VT_SD_RS</label>
+            </value>
+            <value>
+                <fullName>Errori di fatturazione mercato Retail aziende Business</fullName>
+                <default>false</default>
+                <label>Errori di fatturazione mercato Retail aziende Business</label>
+            </value>
+            <value>
+                <fullName>Verifica calcolo bollette mercato Retail e aziende Business</fullName>
+                <default>false</default>
+                <label>Verifica calcolo bollette mercato Retail e aziende Business</label>
+            </value>
+            <value>
+                <fullName>Verifica fatturazione TARI e TCP</fullName>
+                <default>false</default>
+                <label>Verifica fatturazione TARI e TCP</label>
+            </value>
+            <value>
+                <fullName>Fatturazione SD</fullName>
+                <default>false</default>
+                <label>Fatturazione SD</label>
+            </value>
+            <value>
+                <fullName>Errori di fatturazione con operandi/tariffe ENERGY E NON ENERGY</fullName>
+                <default>false</default>
+                <label>Errori di fatturazione con operandi/tariffe ENERGY E NON ENERGY</label>
+            </value>
+            <value>
+                <fullName>Verifica/modifica registrazione pagamenti</fullName>
+                <default>false</default>
+                <label>Verifica/modifica registrazione pagamenti</label>
+            </value>
+            <value>
+                <fullName>Verifica storni bancari</fullName>
+                <default>false</default>
+                <label>Verifica storni bancari</label>
+            </value>
+            <value>
+                <fullName>Verifica domiciliazione</fullName>
+                <default>false</default>
+                <label>Verifica domiciliazione</label>
+            </value>
+            <value>
+                <fullName>Verifica calcolo bollette mercato aziende Business</fullName>
+                <default>false</default>
+                <label>Verifica calcolo bollette mercato aziende Business</label>
+            </value>
+            <value>
+                <fullName>Verifica sospensione</fullName>
+                <default>false</default>
+                <label>Verifica sospensione</label>
+            </value>
+            <value>
+                <fullName>Verifica affidi legali</fullName>
+                <default>false</default>
+                <label>Verifica affidi legali</label>
+            </value>
+            <value>
+                <fullName>Credito prescritto da chiudere a perdita</fullName>
+                <default>false</default>
+                <label>Credito prescritto da chiudere a perdita</label>
+            </value>
+            <value>
+                <fullName>Verifica su crediti ceduti</fullName>
+                <default>false</default>
+                <label>Verifica su crediti ceduti</label>
+            </value>
+            <value>
+                <fullName>Reclamo su comportamento ADR</fullName>
+                <default>false</default>
+                <label>Reclamo su comportamento ADR</label>
+            </value>
+            <value>
+                <fullName>Rimozione marcatura CLEVER/RESONEGAST/K*</fullName>
+                <default>false</default>
+                <label>Rimozione marcatura CLEVER/RESONEGAST/K*</label>
+            </value>
+            <value>
+                <fullName>Ritiro posizione affidata ad ADR- cliente assistito</fullName>
+                <default>false</default>
+                <label>Ritiro posizione affidata ad ADR- cliente assistito</label>
+            </value>
+            <value>
+                <fullName>Rimozione marcatura su importo a credito</fullName>
+                <default>false</default>
+                <label>Rimozione marcatura su importo a credito</label>
+            </value>
+            <value>
+                <fullName>Rimozione marcatura PHONE*</fullName>
+                <default>false</default>
+                <label>Rimozione marcatura PHONE*</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

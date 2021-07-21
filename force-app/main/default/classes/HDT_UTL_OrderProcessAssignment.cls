@@ -9,6 +9,11 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
+    private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
+    private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
+    private static HDT_QR_Sale saleQr = new HDT_QR_Sale();
+
+
 
     public class HDT_WRP_Process {
         @AuraEnabled
@@ -195,6 +200,24 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         }
 
         return result;
+    }
+
+    @AuraEnabled
+    public static Boolean fieldsTransition(ServicePoint__c sp,Sale__c sale){
+        ServicePoint__c serpoint = new ServicePoint__c();
+        
+        List <ServicePoint__c> transitionlist =servicePointQr.getRecordById(sp.Id,'Id,PlugPresence__c,PowerRequested__c,PowerContractual__c');
+        if(!transitionlist.isEmpty()){
+            serpoint = transitionlist[0];
+           }
+        if((serpoint.PlugPresence__c== 'NO')||( serpoint.PowerRequested__c!=null && serpoint.PowerRequested__c != serpoint.PowerContractual__c )){
+            Sale__c s = new Sale__c(Id=sale.Id);
+            s.isTransition__c=true;
+            saleSrv.updateRecord(s);
+            return false;
+           } else{
+            return true;
+        }
     }
 
 }

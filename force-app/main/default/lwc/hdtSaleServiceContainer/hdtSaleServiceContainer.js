@@ -1,7 +1,9 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api,track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import createSaleServiceItemTile from '@salesforce/apex/HDT_LC_SaleServiceContainer.createSaleServiceItemTile';
 import updateSale from '@salesforce/apex/HDT_LC_SaleServiceContainer.updateSale';
+import fieldsTransition from '@salesforce/apex/HDT_UTL_OrderProcessAssignment.fieldsTransition';
+
 
 export default class hdtSaleServiceContainer extends LightningElement {
     @api saleRecord;
@@ -9,7 +11,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
     @api accountId;
     @api targetObject;
     @api addititionalParam;
-    servicePoint;
+    @track servicePoint;
     currentStep = 2;
     nextStep = 3;
     loading = false;
@@ -54,6 +56,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
 
     handleNewServicePoint(event){
         let newServicePoint = event.detail;
+        this.servicePoint = newServicePoint;
         this.dispatchEvent(new CustomEvent('newservicepoint', {detail: {newServicePoint}}));
     }
 
@@ -76,14 +79,26 @@ export default class hdtSaleServiceContainer extends LightningElement {
 
             this.refreshTileData();
             this.dispatchEvent(new CustomEvent('newtile'));
+            if(data.isTransition){
+                const toastWarning = new ShowToastEvent({
+                    title: 'Warning',
+                    message: 'E stato creato un caso transitorio!',
+                    variant: 'warning'
+                });
+                this.dispatchEvent(toastWarning);
+    
+            }else{
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Successo',
+                    message: 'Service Point confermato con successo',
+                    variant: 'success'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+    
 
-            const toastSuccessMessage = new ShowToastEvent({
-                title: 'Successo',
-                message: 'Service Point confermato con successo',
-                variant: 'success'
-            });
-            this.dispatchEvent(toastSuccessMessage);
+            }
 
+            
         }).catch(error => {
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
@@ -117,7 +132,32 @@ export default class hdtSaleServiceContainer extends LightningElement {
     }
 
     handleNext(){
-        this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});
+        this.loading = true;
+
+        fieldsTransition({sp:this.servicePoint,sale: this.saleRecord}).then(data =>{
+            if(data){
+                this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});  
+            }else{
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Transitorio: Processo non Innescabile da Salesforce',
+                    variant: 'error'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            
+            }
+            this.loading = false;
+
+        }).catch(error => {
+            this.loading = false;
+            console.log(error.body.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
     }
 
     handleEdit(){

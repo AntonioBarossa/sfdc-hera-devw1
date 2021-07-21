@@ -1,3 +1,11 @@
+/**
+* @author Frida1995 (elfrida.kora@dunegroup.it)
+* @date 18/06/2021
+* @description HDT_QR_AgentMatrix
+* @history Frida1995 – 18/06/2021 – Created class
+*/
+
+
 public inherited sharing class HDT_QR_AgentMatrix {
 
     public static List<AgentMatrix__c> getRecordsByChannel(String Channel){

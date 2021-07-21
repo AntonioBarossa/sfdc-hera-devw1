@@ -232,12 +232,21 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         return httpObj;
     }
 
-    public static AccountStatementFilter__c executeControllForSingleRecord(HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj record, AccountStatementFilter__c serviceCatalog){
+    public static AccountStatementFilter__c executeControllForSingleRecord(HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj record, AccountStatementFilter__c serviceCatalog, String tabValue){
+        
+        Set<String> raiFeeSet = new Set<String>();
 
         serviceCatalog.Multiselect__c = false;
         serviceCatalog.IsInvoice__c = (String.isEmpty(record.numeroFattura)) ? false : true;
         serviceCatalog.OnCredit__c = (Decimal.valueOf(record.residuo)<0) ? true : false;
         serviceCatalog.Vendor__c = (String.isEmpty(record.societa)) ? '' : record.societa;
+
+        if(tabValue.equalsIgnoreCase('EC')){
+            raiFeeSet = checkSecondLevel(record.secondoLivelloInformativo, raiFeeSet);
+        } else if(tabValue.equalsIgnoreCase('EC4')){
+            raiFeeSet = checkSecondLevel(record.secondoLivelloInformativoF2, raiFeeSet);
+        }
+        serviceCatalog.IsRaiFee__c = (serviceCatalog.Context__c.equalsIgnoreCase('EC2L') && raiFeeSet.size() > 0);
 
         if(!String.isEmpty(record.fatturaPrescrivibile) && record.fatturaPrescrivibile.equalsIgnoreCase('X') && String.isEmpty(record.DEL_569) ){
             serviceCatalog.IsPrescribable__c = true;
@@ -252,7 +261,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
     }
 
-    public static AccountStatementFilter__c executeControllForMultipleRecords(List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> recordsList, AccountStatementFilter__c serviceCatalog){
+    public static AccountStatementFilter__c executeControllForMultipleRecords(List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> recordsList, AccountStatementFilter__c serviceCatalog, String tabValue){
         Set<String> isInstallmentSet = new Set<String>();
         Set<String> sameCaSet = new Set<String>();
         Set<String> raiFeeSet = new Set<String>();
@@ -260,9 +269,15 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
         for(HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj obj : recordsList){
 
-            if(!String.isEmpty(obj.documentoPareggio) && obj.documentoPareggio.substring(0, 2).equalsIgnoreCase('27')){
-                raiFeeSet.add(obj.documentoPareggio);
+            if(tabValue.equalsIgnoreCase('EC')){
+                raiFeeSet = checkSecondLevel(obj.secondoLivelloInformativo, raiFeeSet);
+            } else if(tabValue.equalsIgnoreCase('EC4')){
+                raiFeeSet = checkSecondLevel(obj.secondoLivelloInformativoF2, raiFeeSet);
             }
+
+            //if(!String.isEmpty(obj.documentoPareggio) && obj.documentoPareggio.substring(0, 2).equalsIgnoreCase('27')){
+            //    raiFeeSet.add(obj.documentoPareggio);
+            //}
 
             if(!String.isEmpty(obj.rateizzato)){
                 isInstallmentSet.add(obj.rateizzato);
@@ -297,6 +312,18 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         serviceCatalog.IsRaiFee__c = (serviceCatalog.Context__c.equalsIgnoreCase('EC2L') && raiFeeSet.size() > 0);
 
         return serviceCatalog;
+    }
+
+    public static Set<String> checkSecondLevel(List<HDT_WRP_AccountStatement.HDT_WRP_SecondLevelObj> secondLevelList, Set<String> raiFeeSet){
+
+        for(HDT_WRP_AccountStatement.HDT_WRP_SecondLevelObj secondLevelObj : secondLevelList){
+            if(!String.isEmpty(secondLevelObj.docPareggio) && secondLevelObj.docPareggio.substring(0, 2).equalsIgnoreCase('27')){
+                raiFeeSet.add(secondLevelObj.docPareggio);
+            }
+        }
+
+        return raiFeeSet;
+
     }
 
 }
