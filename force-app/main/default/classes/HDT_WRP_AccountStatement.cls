@@ -156,9 +156,11 @@ public class HDT_WRP_AccountStatement {
         public String DEL_569;
         public String documentoPareggio;
         public List<HDT_WRP_SecondLevelObj> secondoLivelloInformativo;
+        public List<HDT_WRP_SecondLevelObj> secondoLivelloInformativoF2;
     }
 
     public class HDT_WRP_SecondLevelObj {
+        public String docPareggio;
     }
 
 }
