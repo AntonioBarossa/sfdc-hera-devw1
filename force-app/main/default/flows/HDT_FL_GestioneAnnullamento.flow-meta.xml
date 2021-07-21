@@ -406,13 +406,20 @@
     <assignments>
         <name>Assegna_Stato</name>
         <label>Assegna Stato</label>
-        <locationX>1449</locationX>
+        <locationX>1532</locationX>
         <locationY>2440</locationY>
+        <assignmentItems>
+            <assignToReference>Annulla_Attivita.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullata</stringValue>
+            </value>
+        </assignmentItems>
         <assignmentItems>
             <assignToReference>Annulla_Attivita.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Annullata</stringValue>
+                <stringValue>Completed</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -425,10 +432,17 @@
         <locationX>4606</locationX>
         <locationY>2846</locationY>
         <assignmentItems>
-            <assignToReference>Annulla_Attivita_0.wrts_prcgvr__Status__c</assignToReference>
+            <assignToReference>Annulla_Attivita_0.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullata</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Annulla_Attivita_0.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completed</stringValue>
             </value>
         </assignmentItems>
         <connector>

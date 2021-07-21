@@ -89,6 +89,7 @@ public with sharing class HDT_UTL_CaseProcess {
                         for(Case child : childCases){
                             if(!(child.Phase__c.equalsIgnoreCase('Completata'))){
                                 child.Phase__c = 'Annullato';
+                                child.Status = 'Closed';
                             }
                         }
                         HDT_UTL_DatabaseService.updateSObject(childCases);
