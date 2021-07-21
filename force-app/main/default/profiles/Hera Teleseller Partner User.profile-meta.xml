@@ -344,10 +344,6 @@
         <enabled>true</enabled>
         <name>wrts_prcgvr__ServiceCatalogReportSetting__c</name>
     </customSettingAccesses>
-	<customSettingAccesses>
-        <enabled>true</enabled>
-        <name>Connector_Settings__c</name>
-    </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>HDT_FulfillmentDateMatrix__c</name>
@@ -695,6 +691,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Description</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.ExternalPartnerNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7725,17 +7726,12 @@
     </fieldPermissions>
     <fieldPermissions>
 		<editable>true</editable>
-		<field>DependenciesMatrix__c.BlockingProcessType__c</field>
+			<field>DependenciesMatrix__c.BlockingProcessType__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
     	<fieldPermissions>
 		<editable>true</editable>
 		<field>DependenciesMatrix__c.CheckingPhase__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>DependenciesMatrix__c.DependencyNumber__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
@@ -23139,6 +23135,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.ActivationEleExternalDistributor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.AnnualConsumptionStandardM3__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27209,6 +27210,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.CausalQualityComfortCall__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CciaaData__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27234,9 +27240,19 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ContactDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ContactReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>wrts_prcgvr__Activity__c.ContactResult__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Contact__c</field>
@@ -27552,6 +27568,11 @@
         <field>wrts_prcgvr__Activity__c.isAtoA__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>wrts_prcgvr__Activity__c.IsClientInResolution153__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isManualAppoitment__c</field>
@@ -29176,6 +29197,13 @@
     <layoutAssignments>
         <layout>SiebelRdsAttribute__x-SiebelRdsAttribute Layout</layout>
     </layoutAssignments>
+    <loginFlows>
+        <flow>HDT_FL_UserLoginFlow</flow>
+        <flowType>UI</flowType>
+        <friendlyName>TelesellerLoginFlow</friendlyName>
+        <uiLoginFlowType>VisualWorkflow</uiLoginFlowType>
+        <useLightningRuntime>true</useLightningRuntime>
+    </loginFlows>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
@@ -29318,6 +29346,24 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>BillingProfile__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>BlackList__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>BrandSalesCompany__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -29993,6 +30039,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>PartyConsent</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>PercentageRulesForAssigningVisits__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -30803,6 +30858,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>TechnicalOffer__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>VisitAssignmentRules__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

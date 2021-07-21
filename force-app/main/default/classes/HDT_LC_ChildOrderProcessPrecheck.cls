@@ -52,6 +52,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 List<Contract> contracts = contractQr.getContractFromServicePoint(order.ServicePoint__c);
                 processType = 'Voltura';
                 newOrder.Subprocess__c = 'Standard';
+                newOrder.VoltureType__c = 'Ordinaria';
                 processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
                 newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 newOrder.ContractReference__c = contracts.size() > 0 
