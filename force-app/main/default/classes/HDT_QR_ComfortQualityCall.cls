@@ -15,9 +15,9 @@ public inherited sharing class HDT_QR_ComfortQualityCall {
             FROM ComfortQualityCall__c
             WHERE Process__c = :order.RecordType.DeveloperName //text
             AND Channel__c = :order.Channel__c //text
-            AND CustomerType__c = :order.CustomerType__c //text
+            AND CustomerType__c = :order.CustomerCategory__c //text
             AND MarketType__c = :order.MarketOrigin__c //picklist
-            // AND (ComfortSignatureMethod__c = :order.SignatureMethod__c OR QualitySignatureMethod__c = :order.SignatureMethod__c)
+            AND (ComfortSignatureMethod__c = :order.SignatureMethod__c OR QualitySignatureMethod__c = :order.SignatureMethod__c)
             WITH SECURITY_ENFORCED
         ];
     }

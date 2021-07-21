@@ -216,13 +216,19 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
         
         //comfort quality call start
+        system.debug('quality log 1 MarketType__c: ' + order.MarketOrigin__c);
+        system.debug('quality log 1 CustomerCategory__c: ' + order.CustomerCategory__c);
+        system.debug('quality log 1 MarketOrigin__c: ' + order.MarketOrigin__c);
+        system.debug('quality log 1 SignatureMethod__c: ' + order.SignatureMethod__c);
         List<ComfortQualityCall__c> comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
 
+        system.debug('quality log 2: ' + comfortQualityList);
         if (!comfortQualityList.isEmpty()) {
-            orderToUpdate.QualityCall__c = true;
+            system.debug('quality log 3: enter quality marker');
+            orderToUpdate.QualityCall__c = comfortQualityList[0].QualityEnabled__c;
             orderToUpdate.QualityCallUnique__c = comfortQualityList[0].UniqueQuality__c;
+            orderToUpdate.ComfortCallDaysDue__c = comfortQualityList[0].DaysComfort__c;
         }
-        //comfort quality call end
 
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);
         orderSrv.updateRecord(orderToUpdate);

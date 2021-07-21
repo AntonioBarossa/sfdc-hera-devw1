@@ -186,7 +186,8 @@ public inherited sharing class HDT_QR_Order {
             OwnerId,                                        // @Picchiri  10/06/21
             OrderReferenceNumber,                            // @Picchiri  15/06/21
             IsSequanzialized__c,                             // @Picchiri  24/06/21
-            SalesCompanyCode__c
+            SalesCompanyCode__c,
+            CustomerType__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -320,7 +321,8 @@ public inherited sharing class HDT_QR_Order {
             OwnerId,                                        
             OrderReferenceNumber,
             SalesCompanyCode__c,
-            IsSequanzialized__c
+            IsSequanzialized__c,
+            CustomerType__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -365,7 +367,10 @@ public inherited sharing class HDT_QR_Order {
             DocumentLow80__c,
             AutorizationVolturaThirdTrader__c,
             VolturaThirdTrader__c,
-            Phase__c
+            Phase__c,
+            ComfortCallDaysDue__c,
+            QualityCall__c,
+            QualityCallUnique__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
