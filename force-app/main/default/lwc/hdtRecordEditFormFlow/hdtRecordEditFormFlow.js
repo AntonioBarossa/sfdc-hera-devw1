@@ -93,6 +93,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         updateRecord({fields: { Id: this.recordId }}).then(() => {
                         console.log('Record Refreshato');
                         console.log('Prima Colonna ' + JSON.stringify(this.firstColumn));
+                        console.log('Seconda Colonna ' + JSON.stringify(this.secondColumn));
                         this.variablesLoaded = true;
                         }).catch(error => {
                             console.log('Error Refreshing record');
@@ -169,6 +170,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         console.log('### END Connected ###');
         
     }
+    renderedCallback(){
+        //this.installmentsLogic();
+    }
     /*get formats(){
         var formats = [];
         console.log(this.acceptedFormats);
@@ -216,6 +220,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         if(this.recordId != null){
         var record = event.detail.records;
         var fields = record[this.recordId].fields;
+        this.installmentsLogic();
         console.log('Edit Form Loaded ' + fields);
         }
     }
@@ -365,7 +370,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     handleChange(event){
 
         //Reclami customizations
+        this.complaintsLogic();
+        //PianoRata customizations
+        this.installmentsLogic();
+    }
 
+    complaintsLogic(){
         let five = this.objSelector('FithLevelComplaintClassification__c');
         console.log('Five '+five);
         let channel = this.objSelector('ComplaintEntryChannel__c');
@@ -388,11 +398,13 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 address.required = false;
             }
         }
-        //PianoRata customizations
+    }
+
+    installmentsLogic(){
         let reasonObj =  this.objSelector('Reason__c');
         console.log('#Reason --> ' + JSON.stringify(reasonObj));
         let paymentType = this.objSelector('PaymentType__c');
-        console.log('#PaymentType --> ' + paymentType);
+        console.log('#PaymentType --> ' + JSON.stringify(paymentType));
         if(!(Object.keys(reasonObj).length === 0)){
             let reason = this.selector('Reason__c');
             if(reason != null){
@@ -413,6 +425,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }
         }
         let depositObj = this.objSelector('Deposit__c');
+        console.log('#Deposit --> ' + JSON.stringify(depositObj));
         if(!(Object.keys(depositObj).length === 0)){
             let deposit = this.selector('Deposit__c');
             console.log('#Deposit -> ' + deposit.value);
