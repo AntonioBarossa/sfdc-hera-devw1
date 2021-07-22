@@ -1249,10 +1249,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_TestAccessibilityTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_UTL_Account</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1590,10 +1586,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_SwtichInProcessTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_TestDataFactory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

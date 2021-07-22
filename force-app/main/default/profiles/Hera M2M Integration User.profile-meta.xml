@@ -1046,6 +1046,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.IsTechnicalTransfer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.isTransition__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5251,6 +5256,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.IsExportCMOR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.IsInvoicingVerified__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5932,6 +5942,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.ShipmentAddressAssign__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Sie173Mark__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7751,17 +7766,12 @@
     </fieldPermissions>
     	<fieldPermissions>
 		<editable>true</editable>
-    <field>DependenciesMatrix__c.BlockingProcessType__c</field>
+    	<field>DependenciesMatrix__c.BlockingProcessType__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
     	<fieldPermissions>
 		<editable>true</editable>
 		<field>DependenciesMatrix__c.CheckingPhase__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>false</editable>
-		<field>DependenciesMatrix__c.DependencyNumber__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
 	<fieldPermissions>
@@ -12010,6 +12020,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.DocumentalProcessType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Order.DocusignURL__c</field>
         <readable>true</readable>
@@ -12837,6 +12852,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.ShippingAddress</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.ShippingAddressFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
