@@ -91,6 +91,13 @@
                 <elementReference>ParentRecordId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.ApprovalProcess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ShipToDifferentAddress</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCase_0</targetReference>
         </connector>
@@ -206,6 +213,11 @@
         <name>EffectiveDateFormula</name>
         <dataType>Date</dataType>
         <expression>{!$Flow.CurrentDate}+3</expression>
+    </formulas>
+    <formulas>
+        <name>ShipToDifferentAddress</name>
+        <dataType>Boolean</dataType>
+        <expression>{!GetInputCase.Account.BillingAddressFormula__c} &lt;&gt; {!GetInputCase.BillingProfile__r.InvoicingAddressFormula__c}</expression>
     </formulas>
     <interviewLabel>Gestione Voltura Tecnica {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Voltura Tecnica</label>
