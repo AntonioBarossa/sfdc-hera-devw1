@@ -646,9 +646,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String disconnectable = getFieldValue(fields, 'Disconnectable__c');
 
-        String disconnectableCategory = getFieldValue(fields, 'NotDisconnectableCategory__c');
+        String disconnectableCategory = getFieldValue(fields, 'DisconnectibilityType__c');
 
-        String phonePesse = getFieldValue(fields, 'MobilePhonePersonalizedNoticePesse__c');
+        String phonePesse = getFieldValue(fields, 'MobilePhoneNoticePesse__c');
 
 
 
@@ -673,9 +673,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             attachedDocument = caseValidationQr.getDocumentByCaseId(recordId); 
 
-            if(disconnectable == 'false' 
-            && ((disconnectableCategory == 'null' || disconnectableCategory == '') 
-            || (phonePesse == 'null' || phonePesse == '') 
+            if(disconnectable.equalsIgnoreCase('No')
+            && ((disconnectableCategory == null || disconnectableCategory == '') 
+            || (phonePesse == null || phonePesse == '') 
             || (attachedDocument.size() == 0))){
 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 

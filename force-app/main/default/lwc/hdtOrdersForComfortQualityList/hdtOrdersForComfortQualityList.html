@@ -1,0 +1,29 @@
+<template>
+
+    <lightning-card title="Esito comfort/quality call" class="slds-size_xxx-large">
+        <template if:true={loading}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+    
+        <lightning-datatable
+            key-field="Id"
+            data={ordersList}
+            columns={columnsTable}
+            hide-checkbox-column="true"
+            onrowaction={handleRowAction}>
+        </lightning-datatable>
+
+        <c-hdt-confirmation-dialog-dropdown-manual
+            options={cancellationOptions}
+            title="Annulla Contratto"
+            message="Scegli una causale per procedere: "
+            confirm-label='Si'
+            cancel-label='No'
+            visible={isDialogVisible}
+            name="cancelContractDialog"
+            onclick={handleDialogResponse}>
+        </c-hdt-confirmation-dialog-dropdown-manual>
+
+    </lightning-card>
+
+</template>

@@ -33,11 +33,6 @@
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewTask</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>HDT_CreateBeneficiaryAccount</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
@@ -55,9 +50,6 @@
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>HDT_SendCertifiedEmail</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>NewTask</quickActionName>
         </quickActionListItems>
     </quickActionList>
     <showEmailCheckbox>false</showEmailCheckbox>
