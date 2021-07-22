@@ -131,7 +131,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return accList;
 	}
 
-
 	public static List<Account> createAccountResidenziale(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category){
 
 		List<Account> accList=new List<Account>();
@@ -506,5 +505,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return agentMatrixList;
+	}
+
+	public static List<BillingProfile__c> createBillingProfile(Integer amount, Boolean doInsert, Id Account){
+
+		List<BillingProfile__c> tstBillingProfileList=new List<BillingProfile__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			BillingProfile__c testBillingProfile=new BillingProfile__c();
+			testBillingProfile.Account__c=Account;
+
+			tstBillingProfileList.add(testBillingProfile);
+		}
+
+		if (doInsert){
+
+			insert tstBillingProfileList;
+		}
+
+		return tstBillingProfileList;
 	}
 }
