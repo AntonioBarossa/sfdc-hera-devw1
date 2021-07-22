@@ -35,6 +35,8 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
             System.debug('Error ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
         }
 
+        HDT_UTL_CaseProcess.updateServiceRequest(trigger.new, trigger.old);
+        
         Boolean skipForCancellation = HDT_UTL_CaseProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
         if(!skipForCancellation){
         //Checks Phase Transition

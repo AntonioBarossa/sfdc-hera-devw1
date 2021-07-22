@@ -404,19 +404,21 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
                 if(sendToSap){
                     this.sendToSapHandler(result.techOffId);
+                    this.showToastHandler(toastObj);
                 } else {
                     this.goBackToRecord();
+                    this.showToastHandler(toastObj);
+                    this.spinnerObj.spinner = false;
                 }
 
             } else {
                 toastObj.success = false;
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
-                toastObj.variant = 'warning';                  
+                toastObj.variant = 'warning';
+                this.showToastHandler(toastObj);
+                this.spinnerObj.spinner = false;
             }
-
-            this.showToastHandler(toastObj);
-            this.spinnerObj.spinner = false;
 
         })
         .catch(error => {
@@ -440,10 +442,13 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         var toastObj = {success: true, title: '', message: '', variant: '', mode: 'sticky'};
 
+        this.spinnerObj.spincss = 'sendingdata slds-text-heading_small';
+
         sendTechOfferToSAP({technicalofferid: techOffId})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);
+            console.log(result.bodyResponse);
 
             if(result.success){
                 toastObj.success = true;
@@ -460,6 +465,8 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 this.showToastHandler(toastObj);
                 this.getMatrixData();
             }
+
+            this.spinnerObj.spinner = false;
 
         })
         .catch(error => {
