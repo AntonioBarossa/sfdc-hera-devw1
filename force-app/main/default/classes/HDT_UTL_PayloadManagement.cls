@@ -413,36 +413,51 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
         List<sObject> cases = inputs.get('CaseList');
         List<sObject> orders = inputs.get('OrderList');
+        // Come primo step contiamo il numero di preventivi su Case e Order, necessario in seguito.
+        Integer numPreventiviCases = 0;
+        Integer numPreventiviOrders = 0;
         for (Integer i = 0; i < cases.size(); i++) {
             String cluster = HDT_UTL_DocumentalManagement.getValue('CaseList', 'Cluster__c', i, inputs, formParams);
-            if (cluster != 'Preventivi' || cluster != 'Verifiche') {
-                continue;
+            if (cluster == 'Preventivi' || cluster == 'Verifiche') {
+                numPreventiviCases++;
             }
-
-            String[] record = new List<String>();
-            // Il primo 310|50 è già presente, evitiamo di aggiungerlo una seconda volta.
-            if (i > 0) {
-                record.add('00310');
-                record.add('50');
+        }
+        for (Integer i = 0; i < orders.size(); i++) {
+            String processType = HDT_UTL_DocumentalManagement.getValue('OrderList', 'ProcessType__c', i, inputs, formParams);
+            if (processType == 'Prima Attivazione con modifica') {
+                numPreventiviOrders++;
             }
-            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CreatedDate', i, inputs, formParams)));
-            record.add(createdDate);                                                                                        // Data Stato
-            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Amount__c', i, inputs, formParams));              // Costo
-            record.add(createdDate);                                                                                        // Data Doc
-            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));             // Num documento
-            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));             // N. Ordine
-            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'TensionOption__c', i, inputs, formParams));       // Tipo lavoro
-            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CommodityFormula__c', i, inputs, formParams));    // Settore merceologico
-            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'AddressFormula__c', i, inputs, formParams));      // Indirizzo del lavoro
-            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Phase__c', i, inputs, formParams));               // Stato
-            // Aggiungiamo lo \n finale sempre, tranne quando siamo all'ultimo giro E non abbiamo Order subito dopo.
-            if (i != cases.size() - 1) {
-                record.add(endLine);
-            } else if (i == cases.size() - 1 && !orders.isEmpty()) {
-                record.add(endLine);
+        }
+        Integer preventivoCounter = 0;
+        for (Integer i = 0; i < cases.size(); i++) {
+            String cluster = HDT_UTL_DocumentalManagement.getValue('CaseList', 'Cluster__c', i, inputs, formParams);
+            if (cluster == 'Preventivi' || cluster == 'Verifiche') {
+                preventivoCounter++;
+                String[] record = new List<String>();
+                // Il primo 310|50 è già presente, evitiamo di aggiungerlo una seconda volta.
+                if (preventivoCounter > 1) {
+                    record.add('00310');
+                    record.add('50');
+                }
+                String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CreatedDate', i, inputs, formParams)));
+                record.add(createdDate);                                                                                        // Data Stato
+                record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Amount__c', i, inputs, formParams));              // Costo
+                record.add(createdDate);                                                                                        // Data Doc
+                record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));             // Num documento
+                record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));             // N. Ordine
+                record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'TensionOption__c', i, inputs, formParams));       // Tipo lavoro
+                record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CommodityFormula__c', i, inputs, formParams));    // Settore merceologico
+                record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'AddressFormula__c', i, inputs, formParams));      // Indirizzo del lavoro
+                record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Phase__c', i, inputs, formParams));               // Stato
+                // Aggiungiamo lo \n finale sempre, tranne quando siamo all'ultimo giro E non abbiamo Order subito dopo.
+                if (preventivoCounter != numPreventiviCases) {
+                    record.add(endLine);
+                } else if (preventivoCounter == numPreventiviCases && numPreventiviOrders > 0) {
+                    record.add(endLine);
+                }
+                
+                payloadSection += String.join(record, div);
             }
-            
-            payloadSection += String.join(record, div);
         }
 
         for (Integer i = 0; i < orders.size(); i++) {
@@ -474,6 +489,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
             payloadSection += String.join(record, div);
         }
+
+        System.debug('seriously? ' + payloadSection + ' wtf?');
 
         return payloadSection;
     }
