@@ -19,4 +19,9 @@ public  class HDT_WS_MotoreVas {
         HDT_WS_Response res = (HDT_WS_Response) HDT_WS_HTTPServiceCall.sendRequest('VAS.Deactivation', req,HDT_WS_ArrichmentDataEntityResponse.class);
         return res;
     } 
+
+    @InvocableMethod(label='VAS Deactivation Callout' callout=true)
+    public static void disactivateVas(List<Id> orderIds) {
+        deactivationCallout(orderIds.get(0));
+    }
 }

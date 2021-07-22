@@ -2,7 +2,7 @@
  * @description       : Generating requests for activating/disactivating VAS
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-07-13
+ * @last modified on  : 2021-07-21
  * @last modified by  : gabriele.rota@webresults.it
  * Modifications Log 
  * Ver   Date         Author                        Modification
@@ -48,6 +48,7 @@ public with sharing class HDT_UTL_VasManagement {
             ServicePointCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c, OrderNumber,
             VasServiceActivationDate__c, ShippingStreetToponym__c, ShippingStreetName__c, ShippingStreetNumber__c,
             ShippingCity__c, ShippingPlace__c, ShippingPostalCode__c, ShippingProvince__c, PhoneNumber__c, ShippingMail__c, SignedDate__c,
+            VasAfterthoughtCausal__c,
             ContractReference__r.SAPContractCode__c,
             SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c, SBQQ__Quote__r.SBQQ__PriceBook__r.Name,
             SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
@@ -115,7 +116,7 @@ public with sharing class HDT_UTL_VasManagement {
             nrContrattoIp = currentOrder.ContractReference__r?.SAPContractCode__c;
 
             //numDocRif = null
-            //statoPratica = Process Type da creare
+            statoPratica = currentOrder.VasAfterthoughtCausal__c;
         }
     }
 

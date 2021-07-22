@@ -68,6 +68,41 @@ public inherited sharing class HDT_LC_SaleVas {
         return contractQr.getActiveRecordsByAccountId(accountId);
     }
 
+
+    /**
+     * @author Federico de Felice (federico.defelice@webresults.it)
+     * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
+     * @param String accountId
+     * @return List<Contact>
+     */
+    @AuraEnabled
+    public static List<Contract> getTempNuovaAttivazContracts(String accountId){
+        //Contracts with status "Activated"
+        contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status');
+        return contractQr.getTempNewActivationContractsByAccountId(accountId);
+    }
+
+    /**
+    * @description Getting list of Orders/Assets/Subscription
+    * @author gabriele.rota@webresults.it | 2021-07-21 
+    * @param accountId 
+    * @param key 
+    * @return List<SObject> 
+    **/
+    @AuraEnabled
+    public static List<SObject> getFornitura(Id accountId, String key){
+        List<SObject> records;
+
+        switch on key {
+            when else {
+                //Contracts with status "Activated"
+                contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status');
+                records = contractQr.getTempNewActivationContractsByAccountId(accountId);
+            }
+        }
+        return records;
+    }
+
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get map with lists of active contracts and orders
