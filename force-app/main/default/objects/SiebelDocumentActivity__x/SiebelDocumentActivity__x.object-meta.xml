@@ -101,7 +101,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Attivit_Documentale_Siebel_Record_Page</content>
+        <content>Attivit_Documentale_Siebel_Record_Page1</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -109,7 +109,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Attivit_Documentale_Siebel_Record_Page</content>
+        <content>Attivit_Documentale_Siebel_Record_Page1</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -120,14 +120,14 @@
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>SiebelIntegDoc</description>
+    <description>SiebelDocumentActivity</description>
     <enableFeeds>false</enableFeeds>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>false</enableSearch>
     <externalDataSource>Hera_Archive</externalDataSource>
-    <externalName>SiebelIntegDoc</externalName>
+    <externalName>SiebelDocumentActivity</externalName>
     <label>Attività Documentale Siebel</label>
-    <pluralLabel>Attività Documentali Siebel</pluralLabel>
+    <pluralLabel>SiebelDocumentActivity</pluralLabel>
     <searchLayouts></searchLayouts>
 </CustomObject>
