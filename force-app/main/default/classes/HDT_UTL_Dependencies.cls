@@ -33,7 +33,6 @@ public inherited sharing class HDT_UTL_Dependencies {
             dependenciesCheckCS.add(dependecyPhaseCheck.Phase__c);
         }
         if(tipology.equalsIgnoreCase(TIPOLOGY_SALES)){
-            System.debug('------------------------ORDER');
             for(Order order : (List<Order>)newSObjectMap.values()){
                 Order oldOrder = (Order)oldSObjectMap.get(order.ID);
                 if(!oldOrder.Phase__c.equalsIgnoreCase(order.Phase__c) && dependenciesCheckCS.contains(order.Phase__c)){
@@ -51,7 +50,6 @@ public inherited sharing class HDT_UTL_Dependencies {
                 }
             }
         }else if(tipology.equalsIgnoreCase(TIPOLOGY_POSTSALES)){
-            System.debug('------------------------CASE');
             for(Case caseProcess : (list<Case>)newSObjectMap.values()){
                 Case oldCase = (Case)oldSObjectMap.get(caseProcess.ID);
                 if(!oldCase.Phase__c.equalsIgnoreCase(caseProcess.Phase__c)){//&& AGGIUNGERE CONTROLLO SE caseProcess.Phase__c IN CS
@@ -87,8 +85,6 @@ public inherited sharing class HDT_UTL_Dependencies {
                         ((Case)newSObjectMap.get(casePr.ID)).Phase__c = PHASE_SEQUENZIALIZZATO;
                     }
                 }
-                System.debug(newSObjectMap);
-                System.debug('--------------------ARRIVATO1');
             }
         }
     }
@@ -231,7 +227,9 @@ public inherited sharing class HDT_UTL_Dependencies {
         try{
             if (ServiceRequest__c.SObjectType.getDescribe().isAccessible()&&
                 Schema.sObjectType.ServiceRequest__c.fields.Status__c.isAccessible()&&
-                Schema.sObjectType.ServiceRequest__c.fields.Status__c.isUpdateable()){
+                Schema.sObjectType.ServiceRequest__c.fields.Status__c.isUpdateable()&&
+                Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isAccessible()&&
+                Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isUpdateable()){
                 
                 update serviceRequestsToBeSequenced;
             }

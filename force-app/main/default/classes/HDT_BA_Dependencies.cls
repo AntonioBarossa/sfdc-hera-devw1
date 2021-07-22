@@ -4,13 +4,10 @@
 * @description HDT_BA_Dependencies – Batch per lo sblocco dei processi sequenzializzati
 */
 public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObject> {
-    List<ServiceRequest__c> serviceRequestsToBeSequenced = new List<ServiceRequest__c>();
-    List<Order> ordersToBeUpdated = new List<Order>();
-    List<Case> casesToBeUpdated = new List<Case>();
-
+    
     public Database.QueryLocator start(Database.BatchableContext BC) {
          
-        String query = 'SELECT Id, Status__c, Case__c, Order__c, Type__c '
+        String query = 'SELECT Id, Status__c, Case__c, Order__c, Type__c, NextPhase__c '
                     + 'FROM ServiceRequest__c '
                     + 'WHERE DependOn__r.Status__c <> \''+String.escapeSingleQuotes(HDT_UTL_Dependencies.STATUS_LAVORAZIONE)+'\' '
                     + 'AND Status__c = \''+String.escapeSingleQuotes(HDT_UTL_Dependencies.STATUS_SEQUENZIALIZZATO)+'\' '
@@ -20,7 +17,11 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
     }
      
     public void execute(Database.BatchableContext BC, List<ServiceRequest__c> srList) {
-        
+        Integer recordsProcessed = 0;
+        List<ServiceRequest__c> serviceRequestsToBeSequenced = new List<ServiceRequest__c>();
+        List<Order> ordersToBeUpdated = new List<Order>();
+        List<Case> casesToBeUpdated = new List<Case>();
+
         for(ServiceRequest__c sr : srList) {        
             if(sr.Type__c.equalsIgnoreCase(HDT_UTL_Dependencies.TIPOLOGY_POSTSALES)){
                 Case caseToUpdate = new Case(ID=sr.Case__c);
@@ -36,30 +37,44 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
             sr.DependOn__c = null;
             sr.Status__c = HDT_UTL_Dependencies.STATUS_LAVORAZIONE;
             serviceRequestsToBeSequenced.add(sr);
+            recordsProcessed++;
         }
-    }   
-     
-    public void finish(Database.BatchableContext BC) {
-        
         Savepoint sp = Database.setSavePoint();
         try{
             if (ServiceRequest__c.SObjectType.getDescribe().isAccessible()&&
                 Schema.sObjectType.ServiceRequest__c.fields.Status__c.isAccessible()&&
                 Schema.sObjectType.ServiceRequest__c.fields.Status__c.isUpdateable()&&
+                Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isAccessible()&&
+                Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isUpdateable()&&
                 Order.SObjectType.getDescribe().isAccessible()&&
                 Schema.sObjectType.Order.fields.Status.isAccessible()&&
                 Schema.sObjectType.Order.fields.Status.isUpdateable()&&
+                Schema.sObjectType.Order.fields.Phase__c.isAccessible()&&
+                Schema.sObjectType.Order.fields.Phase__c.isUpdateable()&&
                 Case.SObjectType.getDescribe().isAccessible()&&
                 Schema.sObjectType.Case.fields.Status.isAccessible()&&
-                Schema.sObjectType.Case.fields.Status.isUpdateable()){
-
-                update serviceRequestsToBeSequenced;
-                update casesToBeUpdated;
-                update ordersToBeUpdated;
+                Schema.sObjectType.Case.fields.Status.isUpdateable()&&
+                Schema.sObjectType.Case.fields.Phase__c.isAccessible()&&
+                Schema.sObjectType.Case.fields.Phase__c.isUpdateable()){
+                
+                if(serviceRequestsToBeSequenced.size()>0){
+                    update serviceRequestsToBeSequenced;
+                }
+                if(ordersToBeUpdated.size()>0){
+                    update ordersToBeUpdated;
+                }
+                if(casesToBeUpdated.size()>0){
+                    update casesToBeUpdated;
+                }
             }
         }catch(Exception ex){
             System.debug(ex.getMessage());
             Database.rollback(sp);
         }
+        System.debug(recordsProcessed + ' records unlocked in the sequentialization processing');
+    }   
+     
+    public void finish(Database.BatchableContext BC) {
+        System.debug('Batch execution, for unlock records in the sequentialization processing, finished');
     }
 }

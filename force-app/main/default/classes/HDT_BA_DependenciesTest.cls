@@ -1,77 +1,72 @@
 /**
 * @author Andrea Arosio (andrea.arosio@webresults.it)
-* @date 19/07/2021
-* @description Test Class for HDT_UTL_Dependencies – Classe di utilità per la gestione della sequenzializzazione dei processi
+* @date 22/07/2021
+* @description Test Class for HDT_BA_Dependencies – Classe Batch per lo sblocco dei processi sequenzializzati
 */
 @isTest
-public with sharing class HDT_UTL_DependenciesTest {
-
+public with sharing class HDT_BA_DependenciesTest {
+    
     @isTest(SeeAllData=true)
-    static void sequentializationOrderTest() {
-        
+    static void batchDesquentializationTest(){
         final String PROCESS_TYPE = 'Cambio offerta - EE';
         final String ORDER_RECORDTYPEID_CONFERMA =
         Schema.SObjectType.Order.getRecordTypeInfosByName().get(PROCESS_TYPE).getRecordTypeId();
+        final String STATUS_CANCELLED = 'Annullato';
         final String SERVICE_POINT_CODE = 'IT001E00031754';
         final String PHASE_BLK = 'In attesa conferma cliente';
         final String PHASE_INC = 'Bozza';
         final String PHASE_INC_NEXT = 'Comunicazione verso Heroku';
-        
+
         Test.startTest();
-        
+
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordListBlk = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, PHASE_INC); 
-        //ServicePoint__c sp = [SELECT id, ServicePointCode__c FROM ServicePoint__c WHERE ServicePointCode__c =: SERVICE_POINT_CODE];
         ServicePoint__c sp = new ServicePoint__c(ServicePointCode__c = SERVICE_POINT_CODE);
-
+        ServiceRequest__c sr = new ServiceRequest__c();
         for(Order order : ordListBlk){
             
             order.RecordTypeId = ORDER_RECORDTYPEID_CONFERMA;
             order.Phase__c = PHASE_BLK;
-            order.Status = HDT_UTL_Dependencies.STATUS_LAVORAZIONE;
+            order.Status = STATUS_CANCELLED;
             insert order;
-
-            ServiceRequest__c sr = new ServiceRequest__c();
 
             sr.ServicePoint__c = sp.Id;
             sr.ServicePointCode__c = sp.ServicePointCode__c;
             sr.Order__c = order.Id;
             sr.Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
-            sr.Status__c = HDT_UTL_Dependencies.STATUS_LAVORAZIONE;
+            sr.Status__c = STATUS_CANCELLED;
             sr.ProcessType__c = PROCESS_TYPE;
             insert sr;
+            System.debug(sr);
         }
-
         List<Order> ordListInc = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza'); 
         
         for(Order order : ordListInc){
             
             order.RecordTypeId = ORDER_RECORDTYPEID_CONFERMA;
-            insert order;
-
-            ServiceRequest__c sr = new ServiceRequest__c();
-
-            sr.ServicePoint__c = sp.Id;
-            sr.ServicePointCode__c = sp.ServicePointCode__c;
-            sr.Order__c = order.Id;
-            sr.Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
-            sr.Status__c = HDT_UTL_Dependencies.STATUS_BOZZA;
-            sr.ProcessType__c = PROCESS_TYPE;
-            insert sr;
-
             order.Phase__c = PHASE_INC_NEXT;
             order.Contact__c = '0031X00000gI5K8QAK';
-            
-            update order;
+            insert order;
 
-            Order orderAfterUpdate = [SELECT ID, Status, Phase__c FROM Order WHERE ID =: order.Id];
-            ServiceRequest__c srAfterUpdate = [SELECT ID, Status__c, DependOn__c, NextPhase__c FROM ServiceRequest__c WHERE Order__c =: order.Id];
-            System.debug(orderAfterUpdate);
-            System.debug(srAfterUpdate);
-            System.assertEquals('Sequenzializzato', orderAfterUpdate.Status);
-            System.assertEquals('In sequenzializzazione', orderAfterUpdate.Phase__c);
+            ServiceRequest__c srSeq = new ServiceRequest__c();
+
+            srSeq.ServicePoint__c = sp.Id;
+            srSeq.ServicePointCode__c = sp.ServicePointCode__c;
+            srSeq.Order__c = order.Id;
+            srSeq.Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
+            srSeq.Status__c = HDT_UTL_Dependencies.STATUS_SEQUENZIALIZZATO;
+            srSeq.DependOn__c = sr.Id;
+            srSeq.NextPhase__c = PHASE_INC_NEXT;
+            srSeq.ProcessType__c = PROCESS_TYPE;
+            insert srSeq;
+            System.debug(srSeq);
         }
-        Test.stopTest();
 
+        HDT_BA_Dependencies bad = new HDT_BA_Dependencies();
+        Id batchId = Database.executeBatch(bad);
+
+        Test.stopTest();
+        System.debug([SELECT count() FROM wrts_prcgvr__AsyncJob__c]);
+        System.assertEquals(0, [select count() from ServiceRequest__c where Status__c =: HDT_UTL_Dependencies.STATUS_SEQUENZIALIZZATO]);
     }
 }
