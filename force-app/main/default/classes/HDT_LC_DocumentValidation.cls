@@ -56,6 +56,7 @@ public inherited sharing class HDT_LC_DocumentValidation {
             } else {
                 ord.Phase__c = 'Documentazione Validata';
             }
+
         }
         System.debug('************:'+ord);
         orderSrv.updateRecord(ord);
