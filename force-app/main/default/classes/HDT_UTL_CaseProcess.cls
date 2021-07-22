@@ -55,7 +55,7 @@ public with sharing class HDT_UTL_CaseProcess {
                    if(mapAccount.get(newCase.AccountId) != null){
                        a = mapAccount.get(newCase.AccountId);
                    }
-                   if(a != null && c != null){
+                   if(a != null && c != null && newCase.Lead__c == null){
                     commList.add(commUTL.instanceCommunicationLog(newCase.cluster__c,newCase.type,newCase.Phase__c,newCase.status,newCase.CancellationReasonDescription__c,'',newCase.id,newCase.ContactId,newCase.AccountId,c != null ? c.company__c : 'ND',a != null ? a.CompanyOwner__c : ''));
                    }  
                }
@@ -75,9 +75,41 @@ public with sharing class HDT_UTL_CaseProcess {
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
 			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
 				caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
+                //Variazione Indirizzzo di Fornitura
                 if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura')){
                     System.debug('Inside Condition');
                     createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento');
+                }
+                //Annullamento Case di Richiesta Parere legati al case di Reclamo
+                //Annullamento activities legate al case di Richiesta Parere
+                if(caseNew.Type.equalsIgnoreCase('Reclamo Scritto/Rich. Info')){
+                    HDT_QR_Case caseQr = new HDT_QR_Case();
+                    List<Case> childCases = new List<Case>();
+                    List<String> caseIds = new List<String>();
+                    List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
+                    List<SObject> updateList = new List<SObject>();
+                    childCases = caseQr.getChildCase(caseNew.Id);
+                    if(childCases != null){
+                        for(Case child : childCases){
+                            if(!(child.Phase__c.equalsIgnoreCase('Completata'))){
+                                caseIds.add(child.Id);
+                                child.Phase__c = 'Annullato';
+                                child.Status = 'Closed';
+                            }
+                        }
+                        if(caseIds != null){
+                            activities = caseQr.getCaseActivities(caseIds);
+                            if(activities != null){
+                                for(wrts_prcgvr__Activity__c activity : activities){
+                                    activity.wrts_prcgvr__Status__c = 'Completed';
+                                    activity.Status__c = 'Annullata';
+                                }
+                                updateList.addAll(activities);
+                            }
+                        }
+                        updateList.addAll(childCases);
+                        HDT_UTL_DatabaseService.updateSObject(updateList);
+                    }
                 }
                 return true;
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
@@ -141,5 +173,30 @@ public with sharing class HDT_UTL_CaseProcess {
 		{
 		
 		}
+    }
+
+    public static void updateServiceRequest(List<Case> newCasesList, List<Case> oldCasesList){
+        Map<String,Case> mapCases = new Map<String,Case>();
+        Map<String,String> caseStatuses= new Map<String,String>();
+        List<ServiceRequest__c> sReqToUpdate= new List<ServiceRequest__c>();
+        Set<Id> caseIds= new Set<Id>();
+        for(Case o: oldCasesList){
+            mapCases.put(o.id, o);
+        }
+        for (Case cs: newCasesList){
+            Case oldCase= mapCases.get(cs.id);
+            
+            if(cs.Status != oldCase.Status ){
+                caseIds.add(cs.Id);
+                caseStatuses.put(cs.Id, cs.Status);
+            }
+        }
+        List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(caseIds, 'Case__c');
+        for(ServiceRequest__c s: srvRequests){
+            ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
+            s.Status__c= caseStatuses.get(s.Case__c);
+            sReqToUpdate.add(s);
+        }
+        HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
     }
 }

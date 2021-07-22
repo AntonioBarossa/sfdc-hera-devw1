@@ -44,7 +44,7 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
      * @param Sale__c sale
      */
     @AuraEnabled
-    public static void createSaleServiceItemTile(ServicePoint__c servicePoint, Sale__c sale, ServicePoint__c oldServicePoint){
+    public static Map<String,Boolean> createSaleServiceItemTile(ServicePoint__c servicePoint, Sale__c sale, ServicePoint__c oldServicePoint){
         
         Map<String,String> extraParams = new Map<String,String>();
 
@@ -56,6 +56,11 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
         }
 
         saleServiceItemSrv.createRecord(servicePoint, sale, extraParams);
+        boolean isTransition =HDT_UTL_Sales.isTransition(ServicePoint,sale);
+        Map<String,Boolean> result = new Map<String,Boolean>{
+            'isTransition'=>isTransition
+        };
+        return result;
 
     }
     

@@ -2,6 +2,8 @@ import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import init from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.init';
 import next from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.next';
+import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
+
 
 // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
 import callServiceCreditCheck from '@salesforce/apex/HDT_WS_CreditCheck.callService';
@@ -23,10 +25,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     options;
     @track processesReference = [];
     value;
+    serviceRequest;
 
     get disabledNext(){
         let result = true;
-        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || (this.selectedProcessObject === '')){
+        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || (this.selectedProcessObject === '') || this.compatibilita === false){
             result = true;
         } else {
             result = false;
@@ -131,14 +134,91 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     }
 
+    incompatibilityfound(selectedProcess, compatibility){
+        console.log('incompatibilityfound: ', JSON.stringify(selectedProcess));
+
+        if(selectedProcess.recordType === 'HDT_RT_Attivazione')
+        {
+            // this.precheck = false;
+            // this.compatibilita = true;
+            // this.causale = 'E necessario effettuare un subentro';
+
+            this.precheck = true;
+            this.compatibilita = false;
+            this.causaleCompatibilita = compatibility;
+
+            this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
+            this.disabledDeliberation = this.order.Step__c !== undefined;
+        }
+        else if(selectedProcess.recordType === 'HDT_RT_RiattivazioniNonMorose'){
+            this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
+            this.disabledDeliberation = this.order.Step__c !== undefined;
+        }
+        else if(selectedProcess.recordType === 'HDT_RT_Subentro')
+        {
+            this.precheck = true;
+            this.compatibilita = false;
+            this.causaleCompatibilita = compatibility;
+            this.showDeliberation = false;
+        }
+        else if(selectedProcess.recordType === 'HDT_RT_SwitchIn')
+        {
+            // this.precheck = false;
+            this.precheck = true;
+            // this.compatibilita = false;
+            this.compatibilita = false;
+            this.causaleCompatibilita = compatibility;
+            this.showDeliberation = false;
+
+            this.showEsitoCheck = false;
+
+        }
+        else if(selectedProcess.recordType === 'HDT_RT_AttivazioneConModifica')
+        {
+            this.precheck = true;
+            this.compatibilita = false;
+            this.causaleCompatibilita = compatibility;
+            this.showDeliberation = false;
+        }
+        else if(selectedProcess.recordType === 'HDT_RT_VAS')
+        {
+            this.selectedProcessObject.recordType = 'HDT_RT_VAS';
+            this.precheck = true;
+            this.compatibilita = false;
+            this.causaleCompatibilita = compatibility;
+            this.showDeliberation = false;
+        }
+        else if(selectedProcess.recordType === 'HDT_RT_CambioOfferta')
+        {
+            this.precheck = true;
+            this.compatibilita = false;
+            this.causaleCompatibilita = compatibility;
+            this.showDeliberation = false;
+        }
+        else if(selectedProcess.recordType === 'HDT_RT_ScontiBonus')
+        {
+            this.precheck = true;
+            this.compatibilita = false;
+            this.causaleCompatibilita = compatibility;
+            this.showDeliberation = false;
+        }
+        //INIZIO SVILUPPI EVERIS
+        else if(selectedProcess.recordType === 'HDT_RT_Voltura'){
+            this.selectedProcessObject.recordType = 'HDT_RT_Voltura';
+            this.precheck = true;
+            this.compatibilita = false;
+            this.causaleCompatibilita = compatibility;
+            this.showDeliberation = false;
+        }
+        //FINE SVILUPPI EVERIS 
+
+    }
+
     handleSelectProcess(event){
         console.log('handleSelectProcess: ' + JSON.stringify(event.detail));
 
         this.selectedProcessObject = this.processesReference.filter(el => el.processType === event.target.value)[0];
-
-        console.log('this.selectedProcessObject: ' + JSON.stringify(this.selectedProcessObject));
-
-        this.applySelectionLogic(this.selectedProcessObject);
+        this.checkCompatibilityProcess();
     }
 
     goToNextStep(extraParams){
@@ -153,7 +233,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         //EVERIS
 
         //EVERIS: Aggiunta variabile Order
-        next({order: this.order,orderId: this.order.Id, selectedProcessObject: this.selectedProcessObject, deliberate: this.deliberation, extraParams: extraParams}).then(data =>{
+        next({order: this.order,orderId: this.order.Id, selectedProcessObject: this.selectedProcessObject, deliberate: this.deliberation, extraParams: extraParams, srRequest: this.serviceRequest}).then(data =>{
             this.loaded = true;
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
 
@@ -235,6 +315,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                     this.selectedProcessObject = this.processesReference[0];
                     this.value = this.selectedProcessObject.processType;
                     this.disabledSelectProcess = true;
+                    this.checkCompatibilityProcess();
                 }
     
                 if (this.options.length === 0) {
@@ -243,7 +324,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                         this.selectedProcessObject = {processType: 'VAS', recordType: 'HDT_RT_VAS'}
                         this.value = this.selectedProcessObject.processType;
                         this.disabledSelectProcess = true;
-                        this.applySelectionLogic(this.selectedProcessObject);
+                        this.checkCompatibilityProcess();
                     }
                 }
     
@@ -265,7 +346,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.options.push({label: this.order.ProcessType__c, value: this.order.ProcessType__c});
             this.selectedProcessObject = {processType: this.order.ProcessType__c, recordType: this.order.RecordType.DeveloperName}
             this.value = this.selectedProcessObject.processType;
-            this.applySelectionLogic(this.selectedProcessObject);
+            this.checkCompatibilityProcess();
         }
 
         console.log('CallBack end');
@@ -395,4 +476,37 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         return data; 
     }
     // END @Picchiri 07/06/21 Credit Check
+    checkCompatibilityProcess(){
+        this.loaded = false;
+        let sRequest= {
+            'servicePoint': this.order.ServicePoint__c,
+            'servicePointCode': this.order.ServicePoint__r.ServicePointCode__c,
+            'status': this.order.Status,
+            'order': this.order.Id,
+            'commoditySector': this.order.ServicePoint__r.CommoditySector__c,
+            'type': 'Order',
+            'processType' : this.selectedProcessObject.processType
+        };
+        checkCompatibility({servReq: sRequest}).then(data =>{
+            if(data.compatibility == ''){
+                this.applySelectionLogic(this.selectedProcessObject);
+                this.serviceRequest= data.ServiceRequest;
+            }else{
+                this.incompatibilityfound(this.selectedProcessObject, data.compatibility);
+            }
+            this.loaded = true;
+
+        }).catch(error => {
+            this.loaded = true;
+            console.log(error.body.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+            this.loaded = true;
+        });
+    }
 }

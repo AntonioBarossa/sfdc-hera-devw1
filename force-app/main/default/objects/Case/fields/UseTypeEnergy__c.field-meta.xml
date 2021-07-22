@@ -13,5 +13,109 @@
         <controllingField>ConnectionType__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_UseTypeEnergy</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Ins Lum Pubb (Perm Partic)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Imp Risalita (Perm Partic)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Illuminaz Monum (Perm Partic)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Non raggiungibile(Perm Partic)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Ordinaria (Perm)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Inst Non presid (Perm Partic)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Ville rifugi simili(Perm Part)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Roulottes simili (Perm Partic)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Cottimo (Perm)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Manifest (Temp Straord 6h)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Manifest (Temp Straord 8h)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Spett viagg (Temp Straord 6h)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Spett viagg (Temp Straord)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Ripr cine tv(Temp Straord 8h)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Manifest (Temp Straord 16h)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>For temp abit(Temp Straord 6h)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Leviga Pavim(Temp Straord 8h)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Cantiere (Temp)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Luminarie (Temp Straord 16h)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Leviga Pavimenti(Temp Straord)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Luminarie (Temp Straord 8h)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>03 Illuminazione Pubblica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Spett viagg (Temp permanente)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Leviga Pavim(Temp permanente)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Ripr cine tv(Temp permanente)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Temporanea</controllingFieldValue>
+            <valueName>Manifest (Temp permanente)</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

@@ -403,7 +403,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Gestione_Morosita_Subflow</targetReference>
+            <targetReference>Arricchimento_Dati_0_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1256,10 +1256,10 @@
             <name>Cluster_Morosit</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Riattivazione Fornitura</stringValue>
+                    <stringValue>HDT_RT_Morosita</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -4085,6 +4085,35 @@
     </subflows>
     <subflows>
         <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_0_0_0_0_0_0_0_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>1700</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Gestione_Morosita_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_Fatturazione</name>
         <label>Arricchimento Dati</label>
         <locationX>2184</locationX>
@@ -4310,7 +4339,7 @@
         <name>Gestione_Morosita_Subflow</name>
         <label>Gestione Morosita Subflow</label>
         <locationX>1700</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <flowName>HDT_FL_GestioneMorosita</flowName>
         <inputAssignments>
             <name>InputCase</name>

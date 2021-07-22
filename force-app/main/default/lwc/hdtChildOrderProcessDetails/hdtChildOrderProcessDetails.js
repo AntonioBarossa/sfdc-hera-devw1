@@ -1083,6 +1083,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'disabled': true,
                         'value': '',
                         'processVisibility': ''
+                    },                    {
+                        'label': '',
+                        'apiname': 'SAPImplantCode__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': '',
