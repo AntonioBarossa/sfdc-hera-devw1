@@ -453,8 +453,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 }
             }
         }
-        let installmentTypeObj = this.objSelector('TypeInstallmentPlan__c');
-        if(!(Object.keys(installmentTypeObj).length === 0)){
+        //let installmentTypeObj = this.objSelector('TypeInstallmentPlan__c');
+        /*if(!(Object.keys(installmentTypeObj).length === 0)){
             let installmentType = this.selector('TypeInstallmentPlan__c');
             console.log('#InstallmentType -> ' + installmentType.value);
             if(installmentType.value !== null && installmentType.value !== undefined){
@@ -468,6 +468,6 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                     }
                 }
             }
-        }
+        }*/
     }
 }
