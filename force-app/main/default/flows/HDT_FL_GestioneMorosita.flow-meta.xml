@@ -99,7 +99,7 @@
         <name>Assegna_Fase_In_Da_Inviare</name>
         <label>Assegna Fase In Da Inviare</label>
         <locationX>842</locationX>
-        <locationY>2630</locationY>
+        <locationY>2750</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -112,6 +112,20 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcola_Codice_Causale_0.CausalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.OperationCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcola_Codice_Causale_0.OperationCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -486,7 +500,7 @@
         <locationX>710</locationX>
         <locationY>2510</locationY>
         <defaultConnector>
-            <targetReference>Assegna_Fase_In_Da_Inviare</targetReference>
+            <targetReference>Calcola_Codice_Causale_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Energia Elettrica</defaultConnectorLabel>
         <rules>
@@ -541,6 +555,48 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Fase_In_Da_Inviare_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.Type</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Subprocess__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.Subprocess__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Calcola_Codice_Causale_0</name>
+        <label>Calcola Codice Causale</label>
+        <locationX>842</locationX>
+        <locationY>2630</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Fase_In_Da_Inviare</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -759,7 +815,7 @@
         <name>AggiornaCase_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>842</locationX>
-        <locationY>2750</locationY>
+        <locationY>2870</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
         </connector>
@@ -1194,7 +1250,7 @@
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
         <locationX>842</locationX>
-        <locationY>2870</locationY>
+        <locationY>2990</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
