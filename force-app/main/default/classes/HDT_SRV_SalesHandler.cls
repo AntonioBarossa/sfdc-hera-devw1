@@ -134,7 +134,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
 
                                 if(mapRequestFields.get('CODERR_ES') == '003' || mapRequestFields.get('CODERR_ES') == '103'){
-                                    ord.IsVolturaTecnica__c = true;
+                                    ord.IsTechnicalTransfer__c = true;
                                 }
                             }
                             when 'Amm. Precheck OK SII' {

@@ -212,7 +212,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
 
                                             if(fieldValueResponse.get('CODERR_ES') == '003' || fieldValueResponse.get('CODERR_ES') == '103'){
-                                                ord.IsVolturaTecnica__c = true;
+                                                ord.IsTechnicalTransfer__c = true;
                                             }
                                         }
                                         when 'Amm. Precheck OK SII' {
