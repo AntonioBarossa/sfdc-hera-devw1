@@ -62,6 +62,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     filterPagination = false;
     showFilterFirstLevel = false;
     showOperationModal;
+    billParameters;
 
     totRecs;
     fromRec;
@@ -287,14 +288,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.filterType = 'paperlessFilters';
         this.showFilters2 = true;
     }
+
     billList(event){
-        this.billListHeader = 'Elenco bollette';
+        this.billParameters = event.currentTarget.dataset.parameters;
         this.showBillList = true;
     }
-    viewReminders(event){
-        this.billListHeader = 'Visualizza Solleciti';
-        this.showBillList = true;
-    }
+
     refreshRecord(){
         //refresh all data in the same service
         this.filterOn = false;
@@ -1429,17 +1428,5 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             console.error('# Stack => ' + e.stack );
         }
     }
-
-    showRate(event){
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: 'Attenzione',
-                message: 'Servizio in sviluppo',
-                variant: 'info'
-            })
-        );
-    }
-
-
 
 }

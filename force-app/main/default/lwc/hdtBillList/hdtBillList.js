@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import getWsData from '@salesforce/apex/HDT_LC_BillList.getWsData';
 
 const columns = [
     { label: 'Numero bolletta', fieldName: 'billNumber' },
@@ -7,36 +8,45 @@ const columns = [
 
 export default class HdtBillList extends LightningElement {
 
-    @api modalHeader;
-    @api requestType;
+    @api parameters;
+    modalHeader;
+    error = {
+        show: false,
+        message: ''
+    }
 
     data = [];
     columns = columns;
 
     connectedCallback(){
-        const data = [
-            {id: '1', billNumber: '001', billDate: '21/02/2020'},
-            {id: '2', billNumber: '002', billDate: '13/06/2020'},
-            {id: '3', billNumber: '003', billDate: '29/08/2020'}
-        ];
-
-        this.data = data;
+        var objParameters = JSON.parse(this.parameters);
+        this.modalHeader = objParameters.header;
+        this.getDataFromWs();
     }
 
-    /*clickOperation(event){
-        var dataSet = event.currentTarget.dataset;
-        this.stmtName = dataSet.id;
-
-        const closeEvent = new CustomEvent("choisestmt", {
-            detail:  {
-                stmtName: this.stmtName, stmtLabel: dataSet.label
+    getDataFromWs(){
+        getWsData({wrapperObj: ''})
+        .then(result => {
+            console.log(result);
+            var resultObj = JSON.parse(result);
+            if(resultObj.success){
+                var dataObj = JSON.parse(resultObj.body);
+                this.data = dataObj;
+            } else {
+                this.error.show = true;
+                this.error.message = resultObj.message; 
             }
-        });
+            
 
-        // Dispatches the event.
-        this.dispatchEvent(closeEvent);
-        this.stmtName = '';
-    }*/
+        }).catch(error => {
+            this.error.show = true;
+            this.error.message = 'CATCH ERROR MESSAGE';
+        });
+    }
+
+    apply(event){
+
+    }
 
     closeModal(event){
         console.log('# closeModal #');

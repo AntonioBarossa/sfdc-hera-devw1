@@ -18,10 +18,12 @@
             <!-- modal body start -->        
             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height: min-content;">
         
-                <div class="slds-form slds-m-top_x-large slds-m-top_xx-small" >
-                    <lightning-card >
+                <div if:true={error.show} class="slds-form slds-m-top_x-large slds-m-top_xx-small" >
+                    MESSAGGIO DI ERRORE
+                </div>
 
-                        <div style="height: 300px;">
+                <div if:false={error.show} class="slds-form slds-m-top_x-large slds-m-top_xx-small" >
+                    <lightning-card >
 
                             <div class="slds-grid slds-gutters slds-m-bottom_medium">
                                 <div class="slds-col slds-size_1-of-3">
@@ -36,14 +38,14 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <lightning-datatable
-                                    key-field="id"
-                                    data={data}
-                                    columns={columns}
-                                    max-row-selection='1'
-                            ></lightning-datatable>
-                        </div>    
+                            <div style="height: 50vh;">
+                                <lightning-datatable
+                                        key-field="id"
+                                        data={data}
+                                        columns={columns}
+                                        max-row-selection='1'
+                                ></lightning-datatable>
+                            </div>    
 
                     </lightning-card>
                 </div>
@@ -51,8 +53,8 @@
             </div>
             <!-- modal footer start-->
             <footer class="slds-modal__footer">
-                <lightning-button class="slds-m-left_x-small" variant="brand-outline" label="Interroga" title="confirm" ></lightning-button>
-                <lightning-button class="slds-m-left_x-small" variant="brand" label="Annulla" title="Close" onclick={closeModal} ></lightning-button>
+                <lightning-button class="slds-m-left_x-small" variant="brand-outline" label="Chiudi" title="Chiudi" onclick={closeModal} ></lightning-button>
+                <lightning-button class="slds-m-left_x-small" variant="brand" label="Visualizza" title="Visualizza" onclick={apply} ></lightning-button>
             </footer>
 
         </div>
