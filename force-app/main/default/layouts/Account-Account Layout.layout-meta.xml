@@ -216,6 +216,34 @@
         <fields>CommoditySector__c</fields>
         <relatedList>ServicePoint__c.Account__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>ACTIVITY_UID__c</fields>
+        <fields>TODO_CD__c</fields>
+        <fields>EVT_STAT_CD__c</fields>
+        <fields>CREATED__c</fields>
+        <relatedList>SiebelActivity__x.TARGET_OU_ID_SF__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>X_CONT_CD__c</fields>
+        <fields>START_DT__c</fields>
+        <fields>END_DT__c</fields>
+        <relatedList>SiebelContract__x.SERV_ACCT_SALESFORCE__c</relatedList>
+        <sortField>END_DT__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>INS_PRODUCT__c</fields>
+        <fields>SR_NUM__c</fields>
+        <fields>ACT_OPEN_DT__c</fields>
+        <relatedList>SiebelRds__x.CST_OU_ID_SALESFORCE__c</relatedList>
+        <sortField>ACT_OPEN_DT__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
