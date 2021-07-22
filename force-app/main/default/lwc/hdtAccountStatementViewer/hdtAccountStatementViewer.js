@@ -1179,21 +1179,21 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             listToConsider = 'allDataFiltered';
         }
 
-        var currentFilter = this.template.querySelector("c-hdt-account-statement-detail-viewer").staticObj;
-        var secondLevelColumns = this.template.querySelector("c-hdt-account-statement-detail-viewer").columns;
-        var isSecondLevelFiltered = this.template.querySelector("c-hdt-account-statement-detail-viewer").getIfSecondLevelIsFiltered();
+        if(this.showSecondLevel){
+            var currentFilter = this.template.querySelector("c-hdt-account-statement-detail-viewer").staticObj;
+            var secondLevelColumns = this.template.querySelector("c-hdt-account-statement-detail-viewer").columns;
+            var isSecondLevelFiltered = this.template.querySelector("c-hdt-account-statement-detail-viewer").getIfSecondLevelIsFiltered();
 
-        const columnTypeMap = new Map();
-        secondLevelColumns.forEach((col) => {
-            columnTypeMap.set(col.fieldName, col.fieldType);
-        });
+            const columnTypeMap = new Map();
+            secondLevelColumns.forEach((col) => {
+                columnTypeMap.set(col.fieldName, col.fieldType);
+            });
 
-        var contoContrArray;
-        if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
-            contoContrArray = currentFilter.contoContrattuale.value.split(',');
+            var contoContrArray;
+            if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
+                contoContrArray = currentFilter.contoContrattuale.value.split(',');
+            }
         }
-
-        console.log('# CALL CHILD METHOD #');
 
         this[listToConsider].forEach((r) => {
             //filter second level
@@ -1202,13 +1202,28 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             }
             listToPrint.push(r);
         });
+
+        console.log('sorting documents...');
+        
+        listToPrint.sort(function (a, b) {
+            var dateParts = a.dataScadenza.split("/");
+            // month is 0-based, that's why we need dataParts[1] - 1
+            var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+            var datePartsb = b.dataScadenza.split("/");
+            // month is 0-based, that's why we need dataParts[1] - 1
+            var dateObjectb = new Date(+datePartsb[2], datePartsb[1] - 1, +datePartsb[0]);
+            return a.contoContrattuale.localeCompare(b.contoContrattuale) || dateObjectb - dateObject;
+        });
+
         this.documents = JSON.stringify(listToPrint);
-        //console.log('documents ' + this.documents);
+        console.log('documents ' + this.documents);
+
         this.showPrintModal = true;
         //this.sendToApex();
         listToPrint.splice(0, listToPrint.length);
         //this.spinnerObj.spinner = false;
         //this.closeMainSpinner();
+
     }
 
     sendToApex(){

@@ -14,6 +14,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return checkGruppoIva(inputs,formParams);
                 }when 'checkCommercialOffer'{
                     return checkCommercialOffer(inputs,formParams);
+                }when 'generateSection20'{
+                    return generateSection20(inputs,formParams);
+                }when 'generateSection40'{
+                    return generateSection40(inputs,formParams);
+                }when 'generateSection50'{
+                    return generateSection50(inputs,formParams);
+                }when 'generateSection70'{
+                    return generateSection70(inputs,formParams);
+                }when 'generateSectionReclami'{
+                    return generateSectionReclami(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -42,6 +52,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
             when 'Case'{
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Case', 'SalesCompany__c', 0, inputs, formParams);
+                city = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyCity__c', 0, inputs, formParams);
+                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city);
+                if (cityExceptionList != null && cityExceptionList.size()>0) {
+                    companyDesc = 'Hera Comm S.p.A.';
+                }
             }
             when 'Account'{
                 //gestire in base al compani owner
@@ -282,5 +297,446 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             result += '|';
         }
         return result;
+    }
+
+    // Genera la sezione di payload ricorsiva 00310|20| per la stampa della Scheda Cliente (sezione "Contratti")
+    private String generateSection20(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        String accountId = HDT_UTL_DocumentalManagement.getValue('Account', 'Id', 0, inputs, formParams);
+
+        String objectName = 'Contract';
+        String queryFields = 'Id,ContractNumber,BillingProfile__r.ContractAccountCode__c,StartDate,ServicePoint__r.SupplyAddress__c,ServicePoint__r.SAPImplantCode__c,ServicePoint__r.CommoditySector__c,Status';
+        String queryString = 'SELECT ' + queryFields;
+        String fromString = ' FROM '+ objectName;
+        String controllingField = 'AccountId';
+        String whereString = ' WHERE ' + controllingField + ' =\''+ accountId + '\'';
+        String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
+        
+        queryString = queryString + relatedQueryString + fromString + whereString; 
+        System.debug('query ' + queryString);
+
+        List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
+        for (Integer i = 0; i < recordList.size(); i++) {
+            Contract c = (Contract) recordList[i];
+            List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
+
+            String[] record = new List<String>();
+            // Il primo 310|20 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('00310');
+                record.add('20');
+            }
+
+            record.add(c.ContractNumber);                               // Numero Documento
+            record.add(c.BillingProfile__r.ContractAccountCode__c);     // Codice Conto Contrattuale
+            record.add(getFormattedDate(c.StartDate));                  // Data stipula
+            record.add(c.ServicePoint__r.SupplyAddress__c);             // Indirizzo di fornitura
+            record.add(c.ServicePoint__r.SAPImplantCode__c);            // Codice Impianto
+            record.add('Contratto');                                    // Tipo (cablato, su Siebel invece era campo ad-hoc)
+            record.add(subscriptions[0].SBQQ__ProductName__c);          // Prodotto di servizio
+            record.add(c.ServicePoint__r.CommoditySector__c);           // Settore merceologico
+            record.add(c.Status);                                       // Stato
+            if (i < recordList.size() - 1) {
+                record.add(endLine);
+            }
+            payloadSection += String.join(record, div);
+        }
+
+        return payloadSection;
+    }
+
+    // Genera la sezione di payload ricorsiva 00310|40| per la stampa della Scheda Cliente (sezione "Richieste di Servizio")
+    private String generateSection40(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        List<sObject> cases = inputs.get('CaseList');
+        List<sObject> orders = inputs.get('OrderList');
+        for (Integer i = 0; i < cases.size(); i++) {
+            String[] record = new List<String>();
+            // Il primo 310|40 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('00310');
+                record.add('40');
+            }
+            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CreatedDate', i, inputs, formParams)));
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Origin', i, inputs, formParams));         // Canale
+            record.add(createdDate);                                                                                // Data ricevimento
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Type', i, inputs, formParams));           // Sottotipo
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Cluster__c', i, inputs, formParams));     // Tipo
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));     // N. RS
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Phase__c', i, inputs, formParams));       // Stato
+            // Aggiungiamo lo \n finale sempre, tranne quando siamo all'ultimo giro E non abbiamo Order subito dopo.
+            if (i != cases.size() - 1) {
+                record.add(endLine);
+            } else if (i == cases.size() - 1 && !orders.isEmpty()) {
+                record.add(endLine);
+            }
+
+            payloadSection += String.join(record, div);
+        }
+
+        for (Integer i = 0; i < orders.size(); i++) {
+            String[] record = new List<String>();
+            // Il primo 310|40 è già presente, evitiamo di aggiungerlo una seconda volta.
+            // Se i = 0 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
+            if (i > 0 || String.isNotBlank(payloadSection)) {
+                record.add('00310');
+                record.add('40');
+            }
+            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('OrderList', 'CreatedDate', i, inputs, formParams)));
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Channel__c', i, inputs, formParams));        // Canale
+            record.add(createdDate);                                                                                    // Data ricevimento
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'ProcessType__c', i, inputs, formParams));    // Sottotipo
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Cluster__c', i, inputs, formParams));        // Tipo
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'OrderNumber', i, inputs, formParams));       // N. RS
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Phase__c', i, inputs, formParams));          // Stato
+            // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
+            if (i < orders.size() - 1) {
+                record.add(endLine);
+            }
+            payloadSection += String.join(record, div);
+        }
+
+        return payloadSection;
+    }
+
+    // Genera la sezione di payload ricorsiva 00310|50| per la stampa della Scheda Cliente (sezione "Preventivi")
+    private String generateSection50(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        List<sObject> cases = inputs.get('CaseList');
+        List<sObject> orders = inputs.get('OrderList');
+        for (Integer i = 0; i < cases.size(); i++) {
+            String cluster = HDT_UTL_DocumentalManagement.getValue('CaseList', 'Cluster__c', i, inputs, formParams);
+            if (cluster != 'Preventivi' || cluster != 'Verifiche') {
+                continue;
+            }
+
+            String[] record = new List<String>();
+            // Il primo 310|50 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('00310');
+                record.add('50');
+            }
+            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CreatedDate', i, inputs, formParams)));
+            record.add(createdDate);                                                                                        // Data Stato
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Amount__c', i, inputs, formParams));              // Costo
+            record.add(createdDate);                                                                                        // Data Doc
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));             // Num documento
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CaseNumber', i, inputs, formParams));             // N. Ordine
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'TensionOption__c', i, inputs, formParams));       // Tipo lavoro
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'CommodityFormula__c', i, inputs, formParams));    // Settore merceologico
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'AddressFormula__c', i, inputs, formParams));      // Indirizzo del lavoro
+            record.add(HDT_UTL_DocumentalManagement.getValue('CaseList', 'Phase__c', i, inputs, formParams));               // Stato
+            // Aggiungiamo lo \n finale sempre, tranne quando siamo all'ultimo giro E non abbiamo Order subito dopo.
+            if (i != cases.size() - 1) {
+                record.add(endLine);
+            } else if (i == cases.size() - 1 && !orders.isEmpty()) {
+                record.add(endLine);
+            }
+            
+            payloadSection += String.join(record, div);
+        }
+
+        for (Integer i = 0; i < orders.size(); i++) {
+            String processType = HDT_UTL_DocumentalManagement.getValue('OrderList', 'ProcessType__c', i, inputs, formParams);
+            if (processType != 'Prima Attivazione con modifica') {
+                continue;
+            }
+
+            String[] record = new List<String>();
+            // Il primo 310|540 è già presente, evitiamo di aggiungerlo una seconda volta.
+            // Se i = 0 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
+            if (i > 0 || String.isNotBlank(payloadSection)) {
+                record.add('00310');
+                record.add('50');
+            }
+            String createdDate = getFormattedDate(Date.valueOf(HDT_UTL_DocumentalManagement.getValue('OrderList', 'CreatedDate', i, inputs, formParams)));
+            record.add(createdDate);                                                                                              // Data Stato
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'EstimateAmount__c', i, inputs, formParams));           // Costo
+            record.add(createdDate);                                                                                              // Data Doc
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'OrderNumber', i, inputs, formParams));                 // Num documento
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'OrderNumber', i, inputs, formParams));                 // N. Ordine
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'RequestOption__c', i, inputs, formParams));            // Tipo lavoro
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'CommodityFormula__c', i, inputs, formParams));         // Settore merceologico
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'SupplyAddressFormula__c', i, inputs, formParams));     // Indirizzo del lavoro
+            record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Phase__c', i, inputs, formParams));                    // Stato
+            // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
+            if (i < orders.size() - 1) {
+                record.add(endLine);
+            }
+            payloadSection += String.join(record, div);
+        }
+
+        return payloadSection;
+    }
+
+    // Genera la sezione di payload ricorsiva 00310|70| per la stampa della Scheda Cliente (sezione "Anagrafiche Collegate")
+    private String generateSection70(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        String accountId = HDT_UTL_DocumentalManagement.getValue('Account', 'Id', 0, inputs, formParams);
+        HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
+        AccountContactRelation acr = acrQueryHandler.getPrimaryContactRelation(accountId);
+        if (acr == null) {
+            System.debug('Nessun contatto titolare trovate per accountId: ' + accountId);
+            return '';
+        }
+
+        List<AccountContactRelation> relations = acrQueryHandler.getRelatedAccounts(acr.ContactId);
+        for (Integer i = 0; i < relations.size(); i++) {
+            AccountContactRelation rel = relations[i];
+            String[] record = new List<String>();
+            // Il primo 310|70 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('00310');
+                record.add('70');
+            }
+
+            record.add(rel.Account.FirstName__c);                  // Nome
+            record.add(rel.Account.LastName__c);                   // Cognome/ragione sociale
+            if (rel.AccountId != accountId) {
+                record.add(rel.Account.FiscalCode__c);             // Codice Fiscale cliente principale
+                record.add(rel.Account.FirstName__c);              // Nome principale
+                record.add(rel.Account.LastName__c);               // Cognome/ragione sociale principale
+                record.add(rel.Account.CustomerCode__c);           // Codice cliente principale
+                record.add(rel.Account.VATNumber__c);              // PIVA cliente principale
+            }
+
+            // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
+            if (i < relations.size() - 1) {
+                record.add(endLine);
+            }
+            payloadSection += String.join(record, div);
+        }
+
+        return payloadSection;
+    }
+
+    /*
+    Genera la sezione di payload per la stampa della risposta motivata dei reclami (corpo della risposta).
+    Esempio di payload: 
+
+        00310|100|Gentile cliente|
+        00310|100|come anticipato nella telefonata del 12/07, le confermiamo di aver trasmesso al Distributore INRETE l’autolettura di mc 300|
+        00310|100|...
+        ...
+        00310|110|Simone Fazio|
+        00310|120|Servizio: Gas|
+        00310|120|Tipologia fornitura: mercato libero|
+        00310|120|Tariffa cliente: Hera Impronta Zero Casa Gas|
+        00310|120|Indirizzo di fornitura: VIA ZENA 5 LOIANO (BO)|
+        00310|120|PDR: 03081000247066|
+        00310|120|Servizio: Gas|
+        00310|120|Tipologia fornitura: mercato libero|
+        00310|120|Tariffa cliente: Hera Impronta Zero Casa Gas|
+        00310|120|Indirizzo di fornitura: VIA FELSINA 37 BOLOGNA (BO)|
+        00310|120|PDR: 03081000243674|
+        00310|130|1|25|
+    */
+    private String generateSectionReclami(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String endLine = '\n';
+        String div = '|';
+        String payloadSection = '';
+
+        String context = (String) formParams.get('Contesto');
+        if (context != 'Case') {
+            return '';
+        }
+
+        String cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
+        if (String.isNotBlank(cluster) && cluster != 'Reclami') {
+            return '';
+        }
+
+        String htmlResponse = HDT_UTL_DocumentalManagement.getValue('Case', 'ComplaintBodyResponse__c', 0, inputs, formParams);
+        if (String.isBlank(htmlResponse)) {
+            return '';
+        }
+
+        String plainTextResponse = htmlResponse.stripHtmlTags();
+        String[] splittedResponse = plainTextResponse.split('\n');
+        
+        // Sezione ricorsiva 310|100 con il corpo della risposta.
+        for (Integer i = 0; i < splittedResponse.size(); i++) {
+            String[] record = new List<String>();
+            // Il primo 310|100 è già presente, evitiamo di aggiungerlo una seconda volta.
+            if (i > 0) {
+                record.add('00310');
+                record.add('100');
+            }
+            String cleanResponseLine = HDT_UTL_DocumentalManagement.removeSpecialChar(splittedResponse[i]);
+            record.add(cleanResponseLine);
+            record.add(endLine);
+
+            payloadSection += String.join(record, div);
+        }
+
+        // Record 310|110 con riferimento operatore che ha lavorato la pratica.
+        String[] userRecord = new List<String>();
+        userRecord.add('00310');
+        userRecord.add('110');
+        userRecord.add(UserInfo.getFirstName() + ' ' + UserInfo.getLastName());
+        userRecord.add(endLine);
+        payloadSection += String.join(userRecord, div);
+
+        // Sezione ricorsiva 310|120 con le info sulle forniture incluse nella risposta del reclamo.
+        List<String> caseIds = new List<String>();
+        String isContainer = HDT_UTL_DocumentalManagement.getValue('Case', 'IsContainer__c', 0, inputs, formParams);
+        if (Boolean.valueOf(isContainer)) {
+            String selectedChildCases = HDT_UTL_DocumentalManagement.getValue('Case', 'Note__c', 0, inputs, formParams);
+            if (String.isNotBlank(selectedChildCases)) {
+                for (String caseId : selectedChildCases.split(';')) {
+                    caseIds.add(caseId);
+                }
+            }
+        } else {
+            caseIds.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Id', 0, inputs, formParams));
+        }
+
+        HDT_QR_Case queryCase = new HDT_QR_Case();
+        String queryFieldsCase = 'Id,CaseNumber,Contract__c,Market__c,SendDate__c,CommodityFormula__c,AddressFormula__c,PODPDRFormula__c'; // WIP. per aggiungere l'offerta bisogna querare anche i contratti del cliente... :(
+        List<Case> responseCases = queryCase.getRecordsById(caseIds, queryFieldsCase);
+
+        List<String> contractIds = new List<String>();
+        for (Case c : responseCases) {
+            contractIds.add(c.Contract__c);
+        }
+        String objectName = 'Contract';
+        String queryFieldsContract = 'Id';
+        String queryString = 'SELECT ' + queryFieldsContract;
+        String fromString = ' FROM '+ objectName;
+        String controllingField = 'Id';
+        String whereString = ' WHERE ' + controllingField + ' IN :contractIds';
+        String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
+        queryString = queryString + relatedQueryString + fromString + whereString; 
+        System.debug('contracts query ' + queryString);
+        List<sObject> recordList = new List<sObject>();
+        SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe(); 
+        if (objRes.isAccessible()) {
+            recordList = Database.query(queryString);
+        }
+
+        Map<Id, String> offersMap = new Map<Id, String>(); // mappa tra id contratto e offerta commerciale del contratto.
+        for (Integer i = 0; i < recordList.size(); i++) {
+            Contract c = (Contract) recordList[i];
+            List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
+            offersMap.put(c.Id, subscriptions[0].SBQQ__ProductName__c);
+        }
+
+        // Info sulle forniture
+        String emptyLine = '00310|120| |' + endLine;
+        for (Case c : responseCases) {
+            {
+                String[] record = new List<String>();
+                record.add('00310');
+                record.add('120');
+                record.add('Servizio: ' + c.CommodityFormula__c);
+                record.add(endLine);
+                payloadSection += String.join(record, div);
+            }
+            {
+                String[] record = new List<String>();
+                record.add('00310');
+                record.add('120');
+                record.add('Tipologia fornitura: ' + c.Market__c);
+                record.add(endLine);
+                payloadSection += String.join(record, div);
+            }
+            {
+                String[] record = new List<String>();
+                record.add('00310');
+                record.add('120');
+                record.add('Tariffa cliente: ' + offersMap.get(c.Contract__c));
+                record.add(endLine);
+                payloadSection += String.join(record, div);
+            }
+            {
+                String[] record = new List<String>();
+                record.add('00310');
+                record.add('120');
+                record.add('Indirizzo di fornitura: ' + c.AddressFormula__c);
+                record.add(endLine);
+                payloadSection += String.join(record, div);
+            }
+            {
+                String[] record = new List<String>();
+                record.add('00310');
+                record.add('120');
+                if ('Gas' == c.CommodityFormula__c) {
+                    record.add('PDR: ' + c.PODPDRFormula__c);
+                } else { // TODO WAVE 2: adeguare per le altre commodity.
+                    record.add('POD: ' + c.PODPDRFormula__c);
+                }
+                record.add(endLine);
+                payloadSection += String.join(record, div);
+                payloadSection += emptyLine;
+            }
+        }
+
+        // Info sulle date ricezione del reclamo (incluse sempre nella sezione 310|120)
+        for (Integer i = 0; i < 4; i++) {
+            payloadSection += emptyLine;
+        }
+        for (Integer i = 0; i < responseCases.size(); i++) {
+            Case c = responseCases[i];
+            String[] record = new List<String>();
+            record.add('00310');
+            record.add('120');
+            record.add('Risposta al Reclamo ricevuto in data ' + getFormattedDate(c.SendDate__c) + ' ns Prot ' + c.CaseNumber);
+            // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
+            if (i < responseCases.size() - 1) {
+                record.add(endLine);
+            }
+            payloadSection += String.join(record, div);
+        }
+
+        // Record 310|130 per box indennizzi, previsto solo per i reclami scritti (non per le richieste di info).
+        String complaintClassification = HDT_UTL_DocumentalManagement.getValue('Case', 'FirstLevelComplaintClassification__c', 0, inputs, formParams);
+        if (String.isNotBlank(complaintClassification) && complaintClassification != 'Richiesta di informazioni') {
+            Boolean indemnityConfirmed = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityConfirmed__c', 0, inputs, formParams));
+            String indemnityMotivation = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityMotivation__c', 0, inputs, formParams);
+            String indemnityDueSendResponse = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueSendResponse__c', 0, inputs, formParams);
+            String indemnityDueBillingCorrection = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueBilllingCorrection__c', 0, inputs, formParams);
+
+            String[] record = new List<String>();
+            record.add('00310');
+            record.add('130');
+            // Calcolo tipologia di indennizzo attesa da Engage1.
+            if (indemnityConfirmed) {
+                record.add('1');
+            } else if (indemnityMotivation == 'Altro indennizzo stesso anno solare') {
+                record.add('2');
+            } else {
+                record.add('3');
+            }
+            // Importo indennizzo, se presente.
+            if (complaintClassification == 'Reclamo Scritto' && Decimal.valueOf(indemnityDueSendResponse) > 0) {
+                record.add(String.valueOf(indemnityDueSendResponse));
+            } else if (complaintClassification == '	Rettifica Doppia Fatturazione' && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+                record.add(String.valueOf(indemnityDueBillingCorrection));
+            }
+            // Aggiungiamo anche | e l'endLine poichè il record indennizzi è opzionale e il 310|120 non può aggiungere a prenscindere un endline finale.
+            payloadSection += '|' + endLine + String.join(record, div);
+        }
+
+        return payloadSection;
+    }
+
+    // Restituisce la data nel formato richiesto da Engage1
+    private static String getFormattedDate(Date dateToFormat) {
+        Datetime dt = dateToFormat;
+        String formattedDate = dt.format('dd/MM/y');
+        return formattedDate;
     }
 }

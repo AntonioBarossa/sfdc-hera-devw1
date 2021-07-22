@@ -506,6 +506,11 @@
                 <label>Caricamento Siebel KO</label>
             </value>
             <value>
+                <fullName>Sequenzializzato</fullName>
+                <default>false</default>
+                <label>Sequenzializzato</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -594,6 +599,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Ripensamento -  Comunicazione verso Heroku OK</label>
+            </value>
+            <value>
+                <fullName>Sospeso</fullName>
+                <default>false</default>
+                <isActive>true</isActive>
+                <label>Sospeso</label>
             </value>
         </valueSetDefinition>
     </valueSet>

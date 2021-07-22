@@ -15,6 +15,7 @@ import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
 // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
 import ConsumptionsCorrectionType__c from '@salesforce/schema/Case.ConsumptionsCorrectionType__c';
+import SystemCapacity__c from '@salesforce/schema/Case.SystemCapacity__c';
 
 export default class hdtChildOrderProcessDetails extends LightningElement {
 
@@ -345,7 +346,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     getConfirmedSteps(){
         //EVERIS: MODIFICATO LAYOUT PER RENDERLO PIU FRIENDLY E AGGIUNTE SEZIONI
-        this.confirmedSteps = this.availableStepsFirst.filter(section => (section.name !== 'reading'
+        this.confirmedSteps = this.availableStepsFirst.filter(section => (
+        section.name !== 'reading'
         && section.name !== 'processVariables' 
         && section.name !== 'creditCheck' 
         && section.name !== 'dettaglioImpianto' 
@@ -355,6 +357,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         && section.name !== 'indirizzoSpedizione' 
         && section.name !== 'ivaAccise'
         && section.name !== 'dateOrdine'));
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+            let exitingCustomerIndex = this.confirmedSteps.indexOf(section => (section.name === 'clienteUscente'));
+            console.log('exitingCustomerIndex ' + exitingCustomerIndex)
+            if(exitingCustomerIndex > -1){
+                this.confirmedSteps.splice(exitingCustomerIndex, 1);
+            }
+        }
 
     }
 
@@ -370,7 +379,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         || section.name === 'indirizzoSpedizione' 
         || section.name === 'ivaAccise'
         || section.name === 'dateOrdine'));
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+            this.pendingSteps.push(
+                this.availableStepsFirst.filter(section => section.name === 'clienteUscente')
+            );
+        }
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
+        
     }
 
     @api
@@ -1063,6 +1078,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': '',
                         'apiname': 'ImplantType__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },                    {
+                        'label': '',
+                        'apiname': 'SAPImplantCode__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
@@ -2594,7 +2617,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
             this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura';
             console.log('IsVolture--> '+this.isVolture);
-            console.log('ConfirmedSteps--> '+this.confirmedSteps);
+            console.log('ConfirmedSteps--> '+JSON.stringify(this.confirmedSteps));
             console.log('Details Callback End');
             console.log('CommoditySector -> ' + this.order.ServicePoint__r.CommoditySector__c)
             this.readingDisabled = (this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);

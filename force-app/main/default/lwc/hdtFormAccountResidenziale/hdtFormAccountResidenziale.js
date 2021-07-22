@@ -13,15 +13,17 @@ import { NavigationMixin } from 'lightning/navigation';
 import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCodeData';
 import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountResidenziale.insertAccount';
+import checkRole from '@salesforce/apex/HDT_UTL_Account.checkIsBackoffice';
 export default class HdtFormAccountResidenziale extends NavigationMixin(LightningElement) {
 
-
+    @api showCompanyOwner = false;
     @track spinner=false;
     @track errorMessage='';
     @track phonePrefixValue;
     @track phonePrefixOptions;
     @track mobilePhonePrefixValue;
     @track mobilePhonePrefixOptions;
+    @api companyDefault;
     @track fiscalCode;
     @api customerMarkingOptions = [];
     @api categoryOptions = [];
@@ -79,6 +81,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     categoryGetOptions({error, data}) {
         if (data){
             this.categoryData = data;
+            this.inizializeInit();
         }
     };
 
@@ -99,6 +102,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         { label: 'Familiare', value: 'Familiare' }
     ];
     handleCompanyOwnerChange(event) {
+        console.log("***************CHANGE" + event.target.value);
         let key = this.customerData.controllerValues[event.target.value];
         this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
         this.markingValue = '';
@@ -112,6 +116,42 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     closeModal() {
         this.showModal = false;
         window.history.back();
+    }
+
+    inizializeInit(){
+        checkRole({}).then((response) => {
+            if(response == 'HDT_BackOffice'){
+                this.showCompanyOwner = false;
+            }else if(response == 'HDT_FrontOffice_HERACOMM'){
+                this.companyDefault = 'HERA COMM';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['HERA COMM'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }else if(response == 'HDT_FrontOffice_Reseller'){
+                this.companyDefault = 'Reseller';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['Reseller'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }
+            else if(response == 'HDT_FrontOffice_MMS'){
+                this.companyDefault = 'MMS';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['MMS'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }
+            else if(response == 'HDT_FrontOffice_AAAEBT'){
+                this.companyDefault = 'AAA-EBT';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['AAA-EBT'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }
+            else{
+                this.companyDefault = 'HERA COMM';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['HERA COMM'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }
+        });
     }
 
     connectedCallback(){
@@ -213,7 +253,14 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             if(this.accountAddress['Civico'] != null){
                 this.fieldsToUpdate['BillingStreetNumber__c'] = this.accountAddress['Civico'];
             }
+            if(this.accountAddress['Localita'] != null){
+                this.fieldsToUpdate['BillingPlace__c'] = this.accountAddress['Localita'];
+            }
+            if(this.accountAddress['Codice Localita'] != null){
+                this.fieldsToUpdate['BillingPlaceCode__c'] = this.accountAddress['Codice Localita'];
+            }
             if(this.accountAddress['Flag Verificato'] !=null){
+                this.fieldsToUpdate['BillingIsAddressVerified__c'] = this.accountAddress['Flag Verificato'];
                 this.isVerified = this.accountAddress['Flag Verificato'];
             }
         }

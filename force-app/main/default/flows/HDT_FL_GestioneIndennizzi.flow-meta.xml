@@ -261,7 +261,7 @@
             <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.IndemnityDueSendResponse__c</elementReference>
+                <elementReference>getInputCase.IndemnityDueBilllingCorrection__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -284,7 +284,7 @@
             <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.IndemnityDueSendResponse__c</elementReference>
+                <elementReference>getInputCase.IndemnityDueBilllingCorrection__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -307,7 +307,7 @@
             <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.IndemnityDueSendResponse__c</elementReference>
+                <elementReference>getInputCase.IndemnityDueBilllingCorrection__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1030,6 +1030,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>getInputCase.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Bozza</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>

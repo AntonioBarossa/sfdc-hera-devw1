@@ -1,29 +1,42 @@
 import { LightningElement, api, track} from 'lwc';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import endDateError from '@salesforce/label/c.HDT_LWC_OfferEditForm_EndDateError';
+import numberTimeError from '@salesforce/label/c.HDT_LWC_OfferEditForm_NumberTimeError';
+import numberDaysMonthsYearsError from '@salesforce/label/c.HDT_LWC_OfferEditForm_NumberDaysMonthsYearsError';
+import numberOfTimeUnitsError from '@salesforce/label/c.HDT_LWC_OfferEditForm_NumberOfTimeUnitsError';
+import allFieldRequired from '@salesforce/label/c.HDT_LWC_OfferEditForm_AllFieldRequired';
 
 export default class HdtTechnicalOfferEditForm extends LightningElement {
+
+    label = {
+        endDateError,
+        numberTimeError,
+        numberDaysMonthsYearsError,
+        numberOfTimeUnitsError,
+        allFieldRequired
+    };
 
     @api productId;
     @api rateObj;
     fieldsList = [
-        'Market__c',
-        'ProcessType__c',
-        'PlacetOffer__c',
-        //'ServiceProduct__c',
-        'StartDate__c',
-        'EndDate__c',
-        'StepAllowed__c',
-        'ContractId__c',
-        'NumberTimeExtension__c',
-        'UnitTimeExtension__c',
-        'NumberDaysMonthsYears__c',
-        'UnitTerminationTime__c',
-        'CancellationAllowed__c',
-        'RecessAdmitted__c',
-        'NumberOfTimeUnits__c',
-        'UnitOfTimeMeasurement__c',
-        'AdmittingProfileModification__c',
-        'OfferToBeModified__c'
+        {fieldName: 'Market__c', required: true},
+        {fieldName: 'ProcessType__c', required: false},
+        {fieldName: 'PlacetOffer__c', required: false},
+        //{fieldName: 'ServiceProduct__c', required: true},
+        {fieldName: 'StartDate__c', required: true},
+        {fieldName: 'EndDate__c', required: true},
+        {fieldName: 'StepAllowed__c', required: true},
+        {fieldName: 'ContractId__c', required: true},
+        {fieldName: 'NumberTimeExtension__c', required: true},
+        {fieldName: 'UnitTimeExtension__c', required: true},
+        {fieldName: 'NumberDaysMonthsYears__c', required: true},
+        {fieldName: 'UnitTerminationTime__c', required: true},
+        {fieldName: 'CancellationAllowed__c', required: true},
+        {fieldName: 'RecessAdmitted__c', required: true},
+        {fieldName: 'NumberOfTimeUnits__c', required: true},
+        {fieldName: 'UnitOfTimeMeasurement__c', required: true},
+        {fieldName: 'AdmittingProfileModification__c', required: false},
+        {fieldName: 'OfferToBeModified__c', required: false}
     ];
 
     @api mode;
@@ -121,7 +134,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
             var start = new Date(techOffObj.StartDate__c);
             var end = new Date(techOffObj.EndDate__c);
             if(start >= end){
-                returnObj.message = 'La data di fine validità non può essere inferiore alla data di inizio';
+                returnObj.message = this.label.endDateError;
                 return returnObj;
             }
             //returnObj.success = true;
@@ -131,7 +144,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         if(this.checkIsNotNull(techOffObj.NumberTimeExtension__c)){
             let isnum = /^\d+$/.test(techOffObj.NumberTimeExtension__c);
             if(!isnum){
-                returnObj.message = 'Numero unità di tempo per proroga può contenere solo dei numeri';
+                returnObj.message = this.label.numberTimeError;
                 return returnObj;
             }
         }
@@ -139,7 +152,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         if(this.checkIsNotNull(techOffObj.NumberDaysMonthsYears__c)){
             let isnum = /^\d+$/.test(techOffObj.NumberDaysMonthsYears__c);
             if(!isnum){
-                returnObj.message = 'Nº Giorni/Mesi/Anni non può contenere delle lettere';
+                returnObj.message = this.label.numberDaysMonthsYearsError;
                 return returnObj;
             }
         }
@@ -147,15 +160,24 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         if(this.checkIsNotNull(techOffObj.NumberOfTimeUnits__c)){
             let isnum = /^\d+$/.test(techOffObj.NumberOfTimeUnits__c);
             if(!isnum){
-                returnObj.message = 'Numero unità di tempo non può contenere delle lettere';
+                returnObj.message = this.label.numberOfTimeUnitsError;
                 return returnObj;             
             }
         }
 
         for(var i in techOffObj){
-            if(!this.checkIsNotNull(techOffObj[i])){
-                returnObj.message = 'Tutti i parametri devono essere compilati!';
-                return returnObj;
+            //console.log('> > > > ' + i + ' - ' + techOffObj[i]);
+            let foundField = this.fieldsList.find(field  => field.fieldName === i);
+            //console.log('>>>> ' + JSON.stringify(foundField));
+            if(!this.checkIsNotNull(techOffObj[i]) && foundField.required){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: this.label.allFieldRequired,
+                        variant: 'warning',
+                        mode: 'sticky'
+                    })
+                );
             }
         }
 

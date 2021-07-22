@@ -9,7 +9,7 @@
         ></c-hdt-confirmation-modal>
     </template>
 
-    <lightning-card title="Configurazione Offerta Tecnica" icon-name="standard:proposition" >
+    <lightning-card title={label.mainTitle} icon-name="standard:proposition" >
         
         <div if:true={spinnerObj.spinner} class="progress">
             <lightning-spinner class={spinnerObj.spincss} alternative-text="Loading" size="large"></lightning-spinner>
@@ -51,13 +51,13 @@
 
             <div class="slds-card__body slds-card__body_inner">
                 <div class="slds-grid slds-gutters">
-                    <div class="slds-col">
+                    <div class="slds-col slds-size_1-of-3">
                         
                         <div class="slds-form slds-m-top_x-large " >
 
                             <div class="slds-form-element slds-form-element_horizontal">
                                 <lightning-helptext content={helpTxtProductCode} ></lightning-helptext>
-                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Product Code</label>
+                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Codice Prodotto</label>
                                 <div class="slds-form-element__control">
                                     <!--<lightning-input disabled value={product.productCode} type="text" label=" "></lightning-input>-->
                                     <div class="slds-box slds-box_x-small lgc-bg" >
@@ -80,7 +80,7 @@
                         </div>
                     </div>
 
-                    <div class="slds-col">
+                    <div class="slds-col slds-border_left slds-border_right  slds-size_1-of-3">
                         <div class="slds-form slds-m-top_x-large " >
                             <div class="slds-form-element slds-form-element_horizontal">
                                 <lightning-helptext content={helpTxtRateCategory} ></lightning-helptext>
@@ -106,6 +106,37 @@
 
                         </div>
                     </div>
+
+                    <div class="slds-col  slds-size_1-of-3">
+                        
+                        <div class="slds-form slds-m-top_x-large " >
+
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <lightning-helptext content="Codice offerta in Sap" ></lightning-helptext>
+                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Codice SAP</label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-box slds-box_x-small lgc-bg" >
+                                        <div class="slds-text-body_regular">{product.sapCode}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <lightning-helptext content="Eventuale messaggio di integrazione"></lightning-helptext>
+                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Notifica SAP</label>
+                                <div class="slds-form-element__control">
+                                    <textarea id="textarea-id-01" disabled="" class="slds-textarea">
+                                        {product.sapErrorMessage}
+                                    </textarea>
+                                    <!--<div class="slds-box slds-box_x-small lgc-bg" >
+                                        <div class="slds-text-body_regular">{product.sapErrorMessage}</div>
+                                    </div>-->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
                 <!--slds-m-top_small slds-m-bottom_xxx_small slds-m-left_x-small slds-m-right_x-small-->
                 <div class="slds-box slds-box_xx-small slds-m-top_medium" >
@@ -251,6 +282,7 @@
                                                 icon="standard:announcement"
                                                 pill-obj={d.infoGroup}
                                                 rate={product.rateCategory}
+                                                rate-type-value={d.rateType.value}
                                                 onsetvaluetoparent={handleSetvaluetoparent}
                                             ></c-hdt-pill>
                                         </template>
