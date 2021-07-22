@@ -262,6 +262,30 @@ public with sharing class HDT_SRV_SalesHandler {
                 }                        
 
             }
+
+            when 'NOTIF_VAS'{
+                Map<String, String> requestInformations = new Map<String, String>();
+                for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
+                    requestInformations.put(field.Name, field.value);
+                }
+                //att o disattivazione request.objectType == Order Attivazione, else (case, asset) disatt
+
+                if(request.objectType == 'Order'){
+                    //attivazione
+                    if(requestInformations.get('ESITO')=='OK'){
+                        HDT_UTL_NotifVas.handleAttivazioneVas(requestInformations, request);
+                    }else{
+                        //KO -> Scarti, distinguere KO definitivo da Ko scarti
+                    }
+                }else{
+                    //disattivazione
+                    if(requestInformations.get('ESITO')=='OK'){
+
+                    }else{
+                        //KO -> Scarti, distinguere KO definitivo da Ko scarti
+                    }
+                }
+            }
             when 'RICH_PASS' {
 
                 if (request.objects.get(0).fields.get(0) != null){
