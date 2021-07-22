@@ -14,7 +14,7 @@ public with sharing class HDT_BA_PaperCampaignClosing implements Database.Batcha
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         // collect the batches of records or objects to be passed to execute
-        String query = 'SELECT campaignId,Status,contactId FROM CampaignMember WHERE PaperProcess__c == :paperProcessingId AND status != \'Gestito da CRM\' AND contactId != null WITH SECURITY_ENFORCED';
+        String query = 'SELECT campaignId,Status,contactId FROM CampaignMember WHERE PaperProcess__c = :paperProcessingId AND status != \'Gestito da CRM\' AND contactId != null WITH SECURITY_ENFORCED';
         return Database.getQueryLocator(query);
     }
 
@@ -29,7 +29,7 @@ public with sharing class HDT_BA_PaperCampaignClosing implements Database.Batcha
             cm.status = 'Gestito da CRM';
             ppWrapList.add(pc);
         }
-        HDT_SRV_PaperCommunication.updateRecords(ppWrapList);
+        HDT_SRV_PaperCommunication.insertRecords(ppWrapList);
         campSRV.updateRecords(scope);
     }
 

@@ -16,6 +16,19 @@ public inherited sharing class HDT_QR_ActivityCustom {
         ];
     }
 
+    public static List<wrts_prcgvr__Activity__c> getRecordById(String activityId) {
+        return [
+            SELECT
+            Id,
+            Account__c,
+            Contact__c,
+            Distributor__c,
+            AppointmentDate__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE Id= :activityId
+            WITH SECURITY_ENFORCED
+        ];
+    }
     public static List<wrts_prcgvr__Activity__c> getRecordByCaseId(String caseId) {
         return [
             SELECT

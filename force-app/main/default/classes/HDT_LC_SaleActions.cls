@@ -33,7 +33,9 @@ public inherited sharing class HDT_LC_SaleActions {
      * @param Sale__c sale
      */
     @AuraEnabled
-    public static void save(Sale__c sale){
+    public static void save(Sale__c sale, String campaignMemberId){
+
+        Id campaignElegibilityGroup = (sale.Campaign__c != null && sale.Campaign__r.CampaignEligibilityGroup__c != null) ? sale.Campaign__r.CampaignEligibilityGroup__c : null;
         
         //1 - Check if QuoteLines have BillingProfiles associated
         quoteLineSrv.checkReadAccess('Name,BillingProfile__c,SBQQ__Quote__c');
@@ -63,10 +65,11 @@ public inherited sharing class HDT_LC_SaleActions {
         
         //2 - Update Opportunity stage
         opportunitySrv.checkReadAccess('StageName');
-        List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName', 'Proposal');
+        List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName, CampaignEleggibilityGroup__c', 'Proposal');
         
         for (Opportunity opp : opps) {
             opp.StageName = 'Closed Won';
+            opp.CampaignEleggibilityGroup__c = campaignElegibilityGroup;
         }
         
         //3 - Update SBQQ__Quote
@@ -78,12 +81,13 @@ public inherited sharing class HDT_LC_SaleActions {
             quote.SBQQ__Ordered__c = true;
             quote.SBQQ__LineItemsGrouped__c = true;
             quote.SBQQ__OrderByQuoteLineGroup__c = true;
+            quote.CampaignEleggibilityGroup__c = campaignElegibilityGroup;
         }
 
         system.debug('quoteList: ' + quoteList);
 
         //4 - Update Sale
-        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva');
+        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva', CampaignEleggibilityGroup__c = campaignElegibilityGroup);
 
         //5 - SBQQ__QuoteLineGroup__c
         //Creazione di un QuoteLineGroup per ogni QuoteLine principale.
@@ -155,6 +159,11 @@ public inherited sharing class HDT_LC_SaleActions {
         saleSrv.updateRecord(saleToUpdate);
         quoteLineSrv.updateRecords(quoteLinesListToUpdate);
         quoteSrv.updateRecords(quoteList);
+
+        //update campaignMember Status
+        if (campaignMemberId != null) {
+            CampaignMember memberToUpdate = HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, 'Positivo');
+        }
     }
 
 
