@@ -73,7 +73,7 @@
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>Attività Documentale Siebel Record Page</masterLabel>
-    <sobjectType>SiebelIntegDoc__x</sobjectType>
+    <sobjectType>SiebelDocumentActivity__x</sobjectType>
     <template>
         <name>flexipage:recordHomeTemplateDesktop</name>
         <properties>
