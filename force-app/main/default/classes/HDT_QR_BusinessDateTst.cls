@@ -1,3 +1,9 @@
+/**
+* @author Luis Bispo (luis.bispo@engdb.com.br)
+* @date 22/07/2021
+* @description HDT_QR_BusinessDate for Test Classes
+* @history Luis Bispo – 22/07/2021 – Created class
+*/
 
 @isTest
 public with sharing class HDT_QR_BusinessDateTst {
