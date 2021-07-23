@@ -41,7 +41,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             result = validateGestioneBonusSociale(currentCase, fields);
         } else if(caseType == 'Gestione Disalimentabilità' || caseType == 'Riattivazione Fornitura'){
 
-            result = validateMorosita(fields, recordId, caseType);
+            result = validateMorosita(fields, recordId, caseType, currentCase);
 
         } else if(caseType == 'Marcatura/Uso PdR' 
         || caseType == 'Condizioni Contrattuali Errate' 
@@ -640,7 +640,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     }
 
     
-    public String validateMorosita(String fields, string recordId, String caseType){
+    public String validateMorosita(String fields, string recordId, String caseType, Case currentCase){
 
         String result;
 
@@ -673,6 +673,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             attachedDocument = caseValidationQr.getDocumentByCaseId(recordId); 
 
+            if(disconnectable != null && disconnectable != ''){
+                if(disconnectable == currentCase.Disconnectable__c){
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario modificare il campo Disalimentabile'));
+                }else{
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+                }
+            }
             if(disconnectable.equalsIgnoreCase('No')
             && ((disconnectableCategory == null || disconnectableCategory == '') 
             || (phonePesse == null || phonePesse == '') 
