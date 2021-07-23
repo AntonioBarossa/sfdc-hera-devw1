@@ -72,6 +72,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     booleanFormDistributor=false;
     @api retrievedDistributor={};
     @api commodity='';
+    oldServicePoint = {}; //keltin used for change use check
    // showForm=false;
 
     
@@ -591,6 +592,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
                     this.handleCallServiceSap(this.selectedservicepoint);
                     this.servicePointRetrievedData = data[0];
+                    this.oldServicePoint = data[0]; //keltin used for change use check
                     console.log('servicePointRetriviedData: ******'+JSON.stringify(this.servicePointRetrievedData.RecordType.DeveloperName));
                     if(this.servicePointRetrievedData.RecordType.DeveloperName!= undefined){
                     switch(this.servicePointRetrievedData.RecordType.DeveloperName){
@@ -1225,7 +1227,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             console.log('new Sp : ' + JSON.stringify(this.newServicePoint));
             this.isSap= false;
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
-            this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: this.newServicePoint}));
+            this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: {newServicePoint: this.newServicePoint, oldServicePoint: this.oldServicePoint}})); //keltin used for change use check
             
         }).catch(error => {
             
