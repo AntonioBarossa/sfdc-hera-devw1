@@ -19,7 +19,7 @@ package.xml
 **profiles/Minimum Access - Salesforce.profile
 **sites/*
 **networks/*
-**flexipages/HDT_KnowledgeGeneralPage*
+
 **layout/AccountBrand-Account*
 **experiences/*
 **objects/Account/fields/ChannelProgramLevelName*
