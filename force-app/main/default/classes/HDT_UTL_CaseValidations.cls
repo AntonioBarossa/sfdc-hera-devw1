@@ -674,30 +674,23 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             attachedDocument = caseValidationQr.getDocumentByCaseId(recordId); 
 
             if(disconnectable != null && disconnectable != ''){
+                System.debug('DisconnectableLWC -> ' + disconnectable);
+                System.debug('DisconnectableRecord -> ' + currentCase.Disconnectable__c);
                 if(disconnectable == currentCase.Disconnectable__c){
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario modificare il campo Disalimentabile'));
-                }else{
+                }else if(disconnectable.equalsIgnoreCase('No')
+                && ((disconnectableCategory == null || disconnectableCategory == '') 
+                || (phonePesse == null || phonePesse == '') 
+                || (attachedDocument.size() == 0))){
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
+                        'Se Disalimentabilità è NO bisogna valorizzare:\nCategoria Disalimentabilità\n'+
+                        'Il telefono Pesse\nEd è necessario inserire un allegato'));
+                } else {
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
                 }
-            }
-            if(disconnectable.equalsIgnoreCase('No')
-            && ((disconnectableCategory == null || disconnectableCategory == '') 
-            || (phonePesse == null || phonePesse == '') 
-            || (attachedDocument.size() == 0))){
-
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
-                    'Se Disalimentabilità è NO bisogna valorizzare:\nCategoria Disalimentabilità\n'+
-                    'Il telefono Pesse\nEd è necessario inserire un allegato'));
-
             } else {
-
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
-
             }
-        } else {
-
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
-
         }
 
         return result;
