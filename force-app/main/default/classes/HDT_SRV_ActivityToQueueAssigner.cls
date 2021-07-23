@@ -31,7 +31,7 @@ public with sharing class HDT_SRV_ActivityToQueueAssigner implements Queueable {
                 Order__r.SalesCompany__c,
                 Case__r.Cluster__c,
                 Order__r.Cluster__c,
-                Case__r.ProcessType__c,
+                Case__r.Type,
                 Order__r.ProcessType__c,
                 Case__r.SubProcess__c,
                 Order__r.Subprocess__c,
@@ -82,7 +82,7 @@ public with sharing class HDT_SRV_ActivityToQueueAssigner implements Queueable {
                 (Vendor__c =: activity.Order__r.SalesCompany__c OR Vendor__c = null) AND
                 (MacroProcess__c INCLUDES (:activity.Case__r.Cluster__c) OR MacroProcess__c = null) AND
                 (MacroProcess__c INCLUDES (:activity.Order__r.Cluster__c) OR MacroProcess__c = null) AND
-                (Process__c INCLUDES (:activity.Case__r.ProcessType__c) OR Process__c = null) AND
+                (Process__c INCLUDES (:activity.Case__r.Type) OR Process__c = null) AND
                 (Process__c INCLUDES (:activity.Order__r.ProcessType__c) OR Process__c = null) AND
                 (SubProcess__c INCLUDES (:activity.Case__r.SubProcess__c) OR SubProcess__c = null) AND
                 (SubProcess__c INCLUDES (:activity.Order__r.Subprocess__c) OR SubProcess__c = null) AND
