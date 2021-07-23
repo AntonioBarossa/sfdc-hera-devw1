@@ -77,6 +77,8 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         contrWrp.endDate = String.valueOf(c.EndDate);
         contrWrp.asset = c.ServicePoint__r.SAPImplantCode__c;
         contrWrp.service = c.ServicePoint__r.CommoditySector__c;
+        contrWrp.serialNumber = c.ServicePoint__r.MeterSN__c;
+        contrWrp.servicePoint = c.ServicePoint__r.ServicePointCode__c;
         return contrWrp;
     }
 
@@ -148,13 +150,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         if(enrichmentbMetadataList.size()>0 && !String.isEmpty(enrichmentbMetadataList[0].Credential__c)){
 
             httpObj.endPoint = enrichmentbMetadataList[0].Credential__c;
-            httpObj.headersMap.put('Authorization', enrichmentbMetadataList[0].Authorization__c);
-
-/*             if(enrichmentbMetadataList[0].UseMock__c){
-                httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/meterreading';
-                httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
-            } */
-
+            //httpObj.headersMap.put('Authorization', enrichmentbMetadataList[0].Authorization__c);
             httpObj.httpMethod = 'POST';
             httpObj.headersMap.put('Content-Type', 'application/json');
 
@@ -210,6 +206,25 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             data.statoLettura = readingStatusMap.get(data.statoLettura);
             data.tipoLettura = readingTypeMap.get(data.tipoLettura);
             data.tipoNumeratore = numTypeMap.get(data.tipoNumeratore);
+
+            // In caso di lettura stornata, da as-is siebel gli unici campi da valorizzare sono: codiceContratto, apparecchiatura, dataLetturaPianificata, settoreMerceologico, letturaStornata
+            // Per cui tutti gli altri campi vanno sbiancati.
+            if (String.isNotBlank(data.letturaStornata)) {
+                data.campo = null;
+                data.posizioniPrecedentiLaVirgola = null;
+                data.decimali = null;
+                data.quantitaCalcolo = null;
+                data.tipoLettura = null;
+                data.categoriaLettura = null;
+                data.statoLettura = null;
+                data.consumoMedioGiornaliero = null;
+                data.giorniConsumo = null;
+                data.identificazioneNumeratore = null;
+                data.unitaDiMisura = null;
+                data.categoriaNumeratore = null;
+                data.tipoNumeratore = null;
+                data.motivazione = null;
+            }
         }
 
     }
@@ -234,6 +249,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         public String categoriaNumeratore;
         public String tipoNumeratore;
         public String motivazione;
+        public String letturaStornata;
     }
     
     public class HDT_WRP_EstrattoLettureResponse{

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Contiene la matrice per il calcolo della data di Decorrenza</description>
+    <enableFeeds>false</enableFeeds>
+    <label>Matrice Data Adempimento</label>
+    <visibility>Public</visibility>
+</CustomObject>

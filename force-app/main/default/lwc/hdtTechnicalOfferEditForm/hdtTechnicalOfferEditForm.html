@@ -1,0 +1,62 @@
+<template>
+    <div class={hidden} >
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="welcome-mat-403-label" aria-describedby="welcome-mat-403-content" aria-modal="true">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button onclick={closeModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Offerta tecnica</h2>
+                </header>
+                
+                <div id="modal-content-id-1" class="slds-modal__content" style="height: min-content;">
+                    <lightning-record-edit-form
+                        record-id={technicalOfferId}
+                        object-api-name="TechnicalOffer__c"
+                        density="comfy"
+                        onsubmit={handleSubmit}
+                        onsuccess={handleSuccess}
+                        onload={handleLoad}
+                        onerror={handleError}
+                    >
+                    <!---->
+                        
+                        <lightning-messages></lightning-messages>
+
+                        <div class="slds-grid slds-wrap slds-m-around_medium">
+                            
+                            <div class="slds-col slds-size_1-of-1">
+                                <lightning-input-field field-name="Product__c" value={productId} variant="label-stacked" disabled ></lightning-input-field>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-2">
+                                <!--<lightning-input type="text" label="Prodotto di servizio" value={rateObj.servProduct} disabled></lightning-input>-->
+                                <lightning-input-field field-name="ServiceProduct__c" value={rateObj.servProduct} variant="label-stacked" disabled ></lightning-input-field>
+                            </div>
+
+                            <template iterator:it={fieldsList}>
+                                <div key={it.value} class="slds-col slds-size_1-of-2">
+                                    <!--<lightning-input-field key={it.value} field-name={it.value} variant="label-stacked" ></lightning-input-field>-->
+                                    <template if:true={it.value.required} >
+                                        <lightning-input-field key={it.value.fieldName} field-name={it.value.fieldName} variant="label-stacked" required ></lightning-input-field>
+                                    </template>
+                                    <template if:false={it.value.required} >
+                                        <lightning-input-field key={it.value.fieldName} field-name={it.value.fieldName} variant="label-stacked" ></lightning-input-field>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} >Cancella</button>
+                    <button class="slds-button slds-button_brand" onclick={saveAction} >Avanti</button>
+                </footer>
+
+                
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</template>

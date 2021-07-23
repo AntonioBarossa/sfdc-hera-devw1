@@ -16,11 +16,6 @@
 &quot;Column&quot; : 1
 },
 {
-&quot;FieldName&quot; : &quot;RecipientStructure__c&quot;,
-&quot;Required&quot; : true,
-&quot;Column&quot; : 1
-},
-{
 &quot;FieldName&quot; : &quot;OpinionRequest__c&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 1

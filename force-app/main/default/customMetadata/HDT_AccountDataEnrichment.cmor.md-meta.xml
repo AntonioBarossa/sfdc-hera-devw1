@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Authorization__c</field>
-        <value xsi:type="xsd:string">Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>ColumnData__c</field>
@@ -14,19 +14,29 @@
     &quot;iconName&quot;: &quot;standard:record_update&quot;,
     &quot;columns&quot;: [
       {
+        &quot;label&quot;: &quot;Stato Cmor&quot;,
+        &quot;fieldName&quot;: &quot;stato&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Descrizione Stato CMOR&quot;,
+        &quot;fieldName&quot;: &quot;statoDescr&quot;,
+        &quot;initialWidth&quot;: 220
+      },
+      {
         &quot;label&quot;: &quot;Importo Cmor&quot;,
         &quot;fieldName&quot;: &quot;cmor&quot;,
         &quot;initialWidth&quot;: 140,
         &quot;type&quot;: &quot;currency&quot;
       },
       {
-        &quot;label&quot;: &quot;Importo Cmor stornato&quot;,
+        &quot;label&quot;: &quot;Importo stornato&quot;,
         &quot;fieldName&quot;: &quot;cmorStornato&quot;,
         &quot;initialWidth&quot;: 220,
         &quot;type&quot;: &quot;currency&quot;
       },
       {
-        &quot;label&quot;: &quot;Importo Cmor rettificato&quot;,
+        &quot;label&quot;: &quot;Importo rettificato&quot;,
         &quot;fieldName&quot;: &quot;cmorRett&quot;,
         &quot;initialWidth&quot;: 220,
         &quot;type&quot;: &quot;currency&quot;
@@ -39,7 +49,8 @@
       {
         &quot;label&quot;: &quot;Data aggiornamento stato&quot;,
         &quot;fieldName&quot;: &quot;dataAgg&quot;,
-        &quot;initialWidth&quot;: 220
+        &quot;initialWidth&quot;: 220,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Settore merceologico&quot;,
@@ -74,17 +85,8 @@
       {
         &quot;label&quot;: &quot;Data comunicazione pratica distributore&quot;,
         &quot;fieldName&quot;: &quot;dataCom&quot;,
-        &quot;initialWidth&quot;: 240
-      },
-      {
-        &quot;label&quot;: &quot;Stato Cmor&quot;,
-        &quot;fieldName&quot;: &quot;stato&quot;,
-        &quot;initialWidth&quot;: 140
-      },
-      {
-        &quot;label&quot;: &quot;Descrizione Stato CMOR&quot;,
-        &quot;fieldName&quot;: &quot;statoDescr&quot;,
-        &quot;initialWidth&quot;: 220
+        &quot;initialWidth&quot;: 240,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Codice Cliente&quot;,
@@ -121,7 +123,8 @@
       {
         &quot;label&quot;: &quot;Data aggiornamento stato&quot;,
         &quot;fieldName&quot;: &quot;dataFlusso&quot;,
-        &quot;initialWidth&quot;: 220
+        &quot;initialWidth&quot;: 220,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Settore merceologico&quot;,
@@ -146,7 +149,8 @@
       {
         &quot;label&quot;: &quot;Data switch out&quot;,
         &quot;fieldName&quot;: &quot;dataSwitch&quot;,
-        &quot;initialWidth&quot;: 160
+        &quot;initialWidth&quot;: 160,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Billing Profile&quot;,
@@ -156,7 +160,8 @@
       {
         &quot;label&quot;: &quot;Data Richiesta SII&quot;,
         &quot;fieldName&quot;: &quot;dataRichiesta&quot;,
-        &quot;initialWidth&quot;: 160
+        &quot;initialWidth&quot;: 160,
+        &quot;sortable&quot;: true
       },
       {
         &quot;label&quot;: &quot;Importo Cmor Pregresso&quot;,
@@ -175,7 +180,7 @@
     </values>
     <values>
         <field>Credential__c</field>
-        <value xsi:type="xsd:string">https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-enrichment/cmor/search</value>
+        <value xsi:type="xsd:string">callout:CMOR</value>
     </values>
     <values>
         <field>UseMock__c</field>

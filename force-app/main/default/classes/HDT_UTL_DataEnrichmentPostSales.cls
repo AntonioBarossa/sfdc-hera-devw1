@@ -1,6 +1,17 @@
 public with sharing class HDT_UTL_DataEnrichmentPostSales {
 
+    /**
+     * Gestisce la response dell'arricchimento dati scrivendo i valori su currentCase.
+     */
     public static Case handleResponse(String serializedResponse, Case currentCase){
+        Set<String> dataEnrichmentFields = new Set<String>();
+        return handleResponse(serializedResponse, currentCase, dataEnrichmentFields);
+    }
+
+    /**
+     * Gestisce la response dell'arricchimento dati scrivendo i valori su currentCase e restituendo la lista dei campi valorizzati in dataEnrichmentFields.
+     */
+    public static Case handleResponse(String serializedResponse, Case currentCase, Set<String> dataEnrichmentFields){
         HDT_QR_DataEnrichmentPostSales depsQr = new HDT_QR_DataEnrichmentPostSales();
         HDT_SRV_DataEnrichmentPostSales depsSrv = new HDT_SRV_DataEnrichmentPostSales();
         List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
@@ -67,6 +78,26 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                                 transcodeMap.put(transcodeConfig.SfdcField__c, 
                                 depsSrv.getCaliber(position.valore));
                             }
+                            when 'writeCollectiveBillType' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                depsSrv.writeCollectiveBillType(position.valore, currentCase));
+                            }
+                            when 'getOpzione'{
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                    depsSrv.getOpzione(position.valore));
+                            }
+                            when 'getDateFromString'{
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                    depsSrv.getDateFromString(position.valore));
+                            }
+                            when 'variationsBlock'{
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                    depsSrv.variationsBlock(position.valore));
+                            }
+                            when 'writeBlockCode' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                depsSrv.writeBlockCode(position.valore, currentCase));
+                            }
                         }
                     } else {
                         transcodeMap.put(transcodeConfig.SfdcField__c, position.valore);
@@ -88,6 +119,11 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
             String provinciaRecapito = billingRecord.InvoicingProvince__c != null? billingRecord.InvoicingProvince__c :'';
             String nazioneRecapito = billingRecord.InvoicingCountry__c != null? billingRecord.InvoicingCountry__c :'';
             nazioneRecapito = nazioneRecapito.length()>0?nazioneRecapito.substring(0,2):nazioneRecapito;
+            String codiceUfficio = billingRecord.SubjectCode__c != null?billingRecord.SubjectCode__c:'';
+            String tipoXml = billingRecord.XMLType__c != null?billingRecord.XMLType__c:'';
+            String pecElettronica = billingRecord.ElectronicInvoiceCertifiedEmailAddress__c != null?billingRecord.ElectronicInvoiceCertifiedEmailAddress__c:'';
+            String modInvioFatt = billingRecord.ElectronicInvoicingMethod__c != null?billingRecord.ElectronicInvoicingMethod__c:'';
+            Date dataConsensoPEc = billingRecord.SendCertifiedEmailConsentDate__c;
             modInvioBolletta = billingRecord.BillSendingMethod__c;
             pecBolletta = billingRecord.InvoiceCertifiedEmailAddress__c;
             emailBolletta = billingRecord.InvoiceEmailAddress__c;
@@ -103,15 +139,33 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
             transcodeMap.put('InvoicingCity__c', comuneRecapito);
             transcodeMap.put('InvoicingStreetNumberExtension__c', suffissoRecapito);
             transcodeMap.put('InvoicingStreetName__c', viaRecapito);
-            transcodeMap.put('InvoicingCountry__c', nazioneRecapito);
+            transcodeMap.put('OfficeSubjectCode__c', codiceUfficio);
+            transcodeMap.put('XMLType__c', tipoXml);
+            transcodeMap.put('ElectronicInvoiceCertifiedEmailAddress__c', pecElettronica);
+            transcodeMap.put('ElectronicInvoicingMethod__c', modInvioFatt);
+            transcodeMap.put('SendCertifiedEmailConsentDate__c', dataConsensoPEc);
+
         } catch(Exception e) {
             System.debug('Billing Profile non presente a sistema');
         }
+
+        //ServicePoint
+        try{
+            ServicePoint__c servicePoint = depsQr.getServicePointData(currentCase.ServicePoint__c);
+            transcodeMap.put('SupplyType__c',ServicePoint.SupplyType__c);
+            transcodeMap.put('Disconnectable__c',ServicePoint.Disconnectable__c);
+            transcodeMap.put('DisconnectibilityType__c',ServicePoint.DisconnectibilityType__c);
+        } catch(Exception e){
+            System.debug('Errore Ereditare campi SP -> ' + e.getMessage());
+        }
+
 
         //SALESCOMPANY
         salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');
         salesCompany = depsSrv.calculateSalesCompany(salesCompanyCode);
         transcodeMap.put('SalesCompany__c', salesCompany);
+
+        dataEnrichmentFields.addAll(transcodeMap.keySet());
 
         return depsSrv.populateCase(transcodeMap, currentCase);
     }

@@ -1,10 +1,21 @@
-public inherited sharing class HDT_TRH_Contact extends HDT_TRH_TriggerHandler {
+/**
+ * @author 'Sabina Levonja' (sabina.levonja@dunegroup.it)
+ * @description HDT_TRH_Contact - 
+ */
+
+ public inherited sharing class HDT_TRH_Contact extends HDT_TRH_TriggerHandler {
 
     // public override void beforeInsert(){}
     // public override void beforeDelete(){}
     // public override void afterDelete(){}
     // public override void afterUndelete(){}
 
+
+    public override void beforeInsert(){
+        
+        HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
+        HDT_UTL_GestionePrivacy.checkCloneCompany(trigger.new);
+    }
 
     public override void afterInsert(){
 
@@ -17,8 +28,15 @@ public inherited sharing class HDT_TRH_Contact extends HDT_TRH_TriggerHandler {
     }
 
     public override void beforeUpdate(){
-
-    Map<String,Contact> mapContact = new Map<String,Contact>();
+        System.debug('*******TriggerContact');
+        HDT_UTL_GestionePrivacy.updateContactPointFromObjectContact(trigger.new,trigger.old);
+    }
+    
+   /* public override void afterUpdate(){
+        System.debug('*******TriggerContact');
+        HDT_UTL_GestionePrivacy.updateContactPointFromObjectContact(trigger.new,trigger.old);
+    }*/
+/*    Map<String,Contact> mapContact = new Map<String,Contact>();
     List<Contact> listNewContact = trigger.new;
     List<ContactPointEmail> insertEmails= new List<ContactPointEmail>();
     List<ContactPointEmail> updateEmails= new List<ContactPointEmail>();
@@ -125,5 +143,5 @@ public inherited sharing class HDT_TRH_Contact extends HDT_TRH_TriggerHandler {
         insert insertPhones;
         update updateEmails;
         insert insertEmails;
-    }
+    } */
 }

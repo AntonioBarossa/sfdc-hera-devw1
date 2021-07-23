@@ -25,11 +25,6 @@
 &quot;FieldName&quot; : &quot;CustomerRecessDate__c&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 2
-},	
-{
-&quot;FieldName&quot; : &quot;DistributorNote__c&quot;,
-&quot;Required&quot; : false,
-&quot;Column&quot; : 2
 }
 ]</value>
     </values>
@@ -46,7 +41,7 @@
    },  
 
    {
-      &quot;FieldName&quot;:&quot;PODPDRFormula__c&quot;,
+      &quot;FieldName&quot;:&quot;ServicePoint__c&quot;,
       &quot;Column&quot;:1
    },
    {
@@ -120,7 +115,7 @@
 ]</value>
     </values>
     <values>
-        <field>ValidateClass__c</field>
-        <value xsi:nil="true"/>
-    </values>
+      <field>ValidateClass__c</field>
+      <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
+  </values>
 </CustomMetadata>

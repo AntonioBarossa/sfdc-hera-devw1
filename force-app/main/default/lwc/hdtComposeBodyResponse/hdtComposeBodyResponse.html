@@ -1,6 +1,10 @@
 <template>
 
-    <div class="c-container slds-p-around_small">
+    <div if:true={quartoLivello} class="header">
+        <h1>{headerString}</h1>
+    </div>
+
+    <div class="c-container slds-p-top_small slds-p-right_small slds-p-bottom_small">
                 
         <lightning-layout horizontal-align="spread">
             
@@ -56,14 +60,14 @@
 
         <lightning-button
             class="slds-m-right_small"
-            variant="destructive" 
+            variant="neutral" 
             name="delete all templates" 
             label="Elimina Template Selezionati" 
             onclick={deleteTemplates}>
         </lightning-button>
 
         <lightning-button 
-            variant="success" 
+            variant="brand" 
             name="Genera Risposta Reclamo" 
             label="Componi Corpo Risposta" 
             onclick={handleCompose}>
@@ -85,7 +89,7 @@
         onsubmit ={handleSubmit}
         density="comfy"
         >
-        <lightning-input-field field-name="ComplaintBodyResponse__c"></lightning-input-field>
+        <lightning-input-field class="richTextArea" field-name="ComplaintBodyResponse__c"></lightning-input-field>
 
         <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
             <div class="actionsLeft">
@@ -95,7 +99,7 @@
 
                 
                     <lightning-button class="slds-m-left_xxx-small" 
-                    variant="destructive" 
+                    variant="brand" 
                     name="delete all" 
                     label="Cancella Tutto" 
                     onclick={handleCompose}></lightning-button>
@@ -107,11 +111,11 @@
                     label="Copy to Clipboard" 
                     onclick={copyToClip}></lightning-button>
 
-                    <lightning-button variant="success" 
+                    <lightning-button variant="brand" 
                     class="slds-m-left_xxx-small" 
                     type="submit" 
                     name="save" 
-                    label="Conferma Pratica"></lightning-button>
+                    label={nextLabel}></lightning-button>
 
 
             </div>

@@ -2,13 +2,14 @@ import { LightningElement, api, track } from 'lwc';
 import CampaignIcons from '@salesforce/resourceUrl/campaignIcons';
 import getAllCampaigns from '@salesforce/apex/HDT_LC_CampaignsController.getCampaigns';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
+import { NavigationMixin } from 'lightning/navigation';
 
 export default class HdtAccountHighlightPanel extends LightningElement {
-    @api objectApiName;
+    @api objectApiName = 'Account';
     @api recordId;
     @api campaignCategory = 'Campagna CRM';
     @api campaignChannel = '';
+    @track pageUrl;
 
     inactiveCampaignsIcon = CampaignIcons + "/inactiveCampaigns.png";
     activeCampaignsIcon = CampaignIcons + "/activeCampaigns.png";
@@ -24,7 +25,7 @@ export default class HdtAccountHighlightPanel extends LightningElement {
         this.iconStatus = this.inactiveCampaignsIcon;
 
         getAllCampaigns({ id: this.recordId, objectName: this.objectApiName, category: this.campaignCategory, channel: this.campaignChannel }).then(data => {
-            if (data.length > 0) {
+            if (data != null && data.length > 0) {
                 this.allCampaigns = data;
                 //check for at least one active Inbound Campaign
                 this.activeCampaigns = data.filter((item) => {
@@ -33,6 +34,8 @@ export default class HdtAccountHighlightPanel extends LightningElement {
             }
             //check for at least one active Inbound Required Campaign
             if (this.activeCampaigns.length > 0) {
+                this.pageUrl = window.location.href;
+                console.log(this.pageUrl);
                 this.requiredCampaigns = this.activeCampaigns.some((item) => {
                     return item.Campaign.Required__c === true;
                 });
@@ -41,7 +44,13 @@ export default class HdtAccountHighlightPanel extends LightningElement {
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Sul Cliente sono presenti Campagne Obbligatorie',
-                            message: '',
+                            message: 'Clicca {0}',
+                            messageData: [
+                                {
+                                    url: this.pageUrl,
+                                    label: 'qui'
+                                }
+                            ],
                             variant: 'error',
                             mode: 'sticky'
                         })

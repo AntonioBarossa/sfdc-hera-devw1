@@ -30,6 +30,246 @@
         <default>false</default>
         <label>post-sales</label>
     </customValue>
+    <customValue>
+        <fullName>Accertamento</fullName>
+        <default>false</default>
+        <label>Accertamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Agente</fullName>
+        <default>false</default>
+        <label>Agente</label>
+    </customValue>
+    <customValue>
+        <fullName>Agenzia</fullName>
+        <default>false</default>
+        <label>Agenzia</label>
+    </customValue>
+    <customValue>
+        <fullName>App</fullName>
+        <default>false</default>
+        <label>App</label>
+    </customValue>
+    <customValue>
+        <fullName>Assistente Web</fullName>
+        <default>false</default>
+        <label>Assistente Web</label>
+    </customValue>
+    <customValue>
+        <fullName>Associazioni</fullName>
+        <default>false</default>
+        <label>Associazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Call Center</fullName>
+        <default>false</default>
+        <label>Call Center</label>
+    </customValue>
+    <customValue>
+        <fullName>Camper</fullName>
+        <default>false</default>
+        <label>Camper</label>
+    </customValue>
+    <customValue>
+        <fullName>Chat</fullName>
+        <default>false</default>
+        <label>Chat</label>
+    </customValue>
+    <customValue>
+        <fullName>CONSIP</fullName>
+        <default>false</default>
+        <label>CONSIP</label>
+    </customValue>
+    <customValue>
+        <fullName>Contatto - file</fullName>
+        <default>false</default>
+        <label>Contatto - file</label>
+    </customValue>
+    <customValue>
+        <fullName>CONTRATTO</fullName>
+        <default>false</default>
+        <label>CONTRATTO</label>
+    </customValue>
+    <customValue>
+        <fullName>Da PGM</fullName>
+        <default>false</default>
+        <label>Da PGM</label>
+    </customValue>
+    <customValue>
+        <fullName>e-mail</fullName>
+        <default>false</default>
+        <label>e-mail</label>
+    </customValue>
+    <customValue>
+        <fullName>HERA COMM POINT</fullName>
+        <default>false</default>
+        <label>HERA COMM POINT</label>
+    </customValue>
+    <customValue>
+        <fullName>Interno</fullName>
+        <default>false</default>
+        <label>Interno</label>
+    </customValue>
+    <customValue>
+        <fullName>IVR</fullName>
+        <default>false</default>
+        <label>IVR</label>
+    </customValue>
+    <customValue>
+        <fullName>ML cartacea</fullName>
+        <default>false</default>
+        <label>ML cartacea</label>
+    </customValue>
+    <customValue>
+        <fullName>ML in bound</fullName>
+        <default>false</default>
+        <label>ML in bound</label>
+    </customValue>
+    <customValue>
+        <fullName>ML out bound</fullName>
+        <default>false</default>
+        <label>ML out bound</label>
+    </customValue>
+    <customValue>
+        <fullName>ML vocal order</fullName>
+        <default>false</default>
+        <label>ML vocal order</label>
+    </customValue>
+    <customValue>
+        <fullName>MV Documentum</fullName>
+        <default>false</default>
+        <label>MV Documentum</label>
+    </customValue>
+    <customValue>
+        <fullName>ON-LINE</fullName>
+        <default>false</default>
+        <label>ON-LINE</label>
+    </customValue>
+    <customValue>
+        <fullName>PA</fullName>
+        <default>false</default>
+        <label>PA</label>
+    </customValue>
+    <customValue>
+        <fullName>PARTNER</fullName>
+        <default>false</default>
+        <label>PARTNER</label>
+    </customValue>
+    <customValue>
+        <fullName>Postel</fullName>
+        <default>false</default>
+        <label>Postel</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo</fullName>
+        <default>false</default>
+        <label>Protocollo</label>
+    </customValue>
+    <customValue>
+        <fullName>Punto Hera</fullName>
+        <default>false</default>
+        <label>Punto Hera</label>
+    </customValue>
+    <customValue>
+        <fullName>Reclamo scritto/Richiesta info</fullName>
+        <default>false</default>
+        <label>Reclamo scritto/Richiesta info</label>
+    </customValue>
+    <customValue>
+        <fullName>Reseller</fullName>
+        <default>false</default>
+        <label>Reseller</label>
+    </customValue>
+    <customValue>
+        <fullName>Ripresa Dati</fullName>
+        <default>false</default>
+        <label>Ripresa Dati</label>
+    </customValue>
+    <customValue>
+        <fullName>ServiziSociali</fullName>
+        <default>false</default>
+        <label>ServiziSociali</label>
+    </customValue>
+    <customValue>
+        <fullName>SFA</fullName>
+        <default>false</default>
+        <label>SFA</label>
+    </customValue>
+    <customValue>
+        <fullName>SMS</fullName>
+        <default>false</default>
+        <label>SMS</label>
+    </customValue>
+    <customValue>
+        <fullName>Sportello</fullName>
+        <default>false</default>
+        <label>Sportello</label>
+    </customValue>
+    <customValue>
+        <fullName>Sportello amministratori</fullName>
+        <default>false</default>
+        <label>Sportello amministratori</label>
+    </customValue>
+    <customValue>
+        <fullName>telef/sportello - solo diniego</fullName>
+        <default>false</default>
+        <label>telef/sportello - solo diniego</label>
+    </customValue>
+    <customValue>
+        <fullName>Telefono</fullName>
+        <default>false</default>
+        <label>Telefono</label>
+    </customValue>
+    <customValue>
+        <fullName>Telefono Outbound</fullName>
+        <default>false</default>
+        <label>Telefono Outbound</label>
+    </customValue>
+    <customValue>
+        <fullName>Teleselling</fullName>
+        <default>false</default>
+        <label>Teleselling</label>
+    </customValue>
+    <customValue>
+        <fullName>TLS</fullName>
+        <default>false</default>
+        <label>TLS</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita Condomini</fullName>
+        <default>false</default>
+        <label>Vendita Condomini</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita Diretta</fullName>
+        <default>false</default>
+        <label>Vendita Diretta</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita Indiretta</fullName>
+        <default>false</default>
+        <label>Vendita Indiretta</label>
+    </customValue>
+    <customValue>
+        <fullName>Web</fullName>
+        <default>false</default>
+        <label>Web</label>
+    </customValue>
+    <customValue>
+        <fullName>Web-AAA</fullName>
+        <default>false</default>
+        <label>Web-AAA</label>
+    </customValue>
+    <customValue>
+        <fullName>Web-EB</fullName>
+        <default>false</default>
+        <label>Web-EB</label>
+    </customValue>
+    <customValue>
+        <fullName>Web-MMS</fullName>
+        <default>false</default>
+        <label>Web-MMS</label>
+    </customValue>
     <masterLabel>Fonti Consenso</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

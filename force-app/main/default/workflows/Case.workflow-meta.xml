@@ -11,6 +11,16 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Passa_a_Approvato_OK</fullName>
+        <field>Phase__c</field>
+        <literalValue>Approvazione OK</literalValue>
+        <name>Passa a &quot;Approvato OK&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Passa_a_Attesa_Modulo_Firmato</fullName>
         <field>Phase__c</field>
         <literalValue>Da Inviare</literalValue>
@@ -25,6 +35,16 @@
         <field>Phase__c</field>
         <literalValue>Da Inviare</literalValue>
         <name>Passa a &quot;Da Inviare&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Passa_a_Pratica_In_Attesa</fullName>
+        <field>Phase__c</field>
+        <literalValue>Pratica In Attesa</literalValue>
+        <name>Passa a &quot;Pratica In Attesa&quot;</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>

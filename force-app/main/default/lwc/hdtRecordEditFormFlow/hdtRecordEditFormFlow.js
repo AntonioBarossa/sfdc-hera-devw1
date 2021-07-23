@@ -84,13 +84,22 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         }
                     });
                 }
-                this.variablesLoaded = true;
-                if(this.recordId != null){
-                    updateRecord({fields: { Id: this.recordId }}).then(() => {
-                       console.log('Record Refreshato');
-                    }).catch(error => {
-                        console.log('Error Refreshing record');
-                    });
+                
+                if(this.processType.localeCompare('Richiesta Parere') === 0
+                    || this.processType.localeCompare('Richiesta Parere Esercizio Diritti Privacy') === 0){
+                    this.variablesLoaded = true;
+                }else{
+                    if(this.recordId != null){
+                        updateRecord({fields: { Id: this.recordId }}).then(() => {
+                        console.log('Record Refreshato');
+                        console.log('Prima Colonna ' + JSON.stringify(this.firstColumn));
+                        console.log('Seconda Colonna ' + JSON.stringify(this.secondColumn));
+                        this.variablesLoaded = true;
+                        }).catch(error => {
+                            console.log('Error Refreshing record');
+                            this.error = true;
+                        });
+                    }
                 }
             } else if (error) {
                 this.error = true;
@@ -153,10 +162,16 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             this.formats = this.acceptedFormats.split(";");
             console.log(JSON.stringify(this.formats));
         }
+        console.log('### PreviousButton -> ' +this.previousButton);
         if(this.previousButton && !this.availableActions.find(action => action === 'BACK')){
             this.previousButton = false;
         }
+        console.log('### ProcessType -> ' + this.processType);
+        console.log('### END Connected ###');
         
+    }
+    renderedCallback(){
+        //this.installmentsLogic();
     }
     /*get formats(){
         var formats = [];
@@ -202,16 +217,25 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.handleGoNext();
     }
     handleOnLoad(event){
+        if(this.recordId != null){
         var record = event.detail.records;
         var fields = record[this.recordId].fields;
+        this.installmentsLogic();
         console.log('Edit Form Loaded ' + fields);
+        }
     }
 
     handleError(event){
-        console.log('Error Loading');
+        console.log('Error Loading: ' + JSON.stringify(event.detail));
+        let message = '';
         let obj = event.detail.output.fieldErrors;
- 
-        let message = obj[Object.keys(obj)[0]][0].message;
+        if (Object.keys(obj).length > 0) {
+            message = obj[Object.keys(obj)[0]][0].message;
+        } else {
+            // Errore da validation rules con error location "top of the page"
+            message = event.detail.detail;
+        }
+
         console.log('Error Loading message ' + message);
         this.dispatchEvent(
             new ShowToastEvent({
@@ -221,15 +245,18 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }),
         );
     }
+
     handleDraft(event){
         console.log('draft handle');
         if(event.target.name === 'draft'){
 
             this.saveInDraft = true;
+            this.cancelCase  = false;
 
         } else if(event.target.name === 'cancel'){
 
             this.cancelCase = true;
+            this.saveInDraft = false;
 
         }
 
@@ -267,7 +294,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     handleSubmit(event){
-        if(this.recordId != null){
+        if(this.recordId != null 
+            || this.processType.localeCompare('Richiesta Parere') === 0
+            || this.processType.localeCompare('Richiesta Parere Esercizio Diritti Privacy') === 0){
             event.preventDefault();       // stop the form from submitting
             this.saveInDraft = false;
             this.cancelCase = false;
@@ -324,63 +353,121 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.dispatchEvent(navigateBackEvent);
     }
 
-    handleChange(event){
+    selector(fieldName){
 
-        let five = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c')).length === 0)
-        ? this.firstColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c')
-        : this.secondColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c');
-
-        console.log('Five '+five);
-
-        let channel = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'ComplaintEntryChannel__c')).length === 0) 
-        ? this.firstColumn.filter(element => element['FieldName'] === 'ComplaintEntryChannel__c')
-        : this.secondColumn.filter(element => element['FieldName'] === 'ComplaintEntryChannel__c');
-
-        console.log('Channel '+channel);
-
-        if(!(Object.keys(five).length === 0)){
-
-            let fifthLevel = this.template.querySelector('lightning-input-field[data-id="FithLevelComplaintClassification__c"]') != null
-            ?this.template.querySelector('lightning-input-field[data-id="FithLevelComplaintClassification__c"]')
-            :null;
-
-            console.log('#Valore quinto livello -->' +fifthLevel.value)
-
-            if(fifthLevel != null){
-                if(fifthLevel.value != '' && fifthLevel.value != undefined && fifthLevel != null){
-
-                    let soldBy = this.template.querySelector('lightning-input-field[data-id="SoldBy__c"]');
-                    soldBy.disabled = false;
-
-                }
-            }
-        
-        } else if(!(Object.keys(channel).length === 0)){
-
-            let entryChannel = this.template.querySelector('lightning-input-field[data-id="ComplaintEntryChannel__c"]') != null
-            ?this.template.querySelector('lightning-input-field[data-id="ComplaintEntryChannel__c"]')
-            :null;
-
-            console.log('#Valore Entry Channel --> ' +entryChannel.value);
-
-            let address = this.template.querySelector('lightning-input-field[data-id="CompliantOriginEmail__c"]');
-
-            if(entryChannel.value === 'Email' || entryChannel.value === 'PEC'){
-
-                address.required = true;
-
-            } else {
-
-                address.required = false;
-
-            }
-
-
-
-        }
-
+        return this.template.querySelector('lightning-input-field[data-id="'+ fieldName + '"]') != null
+        ?this.template.querySelector('lightning-input-field[data-id="'+ fieldName + '"]')
+        :null;
 
     }
 
+    objSelector(fieldName){
+        return !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === fieldName)).length === 0) 
+        ? this.firstColumn.filter(element => element['FieldName'] === fieldName)
+        : this.secondColumn.filter(element => element['FieldName'] === fieldName);
+    }
 
+    handleChange(event){
+
+        //Reclami customizations
+        this.complaintsLogic();
+        //PianoRata customizations
+        this.installmentsLogic();
+    }
+
+    complaintsLogic(){
+        let five = this.objSelector('FithLevelComplaintClassification__c');
+        console.log('Five '+five);
+        let channel = this.objSelector('ComplaintEntryChannel__c');
+        console.log('Channel '+channel);
+        if(!(Object.keys(five).length === 0)){
+            let fifthLevel = this.selector('FithLevelComplaintClassification__c');
+            console.log('#Valore quinto livello -->' +fifthLevel.value)
+            if(fifthLevel != null){
+                if(fifthLevel.value != '' && fifthLevel.value != undefined && fifthLevel != null){
+                    let soldBy = this.selector('SoldBy__c');
+                }
+            }
+        } else if(!(Object.keys(channel).length === 0)){
+            let entryChannel = this.selector('ComplaintEntryChannel__c');
+            console.log('#Valore Entry Channel --> ' +entryChannel.value);
+            let address = this.selector('CompliantOriginEmail__c');
+            if(entryChannel.value === 'Email' || entryChannel.value === 'PEC'){
+                address.required = true;
+            } else {
+                address.required = false;
+            }
+        }
+    }
+
+    installmentsLogic(){
+        let reasonObj =  this.objSelector('Reason__c');
+        console.log('#Reason --> ' + JSON.stringify(reasonObj));
+        let paymentType = this.objSelector('PaymentType__c');
+        console.log('#PaymentType --> ' + JSON.stringify(paymentType));
+        if(!(Object.keys(reasonObj).length === 0)){
+            let reason = this.selector('Reason__c');
+            if(reason != null){
+                console.log('#Valore Reason --> ' + reason.value);
+                if(reason.value && reason.value != ''){
+                    if(!(Object.keys(paymentType).length === 0)){
+                        console.log('Inside Condition Installments');
+                        let payType = this.selector('PaymentType__c');
+                        console.log('#Valore payType -> ' + payType.value);
+                        if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
+                            payType.disabled = false;
+                        } else {
+                            payType.disabled = true;
+                            payType.value = '';
+                        }
+                    }
+                }
+            }
+        }
+        let depositObj = this.objSelector('Deposit__c');
+        console.log('#Deposit --> ' + JSON.stringify(depositObj));
+        if(!(Object.keys(depositObj).length === 0)){
+            let deposit = this.selector('Deposit__c');
+            console.log('#Deposit -> ' + deposit.value);
+            if(deposit.value != null && deposit.value != undefined){
+                let depositPaymentMode = this.selector('DepositPaymentMode__c');
+                let sendPaperlessCode = this.selector('SendPaperlessCodeMode__c');
+                let depositamount = this.selector('DepositAmount__c');
+                let depositDate = this.selector('DepositPaymentDate__c');
+                if(!deposit.value){
+                    depositPaymentMode.disabled = true;
+                    depositamount.disabled = true;
+                    depositDate.disabled = true;
+                    sendPaperlessCode.disabled = true;
+                    depositPaymentMode.value = '';
+                    depositamount.value = null;
+                    depositDate.value = null;
+                    sendPaperlessCode.value = '';
+                } else {
+                    depositPaymentMode.disabled = false;
+                    depositamount.disabled = false;
+                    depositDate.disabled = false;
+                }
+                if(depositPaymentMode.value === 'Paperless' && !depositPaymentMode.disabled){
+                    sendPaperlessCode.disabled = false;
+                }
+            }
+        }
+        //let installmentTypeObj = this.objSelector('TypeInstallmentPlan__c');
+        /*if(!(Object.keys(installmentTypeObj).length === 0)){
+            let installmentType = this.selector('TypeInstallmentPlan__c');
+            console.log('#InstallmentType -> ' + installmentType.value);
+            if(installmentType.value !== null && installmentType.value !== undefined){
+                let applicationInterestObj = this.objSelector('ApplicationInterests__c');
+                if(!(Object.keys(installmentTypeObj).length === 0)){
+                    let applicationInterest = this.selector('ApplicationInterests__c');
+                    if(installmentType.value.includes('Solo Piano Mensile')){
+                        applicationInterest.value = true;
+                    } else {
+                        applicationInterest.value = false;
+                    }
+                }
+            }
+        }*/
+    }
 }

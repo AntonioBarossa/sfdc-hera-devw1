@@ -3,23 +3,25 @@
     <template if:true={bShowModal} >    
         <c-hdt-detail-filter-modal onclosemodal={closeModal}
                                      fields-to-filter={fieldsToFilter}
-                                     onsetobjfilter={applyFilter}
-                                     consider={filterApplied}
+                                     first-level-filter-obj={firstLevelFilterObj}
+                                     onsetobjfilter={applyInterFromChild}
         ></c-hdt-detail-filter-modal>
+        <!--consider={filterApplied}-->
     </template>
 
     <div class="slds-border_top lgc-bg" >
         <div class="slds-m-bottom_x-small slds-m-top_xx-small">
-            <div class="slds-grid slds-gutters slds-align_absolute-center">
+            <div class="slds-grid slds-gutters">
                 <div class="slds-col slds-text-heading_medium slds-size_1-of-12">
                     Dettaglio
                 </div>
-                <div class="slds-col slds-size_3-of-12">
+                <div class="slds-col slds-size_4-of-12">
 
                     <div class="slds-button-group" role="group">
                         <template for:each={buttonList} for:item="c">
                             <button key={c.name} if:true={c.enable} class="slds-button slds-button_neutral mainbutton" onclick={buttonHandler} name={c.name} >{c.label}</button>
                         </template>
+                        <button if:true={filterApplied} class="slds-button slds-button_neutral mainbutton" onclick={removeFilter} >Rimuovi filtro</button>
                     </div>
 
                 </div>
@@ -39,8 +41,7 @@
                       </span>
                     <!--<lightning-icon if:true={filterApplied} icon-name="standard:filter" alternative-text="filterApplied" title="filterApplied" variant="success" size="small"></lightning-icon>-->
                 </div>
-                <div class="slds-col slds-size_7-of-12">
-                </div>
+                
             </div>
         </div>
         <div style="height: 18vh;"><!--height: 150px;-->
@@ -49,7 +50,6 @@
                     data={accountdetailsToView}
                     columns={columns}
                     resize-column-disabled=true
-                    default-sort-direction={defaultSortDirection}
                     sorted-direction={sortDirection}
                     sorted-by={sortedBy}
                     onsort={onHandleSort}

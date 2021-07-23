@@ -6,6 +6,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
     // I possibili contesti di innesco di un Allineamento Anagrafica.
     public enum HDT_ENU_AnagAlignmentContext {
         SERVICE_CATALOG,                    // Innesco manuale da Service Catalog
+        ALLINEAMENTO_CANONE_RAI,            // Innesco automatico alla chiusura del Case del processo di Allineamento Canone RAI
         VARIAZIONI_FISCALE,                 // Innesco automatico alla chiusura del Case del processo di Variazioni - Fiscale
         VARIAZIONI_MARCATURA_USO_PDR,       // Innesco automatico alla chiusura del wizard del processo di Variazioni - Marcatura/Uso PDR
         VARIAZIONI_INDIRIZZO_FORNITURA,     // Innesco automatico alla chiusura del wizard del processo di Variazioni - Indirizzo Fornitura
@@ -36,19 +37,16 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         switch on context {
             when 'SERVICE_CATALOG' {
-                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.SERVICE_CATALOG);
+                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.SERVICE_CATALOG)[0].Id;
             }
             when 'VARIAZIONI_MARCATURA_USO_PDR' {
-                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_MARCATURA_USO_PDR);
+                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_MARCATURA_USO_PDR)[0].Id;
             }
             when 'VARIAZIONI_INDIRIZZO_FORNITURA' {
-                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_INDIRIZZO_FORNITURA);
+                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_INDIRIZZO_FORNITURA)[0].Id;
             }
             when 'VARIAZIONI_TARIFFA_RES_NONRES' {
-                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_TARIFFA_RES_NONRES);
-            }
-            when 'VARIAZIONE_ANAGRAFICA_CLIENTE' {
-                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
+                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_TARIFFA_RES_NONRES)[0].Id;
             }
         }
 
@@ -56,24 +54,147 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         return resultList;
     }
 
-    public static Id handleAnagAlignment(SObject triggerObj, HDT_ENU_AnagAlignmentContext context) {
+    /**
+     * Gestisce la creazione di Case di Allineamento Anagrafici all'arrivo delle notifiche passive da Heroku.
+     */
+    public static Case handleAnagAlignmentHeroku(HDT_WRP_HerokuPostSalesManager herokuWrapper) {
+
+        Case anagAlignCase = new Case();
+
+        if (herokuWrapper == null) {
+            System.debug('HDT_WRP_HerokuPostSalesManager null in input.');
+            return anagAlignCase;
+        }
+
+        if (herokuWrapper.responseMap == null) {
+            System.debug('HDT_WRP_HerokuPostSalesManager null responseMap.');
+            return anagAlignCase;
+        }
+
+        String codiceFlusso = herokuWrapper.requestMap.get('COD_FLUSSO');
+        // COD_SERVIZIO e COD_PRESTAZIONE sono obbligatori insieme
+        String codiceServizio = herokuWrapper.requestMap.get('COD_SERVIZIO');
+        String codicePrestazione = herokuWrapper.requestMap.get('COD_PRESTAZIONE');
+        if (codicePrestazione == null || codiceServizio == null) {
+            System.debug('codicePrestazione o codiceServizio non valorizzato');
+            return anagAlignCase;
+        }
+
+        System.debug('Gestione Allineamento Anagrafica da richiesta passiva Heroku');
+
+        // COD_PRESA e COD_PRAT_DISTR sono obbligatori insieme
+        String codicePresa = herokuWrapper.requestMap.get('COD_PRESA');
+        String codicePraticaDistributore = herokuWrapper.requestMap.get('COD_PRAT_DISTR');
+        String herokuCode = herokuWrapper.requestMap.get('requestId');
+        HDT_ENU_AnagAlignmentContext context = codiceServizio.equals('VS2') ? HDT_ENU_AnagAlignmentContext.VARIAZIONE_STATO_POD : HDT_ENU_AnagAlignmentContext.VARIAZIONE_STATO_PDR;
+
+        HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
+        switch on codicePrestazione {
+            when 'A01', 'A40', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
+                Order triggerOrder = null;
+                if (!String.isBlank(codicePraticaDistributore)) {
+                    triggerOrder = queryHandlerOrder.findOrderByDistributorPracticeCode(codicePraticaDistributore);
+                } else {
+                    String processType = getProcessTypeFromCodPrestazione(codicePrestazione);
+                    triggerOrder = queryHandlerOrder.findOrderByTypeAndServicePointCode(processType, codicePresa);
+                }
+
+                if (triggerOrder != null) {
+                    anagAlignCase = createAnagAlignmentCase(triggerOrder);
+                    anagAlignCase.CausalCode__c = causalCodeAnagAlignment(triggerOrder.CommodityFormula__c, context);
+                    anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+                    anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
+                    anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
+                    anagAlignCase.RegionalAdditional__c = queryHandlerOrder.findRegionalAdditional(triggerOrder.ExciseGAS__c, triggerOrder.SupplyPlace__c, getRegion(triggerOrder.SupplyState__c));
+                    System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                    anagAlignCase.Phase__c = 'Da Inviare';
+                    HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
+                }
+            }
+            when 'N02', 'U01' { // Casistica 2: non è possibile linkare a pratica di origine, creiamo solo il Case di Allineamento Anagrafica.
+                Case tempCase = new Case();
+                Set<String> dataEnrichmentFields = new Set<String>();
+                try {
+                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(codicePresa, null);
+                    HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, tempCase, dataEnrichmentFields);
+                } catch (Exception ex){
+                    System.debug('Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+                }
+
+                anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
+                updateAnagAlignmentCaseCustomerData(anagAlignCase);
+                anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+                anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+
+                for (String field : dataEnrichmentFields) {
+                    anagAlignCase.put(field, tempCase.get(field));
+                }
+
+                System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                anagAlignCase.Phase__c = 'Da Inviare';
+                HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
+            }
+            when 'F01', 'F02' { // Casistica 3: creazione Case Allineamento Anagrafica + Case Ricostruzione Consumi
+                Case tempCase = new Case();
+                Set<String> dataEnrichmentFields = new Set<String>();
+                try {
+                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(codicePresa, null);
+                    HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, tempCase, dataEnrichmentFields);
+                } catch (Exception ex){
+                    System.debug('Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+                }
+
+                anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
+                updateAnagAlignmentCaseCustomerData(anagAlignCase);
+                anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+                anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+
+                for (String field : dataEnrichmentFields) {
+                    anagAlignCase.put(field, tempCase.get(field));
+                }
+
+                System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                anagAlignCase.Phase__c = 'Da Inviare';
+                HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
+
+                Case ricostruzioneConsumiCase = createCaseRicostruzioneConsumi(codicePresa, herokuCode);
+                for (String field : dataEnrichmentFields) {
+                    ricostruzioneConsumiCase.put(field, tempCase.get(field));
+                }
+                HDT_UTL_DatabaseService.updateSObject(ricostruzioneConsumiCase);
+            }
+        }
+
+        return anagAlignCase;
+    }
+
+
+    /**
+     * Dispatcher per la gestione delle varie casistiche di Allineamento Anagrafica.
+     * Restituisce la lista di Case di Allineamento Anagrafica che sono stati creati o modificati.
+     */
+    public static List<Case> handleAnagAlignment(SObject triggerObj, HDT_ENU_AnagAlignmentContext context) {
+
+        List<Case> returnCases = new List<Case>();
 
         switch on context {
             when SERVICE_CATALOG {
-                updateAnagAlignmentCaseServiceConsole((Case) triggerObj);
-                return triggerObj.Id;
+                updateAnagAlignmentCaseServiceCatalog((Case) triggerObj);
+                returnCases.add((Case) triggerObj);
             }
-            when VARIAZIONI_FISCALE {
-                // TODO
-            }
-            when VARIAZIONI_MARCATURA_USO_PDR,
+            when VARIAZIONI_FISCALE,
+                 VARIAZIONI_MARCATURA_USO_PDR,
                  VARIAZIONI_INDIRIZZO_FORNITURA,
-                 VARIAZIONI_TARIFFA_RES_NONRES {
+                 VARIAZIONI_TARIFFA_RES_NONRES,
+                 ALLINEAMENTO_CANONE_RAI{
                 Case anagAlignCase = createAnagAlignmentCase(triggerObj);
-                updateAnagAlignmentCaseVariazioni(anagAlignCase, (Case) triggerObj, context);
+                updateAnagAlignmentCasePostSalesDispatcher(anagAlignCase, (Case) triggerObj, context);
+                returnCases.add(anagAlignCase);
             }
             when VARIAZIONE_ANAGRAFICA_CLIENTE {
-                // TODO
+                Case varAnagCase = (Case) triggerObj;
+                List<Case> anagAlignCases = createAnagAlignmentCasesModAnagCliente(triggerObj);
+                returnCases.addAll(anagAlignCases);
             }
             when VARIAZIONE_STATO_POD {
                 // TODO
@@ -83,26 +204,22 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             }
         }
 
-        return null;
+        return returnCases;
     }
 
-
-    // Aggiorna il Case creato da Service Catalog con i dati necessari per l'allineamento anagrafica.
-    // Si assume che che l'arricchimento dati è già stato effettuato sul Case.
-    private static Boolean updateAnagAlignmentCaseServiceConsole(Case inputCase) {
-
+    // Aggiorna il Case di Allineamento Anagrafica con i dati fiscali e di contatto presenti sull'Account.
+    private static void updateAnagAlignmentCaseCustomerData(Case inputCase) {
         HDT_QR_Account accountQueryHandler = new HDT_QR_Account();
         HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
 
         String accountQueryFields = '';
         // DATI INDIRIZZO DI RESIDENZA
-        accountQueryFields += 'BillingStreetToponym__c,BillingState,BillingStreetNumber__c,BillingPlace__c,BillingStreetName__c,BillingPostalCode,BillingCountry,BillingCityCode__c';
+        accountQueryFields += 'BillingState,BillingStreetNumber__c,BillingPlace__c,BillingStreetName__c,BillingPostalCode,BillingCountry,BillingCityCode__c';
         // DATI CLIENTE FINALE
         accountQueryFields += ',FirstName__c,LastName__c,FiscalCode__c,VATNumber__c';
         Account caseAccount = accountQueryHandler.getRecordById(inputCase.AccountId, accountQueryFields);
 
         // DATI INDIRIZZO DI RESIDENZA
-        inputCase.BillingStreetToponym__c = caseAccount.BillingStreetToponym__c;
         inputCase.BillingProvince__c = caseAccount.BillingState;
         inputCase.BillingStreetNumber__c = caseAccount.BillingStreetNumber__c;
         inputCase.BillingPlace__c = caseAccount.BillingPlace__c;
@@ -118,10 +235,114 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         inputCase.FiscalCode__c = caseAccount.FiscalCode__c;
         Contact caseContact = contactQueryHandler.getRecordById(inputCase.ContactId);
         inputCase.Mobile__c = caseContact.MobilePhone != null ? caseContact.MobilePhone : caseContact.Phone;
+    }
+
+
+    // Aggiorna il Case creato da Service Catalog con i dati necessari per l'allineamento anagrafica.
+    // Si assume che che l'arricchimento dati è già stato effettuato sul Case.
+    // Il passaggio alla fase 'Da Inviare' viene fatto dal flow.
+    private static Boolean updateAnagAlignmentCaseServiceCatalog(Case inputCase) {
+
+        updateAnagAlignmentCaseCustomerData(inputCase);
 
         inputCase.CausalCode__c = causalCodeAnagAlignment(inputCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.SERVICE_CATALOG);
+        inputCase.OperationCode__c = reasonAnagAlignment(inputCase.CausalCode__c);
 
         return HDT_UTL_DatabaseService.updateSObject(inputCase);
+    }
+
+    /**
+     * Crea il Case di allineamento anagrafica a partire da un POD/PDR senza processo collegato.
+     */
+    private static Case createAnagAlignmentCaseFromServicePoint(String servicePointCode,String herokuCode) {
+        if (servicePointCode == null) {
+            return null;
+        }
+
+        Map<String, Object> inputMap = new Map<String, Object>();
+        HDT_QR_CreateGenericCase rtQueryHandler = new HDT_QR_CreateGenericCase();
+        HDT_QR_Case caseQuery = new HDT_QR_Case();
+        HDT_QR_AnagAlignment queryHandler = new HDT_QR_AnagAlignment();
+        HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
+        ServicePoint__c servicePoint = queryHandler.findServicePointByCode(servicePointCode);
+        if (servicePoint == null) {
+            System.debug('Service Point non trovato a sistema: ' + servicePointCode);
+            return null;
+        }
+
+        String accountId = servicePoint.Account__c;
+        AccountContactRelation acr = acrQueryHandler.getPrimaryContactRelation(accountId);
+        if (acr == null) {
+            System.debug('Nessun contact Titolare trovato a sistema per l\'account: ' + accountId);
+            return null;
+        }
+
+        String recordTypeId = rtQueryHandler.getRecordTypeByDevName('HDT_RT_AllineamentoAnagrafica')[0].Id;
+        inputMap.put('recordTypeId', recordTypeId);
+        inputMap.put('cluster', 'Modifiche Anagrafiche');
+        inputMap.put('type', 'Allineamento Anagrafica');
+        inputMap.put('accountId', accountId);
+        inputMap.put('contactId', acr.ContactId);
+        inputMap.put('servicePointId', servicePoint.Id);
+        inputMap.put('HerokuPracticeCode__c', herokuCode);
+
+        HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
+        Case anagAlignCase = createCaseUtility.createCase(inputMap);
+
+        if (anagAlignCase != null) {
+            HDT_UTL_DatabaseService.insertSObject(anagAlignCase);
+            return caseQuery.getRecordById(anagAlignCase.Id);
+        }
+
+        return null;
+
+    }
+
+    /**
+     * Crea il Case di Ricostruzione Consumi in caso di F01/F02
+     */
+    private static Case createCaseRicostruzioneConsumi(String servicePointCode, String herokuCode) {
+        if (servicePointCode == null) {
+            return null;
+        }
+
+        Map<String, Object> inputMap = new Map<String, Object>();
+        HDT_QR_CreateGenericCase rtQueryHandler = new HDT_QR_CreateGenericCase();
+        HDT_QR_Case caseQuery = new HDT_QR_Case();
+        HDT_QR_AnagAlignment queryHandler = new HDT_QR_AnagAlignment();
+        HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
+        ServicePoint__c servicePoint = queryHandler.findServicePointByCode(servicePointCode);
+        if (servicePoint == null) {
+            System.debug('Service Point non trovato a sistema: ' + servicePointCode);
+            return null;
+        }
+
+        String accountId = servicePoint.Account__c;
+        AccountContactRelation acr = acrQueryHandler.getPrimaryContactRelation(accountId);
+        if (acr == null) {
+            System.debug('Nessun contact Titolare trovato a sistema per l\'account: ' + accountId);
+            return null;
+        }
+
+        String recordTypeId = rtQueryHandler.getRecordTypeByDevName('HDT_RT_FatturazioneConsumi')[0].Id;
+        inputMap.put('recordTypeId', recordTypeId);
+        inputMap.put('cluster', 'Fatturazione');
+        inputMap.put('type', 'Ricostruzione Consumi');
+        inputMap.put('accountId', accountId);
+        inputMap.put('contactId', acr.ContactId);
+        inputMap.put('servicePointId', servicePoint);
+        inputMap.put('HerokuPracticeCode__c', herokuCode);
+
+        HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
+        Case c = createCaseUtility.createCase(inputMap);
+
+        if (c != null) {
+            c.Reason__c = 'Blocco per frode';
+            HDT_UTL_DatabaseService.insertSObject(c);
+            return caseQuery.getRecordById(c.Id);
+        }
+
+        return c;
     }
 
     /**
@@ -136,7 +357,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         switch on triggerObj {
             when Case triggerCase {
                 Map<String, Object> inputMap = new Map<String, Object>();
-                inputMap.put('recordType', 'HDT_RT_AllineamentoAnagrafica');
+                HDT_QR_CreateGenericCase rtQueryHandler = new HDT_QR_CreateGenericCase();
+                String recordTypeId = rtQueryHandler.getRecordTypeByDevName('HDT_RT_AllineamentoAnagrafica')[0].Id;
+                inputMap.put('recordTypeId', recordTypeId);
                 inputMap.put('cluster', 'Modifiche Anagrafiche');
                 inputMap.put('type', 'Allineamento Anagrafica');
                 inputMap.put('inputSObj', triggerObj);
@@ -144,7 +367,16 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 newCaseList = createCaseUtility.createCaseFromCase(inputMap);
             }
             when Order triggerOrder {
-                // TODO
+                Map<String, Object> inputMap = new Map<String, Object>();
+                HDT_QR_CreateGenericCase rtQueryHandler = new HDT_QR_CreateGenericCase();
+                String recordTypeId = rtQueryHandler.getRecordTypeByDevName('HDT_RT_AllineamentoAnagrafica')[0].Id;
+                inputMap.put('recordTypeId', recordTypeId);
+                inputMap.put('cluster', 'Modifiche Anagrafiche');
+                inputMap.put('type', 'Allineamento Anagrafica');
+                inputMap.put('inputSObj', triggerObj);
+
+                HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
+                newCaseList.add(createCaseUtility.createCaseFromOrder(inputMap));
             }
             when else {
             }
@@ -159,24 +391,142 @@ public inherited sharing class HDT_SRV_AnagAlignment {
     }
 
     /**
-     * Richiama l'arricchimento dati sul Case di Allineamento Anagrafica;
-     * Poi valorizza in base al contesto i dati specifici presi dal Case di Variazioni.
+     * Aggiorna il Case di allineamento anagrafica con i dati di anagrafica del cliente ed eventuali logiche specifiche 
+     * del processo che ha originato l'allineamento, e infine invia il Case ad Heroku.
      */
-    private static Boolean updateAnagAlignmentCaseVariazioni(Case anagAlignCase, Case triggerCase, HDT_ENU_AnagAlignmentContext context) {
+    private static Boolean updateAnagAlignmentCasePostSalesDispatcher(Case anagAlignCase, Case triggerCase, HDT_ENU_AnagAlignmentContext context) {
 
-        String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(triggerCase.PODPDRFormula__c, triggerCase.ContractCode__c);
-        anagAlignCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, anagAlignCase);
+        updateAnagAlignmentCaseCustomerData(anagAlignCase);
 
         switch on context {
+            when ALLINEAMENTO_CANONE_RAI {
+                // TODO: aggiungere qui eventuali logiche specifiche per Allineamento Canone RAI
+            }
             when VARIAZIONI_FISCALE {
-                // TODO
+                // TODO: aggiungere qui eventuali logiche specifiche per Variazioni/Fiscali
+            }
+            when VARIAZIONI_MARCATURA_USO_PDR {
+                // TODO: aggiungere qui eventuali logiche specifiche per Variazioni/MarcaturaUsoPDR
+            }
+            when VARIAZIONI_INDIRIZZO_FORNITURA {
+                // TODO: aggiungere qui eventuali logiche specifiche per Variazioni/Mod.Indirizzo di fornitura
+            }
+            when VARIAZIONI_TARIFFA_RES_NONRES {
+                // TODO: aggiungere qui eventuali logiche specifiche per Variazioni/TariffaRes/NonRes
+            }
+        }
+
+        // Necessario per valorizzare i campi formula PODPDRFormula__c e ContractCode__c
+        List<Case> anagAlignCases = new List<Case>();
+        anagAlignCases.add(anagAlignCase);
+        Formula.recalculateFormulas(anagAlignCases);
+
+        anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+        anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+        anagAlignCase.Phase__c = 'Da Inviare';
+
+        return HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
+    }
+
+    /**
+     * Il processo di Variazione Anagrafica Cliente modifica direttamente le entità master (Account/Contact/BillingProfile) senza un ServicePoint di riferimento.
+     * Per questo motivo vanno creati N Case di Allineamento Anagrafica, uno per ogni contratto attivo sul cliente.
+     * Per ognuni di essi richiamiamo l'arricchimento dati e valorizziamo i dati come nello scenario di innesco da Service Catalog.
+     */
+    private static List<Case> createAnagAlignmentCasesModAnagCliente(SObject triggerObj) {
+        if (triggerObj == null) {
+            System.debug('createAnagAlignmentCasesModAnagCliente: null object in input');
+            return null;
+        }
+
+        Case triggerCase = (Case) triggerObj;
+        HDT_QR_Contract contractQueryHandler = new HDT_QR_Contract();
+        List<Contract> activeContracts = contractQueryHandler.getActiveRecordsByAccountId(triggerCase.AccountId);
+        System.debug('createAnagAlignmentCasesModAnagCliente: # contratti attivi: ' + activeContracts.size());
+
+        Map<String, Object> inputMap = new Map<String, Object>();
+        HDT_QR_CreateGenericCase rtQueryHandler = new HDT_QR_CreateGenericCase();
+        String recordTypeId = rtQueryHandler.getRecordTypeByDevName('HDT_RT_AllineamentoAnagrafica')[0].Id;
+        inputMap.put('recordTypeId', recordTypeId);
+        inputMap.put('cluster', 'Modifiche Anagrafiche');
+        inputMap.put('type', 'Allineamento Anagrafica');
+        inputMap.put('inputSObj', triggerObj);
+
+        HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
+
+        List<Case> anagAlignCases = new List<Case>();
+        for (Contract contract : activeContracts) {
+            Case anagAlignCase = createCaseUtility.createCaseFromCase(inputMap)[0];
+            anagAlignCase.Contract__c = contract.Id;
+            anagAlignCase.ServicePoint__c = contract.ServicePoint__c;
+            anagAlignCases.add(anagAlignCase);
+        }
+
+        // Necessario per valorizzare i campi formula PODPDRFormula__c e ContractCode__c usati dall'arricchimento dati.
+        Formula.recalculateFormulas(anagAlignCases);
+
+        HDT_QR_Account accountQueryHandler = new HDT_QR_Account();
+        HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
+        String accountQueryFields = '';
+        // DATI INDIRIZZO DI RESIDENZA
+        accountQueryFields += 'BillingState,BillingStreetNumber__c,BillingCity,BillingPlace__c,BillingStreetName__c,BillingPostalCode,BillingCountry,BillingCityCode__c';
+        // DATI CLIENTE FINALE
+        accountQueryFields += ',FirstName__c,LastName__c,FiscalCode__c,VATNumber__c';
+        Account caseAccount = accountQueryHandler.getRecordById(triggerCase.AccountId, accountQueryFields);
+        Map<Id, Contact> contactsMap = new Map<Id, Contact>();
+        Set<Id> contactIds = new Set<Id>();
+        for (Case anagAlignCase : anagAlignCases) {
+            contactIds.add(anagAlignCase.ContactId);
+        }
+        List<Contact> contacts = contactQueryHandler.getRecordsByIds(contactIds);
+        for (Contact c : contacts) {
+            contactsMap.put(c.Id, c);
+        }
+
+        for (Case anagAlignCase : anagAlignCases) {
+
+            // DATI INDIRIZZO DI RESIDENZA
+            anagAlignCase.BillingProvince__c = caseAccount.BillingState;
+            anagAlignCase.BillingStreetNumber__c = caseAccount.BillingStreetNumber__c;
+            anagAlignCase.BillingCity__c = caseAccount.BillingCity;
+            anagAlignCase.BillingPlace__c = caseAccount.BillingPlace__c;
+            anagAlignCase.BillingStreetName__c = caseAccount.BillingStreetName__c;
+            anagAlignCase.BillingPostalCode__c = caseAccount.BillingPostalCode;
+            anagAlignCase.BillingCountry__c = caseAccount.BillingCountry;
+            anagAlignCase.BillingCityCode__c = caseAccount.BillingCityCode__c;
+
+            // DATI CLIENTE FINALE
+            anagAlignCase.FirstName__c = caseAccount.FirstName__c;
+            anagAlignCase.LastName__c = caseAccount.LastName__c;
+            anagAlignCase.VATNumber__c = caseAccount.VATNumber__c;
+            anagAlignCase.FiscalCode__c = caseAccount.FiscalCode__c;
+            Contact caseContact = contactsMap.get(anagAlignCase.ContactId);
+            anagAlignCase.Mobile__c = caseContact.MobilePhone != null ? caseContact.MobilePhone : caseContact.Phone;
+
+            anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
+            anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+
+        }
+
+        // Queueable per invocare l'arricchimento dati su ogni Case e per inviarli ad heroku.
+        System.enqueueJob(new HDT_QBL_AnagAlignment(anagAlignCases));
+
+        return anagAlignCases;
+    }
+
+    private static String getProcessTypeFromCodPrestazione(String codicePrestazione) {
+        String processType = '';
+
+        switch on codicePrestazione {
+            when 'A01' {
+                processType = 'Prima Attivazione Ele'; // TODO adeguare
             }
             when else {
                 // TODO
             }
         }
 
-        return False;
+        return processType;
     }
 
     /**
@@ -206,4 +556,69 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         return causalCode;
     }
+
+    /**
+     * Calcola il campo MOTIVAZIONE richiesto dal SII. I valori previsti sono i seguenti:
+     * 
+     * 01: Integrazione dati cliente finale;
+     * 02: Correzione errore;
+     * 03: Integrazione dati;
+     * 04: Correzione a seguito di segnalazione da parte del Gestore
+     * 05: Altro
+     */
+    private static String reasonAnagAlignment(String causalCode) {
+        if (causalCode == null) {
+            return '';
+        }
+
+        return causalCode.equals('AGG') ? '01' : '03';
+    }
+
+    /**
+     * Transcodifica le accise raccolte sugli Order nel valore numerico richiesto dal SII.
+     * La transcodifica di default è 0, quindi gestiamo solo le eccezioni che hanno accisa > 0.
+     */
+    private static Double transcodeExcises(Order triggerOrder) {
+        String acc = triggerOrder.ExciseGAS__c != null ? triggerOrder.ExciseGAS__c : triggerOrder.ExciseEle__c;
+        if (acc == null) {
+            return 0;
+        }
+
+        Double transcodedValue = 0;
+        if (acc.contains('G_ICD') || acc.contains('G_ICC')) {
+            transcodedValue = 0.044;
+        } else if (acc.contains('E_IE_L01') || acc.contains('E_IE_M04') || acc.contains('E_IE_L13') || acc.contains('E_IE_13A')) {
+            transcodedValue = 0.0125;
+        }
+
+        return transcodedValue;
+    }
+
+    // Codice venditore cablato essendo cablato anche nel template pclick delle attivazioni.
+    private static String companyCodeTemp(String commodity) {
+        return commodity.equals('Gas') ? '10V0000160' : '13V0000000';
+    }
+
+    // Fornisce la regione a partire dalla provincia. Per Wave 1 sono gestite solo MARCHE e ABRUZZO.
+    // TODO WAVE 3: creare un metadato ad-hoc per configurare tutte le province e tutte le regioni.
+    public static String getRegion(String province) {
+        if (String.isBlank(province)) {
+            return '';
+        }
+
+        switch on province.toUpperCase() {
+            when 'AQ', 'CH', 'PE', 'TE' {
+                return 'ABRUZZO';
+            }
+            when 'AN', 'AP', 'FM', 'MC', 'PU' {
+                return 'MARCHE';
+            }
+            when else {
+                System.debug('Provincia non in ambito wave 1: ' + province);
+            }
+        }
+
+        return '';
+    }
+
 }

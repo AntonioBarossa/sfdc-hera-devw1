@@ -25,7 +25,51 @@
                     </template>
 
                     <template if:false={spinner} >
-                        <div style="height: 300px;">
+
+                        <div class="slds-box slds-box_xx-small slds-m-top_small slds-m-bottom_small">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_2-of-9">
+                                    <!--<lightning-combobox
+                                        name="progress"
+                                        label="Filtra per questo campo"
+                                        value={searchByField}
+                                        placeholder="Seleziona..."
+                                        options={options}
+                                        onchange={handleFieldChange}
+                                        variant="label-hidden"
+                                        disabled
+                                    ></lightning-combobox>-->
+                                    <div class="slds-text-heading_small">Cerca per descrizione o valore possibile</div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-9">
+                                    <lightning-input
+                                        type="text"
+                                        label="Cerca per descrizione o valore possibile"
+                                        onchange={setFieldValue}
+                                        variant="label-hidden"
+                                    ></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-9">
+                                    <lightning-button-icon
+                                        icon-name="utility:search"
+                                        variant="neutral"
+                                        alternative-text="search"
+                                        title="Cerca"
+                                        onclick={search}
+                                    ></lightning-button-icon>
+                                    <lightning-button-icon
+                                        icon-name="utility:refresh"
+                                        variant="neutral"
+                                        alternative-text="refresh"
+                                        title="refresh"
+                                        onclick={refresh}
+                                        class="slds-m-left_xx-small"
+                                    ></lightning-button-icon>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div if:false={emptyTable} style="height: 300px;">
                             <lightning-datatable
                                     key-field="id"
                                     data={data}
@@ -35,6 +79,13 @@
                                     >
                             </lightning-datatable>
                         </div>
+                        <div if:true={emptyTable} style="height: 300px;">
+                            <div class="slds-box">
+                                <div class="slds-text-color_error">ATTENZIONE</div>
+                                <div class="slds-text-heading_large">Non è stato trovato nessun risultato</div>
+                            </div>
+                        </div>
+
                     </template>
                 </div> 
                 <!--<p slot="footer">

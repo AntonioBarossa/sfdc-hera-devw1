@@ -27,11 +27,6 @@
 &quot;FieldName&quot; : &quot;SecondLevelOpinion__c&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;RecipientStructure__c&quot;,
-&quot;Required&quot; : false,
-&quot;Column&quot; : 1
 }]</value>
     </values>
     <values>

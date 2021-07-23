@@ -8,6 +8,28 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_AccountHolderType</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Stesso Sottoscrittore</fullName>
+                <default>false</default>
+                <label>Stesso Sottoscrittore</label>
+            </value>
+            <value>
+                <fullName>Beneficiario Alternativo</fullName>
+                <default>false</default>
+                <label>Beneficiario Alternativo</label>
+            </value>
+            <value>
+                <fullName>Erede</fullName>
+                <default>false</default>
+                <label>Erede</label>
+            </value>
+            <value>
+                <fullName>Pagatore Alternativo</fullName>
+                <default>false</default>
+                <label>Pagatore Alternativo</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account.Orders$Channel__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders$Phase__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders$ShippingCountry__c</field>
+    </columns>
+    <columns>
+        <field>Account$Category__c</field>
+    </columns>
+    <columns>
+        <field>Account$Name</field>
+    </columns>
+    <columns>
+        <field>Account$PrimaryEmail__c</field>
+    </columns>
+    <columns>
+        <field>Account$Phone</field>
+    </columns>
+    <columns>
+        <field>Account$Segment__c</field>
+    </columns>
+    <description>AS IS 11.b</description>
+    <format>Tabular</format>
+    <name>AS IS 11.b-Analisi Rich. di Serviz. Ord.</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>HDT_AccountsWiWoOrders__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Account$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

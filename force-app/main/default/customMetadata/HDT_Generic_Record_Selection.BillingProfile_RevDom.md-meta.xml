@@ -8,14 +8,14 @@
     { &quot;label&quot;: &quot;Codice&quot;, &quot;fieldName&quot;: &quot;ContractAccountCode__c&quot; },
     { &quot;label&quot;: &quot;Stato&quot;, &quot;fieldName&quot;: &quot;Status__c&quot; },
 	{ &quot;label&quot;: &quot;Data Attivazione&quot;, &quot;fieldName&quot;: &quot;ActivationDate__c&quot; },
-	{ &quot;label&quot;: &quot;Modalità Pagamento&quot;, &quot;fieldName&quot;: &quot;PaymentMethod__c&quot; }
+	{ &quot;label&quot;: &quot;Modalità Pagamento&quot;, &quot;fieldName&quot;: &quot;PaymentMethod__c&quot; },
 {&quot;label&quot;:&quot;Indirizzo Spedizione&quot;, &quot;fieldName&quot;:&quot;InvoicingAddressFormula__c&quot;},
 {&quot;label&quot;:&quot;Modalita Invio Bolletta&quot;, &quot;fieldName&quot;:&quot;BillSendingMethod__c&quot;}
 ]</value>
     </values>
     <values>
         <field>Default_Search_Key__c</field>
-        <value xsi:type="xsd:string">Attivo</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Distinct__c</field>
@@ -31,7 +31,7 @@
     </values>
     <values>
         <field>Query_Type__c</field>
-        <value xsi:type="xsd:string">SOSL</value>
+        <value xsi:type="xsd:string">SOQL</value>
     </values>
     <values>
         <field>Row_Limit__c</field>
@@ -39,7 +39,7 @@
     </values>
     <values>
         <field>Where_Conditions__c</field>
-        <value xsi:type="xsd:string">Status__c = &apos;Attivo&apos; AND PaymentMethod__c = &apos;RID&apos;</value>
+        <value xsi:type="xsd:string">PaymentMethod__c = &apos;RID&apos;</value>
     </values>
     <values>
         <field>sObject__c</field>

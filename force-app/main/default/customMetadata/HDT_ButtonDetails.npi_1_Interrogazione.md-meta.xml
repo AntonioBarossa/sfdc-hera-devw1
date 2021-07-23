@@ -3,6 +3,10 @@
     <label>Interrogazione</label>
     <protected>false</protected>
     <values>
+        <field>Accesskey__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>ButtonCode__c</field>
         <value xsi:type="xsd:string">interrogation</value>
     </values>
@@ -28,6 +32,6 @@
     </values>
     <values>
         <field>Tab__c</field>
-        <value xsi:type="xsd:string">NVI</value>
+        <value xsi:type="xsd:string">EC3</value>
     </values>
 </CustomMetadata>

@@ -8,9 +8,28 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Subentro su GdM Chiuso&quot;,&quot;value&quot;:&quot;Subentro su GdM Chiuso&quot;},
-{&quot;label&quot;:&quot;Prima Attivazione&quot;,&quot;value&quot;:&quot;Prima Attivazione&quot;},
-{&quot;label&quot;:&quot;Riattivazioni non Morose&quot;,&quot;value&quot;:&quot;Riattivazioni non Morose&quot;},
-{&quot;label&quot;:&quot;Comfort Call e Quality Call&quot;,&quot;value&quot;:&quot;Comfort Call e Quality Call&quot;}]</value>
+        <value xsi:type="xsd:string">[{"label":"Prima Attivazione Ele","value":"Prima Attivazione Ele"},
+{"label":"Prima Attivazione In delibera","value":"Prima Attivazione In delibera"},
+{"label":"Prima Attivazione Fuori delibera","value":"Prima Attivazione Fuori delibera"},
+{"label":"Prima Attivazione con modifica","value":"Prima Attivazione con modifica"},
+{"label":"Cambio Offerta","value":"Cambio Offerta"},
+{"label":"Cambio Uso","value":"Cambio Uso"},
+{"label":"Connessione con Attivazione","value":"Connessione con Attivazione"},
+{"label":"Riattivazione non morose","value":"Riattivazione non morose"},
+{"label":"Aggiunta Sconti o Bonus VAS","value":"Aggiunta Sconti o Bonus VAS"},
+{"label":"Subentro Gas","value":"Subentro Gas"},
+{"label":"Subentro Ele","value":"Subentro Ele"},
+{"label":"Switch in con voltura tecnica","value":"Switch in con voltura tecnica"},
+{"label":"Voltura con Switch","value":"Voltura con Switch"},
+{"label":"Switch in Ripristinatorio","value":"Switch in Ripristinatorio"},
+{"label":"Switch in Reseller","value":"Switch in Reseller"},
+{"label":"Switch in Fittizio","value":"Switch in Fittizio"},
+{"label":"Switch in Winback","value":"Switch in Winback"},
+{"label":"Switch in Gas","value":"Switch in Gas"},
+{"label":"Switch in Ele","value":"Switch in Ele"},
+{"label":"Voltura","value":"Voltura"},
+{"label":"Aggiunta Sconti o Bonus VAS Ele","value":"Aggiunta Sconti o Bonus VAS Ele"},
+{"label":"Aggiunta Sconti o Bonus VAS Gas","value":"Aggiunta Sconti o Bonus VAS Gas"}
+]</value>
     </values>
 </CustomMetadata>

@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>APP</fullName>
-        <default>false</default>
-        <label>APP</label>
-    </customValue>
-    <customValue>
         <fullName>Assistente web</fullName>
         <default>false</default>
         <label>Assistente web</label>
@@ -14,16 +9,6 @@
         <fullName>Back office</fullName>
         <default>false</default>
         <label>Back office</label>
-    </customValue>
-    <customValue>
-        <fullName>Back office Teleselling</fullName>
-        <default>false</default>
-        <label>Back office Teleselling</label>
-    </customValue>
-    <customValue>
-        <fullName>Back office Vendita</fullName>
-        <default>false</default>
-        <label>Back office Vendita</label>
     </customValue>
     <customValue>
         <fullName>Callback</fullName>
@@ -46,19 +31,14 @@
         <label>Consip</label>
     </customValue>
     <customValue>
-        <fullName>HC_WEB</fullName>
+        <fullName>Da PGM</fullName>
         <default>false</default>
-        <label>HC_WEB</label>
+        <label>Da PGM</label>
     </customValue>
     <customValue>
         <fullName>Helpdesk</fullName>
         <default>false</default>
         <label>Helpdesk</label>
-    </customValue>
-    <customValue>
-        <fullName>IVR</fullName>
-        <default>false</default>
-        <label>IVR</label>
     </customValue>
     <customValue>
         <fullName>PA</fullName>
@@ -74,16 +54,6 @@
         <fullName>ServiziSociali</fullName>
         <default>false</default>
         <label>ServiziSociali</label>
-    </customValue>
-    <customValue>
-        <fullName>SMS</fullName>
-        <default>false</default>
-        <label>SMS</label>
-    </customValue>
-    <customValue>
-        <fullName>SOL</fullName>
-        <default>false</default>
-        <label>SOL</label>
     </customValue>
     <customValue>
         <fullName>Sportello</fullName>
@@ -139,6 +109,41 @@
         <fullName>Vendita TopBusiness</fullName>
         <default>false</default>
         <label>Vendita TopBusiness</label>
+    </customValue>
+    <customValue>
+        <fullName>Social</fullName>
+        <default>false</default>
+        <label>Social</label>
+    </customValue>
+    <customValue>
+        <fullName>SMS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>SMS</label>
+    </customValue>
+    <customValue>
+        <fullName>IVR</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>IVR</label>
+    </customValue>
+    <customValue>
+        <fullName>HC_WEB</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>HC_WEB</label>
+    </customValue>
+    <customValue>
+        <fullName>APP</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>APP</label>
+    </customValue>
+    <customValue>
+        <fullName>SOL</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>SOL</label>
     </customValue>
     <description>Canale login dell&apos;utente</description>
     <masterLabel>Canale Login</masterLabel>

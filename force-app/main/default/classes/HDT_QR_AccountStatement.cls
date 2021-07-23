@@ -14,7 +14,7 @@ public inherited sharing class HDT_QR_AccountStatement {
     public static List<HDT_ColumnsSecondLevel__mdt> getColumnsSecondLevel(List<HDT_ColumnsSecondLevel__mdt> colSecList, String tabValue){
         colSecList = new List<HDT_ColumnsSecondLevel__mdt>();
         colSecList = [
-            SELECT MasterLabel, ColumnOrder__c, FieldName__c, InitialWidth__c, IsFilter__c, IsVisible__c, Sortable__c
+            SELECT MasterLabel, ColumnOrder__c, FieldName__c, InitialWidth__c, IsFilter__c, IsVisible__c, Sortable__c, FieldType__c	
             FROM HDT_ColumnsSecondLevel__mdt
             WHERE IsVisible__c = true AND Tab__r.DeveloperName = :tabValue
             WITH SECURITY_ENFORCED
@@ -93,7 +93,7 @@ public inherited sharing class HDT_QR_AccountStatement {
     public static List<HDT_ButtonDetails__mdt> getButtonMetadataList(List<HDT_ButtonDetails__mdt> mdtButtonList, String tabValue, String level){
         mdtButtonList = new List<HDT_ButtonDetails__mdt>();
         mdtButtonList = [
-            SELECT MasterLabel, DeveloperName, ButtonCode__c,ButtonLevel__c,ButtonOrder__c,IsVisible__c, Tab__r.DeveloperName, ButtonType__c,Parameters__c
+            SELECT MasterLabel, DeveloperName, ButtonCode__c,ButtonLevel__c,ButtonOrder__c,IsVisible__c, Tab__r.DeveloperName, ButtonType__c,Parameters__c,Accesskey__c
             FROM HDT_ButtonDetails__mdt	
             WHERE Tab__r.DeveloperName = :tabValue AND ButtonLevel__c = :level
             WITH SECURITY_ENFORCED

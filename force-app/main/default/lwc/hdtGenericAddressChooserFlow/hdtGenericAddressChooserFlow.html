@@ -8,8 +8,8 @@
                 </lightning-layout-item>
 
                 <lightning-layout-item>
-                    <lightning-button-icon icon-name="standard:address" variant="brand" class="slds-m-left_xx-small"
-                        data-id="indirizzoRecapito" onclick={handleChangeAddress}></lightning-button-icon>
+                    <lightning-button label="Modifica" icon-name="standard:address" variant="brand" class="slds-m-left_xx-small"
+                        data-id="indirizzoRecapito" onclick={handleChangeAddress}></lightning-button>
                 </lightning-layout-item>
             </lightning-layout>
         </div>
@@ -29,7 +29,10 @@
                 </header>
                 <!-- Modal/Popup Box LWC body starts here -->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                    <c-hdt-target-object-address-fields accountid={accountId} objectapiname="Case" wrapaddressobject={addressWrapper}></c-hdt-target-object-address-fields>
+                    <c-hdt-target-object-address-fields accountid={accountId} 
+                        objectapiname="Case" 
+                        wrap-address-object={addressWrapper}
+                        ></c-hdt-target-object-address-fields>
                 </div>
             </div>
         </section>

@@ -12,10 +12,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
     private static HDT_SRV_QuoteLine quoteLineSrv = new HDT_SRV_QuoteLine();
+    private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
+    private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
 
     private static void alignBillingProfileFields(Order orderToUpdate, String billingProfileId){
 
-        billingProfileSrv.checkReadAccess('SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanABI__c,IbanCAB__c,IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingPostalCode__c,InvoicingCityCode__c,InvoiceEmailAddress__c');
+        billingProfileSrv.checkReadAccess('IbanCountry__c,CreateContractAccount__c,SendCertifiedEmailConsentDate__c,SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanABI__c,IbanCAB__c,IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingPostalCode__c,InvoicingCityCode__c,InvoiceEmailAddress__c');
         BillingProfile__c billingProfile = billingProfileQr.getRecordById(billingProfileId);
 
         orderToUpdate.SubjectCode__c = billingProfile.SubjectCode__c;
@@ -44,77 +46,126 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.BillingPostalCode__c = billingProfile.InvoicingPostalCode__c;
         orderToUpdate.BillingCityCode__c = billingProfile.InvoicingCityCode__c;
         orderToUpdate.SignatoryType__c = billingProfile.SignatoryType__c;
+        orderToUpdate.SendCertifiedEmailConsentDate__c = billingProfile.SendCertifiedEmailConsentDate__c;
+        orderToUpdate.CreateContractAccount__c = billingProfile.CreateContractAccount__c;
+        orderToUpdate.IbanCountry__c = billingProfile.IbanCountry__c;
     }
 
     private static void alignServicePointFields(Order orderToUpdate, String servicePointId) {
         
-        servicePointSrv.checkReadAccess('RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        servicePointSrv.checkReadAccess('CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
 
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
-        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
+        orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
         orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;
-        orderToUpdate.MaxRequiredPotential__c = servicePoint.MaxRequiredPotential__c;
+        orderToUpdate.MaxRequiredPotential__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MaxRequiredPotential__c : null;
         orderToUpdate.UseTypeEnergy__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && servicePoint.UseTypeEnergy__c == null ? 'Ordinaria (Perm)' : servicePoint.UseTypeEnergy__c;
         orderToUpdate.UseCategory__c = servicePoint.UseCategory__c;
-        // orderToUpdate.WithdrawalClass__c = servicePoint.WithdrawalClass__c;
         orderToUpdate.MeterSN__c = servicePoint.MeterSN__c;
         orderToUpdate.Resident__c = servicePoint.Resident__c;
         orderToUpdate.RemiCode__c = servicePoint.RemiCode__c;
         orderToUpdate.SupplyCity__c = servicePoint.SupplyCity__c;
-        orderToUpdate.SupplyStreet__c = servicePoint.SupplyStreet__c;
+        orderToUpdate.SupplyStreetName__c = servicePoint.SupplyStreet__c;
         orderToUpdate.SupplyStreetNumber__c = servicePoint.SupplyStreetNumber__c;
         orderToUpdate.SupplyPlace__c = servicePoint.SupplyPlace__c;
         orderToUpdate.SupplyPostalCode__c = servicePoint.SupplyPostalCode__c;
         orderToUpdate.SupplyCountry__c = servicePoint.SupplyCountry__c;
         orderToUpdate.PowerCommitted__c = servicePoint.PowerContractual__c;
         orderToUpdate.ServicePointCode__c = servicePoint.ServicePointCode__c;
-        orderToUpdate.SAPImplantCode__c = servicePoint.SAPImplantCode__c != null ? servicePoint.SAPImplantCode__c : '12345';
+        orderToUpdate.SAPImplantCode__c = servicePoint.SAPImplantCode__c;
         orderToUpdate.ImplantType__c = servicePoint.ImplantType__c;
         orderToUpdate.SupplyCityCode__c = servicePoint.SupplySAPCityCode__c;
         orderToUpdate.SupplyState__c = servicePoint.SupplyProvince__c;
         orderToUpdate.Disconnectable__c = servicePoint.Disconnectable__c != null ? servicePoint.Disconnectable__c : 'Si';
         orderToUpdate.DisconnectibilityType__c = servicePoint.DisconnectibilityType__c;
         orderToUpdate.ConnectionType__c = 'Permanente';
+        orderToUpdate.InstanceSelfCertification__c = 'SI';
+        orderToUpdate.ConnectionMandate__c = 'SI';
+        orderToUpdate.SelfCertificationConnection__c = '02';
+        orderToUpdate.RequestOption__c = calculateRequestedOption(servicePoint.ImplantType__c, servicePoint.PowerContractual__c);
+        orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
+        orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? (servicePoint.WithdrawalClass__c != null ? servicePoint.WithdrawalClass__c : '001-7 giorni') : null;
+        orderToUpdate.SupplyType__c = servicePoint.SupplyType__c;
+        //orderToUpdate.EffectiveDate__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_SwitchIn' ? Date.newInstance(2021, 06, 01) : Date.today(); //to do: with switch in calculation logic
+        orderToUpdate.DistributorCode__c = servicePoint.Distributor__r.Code__c;
+        orderToUpdate.PressureLevel__c = servicePoint.PressureLevel__c;
+        orderToUpdate.RequestPhase__c = servicePoint.RequestPhase__c;
+        orderToUpdate.PowerRequested__c = servicePoint.PowerRequested__c;
+        orderToUpdate.EnergyService__c = 'No';
+        orderToUpdate.LiftingPeople__c = 'No';
+        orderToUpdate.MeterType__c = servicePoint.MeterType__c;
+        orderToUpdate.IsRemoteManaged__c = servicePoint.IsRemoteManaged__c;
+        orderToUpdate.CustomerRequestDate__c = Date.today();
+        //Aggiunta valorizzazione Commodity
+        orderToUpdate.Commodity__c = servicePoint.CommoditySector__c;
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
 
-        accountSrv.checkReadAccess('BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
-        Account account = accountQr.getRecordById(accountId, 'BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
+        accountSrv.checkReadAccess('CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
+        Account account = accountQr.getRecordById(accountId, 'CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
 
         String customerName = null;
+        String customerLastName = null;
 
         if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
-            customerName = account.Name;
+            orderToUpdate.CustomerCompanyName__c = account.LastName__c;
+
+            orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
         } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
-            customerName = account.FirstName__c;
+            orderToUpdate.CustomerName__c = account.FirstName__c;
+            orderToUpdate.CustomerLastName__c = account.LastName__c;
+
+            orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
+
+            orderToUpdate.AtecoCode__c = '999999';
         }
 
         orderToUpdate.CustomerFiscalCode__c = account.FiscalCode__c;
         orderToUpdate.CustomerVATNumber__c = account.VATNumber__c;
-        orderToUpdate.CustomerName__c = customerName;
-        orderToUpdate.CustomerLastName__c = account.LastName__c;
         orderToUpdate.Email__c = account.PrimaryEmail__c;
         orderToUpdate.PhoneNumber__c = account.Phone;
-        orderToUpdate.EffectiveDate__c = Date.newInstance(2021, 06, 01);
-        // orderToUpdate.CustomerMarking__c = account.CustomerMarking__c; //Is a formula field
         orderToUpdate.BPSAPModel__c = account.BPSAPModel__c;
-
+        orderToUpdate.ResidentialStreetName__c = account.BillingStreetName__c;
+        orderToUpdate.ResidentialStreetNumber__c = account.BillingStreetNumber__c;
+        orderToUpdate.ResidentialIsAddressVerified__c = account.BillingIsAddressVerified__c;
+        orderToUpdate.ResidentialCity__c = account.BillingCity;
+        orderToUpdate.ResidentialState__c = account.BillingState;
+        orderToUpdate.ResidentialPostalCode__c = account.BillingPostalCode;
+        orderToUpdate.ResidentialCountry__c = account.BillingCountry;
+        orderToUpdate.ResidentialCityCode__c = account.BillingCityCode__c;
+        orderToUpdate.ResidentialPlace__c = account.BillingPlace__c;
+        orderToUpdate.CustomerCategory__c = account.Category__c;
+        orderToUpdate.CustomerType__c = account.CustomerType__c;
+        orderToUpdate.CustomerCode__c = account.CustomerCode__c;
     }
 
     private static void alignSaleFields(Order orderToUpdate, String saleId){
 
-        saleSrv.checkReadAccess('SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone');
-        Sale__c sale = saleQr.getRecordById(saleId, 'SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone');
+        saleSrv.checkReadAccess('Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone');
+        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone');
 
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
-        orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? sale.SalesContact__r.Phone : null;
+        orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? (sale.SalesContact__r.Phone != null ? sale.SalesContact__r.Phone : sale.SalesContact__r.MobilePhone) : null;
+        orderToUpdate.Contact__c = sale.SalesContact__c;
+        orderToUpdate.SalesContact__c = sale.SalesContact__c;
+        orderToUpdate.CommentForDL__c = sale.SalesContact__c != null ? (sale.SalesContact__r.Phone != null ? sale.SalesContact__r.Phone : sale.SalesContact__r.MobilePhone) : null;
+        orderToUpdate.LowerChannelAgency__c = sale.LowerChannelAgency__c;
+        orderToUpdate.UpperChannelAgency__c = sale.UpperChannelAgency__c;
+        
+        orderToUpdate.Channel__c = sale.Channel__c;
+        orderToUpdate.VendorLastName__c = sale.VendorLastName__c;
+        orderToUpdate.VendorFirstName__c = sale.VendorFirstName__c;
+        orderToUpdate.CommercialId__c = sale.CommercialId__c;
+        orderToUpdate.AgencyCode__c = sale.AgencyCode__c;
+        orderToUpdate.Agency__c = sale.Agency__c;
     }
 
     private static void alignPrimaryProduct(Order orderToUpdate, String quoteId) {
@@ -125,8 +176,72 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if (!quoteLineList.isEmpty()) {
             orderToUpdate.CommercialProductCode__c = quoteLineList[0].SBQQ__Product__r.ProductCode;
             orderToUpdate.CommercialProductVersion__c = quoteLineList[0].SBQQ__Product__r.Version__c;
+            orderToUpdate.CommercialProduct__c = quoteLineList[0].SBQQ__Product__r.Name;
         }
 
+    }
+
+    private static void alignQuote(Order orderToUpdate, String quoteId, Order order) {
+
+        quoteSrv.checkReadAccess('SalesCompanyCode__c,SalesCompany__c');
+        SBQQ__Quote__c quote = quoteQr.getRecordById(quoteId);
+
+        if (order.SalesCompanyCode__c == null) {
+            orderToUpdate.SalesCompanyCode__c = quote.SalesCompanyCode__c;
+        }
+
+        if (order.SalesCompany__c == null) {
+            orderToUpdate.SalesCompany__c = quote.SalesCompany__c;
+        }
+
+    }
+
+    public static String calculateRequestedOption(String implantType, Decimal powerContractual){
+
+        String result = '';
+
+        switch on implantType {
+            when '13A0-Usi di Abitazione BT' {
+                result = 'Domestici-TD';
+            }
+            when '13BB-Illuminazione pubblica BT' {
+                result = 'AEEG Opzione BTIP-E_BTIP';
+            }
+            when '13CB-Non domestici in BT' {
+
+                if(powerContractual > 0 && powerContractual <= 1.5) {
+                    result = 'AEEG Opz BTA1 <= 1,5 kW-E_BTA1';
+                } else if(powerContractual > 1.5 && powerContractual <= 3) {
+                    result = 'AEEG Op BTA2 >1,5<=3 kW-E_BTA2';
+                } else if(powerContractual > 3 && powerContractual <= 6) {
+                    result = 'AEEG Op BTA3 >3 <=6 kW-E_BTA3';
+                } else if(powerContractual > 6 && powerContractual <= 10) {
+                    result = 'AEEG Op BTA4 >6 <=10 kW-E_BTA4';
+                } else if(powerContractual > 10 && powerContractual <= 16.5) {
+                     result = 'AEEG Op BTA5 > 10 kW-E_BTA5';
+                } else if(powerContractual > 16.5) {
+                    result = 'AEEG Op BTA6 olt 16,5kW-E_BTA6';
+                }
+
+            }
+            when '13EM-Non domestici MT' {
+                if(powerContractual > 0 && powerContractual <= 100) {
+                    result = 'AEEG Opz MTA1 fin 100kW-E_MTA1';
+                } else if(powerContractual > 100 && powerContractual <= 500) {
+                    result = 'AEEG Op MTA2 >100 <=500-E_MTA2';
+                } else if(powerContractual > 500) {
+                    result = 'AEEG Op MTA3 olt 500kW-E_MTA3';
+                }
+            }
+            when '13DM-Illuminazione pubblica MT' {
+                result = 'AEEG Opzione MTIP-E_MTIP';
+            }
+            when '13FM-Non domestici AT' {
+                result = 'AEEG Op ALTA fin 220 kV-E_ALTA';
+            }
+        }
+
+        return result;
     }
 
     public static void alignFields(Order order) {
@@ -140,6 +255,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         if(order.SBQQ__Quote__c != null) {
             alignPrimaryProduct(orderToUpdate, order.SBQQ__Quote__c);
+            alignQuote(orderToUpdate, order.SBQQ__Quote__c, order);
         }
 
         if(order.BillingProfile__c != null) {
@@ -152,5 +268,11 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         orderSrv.updateRecord(orderToUpdate);
 
+        if (order.ServicePoint__c != null) {
+            servicePointSrv.updateRecord(new ServicePoint__c(
+                Id = order.ServicePoint__c,
+                PowerRequested__c = null
+            ));
+        }
     }
 }

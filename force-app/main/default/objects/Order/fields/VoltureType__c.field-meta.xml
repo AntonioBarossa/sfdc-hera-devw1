@@ -7,7 +7,6 @@
     <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -24,6 +23,16 @@
                 <fullName>Incorporazione societaria</fullName>
                 <default>false</default>
                 <label>Incorporazione societaria</label>
+            </value>
+            <value>
+                <fullName>In Continuità</fullName>
+                <default>false</default>
+                <label>In Continuità</label>
+            </value>
+            <value>
+                <fullName>Recupero</fullName>
+                <default>false</default>
+                <label>Recupero</label>
             </value>
             <value>
                 <fullName>Oridnaria</fullName>

@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Taxes__c</field>
-        <value xsi:type="xsd:string">G_I24-Imp. Forze Armate Nazion</value>
+        <value xsi:type="xsd:string">Imposta Forze Armate Nazionali (Cod. G_I24)</value>
     </values>
     <values>
         <field>UseCategory__c</field>

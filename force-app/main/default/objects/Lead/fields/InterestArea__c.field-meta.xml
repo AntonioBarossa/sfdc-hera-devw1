@@ -3,12 +3,118 @@
     <fullName>InterestArea__c</fullName>
     <description>Gli interessi manifestati dal Lead</description>
     <externalId>false</externalId>
-    <label>Area di Interesse</label>
+    <label>Interessi Aggiuntivi</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <type>Picklist</type>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
     <valueSet>
+        <controllingField>InterestProduct__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_InterestArea</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Offerta EE</controllingFieldValue>
+            <controllingFieldValue>Offerta GAS</controllingFieldValue>
+            <controllingFieldValue>Offerta Dual</controllingFieldValue>
+            <controllingFieldValue>HVAC</controllingFieldValue>
+            <controllingFieldValue>HVAC - caldaia</controllingFieldValue>
+            <controllingFieldValue>HVAC - condizionatore</controllingFieldValue>
+            <controllingFieldValue>VAS – assicurazioni</controllingFieldValue>
+            <controllingFieldValue>VAS – prodotti</controllingFieldValue>
+            <controllingFieldValue>E- mobility auto</controllingFieldValue>
+            <controllingFieldValue>E- mobility bicicletta</controllingFieldValue>
+            <valueName>Green</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Offerta EE</controllingFieldValue>
+            <controllingFieldValue>Offerta GAS</controllingFieldValue>
+            <controllingFieldValue>Offerta Dual</controllingFieldValue>
+            <controllingFieldValue>HVAC</controllingFieldValue>
+            <controllingFieldValue>HVAC - caldaia</controllingFieldValue>
+            <controllingFieldValue>HVAC - condizionatore</controllingFieldValue>
+            <controllingFieldValue>VAS – assicurazioni</controllingFieldValue>
+            <controllingFieldValue>VAS – prodotti</controllingFieldValue>
+            <controllingFieldValue>E- mobility auto</controllingFieldValue>
+            <controllingFieldValue>E- mobility bicicletta</controllingFieldValue>
+            <valueName>Digitale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Offerta EE</controllingFieldValue>
+            <controllingFieldValue>Offerta GAS</controllingFieldValue>
+            <controllingFieldValue>Offerta Dual</controllingFieldValue>
+            <controllingFieldValue>VAS – assicurazioni</controllingFieldValue>
+            <controllingFieldValue>VAS – prodotti</controllingFieldValue>
+            <controllingFieldValue>E- mobility auto</controllingFieldValue>
+            <controllingFieldValue>E- mobility bicicletta</controllingFieldValue>
+            <valueName>HVAC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Offerta EE</controllingFieldValue>
+            <controllingFieldValue>Offerta GAS</controllingFieldValue>
+            <controllingFieldValue>Offerta Dual</controllingFieldValue>
+            <controllingFieldValue>HVAC</controllingFieldValue>
+            <controllingFieldValue>HVAC - caldaia</controllingFieldValue>
+            <controllingFieldValue>HVAC - condizionatore</controllingFieldValue>
+            <controllingFieldValue>VAS – prodotti</controllingFieldValue>
+            <controllingFieldValue>E- mobility auto</controllingFieldValue>
+            <controllingFieldValue>E- mobility bicicletta</controllingFieldValue>
+            <valueName>Assicurazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Offerta EE</controllingFieldValue>
+            <controllingFieldValue>Offerta GAS</controllingFieldValue>
+            <controllingFieldValue>Offerta Dual</controllingFieldValue>
+            <controllingFieldValue>HVAC</controllingFieldValue>
+            <controllingFieldValue>HVAC - caldaia</controllingFieldValue>
+            <controllingFieldValue>HVAC - condizionatore</controllingFieldValue>
+            <controllingFieldValue>VAS – assicurazioni</controllingFieldValue>
+            <controllingFieldValue>VAS – prodotti</controllingFieldValue>
+            <valueName>E-mobility</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Offerta GAS</controllingFieldValue>
+            <controllingFieldValue>Offerta Dual</controllingFieldValue>
+            <controllingFieldValue>HVAC</controllingFieldValue>
+            <controllingFieldValue>HVAC - caldaia</controllingFieldValue>
+            <controllingFieldValue>HVAC - condizionatore</controllingFieldValue>
+            <controllingFieldValue>VAS – assicurazioni</controllingFieldValue>
+            <controllingFieldValue>VAS – prodotti</controllingFieldValue>
+            <controllingFieldValue>E- mobility auto</controllingFieldValue>
+            <controllingFieldValue>E- mobility bicicletta</controllingFieldValue>
+            <valueName>Offerta EE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Offerta EE</controllingFieldValue>
+            <controllingFieldValue>Offerta Dual</controllingFieldValue>
+            <controllingFieldValue>HVAC</controllingFieldValue>
+            <controllingFieldValue>HVAC - caldaia</controllingFieldValue>
+            <controllingFieldValue>HVAC - condizionatore</controllingFieldValue>
+            <controllingFieldValue>VAS – assicurazioni</controllingFieldValue>
+            <controllingFieldValue>VAS – prodotti</controllingFieldValue>
+            <controllingFieldValue>E- mobility auto</controllingFieldValue>
+            <controllingFieldValue>E- mobility bicicletta</controllingFieldValue>
+            <valueName>Offerta GAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Offerta EE</controllingFieldValue>
+            <controllingFieldValue>Offerta GAS</controllingFieldValue>
+            <controllingFieldValue>HVAC</controllingFieldValue>
+            <controllingFieldValue>HVAC - caldaia</controllingFieldValue>
+            <controllingFieldValue>HVAC - condizionatore</controllingFieldValue>
+            <controllingFieldValue>VAS – assicurazioni</controllingFieldValue>
+            <controllingFieldValue>VAS – prodotti</controllingFieldValue>
+            <controllingFieldValue>E- mobility auto</controllingFieldValue>
+            <controllingFieldValue>E- mobility bicicletta</controllingFieldValue>
+            <valueName>Offerta Dual</valueName>
+        </valueSettings>
     </valueSet>
+    <visibleLines>5</visibleLines>
 </CustomField>

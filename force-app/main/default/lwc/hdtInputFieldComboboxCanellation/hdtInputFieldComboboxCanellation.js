@@ -2,7 +2,8 @@ import { LightningElement, track,wire,api} from 'lwc';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
 import getListOptions from '@salesforce/apex/HDT_UTL_CaseCancellation.getListCanellationReasonLwc';
 import { getRecord } from 'lightning/uiRecordApi';
-const FIELDS = ['Case.ProcessCancellationReason__c'];
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+const FIELDS = ['Case.CancellationReason__c'];
 export default class HdtInputFieldComboboxCanellation extends LightningElement {
     @api defaultValue;
     @api variant;
@@ -15,7 +16,7 @@ export default class HdtInputFieldComboboxCanellation extends LightningElement {
     @api recordId;
     @track defaultValue2;
     
-    @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
+    /*@wire(getRecord, { recordId: '$recordId', fields: FIELDS })
     wiredRecord({ error, data }) {
         if (error) {
             let message = 'Unknown error';
@@ -35,7 +36,7 @@ export default class HdtInputFieldComboboxCanellation extends LightningElement {
             console.log('data ' + JSON.stringify(data));
             this.defaultValue2 = data.fields.ProcessCancellationReason__c.value;
         }
-    }
+    }*/
     
     connectedCallback(){
         this.selectedReason = this.defaultValue;

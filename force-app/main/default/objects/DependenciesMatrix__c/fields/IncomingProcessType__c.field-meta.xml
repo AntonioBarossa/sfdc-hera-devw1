@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IncomingProcessType__c</fullName>
+    <description>Identifica la tipologia del processo entrante.</description>
+    <externalId>false</externalId>
+    <label>Tipologia processo entrante</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_ProcessType</valueSetName>
+    </valueSet>
+</CustomField>

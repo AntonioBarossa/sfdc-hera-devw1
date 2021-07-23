@@ -111,7 +111,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         }
 
         for(HDT_ButtonDetails__mdt butMdt : mdtButtonList){
-            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c, butMdt.ButtonType__c, butMdt.Parameters__c));
+            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c, butMdt.ButtonType__c, butMdt.Parameters__c, butMdt.Accesskey__c));
         }
 
         return objDetail;
@@ -140,6 +140,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             colObj.fieldName = colSec_mdt.FieldName__c;
             colObj.sortable = colSec_mdt.Sortable__c;
             colObj.initialWidth = colSec_mdt.InitialWidth__c;
+            colObj.type = colSec_mdt.FieldType__c;
             obj.columnObj.add(colObj);
         }
 
@@ -155,7 +156,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         obj.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
 
         for(HDT_ButtonDetails__mdt button_mdt : mdtButtonList){
-            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c, button_mdt.ButtonType__c, ''));
+            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c, button_mdt.ButtonType__c, '',button_mdt.Accesskey__c));
         }
 
         obj.success = true;
@@ -318,8 +319,16 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             AccountStatementFilter__c serviceCatalog = new AccountStatementFilter__c();
             serviceCatalog.User__c = currentUserId;
 
+            List<HDT_TabConfiguration__mdt> mdtTabConfList;
+            mdtTabConfList = HDT_QR_AccountStatement.getTabConfMetadataList(mdtTabConfList, tabValue);
+
             List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> recordsList;
             recordsList = (List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj>) JSON.deserialize(records, List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj>.class);
+
+            /*Map<String, Object> seconLevelMap = (Map<String, Object>)JSON.deserializeUntyped(records);
+            List<Object> seconLevelList = (List<Object>)seconLevelMap.get(mdtTabConfList[0].SecondLevelAPI_Name__c);
+
+            System.debug('>>> secondLevelList ' + String.valueOf(seconLevelList));*/
 
             //set context field
             if(level.equalsIgnoreCase('1')){
@@ -332,6 +341,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 serviceCatalog.Context__c = 'InstallmentsView';
             }
             
+            if(tabValue.equalsIgnoreCase('EC7')){
+                serviceCatalog.Context__c = 'EC7';
+            }
+
             /*
                 1° livello
                     - Single Record:
@@ -355,12 +368,22 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                             = IsRaiFee__c
             */
 
-            System.debug('>>> recordsList: ' + String.valueOf(recordsList.size()));
+            System.debug('>>> first level size: ' + String.valueOf(recordsList.size()));
 
-            if(recordsList.size() > 1){
-                serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForMultipleRecords(recordsList, serviceCatalog);
+            Integer firstLevelSize = recordsList.size();
+            Integer secondLevelSize = 0;
+
+            if(serviceCatalog.Context__c.equalsIgnoreCase('EC2L') && recordsList[0].secondoLivelloInformativo != null){
+                secondLevelSize = recordsList[0].secondoLivelloInformativo.size();
+            }
+
+            //if(recordsList.size() > 1){
+            if(firstLevelSize > 1 || secondLevelSize > 1){
+                System.debug('>>> Multiple Records');
+                serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForMultipleRecords(recordsList, serviceCatalog, tabValue);
             } else {
-                serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForSingleRecord(recordsList[0], serviceCatalog);
+                System.debug('>>> Single Records');
+                serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForSingleRecord(recordsList[0], serviceCatalog, tabValue);
             }
 
             serviceCatalog.DocumentSelected__c = records;

@@ -10,13 +10,15 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
 
         HDT_UTL_FlowOutputs output = new HDT_UTL_FlowOutputs();
         String phase;
+        String invoiceList = '';
+        String documentList = '';
 
         String recordId = inputs[0].recordId;
         String reimburseMethod = inputs[0].reimburseMethod;
         Boolean isForeign = inputs[0].isForeign;
         String beneficiary = inputs[0].beneficiary;
 
-        Decimal residualSum;
+        Decimal residualSum = 0;
         Integer creditDocument = 0;
         Integer debitDocument = 0;
         Boolean creditDebit = false;
@@ -26,7 +28,7 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
 
         if(documents.size() == 1){
 
-            if(reimburseMethod == 'Assegno' || (isForeign != null && isForeign == true) || documents[0].Residue__c == 0){
+            if(reimburseMethod == 'Assegno' || (isForeign != null && isForeign == true) || documents[0].DocumentResidue__c == 0){
 
                 phase = 'Elaborazione Manuale';
 
@@ -47,17 +49,27 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
             // Controlli sui documenti
             for(DocumentSelected__c document : documents){
 
-                if(document.Residue__c > 0){
+                if(document.DocumentResidue__c > 0){
 
                     ++debitDocument;
 
-                } else if(document.Residue__c < 0){
+                } else if(document.DocumentResidue__c < 0){
 
                     ++creditDocument;
 
                 }
 
-                residualSum += document.Residue__c;
+                residualSum += document.DocumentResidue__c;
+
+                // Concatenazione numeri fattura/documento per Heroku.
+                String documentNumber = document.DocumentNumber__c;
+                if(String.isNotBlank(documentNumber)){
+                    if(documentNumber.startsWith('0')){
+                        invoiceList += documentNumber + ';';
+                    } else {
+                        documentList += documentNumber + ';';
+                    }
+                }
 
             }
 
@@ -106,11 +118,16 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
 
                 phase = 'Elaborazione Manuale';
 
+            } else {
+
+                phase = 'Elaborazione Manuale';
             }
 
         }
 
         output.phase = phase;
+        output.invoiceList = invoiceList;
+        output.documentList = documentList;
 
         outputs.add(output);
 
@@ -139,6 +156,11 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
         @InvocableVariable
         public String phase;
 
+        @InvocableVariable
+        public String invoiceList;
+
+        @InvocableVariable
+        public String documentList;
     }
 
   

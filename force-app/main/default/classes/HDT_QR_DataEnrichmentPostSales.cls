@@ -20,7 +20,18 @@ public with sharing class HDT_QR_DataEnrichmentPostSales {
 
         BillingProfile__c billingProfile = new BillingProfile__c();
 
-        billingProfile = [SELECT Id,BillSendingMethod__c,InvoiceEmailAddress__c,InvoiceCertifiedEmailAddress__c,InvoicingStreetName__c,
+        billingProfile = [SELECT Id,
+        SubjectCode__c,
+        CIG__c,
+        CUP__c,
+        XMLType__c,
+        ElectronicInvoiceCertifiedEmailAddress__c,
+        ElectronicInvoicingMethod__c,
+        SendCertifiedEmailConsentDate__c,
+        BillSendingMethod__c,
+        InvoiceEmailAddress__c,
+        InvoiceCertifiedEmailAddress__c,
+        InvoicingStreetName__c,
         InvoicingStreetNumber__c,
         InvoicingStreetNumberExtension__c,
         InvoicingCity__c,
@@ -57,6 +68,24 @@ public with sharing class HDT_QR_DataEnrichmentPostSales {
 
         return billingProfile;
 
+
+    }
+
+    public ServicePoint__c getServicePointData(String recordId){
+
+        ServicePoint__c servicePoint = new ServicePoint__c();
+
+        servicePoint = [SELECT Id,
+        SupplyType__c,
+        Disconnectable__c,
+        DisconnectibilityType__c
+        FROM ServicePoint__c
+        WHERE Id = :recordId
+        WITH SECURITY_ENFORCED
+        LIMIT 1
+        ];
+
+        return servicePoint;
 
     }
 

@@ -3,6 +3,10 @@
     <label>Genera Paperless</label>
     <protected>false</protected>
     <values>
+        <field>Accesskey__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>ButtonCode__c</field>
         <value xsi:type="xsd:string">runFlowFromAura</value>
     </values>
@@ -27,7 +31,8 @@
         <value xsi:type="xsd:string">{
   &quot;processType&quot;: &quot;Paperless&quot;,
   &quot;recordTypeName&quot;: &quot;HDT_RT_AltriProcessiPagamenti&quot;,
-  &quot;flowName&quot;: &quot;HDT_FL_PostSalesMasterDispatch &quot;
+  &quot;flowName&quot;: &quot;HDT_FL_PostSalesMasterDispatch&quot;,
+  &quot;createDocuments&quot;: true
 }</value>
     </values>
     <values>

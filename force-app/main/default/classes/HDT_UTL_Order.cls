@@ -5,26 +5,28 @@ public inherited sharing class HDT_UTL_Order {
     private static HDT_QR_BillingProfile billingProfileQr = new HDT_QR_BillingProfile();
     private static HDT_QR_AccountContactRelation accountContactRelQr = new HDT_QR_AccountContactRelation();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
+    private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
 
-    public Order enrichOrder(Order newOrder){
+    /*public Order enrichOrder(Order newOrder){
 
         String servicePointFields = 'AnnualConsumption__c, SupplyType__c, WithdrawalClass__c, MarketOrigin__c';
         
-        List<ServicePoint__c> servicePointList = new List<ServicePoint__c>();
+        //List<ServicePoint__c> servicePointList = new List<ServicePoint__c>();
         List<Contract> contractList = new List<Contract>();
-        BillingProfile__c billingProfileList = new BillingProfile__c();
-        List<AccountContactRelation> accountContactRelList = new List<AccountContactRelation>();
+        //BillingProfile__c billingProfileList = new BillingProfile__c();
+        //List<AccountContactRelation> accountContactRelList = new List<AccountContactRelation>();
 
         System.debug('ServicePointId-->'+newOrder.ServicePoint__c);
-        System.debug('ContractId-->'+newOrder.ContractId);
-        System.debug('AccountId-->'+newOrder.AccountId);
+        //System.debug('ContractId-->'+newOrder.ContractId);
+        //System.debug('AccountId-->'+newOrder.AccountId);
 
-        String billingProfileId;
+        //String billingProfileId;
 
-        servicePointList = servicePointQr.getRecordById(newOrder.ServicePoint__c, servicePointFields);
-        contractList = contractQr.getRecordById(newOrder.ContractId);
+        //servicePointList = servicePointQr.getRecordById(newOrder.ServicePoint__c, servicePointFields);
+        //contractList = contractQr.getRecordById(newOrder.ContractId);
 
-        billingProfileId = String.valueOf(contractList[0].BillingProfile__c);
+        //billingProfileId = String.valueOf(contractList[0].BillingProfile__c);
 
         System.debug('BillingProfileId--> '+billingProfileId);
 
@@ -36,6 +38,7 @@ public inherited sharing class HDT_UTL_Order {
         newOrder.WithdrawalClass__c = servicePointList[0].WithdrawalClass__c;
         newOrder.Market__c = servicePointList[0].MarketOrigin__c;
         //newOrder.PaymentMode__c = billingProfileList.PaymentMethod__c;
+        newOrder.BillingProfile__c = billingProfileId;
         newOrder.BillSendMode__c  = billingProfileList.BillSendingMethod__c;
         newOrder.BillToContactId = accountContactRelList[0].ContactId;
         newOrder.PhoneNumber__c = accountContactRelList[0].Contact.MobilePhone;
@@ -45,8 +48,6 @@ public inherited sharing class HDT_UTL_Order {
         return newOrder;
 
 
-    }
-
-
+    }*/
 
 }

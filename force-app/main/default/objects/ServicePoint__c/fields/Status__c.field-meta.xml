@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Impianto compl. in funzione</fullName>
+                <default>false</default>
+                <label>Impianto compl. in funzione</label>
+            </value>
+            <value>
+                <fullName>Interruzione avviata</fullName>
+                <default>false</default>
+                <label>Interruzione avviata</label>
+            </value>
+            <value>
+                <fullName>Impianto parzialmente chiuso</fullName>
+                <default>false</default>
+                <label>Impianto parzialmente chiuso</label>
+            </value>
+            <value>
+                <fullName>Impianto compl. chiuso</fullName>
+                <default>false</default>
+                <label>Impianto compl. chiuso</label>
+            </value>
+            <value>
+                <fullName>Impianto in attivazione</fullName>
+                <default>false</default>
+                <label>Impianto in attivazione</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

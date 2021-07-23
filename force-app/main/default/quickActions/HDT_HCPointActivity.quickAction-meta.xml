@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldOverrides>
+        <field>QAdLogin__c</field>
+        <formula>UPPER($User.FirstName+&apos;.&apos;+$User.LastName)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>QAdTicketCallTime__c</field>
+        <formula>NOW()</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Type__c</field>
+        <literalValue>Sportello</literalValue>
+    </fieldOverrides>
     <label>Attività HC Point / QAd Light</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>

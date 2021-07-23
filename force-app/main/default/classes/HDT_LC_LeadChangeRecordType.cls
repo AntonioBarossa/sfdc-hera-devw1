@@ -1,4 +1,9 @@
-public with sharing class HDT_LC_LeadChangeRecordType {
+/**
+ * @author 'Sabina Levonja' (sabina.levonja@dunegroup.it)
+ * @description HDT_LC_LeadChangeRecordType - 
+ */
+
+ public with sharing class HDT_LC_LeadChangeRecordType {
 
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
 	private static HDT_QR_Recordtype qrRecordtype = new HDT_QR_Recordtype();
@@ -9,12 +14,13 @@ public with sharing class HDT_LC_LeadChangeRecordType {
         Lead lead=new Lead(Id= leadId);
         lead.RecordTypeId= recordtypeQr.getRecordType('HDT_RT_Main', 'Lead').Id;
         HDT_SRV_Lead.checkUpdateAccess(lead);
-        Lead l=HDT_SRV_Lead.updateRecord(lead);
-		id r = qrRecordtype.getRecordType('HDT_RT_GestionePrivacy', 'Case').id;
-   
-        Case c=new Case(Subject='Acquisizione Privacy',recordtypeid=r,Type='Modifica Privacy'/*, Category__c= l.Categoria__c, Sottocategoria__c= l.Sottocategoria__c*/);
-        Case ce= caseSrv.createRecord(c);
-
-        return ce.Id;
+        HDT_SRV_Lead.updateRecord(lead);
+        String res = '';
+        String s = HDT_QR_ServiceCatalog.getServiceLinkItemAccountRedirectUrlByCategory('', 'Modifica Privacy');
+        if(s != null){
+           // res = s.replace('&c__accid={!Id}','');
+           res = s.replace('&c__accid={!Id}','&c__leadId='+ leadId);
+        }
+        return res;
     }
 }

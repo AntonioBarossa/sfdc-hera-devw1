@@ -112,6 +112,8 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.RecordType.DeveloperName,
             ServicePoint__r.Account__c,
             ServicePoint__r.MeterClass__c,
+            ServicePoint__r.MeterStatus__c,
+            ServicePoint__r.PlugPresence__c,
             ServicePoint__r.UseTypeEnergy__c,
             ServicePoint__r.UseCategory__c,
             BillingProfile__c,
@@ -134,6 +136,8 @@ public inherited sharing class HDT_QR_Order {
             SBQQ__Quote__r.OrderReference__c,
             SBQQ__Quote__r.ContractReference__r.ContractNumber,
             SBQQ__Quote__r.OrderReference__r.OrderNumber,
+            SBQQ__Quote__r.AllowChangeUse__c,
+            ProcessType__c,
             SalesCompany__c,
             Campaign__c,
             Campaign__r.Name,
@@ -148,9 +152,58 @@ public inherited sharing class HDT_QR_Order {
             ActivationCountry__c,
             ActivationProvince__c,
             ActivationStreetNumberExtension__c,
-            ActivationStreetNumber__c
+            ActivationStreetNumber__c,
+            ImplantType__c,
+            PowerCommitted__c,
+            PowerRequested__c,
+            ServicePoint__r.MarketOrigin__c,                // @Picchiri 21/05/21
+            WizardCompletedDate__c,                         // @Picchiri 21/05/21
+            ActivatedDate,                                  // @Picchiri 21/05/21
+            ServicePoint__r.VoltageLevel__c,                // @Picchiri 21/05/21
+            ServicePoint__r.SupplyType__c,                  // @Picchiri 21/05/21
+            RecessNotice__c,                                // @Picchiri 21/05/21
+            CustomerCategory__c,                            // @Picchiri 26/05/21
+            Channel__c,                                     // @Picchiri 27/05/21
+            Market__c,                                      // @Picchiri 26/05/21
+            MarketOrigin__c,                                // @Picchiri 27/05/21
+            VoltageLevel__c,                                // @Picchiri 27/05/21 
+            SupplyType__c,                                  // @Picchiri 27/05/21 
+            CreatedById,                                    // @Picchiri 31/05/21 
+            Account.CustomerCode__c,                        // @Picchiri 31/05/21             
+            Account.CustomerMarking__c,                     // @Picchiri 31/05/21             
+            Account.CustomerType__c,                        // @Picchiri 31/05/21 
+            ServicePoint__r.SupplyStreetName__c,            // @Picchiri 31/05/21  
+		    ServicePoint__r.SupplyCity__c,                  // @Picchiri 31/05/21 
+		    ServicePoint__r.SupplyProvince__c,              // @Picchiri 31/05/21 
+		    ServicePoint__r.SupplyPostalCode__c,            // @Picchiri 31/05/21
+            ServicePoint__r.Account__r.CustomerCode__c,     // @Picchiri 08/06/21             
+            ServicePoint__r.Account__r.FiscalCode__c,       // @Picchiri 08/06/21             
+            CommercialProduct__c,                           // @Picchiri 31/05/21 
+            AnnualConsumption__c,                           // @Picchiri 31/05/21 
+            Catalog__c,                                     // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
+            ServicePoint__r.AnnualConsumptionStandardM3__c, // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
+            BillingProfile__r.AccountClass__c,              // @Picchiri Calcolo della date Switch in 08/06/21             
+            OwnerId,                                        // @Picchiri  10/06/21
+            OrderReferenceNumber,                            // @Picchiri  15/06/21
+            IsSequanzialized__c,                             // @Picchiri  24/06/21
+            SalesCompanyCode__c,
+            CustomerType__c
             FROM Order 
             WHERE Id = :orderId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Order> getOrderByIdForSalesCallout(String id){
+        return [
+            SELECT 
+            Id,
+            Phase__c,
+            PrecheckResultSII__c,
+            BillingProfile__c,
+            ProcessType__c
+            FROM Order 
+            WHERE Id = :id
             WITH SECURITY_ENFORCED
         ];
     }
@@ -165,11 +218,112 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getRecordsByIds(List<String> orderIds){
         return [
             SELECT 
+            AccountId,
+            Account.Name,
+            Account.VATNumber__c,
+            Account.FiscalCode__c,
+            Account.BillingAddress,
+            Account.ShippingAddress,
+            Account.FirstName__c,
+            Account.LastName__c,
+            Account.RecordType.Developername,
+            Account.Category__c,
+            Name,
             RecordTypeId,
             RecordType.Name,
             RecordType.DeveloperName,
-            Phase__c,
-            Status
+            SystemModstamp,
+            Status,
+            ContractSigned__c,
+            SignedDate__c,
+            SignatureMethod__c,
+            DocSendingMethod__c,
+            Sale__c,
+            CreatedDate,
+            Step__c,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            //INIZIO SVILUPPI EVERIS
+            ContractId,
+            ServicePoint__r.CommoditySector__c,
+            //FINE SVILUPPI EVERIS
+            ServicePoint__r.RecordType.DeveloperName,
+            ServicePoint__r.Account__c,
+            ServicePoint__r.MeterClass__c,
+            ServicePoint__r.UseTypeEnergy__c,
+            ServicePoint__r.UseCategory__c,
+            BillingProfile__c,
+            Deliberation__c,
+            ParentOrder__c,
+            ParentOrder__r.Status,
+            ParentOrder__r.Phase__c,
+            ParentOrder__r.ContractSigned__c,
+            ParentOrder__r.SignedDate__c,
+            OrderNumber,
+            Phase__c, 
+            RequestOption__c,
+            WaiverRightAfterthought__c,
+            MaxAfterthoughtDate__c,
+            PreviousTrader__c,
+            VolturaThirdTrader__c,
+            SBQQ__Quote__r.IsVAS__c,
+            SBQQ__Quote__r.AmendmentAllowed__c,
+            SBQQ__Quote__r.ContractReference__c,
+            SBQQ__Quote__r.OrderReference__c,
+            SBQQ__Quote__r.ContractReference__r.ContractNumber,
+            SBQQ__Quote__r.OrderReference__r.OrderNumber,
+            SBQQ__Quote__r.AllowChangeUse__c,
+            ProcessType__c,
+            SalesCompany__c,
+            Campaign__c,
+            Campaign__r.Name,
+            ContractReference__c,
+            ContractReference__r.ServicePoint__c,
+            OrderReference__c,
+            ContractReference__r.ContractNumber,
+            OrderReference__r.OrderNumber,
+            ActivationStreetName__c,
+            ActivationCity__c,
+            ActivationPostalCode__c,
+            ActivationCountry__c,
+            ActivationProvince__c,
+            ActivationStreetNumberExtension__c,
+            ActivationStreetNumber__c,
+            ImplantType__c,
+            PowerCommitted__c,
+            ServicePoint__r.MarketOrigin__c,                
+            WizardCompletedDate__c,                         
+            ActivatedDate,                                  
+            ServicePoint__r.VoltageLevel__c,                
+            ServicePoint__r.SupplyType__c,                  
+            RecessNotice__c,                                
+            CustomerCategory__c,                            
+            Channel__c,                                     
+            Market__c,                                      
+            MarketOrigin__c,                                
+            VoltageLevel__c,                                 
+            SupplyType__c,                                   
+            CreatedById,                                     
+            Account.CustomerCode__c,                                     
+            Account.CustomerMarking__c,                                  
+            Account.CustomerType__c,                         
+            ServicePoint__r.SupplyStreetName__c,             
+		    ServicePoint__r.SupplyCity__c,                   
+		    ServicePoint__r.SupplyProvince__c,               
+		    ServicePoint__r.SupplyPostalCode__c,            
+            ServicePoint__r.Account__r.CustomerCode__c,                  
+            ServicePoint__r.Account__r.FiscalCode__c,                    
+            CommercialProduct__c, 
+            sale__r.isTransition__c,                           
+            AnnualConsumption__c,                            
+            Catalog__c,                                     
+            ServicePoint__r.AnnualConsumptionStandardM3__c, 
+            BillingProfile__r.AccountClass__c,                           
+            OwnerId,                                        
+            OrderReferenceNumber,
+            SalesCompanyCode__c,
+            IsSequanzialized__c,
+            CustomerType__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -214,7 +368,10 @@ public inherited sharing class HDT_QR_Order {
             DocumentLow80__c,
             AutorizationVolturaThirdTrader__c,
             VolturaThirdTrader__c,
-            Phase__c
+            Phase__c,
+            ComfortCallDaysDue__c,
+            QualityCall__c,
+            QualityCallUnique__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -393,7 +550,10 @@ public inherited sharing class HDT_QR_Order {
     }
 
     public List<Order> getRecordByOrderNumber(String orderNumber){
-        return [Select id,phase__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+    }
+    public List<Order> getRecordByOrderId(String recordId){
+        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c from Order where Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getRecordsByOrdersIdsBulk(List<String> orderIds){
@@ -418,9 +578,57 @@ public inherited sharing class HDT_QR_Order {
         WHERE Id = :userId
         WITH SECURITY_ENFORCED
         LIMIT 1].UserRole.Name;
-
-
     }
+
+    public Order getDates(String recordId){
+        return [SELECT Id, EffectiveDate__c, RetroactiveDate__c
+        FROM Order
+        WHERE Id = :recordId
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
+    }
+
+    public List<Order> getRecordsByIdWithFields(List<String> Ids, String fields) {
+        String query = 'SELECT '+ fields +
+                ' From Order where Id IN :Ids';
+        List<Order> orders = Database.query(query);
+
+        return orders;
+    }
+    
     //FINE SVILUPPI EVERIS
+
+    public List<order> getOrderCreatedYesterday(){
+        return [Select id,Account.Segment__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday];
+    }
+
+    public static String getRecordTypesDeveloperNameById(Id id){
+        String devName = [SELECT DeveloperName FROM RecordType WHERE id = :id].DeveloperName;
+        return devName;
+    }
+
+    public List<order> getOrderForComfortQualityResult(String parentOrderId){
+        return [SELECT 
+            Id,
+            AccountId,
+            Account.Name,
+            Recordtypeid,
+            Recordtype.Name,
+            Recordtype.DeveloperName,
+            Status,
+            Phase__c,
+            OrderNumber,
+            ProcessType__c,
+            DateComfortCall__c,
+            ComfortCallDaysDue__c,
+            QualityCall__c,
+            QualityCallUnique__c,
+            ConfirmCustomerContract__c,
+            CancellationReason__c
+        FROM Order
+        WHERE ParentOrder__c = :parentOrderId
+        WITH SECURITY_ENFORCED
+        ];
+    }
 
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X_MODELLO_RATA_UNICA__c</fullName>
+    <description>X_MODELLO_RATA_UNICA</description>
+    <externalDeveloperName>X_MODELLO_RATA_UNICA</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>TARI Modello Rata Unica</label>
+    <length>30</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -43,13 +43,60 @@ public inherited sharing class HDT_QR_Account {
         return accounts;
     }
 
+
     public Account getBillingAddressAccount(String accountId){
-        contractSrv.checkReadAccess('Id,BillingAddress');
+        contractSrv.checkReadAccess('Id,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingStreetName__c,BillingCity,BillingState,BillingPostalCode,BillingCountry,BillingStreetCode__c,BillingCityCode__c');
         Account ac = new Account();
         //String query = 'SELECT Id,BillingAddress FROM Account WHERE Id ='+accountId;
-        ac= [SELECT Id,BillingAddress FROM Account WHERE Id =: AccountId WITH SECURITY_ENFORCED];
+        ac= [SELECT Id,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingStreetName__c,BillingCity,BillingState,BillingPostalCode,BillingCountry,BillingStreetCode__c,BillingCityCode__c FROM Account WHERE Id =: AccountId];
         //ac = database.query(query);
         system.debug('Account retrieved******'+ ac);
         return ac;
+    }
+    
+    public Account getAccountByDistributorKey(String globalKeyId){
+        contractSrv.checkReadAccess('Id,Code__c');
+        Account ac = new Account();
+        List<Account> listAcc = new List<Account>();
+        listAcc = [SELECT Id FROM Account WHERE Code__c =: globalKeyId];
+        //String query = 'SELECT Id,BillingAddress FROM Account WHERE Id ='+accountId;
+        if(!listAcc.isEmpty()){
+            ac= listAcc[0];
+        }
+        
+        //ac = database.query(query);
+        system.debug('Account retrieved******'+ ac);
+        return ac;
+    }
+
+    public List<Account> getAccountByFiscalCode(String fiscalCode) {
+        return [
+            SELECT
+            Id
+            FROM Account 
+            WHERE FiscalCode__c = :fiscalCode
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Account> getAccountByVat(String vat) {
+        return [
+            SELECT
+            Id
+            FROM Account 
+            WHERE VATNumber__c = :vat
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Account> getAccountByFiscalCodeAndVat(String fiscalCode, String vat){
+        return [
+            SELECT
+            Id
+            FROM Account 
+            WHERE FiscalCode__c = :fiscalCode
+            AND VATNumber__c = :vat
+            WITH SECURITY_ENFORCED
+        ];
     }
 }

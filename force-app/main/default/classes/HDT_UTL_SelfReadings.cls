@@ -2,6 +2,22 @@ public inherited sharing class HDT_UTL_SelfReadings {
 
     private static HDT_QR_SelfReadings queryHandler = new HDT_QR_SelfReadings();
     private static HDT_QR_RecordType rtQueryHandler = new HDT_QR_RecordType();
+
+    public class HDT_UTL_SelfReadingsFlowInputs {
+
+        @InvocableVariable
+        public String servicePointId;
+
+        @InvocableVariable
+        public String accountId;
+
+        @InvocableVariable
+        public Datetime caseCreatedDateTime;
+
+        @InvocableVariable
+        public String metadataRecordName;
+
+    }
     
     @InvocableMethod(label = 'isProcessReading')
     public static List<Boolean> isProcessReading(List<HDT_UTL_SelfReadingsFlowInputs> inputs) {
@@ -57,19 +73,169 @@ public inherited sharing class HDT_UTL_SelfReadings {
         return results; 
     }
 
-    public class HDT_UTL_SelfReadingsFlowInputs {
+    /**
+     * Gestisce l'upsert dei Case di Autolettura con canale IVR/SOL.
+     * Mulesoft crea inizialmente un Case vuoto e poi lo aggiorna dopo aver chiamato il Check Autolettura di SAP.
+     */
+    public static void upsertInboundSelfReading(HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest request, HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse response) {
 
-        @InvocableVariable
-        public String servicePointId;
+        Case c = new Case();
+        Reading__c r = new Reading__c();
+        Boolean isGas = request.commodity.equals('Gas');
 
-        @InvocableVariable
-        public String accountId;
+        if (String.isNotBlank(request.id)) {
+            c.Id = request.id;
+        }
 
-        @InvocableVariable
-        public Datetime caseCreatedDateTime;
+        if (String.isNotBlank(request.readings.id)) {
+            r.Id = request.readings.id;
+        }
 
-        @InvocableVariable
-        public String metadataRecordName;
+        Contract inputContract = queryHandler.getContractBySapCode(request.contractCode);
+        if (inputContract == null) {
+            throw new HDT_UTL_HeraException('Could not find contract with code: ' + request.contractCode);
+        }
 
+        HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
+        AccountContactRelation acr = acrQueryHandler.getPrimaryContactRelation(inputContract.AccountId);
+        if (acr == null || String.isBlank(acr.ContactId)) {
+            throw new HDT_UTL_HeraException('Could not find primary contact for Account: ' + inputContract.AccountId);
+        }
+
+        c.AccountId = inputContract.AccountId;
+        c.ContactId = acr.ContactId;
+        c.Contract__c = inputContract.Id;
+        c.ServicePoint__c = inputContract.ServicePoint__c;
+        c.Origin = request.origin;
+        c.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_Autolettura');
+        c.Cluster__c = String.isNotBlank(request.cluster) ? request.cluster : 'Autolettura';
+        c.Type = String.isNotBlank(request.type) ? request.type : 'Autolettura da cliente';
+        c.IntegrationId__c = request.integrationId;
+        c.MeterCode__c = request.serialNumber;
+        c.ReadingDate__c = request.readingDate;
+
+        switch on request.outcome {
+            when 'OK' {
+                c.Phase__c = 'Check preliminari OK';
+            }
+            when 'KO' {
+                c.Phase__c = 'Check preliminari KO';
+            }
+            when else {
+                c.Phase__c = 'Attesa check preliminari';
+                c.Type = 'In Lavorazione';
+            }
+        }
+
+        c.Outcome__c = request.outcome;
+        //request.outcomeCode;
+        //request.outcomeDescription;
+
+        HDT_UTL_DatabaseService.upsertSObject(c);
+        response.caseId = c.Id;
+
+        r.Mru__c = request.readings.mru;
+        r.SendTo__c = request.readings.sendTo;
+        r.Name = 'Lettura ' + Datetime.now().format('dd/MM/y HH:mm:ss');
+        r.ReadingDate__c = request.readingDate != null ? request.readingDate : request.readings.date1;
+        if (isGas) {
+            r.CaseGas__c = c.Id;
+            r.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_LetturaGas');
+            r.ReadingDigitNumberMeter__c = request.readings.digits1;
+            r.ReadingDigitNumberCorrector__c = request.readings.digits2;
+            r.ReadingDateMeter__c = request.readings.date1;
+            r.ReadingDateCorrector__c = request.readings.date2;
+            r.ReadingBandMeter__c = request.readings.band1;
+            r.ReadingBandCorrector__c = request.readings.band2;
+            r.ReadingValueMeter__c = request.readings.value1;
+            r.ReadingValueCorrector__c = request.readings.value2;
+            r.ReadingSerialNumberMeter__c = request.readings.serialNumber1;
+            r.ReadingSerialNumber2__c = request.readings.serialNumber2;
+            r.ReadingRegisterMeter__c = request.readings.register1;
+            r.ReadingRegisterCorrector__c = request.readings.register2;
+            r.ReadingTypeMeter__c = request.readings.type1;
+            r.ReadingTypeCorrector__c = request.readings.type2;
+            r.ReadingUnitMeter__c = request.readings.unit1;
+            r.ReadingUnitCorrector__c = request.readings.unit2;
+        } else { // Energia Elettrica (TODO: da adeguare in Wave 2 per gestire anche le altre commodity)
+            r.CaseEle__c = c.Id;
+            r.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_LetturaEle');
+            r.ReadingDigitNumber1__c = request.readings.digits1;
+            r.ReadingDigitNumber2__c = request.readings.digits2;
+            r.ReadingDigitNumber3__c = request.readings.digits3;
+            r.ReadingDigitNumber4__c = request.readings.digits4;
+            r.ReadingDigitNumber5__c = request.readings.digits5;
+            r.ReadingDigitNumber6__c = request.readings.digits6;
+            r.ReadingDigitNumber7__c = request.readings.digits7;
+            r.ReadingDigitNumber8__c = request.readings.digits8;
+            r.ReadingDigitNumber9__c = request.readings.digits9;
+            r.ReadingDate1__c = request.readings.date1;
+            r.ReadingDate2__c = request.readings.date2;
+            r.ReadingDate3__c = request.readings.date3;
+            r.ReadingDate4__c = request.readings.date4;
+            r.ReadingDate5__c = request.readings.date5;
+            r.ReadingDate6__c = request.readings.date6;
+            r.ReadingDate7__c = request.readings.date7;
+            r.ReadingDate8__c = request.readings.date8;
+            r.ReadingDate9__c = request.readings.date9;
+            r.ReadingBand1__c = request.readings.band1;
+            r.ReadingBand2__c = request.readings.band2;
+            r.ReadingBand3__c = request.readings.band3;
+            r.ReadingBand4__c = request.readings.band4;
+            r.ReadingBand5__c = request.readings.band5;
+            r.ReadingBand6__c = request.readings.band6;
+            r.ReadingBand7__c = request.readings.band7;
+            r.ReadingBand8__c = request.readings.band8;
+            r.ReadingBand9__c = request.readings.band9;
+            r.ReadingValue1__c = request.readings.value1;
+            r.ReadingValue2__c = request.readings.value2;
+            r.ReadingValue3__c = request.readings.value3;
+            r.ReadingValue4__c = request.readings.value4;
+            r.ReadingValue5__c = request.readings.value5;
+            r.ReadingValue6__c = request.readings.value6;
+            r.ReadingValue7__c = request.readings.value7;
+            r.ReadingValue8__c = request.readings.value8;
+            r.ReadingValue9__c = request.readings.value9;
+            r.ReadingSerialNumber1__c = request.readings.serialNumber1;
+            r.ReadingSerialNumber2__c = request.readings.serialNumber2;
+            r.ReadingSerialNumber3__c = request.readings.serialNumber3;
+            r.ReadingSerialNumber4__c = request.readings.serialNumber4;
+            r.ReadingSerialNumber5__c = request.readings.serialNumber5;
+            r.ReadingSerialNumber6__c = request.readings.serialNumber6;
+            r.ReadingSerialNumber7__c = request.readings.serialNumber7;
+            r.ReadingSerialNumber8__c = request.readings.serialNumber8;
+            r.ReadingSerialNumber9__c = request.readings.serialNumber9;
+            r.ReadingRegister1__c = request.readings.register1;
+            r.ReadingRegister2__c = request.readings.register2;
+            r.ReadingRegister3__c = request.readings.register3;
+            r.ReadingRegister4__c = request.readings.register4;
+            r.ReadingRegister5__c = request.readings.register5;
+            r.ReadingRegister6__c = request.readings.register6;
+            r.ReadingRegister7__c = request.readings.register7;
+            r.ReadingRegister8__c = request.readings.register8;
+            r.ReadingRegister9__c = request.readings.register9;
+            r.ReadingType1__c = request.readings.type1;
+            r.ReadingType2__c = request.readings.type2;
+            r.ReadingType3__c = request.readings.type3;
+            r.ReadingType4__c = request.readings.type4;
+            r.ReadingType5__c = request.readings.type5;
+            r.ReadingType6__c = request.readings.type6;
+            r.ReadingType7__c = request.readings.type7;
+            r.ReadingType8__c = request.readings.type8;
+            r.ReadingType9__c = request.readings.type9;
+            r.ReadingUnit1__c = request.readings.unit1;
+            r.ReadingUnit2__c = request.readings.unit2;
+            r.ReadingUnit3__c = request.readings.unit3;
+            r.ReadingUnit4__c = request.readings.unit4;
+            r.ReadingUnit5__c = request.readings.unit5;
+            r.ReadingUnit6__c = request.readings.unit6;
+            r.ReadingUnit7__c = request.readings.unit7;
+            r.ReadingUnit8__c = request.readings.unit8;
+            r.ReadingUnit9__c = request.readings.unit9;
+        }
+        
+        HDT_UTL_DatabaseService.upsertSObject(r);
+        response.readingId = r.Id;
     }
+
 }

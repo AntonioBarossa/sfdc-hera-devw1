@@ -4,11 +4,15 @@
     <protected>false</protected>
     <values>
         <field>ColumnOrder__c</field>
-        <value xsi:type="xsd:double">8.0</value>
+        <value xsi:type="xsd:double">3.0</value>
     </values>
     <values>
         <field>FieldName__c</field>
         <value xsi:type="xsd:string">tipoDoc</value>
+    </values>
+    <values>
+        <field>FieldType__c</field>
+        <value xsi:type="xsd:string">text</value>
     </values>
     <values>
         <field>InitialWidth__c</field>

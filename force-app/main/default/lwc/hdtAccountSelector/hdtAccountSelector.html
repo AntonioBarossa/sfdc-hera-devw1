@@ -10,7 +10,7 @@
 		<template if:false={changesCommitted}>
 			<template if:true={isCall}>
 				<span class="slds-size_1-of-1 slds-text-align_center">
-					In caso di chiamata muta o per errore, innescare il relativo processo dal tasto Catalogo Servizi.
+					In caso di chiamata muta o per errore usare la funzionalità Notifica Chiamata.
 				</span>
 			</template>
 		</template>
@@ -22,17 +22,17 @@
 		<template if:true={showContactSearchPanel}>
 			<div onkeyup={handleKeyUp} class="slds-col slds-size_1-of-1">
 				<lightning-input
+					variant="label-hidden"
 					data-id="search_bar_anagrafica"
 					name="search_bar_anagrafica"
-					placeholder="Cerca per nome, numero di telefono o email e digita invio"
 					type="search"
 				></lightning-input>
 			</div>
 			<div class="slds-grid slds-grid_vertical slds-size_1-of-1">
-				<template if:false={contactsFound}>
+				<template if:false={searchResults}>
 					<span class="slds-p-horizontal_medium slds-p-top_medium slds-text-align_center">
-						Nessun contatto o lead trovato. <br>
-						E possibile ricercare per nome, email, numero di telefono, codice fiscale e partita IVA.
+						Nessuna corrispondenza. <br>
+						Effettua la ricerca per codice cliente, nome, email, numero di telefono, codice fiscale, e partita IVA e premi invio.
 					</span>
 				</template>
 				<template if:true={contactsFound}>
@@ -71,9 +71,10 @@
 						Account correlati:
 					</span>
 					<template for:each={accounts} for:item="account">
-						<div key={account.Id} data-id={account.Id} class="slds-col slds-size_1-of-1 slds-m-top_small" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
+						<div key={account.Id} data-id={account.Id} data-sobjtype={account.attributes.type} class="slds-col slds-size_1-of-1 slds-m-top_small" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
 							<lightning-card title={account.Name} icon-name="standard:account">
 								<ul class="slds-m-around_medium">
+									Cod. Cliente: {account.CustomerCode__c} <br>
 									Cod. Fiscale: {account.FiscalCode__c}, Partita IVA: {account.VATNumber__c} <br>
 									Indirizzo di Fatturazione: {account.BillingAddressFormula__c}
 								</ul>

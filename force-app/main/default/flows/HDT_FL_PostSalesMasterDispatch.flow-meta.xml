@@ -10,10 +10,54 @@
         <connector>
             <targetReference>Gestione_Informative_SubFlow</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
                 <elementReference>Crea_Case_Informative</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>contesto</name>
+            <value>
+                <elementReference>Context</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>createDocuments</name>
+            <value>
+                <elementReference>createDocuments</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>method</name>
+            <value>
+                <stringValue>manageDocumentsInformative</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>serviceCatalogId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>ManageDocument</name>
+        <label>ManageDocument</label>
+        <locationX>4252</locationX>
+        <locationY>878</locationY>
+        <actionName>HDT_SRV_DocumentSelectedManager</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>GetContractFatturazione_0_0</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caseId</name>
+            <value>
+                <elementReference>CaseId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -46,6 +90,7 @@
         <connector>
             <targetReference>GetContractFatturazione_0</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -76,8 +121,8 @@
     <assignments>
         <name>Assegna_Case_Id</name>
         <label>Assegna Case Id</label>
-        <locationX>4252</locationX>
-        <locationY>758</locationY>
+        <locationX>4516</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -86,7 +131,23 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Gestione_Canone_Rai_Subflow</targetReference>
+            <targetReference>Arricchimento_Dati_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_0</name>
+        <label>Assegna Case Id</label>
+        <locationX>4252</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Canone_Rai_0</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ManageDocument</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -141,7 +202,7 @@
         <name>Assegna_Case_Id_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
         <locationX>1304</locationX>
-        <locationY>1094</locationY>
+        <locationY>1310</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -150,7 +211,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Arricchimento_Dati_0</targetReference>
+            <targetReference>Nuovo_Impianto_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -172,8 +233,8 @@
     <assignments>
         <name>Assegna_Case_Id_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>4912</locationX>
-        <locationY>1094</locationY>
+        <locationX>5484</locationX>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -186,9 +247,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Case_Id_0_0_0_0_0_0_0_0_0</name>
+        <label>Assegna Case Id</label>
+        <locationX>5220</locationX>
+        <locationY>1430</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CreaCaseVariazioni_0</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Gestione_Variazioni_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Case_Id_Annullamento</name>
         <label>Assegna Case Id</label>
-        <locationX>4516</locationX>
+        <locationX>4912</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -198,7 +275,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Gestione_Annullamento_Subflow</targetReference>
+            <targetReference>Arricchimento</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -246,7 +323,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Arricchimento_Dati_0_0</targetReference>
+            <targetReference>Check_Arricchimento_Dati_Fatturazione</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -266,22 +343,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Case_Id_Modifiche_Anagrafiche</name>
-        <label>Assegna Case Id</label>
-        <locationX>2756</locationX>
-        <locationY>974</locationY>
-        <assignmentItems>
-            <assignToReference>CaseId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Crea_Case_Modifiche_Anagrafiche</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Check_Arricchimento_Dati_Mod_Anagrafica</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assegna_Case_Id_Modifiche_Anagrafiche_0</name>
         <label>Assegna Case Id</label>
         <locationX>3196</locationX>
@@ -294,7 +355,39 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Gestione_Reclami_Subflow</targetReference>
+            <targetReference>Arricchimento_Dati_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_Modifiche_Anagrafiche_Account</name>
+        <label>Assegna Case Id</label>
+        <locationX>2624</locationX>
+        <locationY>1430</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Modifiche_Anagrafiche_Account</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Arricchimento_Dati_Mod_Anagrafica</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_Modifiche_Anagrafiche_Lead</name>
+        <label>Assegna Case Id</label>
+        <locationX>2888</locationX>
+        <locationY>1550</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Modifiche_Anagrafiche_Lead</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Arricchimento_Dati_Mod_Anagrafica</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -310,7 +403,69 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Gestione_Morosita_Subflow</targetReference>
+            <targetReference>Arricchimento_Dati_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_Notifiche</name>
+        <label>Assegna Case Id</label>
+        <locationX>5748</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Notifiche</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Arricchimento_Dati_Notifiche</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_Notifiche_0</name>
+        <label>Assegna Case Id</label>
+        <locationX>6012</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Voltura</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Arricchimento_Dati_Notifiche_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_variabili</name>
+        <label>Assegna variabili</label>
+        <locationX>4252</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>GetRecord.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRecord.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRecord.BillingProfile__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>billingProfile</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -346,8 +501,8 @@
     <assignments>
         <name>AssignRecordTypeIdEle</name>
         <label>AssignRecordTypeIdEle</label>
-        <locationX>5044</locationX>
-        <locationY>758</locationY>
+        <locationX>5484</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
             <operator>Assign</operator>
@@ -356,14 +511,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>CreaCaseVariazioni</targetReference>
+            <targetReference>Selezione_Fornitura_00_0</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssignRecordTypeIdGas</name>
         <label>AssignRecordTypeIdGas</label>
-        <locationX>4780</locationX>
-        <locationY>758</locationY>
+        <locationX>5220</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
             <operator>Assign</operator>
@@ -372,7 +527,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>CreaCaseVariazioni</targetReference>
+            <targetReference>Selezione_Fornitura_00_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -395,7 +550,7 @@
         <name>Istanzia_Variabile_RT_Ele_0</name>
         <label>Istanzia Variabile RT Ele</label>
         <locationX>1436</locationX>
-        <locationY>758</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
             <operator>Assign</operator>
@@ -427,7 +582,7 @@
         <name>Istanzia_Variabile_RT_Gas_0</name>
         <label>Istanzia Variabile RT Gas</label>
         <locationX>1172</locationX>
-        <locationY>758</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
             <operator>Assign</operator>
@@ -439,9 +594,41 @@
             <targetReference>Crea_Case_0_0</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_RT_Mod_Anagrafica</name>
+        <label>Set RT Mod. Anagrafica</label>
+        <locationX>2888</locationX>
+        <locationY>854</locationY>
+        <assignmentItems>
+            <assignToReference>RecordTypeModificaAnagrafica</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RecordTypeName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_RT_Modifiche_Anagrafiche</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_RT_Votiva_Modena</name>
+        <label>Set RT Votiva Modena</label>
+        <locationX>2624</locationX>
+        <locationY>854</locationY>
+        <assignmentItems>
+            <assignToReference>RecordTypeModificaAnagrafica</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>HDT_RT_VotiveModena</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_RT_Modifiche_Anagrafiche</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>ModificaDatiContattoChoice</name>
-        <choiceText>Modifica Dati di Contatto</choiceText>
+        <choiceText>Modifica Dati di Contatto (Telefono, Email, PEC, Fax, Marcatura)</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Modifica Dati di Contatto</stringValue>
@@ -449,7 +636,7 @@
     </choices>
     <choices>
         <name>ModificaDatiFiscaliChoice</name>
-        <choiceText>Modifica Dati Fiscali</choiceText>
+        <choiceText>Modifica Dati Fiscali (Nome, Cognome/Ragione sociale, Codice Fiscale, Partita IVA, Indirizzo Residenza/Sede legale)</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Modifica Dati Fiscali</stringValue>
@@ -457,10 +644,18 @@
     </choices>
     <choices>
         <name>ModificaDatiRecapitoChoice</name>
-        <choiceText>Modifica Dati di Recapito</choiceText>
+        <choiceText>Modifica Dati di Recapito (Modalità Invio Bolletta, Recapito Invio Bolletta, Fatturazione Elettronica)</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Modifica Dati di Recapito</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ModificaDatiRecapitoVotivaModenaChoice</name>
+        <choiceText>Modifica Dati di Recapito su Votiva Modena</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Modifica Dati di Recapito Votiva Modena</stringValue>
         </value>
     </choices>
     <choices>
@@ -494,10 +689,67 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Arricchimento</name>
+        <label>Arricchimento?</label>
+        <locationX>4912</locationX>
+        <locationY>878</locationY>
+        <defaultConnector>
+            <targetReference>Gestione_Annullamento_Subflow</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Arricchimento</defaultConnectorLabel>
+        <rules>
+            <name>Contratto_Non_Richiesto</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Contratto Non Richiesto</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Arricchimento_Dati_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>Contratto Non Richiesto</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Arricchimento_Dati_Fatturazione</name>
+        <label>Arricchimento Dati Fatturazione?</label>
+        <locationX>2096</locationX>
+        <locationY>1574</locationY>
+        <defaultConnector>
+            <targetReference>Arricchimento_Dati_Fatturazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Con Arricchimento</defaultConnectorLabel>
+        <rules>
+            <name>Senza_Arricchimento</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore di Fatturazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prescrizione Fatture</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Fatturazione_Subflow</targetReference>
+            </connector>
+            <label>Senza Arricchimento</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Arricchimento_Dati_Mod_Anagrafica</name>
         <label>Arricchimento Dati Mod. Anagrafica?</label>
         <locationX>2756</locationX>
-        <locationY>1094</locationY>
+        <locationY>1766</locationY>
         <defaultConnector>
             <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
         </defaultConnector>
@@ -519,12 +771,37 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Contesto_Case</name>
+        <label>Contesto Case?</label>
+        <locationX>2756</locationX>
+        <locationY>1190</locationY>
+        <defaultConnector>
+            <targetReference>Get_Lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Lead</defaultConnectorLabel>
+        <rules>
+            <name>Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Crea_Case_Modifiche_Anagrafiche_Account</targetReference>
+            </connector>
+            <label>Account</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Processo_ModAnagrafica</name>
         <label>Processo?</label>
         <locationX>2756</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Get_RT_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Check_Votiva_Modena_ModAnag</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Processo senza fornitura</defaultConnectorLabel>
         <rules>
@@ -559,6 +836,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Votiva_Modena_ModAnag</name>
+        <label>Votiva Modena?</label>
+        <locationX>2756</locationX>
+        <locationY>734</locationY>
+        <defaultConnector>
+            <targetReference>Set_RT_Mod_Anagrafica</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SubprocessChoice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ModificaDatiRecapitoVotivaModenaChoice</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_RT_Votiva_Modena</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>CommodityDecision</name>
         <label>Commodity?</label>
         <locationX>248</locationX>
@@ -587,7 +889,7 @@
         <name>CommodityDecision_0</name>
         <label>Commodity?</label>
         <locationX>1304</locationX>
-        <locationY>518</locationY>
+        <locationY>734</locationY>
         <defaultConnector>
             <targetReference>Get_RT_Ele_0</targetReference>
         </defaultConnector>
@@ -611,8 +913,8 @@
     <decisions>
         <name>CommodityDecision_0_0</name>
         <label>Commodity?</label>
-        <locationX>4912</locationX>
-        <locationY>518</locationY>
+        <locationX>5352</locationX>
+        <locationY>734</locationY>
         <defaultConnector>
             <targetReference>GetEleRecordType</targetReference>
         </defaultConnector>
@@ -631,6 +933,95 @@
                 <targetReference>GetGasRecordType</targetReference>
             </connector>
             <label>Gas</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Con_Senza_SelezioneFornitura</name>
+        <label>Con/Senza SelezioneFornitura</label>
+        <locationX>4384</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Selezione_Fornitura_Autolettura_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Con Selezione</defaultConnectorLabel>
+        <rules>
+            <name>Senza_Selezione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Verifica Pareggio Fittizio Canone Rai</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Crea_Case_Canone_Rai_0</targetReference>
+            </connector>
+            <label>Senza Selezione</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Nuovo_Impianto</name>
+        <label>Nuovo Impianto/Aggiunt Attacco?</label>
+        <locationX>1304</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Selezione_Fornitura_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Nuovo_Impianto_Aggiunta_Attacco</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuovo Impianto</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Aggiunta Attacco</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CommodityDecision_0</targetReference>
+            </connector>
+            <label>Nuovo Impianto/Aggiunta Attacco</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Nuovo_Impianto_0</name>
+        <label>Nuovo Impianto/Aggiunt Attacco?</label>
+        <locationX>1304</locationX>
+        <locationY>1430</locationY>
+        <defaultConnector>
+            <targetReference>Arricchimento_Dati_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Nuovo_Impianto_Aggiunta_Attacco_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuovo Impianto</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Aggiunta Attacco</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Preventivi_Subflow</targetReference>
+            </connector>
+            <label>Nuovo Impianto/Aggiunta Attacco</label>
         </rules>
     </decisions>
     <decisions>
@@ -673,9 +1064,87 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Selezione_Fornitura_00</name>
+        <label>Selezione Fornitura?</label>
+        <locationX>5352</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Selezione_Fornitura_Notifiche_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altri Processi</defaultConnectorLabel>
+        <rules>
+            <name>Processi_Generici</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Dettaglio Bolletta</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>BP/CA - errata categoria</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Split Payment</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CommodityDecision_0_0</targetReference>
+            </connector>
+            <label>Processi Generici</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Selezione_Fornitura_00_0</name>
+        <label>Selezione Fornitura?</label>
+        <locationX>5352</locationX>
+        <locationY>1190</locationY>
+        <defaultConnector>
+            <targetReference>CreaCaseVariazioni</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altri Processi</defaultConnectorLabel>
+        <rules>
+            <name>Processi_Generici_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Dettaglio Bolletta</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>BP/CA - errata categoria</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Split Payment</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CreaCaseVariazioni_0</targetReference>
+            </connector>
+            <label>Processi Generici</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Switch_Subflow</name>
         <label>Switch Subflow</label>
-        <locationX>2679</locationX>
+        <locationX>3163</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen_0</targetReference>
@@ -765,21 +1234,21 @@
             <name>Cluster_Preventivi</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Variazione Potenza</stringValue>
+                    <stringValue>HDT_RT_PreventiviEle</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Spostamento Contatore</stringValue>
+                    <stringValue>HDT_RT_PreventiviGas</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Selezione_Fornitura_0_0</targetReference>
+                <targetReference>Nuovo_Impianto</targetReference>
             </connector>
             <label>Cluster Preventivi</label>
         </rules>
@@ -787,10 +1256,10 @@
             <name>Cluster_Morosit</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Riattivazione Fornitura</stringValue>
+                    <stringValue>HDT_RT_Morosita</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -893,12 +1362,26 @@
         </rules>
         <rules>
             <name>Cluster_Reclami</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Reclamo Scritto/Rich. Info</stringValue>
+                    <stringValue>HDT_RT_ReclamiScrittiRichiesteInfo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VerificaDatiAlDl</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ComportamentoVenditori</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -969,7 +1452,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Selezione_Fornitura_Autolettura_0</targetReference>
+                <targetReference>Get_RT_Canone_Rai_0</targetReference>
             </connector>
             <label>Canone Rai</label>
         </rules>
@@ -1006,11 +1489,54 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Selezione_Fornitura_Notifiche_0_0</targetReference>
+                <targetReference>Selezione_Fornitura_00</targetReference>
             </connector>
             <label>Cluster Variazioni</label>
         </rules>
+        <rules>
+            <name>Cluster_Notifiche_Outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_SospensioneRiattivazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Fornitura_Notifiche</targetReference>
+            </connector>
+            <label>Cluster Notifiche</label>
+        </rules>
+        <rules>
+            <name>Cluster_Voltura</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VolturaTecnica</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Fornitura_Notifiche_0_0_0</targetReference>
+            </connector>
+            <label>Cluster Voltura</label>
+        </rules>
     </decisions>
+    <formulas>
+        <name>votiveModenaCluster</name>
+        <dataType>String</dataType>
+        <expression>IF( CONTAINS({!ProcessType}, &quot;Votive Modena Contestazione Fattura&quot;), 
+     &quot;Reclami&quot;,
+      IF(CONTAINS({!ProcessType}, &quot;Spostamento Votive Modena&quot;),&quot;Preventivi&quot;,
+      IF(CONTAINS({!ProcessType}, &quot;Votive Modena Pagamenti Morosità&quot;),&quot;Morosità&quot;,
+      IF(CONTAINS({!ProcessType}, &quot;Votive Modena Cessazione&quot;),&quot;Disattivazioni&quot;,&quot;&quot;
+)
+)
+)
+)</expression>
+    </formulas>
     <interviewLabel>HDT_FL_PostSalesMasterDispatch {!$Flow.CurrentDateTime}</interviewLabel>
     <label>PostSales Master Dispatch</label>
     <processMetadataValues>
@@ -1047,9 +1573,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Verifiche</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1068,12 +1606,6 @@
             <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1125,7 +1657,7 @@
         <name>Crea_Case_0_0</name>
         <label>Crea Case</label>
         <locationX>1304</locationX>
-        <locationY>974</locationY>
+        <locationY>1190</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0</targetReference>
         </connector>
@@ -1136,9 +1668,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Preventivi</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1163,12 +1707,6 @@
             <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1231,9 +1769,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Disattivazioni</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1252,12 +1802,6 @@
             <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1320,27 +1864,27 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
-                <elementReference>Votive_Modena</elementReference>
+                <elementReference>votiveModenaCluster</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Contract__c</field>
-            <value>
-                <elementReference>Contract</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1359,12 +1903,6 @@
             <field>RecordTypeId</field>
             <value>
                 <elementReference>Get_RT_VotiveModena.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ServicePoint__c</field>
-            <value>
-                <elementReference>ServicePointId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1403,9 +1941,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Pagamenti</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1421,9 +1971,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
+            <field>DistributorCode__c</field>
             <value>
-                <stringValue>Phone</stringValue>
+                <stringValue>13D0000001</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1442,6 +1998,12 @@
             <field>RecordTypeId</field>
             <value>
                 <elementReference>Get_RT_Pagamenti.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SalesCompanyCode__c</field>
+            <value>
+                <stringValue>13V0000000</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1468,7 +2030,7 @@
     <recordCreates>
         <name>Crea_Case_Annullamento</name>
         <label>Crea Case</label>
-        <locationX>4516</locationX>
+        <locationX>4912</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Annullamento</targetReference>
@@ -1480,9 +2042,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Annullamento</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1501,12 +2075,6 @@
             <field>Mobile__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1557,9 +2125,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Autolettura</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1572,12 +2152,6 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1610,8 +2184,8 @@
     <recordCreates>
         <name>Crea_Case_Canone_Rai</name>
         <label>Crea Case Canone Rai</label>
-        <locationX>4252</locationX>
-        <locationY>638</locationY>
+        <locationX>4516</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Assegna_Case_Id</targetReference>
         </connector>
@@ -1622,9 +2196,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Canone Rai</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1640,15 +2226,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Note__c</field>
+            <field>Email__c</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
+            <field>Note__c</field>
             <value>
-                <stringValue>Phone</stringValue>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1666,7 +2252,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <elementReference>Get_RT_Canone_Rai.Id</elementReference>
+                <elementReference>Get_RT_Canone_Rai_0.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1676,15 +2262,80 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>SuppliedEmail</field>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Crea_Case_Canone_Rai_0</name>
+        <label>Crea Case Canone Rai</label>
+        <locationX>4252</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Canone Rai</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DistributorNote__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>SuppliedPhone</field>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Canone_Rai_0.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1717,9 +2368,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Fatturazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1732,12 +2395,6 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1782,21 +2439,27 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Fatturazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>ContactId</field>
+            <field>CompanyOwner__c</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
+            <field>ContactId</field>
             <value>
-                <stringValue>Phone</stringValue>
+                <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1829,21 +2492,27 @@
             <targetReference>Assegna_Case_Id_Informative</targetReference>
         </connector>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Informative</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>ContactId</field>
+            <field>CompanyOwner__c</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
+            <field>ContactId</field>
             <value>
-                <stringValue>Phone</stringValue>
+                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1868,12 +2537,12 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
-        <name>Crea_Case_Modifiche_Anagrafiche</name>
+        <name>Crea_Case_Modifiche_Anagrafiche_Account</name>
         <label>Crea Case</label>
-        <locationX>2756</locationX>
-        <locationY>854</locationY>
+        <locationX>2624</locationX>
+        <locationY>1310</locationY>
         <connector>
-            <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_Account</targetReference>
         </connector>
         <inputAssignments>
             <field>AccountId</field>
@@ -1882,9 +2551,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Modifiche Anagrafiche</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1900,9 +2581,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
+            <field>ParentId</field>
             <value>
-                <stringValue>Phone</stringValue>
+                <elementReference>ParentRecordId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1939,6 +2620,59 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
+        <name>Crea_Case_Modifiche_Anagrafiche_Lead</name>
+        <label>Crea Case</label>
+        <locationX>2888</locationX>
+        <locationY>1430</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_Lead</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Modifiche Anagrafiche</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Get_Lead.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Lead__c</field>
+            <value>
+                <elementReference>LeadId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Modifiche_Anagrafiche.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <name>Crea_Case_Morosita</name>
         <label>Crea Case</label>
         <locationX>1700</locationX>
@@ -1953,9 +2687,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Morosità</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1974,12 +2720,6 @@
             <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2028,6 +2768,89 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
+        <name>Crea_Case_Notifiche</name>
+        <label>Crea Case</label>
+        <locationX>5748</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_Notifiche</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Notifiche</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Mobile__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Phone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Notifiche.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <name>Crea_Case_Reclamo</name>
         <label>Crea Case Reclamo</label>
         <locationX>3196</locationX>
@@ -2042,9 +2865,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Reclami</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2060,15 +2895,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Note__c</field>
+            <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2117,12 +2946,12 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
-        <name>CreaCaseVariazioni</name>
-        <label>CreaCaseVariazioni</label>
-        <locationX>4912</locationX>
-        <locationY>974</locationY>
+        <name>Crea_Case_Voltura</name>
+        <label>Crea Case</label>
+        <locationX>6012</locationX>
+        <locationY>638</locationY>
         <connector>
-            <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0</targetReference>
+            <targetReference>Assegna_Case_Id_Notifiche_0</targetReference>
         </connector>
         <inputAssignments>
             <field>AccountId</field>
@@ -2131,9 +2960,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
-                <stringValue>Variazioni</stringValue>
+                <stringValue>Voltura</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2155,9 +2996,98 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
+            <field>Phase__c</field>
             <value>
-                <stringValue>Phone</stringValue>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Voltura.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedPhone</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>CreaCaseVariazioni</name>
+        <label>CreaCaseVariazioni</label>
+        <locationX>5484</locationX>
+        <locationY>1310</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Variazioni</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DistributorNote__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2205,6 +3135,89 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordCreates>
+        <name>CreaCaseVariazioni_0</name>
+        <label>CreaCaseVariazioni</label>
+        <locationX>5220</locationX>
+        <locationY>1310</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Variazioni</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DistributorNote__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>RecordTypeCalculated</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedPhone</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>CaseFatturazione_0</name>
         <label>CaseFatturazione</label>
@@ -2229,7 +3242,7 @@
     <recordLookups>
         <name>Cerca_Contatto_Primario</name>
         <label>Cerca Contatto Primario</label>
-        <locationX>2679</locationX>
+        <locationX>3163</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2255,6 +3268,13 @@
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Titolare</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -2283,9 +3303,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Lead</name>
+        <label>Get Lead</label>
+        <locationX>2888</locationX>
+        <locationY>1310</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_Modifiche_Anagrafiche_Lead</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>LeadId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Lead</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_RT_Annullamento</name>
         <label>Get RT Annullamento</label>
-        <locationX>4516</locationX>
+        <locationX>4912</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2325,13 +3366,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_RT_Canone_Rai</name>
+        <name>Get_RT_Canone_Rai_0</name>
         <label>Get RT Canone Rai</label>
-        <locationX>4252</locationX>
-        <locationY>518</locationY>
+        <locationX>4384</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Crea_Case_Canone_Rai</targetReference>
+            <targetReference>Con_Senza_SelezioneFornitura</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2391,7 +3432,7 @@
         <name>Get_RT_Ele_0</name>
         <label>Get RT Ele</label>
         <locationX>1436</locationX>
-        <locationY>638</locationY>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Istanzia_Variabile_RT_Ele_0</targetReference>
@@ -2454,7 +3495,7 @@
         <name>Get_RT_Gas_0</name>
         <label>Get RT Gas</label>
         <locationX>1172</locationX>
-        <locationY>638</locationY>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Istanzia_Variabile_RT_Gas_0</targetReference>
@@ -2496,17 +3537,17 @@
         <name>Get_RT_Modifiche_Anagrafiche</name>
         <label>Get RT Modifiche Anagrafiche</label>
         <locationX>2756</locationX>
-        <locationY>734</locationY>
+        <locationY>1070</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Crea_Case_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Check_Contesto_Case</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>RecordTypeName</elementReference>
+                <elementReference>RecordTypeModificaAnagrafica</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -2521,6 +3562,27 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_Morosita</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordTypeName</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_RT_Notifiche</name>
+        <label>Get RT Annullamento</label>
+        <locationX>5748</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_Notifiche</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2563,6 +3625,27 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_Reclamo</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordTypeName</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_RT_Voltura</name>
+        <label>Get RT Voltura</label>
+        <locationX>6012</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_Voltura</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2629,10 +3712,41 @@
         </outputAssignments>
     </recordLookups>
     <recordLookups>
+        <name>GetContractFatturazione_0_0</name>
+        <label>GetContractFatturazione</label>
+        <locationX>4252</locationX>
+        <locationY>998</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetRecord</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SAPContractCode__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ManageDocument.contractCode</elementReference>
+            </value>
+        </filters>
+        <object>Contract</object>
+        <outputAssignments>
+            <assignToReference>billingProfile</assignToReference>
+            <field>BillingProfile__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Contract</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServicePointId</assignToReference>
+            <field>ServicePoint__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
         <name>GetEleRecordType</name>
         <label>GetEleRecordType</label>
-        <locationX>5044</locationX>
-        <locationY>638</locationY>
+        <locationX>5484</locationX>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssignRecordTypeIdEle</targetReference>
@@ -2652,8 +3766,8 @@
     <recordLookups>
         <name>GetGasRecordType</name>
         <label>GetGasRecordType</label>
-        <locationX>4780</locationX>
-        <locationY>638</locationY>
+        <locationX>5220</locationX>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssignRecordTypeIdGas</targetReference>
@@ -2670,20 +3784,51 @@
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetRecord</name>
+        <label>GetRecord</label>
+        <locationX>4252</locationX>
+        <locationY>1118</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_variabili</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Crea_Case_Canone_Rai_0</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Case_Fatturazione_0</name>
         <label>Aggiorna Case Fatturazione</label>
         <locationX>1964</locationX>
         <locationY>1358</locationY>
         <connector>
-            <targetReference>Arricchimento_Dati_0_0</targetReference>
+            <targetReference>Check_Arricchimento_Dati_Fatturazione</targetReference>
         </connector>
         <inputReference>CaseFatturazione_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCase</name>
+        <label>AggiornaCase</label>
+        <locationX>4252</locationX>
+        <locationY>1358</locationY>
+        <connector>
+            <targetReference>Gestione_Canone_Rai_Subflow</targetReference>
+        </connector>
+        <inputReference>GetRecord</inputReference>
     </recordUpdates>
     <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
-        <locationX>5308</locationX>
+        <locationX>6276</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2701,11 +3846,11 @@
         <label>Selezione Sottoprocesso</label>
         <locationX>2492</locationX>
         <locationY>518</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_RT_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Check_Votiva_Modena_ModAnag</targetReference>
         </connector>
         <fields>
             <name>VariazioneClienteHeaderText</name>
@@ -2714,10 +3859,11 @@
         </fields>
         <fields>
             <name>SubprocessChoice</name>
+            <choiceReferences>ModificaDatiContattoChoice</choiceReferences>
+            <choiceReferences>ModificaDatiRecapitoChoice</choiceReferences>
             <choiceReferences>ModificaDatiFiscaliChoice</choiceReferences>
             <choiceReferences>VariazioneGruppoIVAChoice</choiceReferences>
-            <choiceReferences>ModificaDatiRecapitoChoice</choiceReferences>
-            <choiceReferences>ModificaDatiContattoChoice</choiceReferences>
+            <choiceReferences>ModificaDatiRecapitoVotivaModenaChoice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Sotto-processo</fieldText>
             <fieldType>RadioButtons</fieldType>
@@ -2727,7 +3873,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>2553</locationX>
+        <locationX>3037</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Cerca_Contatto_Primario</targetReference>
@@ -2767,8 +3913,8 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>1304</locationX>
-        <locationY>1214</locationY>
+        <locationX>1392</locationX>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>Gestione_Preventivi_Subflow</targetReference>
         </connector>
@@ -2794,39 +3940,10 @@
     </subflows>
     <subflows>
         <description>Arricchimento Dati</description>
-        <name>Arricchimento_Dati_0_0</name>
-        <label>Arricchimento Dati</label>
-        <locationX>2096</locationX>
-        <locationY>1574</locationY>
-        <connector>
-            <targetReference>Gestione_Fatturazione_Subflow</targetReference>
-        </connector>
-        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
-        <inputAssignments>
-            <name>ContractId</name>
-            <value>
-                <elementReference>Contract</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>InputCase</name>
-            <value>
-                <elementReference>CaseId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ServicePointId</name>
-            <value>
-                <elementReference>ServicePointId</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_0_0_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>4912</locationX>
-        <locationY>1214</locationY>
+        <locationX>5484</locationX>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>Gestione_Variazioni_Subflow</targetReference>
         </connector>
@@ -2880,10 +3997,155 @@
         </inputAssignments>
     </subflows>
     <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_0_0_0_0_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>3196</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Gestione_Reclami_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_0_0_0_0_0_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>4780</locationX>
+        <locationY>998</locationY>
+        <connector>
+            <targetReference>Gestione_Annullamento_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_0_0_0_0_0_0_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>4516</locationX>
+        <locationY>998</locationY>
+        <connector>
+            <targetReference>Gestione_Canone_Rai_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_0_0_0_0_0_0_0_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>1700</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Gestione_Morosita_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_Fatturazione</name>
+        <label>Arricchimento Dati</label>
+        <locationX>2184</locationX>
+        <locationY>1694</locationY>
+        <connector>
+            <targetReference>Gestione_Fatturazione_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Arricchimento_Dati_Mod_Anagrafica</name>
         <label>Arricchimento Dati Mod. Anagrafica</label>
         <locationX>2624</locationX>
-        <locationY>1214</locationY>
+        <locationY>1886</locationY>
         <connector>
             <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
         </connector>
@@ -2897,7 +4159,65 @@
         <inputAssignments>
             <name>InputCase</name>
             <value>
-                <elementReference>Crea_Case_Modifiche_Anagrafiche</elementReference>
+                <elementReference>Crea_Case_Modifiche_Anagrafiche_Account</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_Notifiche</name>
+        <label>Arricchimento Dati</label>
+        <locationX>5748</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Gestione_Notifiche</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_Notifiche_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>6012</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Gestione_Voltura_Tecnica_SubFlow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2910,8 +4230,8 @@
     <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>4516</locationX>
-        <locationY>878</locationY>
+        <locationX>4912</locationX>
+        <locationY>1214</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2942,8 +4262,8 @@
     <subflows>
         <name>Gestione_Canone_Rai_Subflow</name>
         <label>Gestione Canone Rai Subflow</label>
-        <locationX>4252</locationX>
-        <locationY>878</locationY>
+        <locationX>4384</locationX>
+        <locationY>1574</locationY>
         <flowName>HDT_FL_GestioneCanoneRai</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2956,8 +4276,14 @@
         <name>Gestione_Fatturazione_Subflow</name>
         <label>Gestione Fatturazione Subflow</label>
         <locationX>2096</locationX>
-        <locationY>1694</locationY>
+        <locationY>1910</locationY>
         <flowName>HDT_FL_GestioneFatturazione</flowName>
+        <inputAssignments>
+            <name>HasPartiteNonFatturate</name>
+            <value>
+                <elementReference>ManageDocumentsFatturazione_0.hasPartiteNonFatturate</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>InputCase</name>
             <value>
@@ -2994,7 +4320,7 @@
         <name>Gestione_Modifiche_Anagrafiche</name>
         <label>Gestione Modifiche Anagrafiche</label>
         <locationX>2756</locationX>
-        <locationY>1430</locationY>
+        <locationY>2102</locationY>
         <flowName>HDT_FL_GestioneModificheAnagrafiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3013,8 +4339,21 @@
         <name>Gestione_Morosita_Subflow</name>
         <label>Gestione Morosita Subflow</label>
         <locationX>1700</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <flowName>HDT_FL_GestioneMorosita</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Notifiche</name>
+        <label>Gestione Notifiche</label>
+        <locationX>5748</locationX>
+        <locationY>998</locationY>
+        <flowName>HDT_FL_GestioneNotifiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
             <value>
@@ -3026,7 +4365,7 @@
         <name>Gestione_Preventivi_Subflow</name>
         <label>Gestione Preventivi Subflow</label>
         <locationX>1304</locationX>
-        <locationY>1334</locationY>
+        <locationY>1766</locationY>
         <flowName>HDT_FL_GestionePreventivi</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3040,7 +4379,7 @@
         <name>Gestione_Reclami_Subflow</name>
         <label>Gestione Reclami Subflow</label>
         <locationX>3196</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <flowName>HDT_FL_GestioneReclami</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3052,8 +4391,8 @@
     <subflows>
         <name>Gestione_Variazioni_Subflow</name>
         <label>Gestione Variazioni Subflow</label>
-        <locationX>4912</locationX>
-        <locationY>1334</locationY>
+        <locationX>5352</locationX>
+        <locationY>1766</locationY>
         <flowName>HDT_FL_GestioneVariazioni</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3087,6 +4426,19 @@
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Gestione_Voltura_Tecnica_SubFlow</name>
+        <label>Gestione Voltura Tecnica SubFlow</label>
+        <locationX>6012</locationX>
+        <locationY>998</locationY>
+        <flowName>HDT_FL_VolturaTecnica</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Selezione_Fornitura</name>
@@ -3175,8 +4527,8 @@
     <subflows>
         <name>Selezione_Fornitura_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>1304</locationX>
-        <locationY>398</locationY>
+        <locationX>1392</locationX>
+        <locationY>518</locationY>
         <connector>
             <targetReference>CommodityDecision_0</targetReference>
         </connector>
@@ -3295,10 +4647,10 @@
     <subflows>
         <name>Selezione_Fornitura_Autolettura_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>4252</locationX>
-        <locationY>398</locationY>
+        <locationX>4516</locationX>
+        <locationY>638</locationY>
         <connector>
-            <targetReference>Get_RT_Canone_Rai</targetReference>
+            <targetReference>Crea_Case_Canone_Rai</targetReference>
         </connector>
         <flowName>HDT_FL_SupplySelection</flowName>
         <inputAssignments>
@@ -3418,7 +4770,47 @@
         <locationX>2756</locationX>
         <locationY>518</locationY>
         <connector>
-            <targetReference>Get_RT_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Check_Votiva_Modena_ModAnag</targetReference>
+        </connector>
+        <flowName>HDT_FL_SupplySelection</flowName>
+        <inputAssignments>
+            <name>AccountId</name>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>TargetObject</name>
+            <value>
+                <stringValue>Fornitura</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>Commodity</assignToReference>
+            <name>Commodity</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Contract</assignToReference>
+            <name>Contract</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServicePointId</assignToReference>
+            <name>ServicePointId</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Selezione_Fornitura_Notifiche</name>
+        <label>Selezione Fornitura</label>
+        <locationX>5748</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Get_RT_Notifiche</targetReference>
         </connector>
         <flowName>HDT_FL_SupplySelection</flowName>
         <inputAssignments>
@@ -3455,7 +4847,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>4516</locationX>
+        <locationX>4912</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Get_RT_Annullamento</targetReference>
@@ -3495,10 +4887,50 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>4912</locationX>
-        <locationY>398</locationY>
+        <locationX>5440</locationX>
+        <locationY>518</locationY>
         <connector>
             <targetReference>CommodityDecision_0_0</targetReference>
+        </connector>
+        <flowName>HDT_FL_SupplySelection</flowName>
+        <inputAssignments>
+            <name>AccountId</name>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>TargetObject</name>
+            <value>
+                <stringValue>Fornitura</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>Commodity</assignToReference>
+            <name>Commodity</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Contract</assignToReference>
+            <name>Contract</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServicePointId</assignToReference>
+            <name>ServicePointId</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Selezione_Fornitura_Notifiche_0_0_0</name>
+        <label>Selezione Fornitura</label>
+        <locationX>6012</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Get_RT_Voltura</targetReference>
         </connector>
         <flowName>HDT_FL_SupplySelection</flowName>
         <inputAssignments>
@@ -3607,6 +5039,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>CampaignId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>cancelCase</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -3659,6 +5098,20 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>LeadId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ParentRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <description>Tipo processo passato in input dal Service Catalog</description>
         <name>ProcessType</name>
         <dataType>String</dataType>
@@ -3675,6 +5128,13 @@
     </variables>
     <variables>
         <name>RecordTypeCalculated</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RecordTypeModificaAnagrafica</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

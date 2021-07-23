@@ -25,13 +25,19 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
             //update child orders
             for (Order childOrder : childOrders) {
+                
+                String phase = childOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' ? childOrder.Phase__c : 
+                checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione';
+
+                if (childOrder.ComfortCallDaysDue__c != null) { //comform call logic
+                    phase = 'In attesa conferma cliente';
+                }
 
                 // if (childOrder.RecordType.DeveloperName != 'HDT_RT_ScontiBonus') {
                     ordersToUpdate.add(new Order(
                         Id = childOrder.Id,
                         //EVERIS: AGGIUNTA CASISTICA VOLTURA
-                        Phase__c = childOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' ? childOrder.Phase__c : 
-                        checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
+                        Phase__c = phase
                     ));
                 // }
 
@@ -40,17 +46,26 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             //update parent order
             ordersToUpdate.add(new Order(
                 Id = orderParent.Id,
-                Phase__c = 'Plico da inviare' //Everis: modificato in 'Plico da inviare poiche la fase 'Plico inviato da validare' non presente a DM'
+                Phase__c = 'Documentazione da inviare' //Everis: modificato in 'Plico da inviare poiche la fase 'Plico inviato da validare' non presente a DM'
             ));
 
         } else {
 
             //update child orders
             for (Order childOrder : childOrders) {
+
+                String phase = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione';
+                // Date dateComfortCall = null;
+
+                if (childOrder.ComfortCallDaysDue__c != null) { //comform call logic
+                    phase = 'In attesa conferma cliente';
+                    // dateCDateComfortCall__c
+                }
+
                 // if (childOrder.RecordType.DeveloperName != 'HDT_RT_ScontiBonus') {
                     ordersToUpdate.add(new Order(
                         Id = childOrder.Id,
-                        Phase__c = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
+                        Phase__c = phase
                     ));
                 // }
             }
@@ -58,7 +73,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             //update parent order
             ordersToUpdate.add(new Order(
                 Id = orderParent.Id,
-                Phase__c = 'Plico Firmato da validare'
+                Phase__c = 'Documentazione da validare'
             ));
 
         }
@@ -84,7 +99,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         for (Order childOrder : childOrders) {
             ordersToUpdate.add(new Order(
                 Id = childOrder.Id,
-                Status = 'Annullato',
+                Status = 'Annullato', //Chiuso
                 Phase__c = 'Annullato',
                 CancellationReason__c = cancellationReason
             ));
@@ -93,7 +108,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         //update parent order
         ordersToUpdate.add(new Order(
             Id = orderParent.Id,
-            Status = 'Annullato',
+            Status = 'Annullato', //Chiuso
             Phase__c = 'Annullato',
             CancellationReason__c = cancellationReason
         ));
@@ -151,10 +166,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     * @return Boolean
     */
     @AuraEnabled
-    public static Boolean isSaveDisabled(String orderParentId){
+    public static Boolean isSaveDisabled(Order orderParent){
         Boolean result = false;
         
-        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParentId);
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         
         for (Order childOrder : childOrders) {
             if (childOrder.Step__c != 20) {
@@ -163,7 +178,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             }
         }
 
-        return result;
+        return result || orderParent.Status == 'Completed';
     }
 
 }

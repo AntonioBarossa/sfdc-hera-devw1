@@ -11,6 +11,11 @@
         <label>Gas</label>
     </customValue>
     <customValue>
+        <fullName>Multi</fullName>
+        <default>false</default>
+        <label>Multi</label>
+    </customValue>
+    <customValue>
         <fullName>Teleriscaldamento</fullName>
         <default>false</default>
         <label>Teleriscaldamento</label>

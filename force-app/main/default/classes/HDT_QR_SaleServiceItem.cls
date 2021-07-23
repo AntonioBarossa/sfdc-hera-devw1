@@ -37,7 +37,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         AND ServicePoint__r.MeterType__c = :servicePoint.MeterType__c
         AND ServicePoint__r.UseCategory__c = :servicePoint.UseCategory__c
         AND Opportunity__r.Sale__r.Agency__c = :sale.Agency__c
-        AND Opportunity__r.Sale__r.Channel__c = :sale.Channel__c
+        // AND Opportunity__r.Sale__r.Channel__c = :sale.Channel__c
         AND Opportunity__r.Sale__r.Campaign__c = :sale.Campaign__c
         AND Quote__r.Login__c = :calculatedStringValues.get('login')
         AND Quote__r.LoginGroup__c = :calculatedStringValues.get('loginGroup')

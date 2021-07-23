@@ -117,7 +117,7 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
     handleDialogResponse(event){
         if(event.detail.status == true){
             this.loaded = false;
-            deleteTile({opportunityId:this.opportunityToDeleteId}).then(data =>{
+            deleteTile({opportunityId:this.opportunityToDeleteId, cancellationReason:event.detail.choice}).then(data =>{
                 this.loaded = true;
     
                 this.getTilesData();

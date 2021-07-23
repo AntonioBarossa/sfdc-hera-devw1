@@ -5,17 +5,52 @@ export default class HdtFilterFirstLevelModal extends LightningElement {
     @api columns;
     @api modalTitle;
     @api confirmLabel;
+    @api firstLevelFilterObj;
     @track filterObj = [];
+    defaultFilterObj = [];
     error;
 
+    connectedCallback(){
+        console.log('>>> INPUT FILTER OBJ ' + JSON.stringify(this.firstLevelFilterObj));
+
+        this.columns.forEach((element) => {
+            if(element.isFilter){
+                var tempObj = {};
+                tempObj.label = element.label;
+                tempObj.fieldName = element.fieldName;
+                tempObj.type = element.detail.type;
+                tempObj.filterDetail = {};
+
+                if(this.firstLevelFilterObj != undefined && this.firstLevelFilterObj[element.fieldName] != undefined){
+                    tempObj.filterDetail.operator = this.firstLevelFilterObj[element.fieldName].operator;
+                    tempObj.filterDetail.value = this.firstLevelFilterObj[element.fieldName].value;
+                    this.filterObj.push({fieldName: element.fieldName, operator: tempObj.filterDetail.operator, value: tempObj.filterDetail.value});
+                } else {
+                    tempObj.filterDetail.operator = null;
+                    tempObj.filterDetail.value = '';                
+                }
+
+                this.defaultFilterObj.push(tempObj);
+            }
+        });
+
+        console.log('>>> INNER FILTER OBJ ' + JSON.stringify(this.filterObj));
+        //console.log('>>> NEW COLUMNS ' + JSON.stringify(this.defaultFilterObj));
+
+    }
+
     setOperator(event){
+        console.log('>>> operator ' + event.detail.operator);
+
         let foundRow = this.filterObj.find(ele  => ele.fieldName === event.detail.fieldName);
         if(foundRow === undefined){
             this.filterObj.push({fieldName: event.detail.fieldName, operator: event.detail.operator});
         } else {
             foundRow.operator = event.detail.operator;
         }
-        //console.log(JSON.stringify(this.filterObj));
+
+    //console.log(JSON.stringify(this.filterObj));
+
     }
 
     onChangeHandler(event){
@@ -45,31 +80,44 @@ export default class HdtFilterFirstLevelModal extends LightningElement {
         //console.log(JSON.stringify(this.filterObj));
     }
 
+    checkSingleField(field){
+        if(field === undefined || field === null || field === ''){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     applyFilter(){
-        var interObj = {};
-        this.filterObj.forEach((element) => {
-            for (var key in element) {
-                if(element[key] === undefined || element[key] ===''){
-                    break;
+        console.log('>>> INNER FILTER OBJ ' + JSON.stringify(this.filterObj));
+        try {
+            var interObj = {};
+            this.filterObj.forEach((element) => {
+                if(this.checkSingleField(element.fieldName) && this.checkSingleField(element.operator) && this.checkSingleField(element.value)){
+                    interObj[element.fieldName] = {operator: element.operator, value: element.value};
                 }
-                interObj[element.fieldName] = {operator: element.operator, value: element.value};
-            }            
-        });
+            });
 
-        var filterObj = JSON.stringify(interObj);
+            var filterObj = JSON.stringify(interObj);
 
-        console.log('>>> ' + filterObj);
+            console.log('>>> ' + filterObj);
 
-        const sendApply = new CustomEvent("applyinterrogation", {
-            detail: {value: filterObj}
-        });
-        // Dispatches the event.
-        this.dispatchEvent(sendApply);
-        this.resetParameters();
+            const sendApply = new CustomEvent("applyinterrogation", {
+                detail: {value: filterObj}
+            });
+            // Dispatches the event.
+            this.dispatchEvent(sendApply);
+            //this.resetParameters();
+
+        } catch (error) {
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );            
+        }
     }
 
     closeModal(){
-        console.log('>>> close');
+        console.log('>>> close HdtFilterFirstLevelModal');
         this.closeModalEvent();
         this.resetParameters();
     }

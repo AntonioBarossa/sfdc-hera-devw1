@@ -20,6 +20,7 @@
     <template if:true={joinFilterModal} >
         <c-hdt-join-filter-modal
                 tab-code={tabCode}
+                record-id={recordid}
                 onclosemodal={closeModalHandler}
                 fields-to-filter={fieldsToFilter}
                 onsetobjfilter={applyFilter}
@@ -31,13 +32,24 @@
             modal-title={title}
             confirm-label={filterLabel}
             columns={columns}
+            first-level-filter-obj={firstLevelFilterObj}
             onapplyinterrogation={applyInterFromChild}
             onclosemodal={closeModalHandler}
         ></c-hdt-filter-first-level-modal>
     </template>
+    <template if:true={showPrintModal}>
+        <c-hdt-account-document-signature-manager
+            record-id={recordid}
+            context={context}
+            documents={documents}
+            tipo-plico={tipoPlico}
+            onclosemodal={handleClosePrintModal}
+        ></c-hdt-account-document-signature-manager>
+    </template>
 
     <template if:true={showBillList} >
         <c-hdt-bill-list
+            modal-header={billListHeader}
             onclosemodal={closeModalHandler}
         ></c-hdt-bill-list>
     </template>
@@ -58,6 +70,7 @@
 
     <template if:true={showFilters2} >
         <c-hdt-account-statement-filters2
+            account-id={recordid}
             filter-type={filterType}
             onclosemodal={closeModalHandler}
             onsetobjfilter={applyFilter}
@@ -74,23 +87,7 @@
         <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
     </div>
 
-
-    <div if:true={showError} class="slds-text-align_center">
-        <lightning-card>
-            <lightning-icon icon-name="utility:wifi"
-                alternative-text="Warning!"
-                title="Warning"
-                size="large"
-            ></lightning-icon>
-
-        <div class="slds-box slds-box_x-small slds-m-top_x-large slds-text-heading_medium">
-            <p>{showErrorMessage}</p>
-        </div>
-
-        </lightning-card>
-    </div>
-
-    <div if:false={showError} class="slds-grid slds-wrap">
+    <div class="slds-grid slds-wrap">
 
         <!-- Section 1: menu button, pagination and page index -->
         <div class="slds-col slds-size_1-of-1">
@@ -98,6 +95,7 @@
                 <!-- menu buttons -->
                 <div class="slds-col">
                     <div class="slds-button-group" role="group">
+                        <button class="slds-button slds-button_neutral mainbutton" name="refreshRecords" onclick={refreshRecord} disabled >Ripristina</button>
                         <template for:each={confObj} for:item="c">
                             <button
                                 key={c.name}
@@ -107,6 +105,7 @@
                                 data-parameters={c.parameters}
                                 name={c.name}
                                 onclick={buttonHandler}
+                                accesskey={c.accesskey}
                             >{c.label}</button>
                         </template>
                     </div>
@@ -218,7 +217,7 @@
         </div>
 
         <!-- Section 2: data of first level -->
-        <div id="tableViewInnerDiv" class="slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_xx-small tableFixHead scrolltop tableScroll" >
+        <div if:false={showError} id="tableViewInnerDiv" class="slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_xx-small tableFixHead scrolltop tableScroll" >
             <table class="slds-table" >
                 <thead>
                     <tr>
@@ -240,8 +239,8 @@
                             <th key={c.fieldName} >
                                 <div class="slds-m-left_x-small slds-truncate slds-align_absolute-center divheader" title={c.label}><!--slds-cell-fixed-->
                                     <p>{c.label}</p>
-                                    <p if:true={c.showAmount}>
-                                        &nbsp;-&nbsp;
+                                    <p if:true={c.showAmount} class="slds-m-left_xx-small">
+                                        <!--&nbsp;-&nbsp;-->
                                         <lightning-formatted-number
                                             value={totAmount}
                                             format-style="currency"
@@ -268,30 +267,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Interrogazione 
-                    <template if:false={showAccountData} >
-                        <tr>
-                            <td data-label="buttongo">
-                                <div class="slds-truncate slds-form-element" title="filter0">
-                                    <lightning-button-icon icon-name="utility:play"
-                                                           variant="brand"
-                                                           alternative-text="Applica interrogazione"
-                                                           onclick={applyInterrogation}
-                                    ></lightning-button-icon>
-                                </div>
-                            </td>
-
-                            <template iterator:c={columns} >
-                                <td key={c.value.fieldName} style="width: 200px; text-align:center">
-                                   <c-hdt-input-field field={c.value.fieldName} field-type={c.value.detail.type} onsettdvalue={setIntParam} ></c-hdt-input-field>
-                                </td>
-                            </template>
-
-                        </tr>                    
-                    </template>-->
-
-                    <!-- Table to show account statement -->
-                    <!-- <template if:true={showAccountData} iterator:it={accountData} > -->
                     <template iterator:it={accountData} >
                         
                         <tr key={it.value.id} data-id={it.value.id} onclick={handleRowAction} >
@@ -318,6 +293,21 @@
                     </template>
                 </tbody>
             </table>
+        </div>
+
+        <div if:true={showError} class="slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_xx-small slds-text-align_center">
+            <lightning-card>
+                <lightning-icon icon-name="utility:wifi"
+                    alternative-text="Warning!"
+                    title="Warning"
+                    size="large"
+                ></lightning-icon>
+    
+            <div class="slds-box slds-box_x-small slds-m-top_x-large slds-text-heading_medium">
+                <p>{showErrorMessage}</p>
+            </div>
+    
+            </lightning-card>
         </div>
 
         <!-- Section 3: data of sevond level -->

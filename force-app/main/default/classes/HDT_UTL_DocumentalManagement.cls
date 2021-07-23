@@ -1,0 +1,658 @@
+public inherited sharing class HDT_UTL_DocumentalManagement {
+	public static List<Map<String,List<sObject>>> getRecordObjectsList(List<SObject> recordsList,String context){
+		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
+		switch on context {
+			when 'Context1' {
+				return getRecordObjectsListContext1(recordsList);
+			}
+			when 'Context2'{
+				return getRecordObjectsListContext2(recordsList);
+			}
+			when 'Context3'{
+				return getRecordObjectsListContext3(recordsList);
+			}
+			when 'Context4'{
+				return getRecordObjectsListContext4(recordsList);
+			}when else {
+				return null;
+			}
+		}
+	}
+	public static ContentVersion createContectVersion(String base64, String filename){
+		ContentVersion cv = new ContentVersion();
+		cv.VersionData = EncodingUtil.base64Decode(base64);
+		cv.Title = filename;
+		cv.PathOnClient = filename;
+		try {
+			insert cv;
+			return cv;
+		} catch(DMLException e) {
+			System.debug(e);
+			return null;
+		}
+	}
+
+	public static ContentDocumentLink createContentLink(String contentVersionId, String recordId) {
+		if (contentVersionId == null || recordId == null) { return null; }
+		ContentDocumentLink cdl = new ContentDocumentLink();
+		cdl.ContentDocumentId = [
+			SELECT ContentDocumentId 
+			FROM ContentVersion 
+			WHERE Id =: contentVersionId
+		].ContentDocumentId;
+		cdl.LinkedEntityId = recordId;
+		// ShareType is either 'V', 'C', or 'I'
+		// V = Viewer, C = Collaborator, I = Inferred
+		cdl.ShareType = 'V';
+		try {
+			insert cdl;
+			return cdl;
+		} catch(DMLException e) {
+			System.debug(e);
+			return null;
+		}
+	}
+	private static String getSharedLink(String cdId){
+		if (cdId == null) { return null; }
+		String queryString = 'SELECT Id,DistributionPublicUrl FROM ContentDistribution WHERE Id = \''+cdId+'\'';
+		try {
+			List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'ContentDistribution');
+			ContentDistribution cd = (ContentDistribution)recordList[0];
+			return cd.DistributionPublicUrl;
+		} catch (Exception e) {
+			System.debug(e);
+			return null;
+		}
+		
+	}
+
+	public static String createContentDistribution(String contentVersionId){
+		if (contentVersionId == null) { return null; }
+		ContentDistribution cd = new ContentDistribution();
+		cd.Name = 'Test';
+		cd.ContentVersionId = contentVersionId;
+		cd.PreferencesAllowViewInBrowser= true;
+		cd.PreferencesLinkLatestVersion=true;
+		cd.PreferencesNotifyOnVisit=true;
+		cd.PreferencesPasswordRequired=false;
+		cd.PreferencesAllowOriginalDownload= true;
+		try {
+			insert cd;
+			return getSharedLink(cd.Id);
+		} catch(DMLException e) {
+			System.debug(e);
+			return null;
+		}
+	}
+	public static void createDocumentEnvelopeAttachment(HDT_WRP_DocumentalResponse response, String context){
+		try {
+			String recordId;
+			List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
+			List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem> serviceItemList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem>();
+			serviceItemList.addAll(response.deliverPackageResponse.serviceList);
+			List<DocumentalEnvelopeAttachment__c> envelopeList = new List<DocumentalEnvelopeAttachment__c>();
+			for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem serviceItem : serviceItemList){
+				recordId = (Id) serviceItem.serviceId;
+				for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : serviceItem.attachmentList){
+					DocumentalEnvelopeAttachment__c envelope = new DocumentalEnvelopeAttachment__c();
+					envelope.AttachmentCode__c = singleAttachment.code;
+					envelope.Required__c = singleAttachment.mandatory == 'Y'? true:false;
+					envelope.Version__c = singleAttachment.version;
+					if(context.equalsIgnoreCase('Case')){
+						envelope.Case__c = recordId;
+					}else if(context.equalsIgnoreCase('Order')){
+						envelope.Order__c = recordId;
+					}
+					envelopeList.add(envelope);
+				}
+			}
+			if(envelopeList.size()>0){
+				Boolean result = HDT_UTL_DatabaseService.insertSObject(envelopeList);
+			}
+			
+		} catch (Exception ex) {
+			System.debug('Error in class HDT_UTL_DocumentalManagement method createDocumentEnvelopeAttachment at line' + ex.getLineNumber() + '. Error: '+ ex.getMessage());
+		}
+	}
+
+	private static Boolean isSignNeeded(HDT_WRP_DocumentalResponse response){
+		List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
+		attachmentList.addAll(response.deliverPackageResponse.serviceList[0].attachmentList);
+		for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : attachmentList){
+			if(singleAttachment.mandatory == 'Y')
+				return true;
+		}
+		return false;
+	}
+	public static Boolean updateDocumentalPhase(sObject processRecord, HDT_WRP_DocumentalResponse response,String context){
+		String archive = response.deliverPackageResponse.archive;
+		String result = response.deliverPackageResponse.result;
+		String cluster = '';
+		String quotationType = '';
+		if(result == '000'){
+			if(archive != 'Y'){
+				processRecord.put('DocumentalPhase__c','Preview');
+			}else{
+				if(isSignNeeded(response)){
+					processRecord.put('DocumentalPhase__c','Plico in firma');
+				}else {
+					processRecord.put('DocumentalPhase__c','Plico inviato');
+				}
+				if(context.equalsIgnoreCase('Case')){
+					cluster = (String) processRecord.get('Cluster__c');
+					quotationType = (String) processRecord.get('QuotationType__c');
+					if(cluster.equalsIgnoreCase('Preventivi') && String.isNotBlank(quotationType) && quotationType.equalsIgnoreCase('Predeterminabile')){
+						processRecord.put('Phase__c','Attesa conferma preventivo cliente');
+					}
+				}
+			}
+		}else {
+			processRecord.put('DocumentalPhase__c','Errore composizione');
+		}
+		return HDT_UTL_DatabaseService.updateSObject(processRecord);
+	}
+
+	public static sObject getProcessRecord(Id requestId, String context){
+		String fieldString = '';
+		String fromString = '';
+		String whereString = 'Id = \''+requestId + '\'';
+		String queryString = 'SELECT ';
+		switch on context {
+			when 'Order' {
+				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c';
+				fromString = 'Order';
+			}
+			when 'Case'{
+				fieldString = 'Id, AccountId,SendMode__c ,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c,QuotationType__c';
+				fromString = 'Case';
+			}
+			when else {
+				fieldString = 'Id,PrimaryEmail__c,SendMode__c';
+				fromString = 'Account';
+			}
+		}
+		queryString += fieldString + ' FROM ' + fromString + ' WHERE ' + whereString;
+		List<sObject> toReturnList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromString);
+		return toReturnList[0];
+	}
+	public static void createDocumentSendTracking(String message, Id requestId, String envelopeId,sObject processRecord){
+		try {
+			String sObjName = requestId.getSObjectType().getDescribe().getName();
+			DocumentSendTracking__c documentalSendTracking = new DocumentSendTracking__c ();
+			switch on sObjName {
+				when 'Case' {
+					documentalSendTracking.Case__c = (Id) requestId;
+					System.debug('### Account Id: '+processRecord.get('AccountId'));
+					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
+					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
+				}
+				when 'Order','DocumentazioneAnticipata' {
+					documentalSendTracking.Order__c = (Id) requestId;
+					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
+					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c'); 
+					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
+				}
+				when else {
+					documentalSendTracking.Account__c = (Id) processRecord.get('Id');
+					documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
+				}
+			}
+			documentalSendTracking.SendDate__c = Date.today();
+			documentalSendTracking.EnvelopeId__c = envelopeId;
+			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalSendTracking);
+		} catch (Exception ex) {
+			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+		}
+	}
+	private static List<Map<String,List<sObject>>> getRecordObjectsListContext2(List<SObject> recordsList){
+		Case caseObject = (Case) recordsList[0];
+		Account accountObject = (Account) caseObject.Account;
+		Contact contactObject = (Contact) caseObject.Contact;
+		List<DocumentSelected__c> documentSelectedObjectList = (List<DocumentSelected__c> ) caseObject.documenti_selezionati__r;
+		List<sObject> listCase = new List<sObject>();
+		listCase.add(caseObject);
+		System.debug('listCase ' + listCase);
+		List<sObject> listAccount = new List<sObject>();
+		listAccount.add(accountObject);
+		List<sObject> listContact = new List<sObject>();
+		listContact.add(contactObject);
+		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>{
+			'Case' => listCase, 'Account' => listAccount, 'PrimaryContact' => listContact, 'DocumentSelected' => documentSelectedObjectList
+		};
+		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
+		toReturn.add(mapStringObjectRecords);
+		return toReturn;
+	}
+
+	private static List<Map<String,List<sObject>>> getRecordObjectsListContext3(List<SObject> recordsList){
+		
+		List<Account> listAccount = new List<Account>();
+		Account accountObject = (Account) recordsList[0];
+		listAccount.add(accountObject);
+
+		List<Case> listCase = (List<Case>) accountObject.Cases;
+		List<Order> listOrder = (List<Order>) accountObject.Orders;
+		List<BillingProfile__c> listBp = (List<BillingProfile__c>) accountObject.BillingProfiles__r;
+		
+		List<AccountContactRelation> listAccContRel = (List<AccountContactRelation>) accountObject.AccountContactRelations;
+		List<Contact> listContact = new List<Contact>();
+		for(AccountContactRelation accConRel : listAccContRel){
+			listContact.add(accConRel.Contact);
+		}
+		
+		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>{
+			'CaseList' => listCase,'OrderList' => listOrder, 'Account' => listAccount, 'ContactList' => listContact, 'BillingProfileList' => listBp, 'AccountContactRelationList' => listAccContRel
+		};
+		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
+		toReturn.add(mapStringObjectRecords);
+		return toReturn;
+	} 
+
+	private static List<Map<String,List<sObject>>> getRecordObjectsListContext4(List<SObject> recordsList){
+		Account accountObject = (Account) recordsList[0];
+		List<sObject> listAccount = new List<sObject>();
+		listAccount.add(accountObject);
+		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>{
+			'Account' => listAccount
+		};
+		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
+		toReturn.add(mapStringObjectRecords);
+		return toReturn;
+	}
+
+	
+	private static List<Map<String,List<sObject>>> getRecordObjectsListContext1(List<SObject> recordsList){
+		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
+		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>();
+		for(Order singleOrder : (List<Order>) recordsList){
+			mapStringObjectRecords = new Map<String,List<sObject>>();
+			
+			List<OrderItem> orderItemList = new List<OrderItem>();
+			List<OrderItem> orderItemVasList = new List<OrderItem>();
+			//USER
+			User seller = (User) singleOrder.SaleBy__r;
+			List<User> userList = new List<User>();
+			userList.add(seller);
+			mapStringObjectRecords.put('Seller' ,userList);
+			//ACCOUNT
+			Account account = (Account) singleOrder.Account;
+			List<Account> accountList = new List<Account>();
+			accountList.add(account);
+			mapStringObjectRecords.put('Account' ,accountList);
+			//CONTACT
+			Contact contact = (Contact) singleOrder.Contact__r;
+			List<Contact> contactList = new List<Contact>();
+			contactList.add(contact);
+			mapStringObjectRecords.put('PrimaryContact' ,contactList);
+			//PARENT ORDER
+			Order parentOrder = (Order) singleOrder.ParentOrder__r;
+			List<sObject> parentOrderList = new List<sObject>();
+			parentOrderList.add(parentOrder);
+			mapStringObjectRecords.put('ParentOrder' , parentOrderList);
+			//SINGLE ORDER
+			List<sObject> orderList = new List<sObject>();
+			orderList.add(singleOrder);
+			mapStringObjectRecords.put('Order' , orderList);
+			
+			
+			mapStringObjectRecords.put('Account' ,accountList);
+			for(OrderItem singleOrderItem : (List<OrderItem>)  singleOrder.OrderItems){
+				orderItemList = new List<OrderItem>();
+				String family = singleOrderItem.ProductFamily__c;
+				if(family == 'Offerta commerciale'){
+					orderItemList.add(singleOrderItem);
+					mapStringObjectRecords.put('ItemCommercialOffer' ,orderItemList);
+				}else if(family == 'VAS Prodotto' || family == 'VAS Servizio'){
+					orderItemList.add(singleOrderItem);
+					mapStringObjectRecords.put('ParentItemVAS' ,orderItemList);
+				}else if(family.equalsIgnoreCase('VAS Opzione servizio') || family.equalsIgnoreCase('VAS Opzione prodotto') || family.equalsIgnoreCase('VAS Fatturabili')){
+					orderItemVasList.add(singleOrderItem);
+					mapStringObjectRecords.put('ItemVAS' ,orderItemVasList);
+				}else if(family.indexOf('Bonus') > -1){
+					orderItemList.add(singleOrderItem);
+					mapStringObjectRecords.put('ItemBonus' ,orderItemList);
+				}else if(family.indexOf('Promozione') > -1){
+					orderItemList.add(singleOrderItem);
+					mapStringObjectRecords.put('ItemPromotion' ,orderItemList);
+				}
+			}
+			toReturn.add(new Map<String,List<sObject>>(mapStringObjectRecords));
+		}
+		return toReturn;
+	}
+
+	public static HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure getDocumentalConfiguration(String context){
+		List<Document> documentList = HDT_QR_DocumentalConfiguration.getDocumentByContext(context);
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configuration = (HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure) JSON.deserialize(documentList[0].body.toString(), HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure.class);
+		return configuration;
+	}
+
+    public static String manageAmountDot(String valString){
+		String res = valString;
+		Integer df = valString.indexOf('\\.');
+		String intero = '';
+		if(df>=0){
+			if(df==0){
+				intero='0';
+			}else{
+				intero=valString.substring(0,df);
+			}
+			String  dec=valString.substring(df+1,valString.length());
+			if(dec.length()==1){
+				dec=dec+'0';
+			}
+			res=intero+','+dec;
+		}
+
+		else{
+			if(valString=='' || valString == null){
+				valString='0';
+			}
+			res = valString+',00';
+		}
+		
+		return res;
+	}
+
+    
+	public static String removeSpecialChar (String text){
+		text = text.replaceAll('[à]','a\'');
+		text = text.replaceAll('[èé]','e\'');
+		text = text.replaceAll('[ì]','i\'');
+		text = text.replaceAll('[ò]','o\'');
+		text = text.replaceAll('[ù]','u\'');
+		text = text.replaceAll('\r\n',' ');
+		text = text.replaceAll('\n\r',' ');
+		text = text.replaceAll('[ì]','i\'');
+		text = text.replaceAll('À','A\'');
+		text = text.replaceAll('Á','A\'');
+		text = text.replaceAll('Ù','U\'');
+		text = text.replaceAll('Ú','U\'');
+		text = text.replaceAll('Ó','O\'');
+		text = text.replaceAll('Ò','O\'');
+		text = text.replaceAll('È','E\'');
+		text = text.replaceAll('É','E\'');
+		text = text.replaceAll('Ì','I\'');
+		text = text.replaceAll('Í','I\'');
+		text = text.replaceAll('[’‘“”]','\'');
+		text = text.replaceAll('·', '-');
+		text = text.replaceAll('\u00A0', ' ');  // 00A0 = carattere unicode "No-Break Space"
+
+		return text;
+	}
+	
+	public static String transformDate(Date dateObj) {
+		DateTime dt = DateTime.newInstance(dateObj.year(), dateObj.month(),dateObj.day());
+		String dateStr = dt.format('dd/MM/yyyy');
+		return dateStr;
+	}
+
+	public static String getValueFromMethod(String classString, String method, Map<String,List<sObject>> inputs,Map<String,Object> formParams){
+		HDT_UTL_DocumentalManagementInterface support = HDT_UTL_DocumentalManagementFactory.getInstance(classString);
+		return support.execute(method,inputs,formParams);
+	}
+	public static Integer getChildCount(String objectString, Map<String,List<sObject>> inputs){
+		return inputs.get(objectString)?.size();
+	}
+	public static String getValue(String objectString, String fieldString, Integer index,Map<String,List<sObject>> inputs,Map<String,Object> formParams){
+        String retVal = '';
+		try {
+			if(inputs.get(objectString) != null && inputs.get(objectString).size()>0 && inputs.get(objectString)[0] != null){
+				if(inputs.get(objectString)[index].get(fieldString) != null){
+					retVal = String.valueOf(inputs.get(objectString)[index].get(fieldString));
+				}
+			}else if(objectString.equalsIgnoreCase('FormParameters') && formParams != null && formParams.get(fieldString) != null){
+				retVal = String.valueOf(formParams.get(fieldString));
+			}
+		} catch (Exception ex) {
+			System.debug(objectString + ' ' + fieldString +' '+ index+ ' '+ ex.getMessage() + ' at Line:' + ex.getLineNumber());
+		}
+        return retVal;
+    }
+	public static String getValueFromObject(Map<String,List<sObject>> inputs,HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord singleRecord, Integer index,Map<String,Object> formParams){
+		String result = '';
+		if(singleRecord.object1 != null && singleRecord.object1 != '' && singleRecord.field1 != null){
+            result = getValue(singleRecord.object1,singleRecord.field1,index,inputs,formParams);
+		}
+
+		if(result == '' && singleRecord.object2 != null && singleRecord.object2 != '' && singleRecord.field2 != null){
+			result = getValue(singleRecord.object2,singleRecord.field2,index,inputs,formParams);
+		}
+
+		if(result == '' && singleRecord.object3 != null && singleRecord.object3 != '' && singleRecord.field3 != null){
+            result = getValue(singleRecord.object3,singleRecord.field3,index,inputs,formParams);
+		}
+		if(result == '' && singleRecord.object4 != null && singleRecord.object4 != '' && singleRecord.field4 != null){
+            result = getValue(singleRecord.object4,singleRecord.field4,index,inputs,formParams);
+		}
+
+		if(result != null && result != ''){
+			if(singleRecord.isData != null && singleRecord.isData == 'Y' ){
+				try {
+					Date dateObj = Date.valueOf(result);
+					result = transformDate(dateObj);
+				} catch (Exception ex) {
+					System.debug('Attenzione! Rimuovere flag is data nella sezione' + singleRecord.recordType);
+				}
+			}else if(singleRecord.manageAmount != null && singleRecord.manageAmount == 'Y'){
+				result = manageAmountDot(result);
+			}
+		}
+		return result;
+	}
+	
+	public static String getConcatValueFromObject(Map<String,List<sObject>> inputs,HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord singleRecord){
+		String resultOne = '';
+		String resultTwo = '';
+		if(singleRecord.object1 != null && singleRecord.object1 != ''){
+			resultOne = getValue(singleRecord.object1,singleRecord.field1,0,inputs,null);
+		}
+		if(resultOne != null && resultOne != '' && singleRecord.object2 != null && singleRecord.object2 != ''){
+			resultTwo += getValue(singleRecord.object2,singleRecord.field2,0,inputs,null);
+		}
+		if(singleRecord.separetor == 'space')
+			return resultOne + ' ' + resultTwo;
+		else
+			return resultOne + singleRecord.separetor + resultTwo;
+	}
+
+	public static String calculateExpression(Map<String,List<sObject>> inputs,String expression, Map<String,Object> formParams){
+		String[] expressionArray = new List<String>();
+		String objectCondition = '';
+		String fieldCondition = '';
+		String[] fieldArray = new List<String>();
+		String[] objectField1 = new List<String>();
+		String[] objectField2 = new List<String>();
+		String propValue = '';
+		String operatore = '';
+		String condizione = '';
+		String result = '';
+		String resultTwo = '';
+		String resultToReturn = '';
+		String jolly = '';
+		Integer i = 0;
+		//System.debug('expression ' + expression);
+        expressionArray = expression.split('\\|');
+		//System.debug('expressionArray ' + expressionArray);
+		try{
+			if(expressionArray.size()>0){
+				while(i<expressionArray.size()){
+					fieldArray = new List<String>();
+					objectField1 = new List<String>();
+					objectField2 = new List<String>();
+					jolly = expressionArray[i++];
+					fieldArray = expressionArray[i++].split('\\.');
+					operatore = expressionArray[i++];
+					condizione = expressionArray[i++];
+					result = expressionArray[i++];
+					resultTwo = expressionArray[i++];
+					
+					objectCondition = fieldArray[0];
+					fieldCondition = fieldArray[1];
+					
+					if(result.indexOf('.')>-1){
+						objectField1 = result.split('\\.');
+						/*if(inputs.get(objectField1[0]) != null && inputs.get(objectField1[0]).size()>0){
+							if(inputs.get(objectField1[0])[0].get(objectField1[1]) != null){
+								result = String.valueOf(inputs.get(objectField1[0])[0].get(objectField1[1]));
+							}
+						}*/
+						result = getValue(objectField1[0],objectField1[1],0,inputs,formParams);
+					}
+				
+					if(resultTwo.indexOf('.')>-1){
+						objectField2 = resultTwo.split('\\.');
+						/*if(inputs.get(objectField2[0]) != null && inputs.get(objectField2[0]).size()>0){
+							if(inputs.get(objectField2[0])[0].get(objectField2[1]) != null){
+								result = String.valueOf(inputs.get(objectField2[0])[0].get(objectField2[1]));
+							}
+						}*/
+						result = getValue(objectField2[0],objectField2[1],0,inputs,formParams);
+					}
+					if(inputs.get(objectCondition) != null && inputs.get(objectCondition).size() > 0 && inputs.get(objectCondition)[0].get(fieldCondition) != null){
+						propValue = String.valueOf(inputs.get(objectCondition)[0].get(fieldCondition));
+					}
+					if(operatore == '='){
+						if(propValue == condizione){
+							resultToReturn = result;
+							break;
+						}
+					}else if(operatore == '<>'){
+						if(propValue != condizione){
+							resultToReturn = result;
+							break;
+						}
+					}else if(operatore == '<'){
+						Integer propValueInt = Integer.valueOf(propValue);
+						Integer condizioneInt = Integer.valueOf(condizione);
+						if(propValueInt < condizioneInt){
+							resultToReturn = result;
+							break;
+						}
+					}else if(operatore == '>'){
+						Integer propValueInt = Integer.valueOf(propValue);
+						Integer condizioneInt = Integer.valueOf(condizione);
+						if(propValue > condizione){
+							resultToReturn = result;
+							break;
+						}
+					}else if(operatore == 'LIKE'){
+						if(propValue.indexOf(condizione)>-1){
+							resultToReturn = result;
+							break;
+						}
+					}else{
+						break;
+					}
+					if(resultTwo != 'ELSE'){
+						if(resultTwo.equalsIgnoreCase('noValue')){
+							resultToReturn = '';
+						}
+						resultToReturn = resultTwo;
+						break;
+					}
+				}
+				if(resultToReturn == 'sysdate'){
+					Date today = Date.today();
+					resultToReturn = transformDate(today);
+				}
+			}
+		}catch(Exception ex){
+			System.debug('for expressione '+expression + ' ' + ex.getMessage() + ' ' + ex.getLineNumber());
+		}
+        return resultToReturn;
+	}
+	public static String getDocumentalContext(String context){
+		switch on context {
+			when 'Order' {
+				return 'Context1';
+			}
+			when 'Case' {
+				return 'Context2';
+			}
+			when 'EC' {
+				return 'Context4';
+			}
+			when 'GC' {
+				return 'Context4';
+			}
+			when 'Account' {
+				return 'Context3';
+			}
+			when 'DocumentazioneAnticipata'{
+				return 'Context2';
+			}
+			when else {
+				return null;
+			}
+		}
+	}
+	// Calcola lo Stato Documento da mandare a EngageOne per le stampe della vista Gestione Credito.
+	public static String calculateDocumentStatusGc(String ufficioIncassi, Double residuo, Boolean ordineDiPagamento){
+		String statoDocumento = '';
+		try {
+			// Verifichiamo se l'ufficio incassi è valorizzato con un BP.
+			// Di solito un BP inizia sempre con 100.
+			if (ufficioIncassi == '' || ufficioIncassi.substring(0, 3) == '100') {
+				if (residuo > 0) {
+					if (ordineDiPagamento) {
+						statoDocumento = 'Pagato';
+					} else {
+						statoDocumento = 'Da pagare';
+					}
+				} else if (residuo < 0) {
+					if (ordineDiPagamento) {
+						statoDocumento = 'Accreditato';
+					} else {
+						statoDocumento = 'Da accreditare';
+					}
+				}
+			} else {
+				switch on ufficioIncassi{
+					when 'BANCASIST1','CESSPASALV', 'CESSPASAL1', 'BANCASIST2', 'BANCASIST3', 'BANCASIST4', 'BANCAFFCT0', 'BANCASIST5', 'BANCAFFCT1', 'BANCASIST6', 'BANCAFFCT2', 'BANCASIST7', 'BANCAFFCT3'{
+						statoDocumento = 'Cessione credito ad altra società';
+					}
+					when 'CESSIONSAL'{
+						statoDocumento = 'Cessione credito a nuovo trader';
+					}
+					when 'CESSKLEIN2','HM_CESS_NP','CESEUROPAF','CREDCEDUTO','CESAAAEURO' {
+						statoDocumento = 'Cessione credito a terzi';
+					}
+				}
+
+				if(String.isBlank(statoDocumento)) {
+					statoDocumento = 'Soc. rec. esterna';
+				}
+			}
+		} catch (Exception ex) {
+			System.debug('Errore calcolo stato documento GC ' + ex.getMessage());
+		}
+		return statoDocumento;
+	}
+
+	public static String calculateDocumentStatus(Double importo, Double residuo, Boolean storno){
+		if (storno == true) {
+			return 'Storno';
+		}
+
+		if (residuo > 0) {
+			return 'Da pagare';
+		}
+		
+		if (importo > 0 && residuo == 0) {
+			return 'Pagato';
+		}
+		
+		if (importo < 0 && residuo == 0) {
+			return 'Accreditato';
+		}
+		
+		if (importo < 0 && residuo < 0) {
+			return 'Da accreditare';
+		}
+		
+		return '';  // Non dovrebbe mai accadere.
+	}
+}

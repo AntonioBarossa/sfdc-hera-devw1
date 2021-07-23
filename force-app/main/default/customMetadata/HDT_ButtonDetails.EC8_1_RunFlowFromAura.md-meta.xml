@@ -3,6 +3,10 @@
     <label>Traccia Informativa</label>
     <protected>false</protected>
     <values>
+        <field>Accesskey__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>ButtonCode__c</field>
         <value xsi:type="xsd:string">runFlowFromAura</value>
     </values>
@@ -28,7 +32,8 @@
 &quot;context&quot;: &quot;IndemnitiesList&quot;,
 &quot;processType&quot;: &quot;Informative&quot;,
 &quot;recordTypeName&quot;: &quot;HDT_RT_Informative&quot;,
-&quot;flowName&quot;: &quot;HDT_FL_PostSalesMasterDispatch&quot;
+&quot;flowName&quot;: &quot;HDT_FL_PostSalesMasterDispatch&quot;,
+&quot;createDocuments&quot;: true
 }</value>
     </values>
     <values>

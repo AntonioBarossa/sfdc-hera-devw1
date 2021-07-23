@@ -5,7 +5,7 @@
 * @history Keltin Mesonjesi – 25/02/2021 – Created class
 */
 public inherited sharing class HDT_QR_AccountContactRelation {
-    
+     
     public List<AccountContactRelation> getAccountContactRelation(Id accountId, Id contactId, String fields){
         String query= 'Select '+fields+ ' FROM AccountContactRelation WHERE AccountId = :accountId And ContactId = :contactId';
         List<AccountContactRelation> listAccCon= Database.query(query);
@@ -61,6 +61,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
     
         return [
             SELECT 
+            AccountId,
             ContactId, 
             Roles
             FROM AccountContactRelation 
@@ -70,6 +71,143 @@ public inherited sharing class HDT_QR_AccountContactRelation {
         ];
 
     }
+
+    public List<AccountContactRelation> getPrimaryContactRelations(Set<Id> ids) {
+    
+        return [
+            SELECT 
+            AccountId,
+            Account.CompanyOwner__c,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE AccountId IN :ids
+            AND Roles  = 'Titolare'
+            AND IsActive = True
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    public List<AccountContactRelation> getPrimaryRelationsByContacts(Set<Id> contactIds) {
+
+        return [
+            SELECT 
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE ContactId IN :contactIds
+            AND Roles  = 'Titolare'
+            AND IsActive = True
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    public AccountContactRelation getPrimaryContactRelation(Id accountId) {
+    
+        List<AccountContactRelation> relations = [
+            SELECT 
+            AccountId,
+            ContactId,
+            Contact.MobilePhone,
+            Contact.Email,
+            Roles
+            FROM AccountContactRelation 
+            WHERE AccountId = :accountId
+            AND Roles  = 'Titolare'
+            AND IsActive = True
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (relations.size() > 0) {
+            return relations[0];
+        }
+
+        return null;
+    }
+
+    public List<AccountContactRelation> getAdministratorRelations() {
+    
+        return [
+            SELECT 
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE Roles INCLUDES ('Amministratore condominio')
+            AND IsActive = True
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    public AccountContactRelation getActiveAdministratorRelation(String accountId) {
+    
+        List<AccountContactRelation> relations = [
+            SELECT
+            Id,
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE Roles INCLUDES ('Amministratore condominio')
+            AND IsActive = True
+            AND AccountId = :accountId
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (relations.size() > 1) {
+            System.debug('ATTENZIONE: Account associato contemporaneamente a più amministratori di condominio: ' + accountId);
+        }
+
+        if (relations.size() > 0) {
+            return relations[0];
+        }
+
+        return null;
+
+    }
+
+    public List<AccountContactRelation> getSolContactRelations(String accountId) {
+    
+        return [
+            SELECT
+            Id,
+            AccountId,
+            ContactId,
+            Roles
+            FROM AccountContactRelation
+            WHERE
+            AccountId = :accountId
+            AND IsManagerSOL__c = True
+            AND IsActive = True
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<AccountContactRelation> getRelatedAccounts(Id contactId) {
+
+        return [
+            SELECT 
+            AccountId,
+            Account.Name,
+            Account.FirstName__c,
+            Account.LastName__c,
+            Account.FiscalCode__c,
+            Account.VATNumber__c,
+            Account.CustomerCode__c,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE ContactId = :contactId
+            AND IsActive = True
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
     // FINE SVILUPPI EVERIS
 
 }

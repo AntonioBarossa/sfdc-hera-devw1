@@ -176,6 +176,52 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         Set<Id> idList = new Set<Id>();
         Set<Id> idToFilterByMunicipalities = new Set<Id>();
         List<String> familyList = getFamilyList();
+        List<String> statusList = new List<String>();
+        statusList.add(Label.HDT_Sold);//'Vendibile'
+
+        Boolean iAmSalesforceCpqAdmin = checkIfIamAsalesforceCpqAdmin();
+        Boolean iAmAsuperUser = checkIfIamAsuperUser(quote.SuperUser__c);
+        System.debug('>>> iAmSalesforceCpqAdmin: ' + iAmSalesforceCpqAdmin + ' - iAmAsuperUser: ' + iAmAsuperUser);
+
+        if(iAmSalesforceCpqAdmin && iAmAsuperUser){
+
+            statusList.add(Label.HDT_InDevelopment);//'In Sviluppo'
+            statusList.add(Label.HDT_Expired);//'Scaduta
+
+        } else if(iAmSalesforceCpqAdmin && !iAmAsuperUser){
+
+            statusList.add(Label.HDT_Expired);//'Scaduta
+
+        } else if(!iAmSalesforceCpqAdmin && iAmAsuperUser){
+
+            statusList.add(Label.HDT_Expired);//'Scaduta
+            List<Product2> allAvailableProducts;
+            allAvailableProducts = HDT_QR_SearchPlug.getAllAvailableProducts(allAvailableProducts, familyList, statusList);
+
+            for(Product2 p : allAvailableProducts){
+                idList.add(p.Id);
+            }
+            return idList;
+            
+        }
+
+        //if(iAmSalesforceCpqAdmin()){
+        //    statusList.add(Label.HDT_InDevelopment);//'In Sviluppo'
+        //}
+
+        //if(checkIfIamAsuperUser(quote.SuperUser__c)){
+        //    //List<String> statusList = new List<String>{'Vendibile', 'Scaduta'};
+        //    statusList.add(Label.HDT_Expired);//'Scaduta
+        //    List<Product2> allAvailableProducts;
+        //    allAvailableProducts = HDT_QR_SearchPlug.getAllAvailableProducts(allAvailableProducts, familyList, statusList);
+
+        //    for(Product2 p : allAvailableProducts){
+        //        idList.add(p.Id);
+        //    }
+        //    return idList;
+        //}
+
+        System.debug('>>>>> statusList ' + statusList);
 
         //>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...
         System.debug('>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...');
@@ -186,7 +232,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         //  - CategoryTypeClient__c     - UseCategory__c
         //  - CompanyOwner__c           - EquipmenType__c
         List<EligibilityCriteria__c> filteredEligibleCriteria;
-        filteredEligibleCriteria = HDT_QR_SearchPlug.selectEligibleCriteria(filteredEligibleCriteria, familyList, quote);
+        filteredEligibleCriteria = HDT_QR_SearchPlug.selectEligibleCriteria(filteredEligibleCriteria, statusList, familyList, quote);
 
         //  Here we filter the NUMBER & checkbox field type
         //  - ClientAgeMin__c             - ClientAgeMax__c
@@ -207,6 +253,14 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             newClient = checkBooleanCriteria(quote.NewClient__c, criteria.NewClient__c);
             login = checkLoginGroup(criteria.LoginGroup__c);
 
+            System.debug('>>> age: ' + age);
+            System.debug('>>> consumptionRangeEe: ' + consumptionRangeEe);
+            System.debug('>>> consumptionRangeGas: ' + consumptionRangeGas);
+            System.debug('>>> powerRange: ' + powerRange);
+            System.debug('>>> residentDeliveryAddress: ' + residentDeliveryAddress);
+            System.debug('>>> newClient: ' + newClient);
+            System.debug('>>> login: ' + login);
+
             if(age && consumptionRangeEe && consumptionRangeGas && powerRange && residentDeliveryAddress && newClient && login){
 
                 if(criteria.EligibleForAllCities__c){
@@ -226,7 +280,8 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             System.debug('>>> FILTER - STEP 2 > FILTER ONLY Municipalities...');
 
             List<EligibleMunicipality__c> eligibleMunicipality;
-            eligibleMunicipality = HDT_QR_SearchPlug.findEligibleMunicipality(idToFilterByMunicipalities, familyList, String.valueOf(quote.SupplyCity__c));
+            String supplyCity = String.valueOf(quote.SupplyCity__c);
+            eligibleMunicipality = HDT_QR_SearchPlug.findEligibleMunicipality(idToFilterByMunicipalities, statusList, familyList, supplyCity.replaceFirst('^0+', ''));
 
             for(EligibleMunicipality__c e : eligibleMunicipality){
                 idList.add(e.EligibilityCriteria__r.Product__c);
@@ -237,8 +292,8 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         //>>> FILTER - STEP 3 > FILTER ONLY prodUCT Without Criteria...
         System.debug('>>> FILTER - STEP 3 > FILTER ONLY prodUCT Without Criteria...');
         List<Product2> prodWithoutCriteria;
-        prodWithoutCriteria = HDT_QR_SearchPlug.getEligibilitiesCriteriaFromProduct(prodWithoutCriteria, familyList, 'Vendibile');
-        
+        prodWithoutCriteria = HDT_QR_SearchPlug.getEligibilitiesCriteriaFromProduct(prodWithoutCriteria, statusList, familyList);
+
         if(!String.isEmpty(quote.SupplyCity__c)){
             for(Product2 p : prodWithoutCriteria){
                 if(p.EligibilitiesCriteria__r.size() == 0){
@@ -272,13 +327,22 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         return false;
     }
 
-    public static Boolean checkBooleanCriteria(String booleanString, Boolean checkbox){
+    public static Boolean checkBooleanCriteria(String booleanQuote, String booleanCriteria){
 
-        if(!String.isEmpty(booleanString) && booleanString.equalsIgnoreCase('Y') == checkbox){
+        if(String.isEmpty(booleanQuote) || String.isEmpty(booleanCriteria)){
             return true;
-        } else {
-            return false;
         }
+
+
+        if(booleanQuote.equalsIgnoreCase('Y') && booleanCriteria.equalsIgnoreCase('Si')){
+            return true;
+        }
+        
+        if(booleanQuote.equalsIgnoreCase('N') && booleanCriteria.equalsIgnoreCase('No')){
+            return true;
+        }     
+
+        return false;
 
     }
 
@@ -303,6 +367,58 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         sl.add('VAS Prodotto');
         sl.add('VAS Servizio');
         return sl;
+    }
+
+    private static Boolean checkIfIamAsuperUser(String superUser){
+        //Permission set --> HDT_SuperUserCPQ
+        List<PermissionSetAssignment> assignmentList;
+        Boolean superUserQuote;
+        Boolean superUserPermission;
+        
+        if(!String.isEmpty(superUser) && superUser.equalsIgnoreCase('Y')){
+            System.debug('>>> QUOTE IS A SUPER USER');
+            superUserQuote = true;
+        } else {
+            System.debug('>>> QUOTE IS NOT A SUPER USER');
+            superUserQuote = false;
+        }
+
+        try{
+            assignmentList = HDT_QR_SearchPlug.getUserPermissionSets(assignmentList, UserInfo.getUserId(), Label.HDT_SuperUserCPQ);
+            System.debug('>>> PermissionSetList Size: ' + String.valueOf(assignmentList.size()));
+            if(assignmentList.size() > 0){
+                superUserPermission = true;
+            } else {
+                superUserPermission = false;
+            }
+        } catch (Exception ex){
+            System.debug('>>> Exception: ' + ex.getMessage());
+            superUserPermission = false;
+        }
+
+        if(superUserQuote && superUserPermission){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    private static Boolean checkIfIamAsalesforceCpqAdmin(){
+        List<PermissionSetAssignment> assignmentList;
+
+        try{
+            assignmentList = HDT_QR_SearchPlug.getUserPermissionSets(assignmentList, UserInfo.getUserId(), Label.HDT_PermissionSetNameForCPQ);
+            System.debug('>>> PermissionSetList Size: ' + String.valueOf(assignmentList.size()));
+            if(assignmentList.size() > 0){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex){
+            System.debug('>>> Exception: ' + ex.getMessage());
+            return false;
+        }
     }
 
 }

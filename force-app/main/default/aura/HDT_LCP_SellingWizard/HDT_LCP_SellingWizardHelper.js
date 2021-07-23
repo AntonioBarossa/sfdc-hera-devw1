@@ -35,7 +35,7 @@
 
     getSaleRecord : function(component) {
         var saleIdParam = component.get("v.saleId");
-        var fieldsParam = 'Id,Name,Account__r.Category__c,Account__r.RecordType.DeveloperName,Account__r.Name,Account__r.FiscalCode__c,Account__r.CompanyOwner__c,Account__r.Owner.Name,CurrentStep__c,Status__c,CreatedDate,Agency__c,Market__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c';
+        var fieldsParam = 'Id,Name,Account__r.Category__c,Account__r.RecordType.DeveloperName,Account__r.Name,Account__r.FiscalCode__c,Account__r.CompanyOwner__c,Account__r.Owner.Name,CurrentStep__c,Status__c,CreatedDate,Agency__c,Market__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c';
 
         var action = component.get("c.getSale");
         action.setParams({id : saleIdParam, fields: fieldsParam});

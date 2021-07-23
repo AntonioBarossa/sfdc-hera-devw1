@@ -21,6 +21,8 @@ public inherited sharing class HDT_WRP_MeterReading {
         @AuraEnabled public String endDate;
         @AuraEnabled public String asset;
         @AuraEnabled public String service;
+        @AuraEnabled public String serialNumber;
+        @AuraEnabled public String servicePoint;
     }
 
     /*public class HDT_WRP_MeterReadingDetail {

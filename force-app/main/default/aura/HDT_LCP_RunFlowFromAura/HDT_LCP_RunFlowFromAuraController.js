@@ -20,6 +20,15 @@
         //variabile per informative
         var context = myPageRef.state.c__context;
 
+        //variabile per innesco da altri case
+        var parentRecordId = myPageRef.state.c__parentRecordId;
+
+        //variabile per innesco da campagne
+        var campaignId = myPageRef.state.c__campaignId;
+
+        // id del lead oggetto del process.
+        var leadId = myPageRef.state.c__leadId;
+
 
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
@@ -33,6 +42,9 @@
         console.log('# recordToCancell -> ' + recordToCancell);
         console.log('# sObjectRecordToCancell -> ' + sObjectRecordToCancell);
         console.log('# context -> '+context);
+        console.log('# parentRecordId -> ' +parentRecordId);
+        console.log('# campaignId -> ' + campaignId)
+        console.log('# leadId -> ' + leadId);
         console.log('# ----------------- #');
 
         var workspaceAPI = component.find("workspace");
@@ -49,6 +61,7 @@
         workspaceAPI.getAllTabInfo().then(function(response) {
             console.log('----------');
             var accountTabId;
+            var leadTabId;
             response.forEach((element) => {
                 if(element.pageReference.type === 'standard__recordPage'){                    
                     if(element.pageReference.attributes.recordId===accId){
@@ -58,12 +71,17 @@
                         //        subTabToRefresh = sub.tabId;
                         //    }
                         //});
+                    } else if(element.pageReference.attributes.recordId===leadId){
+                        leadTabId = element.tabId;
                     }
                 }
             });
             console.log('----------');
             console.log('# accountTabId: ' + accountTabId);
             component.set("v.accountTabId", accountTabId);
+
+            console.log('# leadTabId: ' + leadTabId);
+            component.set("v.leadTabId", leadTabId);
             
             console.log('# subTabToClose: ' + subTabToClose);
             component.set("v.subTabToClose", subTabToClose);
@@ -73,7 +91,9 @@
 
         if(caseId === null || caseId === 'undefined' || caseId === undefined){
             console.log('# CaseId is NULL');
-            inputVariables.push({ name : 'AccountId', type : 'String', value : accId });
+            if (accId != null){
+                inputVariables.push({ name : 'AccountId', type : 'String', value : accId });
+            }
             inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
             inputVariables.push({ name : 'RecordTypeName', type : 'String', value : recordTypeName });
             component.set('v.enableRefresh', false);
@@ -81,7 +101,7 @@
             console.log('# CaseId is NOT NULL');
             //{ name : "InputCase", type : "SObject", value: {"Id" : caseId}}
             inputVariables.push({ name : 'InputCase', type : 'String', value : caseId });
-            if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase'){
+            if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase' || processType === 'Ripensamento'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
             }
 
@@ -103,6 +123,15 @@
         if(serviceCatalogId != null){
             inputVariables.push({ name : 'serviceCatalogId', type : 'String', value : serviceCatalogId });
         }
+        if(parentRecordId != null){
+            inputVariables.push({ name : 'ParentRecordId', type : 'String', value : parentRecordId });
+        }
+        if(campaignId != null){
+            inputVariables.push({ name : 'CampaignId', type : 'String', value : campaignId});
+        }
+        if(leadId != null){
+            inputVariables.push({ name : 'LeadId', type : 'String', value : leadId});
+        }
 
         console.log('## inputVariables -> ');
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
@@ -112,17 +141,48 @@
     },
     
     handleStatusChange : function (component, event) {
+    
        console.log('### EVENT STATUS: ' + event.getParam("status"));
        var workspaceAPI = component.find("workspace");
-       //TODO getire eventuali errori provenienti dal flow 
-       //event.getParam("status") === "ERROR" 
 
-       if(event.getParam("status") === "FINISHED" || event.getParam("status") === "FINISHED_SCREEN") {
-            var flowfinal = component.find("flowData");
-            flowfinal.destroy();
+       if(event.getParam("status") === "FINISHED" 
+       || event.getParam("status") === "FINISHED_SCREEN"
+       || event.getParam("status") === "ERROR") {
+
             var accountTabId = component.get("v.accountTabId");
+            var leadTabId = component.get("v.leadTabId");
             var subTabToClose = component.get("v.subTabToClose");
             var enableRefresh = component.get('v.enableRefresh');
+            var flowfinal = component.find("flowData");
+                
+            if(event.getParam("status") === "ERROR"){
+                //Sembra non esserci nella struttura dell'event il messaggio di errore
+                /*event: {
+                    "_name":"",
+                    "_source":{},
+                    "_params":{
+                        "status":"ERROR",
+                        "flowTitle":"Gestione Annullamento",
+                        "showHeader":true,
+                        "guid":"5576e83980290edaf4536891f79f179e6928cf-b934"
+                    },
+                    "target":null,
+                    "currentTarget":null}
+                */
+                console.log('Inside Error condition: ' + JSON.stringify(event));
+
+                var toastEvent = $A.get("e.force:showToast");
+                toastEvent.setParams({
+                    "title": "Errore",
+                    "message": "Non è stato possibile portare a termine le operazioni.\nSi prega di contattare l'Amministratore di sistema",
+                    "type" : "error"
+                });
+                toastEvent.fire();
+            }
+
+           
+            flowfinal.destroy();
+
             console.log('# Refresh page -> ' + enableRefresh);
 
             console.log('# close -> ' + subTabToClose + ' - refresh -> ' + accountTabId);
@@ -145,40 +205,79 @@
                 newCaseId=component.get("v.recordid");
             }
 
-
-        if(!enableRefresh){
-            workspaceAPI.openSubtab({
-                parentTabId: accountTabId,
-                pageReference: {
-                    type: "standard__recordPage",
-                    attributes: {
-                        recordId: newCaseId,
-                        objectApiName: "Case",
-                        actionName: "view"
-                    }
-                },
-                focus: true
-            }).then(function(response){
-
+            console.log('# outputVariable -> '+outputVariables);
+            console.log('# newCaseId -> '+newCaseId);
+            //Gestione chiusura errore in creazione
+            if(newCaseId == null || newCaseId == undefined){
+                
                 workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
                     console.log('# Refresh page -> ' + enableRefresh);
+                    
                     console.log('# OK Refresh page #');
                     $A.get('e.force:refreshView').fire();
-                    
-    
-                    //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
-                    //    workspaceAPI.refreshTab({
-                    //        tabId: subTabToRefresh,
-                    //        includeAllSubtabs: true
-                    //    }).catch(function(error) {
-                    //        console.log(error);
-                    //    });
-                    //});
-    
-                    }).catch(function(error) {
-                        console.log(error);
-                    });
+                
+                    if(accountTabId != null){
+                        workspaceAPI.focusTab({tabId : accountTabId}).
+                        then(function(response) {
+                            workspaceAPI.refreshTab({
+                                    tabId: accountTabId,
+                                    includeAllSubtabs: true
+                                }).catch(function(error) {
+                                    console.log(error);
+                                });
+                        });
+                    } else if(leadTabId != null){
+                        workspaceAPI.focusTab({tabId : leadTabId}).
+                        then(function(response) {
+                            workspaceAPI.refreshTab({
+                                    tabId: leadTabId,
+                                    includeAllSubtabs: true
+                                }).catch(function(error) {
+                                    console.log(error);
+                                });
+                        });
+                    }
+
+                }).catch(function(error) {
+                    console.log(error);
                 });
+
+                return;
+
+            }
+            if(!enableRefresh && accountTabId != null){
+                workspaceAPI.openSubtab({
+                    parentTabId: accountTabId,
+                    pageReference: {
+                        type: "standard__recordPage",
+                        attributes: {
+                            recordId: newCaseId,
+                            objectApiName: "Case",
+                            actionName: "view"
+                        }
+                    },
+                    focus: true
+                }).then(function(response){
+
+                    workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                        console.log('# Refresh page -> ' + enableRefresh);
+                        console.log('# OK Refresh page #');
+                        $A.get('e.force:refreshView').fire();
+                        
+        
+                        //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
+                        //    workspaceAPI.refreshTab({
+                        //        tabId: subTabToRefresh,
+                        //        includeAllSubtabs: true
+                        //    }).catch(function(error) {
+                        //        console.log(error);
+                        //    });
+                        //});
+        
+                        }).catch(function(error) {
+                            console.log(error);
+                        });
+                    });
             }else{
 
                 workspaceAPI.focusTab({
@@ -195,7 +294,7 @@
                 .then(function(response) {
                     workspaceAPI.closeTab({ tabId: subTabToClose}).then(function(response){
                         console.log('# Refresh page -> ' + enableRefresh);
-                      
+                        
                         console.log('# OK Refresh page #');
                         $A.get('e.force:refreshView').fire();
                     }).catch(function(error){
@@ -205,11 +304,11 @@
                 .catch(function(error) {
                     console.log(error);
                 });
-    
+
 
                 /*workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
                         console.log('# Refresh page -> ' + enableRefresh);
-                      
+                        
                         console.log('# OK Refresh page #');
                         $A.get('e.force:refreshView').fire();
                     

@@ -33,6 +33,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             'SendCertifiedEmailConsentDate__c',
             'DivergentSubject__c',
             'CreateContractAccount__c'
+            // 'CareOf__c' //Presso
         };
 
         List<String> rid = new List<String>{
@@ -50,10 +51,12 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             'IbanABI__c',
             'IbanCAB__c',
             'IbanCodeNumber__c'
+            // 'CareOf__c' //Presso
         };
 
         List<String> fatturazioneElettronica = new List<String>{
             'ElectronicInvoicingMethod__c',
+            'ElectronicInvoiceCertifiedEmailAddress__c',
             'SubjectCode__c',
             'SubjectCodeStartDate__c',
             'SubjectCodeEndDate__c',
@@ -62,7 +65,6 @@ public inherited sharing class HDT_LC_BillingProfileForm {
         };
 
         List<String> tipologiaIntestatario = new List<String>{
-            'SignatoryType__c',
             'OtherPayer__c',
             'LegalAgent__c',
             'BankAccountSignatoryFiscalCode__c',
@@ -79,6 +81,9 @@ public inherited sharing class HDT_LC_BillingProfileForm {
 
         switch on paymentMethod {
             when  'Bollettino'{
+                resultMap.put('choosenFields', bollettionoPostale);
+            }
+            when  'Bollettino postale'{
                 resultMap.put('choosenFields', bollettionoPostale);
             }
             when 'RID' {
@@ -105,6 +110,11 @@ public inherited sharing class HDT_LC_BillingProfileForm {
      */
     @AuraEnabled
     public static BillingProfile__c createBillingProfile(BillingProfile__c billingProfile){
+
+        if(billingProfile.PaymentMethod__c == 'RID' && !billingProfile.IbanIsForeign__c){
+            billingProfile.IBAN__c = billingProfile.IbanCountry__c + billingProfile.IbanCIN_IBAN__c + billingProfile.IbanCIN__c + billingProfile.IbanABI__c + billingProfile.IbanCAB__c + billingProfile.IbanCodeNumber__c;
+        }
+
         return billingProfileSrv.createRecord(billingProfile);
     }
 

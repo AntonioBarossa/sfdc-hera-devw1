@@ -1,15 +1,19 @@
 import {LightningElement, track,api} from 'lwc';
 import getServicePoints from '@salesforce/apex/HDT_LC_AdvancedSearch.getServicePoints';
 import getContracts from '@salesforce/apex/HDT_LC_AdvancedSearch.getContracts';
-import callWebService from '@salesforce/apex/HDT_LC_AdvancedSearch.callWebService';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import getForniture from '@salesforce/apex/HDT_LC_AdvancedSearch.getForniture';
 import getCustomMetadata from '@salesforce/apex/HDT_QR_FiltriProcessi.getCustomMetadata';
-
+import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.callService';
+import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
+import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
+import permissionForFlagContract from '@salesforce/apex/HDT_LC_AdvancedSearch.permissionForFlagContract';
 
 
 export default class HdtAdvancedSearch extends LightningElement {
-
+    @api openCheckBox=false;
+    @api sp;
+    @api responseArriccData;
     @track filterInputWord = null;
     openmodel = false;
     submitButtonStatus = true;
@@ -38,16 +42,24 @@ export default class HdtAdvancedSearch extends LightningElement {
     @api targetobject;
     @api outputContract=[];
     @api showbuttoncontract ;
-    @api showbuttonforniture ;
+    @api showbuttonforniture=false;
+    @api flagContratto=false;
+    @api isSuperUser=false;
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
         'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
         'serialnumber':'Nessun record trovato'
     }
+    @api isRicercainSAP=false;
 
     connectedCallback() {
+        permissionForFlagContract().then(data =>{
+            console.log('enter in permissionForFlagContract : ' + JSON.stringify(data));
+            this.openCheckBox= data;
+        });
         if(this.processtype === undefined || this.processtype === ''){
             console.log('processType non popolato');
+            this.showbuttonforniture=true;
         }
         else
         {
@@ -79,6 +91,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 {
                     TipoServizioSplit = data.TipoServizio__c.split(",");
                     console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
+                    this.submitFornitura();
                 }
                 
             }
@@ -126,12 +139,12 @@ export default class HdtAdvancedSearch extends LightningElement {
         console.log('enter in handleAdditionalFilter');
         console.log('processType******************'+JSON.stringify(processT));
 
-        if(processT ==='Voltura Tecnica'){
+       /* if(processT ==='Voltura Tecnica'){
             console.log('entra qui Modifica***************');
           
             this.submitFornitura();
-        }
-        else if(processT==='Annullamento contratti')
+        }*/
+        if(processT==='Annullamento contratti')
         {
             console.log('entra qui Cessazioni***************');
             this.submitContract();
@@ -179,6 +192,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     closeModal() {
+        this.confirmButtonDisabled=true;
         this.openmodel = false;
     }
 
@@ -195,6 +209,8 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.submitButtonStatus = false;
             this.searchInputValue = event.target.value;
         }
+
+
     }
 
     /**
@@ -203,6 +219,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     formatTableHeaderColumns(rowData) {
         let columns = [];
         this.tableColumns = [];
+        console.log('rowData*******************' + JSON.stringify(rowData));
         rowData.forEach(row => {
             let keys = Object.keys(row);
             columns = columns.concat(keys);
@@ -315,22 +332,47 @@ export default class HdtAdvancedSearch extends LightningElement {
      * TODO this method is not finished yet need webserivce.
      */
     callApi(event){
-        callWebService({pod:this.searchInputValue}).then(data=>{
-            if (data == null){
-                console.log("call this.handleConfirm()");
-            }else {
-                console.log("process data");
+
+        this.preloading = true;
+        this.isRicercainSAP= true;
+        this.dispatchEvent(new CustomEvent('ricercainsap', {
+            detail: this.isRicercainSAP
+        }));  
+        console.log('searchInputValue' + JSON.stringify(this.searchInputValue));
+        callService({contratto:'',pod:this.searchInputValue}).then(data =>{
+            
+            console.log('data*******************SAPPPP' + JSON.stringify(this.data));
+            if(data.statusCode=='200'){
+                this.responseArriccData = data;
+                extractDataFromArriccDataServiceWithExistingSp({sp:'',response:data}).then(datas =>{
+                console.log('datas*************************' +  JSON.stringify(datas));
+                let sp = datas;
+                this.sp=sp;
+                if(sp!= undefined|| sp != null){
+                    console.log("servicepoint in extractDataFromArriccDataServiceWithExistingSp" + JSON.stringify(sp));
+                      /*  this.originalData = JSON.parse(JSON.stringify(datas));
+                        this.createTable(datas);
+                        this.formatTableHeaderColumns(datas);
+                        this.submitButtonStatus = true;
+                        this.openmodel = true;
+                        this.isLoaded = true;
+                        this.apiSearchButtonStatus=true;
+                        this.searchInputValue= null;*/
+                        this.rowToSend = datas; 
+                        this.handleConfirm();
+
+                }else{
+                    this.alert('Errore','Il dato ricercato non è stato trovato in SAP, Modificare i parametri di ricerca o procedere alla creazione manuale.','error');
+                }
+        
+                });
+            }else{
+                this.alert('Errore','Il dato ricercato non è stato trovato in SAP, Modificare i parametri di ricerca o procedere alla creazione manuale.','error');
             }
-        }).catch(error => {
-            this.preloading = false;
-            let errorMsg = error;
-            if ('body' in error && 'message' in error.body) {
-                errorMsg = error.body.message
-            }
-            this.alert('',errorMsg,'error')
+
+            //if statuscode 200 chiamare metodo da apex da controller della classe per creare mappa k/v con i dati presi da SAP
         });
-        // test
-        this.handleConfirm();
+        this.preloading = false;
     }
 
     /**
@@ -338,12 +380,17 @@ export default class HdtAdvancedSearch extends LightningElement {
      */
     submitSearch(event) {
         event.preventDefault();
-
         console.log('event value submitSearch() '+ event.target.value);
-
+        let isBlacklist=false;
         this.preloading = true;
         let qty = this.queryType;
-        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter}).then(data => {
+        isInBlacklist({pod:this.searchInputValue}).then(data =>{
+            console.log('isInBlacklist :  ' + JSON.stringify(data));
+            isBlacklist=data;
+        
+        if(isBlacklist == false){
+        console.log('isSuperUser : ' + JSON.stringify(this.isSuperUser));
+        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter,isSuperUser:this.isSuperUser}).then(data => {
             console.log('getServicePoint data *******'+ JSON.stringify(data));
             this.preloading = false;
             if (data.length > 0) {
@@ -368,6 +415,13 @@ export default class HdtAdvancedSearch extends LightningElement {
             }
             this.alert('',errorMsg,'error')
         });
+    }else{
+        this.preloading = false;
+        console.log('entra in else');
+        this.alert('Errore','Non è possibile procedere in quanto il POD/PD ricercato è presente in Black List','error');
+    }
+        });
+ 
 
     }
      /**
@@ -379,9 +433,25 @@ export default class HdtAdvancedSearch extends LightningElement {
         let selectedRows = event.detail.selectedRows;
         this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
+        console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
         this.preloading = false;
         console.log('getSelectedServicePoint END');
     }
+
+
+         /**
+     * Get selected record from table
+     */
+          getSelectedServicePoint2(rows){
+            console.log('getSelectedServicePoint START');
+            this.preloading = true;
+            let selectedRows = rows;
+            this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
+            this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
+            console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
+            this.preloading = false;
+            console.log('getSelectedServicePoint END');
+        }
 
     /**
      * Handle action when confirm button is pressed
@@ -389,7 +459,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     handleConfirm(){
         this.preloading = true;
         this.closeModal();
-
+        console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
             this.dispatchEvent(new CustomEvent('servicepointselection', {
                 detail: this.rowToSend
             }));       
@@ -401,6 +471,19 @@ export default class HdtAdvancedSearch extends LightningElement {
 @api
     getTargetObject(targetObject){
         this.targetObject = targetObject;
+    }
+
+@api
+    handleCheckBoxChange(event){
+        console.log('event handleCheckBoxChange  :  ' + event.target.checked);
+
+        this.flagContratto = event.target.checked;
+        if(this.flagContratto==true){
+            this.isSuperUser=true;
+        }else{
+            this.isSuperUser=false;
+        }
+        console.log('isSuperUser handleCheckBoxChange  :  ' + this.isSuperUser);
     }
     
 

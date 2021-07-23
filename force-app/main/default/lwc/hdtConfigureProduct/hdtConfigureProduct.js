@@ -5,6 +5,7 @@ import cancelQuote from '@salesforce/apex/HDT_LC_ConfigureProduct.cancelQuote';
 import updateSaleNext from '@salesforce/apex/HDT_LC_ConfigureProduct.updateSaleNext';
 import updateSalePrevious from '@salesforce/apex/HDT_LC_ConfigureProduct.updateSalePrevious';
 import amendContract from '@salesforce/apex/HDT_LC_ConfigureProduct.amendContract';
+import checkDueProduct from '@salesforce/apex/HDT_LC_ConfigureProduct.checkApprovedProduct';
 
 export default class hdtConfigureProduct extends LightningElement {
     
@@ -70,15 +71,13 @@ export default class hdtConfigureProduct extends LightningElement {
     }
 
     @api
-    getQuotesData(){
+    getQuotesData(isCancelActionCheck = false){
         this.loaded = false;
         getQuotes({saleId: this.saleRecord.Id}).then(data =>{
             this.loaded = true;
 
             let quotesArray = [];
             let count = 0;
-
-            console.log('getQuotesData: ', JSON.parse(JSON.stringify(data)));
 
             data.forEach(el => {
                 quotesArray.push({
@@ -95,6 +94,12 @@ export default class hdtConfigureProduct extends LightningElement {
             });
 
             this.quotesData = quotesArray;
+
+            if (isCancelActionCheck) {
+                if (this.quotesData.length === 0) {
+                    this.updateSaleRecordPrevious({Id: this.saleRecord.Id, CurrentStep__c: this.currentStep - 1});
+                }
+            }
 
         }).catch(error => {
             this.loaded = true;
@@ -172,7 +177,7 @@ export default class hdtConfigureProduct extends LightningElement {
                 }).then(data =>{
                 this.loaded = true;
     
-                this.getQuotesData();
+                this.getQuotesData(true);
                 const toastSuccessMessage = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Quote eliminata con successo',
@@ -203,9 +208,39 @@ export default class hdtConfigureProduct extends LightningElement {
 
     updateSaleRecordNext(saleData){
         this.loaded = false;
-        updateSaleNext({sale: saleData}).then(data =>{
-            this.loaded = true;
-            this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
+        // logica approvazione
+        checkDueProduct({sale: saleData}).then(data =>{
+            console.log("TESTCHECK:");
+            console.log("TESTCHECK:" + JSON.stringify(data));
+            let check = data.wrapCheck;
+            let errorM = data.responseError;
+            if(check){
+                updateSaleNext({sale: saleData}).then(data =>{
+                    this.loaded = true;
+                    this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
+                }).catch(error => {
+                    this.loaded = true;
+                    console.log(error.body.message);
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: error.body.message,
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+                });
+            }
+            else{
+                this.loaded = true;
+                console.log('***:' + errorM);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'i seguenti prodotti sono scaduti e senza approvazione: ' + errorM,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            }
         }).catch(error => {
             this.loaded = true;
             console.log(error.body.message);

@@ -17,9 +17,31 @@
                 <label>RID</label>
             </value>
             <value>
+                <fullName>Bollettino postale</fullName>
+                <default>false</default>
+                <label>Bollettino postale</label>
+            </value>
+            <value>
+                <fullName>Rate</fullName>
+                <default>false</default>
+                <label>Rate</label>
+            </value>
+            <value>
+                <fullName>Standard</fullName>
+                <default>false</default>
+                <label>Standard</label>
+            </value>
+            <value>
                 <fullName>Bollettino</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Bollettino</label>
+            </value>
+            <value>
+                <fullName>BollettinoPostale</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BollettinoPostale</label>
             </value>
         </valueSetDefinition>
     </valueSet>

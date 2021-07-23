@@ -78,7 +78,9 @@ public inherited sharing class HDT_QR_Quote {
             ContractReference__c,
             OrderReference__c,
             IsVAS__c,
-            AmendmentAllowed__c
+            AmendmentAllowed__c,
+            SalesCompanyCode__c,
+            SalesCompany__c
             FROM SBQQ__Quote__c
             WHERE Id = :quoteId
             WITH SECURITY_ENFORCED
@@ -198,6 +200,31 @@ public inherited sharing class HDT_QR_Quote {
             AND Sale__c IN :saleIds
             AND ContractReference__c IN :contracts
             AND Id NOT IN :excludedQuotes
+            AND SBQQ__Status__c != 'Cancelled'
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<SBQQ__Quote__c> getQuotesBySaleAndContractReference(String saleId, String contractReference) {
+        return [
+            SELECT
+            Id
+            FROM SBQQ__Quote__c
+            WHERE Sale__c = :saleId
+            AND ContractReference__c = :contractReference
+            AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<SBQQ__Quote__c> getQuotesBySaleAndOrderReference(String saleId, String orderReference) {
+        return [
+            SELECT
+            Id
+            FROM SBQQ__Quote__c
+            WHERE Sale__c = :saleId
+            AND OrderReference__c = :orderReference
+            AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];
     }

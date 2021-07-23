@@ -106,7 +106,7 @@ mapViaCarracci=  [
 
 @api
     openedForm(){
-        console.log('entra in openedForm');
+        
         this.openForm=true;
         this.currentPage = 1;
     }
@@ -175,6 +175,8 @@ mapViaCarracci=  [
     this.totalPage = this.pages.length;
     this.reLoadTableComune();
 }
+
+@api
 handleFilterDataTable(event) {
     let val = event.target.value;
         let self = this;
@@ -230,9 +232,12 @@ getSelectedComune(event){
 @api
     connectedCallback(event){
         
- 
-        console.log('connectedCallback START');
-        console.log('connectedCallback listobjtoshow ' + JSON.stringify(this.listobjtoshow));
+        //const inputBox = this.template.querySelector.('lightning-input');
+       // inputBox.focus();
+        //Object.keys(this.prevwrapaddressobject[0]).forEach(key=>{
+        //    console.log('key*********************************' + key);
+            //this.createTable(this.listObjtoShow);
+          //  this.columns = this.columnsComune;
         if(this.headertoshow = 'Comune'){
             //this.columns = this.columnsComune;
             this.openForm=true;
@@ -245,9 +250,47 @@ getSelectedComune(event){
         this.currentPage = 1;
         this.createTable(this.listobjtoshow);
         // this.tableDataComune = this.listobjtoshow;
+        console.log("*********MOLINOTIUCCIDO:"+JSON.stringify(this.listobjtoshow));
+        //this.openForm=true;
+            //this.formatTableHeaderColumns(this.listObjtoShow);
+            /*switch(key){
+                case 'fieldname':
+                    /*if(this.previsionecomune==='RAVEN'){
+                        this.createTable(this.mapComuneRaven);
+                        this.formatTableHeaderColumns(this.mapComuneRaven);
+                    }else if(this.previsionecomune==='RAVEL'){
+                        this.createTable(this.mapComuneRavel);
+                        this.formatTableHeaderColumns(this.mapComuneRavel);
+                    }else{
+                        this.createTable(this.mapComune);
+                        this.formatTableHeaderColumns(this.mapComune);
+                    }*/
+                    /*if(this.prevvia==='CARRAI'){
+                        this.createTable(this.mapViaCarraia);
+                        this.formatTableHeaderColumns(this.mapViaCarraia);
+                    }
+                    else if(this.prevvia==='CARRAC'){
+                        this.createTable(this.mapViaCarracci);
+                        this.formatTableHeaderColumns(this.mapViaCarracci);
+                    }else if(this.prevvia!=undefined||this.prevvia!=null){
+                        this.createTable(this.mapVia);
+                        this.formatTableHeaderColumns(this.mapVia);
+                    }
+                break;
+                }*/
 
-        console.log('connectedCallback END');
-
+        //});
+        /*console.log('HdtSelectionAddressResponse - START - prevwrapaddressobject : '+ JSON.stringify(this.prevwrapaddressobject));
+        console.log('Comune**************' + JSON.stringify(this.previsionecomune));
+        console.log('provincia**************' + JSON.stringify(this.prevprovincia));
+        console.log('cap**************' + JSON.stringify(this.prevcap));
+ 
+        /*
+        */
+        /*this.previsionecomune='';
+        this.prevvia='';
+            */
+            
     }
 
     @api
@@ -268,8 +311,8 @@ getSelectedComune(event){
                 this.openForm2=true;
             }
             
-            console.log("*********:"+JSON.stringify(data));
-            console.log("*********:"+JSON.stringify(this.tableDataComune));
+            console.log("*********MOLINOTIUCCIDO2:"+JSON.stringify(data));
+            console.log("*********MOLINOTIUCCIDO3:"+JSON.stringify(this.tableDataComune));
             
             //this.formatTableHeaderColumns(this.listObjtoShow);
             /*switch(key){

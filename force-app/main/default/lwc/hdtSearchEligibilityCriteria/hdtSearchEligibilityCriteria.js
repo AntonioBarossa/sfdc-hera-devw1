@@ -2,11 +2,23 @@ import { LightningElement, track, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import getRecords from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.getEligibilityCriteriaRecord';
 import cloneRecord from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.cloneEligibilityCriteriaRecord';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent'
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import mainTitle from '@salesforce/label/c.HDT_LWC_SearchEligibilityCriteria_MainTitle';
+import heplText1 from '@salesforce/label/c.HDT_LWC_SearchEligibilityCriteria_HeplText1';
+import heplText2 from '@salesforce/label/c.HDT_LWC_SearchEligibilityCriteria_HeplText2';
+import search from '@salesforce/label/c.HDT_LWC_SearchEligibilityCriteria_Search';
 
 export default class HdtSearchEligibilityCriteria extends NavigationMixin(LightningElement) {
+    
+    label = {
+        mainTitle,
+        heplText1,
+        heplText2,
+        search
+    };
+    
     data = [];
-    //data2 = [];
+    //treeNotAvailable = [];
     detailFields = ['Version__c', 'ProductCode__c'];
     filter;
     showTable = false;
@@ -91,11 +103,11 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
                     if(result.eligibleForAllCities){
                         this.showTree = false;
                     } else {
-                        this.data = result.treeItemList;
-                        //this.data2 = result.treeNotAvailableItemList;
+                        //this.data = result.treeItemList;
+                        this.treeNotAvailable = result.treeNotAvailableItemList;
                         this.showTree = true;
 
-                        if(this.data.length===0){
+                        if(this.treeNotAvailable.length===0){
                             this.showTree = false;
                             this.result.show = true;
                             this.showTable = false;
@@ -126,9 +138,9 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
         this.handleClone(this.item.selectedId);
         
-        setTimeout(() => {
+        // setTimeout(() => { //
 
-        }, 2000);
+        // }, 2000);
         
     }
 
@@ -142,7 +154,8 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
                 if(result){
                     console.log('# success #');
                     console.log('# Offer cloned id -> ' + result);
-                    this.goToRecord(result, 'EligibilityCriteria__c');
+                    //this.goToRecord(result, 'EligibilityCriteria__c');
+                    this.goToRecord(this.productid, 'Product2');
                 } else {
                     this.error.show = true;
                     this.error.message = 'An error occurred!';

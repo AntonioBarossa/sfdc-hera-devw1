@@ -123,6 +123,8 @@
            
             });
 
+            $A.get('e.force:refreshView').fire();
+
             
             
             /*workspaceAPI.openSubtab({//Subtab({ NON SEMBRA ESSERE NECESSARIO APRIRE UN NUOVO TAB
@@ -179,6 +181,7 @@
                 focus: true
             }).then(function(response2){
                 workspaceAPI.closeTab({tabId: focusedTab});
+                $A.get('e.force:refreshView').fire();
             })
             .catch(function(error) {
                 console.log('******' + error);

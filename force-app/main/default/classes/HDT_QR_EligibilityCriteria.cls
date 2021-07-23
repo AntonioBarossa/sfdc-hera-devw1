@@ -3,7 +3,7 @@ public inherited sharing class HDT_QR_EligibilityCriteria {
     public static List<EligibilityCriteria__c> getEligibilityCriteriaSingleRecord(List<EligibilityCriteria__c> criteria, String eligibilityId){
         criteria = new List<EligibilityCriteria__c>();
         criteria = [
-            SELECT EligibleForAllCities__c
+            SELECT EligibleForAllCities__c, Product__r.Status__c
             FROM EligibilityCriteria__c
             WHERE Id = :eligibilityId
             WITH SECURITY_ENFORCED
@@ -54,8 +54,8 @@ public inherited sharing class HDT_QR_EligibilityCriteria {
     public static EligibilityCriteria__c getEligibilityCriteriaWithChild(EligibilityCriteria__c crtiteriaToClone, String recIdToClone){
         crtiteriaToClone = [
             SELECT Id, Name,
-                   OriginMarket__c,CategoryTypeClient__c,LoginGroup__c,ResidentDeliveryAddress__c,CompanyOwner__c,
-                   Campaign__c,PromoCode__c,Channel__c,ClientMarker__c,Login__c,NewClient__c,Agency__c,UseCategory__c,
+                   OriginMarket__c,CategoryTypeClient__c,LoginGroup__c, ResidentDeliveryAddress__c,CompanyOwner__c,
+                   Campaign__c,PromoCode__c,Channel__c,ClientMarker__c,Login__c, NewClient__c,Agency__c,UseCategory__c,
                    EquipmenType__c,ClientAgeMin__c,ConsumptionRangeEEmin__c,ConsumptionRangeGASmin__c,PowerRangeMin__c,
                    ClientAgeMax__c,ConsumptionRangeEEmax__c,ConsumptionRangeGASmax__c,PowerRangeMax__c,EligibleForAllCities__c,
                    CampaignName__c,
@@ -67,6 +67,18 @@ public inherited sharing class HDT_QR_EligibilityCriteria {
             LIMIT 1
         ];
         return crtiteriaToClone;
+    }
+
+    public static List<Product2> getProductById(List<Product2> prodList, String productId){
+        prodList = new List<Product2>();
+        prodList = [
+            SELECT Id, Name, ProductCode, Version__c, Family, Status__c
+            FROM Product2
+            WHERE Id =: productId
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+        return prodList;
     }
 
 }

@@ -10,11 +10,9 @@
         <matchingRule>Account_Matching</matchingRule>
         <objectMapping xsi:nil="true"/>
     </duplicateRuleMatchRules>
-    <isActive>false</isActive>
+    <isActive>true</isActive>
     <masterLabel>Account Duplicated</masterLabel>
-    <operationsOnInsert>Alert</operationsOnInsert>
-    <operationsOnInsert>Report</operationsOnInsert>
     <operationsOnUpdate>Alert</operationsOnUpdate>
-    <securityOption>EnforceSharingRules</securityOption>
+    <securityOption>BypassSharingRules</securityOption>
     <sortOrder>2</sortOrder>
 </DuplicateRule>

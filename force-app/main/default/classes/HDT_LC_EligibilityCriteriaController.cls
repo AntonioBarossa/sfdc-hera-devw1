@@ -29,8 +29,9 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
         HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj municipalityTreeObj;
 
-        municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityTreeObj(municipalityTreeObj, recordId);
-        //municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityTreeObjEmprovedMethod(municipalityTreeObj, recordId);
+        //municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityTreeObj(municipalityTreeObj, recordId);
+        //municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityTreeCompleteObj(municipalityTreeObj, recordId);
+        municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityNotAvailableObj(municipalityTreeObj, recordId);
 
         return municipalityTreeObj;
     }
@@ -43,13 +44,13 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
         HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj;
 
         try{
-
+            
             if(String.isEmpty(eligibilityId)){
                 // eligibilityId IS NULL, so get all Municipalities code
                 //StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
                 //cityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
                 cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createDefaultCityZipCodeObj(cityZipCodeObj);
-    
+                cityZipCodeObj.isEditable = true;
                 cityZipCodeObj.success = true;
                 cityZipCodeObj.message = '';
             } else {
@@ -71,6 +72,17 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
                     }
 
                 }
+
+                if(String.isEmpty(criteria[0].Product__r.Status__c) || !criteria[0].Product__r.Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
+                    cityZipCodeObj.isEditable = false;
+                } else {
+                    cityZipCodeObj.isEditable = true;
+                }
+    
+                if(HDT_UTL_ProductStObjProcess.skipTrigger('HDT_ProductStObj')){
+                    cityZipCodeObj.isEditable = true;
+                }
+
                 cityZipCodeObj.success = true;
                 cityZipCodeObj.message = '';
             }
@@ -91,9 +103,24 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
         System.debug('## >> ' + productId);
 
         HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion recObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion();
+        List<Product2> prodList;
+
+        Set<String> familySet = new Set<String>();
+        familySet.add(Label.HDT_ProductFamilyTrigger);
+        familySet.add('VAS Prodotto');
+        familySet.add('VAS Servizio');
 
         try{
             recObj.success = true;
+
+            prodList = HDT_QR_EligibilityCriteria.getProductById(prodList, productId);
+
+            //if(String.isEmpty(prodList[0].Family) || !prodList[0].Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
+            if(String.isEmpty(prodList[0].Family) || !familySet.contains(prodList[0].Family)){
+                recObj.success = false;
+                recObj.message = Label.HDT_EligCriteria_ProductType;
+                return recObj;
+            }
 
             List<EligibilityCriteria__c> eliCrit;
             eliCrit = HDT_QR_EligibilityCriteria.getEligibilityCriteriaByProductId(eliCrit, productId);
@@ -106,7 +133,13 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
                 recObj.eligibilityId = eliCrit[0].Id;
             } else {
                 recObj.recIsPresent = false;
-                recObj.eligibilityId = '';      
+                recObj.eligibilityId = '';
+                
+                if(!prodList[0].Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
+                    recObj.success = false;
+                    recObj.message = Label.HDT_EligCriteria_ProdStatus;
+                }
+
             }
 
         } catch (Exception e){

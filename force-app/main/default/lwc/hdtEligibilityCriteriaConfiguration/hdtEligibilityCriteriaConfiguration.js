@@ -4,8 +4,23 @@ import saveEligibilityCriteria from '@salesforce/apex/HDT_LC_EligibilityCriteria
 import getCityZipCodeObj from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.getCityZipCodeObj';
 import deleteEligibilityCriteria from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.deleteEligibilityCriteria';
 import { NavigationMixin } from 'lightning/navigation';
+import saveBody from '@salesforce/label/c.HDT_LWC_CriteriaModal_SaveBody';
+import saveTitle from '@salesforce/label/c.HDT_LWC_CriteriaModal_SaveTitle';
+import closeBody from '@salesforce/label/c.HDT_LWC_CriteriaModal_CloseBody';
+import closeTitle from '@salesforce/label/c.HDT_LWC_CriteriaModal_CloseTitle';
+import deleteTitle from '@salesforce/label/c.HDT_LWC_CriteriaModal_DeleteTitle';
+import deleteBody from '@salesforce/label/c.HDT_LWC_CriteriaModal_DeleteBody';
 
 export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin(LightningElement) {
+
+    label = {
+        saveBody,
+        saveTitle,
+        closeBody,
+        closeTitle,
+        deleteTitle,
+        deleteBody
+    };
 
     @api productid;
     @api eligibilityId;
@@ -53,6 +68,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
     disableCitySelection = true;
     toggleLabel = 'Valido per tutte le province';
     alreadyLoaded = false;
+    editable = false;
 
     connectedCallback(){
         console.log('>>> eligibilityId > ' + this.eligibilityId);
@@ -96,6 +112,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
             };
 
             if(result.success){
+                this.editable = result.isEditable;
                 toastObj.title = 'Successo';
                 toastObj.message = result.message;
                 toastObj.variant = 'success';
@@ -452,19 +469,59 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
             this.dataToView.sort(this.compare);
         }
 
-        if(this.dataToView.length>0){
+        if(this.dataToView.length > 0){
             this.showAvailableItems = true;
             this.showEmptyImmage = false;
         }
 
-        if(this.dataRemoved.length===0){
+        if(this.dataRemoved.length === 0){
             this.showRemovedTable = false;
+            this.showEmptyRemovedImmage = true;
         }
         
     }
 
     restoreAllItem(event){
-        console.log('# restoreAllItem #');
+        console.log('# RESTORE FROM ALL ITEM #');
+
+        if(this.showSearchRemovedTable){
+            console.log('# RESTORE FROM SEARCH #');
+            this.searchRemovedTable.forEach((i) => {
+                let alreadyPresent = this.dataToView.find(ele  => ele.value === i.value);
+                if(alreadyPresent == null || alreadyPresent == undefined){
+                    var itemRemoved = { label: i.label, value: i.value, id: i.value};
+                    this.dataToView.push(itemRemoved);
+                }
+
+                let element = this.dataRemoved.find(ele  => ele.value === i.value);
+                var a = this.dataRemoved.indexOf(element);
+                this.dataRemoved.splice(a, 1);
+
+            });
+            this.searchRemovedTable = [];
+        } else if(this.showRemovedTable){
+            this.dataRemoved.forEach((i) => {
+                let alreadyPresent = this.dataToView.find(ele  => ele.value === i.value);
+                if(alreadyPresent == null || alreadyPresent == undefined){
+                    var itemRemoved = { label: i.label, value: i.value, id: i.value};
+                    this.dataToView.push(itemRemoved);
+                }
+            });
+            this.dataRemoved = [];
+        }
+
+        this.dataToView.sort(this.compare);
+
+        if(this.dataToView.length > 0){
+            this.showAvailableItems = true;
+            this.showEmptyImmage = false;
+        }
+    
+        if(this.dataRemoved.length === 0){
+            this.showRemovedTable = false;
+            this.showEmptyRemovedImmage = true;
+        }
+
     }
 
     compare(a, b) {
@@ -603,16 +660,16 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         try {
             switch (event.target.name) {
                 case 'saveAction':
-                    this.modalObj.header = 'Salva il criterio';
-                    this.modalObj.body = 'Questa configurazione verrà salvata su Salesforce. Vuoi confermare?';
+                    this.modalObj.header = this.label.saveTitle;
+                    this.modalObj.body = this.label.saveBody;
                     break;
                 case 'goBackToRecord':
-                    this.modalObj.header = 'Chiudi la configurazione';
-                    this.modalObj.body = 'Perderai tutte le tue configurazioni, vuoi procedere?';
+                    this.modalObj.header = this.label.closeTitle;
+                    this.modalObj.body = this.label.closeBody;
                     break;
                 case 'delete':
-                    this.modalObj.header = 'Elimina il criterio';
-                    this.modalObj.body = 'Perderai tutte le tue configurazioni, vuoi procedere?';
+                    this.modalObj.header = this.label.deleteTitle;
+                    this.modalObj.body = this.label.deleteBody;
 
             }
 

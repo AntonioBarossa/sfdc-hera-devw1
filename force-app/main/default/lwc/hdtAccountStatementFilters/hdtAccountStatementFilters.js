@@ -82,6 +82,13 @@ export default class HdtAccountStatementFilters extends LightningElement {
     }
 
     dateConfiguration(){
+
+        if((!this.joinFilterObj.obj0.empty || !this.joinFilterObj.obj1.empty) && this.joinFilterObj.obj2.empty && this.joinFilterObj.obj3.empty ){
+            this.filterObject[this.joinFilterObj.obj2.name] = '';
+            this.filterObject[this.joinFilterObj.obj3.name] = '';
+            return;
+        }
+
         //dataInizio valorizzato e dataFine null
         //Se l’operatore inserisce solo la DataInizio, allora DataFine = DataInizio + 2 anni 
         if(!this.joinFilterObj.obj2.empty && this.joinFilterObj.obj3.empty){
@@ -116,19 +123,19 @@ export default class HdtAccountStatementFilters extends LightningElement {
             var dateArray = this.setDate(today);
             this.filterObject[this.joinFilterObj.obj2.name] = (dateArray[0]-2).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
             this.filterObject[this.joinFilterObj.obj3.name] = dateArray[0].toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
-
         }
+
     }
 
     closeModal(event){
         console.log('# closeModal #');
 
-        //for (var key in this.filterObject) {
-        //    delete this.filterObject[key];
-        //}
+        for (var key in this.filterObject) {
+            delete this.filterObject[key];
+        }
 
         const closeEvent = new CustomEvent("closemodal", {
-            detail:   {booleanVar: 'showFilters'}
+            detail: {booleanVar: 'showFilters'}
         });
 
         // Dispatches the event.

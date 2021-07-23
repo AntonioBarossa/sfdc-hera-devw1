@@ -25,18 +25,20 @@
                             <div class="slds-grid slds-grid_vertical">
                                 <div class="slds-col slds-grid">
                                     <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                        <template if:true={customerMarkingOptions.data}>
-                                            <lightning-combobox data-id="customerMarking" name="customerMarking" label="Marcatura Cliente"
-                                                placeholder="Seleziona Marcatura" value={markingValue} options={customerMarkingOptions.data.values}
+                                        <template if:true={customerMarkingOptions}>
+                                            <lightning-combobox data-id="customerMarking" name="customerMarking" label="Marcatura"
+                                                placeholder="Seleziona Marcatura" value={markingValue} onchange={handleCustomerChange} options={customerMarkingOptions}
                                                 required>
                                             </lightning-combobox>
+                                            <lightning-helptext content='Per completare il campo selezionare prima un valore per "Silos"'></lightning-helptext>
                                         </template>
                                     </div>
                                     <div class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
-                                        <template if:true={categoryOptions.data}>
+                                        <template if:true={categoryOptions}>
                                             <lightning-combobox data-id="category" name="category" label="Categoria" placeholder="Seleziona Categoria"
-                                                value={categoryValue} options={categoryOptions.data.values} required>
+                                                value={categoryValue} options={categoryOptions} required>
                                             </lightning-combobox>
+                                            <lightning-helptext content='Per completare il campo selezionare prima un valore per "Marcatura"'></lightning-helptext>
                                         </template>
                                     </div>
 
@@ -95,20 +97,27 @@
 
                                     <div class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
                                         <template if:true={companyOwnerOptions.data}>
-                                            <lightning-combobox data-id="companyOwner" name="companyOwner" label="Società Gruppo Hera" placeholder="Seleziona Società"
-                                                options={companyOwnerOptions.data.values} required>
+                                            <lightning-combobox data-id="companyOwner" name="companyOwner" label="Silos" placeholder="Seleziona Società"
+                                                options={companyOwnerOptions.data.values} onchange={handleCompanyOwnerChange} disabled={showCompanyOwner} value={companyDefault} required>
                                             </lightning-combobox>
                                         </template>
-                                    </div>
-                                    
-                                    <!-- <div
-                                    class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <c-hdt-calcola-codice-fiscale></c-hdt-calcola-codice-fiscale>
-                                    <lightning-button class="slds-form-element" name="calculateFiscalCode" type="submit"
-                                        label="Calcola Codice Fiscale" onclick={handleCalculation}></lightning-button>
-                                </div> -->
+                                    </div> 
+                                </div>
+                                <div class="slds-col slds-grid">
+                                <div
+                                        class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                        <lightning-button class="slds-form-element" name="calculateFiscalCode" type="submit"
+                                            label="Calcola Codice Fiscale" onclick={handleCalculation}></lightning-button> 
+                                    </div> 
                                 </div>
                             </div>
+                        </lightning-card>
+
+                       <lightning-card title="Indirizzi">
+                            <div class="slds-p-left_x-large slds-p-right_x-large">
+                                <c-hdt-target-object-address-fields objectapiname={currentObjectApiName}></c-hdt-target-object-address-fields>
+                            </div>
+
                         </lightning-card>
                         <!-- <div class="slds-m-top_x-large">
                             <h3
@@ -278,7 +287,7 @@
                                 <div
                                     class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
                                     <lightning-input type="tel" data-id="mobilePhone" label="Cellulare"
-                                        minlength="10" message-when-too-short="Il numero di cellulare non può essere meno di 10 cifre!">
+                                        >
                                     </lightning-input>
                                 </div>
 
@@ -294,7 +303,7 @@
                                 <div
                                     class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
                                     <lightning-input type="tel" data-id="phoneNumber" label="Telefono Fisso"
-                                        maxlength="11">
+                                        >
                                     </lightning-input>
                                 </div>
 

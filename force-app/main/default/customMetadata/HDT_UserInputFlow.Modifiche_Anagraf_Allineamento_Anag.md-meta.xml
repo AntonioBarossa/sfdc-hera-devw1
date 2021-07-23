@@ -19,11 +19,6 @@
         &quot;Column&quot;   : 1
     },
     {
-        &quot;FieldName&quot; : &quot;BillingStreetToponym__c&quot;,
-        &quot;Required&quot;   : false,
-        &quot;Column&quot;   : 1
-    },
-    {
         &quot;FieldName&quot; : &quot;BillingStreetNumber__c&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 1
@@ -50,11 +45,6 @@
     },
     {
         &quot;FieldName&quot; : &quot;BillingCityCode__c&quot;,
-        &quot;Required&quot;   : false,
-        &quot;Column&quot;   : 1
-    },
-    {
-        &quot;FieldName&quot; : &quot;SupplyStreetToponym__c&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 1
     },
@@ -90,11 +80,6 @@
     },
     {
         &quot;FieldName&quot; : &quot;SupplyCityCode__c&quot;,
-        &quot;Required&quot;   : false,
-        &quot;Column&quot;   : 1
-    },
-    {
-        &quot;FieldName&quot; : &quot;InvoicingStreetToponym__c&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 1
     },
@@ -199,6 +184,11 @@
         &quot;Column&quot;   : 2
     },
     {
+        &quot;FieldName&quot; : &quot;CausalCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
         &quot;FieldName&quot; : &quot;FirstName__c&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 2
@@ -219,7 +209,7 @@
         &quot;Column&quot;   : 2
     },
     {
-        &quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
+        &quot;FieldName&quot; : &quot;Mobile__c&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 2
     },

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account.Orders.Activities$Status</field>
+    </columns>
+    <columns>
+        <field>Account.Orders$Phase__c</field>
+    </columns>
+    <columns>
+        <field>Account.Orders$ServicePointCodeFormula__c</field>
+    </columns>
+    <description>AS IS 49</description>
+    <format>Tabular</format>
+    <name>AS IS 49-RDA da lavorare dal Service</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>HDT_AccountsWiWoOrdersWiWoAcivities__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Account$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -32,8 +32,12 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>createQuickActionName</name>
+                    <value>NewContact</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>lookupFieldName</name>
-                    <value>Order.BillToContactId</value>
+                    <value>Order.Contact__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>updateQuickActionName</name>
@@ -74,6 +78,82 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Order.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>EleReadings__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Subprocess__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Standard</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.ProcessType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Voltura</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Order.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>GasReadings__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Subprocess__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Standard</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.ProcessType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Voltura</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-04dbe995-61ad-4e3b-8fcf-6be8791f348a</name>
@@ -133,6 +213,46 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>objectApiName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>hdtDocumentalPhaseHistory</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Order.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Comunicazioni_Documentali__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-463ef932-22ee-4bde-b732-38735afe7258</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -177,6 +297,19 @@
                 <componentName>flexipage:tab</componentName>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-463ef932-22ee-4bde-b732-38735afe7258</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Documentale</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-3f75c099-4a55-4a62-be42-0f0dde8841f9</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -187,23 +320,80 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>Order.HDT_ValidazioneDocumentale</value>
+                            <value>CustomButton.Order.HDT_InfoTracking</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Order.Validazione_Documenti</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Order.HDT_Ripensamento</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>(1 OR 2) AND 3</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <leftValue>{!Record.ProcessType__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>In attesa validazione</rightValue>
+                                    <rightValue>Switch in Gas</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>CONTAINS</operator>
-                                    <rightValue>HDT_RT_Voltura</rightValue>
+                                    <leftValue>{!Record.ProcessType__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Switch in Ele</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NotRethinkable__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>CustomButton.Order.HDT_InfoTracking</value>
+                            <value>CustomButton.Order.HDT_AnnullamentoPrestazione</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.NotCancellable__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Order.Ripristina_Annullamento</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Annullamento - Comunicazione verso Heroku KO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Annullamento - Esito KO da DL/SII</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Annullamento - Ammissibilità KO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ripensamento - Comunicazione verso Heroku KO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ripensamento - Ammissibilità KO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ripensamento - Esito KO da SII</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Order.Riprendi_Processo</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -225,7 +415,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>1</value>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>
@@ -258,6 +448,58 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>forceKnowledge:articleSearchDesktop</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-d152bdb4-77af-4f0d-8da9-53661bbb33f7</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>runtime_sales_activities:activityPanel</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-73e700ce-c44c-42e6-b9d0-45c0ed191450</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-d152bdb4-77af-4f0d-8da9-53661bbb33f7</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.knowledge</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-73e700ce-c44c-42e6-b9d0-45c0ed191450</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.activity</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-81b825a9-0d34-4fd7-a5bc-350eb314a422</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>columnsButton</name>
                     <value>2</value>
@@ -275,7 +517,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>forceKnowledge:articleSearchDesktop</componentName>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-81b825a9-0d34-4fd7-a5bc-350eb314a422</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
             </componentInstance>
         </itemInstances>
         <name>rightsidebar</name>

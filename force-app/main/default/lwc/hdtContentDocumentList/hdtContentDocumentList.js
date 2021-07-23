@@ -67,12 +67,17 @@ export default class HdtContentDocumentList extends NavigationMixin(LightningEle
     
     }
     handleDelete(event) {
-        if (event.target) {
-            if (event.target.name === 'confirmModal') {
+        console.log('#ContentDocumentList EVENT -> ' + JSON.stringify(event.target));
+        //event target is null
+        console.log('#ContentDocumentList EVENT -> ' + JSON.stringify(event.detail));
+        //status is boolean
+        /*if (event.target) {
+            if (event.target.name === 'confirmModal') {*/
                 if (event.detail !== 1) {
-                    if (event.detail.status === 'confirm') {
+                    if (event.detail.status/*event.detail.status === 'confirm'*/) {
                         //delete content document
                         let contentDocumentId = event.detail.originalMessage;
+                        console.log('#ContentDocumentList -> HERE');
                         deleteRecord(contentDocumentId)
                             .then(() => {
                                 this.dispatchEvent(
@@ -98,7 +103,7 @@ export default class HdtContentDocumentList extends NavigationMixin(LightningEle
 
                 //hides the component
                 this.isDialogVisible = false;
-            }
-        }
+           //}
+        //}
     }
 }
