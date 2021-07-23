@@ -109,4 +109,18 @@ public inherited sharing class HDT_QR_Case {
         return activities;
     }
 
+    public List<Case> getServicePointCaseWinBack(String servicePointId){
+        return [
+        SELECT 
+        Id,
+        Phase__c,
+        DistributorName__c
+        FROM Case
+        WHERE ServicePoint__c = :servicePointId
+        AND Type = 'Switch Out SII'
+        AND Status = 'In Lavorazione'
+        WITH SECURITY_ENFORCED
+        ];
+    }
+
 }
