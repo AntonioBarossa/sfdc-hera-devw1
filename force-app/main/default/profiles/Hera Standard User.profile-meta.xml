@@ -2610,18 +2610,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-<<<<<<< HEAD
-        <field>AssignmentRule__c.CreatorAgency__c</field>
-=======
         <field>AssignmentRule__c.CompanyOwner__c</field>
->>>>>>> DEVW1
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-<<<<<<< HEAD
-        <field>AssignmentRule__c.FirstLevelOpinion__c</field>
-=======
         <field>AssignmentRule__c.Commodity__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2633,7 +2626,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AssignmentRule__c.ClientMarking__c</field>
->>>>>>> DEVW1
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AssignmentRule__c.CreatorAgency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AssignmentRule__c.FirstLevelOpinion__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>

@@ -385,7 +385,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Subject__c</picklist>
-<<<<<<< HEAD
         <values>
             <fullName>Acceso Piattaforme documentali</fullName>
             <default>false</default>
@@ -961,8 +960,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Type__c</picklist>
-=======
->>>>>>> DEVW1
         <values>
             <fullName>Acceso Piattaforme documentali</fullName>
             <default>false</default>
