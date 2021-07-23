@@ -59,23 +59,34 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         Case currentCase = (Case) inputCase;
         Case parentCase = new Case();
 
-        parentCase = caseQr.getParentCaseById(currentCase.ParentId);
+        try{
+            parentCase = caseQr.getParentCaseById(currentCase.ParentId);
+        }catch(Exception e){
+            System.debug(e.getMessage());
+        }
+        if(parentCase != null){
 
-        if(parentCase.Type == 'Variazione indirizzo di fornitura'){
+            if(parentCase.Type == 'Variazione indirizzo di fornitura'){
 
-            if(currentCase.Phase__c == 'KO definitivo'
-            || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) > 0){
-                
-                parentCase.Phase__c = 'Elaborazione Manuale';
-            } else {
-
-                parentCase.Phase__c = 'Completata';
-
+                if(currentCase.Phase__c == 'KO definitivo'
+                || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) > 0){
+                    parentCase.Phase__c = 'Elaborazione Manuale';
+                } else {
+                    parentCase.Phase__c = 'Completata';
+                }
+            } else if(parentCase.Type.equalsIgnoreCase('Allineamento Canone Rai')){
+                if(currentCase.Phase__c.equalsIgnoreCase('KO definitivo')){
+                    wrts_prcgvr__Activity__c activity = createActivity('Elaborazione Manuale');
+                    activity.Case__c = parentCase.Id;
+                    HDT_UTL_DatabaseService.insertSObject(activity);
+                } else {
+                    parentCase.Phase__c = 'Completata';
+                }
             }
 
+            HDT_UTL_DatabaseService.updateSObject(parentCase);
         }
 
-        HDT_UTL_DatabaseService.updateSObject(parentCase);
 
     }
 
@@ -110,7 +121,6 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.BillingStreetName__c = currentCase.BillingStreetName__c;
                 acc.BillingStreetNumber__c = currentCase.BillingStreetNumber__c;
                 acc.BillingStreetNumberExtension__c = currentCase.BillingStreetNumberExtension__c;
-                acc.BillingStreetToponym__c = currentCase.BillingStreetToponym__c;
                 objToUpdate = acc;
             }
             when 'Variazione Gruppo IVA' {
@@ -159,7 +169,6 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 bp.InvoicingPlace__c = currentCase.InvoicingPlace__c;
                 bp.InvoicingStreetName__c = currentCase.InvoicingStreetName__c;
                 bp.InvoicingCountry__c = currentCase.InvoicingCountry__c;
-                bp.InvoicingStreetToponym__c = currentCase.InvoicingStreetToponym__c;
                 bp.InvoicingProvince__c = currentCase.InvoicingProvince__c;
                 bp.ReminderFlag__c = currentCase.ReminderFlag__c;
                 bp.ReminderCertifiedEmailAddress__c = currentCase.ReminderCertifiedEmailAddress__c;
@@ -200,17 +209,18 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 if (currentAdminAcr != null) {
                     System.debug('Disassociazione Account ' + accountId + ' da Amministratore di condominio: ' + currentAdminAcr.ContactId);
                     currentAdminAcr.IsActive = False;
+                    currentAdminAcr.EndDate = Date.today();
                     HDT_UTL_DatabaseService.updateSObject(currentAdminAcr);
-
-                    AccountContactRelation newAdminAcr = new AccountContactRelation();
-                    newAdminAcr.AccountId = accountId;
-                    newAdminAcr.ContactId = newAdministratorId;
-                    newAdminAcr.IsActive = True;
-                    newAdminAcr.Roles = 'Amministratore condominio';
-                    System.debug('Associazione Account ' + accountId + ' ad Amministratore di condominio: ' + newAdministratorId);
-                    HDT_UTL_DatabaseService.insertSObject(newAdminAcr);
-
                 }
+                
+                AccountContactRelation newAdminAcr = new AccountContactRelation();
+                newAdminAcr.AccountId = accountId;
+                newAdminAcr.ContactId = newAdministratorId;
+                newAdminAcr.IsActive = True;
+                newAdminAcr.StartDate = Date.today();
+                newAdminAcr.Roles = 'Amministratore condominio';
+                System.debug('Associazione Account ' + accountId + ' ad Amministratore di condominio: ' + newAdministratorId);
+                HDT_UTL_DatabaseService.insertSObject(newAdminAcr);
             }
             when 'Cambio Intest/Indirizzo Amministratore' {
                 Contact c = new Contact();
@@ -227,7 +237,6 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 c.MailingStreetName__c = currentCase.BillingStreetName__c;
                 c.MailingStreetNumberExtension__c = currentCase.BillingStreetNumberExtension__c;
                 c.MailingStreetNumber__c = currentCase.BillingStreetNumber__c;
-                c.MailingStreetToponym__c = currentCase.BillingStreetToponym__c;
 
                 HDT_UTL_DatabaseService.updateSObject(c);
             }
@@ -253,6 +262,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
     }
 
+    public void innescoAllineamentoAnagraficaCanoneRai(SObject inputCase) {
+        if (inputCase == null) {
+            System.debug('innescoAllineamentoAnagraficaCanoneRai: null input case.');
+            return;
+        }
+
+        System.debug('Innesco Allineamento Anagrafica alla chiusura del Case di Allineamento Canone RAI: ' + inputCase.Id);
+
+        try {
+            List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.ALLINEAMENTO_CANONE_RAI);
+            System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+        } catch (Exception ex) {
+            System.debug('# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());
+        }
+    }
+
     public void evaluateEffectiveDate(SObject inputOrder){
 
         Order currentOrder = (Order) inputOrder;
@@ -270,14 +295,9 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         Case currentCase = (Case) inputCase;
 
         if(currentCase.VulturePracticeReference__c != null){
-
-            wrts_prcgvr__ActivityTemplate__c template = postsalesQr.getActivityTemplate('Sblocco Voltura');
-            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-            activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
+            wrts_prcgvr__Activity__c activity = createActivity('Sblocco Voltura');
             activity.Order__c = currentCase.VulturePracticeReference__c;
-            activity.wrts_prcgvr__Description__c = template.wrts_prcgvr__Subject__c;
             HDT_UTL_DatabaseService.insertSObject(activity);
-        
         }
 
     }
@@ -294,5 +314,49 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     }
 
+    public void advanceRelatedCase(SObject inputOrder){
 
+        Order currentOrder = (Order) inputOrder;
+        Case relatedCase = postsalesQr.getCaseByServicePoint('Allineamento Canone Rai', currentOrder.ServicePoint__c);
+        if(relatedCase != null){
+            if(!(currentOrder.PhaseStory__c.containsIgnoreCase('Errore Lavorazione SAP'))){
+                relatedCase.Phase__c = 'Completata';
+                HDT_UTL_DatabaseService.updateSObject(relatedCase);
+            }else{
+                wrts_prcgvr__Activity__c activity = createActivity('Elaborazione Manuale');
+                activity.Case__c = relatedCase.Id;
+                HDT_UTL_DatabaseService.insertSObject(activity);
+            }
+        }
+    }
+
+    public void updateServicePoint(SObject inputCase){
+
+        Case currentCase = (Case) inputCase;
+        ServicePoint__c servicePoint = new ServicePoint__c();
+        servicePoint.Id             = currentCase.ServicePoint__c;
+        servicePoint.UseCategory__c = currentCase.UseCategory__c;
+        servicePoint.SupplyType__c  = currentCase.SupplyType__c;
+        servicePoint.ImplantType__c	= currentCase.ServicePointType__c;
+        HDT_UTL_DatabaseService.updateSObject(servicePoint);
+
+    }
+
+    //returns activity and has to be created inside the caller methdo because it has to be linked to an entity first
+    private static wrts_prcgvr__Activity__c createActivity(String templateName){
+        HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
+        wrts_prcgvr__ActivityTemplate__c template = postsalesQr.getActivityTemplate(templateName);
+        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+        activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
+        activity.wrts_prcgvr__Description__c = template.wrts_prcgvr__Subject__c;
+        return activity;
+    }
+
+    public void sendDocumentFile(SObject inputRecord){
+        String recordId = (String)inputRecord.get('Id');
+        Map<String,String> formParams = new Map<String,String>();
+        formParams.put('mode', 'Print');
+        formParams.put('Archiviato', 'Y');
+        HDT_LC_DocumentSignatureManager.sendDocumentFile(recordId, 'Case', JSON.serialize(formParams));
+    }
 }

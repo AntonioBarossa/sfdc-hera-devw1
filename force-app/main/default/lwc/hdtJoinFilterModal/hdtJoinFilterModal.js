@@ -4,11 +4,12 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 const filterObject = {};
 const timeLimit5y = 157680000000;//5years
-const timeLimit2y = 157680000000;//2years
+const timeLimit2y = 63072000000;//2years
 
 export default class HdtJoinFilterModal extends LightningElement {
 
     @api tabCode;
+    @api recordId;
     @track filterObject = filterObject;
     @track item = {
         selectedId: '',
@@ -37,10 +38,13 @@ export default class HdtJoinFilterModal extends LightningElement {
 
     timeLimit = 0;
     timeDiff = 0;
+    filter;
 
     connectedCallback(){
         
         console.log('>>>>>> join filter modal > ' + this.tabCode);
+
+        this.filter = '(Account__c = \'' + this.recordId + '\' AND ContractAccountCode__c != null)';
 
         switch (this.tabCode) {
             case 'EC':
@@ -49,6 +53,10 @@ export default class HdtJoinFilterModal extends LightningElement {
                 this.timeDiff = 5;
                 break;
             case 'EC1':
+
+                this.joinFilterObj.dataInizio.label = 'Data scadenza da';
+                this.joinFilterObj.dataFine.label = 'Data scadenza a';
+
                 this.joinFilterObj.numeroFattura.showField = false;
                 this.joinFilterObj.numeroBollettino.showField = false;
                 this.joinFilterObj.societa.showField = false;
@@ -57,6 +65,7 @@ export default class HdtJoinFilterModal extends LightningElement {
                 this.timeDiff = 2;
                 break;
             case 'EC4':
+                
                 this.joinFilterObj.numeroFattura.showField = false;
                 this.joinFilterObj.numeroBollettino.showField = false;
                 this.joinFilterObj.societa.showField = false;

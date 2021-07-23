@@ -87,11 +87,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.BillingAddessIsForeign__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.BillingAddress</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -5293,11 +5288,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.SupplyStreetNumber__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.SupplyStreetToponym__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22992,11 +22982,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ServicePoint__c.SupplyStreetToponym__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>ServicePoint__c.SupplyStreet__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -26587,11 +26572,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.CreditCheckResultsFinal__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.CreditCheckResults__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -26618,11 +26598,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.FinalReason__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

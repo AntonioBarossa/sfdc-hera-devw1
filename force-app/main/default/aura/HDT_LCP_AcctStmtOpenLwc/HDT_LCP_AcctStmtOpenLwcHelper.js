@@ -1,4 +1,24 @@
 ({
+
+    getEnclosingTabId: function(component, event, helper) {
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getEnclosingTabId().then(function(subtabId) {
+            console.log('>>>>>>>>> ' + subtabId);
+            workspaceAPI.setTabLabel({
+                tabId: subtabId,
+                label: 'Estratto conto'
+            });
+            workspaceAPI.setTabIcon({
+                tabId: subtabId,
+                icon: 'custom:custom83',
+                iconAlt: 'Estratto conto'
+            });
+       })
+        .catch(function(error) {
+            console.log(error);
+        });
+    },
+
     closeModal:function(component,event,helper){    
         var cmpTarget = component.find('modalbox');
         var cmpBack = component.find('modalbackdrop');

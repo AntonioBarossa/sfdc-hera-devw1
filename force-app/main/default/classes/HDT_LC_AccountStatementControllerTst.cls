@@ -1,0 +1,160 @@
+@isTest
+public class HDT_LC_AccountStatementControllerTst {
+
+    /*
+        Test Class for:
+        HDT_LC_AccountStatementController - 62%
+        HDT_LC_AccountStatementCtrlHelper - 74%
+        HDT_LC_AccountStatementCtrlUtility - 76%
+        HDT_QR_AccountStatement - 100%
+        HDT_WRP_AccountStatement - 53%
+    */
+
+    @testSetup
+    static void setup() {
+        Account a = new Account();
+        a.CustomerCode__c = '0001';
+        a.Name = 'accountTest';
+        insert a;
+    }
+
+    @isTest
+    static void getTabsMetaData(){
+        HDT_WRP_AccountStatement.HDT_WRP_Tabs tabMetadata;
+
+        Test.startTest();
+        tabMetadata = HDT_LC_AccountStatementController.getTabsMetaData();
+        Test.stopTest();
+
+        System.assertEquals(true, tabMetadata.success, '');
+        System.assertEquals(10, tabMetadata.tabDetail.size(), '');
+    }
+
+    @isTest
+    static void getSecondLevelColumns(){
+        HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj secLevColumnsObj;
+
+        Test.startTest();
+        secLevColumnsObj = HDT_LC_AccountStatementController.getSecondLevelColumns('EC');
+        Test.stopTest();
+
+        System.debug('>>> columnObj ' + secLevColumnsObj.columnObj.size());
+        System.debug('>>> buttonList ' + secLevColumnsObj.buttonList.size());
+    }
+
+    @isTest
+    static void getTabConfiguration(){
+
+        HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj colObj;
+
+        Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
+
+        Test.startTest();
+        colObj = HDT_LC_AccountStatementController.getTabConfiguration('EC', accountId);
+        Test.stopTest();
+
+    }
+
+    @isTest
+    static void getPicklistValue(){
+        Test.startTest();
+        String picklistValue = HDT_LC_AccountStatementController.getPicklistValue('EC', 'StepValues');
+        Test.stopTest();
+
+    }
+
+    @isTest
+    static void getFieldValues(){
+        HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist picklist;
+
+        Test.startTest();
+        picklist = HDT_LC_AccountStatementController.getFieldValues('EC');
+        Test.stopTest();
+
+    }
+
+    @isTest
+    static void callMulesoft(){
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_AccountStatementControllerTstMock());
+
+        HDT_WRP_AccountStatement.HDT_WRP_TechObj techObj;
+
+        List<String> requestTypeList = new List<String>();
+        requestTypeList.add('home');
+        requestTypeList.add('allRecentItems');
+        requestTypeList.add('joinFilter');
+        requestTypeList.add('filters');
+        requestTypeList.add('viewResult');
+        requestTypeList.add('expired');
+        requestTypeList.add('creditRecovery');
+        requestTypeList.add('expiredFromDay');
+        requestTypeList.add('manageableItems');
+        requestTypeList.add('contractService');
+
+        Account account = [
+            SELECT Id, CustomerCode__c
+            FROM Account
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
+        Test.startTest();
+        techObj = new HDT_WRP_AccountStatement.HDT_WRP_TechObj();
+        techObj.recordId = String.valueOf(account.Id);
+        techObj.customerCode = String.valueOf(account.CustomerCode__c);
+        techObj.tabCode = 'EC';
+        techObj.statementType = 'ORDINARIO';
+        techObj.aggregation = '03';
+
+        Object obj;
+        for(String s : requestTypeList){
+            techObj.requestType = s;
+            obj = HDT_LC_AccountStatementController.callMulesoft(JSON.serialize(techObj, true), null);
+        }
+
+        Test.stopTest();
+
+    }
+
+    @isTest
+    static void serviceCatalogBackendHandler(){
+        HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogResponse;
+        Account account = [SELECT Id, CustomerCode__c FROM Account LIMIT 1];
+
+        List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> objList = new List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj>();
+        HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj obj1 = new HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj();
+        obj1.contoContrattuale = '200001846232';
+        obj1.rateizzato = 'NO';
+        obj1.numeroFattura = '0000411810643841';
+        obj1.residuo = '0.0';
+        obj1.societa = 'Hera Comm S.p.A.';
+        obj1.fatturaPrescrivibile = 'testString';
+        obj1.fatturaPrescritta = 'testString';
+        //obj1.DEL_569 = 'testString';
+        obj1.documentoPareggio = 'testString';
+        obj1.secondoLivelloInformativo = new List<HDT_WRP_AccountStatement.HDT_WRP_SecondLevelObj>();
+        obj1.secondoLivelloInformativo.add(new HDT_WRP_AccountStatement.HDT_WRP_SecondLevelObj());
+
+        HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj obj2 = new HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj();
+        obj2.contoContrattuale = '200001846232';
+        obj2.rateizzato = 'NO';
+        obj2.numeroFattura = '0000411810643841';
+        obj2.residuo = '0.0';
+        obj2.societa = 'Hera Comm S.p.A.';
+        obj2.fatturaPrescrivibile = 'testString';
+        obj2.fatturaPrescritta = 'testString';
+        //obj2.DEL_569 = 'testString';
+        obj2.documentoPareggio = 'testString';
+        obj2.secondoLivelloInformativo = new List<HDT_WRP_AccountStatement.HDT_WRP_SecondLevelObj>();
+        obj2.secondoLivelloInformativo.add(new HDT_WRP_AccountStatement.HDT_WRP_SecondLevelObj());
+
+        Test.startTest();
+        objList.add(obj1);
+        serviceCatalogResponse = HDT_LC_AccountStatementController.serviceCatalogBackendHandler('EC', account.Id, JSON.serialize(objList, true), '1');
+
+        objList.add(obj2);
+        serviceCatalogResponse = HDT_LC_AccountStatementController.serviceCatalogBackendHandler('EC', account.Id, JSON.serialize(objList, true), '1');
+        Test.stopTest();
+    }
+
+}

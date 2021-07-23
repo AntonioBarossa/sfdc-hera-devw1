@@ -311,7 +311,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Ruolo_Contatto.Roles</leftValueReference>
+                <leftValueReference>Refresh_Ruolo_Contatto.Roles</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Titolare</stringValue>
@@ -326,7 +326,7 @@
     <decisions>
         <name>Check_Pulsante_Premuto</name>
         <label>Pulsante Premuto?</label>
-        <locationX>2424</locationX>
+        <locationX>2266</locationX>
         <locationY>292</locationY>
         <defaultConnector>
             <targetReference>Refresh_Case</targetReference>
@@ -511,11 +511,11 @@
     <recordLookups>
         <name>Refresh_Case</name>
         <label>Refresh Case</label>
-        <locationX>2435</locationX>
+        <locationX>2275</locationX>
         <locationY>489</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Processo_2</targetReference>
+            <targetReference>Refresh_Ruolo_Contatto</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -527,6 +527,34 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Refresh_Ruolo_Contatto</name>
+        <label>Refresh Ruolo Contatto</label>
+        <locationX>2432</locationX>
+        <locationY>489</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Processo_2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Query_Case.AccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ContactId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Refresh_Case.ContactId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>AccountContactRelation</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -545,6 +573,12 @@
                 <elementReference>InputCase</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Category__c</field>
+            <value>
+                <elementReference>Query_Case.Account.Category__c</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>CertifiedEmail__c</field>
             <value>
@@ -711,12 +745,6 @@
             <field>InvoicingStreetNumber__c</field>
             <value>
                 <elementReference>Get_Billing_Profile.InvoicingStreetNumber__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>InvoicingStreetToponym__c</field>
-            <value>
-                <elementReference>Get_Billing_Profile.InvoicingStreetToponym__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1548,8 +1576,8 @@ Inserisci manualmente i seguenti campi:</description>
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>2430</locationX>
-        <locationY>50</locationY>
+        <locationX>2272</locationX>
+        <locationY>23</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

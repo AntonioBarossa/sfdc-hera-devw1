@@ -77,7 +77,7 @@
         <inputParameters>
             <name>causalCode</name>
             <value>
-                <elementReference>GetOrder.CausalCode__c</elementReference>
+                <elementReference>GetOrder.ProcessCode__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -128,13 +128,13 @@
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare</name>
         <label>Aggiorna Fase in Da Inviare</label>
-        <locationX>2313</locationX>
-        <locationY>2617</locationY>
+        <locationX>2311</locationX>
+        <locationY>2620</locationY>
         <assignmentItems>
             <assignToReference>GetRecord.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Comunicazione verso Heroku OK</stringValue>
+                <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -149,6 +149,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>CalcoloCodiceCausale.OperationCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -211,8 +218,8 @@
     <assignments>
         <name>Annullato_0</name>
         <label>Annullato</label>
-        <locationX>4102</locationX>
-        <locationY>3413</locationY>
+        <locationX>4510</locationX>
+        <locationY>3383</locationY>
         <assignmentItems>
             <assignToReference>GetOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -399,17 +406,24 @@
     <assignments>
         <name>Assegna_Stato</name>
         <label>Assegna Stato</label>
-        <locationX>1449</locationX>
+        <locationX>1677</locationX>
         <locationY>2440</locationY>
         <assignmentItems>
-            <assignToReference>Annulla_Attivita.wrts_prcgvr__Status__c</assignToReference>
+            <assignToReference>Annulla_Attivita.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullata</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Annulla_Attivita.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Annulla_Attivita</targetReference>
+            <targetReference>AssegnaACollection</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -418,10 +432,49 @@
         <locationX>4606</locationX>
         <locationY>2846</locationY>
         <assignmentItems>
-            <assignToReference>Annulla_Attivita_0.wrts_prcgvr__Status__c</assignToReference>
+            <assignToReference>Annulla_Attivita_0.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullata</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Annulla_Attivita_0.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaACollection_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaACollection</name>
+        <label>AssegnaACollection</label>
+        <locationX>1636</locationX>
+        <locationY>2296</locationY>
+        <assignmentItems>
+            <assignToReference>ActivityCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Annulla_Attivita</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Annulla_Attivita</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaACollection_0</name>
+        <label>AssegnaACollection</label>
+        <locationX>4557</locationX>
+        <locationY>2663</locationY>
+        <assignmentItems>
+            <assignToReference>ActivityCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Annulla_Attivita_0</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -497,8 +550,8 @@
     <assignments>
         <name>AssegnaValori_1</name>
         <label>AssegnaValori</label>
-        <locationX>3791</locationX>
-        <locationY>1033</locationY>
+        <locationX>3656</locationX>
+        <locationY>1072</locationY>
         <assignmentItems>
             <assignToReference>GetOrder.CancellationRequestDate__c</assignToReference>
             <operator>Assign</operator>
@@ -610,6 +663,29 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Ripensato</name>
+        <label>Ripensato</label>
+        <locationX>4214</locationX>
+        <locationY>3312</locationY>
+        <assignmentItems>
+            <assignToReference>GetOrder.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ripensato</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetOrder.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullato</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Order</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Ripristina_Fase_e_Processo</name>
         <label>Ripristina Fase</label>
         <locationX>2939</locationX>
@@ -707,6 +783,21 @@
                 <targetReference>Bozza_Annullata_0</targetReference>
             </connector>
             <label>Bozza</label>
+        </rules>
+        <rules>
+            <name>RipensamentoProcess</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ripensamento</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Ripensato</targetReference>
+            </connector>
+            <label>Ripensamento</label>
         </rules>
     </decisions>
     <decisions>
@@ -1418,17 +1509,17 @@
         <connector>
             <targetReference>Fase</targetReference>
         </connector>
-        <inputReference>Get_Activities</inputReference>
+        <inputReference>ActivityCollection</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Attivita_0</name>
         <label>Update Attivita</label>
-        <locationX>4199</locationX>
-        <locationY>2904</locationY>
+        <locationX>4198</locationX>
+        <locationY>2905</locationY>
         <connector>
             <targetReference>Fase_0</targetReference>
         </connector>
-        <inputReference>Get_Activities_0</inputReference>
+        <inputReference>ActivityCollection</inputReference>
     </recordUpdates>
     <screens>
         <name>Loading_Spinner_Screen</name>
@@ -1963,7 +2054,10 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>DefaultReason</assignToReference>
+                <name>selectedReason</name>
+            </outputParameters>
         </fields>
         <fields>
             <name>hdtOrderFormFlow</name>
@@ -2008,7 +2102,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Annullamento prestazione </stringValue>
+                    <stringValue>Annullamento prestazione</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2050,6 +2144,14 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>ActivityCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>wrts_prcgvr__Activity__c</objectType>
+    </variables>
     <variables>
         <name>cluster</name>
         <dataType>String</dataType>

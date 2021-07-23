@@ -8,10 +8,12 @@ import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSetting
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
 import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint';
 import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint';
-
+import getDistributorPointCode from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getDistributorPointCode';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.callService';
 import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
+import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
+
 
 
 
@@ -66,7 +68,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     isValid = false;
     isValidFields = false;
     @api isricercainsap;
-
+    @api recordDistributorPointCode;
+    isDistributor= false;
+    booleanFormDistributor=false;
+    @api retrievedDistributor={};
+    @api commodity='';
+   // showForm=false;
 
     
     
@@ -214,6 +221,18 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                 ) 
             }
+            else if(element=='MeterStatus__c')
+            {
+
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : mapFieldReq.get(element),
+                        value: this.servicePointRetrievedData[element],
+                        disabled: true
+                    }
+                ) 
+            }
             else
             {
                 console.log('entra in else ++++' + JSON.stringify(element));
@@ -235,6 +254,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
                 if((this.recordtype.label == 'Punto Elettrico'&& element == 'CommoditySector__c'))
                 {
+                 this.commodity='Energia Elettrica'; 
                  console.log('entra in Punto Elettrico CommoditySector__c');
                  this.allSubmitedFields.CommoditySector__c = 'Energia Elettrica';
                  fieldsDataObject.push(
@@ -257,8 +277,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     ) 
                 }
                 else if(this.recordtype.label === 'Punto Gas' && element === 'CommoditySector__c'){
-                    
-                this.allSubmitedFields.CommoditySector__c = 'Gas';
+                 this.commodity='Gas';   
+                 this.allSubmitedFields.CommoditySector__c = 'Gas';
                  fieldsDataObject.push(
                      {
                          fieldname: element,
@@ -299,9 +319,35 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required : mapFieldReq.get(element),
                             value:true,
+                            disabled: false
+                        }
+                    ) 
+                }
+                else if((this.recordtype.label === 'Punto Elettrico'|| this.recordtype.label === 'Punto Gas' ) && element === 'MeterStatus__c'){
+                    console.log('entra in MeterStatus__c');
+                    this.allSubmitedFields.MeterStatus__c = 'Bozza';
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required : mapFieldReq.get(element),
+                            value:'Bozza',
                             disabled: true
                         }
                     ) 
+                }
+                else if((this.recordtype.label === 'Punto Elettrico'||this.recordtype.label === 'Punto Gas') && element === 'Distributor__c' && this.isDistributor == true){
+                    console.log('entra in Distributor__c');
+                    console.log('entra in Distributor__c + recordDistributorPointCode  ' + JSON.stringify(this.recordDistributorPointCode));
+                    this.allSubmitedFields.Distributor__c = this.recordDistributorPointCode;
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required : mapFieldReq.get(element),
+                            value:this.recordDistributorPointCode,
+                            disabled: false
+                        }
+                    )
+                    this.isDistributor=false;
                 }
                 else
                 {
@@ -504,6 +550,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.allFieldsObject = this.toObject(this.allFieldsData, this.allFieldsDataReq);
     }
 
+
     connectedCallback(){
         this.loading = true;
 
@@ -596,6 +643,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
+       // this.showForm=true;
     }
 
 
@@ -622,6 +670,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Pre-fill Account__c field on render
      */
     renderedCallback(){
+        console.log('renderedCallback START + RECORDTYPEID' + this.recordType);
         if(this.fieldsReady){
             if(this.selectedservicepoint == undefined){
                 let accountField = this.template.querySelector('[data-name="Account__c"]');
@@ -666,11 +715,46 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.handleFillFieldsButtonAvailability(event.target.fieldName, event.target.value);
         console.log('handleFieldsDataChange fieldName : ******' + JSON.stringify(event.target.fieldName) );
         console.log('handleFieldsDataChange value : ******' + JSON.stringify(event.target.value) );
+        console.log('handleFieldsDataChange lenght : ******' + JSON.stringify(event.target.value.length) );
         this.allSubmitedFields[event.target.fieldName] = event.target.value;
         
         this.validForm = true;
 
+        if(event.target.fieldName =='ServicePointCode__c' && event.target.value.length  == 5){
+            console.log('enter in ServicePointCode__c for getDistributorPointCode');
+            console.log('Commodity --- : ' + this.commodity);
+            let pointCode = event.target.value;
+            getDistributorPointCode({code:pointCode,commodity:this.commodity}).then(data => {
+                console.log('enter in getDistributorPointCode --- Data : ' + JSON.stringify(data)); 
+                console.log('enter in getDistributorPointCode --- Data LENGHT : ' + JSON.stringify(data.length));
+                let i = 0;
+                this.retrievedDistributor=data;
+                if(data.length>1){
+                    console.log('data lenght > 1');
+                    this.booleanFormDistributor=true;
+                }
+                else{
 
+                    data.forEach(element=>{
+                        /*i++;
+                        let searchDistributor = 'Distributore' +JSON.stringify(i); */
+                        console.log('enter in FOREACH --- ELEMENT : ' + JSON.stringify(element.Account__r.Id));
+                        this.recordDistributorPointCode=element.Account__r.Id;
+                    });
+
+                    this.isDistributor= true;
+
+                    this.allSubmitedFields['Distributor__c'] =  this.recordDistributorPointCode;
+                    this.servicePointRetrievedData.Distributor__c = this.recordDistributorPointCode;
+                    this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+    
+                }
+
+ 
+
+            });
+
+        }
         if(event.target.fieldName =='Disconnectable__c' && event.target.value == 'SI'){
             console.log(' if event target = disconnectable SI');
 
@@ -906,9 +990,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
 
         //Validate address
+        
         if(!this.theRecord['Indirizzo Estero']){
             console.log('entra in if ind estero');
-            if (!this.theRecord['Flag Verificato']) {
+            if (this.theRecord['Flag Verificato']== false) {
                 console.log('entra in flag verificato false ');
                 isValid = false;
                 this.isValidFields = false;
@@ -969,6 +1054,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     save(){
         console.log('save');
+        let isBlacklist = false;
+        
+        isInBlacklist({pod:this.allSubmitedFields['ServicePointCode__c']}).then(data =>{
+            console.log('isInBlacklist :  ' + JSON.stringify(data));
+            isBlacklist=data;
+        
+        if(isBlacklist == false){
 
         this.theRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log('this.theRecord'+JSON.stringify(this.theRecord));
@@ -1010,7 +1102,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             
         }
+    
     }
+    }else{
+        console.log('entra in else');
+        this.alert('Errore','Non è possibile procedere in quanto il POD/PD ricercato è presente in Black List','error');
+    }
+    });
     }
 
     /**
@@ -1144,6 +1242,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: this.newServicePoint}));
             
         }).catch(error => {
+            
             this.loading = false;
 
             const toastErrorMessage = new ShowToastEvent({
@@ -1152,6 +1251,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 variant: 'error'
             });
             this.dispatchEvent(toastErrorMessage);
+
         });
 									 
     }
@@ -1161,4 +1261,32 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('handleResponseHeroku event detail : ' + JSON.stringify(event.detail));
         this.herokuAddressResponse=event.detail;
     }
+
+
+    handleDistributor(event){
+        console.log('entra in addDistributor');
+    }
+
+    @api
+    closedFormDistributor(event){
+        this.booleanFormDistributor=event.target.value;
+    }
+
+    @api
+    getDistributorSelected(event){
+        console.log('event value getDistributorSelected : ' + JSON.stringify(event.detail.Distributor));
+        this.retrievedDistributor.forEach(element=>{
+            console.log('element on getDistributorSelected ----- : ' + JSON.stringify(element));
+            if(event.detail.Distributor === element.Account__r.Name){
+
+                this.recordDistributorPointCode=element.Account__r.Id;
+
+            }
+
+        });
+        
+        this.isDistributor=true;
+        this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+    }
+
 }

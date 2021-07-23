@@ -12,6 +12,10 @@
         <restricted>true</restricted>
         <valueSetName>HDT_Station</valueSetName>
         <valueSettings>
+            <controllingFieldValue>HC_CRM_CC_OUT_CMDGRP</controllingFieldValue>
+            <valueName>Team 1</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>HC_CRM_CC_OUT_KN</controllingFieldValue>
             <valueName>CC_KN_coach</valueName>
         </valueSettings>
@@ -57,11 +61,23 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HC_CRM_CC_OUT_KN</controllingFieldValue>
+            <valueName>CC_KN_team 16</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HC_CRM_CC_OUT_KN</controllingFieldValue>
             <valueName>CC_KN_team18</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HC_CRM_CC_OUT_KN</controllingFieldValue>
             <valueName>CC_KN_team19</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HC_CRM_CC_OUT_KN</controllingFieldValue>
+            <valueName>CC_KN_team2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HC_CRM_CC_OUT_KN</controllingFieldValue>
+            <valueName>CC_KN_team21</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HC_CRM_CC_OUT_KN</controllingFieldValue>
@@ -651,12 +667,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HCM_SPORT</controllingFieldValue>
-            <controllingFieldValue>HCM_SPORT_OUT</controllingFieldValue>
-            <valueName>HCM_SP_Urbania</valueName>
+            <valueName>HCM_SP_Urbino</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HCM_SPORT</controllingFieldValue>
-            <valueName>HCM_SP_Urbino</valueName>
+            <valueName>HCM_SP_Urbino_accoglienza</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>HCM_SPORT_OUT</controllingFieldValue>
@@ -721,6 +736,10 @@
         <valueSettings>
             <controllingFieldValue>HCM_SPORT_OUT</controllingFieldValue>
             <valueName>HCM_SP_Torre de Passeri</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HCM_SPORT_OUT</controllingFieldValue>
+            <valueName>HCM_SP_Urbania</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

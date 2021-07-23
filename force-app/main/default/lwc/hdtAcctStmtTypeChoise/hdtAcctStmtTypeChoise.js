@@ -29,7 +29,7 @@ export default class HdtAcctStmtTypeChoise extends LightningElement {
                 new ShowToastEvent({
                     title: 'ATTENZIONE',
                     message: 'VALORE NON SELEZIONABILE PER QUESTA WAVE',
-                    variant: 'success',
+                    variant: 'info',
                     mode: 'sticky'
                 })
             );

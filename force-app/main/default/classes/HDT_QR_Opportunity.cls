@@ -124,4 +124,14 @@ public inherited sharing class HDT_QR_Opportunity {
             ORDER BY CreatedDate ASC
         ];
     }
+
+    public List<Opportunity> getRecordByQuote(String quoteId){
+        return [
+            SELECT
+            Id
+            FROM Opportunity
+            WHERE SBQQ__PrimaryQuote__c = :quoteId
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

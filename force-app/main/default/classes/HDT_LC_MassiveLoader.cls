@@ -178,7 +178,7 @@ public with sharing class HDT_LC_MassiveLoader {
                     Boolean parsingError = false;
                     Integer fileLines = 0;
 
-                    List<List<String>> file = new List<List<String>>();
+                    //List<List<String>> file = new List<List<String>>();
                     for (String fileRow : fileBody.split('\n')) {
                         List<String> rowFields = fileRow.split(',');
                         

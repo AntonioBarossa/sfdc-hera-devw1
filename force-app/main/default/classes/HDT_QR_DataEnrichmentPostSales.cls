@@ -71,5 +71,23 @@ public with sharing class HDT_QR_DataEnrichmentPostSales {
 
     }
 
+    public ServicePoint__c getServicePointData(String recordId){
+
+        ServicePoint__c servicePoint = new ServicePoint__c();
+
+        servicePoint = [SELECT Id,
+        SupplyType__c,
+        Disconnectable__c,
+        DisconnectibilityType__c
+        FROM ServicePoint__c
+        WHERE Id = :recordId
+        WITH SECURITY_ENFORCED
+        LIMIT 1
+        ];
+
+        return servicePoint;
+
+    }
+
 
 }

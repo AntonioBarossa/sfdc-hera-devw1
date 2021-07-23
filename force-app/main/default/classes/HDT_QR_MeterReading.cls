@@ -15,7 +15,8 @@ public inherited sharing class HDT_QR_MeterReading {
     public static List<Contract> getAccountContracts(List<Contract> contractList, String accountId){
         contractList = new List<Contract>();
         contractList = [
-            SELECT Id, SAPContractCode__c, Status, EndDate, StartDate, ServicePoint__r.CommoditySector__c, ServicePoint__r.SAPImplantCode__c
+            SELECT Id, SAPContractCode__c, Status, EndDate, StartDate, ServicePoint__r.CommoditySector__c, ServicePoint__r.SAPImplantCode__c,
+                   ServicePoint__r.MeterSN__c, ServicePoint__r.ServicePointCode__c
             FROM Contract
             WHERE AccountId = :accountId
             AND SAPContractCode__c != null

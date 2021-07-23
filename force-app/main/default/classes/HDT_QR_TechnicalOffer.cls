@@ -3,7 +3,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
     public static List<TechnicalOffer__c> getOfferById(List<TechnicalOffer__c> tecOffList, String technicalOfferId){
         tecOffList = new List<TechnicalOffer__c>();
         tecOffList = [
-            SELECT Id, OfferCode__c
+            SELECT Id
             FROM TechnicalOffer__c
             WHERE Id =: technicalOfferId
             WITH SECURITY_ENFORCED
@@ -57,7 +57,13 @@ public inherited sharing class HDT_QR_TechnicalOffer {
 
     public static TechnicalOffer__c queryTechnicalOfferRecordWithChild(TechnicalOffer__c techOff, Id recId){
         techOff = [
-            SELECT Id, Name, RateCategory__r.Name, Product__r.Status__c, (
+            SELECT Id, Name, RateCategory__r.Name, Product__r.Status__c, 
+                   Market__c, ProcessType__c, PlacetOffer__c, StartDate__c, EndDate__c, StepAllowed__c,
+                   ContractId__c, NumberTimeExtension__c, UnitTimeExtension__c, NumberDaysMonthsYears__c,
+                   UnitTerminationTime__c, CancellationAllowed__c, RecessAdmitted__c, NumberOfTimeUnits__c,
+                   UnitOfTimeMeasurement__c, AdmittingProfileModification__c, OfferToBeModified__c, ServiceProduct__c,
+                   SapCode__c, Message__c,
+                (
                     SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,S__c, G__c, TechnicalOffer__c,PriceCodeValue__c,DiscountCodeValue__c, DiscountCode__c,StringValue__c,
                            FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
                     FROM RigheOffertaTecnica__r ORDER BY RowId__c
@@ -136,7 +142,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
     public static List<Product2> getProductById(List<Product2> prodList, String productId){
         prodList = new List<Product2>();
         prodList = [
-            SELECT Id, Name, ProductCode, Version__c
+            SELECT Id, Name, ProductCode, Version__c, Family, Status__c
             FROM Product2
             WHERE Id =: productId
             WITH SECURITY_ENFORCED
@@ -189,12 +195,12 @@ public inherited sharing class HDT_QR_TechnicalOffer {
         return allValues;
     }
 
-    public static List<Info1GroupList__c> getTariffDetails(List<Info1GroupList__c> infoOneGroupList, String rate){
+    public static List<Info1GroupList__c> getTariffDetails(List<Info1GroupList__c> infoOneGroupList, String rate, String rateTypeValue){
         infoOneGroupList = new List<Info1GroupList__c>();
         infoOneGroupList = [
-            SELECT Id, DetTariffa__c, FilterTypeCategory__c
+            SELECT Id, Name, FilterTypeCategory__c, DetTariffa__c
             FROM Info1GroupList__c
-            WHERE FilterTypeCategory__c = :rate
+            WHERE FilterTypeCategory__c = :rate AND Name = :rateTypeValue
             WITH SECURITY_ENFORCED
         ];
         return infoOneGroupList;
@@ -239,7 +245,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
             SELECT Id, ValueDescription__c, DetRate__c, PossibleValue__c
             FROM Info2GroupList__c
             WHERE DetRate__c IN :tariffList
-            AND ValueDescription__c LIKE :searchValue
+            AND (ValueDescription__c LIKE :searchValue OR PossibleValue__c LIKE :searchValue)
             WITH SECURITY_ENFORCED
             LIMIT 100
         ];

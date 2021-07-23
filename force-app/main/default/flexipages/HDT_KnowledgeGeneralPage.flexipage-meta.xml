@@ -217,6 +217,18 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>hdtCloneArticle</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>HDT_RT_Template</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>forceKnowledge:articleMasterVersion</componentName>
             </componentInstance>
         </itemInstances>

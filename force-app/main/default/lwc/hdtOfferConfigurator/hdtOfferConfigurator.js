@@ -6,9 +6,14 @@ import sendTechOfferToSAP from '@salesforce/apex/HDT_LC_OfferConfiguratorControl
 import getOfferMatrix from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getOfferMatrix';
 import deleteTechnicalOffer from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.deleteTechnicalOffer';
 import { getRecord } from 'lightning/uiRecordApi';
+import mainTitle from '@salesforce/label/c.HDT_LWC_OfferConfig_MainTitle';
 
 export default class HdtOfferConfigurator extends NavigationMixin(LightningElement) {
     
+    label = {
+        mainTitle
+    };
+
     @track dataRows = [];
     @track selection;
     @api productid;
@@ -37,7 +42,9 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         template: '',
         version: '',
         rateCategory: '',
-        productCode: ''
+        productCode: '',
+        sapCode: '',
+        sapErrorMessage: ''
     };
 
     helpTxtProductCode = 'Codice Prodotto dell\' offerta';
@@ -259,6 +266,10 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 console.log('>>> isEditable: ' + result.isEditable);
                 this.editable = result.isEditable;
                 this.dataRows = result.rowList;
+
+                this.product.sapCode = result.sapCode;
+                this.product.sapErrorMessage = result.sapErrorMessage;
+
             } else {
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
@@ -342,17 +353,45 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         this.sendToApex(true);
     }
 
+    preSaveCheck(){
+        var toastObj = {
+            success: true,
+            title: '',
+            message: '',
+            variant: '',
+            mode: ''
+        }
+
+        if(this.product.productCode.length > 10){
+            toastObj.success = false;
+            toastObj.title = 'ATTENZIONE';
+            toastObj.message = 'Il codice dell\'offerta non può contenere più di 10 caratteri.';
+            toastObj.variant = 'warning'; 
+            toastObj.mode = 'sticky';
+            return toastObj;
+        }
+
+        return toastObj;
+    }
+
     sendToApex(sendToSap){
         console.log('# sendToApex #');
         console.log('# this.technicalofferid > ' + this.technicalofferid);
         console.log('# this.product.rateCategory > ' + this.product.rateCategory);
+
+        var toastObj = {};
+        toastObj = this.preSaveCheck();
+        if(!toastObj.success){
+            this.showToastHandler(toastObj);
+            return;
+        }
 
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
 
         var toastObj = {success: true, title: '', message: '', variant: '', mode: 'sticky'};
 
-        saveNewOfferConfigured({techOffObj: this.newTechOfferObj, idToClone: this.techOffIdToClone, offerJson: JSON.stringify(this.dataRows), productId: this.productid, technicalofferid: this.technicalofferid, rate: this.product.rateCategory, sendToSap: sendToSap})
+        saveNewOfferConfigured({techOffObj: this.newTechOfferObj, idToClone: this.techOffIdToClone, offerJson: JSON.stringify(this.dataRows), productId: this.productid, technicalofferid: this.technicalofferid, rate: this.product.rateCategory})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + JSON.stringify(result));
@@ -365,19 +404,21 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
                 if(sendToSap){
                     this.sendToSapHandler(result.techOffId);
+                    this.showToastHandler(toastObj);
                 } else {
                     this.goBackToRecord();
+                    this.showToastHandler(toastObj);
+                    this.spinnerObj.spinner = false;
                 }
 
             } else {
                 toastObj.success = false;
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
-                toastObj.variant = 'warning';                  
+                toastObj.variant = 'warning';
+                this.showToastHandler(toastObj);
+                this.spinnerObj.spinner = false;
             }
-
-            this.showToastHandler(toastObj);
-            this.spinnerObj.spinner = false;
 
         })
         .catch(error => {
@@ -401,25 +442,31 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         var toastObj = {success: true, title: '', message: '', variant: '', mode: 'sticky'};
 
+        this.spinnerObj.spincss = 'sendingdata slds-text-heading_small';
+
         sendTechOfferToSAP({technicalofferid: techOffId})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);
+            console.log(result.bodyResponse);
 
             if(result.success){
                 toastObj.success = true;
                 toastObj.title = 'Successo';
                 toastObj.message = result.message;
                 toastObj.variant = 'success';
+                this.showToastHandler(toastObj);
+                this.goBackToRecord();
             } else {
                 toastObj.success = false;
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
-                toastObj.variant = 'warning';                  
+                toastObj.variant = 'warning';
+                this.showToastHandler(toastObj);
+                this.getMatrixData();
             }
 
-            this.showToastHandler(toastObj);
-            this.goBackToRecord();
+            this.spinnerObj.spinner = false;
 
         })
         .catch(error => {
@@ -438,11 +485,16 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
     }
 
-    back(event){
+    backToProduct(event){
         console.log('back');
         this.errorObj.showError = false;
-        //this.productid = '';
         this.goBackToRecord();
+    }
+
+    backToMatrix(event){
+        console.log('back');
+        this.errorObj.showError = false;
+        //this.goBackToRecord();
     }
 
     openConfirmation(event){
@@ -573,6 +625,16 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 mode: toastObj.mode
             })
         );
+    }
+
+    showEdit(){
+        console.log('>>> showEdit');
+        const openEdit = new CustomEvent("openedit", {
+            detail: ''
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(openEdit);
     }
 
 }

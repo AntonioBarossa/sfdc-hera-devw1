@@ -15,6 +15,8 @@ public inherited sharing class HDT_LC_ConfigureProduct {
     private static HDT_QR_Opportunity opportunityQr = new HDT_QR_Opportunity();
     private static HDT_SRV_Opportunity opportunitySrv = new HDT_SRV_Opportunity();
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
+    private static HDT_SRV_ActivityCustom actSrv = new HDT_SRV_ActivityCustom();
+    private static HDT_QR_Recordtype rctype = new HDT_QR_Recordtype();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -239,5 +241,69 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         performChecks(sale);
         updateQuotesOnNext(sale.Id);
         saleSrv.updateRecord(sale);
+    }
+
+    @AuraEnabled
+    public static wrapReturnValidity checkApprovedProduct(Sale__c sale){
+        list<String> listId = new List<String>();
+        list<String> idToCreateActivity = new List<String>();
+        map<String,boolean> checkIsPresent = new Map<string,boolean>();
+        wrapReturnValidity resp = new wrapReturnValidity();
+        resp.wrapCheck = true;
+        resp.responseError = '';
+        Boolean hasPermission = FeatureManagement.checkPermission('HDT_CP_SuperUserCPQ');
+        Map<String,wrts_prcgvr__Activity__c> orderLineActivity = new Map<String,wrts_prcgvr__Activity__c>();
+            List<SBQQ__QuoteLine__c> quoteLinesActive = quoteLineQr.getActiveRecords(sale.Id);
+            for(SBQQ__QuoteLine__c line : quoteLinesActive){
+                if(line.SBQQ__Product__c != null && line.SBQQ__Product__r.Status__c == 'Scaduta' ){//line.SBQQ__Product__r.EndDate__c < date.today()){
+                    listId.add(line.id);
+                    checkIsPresent.put(line.id,true);
+                }
+            }
+            if(!listId.isEmpty()){
+                List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getRecordByOrderLine(listId);
+                System.debug('*****DEBUGActivity:' + listActivity);
+                for(wrts_prcgvr__Activity__c a : listActivity){
+                    orderLineActivity.put(a.QuoteLine__c,a);
+                }
+                System.debug('*****DEBUGActivity2:' + orderLineActivity);
+                for(SBQQ__QuoteLine__c line : quoteLinesActive){
+                    if(checkIsPresent.get(line.id)!= null){
+                        if(orderLineActivity.get(line.id) != null){
+                            System.debug('*****DEBUGActivityDENTROIF:' + line);
+                            if(orderLineActivity.get(line.id) != null &&  orderLineActivity.get(line.id).approved__c != 'Si'){
+                                resp.responseError += (resp.responseError == '' ? line.sbqq__product__r.Name : ',' + line.sbqq__product__r.Name);
+                                resp.wrapCheck = false;
+                            }
+                        }
+                        else{
+                            System.debug('*****DEBUGActivityDENTROELSE:' + line);
+                            resp.responseError += (resp.responseError == '' ? line.sbqq__product__r.Name : ',' + line.sbqq__product__r.Name);
+                            idToCreateActivity.add(line.id);
+                            resp.wrapCheck = false;
+                        }
+                     }
+                }
+                if(idToCreateActivity != null && !idToCreateActivity.isEmpty()){
+                    Id recTypeId= null;
+                    RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
+                    if(rc !=null){
+                        recTypeId= rc.Id;
+                    }
+                    List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
+                    for(String s : idToCreateActivity){
+                        listActivityToCreate.add(new wrts_prcgvr__Activity__c(QuoteLine__c=s, RecordTypeId= recTypeId, Type__c= 'Approvazione Quote'));
+                    }
+                    actSrv.createRecord(listActivityToCreate);
+                }
+            }else{
+                return resp;
+            }
+        
+        return resp;
+    }
+    public class wrapReturnValidity{
+        @AuraEnabled public boolean wrapCheck {get;set;} 
+        @AuraEnabled public string responseError {get;set;}
     }
 }

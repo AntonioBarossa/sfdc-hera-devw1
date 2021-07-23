@@ -30,6 +30,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         spincss: ''
     };
     @track interObj = {};
+    @track firstLevelFilterObj = {};
     techObj = {};
     //secondLevelFilter;
     showError = false;
@@ -42,7 +43,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     totAmountStored = 0;
     totAmount = 0;
     checkboxCount = 0;
-    
+    @track showPrintModal = false;
     //error;
     //showAccountData = true;
     @track modalObj = {
@@ -80,6 +81,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     title;
     showFilters2 = false;
     filterType;
+    billListHeader;
+    @track context;
+    @track tipoPlico;
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -212,39 +216,31 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             return false;
         }        
     }
-
     @api reopenTab(){
         console.log('# reopenTab #');
-
         if(this.allData.length == 0){
             if(this.showError){
                 this.showError = false;
             }
             
             this.openMainSpinner();
-
             if(this.checkBeforeOpenTab()){
                 this.openFilters();
                 this.closeMainSpinner();
             } else {
                 this.backendCall('home', '');// Chiamata in backend
             }
-
             this.focusOnButton('home');
         }
-
     }
-
     //button handler section --- START ---
     buttonHandler(event){
         try {
             console.log('>>> BUTTON TYPE > ' + event.currentTarget.dataset.type);
-
             if(event.currentTarget.dataset.type === undefined){
                 console.log('>>> NO BUTTON TYPE SET');
                 return;
             }
-
             switch (event.currentTarget.dataset.type) {
                 case 'webservice':
                     this.handleButtonClick(event.target.name);
@@ -256,7 +252,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 case 'lwcmethod':
                     this[event.target.name](event);
             }
-
         } catch(e){
             console.error('>>> buttonHandler');
             console.error('# Name => ' + e.name );
@@ -264,82 +259,42 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             console.error('# Stack => ' + e.stack );
         }
     }
-
     //+++ openmodal button type
     changeType(){
         this.showAcctStmt = true;
     }
-
     interrogation(event){
         this.title = 'Interrogazione dei dati';
         this.filterLabel = 'Interroga';
         this.showFilterFirstLevel = true;
-        this.totAmount = 0;
     }
-
     joinFilter(event) {
         console.log('# joinFilter #');
         this.joinFilterModal = true;
     }
-
     contractService(event){
         this.filterType = 'contractService';
         this.showFilters2 = true;
     }
-
+    filterEc7(){
+        this.filterType = 'filterEc7';
+        this.showFilters2 = true;
+    }
     openFilters(){
         this.showFilters = true;
     }
-
     paperlessFilters(event){
         this.filterType = 'paperlessFilters';
         this.showFilters2 = true;
     }
-
     billList(event){
+        this.billListHeader = 'Elenco bollette';
         this.showBillList = true;
     }
-
-    //+++ webservice type button
-    /*
-    allRecentItems(event) {
-        var requestType = event.target.name;//event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
+    viewReminders(event){
+        this.billListHeader = 'Visualizza Solleciti';
+        this.showBillList = true;
     }
-
-    home(event) {
-        var requestType = event.target.name;//event.target.name
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    expired(event){
-        var requestType = event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    creditRecovery(event){
-        var requestType = event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    expiredFromDay(event){
-        var requestType = event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    manageableItems(event){
-        var requestType = event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-    */
-    //+++ webservice type button
-
     refreshRecord(){
         //refresh all data in the same service
         this.filterOn = false;
@@ -352,46 +307,37 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.showAccountData = true;
         this.avoidSort = '';
         this.showFile = false;
-
         for (var key in this.interObj) {
             this.interObj[key] = '';
         }
-
+        this.firstLevelFilterObj = {};
         this.resetFile();
         this.resetIdList();
         this.refreshSortButton();
         this.setButtonForFilterApplied(false);
     }
-
     serviceCatalogHandler(){
         this.serviceCatalogBackendHandler('serviceCatalogHandler', null);
     }
-
     runFlowFromAura(event){
         console.log('>>> PARAMETERS: ' + event.currentTarget.dataset.parameters);
         this.serviceCatalogBackendHandler('runFlowFromAura', event.currentTarget.dataset.parameters);
     }
-
     serviceCatalogBackendHandler(serviceOperation, parameters){
         console.log('# serviceCatalogBackendHandler #');
-
         if(idlist.length > 0){
             this.showOperationModal = true;
-
             var selectedRecord = this.allData.filter(function(item) {
                 if(!idlist.includes(item.id))
                     return false;
                 
                 return true;
             });
-
             //selectedRecord.forEach(r => {
             //    r[this.detailTable] = [];
             //});
-
             var recordsString = JSON.stringify(selectedRecord);
             this.serviceCatalogBackendOperation(recordsString, serviceOperation, parameters);
-
         } else {
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -511,6 +457,20 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.backendCall(event.target.name, JSON.stringify({numeroFattura: nf}));
         //this.focusOnButton(event.target.name);
 
+    }
+    handleClosePrintModal(event){
+        this.showPrintModal = false;
+    }
+    printEstrattoConto(){
+        this.context = 'EC';
+        this.tipoPlico = 'Estratto Conto';
+        this.printFile();
+    }
+
+    printGestioneCredito(){
+        this.context = 'GC';
+        this.tipoPlico = 'Gestione Credito';
+        this.printFile();
     }
 
     printOperation(){
@@ -653,6 +613,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log(JSON.stringify(this.techObj));
         console.log('--------------------------');
 
+        this.firstLevelFilterObj = {};
+
         callMulesoft({techObj: JSON.stringify(this.techObj), requestObj: requestObj})
             .then(result => {
                 console.log('# Mulesoft result #');
@@ -661,6 +623,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 if(result.success){
                    var obj = JSON.parse(result.data);
 
+                   //console.log('>>>>> ' + JSON.stringify(obj));
                    console.log('>>> REQUEST TYPE -> ' + this.techObj.requestType);
 
                    if(this.techObj.requestType==='viewResult'){
@@ -670,6 +633,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                        // other requestType logic goes here
                        this.handleMulesoftResponse(obj);
                    }
+
+                   if(this.showSecondLevel){
+                    this.refreshSecondLevelToChild();
+                   }
+
+                   this.filterOn = false;
 
                 } else {
                     this.showError = true;
@@ -859,15 +828,19 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         let perpage = this.perpage;
         let startIndex = (page * perpage) - perpage;
         let endIndex = (page * perpage);
-        
+
         if(this.filterPagination){
-            this.accountData = this.allDataFiltered.slice(startIndex, endIndex);
-            this.firstLevel = this.allDataFiltered[0];
-            this.secondLevelList = this.allDataFiltered[0][this.detailTable];
+            if(this.allDataFiltered != undefined){
+                this.accountData = this.allDataFiltered.slice(startIndex, endIndex);
+                this.firstLevel = this.allDataFiltered[0];
+                this.secondLevelList = this.allDataFiltered[0][this.detailTable];
+            }
         } else {
-            this.accountData = this.allData.slice(startIndex, endIndex);
-            this.firstLevel = this.accountData[0];
-            this.secondLevelList = this.accountData[0][this.detailTable];
+            if(this.allData != undefined && this.accountData[0] != undefined){
+                this.accountData = this.allData.slice(startIndex, endIndex);
+                this.firstLevel = this.accountData[0];
+                this.secondLevelList = this.accountData[0][this.detailTable];
+            }
         }
 
         this.fromRec = (startIndex == 0) ? 1 : startIndex+1;
@@ -898,11 +871,21 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log('# applyInterFromChild #');
 
         var interObj = JSON.parse(event.detail.value);
+        this.firstLevelFilterObj = interObj;
+        console.log('interObj ' + event.detail.value);
+        this.totAmount = 0;
 
         try {
 
             if(interObj && Object.keys(interObj).length === 0 && interObj.constructor === Object){
                 console.log('>>> no apply filter');
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Non hai inserito nessun parametro',
+                        variant: 'info'
+                    }),
+                );
             } else {
                 this.applyInterrogation(interObj);
             }
@@ -919,120 +902,136 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     applyInterrogation(currentFilter){
         console.log('# applyInterrogation # ');
 
-        const columnTypeMap = new Map();
-        this.columns.forEach((col) => {
-            columnTypeMap.set(col.fieldName, col.detail.type);
-        });
-
-        var contoContrArray;
-        if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
-            contoContrArray = currentFilter.contoContrattuale.value.split(',');
-        }
-
-        this.allDataFiltered = this.allData.filter(function(item) {
-            
-            for (var key in currentFilter) {
-
-                const currentType = columnTypeMap.get(key);
-                var filterValue;
-                var tableValueToFilter;
-
-                switch (currentType) {
-                    case 'number':
-                        filterValue = parseFloat(currentFilter[key].value);
-                        tableValueToFilter = parseFloat(item[key]);
-                        break;
-                    case 'date':
-                        var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
-                        filterValue = date.getTime();
-
-                        var cDate = item[key].split('/');
-                        var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
-                        tableValueToFilter = cDate2.getTime();
-
-                        break;
-                    case 'text':
-                        filterValue = currentFilter[key].value;
-                        tableValueToFilter = item[key];
-                }
-
-                switch (currentFilter[key].operator) {
-                    case '='://uguale a
-                        if (tableValueToFilter != filterValue)
-                        return false;
-                        break;
-                    case '>'://maggiore di
-                        if (tableValueToFilter <= filterValue)
-                        return false;
-                        break;
-                    case 'in'://contiene caratteri
-                        if(!tableValueToFilter.includes(filterValue))
-                        return false;
-                        break;
-                    case 'on'://contiene valori
-                        if(!contoContrArray.includes(tableValueToFilter))
-                        return false;
-                }
-
-            }
-            return true;
-        });
-
-        if(this.allDataFiltered.length == 0){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Attenzione',
-                    message: 'Nessun record trovato',
-                    variant: 'warning'
-                }),
-            );
-            return;
-        }
-
-        this.firstLevel = this.allDataFiltered[0];
-        this.secondLevelList = this.allDataFiltered[0][this.detailTable];
-        if(this.amountField != null && this.amountField != ''){
-            this.allDataFiltered.forEach((element) => { this.totAmount +=  parseFloat(element[this.amountField]) });
-        }
-        var firstRowId = this.allDataFiltered[0][this.uniqueId];
-
-        if(this.allDataFiltered.length < this.perpage){
-            //we can use only accountData list
-            this.showPagination = false;
-            this.accountData = this.allDataFiltered;
-            this.allDataFiltered = [];
-        } else {
-            //we need to use allDataFiltered
-            this.filterPagination = true;
-            this.accountData = this.allDataFiltered.slice(0, this.perpage);
-            this.fromRec = 1;
-            this.toRec = this.perpage;
-            this.totRecs = this.allDataFiltered.length;
-            this.setPages(this.totRecs);
-        }
-
-        this.filterOn = true;
-        this.showFilterFirstLevel = false;
-        let element = this.template.querySelector('[data-id="' + firstRowId + '"]');
-        element.style.background = ' #ecebea';
-        
         try{
+
+            const columnTypeMap = new Map();
+            this.columns.forEach((col) => {
+                columnTypeMap.set(col.fieldName, col.detail.type);
+            });
+
+            var contoContrArray;
+            if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
+                contoContrArray = currentFilter.contoContrattuale.value.split(',');
+            }
+
+            this.allDataFiltered = this.allData.filter(function(item) {
+                
+                for (var key in currentFilter) {
+
+                    const currentType = columnTypeMap.get(key);
+                    var filterValue;
+                    var tableValueToFilter;
+
+                    if(item[key] === undefined || item[key] === ''){
+                        return false;
+                    }
+
+                    switch (currentType) {
+                        case 'number':
+                            filterValue = parseFloat(currentFilter[key].value);
+                            tableValueToFilter = parseFloat(item[key]);
+                            break;
+                        case 'date':
+                            var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
+                            filterValue = date.getTime();
+
+                            var cDate = item[key].split('/');
+                            var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
+                            tableValueToFilter = cDate2.getTime();
+
+                            break;
+                        case 'text':
+                            filterValue = currentFilter[key].value;
+                            tableValueToFilter = item[key];
+                    }
+
+                    switch (currentFilter[key].operator) {
+                        case '='://uguale a
+                            if (tableValueToFilter != filterValue)
+                            return false;
+                            break;
+                        case '>'://maggiore di
+                            if (tableValueToFilter <= filterValue)
+                            return false;
+                            break;
+                        case 'in'://contiene caratteri
+                            if(!tableValueToFilter.includes(filterValue))
+                            return false;
+                            break;
+                        case 'on'://contiene valori
+                            if(!contoContrArray.includes(tableValueToFilter))
+                            return false;
+                    }
+
+                }
+                return true;
+            });
+
+            if(this.allDataFiltered.length == 0){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Nessun record trovato',
+                        variant: 'warning'
+                    }),
+                );
+                return;
+            }
+
+            this.firstLevel = this.allDataFiltered[0];
+            this.secondLevelList = this.allDataFiltered[0][this.detailTable];
+            if(this.amountField != null && this.amountField != ''){
+                this.allDataFiltered.forEach((element) => { this.totAmount +=  parseFloat(element[this.amountField]) });
+            }
+            var firstRowId = this.allDataFiltered[0][this.uniqueId];
+
+            if(this.allDataFiltered.length < this.perpage){
+                //we can use only accountData list
+                this.showPagination = false;
+                this.accountData = this.allDataFiltered;
+                this.allDataFiltered = [];
+            } else {
+                //we need to use allDataFiltered
+                this.filterPagination = true;
+                this.accountData = this.allDataFiltered.slice(0, this.perpage);
+                this.fromRec = 1;
+                this.toRec = this.perpage;
+                this.totRecs = this.allDataFiltered.length;
+                this.setPages(this.totRecs);
+            }
+
+            this.filterOn = true;
+            this.showFilterFirstLevel = false;
+            let element = this.template.querySelector('[data-id="' + firstRowId + '"]');
+            element.style.background = ' #ecebea';
+        
             this.setButtonForFilterApplied(true);
         } catch (e){
-            console.log(e);
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack ); 
         }
 
     }
 
-    setButtonForFilterApplied(remove){
+    setButtonForFilterApplied(disable){
         this.template.querySelectorAll('button').forEach(c => {
-            if(c.name === 'interrogation' || c.name === 'joinFilter'){
-                if(remove){
-                    c.setAttribute('disabled', '');
+            //if(c.name === 'interrogation'){
+            //    if(disable){
+            //        c.setAttribute('disabled', '');
+            //    } else {
+            //        c.removeAttribute('disabled');
+            //    }
+            //}
+
+            if(c.name === 'refreshRecords'){
+                if(disable){
+                    c.removeAttribute('disabled'); 
                 } else {
-                    c.removeAttribute('disabled');
+                    c.setAttribute('disabled', '');
                 }
             }
+
         });
     }
 
@@ -1137,14 +1136,26 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
      
     }
 
-    //refreshSecondLevel(){
-    //    console.log('# refreshSecondLevel #');
-    //    var a = [];
-    //    this.secondLevelList.forEach((i) => {
-    //        a.push(i);
-    //    });
-    //    this.secondLevelList = a;
-    //}
+    refreshSecondLevelToChild(){
+        this.template.querySelector("c-hdt-account-statement-detail-viewer").removeFilterFromParent();
+    }
+
+    refreshSecondLevel(){
+        console.log('# refreshSecondLevel #');
+        try {
+            if(this.secondLevelList != undefined && this.secondLevelList.length > 0){
+                var a = [];
+                this.secondLevelList.forEach((i) => {
+                    a.push(i);
+                });
+                this.secondLevelList = a;
+            }
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
+        }
+    }
 
     modalResponse(event){
         if(event.detail.decision === 'conf'){
@@ -1156,24 +1167,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     printFile(){
         console.log('# printFile #');
 
-        this.spinnerObj.spinner = true;
-
-        var applySecondFilter = false;
-        var filterString = this.template.querySelector("c-hdt-account-statement-detail-viewer").filterString;
-        var currentFilter = {};
-
-        if(filterString != undefined && filterString != ''){
-            applySecondFilter = true;
-            var myObj = JSON.parse(filterString);
-
-            for (var key in myObj) {
-                if(myObj[key] != undefined && myObj[key] !=''){
-                    currentFilter[key] = myObj[key];
-                }
-            }
-
-        }        
-        
         var listToConsider;
         if(!this.filterOn){
             //Print all data -> allData if filterOn = false
@@ -1186,24 +1179,51 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             listToConsider = 'allDataFiltered';
         }
 
+        if(this.showSecondLevel){
+            var currentFilter = this.template.querySelector("c-hdt-account-statement-detail-viewer").staticObj;
+            var secondLevelColumns = this.template.querySelector("c-hdt-account-statement-detail-viewer").columns;
+            var isSecondLevelFiltered = this.template.querySelector("c-hdt-account-statement-detail-viewer").getIfSecondLevelIsFiltered();
+
+            const columnTypeMap = new Map();
+            secondLevelColumns.forEach((col) => {
+                columnTypeMap.set(col.fieldName, col.fieldType);
+            });
+
+            var contoContrArray;
+            if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
+                contoContrArray = currentFilter.contoContrattuale.value.split(',');
+            }
+        }
+
         this[listToConsider].forEach((r) => {
             //filter second level
-            if(applySecondFilter){
-                r[this.detailTable] = r[this.detailTable].filter(function(item) {
-                    for (var key in currentFilter) {
-                        if (item[key] === undefined || item[key] != currentFilter[key])
-                            return false;
-                    }
-                    return true;
-                });
+            if(this.showSecondLevel && isSecondLevelFiltered){
+                r[this.detailTable] = this.template.querySelector("c-hdt-account-statement-detail-viewer").getSecondLevelList(r[this.detailTable], currentFilter, columnTypeMap, contoContrArray);
             }
             listToPrint.push(r);
         });
 
-        this.sendToApex();
+        console.log('sorting documents...');
+        
+        listToPrint.sort(function (a, b) {
+            var dateParts = a.dataScadenza.split("/");
+            // month is 0-based, that's why we need dataParts[1] - 1
+            var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+            var datePartsb = b.dataScadenza.split("/");
+            // month is 0-based, that's why we need dataParts[1] - 1
+            var dateObjectb = new Date(+datePartsb[2], datePartsb[1] - 1, +datePartsb[0]);
+            return a.contoContrattuale.localeCompare(b.contoContrattuale) || dateObjectb - dateObject;
+        });
+
+        this.documents = JSON.stringify(listToPrint);
+        console.log('documents ' + this.documents);
+
+        this.showPrintModal = true;
+        //this.sendToApex();
         listToPrint.splice(0, listToPrint.length);
-        this.spinnerObj.spinner = false;
+        //this.spinnerObj.spinner = false;
         //this.closeMainSpinner();
+
     }
 
     sendToApex(){
@@ -1338,7 +1358,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             this.resetFile();
             this.resetIdList();
             this.refreshSortButton();
-
             this.backendCall(requestType, requestObj);// Chiamata in backend
         }
 
@@ -1352,6 +1371,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 but.classList.add('slds-button_brand');
             }            
         });
+        this.setButtonForFilterApplied(false);
     }
 
     setNewChoise(event){
@@ -1376,43 +1396,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             new ShowToastEvent({
                 title: 'Visualizza bolletta',
                 message: 'Questo servizio non è ancora disponibile',
-                variant: 'success',
+                variant: 'info',
                 mode: 'sticky'
             })
         );
     }
-
-
-    //ALL CLOSE MODAL LOGIC
-    /*
-    closeBillList(){
-        this.showBillList = false;
-    }
-
-    closeViewResult(){
-        this.showViewResult = false;
-    }
-
-    closeStatementFilters(){
-        this.showFilters = false;
-    }
-
-    closeModal() {
-        this.joinFilterModal = false;
-    }
-
-    closeFirstLevelFilter(event){
-        this.showFilterFirstLevel = false;
-    }
-
-    closeStatementFilters2(){
-        this.showFilters2 = false;
-    }
-
-    closestmtchoise(){
-        this.showAcctStmt = false;
-    }
-    */
    
     closeModalHandler(event){
         try{
@@ -1421,5 +1409,37 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             console.log('>>>>>> flop ');
         }        
     }
+
+    removeAllData(){
+        this.allData = [];
+        this.accountData = [];
+        console.log('# refreshSecondLevel #');
+        try {
+            if(this.secondLevelList != undefined && this.secondLevelList.length > 0){
+                var a = [];
+                this.secondLevelList = a;
+            }
+
+            this.totRecs = 0;
+            this.setPages(0);
+
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
+        }
+    }
+
+    showRate(event){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Attenzione',
+                message: 'Servizio in sviluppo',
+                variant: 'info'
+            })
+        );
+    }
+
+
 
 }

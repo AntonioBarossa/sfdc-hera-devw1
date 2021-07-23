@@ -23,7 +23,7 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
                 if (data != null) {
                     String tipoAttivita = (String) data.get('tipoAttivita');
-                    if (!tipoAttivita.equals('Pratica gestita')){ // ==> tipoAttivita = Errore cons. eBSM ==> riportiamo l'errore nell'activity.
+                    if (tipoAttivita != null && !tipoAttivita.equals('Pratica gestita')){ // ==> tipoAttivita = Errore cons. eBSM ==> riportiamo l'errore nell'activity.
                         System.debug('Creazione activity Errore Lavorazione SAP');
                         HDT_SRV_BpCaVariation.createActivity(recordId,(String)data.get('commenti'),'Errore Lavorazione SAP');
                         response.success = false;
@@ -49,13 +49,14 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
         caseToUpdate.SendDate__c = Date.today();
 
         if (response.success) {
-            caseToUpdate.Phase__c = 'Esito OK da SAP';
+            caseToUpdate.TecnicalPhase__c = 'Esito OK da SAP';
         } else {
-            caseToUpdate.Phase__c = 'Errore Lavorazione SAP';
+            caseToUpdate.TecnicalPhase__c = 'Errore Lavorazione SAP';
         }
 
-        String serializedCase = JSON.serialize(caseToUpdate);
-        updateFuture(serializedCase);
+        // String serializedCase = JSON.serialize(caseToUpdate);
+        // updateFuture(serializedCase);
+        HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
 
         return response;
     }

@@ -30,6 +30,7 @@
                                                 placeholder="Seleziona Marcatura" value={markingValue} onchange={handleCustomerChange} options={customerMarkingOptions}
                                                 required>
                                             </lightning-combobox>
+                                            <lightning-helptext content='Per completare il campo selezionare prima un valore per "Silos"'></lightning-helptext>
                                         </template>
                                     </div>
                                     <div class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
@@ -37,6 +38,7 @@
                                             <lightning-combobox data-id="category" name="category" label="Categoria" placeholder="Seleziona Categoria"
                                                 value={categoryValue} options={categoryOptions} required>
                                             </lightning-combobox>
+                                            <lightning-helptext content='Per completare il campo selezionare prima un valore per "Marcatura"'></lightning-helptext>
                                         </template>
                                     </div>
 
@@ -96,7 +98,7 @@
                                     <div class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
                                         <template if:true={companyOwnerOptions.data}>
                                             <lightning-combobox data-id="companyOwner" name="companyOwner" label="Silos" placeholder="Seleziona Società"
-                                                options={companyOwnerOptions.data.values} onchange={handleCompanyOwnerChange} required>
+                                                options={companyOwnerOptions.data.values} onchange={handleCompanyOwnerChange} disabled={showCompanyOwner} value={companyDefault} required>
                                             </lightning-combobox>
                                         </template>
                                     </div> 

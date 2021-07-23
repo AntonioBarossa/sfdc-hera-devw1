@@ -1,8 +1,13 @@
-global inherited sharing class HDT_UTL_ServiceCatalogProfileCriteria implements wrts_prcgvr.Interfaces_1_2.IApexCriteria {
+/**
+ * @author 'Lorenzo Gulotta' (lorenzo.gulotta@webresults.it)
+ * @description HDT_UTL_ServiceCatalogProfileCriteria - 
+ */
+
+ global inherited sharing class HDT_UTL_ServiceCatalogProfileCriteria implements wrts_prcgvr.Interfaces_1_2.IApexCriteria {
     HDT_QR_PermissionSet permQr = new HDT_QR_PermissionSet();
     global boolean evaluate(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
- 		Map<String,HDT_ServiceCatalogProfileFilter__mdt> listMet = HDT_ServiceCatalogProfileFilter__mdt.getAll();
+ 		//Map<String,HDT_ServiceCatalogProfileFilter__mdt> listMet = HDT_ServiceCatalogProfileFilter__mdt.getAll();
         String userId = userinfo.getUserId();
         String us= userinfo.getUserType();
         SObject action = (SObject) argsMap.get('action'); //phase transition detail
@@ -18,7 +23,9 @@ global inherited sharing class HDT_UTL_ServiceCatalogProfileCriteria implements 
             }
         }
         else{
-            HDT_ServiceCatalogProfileFilter__mdt permissionName = listMet.get(method);
+
+            res = FeatureManagement.checkPermission(method);
+            /*HDT_ServiceCatalogProfileFilter__mdt permissionName = listMet.get(method);
             System.debug('**********Permission:'+permissionName);
             
             if(permissionName != null){
@@ -30,7 +37,7 @@ global inherited sharing class HDT_UTL_ServiceCatalogProfileCriteria implements 
                         res = true;
                     }    
                 }
-            }
+            }*/
         }
         return res;
     }

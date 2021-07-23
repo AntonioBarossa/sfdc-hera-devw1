@@ -13,25 +13,36 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
     
     public override void beforeUpdate(){
         //Check Quotation Type && set technical phase
-
-        for(Case caseNew : (List<Case>) Trigger.new)
-        {
-            Case caseOld = (Case) Trigger.oldMap.get(caseNew.Id);
-            if(caseOld.Amount__c != null && caseNew.Amount__c != caseOld.Amount__c && caseOld.QuotationType__c == 'Rapido'){
-                caseNew.QuotationType__c = 'Predeterminabile';
-            }
-            if(caseNew.TecnicalPhase__c	!= null
-            && caseNew.TecnicalPhase__c  == caseOld.TecnicalPhase__c
-            /*&& caseNew.Phase__c.containsIgnoreCase('Comunicazione verso Heroku OK ')*/){
-                caseNew.Phase__c = caseNew.TecnicalPhase__c;
-                caseNew.TecnicalPhase__c = null;
-            }
+        try{
+            for(Case caseNew : (List<Case>) Trigger.new)
+            {
+                Case caseOld = (Case) Trigger.oldMap.get(caseNew.Id);
+                if(caseOld.Amount__c != null && caseNew.Amount__c != caseOld.Amount__c && caseOld.QuotationType__c == 'Rapido'){
+                    caseNew.QuotationType__c = 'Predeterminabile';
+                }
+                //Inserito questo controllo per gestire la casistica di un Preventivo Analitico che riceve più ammissibilità causa esecuzione lavori.
+                //pertanto se il Preventivo è Analitico, ho già ricevuto un ammissibilità OK e sto ricevendo un importo, non devo riclassificare.
+                if(String.isBlank(String.valueOf(caseOld.Amount__c)) && String.isNotBlank(String.valueOf(caseNew.Amount__c)) && caseOld.QuotationType__c != null && caseOld.QuotationType__c.equalsIgnoreCase('Analitico')
+                    && !(caseOld.PhaseStory__c != null && caseOld.PhaseStory__c.containsIgnoreCase('Ammissibilità OK'))){
+                        caseNew.QuotationType__c = 'Predeterminabile';
+                }
+                if(caseNew.TecnicalPhase__c	!= null && caseNew.TecnicalPhase__c  == caseOld.TecnicalPhase__c){
+                    caseNew.Phase__c = caseNew.TecnicalPhase__c;
+                    caseNew.TecnicalPhase__c = null;
+                }
+            }   
+        }catch(Exception ex){
+            System.debug('Error ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
         }
 
-        //Checks Phase Transition
-        ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
-                .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
+        HDT_UTL_CaseProcess.updateServiceRequest(trigger.new, trigger.old);
         
+        Boolean skipForCancellation = HDT_UTL_CaseProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
+        if(!skipForCancellation){
+        //Checks Phase Transition
+            ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
+                    .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
+        }
         //Checks Mandatory Activity
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
                 .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
@@ -49,8 +60,14 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
 
         HDT_UTL_CaseProcess.casePhaseManagementAfterUpdate(trigger.new,trigger.old);  
+
+        //***INIZIO SVILUPPO CAMPAGNE */
+        HDT_UTL_CaseProcess.updateMemberStatusforClosedCases(trigger.new, trigger.old); 
+        //**FINE SVILUPPO */
     }
 
+    //Andrei Necsulescu - 02/07/2021: Commented as it created an exception when importing more than a certain number of Cases at a time.
+    /*
     public override void afterInsert(){   
         wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt ObjectCompatibility =
             (wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt) wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
@@ -83,6 +100,7 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         String[] conflictsString = new List<String>(conflicts);
         return String.join(conflictsString, ', ');
     }
+    */
 
     /**
      * Ribalta i campi Canale/Gruppo/Postazione dall'utenza in contesto al Case.

@@ -38,7 +38,7 @@
     <customValue>
         <fullName>Sportello</fullName>
         <default>false</default>
-        <label>Sportello</label>
+        <label>Chiamata Sportello</label>
     </customValue>
     <customValue>
         <fullName>Segnalazioni VAS</fullName>
@@ -104,6 +104,16 @@
         <fullName>Lavorazione Reclamo Post Survey</fullName>
         <default>false</default>
         <label>Lavorazione Reclamo Post Survey</label>
+    </customValue>
+    <customValue>
+        <fullName>Quality Call</fullName>
+        <default>false</default>
+        <label>Quality Call</label>
+    </customValue>
+    <customValue>
+        <fullName>Comfort Call</fullName>
+        <default>false</default>
+        <label>Comfort Call</label>
     </customValue>
     <description>Tipi Attività.</description>
     <masterLabel>Tipo Attività</masterLabel>

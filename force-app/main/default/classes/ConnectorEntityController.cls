@@ -61,7 +61,7 @@ global with sharing class ConnectorEntityController {
 
 			result.put('activityId', activity.Id);
 			result.put('accountId', activity.Account__c);
-			result.put('contactId', activity.Id);
+			result.put('contactId', activity.Contact__c);
 			result.put('leadId', activity.Lead__c);
 		} catch (Exception e) {
 			return 'ERROR: ' + e.getMessage();
@@ -82,6 +82,7 @@ global with sharing class ConnectorEntityController {
 				ActivityEndTime__c = Datetime.now(),
 				CallEndTime__c = Datetime.now(),
 				CallDuration__c = (Decimal) message.get('Duration'),
+				RecordingLink__c = (String) attachdata.get('URLREC'),
 				WaitingTime__c = 0 // WIP
 			);
 

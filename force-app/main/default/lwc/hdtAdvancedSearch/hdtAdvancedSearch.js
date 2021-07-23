@@ -6,9 +6,12 @@ import getForniture from '@salesforce/apex/HDT_LC_AdvancedSearch.getForniture';
 import getCustomMetadata from '@salesforce/apex/HDT_QR_FiltriProcessi.getCustomMetadata';
 import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.callService';
 import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
+import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
+import permissionForFlagContract from '@salesforce/apex/HDT_LC_AdvancedSearch.permissionForFlagContract';
 
 
 export default class HdtAdvancedSearch extends LightningElement {
+    @api openCheckBox=false;
     @api sp;
     @api responseArriccData;
     @track filterInputWord = null;
@@ -40,6 +43,8 @@ export default class HdtAdvancedSearch extends LightningElement {
     @api outputContract=[];
     @api showbuttoncontract ;
     @api showbuttonforniture=false;
+    @api flagContratto=false;
+    @api isSuperUser=false;
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
         'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
@@ -48,6 +53,10 @@ export default class HdtAdvancedSearch extends LightningElement {
     @api isRicercainSAP=false;
 
     connectedCallback() {
+        permissionForFlagContract().then(data =>{
+            console.log('enter in permissionForFlagContract : ' + JSON.stringify(data));
+            this.openCheckBox= data;
+        });
         if(this.processtype === undefined || this.processtype === ''){
             console.log('processType non popolato');
             this.showbuttonforniture=true;
@@ -82,6 +91,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 {
                     TipoServizioSplit = data.TipoServizio__c.split(",");
                     console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
+                    this.submitFornitura();
                 }
                 
             }
@@ -129,12 +139,12 @@ export default class HdtAdvancedSearch extends LightningElement {
         console.log('enter in handleAdditionalFilter');
         console.log('processType******************'+JSON.stringify(processT));
 
-        if(processT ==='Voltura Tecnica'){
+       /* if(processT ==='Voltura Tecnica'){
             console.log('entra qui Modifica***************');
           
             this.submitFornitura();
-        }
-        else if(processT==='Annullamento contratti')
+        }*/
+        if(processT==='Annullamento contratti')
         {
             console.log('entra qui Cessazioni***************');
             this.submitContract();
@@ -182,6 +192,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     closeModal() {
+        this.confirmButtonDisabled=true;
         this.openmodel = false;
     }
 
@@ -370,10 +381,16 @@ export default class HdtAdvancedSearch extends LightningElement {
     submitSearch(event) {
         event.preventDefault();
         console.log('event value submitSearch() '+ event.target.value);
-
+        let isBlacklist=false;
         this.preloading = true;
         let qty = this.queryType;
-        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter}).then(data => {
+        isInBlacklist({pod:this.searchInputValue}).then(data =>{
+            console.log('isInBlacklist :  ' + JSON.stringify(data));
+            isBlacklist=data;
+        
+        if(isBlacklist == false){
+        console.log('isSuperUser : ' + JSON.stringify(this.isSuperUser));
+        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter,isSuperUser:this.isSuperUser}).then(data => {
             console.log('getServicePoint data *******'+ JSON.stringify(data));
             this.preloading = false;
             if (data.length > 0) {
@@ -398,7 +415,12 @@ export default class HdtAdvancedSearch extends LightningElement {
             }
             this.alert('',errorMsg,'error')
         });
-
+    }else{
+        this.preloading = false;
+        console.log('entra in else');
+        this.alert('Errore','Non è possibile procedere in quanto il POD/PD ricercato è presente in Black List','error');
+    }
+        });
  
 
     }
@@ -449,6 +471,19 @@ export default class HdtAdvancedSearch extends LightningElement {
 @api
     getTargetObject(targetObject){
         this.targetObject = targetObject;
+    }
+
+@api
+    handleCheckBoxChange(event){
+        console.log('event handleCheckBoxChange  :  ' + event.target.checked);
+
+        this.flagContratto = event.target.checked;
+        if(this.flagContratto==true){
+            this.isSuperUser=true;
+        }else{
+            this.isSuperUser=false;
+        }
+        console.log('isSuperUser handleCheckBoxChange  :  ' + this.isSuperUser);
     }
     
 

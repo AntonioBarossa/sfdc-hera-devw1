@@ -6,16 +6,16 @@
     <div class="slds-grid">
         <div class="slds-col slds-size_1-of-3">
             <lightning-combobox name="modalitaFirma" label="Modalità di firma" value={signMode} placeholder="Seleziona una Modalità" onchange={handleChangeSignMode}
-                options={modalitaFirma} read-only={enableEdit} data-id="modalitaFirma" required></lightning-combobox>
-            <lightning-input type="email" data-id="email" required={emailRequired} label="Indirizzo Email" value={email} disabled={enableEdit} pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"></lightning-input>
+                options={modalitaFirma} read-only={disableinput} data-id="modalitaFirma" required></lightning-combobox>
+            <lightning-input type="email" data-id="email" required={emailRequired} label="Indirizzo Email" value={email} disabled={disableinput} pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"></lightning-input>
         </div>
         <div class="slds-col slds-size_1-of-8 slds-grow-none">
         </div>
         <div class="slds-col slds-size_1-of-3">
             <lightning-combobox name="modalitaInvio" label="Modalità di invio documentazione" value={sendMode}
                 placeholder="Seleziona una Modalità" options={modalitaInvio} onchange={handleChange}
-                disabled={enableEdit} data-id="modalitaSpedizione" required></lightning-combobox>
-            <lightning-input type="tel" disabled={enableEdit} required={phoneRequired} label="Cellulare" data-id="telefono" name="phone3" value={phone} pattern="[0-9]{10}">
+                disabled={disableinput} data-id="modalitaSpedizione" required></lightning-combobox>
+            <lightning-input type="tel" disabled={disableinput} required={phoneRequired} label="Cellulare" data-id="telefono" name="phone3" value={phone} pattern="[0-9]{10}">
             </lightning-input>
 
         </div>
@@ -41,28 +41,31 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </template>
-    <div class="slds-grid">
-        <div class="slds-col slds-size_4-of-5">
-            <lightning-layout vertical-align="end">
-                <lightning-layout-item flexibility="auto">
-                    <lightning-input type="text" label="Indirizzo di recapito"
-                        value={address} data-id="indirizzoRecapito" disabled></lightning-input>
-                </lightning-layout-item>
+    <template if:true={showAddress}>
+        <div class="slds-grid">
+            <div class="slds-col slds-size_4-of-5">
+                <lightning-layout vertical-align="end">
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-input type="text" label="Indirizzo di recapito"
+                            value={address} data-id="indirizzoRecapito" disabled></lightning-input>
+                    </lightning-layout-item>
 
-                <lightning-layout-item>
-                    <lightning-button-icon icon-name="standard:address" variant="brand" class="slds-m-left_xx-small"
-                        data-id="indirizzoRecapito" disabled={enableEdit}  onclick={handleChangeAddress}></lightning-button-icon>
-                </lightning-layout-item>
-            </lightning-layout>
+                    <lightning-layout-item>
+                        <lightning-button-icon icon-name="standard:address" variant="brand" class="slds-m-left_xx-small"
+                            data-id="indirizzoRecapito" disabled={enableEdit}  onclick={handleChangeAddress}></lightning-button-icon>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
         </div>
-    </div>
+    </template>
+    <!--
     <div class="slds-m-top_medium slds-m-bottom_x-large">
-            <template if:true={enablePreview}>
+        <template if:true={enablePreview}>
                 <lightning-button label="Preview documentazione" title="Approve" icon-name="utility:download" accesskey="p" onclick={handlePreview}></lightning-button>
             </template>
 		<lightning-button-stateful class="slds-m-left_small" selected={buttonStatefulState} label-when-off="Conferma dati"
 			label-when-on="Dati confermati" label-when-hover="Modifica Dati" icon-name-when-off="utility:add"
 			icon-name-when-on="utility:check" icon-name-when-hover="utility:close" onclick={handleButtonStatefulClick}>
 		</lightning-button-stateful>
-	</div>
+	</div>-->
 </template>

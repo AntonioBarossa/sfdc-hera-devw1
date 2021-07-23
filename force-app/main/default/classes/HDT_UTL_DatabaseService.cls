@@ -1,4 +1,9 @@
-public with sharing class HDT_UTL_DatabaseService {
+/**
+ * @author 'Lorenzo Gulotta' (lorenzo.gulotta@webresults.it)
+ * @description HDT_UTL_DatabaseService - 
+ */
+
+ public with sharing class HDT_UTL_DatabaseService {
     
     private static final String MAXNUMBERRECORDSEXCEPTION = 'Puoi Passare Massimo 10000 Record in una singola azione di DML.';
     private static final String PERMISSIONEXCEPTION = 'Utente {0} non possiede i permessi per effettuare questa Specifica operazione sull oggetto {1}.';
@@ -11,7 +16,7 @@ public with sharing class HDT_UTL_DatabaseService {
         if (checkBeforeDml(sObjectList, DmlOperation.DML_INSERT)) {
             return false;
         }
-        List<Database.SaveResult> insertResult = Database.insert(sObjectList, true);
+        /*List<Database.SaveResult> insertResult =*/ Database.insert(sObjectList, true);
         return true;
     }
 
@@ -23,7 +28,7 @@ public with sharing class HDT_UTL_DatabaseService {
         if (checkBeforeDml(sObjectList, DmlOperation.DML_UPDATE)) {
             return false;
         }
-        List<Database.SaveResult> updateResult = Database.update(sObjectList, true);
+        /*List<Database.SaveResult> updateResult =*/ Database.update(sObjectList, true);
         return true;
     }
 
@@ -53,7 +58,7 @@ public with sharing class HDT_UTL_DatabaseService {
             return false;
         }
         Schema.SobjectField theField = Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap().get(fieldName);
-        List<Database.UpsertResult> upsertResult = Database.upsert(sObjectList,theField, true);
+        /*List<Database.UpsertResult> upsertResult =*/ Database.upsert(sObjectList,theField, true);
         return true;
     }
 
@@ -65,7 +70,7 @@ public with sharing class HDT_UTL_DatabaseService {
         if (checkBeforeDml(sObjectList, DmlOperation.DML_DELETE)) {
             return false;
         }
-        List<Database.DeleteResult> deleteResult = Database.delete(sObjectList, true);
+        /*List<Database.DeleteResult> deleteResult =*/ Database.delete(sObjectList, true);
         return true;
     }
 
@@ -73,7 +78,7 @@ public with sharing class HDT_UTL_DatabaseService {
         if (checkBeforeDml(sObjectIds, DmlOperation.DML_DELETE)) {
             return false;
         }
-        List<Database.DeleteResult> deleteResult = Database.delete(sObjectIds, true);
+        /*List<Database.DeleteResult> deleteResult =*/ Database.delete(sObjectIds, true);
         return true;
     }
 

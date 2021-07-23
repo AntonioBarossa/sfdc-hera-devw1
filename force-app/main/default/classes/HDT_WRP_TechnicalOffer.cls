@@ -46,6 +46,7 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
     public class HDT_WRP_TecnicalOfferObj {
         @auraEnabled public Boolean productCodeIsAlreadyPresent;
         @auraEnabled public String techOffIdToClone;
+        @auraEnabled public Boolean enableCreate;
         @auraEnabled public Boolean offerIsPresent;
         @auraEnabled public List<TechnicalOffer__c> tecnicalOffers;
     }
@@ -53,6 +54,8 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
     public class HDT_WRP_MatrixTable {
         @auraEnabled public Boolean success;
         @auraEnabled public String message;
+        @auraEnabled public String sapCode;
+        @auraEnabled public String sapErrorMessage;
         @auraEnabled public Boolean isEditable;
         @auraEnabled public List<HDT_WRP_MatrixSingleRow> rowList;
     }

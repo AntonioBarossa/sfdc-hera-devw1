@@ -1,7 +1,13 @@
 import { LightningElement, api, wire } from 'lwc';
 import getRateList from '@salesforce/apex/HDT_LC_OfferConfiguratorController.getRateList';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import offerSelection from '@salesforce/label/c.HDT_LWC_OfferSelectionLabel';
 
 export default class HdtTechnicalOfferSelection extends LightningElement {
+
+    label = {
+        offerSelection
+    };
 
     @api tiles;
     @api iconName;
@@ -75,8 +81,32 @@ export default class HdtTechnicalOfferSelection extends LightningElement {
 
     selectRate(event){
         console.log('### selectRate ###');
-        var dataset = event.currentTarget.dataset;
-        this.dispatchCustomEvent(dataset.id, dataset.name, dataset.temp, dataset.servProduct);
+
+        console.log('>>> ' + JSON.stringify(this.tiles.records));
+        console.log('>>> ' + JSON.stringify(event.currentTarget.dataset));
+
+        //[{"id":"a321x000000aPktAAE","name":"ProductTest [V1] [ELVND_FC01]","rateTemp":"ZELE_PREZZO","rateName":"ELVND_FC01"}]
+        //{"id":"a2j1x000004d8e1AAA","name":"ELVND_FC01","temp":"ZELE_PREZZO","servProduct":"ELE_PREZZO"}
+
+        var rateArray = [];
+
+        this.tiles.records.forEach(item => {
+            rateArray.push(item.rateName);
+        });
+
+        if(rateArray.includes(event.currentTarget.dataset.name)){
+            const evt = new ShowToastEvent({
+                title: 'ATTENZIONE',
+                message: 'Hai già creato un\'offerta con la category ' + event.currentTarget.dataset.name,
+                variant: 'warning'
+            });
+            this.dispatchEvent(evt);
+            return;
+        } else {
+            var dataset = event.currentTarget.dataset;
+            this.dispatchCustomEvent(dataset.id, dataset.name, dataset.temp, dataset.servProduct);
+        }
+
     }
 
     dispatchCustomEvent(selectedRateId, selectedRateName, selectedRateTemplate, selectedServProduct){

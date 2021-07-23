@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Operando__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup Gerarchica che associa un operando alle corrispettive posizioni</description>
+    <externalId>false</externalId>
+    <label>Operando</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>$Source.Type__c</field>
+            <operation>equals</operation>
+            <value>Posizione</value>
+        </filterItems>
+        <filterItems>
+            <field>Service26Config__c.Type__c</field>
+            <operation>equals</operation>
+            <value>Operando</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Service26Config__c</referenceTo>
+    <relationshipLabel>Servizio26 Configs</relationshipLabel>
+    <relationshipName>Service26Configs</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

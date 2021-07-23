@@ -1,4 +1,9 @@
-public with sharing class HDT_UTL_Individual {
+/**
+ * @author 'Sabina Levonja' (sabina.levonja@dunegroup.it)
+ * @description HDT_UTL_Individual - 
+ */
+
+ public with sharing class HDT_UTL_Individual {
    
     
     // public static Individual createIndividualContact (Id ContactId) {
@@ -20,7 +25,7 @@ public with sharing class HDT_UTL_Individual {
         List<Contact> contacts = contactQr.getRecordsById(contactIds);
         List<Individual> inds= new List<Individual>();
         List<Contact> updateContacts= new List<Contact>();
-        List<wrapContactIndi> listWrapInd = new List<wrapContactIndi>();
+        //List<wrapContactIndi> listWrapInd = new List<wrapContactIndi>();
         Map<String,Individual> mapCheck = new Map<String,individual>();
         for(Contact c: contacts){
             Individual individual =new Individual(LastName = c.LastName,FirstName = c.firstName);
@@ -34,6 +39,41 @@ public with sharing class HDT_UTL_Individual {
         for(Contact c :contacts){
             if(mapCheck.get(c.Id) != null){
                 c.IndividualId = mapCheck.get(c.Id).id;
+            }
+            /*for(Individual i: indv){
+                if(c.LastName== i.lastname && c.firstname == i.firstname){
+                    Contact contact=new Contact(Id=c.Id, IndividualId=i.Id);
+                    updateContacts.add(contact);
+                }
+            }*/
+        }
+        contactSrv.updateRecord(updateContacts);
+        return indv;
+    }
+    public static List<Individual> createIndividualContact (List<Contact> contactIds) {
+        HDT_SRV_Contact contactSrv= new HDT_SRV_Contact();
+        HDT_QR_Contact contactQr = new HDT_QR_Contact();
+        //List<Contact> contacts = contactQr.getRecordsById(contactIds);
+        List<Individual> inds= new List<Individual>();
+        List<Contact> updateContacts= new List<Contact>();
+        //List<wrapContactIndi> listWrapInd = new List<wrapContactIndi>();
+        Map<String,Individual> mapCheck = new Map<String,individual>();
+        for(Contact c: contactIds){
+            Individual individual =new Individual(LastName = c.LastName,FirstName = c.firstName,CompanyOwner__c = c.CompanyOwner__c);
+            inds.add(individual);
+            mapCheck.put(c.id,individual);
+            /*wrapContactIndi wr = new wrapContactIndi();
+            wr.c = c;
+            wr.i = individual;*/
+        }
+        List<Individual> indv= HDT_SRV_Individual.createRecord(mapCheck.values());
+        System.debug('********PREIndividual');
+        for(Contact c :contactIds){
+            System.debug('********IntoIndividual');
+            if(mapCheck.get(c.Id) != null){
+                System.debug('********Into2Individual:' + mapCheck.get(c.Id).id);
+                c.IndividualId = mapCheck.get(c.Id).id;
+                updateContacts.add(c);
             }
             /*for(Individual i: indv){
                 if(c.LastName== i.lastname && c.firstname == i.firstname){
@@ -88,6 +128,32 @@ public with sharing class HDT_UTL_Individual {
         return indv;
     }
 
+    public static List<Individual> createIndividualLead (List<Lead> leadIds) {
+        //HDT_QR_Lead leadQr = new HDT_QR_Lead();
+        //List<Lead> leads = leadQr.getRecordsById(leadIds);
+        List<Individual> inds= new List<Individual>();
+        List<Lead> updateLeads= new List<Lead>();
+        Map<String,Individual> mapCheck = new Map<String,individual>();
+
+        for(Lead l: leadIds){
+            Individual individual =new Individual(LastName = l.LastName,FirstName = l.firstName,companyOwner__c = l.companyOwner__c);
+            inds.add(individual);
+            mapCheck.put(l.id,individual);
+        }
+
+        List<Individual> indv= HDT_SRV_Individual.createRecord(inds);
+        
+        for(Lead l :leadIds){
+            if(mapCheck.get(l.Id) != null){
+                System.debug('********Into2Individual:' + mapCheck.get(l.Id).id);
+                l.IndividualId = mapCheck.get(l.Id).id;
+                updateLeads.add(l);
+            }
+        }
+        HDT_SRV_Lead.updateRecord(updateLeads);
+        return indv;
+    }
+
     public static void updatePrivacy(Map<String,object> indv){
         Individual ind= new Individual();
         for(String field: indv.keySet()){
@@ -104,7 +170,7 @@ public with sharing class HDT_UTL_Individual {
         
                 
         HDT_SRV_Individual.checkCreateAccess(indv);
-        Individual indvid= HDT_SRV_Individual.updateRecord(indv);
+        /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(indv);
 
     }
 
@@ -114,7 +180,7 @@ public with sharing class HDT_UTL_Individual {
         
 
         HDT_SRV_Individual.checkCreateAccess(indv);
-        Individual individ= HDT_SRV_Individual.updateRecord(indv);
+        /*Individual individ=*/ HDT_SRV_Individual.updateRecord(indv);
      }
 
      public static Individual modifyContentPrivacyMarketing(Individual indv,String VersioneInformativaMarketing,String FonteConsensoMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing ){

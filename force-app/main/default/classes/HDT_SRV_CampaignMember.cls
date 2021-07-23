@@ -50,4 +50,24 @@ public inherited sharing class HDT_SRV_CampaignMember {
 
         HDT_UTL_DatabaseService.updateSObject(cMember);
     }
+
+    public CampaignMember createRecord(CampaignMember cMember){
+        //List<String> fields = helperMethods.getObjAttrList(cMember);
+       // checkUpdateAccess(String.join(fields, ','));
+       CampaignMember c = cMember;
+       insert c;
+        return c;
+    }
+
+    
+
+    public void updateRecords(List<CampaignMember> cmembers){
+
+        for (CampaignMember cm : cmembers) {
+            List<String> fields = helperMethods.getObjAttrList(cm);
+            checkUpdateAccess(String.join(fields, ','));
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(cmembers);
+    }
 }

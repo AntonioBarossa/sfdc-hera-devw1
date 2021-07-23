@@ -60,17 +60,31 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
      */
     public SaleServiceItem__c createRecord(ServicePoint__c servicePoint, Sale__c sale, Map<String,String> extraParams){
 
+      
+
+
+
         //Get servicePoint data start
         servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
         servicePoint = existingServicePoint[0];
         //Get servicePoint data end
 
         //Get sale data start
         saleSrv.checkReadAccess('Account__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
-        Sale__c existingSale = saleQr.getRecordById(sale.id, 'Account__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
+        Sale__c existingSale = saleQr.getRecordById(sale.id, 'Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
         sale = existingSale;
         //Get sale data end
+        
+          /*** get Agency User and Code */
+        System.debug('******SalesAgent');
+          Map<String,String> agc = HDT_UTL_Sales.getAgentNameAndCode(servicePoint,sale.Account__r.CustomerMarking__c);
+          //String brand =  HDT_UTL_BrandSalesCompany.getFieldsMatrice(String comune,String servizio,String societaVendita,String tipoMercato);
+
+
+          /***end */
+  
+
 
         //Needed logic start
         Boolean allowChangeUse = false;
@@ -84,6 +98,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 allowChangeUse = true;
             }
         }
+
+        Boolean isTransition = HDT_UTL_Sales.isTransition(servicePoint, sale);
         //Needed logic end
 
         //Start userRoleProfile logic
@@ -136,6 +152,9 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         calculatedDecimalValues.put('consumptionRangeEle', consumptionRangeEle);
         calculatedDecimalValues.put('consumptionRangeGas', consumptionRangeGas);
         calculatedDecimalValues.put('powerFlow', powerFlow);
+        String brand =  HDT_UTL_BrandSalesCompany.getFieldsMatrice(Servicepoint.SupplyCity__c,Servicepoint.CommoditySector__c,agc.get('nomeAgente'),Servicepoint.MarketOrigin__c);
+        
+
 
         checkReadAccess('Opportunity__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.RecordType.Name,ServicePoint__r.RecordType.DeveloperName,ServicePoint__r.RecordType.MarketOrigin__c,Opportunity__r.Sale__c');
         List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(sale, servicePoint, calculatedStringValues, calculatedDecimalValues);
@@ -173,16 +192,20 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SBQQ__Opportunity2__c = newOpportunity.Id,
                 SBQQ__Account__c = sale.Account__c,
                 SBQQ__Primary__c = true,
-                Agency__c = sale.Agency__c,
+                Agency__c = sale.agency__c,
+                salesCompany__c = agc.get('nomeAgente'),
+                salesCompanyCode__c = agc.get('codiceAgente'),
                 Market__c = servicePoint.MarketOrigin__c,
                 Channel__c = sale.Channel__c,
                 FriendCode__c = sale.FriendCode__c,
                 CampaignCode__c = sale.CampaignCode__c,
                 CreatedBy__c = sale.CreatedBy__c,
-                SalesCompany__c = sale.SalesCompany__c,
+                //SalesCompany__c = sale.SalesCompany__c,
+                BrandLogo__c = brand,
                 Campaign__c = sale.Campaign__c,
                 SupplyCity__c = servicePoint.SupplySAPCityCode__c,
-                AmendmentAllowed__c = amendmentAllowed,
+                AmendmentAllowed__c = amendmentAllowed && !isTransition,
+                isTransition__c = isTransition,
                 ContractReference__c = contractReference,
                 AllowChangeUse__c = allowChangeUse,
                 UseCategory__c = servicePoint.UseCategory__c,
@@ -219,6 +242,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         return newSaleServiceItem;
     }
+
 
     public void updateRecords(List<SaleServiceItem__c> records){
         HDT_UTL_DatabaseService.updateSObject(records);

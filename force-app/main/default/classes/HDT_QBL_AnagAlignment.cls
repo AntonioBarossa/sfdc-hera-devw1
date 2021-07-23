@@ -15,7 +15,7 @@ public inherited sharing class HDT_QBL_AnagAlignment implements Queueable, Datab
         }
 
         Case anagAlignCase = anagAlignCases[0];
-        System.debug('HDT_QBL_AnagAlignment: arricchimento dati su Case: ' + anagAlignCase.Id);
+        System.debug('HDT_QBL_AnagAlignment: arricchimento dati...');
         try {
             String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(anagAlignCase.PODPDRFormula__c, anagAlignCase.ContractCode__c);
             HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, anagAlignCase);
@@ -34,10 +34,19 @@ public inherited sharing class HDT_QBL_AnagAlignment implements Queueable, Datab
             System.enqueueJob(new HDT_QBL_AnagAlignment(nextJobCases));
         }
 
-        // DML finale, va fatto dopo l'enqueuejob: https://medium.com/@CoachRWZ/salesforce-chaining-queueable-apex-callouts-53615b8dee92
-        // Innesco invio ad Heroku.
-        System.debug('HDT_QBL_AnagAlignment: predisposizione invio ad heroku per Case: ' + anagAlignCase.Id);
-        anagAlignCase.Phase__c = 'Da Inviare';
-        HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
+        // ProcessClick non fa partire i job per le callout da contesto trigger o batch,
+        // quindi demandiamo la callout heroku ad un platform event.
+        System.debug('HDT_QBL_AnagAlignment: predisposizione platform event...');
+        HDT_PEV_AnagAlignment__e event = new HDT_PEV_AnagAlignment__e();
+        event.SerializedCase__c = JSON.serialize(anagAlignCase);
+
+        Database.SaveResult sr = EventBus.publish(event);
+        if (sr.isSuccess()) {
+            System.debug('Successfully published event.');
+        } else {
+            for (Database.Error err : sr.getErrors()) {
+                System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@
         workspaceAPI.openTab({
             url: '/' + accountId
         }).then(function(response) {
-            var i = workspaceAPI.openSubtab({
+            workspaceAPI.openSubtab({
                 parentTabId: response,
                 pageReference: {
                     type: 'standard__component',
@@ -16,20 +16,23 @@
                         componentName: 'c__HDT_LCP_AcctStmtOpenLwc'
                     },
                     state: {
-                        c__recordid: accountId
+                        c__recordid: accountId,
+                        c__tab: 'EC'
                     }
                 }
-            });
+            }).then(function(subtabId) {
 
-            workspaceAPI.setTabLabel({
-                tabId: i,
-                label: 'Estratto conto'
+                workspaceAPI.setTabLabel({
+                    tabId: subtabId,
+                    label: 'Estratto conto'
+                });
+                workspaceAPI.setTabIcon({
+                    tabId: subtabId,
+                    icon: 'custom:custom83',
+                    iconAlt: 'Estratto conto'
+                });
+                $A.get("e.force:closeQuickAction").fire();
             });
-            workspaceAPI.setTabIcon({
-                tabId: i,
-                icon: 'custom:custom83'
-            });
-            $A.get("e.force:closeQuickAction").fire();
         })
         .catch(function(error) {
             console.log(error);

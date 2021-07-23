@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_AlertConfiguration</fullName>
+    <columns>NAME</columns>
+    <columns>AlertType__c</columns>
+    <columns>AlertRule__c</columns>
+    <columns>IsEmailChannelActive__c</columns>
+    <columns>IsPushChannelActive__c</columns>
+    <columns>IsSmsChannelActive__c</columns>
+    <columns>IsSolChannelActive__c</columns>
+    <columns>AccountCategory__c</columns>
+    <columns>BillSendingMethod__c</columns>
+    <columns>IsActive__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Regole Alert</label>
+</ListView>

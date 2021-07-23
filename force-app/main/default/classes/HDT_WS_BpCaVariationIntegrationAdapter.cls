@@ -6,6 +6,7 @@ public with sharing class HDT_WS_BpCaVariationIntegrationAdapter implements HDT_
          req.setEndpoint(inputParameters.namedCredential);
          req.setMethod('POST');
          req.setBody(inputParameters.requestBody);
+         req.setTimeout(120000);
          req.setHeader('Content-Type','application/json');
          Http http = new Http();
          HTTPResponse res = http.send(req);

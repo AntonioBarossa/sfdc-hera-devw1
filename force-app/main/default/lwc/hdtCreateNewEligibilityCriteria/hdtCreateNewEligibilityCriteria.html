@@ -1,10 +1,21 @@
 <template>
+ 
+    <template if:true={showError} >
+        <c-hdt-error-modal-message
+            header={errorHeader}
+            body-message={errorMessage}
+            header-class="slds-text-heading_large"
+            body-class="slds-text-heading_medium"
+            oncloseerrormodal={closeModal}
+        ></c-hdt-error-modal-message>
+    </template>
+ 
     <template if:true={showWelcom} >
         <c-hdt-welcome-mat-modal
             icon-name="standard:product_service_campaign"
-            main-title-label="Eleggibilità"
-            new-title-label="Crea dei criteri"
-            search-title-label="Cerca e copia un insieme di criteri"
+            main-title-label={label.mainTitle}
+            new-title-label={label.newTitleLabel}
+            search-title-label={label.searchTitleLabel}
             onclosemodal={closeModal}
             oncreatenew={createNew}
             onsearch={search}

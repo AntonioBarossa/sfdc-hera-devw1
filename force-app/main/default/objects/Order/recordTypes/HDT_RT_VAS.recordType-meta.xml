@@ -1844,6 +1844,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>LiftingPeople__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>MarketOrigin__c</picklist>
         <values>
             <fullName>Default</fullName>
@@ -1926,7 +1937,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Amm%2E Precheck OK SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1936,6 +1963,10 @@
         <values>
             <fullName>Bozza</fullName>
             <default>true</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
         </values>
         <values>
             <fullName>Completata</fullName>
@@ -2044,8 +2075,8 @@
     <picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
-            <fullName>To define</fullName>
-            <default>false</default>
+            <fullName>VAS</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -2224,6 +2255,10 @@
         <picklist>SalesCompany__c</picklist>
         <values>
             <fullName>Acegas Aps Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
         <values>

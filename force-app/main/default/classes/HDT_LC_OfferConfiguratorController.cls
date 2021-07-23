@@ -1,9 +1,9 @@
 public inherited sharing class HDT_LC_OfferConfiguratorController {
 
     @AuraEnabled
-    public static List<sObject> getTableData(String objectApiName, String rate, String searchByField, String searchValue){
+    public static List<sObject> getTableData(String objectApiName, String rate, String rateTypeValue, String searchByField, String searchValue){
         try{
-            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName, rate, searchByField, searchValue);
+            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName, rate, rateTypeValue, searchByField, searchValue);
         } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         } 
@@ -28,6 +28,23 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
             respObj.errorMessage = '';
             respObj.data = new HDT_WRP_TechnicalOffer.HDT_WRP_TecnicalOfferObj();
 
+            thisProduct = HDT_QR_TechnicalOffer.getProductById(thisProduct, productId);
+
+            if(String.isEmpty(thisProduct[0].Family) || !thisProduct[0].Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
+                respObj.success = false;
+                respObj.errorMessage = Label.HDT_OfferConfig_OfferType;
+                return respObj;
+            }
+
+            respObj.data.enableCreate = true;
+            if(String.isEmpty(thisProduct[0].Status__c) || !thisProduct[0].Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
+                respObj.data.enableCreate = false;
+            }
+
+            if(HDT_UTL_ProductStObjProcess.skipTrigger('HDT_ProductStObj')){
+                respObj.data.enableCreate = true;
+            }
+
             tecOffList = HDT_QR_TechnicalOffer.queryTechnicalOfferByProductId(productId, tecOffList);
 
             if(tecOffList != null && tecOffList.size() > 0){
@@ -43,11 +60,11 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                 respObj.data.tecnicalOffers = null;            
             }
 
-            thisProduct = HDT_QR_TechnicalOffer.getProductById(thisProduct, productId);
             prodList = HDT_QR_TechnicalOffer.getProduct2ByCode(prodList, thisProduct[0].ProductCode, productId);
 
             if(prodList.size() > 0 && prodList[0].Technical_Offer__r.size() > 0){
                 respObj.data.productCodeIsAlreadyPresent = true;
+                //respObj.data.techOffToClone = prodList[0].Technical_Offer__r[0];
                 respObj.data.techOffIdToClone = prodList[0].Technical_Offer__r[0].Id;
             } else {
                 respObj.data.productCodeIsAlreadyPresent = false;
@@ -125,22 +142,30 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
                 TechnicalOffer__c techOff;
                 techOff = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(techOff, technicalOfferId);
+                matrixTable.sapCode = techOff.SapCode__c;
+                matrixTable.sapErrorMessage = techOff.Message__c;
 
-                techOff = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(techOff, technicalOfferId);
-                
-                if(String.isEmpty(techOff.Product__r.Status__c) || techOff.Product__r.Status__c.equalsIgnoreCase('Vendibile')){
+                if(String.isEmpty(techOff.Product__r.Status__c) || !techOff.Product__r.Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
                     matrixTable.isEditable = false;
+                }
+
+                if(HDT_UTL_ProductStObjProcess.skipTrigger('HDT_ProductStObj')){
+                    matrixTable.isEditable = true;
                 }
 
                 Map<String, TechnicalOfferItem__c> itemsMap = new Map<String, TechnicalOfferItem__c>();
                 for(TechnicalOfferItem__c item : techOff.RigheOffertaTecnica__r){
-                    itemsMap.put(item.RowId__c, item);
+                    //itemsMap.put(item.RowId__c, item);
+                    itemsMap.put(item.Operand__c, item);
                 }
 
                 TechnicalOfferItem__c tempItem;
                 for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow setSingleRow : matrixTable.rowList){
-                    tempItem = itemsMap.get(setSingleRow.id);
-                    setSingleRow = HDT_LC_OfferConfiguratorCtrlHelper.convertObjectToWrapper(tempItem, setSingleRow);
+                    //tempItem = itemsMap.get(setSingleRow.id);
+                    if(itemsMap.containsKey(setSingleRow.tecName)){
+                        tempItem = itemsMap.get(setSingleRow.tecName);
+                        setSingleRow = HDT_LC_OfferConfiguratorCtrlHelper.convertObjectToWrapper(tempItem, setSingleRow);
+                    }
                 }    
 
             }
@@ -163,27 +188,17 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String techOffObj, String idToClone, String offerJson, String productId, String technicalofferid, String rate, Boolean sendToSap){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String techOffObj, String idToClone, String offerJson, String productId, String technicalofferid, String rate){
         
         System.debug('# saveNewOfferConfigured #');
         System.debug('# techOffObj > ' + techOffObj);
         System.debug('# idToClone > ' + idToClone);
         System.debug('# technicalofferid > ' + technicalofferid);
-        System.debug('# sendToSap > ' + sendToSap);
 
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
 
         try{
-
-            //List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList;
-            //offerList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(offerJson, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
             saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(saveResponse, techOffObj, idToClone, offerJson, technicalofferid, productId, rate);
-            HDT_LC_OfferConfiguratorCtrlHelper.updateProductAfterSap(technicalofferid, '', 'draft');
-            //if(saveResponse.success && sendToSap && !String.isEmpty(saveResponse.techOffId)){
-            //    System.debug('>>> sendToSap');
-            //    saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.sendTechOfferToSAP(saveResponse, saveResponse.techOffId);
-            //}
-
         } catch (Exception ex){
             throw new AuraHandledException(ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']');
         }

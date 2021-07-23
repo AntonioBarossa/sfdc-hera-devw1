@@ -1845,6 +1845,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>LiftingPeople__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>MarketOrigin__c</picklist>
         <values>
             <fullName>Default</fullName>
@@ -1927,6 +1938,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Amm%2E Precheck OK SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
@@ -1952,10 +1967,18 @@
         </values>
         <values>
             <fullName>Bozza</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1987,7 +2010,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Documentazione Validata</fullName>
+            <fullName>Dati Tecnici Ricevuti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2039,11 +2062,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In attesa validazione</fullName>
+            <fullName>In sequenzializzazione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>In sequenzializzazione</fullName>
+            <fullName>Inviare preventivo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2059,6 +2082,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pratica non gestita per il DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Preventivo Accettato</fullName>
             <default>false</default>
         </values>
@@ -2067,11 +2094,51 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Registrazione  da validare</fullName>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Preventivo extra sistema</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Richiesta preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2101,7 +2168,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambio Offerta</fullName>
+            <fullName>Cambio Offerta Ele</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2126,10 +2193,6 @@
         </values>
         <values>
             <fullName>Prima Attivazione con modifica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Riattivazione non morose</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2167,6 +2230,10 @@
         <values>
             <fullName>Switch in con voltura tecnica</fullName>
             <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporanea - Nuova Attivazione</fullName>
+            <default>true</default>
         </values>
         <values>
             <fullName>To define</fullName>
@@ -2353,6 +2420,10 @@
         <picklist>SalesCompany__c</picklist>
         <values>
             <fullName>Acegas Aps Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
         <values>

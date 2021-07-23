@@ -1,3 +1,9 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 14/01/2021
+ * @description HDT_QR_Contact.cls
+ * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
+ */
 public inherited sharing class HDT_QR_Contact {
     
     public Contact getRecordById(String id) {
@@ -30,7 +36,7 @@ public inherited sharing class HDT_QR_Contact {
 
     public List<Contact> getRecordsById(List<String> ids) {
 
-        String query = 'SELECT Firstname, accountId, LastName, IndividualId,Company__c  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
+        String query = 'SELECT Firstname, accountId, LastName, IndividualId,Company__c,CompanyOwner__c  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
         List<Contact> contacts = Database.query(query);
         return contacts;
     }
@@ -70,6 +76,17 @@ public inherited sharing class HDT_QR_Contact {
         ];
     }
 
+    public Contact getContactsByIndividual(String individualId){
+        return [
+            SELECT
+            Id,
+            Email
+            FROM Contact
+            WHERE IndividualId = :individualId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     public List<String> getContactsIdByAccountId(String accountId) {
         List <AccountContactRelation> accountContact = [
             SELECT ContactId from AccountContactRelation 
@@ -83,6 +100,10 @@ public inherited sharing class HDT_QR_Contact {
         }
         return res;
     }
+    
+    public List<Contact> getContactsIdByAccountIdList(List<String> accountIds) {
+        return [Select id,accountId,firstname,lastname,FiscalCode__c,Phone,MobilePhone,Email,Individual.ProfilingCompanyConsent__c from Contact where AccountId IN : accountIds];
+    }
 
     // INIZIO SVILUPPI EVERIS
 
@@ -93,6 +114,7 @@ public inherited sharing class HDT_QR_Contact {
             Name,
             Email,
             Phone,
+            ContactCode__c,
             MobilePhone,
             IndividualId,
             Fax,

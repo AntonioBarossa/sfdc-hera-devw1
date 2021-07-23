@@ -2,10 +2,16 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
     
    public override void beforeInsert(){
         HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
+        createKpiExtension();
     }
 
     protected override void beforeUpdate() {
         checkAccountName();
+        createKpiExtension();
+    }
+
+    public override void afterUpdate(){
+        manageAccountPartnerQueues();
     }
 
     /**
@@ -29,7 +35,39 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
                 acc.addError('Il Nome del Cliente deve essere equivalente a \'Nome Cognome\' per clienti Residenziali o \'Cognome/Ragione sociale\' per clienti Aziende.');
             }
         }
-
     }
 
+    private void createKpiExtension(){
+        if(Trigger.isInsert){
+            HDT_UTL_KpiTracking.createKpiTracking(Trigger.new, null);
+        }else if(Trigger.isUpdate){
+            HDT_UTL_KpiTracking.createKpiTracking(Trigger.new, Trigger.oldMap);
+        }else if(Trigger.isDelete){
+            HDT_UTL_KpiTracking.deleteKpiTracking(Trigger.old);
+        }
+    }
+
+    private void manageAccountPartnerQueues(){
+        List<Account> newAcc= Trigger.new;
+        List<Account> oldAcc= Trigger.old;
+        Map<String,Account> mapAccount = new Map<String,Account>();
+        for(Account ac: oldAcc){
+            mapAccount.put(ac.Id, ac);
+        }
+        List<Account> accts= new List<Account>();
+        for (Account acc : newAcc) {
+            Account oldAccount= mapAccount.get(acc.Id);
+            if(acc.isPartner== true && oldAccount.Published__c== false && acc.Published__c == true){
+                accts.add(acc);
+                
+            }
+        }
+        if(!accts.isEmpty()){
+            Datetime dt= Datetime.now().addMinutes(2);
+            String cron = dt.second() + ' ' + dt.minute() + ' ' + dt.hour() + ' * * ?';
+
+            HDT_SCH_QueueAssignmentScheduler s = new HDT_SCH_QueueAssignmentScheduler(accts); 
+            System.schedule('PartnerQueues ' + String.valueOf(Datetime.now()), cron, s);
+        }
+    }
 }

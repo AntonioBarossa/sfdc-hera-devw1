@@ -4,6 +4,7 @@
     <standardValue>
         <fullName>Account/Billing Profile - errata categoria</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Account/Billing Profile - errata categoria</label>
     </standardValue>
     <standardValue>
@@ -59,6 +60,7 @@
     <standardValue>
         <fullName>Cambio cont. non registrato</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Cambio cont. non registrato</label>
     </standardValue>
     <standardValue>
@@ -164,6 +166,7 @@
     <standardValue>
         <fullName>Fiscale  - IVA Esenzione/Revoca</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Fiscale  - IVA Esenzione/Revoca</label>
     </standardValue>
     <standardValue>
@@ -219,6 +222,7 @@
     <standardValue>
         <fullName>Mod. Imp. - Em. Imp. - Var. Portata</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Mod. Imp. - Em. Imp. - Var. Portata</label>
     </standardValue>
     <standardValue>
@@ -319,11 +323,13 @@
     <standardValue>
         <fullName>Rettifica Consumi - Errore di Lettura</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Rettifica Consumi - Errore di Lettura</label>
     </standardValue>
     <standardValue>
         <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Rettifica Consumi - Errore Stima Consumi</label>
     </standardValue>
     <standardValue>
@@ -380,6 +386,11 @@
         <fullName>Risoluzione No Punto Sospeso</fullName>
         <default>false</default>
         <label>Risoluzione No Punto Sospeso</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Risoluzione No Sospensione</fullName>
+        <default>false</default>
+        <label>Risoluzione No Sospensione</label>
     </standardValue>
     <standardValue>
         <fullName>Risoluzione Punto Sospeso</fullName>
@@ -499,6 +510,7 @@
     <standardValue>
         <fullName>Variazione Tensione - Pressione</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Variazione Tensione - Pressione</label>
     </standardValue>
     <standardValue>
@@ -625,5 +637,35 @@
         <fullName>Variazione Portata</fullName>
         <default>false</default>
         <label>Variazione Portata</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contratti/Bonus Commerciale</fullName>
+        <default>false</default>
+        <label>Contratti/Bonus Commerciale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Riattivazione Non Morose</fullName>
+        <default>false</default>
+        <label>Riattivazione Non Morose</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VOTIVE Modena/Intervento Riattivazione luce</fullName>
+        <default>false</default>
+        <label>VOTIVE Modena/Intervento Riattivazione luce</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VOTIVE Modena/Nuovo contratto</fullName>
+        <default>false</default>
+        <label>VOTIVE Modena/Nuovo contratto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VOTIVE Modena/Subentro</fullName>
+        <default>false</default>
+        <label>VOTIVE Modena/Subentro</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Indennizzo</fullName>
+        <default>false</default>
+        <label>Indennizzo</label>
     </standardValue>
 </StandardValueSet>

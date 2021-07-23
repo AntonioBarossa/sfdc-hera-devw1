@@ -1,47 +1,59 @@
-import { LightningElement, api} from 'lwc';
+import { LightningElement, api, track} from 'lwc';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import endDateError from '@salesforce/label/c.HDT_LWC_OfferEditForm_EndDateError';
+import numberTimeError from '@salesforce/label/c.HDT_LWC_OfferEditForm_NumberTimeError';
+import numberDaysMonthsYearsError from '@salesforce/label/c.HDT_LWC_OfferEditForm_NumberDaysMonthsYearsError';
+import numberOfTimeUnitsError from '@salesforce/label/c.HDT_LWC_OfferEditForm_NumberOfTimeUnitsError';
+import allFieldRequired from '@salesforce/label/c.HDT_LWC_OfferEditForm_AllFieldRequired';
 
 export default class HdtTechnicalOfferEditForm extends LightningElement {
 
+    label = {
+        endDateError,
+        numberTimeError,
+        numberDaysMonthsYearsError,
+        numberOfTimeUnitsError,
+        allFieldRequired
+    };
+
     @api productId;
     @api rateObj;
-    technicalOfferId = '';
-    techOffId;
     fieldsList = [
-        'Market__c',
-        'ProcessType__c',
-        'PlacetOffer__c',
-        //'ServiceProduct__c',
-        'StartDate__c',
-        'EndDate__c',
-        'StepAllowed__c',
-        'ContractId__c',
-        'NumberTimeExtension__c',
-        'UnitTimeExtension__c',
-        'CancellationAllowed__c',
-        'NumberDaysMonthsYears__c',
-        'UnitTerminationTime__c',
-        'RecessAdmitted__c',
-        'NumberOfTimeUnits__c',
-        'UnitOfTimeMeasurement__c',
-        'AdmittingProfileModification__c',
-        'OfferToBeModified__c'
+        {fieldName: 'Market__c', required: true},
+        {fieldName: 'ProcessType__c', required: false},
+        {fieldName: 'PlacetOffer__c', required: false},
+        //{fieldName: 'ServiceProduct__c', required: true},
+        {fieldName: 'StartDate__c', required: true},
+        {fieldName: 'EndDate__c', required: true},
+        {fieldName: 'StepAllowed__c', required: true},
+        {fieldName: 'ContractId__c', required: true},
+        {fieldName: 'NumberTimeExtension__c', required: true},
+        {fieldName: 'UnitTimeExtension__c', required: true},
+        {fieldName: 'NumberDaysMonthsYears__c', required: true},
+        {fieldName: 'UnitTerminationTime__c', required: true},
+        {fieldName: 'CancellationAllowed__c', required: true},
+        {fieldName: 'RecessAdmitted__c', required: true},
+        {fieldName: 'NumberOfTimeUnits__c', required: true},
+        {fieldName: 'UnitOfTimeMeasurement__c', required: true},
+        {fieldName: 'AdmittingProfileModification__c', required: false},
+        {fieldName: 'OfferToBeModified__c', required: false}
     ];
 
+    @api mode;
+    @api technicalOfferId;
+    @api hidden;
+
+    @api handleValueChange() {
+        console.log('>>> handleValueChange');
+        if(this.hidden === 'slds-show'){
+            this.hidden='slds-hide';
+        } else {
+            this.hidden = 'slds-show';
+        }
+    }
+
     connectedCallback(){
-        
-        if(this.rateObj.rateName!=null && this.rateObj.rateName != undefined){
-            console.log('>>> rate: ' + this.rateObj.rateName);
-        }
-
-        if(this.rateObj.rateTemplate!=null && this.rateObj.rateTemplate != undefined){
-            console.log('>>> template: ' + this.rateObj.rateTemplate);
-        }
-
-        if(this.rateObj.servProduct!=null && this.rateObj.servProduct != undefined){
-            console.log('>>> servProduct: ' + this.rateObj.servProduct);
-        }
-
+        console.log('>>> connectedCallback HdtTechnicalOfferEditForm');
     }
 
     handleLoad(event){
@@ -50,12 +62,6 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
 
     handleSuccess(event) {
         console.log('>>>> handleSuccess ' + event.detail.id);
-
-        const newOffer = new CustomEvent('newoffercreated', {
-            detail: {newTechOfferId: event.detail.id}
-        });
-        // Fire the custom event
-        this.dispatchEvent(newOffer);
     }
 
     handleError(event){
@@ -66,35 +72,31 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
 
     handleSubmit(event){
         console.log('>>>> handleSubmit ');
+        event.preventDefault();
     }
 
     saveAction(){
         console.log('>>>> saveAction ');
         var techOffObj = {};
-        //const fields = this.template.querySelectorAll('lightning-input-field');
-        //this.template.querySelector('lightning-record-edit-form').submit(fields);
+
         this.template.querySelectorAll('lightning-input-field').forEach((field) => {
             techOffObj[field.fieldName] = field.value;
         });
 
-        if(this.rateObj.servProduct!=null && this.rateObj.servProduct != undefined){
-            techOffObj.ServiceProduct__c = this.rateObj.servProduct;
-        }
-
-        var respCheck = this.checkValue(techOffObj);
-        console.log('#### ' + respCheck.success);
-
-        if(!respCheck.success){
+        var responseObj = this.checkValue(techOffObj);
+        if(!responseObj.success){
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Attenzione',
-                    message: respCheck.message,
-                    variant: 'warning'
+                    message: responseObj.message,
+                    variant: 'warning',
+                    mode: 'sticky'
                 })
             );
             return;
         }
 
+        this.hidden = 'slds-hide';
 
         const newOffer = new CustomEvent('newoffercreated', {
             detail: {newTechOfferObj: JSON.stringify(techOffObj)}
@@ -105,7 +107,15 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
     }
 
     closeModal(event){
-        const closemodal = new CustomEvent('closemodal', {
+        var closeMode = '';
+
+        if(this.mode === 'edit'){
+            closeMode = 'closeedit';
+        } else if(this.mode === 'insert'){
+            closeMode = 'closemodal';
+        }
+
+        const closemodal = new CustomEvent(closeMode, {
             detail: ''
         });
         // Fire the custom event
@@ -121,19 +131,56 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         };
 
         if(this.checkIsNotNull(techOffObj.StartDate__c) && this.checkIsNotNull(techOffObj.EndDate__c)){
-           
             var start = new Date(techOffObj.StartDate__c);
             var end = new Date(techOffObj.EndDate__c);
-
             if(start >= end){
-                returnObj.message = 'Data fine inferiore dello start';
+                returnObj.message = this.label.endDateError;
                 return returnObj;
             }
-
-            returnObj.success = true;
-            return returnObj;
-
+            //returnObj.success = true;
+            //return returnObj;
         }
+
+        if(this.checkIsNotNull(techOffObj.NumberTimeExtension__c)){
+            let isnum = /^\d+$/.test(techOffObj.NumberTimeExtension__c);
+            if(!isnum){
+                returnObj.message = this.label.numberTimeError;
+                return returnObj;
+            }
+        }
+
+        if(this.checkIsNotNull(techOffObj.NumberDaysMonthsYears__c)){
+            let isnum = /^\d+$/.test(techOffObj.NumberDaysMonthsYears__c);
+            if(!isnum){
+                returnObj.message = this.label.numberDaysMonthsYearsError;
+                return returnObj;
+            }
+        }
+
+        if(this.checkIsNotNull(techOffObj.NumberOfTimeUnits__c)){
+            let isnum = /^\d+$/.test(techOffObj.NumberOfTimeUnits__c);
+            if(!isnum){
+                returnObj.message = this.label.numberOfTimeUnitsError;
+                return returnObj;             
+            }
+        }
+
+        for(var i in techOffObj){
+            //console.log('> > > > ' + i + ' - ' + techOffObj[i]);
+            let foundField = this.fieldsList.find(field  => field.fieldName === i);
+            //console.log('>>>> ' + JSON.stringify(foundField));
+            if(!this.checkIsNotNull(techOffObj[i]) && foundField.required){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: this.label.allFieldRequired,
+                        variant: 'warning',
+                        mode: 'sticky'
+                    })
+                );
+            }
+        }
+
 
         returnObj.success = true;
         return returnObj;
