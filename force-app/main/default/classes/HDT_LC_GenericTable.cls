@@ -5,13 +5,14 @@ public inherited sharing class HDT_LC_GenericTable {
     @AuraEnabled
     public static string getData(String inputs, String tableName, String searchKey, String searchTerm){
         
-        //Conviene fare una SOSL dato che in generale si avranno record diversi
-        //La SOSL va fatta con un testo chiave sicuramente comune a tutti (ad esempio AccountId)
-        
         //VariableDeclaration
         HDT_QR_GenericTable tableQr = new HDT_QR_GenericTable();
 
+        List<HDT_WRP_Columns> columns = new List<HDT_WRP_Columns>();
+
         HDT_WRP_Mapping mappings = new HDT_WRP_Mapping();
+        HDT_WRP_Columns column = new HDT_WRP_Columns();
+
         HDT_GenericTable__mdt tableConfig = new HDT_GenericTable__mdt();
 
         rowData = new List<List<SObject>>();
@@ -21,15 +22,12 @@ public inherited sharing class HDT_LC_GenericTable {
 
         Integer count = 0;
         Integer fieldCount = 0;
-        
 
-        //wrap inputs in wrapper Obj
-
-        //HDT_WRP_Columns columns = (HDT_WRP_Columns) JSON.deserialize(inputs, HDT_WRP_Columns.class);
-
+        //Actions
         tableConfig = tableQr.getTableConfiguration(tableName);
         mappings = (HDT_WRP_Mapping) JSON.deserialize(tableConfig.Mapping__c, HDT_WRP_Mapping.class);
 
+        /*Create Queries */
         for(HDT_WRP_Object singleObj : mappings.objects){
             String query = 'Select ';
             fieldCount = 0;
@@ -50,15 +48,29 @@ public inherited sharing class HDT_LC_GenericTable {
             queryList.add(query);
             objList.add(singleObj.obj);
         }
+        /*Execute Recursive Queries */
         System.debug('QueryList-> ' +queryList);
         System.debug('ObjList -> ' +objList);
         doRecursion(queryList, objList);
         System.debug('Data -> ' + rowData);
-        /*try {
-            
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }*/
+        /*Create Column Obj*/
+        for(List<SObject> sObjList : rowData){
+            if(sObjList != null){
+                Map<String, Object> objMap = sObjList[0].getSObjectType().getDescribe().fields.getMap();
+                Map<String, Object> singleObjMap = (Map<String, Object>) JSON.deserializeUntyped(JSON.serialize(sObjList[0]));
+                for(String key : singleObjMap.keySet()){
+                    Schema.sObjectField fieldObj= (Schema.sObjectField) objMap.get(key);
+                    if(fieldObj != null){
+                        Schema.DescribeFieldResult fieldRes = fieldObj.getDescribe();
+                        System.debug('Label: ' + fieldRes.getLabel());
+                        System.debug('Value: ' + singleObjMap.get(key));
+                        System.debug('Type: '  + String.valueOf(fieldRes.getType()));
+                        //Customizations
+                    }
+                } 
+            }
+        }
+
         return 'Ok';
     }
 
@@ -80,11 +92,11 @@ public inherited sharing class HDT_LC_GenericTable {
         }
     }
 
-    /*public class HDT_WRP_Columns{
+    public class HDT_WRP_Columns{
         public String label;
         public String name;
         public String type;
-    }*/
+    }
     public class HDT_WRP_Mapping{
         List<HDT_WRP_Object> objects;
     }
@@ -94,9 +106,11 @@ public inherited sharing class HDT_LC_GenericTable {
         public String whereCond;
     }
     public class HDT_WRP_Fields{
-        public String columnName;
         public String apiName;
     }
-
+    public class HDT_WRP_Ouput{
+        List<HDT_WRP_Columns> columns;
+        List<List<SObject>> rowData;
+    }
 
 }
