@@ -2555,11 +2555,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AssignmentRule__c.CreatorAgency__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>AssignmentRule__c.Commodity__c</field>
         <readable>true</readable>
     </fieldPermissions>	
@@ -2571,6 +2566,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AssignmentRule__c.ClientMarking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AssignmentRule__c.CreatorAgency__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24816,6 +24816,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>User.Station__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.UserCompany__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

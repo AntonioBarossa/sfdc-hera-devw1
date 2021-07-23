@@ -2618,7 +2618,7 @@
         <field>AssignmentRule__c.SAPStep__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+	<fieldPermissions>
         <editable>true</editable>
         <field>AssignmentRule__c.SalesAgency__c</field>
         <readable>true</readable>
@@ -24816,6 +24816,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>User.Station__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.UserCompany__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

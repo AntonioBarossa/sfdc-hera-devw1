@@ -2601,6 +2601,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AssignmentRule__c.OfferType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AssignmentRule__c.Priority__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2611,12 +2616,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AssignmentRule__c.QueueSize__c</field>
+        <field>AssignmentRule__c.QuoteType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AssignmentRule__c.QuoteType__c</field>
+        <field>AssignmentRule__c.SAPStep__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -27972,11 +27977,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.PraxidiaPostWorkOutcome__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.Priority__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
