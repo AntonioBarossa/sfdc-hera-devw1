@@ -1,80 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Contact.HDT_VisitD2D</members>
-        <members>Lead.HDT_RecallMe</members>
-        <members>Lead.HDT_VisitD2D</members>
+        <members>wrts_prcgvr__Activity__c.HDT_EsitoQualityComfortCall</members>
         <name>QuickAction</name>
     </types>
     <types>
-        <members>Contact_Record_Page</members>
-        <members>HDT_KnowledgeGeneralPage</members>
-        <members>HDT_Order_Default</members>
-        <members>HDT_Order_Volture_Page</members>
-        <name>FlexiPage</name>
-    </types>
-    <types>
-        <members>BlackList__c</members>
-        <members>BrandSalesCompany__c</members>
-        <members>HDT_Dependant_Picklist_VAS__mdt</members>
-        <members>PercentageRulesForAssigningVisits__c</members>
-        <members>VisitAssignmentRules__c</members>
-        <name>CustomObject</name>
-    </types>
-    <types>
-        <members>HDT_ActivityType</members>
-        <members>HDT_OrderProcess</members>
-        <members>HDT_ProcessType</members>
-        <name>GlobalValueSet</name>
-    </types>
-    <types>
-        <members>hdtCtToolbarContainer</members>
-        <members>hdtDocumentSignatureManager</members>
-        <members>hdtDocumentalPhaseHistory</members>
-        <members>hdtDocumentalSignatureManagerOrderDossier</members>
-        <members>hdtFormAccountBusiness</members>
-        <members>hdtFormAccountResidenziale</members>
-        <members>hdtRecallMeCreateForm</members>
-        <members>hdtRecordEditFormFlow</members>
-        <members>hdtRequestVisitD2DContact</members>
-        <members>hdtRequestVisitD2DLead</members>
-        <members>hdtSaleServiceContainer</members>
-        <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>Admin</members>
-        <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
-        <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
-        <name>Profile</name>
-    </types>
-    <types>
-        <members>HDT_FL_GestionePreventivi</members>
-        <members>HDT_FL_SegnalazioniVAS</members>
-        <members>HDT_FL_UserLoginFlow</members>
-        <name>Flow</name>
-    </types>
-    <types>
-        <members>Account.CheckBusinessFields</members>
-        <members>Account.CheckResidenzialeFields</members>
-        <members>SurveyCRM__c.ElencoRisposta_NonValorizzato</members>
-        <members>SurveyCRM__c.ElencoRisposta_Valorizzato</members>
-        <name>ValidationRule</name>
-    </types>
-    <types>
-        <members>BlackList__c.All</members>
-        <members>VisitAssignmentRules__c.All</members>
-        <name>ListView</name>
-    </types>
-    <types>
-        <members>BlackList__c.HDT_RT_BlacklistEmail</members>
-        <members>BlackList__c.HDT_RT_BlacklistPod</members>
-        <members>Case.HDT_RT_Indennizzo</members>
         <members>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</members>
         <members>wrts_prcgvr__Activity__c.HDT_RT_Call</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_ComfortQualityCall</members>
         <members>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</members>
         <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
         <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</members>
@@ -89,313 +22,151 @@
         <name>RecordType</name>
     </types>
     <types>
-        <members>Case-HDT_CanoneRai</members>
+        <members>BlackList__c</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>Account-Account Layout</members>
+        <members>Case-Case Layout</members>
+        <members>Case-HDT_AlertDisassociazioneUtenteWeb</members>
+        <members>Case-HDT_AllineamentoAnagrafica</members>
+        <members>Case-HDT_Annullamento</members>
+        <members>Case-HDT_Autolettura</members>
+        <members>Case-HDT_GestioneBolletta</members>
+        <members>Case-HDT_GestioneBonusSociale</members>
+        <members>Case-HDT_GestionePrivacy</members>
+        <members>Case-HDT_InversioneContatore</members>
+        <members>Case-HDT_SospensioneRiattivazione</members>
+        <members>Case-HDT_UnificazioneSeparazioneCABolletta</members>
+        <members>Case-HDT_VariazioneAmministratore</members>
+        <members>Case-HDT_VerificaTitolaritaPodPdr</members>
         <members>Contact-Contact Layout</members>
-        <members>DocumentSendTracking__c-Comunicazione Documentale Layout</members>
-        <members>Knowledge__kav-HDT_NewsScrittore</members>
+        <members>Global-Global Layout</members>
+        <members>Lead-Acquisizione Lead Layout</members>
         <members>Lead-Lead Layout</members>
+        <members>Opportunity-Opportunity Layout</members>
         <members>Order-Dossier</members>
-        <members>Order-Prima attivazione con modifica</members>
-        <members>Order-Prima attivazione</members>
-        <members>Order-Sconti o Bonus VAS</members>
-        <members>Order-Subentro</members>
-        <members>Order-Switch in</members>
-        <members>Order-VAS</members>
+        <members>Order-Order Layout</members>
+        <members>Quote-Quote Layout</members>
+        <members>Task-Task Layout</members>
+        <members>wrts_prcgvr__Activity__c-HDT_ComfortQuality</members>
         <name>Layout</name>
     </types>
     <types>
         <members>HDT_ApexClasses</members>
-        <members>HDT_SalesforceCPQAdmin</members>
         <members>HDT_SalesforceCPQPartner</members>
         <members>HDT_SalesforceCPQUser</members>
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_BA_AccountBpCaCallout</members>
-        <members>HDT_BA_AttributesContact</members>
-        <members>HDT_BA_ConsentContact</members>
-        <members>HDT_BA_LeadWebServiceReitekSend</members>
-        <members>HDT_LC_AccountStatementCtrlHelper</members>
-        <members>HDT_LC_AccountStatementCtrlUtility</members>
-        <members>HDT_LC_CampaignsController</members>
-        <members>HDT_LC_FormAccountBusiness</members>
+        <members>HDT_BA_ComfortCall</members>
+        <members>HDT_BA_QualityCall</members>
+        <members>HDT_LC_ActivityChildCreationController</members>
+        <members>HDT_LC_AdvancedSearch</members>
+        <members>HDT_LC_ChildOrderProcessActions</members>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_LC_ComfortQualityCallResult</members>
+        <members>HDT_LC_DocumentValidation</members>
         <members>HDT_LC_FormAccountResidenziale</members>
-        <members>HDT_LC_LeadChangeRecordType</members>
-        <members>HDT_LC_RecallMe</members>
-        <members>HDT_LC_RecallMeCreateForm</members>
-        <members>HDT_LC_RequestVisitD2DCreateForm</members>
-        <members>HDT_LC_ResumeCommercialBonus</members>
-        <members>HDT_LC_ResumeCommercialBonusTst</members>
-        <members>HDT_LC_ResumeSaleControllerTst</members>
-        <members>HDT_LC_SaleServiceContainer</members>
+        <members>HDT_LC_FormAccountResidenzialeTst</members>
+        <members>HDT_LC_HighlightsPanel</members>
+        <members>HDT_LC_HighlightsTab</members>
+        <members>HDT_LC_ManageBillingProfileTst</members>
+        <members>HDT_LC_MeterReadingControllerHelper</members>
+        <members>HDT_LC_OfferConfiguratorCtrlHelper</members>
+        <members>HDT_LC_OrderDossierWizardActions</members>
+        <members>HDT_LC_OrdersForComfortQualityList</members>
+        <members>HDT_LC_TargetObjectCreateForm</members>
+        <members>HDT_LC_TargetObjectRecordTypeSelectionTS</members>
         <members>HDT_QR_ActivityCustom</members>
-        <members>HDT_QR_AgentMatrix</members>
-        <members>HDT_QR_AgentMatrixTst</members>
         <members>HDT_QR_Blacklist</members>
-        <members>HDT_QR_BrandSalesCompany</members>
-        <members>HDT_QR_Campaign</members>
+        <members>HDT_QR_CampaignMember</members>
         <members>HDT_QR_Case</members>
-        <members>HDT_QR_Contact</members>
-        <members>HDT_QR_ContactPoint</members>
-        <members>HDT_QR_ContactTst</members>
-        <members>HDT_QR_Group</members>
-        <members>HDT_QR_Individual</members>
-        <members>HDT_QR_Lead</members>
-        <members>HDT_QR_LeadTst</members>
+        <members>HDT_QR_ComfortQualityCall</members>
+        <members>HDT_QR_Contract</members>
         <members>HDT_QR_Order</members>
-        <members>HDT_QR_PercentageRulesForAssigningVisits</members>
-        <members>HDT_QR_VisitAssignmentRules</members>
-        <members>HDT_SCH_LeadExpiredScheduler</members>
-        <members>HDT_SCH_LeadWebServiceReitekSend</members>
-        <members>HDT_SRV_CampaignMember</members>
-        <members>HDT_SRV_SaleServiceItem</members>
-        <members>HDT_SRV_SalesManager</members>
-        <members>HDT_TRH_DocumentalActivity</members>
-        <members>HDT_TRH_Lead</members>
-        <members>HDT_UTL_Account</members>
-        <members>HDT_UTL_BrandSalesCompany</members>
+        <members>HDT_QR_ProductTst</members>
+        <members>HDT_QR_SaleServiceItem</members>
+        <members>HDT_QR_ServiceRequest</members>
+        <members>HDT_SCH_ComfortCallScheduler</members>
+        <members>HDT_SCH_QualityCallScheduler</members>
+        <members>HDT_SRV_AnagAlignment</members>
+        <members>HDT_SRV_PostSalesManager</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_SRV_ServiceRequest</members>
+        <members>HDT_TRH_Case</members>
+        <members>HDT_TRH_Contract</members>
+        <members>HDT_TRH_Order</members>
+        <members>HDT_UTL_ActiveServicesKpi</members>
         <members>HDT_UTL_CaseProcess</members>
-        <members>HDT_UTL_Constants</members>
         <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_DocumentalManagement</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_Lead</members>
-        <members>HDT_UTL_LeadProcess</members>
+        <members>HDT_UTL_MatrixCompatibility</members>
         <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_OrderProcessAssignment</members>
         <members>HDT_UTL_PayloadManagement</members>
+        <members>HDT_UTL_PostSalesManager</members>
         <members>HDT_UTL_Sales</members>
-        <members>HDT_UTL_ServiceCatalogProfileCriteria</members>
-        <members>HDT_UTL_VasManagement</members>
-        <members>HDT_WRP_AccountStatement</members>
-        <members>HDT_WS_CampagenDmDmp</members>
-        <members>HDT_WS_InvioNumerazioni</members>
-        <members>HDT_WS_MotoreVas</members>
         <members>HDT_WS_RecallMe</members>
-        <members>HDT_WS_RecallMeConfirmRequest</members>
-        <members>HDT_WS_RecallMeRequest</members>
-        <members>HDT_WS_RicCreBpCaInvoker</members>
-        <members>HDT_WS_RicCreBpCaRequest</members>
-        <members>HDT_WS_RichCreBpCaResponse</members>
+        <members>HDT_WS_RecallMeResponse</members>
         <members>HDT_WS_SalesApexCalloutAction</members>
         <members>HDT_WS_TransitionWinBack</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Account.ExternalPartnerNumber__c</members>
-        <members>AssignmentRule__c.ClientCategory__c</members>
-        <members>AssignmentRule__c.ClientMarking__c</members>
-        <members>AssignmentRule__c.Commodity__c</members>
-        <members>AssignmentRule__c.CompanyOwner__c</members>
-        <members>AssignmentRule__c.MacroProcess__c</members>
-        <members>AssignmentRule__c.Market__c</members>
-        <members>AssignmentRule__c.Process__c</members>
-        <members>AssignmentRule__c.RulePriority__c</members>
-        <members>AssignmentRule__c.SubProcess__c</members>
-        <members>AssignmentRule__c.Type__c</members>
-        <members>BlackList__c.Domain__c</members>
-        <members>BlackList__c.ErrorMessage__c</members>
-        <members>BlackList__c.Note__c</members>
-        <members>BlackList__c.Pod__c</members>
-        <members>BlackList__c.isActive__c</members>
-        <members>BrandSalesCompany__c.ActiveFlgforACR__c</members>
-        <members>BrandSalesCompany__c.ActiveFlgforBrand__c</members>
-        <members>BrandSalesCompany__c.CommonSupply__c</members>
-        <members>BrandSalesCompany__c.CorporateBrand__c</members>
-        <members>BrandSalesCompany__c.MarketType__c</members>
-        <members>BrandSalesCompany__c.SalesCompany__c</members>
-        <members>BrandSalesCompany__c.Service__c</members>
-        <members>ComfortQualityCall__c.ComfortSignatureMethod__c</members>
-        <members>ComfortQualityCall__c.QualitySignatureMethod__c</members>
-        <members>Contact.Consumption__c</members>
-        <members>DocumentSendTracking__c.DocumentalSystem__c</members>
-        <members>DocumentalActivity__c.DocumentalSystem__c</members>
-        <members>HDT_Dependant_Picklist_VAS__mdt.Description__c</members>
-        <members>HDT_Dependant_Picklist_VAS__mdt.Has_Attachment__c</members>
-        <members>HDT_Dependant_Picklist_VAS__mdt.Reporting_Category__c</members>
-        <members>HDT_Dependant_Picklist_VAS__mdt.Reporting_Subcategory__c</members>
-        <members>HDT_Dependant_Picklist_VAS__mdt.Reporting_Type__c</members>
-        <members>HDT_Dependant_Picklist_VAS__mdt.UserInputFlow__c</members>
-        <members>HDT_Dependant_Picklist_VAS__mdt.Value__c</members>
-        <members>Lead.ContactDate__c</members>
-        <members>Lead.Contact__c</members>
-        <members>Lead.IsAddressVerified__c</members>
-        <members>Lead.consumption__c</members>
-        <members>Lead.isSendToReitek__c</members>
-        <members>Order.IsTechnicalTransfer__c</members>
-        <members>Order.isTransition__c</members>
-        <members>PercentageRulesForAssigningVisits__c.Agency__c</members>
-        <members>PercentageRulesForAssigningVisits__c.PercentageOfAssignment__c</members>
-        <members>PercentageRulesForAssigningVisits__c.VisitAssignmentRules__c</members>
-        <members>SBQQ__Quote__c.BrandLogo__c</members>
-        <members>SBQQ__Quote__c.isTransition__c</members>
-        <members>Sale__c.isTransition__c</members>
-        <members>ServicePoint__c.ActivationEleExternalDistributor__c</members>
-        <members>VisitAssignmentRules__c.Cap__c</members>
-        <members>VisitAssignmentRules__c.Category__c</members>
-        <members>VisitAssignmentRules__c.Consumption__c</members>
-        <members>wrts_prcgvr__Activity__c.AnomalyExample__c</members>
-        <members>wrts_prcgvr__Activity__c.CausalQualityComfortCall__c</members>
-        <members>wrts_prcgvr__Activity__c.ContactDate__c</members>
-        <members>wrts_prcgvr__Activity__c.ContactResult__c</members>
-        <members>wrts_prcgvr__Activity__c.CustomerImpact__c</members>
-        <members>wrts_prcgvr__Activity__c.ExpectedBehavior__c</members>
-        <members>wrts_prcgvr__Activity__c.IsClientInResolution153__c</members>
-        <members>wrts_prcgvr__Activity__c.MalfunctionDate__c</members>
-        <members>wrts_prcgvr__Activity__c.MalfunctionDescription__c</members>
-        <members>wrts_prcgvr__Activity__c.MalfunctioningFeature__c</members>
-        <members>wrts_prcgvr__Activity__c.MalfunctionsCount__c</members>
-        <members>wrts_prcgvr__Activity__c.OperationImpacts__c</members>
-        <members>wrts_prcgvr__Activity__c.Opportunity__c</members>
-        <members>wrts_prcgvr__Activity__c.PetitionerAssigneeStructure__c</members>
-        <members>wrts_prcgvr__Activity__c.ReminderCount__c</members>
-        <members>wrts_prcgvr__Activity__c.Subject__c</members>
-        <members>wrts_prcgvr__Activity__c.Type__c</members>
+        <members>HDT_CancellationReason</members>
+        <members>HDT_FirstLevelOpinion</members>
+        <members>HDT_OfferType</members>
+        <members>HDT_SAPStep</members>
+        <members>HDT_SecondLevelOpinion</members>
+        <members>HDT_UserCompany</members>
+        <name>GlobalValueSet</name>
+    </types>
+    <types>
+        <members>AssignmentRule__c.CreatorAgency__c</members>
+        <members>AssignmentRule__c.FirstLevelOpinion__c</members>
+        <members>AssignmentRule__c.OfferType__c</members>
+        <members>AssignmentRule__c.SAPStep__c</members>
+        <members>AssignmentRule__c.SalesAgency__c</members>
+        <members>AssignmentRule__c.SecondLevelOpinion__c</members>
+        <members>Case.IsExportCMOR__c</members>
+        <members>Case.Sie173Mark__c</members>
+        <members>Contract.Market__c</members>
+        <members>Contract.TerminationReason__c</members>
+        <members>Order.DocumentalProcessType__c</members>
+        <members>Order.OfferType__c</members>
+        <members>Order.ShippingAddressFormula__c</members>
+        <members>Product2.TypeOffer__c</members>
+        <members>ServicePoint__c.SwitchInWinback__c</members>
+        <members>User.UserCompany__c</members>
+        <members>wrts_prcgvr__Activity__c.AssignmentRule__c</members>
+        <members>wrts_prcgvr__Activity__c.Queued__c</members>
+        <members>wrts_prcgvr__Activity__c.SAPStep__c</members>
+        <members>wrts_prcgvr__Activity__c.wrts_prcgvr__Priority__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_LCP_OrderDossierWizard</members>
-        <members>HDT_LCP_RecallMe</members>
-        <members>HDT_LCP_RequestVisitD2DContact</members>
-        <members>HDT_LCP_RequestVisitD2DLead</members>
+        <members>HDT_LCP_ComfortQualityCallResult</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>HDT_FL_SegnalazioniVAS</members>
-        <name>FlowDefinition</name>
+        <members>hdtAdvancedSearch</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtHighlightsPanel</members>
+        <members>hdtHighlightsTab</members>
+        <members>hdtOfferConfigurator</members>
+        <members>hdtOrdersForComfortQualityList</members>
+        <members>hdtSaleServiceContainer</members>
+        <members>hdtTargetObjectCreateForm</members>
+        <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_Lead</members>
-        <name>ApexTrigger</name>
-    </types>
-    <types>
-        <members>HDT_Dependant_Picklist_VAS.DPV0</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV1</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV10</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV11</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV12</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV13</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV14</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV15</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV16</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV17</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV18</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV19</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV2</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV20</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV21</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV22</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV23</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV24</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV25</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV26</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV27</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV28</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV29</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV3</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV30</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV31</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV32</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV33</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV34</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV35</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV36</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV37</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV38</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV39</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV4</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV40</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV41</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV42</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV43</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV44</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV45</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV46</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV47</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV48</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV49</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV5</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV50</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV51</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV52</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV53</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV54</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV55</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV56</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV57</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV6</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV7</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV8</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV9</members>
-        <members>HDT_IntegrationObject.Documentale_Context1</members>
-        <members>HDT_IntegrationObject.Documentale_Context2</members>
-        <members>HDT_IntegrationObject.Documentale_Context3</members>
-        <members>HDT_PraticheBloccanti.Config1</members>
-        <members>HDT_PraticheBloccanti.Config10</members>
-        <members>HDT_PraticheBloccanti.Config11</members>
-        <members>HDT_PraticheBloccanti.Config12</members>
-        <members>HDT_PraticheBloccanti.Config13</members>
-        <members>HDT_PraticheBloccanti.Config14</members>
-        <members>HDT_PraticheBloccanti.Config15</members>
-        <members>HDT_PraticheBloccanti.Config16</members>
-        <members>HDT_PraticheBloccanti.Config17</members>
-        <members>HDT_PraticheBloccanti.Config18</members>
-        <members>HDT_PraticheBloccanti.Config19</members>
-        <members>HDT_PraticheBloccanti.Config2</members>
-        <members>HDT_PraticheBloccanti.Config20</members>
-        <members>HDT_PraticheBloccanti.Config21</members>
-        <members>HDT_PraticheBloccanti.Config22</members>
-        <members>HDT_PraticheBloccanti.Config23</members>
-        <members>HDT_PraticheBloccanti.Config24</members>
-        <members>HDT_PraticheBloccanti.Config25</members>
-        <members>HDT_PraticheBloccanti.Config26</members>
-        <members>HDT_PraticheBloccanti.Config27</members>
-        <members>HDT_PraticheBloccanti.Config28</members>
-        <members>HDT_PraticheBloccanti.Config29</members>
-        <members>HDT_PraticheBloccanti.Config3</members>
-        <members>HDT_PraticheBloccanti.Config30</members>
-        <members>HDT_PraticheBloccanti.Config31</members>
-        <members>HDT_PraticheBloccanti.Config32</members>
-        <members>HDT_PraticheBloccanti.Config33</members>
-        <members>HDT_PraticheBloccanti.Config34</members>
-        <members>HDT_PraticheBloccanti.Config35</members>
-        <members>HDT_PraticheBloccanti.Config36</members>
-        <members>HDT_PraticheBloccanti.Config37</members>
-        <members>HDT_PraticheBloccanti.Config38</members>
-        <members>HDT_PraticheBloccanti.Config39</members>
-        <members>HDT_PraticheBloccanti.Config4</members>
-        <members>HDT_PraticheBloccanti.Config40</members>
-        <members>HDT_PraticheBloccanti.Config41</members>
-        <members>HDT_PraticheBloccanti.Config42</members>
-        <members>HDT_PraticheBloccanti.Config43</members>
-        <members>HDT_PraticheBloccanti.Config44</members>
-        <members>HDT_PraticheBloccanti.Config45</members>
-        <members>HDT_PraticheBloccanti.Config46</members>
-        <members>HDT_PraticheBloccanti.Config47</members>
-        <members>HDT_PraticheBloccanti.Config48</members>
-        <members>HDT_PraticheBloccanti.Config49</members>
-        <members>HDT_PraticheBloccanti.Config5</members>
-        <members>HDT_PraticheBloccanti.Config50</members>
-        <members>HDT_PraticheBloccanti.Config51</members>
-        <members>HDT_PraticheBloccanti.Config52</members>
-        <members>HDT_PraticheBloccanti.Config53</members>
-        <members>HDT_PraticheBloccanti.Config54</members>
-        <members>HDT_PraticheBloccanti.Config55</members>
-        <members>HDT_PraticheBloccanti.Config56</members>
-        <members>HDT_PraticheBloccanti.Config57</members>
-        <members>HDT_PraticheBloccanti.Config58</members>
-        <members>HDT_PraticheBloccanti.Config59</members>
-        <members>HDT_PraticheBloccanti.Config6</members>
-        <members>HDT_PraticheBloccanti.Config60</members>
-        <members>HDT_PraticheBloccanti.Config61</members>
-        <members>HDT_PraticheBloccanti.Config62</members>
-        <members>HDT_PraticheBloccanti.Config7</members>
-        <members>HDT_PraticheBloccanti.Config8</members>
-        <members>HDT_PraticheBloccanti.Config9</members>
-        <members>HDT_ProcessCancellationReason.Config33</members>
-        <members>HDT_ProcessCancellationReason.Config34</members>
-        <members>HDT_ProcessCancellationReason.Config35</members>
-        <name>CustomMetadata</name>
+        <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
     </types>
     <version>49</version>
 </Package>

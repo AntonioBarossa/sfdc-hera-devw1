@@ -174,4 +174,29 @@ public with sharing class HDT_UTL_CaseProcess {
 		
 		}
     }
+
+    public static void updateServiceRequest(List<Case> newCasesList, List<Case> oldCasesList){
+        Map<String,Case> mapCases = new Map<String,Case>();
+        Map<String,String> caseStatuses= new Map<String,String>();
+        List<ServiceRequest__c> sReqToUpdate= new List<ServiceRequest__c>();
+        Set<Id> caseIds= new Set<Id>();
+        for(Case o: oldCasesList){
+            mapCases.put(o.id, o);
+        }
+        for (Case cs: newCasesList){
+            Case oldCase= mapCases.get(cs.id);
+            
+            if(cs.Status != oldCase.Status ){
+                caseIds.add(cs.Id);
+                caseStatuses.put(cs.Id, cs.Status);
+            }
+        }
+        List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(caseIds, 'Case__c');
+        for(ServiceRequest__c s: srvRequests){
+            ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
+            s.Status__c= caseStatuses.get(s.Case__c);
+            sReqToUpdate.add(s);
+        }
+        HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
+    }
 }

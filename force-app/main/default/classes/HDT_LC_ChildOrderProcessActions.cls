@@ -6,6 +6,7 @@
  */
 public inherited sharing class HDT_LC_ChildOrderProcessActions {
     
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_SRV_ServicePoint servicePointSrv= new HDT_SRV_ServicePoint();
     private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
@@ -213,6 +214,31 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
             }
+        }
+        
+        //comfort quality call start
+        system.debug('quality log 1 recordtype developername: ' + order.RecordType.DeveloperName);
+        system.debug('quality log 1 Channel__c: ' + order.Channel__c);
+        system.debug('quality log 1 MarketType__c: ' + order.MarketOrigin__c);
+        system.debug('quality log 1 CustomerCategory__c: ' + order.CustomerCategory__c);
+        system.debug('quality log 1 MarketOrigin__c: ' + order.MarketOrigin__c);
+        system.debug('quality log 1 SignatureMethod__c: ' + order.SignatureMethod__c);
+        List<ComfortQualityCall__c> comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
+
+        system.debug('quality log 2: ' + comfortQualityList);
+
+        if (!comfortQualityList.isEmpty()) {
+            system.debug('quality log 3: enter quality marker');
+            orderToUpdate.QualityCall__c = true;
+
+            List<Order> orderChildComfort = orderQr.getChildOrdersByParentId(order.ParentOrder__c);
+
+            if(orderChildComfort.size() > 1){ //if more than 1 child group activity comfort/quality by Parent
+                orderToUpdate.QualityCallUnique__c = true;
+            }
+
+            orderToUpdate.ComfortCallDaysDue__c = comfortQualityList[0].DaysComfort__c;
+            orderToUpdate.DateComfortCall__c = Date.today();
         }
 
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);

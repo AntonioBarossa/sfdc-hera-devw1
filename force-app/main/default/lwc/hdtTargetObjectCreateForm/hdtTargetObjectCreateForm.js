@@ -12,6 +12,7 @@ import getDistributorPointCode from '@salesforce/apex/HDT_LC_TargetObjectCreateF
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.callService';
 import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
+import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
 
 
 
@@ -1055,6 +1056,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     save(){
         console.log('save');
+        let isBlacklist = false;
+        
+        isInBlacklist({pod:this.allSubmitedFields['ServicePointCode__c']}).then(data =>{
+            console.log('isInBlacklist :  ' + JSON.stringify(data));
+            isBlacklist=data;
+        
+        if(isBlacklist == false){
 
         this.theRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log('this.theRecord'+JSON.stringify(this.theRecord));
@@ -1096,7 +1104,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             
         }
+    
     }
+    }else{
+        console.log('entra in else');
+        this.alert('Errore','Non è possibile procedere in quanto il POD/PD ricercato è presente in Black List','error');
+    }
+    });
     }
 
     /**

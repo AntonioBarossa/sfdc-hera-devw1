@@ -18,16 +18,25 @@ public inherited sharing class HDT_QR_Contract {
 		  
 	}
 
-    public Contract getSapContractCode(String code) {
+    public Contract getSapContractCode(String code,Boolean isSuperUser) {
         contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
         system.debug('code ******************** : ' + code);
+        system.debug('isSuperUser ******************** : ' + isSuperUser);
         String filter = 'Activated';
+        List<Contract> con= new List<Contract>();
         Contract c = new Contract();
-        String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c =: code AND Status=: filter WITH SECURITY_ENFORCED';
-        List<Contract> con = Database.query(query);
+        if(isSuperUser==true){
+            String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__r.ServicePointCode__c =: code LIMIT 1';
+            con = Database.query(query);
+        }else{
+            String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c =: code AND Status=: filter WITH SECURITY_ENFORCED';
+            con = Database.query(query);
+        }
+
         if(con != null && con.size()> 0){
             c= con[0];
         }
+        system.debug('contract ******************** : ' + c);
         return c;
 	}
 
