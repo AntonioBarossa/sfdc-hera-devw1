@@ -161,6 +161,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>wrts_prcgvr__Priority__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>wrts_prcgvr__Status__c</picklist>
         <values>
             <fullName>Completed</fullName>
