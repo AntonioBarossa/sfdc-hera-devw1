@@ -125,4 +125,30 @@ public inherited sharing class HDT_QR_ActivityCustom {
         return actList;
 
     }
+    
+    public static List<wrts_prcgvr__Activity__c> getActivityByRecordId(String activityId){
+        return [
+            SELECT Id,
+            Type__c,
+            Order__c,
+            Order__r.AccountId,
+            Order__r.Account.Name,
+            Order__r.Recordtypeid,
+            Order__r.Recordtype.Name,
+            Order__r.Recordtype.DeveloperName,
+            Order__r.Status,
+            Order__r.Phase__c,
+            Order__r.OrderNumber,
+            Order__r.ProcessType__c,
+            Order__r.DateComfortCall__c,
+            Order__r.ComfortCallDaysDue__c,
+            Order__r.QualityCall__c,
+            Order__r.QualityCallUnique__c,
+            Order__r.ConfirmCustomerContract__c,
+            Order__r.CancellationReason__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE Id = :activityId
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }
