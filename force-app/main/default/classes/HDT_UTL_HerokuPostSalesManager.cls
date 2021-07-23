@@ -330,6 +330,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     }
                 currentCase.Phase__c = type; 
             }
+            if(String.isNotBlank(type) && recordCase.Type.equalsIgnoreCase('Comunicazione Pagamento') && type.equalsIgnoreCase('Pratica Gestita')){
+                currentCase.Phase__c = 'Completata';
+            }
             if(String.isNotBlank(message)){
                 // Per il piano rate SAP manda TIPO_ATTIVITA=Paperless generato quando genera il codice bollettino paperless.
                 if(type.equalsIgnoreCase('Paperless generato')){
