@@ -480,6 +480,29 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     
     // }
     // // FINE @Picchiri Credit check Date 15.06.21
-
+        public static void updateServiceRequest(List<Order> newOrdersList, List<Order> oldOrdersList){
+            Map<String,Order> mapOrder = new Map<String,Order>();
+            Map<String,String> orderStatuses= new Map<String,String>();
+            List<ServiceRequest__c> sReqToUpdate= new List<ServiceRequest__c>();
+            Set<Id> orderIds= new Set<Id>();
+            for(Order o: oldOrdersList){
+                mapOrder.put(o.id, o);
+            }
+            for (Order ord: newOrdersList){
+                Order oldOrder= mapOrder.get(ord.id);
+                
+                if(ord.Status != oldOrder.Status ){
+                    orderIds.add(ord.Id);
+                    orderStatuses.put(ord.Id, ord.Status);
+                }
+            }
+            List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(orderIds, 'Order__c');
+            for(ServiceRequest__c s: srvRequests){
+                ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
+                s.Status__c= orderStatuses.get(s.Order__c);
+                sReqToUpdate.add(s);
+            }
+            HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
+        }
 
 }

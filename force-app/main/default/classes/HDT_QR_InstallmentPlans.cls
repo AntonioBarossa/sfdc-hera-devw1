@@ -76,6 +76,7 @@ public with sharing class HDT_QR_InstallmentPlans {
         Deposit__c,
         DepositAmount__c,
         Amount__c,
+        TotalPaidCustomer__c,
         CutomerAssisted__c,
         RefundableEscape__c,
         TotalToPay__c,

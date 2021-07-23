@@ -743,6 +743,11 @@
                 <label>Preventivo rifiutato – Amm OK</label>
             </value>
             <value>
+                <fullName>Preventivo rifiutato – Amm KO</fullName>
+                <default>false</default>
+                <label>Preventivo rifiutato – Amm KO</label>
+            </value>
+            <value>
                 <fullName>Presa in Carico KO</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
