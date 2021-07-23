@@ -5,6 +5,7 @@ export default class HdtGenericTable extends LightningElement {
     //inputs 
     @api columns;
     @api rowsData;
+    @api tableName;
 
     //utilities
     @track altMessage;
@@ -13,5 +14,6 @@ export default class HdtGenericTable extends LightningElement {
     connectedCallback(){
 
     }
+
 
 }
