@@ -12,6 +12,7 @@ import getDistributorPointCode from '@salesforce/apex/HDT_LC_TargetObjectCreateF
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.callService';
 import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
+import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
 
 
 
@@ -72,6 +73,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     booleanFormDistributor=false;
     @api retrievedDistributor={};
     @api commodity='';
+    oldServicePoint = {}; //keltin used for change use check
    // showForm=false;
 
     
@@ -591,6 +593,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
                     this.handleCallServiceSap(this.selectedservicepoint);
                     this.servicePointRetrievedData = data[0];
+                    this.oldServicePoint = data[0]; //keltin used for change use check
                     console.log('servicePointRetriviedData: ******'+JSON.stringify(this.servicePointRetrievedData.RecordType.DeveloperName));
                     if(this.servicePointRetrievedData.RecordType.DeveloperName!= undefined){
                     switch(this.servicePointRetrievedData.RecordType.DeveloperName){
@@ -1053,6 +1056,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     save(){
         console.log('save');
+        let isBlacklist = false;
+        
+        isInBlacklist({pod:this.allSubmitedFields['ServicePointCode__c']}).then(data =>{
+            console.log('isInBlacklist :  ' + JSON.stringify(data));
+            isBlacklist=data;
+        
+        if(isBlacklist == false){
 
         this.theRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log('this.theRecord'+JSON.stringify(this.theRecord));
@@ -1094,7 +1104,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             
         }
+    
     }
+    }else{
+        console.log('entra in else');
+        this.alert('Errore','Non è possibile procedere in quanto il POD/PD ricercato è presente in Black List','error');
+    }
+    });
     }
 
     /**
@@ -1225,7 +1241,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             console.log('new Sp : ' + JSON.stringify(this.newServicePoint));
             this.isSap= false;
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
-            this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: this.newServicePoint}));
+            this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: {newServicePoint: this.newServicePoint, oldServicePoint: this.oldServicePoint}})); //keltin used for change use check
             
         }).catch(error => {
             

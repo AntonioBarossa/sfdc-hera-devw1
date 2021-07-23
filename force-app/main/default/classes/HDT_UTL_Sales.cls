@@ -1,5 +1,7 @@
 public with sharing class HDT_UTL_Sales {
     
+     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
+
     public static map<String,String> mapMarcatura = new Map<String,String>();//'AAS Associazione' => 'AAS','AAS Azienda'=> 'AAS','AAS Condominio'=> 'AAS','AAS Ditta individuale'=> 'AAS','AAS Parti comuni'=> 'AAS','AAS Persona fisica'=> 'AAS'}; 
     public static String getCityAgency(String comune,boolean isEle, boolean isGas){
         String getSDVComune = '';
@@ -13,6 +15,8 @@ public with sharing class HDT_UTL_Sales {
 
         return getSDVComune;
     }
+    
+
 
     public static Map<String,String> getAgentNameAndCode(ServicePoint__c Service,String Marcatura){
         String marcaturaValue = '';
@@ -46,6 +50,31 @@ public with sharing class HDT_UTL_Sales {
             mapRes.put('codiceAgente','');
         }
         return mapRes;
+    }
+
+    public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
+
+        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        if(((sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende SME' && sale.Account__r.Category__c != 'Piccoli Condomini') ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+            Sale__c s = new Sale__c(Id=sale.Id);
+            s.isTransition__c=true;
+            saleSrv.updateRecord(s);
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public static Boolean isTransitionNoUp(ServicePoint__c sp, Sale__c sale){
+
+        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        if(((sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende SME' && sale.Account__r.Category__c != 'Piccoli Condomini') ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+            Sale__c s = new Sale__c(Id=sale.Id);
+            s.isTransition__c=true;
+           // saleSrv.updateRecord(s);
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

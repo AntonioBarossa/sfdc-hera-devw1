@@ -1,3 +1,10 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 27/02/2021
+* @description HDT_LC_CalculateEstimatedCost
+* @history Keltin Mesonjesi – 27/02/2021 – Created class
+*/
+
 public inherited sharing class HDT_LC_CalculateEstimatedCost {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 

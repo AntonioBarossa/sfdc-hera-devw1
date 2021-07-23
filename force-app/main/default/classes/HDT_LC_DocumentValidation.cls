@@ -1,3 +1,10 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 27/02/2021
+* @description HDT_LC_DocumentValidation
+* @history Keltin Mesonjesi – 27/02/2021 – Created class
+*/
+
 public inherited sharing class HDT_LC_DocumentValidation {
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
 	private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
@@ -49,6 +56,7 @@ public inherited sharing class HDT_LC_DocumentValidation {
             } else {
                 ord.Phase__c = 'Documentazione Validata';
             }
+
         }
         System.debug('************:'+ord);
         orderSrv.updateRecord(ord);

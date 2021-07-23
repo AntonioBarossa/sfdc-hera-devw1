@@ -10,6 +10,9 @@ public inherited sharing class HDT_UTL_Morosita {
             when 'Riattivazione Fornitura'{
                 result = 'Riattivazione Fornitura';
             }
+            when 'Risoluzione no sospensione'{
+                result = 'Risoluzione No Sospensione';
+            }
             when else{
                 result = process;
             }
@@ -26,6 +29,10 @@ public inherited sharing class HDT_UTL_Morosita {
         containerCase.Type = 'Contenitore Morosità';
         containerCase.AccountId = currentCase.AccountId;
         containerCase.ContactId = currentCase.ContactId;
+        containerCase.PhoneNumber__c = currentCase.PhoneNumber__c;
+        containerCase.Email__c = currentCase.Email__c;
+        containerCase.Contract__c = currentCase.Contract__c;
+        containerCase.BillingProfile__c = currentCase.BillingProfile__c;
         containerCase.IsContainer__c = true;
         containerCase.RecordTypeId = currentCase.RecordTypeId;
         containerCase.ServicePoint__c = currentCase.ServicePoint__c;

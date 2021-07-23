@@ -3,7 +3,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
     public static List<TechnicalOffer__c> getOfferById(List<TechnicalOffer__c> tecOffList, String technicalOfferId){
         tecOffList = new List<TechnicalOffer__c>();
         tecOffList = [
-            SELECT Id, OfferCode__c
+            SELECT Id
             FROM TechnicalOffer__c
             WHERE Id =: technicalOfferId
             WITH SECURITY_ENFORCED

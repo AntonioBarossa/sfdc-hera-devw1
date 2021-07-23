@@ -33,7 +33,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
      * @param String deliberate
      */
     @AuraEnabled
-    public static void next(Order order,String orderId, Map<String,String> selectedProcessObject, String deliberate, Map<String,String> extraParams){
+    public static void next(Order order,String orderId, Map<String,String> selectedProcessObject, String deliberate, Map<String,String> extraParams, ServiceRequest__c srRequest){
 
         system.debug('extraParams: ' + extraParams);
         
@@ -52,6 +52,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 List<Contract> contracts = contractQr.getContractFromServicePoint(order.ServicePoint__c);
                 processType = 'Voltura';
                 newOrder.Subprocess__c = 'Standard';
+                newOrder.VoltureType__c = 'Ordinaria';
                 processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
                 newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 newOrder.ContractReference__c = contracts.size() > 0 
@@ -109,8 +110,31 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         newOrder.ProcessCode__c = processCode;
         newOrder.Phase__c = 'Bozza';
 
+        //Logica Superficie Servita Start
+        newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas' && selectedProcessObject.get('recordType') != 'HDT_RT_Voltura') ? 75 : null;
+        //Logica Superficie Servita End
+
         orderSrv.updateRecord(newOrder);
         //EVERIS 
+
+	 ServiceRequest__c srvReq = new ServiceRequest__c();
+        srvReq.ServicePointCode__c= srRequest.ServicePointCode__c;
+        srvReq.Status__c= srRequest.Status__c;
+        srvReq.Order__c= srRequest.Order__c;
+        srvReq.CommoditySector__c= srRequest.CommoditySector__c;
+        srvReq.Type__c= srRequest.Type__c;
+        if(srRequest.ServicePoint__c != null){
+            srvReq.ServicePoint__c= srRequest.ServicePoint__c;
+        }else{
+            srvReq.Account__c= srRequest.Account__c;
+            srvReq.BillingProfile__c= srRequest.BillingProfile__c;
+        }
+        srvReq.ProcessType__c= srRequest.ProcessType__c;
+        HDT_SRV_ServiceRequest.createRecord(srvReq);
+        wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(srvReq);
+        if(!result.incompatibilities.isEmpty()){
+            HDT_SRV_ServiceRequest.deleteRecord(srvReq);
+        }
     }
 
     private static String getServicePointTypeFromOrder(String orderId) {

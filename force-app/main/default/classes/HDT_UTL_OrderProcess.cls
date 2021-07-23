@@ -7,6 +7,20 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog(); 
     
     public static void salesProcessManagementBefore(list<Order> newOrderList,List<Order> oldOrderList){
+
+        /*Transitorio
+        */
+        Map<String,Order> mapOrder = new Map<String,Order>();
+        for(Order o: oldOrderList){
+            mapOrder.put(o.Id, o);
+        }
+        for (Order order : newOrderList) {
+            Order oldOrder= mapOrder.get(order.Id);
+            if(order.Phase__c!=oldOrder.Phase__c&&order.Phase__c=='Comunicazione Verso Heroku'&&order.isTransition__c==true){
+                order.Phase__c='Comunicazione  Siebel';
+            }
+        }
+        
         
     }    
     public static void salesProcessManagementAfter(list<Order> newOrderList,List<Order> oldOrderList){
@@ -37,9 +51,23 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }
 
-        List<String> orderList = getParentOrders(newOrdersList, oldOrdersList, orderMapNewToOld);
+        //List<String> orderList = getParentOrders(newOrdersList, oldOrdersList, orderMapNewToOld);
+        List<Order> orders = getParentOrders2(newOrdersList, oldOrdersList, orderMapNewToOld);
+        List<String> ordersHeroku = new List<String>();
+        List<String> ordersSiebel = new List<String>();
+
+        for(Order o:orders){
+            if(o.sale__r.isTransition__c==true){
+
+                ordersSiebel.add(o.Id);
+            }else{
+                ordersHeroku.add(o.Id);
+            }
+        }
         //List<id> docVali = filterByRecordTypeAndPhase(orderList,)
-        updateChildOrdersPhase(orderList, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS');
+        updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Comunicazione Siebel','Documentazione Validata','Comunicazione Motore VAS');
+
+        updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS');
 		insertLogForOrderChangedPhase(orderMapOld,orderMapNew);
     }
 	
@@ -191,7 +219,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         
         orderSrv.checkReadAccess('Phase__c');
         List<Order> childOrders = orderQr.getChildOrdersByParentIds(parentOrderIds);
-
+       
         for (Order childOrder : childOrders) {
             if (childOrder.Phase__c == currentPhase) {
                 Order orderToUpdate = new Order(
@@ -452,6 +480,29 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     
     // }
     // // FINE @Picchiri Credit check Date 15.06.21
-
+        public static void updateServiceRequest(List<Order> newOrdersList, List<Order> oldOrdersList){
+            Map<String,Order> mapOrder = new Map<String,Order>();
+            Map<String,String> orderStatuses= new Map<String,String>();
+            List<ServiceRequest__c> sReqToUpdate= new List<ServiceRequest__c>();
+            Set<Id> orderIds= new Set<Id>();
+            for(Order o: oldOrdersList){
+                mapOrder.put(o.id, o);
+            }
+            for (Order ord: newOrdersList){
+                Order oldOrder= mapOrder.get(ord.id);
+                
+                if(ord.Status != oldOrder.Status ){
+                    orderIds.add(ord.Id);
+                    orderStatuses.put(ord.Id, ord.Status);
+                }
+            }
+            List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(orderIds, 'Order__c');
+            for(ServiceRequest__c s: srvRequests){
+                ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
+                s.Status__c= orderStatuses.get(s.Order__c);
+                sReqToUpdate.add(s);
+            }
+            HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
+        }
 
 }

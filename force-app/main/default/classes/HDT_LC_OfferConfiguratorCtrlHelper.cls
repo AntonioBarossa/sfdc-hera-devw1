@@ -352,6 +352,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         newTechOff.Name = prodList[0].ProductCode + ' [' + prodList[0].Version__c + '] [' + recToClone.RateCategory__r.Name + ']';
         newTechOff.NameExternalId__c = newTechOff.Name;
         newTechOff.Product__c = productId;
+        newTechOff.SapCode__c = null;
+        newTechOff.OfferCode__c = recIdToClone;
 
         System.debug('# clone this -> ' + newTechOff);
 
@@ -484,7 +486,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         List<String> fieldToCheck = new List<String>();
         fieldToCheck.add('Market__c');
         //fieldToCheck.add('ProcessType__c');
-        fieldToCheck.add('PlacetOffer__c');
+        //fieldToCheck.add('PlacetOffer__c');
         fieldToCheck.add('StartDate__c');
         fieldToCheck.add('EndDate__c');
         fieldToCheck.add('StepAllowed__c');
@@ -530,6 +532,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         System.debug('>>> responseCtrl > ' + String.valueOf(responseCtrl));
 
+        mulesoftResponse.bodyResponse = body;
+
         if(!responseCtrl.success){
             updateProductAfterSap(technicalOfferId, responseCtrl.message, 'ko');
             mulesoftResponse.success = false;
@@ -545,6 +549,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             mulesoftResponse.message = '';
 
             String errorMessage = '';
+            errorMessage += '[CODE: ' + mulesoftWsResponse.errorDetails[0].code + ']; DETAILS: ';
             for(Integer n=0; n < mulesoftWsResponse.errorDetails.size(); n++){
                 errorMessage += mulesoftWsResponse.errorDetails[n].message;
                 if(n < (mulesoftWsResponse.errorDetails.size()-1)){
@@ -561,7 +566,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         mulesoftResponse.success = true;
         mulesoftResponse.message = Label.HDT_OfferConfig_WS_Success + mulesoftWsResponse.keysap;
-        mulesoftResponse.bodyResponse = '{"newCode": "' + mulesoftWsResponse.keysap + '"}';
+        //mulesoftResponse.bodyResponse = '{"newCode": "' + mulesoftWsResponse.keysap + '"'}';
 
         return mulesoftResponse;
 

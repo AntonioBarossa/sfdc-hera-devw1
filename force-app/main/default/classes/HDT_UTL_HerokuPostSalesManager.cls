@@ -205,6 +205,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             caseParam = recordId != null? recordId:caseNumber;
             recordCase = hpsmQr.getCaseRecord(caseParam);
             currentCase.Id = recordCase.Id;
+            currentCase.Type = recordCase.Type;
             currentPhase = recordCase.Phase__c;
             quotationType = recordCase.QuotationType__c;
             nextPhase = reqWrp.requestMap.get('FASE');
@@ -257,6 +258,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(currentPhase.indexOf('Annull') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
                 if(String.isBlank(recordCase.CancellationHerokuPracticeCode__c)){
                     currentCase.CancellationHerokuPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_UTENTE');
+                }
+            }
+            if(reqWrp.requestMap.get('FATTIB_TEC') != null && reqWrp.requestMap.get('FATTIB_TEC') != ''){
+                if(reqWrp.requestMap.get('FATTIB_TEC').equalsIgnoreCase('SI')){
+                    currentCase.TechnicalFeasibility__c = true;
+                } else {
+                    currentCase.TechnicalFeasibility__c = false;
                 }
             }
             if(nextPhase != null && nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
@@ -332,6 +340,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.Description = nowDateFormat + ': ' + message + '\n' + description;
                 }
             }
+            updateFuture(JSON.serialize(currentCase));
+            return caseUpdate;
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
         }
@@ -355,13 +365,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         return caseUpdate;
     }
     private void handleAfterNotify(Case currentCase, String storno, String activity){
+        currentCase = hpsmQr.getCaseRecord(currentCase.Id);
         if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII' || currentCase.Phase__c == 'Annullato'){
             currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Phase__c == 'Annullamento SII - Ricezione') {
             handlePassiveCancellation(currentCase, 'Case', storno, activity);
-        }else if(currentCase.Type == 'Allineamento Anagagrafica' && currentCase.Phase__c == 'Esito OK da SII'){
+        }else if(currentCase.Type == 'Allineamento Anagrafica' && currentCase.Phase__c == 'Esito OK da SII'){
             currentCase.Phase__c = 'Completata';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
@@ -369,7 +380,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.Phase__c = 'Completata';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
-        }
+        }else if(currentCase.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') 
+                && currentCase.Type.equalsIgnoreCase('Variazione Fase')
+                && currentCase.CausalCode__c.equalsIgnoreCase('E02')){
+            currentCase.Phase__c = 'Inviare preventivo';
+            updateFuture(JSON.serialize(currentCase));
+            }
     }
     //se Annullamento SII - Ricezione e Storno N --> Aggiornare in Annullamento SII e dopo in Annullato SII
     //se Annullamento SII - Ricezione e Attivita Eseguire Gestione Manuale SAP --> Creazione Activity

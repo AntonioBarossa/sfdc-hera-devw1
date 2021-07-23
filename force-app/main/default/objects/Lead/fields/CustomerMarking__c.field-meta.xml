@@ -61,6 +61,46 @@
             <valueName>Persona fisica</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <controllingFieldValue>Reseller</controllingFieldValue>
+            <valueName>D1 - Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <controllingFieldValue>Reseller</controllingFieldValue>
+            <valueName>D2 - Ditta individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <controllingFieldValue>Reseller</controllingFieldValue>
+            <valueName>D3 - Azienda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <controllingFieldValue>Reseller</controllingFieldValue>
+            <valueName>D4 - Parti comuni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <controllingFieldValue>Reseller</controllingFieldValue>
+            <valueName>D5 - Condominio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <controllingFieldValue>Reseller</controllingFieldValue>
+            <valueName>D6 - Associazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <controllingFieldValue>Reseller</controllingFieldValue>
+            <valueName>D7 - BP Doppio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <controllingFieldValue>Reseller</controllingFieldValue>
+            <valueName>D8 - Marcatura nulla</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>
             <valueName>MMS Associazione</valueName>
         </valueSettings>
@@ -331,38 +371,6 @@
         <valueSettings>
             <controllingFieldValue>Reseller</controllingFieldValue>
             <valueName>UNION-Persona fisica</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reseller</controllingFieldValue>
-            <valueName>D1 - Persona fisica</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reseller</controllingFieldValue>
-            <valueName>D2 - Ditta individuale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reseller</controllingFieldValue>
-            <valueName>D3 - Azienda</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reseller</controllingFieldValue>
-            <valueName>D4 - Parti comuni</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reseller</controllingFieldValue>
-            <valueName>D5 - Condominio</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reseller</controllingFieldValue>
-            <valueName>D6 - Associazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reseller</controllingFieldValue>
-            <valueName>D7 - BP Doppio</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reseller</controllingFieldValue>
-            <valueName>D8 - Marcatura nulla</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reseller</controllingFieldValue>

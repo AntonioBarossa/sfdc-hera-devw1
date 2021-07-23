@@ -506,6 +506,11 @@
                 <label>Caricamento Siebel KO</label>
             </value>
             <value>
+                <fullName>Sequenzializzato</fullName>
+                <default>false</default>
+                <label>Sequenzializzato</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

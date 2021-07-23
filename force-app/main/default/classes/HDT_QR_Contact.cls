@@ -1,3 +1,9 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 14/01/2021
+ * @description HDT_QR_Contact.cls
+ * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
+ */
 public inherited sharing class HDT_QR_Contact {
     
     public Contact getRecordById(String id) {
@@ -66,6 +72,17 @@ public inherited sharing class HDT_QR_Contact {
             Email
             FROM Contact
             WHERE AccountId = :accountId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public Contact getContactsByIndividual(String individualId){
+        return [
+            SELECT
+            Id,
+            Email
+            FROM Contact
+            WHERE IndividualId = :individualId
             WITH SECURITY_ENFORCED
         ];
     }
