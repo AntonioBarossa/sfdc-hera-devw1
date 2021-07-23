@@ -111,6 +111,8 @@ public inherited sharing class HDT_QR_Order {
             //FINE SVILUPPI EVERIS
             ServicePoint__r.RecordType.DeveloperName,
             ServicePoint__r.Account__c,
+            ServicePoint__r.distributor__r.name,
+            ServicePoint__r.distributor__c,
             ServicePoint__r.MeterClass__c,
             ServicePoint__r.MeterStatus__c,
             ServicePoint__r.PlugPresence__c,
@@ -186,8 +188,7 @@ public inherited sharing class HDT_QR_Order {
             OwnerId,                                        // @Picchiri  10/06/21
             OrderReferenceNumber,                            // @Picchiri  15/06/21
             IsSequanzialized__c,                             // @Picchiri  24/06/21
-            SalesCompanyCode__c,
-            CustomerType__c
+            SalesCompanyCode__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -322,8 +323,7 @@ public inherited sharing class HDT_QR_Order {
             OwnerId,                                        
             OrderReferenceNumber,
             SalesCompanyCode__c,
-            IsSequanzialized__c,
-            CustomerType__c
+            IsSequanzialized__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -368,10 +368,7 @@ public inherited sharing class HDT_QR_Order {
             DocumentLow80__c,
             AutorizationVolturaThirdTrader__c,
             VolturaThirdTrader__c,
-            Phase__c,
-            ComfortCallDaysDue__c,
-            QualityCall__c,
-            QualityCallUnique__c
+            Phase__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -605,30 +602,6 @@ public inherited sharing class HDT_QR_Order {
     public static String getRecordTypesDeveloperNameById(Id id){
         String devName = [SELECT DeveloperName FROM RecordType WHERE id = :id].DeveloperName;
         return devName;
-    }
-
-    public List<order> getOrderForComfortQualityResult(String parentOrderId){
-        return [SELECT 
-            Id,
-            AccountId,
-            Account.Name,
-            Recordtypeid,
-            Recordtype.Name,
-            Recordtype.DeveloperName,
-            Status,
-            Phase__c,
-            OrderNumber,
-            ProcessType__c,
-            DateComfortCall__c,
-            ComfortCallDaysDue__c,
-            QualityCall__c,
-            QualityCallUnique__c,
-            ConfirmCustomerContract__c,
-            CancellationReason__c
-        FROM Order
-        WHERE ParentOrder__c = :parentOrderId
-        WITH SECURITY_ENFORCED
-        ];
     }
 
 }

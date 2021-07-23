@@ -7,6 +7,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
     public enum HDT_ENU_AnagAlignmentContext {
         SERVICE_CATALOG,                    // Innesco manuale da Service Catalog
         ALLINEAMENTO_CANONE_RAI,            // Innesco automatico alla chiusura del Case del processo di Allineamento Canone RAI
+        GESTIONE_DISALIMENTABILITA,         // Innesco automatico alla chiusura del Case del processo di Gestione Disalimentabilità
         VARIAZIONI_FISCALE,                 // Innesco automatico alla chiusura del Case del processo di Variazioni - Fiscale
         VARIAZIONI_MARCATURA_USO_PDR,       // Innesco automatico alla chiusura del wizard del processo di Variazioni - Marcatura/Uso PDR
         VARIAZIONI_INDIRIZZO_FORNITURA,     // Innesco automatico alla chiusura del wizard del processo di Variazioni - Indirizzo Fornitura
@@ -186,7 +187,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                  VARIAZIONI_MARCATURA_USO_PDR,
                  VARIAZIONI_INDIRIZZO_FORNITURA,
                  VARIAZIONI_TARIFFA_RES_NONRES,
-                 ALLINEAMENTO_CANONE_RAI{
+                 ALLINEAMENTO_CANONE_RAI,
+                 GESTIONE_DISALIMENTABILITA {
                 Case anagAlignCase = createAnagAlignmentCase(triggerObj);
                 updateAnagAlignmentCasePostSalesDispatcher(anagAlignCase, (Case) triggerObj, context);
                 returnCases.add(anagAlignCase);
@@ -401,6 +403,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         switch on context {
             when ALLINEAMENTO_CANONE_RAI {
                 // TODO: aggiungere qui eventuali logiche specifiche per Allineamento Canone RAI
+            }
+            when GESTIONE_DISALIMENTABILITA {
+                // TODO: aggiungere qui eventuali logiche specifiche per Gestione Disalimentabilità
             }
             when VARIAZIONI_FISCALE {
                 // TODO: aggiungere qui eventuali logiche specifiche per Variazioni/Fiscali
