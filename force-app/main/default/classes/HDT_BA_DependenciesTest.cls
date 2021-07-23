@@ -21,7 +21,7 @@ public with sharing class HDT_BA_DependenciesTest {
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordListBlk = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, PHASE_INC); 
-        ServicePoint__c sp = new ServicePoint__c(ServicePointCode__c = SERVICE_POINT_CODE);
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         ServiceRequest__c sr = new ServiceRequest__c();
         for(Order order : ordListBlk){
             
@@ -30,8 +30,8 @@ public with sharing class HDT_BA_DependenciesTest {
             order.Status = STATUS_CANCELLED;
             insert order;
 
-            sr.ServicePoint__c = sp.Id;
-            sr.ServicePointCode__c = sp.ServicePointCode__c;
+            sr.ServicePoint__c = servPointList[0].Id;
+            sr.ServicePointCode__c = servPointList[0].ServicePointCode__c;
             sr.Order__c = order.Id;
             sr.Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
             sr.Status__c = STATUS_CANCELLED;
@@ -50,8 +50,8 @@ public with sharing class HDT_BA_DependenciesTest {
 
             ServiceRequest__c srSeq = new ServiceRequest__c();
 
-            srSeq.ServicePoint__c = sp.Id;
-            srSeq.ServicePointCode__c = sp.ServicePointCode__c;
+            srSeq.ServicePoint__c = servPointList[0].Id;
+            srSeq.ServicePointCode__c = servPointList[0].ServicePointCode__c;
             srSeq.Order__c = order.Id;
             srSeq.Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
             srSeq.Status__c = HDT_UTL_Dependencies.STATUS_SEQUENZIALIZZATO;
