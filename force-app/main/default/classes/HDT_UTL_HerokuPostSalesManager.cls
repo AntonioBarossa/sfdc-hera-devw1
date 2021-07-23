@@ -202,6 +202,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         //INIT VARIABLE FOR NOTIFICATION ON CASE
         if(method.equalsIgnoreCase('esito_intermedio') || method.equalsIgnoreCase('esito_finale') || method.equalsIgnoreCase('AddAttivita')){
             if(String.isBlank(recordId) && String.isBlank(caseNumber)) throw new HDT_UTL_RichPassException('Required Field Missing: RecordId OR CaseNumber');
+            caseNumber = caseNumber.replace('/','');
             caseParam = recordId != null? recordId:caseNumber;
             recordCase = hpsmQr.getCaseRecord(caseParam);
             currentCase.Id = recordCase.Id;
