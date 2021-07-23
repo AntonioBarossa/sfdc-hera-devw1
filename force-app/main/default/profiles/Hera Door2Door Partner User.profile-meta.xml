@@ -2552,12 +2552,6 @@
         <editable>true</editable>
         <field>AssignmentRule__c.ComplaintSeverity__c</field>
         <readable>true</readable>
-<<<<<<< HEAD
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>AssignmentRule__c.CreatorAgency__c</field>
-=======
     </fieldPermissions>	
     <fieldPermissions>
         <editable>true</editable>
@@ -2572,16 +2566,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AssignmentRule__c.ClientCategory__c</field>
->>>>>>> DEVW1
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-<<<<<<< HEAD
-        <field>AssignmentRule__c.FirstLevelOpinion__c</field>
-=======
         <field>AssignmentRule__c.ClientMarking__c</field>
->>>>>>> DEVW1
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
@@ -2617,16 +2606,6 @@
 	<fieldPermissions>
         <editable>true</editable>
         <field>AssignmentRule__c.SAPStep__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>AssignmentRule__c.SalesAgency__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>AssignmentRule__c.SecondLevelOpinion__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
@@ -27216,11 +27195,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.AssignmentRule__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.AssociationStatute__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27541,11 +27515,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.Queued__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.QuoteLine__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27567,11 +27536,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.RequiredOfficeActivity__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.SAPStep__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

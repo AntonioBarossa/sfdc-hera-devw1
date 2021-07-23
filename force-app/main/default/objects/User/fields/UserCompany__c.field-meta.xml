@@ -8,10 +8,6 @@
     <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
     <valueSet>
-<<<<<<< HEAD
-        <restricted>true</restricted>
-        <valueSetName>HDT_UserCompany</valueSetName>
-=======
         <restricted>false</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -206,6 +202,5 @@
                 <label>AMGAS BLU SRL</label>
             </value>
         </valueSetDefinition>
->>>>>>> DEVW1
     </valueSet>
 </CustomField>
