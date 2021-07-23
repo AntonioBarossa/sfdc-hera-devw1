@@ -7926,6 +7926,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contract.Market__C</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contract.MarkForRenewal__c</field>
         <readable>true</readable>
     </fieldPermissions>

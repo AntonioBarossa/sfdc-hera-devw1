@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Subtype__c</field>
-        <value xsi:type="xsd:string">Accise � Energia Elettrica</value>
+        <value xsi:type="xsd:string">Accise - Energia Elettrica</value>
     </values>
     <values>
         <field>Type__c</field>

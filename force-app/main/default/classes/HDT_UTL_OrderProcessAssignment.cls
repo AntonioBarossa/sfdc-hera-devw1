@@ -64,8 +64,8 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
 
     public static List<HDT_WRP_Process> initProcesses(){
         return new List<HDT_WRP_Process>{
-            new HDT_WRP_Process('Subentro Gas', 'HDT_RT_Subentro','A01', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas',false),
-            new HDT_WRP_Process('Subentro Ele', 'HDT_RT_Subentro','A10', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele',false),
+            new HDT_WRP_Process('Subentro Gas', 'HDT_RT_Subentro','A01', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Gas',false),
+            new HDT_WRP_Process('Subentro Ele', 'HDT_RT_Subentro','A10', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele',false),
             new HDT_WRP_Process('Prima Attivazione Ele', 'HDT_RT_Attivazione','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele',false),
             new HDT_WRP_Process('Prima Attivazione In delibera', 'HDT_RT_Attivazione','A40', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas',false),
             new HDT_WRP_Process('Prima Attivazione Fuori delibera', 'HDT_RT_Attivazione','A01', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas',false),
@@ -85,8 +85,8 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false),
             new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false),
             // new HDT_WRP_Process('Switch In Reseller', 'HDT_RT_SwitchIn','', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, null, false), //temporarily commented
-            new HDT_WRP_Process('Voltura Ele', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', false, false, false, false, null, false),
-            new HDT_WRP_Process('Voltura Gas', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero','Regolamentato'}, 'Si', false, false, false, false, null, false)
+            new HDT_WRP_Process('Voltura Ele', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', false, false, false, false, 'HDT_RT_Ele', false),
+            new HDT_WRP_Process('Voltura Gas', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero','Regolamentato'}, 'Si', false, false, false, false, 'HDT_RT_Gas', false)
         };
     }
 
