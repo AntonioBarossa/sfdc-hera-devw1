@@ -37,10 +37,12 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         try {
             wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
                 Id = recordId,
+                AssigneeType__c = 'Utente',
                 OwnerId = assigneeId
             );
 
             if(String.isNotBlank(wrapperId)) {
+                activity.AssigneeType__c = 'Coda';
                 activity.WorkGroup__c = workGroup;
                 activity.Agency__c = agency;
                 activity.Queue__c = wrapperId;

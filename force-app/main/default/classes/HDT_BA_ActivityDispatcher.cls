@@ -100,6 +100,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                         AssignmentRule__c = rule.Id,
                         Agency__c = queue.Agency__c,
                         WorkGroup__c = queue.Group__c,
+                        AssigneeType__c = 'Coda',
                         Queue__c = (Id) queue.QueueId__c,
                         RuleChosenQueue__c = (Id) queue.QueueId__c,
                         OwnerId = (Id) queue.QueueId__c
