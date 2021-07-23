@@ -69,14 +69,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
             } else if(order.VoltureType__c != null && (order.VoltureType__c.containsIgnoreCase('In Continuità') || order.VoltureType__c.containsIgnoreCase('Recupero'))
                 && oldOrder.ServicePoint__r.CommoditySector__c.containsIgnoreCase('Energia Elettrica')){
-            
                     throw new AuraHandledException('Impossibile selezionare il valore \"' + order.VoltureType__c + '\"');
-            }
+            } //else if((order.VoltureType__c == null || order.VoltureType__c == '') && (order.Step__c == 4 || order.Step__c == 8)){
+            //         throw new AuraHandledException('Valorizzare Campi Obbligatori');
+            // }
 
             if(readingDate != null && (isReading != null && isReading == true)){
 
                 order.ReadingCustomerDate__c = readingDate;
 
+            }if(order.VoltureType__c != null && String.isBlank(order.VoltureType__c)){
+                throw new AuraHandledException('Valorizzare campi obbligatori');
             }
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 

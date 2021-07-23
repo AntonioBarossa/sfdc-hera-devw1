@@ -1,22 +1,25 @@
 public with sharing class HDT_SRV_DocumentalManagementFacade {
     public static String getBase64(String recordId,String context,String formParams){
-        String base64 = '';
+        String baseSixtyFour = '';
         String body='';
         String result='';
         String responseCode;
         String responseStatus;
+        String message;
         Map<String,String> resultMap = new Map<String,String>();
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         try{     
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
             documentalResponse = HDT_SRV_DocumentalManagement.executeCalloutRequest(body,context);
-            base64 = documentalResponse.deliverPackageResponse.composedDocument;
+            baseSixtyFour = documentalResponse.deliverPackageResponse.composedDocument;
             result = documentalResponse.deliverPackageResponse.result;
             responseCode = String.valueOf(documentalResponse.responseCode);
             responseStatus = documentalResponse.responseStatus;
+            message = documentalResponse.deliverPackageResponse.message;
             resultMap.put('code',responseCode);
-            resultMap.put('base64',base64);
+            resultMap.put('base64',baseSixtyFour);
             resultMap.put('result',result);
+            resultMap.put('message',message);
         }catch(Exception ex){
             resultMap.put('code','500');
         }
@@ -39,15 +42,15 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
     }
 
     public static void sendAdvanceDocumentation(String recordId,String context,String formParams){
-        String base64 = '';
+        String baseSixtyFour = '';
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : null;
         String fileName = (String) formParamsMap.get('fileName');
         String sendMode = (String) formParamsMap.get('sendMode');
         try{
-            base64 = getBase64(recordId,context,formParams);
+            baseSixtyFour = getBase64(recordId,context,formParams);
             if(sendMode.equalsIgnoreCase('E-mail')){
-                HDT_SRV_DocumentalManagement.createPublicLinkFuture(recordId,base64,fileName);
+                HDT_SRV_DocumentalManagement.createPublicLinkFuture(recordId,baseSixtyFour,fileName);
             }
         }catch(Exception ex){
             System.debug(ex.getMessage());
@@ -78,5 +81,51 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             
         }
         return JSON.serialize(returnMap);
+    }
+
+    public static String showOriginalDocument(String recordId){
+        String context;
+        String baseSixtyFour = '';
+        String body='';
+        String result='';
+        String responseCode;
+        String responseStatus;
+        Map<String,String> resultMap = new Map<String,String>();
+        HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+        try{
+            SObject documentalObject = HDT_QR_DocumentalConfiguration.getDocumentalObjectById(recordId);
+            String documentType = HDT_SRV_DocumentalManagement.getDocumentType(documentalObject);
+            body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject);
+            postelResponse = HDT_SRV_DocumentalManagement.executeGetEnvelopeCalloutRequest(body, documentType);
+            baseSixtyFour = postelResponse.content;
+            resultMap.put('outcome','OK');
+            resultMap.put('base64',baseSixtyFour);
+            resultMap.put('type',  documentType);
+        }catch(Exception ex){
+            resultMap.put('outcome','KO');
+            resultMap.put('errorMessage', ex.getMessage());
+        }
+        return JSON.serialize(resultMap);
+    }
+
+    public static String showArchivedAttachment(String recordId){
+        String baseSixtyFour = '';
+        String body='';
+        String result='';
+        String responseCode;
+        String responseStatus;
+        Map<String,String> resultMap = new Map<String,String>();
+        HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+        try{
+            body = HDT_SRV_DocumentalManagement.generateGetAttachmentRequest(recordId);
+            postelResponse = HDT_SRV_DocumentalManagement.executeGetAttachmentCalloutRequest(body);
+            baseSixtyFour = postelResponse.content;
+            resultMap.put('outcome','OK');
+            resultMap.put('base64', baseSixtyFour);
+        }catch(Exception ex){
+            resultMap.put('outcome','KO');
+            resultMap.put('errorMessage', ex.getMessage());
+        }
+        return JSON.serialize(resultMap);
     }
 }

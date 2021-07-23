@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_44</label>
+    <label>Descrizione tipo documento / Piano bonus</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

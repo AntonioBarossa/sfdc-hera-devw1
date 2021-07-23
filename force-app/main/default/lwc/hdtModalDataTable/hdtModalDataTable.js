@@ -78,6 +78,7 @@ export default class HdtModalDataTable extends LightningElement {
     @api fieldName;
     @api icon;
     @api rate;
+    @api rateTypeValue;
     @track data = [];
     @track columns = [];
     @track error = {show: false, message: ''};
@@ -144,13 +145,17 @@ export default class HdtModalDataTable extends LightningElement {
 
         this.iconHeader = this.icon;
         this.backendCall();
-        
+
+        setTimeout(() => {
+            this.inputAutoFocus();
+        }, 1000);
+
     }
 
     backendCall(){
         console.log('# getTableData #');
 
-        getTableData({objectApiName: this.relatedToTable, rate: this.rate, searchByField: this.searchByField, searchValue: this.searchValue})
+        getTableData({objectApiName: this.relatedToTable, rate: this.rate, rateTypeValue: this.rateTypeValue, searchByField: this.searchByField, searchValue: this.searchValue})
             .then(result => {
                 console.log('# call result #');
 
@@ -192,6 +197,18 @@ export default class HdtModalDataTable extends LightningElement {
         this.dispatchEvent(closeEvent);        
     }
 
+    inputAutoFocus(){
+        console.log('>>> inputAutoFocus');
+        try{
+            console.log('>>> setTimeout');
+            let input = this.template.querySelector('lightning-input');
+            console.log('input ' + input.type);
+            input.focus();
+        } catch (e){
+            console.log('>>> error on focus element');
+        }
+    }
+
     handleRowAction(event) {
         this.data = [];
         const row = event.detail.row;
@@ -200,39 +217,41 @@ export default class HdtModalDataTable extends LightningElement {
         var recordId = '';
         var recordLabel = '';
 
+        console.log(JSON.stringify(this.record));
+
         switch (this.relatedToTable) {
 
             case 'FareTypeList__c':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;
             case 'DiscountListP__c':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;
             case 'DiscountListaA__c':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;                
             case 'PriceListT__c':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;
             case 'PriceListL__c':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;
             case 'PriceListQ__c':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;        
             case 'infoGroup':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['ValueDescription__c'];
                 break;
             case 'priceCode':
                 recordId = this.record['PossibleValue__c'];
-                recordLabel = this.record['PossibleValue__c'];
+                recordLabel = this.record['Description__c'];
                 break;
             case 'RateTemplate__c':
                 recordId = this.record['PossibleValue__c'];

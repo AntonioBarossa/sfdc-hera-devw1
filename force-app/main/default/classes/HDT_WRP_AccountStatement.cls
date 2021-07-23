@@ -16,6 +16,7 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public Boolean enable;
         @AuraEnabled public String type;
         @AuraEnabled public String parameters;
+        @AuraEnabled public String accesskey;
         
         public HDT_WRP_ButtonObjDetail(String labelTemp, String nameTemp, Boolean enableTemp, String typeTemp, String parametersTemp){
             label = labelTemp;
@@ -23,6 +24,14 @@ public class HDT_WRP_AccountStatement {
             enable = enableTemp;
             type = typeTemp;
             parameters = parametersTemp;
+        }
+        public HDT_WRP_ButtonObjDetail(String labelTemp, String nameTemp, Boolean enableTemp, String typeTemp, String parametersTemp, String accesskeyTemp){
+            label = labelTemp;
+            name = nameTemp;
+            enable = enableTemp;
+            type = typeTemp;
+            parameters = parametersTemp;
+            accesskey = accesskeyTemp;
         }
     }
 
@@ -80,7 +89,7 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public String fieldName;
         @AuraEnabled public Boolean sortable;
         @AuraEnabled public Decimal initialWidth;
-        @AuraEnabled public String fieldType;
+        @AuraEnabled public String type;
     }
 
     public class HDT_WRP_ReponseWrapper {
@@ -116,6 +125,7 @@ public class HDT_WRP_AccountStatement {
         public String servizio;
         public String contratto;
         public String loginId;
+        public String stepSollecito;
     }
 
     public class HDT_WRP_Tabs {
@@ -146,9 +156,11 @@ public class HDT_WRP_AccountStatement {
         public String DEL_569;
         public String documentoPareggio;
         public List<HDT_WRP_SecondLevelObj> secondoLivelloInformativo;
+        public List<HDT_WRP_SecondLevelObj> secondoLivelloInformativoF2;
     }
 
     public class HDT_WRP_SecondLevelObj {
+        public String docPareggio;
     }
 
 }

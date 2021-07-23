@@ -17,6 +17,11 @@
                 <default>false</default>
                 <label>SBQQ__Category__c</label>
             </value>
+            <value>
+                <fullName>NumberValueLookup__c</fullName>
+                <default>false</default>
+                <label>Valore Numerico</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -199,7 +199,8 @@ public inherited sharing class HDT_QR_Order {
             Id,
             Phase__c,
             PrecheckResultSII__c,
-            BillingProfile__c
+            BillingProfile__c,
+            ProcessType__c
             FROM Order 
             WHERE Id = :id
             WITH SECURITY_ENFORCED
@@ -311,7 +312,8 @@ public inherited sharing class HDT_QR_Order {
 		    ServicePoint__r.SupplyPostalCode__c,            
             ServicePoint__r.Account__r.CustomerCode__c,                  
             ServicePoint__r.Account__r.FiscalCode__c,                    
-            CommercialProduct__c,                            
+            CommercialProduct__c, 
+            sale__r.isTransition__c,                           
             AnnualConsumption__c,                            
             Catalog__c,                                     
             ServicePoint__r.AnnualConsumptionStandardM3__c, 
@@ -543,10 +545,10 @@ public inherited sharing class HDT_QR_Order {
     }
 
     public List<Order> getRecordByOrderNumber(String orderNumber){
-        return [Select id,phase__c,PrecheckResultSII__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
     public List<Order> getRecordByOrderId(String recordId){
-        return [Select id,phase__c,PrecheckResultSII__c from Order where Id = :recordId WITH SECURITY_ENFORCED];
+        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c from Order where Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getRecordsByOrdersIdsBulk(List<String> orderIds){

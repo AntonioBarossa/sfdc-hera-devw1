@@ -7,125 +7,131 @@ public with sharing class HDT_LC_AdvancedSearch {
 	private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
 	private static CS_SelezioneFornitura__c customSetting = servicePointQr.getCustomSetting();
 
-	
+	@AuraEnabled
+	public static Boolean isInBlacklist(String pod){
+		HDT_QR_Blacklist qrBlack = new HDT_QR_Blacklist();
+		Blacklist__c blacklist = qrBlack.getBlacklist(pod);
+		Boolean response = false;
+		if(blacklist.POD__C != null && blacklist.isActive__c!=false){
+			response = true;
+		}
+		return response;
+	}
+
+	@AuraEnabled
+    public static Boolean permissionForFlagContract(){
+        Boolean res = FeatureManagement.checkPermission('HDT_CP_SupplySelectionSearch');
+        return res;
+    }
 	
 	@AuraEnabled
-	public static List<Map<String,Object>> getIndirizzoFornitura(String accountId) {
+	public static List<HDT_WRP_AddressObject> getIndirizzoFornitura(String accountId) {
 		system.debug('ACCOUNTID **********************'+accountId);
 		Map<String,String> outPutIndirizzo = new Map<String,String>();
 		HDT_QR_ServicePoint sp = new HDT_QR_ServicePoint();
 		List<ServicePoint__c> listBp = new List<ServicePoint__c>();
-		HDT_WRP_AddressObject wrapObject = new HDT_WRP_AddressObject();
+		List<HDT_WRP_AddressObject>  listWrapObject = new List<HDT_WRP_AddressObject>();
+		//HDT_WRP_AddressObject wrapObject = new HDT_WRP_AddressObject();
+		
 		if(accountId != null || accountId != ''){
 			listBp = sp.getAddressFornitura(accountId);
 		}
 		
-		List<Map<String,Object>> customBp = new List<Map<String,Object>>();
 		
 		if(!listBp.isEmpty()){
-		for (ServicePoint__c servicePoint : listBp) {
-			String[] addressSplit=  servicePoint.SupplyAddress__c.split(',');
-			if(addressSplit[4] !=''){
+		for (ServicePoint__c servicePoint : listBp){
+			HDT_WRP_AddressObject wrapObject = new HDT_WRP_AddressObject();
+			if(servicePoint.SupplyCity__c !='' && servicePoint.SupplyCity__c != null){
 				
-				wrapObject.Comune= addressSplit[4] ;
+				wrapObject.Comune=servicePoint.SupplyCity__c ;
 			}
 			else{
 				
-				wrapObject.Comune=' ';
+				wrapObject.Comune='';
 			}
-			if(addressSplit[0] !=''){
+			if(servicePoint.SupplyStreet__c !='' && servicePoint.SupplyStreet__c != null){
 
-				wrapObject.Via= addressSplit[0]  ;
+				wrapObject.Via= servicePoint.SupplyStreet__c  ;
 			}
 			else{
 				
-				wrapObject.Via=', ';
+				wrapObject.Via='';
 				
 			}
-			if(addressSplit[1] !=''){
+			if(servicePoint.SupplyStreetNumber__c !='' && servicePoint.SupplyStreetNumber__c != null){
 				
-				wrapObject.Civico= addressSplit[1]  ;
+				wrapObject.Civico= servicePoint.SupplyStreetNumber__c   ;
 			}
 			else{
 				
-				wrapObject.Civico=', ';
+				wrapObject.Civico='';
 			}
 			
-			if(addressSplit[2] !=''){
+			if(servicePoint.SupplyStreetNumberExtension__c !='' && servicePoint.SupplyStreetNumberExtension__c != null){
 				
-				wrapObject.EstensCivico= addressSplit[2] ;
+				wrapObject.EstensCivico= servicePoint.SupplyStreetNumberExtension__c  ;
 			}
 			else{
 				
-				wrapObject.EstensCivico=', ';
+				wrapObject.EstensCivico='';
 			}
-			if(addressSplit[6] !=''){
+			if(servicePoint.SupplyPostalCode__c !='' && servicePoint.SupplyPostalCode__c != null){
 				
-				wrapObject.CAP= addressSplit[6]  ;
-			}
-			else{
-				
-				wrapObject.CAP=', ';
-			}
-			if(addressSplit[5] !=''){
-				
-				wrapObject.Provincia= addressSplit[5] ;
+				wrapObject.CAP= servicePoint.SupplyPostalCode__c   ;
 			}
 			else{
 				
-				wrapObject.Provincia=', ';
+				wrapObject.CAP='';
 			}
-			if(addressSplit[7] !=''){
+			if(servicePoint.SupplyProvince__c !='' && servicePoint.SupplyProvince__c != null){
 				
-				wrapObject.Stato= addressSplit[7] ;
-			}
-			else{
-				
-				wrapObject.Stato=', ';
-			}
-		/*	if(addressSplit[0] !=''){
-				
-				wrapObject.CodiceViaStradarioSAP= addressSplit[0] ;
+				wrapObject.Provincia= servicePoint.SupplyProvince__c  ;
 			}
 			else{
 				
-				wrapObject.CodiceViaStradarioSAP=', ';
+				wrapObject.Provincia='';
 			}
-			if(addressSplit[0] !=''){
+			if(servicePoint.SupplyCountry__c !='' && servicePoint.SupplyCountry__c != null){
 				
-				wrapObject.CodiceComuneSAP=addressSplit[0] ;
+				wrapObject.Stato= servicePoint.SupplyCountry__c  ;
 			}
 			else{
 				
-				wrapObject.CodiceComuneSAP=', ';
-			}*/
+				wrapObject.Stato='';
+			}
+			if(servicePoint.SupplySAPStreetCode__c !='' && servicePoint.SupplySAPStreetCode__c != null){
+				
+				wrapObject.CodiceViaStradarioSAP= servicePoint.SupplySAPStreetCode__c  ;
+			}
+			else{
+				
+				wrapObject.CodiceViaStradarioSAP='';
+			}
+			if(servicePoint.SupplySAPCityCode__c !='' && servicePoint.SupplySAPCityCode__c != null){
+				
+				wrapObject.CodiceComuneSAP=servicePoint.SupplySAPCityCode__c  ;
+			}
+			else{
+				
+				wrapObject.CodiceComuneSAP='';
+			}
+			system.debug('wrapObject address : '+  wrapObject );
 
-            Map<String,Object> row = new Map<String,Object>();
-			
-			//	String value = servicePoint.SupplyAddress__c;
-
-				String label = 'INDIRIZZOFORNITURA';
-
-				row.put(label,wrapObject);
-
-			/*	if(value!=',,,,,,,'){
-					row.put(label,value);
-				}*/
-				
-			
-            customBp.add(row);
+			listWrapObject.add(wrapObject);
+			system.debug('listWrapObject address in For : '+  listWrapObject );
 		}
 		}
-
-		return customBp;
+		system.debug('listWrapObject address : '+  listWrapObject );
+		return listWrapObject;
 
 	}
 
 	@AuraEnabled
-	public static List<Map<String,Object>> getIndirizzo(String accountId) {
+	public static  HDT_WRP_AddressObject getIndirizzo(String accountId) {
 		system.debug('ACCOUNTID **********************'+accountId);
 
 		HDT_WRP_AddressObject wrapObject = new HDT_WRP_AddressObject();
+		List<HDT_WRP_AddressObject> listWrapperObject = new List<HDT_WRP_AddressObject>();
 		//Map<String,String> outPutIndirizzo = new Map<String,String>();
 		HDT_QR_Account qr = new HDT_QR_Account();		
 		Account ac = new Account();
@@ -154,93 +160,93 @@ public with sharing class HDT_LC_AdvancedSearch {
 			String label = ' ';
 
 			if(ac.BillingCity != null){
-				value = ac.BillingCity ;
+				
 				wrapObject.Comune= ac.BillingCity ;
 			}
 			else{
-				value = ' ';
+				
 				wrapObject.Comune=' ';
 			}
 			if(ac.BillingStreetName__c != null){
-				value += ','+ac.BillingStreetName__c ;
+				
 				wrapObject.Via= ac.BillingStreetName__c ;
 			}
 			else{
-				value += ',  ';
+				
 				wrapObject.Via=', ';
 				
 			}
 			if(ac.BillingStreetNumber__c != null){
-				value += ','+ac.BillingStreetNumber__c ;
+				
 				wrapObject.Civico= ac.BillingStreetNumber__c ;
 			}
 			else{
-				value += ',  ';
+				
 				wrapObject.Civico=', ';
 			}
 			
 			if(ac.BillingStreetNumberExtension__c != null){
-				value += ','+ac.BillingStreetNumberExtension__c ;
+				
 				wrapObject.EstensCivico= ac.BillingStreetNumberExtension__c ;
 			}
 			else{
-				value += ',  ';
+				
 				wrapObject.EstensCivico=', ';
 			}
 			if(ac.BillingPostalCode != null){
-				value += ','+ac.BillingPostalCode ;
+				
 				wrapObject.CAP= ac.BillingPostalCode ;
 			}
 			else{
-				value += ',  ';
+				
 				wrapObject.CAP=', ';
 			}
 			if(ac.BillingState != null){
-				value += ','+ac.BillingState ;
+				
 				wrapObject.Provincia= ac.BillingState ;
 			}
 			else{
-				value += ',  ';
+				
 				wrapObject.Provincia=', ';
 			}
 			if(ac.BillingCountry != null){
-				value += ','+ac.BillingCountry ;
+				
 				wrapObject.Stato= ac.BillingCountry ;
 			}
 			else{
-				value += ',  ';
+				
 				wrapObject.Stato=', ';
 			}
 			if(ac.BillingStreetCode__c != null){
-				value += ','+ac.BillingStreetCode__c ;
+				
 				wrapObject.CodiceViaStradarioSAP= ac.BillingStreetCode__c ;
 			}
 			else{
-				value += ',  ';
+				
 				wrapObject.CodiceViaStradarioSAP=', ';
 			}
 			if(ac.BillingCityCode__c != null){
-				value += ','+ac.BillingCityCode__c ;
+				
 				wrapObject.CodiceComuneSAP= ac.BillingCityCode__c ;
 			}
 			else{
-				value += ',  ';
+				
 				wrapObject.CodiceComuneSAP=', ';
 			}
 
 				
 
-				row.put(label,wrapObject);
+			/*row.put(label,wrapObject);
 
 
 			
-            customBp.add(row);
+            customBp.add(row);*/
 		
 
 		
 	}
-
-		return customBp;
+	
+		return wrapObject;
 	}
 
 	@AuraEnabled
@@ -253,7 +259,6 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		ac = qr.getBillingAddressAccount(accountId);
 	}
 	system.debug('Account retrieved******'+ ac);
-	//String[] billingAddressSplit = ac.BillingAddressFormula__c.split(',');
 
 		if(ac.BillingCity != null){
 			outPut.put('Comune',ac.BillingCity);
@@ -276,6 +281,12 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		if(ac.BillingStreetNumberExtension__c != null){
 			outPut.put('Est.Civico',ac.BillingStreetNumberExtension__c);
 		}
+		if(ac.BillingStreetCode__c != null){
+			outPut.put('Codice Via Stradario SAP',ac.BillingStreetCode__c);
+		}
+		if(ac.BillingCityCode__c != null){
+			outPut.put('Codice Comune SAP',ac.BillingCityCode__c);
+		}
 
 	system.debug('outPut *******'+ outPut);
 
@@ -288,10 +299,12 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 	 */
 	@AuraEnabled(cacheable = true)
 	public static List<Map<String, Object>> getServicePoints(String parameter,
-															 String queryType,String additionalFilter) {
+															 String queryType,String additionalFilter,Boolean isSuperUser) {
 		Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();
+		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		system.debug('queryType' + queryType);
-		system.debug('additionalFilter' + additionalFilter);												
+		system.debug('additionalFilter' + additionalFilter);
+		Boolean isSerachFromContract = false;												
 		switch on queryType {
 			when 'serialnumber' {																				 
 	 
@@ -332,6 +345,7 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 
 
 				}
+				isSerachFromContract=true;
 			}
 			when else {
 			}
@@ -360,6 +374,29 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 					}
 				}
 			}
+			if(isSerachFromContract != true){
+				isSuperUser=false;
+			}
+
+			Contract c = contractQr.getSapContractCode(servicePointObject.ServicePointCode__c,isSuperUser);
+			
+
+				if(c.SAPContractCode__c!=null){
+					String value = '';
+					String label = '';
+					label='Codice Contratto';
+					value=(String) c.SAPContractCode__c;
+					record.put(label,value);
+
+				}else{
+					String value = '';
+					String label = '';
+					label='Codice Contratto';
+					value=' ';
+					record.put(label,value);
+				}
+			
+
 			system.debug('record***********'+record);
 			output.add(new Map<String, Object>(record));
 			record.clear();
@@ -525,7 +562,7 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		system.debug('additionalFilter' + additionalFilter);
 		String fieldForniture = customSetting.OutputServicePoint__c;
 		system.debug('fieldForniture : ' + fieldForniture);
-
+		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		List<String> listField = fieldForniture != null ? fieldForniture.split(',') : new List<String>();
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
@@ -540,28 +577,54 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		}
 		system.debug('data get acc : ' + servicePoints);
 		String type='ServicePoint__c';
-
+		List<String> servicePointsCodes = new List<String>();
+		for(ServicePoint__c s :servicePoints){
+			servicePointsCodes.add(s.ServicePointCode__c);
+		}
+		List<Contract> c = contractQr.getSapContractCode(servicePointsCodes);
+		Integer i = 0;
 		Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
 		Schema.SObjectType leadSchema = schemaMap.get(type);
 		Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
 
         List<Map<String,String>> customSp = new List<Map<String,String>>();
 		for (ServicePoint__c sp : servicePoints) {
-            Map<String,String> row = new Map<String, String>();
+            Map<String,String> row = new Map<String, String>();	
 			for(String field : listField){
 				String value = '';
 				String label = '';
+				
 				if(field.contains('__r')){
 					List<String> s = field.split('__r.');
 					system.debug('************:' + field + '-' + s);
-					value = (String)sp.getSObject(s[0]+'__r').get(s[1]);
-					label = fieldMap.get(s[0]+'__c').getDescribe().getLabel();
+
+					if(sp.getSObject(s[0]+'__r')!=null){
+
+						
+						value = (String)sp.getSObject(s[0]+'__r').get(s[1]);
+
+						label = fieldMap.get(s[0]+'__c').getDescribe().getLabel();
+					}
+
 				}
 				else{
 					value = (String)sp.get(field);
 					label = fieldMap.get(field).getDescribe().getLabel();
 				}
 				row.put(label,value);
+			}
+			if(!c.isEmpty() ){
+				for(Contract con :c){
+					String value = '';
+					String label = '';
+					if(con.ServicePoint__r.ServicePointCode__c== sp.ServicePointCode__c){
+						label='Codice Contratto';
+						value=(String) con.SAPContractCode__c;
+						row.put(label,value);
+					}
+
+				}
+				
 			}
             customSp.add(row);
 		}

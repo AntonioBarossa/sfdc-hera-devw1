@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_ATTRIB_107</label>
+    <label>Data ricezione Archidoc</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

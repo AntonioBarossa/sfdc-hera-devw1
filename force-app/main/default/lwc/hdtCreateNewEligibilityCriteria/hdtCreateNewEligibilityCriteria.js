@@ -2,8 +2,17 @@ import { LightningElement, wire, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { getRecord } from 'lightning/uiRecordApi';
 import getExistingCriteria from '@salesforce/apex/HDT_LC_EligibilityCriteriaController.getExistingCriteria';
+import mainTitle from '@salesforce/label/c.HDT_LWC_CreateNewCriteria_MainTitle';
+import newTitleLabel from '@salesforce/label/c.HDT_LWC_CreateNewCriteria_NewTitleLabel';
+import searchTitleLabel from '@salesforce/label/c.HDT_LWC_CreateNewCriteria_SearchTitleLabel';
 
 export default class HdtCreateNewEligibilityCriteria extends NavigationMixin(LightningElement) {
+
+    label = {
+        mainTitle,
+        newTitleLabel,
+        searchTitleLabel
+    };
 
     @api productid;
     //@api eligibilityId;

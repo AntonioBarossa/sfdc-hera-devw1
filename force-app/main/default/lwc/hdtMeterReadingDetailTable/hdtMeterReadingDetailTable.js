@@ -11,6 +11,9 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     @track detailTableHeader = 'Letture';
     meterReadingError = false;
     meterReadingErrorMessage = '';
+    sortedBy;
+    defaultSortDirection = 'asc';
+    sortDirection = 'asc';
 
     connectedCallback(){
         console.log('HdtMeterReadingDetailTable loaded.');
@@ -28,6 +31,7 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
             if(data.success){
                 var obj = JSON.parse(data.data);
                 this.meterReadingData = obj.data;
+                //console.log(JSON.stringify(this.meterReadingData));
                 this.detailTableHeader = 'Letture contratto > ' + this.contractNumber;
                 this.loadData = true;
             } else {
@@ -80,7 +84,101 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
 
     }
 
-    /*@api meterReadingBackendCall(contractNumber){
+    sort(event){
+        console.log('## sort ## ');
+
+        try {
+            const { fieldName: sortedBy, sortDirection } = event.detail;
+            var sortField = event.detail.fieldName;
+            //var sortDirection = event.detail.sortDirection;
+            var listToConsider = 'meterReadingData';
+            console.log('>>> sort by: ' + sortField + ' - sortDirection: ' + sortDirection);
+
+            var currentObj = this.columnsobj.filter(c => { return c.fieldName == sortField });
+
+            const cloneData = [...this.meterReadingData];
+
+            switch (currentObj[0].fieldType) {
+                case 'text':
+                    if(sortDirection==='asc'){
+                        cloneData.sort((a, b) => (a[sortField] > b[sortField]) ? 1 : -1);
+                    } else {
+                        cloneData.sort((a, b) => (a[sortField] < b[sortField]) ? 1 : -1);
+                    }
+                    break;
+                case 'date':
+
+                    cloneData.sort(function(a, b) {
+
+                        var dateSplitted = b[sortField].split('/');
+                        var data = dateSplitted[1] + '/' + dateSplitted[0] + '/' + dateSplitted[2];
+                        
+                        var dateSplitted2 = a[sortField].split('/');
+                        var data2 = dateSplitted2[1] + '/' + dateSplitted2[0] + '/' + dateSplitted2[2];
+
+                        if(sortDirection==='asc'){
+                            return (new Date(data) < new Date(data2)) ? 1 : -1;
+                        } else {
+                            return (new Date(data) > new Date(data2)) ? 1 : -1;
+                        }
+
+                    });
+
+                    break;
+                case 'number':
+                    if(sortDirection==='asc'){
+                        cloneData.sort((a, b) => (parseFloat(a[sortField]) > parseFloat(b[sortField])) ? 1 : -1);
+                    } else {
+                        cloneData.sort((a, b) => (parseFloat(a[sortField]) < parseFloat(b[sortField])) ? 1 : -1);
+                    }
+            }
+
+            this.meterReadingData = cloneData;
+            this.sortDirection = sortDirection;
+            this.sortedBy = sortedBy;
+
+        } catch(e) {
+            console.log(e);
+        }
+     
+    }
+
+    /*onHandleSort(event){
+        console.log('## sort event ## ');
+
+        try {
+            const { fieldName: sortedBy, sortDirection } = event.detail;
+            console.log('>>> sortDirection ' + sortDirection);
+            const cloneData = [...this.meterReadingData];
+            cloneData.sort(this.sortBy(sortedBy, sortDirection === 'asc' ? 1 : -1));
+            this.meterReadingData = cloneData;
+
+            this.sortDirection = sortDirection;
+            this.sortedBy = sortedBy;
+
+        } catch(e) {
+            console.log(e);
+        }
+     
+    }
+
+    sortBy(field, reverse, primer) {
+        const key = primer
+            ? function(x) {
+                  return primer(x[field]);
+              }
+            : function(x) {
+                  return x[field];
+              };
+
+        return function(a, b) {
+            a = key(a);
+            b = key(b);
+            return reverse * ((a > b) - (b > a));
+        };
+    }
+
+    @api meterReadingBackendCall(contractNumber){
         console.log('>>>> contractNumber  > ' + contractNumber);
         this.loadData = false;
         getMeterReadingRecords({contractCode: contractNumber}).then(result => {

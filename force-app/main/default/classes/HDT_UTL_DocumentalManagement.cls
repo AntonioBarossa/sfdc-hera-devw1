@@ -8,6 +8,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			when 'Context2'{
 				return getRecordObjectsListContext2(recordsList);
 			}
+			when 'Context3'{
+				return getRecordObjectsListContext3(recordsList);
+			}
 			when 'Context4'{
 				return getRecordObjectsListContext4(recordsList);
 			}when else {
@@ -121,10 +124,12 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 		return false;
 	}
-	public static Boolean updateDocumentalPhase(sObject processRecord, HDT_WRP_DocumentalResponse response ){
+	public static Boolean updateDocumentalPhase(sObject processRecord, HDT_WRP_DocumentalResponse response,String context){
 		String archive = response.deliverPackageResponse.archive;
 		String result = response.deliverPackageResponse.result;
-		if(result == 'OK'){
+		String cluster = '';
+		String quotationType = '';
+		if(result == '000'){
 			if(archive != 'Y'){
 				processRecord.put('DocumentalPhase__c','Preview');
 			}else{
@@ -132,6 +137,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					processRecord.put('DocumentalPhase__c','Plico in firma');
 				}else {
 					processRecord.put('DocumentalPhase__c','Plico inviato');
+				}
+				if(context.equalsIgnoreCase('Case')){
+					cluster = (String) processRecord.get('Cluster__c');
+					quotationType = (String) processRecord.get('QuotationType__c');
+					if(cluster.equalsIgnoreCase('Preventivi') && String.isNotBlank(quotationType) && quotationType.equalsIgnoreCase('Predeterminabile')){
+						processRecord.put('Phase__c','Attesa conferma preventivo cliente');
+					}
 				}
 			}
 		}else {
@@ -147,15 +159,15 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String queryString = 'SELECT ';
 		switch on context {
 			when 'Order' {
-				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c';
+				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c';
 				fromString = 'Order';
 			}
 			when 'Case'{
-				fieldString = 'Id, AccountId,SendMode__c ,Email__c,SignMode__c,DocumentalPhase__c';
+				fieldString = 'Id, AccountId,SendMode__c ,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c,QuotationType__c';
 				fromString = 'Case';
 			}
 			when else {
-				fieldString = 'Id,PrimaryEmail__c';
+				fieldString = 'Id,PrimaryEmail__c,SendMode__c';
 				fromString = 'Account';
 			}
 		}
@@ -184,6 +196,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				when else {
 					documentalSendTracking.Account__c = (Id) processRecord.get('Id');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
 				}
 			}
 			documentalSendTracking.SendDate__c = Date.today();
@@ -212,6 +225,30 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		toReturn.add(mapStringObjectRecords);
 		return toReturn;
 	}
+
+	private static List<Map<String,List<sObject>>> getRecordObjectsListContext3(List<SObject> recordsList){
+		
+		List<Account> listAccount = new List<Account>();
+		Account accountObject = (Account) recordsList[0];
+		listAccount.add(accountObject);
+
+		List<Case> listCase = (List<Case>) accountObject.Cases;
+		List<Order> listOrder = (List<Order>) accountObject.Orders;
+		List<BillingProfile__c> listBp = (List<BillingProfile__c>) accountObject.BillingProfiles__r;
+		
+		List<AccountContactRelation> listAccContRel = (List<AccountContactRelation>) accountObject.AccountContactRelations;
+		List<Contact> listContact = new List<Contact>();
+		for(AccountContactRelation accConRel : listAccContRel){
+			listContact.add(accConRel.Contact);
+		}
+		
+		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>{
+			'CaseList' => listCase,'OrderList' => listOrder, 'Account' => listAccount, 'ContactList' => listContact, 'BillingProfileList' => listBp, 'AccountContactRelationList' => listAccContRel
+		};
+		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
+		toReturn.add(mapStringObjectRecords);
+		return toReturn;
+	} 
 
 	private static List<Map<String,List<sObject>>> getRecordObjectsListContext4(List<SObject> recordsList){
 		Account accountObject = (Account) recordsList[0];
@@ -339,7 +376,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		text = text.replaceAll('É','E\'');
 		text = text.replaceAll('Ì','I\'');
 		text = text.replaceAll('Í','I\'');
-		
+		text = text.replaceAll('[’‘“”]','\'');
+		text = text.replaceAll('·', '-');
+		text = text.replaceAll('\u00A0', ' ');  // 00A0 = carattere unicode "No-Break Space"
+
 		return text;
 	}
 	
@@ -539,7 +579,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				return 'Context4';
 			}
 			when 'Account' {
-				return 'Context4';
+				return 'Context3';
 			}
 			when 'DocumentazioneAnticipata'{
 				return 'Context2';

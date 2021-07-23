@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_ATTRIB_114</label>
+    <label>Telefono cliente (RDS Generica)</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

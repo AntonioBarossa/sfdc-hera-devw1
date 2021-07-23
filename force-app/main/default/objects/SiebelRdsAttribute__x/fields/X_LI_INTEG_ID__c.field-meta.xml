@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_LI_INTEG_ID</label>
+    <label>Line item integration Id</label>
     <length>15</length>
     <required>false</required>
     <type>Text</type>

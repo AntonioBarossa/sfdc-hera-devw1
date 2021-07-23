@@ -60,7 +60,8 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         //SetExpirationDate at CreatedDate+20businessDay
         DateTime createdCase = installmentsQr.getCaseById(recordId).CreatedDate;
         System.debug('SRV_InstallmentPlans created date -> ' + createdCase);
-        currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(Date.valueOf(createdCase), 20);
+        currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 19;
+        currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(currentCase.ExpirationDate__c, 1);
         System.debug('SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
 
         //Set AmountToPayInstallments to TotalPay
@@ -204,6 +205,62 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         }
         
         return sapCode;
+    }
+
+    /* Returns either a RentProcessRule or a Map */
+    public HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs evaluateRuleList(List<RentProcessRule__c> ruleList, Map<String,Object> criteriaMap){
+
+        RentProcessRule__c foundRule = new RentProcessRule__c();
+        HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs output = new HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs();
+        String errorMessage = '';
+        String fineTuningField;
+
+        for(RentProcessRule__c rule : ruleList){
+            Map<String,Object> notFoundMap = new Map<String,Object>();
+            for(String fieldName : criteriaMap.keySet()){
+                if(fieldName == 'SuspensionInThePastTwelveMonths__c'){
+                    fineTuningField = 'SuspensionInPastTwelveMonths__c';
+                }else{
+                    fineTuningField = fieldName;
+                }
+                if(!(rule.get(fineTuningField) == criteriaMap.get(fieldName))){
+                    notFoundMap.put(fieldName, criteriaMap.get(fieldName));
+                    String fieldLabel = Case.SObjectType.getDescribe().fields.getMap().get(fieldName).getDescribe().getLabel();
+                    //errorMessage += '\t' + fieldLabel + ': ' + criteriaMap.get(fieldName) + '(prova invece: '+ rule.get(fineTuningField) + ')\n';
+                    errorMessage = formattingErrorMessage(errorMessage, fieldLabel, criteriaMap.get(fieldName), rule.get(fineTuningField));
+                }
+            }
+            if(notFoundMap.isEmpty()){
+                foundRule = rule;
+                break;
+            }
+        }
+
+        output.rentRule = foundRule;
+        output.errorMessage = errorMessage;
+        
+        return output;
+    }
+
+    private String formattingErrorMessage(String errorMessage, String fieldLabel, Object criteriaField, Object ruleField){
+        String fineTuningCriteria = '';
+        String fineTuningRule = '';
+        if(errorMessage.indexOf(fieldLabel) > -1){
+            //Skip 
+        } else {
+            if(criteriaField instanceOf Boolean && Boolean.valueOf(criteriaField) == true){
+                fineTuningCriteria = 'Flaggato';
+                fineTuningRule = 'Non Flaggato'; 
+            } else if(criteriaField instanceOf Boolean && Boolean.valueOf(criteriaField) == false){
+                fineTuningCriteria = 'Non Flaggato';
+                fineTuningRule = 'Flaggato'; 
+            } else {
+                fineTuningCriteria = String.valueOf(criteriaField);
+                fineTuningRule = String.valueOf(ruleField);
+            }
+            errorMessage += '\t' + fieldLabel + ': ' + fineTuningCriteria + ' (prova invece: ' + fineTuningRule + ')\n';
+        }
+        return errorMessage;
     }
 
 
