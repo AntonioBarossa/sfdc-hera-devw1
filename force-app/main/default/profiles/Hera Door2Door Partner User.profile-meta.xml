@@ -32086,6 +32086,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>BlackList__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>AgentMatrix__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
