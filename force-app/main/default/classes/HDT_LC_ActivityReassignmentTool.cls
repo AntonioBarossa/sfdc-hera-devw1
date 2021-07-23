@@ -17,11 +17,14 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
                 }
             }
         }
-        List<Group> queues = [SELECT Id, Name FROM Group WHERE Type = 'Queue' AND Name LIKE :queryString WITH SECURITY_ENFORCED];
-        for(Group queue : queues) {
+        List<Queue__c> queues = [SELECT Id, Name, QueueId__c, Group__c, Agency__c FROM Queue__c WHERE Name LIKE :queryString WITH SECURITY_ENFORCED];
+        for(Queue__c queue : queues) {
             results.add(new Map<String,String>{
-                'id' => queue.Id,
+                'id' => queue.QueueId__c,
+                'wrapperId' => queue.Id,
                 'name' => queue.Name,
+                'workGroup' => queue.Group__c,
+                'agency' => queue.Agency__c,
                 'icon' => 'standard:queue'
             });
         }
@@ -30,12 +33,20 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
     }
 
     @AuraEnabled
-    public static String reassignActivity(String recordId, String assigneeId) {
+    public static String reassignActivity(String recordId, String assigneeId, String wrapperId, String workGroup, String agency) {
         try {
-            HDT_UTL_DatabaseService.updateSObject(new wrts_prcgvr__Activity__c(
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
                 Id = recordId,
                 OwnerId = assigneeId
-            ));
+            );
+
+            if(String.isNotBlank(wrapperId)) {
+                activity.WorkGroup__c = workGroup;
+                activity.Agency__c = agency;
+                activity.Queue__c = wrapperId;
+            }
+
+            HDT_UTL_DatabaseService.updateSObject(activity);
             return null;
         } catch (Exception e) {
             return e.getMessage();
@@ -44,6 +55,6 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
 
     @AuraEnabled
     public static String assignToMe(String recordId) {
-        return reassignActivity(recordId, UserInfo.getUserId());
+        return reassignActivity(recordId, UserInfo.getUserId(), null, null, null);
     }
 }

@@ -23,9 +23,9 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'Distributor__c' => '(Case__r.DistributorName__c IN (###) OR Order__r.DistributorFormula__c IN (###))',
         'Market__c' => '(Case__r.Market__c IN (###) OR Order__r.Market__c IN (###))',
         'SalesCompany__c' => '(Case__r.SalesCompany__c IN (###) OR Order__r.SalesCompany__c IN (###))',
-        'SalesAgency__c' => 'Order__r.CommercialId__c IN (###)',
+        'SalesAgency__c' => 'Order__r.Agency__c IN (###)',
         'MacroProcess__c' => '(Case__r.Cluster__c IN (###) OR Order__r.Cluster__c IN (###))',
-        'Process__c' => '(Case__r.ProcessType__c IN (###) OR Order__r.ProcessType__c IN (###))',
+        'Process__c' => '(Case__r.Type IN (###) OR Order__r.ProcessType__c IN (###))',
         'SubProcess__c' => '(Case__r.SubProcess__c IN (###) OR Order__r.Subprocess__c IN (###))',
         'Commodity__c' => '(Case__r.Commodity__c IN (###) OR Order__r.CommodityFormula__c IN (###))'
     };
@@ -98,7 +98,11 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                         Id = activity.Id,
                         Queued__c = true,
                         AssignmentRule__c = rule.Id,
-                        OwnerId = (String) queue.QueueId__c
+                        Agency__c = queue.Agency__c,
+                        WorkGroup__c = queue.Group__c,
+                        Queue__c = (Id) queue.QueueId__c,
+                        RuleChosenQueue__c = (Id) queue.QueueId__c,
+                        OwnerId = (Id) queue.QueueId__c
                     );
                     if(queue.DailyCapacity__c != null) queueUsageMap.put(queue.QueueId__c, ++queueUsage);
                     processedActivitiesMap.put(processedActivity.Id, processedActivity);
@@ -118,7 +122,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     }
 
     private Map<String,Queue__c> getQueuesMap() {
-        return new Map<String,Queue__c>([SELECT Id, DailyCapacity__c, QueueId__c FROM Queue__c]);
+        return new Map<String,Queue__c>([SELECT Id, DailyCapacity__c, Agency__c, Group__c, QueueId__c FROM Queue__c]);
     }
     
     private Map<String,Decimal> getQueueUsageMap() {

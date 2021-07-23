@@ -19,7 +19,7 @@
         </template>
         <template if:true={assigneesFound}>
             <template for:each={assignees} for:item="assignee">
-                <div key={assignee.id} data-id={assignee.id} onclick={handleListClick} onmouseover={toggleHoveredClass} onmouseout={toggleHoveredClass} class="slds-theme_default slds-m-top_x-small">
+                <div key={assignee.id} data-id={assignee.id} data-wrapperid={assignee.wrapperId} data-workgroup={assignee.workGroup} data-agency={assignee.agency} onclick={handleListClick} onmouseover={toggleHoveredClass} onmouseout={toggleHoveredClass} class="slds-theme_default slds-m-top_x-small">
                     <lightning-icon icon-name={assignee.icon} class="slds-m-right_medium"></lightning-icon>
                     {assignee.name}
                 </div>

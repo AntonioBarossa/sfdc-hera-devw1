@@ -30,7 +30,13 @@ export default class HdtActivityReassignmentTool extends LightningElement {
     }
 
     async handleListClick(event) {
-        this.handleErrorMessage(await reassignActivity({recordId: this.recordId, assigneeId: event.currentTarget.dataset.id}));
+        this.handleErrorMessage(await reassignActivity({
+            recordId: this.recordId,
+            assigneeId: event.currentTarget.dataset.id,
+            wrapperId: event.currentTarget.dataset.wrapperid,
+            workGroup: event.currentTarget.dataset.workgroup,
+            agency: event.currentTarget.dataset.agency
+        }));
     }
 
     async handleButtonClick() {
