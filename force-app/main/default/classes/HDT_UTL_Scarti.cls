@@ -8,26 +8,24 @@
 global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.IApexAction{
     
     global Object execute(Object args){
-
         Map<String, Object> argsMap = (Map<String, Object>) args;
-
         SObject transition = (SObject) argsMap.get('transition');
         SObject action = (SObject) argsMap.get('action');
         String method = (String) argsMap.get('method');
         SObject sender = (SObject) argsMap.get('sender');
 
-        switch on method{
-            when 'checkActivityCreation'{
-                checkActivityCreation((Id)sender.get('Id'));
-            }
-            when else{
-
-            }
+        //c'è annullamento automatico a partire dal singolo scarto, per singolo processo, per singolo cluster
+        //non si riescono a passare tutte queste info tramite method, servirebbero una marea di method
+        //non sembra esserci un modo per passare i dati tramite "parametri" alla action
+        //l'unica via, per ora, sembra quella di mettere il nome del template nel method. ES: 'checkActivityCreation(CBS_ATT006__AMMISSIBILITA_KO)'
+        //di conseguenza lo switch è poco funzionale, perchè bisognerebbe scrivere n righe per quanti template vengono rigchiesti... è anche poco manutenibile
+        //dinamicamente, con substring, si vede il prefisso (checkActivityCreation) e poi si estrae il nome del template dalle parentesi tonde
+        
+        if(method.startsWith('checkActivityCreation(')){
+            checkActivityCreation((Id)sender.get('Id'), method.substringAfter('(').substringBefore(')'));
         }
 
         return null;
-
-
     }
 
     /**
@@ -37,10 +35,19 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 recordId - Id of a record
     * @return void
     */
-    Public static void checkActivityCreation(id recordId){
-        //controllo il case per capire il tipo di processo e il tipo di scarto
-        //query su template con le informazioni precedenti(tipo di processo e tipo di scarto)
-        //chiamo il metodo di process click per creare l'attività
+    public static void checkActivityCreation(Id recordId, String templateName){        
+        //TODO: check campi del case/order per vedere se va annullata la pratica o creata l'attività
+        if(Schema.Case.SObjectType == recordId.getSobjectType()
+            || Schema.Order.SObjectType == recordId.getSobjectType()){
+            wrts_prcgvr__ActivityTemplate__c template = [SELECT Id, wrts_prcgvr__Code__c 
+                                                        FROM wrts_prcgvr__ActivityTemplate__c
+                                                        WHERE Name = :templateName
+                                                        LIMIT 1];
+            if(template != null){
+                wrts_prcgvr.Interfaces_1_1.IActivityIntegration ActivityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+                List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) ActivityIntegration.createFromTemplate(template.wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>recordId});
+            }
+        }
     }
 
     /**
@@ -85,7 +92,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @return List<object> 
     */
     public static List<Object> createScartoForDocusign(List<Object> inputData){
-
         return inputdata;
     }
 
@@ -96,8 +102,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 inputData - list of et4ae5__IndividualEmailResult__c
     * @return List<object> 
     */
-    public static List<Object> createScartoForMarketingCloudEMAIL(List<Object> inputData){
-        
+    public static List<Object> createScartoForMarketingCloudEMAIL(List<Object> inputData){        
         return inputdata;
     }
 
@@ -108,8 +113,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 inputData - list of SMSTracking__c
     * @return List<object> 
     */
-    public static List<Object> createScartoForMarketingCloudSMS(List<Object> inputData){
-        
+    public static List<Object> createScartoForMarketingCloudSMS(List<Object> inputData){        
         return inputdata;
     }
 }
