@@ -1,5 +1,5 @@
 public inherited sharing class HDT_QR_ActivityCustom {
-    public static List<wrts_prcgvr__Activity__c> getRecordByTypeAndStatusAndAccountAndServicePoint(String type, String status, String accountId, String servicePointCode) {
+    public static List<wrts_prcgvr__Activity__c> getRecordByTypeAndStatusAndAccountAndServicePoint(String type, String status, String accountId, Boolean servicePointCode) {
         return [
             SELECT
             Id,
@@ -29,8 +29,6 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
-
-
     public static List<wrts_prcgvr__Activity__c> getRecordByCaseId(String caseId) {
         return [
             SELECT
@@ -84,9 +82,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WHERE OwnerId IN :ownerIdList
             WITH SECURITY_ENFORCED
         ];
-    }
-
-    /**
+    }    /**
      * @author alessandro.picchiri@eng.it
      * @date 25/06/2021     
     */
@@ -124,6 +120,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                                                                 and Status__c = 'Creata' and Order__c IN :orderSetId];
 
         return actList;
+    }
  public static List<wrts_prcgvr__Activity__c> getRejectedActivities(Set<Id> activityIds, Id recTypeId) {
         return [
             SELECT
@@ -176,4 +173,18 @@ public static List<wrts_prcgvr__Activity__c> getRecordById(String activityId) {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public static List<wrts_prcgvr__Activity__c> getRecordByParentIds(Set<Id> ids , Id recordTypeId){
+        return [SELECT 
+                Id,
+                Account__c,
+                Contact__c,
+                Distributor__c,
+                AppointmentDate__c,
+                RecordTypeId
+                FROM wrts_prcgvr__Activity__c 
+                WHERE id IN: ids AND RecordTypeId =: recordTypeId 
+                WITH SECURITY_ENFORCED 
+            ];
+        }
 }
