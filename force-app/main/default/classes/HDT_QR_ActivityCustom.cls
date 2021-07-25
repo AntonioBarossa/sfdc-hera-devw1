@@ -1,5 +1,5 @@
 public inherited sharing class HDT_QR_ActivityCustom {
-    public static List<wrts_prcgvr__Activity__c> getRecordByTypeAndStatusAndAccountAndServicePoint(String type, String status, String accountId, Boolean servicePointCode) {
+    public static List<wrts_prcgvr__Activity__c> getRecordByTypeAndStatusAndAccountAndServicePoint(String type, String status, String accountId, String servicePointCode) {
         return [
             SELECT
             Id,
@@ -174,7 +174,7 @@ public static List<wrts_prcgvr__Activity__c> getRecordById(String activityId) {
         ];
     }
 
-    public static List<wrts_prcgvr__Activity__c> getRecordByParentIds(Set<Id> ids , Id recordTypeId){
+        public static List<wrts_prcgvr__Activity__c> getRecordByParentIds(Set<String> ids , Id recordTypeId){
         return [SELECT 
                 Id,
                 Account__c,
