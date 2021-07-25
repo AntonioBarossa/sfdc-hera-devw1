@@ -12,7 +12,7 @@ public with sharing class HDT_BA_AppoitmentManagmentActivity implements Database
         return Database.getQueryLocator(query);
     }
     public void execute(Database.BatchableContext bc, List<wrts_prcgvr__Activity__c> scope){
-        Set<Id> actvIds= new Set<Id>();
+        Set<String> actvIds= new Set<Id>();
         List<String> actvId = new List<String>();
         Id recType= qrRecordType.getRecordTypeIdByName('HDT_RT_CommunicationReject');
         List<wrts_prcgvr__Activity__c> activitiesToInsert = new List<wrts_prcgvr__Activity__c>();
