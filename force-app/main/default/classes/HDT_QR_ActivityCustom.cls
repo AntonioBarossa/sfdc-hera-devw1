@@ -29,6 +29,8 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+
+
     public static List<wrts_prcgvr__Activity__c> getRecordByCaseId(String caseId) {
         return [
             SELECT
@@ -124,7 +126,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
         return actList;
 
     }
-
+    
     public static List<wrts_prcgvr__Activity__c> getActivityByRecordId(String activityId){
         return [
             SELECT Id,
