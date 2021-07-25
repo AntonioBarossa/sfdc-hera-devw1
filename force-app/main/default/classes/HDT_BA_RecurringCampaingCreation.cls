@@ -17,7 +17,9 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
         for(Campaign c: scope){
             Campaign campaign= c.clone(false,true,false,true);
             campaign.Status='Pianificata';
-            campaign.Name= c.Name +'_'+c.StartDate.year()+ c.StartDate.month() + c.StartDate.day();
+            String startDateMonth = c.StartDate.month() < 9 ? '0'+ String.valueOf(c.StartDate.month()) : String.valueOf(c.StartDate.month());
+            String startDateDay = c.StartDate.day() < 9 ? '0'+ String.valueOf(c.StartDate.day()) : String.valueOf(c.StartDate.day());
+            campaign.Name= c.Name +'_'+c.StartDate.year()+ startDateMonth + startDateDay;
             campaign.StartDate= todayDate.addDays(7);
             campaign.enddate = campaign.StartDate.addDays(Integer.valueOf(7 * campaign.GenerationPeriod__c));
             c.DateNextGeneration__c = c.DateNextGeneration__c.addDays(Integer.valueOf(7 * campaign.GenerationPeriod__c));
@@ -47,4 +49,3 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
         HDT_SRV_Campaign.updateCampaigns(campaignToUpdate);
     }
 }
-    
