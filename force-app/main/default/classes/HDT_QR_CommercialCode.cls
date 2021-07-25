@@ -3,9 +3,10 @@
 * @date 05/07/2021
 * @description HDT_QR_CommercialCode – Contains query for CommercialCode__c
 * @history Fatjola Memishaj – 05/07/2021 – Created class
-*/
+*/ 
 
 public with sharing class HDT_QR_CommercialCode {
+    
 
     public CommercialCode__c getRecordById(String Id) {
         return [

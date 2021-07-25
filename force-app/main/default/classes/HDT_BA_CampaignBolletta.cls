@@ -9,6 +9,7 @@ public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<
         this.campaignMembers = [SELECT ContractReference__c FROM CampaignMember WHERE CampaignId = :campaignId AND isWsBollettaInvoked__c = false WITH SECURITY_ENFORCED];
         System.debug('campaginName - '+ cmp.Name);
     }
+    
 
     public Iterable<CampaignMember> start(Database.BatchableContext bc) {
         return this.campaignMembers;
