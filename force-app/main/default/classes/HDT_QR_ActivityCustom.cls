@@ -124,7 +124,31 @@ public inherited sharing class HDT_QR_ActivityCustom {
                                                                 and Status__c = 'Creata' and Order__c IN :orderSetId];
 
         return actList;
-
+ public static List<wrts_prcgvr__Activity__c> getRejectedActivities(Set<Id> activityIds, Id recTypeId) {
+        return [
+            SELECT
+            Id,
+            ParentActivity__c,
+            DateTimeRef__c,Type__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE ParentActivity__c IN :activityIds
+            AND RecordTypeId = :recTypeId 
+            AND Type__c= 'Scarto Comunicazione'
+            WITH SECURITY_ENFORCED
+        ];
+    }
+public static List<wrts_prcgvr__Activity__c> getRecordById(String activityId) {
+        return [
+            SELECT
+            Id,
+            Account__c,
+            Contact__c,
+            Distributor__c,
+            AppointmentDate__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE Id= :activityId
+            WITH SECURITY_ENFORCED
+        ];
     }
     
     public static List<wrts_prcgvr__Activity__c> getActivityByRecordId(String activityId){

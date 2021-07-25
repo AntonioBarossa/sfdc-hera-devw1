@@ -186,7 +186,7 @@ public inherited sharing class HDT_LC_CampaignsController {
     @AuraEnabled
     public static Boolean cancelAssignments(String recordId){
         Campaign camp = campaignQr.getRecordById(recordId);
-        if (camp.AssignmentType__c == 'Manuale' && (camp.LavorazioneFUB__c == '' || camp.LavorazioneFUB__c == null)) {
+        if (camp.AssignmentType__c == 'Manuale' /*&& (camp.LavorazioneFUB__c == '' || camp.LavorazioneFUB__c == null)*/) {
             List<CampaignMember> cmList = campaignMemberQr.getMembersByCampaign(recordId);
             System.debug(cmList);
             if (cmList.size() > 0) {
