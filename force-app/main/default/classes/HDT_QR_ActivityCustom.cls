@@ -16,6 +16,20 @@ public inherited sharing class HDT_QR_ActivityCustom {
         ];
     }
 
+    public static List<wrts_prcgvr__Activity__c> getRecordById(String activityId) {
+        return [
+            SELECT
+            Id,
+            Account__c,
+            Contact__c,
+            Distributor__c,
+            AppointmentDate__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE Id= :activityId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     public static List<wrts_prcgvr__Activity__c> getRecordByCaseId(String caseId) {
         return [
             SELECT
@@ -108,33 +122,58 @@ public inherited sharing class HDT_QR_ActivityCustom {
                                                        WHERE  (RecordType.DeveloperName = 'HDT_RT_CreditCheckKO' or RecordType.DeveloperName = 'HDT_RT_KoPrecedeteCliente') 
                                                                 and Status__c = 'Creata' and Order__c IN :orderSetId];
 
-        return actList;
+        return actList;}
+        public static List<wrts_prcgvr__Activity__c> getRejectedActivities(Set<Id> activityIds, Id recTypeId) {
+               return [
+                   SELECT
+                   Id,
+                   ParentActivity__c,
+                   DateTimeRef__c,Type__c
+                   FROM wrts_prcgvr__Activity__c
+                   WHERE ParentActivity__c IN :activityIds
+                   AND RecordTypeId = :recTypeId 
+                   AND Type__c= 'Scarto Comunicazione'
+                   WITH SECURITY_ENFORCED
+               ];
+           }
 
-    }
-
-    public static List<wrts_prcgvr__Activity__c> getActivityByRecordId(String activityId){
-        return [
-            SELECT Id,
-            Type__c,
-            Order__c,
-            Order__r.AccountId,
-            Order__r.Account.Name,
-            Order__r.Recordtypeid,
-            Order__r.Recordtype.Name,
-            Order__r.Recordtype.DeveloperName,
-            Order__r.Status,
-            Order__r.Phase__c,
-            Order__r.OrderNumber,
-            Order__r.ProcessType__c,
-            Order__r.DateComfortCall__c,
-            Order__r.ComfortCallDaysDue__c,
-            Order__r.QualityCall__c,
-            Order__r.QualityCallUnique__c,
-            Order__r.ConfirmCustomerContract__c,
-            Order__r.CancellationReason__c
-            FROM wrts_prcgvr__Activity__c
-            WHERE Id = :activityId
-            WITH SECURITY_ENFORCED
-        ];
-    }
+        public static List<wrts_prcgvr__Activity__c> getActivityByRecordId(String activityId){
+            return [
+                SELECT Id,
+                Type__c,
+                Order__c,
+                Order__r.AccountId,
+                Order__r.Account.Name,
+                Order__r.Recordtypeid,
+                Order__r.Recordtype.Name,
+                Order__r.Recordtype.DeveloperName,
+                Order__r.Status,
+                Order__r.Phase__c,
+                Order__r.OrderNumber,
+                Order__r.ProcessType__c,
+                Order__r.DateComfortCall__c,
+                Order__r.ComfortCallDaysDue__c,
+                Order__r.QualityCall__c,
+                Order__r.QualityCallUnique__c,
+                Order__r.ConfirmCustomerContract__c,
+                Order__r.CancellationReason__c
+                FROM wrts_prcgvr__Activity__c
+                WHERE Id = :activityId
+                WITH SECURITY_ENFORCED
+            ];
+        }
+    
+        public static List<wrts_prcgvr__Activity__c> getRecordByParentIds(Set<String> ids , Id recordTypeId){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Contact__c,
+                    Distributor__c,
+                    AppointmentDate__c,
+                    RecordTypeId
+                    FROM wrts_prcgvr__Activity__c 
+                    WHERE id IN: ids AND RecordTypeId =: recordTypeId 
+                    WITH SECURITY_ENFORCED 
+                ];
+        }
 }

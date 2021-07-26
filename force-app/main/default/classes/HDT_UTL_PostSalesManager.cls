@@ -278,6 +278,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
     }
 
+    public void innescoAllineamentoAnagraficaGestioneDisalimentabilita(SObject inputCase) {
+        if (inputCase == null) {
+            System.debug('innescoAllineamentoGestioneDisalimentabilita: null input case.');
+            return;
+        }
+
+        System.debug('Innesco Allineamento Anagrafica alla chiusura del Case di Gestione Disalimentabilità: ' + inputCase.Id);
+
+        try {
+            List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.GESTIONE_DISALIMENTABILITA);
+            System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+        } catch (Exception ex) {
+            System.debug('# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());
+        }
+    }
+
     public void evaluateEffectiveDate(SObject inputOrder){
 
         Order currentOrder = (Order) inputOrder;
