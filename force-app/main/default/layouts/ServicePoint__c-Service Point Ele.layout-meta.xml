@@ -213,6 +213,13 @@
         <fields>UseTypeEnergy__c</fields>
         <fields>SupplyAddress__c</fields>
     </miniLayout>
+    <platformActionList>
+        <platformActionListItems>
+            <actionName>ServicePoint__c.HDT_ServiceCatalog</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+    </platformActionList>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.SUBJECT</fields>
