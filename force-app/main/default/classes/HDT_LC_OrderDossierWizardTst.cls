@@ -40,21 +40,14 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
 
         insert orders;
 
-        // creating SBQQ__Quote__c SObject
-        SBQQ__Quote__c quote = new SBQQ__Quote__c();
-        quote.SBQQ__Type__c = 'Amendment';
-        quote.OrderReference__c = orders[0].Id;
-        quote.SBQQ__Opportunity2__c = opportunities[0].Id; 
-        quote.Sale__c = sales[0].Id;
+        List<SBQQ__Quote__c> quotes = HDT_UTL_DataFactoryTst.createQuote(1, true, orders[0].Id, opportunities[0].Id, sales[0].Id, 'Amendment');
 
-        insert quote;
-
-        opportunities[0].SBQQ__PrimaryQuote__c = quote.Id;
+        opportunities[0].SBQQ__PrimaryQuote__c = quotes[0].Id;
 
         update opportunities;
 
-        orders[0].SBQQ__Quote__c = quote.Id;
-        orders[1].SBQQ__Quote__c = quote.Id;
+        orders[0].SBQQ__Quote__c = quotes[0].Id;
+        orders[1].SBQQ__Quote__c = quotes[0].Id;
 
         update orders;
 

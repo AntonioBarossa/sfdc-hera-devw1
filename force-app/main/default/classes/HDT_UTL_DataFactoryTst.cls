@@ -577,4 +577,27 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return tstBillingProfileList;
 	}
+
+	public static List<SBQQ__Quote__c> createQuote (Integer amount, Boolean doInsert, Id orderId, Id opportunityId, Id saleId, String type) {
+
+		List<SBQQ__Quote__c> quoteList = new List<SBQQ__Quote__c>();
+
+		for (Integer i = 0; i<amount; i++) {
+			
+			SBQQ__Quote__c quote = new SBQQ__Quote__c();
+			quote.SBQQ__Type__c = type;
+			quote.OrderReference__c = orderId;
+			quote.SBQQ__Opportunity2__c = opportunityId; 
+			quote.Sale__c = saleId;
+
+			quoteList.add(quote);
+		}
+		
+		if (doInsert){
+
+			insert quoteList;
+		}
+
+		return quoteList;
+	}
 }
