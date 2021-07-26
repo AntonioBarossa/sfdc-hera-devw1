@@ -55,7 +55,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Disconnectable__c</field>
+                 <field>Disconnectable__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -85,7 +85,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ImplantType__c</field>
+                 <field>ImplantType__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
