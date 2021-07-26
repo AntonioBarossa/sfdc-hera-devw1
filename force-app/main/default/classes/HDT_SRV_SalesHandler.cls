@@ -39,6 +39,23 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                         
                     }
+
+                    if (mapRequestFields.get('ATTIVITA') != null) {
+                        switch on mapRequestFields.get('ATTIVITA'){
+                            when 'Gestione Switch in Ripristinatorio'{
+                                HDT_UTL_ActivityCustom.createActivityWithParams(new Map<String,String>{
+                                    'RecordTypeDeveloperName' => 'HDT_RT_AttivitaGestionali',
+                                    'Type__c'                 => 'Gestione Switch in Ripristinatorio',
+                                    'Status__c'               => 'Creata',
+                                    'ServicePointCode__c'     => mapRequestFields.get('COD_PDR'),
+                                    'FiscalCode__c'           => mapRequestFields.get('CODICE_FISCALE'),
+                                    'VATNumber__c'            => mapRequestFields.get('PIVA'),
+                                    'EffectiveDate__c'        => mapRequestFields.get('DATA_DECORRENZA'),
+                                    'HerokuPracticeCode__c'   => mapRequestFields.get('COD_PRAT_UTENTE')
+                                });
+                            }
+                        }
+                    }
                     
                     if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
                         //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
@@ -66,11 +83,37 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.Description = mapRequestFields.get('ANNOTAZIONI');
+
+                                // if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
+                                //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                // )){
+                                //     ord.TecnicalPhase__c = 'Annullato';
+                                // }
                             }
                             when 'Ammissibilità OK' {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                if( mapRequestFields.get('DES_ERR_AEEG') != null) {
+                                    ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
+                                    ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG');
+                                } else {
+                                    ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                }
+
+                                if (mapRequestFields.get('IMP_PREV_DIST') != null && !String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
+                                    ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
+                                }
+
+                                // if(ord.CausalCode__c == '034' 
+                                //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                // )){
+                                //     ord.TecnicalPhase__c = 'Annullato';
+                                // }
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
@@ -89,6 +132,10 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.CausalCode__c = mapRequestFields.get('CODERR_ES');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+
+                                if(mapRequestFields.get('CODERR_ES') == '003' || mapRequestFields.get('CODERR_ES') == '103'){
+                                    ord.IsTechnicalTransfer__c = true;
+                                }
                             }
                             when 'Amm. Precheck OK SII' {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
@@ -119,7 +166,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Annullamento - Ammissibilità OK', 'Annullamento - Ammissibilità KO' {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 if(previousPhase.indexOf('Ripensamento') >-1){
-                                    nextPhase.replace('Annullamento', 'Ripensamento');
+                                    nextPhase = nextPhase.replace('Annullamento', 'Ripensamento');
                                 }
                                 ord.Phase__c = nextPhase;
                                 //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
@@ -271,6 +318,74 @@ public with sharing class HDT_SRV_SalesHandler {
             when 'WSLead_SOL'{
                 HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
                 RestContext.response.statusCode = 200;
+            }
+            when 'CMPDMP_PRV'{
+               
+                if (request.objects.get(0).fields.get(0) != null) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''  ){
+
+		                HDT_BA_ConsentLead ba = new HDT_BA_ConsentLead(localMapRequestFields.get('runId')); 
+		                Id batchprocessid = Database.executeBatch(ba,1000);
+                        RestContext.response.statusCode = 200;
+                        
+                    }
+                    else {
+                     
+                        responseField.fieldType = 'TEXT';
+                        responseField.name = 'ESITO';
+                        responseField.value = 'KO';
+        
+                        responseFieldError.fieldType = 'TEXT';
+                        responseFieldError.name = 'ERROR_MESSAGE';
+                        responseFieldError.value = 'runId cannot be empty';
+        
+                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+                        mrrResponseItem.objects.add(responseObject);
+        
+                        RestContext.response.statusCode = 400;
+        
+                    }
+                }
+            }
+
+            when 'CMPDMP_ATTR'{
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''){   
+                        HDT_BA_AttributesLead ba = new HDT_BA_AttributesLead(localMapRequestFields.get('runId')); 
+		                Id batchprocessid = Database.executeBatch(ba,1000);
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                       
+                        responseField.fieldType = 'TEXT';
+                        responseField.name = 'ESITO';
+                        responseField.value = 'KO';
+        
+                        responseFieldError.fieldType = 'TEXT';
+                        responseFieldError.name = 'ERROR_MESSAGE';
+                        responseFieldError.value = 'runId cannot be empty';
+        
+                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+                        mrrResponseItem.objects.add(responseObject);
+        
+                        RestContext.response.statusCode = 400;
+        
+                    }
+                }
             }
             when else {
 

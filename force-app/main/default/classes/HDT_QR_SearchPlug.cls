@@ -11,7 +11,11 @@ public inherited sharing class HDT_QR_SearchPlug {
             prodWithoutCriteria = [
                 SELECT Id
                 FROM Product2
-                WHERE Status__c IN :statusList AND IsActive = true AND Family IN :familyList
+                WHERE Status__c IN :statusList
+                AND IsActive = true
+                AND Family IN :familyList
+                AND NoOrderable__c = false
+                //AND (NOT ProductCode LIKE :Label.HDT_CPQ_TemplateProductCode)
                 WITH SECURITY_ENFORCED
             ];
 
@@ -31,7 +35,11 @@ public inherited sharing class HDT_QR_SearchPlug {
             prodWithoutCriteria = [
                 SELECT Id, (SELECT Id FROM EligibilitiesCriteria__r)
                 FROM Product2
-                WHERE Status__c IN :statusList AND IsActive = true AND Family IN :familyList
+                WHERE Status__c IN :statusList
+                AND IsActive = true
+                AND Family IN :familyList
+                AND NoOrderable__c = false
+                //AND (NOT ProductCode LIKE :Label.HDT_CPQ_TemplateProductCode)
                 WITH SECURITY_ENFORCED
             ];
 
@@ -104,7 +112,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                        PowerRangeMin__c, PowerRangeMax__c, ResidentDeliveryAddress__c, NewClient__c
 
                 FROM EligibilityCriteria__c
-                WHERE Product__r.Status__c IN :statusList AND Product__r.IsActive = true AND Product__r.Family IN :familyList AND
+                WHERE Product__r.Status__c IN :statusList AND Product__r.IsActive = true AND Product__r.Family IN :familyList AND Product__r.NoOrderable__c = false AND
 
                     (
                         (OriginMarketOperator__c = 'excludesValues' AND OriginMarket__c excludes (:quote.Market__c)) OR
@@ -140,7 +148,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                     (Agency__c = :quote.Agency__c OR Agency__c = null) AND
                     (UseCategory__c includes (:quote.UseCategory__c) OR UseCategory__c = null) AND
                     (EquipmenType__c = :quote.MeterType__c OR EquipmenType__c = null)
-
+                    //AND (NOT Product__r.ProductCode LIKE :Label.HDT_CPQ_TemplateProductCode)
             ];
 
         }

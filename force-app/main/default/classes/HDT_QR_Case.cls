@@ -17,6 +17,10 @@ public inherited sharing class HDT_QR_Case {
             AccountId,
             CaseNumber,
             HerokuPracticeCode__c,
+            /*** Sviluppo Gest Appuntamento */
+            ServicePoint__r.distributor__r.name,
+            ServicePoint__r.distributor__c,
+            /*** FINE */
             ContactId,
             ServicePoint__c,
             Contract__c,
@@ -61,4 +65,18 @@ public inherited sharing class HDT_QR_Case {
 
         return cases;
     }
+
+    /*****Sviluppo per Campagne */
+
+    public List<Case> getRecordCreatedYesterdayDifferentBy(String cluster){
+        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND createddate = Yesterday ];
+    }
+
+    public List<Case> getRecordCreatedLastWeekEqualsBy(String cluster){
+        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c = : cluster AND CreatedDate = LAST_N_DAYS:7];
+    }
+
+
+    /*** FIne Sviluppo per Campagne */
+
 }

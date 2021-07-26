@@ -25,7 +25,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_OrderProcess.salesProcessManagementBefore(trigger.new,trigger.old);          
 
-        
+        HDT_UTL_OrderProcess.updateServiceRequest(trigger.new, trigger.old);
         
         
     }
@@ -54,6 +54,8 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
     }
 
+    //Andrei Necsulescu - 02/07/2021: Commented as it created an exception when importing more than a certain number of Orders at a time.
+    /*
     public override void afterInsert(){   
         wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt ObjectCompatibility =
             (wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt) wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
@@ -84,4 +86,5 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         String[] conflictsString = new List<String>(conflicts);
         return String.join(conflictsString, ', ');
     }
+    */
 }

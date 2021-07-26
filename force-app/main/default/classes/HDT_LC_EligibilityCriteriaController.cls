@@ -105,14 +105,20 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
         HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion recObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion();
         List<Product2> prodList;
 
+        Set<String> familySet = new Set<String>();
+        familySet.add(Label.HDT_ProductFamilyTrigger);
+        familySet.add('VAS Prodotto');
+        familySet.add('VAS Servizio');
+
         try{
             recObj.success = true;
 
             prodList = HDT_QR_EligibilityCriteria.getProductById(prodList, productId);
 
-            if(String.isEmpty(prodList[0].Family) || !prodList[0].Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
+            //if(String.isEmpty(prodList[0].Family) || !prodList[0].Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
+            if(String.isEmpty(prodList[0].Family) || !familySet.contains(prodList[0].Family)){
                 recObj.success = false;
-                recObj.message = 'Questa funzionalità è riservata alle offerte commerciali';
+                recObj.message = Label.HDT_EligCriteria_ProductType;
                 return recObj;
             }
 
@@ -131,7 +137,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
                 
                 if(!prodList[0].Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
                     recObj.success = false;
-                    recObj.message = 'E\' possibile configurare dei criteri solamente nello stato "In Sviluppo"';
+                    recObj.message = Label.HDT_EligCriteria_ProdStatus;
                 }
 
             }

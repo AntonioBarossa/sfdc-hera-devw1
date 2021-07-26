@@ -7209,10 +7209,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
         </values>
@@ -7250,10 +7246,6 @@
         </values>
         <values>
             <fullName>Marcatura%2FUso PdR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7318,14 +7310,6 @@
         </values>
         <values>
             <fullName>Reclamo Scritto%2FRich%2E Info</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rettifica Consumi - Errore di Lettura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7421,7 +7405,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Unificazione%2FSeparazione CA-Bolletta</fullName>
+            <fullName>Unificazione%2FSeparazione BP-CA-Bolletta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10200,10 +10184,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Modifica Impianto</fullName>
             <default>false</default>
         </values>
@@ -10762,15 +10742,15 @@
     <picklistValues>
         <picklist>WithdrawalClass__c</picklist>
         <values>
-            <fullName>001-7 giorni</fullName>
+            <fullName>001 - 7 giorni</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>002-6 giorni %28no dom%2E%2Bfest%2E%29</fullName>
+            <fullName>002 - 6 giorni %28no dom%2E %2B fest%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>003-5 giorni%28no sab%2Edom%2Efest%29</fullName>
+            <fullName>003 - 5 giorni %28no sab%2E dom%2E fest%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -26,14 +26,14 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         System.debug('********INPUTFIELD:' + argsMap);
         
         System.debug('********tem:' + idTemplate);
-        
+        System.debug('********TM:' + tm);
         System.debug('********sender:' + obj);
         //INIZIO SVILUPPI EVERIS
         System.debug('********method:' +method);
         //FINE SVILUPPI EVERIS
         // Aggiungere if basato su Method e parte static nell header struttura ad oggetto
         
-        if('Annullamento'.equalsIgnoreCase(method) || 'Ripensamento'.equalsIgnoreCase(method) || 'SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method) || 'SubentroEECreaRich'.equalsIgnoreCase(method) || 'AttivazioneEECreaRich'.equalsIgnoreCase(method) || 'PrecheckEECreaRich'.equalsIgnoreCase(method) || 'SubentroGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneInDeliberaCreaRich'.equalsIgnoreCase(method) || 'AttivazioneFuoriDeliberaCreaRich'.equalsIgnoreCase(method) || 'PrecheckGasCreaRich'.equalsIgnoreCase(method) || /*Everis: Aggiunto metodo Voltura*/ 'Voltura'.equalsIgnoreCase(method)) {
+        if('Annullamento'.equalsIgnoreCase(method) || 'Ripensamento'.equalsIgnoreCase(method) || 'SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method) || 'SubentroEECreaRich'.equalsIgnoreCase(method) || 'AttivazioneEECreaRich'.equalsIgnoreCase(method) || 'PrecheckEECreaRich'.equalsIgnoreCase(method) || 'SubentroGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneInDeliberaCreaRich'.equalsIgnoreCase(method) || 'AttivazioneFuoriDeliberaCreaRich'.equalsIgnoreCase(method) || 'PrecheckGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneConModCreaRich'.equalsIgnoreCase(method) || 'PreventivoAccettatoSales'.equalsIgnoreCase(method) || 'PreventivoRifiutatoSales'.equalsIgnoreCase(method) || 'CambioOffertaGasCreaRich'.equalsIgnoreCase(method) || 'CambioOffertaEleCreaRich'.equalsIgnoreCase(method) || 'CambioUsoCreaRich'.equalsIgnoreCase(method) || 'ConnessioneConAttCreaRich'.equalsIgnoreCase(method) || 'TempNuovaAttivazionCereaRich'.equalsIgnoreCase(method) || 'SConVEECreaRich'.equalsIgnoreCase(method) || 'SConVGasCreaRich'.equalsIgnoreCase(method) || /*Everis: Aggiunto metodo Voltura*/ 'Voltura'.equalsIgnoreCase(method)) {
             //////////// Recupero endpoint in base a contesto di oggetto
             wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = ( wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration)  wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
             String endpoint = endpointUtils.getEndpoint(obj);
@@ -48,12 +48,51 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng templateEngine = (wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng) wrts_prcgvr.VersionManager.newClassInstance('CalloutTemplateMng');
             Object objTemp = templateEngine.getTemplate(inputTemplateFunction);
             //inputTemplateFunction.put('templateObject',objTemp);
+            system.debug('*********OBJTEMP:' + ((Map<String,Object>)objTemp).get('templateObject'));
+            system.debug('*********inputTemplateFunction:' + inputTemplateFunction);
             Map<String,Object> templateReturn = (Map<String,Object>)templateEngine.applyTemplate(objTemp);
             wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = (wrts_prcgvr.MRR_1_0.MultiRequest)templateReturn.get('multirequest');
             multirequestObj.requests[0].header.fields = headerAttributetoAdd;
         
             System.debug('********MRRequest:' + multirequestObj);
-        
+            Integer count = 0;
+            List<Integer> indexOfObjectToRemove = new List<Integer>();
+            Map<Integer,Integer> indexOffieldToRemove = new Map<Integer,Integer>();
+            for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
+                    
+                if(w.objectType == 'OrderItem'){
+                    boolean find = false;
+                    Integer k = 0;
+                    for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
+                        System.debug('************Enterfield:' + f.name);
+                        if(f.name == 'Fam_Prod'){
+                            if(f.value != null && f.value != '' && f.value== 'Offerta commerciale' ){
+                                find = true;
+                                System.debug('************EnterFIND');
+                                indexOffieldToRemove.put(count,k);
+                                break;
+                            }
+                            else{
+                                indexOffieldToRemove.put(count,k);
+                            }
+                        }
+                    }
+                    if(!find){
+                        System.debug('************EnterRemove');
+                        indexOfObjectToRemove.add(count);
+                    }
+                }
+                count++;
+            }
+            for(integer i : indexOffieldToRemove.keyset())
+            {
+                multirequestObj.requests[0].objects[i].fields.remove(indexOffieldToRemove.get(i));
+            }
+            for(integer i : indexOfObjectToRemove)
+            {
+                multirequestObj.requests[0].objects.remove(i);
+            }
+
             ///////////// instanzio e effettuo la chiamata con la request
             Map<String,Object> inputClientFunction = new Map<String,Object>();
             inputClientFunction.put('endpoint',endpoint);
@@ -71,7 +110,12 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 System.debug('********MRRequest:' + responseService);
                 System.debug('********description:' + responseService.responses[0].description);
                 System.debug('********objects:' + responseService.responses[0].objects);
-
+                //for()
+             //   responseService.responses[0].objects[0].objects[0].objectType == 'OrderItem'
+             //   responseService.responses[0].objects[0].objects[0].fields[0].name = 'TEMPLATENAME'
+             //   responseService.responses[0].objects[0].objects[0].remove().fields[0].name = 'TEMPLATENAME'
+               System.debug('************Before');
+                
                 Order ord = new Order();
                 ord.id = (id)obj.get('Id');
 
@@ -118,6 +162,14 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             ord.Description = fieldValueResponse.get('ANNOTAZIONI');
+
+                                            // if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
+                                            //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                            //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                            //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                            // )){
+                                            //     ord.TecnicalPhase__c = 'Annullato';
+                                            // }
                                         }
                                         when 'Ammissibilità OK' {
                                             ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
@@ -128,6 +180,18 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             } else {
                                                 ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                             }
+
+                                            if (fieldValueResponse.get('IMP_PREV_DIST') != null) {
+                                                ord.EstimateAmount__c = Decimal.valueOf(fieldValueResponse.get('IMP_PREV_DIST'));
+                                            }
+
+                                            // if(ord.CausalCode__c == '034' 
+                                            //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                            //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                            //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                            // )){
+                                            //     ord.TecnicalPhase__c = 'Annullato';
+                                            // }
                                         }
                                         when 'Esito KO da DL' {
                                             ord.ReasonDL__c = fieldValueResponse.get('TESTO_ERRR');
@@ -146,6 +210,10 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             ord.CausalCode__c = fieldValueResponse.get('CODERR_ES');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+
+                                            if(fieldValueResponse.get('CODERR_ES') == '003' || fieldValueResponse.get('CODERR_ES') == '103'){
+                                                ord.IsTechnicalTransfer__c = true;
+                                            }
                                         }
                                         when 'Amm. Precheck OK SII' {
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');

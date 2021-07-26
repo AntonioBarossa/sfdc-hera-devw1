@@ -6,12 +6,13 @@ public inherited sharing class HDT_SRV_AnagAlignment {
     // I possibili contesti di innesco di un Allineamento Anagrafica.
     public enum HDT_ENU_AnagAlignmentContext {
         SERVICE_CATALOG,                    // Innesco manuale da Service Catalog
+        ALLINEAMENTO_CANONE_RAI,            // Innesco automatico alla chiusura del Case del processo di Allineamento Canone RAI
+        GESTIONE_DISALIMENTABILITA,         // Innesco automatico alla chiusura del Case del processo di Gestione Disalimentabilità
         VARIAZIONI_FISCALE,                 // Innesco automatico alla chiusura del Case del processo di Variazioni - Fiscale
         VARIAZIONI_MARCATURA_USO_PDR,       // Innesco automatico alla chiusura del wizard del processo di Variazioni - Marcatura/Uso PDR
         VARIAZIONI_INDIRIZZO_FORNITURA,     // Innesco automatico alla chiusura del wizard del processo di Variazioni - Indirizzo Fornitura
         VARIAZIONI_TARIFFA_RES_NONRES,      // Innesco automatico alla chiusura del wizard del processo di Variazioni - Modifica Tariffa Residente/Non res.
         VARIAZIONE_ANAGRAFICA_CLIENTE,      // Innesco automatico alla chiusura del wizard del processo di Modifica Anagrafica - Variazione Anagrafica Cliente
-        // TODO: verificare se necessari o se basta la request di heroku.
         VARIAZIONE_STATO_POD,               // Innesco automatico all'arrivo del flusso VS2.0200 dal SII
         VARIAZIONE_STATO_PDR                // Innesco automatico all'arrivo del flusso VSG2.0200 dal SII
     }
@@ -90,7 +91,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
         switch on codicePrestazione {
-            when 'A01', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
+            when 'A01', 'A40', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
                 Order triggerOrder = null;
                 if (!String.isBlank(codicePraticaDistributore)) {
                     triggerOrder = queryHandlerOrder.findOrderByDistributorPracticeCode(codicePraticaDistributore);
@@ -101,6 +102,14 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
                 if (triggerOrder != null) {
                     anagAlignCase = createAnagAlignmentCase(triggerOrder);
+                    anagAlignCase.CausalCode__c = causalCodeAnagAlignment(triggerOrder.CommodityFormula__c, context);
+                    anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+                    anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
+                    anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
+                    anagAlignCase.RegionalAdditional__c = queryHandlerOrder.findRegionalAdditional(triggerOrder.ExciseGAS__c, triggerOrder.SupplyPlace__c, getRegion(triggerOrder.SupplyState__c));
+                    System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                    anagAlignCase.Phase__c = 'Da Inviare';
+                    HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
                 }
             }
             when 'N02', 'U01' { // Casistica 2: non è possibile linkare a pratica di origine, creiamo solo il Case di Allineamento Anagrafica.
@@ -116,6 +125,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
                 updateAnagAlignmentCaseCustomerData(anagAlignCase);
                 anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+                anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
 
                 for (String field : dataEnrichmentFields) {
                     anagAlignCase.put(field, tempCase.get(field));
@@ -138,6 +148,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
                 updateAnagAlignmentCaseCustomerData(anagAlignCase);
                 anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+                anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
 
                 for (String field : dataEnrichmentFields) {
                     anagAlignCase.put(field, tempCase.get(field));
@@ -175,9 +186,11 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             when VARIAZIONI_FISCALE,
                  VARIAZIONI_MARCATURA_USO_PDR,
                  VARIAZIONI_INDIRIZZO_FORNITURA,
-                 VARIAZIONI_TARIFFA_RES_NONRES {
+                 VARIAZIONI_TARIFFA_RES_NONRES,
+                 ALLINEAMENTO_CANONE_RAI,
+                 GESTIONE_DISALIMENTABILITA {
                 Case anagAlignCase = createAnagAlignmentCase(triggerObj);
-                updateAnagAlignmentCaseVariazioni(anagAlignCase, (Case) triggerObj, context);
+                updateAnagAlignmentCasePostSalesDispatcher(anagAlignCase, (Case) triggerObj, context);
                 returnCases.add(anagAlignCase);
             }
             when VARIAZIONE_ANAGRAFICA_CLIENTE {
@@ -203,13 +216,12 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         String accountQueryFields = '';
         // DATI INDIRIZZO DI RESIDENZA
-        accountQueryFields += 'BillingStreetToponym__c,BillingState,BillingStreetNumber__c,BillingPlace__c,BillingStreetName__c,BillingPostalCode,BillingCountry,BillingCityCode__c';
+        accountQueryFields += 'BillingState,BillingStreetNumber__c,BillingPlace__c,BillingStreetName__c,BillingPostalCode,BillingCountry,BillingCityCode__c';
         // DATI CLIENTE FINALE
         accountQueryFields += ',FirstName__c,LastName__c,FiscalCode__c,VATNumber__c';
         Account caseAccount = accountQueryHandler.getRecordById(inputCase.AccountId, accountQueryFields);
 
         // DATI INDIRIZZO DI RESIDENZA
-        inputCase.BillingStreetToponym__c = caseAccount.BillingStreetToponym__c;
         inputCase.BillingProvince__c = caseAccount.BillingState;
         inputCase.BillingStreetNumber__c = caseAccount.BillingStreetNumber__c;
         inputCase.BillingPlace__c = caseAccount.BillingPlace__c;
@@ -236,6 +248,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         updateAnagAlignmentCaseCustomerData(inputCase);
 
         inputCase.CausalCode__c = causalCodeAnagAlignment(inputCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.SERVICE_CATALOG);
+        inputCase.OperationCode__c = reasonAnagAlignment(inputCase.CausalCode__c);
 
         return HDT_UTL_DatabaseService.updateSObject(inputCase);
     }
@@ -380,13 +393,20 @@ public inherited sharing class HDT_SRV_AnagAlignment {
     }
 
     /**
-     * Aggiorna il Case di Variazioni con i dati di anagrafica del cliente e poi lo invia ad Heroku.
+     * Aggiorna il Case di allineamento anagrafica con i dati di anagrafica del cliente ed eventuali logiche specifiche 
+     * del processo che ha originato l'allineamento, e infine invia il Case ad Heroku.
      */
-    private static Boolean updateAnagAlignmentCaseVariazioni(Case anagAlignCase, Case triggerCase, HDT_ENU_AnagAlignmentContext context) {
+    private static Boolean updateAnagAlignmentCasePostSalesDispatcher(Case anagAlignCase, Case triggerCase, HDT_ENU_AnagAlignmentContext context) {
 
         updateAnagAlignmentCaseCustomerData(anagAlignCase);
 
         switch on context {
+            when ALLINEAMENTO_CANONE_RAI {
+                // TODO: aggiungere qui eventuali logiche specifiche per Allineamento Canone RAI
+            }
+            when GESTIONE_DISALIMENTABILITA {
+                // TODO: aggiungere qui eventuali logiche specifiche per Gestione Disalimentabilità
+            }
             when VARIAZIONI_FISCALE {
                 // TODO: aggiungere qui eventuali logiche specifiche per Variazioni/Fiscali
             }
@@ -407,6 +427,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         Formula.recalculateFormulas(anagAlignCases);
 
         anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+        anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
         anagAlignCase.Phase__c = 'Da Inviare';
 
         return HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
@@ -453,7 +474,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
         String accountQueryFields = '';
         // DATI INDIRIZZO DI RESIDENZA
-        accountQueryFields += 'BillingStreetToponym__c,BillingState,BillingStreetNumber__c,BillingPlace__c,BillingStreetName__c,BillingPostalCode,BillingCountry,BillingCityCode__c';
+        accountQueryFields += 'BillingState,BillingStreetNumber__c,BillingCity,BillingPlace__c,BillingStreetName__c,BillingPostalCode,BillingCountry,BillingCityCode__c';
         // DATI CLIENTE FINALE
         accountQueryFields += ',FirstName__c,LastName__c,FiscalCode__c,VATNumber__c';
         Account caseAccount = accountQueryHandler.getRecordById(triggerCase.AccountId, accountQueryFields);
@@ -467,15 +488,12 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             contactsMap.put(c.Id, c);
         }
 
-        // ProcessClick non fa partire i job per le callout da contesto trigger o batch,
-        // quindi demandiamo creazione del case + arricchimento dati + callout heroku ad un platform event per ogni Case.
-        List<HDT_PEV_AnagAlignment__e> events = new List<HDT_PEV_AnagAlignment__e>();
         for (Case anagAlignCase : anagAlignCases) {
 
             // DATI INDIRIZZO DI RESIDENZA
-            anagAlignCase.BillingStreetToponym__c = caseAccount.BillingStreetToponym__c;
             anagAlignCase.BillingProvince__c = caseAccount.BillingState;
             anagAlignCase.BillingStreetNumber__c = caseAccount.BillingStreetNumber__c;
+            anagAlignCase.BillingCity__c = caseAccount.BillingCity;
             anagAlignCase.BillingPlace__c = caseAccount.BillingPlace__c;
             anagAlignCase.BillingStreetName__c = caseAccount.BillingStreetName__c;
             anagAlignCase.BillingPostalCode__c = caseAccount.BillingPostalCode;
@@ -491,24 +509,12 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.Mobile__c = caseContact.MobilePhone != null ? caseContact.MobilePhone : caseContact.Phone;
 
             anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
+            anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
 
-            HDT_PEV_AnagAlignment__e event = new HDT_PEV_AnagAlignment__e();
-            event.SerializedCase__c = JSON.serialize(anagAlignCase);
-            events.add(event);
         }
 
-
-        List<Database.SaveResult> results = EventBus.publish(events);
-        System.debug('Results Size: ' + results.size());
-        for (Database.SaveResult sr : results) {
-            if (sr.isSuccess()) {
-                System.debug('Successfully published event.');
-            } else {
-                for (Database.Error err : sr.getErrors()) {
-                    System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
-                }
-            }
-        }
+        // Queueable per invocare l'arricchimento dati su ogni Case e per inviarli ad heroku.
+        System.enqueueJob(new HDT_QBL_AnagAlignment(anagAlignCases));
 
         return anagAlignCases;
     }
@@ -555,4 +561,69 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         return causalCode;
     }
+
+    /**
+     * Calcola il campo MOTIVAZIONE richiesto dal SII. I valori previsti sono i seguenti:
+     * 
+     * 01: Integrazione dati cliente finale;
+     * 02: Correzione errore;
+     * 03: Integrazione dati;
+     * 04: Correzione a seguito di segnalazione da parte del Gestore
+     * 05: Altro
+     */
+    private static String reasonAnagAlignment(String causalCode) {
+        if (causalCode == null) {
+            return '';
+        }
+
+        return causalCode.equals('AGG') ? '01' : '03';
+    }
+
+    /**
+     * Transcodifica le accise raccolte sugli Order nel valore numerico richiesto dal SII.
+     * La transcodifica di default è 0, quindi gestiamo solo le eccezioni che hanno accisa > 0.
+     */
+    private static Double transcodeExcises(Order triggerOrder) {
+        String acc = triggerOrder.ExciseGAS__c != null ? triggerOrder.ExciseGAS__c : triggerOrder.ExciseEle__c;
+        if (acc == null) {
+            return 0;
+        }
+
+        Double transcodedValue = 0;
+        if (acc.contains('G_ICD') || acc.contains('G_ICC')) {
+            transcodedValue = 0.044;
+        } else if (acc.contains('E_IE_L01') || acc.contains('E_IE_M04') || acc.contains('E_IE_L13') || acc.contains('E_IE_13A')) {
+            transcodedValue = 0.0125;
+        }
+
+        return transcodedValue;
+    }
+
+    // Codice venditore cablato essendo cablato anche nel template pclick delle attivazioni.
+    private static String companyCodeTemp(String commodity) {
+        return commodity.equals('Gas') ? '10V0000160' : '13V0000000';
+    }
+
+    // Fornisce la regione a partire dalla provincia. Per Wave 1 sono gestite solo MARCHE e ABRUZZO.
+    // TODO WAVE 3: creare un metadato ad-hoc per configurare tutte le province e tutte le regioni.
+    public static String getRegion(String province) {
+        if (String.isBlank(province)) {
+            return '';
+        }
+
+        switch on province.toUpperCase() {
+            when 'AQ', 'CH', 'PE', 'TE' {
+                return 'ABRUZZO';
+            }
+            when 'AN', 'AP', 'FM', 'MC', 'PU' {
+                return 'MARCHE';
+            }
+            when else {
+                System.debug('Provincia non in ambito wave 1: ' + province);
+            }
+        }
+
+        return '';
+    }
+
 }

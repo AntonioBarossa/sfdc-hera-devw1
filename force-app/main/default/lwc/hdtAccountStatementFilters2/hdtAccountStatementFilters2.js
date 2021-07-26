@@ -28,6 +28,7 @@ export default class HdtAccountStatementFilters extends LightningElement {
         code: ''
     }
     filterCondition = 'AccountId=';
+    filterCondition2 = 'Account__c=';
 
     serviceValues = [];
     stepValues = [];
@@ -35,6 +36,7 @@ export default class HdtAccountStatementFilters extends LightningElement {
     connectedCallback(){
         console.log('>>> filterType ' + this.filterType);
         this.filterCondition += '\'' + this.accountId + '\'';
+        this.filterCondition2 += '\'' + this.accountId + '\'';
         this.enableDateControll = true;
         this.joinFilterObj = {
             obj1: {enable: false, name: 'contratto', label: 'Contratto', empty: true},
@@ -56,8 +58,8 @@ export default class HdtAccountStatementFilters extends LightningElement {
                 this.joinFilterObj.obj4.enable = true;
                 this.joinFilterObj.obj5.enable = true;
                 break;
-            case 'lwcmethod':
-                //
+            case 'filterEc7':
+                this.joinFilterObj.obj2.enable = true;
         }
 
         this.getFieldValues('stepValues', 'StepValues');
@@ -115,20 +117,20 @@ export default class HdtAccountStatementFilters extends LightningElement {
     applyFilter(){
         console.log('# applyFilter #');
 
-       //var respCheck = this.checkValue();
+       var respCheck = this.checkValue();
 
-       //console.log('#### ' + respCheck.success);
+       console.log('#### ' + respCheck.success);
 
-       //if(!respCheck.success){
-       //    this.dispatchEvent(
-       //        new ShowToastEvent({
-       //            title: 'Attenzione',
-       //            message: respCheck.message,
-       //            variant: 'warning'
-       //        })
-       //    );
-       //    return;
-       //}
+       if(!respCheck.success){
+           this.dispatchEvent(
+               new ShowToastEvent({
+                   title: 'Attenzione',
+                   message: respCheck.message,
+                   variant: 'warning'
+               })
+           );
+           return;
+       }
 
         console.log('# ' + JSON.stringify(this.filterObject));
 
@@ -168,9 +170,9 @@ export default class HdtAccountStatementFilters extends LightningElement {
     closeModal(event){
         console.log('# closeModal #');
 
-        //for (var key in this.filterObject) {
-        //    delete this.filterObject[key];
-        //}
+        for (var key in this.filterObject) {
+            delete this.filterObject[key];
+        }
 
         const closeEvent = new CustomEvent("closemodal", {
             detail:  {booleanVar: 'showFilters2'}
@@ -188,17 +190,23 @@ export default class HdtAccountStatementFilters extends LightningElement {
             message: ''
         };
 
-        //check if filter obj is empty
+        if(JSON.stringify(this.filterObject)==='{}'){
+            returnObj.message = 'Bisogna impostare almeno un filtro';
+            return returnObj; 
+        }
+        
+        /*
+        ////check if filter obj is empty
         if(Object.keys(this.filterObject).length === 0){
             returnObj.message = 'Bisogna impostare almeno un filtro';
             return returnObj;
         }
 
         //check if filter attribute obj is empty
-        //if(Object.keys(this.filterObject).length < Object.keys(this.joinFilterObj).length){
-        //    returnObj.message = 'Manca da valorizzare qualche input';
-        //    return returnObj;            
-        //}
+        if(Object.keys(this.filterObject).length < Object.keys(this.joinFilterObj).length){
+            returnObj.message = 'Devi inserire almeno un filtro';
+            return returnObj;            
+        }
 
         var regExp = /[a-zA-Z]/g;
 
@@ -229,6 +237,7 @@ export default class HdtAccountStatementFilters extends LightningElement {
         } else {
             this.joinFilterObj.obj1.empty = true;
         }
+        */
 
         returnObj.success = true;
         return returnObj;

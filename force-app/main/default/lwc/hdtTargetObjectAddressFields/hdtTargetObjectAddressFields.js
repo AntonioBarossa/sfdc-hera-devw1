@@ -42,6 +42,9 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api flagVerificato =false;
     @track openmodel = false;
     tableData = [];
+    dataAccountAddress=[];
+    dataAddressFornitura=[];
+    columnsFornitura=[];
     tableColumnsFornitura = [];
     tableDataFornitura = [];
     tableColumns = [];
@@ -149,11 +152,11 @@ handleAddressFromAccount()
             this.comune=data['Comune'];		
             this.provincia=data['Provincia'];
             this.cap=data['CAP'];
-            this.stato=data['Stato'];
+            this.stato=data['Stato'].toUpperCase();
 			this.estensCivico=data['Est.Civico'];
-            this.codComuneSAP='';
-            this.codStradarioSAP='';
-            //this.flagVerificato=false;
+            this.codComuneSAP=data['Codice Comune SAP'];
+            this.codStradarioSAP=data['Codice Via Stradario SAP'];
+            this.flagVerificato=true;
 
             this.theRecord['Via']= data['Via'];
             this.theRecord['Civico']= data['Civico'];
@@ -162,9 +165,10 @@ handleAddressFromAccount()
             this.theRecord['CAP']= data['CAP'];
             this.theRecord['Stato']= data['Stato'];
             this.theRecord['Estens.Civico']= data['Est.Civico'];
-            this.theRecord['Codice Comune SAP']= '';
-            this.theRecord['Codice Via Stradario SAP']= '';
-            //this.theRecord['Flag Verificato']= false;
+            this.theRecord['Codice Comune SAP']=data['Codice Comune SAP'];
+            this.theRecord['Codice Via Stradario SAP']= data['Codice Via Stradario SAP'];
+            this.theRecord['Flag Verificato']= true;
+            
 
         }
     });
@@ -241,7 +245,9 @@ handleAddressValuesIfSap(servicePointRetrievedData){
             break;
 
         }
-
+        this.flagVerificato=true;
+        this.theRecord['Flag Verificato'] = this.FlagVerificato;
+        
     });
     console.log('handleAddressValues END ');
 }
@@ -261,12 +267,18 @@ handleAddressValuesIfSap(servicePointRetrievedData){
         console.log(' rowToSend**************'+JSON.stringify(this.rowToSend));
         this.preloading = true;
         this.closeModal();
-		let data = [];
-        console.log(' rowToSend indirizzo**************'+JSON.stringify(this.rowToSend['Indirizzo']));
-        if(this.rowToSend['']!=undefined){
-            data = this.rowToSend[''].split(",");
+		let data;
+        let dataFornitura ;
+
+        if(this.rowToSend['Indirizzo']!=undefined){
+            data = this.rowToSend['Indirizzo'].split(",");
             console.log('data after rowToSend**************'+JSON.stringify(data));
         }
+        if(this.rowToSend['IndirizzoFornitura']!=undefined){
+            dataFornitura = this.rowToSend['IndirizzoFornitura'].split(",");
+            console.log('dataFornitura after rowToSend**************'+JSON.stringify(data));
+        }
+
        /* else if(this.rowToSend['Indirizzo Fornitura']!=undefined)
         {
             console.log(' rowToSend**************'+JSON.stringify(this.rowToSend['Indirizzo Fornitura']));
@@ -275,38 +287,42 @@ handleAddressValuesIfSap(servicePointRetrievedData){
 
         }*/
 
-        if(data!= undefined){
-            console.log('data lenght : '+ JSON.stringify(data.length));
-            if(data.length>7){
-                this.via= data[0];
-                this.civico= data[1];
-                this.estensCivico= data[2];
-                this.comune=data[4]; 
-                this.provincia=data[5];
-                this.cap=data[6];
-                this.stato=data[7];
-
-                this.codComuneSAP = data[8] !== undefined ? data[8] : '';
-                this.codStradarioSAP = data[9] !== undefined ? data[9] : '';
-                this.IndEstero = data[10] !== undefined ? data[10] : false;
-
-                this.disableVerifIndiButton= false;
-
-            }else{
+     
+         if(data!= undefined){
+             console.log('entra in data != undefined : ' + JSON.stringify(data));
                 this.via= data[1];
                 this.civico= data[2];
-                this.estensCivico= data[3];
+                this.estensCivico= data[4];
                 this.comune=data[0]; 
-                this.provincia=data[5];
-                this.cap=data[4];
-                this.stato=data[6].toUpperCase();
+                this.provincia=data[3];
+                this.cap=data[6];
+                this.stato=data[5].toUpperCase();
 
                 this.codComuneSAP = data[7] !== undefined ? data[7] : '';
                 this.codStradarioSAP = data[8] !== undefined ? data[8] : '';
-                this.IndEstero = data[9] !== undefined ? data[9] : false;
+               // this.IndEstero = data[10] !== undefined ? data[10] : false;
 
                 this.disableVerifIndiButton= false;
-            }
+                data=[];
+         }
+         if(dataFornitura!= undefined){
+            console.log('entra in dataFornitura != undefined : '+ JSON.stringify(dataFornitura));
+            this.comune=dataFornitura[0]; 
+            this.via= dataFornitura[1];
+            this.civico= dataFornitura[2];
+            this.provincia=dataFornitura[3];
+            this.estensCivico= dataFornitura[4];
+            this.cap=dataFornitura[6];
+            this.stato=dataFornitura[5].toUpperCase();
+
+            this.codComuneSAP = dataFornitura[7] !== undefined ? dataFornitura[7] : '';
+            this.codStradarioSAP = dataFornitura[8] !== undefined ? dataFornitura[8] : '';
+           // this.IndEstero = dataFornitura[10] !== undefined ? dataFornitura[10] : false;
+
+            this.disableVerifIndiButton= false;
+            dataFornitura=[];
+         }
+
 
             this.theRecord['Via']= this.via;
             this.theRecord['Civico']= this.civico;
@@ -321,8 +337,8 @@ handleAddressValuesIfSap(servicePointRetrievedData){
             this.theRecord['IndirizzoEstero'] = this.IndEstero;
             this.theRecord['Flag Verificato'] = this.FlagVerificato;
 
-            }
-        
+            
+
         this.preloading = false;
         console.log(' THERECORD**************'+JSON.stringify(this.theRecord));
         console.log('esce da handleconfirm');
@@ -340,6 +356,8 @@ handleAddressValuesIfSap(servicePointRetrievedData){
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         console.log('rowToSend ******' + JSON.stringify(this.rowToSend));
         this.preloading = false;
+        this.flagVerificato=true;
+        this.theRecord['Flag Verificato']= true;
         console.log('getSelectedServicePoint END');
     }
     
@@ -353,6 +371,8 @@ handleAddressValuesIfSap(servicePointRetrievedData){
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         console.log('rowToSend ******' + JSON.stringify(this.rowToSend));
         this.preloading = false;
+        this.flagVerificato=true;
+        this.theRecord['Flag Verificato']= true;
         console.log('getSelectedAddress END');
     }
 
@@ -405,15 +425,96 @@ handleAddressValuesIfSap(servicePointRetrievedData){
     submitIndirizzo(){
         this.preloading = true;
             console.log('AccountId *******************'+ JSON.stringify(this.accountid));
+            this.columns = [
+                {label: '', fieldName: 'Indirizzo', type: 'Text'},
+           ];
+            let dataForTable ='';
             getIndirizzo({accountId:this.accountid}).then(data =>{
 
                 console.log('****getIndirizzo: '+  JSON.stringify(data));
+                
+           
+                    
+                    if(data.Comune != undefined){
+                        dataForTable += data.Comune;
+                        if(data.Comune!=', '){
+                            console.log('entra in Comune else : ');
+                            dataForTable+=',';
+                        }
+                    }
+                    if(data.Via != undefined){
+                        dataForTable += data.Via;
+                        if(data.Via!=', '){
+                            console.log('entra in Via else : ');
+                            dataForTable+=',';
+                        }
+                    }
+                    if(data.Civico != undefined){
+                        dataForTable += data.Civico;
+                        if(data.Civico!=', '){
+                            console.log('entra in civico else : ');
+                            dataForTable+=',';
+                        }
+                    }
+                    if(data.Provincia != undefined){
+                        dataForTable += data.Provincia;
+                        if(data.Provincia!=', '){
+                            console.log('entra in Provincia else : ');
+                            dataForTable+=',';
+                        }
+                    }
+                    if(data.EstensCivico != undefined){
+                        dataForTable += data.EstensCivico;
+                        if(data.EstensCivico!=', '){
+                            console.log('entra in EstensCivico else : ');
+                            dataForTable+=',';
+                        }
+                    }
+                    if(data.Stato != undefined){
+                        dataForTable += data.Stato;
+                        if(data.Stato!=', '){
+                            console.log('entra in Stato else : ');
+                            dataForTable+=',';
+                        }
+                    }
+                    if(data.CAP != undefined){
+                        dataForTable += data.CAP ;
+                        if(data.CAP!=', '){
+                            console.log('entra in CAP else : ');
+                            dataForTable+=',';
+                        }
+                    }
+                    if(data.CodiceComuneSAP != undefined){
+                        dataForTable += data.CodiceComuneSAP;
+                        if(data.CodiceComuneSAP!=', '){
+                            console.log('entra in CodiceComuneSAP else : ');
+                            dataForTable+=',';
+                        }
+                    }
+                    if(data.CodiceViaStradarioSAP != undefined){
+                        dataForTable += data.CodiceViaStradarioSAP;
+                        if(data.CodiceViaStradarioSAP!=', '){
+                            console.log('entra in CodiceViaStradarioSAP else : ');
+                            dataForTable+=' ';
+                        }
+                    }
 
+
+                   this.dataAccountAddress = [{
+    
+                    'Indirizzo': dataForTable
+                    
+                }];
+
+                   
+                console.log('dataForTable ' + dataForTable );
+                
                 this.preloading = false;
-                if (data.length > 0) {
-                    this.originalData = JSON.parse(JSON.stringify(data));
-                    this.createTable(data);
-                    this.formatTableHeaderColumns(data);
+                console.log('data getIndirizzo : ' + data.length)
+                if (data!=undefined) {
+                    this.originalData = JSON.parse(JSON.stringify(dataForTable));
+                   // this.createTable(dataForTable);
+                   // this.formatTableHeaderColumns(dataForTable);
                     this.openmodel = true;
                     this.isLoaded = true;
                     console.log('getIndirizzo pages: '+ JSON.stringify(this.pages));
@@ -430,10 +531,58 @@ handleAddressValuesIfSap(servicePointRetrievedData){
 
                 console.log('****getIndirizzoFornitura: ', JSON.stringify(data));
                 this.preloading = false;
+                this.dataAddressFornitura=[];
+                let dataForTableForn ='';
+                let i=1;
+                let searchkey = 'INDIRIZZOFORNITURA'+i;
+                this.columnsFornitura = [
+                    {label: '', fieldName: 'IndirizzoFornitura', type: 'Text'},
+               ];
+                data.forEach(element=>{
+                    i++;
+                    console.log('****count searchkey : '+  JSON.stringify(searchkey));
+                    dataForTableForn ='';
+                    console.log('****element INDIRIZZOFORNITURA: '+  JSON.stringify(element));
+                    if(element.Comune != undefined){
+                        dataForTableForn += element.Comune + ',';
+                    }
+                    if(element.Via != undefined){
+                        dataForTableForn += element.Via + ',';
+                    }
+                    if(element.Civico != undefined){
+                        dataForTableForn += element.Civico + ',';
+                    }
+                    if(element.Provincia != undefined){
+                        dataForTableForn += element.Provincia+ ',';
+                    }
+                    if(element.EstensCivico != undefined){
+                        dataForTableForn += element.EstensCivico + ',';
+                    }
+                    if(element.Stato != undefined){
+                        dataForTableForn += element.Stato + ',';
+                    }
+                    if(element.CAP != undefined){
+                        dataForTableForn += element.CAP + ',';
+                    }
+                    if(element.CodiceComuneSAP != undefined){
+                        dataForTableForn += element.CodiceComuneSAP + ',';
+                    }
+                    if(element.CodiceViaStradarioSAP != undefined){
+                        dataForTableForn += element.CodiceViaStradarioSAP;
+                    }
+
+                    console.log('dataForTableForn lenght : ' + dataForTableForn.length);
+
+                    console.log('dataForTable ' + dataForTableForn );
+
+                    this.dataAddressFornitura.push({'IndirizzoFornitura': dataForTableForn});                    
+                    
+                }); 
+                
                 if (data.length > 0) {
-                    this.originalDataFornitura = JSON.parse(JSON.stringify(data));
-                    this.createTableFornitura(data);
-                    this.formatTableHeaderColumnsFornitura(data);
+                    this.originalDataFornitura = JSON.parse(JSON.stringify(this.dataAddressFornitura));
+                    this.createTableFornitura(this.dataAddressFornitura);
+                    this.formatTableHeaderColumnsFornitura(this.dataAddressFornitura);
                     this.openmodel = true;
                     this.isLoaded = true;
                     console.log('getIndirizzoFornitura pages: '+ JSON.stringify(this.pagesFornitura));
@@ -444,8 +593,6 @@ handleAddressValuesIfSap(servicePointRetrievedData){
                     this.tableDataFornitura = data;
                 }
             });
-            
-
        
         
     }
@@ -1319,6 +1466,7 @@ disabledverifyFieldsAddressDisabled(){
                                 message: 'Non sono presenti Indirizzi corrispondenti ai caratteri inseriti . Digitare nuovamente per effettuare una nuova ricerca.',
                             });
                         }
+                        
                         this.dispatchEvent(event2);
                     }
                     

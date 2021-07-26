@@ -11,29 +11,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     private static HDT_UTL_Order orderUtl = new HDT_UTL_Order();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
+    private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
 
-    /**
-     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-     * @date 06/02/2021
-     * @description Get List of process options
-     * @return List<Map<String,List<SObject>>>
-     */
     @AuraEnabled
-    public static List<Map<String,String>> getOptions(){
-        List<Map<String,String>> options = new List<Map<String,String>>(); 
+    public static List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> init(Order order){
+        List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processesList = new List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process>();
 
-        List<Schema.RecordTypeInfo> recordTypes = Order.SObjectType.getDescribe().getRecordTypeInfos();
-        for (Schema.RecordTypeInfo recordType : recordTypes) {
-            if (recordType.getDeveloperName() != 'HDT_RT_Default' && recordType.getDeveloperName() != 'Master' && recordType.getDeveloperName() != 'HDT_RT_Default' && recordType.getDeveloperName() != 'HDT_RT_OrderDossier') {
-                Map<String,String> singleOption = new Map<String,String>();
-                singleOption.put('Id', recordType.getRecordTypeId());
-                singleOption.put('Label', recordType.getName());
-                singleOption.put('DeveloperName', recordType.getDeveloperName());
-                options.add(singleOption);
-            }
+        if (order.ServicePoint__c != null) {//returns processes that are different from VAS
+            processesList = HDT_UTL_OrderProcessAssignment.getAvailableProcesses(order);
         }
 
-        return options;
+        return processesList;
     }
 
     /**
@@ -45,103 +33,108 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
      * @param String deliberate
      */
     @AuraEnabled
-    public static void next(Order order,String orderId, String selectedProcess, String deliberate, Map<String,String> extraParams){
+    public static void next(Order order,String orderId, Map<String,String> selectedProcessObject, String deliberate, Map<String,String> extraParams, ServiceRequest__c srRequest){
 
         system.debug('extraParams: ' + extraParams);
         
-        String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcess);
+        String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcessObject.get('recordType'));
 
         //INIZIO SVILUPPI EVERIS
         Order newOrder = new Order();    
         //FINE SVILUPPI EVERIS
 
-        String processType = null;
+        String processType = selectedProcessObject.get('processType');
+        String processCode = selectedProcessObject.get('processCode');
 
-        switch on selectedProcess {
-            when 'HDT_RT_VAS'{
-                processType = 'VAS';
-            }
-            when 'HDT_RT_ScontiBonus' {
-
-                if(getServicePointTypeFromOrder(orderId) == 'HDT_RT_Ele') {
-                    processType = 'Aggiunta Sconti o Bonus VAS Ele';
-                } else if(getServicePointTypeFromOrder(orderId) == 'HDT_RT_Gas'){
-                    processType = 'Aggiunta Sconti o Bonus VAS Gas';
-                }
-
-            }
-            when 'HDT_RT_Subentro' {
-                if (extraParams.get('servicePointType') == 'HDT_RT_Ele') {
-                    processType = 'Subentro Ele';
-                } else if(extraParams.get('servicePointType') == 'HDT_RT_Gas') {
-                    processType = 'Subentro Gas';
-                }
-            }
-            when 'HDT_RT_SwitchIn' {
-                if(extraParams.get('switchInRipristinatorio') == null){
-                    if (extraParams.get('servicePointType') == 'HDT_RT_Ele') {
-                        processType = 'Switch in Ele';
-                    } else if(extraParams.get('servicePointType') == 'HDT_RT_Gas') {
-                        processType = 'Switch in Gas';
-                    }
-                } else {
-                    processType = 'Switch in Ripristinatorio';
-                }
-            }
-            when 'HDT_RT_Attivazione' {
-
-                if(extraParams.get('servicePointType') == 'HDT_RT_Ele') {
-                    processType = 'Prima Attivazione Ele';
-                } else {
-                    if (deliberate == 'In Delibera') {
-                        processType = 'Prima Attivazione In delibera';
-                    } else if(deliberate == 'Fuori delibera') {
-                        processType = 'Prima Attivazione Fuori delibera';
-                    }
-                }
-            }
-            when 'HDT_RT_AttivazioneConModifica' {
-                processType = 'Prima Attivazione con modifica';
-            }
-            
-            when 'HDT_RT_CambioOfferta' {
-                processType = 'Cambio Offerta';
-            }
+        switch on selectedProcessObject.get('recordType') {
             //INIZIO SVILUPPI EVERIS
             when 'HDT_RT_Voltura'{
+                List<Contract> contracts = contractQr.getContractFromServicePoint(order.ServicePoint__c);
                 processType = 'Voltura';
                 newOrder.Subprocess__c = 'Standard';
-                newOrder.ProcessCode__c = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VTE' : 'VTG';
+                newOrder.VoltureType__c = 'Ordinaria';
+                processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
                 newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                newOrder.ContractReference__c = contracts.size() > 0 
+                    ? contracts[0].Id
+                    : null;
+                String sapCode = contracts.size() > 0
+                    ? contracts[0].SAPContractCode__c
+                    : '';
+                try{
+                    String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(order.SAPImplantCode__c, sapCode);
+                    List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
+                    positions = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
+                            JSON.deserialize(serializedResponse, List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>.class);
+                    
+                    for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni position : positions){
+                        if(position.campo.equalsIgnoreCase('IMPOSTE')){
+                            String condition = position.valore;
+                            if(position.valore.equalsIgnoreCase('E_IMPOST')){
+                                condition = 'Imposta usi domestici';
+                            } 
+                            List<PicklistEntry> entryList =
+                            ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('ExciseEle__c').getDescribe().getPicklistValues();
+                            for(PicklistEntry entry : entryList){
+
+                                if(entry.getValue().containsIgnoreCase(condition)){
+                    
+                                    newOrder.ExciseEle__c = entry.getValue();                    
+                                }
+                            }
+                        }
+                    }
+                } catch(Exception e){
+                    System.debug('Arricchimento Dati fallito -> ' +e.getMessage());
+                } 
+
+
                 //newOrder = orderUtl.enrichOrder(newOrder);
                 //orderSrv.updateRecord(newOrder);
-
-
-
             }
             //FINE SVILUPPI EVERIS
+        }
+
+        switch on processType {
+            when 'Switch in Ripristinatorio	'{
+                HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction(order);
+            }
         }
 
         //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT
         newOrder.Id = orderId;
         newOrder.RecordTypeId = recordTypeId;
         newOrder.Step__c = 2;
-        newOrder.Deliberation__c = deliberate;        
+        newOrder.Deliberation__c = deliberate;
         newOrder.ProcessType__c = processType;
+        newOrder.ProcessCode__c = processCode;
         newOrder.Phase__c = 'Bozza';
+
+        //Logica Superficie Servita Start
+        newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas' && selectedProcessObject.get('recordType') != 'HDT_RT_Voltura') ? 75 : null;
+        //Logica Superficie Servita End
 
         orderSrv.updateRecord(newOrder);
         //EVERIS 
-        
 
-        /*orderSrv.updateRecord(new Order(
-            Id = orderId,
-            RecordTypeId = recordTypeId,
-            Step__c = 2,
-            Deliberation__c = deliberate, 
-            ProcessType__c = processType,
-            Phase__c = 'Bozza' //Everis: Aggiunto update fase
-        ));*/
+	 ServiceRequest__c srvReq = new ServiceRequest__c();
+        srvReq.ServicePointCode__c= srRequest.ServicePointCode__c;
+        srvReq.Status__c= srRequest.Status__c;
+        srvReq.Order__c= srRequest.Order__c;
+        srvReq.CommoditySector__c= srRequest.CommoditySector__c;
+        srvReq.Type__c= srRequest.Type__c;
+        if(srRequest.ServicePoint__c != null){
+            srvReq.ServicePoint__c= srRequest.ServicePoint__c;
+        }else{
+            srvReq.Account__c= srRequest.Account__c;
+            srvReq.BillingProfile__c= srRequest.BillingProfile__c;
+        }
+        srvReq.ProcessType__c= srRequest.ProcessType__c;
+        HDT_SRV_ServiceRequest.createRecord(srvReq);
+        wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(srvReq);
+        if(!result.incompatibilities.isEmpty()){
+            HDT_SRV_ServiceRequest.deleteRecord(srvReq);
+        }
     }
 
     private static String getServicePointTypeFromOrder(String orderId) {

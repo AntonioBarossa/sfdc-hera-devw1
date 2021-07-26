@@ -5,14 +5,6 @@ public with sharing class HDT_TRH_AnagAlignmentEvent extends HDT_TRH_TriggerHand
         List<Case> anagAlignCases = new List<Case>();
         for (HDT_PEV_AnagAlignment__e event : (List<HDT_PEV_AnagAlignment__e>) Trigger.New) {
             Case anagAlignCase = (Case) JSON.deserialize(event.SerializedCase__c, Case.class);
-            try {
-                System.debug('Arricchimento dati su punto: ' + anagAlignCase.PODPDRFormula__c);
-                String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(anagAlignCase.PODPDRFormula__c, null);
-                HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, anagAlignCase);
-            } catch (Exception ex){
-                System.debug('Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
-            }
-
             anagAlignCases.add(anagAlignCase);
         }
 

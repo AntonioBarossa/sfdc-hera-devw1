@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SupplyCityCode__c</fullName>
     <externalId>false</externalId>
-    <label>Codice comune SAP [Fornitura]</label>
+    <label>Codice ISTAT [Fornitura]</label>
     <length>30</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

@@ -255,91 +255,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullo cambio offerta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullo voltura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Classificazione errata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Codice ABI obsoleto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Contattare banca</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Disattivazione in corso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Domiciliazione già presente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Firma falsa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mancanza titolarità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Multi-ricezione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>No conferma Cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PDR%2FPOD errato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Pratica errata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Quality - Annullo cambio offerta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Revoca ai sensi del comma 14%2E3 del TIMOE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Revoca ai sensi del comma 6%2E3 del TIMOE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Revoca ai sensi del comma 8%2E2 del TIMG</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento da cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento da cliente oltre i termini</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento tramite quality call</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sollecito</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Volontà estorta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2175,6 +2091,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Hera Comm Marche</fullName>
             <default>false</default>
         </values>
@@ -2762,15 +2682,15 @@
     <picklistValues>
         <picklist>WithdrawalClass__c</picklist>
         <values>
-            <fullName>001-7 giorni</fullName>
+            <fullName>001 - 7 giorni</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>002-6 giorni %28no dom%2E%2Bfest%2E%29</fullName>
+            <fullName>002 - 6 giorni %28no dom%2E %2B fest%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>003-5 giorni%28no sab%2Edom%2Efest%29</fullName>
+            <fullName>003 - 5 giorni %28no sab%2E dom%2E fest%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>

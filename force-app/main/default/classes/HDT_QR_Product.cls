@@ -30,4 +30,17 @@ public inherited sharing class HDT_QR_Product {
 
     }
 
+    public static List<Product2> getAllProducts(String IdGruppoEleggibilitCampagne) {
+        return [
+            SELECT 
+            Id,
+            Name,
+            CampaignEleggibilityGroup__c
+            FROM Product2
+            WHERE Status__c != 'Scaduta'
+            AND (CampaignEleggibilityGroup__c = :IdGruppoEleggibilitCampagne OR CampaignEleggibilityGroup__c = null)
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
 }

@@ -2,12 +2,14 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
 
     HDT_QR_InstallmentPlans installmentsQr = new HDT_QR_InstallmentPlans();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
+    HDT_QR_Payments paymentsQr = new HDT_QR_Payments();
 
 
     @InvocableMethod(label = 'Predefault valori pianoRate')
     public static void predefaultInstallmentsValues(List<HDT_UTL_FlowInputs> inputs){
 
         HDT_QR_InstallmentPlans installmentsQr = new HDT_QR_InstallmentPlans();
+        HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
         List<HDT_SRV_AccountInstallmentsCheck.HDT_SRV_AccountInstallmentsCheckInput> inputsCheck = 
             new List<HDT_SRV_AccountInstallmentsCheck.HDT_SRV_AccountInstallmentsCheckInput>();
@@ -55,10 +57,11 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         paymentMethod = installmentsQr.getPaymentMethodByCaseId(recordId);
         currentCase.CAWithOrWithoutSEPA__c = (paymentMethod != null && paymentMethod != '' && paymentMethod == 'RID');
 
-        //SetExpirationDate at CreatedDate+20
+        //SetExpirationDate at CreatedDate+20businessDay
         DateTime createdCase = installmentsQr.getCaseById(recordId).CreatedDate;
         System.debug('SRV_InstallmentPlans created date -> ' + createdCase);
-        currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 20;
+        currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 19;
+        currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(currentCase.ExpirationDate__c, 1);
         System.debug('SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
 
         //Set AmountToPayInstallments to TotalPay
@@ -68,6 +71,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         Decimal documentTotalAmount = 0.0;
         Decimal totalResidue = installmentsQr.getCaseById(recordId).TotalResidue__c;
         Decimal amountInstallment;
+        String customerAssisted;
 
         for(DocumentSelected__c document : raiFeeDocuments){
             totalRaiFeeResidual += document.TvFeeResidual__c;
@@ -82,7 +86,13 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         }
 
         currentCase.AmountToPayInInstallments__c = amountInstallment - totalRaiFeeResidual;
+        currentCase.InstallmentAmount__c = amountInstallment;
 
+        //Set CustomerAssisted
+        customerAssisted = installmentsQr.getCustomerAssistedKpi(accountId);
+        if(customerAssisted != null){
+            currentCase.CutomerAssisted__c = customerAssisted.equalsIgnoreCase('Si');
+        }
 
         HDT_UTL_DatabaseService.updateSObject(currentCase);
 
@@ -108,9 +118,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
         Decimal total;
         if(currentCase.DepositAmount__c != null){
-            total = currentCase.AmountToPayInInstallments__c - currentCase.DepositAmount__c;
+            total = currentCase.InstallmentAmount__c - currentCase.DepositAmount__c;
         }else{
-            total = currentCase.AmountToPayInInstallments__c;
+            total = currentCase.InstallmentAmount__c;
         }
        
 
@@ -195,6 +205,62 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         }
         
         return sapCode;
+    }
+
+    /* Returns either a RentProcessRule or a Map */
+    public HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs evaluateRuleList(List<RentProcessRule__c> ruleList, Map<String,Object> criteriaMap){
+
+        RentProcessRule__c foundRule = new RentProcessRule__c();
+        HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs output = new HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs();
+        String errorMessage = '';
+        String fineTuningField;
+
+        for(RentProcessRule__c rule : ruleList){
+            Map<String,Object> notFoundMap = new Map<String,Object>();
+            for(String fieldName : criteriaMap.keySet()){
+                if(fieldName == 'SuspensionInThePastTwelveMonths__c'){
+                    fineTuningField = 'SuspensionInPastTwelveMonths__c';
+                }else{
+                    fineTuningField = fieldName;
+                }
+                if(!(rule.get(fineTuningField) == criteriaMap.get(fieldName))){
+                    notFoundMap.put(fieldName, criteriaMap.get(fieldName));
+                    String fieldLabel = Case.SObjectType.getDescribe().fields.getMap().get(fieldName).getDescribe().getLabel();
+                    //errorMessage += '\t' + fieldLabel + ': ' + criteriaMap.get(fieldName) + '(prova invece: '+ rule.get(fineTuningField) + ')\n';
+                    errorMessage = formattingErrorMessage(errorMessage, fieldLabel, criteriaMap.get(fieldName), rule.get(fineTuningField));
+                }
+            }
+            if(notFoundMap.isEmpty()){
+                foundRule = rule;
+                break;
+            }
+        }
+
+        output.rentRule = foundRule;
+        output.errorMessage = errorMessage;
+        
+        return output;
+    }
+
+    private String formattingErrorMessage(String errorMessage, String fieldLabel, Object criteriaField, Object ruleField){
+        String fineTuningCriteria = '';
+        String fineTuningRule = '';
+        if(errorMessage.indexOf(fieldLabel) > -1){
+            //Skip 
+        } else {
+            if(criteriaField instanceOf Boolean && Boolean.valueOf(criteriaField) == true){
+                fineTuningCriteria = 'Flaggato';
+                fineTuningRule = 'Non Flaggato'; 
+            } else if(criteriaField instanceOf Boolean && Boolean.valueOf(criteriaField) == false){
+                fineTuningCriteria = 'Non Flaggato';
+                fineTuningRule = 'Flaggato'; 
+            } else {
+                fineTuningCriteria = String.valueOf(criteriaField);
+                fineTuningRule = String.valueOf(ruleField);
+            }
+            errorMessage += '\t' + fieldLabel + ': ' + fineTuningCriteria + ' (prova invece: ' + fineTuningRule + ')\n';
+        }
+        return errorMessage;
     }
 
 

@@ -637,6 +637,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ComplaintType__c</field>
             <value>
                 <elementReference>GetInputCaseAggiornato.ComplaintType__c</elementReference>
@@ -699,7 +705,7 @@
         <inputAssignments>
             <field>Type</field>
             <value>
-                <elementReference>GetInputCaseAggiornato.Type</elementReference>
+                <stringValue>Contenitore Reclami</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1269,7 +1275,7 @@
             <targetReference>Get_Input_Case</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>

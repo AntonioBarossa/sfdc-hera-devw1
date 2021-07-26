@@ -587,6 +587,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Piano Straordinario</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Piano d%27autorità</fullName>
             <default>false</default>
         </values>

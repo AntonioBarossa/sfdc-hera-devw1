@@ -112,7 +112,12 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         save({order: orderToSave}).then(data =>{
             this.loading = false;
 
-            this.dispatchEvent(new CustomEvent('redirecttoparent'));
+            if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
+                console.log('redirect_attivazione_mod');
+                this.dispatchEvent(new CustomEvent('redirect_attivazione_mod'));
+            } else {
+                this.dispatchEvent(new CustomEvent('redirecttoparent'));
+            }
 
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',

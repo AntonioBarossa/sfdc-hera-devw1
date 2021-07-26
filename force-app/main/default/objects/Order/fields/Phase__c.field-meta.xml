@@ -466,6 +466,51 @@
                 <label>Amm. Precheck OK SII</label>
             </value>
             <value>
+                <fullName>Preventivo scaduto</fullName>
+                <default>false</default>
+                <label>Preventivo scaduto</label>
+            </value>
+            <value>
+                <fullName>Inviare preventivo</fullName>
+                <default>false</default>
+                <label>Inviare preventivo</label>
+            </value>
+            <value>
+                <fullName>Dati Tecnici Ricevuti</fullName>
+                <default>false</default>
+                <label>Dati Tecnici Ricevuti</label>
+            </value>
+            <value>
+                <fullName>Richiesta Preventivo extra sistema</fullName>
+                <default>false</default>
+                <label>Richiesta Preventivo extra sistema</label>
+            </value>
+            <value>
+                <fullName>Pratica non gestita per il DL</fullName>
+                <default>false</default>
+                <label>Pratica non gestita per il DL</label>
+            </value>
+            <value>
+                <fullName>Esportazione VS Siebel</fullName>
+                <default>false</default>
+                <label>Esportazione VS Siebel</label>
+            </value>
+            <value>
+                <fullName>Caricamento Siebel OK</fullName>
+                <default>false</default>
+                <label>Caricamento Siebel OK</label>
+            </value>
+            <value>
+                <fullName>Caricamento Siebel KO</fullName>
+                <default>false</default>
+                <label>Caricamento Siebel KO</label>
+            </value>
+            <value>
+                <fullName>Sequenzializzato</fullName>
+                <default>false</default>
+                <label>Sequenzializzato</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -554,6 +599,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Ripensamento -  Comunicazione verso Heroku OK</label>
+            </value>
+            <value>
+                <fullName>Sospeso</fullName>
+                <default>false</default>
+                <isActive>true</isActive>
+                <label>Sospeso</label>
             </value>
         </valueSetDefinition>
     </valueSet>

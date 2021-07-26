@@ -13,7 +13,6 @@
     <columns>AmountToPayInInstallmentsFrom__c</columns>
     <columns>AmountToPayInInstallmentsTo__c</columns>
     <columns>Deposit__c</columns>
-    <columns>CustomerAssisted__c</columns>
     <filterScope>Everything</filterScope>
     <label>Regole Piano Rata</label>
 </ListView>

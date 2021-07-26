@@ -20,7 +20,9 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
                 'PhaseStory__c', 
                 'Status',
                 'Cluster__c',
+                'DistributorNote__c',
                 'Type',
+                'Subprocess__c',
                 'RecordTypeId'
             };
         Case childCase = new Case();
@@ -92,14 +94,62 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
 
         Case newCase = new Case();
 
-        newCase.AccountId = parentOrder.AccountId;
-        newCase.ContactId = parentOrder.Contact__c;
-        newCase.CompanyOwner__c = parentOrder.Account.CompanyOwner__c;
         newCase.RecordTypeId = recordTypeId;
         newCase.Type = caseType;
         newCase.Cluster__c = caseCluster;
-
         newCase.Phase__c = 'Bozza';
+
+        newCase.AccountId = parentOrder.AccountId;
+        newCase.ContactId = parentOrder.Contact__c;
+        newCase.CompanyOwner__c = parentOrder.CompanyOwner__c;
+        newCase.Order__c = parentOrder.Id;
+        // Campi sezione Dati Residenza
+        newCase.BillingCity__c = parentOrder.ResidentialCity__c;
+        newCase.BillingCityCode__c = parentOrder.ResidentialCityCode__c;
+        newCase.BillingCountry__c = parentOrder.ResidentialCountry__c;
+        newCase.BillingIsAddressVerified__c = parentOrder.ResidentialIsAddressVerified__c;
+        newCase.BillingPlace__c = parentOrder.ResidentialPlace__c;
+        newCase.BillingPostalCode__c = parentOrder.ResidentialPostalCode__c;
+        newCase.BillingProvince__c = parentOrder.ResidentialState__c;
+        newCase.BillingStreetName__c = parentOrder.ResidentialStreetName__c;
+        newCase.BillingStreetNumber__c = parentOrder.ResidentialStreetNumber__c;
+        // Campi sezione Dati Esazione
+        newCase.BillingProfile__c = parentOrder.BillingProfile__c;
+        newCase.InvoicingCity__c = parentOrder.BillingCity__c;
+        newCase.InvoicingCityCode__c = parentOrder.BillingCityCode__c;
+        newCase.InvoicingCountry__c = parentOrder.BillingCountry__c;
+        newCase.IsInvoicingVerified__c = parentOrder.BillingIsAddressVerified__c;
+        newCase.InvoicingPlace__c = parentOrder.BillingPlace__c;
+        newCase.InvoicingPostalCode__c = parentOrder.BillingPostalCode__c;
+        newCase.InvoicingProvince__c = parentOrder.BillingProvince__c;
+        newCase.InvoicingStreetName__c = parentOrder.BillingStreetName__c;
+        newCase.InvoicingStreetNumber__c = parentOrder.BillingStreetNumber__c;
+        // Campi sezione Dati Fornitura
+        newCase.SupplyCity__c = parentOrder.SupplyCity__c;
+        newCase.SupplyCityCode__c = parentOrder.SupplyCityCode__c;
+        newCase.SupplyCountry__c = parentOrder.SupplyCountry__c;
+        newCase.SupplyIsAddressVerified__c = parentOrder.SupplyIsAddressVerified__c;
+        newCase.SupplyPlace__c = parentOrder.SupplyPlace__c;
+        newCase.SupplyPlaceCode__c = parentOrder.SupplyPlaceCode__c;
+        newCase.SupplyPostalCode__c = parentOrder.SupplyPostalCode__c;
+        newCase.SupplyProvince__c = parentOrder.SupplyState__c;
+        newCase.SupplyStreetName__c = parentOrder.SupplyStreetName__c;
+        newCase.SupplyStreetNumber__c = parentOrder.SupplyStreetNumber__c;
+        // Campi sezione Tributi e Dati Commerciali
+        newCase.TaxRate__c = parentOrder.VAT__c;
+        newCase.AtecoCode__c = parentOrder.AtecoCode__c;
+        newCase.Market__c = parentOrder.Market__c;
+        newCase.Contract__c = parentOrder.ContractId;
+        newCase.ServicePoint__c = parentOrder.ServicePoint__c;
+        // Campi sezione Altri Dati
+        newCase.Disconnectable__c = parentOrder.Disconnectable__c;
+        newCase.OfficeSubjectCode__c = parentOrder.SubjectCode__c;
+        newCase.DistributorCode__c = parentOrder.DistributorCode__c;
+        newCase.FirstName__c = parentOrder.CustomerName__c;
+        newCase.LastName__c = parentOrder.CustomerLastName__c;
+        newCase.VatNumber__c = parentOrder.CustomerVATNumber__c;
+        newCase.FiscalCode__c = parentOrder.CustomerFiscalCode__c;
+        newCase.Resident__c = parentOrder.Resident__c;
 
         return newCase;
     }

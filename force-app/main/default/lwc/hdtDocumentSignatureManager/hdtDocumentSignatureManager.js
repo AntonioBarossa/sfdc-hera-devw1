@@ -20,7 +20,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track accountId;
     @track documents;
     @api params;
-
+    @api disableinput;
     buttonStatefulState = false;
     @track enableEdit = false;
     @track emailRequired;
@@ -38,12 +38,16 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track signSendMap;
     @track isModalOpen = false;
     @track showSpinner = false;
-    
+    @track showAddress = false;
+    @track documents;
+    @track tipoPlico='';
+
     connectedCallback(){
         try{
             if(this.params){
                 this.returnWrapper = JSON.parse(this.params);
                 var inputWrapper = JSON.parse(this.params);
+                this.documents = inputWrapper.documents;
                 this.context = inputWrapper.context;
                 this.recordId = inputWrapper.recordId;
                 this.processType = inputWrapper.processType;
@@ -56,10 +60,22 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.address = inputWrapper.addressWrapper.completeAddress;
                 this.signMode = inputWrapper.signMode;
                 this.sendMode = inputWrapper.sendMode;
-                if(this.context.localeCompare('Order') === 0 || this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0){
+                if(inputWrapper.tipoPlico){
+                    this.tipoPlico = inputWrapper.tipoPlico;
+                }
+                if(inputWrapper.enableEdit){
+                    this.enableEdit = true;
+                }
+                if(this.context.localeCompare('Order') === 0 || (this.quoteType != null && this.quoteType != ''  && this.quoteType.localeCompare('Analitico') === 0)){
+                    console.log('Inside if');
                     this.enablePreview = false;
                 }else{
                     this.enablePreview = true;
+                }
+                if(this.context.localeCompare('EC')===0 || this.context.localeCompare('GC')===0){
+                    this.showAddress = false;
+                }else{
+                    this.showAddress = true;
                 }
                 this.addressWrapper = inputWrapper.addressWrapper;
                 getSignSendMode({
@@ -214,7 +230,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         }
         
     }
-    
+    @api
     checkForm(){
         try{
             var modFirma = this.template.querySelector("lightning-combobox[data-id=modalitaFirma]");
@@ -239,20 +255,18 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     }, true);
                     if(!allValid){
                         console.log('KO');
-                        
                     }else{
                         console.log('OK');
                         this.buttonStatefulState = !this.buttonStatefulState
                         this.enableEdit = this.buttonStatefulState;
+                        this.disableinput = true;
                         this.returnWrapper.signMode = modFirma.value;
                         this.returnWrapper.sendMode = modSpedizione.value;
                         this.returnWrapper.phone = telefono.value;
                         this.returnWrapper.email = email.value;
                         this.returnWrapper.addressWrapper.completeAddress = address.value;
                         this.returnWrapper.dataConfirmed = true;
-                        // JSON.stringify(this.returnWrapper)
                         this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
-
                     }
                 }
         }catch (error) {
@@ -281,17 +295,21 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         }  
 
     }
-
+    @api
     handlePreview(){
         try{
+            
             this.showSpinner = true;
             var formParams = {
-                sendMode : this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value,
-                signMode : this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value,
+                sendMode : this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value,
+                signMode : this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value,
                 telefono : this.template.querySelector("lightning-input[data-id=telefono]").value,      
                 email : this.template.querySelector("lightning-input[data-id=email]").value,      
-                address : this.template.querySelector("lightning-input[data-id=indirizzoRecapito]").value,
-                mode : 'Preview'
+                //address : this.template.querySelector("lightning-input[data-id=indirizzoRecapito]").value,
+                mode : 'Preview',
+                Archiviato : 'N',
+                EstrattoConto:this.documents,
+                TipoPlico:this.tipoPlico
             };
             
             previewDocumentFile({
@@ -300,40 +318,51 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 formParams: JSON.stringify(formParams)
             }).then(result => {
                 //var base64 = "JVBERi0xLjMNCiXi48/TDQoNCjEgMCBvYmoNCjw8DQovVHlwZSAvQ2F0YWxvZw0KL091dGxpbmVzIDIgMCBSDQovUGFnZXMgMyAwIFINCj4+DQplbmRvYmoNCg0KMiAwIG9iag0KPDwNCi9UeXBlIC9PdXRsaW5lcw0KL0NvdW50IDANCj4+DQplbmRvYmoNCg0KMyAwIG9iag0KPDwNCi9UeXBlIC9QYWdlcw0KL0NvdW50IDINCi9LaWRzIFsgNCAwIFIgNiAwIFIgXSANCj4+DQplbmRvYmoNCg0KNCAwIG9iag0KPDwNCi9UeXBlIC9QYWdlDQovUGFyZW50IDMgMCBSDQovUmVzb3VyY2VzIDw8DQovRm9udCA8PA0KL0YxIDkgMCBSIA0KPj4NCi9Qcm9jU2V0IDggMCBSDQo+Pg0KL01lZGlhQm94IFswIDAgNjEyLjAwMDAgNzkyLjAwMDBdDQovQ29udGVudHMgNSAwIFINCj4+DQplbmRvYmoNCg0KNSAwIG9iag0KPDwgL0xlbmd0aCAxMDc0ID4+DQpzdHJlYW0NCjIgSg0KQlQNCjAgMCAwIHJnDQovRjEgMDAyNyBUZg0KNTcuMzc1MCA3MjIuMjgwMCBUZA0KKCBBIFNpbXBsZSBQREYgRmlsZSApIFRqDQpFVA0KQlQNCi9GMSAwMDEwIFRmDQo2OS4yNTAwIDY4OC42MDgwIFRkDQooIFRoaXMgaXMgYSBzbWFsbCBkZW1vbnN0cmF0aW9uIC5wZGYgZmlsZSAtICkgVGoNCkVUDQpCVA0KL0YxIDAwMTAgVGYNCjY5LjI1MDAgNjY0LjcwNDAgVGQNCigganVzdCBmb3IgdXNlIGluIHRoZSBWaXJ0dWFsIE1lY2hhbmljcyB0dXRvcmlhbHMuIE1vcmUgdGV4dC4gQW5kIG1vcmUgKSBUag0KRVQNCkJUDQovRjEgMDAxMCBUZg0KNjkuMjUwMCA2NTIuNzUyMCBUZA0KKCB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiApIFRqDQpFVA0KQlQNCi9GMSAwMDEwIFRmDQo2OS4yNTAwIDYyOC44NDgwIFRkDQooIEFuZCBtb3JlIHRleHQuIEFuZCBtb3JlIHRleHQuIEFuZCBtb3JlIHRleHQuIEFuZCBtb3JlIHRleHQuIEFuZCBtb3JlICkgVGoNCkVUDQpCVA0KL0YxIDAwMTAgVGYNCjY5LjI1MDAgNjE2Ljg5NjAgVGQNCiggdGV4dC4gQW5kIG1vcmUgdGV4dC4gQm9yaW5nLCB6enp6ei4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kICkgVGoNCkVUDQpCVA0KL0YxIDAwMTAgVGYNCjY5LjI1MDAgNjA0Ljk0NDAgVGQNCiggbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiApIFRqDQpFVA0KQlQNCi9GMSAwMDEwIFRmDQo2OS4yNTAwIDU5Mi45OTIwIFRkDQooIEFuZCBtb3JlIHRleHQuIEFuZCBtb3JlIHRleHQuICkgVGoNCkVUDQpCVA0KL0YxIDAwMTAgVGYNCjY5LjI1MDAgNTY5LjA4ODAgVGQNCiggQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgKSBUag0KRVQNCkJUDQovRjEgMDAxMCBUZg0KNjkuMjUwMCA1NTcuMTM2MCBUZA0KKCB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBFdmVuIG1vcmUuIENvbnRpbnVlZCBvbiBwYWdlIDIgLi4uKSBUag0KRVQNCmVuZHN0cmVhbQ0KZW5kb2JqDQoNCjYgMCBvYmoNCjw8DQovVHlwZSAvUGFnZQ0KL1BhcmVudCAzIDAgUg0KL1Jlc291cmNlcyA8PA0KL0ZvbnQgPDwNCi9GMSA5IDAgUiANCj4+DQovUHJvY1NldCA4IDAgUg0KPj4NCi9NZWRpYUJveCBbMCAwIDYxMi4wMDAwIDc5Mi4wMDAwXQ0KL0NvbnRlbnRzIDcgMCBSDQo+Pg0KZW5kb2JqDQoNCjcgMCBvYmoNCjw8IC9MZW5ndGggNjc2ID4+DQpzdHJlYW0NCjIgSg0KQlQNCjAgMCAwIHJnDQovRjEgMDAyNyBUZg0KNTcuMzc1MCA3MjIuMjgwMCBUZA0KKCBTaW1wbGUgUERGIEZpbGUgMiApIFRqDQpFVA0KQlQNCi9GMSAwMDEwIFRmDQo2OS4yNTAwIDY4OC42MDgwIFRkDQooIC4uLmNvbnRpbnVlZCBmcm9tIHBhZ2UgMS4gWWV0IG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gKSBUag0KRVQNCkJUDQovRjEgMDAxMCBUZg0KNjkuMjUwMCA2NzYuNjU2MCBUZA0KKCBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSB0ZXh0LiBBbmQgbW9yZSApIFRqDQpFVA0KQlQNCi9GMSAwMDEwIFRmDQo2OS4yNTAwIDY2NC43MDQwIFRkDQooIHRleHQuIE9oLCBob3cgYm9yaW5nIHR5cGluZyB0aGlzIHN0dWZmLiBCdXQgbm90IGFzIGJvcmluZyBhcyB3YXRjaGluZyApIFRqDQpFVA0KQlQNCi9GMSAwMDEwIFRmDQo2OS4yNTAwIDY1Mi43NTIwIFRkDQooIHBhaW50IGRyeS4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gQW5kIG1vcmUgdGV4dC4gKSBUag0KRVQNCkJUDQovRjEgMDAxMCBUZg0KNjkuMjUwMCA2NDAuODAwMCBUZA0KKCBCb3JpbmcuICBNb3JlLCBhIGxpdHRsZSBtb3JlIHRleHQuIFRoZSBlbmQsIGFuZCBqdXN0IGFzIHdlbGwuICkgVGoNCkVUDQplbmRzdHJlYW0NCmVuZG9iag0KDQo4IDAgb2JqDQpbL1BERiAvVGV4dF0NCmVuZG9iag0KDQo5IDAgb2JqDQo8PA0KL1R5cGUgL0ZvbnQNCi9TdWJ0eXBlIC9UeXBlMQ0KL05hbWUgL0YxDQovQmFzZUZvbnQgL0hlbHZldGljYQ0KL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcNCj4+DQplbmRvYmoNCg0KMTAgMCBvYmoNCjw8DQovQ3JlYXRvciAoUmF2ZSBcKGh0dHA6Ly93d3cubmV2cm9uYS5jb20vcmF2ZVwpKQ0KL1Byb2R1Y2VyIChOZXZyb25hIERlc2lnbnMpDQovQ3JlYXRpb25EYXRlIChEOjIwMDYwMzAxMDcyODI2KQ0KPj4NCmVuZG9iag0KDQp4cmVmDQowIDExDQowMDAwMDAwMDAwIDY1NTM1IGYNCjAwMDAwMDAwMTkgMDAwMDAgbg0KMDAwMDAwMDA5MyAwMDAwMCBuDQowMDAwMDAwMTQ3IDAwMDAwIG4NCjAwMDAwMDAyMjIgMDAwMDAgbg0KMDAwMDAwMDM5MCAwMDAwMCBuDQowMDAwMDAxNTIyIDAwMDAwIG4NCjAwMDAwMDE2OTAgMDAwMDAgbg0KMDAwMDAwMjQyMyAwMDAwMCBuDQowMDAwMDAyNDU2IDAwMDAwIG4NCjAwMDAwMDI1NzQgMDAwMDAgbg0KDQp0cmFpbGVyDQo8PA0KL1NpemUgMTENCi9Sb290IDEgMCBSDQovSW5mbyAxMCAwIFINCj4+DQoNCnN0YXJ0eHJlZg0KMjcxNA0KJSVFT0YNCg==\n"; 
-                var base64 = result;
-                var sliceSize = 512;
-                base64 = base64.replace(/^[^,]+,/, '');
-                base64 = base64.replace(/\s/g, '');
-                var byteCharacters = window.atob(base64);
-                var byteArrays = [];
+                var resultParsed = JSON.parse(result);
+                if(resultParsed.code === '200' || resultParsed.code === '201'){
+                    if(resultParsed.result === '000'){
+                        var base64 = resultParsed.base64;
+                        var sliceSize = 512;
+                        base64 = base64.replace(/^[^,]+,/, '');
+                        base64 = base64.replace(/\s/g, '');
+                        var byteCharacters = window.atob(base64);
+                        var byteArrays = [];
 
-                for ( var offset = 0; offset < byteCharacters.length; offset = offset + sliceSize ) {
-                    var slice = byteCharacters.slice(offset, offset + sliceSize);
-                    var byteNumbers = new Array(slice.length);
-                    for (var i = 0; i < slice.length; i++) {
-                        byteNumbers[i] = slice.charCodeAt(i);
-                    }
-                    var byteArray = new Uint8Array(byteNumbers);
+                        for ( var offset = 0; offset < byteCharacters.length; offset = offset + sliceSize ) {
+                            var slice = byteCharacters.slice(offset, offset + sliceSize);
+                            var byteNumbers = new Array(slice.length);
+                            for (var i = 0; i < slice.length; i++) {
+                                byteNumbers[i] = slice.charCodeAt(i);
+                            }
+                            var byteArray = new Uint8Array(byteNumbers);
 
-                    byteArrays.push(byteArray);
-                }
-
-                this.blob = new Blob(byteArrays, { type: 'application/pdf' });
-
-                const blobURL = URL.createObjectURL(this.blob);
-                this.url = blobURL;
-                this.fileName = 'myFileName.pdf';
-                this.showFile = true;
-                this.showSpinner = false;
-                this[NavigationMixin.Navigate](
-                    {
-                        type: 'standard__webPage',
-                        attributes: {
-                            url: blobURL
+                            byteArrays.push(byteArray);
                         }
+
+                        this.blob = new Blob(byteArrays, { type: 'application/pdf' });
+
+                        const blobURL = URL.createObjectURL(this.blob);
+                        this.url = blobURL;
+                        this.fileName = 'myFileName.pdf';
+                        this.showFile = true;
+                        this.showSpinner = false;
+                        this[NavigationMixin.Navigate](
+                            {
+                                type: 'standard__webPage',
+                                attributes: {
+                                    url: blobURL
+                                }
+                            }
+                        );
+                        this.dispatchEvent(new CustomEvent('previewexecuted'));
+                    }else{
+                        this.showSpinner = false;
+                        this.showMessage('Attenzione',resultParsed.message,'error');
                     }
-                );
-                this.dispatchEvent(new CustomEvent('previewexecuted'));
+                }else{
+                    this.showSpinner = false;
+                    this.showMessage('Attenzione','Errore nella composizione del plico','error');
+                }
             })
             .catch(error => {
                 this.showSpinner = false;

@@ -343,6 +343,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione Votive</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione dati discordanti</fullName>
             <default>false</default>
         </values>
@@ -363,14 +367,6 @@
         </values>
         <values>
             <fullName>3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -32,4 +32,10 @@
         <label>Annullato</label>
         <groupingString>Draft</groupingString>
     </standardValue>
+    <standardValue>
+        <fullName>Sequenzializzato</fullName>
+        <default>false</default>
+        <label>Sequenzializzato</label>
+        <groupingString>Draft</groupingString>
+    </standardValue>
 </StandardValueSet>

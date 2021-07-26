@@ -16,6 +16,6 @@
     <lightning:workspaceAPI aura:id="workspace"/> 
     <lightning:navigation aura:id="navService" />
     <aura:if isTrue="{!v.showComp}">
-        <c:hdtRecordEditFormFlowSales oncloseaction="{!c.closeTabMain}" processtype="{!v.processType}"  recordid="{!v.recordId}"  objectName="{!v.objectname}"  accountId="{!v.accountid}"   saveButton="{!v.saveButton}"   cancelButton="{!v.cancelButton}"   draftButton="{!v.draftButton}"  saveInDraft="{!v.draftButton}"   cancelCase="{!v.cancelCase}"   isRunFromFlow="{!v.isRunFromFlow}"></c:hdtRecordEditFormFlowSales>
+        <c:hdtRecordEditFormFlowSales oncloseaction="{!c.closeTabMain}" processtype="{!v.processType}"  recordid="{!v.recordId}"  objectName="{!v.objectname}"  accountId="{!v.accountId}"   saveButton="{!v.saveButton}"   cancelButton="{!v.cancelButton}"   draftButton="{!v.draftButton}"  saveInDraft="{!v.draftButton}"   cancelCase="{!v.cancelCase}"   isRunFromFlow="{!v.isRunFromFlow}"></c:hdtRecordEditFormFlowSales>
     </aura:if>
 </aura:component>	

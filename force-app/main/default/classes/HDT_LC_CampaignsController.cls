@@ -5,6 +5,13 @@ public inherited sharing class HDT_LC_CampaignsController {
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
+    private static HDT_SRV_CommercialCode commercialCodeSrv = new HDT_SRV_CommercialCode();
+    private static HDT_QR_CommercialCode commercialCodeQr = new HDT_QR_CommercialCode();
+    private static HDT_QR_Campaign campaignQr = new HDT_QR_Campaign();
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
+    private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_QR_Product productQr = new HDT_QR_Product();
+    private static HDT_SRV_Product productSrv = new HDT_SRV_Product();
 
     @AuraEnabled(cacheable=true)
     public static List <CampaignMember> getCampaigns(String id, String objectName, String category, String channel) {
@@ -30,7 +37,10 @@ public inherited sharing class HDT_LC_CampaignsController {
             return null;
         }
     }
-
+    @AuraEnabled(cacheable=true)
+    public static List<Campaign> getOutboundCampaigns() {
+        return  campaignQr.getOutboundCampaigns();
+    }
     @AuraEnabled
     public static CampaignMember updateCampaignMemberStatus(String campaignMemberId, String statusValue){
         try {
@@ -72,6 +82,24 @@ public inherited sharing class HDT_LC_CampaignsController {
         system.debug(newCase);
         return newCase;
     }
+    @AuraEnabled
+    public static String getServiceCatalogUrlByCaseType(Case c){
+        //Case newCase = caseSrv.createRecord(c);
+        String s = HDT_QR_ServiceCatalog.getServiceLinkItemAccountRedirectUrlByCategory(c.cluster__c, c.type);
+        String res = '';
+        if(s != null){
+            res = s.replace('{!Id}',c.AccountId);
+            res = res + '&c__campaignId=' + c.Campaign__c;
+            //s = s.replace('', arg1)
+        }
+        else{
+            res = null;
+        }
+
+        return res;
+    }
+
+
     @AuraEnabled
     public static List<CampaignMember> getUnassignedCampaignMembers(String campaignId) {
         return  campaignMemberQr.getUnassignedCampaignMembers(campaignId);
@@ -115,6 +143,208 @@ public inherited sharing class HDT_LC_CampaignsController {
         } catch (Exception e) {
             System.debug(e.getMessage());
             return null;
+        }
+    }
+
+    @AuraEnabled
+    public static CommercialCode__c createCommercialCode(String campaignId){
+        Campaign cmp = campaignQr.getCommercialCodeCampaign(campaignId);
+        System.debug('create Commercial code');
+        try {
+            System.debug('try to create Commercial code');
+            CommercialCode__c cc = new CommercialCode__c (
+                Campaign__c = campaignId,
+                FullCode__c = cmp.PrefixCode__c,
+                Name = cmp.PrefixCode__c,
+                MaximalUsesEE__c = cmp.MaxNumberEECodeUse__c,
+                MaximalUsesGAS__c = cmp.MaxNumberGASCodeUse__c,
+                MaximalUsesVAS__c = cmp.MaxNumberVASCodeUse__c,
+                ActualUsesEE__c = 0,
+                ActualUsesGAS__c = 0,
+                ActualUsesVAS__c = 0,
+                RecoveryUsesEE__c = 0,
+                RecoveryUsesGAS__c = 0,
+                RecoveryUsesVAS__c = 0
+            );
+            CommercialCode__c res = commercialCodeSrv.createRecord(cc);
+            return res;
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Boolean checkCommercialCodeUniqueness(String commercialCode, String campaignId) {
+        List<Campaign> campaignsList = campaignQr.getCommercialCode(commercialCode, campaignId);
+        if (campaignsList.size() > 0) {
+            return false;
+        }
+        return true;
+    }
+
+    @AuraEnabled
+    public static Boolean cancelAssignments(String recordId){
+        Campaign camp = campaignQr.getRecordById(recordId);
+        if (camp.AssignmentType__c == 'Manuale' /*&& (camp.LavorazioneFUB__c == '' || camp.LavorazioneFUB__c == null)*/) {
+            List<CampaignMember> cmList = campaignMemberQr.getMembersByCampaign(recordId);
+            System.debug(cmList);
+            if (cmList.size() > 0) {
+                List<CampaignMember> updateMembers = new List<CampaignMember>();
+                for (CampaignMember cm : cmList) {
+                    if (cm.Agency__c != null) {
+                        CampaignMember newCm = new CampaignMember(
+                            Id = cm.Id,
+                            Agency__c = null
+                        );
+                        updateMembers.add(newCm);
+                        System.debug(updateMembers);
+                    }
+                }
+                try {
+                    campaignMemberSrv.updateRecords(updateMembers);
+                    return true;
+                } catch (Exception e) {
+                    System.debug(e.getMessage());
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    @AuraEnabled
+    public static Boolean incrementCommercialCode(String recordId, String commodity){
+        CommercialCode__c commCode = commercialCodeQr.getRecordById(recordId);
+        Boolean isValid = false;
+        if (commodity == 'energia elettrica') {
+            if (commCode.AvailabilityUsesEE__c > 0) {
+                commCode.ActualUsesEE__c += 1;
+                isValid = true;
+            }
+        } else if (commodity == 'gas') {
+            if (commCode.AvailabilityUsesGAS__c > 0) {
+                commCode.ActualUsesGAS__c += 1;
+                isValid = true;
+            }
+        } else if (commodity == 'vas') {
+            if (commCode.AvailabilityUsesVAS__c > 0) {
+                commCode.ActualUsesVAS__c += 1;
+                isValid = true;
+            }            
+        }
+
+        System.debug(commCode);
+
+        if (isValid) {
+            commercialCodeSrv.updateRecord(commCode);
+        }
+
+        return isValid;
+    }
+
+    @AuraEnabled
+    public static Boolean bulkIncrementCommercialCode(String recordId, Map<String,Integer> commodityQuantity){
+        CommercialCode__c commCode = commercialCodeQr.getRecordById(recordId);
+        Boolean isValid = false;
+        for(String commodity : commodityQuantity.keySet()){
+            Integer qnt = commodityQuantity.get(commodity);
+            if (commodity == 'energia elettrica') {
+                if (commCode.AvailabilityUsesEE__c >= qnt) {
+                    commCode.ActualUsesEE__c += qnt;
+                    isValid = true;
+                }
+            } else if (commodity == 'gas') {
+                if (commCode.AvailabilityUsesGAS__c >= qnt) {
+                    commCode.ActualUsesGAS__c += qnt;
+                    isValid = true;
+                }
+            } else if (commodity == 'vas') {
+                if (commCode.AvailabilityUsesVAS__c >= qnt) {
+                    commCode.ActualUsesVAS__c += qnt;
+                    isValid = true;
+                }            
+            }
+        }
+
+        System.debug(commCode);
+
+        if (isValid) {
+            commercialCodeSrv.updateRecord(commCode);
+        }
+        return isValid;
+    }
+
+    @AuraEnabled
+    public static Boolean cancelAssignmentsOrder(String recordId){
+        Order order = orderQr.getOrderbyId(recordId);
+        if (order.FriendCode__c != '' || order.FriendCode__c != null) {
+            CommercialCode__c friendCodeRec = commercialCodeQr.getRecordById(order.FriendCode__c);
+            System.debug(friendCodeRec);
+            friendCodeRec.AvailabilityUsesEE__c = friendCodeRec.AvailabilityUsesEE__c > 0 ? friendCodeRec.AvailabilityUsesEE__c - 1 : 0;
+            friendCodeRec.AvailabilityUsesGAS__c = friendCodeRec.AvailabilityUsesGAS__c > 0 ? friendCodeRec.AvailabilityUsesGAS__c - 1 : 0;
+            friendCodeRec.AvailabilityUsesVAS__c = friendCodeRec.AvailabilityUsesVAS__c > 0 ? friendCodeRec.AvailabilityUsesVAS__c - 1 : 0;
+            order.FriendCode__c = null;
+            try {
+                commercialCodeSrv.updateRecord(friendCodeRec);
+                orderSrv.updateRecord(order);
+                return true;
+            } catch (Exception e) {
+                System.debug(e.getMessage());
+                return false;
+            }
+        }
+        return false;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<Product2> getAllProducts(String IdGruppoEleggibilitCampagne)  {
+        try {
+            List<Product2> prodList = HDT_QR_Product.getAllProducts(IdGruppoEleggibilitCampagne);
+            return prodList;
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @AuraEnabled
+    public static String assignSelectedProducts(String IdGruppoEleggibilitCampagne, List<Id> productIds, List<Id> deselectProductIds) {
+        List<Product2> productList = new List<Product2> ();
+        for (String id : productIds) {
+            Product2 prod = new Product2(
+                Id = id,
+                CampaignEleggibilityGroup__c = IdGruppoEleggibilitCampagne
+            );
+            productList.add(prod);
+        }
+
+        for (String id : deselectProductIds) {
+            Product2 prod = new Product2(
+                Id = id,
+                CampaignEleggibilityGroup__c = null
+            );
+            productList.add(prod);
+        }
+
+        try {
+            productSrv.updateRecords(productList);
+            return 'success';
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            return e.getMessage();
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static string getUserRole(String userId){
+        try {
+            User usr = [SELECT Id, Name, UserRole.Name FROM User WHERE Id = :userId WITH SECURITY_ENFORCED];
+            System.debug(usr.UserRole.Name);
+            System.debug(userId);
+            return usr.UserRole.Name;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
         }
     }
 }

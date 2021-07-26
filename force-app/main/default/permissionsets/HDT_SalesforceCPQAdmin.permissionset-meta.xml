@@ -2095,11 +2095,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.BillingAddessIsForeign__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.BillingAddress</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4041,11 +4036,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AssignmentRule__c.Process__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>AssignmentRule__c.QueueSize__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7100,11 +7090,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.SupplyStreetToponym__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.SupplyType__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -8850,6 +8835,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EligibilityCriteria__c.NameExternalId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EligibilityCriteria__c.NewClient__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8953,6 +8943,11 @@
         <field>EligibleMunicipality__c.Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>EligibleMunicipality__c.NameExternalId__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.CompanyOwner__c</field>
@@ -11806,11 +11801,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SupplyStreetToponym__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.SupplyStreet__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18239,6 +18229,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.ListTotalVAT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.LoginGroup__c</field>
         <readable>true</readable>
@@ -19219,6 +19214,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.TotalDiscountAmountVAT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.UseCategory__c</field>
         <readable>true</readable>
@@ -19745,6 +19745,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.CommercialId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.CompanyOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -19786,6 +19791,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.IsChangeSalesCompany__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.ListAmountVAT__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20261,6 +20271,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.SupplyProvince__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.TotalDiscountAmountVAT__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24440,11 +24455,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ServicePoint__c.SupplyStreetToponym__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>ServicePoint__c.SupplyStreet__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -25101,6 +25111,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>TechnicalOfferItem__c.M__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOfferItem__c.NameExternalId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25959,7 +25974,7 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
+        <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>

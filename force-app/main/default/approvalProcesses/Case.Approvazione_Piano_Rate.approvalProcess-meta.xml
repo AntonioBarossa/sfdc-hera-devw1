@@ -19,8 +19,7 @@
         <field>WorkStatus__c</field>
         <field>Reason__c</field>
         <field>MaxInstallmentsNumber__c</field>
-        <field>InstallmentPlanNumber__c</field>
-        <field>ExistingInstallmentPlanUnpaid__c</field>
+        <field>ExistingInstallmentsPlanNumber__c</field>
         <field>InstallmentNumberRequired__c</field>
         <field>SuspensionInThePastTwelveMonths__c</field>
         <field>TypeInstallmentPlan__c</field>
@@ -47,6 +46,11 @@
             <operation>equals</operation>
             <value>In Attesa Approvazione</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.TotalResidue__c</field>
+            <operation>notEqual</operation>
+            <value>0</value>
+        </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
         <action>
@@ -63,7 +67,7 @@
     </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
     <label>Approvazione Piano Rate</label>
-    <processOrder>1</processOrder>
+    <processOrder>2</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

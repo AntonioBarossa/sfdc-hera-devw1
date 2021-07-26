@@ -8,25 +8,25 @@ public inherited sharing class HDT_UTL_Order {
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
 
-    public Order enrichOrder(Order newOrder){
+    /*public Order enrichOrder(Order newOrder){
 
         String servicePointFields = 'AnnualConsumption__c, SupplyType__c, WithdrawalClass__c, MarketOrigin__c';
         
-        List<ServicePoint__c> servicePointList = new List<ServicePoint__c>();
+        //List<ServicePoint__c> servicePointList = new List<ServicePoint__c>();
         List<Contract> contractList = new List<Contract>();
-        BillingProfile__c billingProfileList = new BillingProfile__c();
-        List<AccountContactRelation> accountContactRelList = new List<AccountContactRelation>();
+        //BillingProfile__c billingProfileList = new BillingProfile__c();
+        //List<AccountContactRelation> accountContactRelList = new List<AccountContactRelation>();
 
         System.debug('ServicePointId-->'+newOrder.ServicePoint__c);
-        System.debug('ContractId-->'+newOrder.ContractId);
-        System.debug('AccountId-->'+newOrder.AccountId);
+        //System.debug('ContractId-->'+newOrder.ContractId);
+        //System.debug('AccountId-->'+newOrder.AccountId);
 
-        String billingProfileId;
+        //String billingProfileId;
 
-        servicePointList = servicePointQr.getRecordById(newOrder.ServicePoint__c, servicePointFields);
-        contractList = contractQr.getRecordById(newOrder.ContractId);
+        //servicePointList = servicePointQr.getRecordById(newOrder.ServicePoint__c, servicePointFields);
+        //contractList = contractQr.getRecordById(newOrder.ContractId);
 
-        billingProfileId = String.valueOf(contractList[0].BillingProfile__c);
+        //billingProfileId = String.valueOf(contractList[0].BillingProfile__c);
 
         System.debug('BillingProfileId--> '+billingProfileId);
 
@@ -48,96 +48,6 @@ public inherited sharing class HDT_UTL_Order {
         return newOrder;
 
 
-    }
-
-    public Boolean isCambioOfferta(Order ord){
-
-        system.debug('HDT_UTL_Order.isCambioOfferta START');
-
-        List<OrderItem> offertaCommerciale = orderItemQr.getRecordsByOrderIdFilteredPdrPod(ord.Id);
-
-        system.debug('HDT_UTL_Order.isCambioOfferta offertaCommerciale: ' + offertaCommerciale);
-        system.debug('HDT_UTL_Order.isCambioOfferta ContractReference__c: ' + ord.SBQQ__Quote__r.ContractReference__c);
-
-        Boolean result = !offertaCommerciale.isEmpty() && !ord.SBQQ__Quote__r.AllowChangeUse__c && ord.SBQQ__Quote__r.ContractReference__c != null && !ord.SBQQ__Quote__r.AmendmentAllowed__c;
-
-        system.debug('HDT_UTL_Order.isCambioOfferta RESULT: ' + result);
-        
-        system.debug('HDT_UTL_Order.isCambioOfferta END');
-
-        return result;
-    }
-
-    public void cambioOffertaActions(Order ord) {
-        if (isCambioOfferta(ord)) {
-            orderSrv.updateRecord(new Order(
-                Id = ord.Id,
-                ProcessType__c = 'Cambio Offerta'
-            ));
-        }
-    }
-
-    public void switchInRipristinatorioAction(Order ord) {
-
-        system.debug('HDT_UTL_Order.switchInRipristinatorioAction START');
-
-        List<wrts_prcgvr__Activity__c> activityList = new List<wrts_prcgvr__Activity__c>();
-        
-        if (ord.ServicePoint__c != null) {
-            activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePoint('Gestione Switch in Ripristinatorio', 'Creata', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
-        }
-
-        system.debug('HDT_UTL_Order.switchInRipristinatorioAction activityList: ' + activityList);
-        system.debug('HDT_UTL_Order.switchInRipristinatorioAction AmendmentAllowed__c: ' + ord.SBQQ__Quote__r.AmendmentAllowed__c);
-        system.debug('HDT_UTL_Order.switchInRipristinatorioAction AllowChangeUse__c: ' + ord.SBQQ__Quote__r.AllowChangeUse__c);
-
-        if (!activityList.isEmpty() 
-            && !ord.SBQQ__Quote__r.AmendmentAllowed__c 
-            && !ord.SBQQ__Quote__r.AllowChangeUse__c 
-            && !isCambioOfferta(ord)) {
-            
-            orderSrv.updateRecord(new Order(
-                Id = ord.Id,
-                ProcessType__c = 'Switch in Ripristinatorio'
-            ));
-
-            activityCustomSrv.updateRecord(new wrts_prcgvr__Activity__c(
-                Id = activityList[0].Id,
-                Order__c = ord.Id
-            ));
-        }
-
-        system.debug('HDT_UTL_Order.switchInRipristinatorioAction END');
-    }
-
-    public void attivazioneConModificaActions(Order ord){
-        system.debug('attivazioneConModificaActions START');
-        system.debug('attivazioneConModificaActions ord.ServicePoint__r.RecordType.DeveloperName ' + ord.ServicePoint__r.RecordType.DeveloperName);
-        system.debug('attivazioneConModificaActions ord.PowerRequested__c ' + ord.PowerRequested__c);
-        system.debug('attivazioneConModificaActions ord.PowerCommitted__c ' + ord.PowerCommitted__c);
-
-
-        if (ord.ServicePoint__c != null 
-            && ord.ServicePoint__r.RecordType.DeveloperName == 'HDT_RT_Ele' 
-            && ord.PowerRequested__c != null 
-            && ord.PowerRequested__c != ord.PowerCommitted__c ) {
-
-                system.debug('attivazioneConModificaActions ENTER');
-            orderSrv.updateRecord(new Order(
-                Id = ord.Id,
-                ProcessType__c = 'Prima Attivazione con modifica'
-            ));
-        }
-
-        system.debug('attivazioneConModificaActions END');
-    }
-
-    public void setOrderProcess(Order ord){
-        if (ord.RecordType.DeveloperName == 'HDT_RT_Default') {
-            cambioOffertaActions(ord);
-            switchInRipristinatorioAction(ord);
-            attivazioneConModificaActions(ord);
-        }
-    }
+    }*/
 
 }

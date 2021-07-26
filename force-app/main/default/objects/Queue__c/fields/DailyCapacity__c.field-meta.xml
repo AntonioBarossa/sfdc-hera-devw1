@@ -3,7 +3,7 @@
     <fullName>DailyCapacity__c</fullName>
     <externalId>false</externalId>
     <label>Capacità Massima Giornaliera</label>
-    <precision>6</precision>
+    <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
     <trackTrending>false</trackTrending>

@@ -8,128 +8,268 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>PetitionerAssigneeStructure__c</controllingField>
-        <restricted>true</restricted>
-        <valueSetName>HDT_ActivityType</valueSetName>
-        <valueSettings>
-            <controllingFieldValue>Tesoreria</controllingFieldValue>
-            <valueName>Supporto verifica rimborsi Clienti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Tesoreria</controllingFieldValue>
-            <valueName>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fatturazione e incassi</controllingFieldValue>
-            <valueName>Supporto documentale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fatturazione e incassi</controllingFieldValue>
-            <valueName>Supporto fatturazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fatturazione e incassi</controllingFieldValue>
-            <valueName>Supporto layout bollette</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fatturazione e incassi</controllingFieldValue>
-            <valueName>Supporto pagamenti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>DAFC</controllingFieldValue>
-            <valueName>Supporto credito Credit Management – affidi ADR</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>DAFC</controllingFieldValue>
-            <valueName>Supporto credito Credit Management – affidi legale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>DAFC</controllingFieldValue>
-            <valueName>Supporto credito Credit Management – cessioni</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>DAFC</controllingFieldValue>
-            <valueName>Supporto credito Credit Management – sospensioni</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Sales&amp;Marketing Service</controllingFieldValue>
-            <valueName>Segnalazioni Commissioni Agenzie</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Canone Rai e Bonus</controllingFieldValue>
-            <valueName>Supporto su Bonus Sociale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Canone Rai e Bonus</controllingFieldValue>
-            <valueName>Supporto su Canone Rai</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CVM + Corp Mui</controllingFieldValue>
-            <valueName>Supporto e segnalazioni back office</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>STS x CVM + Corp Mui</controllingFieldValue>
-            <valueName>Supporto Catalogo Prodotti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>STS x CVM + Corp Mui</controllingFieldValue>
-            <valueName>Supporto emissione SD</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esercizio Clienti</controllingFieldValue>
-            <valueName>Supporto Anomalia processo/sistema</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esercizio Clienti</controllingFieldValue>
-            <valueName>Supporto Esercizio Sistemi</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>OM</controllingFieldValue>
-            <valueName>Supporto caricamenti contratti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>OM</controllingFieldValue>
-            <valueName>Supporto Verifiche contratti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>PPT</controllingFieldValue>
-            <valueName>Gestione processi di Misura</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>PPT</controllingFieldValue>
-            <valueName>Gestione processi Ultima Istanza</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>PPT</controllingFieldValue>
-            <valueName>Rapporti con i distributori e SII</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Reporting</controllingFieldValue>
-            <valueName>Reporting</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>VENDITA</controllingFieldValue>
-            <valueName>Supporto Agenzia</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CRM</controllingFieldValue>
-            <valueName>Supporto Contact Center</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>CRM</controllingFieldValue>
-            <valueName>Supporto Front</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Credito HC</controllingFieldValue>
-            <valueName>Morosità Business</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Credito HC</controllingFieldValue>
-            <valueName>Supporto legale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Credito HC</controllingFieldValue>
-            <valueName>Verifiche Credito Business</valueName>
-        </valueSettings>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Approvazione Quote</fullName>
+                <default>false</default>
+                <label>Approvazione Quote</label>
+            </value>
+            <value>
+                <fullName>Gestione dati discordanti</fullName>
+                <default>false</default>
+                <label>Gestione dati discordanti</label>
+            </value>
+            <value>
+                <fullName>Modifica Contratti PreAttivazione</fullName>
+                <default>false</default>
+                <label>Modifica Contratti PreAttivazione</label>
+            </value>
+            <value>
+                <fullName>Contratti/Bonus Commerciale</fullName>
+                <default>false</default>
+                <label>Contratti/Bonus Commerciale</label>
+            </value>
+            <value>
+                <fullName>Gestione Switch in Ripristinatorio</fullName>
+                <default>false</default>
+                <label>Gestione Switch in Ripristinatorio</label>
+            </value>
+            <value>
+                <fullName>Documentale/Copia Contratto</fullName>
+                <default>false</default>
+                <label>Documentale/Copia Contratto</label>
+            </value>
+            <value>
+                <fullName>Gestione Iva e Accise</fullName>
+                <default>false</default>
+                <label>Gestione Iva e Accise</label>
+            </value>
+            <value>
+                <fullName>Sportello</fullName>
+                <default>false</default>
+                <label>Sportello</label>
+            </value>
+            <value>
+                <fullName>Segnalazioni VAS</fullName>
+                <default>false</default>
+                <label>Segnalazioni VAS</label>
+            </value>
+            <value>
+                <fullName>Annullamento</fullName>
+                <default>false</default>
+                <label>Annullamento</label>
+            </value>
+            <value>
+                <fullName>Presa Appuntamento</fullName>
+                <default>false</default>
+                <label>Presa Appuntamento</label>
+            </value>
+            <value>
+                <fullName>Sollecito Distributore</fullName>
+                <default>false</default>
+                <label>Sollecito Distributore</label>
+            </value>
+            <value>
+                <fullName>Anticipo Appuntamento</fullName>
+                <default>false</default>
+                <label>Anticipo Appuntamento</label>
+            </value>
+            <value>
+                <fullName>Riapertura urgenti Errori DL</fullName>
+                <default>false</default>
+                <label>Riapertura urgenti Errori DL</label>
+            </value>
+            <value>
+                <fullName>Richiesta informazioni appuntamento</fullName>
+                <default>false</default>
+                <label>Richiesta informazioni appuntamento</label>
+            </value>
+            <value>
+                <fullName>Richiesta appuntamento DL (fermo sistemi)</fullName>
+                <default>false</default>
+                <label>Richiesta appuntamento DL (fermo sistemi)</label>
+            </value>
+            <value>
+                <fullName>Comunicazione da DL</fullName>
+                <default>false</default>
+                <label>Comunicazione da DL</label>
+            </value>
+            <value>
+                <fullName>Chiamata Callback</fullName>
+                <default>false</default>
+                <label>Chiamata Callback</label>
+            </value>
+            <value>
+                <fullName>Chiamata inbound</fullName>
+                <default>false</default>
+                <label>Chiamata inbound</label>
+            </value>
+            <value>
+                <fullName>Chiamata outbound</fullName>
+                <default>false</default>
+                <label>Chiamata outbound</label>
+            </value>
+            <value>
+                <fullName>Lavorazione Reclamo Post Survey</fullName>
+                <default>false</default>
+                <label>Lavorazione Reclamo Post Survey</label>
+            </value>
+            <value>
+                <fullName>Gestione Votive</fullName>
+                <default>false</default>
+                <label>Gestione Votive</label>
+            </value>
+            <value>
+                <fullName>Supporto su Bonus Sociale</fullName>
+                <default>false</default>
+                <label>Supporto su Bonus Sociale</label>
+            </value>
+            <value>
+                <fullName>Supporto su Canone Rai</fullName>
+                <default>false</default>
+                <label>Supporto su Canone Rai</label>
+            </value>
+            <value>
+                <fullName>Supporto e segnalazioni back office</fullName>
+                <default>false</default>
+                <label>Supporto e segnalazioni back office</label>
+            </value>
+            <value>
+                <fullName>Supporto emissione SD</fullName>
+                <default>false</default>
+                <label>Supporto emissione SD</label>
+            </value>
+            <value>
+                <fullName>Supporto Catalogo Prodotti</fullName>
+                <default>false</default>
+                <label>Supporto Catalogo Prodotti</label>
+            </value>
+            <value>
+                <fullName>Supporto Anomalia processo/sistema</fullName>
+                <default>false</default>
+                <label>Supporto Anomalia processo/sistema</label>
+            </value>
+            <value>
+                <fullName>Supporto Esercizio Sistemi</fullName>
+                <default>false</default>
+                <label>Supporto Esercizio Sistemi</label>
+            </value>
+            <value>
+                <fullName>Supporto caricamenti contratti</fullName>
+                <default>false</default>
+                <label>Supporto caricamenti contratti</label>
+            </value>
+            <value>
+                <fullName>Supporto Verifiche contratti</fullName>
+                <default>false</default>
+                <label>Supporto Verifiche contratti</label>
+            </value>
+            <value>
+                <fullName>Gestione processi di Misura</fullName>
+                <default>false</default>
+                <label>Gestione processi di Misura</label>
+            </value>
+            <value>
+                <fullName>Gestione processi Ultima Istanza</fullName>
+                <default>false</default>
+                <label>Gestione processi Ultima Istanza</label>
+            </value>
+            <value>
+                <fullName>Rapporti con i distributori e SII</fullName>
+                <default>false</default>
+                <label>Rapporti con i distributori e SII</label>
+            </value>
+            <value>
+                <fullName>Reporting</fullName>
+                <default>false</default>
+                <label>Reporting</label>
+            </value>
+            <value>
+                <fullName>Supporto Agenzia</fullName>
+                <default>false</default>
+                <label>Supporto Agenzia</label>
+            </value>
+            <value>
+                <fullName>Supporto Front</fullName>
+                <default>false</default>
+                <label>Supporto Front</label>
+            </value>
+            <value>
+                <fullName>Supporto Contact Center</fullName>
+                <default>false</default>
+                <label>Supporto Contact Center</label>
+            </value>
+            <value>
+                <fullName>Verifiche Credito Business</fullName>
+                <default>false</default>
+                <label>Verifiche Credito Business</label>
+            </value>
+            <value>
+                <fullName>Morosità Business</fullName>
+                <default>false</default>
+                <label>Morosità Business</label>
+            </value>
+            <value>
+                <fullName>Supporto legale</fullName>
+                <default>false</default>
+                <label>Supporto legale</label>
+            </value>
+            <value>
+                <fullName>Supporto verifica rimborsi Clienti</fullName>
+                <default>false</default>
+                <label>Supporto verifica rimborsi Clienti</label>
+            </value>
+            <value>
+                <fullName>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</fullName>
+                <default>false</default>
+                <label>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</label>
+            </value>
+            <value>
+                <fullName>Supporto documentale</fullName>
+                <default>false</default>
+                <label>Supporto documentale</label>
+            </value>
+            <value>
+                <fullName>Supporto layout bollette</fullName>
+                <default>false</default>
+                <label>Supporto layout bollette</label>
+            </value>
+            <value>
+                <fullName>Supporto fatturazione</fullName>
+                <default>false</default>
+                <label>Supporto fatturazione</label>
+            </value>
+            <value>
+                <fullName>Supporto pagamenti</fullName>
+                <default>false</default>
+                <label>Supporto pagamenti</label>
+            </value>
+            <value>
+                <fullName>Supporto credito Credit Management – sospensioni</fullName>
+                <default>false</default>
+                <label>Supporto credito Credit Management – sospensioni</label>
+            </value>
+            <value>
+                <fullName>Supporto credito Credit Management – affidi legale</fullName>
+                <default>false</default>
+                <label>Supporto credito Credit Management – affidi legale</label>
+            </value>
+            <value>
+                <fullName>Supporto credito Credit Management – cessioni</fullName>
+                <default>false</default>
+                <label>Supporto credito Credit Management – cessioni</label>
+            </value>
+            <value>
+                <fullName>Supporto credito Credit Management – affidi ADR</fullName>
+                <default>false</default>
+                <label>Supporto credito Credit Management – affidi ADR</label>
+            </value>
+            <value>
+                <fullName>Segnalazioni Commissioni Agenzie</fullName>
+                <default>false</default>
+                <label>Segnalazioni Commissioni Agenzie</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

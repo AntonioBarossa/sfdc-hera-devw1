@@ -9,11 +9,10 @@
              console.log(response.getReturnValue());
          	if (state === "SUCCESS") 
          	{
-                console.log("SUCCESS");
-                var navEvt = $A.get("e.force:navigateToSObject");
+                console.log("SUCCESS:" + response.getReturnValue());
+                var navEvt = $A.get("e.force:navigateToURL");
                 navEvt.setParams({
-                  "recordId": response.getReturnValue(),
-                  "slideDevName": "Detail"
+                    "url": response.getReturnValue()
                 });
                 navEvt.fire();
          	}

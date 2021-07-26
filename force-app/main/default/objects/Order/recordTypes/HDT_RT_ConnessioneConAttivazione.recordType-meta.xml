@@ -2018,7 +2018,7 @@
         </values>
         <values>
             <fullName>Bozza</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Bozza Annullata</fullName>
@@ -2026,6 +2026,10 @@
         </values>
         <values>
             <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2054,6 +2058,10 @@
         </values>
         <values>
             <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2117,6 +2125,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviare preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
@@ -2129,6 +2141,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pratica non gestita per il DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Preventivo Accettato</fullName>
             <default>false</default>
         </values>
@@ -2137,7 +2153,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Registrazione  da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Preventivo extra sistema</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2387,6 +2411,10 @@
         <picklist>SalesCompany__c</picklist>
         <values>
             <fullName>Acegas Aps Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2981,15 +3009,15 @@
     <picklistValues>
         <picklist>WithdrawalClass__c</picklist>
         <values>
-            <fullName>001-7 giorni</fullName>
+            <fullName>001 - 7 giorni</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>002-6 giorni %28no dom%2E%2Bfest%2E%29</fullName>
+            <fullName>002 - 6 giorni %28no dom%2E %2B fest%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>003-5 giorni%28no sab%2Edom%2Efest%29</fullName>
+            <fullName>003 - 5 giorni %28no sab%2E dom%2E fest%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>

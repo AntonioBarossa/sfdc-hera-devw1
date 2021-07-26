@@ -11,12 +11,16 @@
         <value xsi:type="xsd:string">dataEmissione</value>
     </values>
     <values>
+        <field>FieldType__c</field>
+        <value xsi:type="xsd:string">date</value>
+    </values>
+    <values>
         <field>InitialWidth__c</field>
         <value xsi:type="xsd:double">150.0</value>
     </values>
     <values>
         <field>IsFilter__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>IsVisible__c</field>

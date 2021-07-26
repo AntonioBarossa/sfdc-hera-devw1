@@ -110,6 +110,11 @@
                 <default>false</default>
                 <label>TCP Comune no Int</label>
             </value>
+            <value>
+                <fullName>Piano Straordinario</fullName>
+                <default>false</default>
+                <label>Piano Straordinario</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
