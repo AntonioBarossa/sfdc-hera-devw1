@@ -153,9 +153,9 @@
                 <label>Consip</label>
             </value>
             <value>
-                <fullName>Contatore chiuso  - intervento straordinario</fullName>
+                <fullName>Contatore chiuso - intervento straordinario</fullName>
                 <default>false</default>
-                <label>Contatore chiuso  - intervento straordinario</label>
+                <label>Contatore chiuso - intervento straordinario</label>
             </value>
             <value>
                 <fullName>Contestaz cliente a diffida legale</fullName>
@@ -218,9 +218,9 @@
                 <label>Errori di fatturazione con operandi/tariffe ENERGY E NON ENERGY</label>
             </value>
             <value>
-                <fullName>Errori di fatturazione mercato  Retail aziende Business</fullName>
+                <fullName>Errori di fatturazione mercato Retail aziende Business</fullName>
                 <default>false</default>
-                <label>Errori di fatturazione mercato  Retail aziende Business</label>
+                <label>Errori di fatturazione mercato Retail aziende Business</label>
             </value>
             <value>
                 <fullName>Errori Tari</fullName>
@@ -618,9 +618,9 @@
                 <label>Verifica anomalie layout bollette</label>
             </value>
             <value>
-                <fullName>Verifica calcolo bollette  mercato aziende Business</fullName>
+                <fullName>Verifica calcolo bollette mercato aziende Business</fullName>
                 <default>false</default>
-                <label>Verifica calcolo bollette  mercato aziende Business</label>
+                <label>Verifica calcolo bollette mercato aziende Business</label>
             </value>
             <value>
                 <fullName>Verifica calcolo bollette mercato Retail e aziende Business</fullName>
@@ -742,7 +742,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto fatturazione</controllingFieldValue>
-            <valueName>Errori di fatturazione mercato  Retail aziende Business</valueName>
+            <valueName>Errori di fatturazione mercato Retail aziende Business</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto fatturazione</controllingFieldValue>
@@ -770,7 +770,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto pagamenti</controllingFieldValue>
-            <valueName>Verifica calcolo bollette  mercato aziende Business</valueName>
+            <valueName>Verifica calcolo bollette mercato aziende Business</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto pagamenti</controllingFieldValue>
@@ -1138,7 +1138,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto Front</controllingFieldValue>
-            <valueName>Contatore chiuso  - intervento straordinario</valueName>
+            <valueName>Contatore chiuso - intervento straordinario</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto Front</controllingFieldValue>
