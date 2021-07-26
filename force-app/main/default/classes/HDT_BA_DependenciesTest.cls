@@ -8,11 +8,11 @@ public with sharing class HDT_BA_DependenciesTest {
     
     @isTest(SeeAllData=true)
     static void batchDesquentializationTest(){
+        final String ORDER_TYPE = 'Cambio offerta';
         final String PROCESS_TYPE = 'Cambio offerta - EE';
         final String ORDER_RECORDTYPEID_CONFERMA =
-        Schema.SObjectType.Order.getRecordTypeInfosByName().get(PROCESS_TYPE).getRecordTypeId();
+        Schema.SObjectType.Order.getRecordTypeInfosByName().get(ORDER_TYPE).getRecordTypeId();
         final String STATUS_CANCELLED = 'Annullato';
-        final String SERVICE_POINT_CODE = 'IT001E00031754';
         final String PHASE_BLK = 'In attesa conferma cliente';
         final String PHASE_INC = 'Bozza';
         final String PHASE_INC_NEXT = 'Comunicazione verso Heroku';
@@ -21,6 +21,9 @@ public with sharing class HDT_BA_DependenciesTest {
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordListBlk = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, PHASE_INC); 
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, false, accList[0].id); 
+        contactList[0].Company__c = 'HCM';
+        insert contactList;
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         ServiceRequest__c sr = new ServiceRequest__c();
         for(Order order : ordListBlk){
@@ -45,7 +48,7 @@ public with sharing class HDT_BA_DependenciesTest {
             
             order.RecordTypeId = ORDER_RECORDTYPEID_CONFERMA;
             order.Phase__c = PHASE_INC_NEXT;
-            order.Contact__c = '0031X00000gI5K8QAK';
+            order.Contact__c = contactList[0].Id;
             insert order;
 
             ServiceRequest__c srSeq = new ServiceRequest__c();

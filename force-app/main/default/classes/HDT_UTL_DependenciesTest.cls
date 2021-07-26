@@ -9,10 +9,10 @@ public with sharing class HDT_UTL_DependenciesTest {
     @isTest(SeeAllData=true)
     static void sequentializationOrderTest() {
         
+        final String ORDER_TYPE = 'Cambio offerta';
         final String PROCESS_TYPE = 'Cambio offerta - EE';
         final String ORDER_RECORDTYPEID_CONFERMA =
-        Schema.SObjectType.Order.getRecordTypeInfosByName().get(PROCESS_TYPE).getRecordTypeId();
-        final String SERVICE_POINT_CODE = 'IT001E00031754';
+        Schema.SObjectType.Order.getRecordTypeInfosByName().get(ORDER_TYPE).getRecordTypeId();
         final String PHASE_BLK = 'In attesa conferma cliente';
         final String PHASE_INC = 'Bozza';
         final String PHASE_INC_NEXT = 'Comunicazione verso Heroku';
@@ -20,7 +20,10 @@ public with sharing class HDT_UTL_DependenciesTest {
         Test.startTest();
         
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Order> ordListBlk = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, PHASE_INC); 
+        List<Order> ordListBlk = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, PHASE_INC);
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, false, accList[0].id); 
+        contactList[0].Company__c = 'HCM';
+        insert contactList;
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
 
         for(Order order : ordListBlk){
@@ -59,7 +62,7 @@ public with sharing class HDT_UTL_DependenciesTest {
             insert sr;
 
             order.Phase__c = PHASE_INC_NEXT;
-            order.Contact__c = '0031X00000gI5K8QAK';
+            order.Contact__c = contactList[0].Id;
             
             update order;
 
@@ -143,5 +146,5 @@ public with sharing class HDT_UTL_DependenciesTest {
     //     }
     //     Test.stopTest();
 
-    }
+    //}
 }
