@@ -3391,27 +3391,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>sale__c.campaignEligibilityGroup__c</field>
+        <field>sale__c.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Order.campaignEligibilityGroup__c</field>
+        <field>Order.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>opportunity.campaignEligibilityGroup__c</field>
+        <field>opportunity.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>product2.campaignEligibilityGroup__c</field>
+        <field>product2.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__Quote__c.campaignEligibilityGroup__c</field>
+        <field>SBQQ__Quote__c.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
