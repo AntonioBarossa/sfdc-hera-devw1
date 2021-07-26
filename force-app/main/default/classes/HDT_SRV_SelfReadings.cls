@@ -190,9 +190,9 @@ public with sharing class HDT_SRV_SelfReadings {
             when 'CheckAutolettura' {
                 return handleResponseCheckAutolettura(sapIntegration);
             }
-            // when 'InvioLetture' {
-            //     return handleResponseInvioLetture(sapIntegration);
-            // }
+            when 'InvioLetture' {
+                return handleResponseInvioLetture(sapIntegration);
+            }
             when else {
                return null;
             }
@@ -220,6 +220,34 @@ public with sharing class HDT_SRV_SelfReadings {
             }
         } else {
             readingCase.Phase__c = 'Check preliminari OK';
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(readingCase);
+
+
+        return responseOk;
+    }
+
+    private static Boolean handleResponseInvioLetture(HDT_WRP_GenericSapIntegration sapIntegration) {
+
+        String caseId = sapIntegration.recordId;
+        Boolean responseOk = true;
+
+        Case readingCase = new Case();
+        readingCase.Id = caseId;
+        Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
+
+        if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
+            responseOk = false;
+            // List<Object> errorDetails = (List<Object>) body.get('errorDetails');
+            // if (errorDetails != null && !errorDetails.isEmpty()) {
+            //     Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
+            //     String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
+            //     readingCase.Phase__c = 'Check preliminari KO';
+            //     readingCase.Description = errorMessage;
+            // }
+        } else {
+            readingCase.Phase__c = 'Esito OK da SAP';
         }
 
         HDT_UTL_DatabaseService.updateSObject(readingCase);
