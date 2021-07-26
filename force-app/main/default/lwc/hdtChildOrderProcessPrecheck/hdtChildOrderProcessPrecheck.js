@@ -426,19 +426,19 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         console.log("this.selectedProcessObject: " + JSON.stringify(this.selectedProcessObject));
         
         let data = {
-            sistema: "eEnergy", //in attesa verifica M.Tatti valorizzazione dinamica
+            sistema: "eEnergy", //Capire SAP/Atos se possibile aggiungere "SalesForce" o lasciare eEnergy
             caso:"Transazionale",
             crmEntity:"Order",
             crmId:this.order.OrderNumber,
             userId: this.order.CreatedById,
-            activationUser:"AccountCommercialePRM", //Capire se da scablare e se inserire user o account, in attesa verifica M.Tatti
-            account:"AccountCommercialePRM", //Capire se da scablare e se inserire user o account, in attesa verifica M.Tatti
+            activationUser:"AccountCommercialePRM", //Owner.UserName (parte prima @)
+            account:"AccountCommercialePRM", //Owner.UserName (parte prima @)
             jobTitle:this.order.Channel__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
             companyName:companyName,
             externalCustomerId:this.order.Account.FiscalCode__c,
             secondaryCustomerId:secondaryCustomerId,
-            bpClass:this.order.Account.CustomerMarking__c, //modificare stringa da mandare, in attesa verifica M.Tatti
+            bpClass:this.order.Account.CustomerMarking__c, //se contiene Dn - rimuovere la parte prima del trattino
             bpCategory:this.order.Account.Category__c,
             bpType:bpType,
             customerType:"CT0",        
