@@ -1,5 +1,5 @@
 /**
-* @author 
+* @author Keltin Mesonjesi
 * @date 04/2021
 * @description HDT_QR_PriceBook
 * @history Keltin Mesonjesi – 04/2021 – Class Created 
