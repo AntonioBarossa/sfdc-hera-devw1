@@ -2,7 +2,7 @@
  * @description       : Generating requests for activating/disactivating VAS
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-07-23
+ * @last modified on  : 2021-07-26
  * @last modified by  : gabriele.rota@webresults.it
  * Modifications Log 
  * Ver   Date         Author                        Modification
@@ -25,13 +25,13 @@ public with sharing class HDT_UTL_VasManagement {
     }
 
     /**
-    * @description Generates VAS disactivation request
+    * @description Generates VAS deactivation request
     * @author gabriele.rota@webresults.it | 2021-07-12 
     * @param orderId 
     * @return HDT_WRP_VASActivationReq 
     **/
-    public static HDT_WRP_VASDisactivationReq getDisactivationRequest(Id caseId) {
-        Case currentCase = [SELECT VasDeactivationCausal__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
+    public static HDT_WRP_VASDisactivationReq getDeactivationRequest(Id caseId) {
+        Case currentCase = [SELECT CaseNumber, VasDeactivationCausal__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
             Subscription__r.SBQQ__Contract__r.SBQQ__Order__c
             FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED LIMIT 1];
         
