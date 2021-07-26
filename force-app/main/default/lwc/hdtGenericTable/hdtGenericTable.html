@@ -1,5 +1,14 @@
 <template>
-    <div class="container-table">
-        
+    <template if:true={loader}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    <div if:false={loader} class="container-table">
+        <lightning-datatable 
+            data={rowData}
+            columns={columns}
+            key-field="_id"
+            onrowselection={getSelectedRecord}
+            max-row-selection={maxRowSelect}>     
+        </lightning-datatable>
     </div>
 </template>
