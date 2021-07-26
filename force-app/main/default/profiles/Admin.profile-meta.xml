@@ -3154,7 +3154,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Campaign.CampaignEleggibilityGroup__c</field>
+        <field>Campaign.campaignEligibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
