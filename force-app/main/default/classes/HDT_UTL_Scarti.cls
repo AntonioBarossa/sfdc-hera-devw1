@@ -102,7 +102,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 inputData - list of et4ae5__IndividualEmailResult__c
     * @return List<object> 
     */
-    public static List<Object> createScartoForMarketingCloudEMAIL(List<Object> inputData){        
+    public static List<Object> createScartoForMarketingCloudEmail(List<Object> inputData){        
         return inputdata;
     }
 
@@ -113,7 +113,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 inputData - list of SMSTracking__c
     * @return List<object> 
     */
-    public static List<Object> createScartoForMarketingCloudSMS(List<Object> inputData){        
+    public static List<Object> createScartoForMarketingCloudSms(List<Object> inputData){        
         return inputdata;
     }
 }
