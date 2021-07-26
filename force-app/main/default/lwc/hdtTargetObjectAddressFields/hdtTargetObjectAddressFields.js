@@ -875,18 +875,20 @@ handleChangeComune(event){
                     console.log("Sucessoooooooooooo:" + JSON.stringify(data));
                     this.herokuAddressServiceData = data['prestazione'];
                     this.headertoshow = 'Comune';
+                    console.log('TryTestHOLA210');
                     if(this.IndEstero==true)
                     {
+                        console.log('TryTestHOLA211');
                         this.booleanForm=false;
                     }
                     else
                     {
                         this.booleanForm=true;
-
+                        console.log('TryTestHOLA212');
                         this.template.querySelector('c-hdt-selection-address-response').openedForm();
                         this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Citta');
                         this.template.querySelector('c-hdt-selection-address-response').handleFilterDataTable(event);
-
+                        console.log('TryTestHOLA213');
                     }
                     
                 }
