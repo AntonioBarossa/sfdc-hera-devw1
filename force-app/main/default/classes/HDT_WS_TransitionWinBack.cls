@@ -2,11 +2,20 @@ public with sharing class HDT_WS_TransitionWinBack {
     
     @AuraEnabled
     public static HDT_WS_TransitionWinBackResponse callTransitionCom(String pod){
-        
+        List<HDT_WS_TransitionWinBackRequest> listReq = new List<HDT_WS_TransitionWinBackRequest>();
         HDT_WS_TransitionWinBackRequest requ = new HDT_WS_TransitionWinBackRequest(pod);
-        HDT_WS_TransitionWinBackResponse resp = (HDT_WS_TransitionWinBackResponse)HDT_WS_HTTPServiceCall.sendRequest('TransitorioWinback', requ,HDT_WS_TransitionWinBackResponse.class);
-        
-        return resp;
+        listReq.add(requ);
+        HDT_WS_TransitionWinBackResponse re = (HDT_WS_TransitionWinBackResponse)HDT_WS_HTTPServiceCall.sendRequest('TransitorioWinback', listReq,HDT_WS_TransitionWinBackResponse.class);
+       /* List<HDT_WS_TransitionWinBackResponse> re = new List<HDT_WS_TransitionWinBackResponse>();
+        type r = HDT_WS_TransitionWinBackResponse.class;
+        List<object> arra = (List<object>)HDT_WS_HTTPServiceCall.sendRequest('TransitorioWinback', listReq,HDT_WS_TransitionWinBackResponse.class);
+        for(object ar : arra){
+            String s = JSON.serialize(ar);
+            HDT_WS_TransitionWinBackResponse respT = (HDT_WS_TransitionWinBackResponse)JSON.deserialize(s,HDT_WS_TransitionWinBackResponse.class);
+            re.add(respT);
+        }
+*/
+        return re;
     }  
 
 
@@ -29,16 +38,18 @@ public with sharing class HDT_WS_TransitionWinBack {
 	}
 
     public class HDT_WS_TransitionWinBackResponse extends HDT_WS_Response{
-        //@AuraEnabled public class HDT_WS_TransitioneObj  transitione{get;set;}
-        @AuraEnabled public String pod {get;set;}
-        @AuraEnabled public String dataDecorreza {get;set;}
-        @AuraEnabled public String stato {get;set;}  
-	}
 
-    /*public class HDT_WS_TransitioneObj{
-        @AuraEnabled public String pod {get;set;}
+        @AuraEnabled public List<HDT_WS_TransitioneObj> result{get;set;}
+     /*   @AuraEnabled public String pod {get;set;}
         @AuraEnabled public String dataDecorreza {get;set;}
-        @AuraEnabled public String stato {get;set;}       
+        @AuraEnabled public String stato {get;set;}  */
+	}
+    public class HDT_WS_TransitioneObj{
+        @AuraEnabled public String pod {get;set;}
+        @AuraEnabled public String effectiveDate {get;set;}
+        @AuraEnabled public String status {get;set;}       
        
-    }*/
+    }
+
+
 }

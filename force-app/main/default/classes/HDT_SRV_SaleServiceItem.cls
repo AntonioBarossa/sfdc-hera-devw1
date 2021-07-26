@@ -72,7 +72,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         //Get sale data start
         saleSrv.checkReadAccess('Account__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
-        Sale__c existingSale = saleQr.getRecordById(sale.id, 'Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
+        Sale__c existingSale = saleQr.getRecordById(sale.id, 'Account__c,Account__r.CustomerMarking__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
         sale = existingSale;
         //Get sale data end
         
@@ -233,6 +233,15 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 ServicePoint__c = servicePoint.Id
             );
         }
+
+        //winback check start
+
+        servicePointSrv.updateRecord(new ServicePoint__c(
+            Id = servicePoint.Id,
+            SwitchInWinback__c = HDT_UTL_Sales.isWinback(servicePoint.Id)
+        ));
+
+        //winback check end
 
         List<String> fields = helperMethods.getObjAttrList(newSaleServiceItem);
 
