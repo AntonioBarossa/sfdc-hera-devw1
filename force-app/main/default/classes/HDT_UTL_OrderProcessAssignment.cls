@@ -12,6 +12,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_Sale saleQr = new HDT_QR_Sale();
+    private static HDT_QR_SaleServiceItem saleItQr = new HDT_QR_SaleServiceItem();
 
 
 
@@ -203,21 +204,39 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     }
 
     @AuraEnabled
-    public static Boolean fieldsTransition(ServicePoint__c sp,Sale__c sale){
+    public static String fieldsTransition(Sale__c sale){
         ServicePoint__c serpoint = new ServicePoint__c();
-        
-        List <ServicePoint__c> transitionlist =servicePointQr.getRecordById(sp.Id,'Id,PlugPresence__c,PowerRequested__c,PowerContractual__c');
-        if(!transitionlist.isEmpty()){
+        Sale__c s = new Sale__c(Id=sale.Id);
+        boolean check = false;
+        String res = '';
+        List<String> listRes = new List<String>();
+        List<SaleServiceItem__c> transitionlist =saleItQr.getRecordsBySaleIdFilter(sale.id);
+        System.debug('*****MAVUOIANNA:'+ transitionlist);
+        /*if(!transitionlist.isEmpty()){
             serpoint = transitionlist[0];
-           }
-        if((serpoint.PlugPresence__c== 'NO')||( serpoint.PowerRequested__c!=null && serpoint.PowerRequested__c != serpoint.PowerContractual__c )){
-            Sale__c s = new Sale__c(Id=sale.Id);
-            s.isTransition__c=true;
-            saleSrv.updateRecord(s);
-            return false;
-           } else{
-            return true;
+           }*/
+        String sub = 'Subentro';
+        boolean r = false;
+        for(SaleServiceItem__c ser :transitionlist ){
+            if((ser.ServicePoint__r.PlugPresence__c== 'NO')||ser.ServicePoint__r.PowerRequested__c!= ser.ServicePoint__r.PowerContractual__c){
+               //Sale__c s = new Sale__c(Id=sale.Id);
+                s.isTransition__c=true;
+                check = true;
+                listRes.add(ser.ServicePoint__r.ServicePointCode__c);
+            }
+            if(ser.ServicePoint__r.CommoditySector__c == 'Gas' && (ser.ServicePoint__r.MeterStatus__c == 'Attivo' || ser.ServicePoint__r.MeterStatus__c == 'Bozza')){
+                r = true;
+            }
         }
+        if(check){
+            saleSrv.updateRecord(s);
+        }
+        res = String.join(listRes,',');
+        if(res == null || res == ''){
+            res = 'Subentro';
+        }
+        System.debug('*****VUOIANNA2:' + res);
+        return res;
     }
 
 }

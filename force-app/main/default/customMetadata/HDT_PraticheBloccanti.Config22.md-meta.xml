@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Verifica Titolarit� POD/PDR</value>
+        <value xsi:type="xsd:string">Verifica Titolarità POD/PDR</value>
     </values>
 </CustomMetadata>

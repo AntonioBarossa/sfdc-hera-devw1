@@ -7799,6 +7799,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Preventivo rifiutato – Amm KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
@@ -7926,10 +7930,10 @@
             <fullName>In Attesa Allineamento Anagrafica</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Inviare preventivo</fullName>
             <default>false</default>
@@ -7970,7 +7974,7 @@
             <fullName>Richiesta Preventivo Extra Sistema</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Ripensamento - Esito KO da SII</fullName>
             <default>false</default>
         </values>
@@ -7985,11 +7989,11 @@
         <values>
             <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>Risposta Parere Ricevuta</fullName>
             <default>false</default>
-        </values>
+        </values> -->
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
