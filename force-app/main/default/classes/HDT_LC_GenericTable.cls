@@ -69,6 +69,7 @@ public inherited sharing class HDT_LC_GenericTable {
                     for(HDT_WRP_Object singleObj : mappings.objects){
                        if(singleObj.obj == sobj.getSObjectType().getDescribe().getName()){
                            singleMap.put('_id', sobj.get('Id'));
+                           singleMap.put('_objName', sobj.getSObjectType().getDescribe().getName());
                            for(HDT_WRP_Fields field : singleObj.fields){
                                if(sobj.get(field.apiName) != null && sobj.get(field.apiName) != ''){
                                     singleMap.put(field.columnName, sobj.get(field.apiName));

@@ -35,6 +35,7 @@ export default class HdtGenericTable extends LightningElement {
     }
     getSelectedRecord(event){
         const selectedRow = event.detail.selectedRows;
+        this.dispatchEvent(new CustomEvent('rowselect',{detail: selectedRow}));
         console.log(selectedRow);
     }
 
