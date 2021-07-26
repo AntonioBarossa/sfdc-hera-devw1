@@ -1,172 +1,147 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>wrts_prcgvr__Activity__c.HDT_EsitoQualityComfortCall</members>
+        <members>Account.Escalation</members>
+        <members>Case.Escalation</members>
+        <members>Interaction__c.Escalation</members>
+        <members>Lead.Escalation</members>
+        <members>Opportunity.Escalation</members>
+        <members>Order.Escalation</members>
+        <members>wrts_prcgvr__Activity__c.HDT_AppointmentFunction</members>
+        <members>wrts_prcgvr__Activity__c.Reassign</members>
+        <members>wrts_prcgvr__Activity__c.Reminder</members>
         <name>QuickAction</name>
     </types>
     <types>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Call</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_ComfortQualityCall</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_GestioneIvaAccise</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Sportello</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_ValidazioneDocumentale</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</members>
+        <members>Gruppo_Eleggibilit_Campagne_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>HDT_GenericTable__mdt</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>HDT_GenericTable__mdt.Generic_Table_Configuration</members>
+        <name>ListView</name>
+    </types>
+    <types>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationAccountLead</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationCase</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationGeneric</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationInteraction</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOpportunity</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOrder</members>
         <name>RecordType</name>
     </types>
     <types>
-        <members>BlackList__c</members>
-        <name>CustomTab</name>
-    </types>
-    <types>
-        <members>Account-Account Layout</members>
-        <members>Case-Case Layout</members>
-        <members>Case-HDT_AlertDisassociazioneUtenteWeb</members>
-        <members>Case-HDT_AllineamentoAnagrafica</members>
-        <members>Case-HDT_Annullamento</members>
-        <members>Case-HDT_Autolettura</members>
-        <members>Case-HDT_GestioneBolletta</members>
-        <members>Case-HDT_GestioneBonusSociale</members>
-        <members>Case-HDT_GestionePrivacy</members>
-        <members>Case-HDT_InversioneContatore</members>
-        <members>Case-HDT_SospensioneRiattivazione</members>
-        <members>Case-HDT_UnificazioneSeparazioneCABolletta</members>
-        <members>Case-HDT_VariazioneAmministratore</members>
-        <members>Case-HDT_VerificaTitolaritaPodPdr</members>
-        <members>Contact-Contact Layout</members>
-        <members>Global-Global Layout</members>
-        <members>Lead-Acquisizione Lead Layout</members>
-        <members>Lead-Lead Layout</members>
-        <members>Opportunity-Opportunity Layout</members>
-        <members>Order-Dossier</members>
-        <members>Order-Order Layout</members>
-        <members>Quote-Quote Layout</members>
-        <members>Task-Task Layout</members>
-        <members>wrts_prcgvr__Activity__c-HDT_ComfortQuality</members>
+        <members>AssignmentRule__c-Regola di Assegnazione Layout</members>
+        <members>HDT_GenericTable__mdt-Generic Table Layout</members>
+        <members>PaperProcessing__c-Lavorazione Cartecea Layout</members>
+        <members>Queue__c-Coda Layout</members>
+        <members>wrts_prcgvr__Activity__c-HDT_GestioneAppuntamento</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_ApexClasses</members>
-        <members>HDT_SalesforceCPQPartner</members>
-        <members>HDT_SalesforceCPQUser</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>HDT_BA_ComfortCall</members>
-        <members>HDT_BA_QualityCall</members>
-        <members>HDT_LC_ActivityChildCreationController</members>
-        <members>HDT_LC_AdvancedSearch</members>
-        <members>HDT_LC_ChildOrderProcessActions</members>
-        <members>HDT_LC_ChildOrderProcessPrecheck</members>
-        <members>HDT_LC_ComfortQualityCallResult</members>
-        <members>HDT_LC_DocumentValidation</members>
+        <members>HDT_BA_ActivityDispatcher</members>
+        <members>HDT_BA_AppoitmentManagmentActivity</members>
+        <members>HDT_BA_CampaignBolletta</members>
+        <members>HDT_BA_CommercialCode</members>
+        <members>HDT_BA_PaperCampaignClosing</members>
+        <members>HDT_BA_PaperCampaignTargeting</members>
+        <members>HDT_BA_PaperProcessing</members>
+        <members>HDT_BA_RecurringCampaingCreation</members>
+        <members>HDT_LC_ActivityReassignmentTool</members>
+        <members>HDT_LC_CampaignsController</members>
         <members>HDT_LC_FormAccountResidenziale</members>
-        <members>HDT_LC_FormAccountResidenzialeTst</members>
-        <members>HDT_LC_HighlightsPanel</members>
-        <members>HDT_LC_HighlightsTab</members>
-        <members>HDT_LC_ManageBillingProfileTst</members>
-        <members>HDT_LC_MeterReadingControllerHelper</members>
-        <members>HDT_LC_OfferConfiguratorCtrlHelper</members>
-        <members>HDT_LC_OrderDossierWizardActions</members>
-        <members>HDT_LC_OrdersForComfortQualityList</members>
-        <members>HDT_LC_TargetObjectCreateForm</members>
-        <members>HDT_LC_TargetObjectRecordTypeSelectionTS</members>
+        <members>HDT_LC_GenericTable</members>
+        <members>HDT_LC_OrderDossierWizardActionsTst</members>
+        <members>HDT_LC_OrderDossierWizardSignatureTst</members>
+        <members>HDT_LC_OrderDossierWizardTableTst</members>
+        <members>HDT_LC_OrderDossierWizardTst</members>
+        <members>HDT_LC_ProcessesContainerTst</members>
+        <members>HDT_LC_RecallMe</members>
+        <members>HDT_LC_SaleActions</members>
         <members>HDT_QR_ActivityCustom</members>
-        <members>HDT_QR_Blacklist</members>
+        <members>HDT_QR_BillingProfileTst</members>
+        <members>HDT_QR_BusinessDate</members>
+        <members>HDT_QR_BusinessDateTst</members>
         <members>HDT_QR_CampaignMember</members>
         <members>HDT_QR_Case</members>
-        <members>HDT_QR_ComfortQualityCall</members>
-        <members>HDT_QR_Contract</members>
+        <members>HDT_QR_CommercialCode</members>
+        <members>HDT_QR_GenericTable</members>
         <members>HDT_QR_Order</members>
-        <members>HDT_QR_ProductTst</members>
-        <members>HDT_QR_SaleServiceItem</members>
-        <members>HDT_QR_ServiceRequest</members>
-        <members>HDT_SCH_ComfortCallScheduler</members>
-        <members>HDT_SCH_QualityCallScheduler</members>
-        <members>HDT_SRV_AnagAlignment</members>
-        <members>HDT_SRV_PostSalesManager</members>
-        <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_SRV_ServiceRequest</members>
-        <members>HDT_TRH_Case</members>
-        <members>HDT_TRH_Contract</members>
-        <members>HDT_TRH_Order</members>
-        <members>HDT_UTL_ActiveServicesKpi</members>
-        <members>HDT_UTL_CaseProcess</members>
+        <members>HDT_QR_Product</members>
+        <members>HDT_SCH_AppointmentManagementActivity</members>
+        <members>HDT_SRV_ActivityToQueueAssigner</members>
+        <members>HDT_SRV_CampaignMember</members>
+        <members>HDT_SRV_InstallmentPlans</members>
+        <members>HDT_SRV_PaperCommunication</members>
+        <members>HDT_SRV_Product</members>
+        <members>HDT_SRV_SaleServiceItem</members>
+        <members>HDT_TRH_Campaign</members>
+        <members>HDT_TRH_CampaignMember</members>
+        <members>HDT_UTL_CampaignMember</members>
+        <members>HDT_UTL_CheckFiscalCodeTaxNumber</members>
+        <members>HDT_UTL_Constants</members>
         <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_MatrixCompatibility</members>
+        <members>HDT_UTL_GestAppAutomaticCreation</members>
+        <members>HDT_UTL_GestAppAutomaticCreationCase</members>
         <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_PayloadManagement</members>
-        <members>HDT_UTL_PostSalesManager</members>
-        <members>HDT_UTL_Sales</members>
-        <members>HDT_WS_RecallMe</members>
-        <members>HDT_WS_RecallMeResponse</members>
-        <members>HDT_WS_SalesApexCalloutAction</members>
-        <members>HDT_WS_TransitionWinBack</members>
+        <members>HDT_UTL_OrderProcessAssignment</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_CancellationReason</members>
-        <members>HDT_FirstLevelOpinion</members>
-        <members>HDT_OfferType</members>
-        <members>HDT_SAPStep</members>
-        <members>HDT_SecondLevelOpinion</members>
-        <members>HDT_UserCompany</members>
-        <name>GlobalValueSet</name>
-    </types>
-    <types>
-        <members>AssignmentRule__c.CreatorAgency__c</members>
-        <members>AssignmentRule__c.FirstLevelOpinion__c</members>
-        <members>AssignmentRule__c.OfferType__c</members>
-        <members>AssignmentRule__c.SAPStep__c</members>
-        <members>AssignmentRule__c.SalesAgency__c</members>
-        <members>AssignmentRule__c.SecondLevelOpinion__c</members>
-        <members>Case.IsExportCMOR__c</members>
-        <members>Case.Sie173Mark__c</members>
-        <members>Contract.Market__c</members>
-        <members>Contract.TerminationReason__c</members>
-        <members>Order.DocumentalProcessType__c</members>
-        <members>Order.OfferType__c</members>
-        <members>Order.ShippingAddressFormula__c</members>
-        <members>Product2.TypeOffer__c</members>
-        <members>ServicePoint__c.SwitchInWinback__c</members>
-        <members>User.UserCompany__c</members>
-        <members>wrts_prcgvr__Activity__c.AssignmentRule__c</members>
-        <members>wrts_prcgvr__Activity__c.Queued__c</members>
-        <members>wrts_prcgvr__Activity__c.SAPStep__c</members>
-        <members>wrts_prcgvr__Activity__c.wrts_prcgvr__Priority__c</members>
+        <members>Campaign.CampaignEligibilityGroup__c</members>
+        <members>CampaignMember.Ecid__c</members>
+        <members>CampaignMember.isToSendStatusReitek__c</members>
+        <members>CampaignMember.isWsBollettaInvoked__c</members>
+        <members>Case.VulturePracticeReference__c</members>
+        <members>HDT_CampaignMemberStatus__mdt.StatusName__c</members>
+        <members>HDT_GenericTable__mdt.Mapping__c</members>
+        <members>HDT_GenericTable__mdt.Object__c</members>
+        <members>HDT_GenericTable__mdt.TableName__c</members>
+        <members>Lead.Company</members>
+        <members>Lead.FiscalCode__c</members>
+        <members>Opportunity.CampaignEleggibilityGroup__c</members>
+        <members>Order.CampaignEleggibilityGroup__c</members>
+        <members>Product2.CampaignEleggibilityGroup__c</members>
+        <members>Queue__c.DailyCapacity__c</members>
+        <members>Queue__c.Group__c</members>
+        <members>SBQQ__Quote__c.CampaignEleggibilityGroup__c</members>
+        <members>Sale__c.CampaignEleggibilityGroup__c</members>
+        <members>wrts_prcgvr__Activity__c.Agency__c</members>
+        <members>wrts_prcgvr__Activity__c.AssigneeType__c</members>
+        <members>wrts_prcgvr__Activity__c.Queue__c</members>
+        <members>wrts_prcgvr__Activity__c.RuleChosenQueue__c</members>
+        <members>wrts_prcgvr__Activity__c.Subject__c</members>
+        <members>wrts_prcgvr__Activity__c.Type__c</members>
+        <members>wrts_prcgvr__Activity__c.WorkGroup__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_LCP_ComfortQualityCallResult</members>
+        <members>HDT_LCP_ActivityReassignmentToolWrapper</members>
+        <members>HDT_LCP_ReminderQuickAction</members>
+        <members>HDT_LCP_SellingWizard</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>hdtAdvancedSearch</members>
-        <members>hdtChildOrderProcessPrecheck</members>
-        <members>hdtHighlightsPanel</members>
-        <members>hdtHighlightsTab</members>
-        <members>hdtOfferConfigurator</members>
-        <members>hdtOrdersForComfortQualityList</members>
-        <members>hdtSaleServiceContainer</members>
-        <members>hdtTargetObjectCreateForm</members>
+        <members>hdtActivityReassignmentTool</members>
+        <members>hdtCampaignProductList</members>
+        <members>hdtCampaignToAccountList</members>
+        <members>hdtCreateCampaign</members>
+        <members>hdtFormAccountResidenziale</members>
+        <members>hdtGenericTable</members>
+        <members>hdtGenericTableFlow</members>
+        <members>hdtSaleActions</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>Admin</members>
-        <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
-        <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
-        <name>Profile</name>
+        <members>HDT_CampaignMembers</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>HDT_FL_ActivityReminder</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

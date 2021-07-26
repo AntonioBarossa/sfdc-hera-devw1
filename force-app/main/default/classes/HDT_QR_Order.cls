@@ -195,6 +195,9 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    public Order getOrderbyId(String id){
+        return [Select id,FriendCode__c from Order Where id = :id][0];
+    }
     public List<Order> getOrderByIdForSalesCallout(String id){
         return [
             SELECT 
