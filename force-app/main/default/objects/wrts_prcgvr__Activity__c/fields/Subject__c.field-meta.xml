@@ -153,9 +153,9 @@
                 <label>Consip</label>
             </value>
             <value>
-                <fullName>Contatore chiuso  - intervento straordinario</fullName>
+                <fullName>Contatore chiuso - intervento straordinario</fullName>
                 <default>false</default>
-                <label>Contatore chiuso  - intervento straordinario</label>
+                <label>Contatore chiuso - intervento straordinario</label>
             </value>
             <value>
                 <fullName>Contestaz cliente a diffida legale</fullName>
@@ -1138,7 +1138,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto Front</controllingFieldValue>
-            <valueName>Contatore chiuso  - intervento straordinario</valueName>
+            <valueName>Contatore chiuso - intervento straordinario</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto Front</controllingFieldValue>
