@@ -1,26 +1,26 @@
 <template>
     <lightning-card>
         <template if:true={show}>
-            <ul>
-                <template for:each={mapData} for:item="mapKey">
-                        <li key={mapKey.key} title={mapKey.key}>{mapKey.key}: </li>
-                        <ul key={mapKey.key} class="slds-is-nested">
-                            <template for:each={mapKey.value} for:item="valore">
-                                <li key={mapKey.key} title={valore}>{valore}, </li>
-                            </template>
-                        </ul>
-                </template>
-            </ul>
-            <!--
-            <lightning-record-form
-                record-id={recordId}
-                object-api-name={wrts_prcgvr__Activity__c}
-                fields={fields}
-                columns="2"
-                mode="edit"
-                onsubmit={handleSubmit}>
-            </lightning-record-form>
-            -->
+            <template for:each={objectList} for:item="oggetto">
+                <div key={oggetto} title={oggetto}>
+                    <lightning-accordion allow-multiple-sections-open>
+                        <lightning-accordion-section key={oggetto.name} name={oggetto.name} label={oggetto.name}>
+                            <lightning-record-view-form
+                                object-api-name={oggetto.name}
+                                record-id={oggetto.id}
+                                density="all">
+                                <template for:each={oggetto.fields} for:item="field">
+                                    
+                                        <lightning-output-field key={field}
+                                            field-name={field}>
+                                        </lightning-output-field>
+                                    
+                                </template>
+                            </lightning-record-view-form>
+                        </lightning-accordion-section>
+                    </lightning-accordion>
+                </div>
+            </template>
         </template>
-    </lightning-card> 
+    </lightning-card>
 </template>
