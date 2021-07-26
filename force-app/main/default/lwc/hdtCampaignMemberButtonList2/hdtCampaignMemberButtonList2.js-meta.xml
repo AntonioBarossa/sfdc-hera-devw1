@@ -13,7 +13,7 @@
     <targetConfigs>
         <targetConfig targets="lightningCommunity__Default">
             <property name="objectApiName" type="String" label="Object Name" description="Automatically bind the page's object name to the component variable" default="{!objectApiName}" />
-            <property name="recordId" type="String" label="Record ID" description="Should be set to {!recordId}" default="{!recordId}" />
+            <property name="recordId" type="String" label="Record ID" description="Should be set to {!recordId}" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

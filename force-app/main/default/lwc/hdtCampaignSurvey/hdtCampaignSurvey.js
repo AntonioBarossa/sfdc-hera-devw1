@@ -19,11 +19,88 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
   @track showModal = false;
   @track campaignId;
   @track contactId;
-
+  @track results;
   connectedCallback() {
-    if (this.objectApiName == "CampaignMember") {
+    if (this.objectApiName == "campaignmember") {
       this.isCampaignMember = true;
     }
+    console.log('********Record::' +  this.objectApiName);
+    console.log('********type::' +  this.recordId);
+    getSurveyCRM({  objectApiName: this.objectApiName, recordId: this.recordId}).then(data => {
+      if (data) {
+        console.log('*****Length2:' + data);
+        let ress = JSON.stringify(data);
+        let surveyQuestions = [];
+        this.fieldValues = data;
+        let isPicklist = true;
+        let isNumber = false;
+        let isDate = false;
+        console.log('*****Length:' + JSON.stringify(ress));
+        if (data != null) {
+          let ob = ress[0];
+          //for (var j = 0; j < ress.length; j++) {
+            surveyQuestions = [];
+            for (var i = 1; i <= 20; i++) {
+              if (data['Question' + i + '__c'] != null) {
+                console.log("TRYTEST:");
+                if (data['TypeResponse' + i + '__c'] == 'Si/No' || data['TypeResponse' + i + '__c'] == 'Indicatore 1-5') {
+                  if(data['TypeResponse' + i + '__c'] == 'Si/No'){
+                      isPicklist = true;
+                      isDate = false;
+                      this.picklistData = [{ label: 'Si', value:'Si'  },
+                                           { label: 'No', value:'No'}];
+                    }
+                    else{
+                      isPicklist = true;
+                      isDate = false;
+                      this.picklistData = [{ label: '1', value:'1'  },
+                                        { label: '2', value:'2'},
+                                        { label: '3', value:'3'},
+                                        { label: '4', value:'4'},
+                                        { label: '5', value:'5'}];
+                    }
+                } else if (data['TypeResponse' + i + '__c'] == 'Numerico') {
+                  isPicklist = false;
+                  isNumber = true;
+                  isDate = false;
+                } else if (data['TypeResponse' + i + '__c'] == 'Data') {
+                  isPicklist = false;
+                  isNumber = false;
+                  isDate = true;
+                } else {
+                  isPicklist = false;
+                  isNumber = false;
+                  isDate = false;
+                }
+                surveyQuestions.push({
+                  'question': data['Question' + i + '__c'], 'isPicklist': isPicklist, 'picklistData': this.picklistData,
+                  'response': 'survey' + 0 + 'response' + i, 'isNumber': isNumber, 'isDate': isDate
+                });
+               //
+                this.surveyId['survey' + 0] = data.Id;
+               // this.surveyCRM = { "surveyQuestions": surveyQuestions, "id": 0 };
+              //  this.surveys.push({ "surveyQuestions": surveyQuestions, "id": 0 });
+              }
+            }
+            console.log("ECCOLO2:" + surveyQuestions);
+            this.surveyCRM = { "surveyQuestions": surveyQuestions, "id": 0 };
+            this.surveys.push({ "surveyQuestions": surveyQuestions, "id": 0 });
+          //}
+          console.log("ECCOLO:" + JSON.stringify(this.surveys));
+         // this.showModal = !this.isCampaignMember;
+        }
+      } else if (error) {
+        console.log("try:" + error);
+        this.showError(error);
+        this.fieldValues = [];
+        const event = new ShowToastEvent({
+          message: this.errorMessage,
+          variant: 'error',
+          mode: 'dismissable'
+        });
+        this.dispatchEvent(event);
+      }
+    });
   }
 
   @wire(getCampaignIdAndContactIdByMember, { campaignMemberId: '$recordId' }) campaign({ error, data }) {
@@ -33,7 +110,7 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
     }
   }
 
-  @wire(getSurveyCRM, { objectApiName: '$objectApiName', recordId: '$recordId' })
+ /* @wire(getSurveyCRM, { objectApiName: '$objectApiName', recordId: '$recordId' })
   surveyInfo({ error, data }) {
     if (data) {
       let surveyQuestions = [];
@@ -87,7 +164,7 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
       this.dispatchEvent(event);
     }
   };
-
+*/
   handleSave(event) {
     //check validity of the input fields
     const allValid = [...this.template.querySelectorAll('lightning-input, lightning-combobox')]
@@ -164,12 +241,12 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
   getpicklistData(options) {
     this.picklistData = [];
     let arrOptions = [];
-    if (options.length > 0) {
+    //if (options.length > 0) {
       arrOptions = options.split(',');
       arrOptions.forEach(element => {
         this.picklistData.push({ label: element, value: element });
       });
-    }
+   // }
     return this.picklistData;
   }
 
