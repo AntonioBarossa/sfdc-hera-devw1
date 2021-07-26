@@ -239,7 +239,7 @@ export default class HdtSelfReading extends LightningElement {
 
         try {
             for (const key in lastReadings) {
-                console.log('processing key: ' + key);
+                console.log('processing key: ' + key + ' with value: ' + lastReadings[key]);
                 const match = key.match(/\d+/);
                 const index = match ? match[0] : -1;
 
@@ -266,20 +266,25 @@ export default class HdtSelfReading extends LightningElement {
                     registers[i].readingSerialNumber = lastReadings[key];
                 } else if (key.startsWith('herDataLettura')) {
                     const readingDate = lastReadings[key];
-                    // La response di SAP valorizza solo la data lettura a null se il registro non ha una lettura
+                    // La response di SAP valorizza la data lettura a null/vuota se il registro non ha una lettura
                     // Skippiamo questa key in modo da marcare l'oggetto del registro come 'da rimuovere'
-                    if (readingDate === null) {
+                    if (readingDate === null || readingDate.length === 0) {
                         continue;
                     }
                     registers[i].readingDate = this.convertItalianDate(readingDate);
                 } else if (key.startsWith('herFascia')) {
                     registers[i].readingBand = lastReadings[key];
-                } else if (key.startsWith('herLettura')) {
+                } else if (key.startsWith('herLettura') && lastReadings[key] != null) {
                     let reading = lastReadings[key];
                     reading = reading.split('.').join('');  // rimuoviamo il separatore delle migliaia per poter parsare come int.
                     registers[i].readingOldValue = reading;
-                }
-                // TODO: add missing fields
+                } else if (key.startsWith('herUnitaDiMisura')) {
+                    registers[i].readingUnit = lastReadings[key];
+                } else if (key.startsWith('herRegistro')) {
+                    registers[i].readingRegister = lastReadings[key];
+                } else if (key.startsWith('herCifrePrecedentiLaVirgola')) {
+                registers[i].readingDigitNumber = lastReadings[key];
+                } 
             }
 
             // Lasciamo solo i registri che hanno una lettura, ovvero quelli che hanno la property readingDate.
@@ -353,7 +358,7 @@ export default class HdtSelfReading extends LightningElement {
                 for (let i = 0; i < registers.length; i++) {
                     let register = registers[i];
 
-                    let result = register.handleSave();
+                    let result = register.handleSave(this.readingCustomerDate);
 
                     if(String(result).includes("Impossibile")){
                         this.errorAdvanceMessage = result;
