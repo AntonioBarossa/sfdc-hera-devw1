@@ -426,29 +426,29 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         console.log("this.selectedProcessObject: " + JSON.stringify(this.selectedProcessObject));
         
         let data = {
-            sistema: "eEnergy",
+            sistema: "eEnergy", //in attesa verifica M.Tatti valorizzazione dinamica
             caso:"Transazionale",
             crmEntity:"Order",
             crmId:this.order.OrderNumber,
             userId: this.order.CreatedById,
-            activationUser:"AccountCommercialePRM",
-            account:"AccountCommercialePRM",
+            activationUser:"AccountCommercialePRM", //Capire se da scablare e se inserire user o account, in attesa verifica M.Tatti
+            account:"AccountCommercialePRM", //Capire se da scablare e se inserire user o account, in attesa verifica M.Tatti
             jobTitle:this.order.Channel__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
             companyName:companyName,
             externalCustomerId:this.order.Account.FiscalCode__c,
             secondaryCustomerId:secondaryCustomerId,
-            bpClass:this.order.Account.CustomerMarking__c,
+            bpClass:this.order.Account.CustomerMarking__c, //modificare stringa da mandare, in attesa verifica M.Tatti
             bpCategory:this.order.Account.Category__c,
             bpType:bpType,
-            customerType:"CT0",                                                 //da definire campo SF con business            
+            customerType:"CT0",        
             operation:operation,
-            companyGroup:"Hera S.p.A.",
+            companyGroup:this.order.SalesCompany__c, //OK
             market:market,
             offerType:offerType,
             details:[{
                 commodity:typeOfCommodity
-            }]		
+            }]		 
         }
 
         if(this.selectedProcessObject.recordType !== 'HDT_RT_VAS'){
