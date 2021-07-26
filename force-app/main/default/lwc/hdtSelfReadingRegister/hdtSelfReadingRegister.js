@@ -23,18 +23,22 @@ export default class HdtSelfReadingRegister extends LightningElement {
         {id: 3, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
         {id: 4, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
         {id: 5, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
-        {id: 6, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:false}
+        {id: 6, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:false},
+        {id: 7, name: "readingUnit", label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false},
+        {id: 8, name: "readingRegister", label:"Registro", type: "text", value: null, disabled:true, visible:false},
+        {id: 9, name: "readingDigitNumber", label:"Cifre Lettura", type: "text", value: null, disabled:true, visible:false}
     ];
 
     registerObjGas = [
-        {id:1, name: "readingDate", label:"Data Ultima Lettura ", type: "date", value: null, disabled:true, visible:true},
-        {id:2, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
-        {id:3, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
-        {id:4, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:true},
-        {id:5, name: "readingType", label:"Tipo ", type: "text", value: null, disabled:true, visible:false},
-        {id:6, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
-        {id:7, name: "readingRegister", label:"Registro", type: "text", value: null, disabled:true, visible:false},
-        {id:8, name: "readingUnit", label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false}
+        {id: 1, name: "readingDate", label:"Data Ultima Lettura ", type: "date", value: null, disabled:true, visible:true},
+        {id: 2, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
+        {id: 3, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
+        {id: 4, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:true},
+        {id: 5, name: "readingType", label:"Tipo ", type: "text", value: null, disabled:true, visible:false},
+        {id: 6, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
+        {id: 7, name: "readingRegister", label:"Registro", type: "text", value: null, disabled:true, visible:false},
+        {id: 8, name: "readingUnit", label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false},
+        {id: 9, name: "readingDigitNumber", label:"Cifre Lettura", type: "text", value: null, disabled:true, visible:false}
     ];
 
     @track registerObj = [];
@@ -203,7 +207,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
     }
 
     @api
-    handleSave(){
+    handleSave(readingCustomerDate){
 
         try {
             this.registerObj.forEach(element => {
@@ -215,9 +219,9 @@ export default class HdtSelfReadingRegister extends LightningElement {
                 } 
     
             });
+            const oldValue = parseInt(this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value);
+            const newValue = parseInt(this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value);
 
-            const oldValue = this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value;
-            const newValue = this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value;
             if (this.allowSmallerReading === false && newValue < oldValue) {
                 this.advanceError = 'Impossibile inserire una lettura inferiore alla precedente.';
             }
@@ -230,21 +234,20 @@ export default class HdtSelfReadingRegister extends LightningElement {
     
             } else{
     
-                console.log('Filling the Array: ' + this.registerObj + ' - ' + this.rowObj);
-    
+                console.log('Filling the Array: ' + JSON.stringify(this.registerObj) + ' - ' + JSON.stringify( this.rowObj));
+                let readingDateNew = this.isVisible ? readingCustomerDate : null;
+
                 this.registerRet = 
                     {
+                        ['ReadingDate'+this.rowObj.id+'__c']:readingDateNew, // usiamo la data lettura cliente su tutti i registri visibili.
                         ['ReadingType'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingType')].value,
                         ['ReadingBand'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingBand')].value,
                         ['ReadingSerialNumber'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingSerialNumber')].value,
                         ['ReadingValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value,
                         ['ReadingOldValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value,
-                        ['ReadingRegister'+this.rowObj.id+'__c']:this.commodity === 'Gas' ? 
-                        this.registerObj[this.registerObj.findIndex(p => p.name === 'readingRegister')].value
-                        : null,
-                        ['ReadingUnit'+this.rowObj.id+'__c']:this.commodity === 'Gas' ?
-                        this.registerObj[this.registerObj.findIndex(p => p.name === 'readingUnit')].value 
-                        : null
+                        ['ReadingRegister'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingRegister')].value,
+                        ['ReadingUnit'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingUnit')].value,
+                        ['ReadingDigitNumber'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingDigitNumber')].value
                     };
     
                     console.log('Array filled with: ' + this.registerRet + ' keys: ' + Object.keys(this.registerRet));

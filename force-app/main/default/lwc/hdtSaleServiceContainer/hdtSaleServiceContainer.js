@@ -135,13 +135,16 @@ export default class hdtSaleServiceContainer extends LightningElement {
         this.loading = true;
 
         fieldsTransition({sale: this.saleRecord}).then(data =>{
-            if(data == null || data == '' || data == 'Subentro'){
-                const toastErrorMessage = new ShowToastEvent({
-                    title: 'warning',
-                    message: 'Per i punti di fornitura gas se si tratta di Subentro ricordarsi di prendere l\'appuntamento su Siebel oppure annullare la vendita ed inserire la richiesta su Siebel.',
-                    variant: 'warning'
-                });
-                this.dispatchEvent(toastErrorMessage);
+            if(data == null || data == '' ||  data == 'Subentro'){
+                if(data == 'Subentro'){
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'warning',
+                        message: 'Per i punti di fornitura gas se si tratta di Subentro ricordarsi di prendere l\'appuntamento su Siebel oppure annullare la vendita ed inserire la richiesta su Siebel.',
+                        variant: 'warning'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+                }
+                //this.dispatchEvent(toastErrorMessage);
                 this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});  
             }else{
                 const toastErrorMessage = new ShowToastEvent({
