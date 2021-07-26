@@ -3,7 +3,7 @@ public inherited sharing class HDT_LC_GenericTable {
     public static List<List<SObject>> rowData { get; set; }
     
     @AuraEnabled
-    public static string getData(String inputs, String tableName, String searchKey, String searchTerm){
+    public static String getData(String tableName, String searchKey, String searchTerm){
         
         //VariableDeclaration
         HDT_QR_GenericTable tableQr = new HDT_QR_GenericTable();
@@ -11,14 +11,16 @@ public inherited sharing class HDT_LC_GenericTable {
         List<HDT_WRP_Columns> columns = new List<HDT_WRP_Columns>();
 
         HDT_WRP_Mapping mappings = new HDT_WRP_Mapping();
-        HDT_WRP_Columns column = new HDT_WRP_Columns();
-
+        HDT_WRP_Ouput output = new HDT_WRP_Ouput();
+    
         HDT_GenericTable__mdt tableConfig = new HDT_GenericTable__mdt();
 
         rowData = new List<List<SObject>>();
 
+        List<Map<String,Object>> dataMap = new List<Map<String,Object>>();
         List<String> queryList = new List<String>();
         List<String> objList = new List<String>();
+        List<String> columnList = new List<String>();
 
         Integer count = 0;
         Integer fieldCount = 0;
@@ -33,6 +35,12 @@ public inherited sharing class HDT_LC_GenericTable {
             fieldCount = 0;
             for(HDT_WRP_Fields field : singleObj.fields){
                 ++fieldCount;
+                if(!(columnList.contains(field.columnName))){
+                    if(field.columnName != null){
+                        columns.add(new HDT_WRP_Columns(field.columnName,field.columnName));
+                        columnList.add(field.columnName);
+                    }
+                }
                 if(fieldCount == singleObj.fields.size()){
                     query += field.apiName + ' ';
                 }else{
@@ -53,25 +61,51 @@ public inherited sharing class HDT_LC_GenericTable {
         System.debug('ObjList -> ' +objList);
         doRecursion(queryList, objList);
         System.debug('Data -> ' + rowData);
-        /*Create Column Obj*/
-        for(List<SObject> sObjList : rowData){
-            if(sObjList != null){
-                Map<String, Object> objMap = sObjList[0].getSObjectType().getDescribe().fields.getMap();
-                Map<String, Object> singleObjMap = (Map<String, Object>) JSON.deserializeUntyped(JSON.serialize(sObjList[0]));
-                for(String key : singleObjMap.keySet()){
-                    Schema.sObjectField fieldObj= (Schema.sObjectField) objMap.get(key);
-                    if(fieldObj != null){
-                        Schema.DescribeFieldResult fieldRes = fieldObj.getDescribe();
-                        System.debug('Label: ' + fieldRes.getLabel());
-                        System.debug('Value: ' + singleObjMap.get(key));
-                        System.debug('Type: '  + String.valueOf(fieldRes.getType()));
-                        //Customizations
-                    }
-                } 
+        /*Create Data Map*/
+        for(List<SObject> sobjList : rowData){
+            if(sobjList != null){
+                for(SObject sobj : sobjList){
+                    Map<String,Object> singleMap = new Map<String,Object>();
+                    for(HDT_WRP_Object singleObj : mappings.objects){
+                       if(singleObj.obj == sobj.getSObjectType().getDescribe().getName()){
+                           singleMap.put('_id', sobj.get('Id'));
+                           for(HDT_WRP_Fields field : singleObj.fields){
+                               if(sobj.get(field.apiName) != null && sobj.get(field.apiName) != ''){
+                                    singleMap.put(field.columnName, sobj.get(field.apiName));
+                               }
+                           }
+                       }
+                   }
+                   if(singleMap != null && !(singleMap.isEmpty())){
+                        dataMap.add(singleMap);
+                   } 
+                }
             }
         }
+        System.debug(dataMap);
+        System.debug(columns);
+        System.debug(columns.size());
+        output.columns = columns;
+        output.rowData = dataMap;
+        System.debug(output);
+        // for(List<SObject> sObjList : rowData){
+        //     if(sObjList != null){
+        //         Map<String, Object> objMap = sObjList[0].getSObjectType().getDescribe().fields.getMap();
+        //         Map<String, Object> singleObjMap = (Map<String, Object>) JSON.deserializeUntyped(JSON.serialize(sObjList[0]));
+        //         for(String key : singleObjMap.keySet()){
+        //             Schema.sObjectField fieldObj= (Schema.sObjectField) objMap.get(key);
+        //             if(fieldObj != null){
+        //                 Schema.DescribeFieldResult fieldRes = fieldObj.getDescribe();
+        //                 System.debug('Label: ' + fieldRes.getLabel());
+        //                 System.debug('Value: ' + singleObjMap.get(key));
+        //                 System.debug('Type: '  + String.valueOf(fieldRes.getType()));
+        //                 //Customizations
+        //             }
+        //         } 
+        //     }
+        // }
 
-        return 'Ok';
+        return JSON.serialize(output);
     }
 
     private static void doRecursion(List<String> queryList, List<String> objList){
@@ -94,8 +128,11 @@ public inherited sharing class HDT_LC_GenericTable {
 
     public class HDT_WRP_Columns{
         public String label;
-        public String name;
-        public String type;
+        public String fieldName;
+        public HDT_WRP_Columns(String fieldName, String label){
+            this.fieldName = fieldName;
+            this.label = label;
+        }
     }
     public class HDT_WRP_Mapping{
         List<HDT_WRP_Object> objects;
@@ -106,11 +143,12 @@ public inherited sharing class HDT_LC_GenericTable {
         public String whereCond;
     }
     public class HDT_WRP_Fields{
+        public String columnName;
         public String apiName;
     }
     public class HDT_WRP_Ouput{
         List<HDT_WRP_Columns> columns;
-        List<List<SObject>> rowData;
+        List<Map<String,Object>> rowData;
     }
 
 }
