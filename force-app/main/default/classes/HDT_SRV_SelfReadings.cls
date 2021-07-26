@@ -3,10 +3,10 @@ public with sharing class HDT_SRV_SelfReadings {
         System.debug('Generating JSON for request type: ' + inputParams.requestType);
         switch on inputParams.requestType {
             when 'CheckAutolettura' {
-                return manageCheckAutolettura(inputParams);
+                return generateJsonCheckAutolettura(inputParams);
             }
             // when 'InvioLetture' {
-            //     return manageInvioLetture(inputParams);
+            //     return generateJsonInvioLetture(inputParams);
             // }
             when else {
                return null;
@@ -15,7 +15,7 @@ public with sharing class HDT_SRV_SelfReadings {
     }
 
     // TODO WAVE 2: adeguare per altre commodity.
-    private static HDT_WRP_GenericSapIntegration manageCheckAutolettura(HDT_WRP_GenericSapIntegration inputParams) {
+    private static HDT_WRP_GenericSapIntegration generateJsonCheckAutolettura(HDT_WRP_GenericSapIntegration inputParams) {
         if (inputParams == null) {
             return null;
         }
@@ -58,13 +58,13 @@ public with sharing class HDT_SRV_SelfReadings {
         if (readingCase.CommodityFormula__c == 'Gas') {
             gen.writeStartObject();
             gen.writeStringField('register', reading.ReadingRegisterMeter__c);
-            gen.writeStringField('reading', reading.ReadingValueMeter__c.format());
+            gen.writeStringField('reading', String.valueOf(reading.ReadingValueMeter__c));
             gen.writeEndObject();
 
             if (reading.ReadingValueCorrector__c != null && String.isNotBlank(reading.ReadingRegisterCorrector__c)) {
                 gen.writeStartObject();
                 gen.writeStringField('register', reading.ReadingRegisterCorrector__c);
-                gen.writeStringField('reading', reading.ReadingValueCorrector__c.format());
+                gen.writeStringField('reading', String.valueOf(reading.ReadingValueCorrector__c));
                 gen.writeEndObject();
             }
         } else {
@@ -74,7 +74,7 @@ public with sharing class HDT_SRV_SelfReadings {
                 gen.writeStartObject();
                 gen.writeStringField('register', (String) reading.get(String.format('ReadingRegister{0}__c', indexParam)));
                 Decimal readingValue = (Decimal) reading.get(String.format('ReadingValue{0}__c', indexParam));
-                gen.writeStringField('reading', readingValue.format());
+                gen.writeStringField('reading', String.valueOf(readingValue));
                 gen.writeEndObject();
             }
         }
@@ -86,6 +86,50 @@ public with sharing class HDT_SRV_SelfReadings {
         inputParams.requestBody = body;
         inputParams.namedCredential = 'Callout:SelfReadingsCheck';
         return inputParams;
+    }
+
+    public static Boolean handleResponse(HDT_WRP_GenericSapIntegration sapIntegration) {
+        System.debug('Handling response for request type: ' + sapIntegration.requestType);
+        switch on sapIntegration.requestType {
+            when 'CheckAutolettura' {
+                return handleResponseCheckAutolettura(sapIntegration);
+            }
+            // when 'InvioLetture' {
+            //     return handleResponseInvioLetture(sapIntegration);
+            // }
+            when else {
+               return null;
+            }
+        }
+    }
+
+    private static Boolean handleResponseCheckAutolettura(HDT_WRP_GenericSapIntegration sapIntegration) {
+
+        String caseId = sapIntegration.recordId;
+        Boolean responseOk = true;
+
+        Case readingCase = new Case();
+        readingCase.Id = caseId;
+        Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
+
+        // SAP restituisce codice 502 in caso di check preliminare non superato.
+        if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
+            responseOk = false;
+            List<Object> errorDetails = (List<Object>) body.get('errorDetails');
+            if (errorDetails != null && !errorDetails.isEmpty()) {
+                Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
+                String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
+                readingCase.Phase__c = 'Check preliminari KO';
+                readingCase.Description = errorMessage;
+            }
+        } else {
+            readingCase.Phase__c = 'Check preliminari OK';
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(readingCase);
+
+
+        return responseOk;
     }
 
 }

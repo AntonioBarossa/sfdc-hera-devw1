@@ -17,34 +17,13 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
             HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
             sapIntegration = submitRequest(recordId,parameters.get('requestType'));
 
-            Map<String,Object> body = (Map<String,Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
-            System.debug('responseBody deserialized: ' + body);
+            Boolean responseOk = HDT_SRV_SelfReadings.handleResponse(sapIntegration);
+            response.success = responseOk;
+            response.message = responseOk ? 'OK' : 'KO';
 
-            // TODO: handle response
-            Map<String,Object> data = (Map<String,Object>) body.get('data');
-            if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
-                response.success = false;
-                response.message = 'KO';
-            } else {
-                System.debug('Response OK');
-                response.success = true;
-                response.message = 'OK';
-            }
         } catch(Exception ex){
             System.debug('HDT_SRV_SelfReadingsFacade: exception ' + ex.getMessage());
         }
-
-        // Case caseToUpdate = new Case();
-        // caseToUpdate.Id = recordId;
-        // caseToUpdate.SendDate__c = Date.today();
-
-        // if (response.success) {
-        //     caseToUpdate.TecnicalPhase__c = 'Esito OK da SAP';
-        // } else {
-        //     caseToUpdate.TecnicalPhase__c = 'Errore Lavorazione SAP';
-        // }
-
-        // HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
 
         return response;
     }
@@ -63,11 +42,5 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
         }
         return sapIntegration;
         
-    }
-
-    @Future
-    private static void updateFuture(String inputString) {
-        Case c = (Case) JSON.deserialize(inputString, Case.class);
-        HDT_UTL_DatabaseService.updateSObject(c);
     }
 }
