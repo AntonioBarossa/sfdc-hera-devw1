@@ -4,7 +4,7 @@ public with sharing class HDT_LC_CampaignSurvey {
     private static HDT_QR_Campaign campaignQr = new HDT_QR_Campaign();
 
     @AuraEnabled(cacheable=true)
-    public static List<SurveyCRM__c> getSurvey(String objectApiName, String recordId){
+    public static SurveyCRM__c getSurvey(String objectApiName, String recordId){
         List<SurveyCRM__c> surveys= new List<SurveyCRM__c>();
         String fields = '';
         Map<String,Schema.SObjectField> surveymap = Schema.SObjectType.SurveyCRM__c.fields.getMap();
@@ -31,7 +31,7 @@ public with sharing class HDT_LC_CampaignSurvey {
             if(campaignMembersIds.size()>0){
                 surveys= HDT_QR_SurveyCrm.getSurveys(campaignMembersIds, fields);
             }
-        } else if (objectApiName == 'CampaignMember') {
+        } else if (objectApiName == 'campaignmember') {
             String campaignMemberRecordId = recordId;
             CampaignMember campaignMemberRec = campaignMemberQr.getAccountAndCampaign(campaignMemberRecordId);
             String campaignId = campaignMemberRec.CampaignId;
@@ -45,7 +45,7 @@ public with sharing class HDT_LC_CampaignSurvey {
         } else {
             surveys = null;
         }
-        return surveys;
+        return surveys != null ? surveys[0] : null;
     }
 
     @AuraEnabled
