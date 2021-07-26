@@ -48,10 +48,12 @@
     </template>
 
     <template if:true={showBillList} >
-        <c-hdt-bill-list
+        <c-hdt-comunications-search-list
+            customer-code={techObj.customerCode}
             parameters={billParameters}
+            other-params={otherParams}
             onclosemodal={closeModalHandler}
-        ></c-hdt-bill-list>
+        ></c-hdt-comunications-search-list>
     </template>
 
     <template if:true={showViewResult} >
@@ -321,6 +323,7 @@
                 filter-applied={filterApplied}
                 onopenmainspinner={openMainSpinner}
                 onclosemainspinner={closeMainSpinner}
+                onmodalhandler={modalHandler}
                 onservicecatalog={serviceCatalogEventFromChild}
             ></c-hdt-account-statement-detail-viewer>
         </div>

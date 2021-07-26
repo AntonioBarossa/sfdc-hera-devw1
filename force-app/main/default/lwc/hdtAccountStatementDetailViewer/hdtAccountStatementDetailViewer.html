@@ -19,7 +19,7 @@
 
                     <div class="slds-button-group" role="group">
                         <template for:each={buttonList} for:item="c">
-                            <button key={c.name} if:true={c.enable} class="slds-button slds-button_neutral mainbutton" onclick={buttonHandler} name={c.name} >{c.label}</button>
+                            <button key={c.name} if:true={c.enable} class="slds-button slds-button_neutral mainbutton" onclick={buttonHandler} data-parameters={c.parameters} name={c.name} >{c.label}</button>
                         </template>
                         <button if:true={filterApplied} class="slds-button slds-button_neutral mainbutton" onclick={removeFilter} >Rimuovi filtro</button>
                     </div>

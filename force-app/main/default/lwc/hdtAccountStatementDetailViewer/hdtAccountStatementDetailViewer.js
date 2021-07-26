@@ -31,6 +31,8 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             this.applyInterrogation(this.staticObj);
         }
 
+        this.updateButtonConfig();
+
         return this.accountdetails;
     }
 
@@ -91,6 +93,26 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                     mode: 'sticky'
                 })
             );
+        });
+    }
+
+    updateButtonConfig(){
+        var dataEmissione = '';
+        for(var i in this.firstLevel){
+            if(i === 'dataEmissione' && this.firstLevel[i] != undefined){
+                dataEmissione = this.firstLevel[i];
+            }
+        }
+
+        this.template.querySelectorAll('button').forEach(c => {    
+            if(c.name === 'showRate'){
+                if(dataEmissione===''){
+                    c.setAttribute('disabled', '');
+                } else {
+                    c.removeAttribute('disabled');
+                }
+            }
+
         });
     }
 
@@ -399,13 +421,20 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     }
 
     showRate(event){
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: 'Attenzione',
-                message: 'Servizio in sviluppo',
-                variant: 'info'
-            })
-        );
+        var paramObj = event.currentTarget.dataset.parameters;
+        console.log('on child - ' + paramObj);
+
+        var muleRequestParams = {
+            billingProfile: this.firstLevel.contoContrattuale,
+            startDate: this.firstLevel.dataEmissione
+        };
+        
+        const modal = new CustomEvent("modalhandler", {
+            detail:  {parameters: paramObj, muleRequestParams: muleRequestParams}
+        });
+        // Dispatches the event.
+        this.dispatchEvent(modal);
+
     }
 
     viewInvoice(event){

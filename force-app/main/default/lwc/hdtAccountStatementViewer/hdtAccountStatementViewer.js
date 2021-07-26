@@ -63,6 +63,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     showFilterFirstLevel = false;
     showOperationModal;
     billParameters;
+    otherParams;
 
     totRecs;
     fromRec;
@@ -289,8 +290,15 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.showFilters2 = true;
     }
 
+    modalHandler(event){
+        this.billParameters = event.detail.parameters;
+        this.otherParams = event.detail.muleRequestParams;
+        this.showBillList = true;
+    }
+
     billList(event){
         this.billParameters = event.currentTarget.dataset.parameters;
+        this.otherParams = '';
         this.showBillList = true;
     }
 

@@ -1,8 +1,10 @@
-public inherited sharing class HDT_SRV_BillList {
+public inherited sharing class HDT_SRV_ComunicationsSearchList {
 
     public static Object getWsData(String wrapperObj) {
 
-        HDT_WRP_BillList.HDT_WRP_WebServiceObj wsObj = new HDT_WRP_BillList.HDT_WRP_WebServiceObj();
+        System.debug('>>> wrapperObj ' + wrapperObj);
+
+        HDT_WRP_ComunicationsSearchList.HDT_WRP_WebServiceObj wsObj = new HDT_WRP_ComunicationsSearchList.HDT_WRP_WebServiceObj();
         
         try{
             wsObj.success = true;
@@ -29,6 +31,11 @@ public inherited sharing class HDT_SRV_BillList {
             s += ']';
 
             wsObj.body = s;
+
+            //Account a = new Account();
+            //a.Id = '';
+            //insert a;
+
         } catch (Exception ex){
             wsObj.success = false;
             wsObj.message = ex.getMessage();

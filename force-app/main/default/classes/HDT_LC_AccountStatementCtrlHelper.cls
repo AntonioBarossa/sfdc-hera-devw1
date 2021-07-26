@@ -156,7 +156,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         obj.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
 
         for(HDT_ButtonDetails__mdt button_mdt : mdtButtonList){
-            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c, button_mdt.ButtonType__c, '',button_mdt.Accesskey__c));
+            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c, button_mdt.ButtonType__c, button_mdt.Parameters__c,button_mdt.Accesskey__c));
         }
 
         obj.success = true;
