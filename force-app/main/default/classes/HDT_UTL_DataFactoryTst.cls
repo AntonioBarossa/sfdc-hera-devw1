@@ -600,4 +600,26 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return quoteList;
 	}
+
+	public static List<Pricebook2> createPricebook (Integer amount, Boolean doInsert) {
+
+		List<Pricebook2> pricebookList = new List<Pricebook2>();
+
+		for (Integer i = 0; i<amount; i++) {
+
+			Pricebook2 pricebook = new Pricebook2();
+			
+			pricebook.Name = 'Test Price Book'+i;
+			pricebook.IsActive = true;
+
+			pricebookList.add(pricebook);
+		}
+
+		if (doInsert){
+
+			insert pricebookList;
+		}
+
+		return pricebookList;
+	}
 }
