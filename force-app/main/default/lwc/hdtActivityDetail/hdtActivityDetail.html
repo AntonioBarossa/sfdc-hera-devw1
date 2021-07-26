@@ -9,13 +9,17 @@
                                 object-api-name={oggetto.name}
                                 record-id={oggetto.id}
                                 density="all">
-                                <template for:each={oggetto.fields} for:item="field">
+                                <lightning-layout key={oggetto.name} multiple-rows>
+                                    <template for:each={oggetto.fields} for:item="field">
                                     
-                                        <lightning-output-field key={field}
-                                            field-name={field}>
-                                        </lightning-output-field>
+                                        <lightning-layout-item key={field} size="6" padding="around-small">
+                                            <lightning-output-field key={field}
+                                                field-name={field}>
+                                            </lightning-output-field>
+                                        </lightning-layout-item>
                                     
-                                </template>
+                                    </template>
+                                </lightning-layout>
                             </lightning-record-view-form>
                         </lightning-accordion-section>
                     </lightning-accordion>

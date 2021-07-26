@@ -47,14 +47,14 @@ export default class HdtActivityDetail extends LightningElement {
             //window.alert(mapObject[key].fieldList);
             var i=0;
             for(var i in objectMap[key].fieldList){
-                window.alert(i);
+                //window.alert(i);
                 campi.push(objectMap[key].fieldList[i].wrts_prcgvr__Field__c);
             }
-            window.alert(campi);
+            //window.alert(campi);
             this.objectList.push({name:key, fields:campi, id:objectMap[key].objectId});
         }
-        window.alert(this.objectList[0].name+', '+this.objectList[0].id+', '+this.objectList[0].fields);
-        window.alert(this.objectList[1].name+', '+this.objectList[1].id+', '+this.objectList[1].fields);
+        //window.alert(this.objectList[0].name+', '+this.objectList[0].id+', '+this.objectList[0].fields);
+        //window.alert(this.objectList[1].name+', '+this.objectList[1].id+', '+this.objectList[1].fields);
     }
 
     /*
