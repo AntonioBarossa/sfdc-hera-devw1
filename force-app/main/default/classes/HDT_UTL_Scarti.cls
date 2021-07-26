@@ -6,7 +6,7 @@
  */
 
 global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.IApexAction{
-    
+
     global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
         SObject transition = (SObject) argsMap.get('transition');
@@ -28,8 +28,35 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         return null;
     }
 
+    public class AttivitaAnonimaData{
+        public String errorMessage {get; set;}
+        public String utenza {get; set;}
+        public String dataEvento {get; set;}
+        public AttivitaAnonimaData(){}
+    }
+
     /**
-    * @author Marco Arci (marco.arci@webresults.it)
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
+    * @date 22/07/2021
+    * @description HDT_UTL_Scarti.checkActivityCreation - Check on activity creation
+    * @param1 recordId - Id of a record
+    * @return void
+    */
+    public static void createAttivitaAnonimeHeroku(List<AttivitaAnonimaData> sourceData){        
+        List<wrts_prcgvr__Activity__c> toInsert = new List<wrts_prcgvr__Activity__c>();
+        for(AttivitaAnonimaData curData : sourceData){
+            wrts_prcgvr__Activity__c newAct = new wrts_prcgvr__Activity__c();
+            newAct.Type__c = 'Richiesta non identificata';
+            newAct.CreatedByUsername__c = curData.utenza;
+            //newAct.StartDate__c = curData.dataEvento;
+            //newAct.DiscardDescription__c = curData.errorMessage;
+            toInsert.add(newAct);
+        }
+        insert toInsert;
+    }
+
+    /**
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 22/07/2021
     * @description HDT_UTL_Scarti.checkActivityCreation - Check on activity creation
     * @param1 recordId - Id of a record
