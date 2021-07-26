@@ -66,8 +66,10 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
        if(servicePo.id != null){
         List<SaleServiceItem__c> listSale = saleServItem.getSaleByServicePointFilter(servicePo.id);
         Sale__c s = new Sale__c();
+        HDT_QR_Sale saQr = new HDT_QR_Sale();
         if(listSale != null && !listSale.isEmpty()){
             s.id = listSale[0].opportunity__r.Sale__c;
+            s = saQr.getRecordById(listSale[0].opportunity__r.Sale__c,'id,Account__r.Category__c');
             boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
             if(isTransitorio){
                 HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
