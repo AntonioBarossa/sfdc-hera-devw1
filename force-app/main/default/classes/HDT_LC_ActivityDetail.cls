@@ -5,17 +5,17 @@
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
 public with sharing class HDT_LC_ActivityDetail {
-    class ObjectFieldData{
+    class HDT_WRP_ObjectFieldData{
         @AuraEnabled public Id objectId {get; set;}
         @AuraEnabled public list<wrts_prcgvr__DynamicField__c> fieldList {get; set;}
 
-        ObjectFieldData(){}
+        HDT_WRP_ObjectFieldData(){}
     }
 
     @AuraEnabled
-    public static map<string,ObjectFieldData> getObjectFields(Id idActivity){
+    public static map<string,HDT_WRP_ObjectFieldData> getObjectFields(Id idActivity){
 
-        map<string,ObjectFieldData> objectFields= new Map<String,ObjectFieldData>();
+        map<string,HDT_WRP_ObjectFieldData> objectFields= new Map<String,HDT_WRP_ObjectFieldData>();
 
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__ActivityTemplate__c, Order__c, Case__c FROM wrts_prcgvr__Activity__c WHERE Id=:idActivity limit 1]; 
         list<wrts_prcgvr__ActivityTemplate__c> activityTemplate = [SELECT Id, wrts_prcgvr__FieldsTemplate__c FROM wrts_prcgvr__ActivityTemplate__c WHERE Id=:activity.wrts_prcgvr__ActivityTemplate__c];
@@ -24,7 +24,7 @@ public with sharing class HDT_LC_ActivityDetail {
         list<wrts_prcgvr__DynamicField__c> dynamicField = [SELECT Id, wrts_prcgvr__Section__c, wrts_prcgvr__ObjectName__c, wrts_prcgvr__Field__c FROM wrts_prcgvr__DynamicField__c WHERE wrts_prcgvr__Section__c IN: dynamicSection];
         for(wrts_prcgvr__DynamicField__c field: dynamicField){
             if(!objectFields.keyset().contains(field.wrts_prcgvr__ObjectName__c)){
-                ObjectFieldData wrp = new ObjectFieldData();
+                HDT_WRP_ObjectFieldData wrp = new HDT_WRP_ObjectFieldData();
                 if(field.wrts_prcgvr__ObjectName__c=='wrts_prcgvr__Activity__c'){
                     wrp.objectId = (Id)activity.get('id');
                 }else{
