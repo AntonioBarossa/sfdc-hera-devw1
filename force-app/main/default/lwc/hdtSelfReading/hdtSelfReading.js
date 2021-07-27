@@ -78,6 +78,10 @@ export default class HdtSelfReading extends LightningElement {
         this.showWindowsModal = true;
     }
 
+    get hasReadingWindows(){
+        return this.readingWindows.length > 0;
+    }
+
     connectedCallback(){
 
         if (this.selectedReadingsList != undefined) {
