@@ -233,7 +233,7 @@
     <assignments>
         <name>Assegna_Case_Id_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>5484</locationX>
+        <locationX>5572</locationX>
         <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -249,7 +249,7 @@
     <assignments>
         <name>Assegna_Case_Id_0_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>5220</locationX>
+        <locationX>5308</locationX>
         <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -265,8 +265,8 @@
     <assignments>
         <name>Assegna_Case_Id_Annullamento</name>
         <label>Assegna Case Id</label>
-        <locationX>4912</locationX>
-        <locationY>758</locationY>
+        <locationX>4780</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -275,7 +275,23 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Arricchimento</targetReference>
+            <targetReference>Arricchimento_Dati_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_Annullamento_0</name>
+        <label>Assegna Case Id</label>
+        <locationX>5044</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Annullamento_0</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Gestione_Annullamento_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -409,7 +425,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche</name>
         <label>Assegna Case Id</label>
-        <locationX>5748</locationX>
+        <locationX>5836</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -425,7 +441,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0</name>
         <label>Assegna Case Id</label>
-        <locationX>6012</locationX>
+        <locationX>6100</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -501,7 +517,7 @@
     <assignments>
         <name>AssignRecordTypeIdEle</name>
         <label>AssignRecordTypeIdEle</label>
-        <locationX>5484</locationX>
+        <locationX>5572</locationX>
         <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
@@ -517,7 +533,7 @@
     <assignments>
         <name>AssignRecordTypeIdGas</name>
         <label>AssignRecordTypeIdGas</label>
-        <locationX>5220</locationX>
+        <locationX>5308</locationX>
         <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
@@ -689,16 +705,16 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Arricchimento</name>
+        <name>Arricchimento_0</name>
         <label>Arricchimento?</label>
         <locationX>4912</locationX>
-        <locationY>878</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Gestione_Annullamento_Subflow</targetReference>
+            <targetReference>Get_RT_Annullamento_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Arricchimento</defaultConnectorLabel>
         <rules>
-            <name>Contratto_Non_Richiesto</name>
+            <name>Contratto_Non_Richiesto_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
@@ -708,7 +724,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Arricchimento_Dati_0_0_0_0_0_0</targetReference>
+                <targetReference>Selezione_Fornitura_Notifiche_0</targetReference>
             </connector>
             <label>Contratto Non Richiesto</label>
         </rules>
@@ -913,7 +929,7 @@
     <decisions>
         <name>CommodityDecision_0_0</name>
         <label>Commodity?</label>
-        <locationX>5352</locationX>
+        <locationX>5440</locationX>
         <locationY>734</locationY>
         <defaultConnector>
             <targetReference>GetEleRecordType</targetReference>
@@ -1066,7 +1082,7 @@
     <decisions>
         <name>Selezione_Fornitura_00</name>
         <label>Selezione Fornitura?</label>
-        <locationX>5352</locationX>
+        <locationX>5440</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Selezione_Fornitura_Notifiche_0_0</targetReference>
@@ -1105,7 +1121,7 @@
     <decisions>
         <name>Selezione_Fornitura_00_0</name>
         <label>Selezione Fornitura?</label>
-        <locationX>5352</locationX>
+        <locationX>5440</locationX>
         <locationY>1190</locationY>
         <defaultConnector>
             <targetReference>CreaCaseVariazioni</targetReference>
@@ -1144,7 +1160,7 @@
     <decisions>
         <name>Switch_Subflow</name>
         <label>Switch Subflow</label>
-        <locationX>3163</locationX>
+        <locationX>3207</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen_0</targetReference>
@@ -1467,7 +1483,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Selezione_Fornitura_Notifiche_0</targetReference>
+                <targetReference>Arricchimento_0</targetReference>
             </connector>
             <label>Cluster Annullamento</label>
         </rules>
@@ -2030,8 +2046,8 @@
     <recordCreates>
         <name>Crea_Case_Annullamento</name>
         <label>Crea Case</label>
-        <locationX>4912</locationX>
-        <locationY>638</locationY>
+        <locationX>4780</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Annullamento</targetReference>
         </connector>
@@ -2099,6 +2115,89 @@
             <field>ServicePoint__c</field>
             <value>
                 <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Crea_Case_Annullamento_0</name>
+        <label>Crea Case</label>
+        <locationX>5044</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_Annullamento_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Annullamento</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DistributorNote__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Mobile__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Phone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Annullamento_0.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2770,7 +2869,7 @@
     <recordCreates>
         <name>Crea_Case_Notifiche</name>
         <label>Crea Case</label>
-        <locationX>5748</locationX>
+        <locationX>5836</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche</targetReference>
@@ -2948,7 +3047,7 @@
     <recordCreates>
         <name>Crea_Case_Voltura</name>
         <label>Crea Case</label>
-        <locationX>6012</locationX>
+        <locationX>6100</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0</targetReference>
@@ -3043,7 +3142,7 @@
     <recordCreates>
         <name>CreaCaseVariazioni</name>
         <label>CreaCaseVariazioni</label>
-        <locationX>5484</locationX>
+        <locationX>5572</locationX>
         <locationY>1310</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0</targetReference>
@@ -3138,7 +3237,7 @@
     <recordCreates>
         <name>CreaCaseVariazioni_0</name>
         <label>CreaCaseVariazioni</label>
-        <locationX>5220</locationX>
+        <locationX>5308</locationX>
         <locationY>1310</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0_0</targetReference>
@@ -3242,7 +3341,7 @@
     <recordLookups>
         <name>Cerca_Contatto_Primario</name>
         <label>Cerca Contatto Primario</label>
-        <locationX>3163</locationX>
+        <locationX>3207</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3326,11 +3425,32 @@
     <recordLookups>
         <name>Get_RT_Annullamento</name>
         <label>Get RT Annullamento</label>
-        <locationX>4912</locationX>
-        <locationY>518</locationY>
+        <locationX>4780</locationX>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_Annullamento</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordTypeName</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_RT_Annullamento_0</name>
+        <label>Get RT Annullamento</label>
+        <locationX>5044</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_Annullamento_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -3578,7 +3698,7 @@
     <recordLookups>
         <name>Get_RT_Notifiche</name>
         <label>Get RT Annullamento</label>
-        <locationX>5748</locationX>
+        <locationX>5836</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3641,7 +3761,7 @@
     <recordLookups>
         <name>Get_RT_Voltura</name>
         <label>Get RT Voltura</label>
-        <locationX>6012</locationX>
+        <locationX>6100</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3745,7 +3865,7 @@
     <recordLookups>
         <name>GetEleRecordType</name>
         <label>GetEleRecordType</label>
-        <locationX>5484</locationX>
+        <locationX>5572</locationX>
         <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3766,7 +3886,7 @@
     <recordLookups>
         <name>GetGasRecordType</name>
         <label>GetGasRecordType</label>
-        <locationX>5220</locationX>
+        <locationX>5308</locationX>
         <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -3828,7 +3948,7 @@
     <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
-        <locationX>6276</locationX>
+        <locationX>6364</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -3873,7 +3993,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>3037</locationX>
+        <locationX>3081</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Cerca_Contatto_Primario</targetReference>
@@ -3942,7 +4062,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_0_0_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>5484</locationX>
+        <locationX>5572</locationX>
         <locationY>1550</locationY>
         <connector>
             <targetReference>Gestione_Variazioni_Subflow</targetReference>
@@ -4173,7 +4293,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_Notifiche</name>
         <label>Arricchimento Dati</label>
-        <locationX>5748</locationX>
+        <locationX>5836</locationX>
         <locationY>878</locationY>
         <connector>
             <targetReference>Gestione_Notifiche</targetReference>
@@ -4202,7 +4322,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_Notifiche_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>6012</locationX>
+        <locationX>6100</locationX>
         <locationY>878</locationY>
         <connector>
             <targetReference>Gestione_Voltura_Tecnica_SubFlow</targetReference>
@@ -4351,7 +4471,7 @@
     <subflows>
         <name>Gestione_Notifiche</name>
         <label>Gestione Notifiche</label>
-        <locationX>5748</locationX>
+        <locationX>5836</locationX>
         <locationY>998</locationY>
         <flowName>HDT_FL_GestioneNotifiche</flowName>
         <inputAssignments>
@@ -4391,7 +4511,7 @@
     <subflows>
         <name>Gestione_Variazioni_Subflow</name>
         <label>Gestione Variazioni Subflow</label>
-        <locationX>5352</locationX>
+        <locationX>5440</locationX>
         <locationY>1766</locationY>
         <flowName>HDT_FL_GestioneVariazioni</flowName>
         <inputAssignments>
@@ -4430,7 +4550,7 @@
     <subflows>
         <name>Gestione_Voltura_Tecnica_SubFlow</name>
         <label>Gestione Voltura Tecnica SubFlow</label>
-        <locationX>6012</locationX>
+        <locationX>6100</locationX>
         <locationY>998</locationY>
         <flowName>HDT_FL_VolturaTecnica</flowName>
         <inputAssignments>
@@ -4807,7 +4927,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche</name>
         <label>Selezione Fornitura</label>
-        <locationX>5748</locationX>
+        <locationX>5836</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Get_RT_Notifiche</targetReference>
@@ -4847,8 +4967,8 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>4912</locationX>
-        <locationY>398</locationY>
+        <locationX>4780</locationX>
+        <locationY>518</locationY>
         <connector>
             <targetReference>Get_RT_Annullamento</targetReference>
         </connector>
@@ -4887,7 +5007,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>5440</locationX>
+        <locationX>5528</locationX>
         <locationY>518</locationY>
         <connector>
             <targetReference>CommodityDecision_0_0</targetReference>
@@ -4927,7 +5047,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>6012</locationX>
+        <locationX>6100</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Get_RT_Voltura</targetReference>

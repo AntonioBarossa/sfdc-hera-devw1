@@ -44,6 +44,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         EffectiveDate__c
         FROM Cases1__r
         WHERE Type = :this.nonRequestedContract
+        AND Phase__c = : this.phaseInstallments
         LIMIT 1)
         FROM Order
         WHERE ProcessType__c = 'Switch in Ele'
