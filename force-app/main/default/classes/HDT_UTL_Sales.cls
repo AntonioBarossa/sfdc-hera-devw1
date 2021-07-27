@@ -1,6 +1,7 @@
 public with sharing class HDT_UTL_Sales {
     
      private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
+     private static HDT_QR_Case caseQr = new HDT_QR_Case();
 
     public static map<String,String> mapMarcatura = new Map<String,String>();//'AAS Associazione' => 'AAS','AAS Azienda'=> 'AAS','AAS Condominio'=> 'AAS','AAS Ditta individuale'=> 'AAS','AAS Parti comuni'=> 'AAS','AAS Persona fisica'=> 'AAS'}; 
     public static String getCityAgency(String comune,boolean isEle, boolean isGas){
@@ -75,6 +76,11 @@ public with sharing class HDT_UTL_Sales {
         }else{
             return false;
         }
+    }
+
+    public static Boolean isWinback(String servicePointId){
+        List<Case> caseList = caseQr.getServicePointCaseWinBack(servicePointId);
+        return !caseList.isEmpty();
     }
 
 }
