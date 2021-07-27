@@ -204,8 +204,8 @@ public with sharing class HDT_SRV_SelfReadings {
         String caseId = sapIntegration.recordId;
         Boolean responseOk = true;
 
-        Case readingCase = new Case();
-        readingCase.Id = caseId;
+        Case readingCaseToUpdate = new Case();
+        readingCaseToUpdate.Id = caseId;
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
 
         // SAP restituisce codice 502 in caso di check preliminare non superato.
@@ -215,14 +215,25 @@ public with sharing class HDT_SRV_SelfReadings {
             if (errorDetails != null && !errorDetails.isEmpty()) {
                 Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
                 String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
-                readingCase.Phase__c = 'Check preliminari KO';
-                readingCase.Description = errorMessage;
+                readingCaseToUpdate.Phase__c = 'Check preliminari KO';
+
+                HDT_QR_Case queryCase = new HDT_QR_Case();
+                List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
+                if (!cases.isEmpty()) {
+                    Case currentReadingCase = cases[0];
+                    String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
+                    String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
+                    readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
+                    if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
+                        HDT_UTL_Case.createActivity(caseId, errorMessage, 'Check preliminari KO');
+                    }
+                }
             }
         } else {
-            readingCase.Phase__c = 'Check preliminari OK';
+            readingCaseToUpdate.Phase__c = 'Check preliminari OK';
         }
 
-        HDT_UTL_DatabaseService.updateSObject(readingCase);
+        HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
 
 
         return responseOk;
@@ -254,6 +265,25 @@ public with sharing class HDT_SRV_SelfReadings {
 
 
         return responseOk;
+    }
+
+    // Verifica se per il dato Canale è prevista la creazione di Activity per l'errore restituito dal Check Autolettura.
+    private static Boolean isErrorWithActivity(String msg, String origin) {
+        if (String.isBlank(origin) || String.isBlank(msg)) {
+            return False;
+        }
+
+        Boolean createActivity = False;
+        switch on origin {
+            when 'Sportello', 'Telefono Inbound' {
+                createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('inferiore valore minimo concesso') || msg.contains('registri incompleti');
+            }
+            when else {
+                // TODO
+            }
+        }
+
+        return createActivity;
     }
 
 }
