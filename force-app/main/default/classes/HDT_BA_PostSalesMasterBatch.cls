@@ -10,6 +10,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
         scope.addAll(postsalesQr.getExpiredArticle());
         scope.addAll(postsalesQr.getExpiredCase());
+        scope.addAll(postsalesQr.getQuotationCase());
 
         return scope;
 
@@ -24,15 +25,10 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
             switch on sobj{
 
                 when Knowledge__kav article{
-
                     if(article.ExpirationDate__c != null){
-
                         KbManagement.PublishingService.archiveOnlineArticle(article.KnowledgeArticleId,null);
-
                     }
-
                 }
-
                 when Case currentCase{
                     if(currentCase.Type.equalsIgnoreCase('Piano Rateizzazione')){
                         SObject transition;
@@ -52,6 +48,14 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
                         //TO trigger Technical Phase
                         HDT_UTL_DatabaseService.updateSObject(newCase);
+                    }
+                    if(currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')){
+                        if(currentCase.QuotationType__c.equalsIgnoreCase('Predeterminabile')){
+                            currentCase.Phase__c = 'Annullamento - Da inviare';
+                        }else{
+                            currentCase.Phase__c = 'Preventivo scaduto';
+                        }
+                        HDT_UTL_DatabaseService.updateSObject(currentCase);
                     }
 
                 }
