@@ -6,7 +6,9 @@
  */
 
 global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.IApexAction{
-    
+    static final string CANONERAI_TEMPLATENAME='CBS_CAR002__CANONE_RAI';
+    static final string BONUSSOCIALE_TEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
+
     global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
         SObject transition = (SObject) argsMap.get('transition');
@@ -67,7 +69,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         }
 
         map<string,Id> mapActivityTemplates= new map<string,Id>();
-        list<wrts_prcgvr__ActivityTemplate__c> activityTemplates=[SELECT Id, Name FROM wrts_prcgvr__ActivityTemplate__c WHERE Name IN: activityTypes]; //to do matchare nome template
+        list<wrts_prcgvr__ActivityTemplate__c> activityTemplates=[SELECT Id, Name FROM wrts_prcgvr__ActivityTemplate__c WHERE Name =: CANONERAI_TEMPLATENAME OR Name=: BONUSSOCIALE_TEMPLATENAME];
         for(wrts_prcgvr__ActivityTemplate__c singleTemplate: activityTemplates){
             mapActivityTemplates.put(singleTemplate.Name,singleTemplate.Id);
         }
@@ -77,7 +79,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
             for(Account singleAccount: listAccounts){
                 if(activity.BPCode__c==singleAccount.CustomerCode__c){
                     activity.Account__c=singleAccount.Id;
-                    activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(activity.Type__c); //to do matchare nome template
+                    if(activity.Type__c.equalsIgnoreCase('Canone RAI')){
+                        activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAI_TEMPLATENAME); 
+                    }else if(activity.Type__c.equalsIgnoreCase('Bonus sociale')){
+                        activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALE_TEMPLATENAME); 
+                    }
                 }
             }
         }
@@ -102,18 +108,22 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 inputData - list of et4ae5__IndividualEmailResult__c
     * @return List<object> 
     */
-    public static List<Object> createScartoForMarketingCloudEmail(List<Object> inputData){        
-        return inputdata;
+    public static List<wrts_prcgvr__Activity__c> createScartoForMarketingCloud(List<object> inputData){
+        list<wrts_prcgvr__Activity__c> insertedActivities= new list<wrts_prcgvr__Activity__c>();
+
+        wrts_prcgvr.Interfaces_1_1.IActivityIntegration ActivityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+
+        wrts_prcgvr__ActivityTemplate__c templatePostSales=[SELECT id, name, wrts_prcgvr__Code__c FROM wrts_prcgvr__ActivityTemplate__c WHERE name='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES'];
+        wrts_prcgvr__ActivityTemplate__c templateSales=[SELECT id, name, wrts_prcgvr__Code__c FROM wrts_prcgvr__ActivityTemplate__c WHERE name='CBS_CRP003__SCARTI_DOCUMENTALI_SALES'];
+
+        for(et4ae5__IndividualEmailResult__c scarto: inputData){
+            if(Template.OrderID__c.isBlank()){
+                insertedActivities.addAll((wrts_prcgvrActivity_c[]) ActivityIntegration.createFromTemplate(templatePostSales.wrts_prcgvr__Code__c, new Map<String,Object>{'objectId' => CaseID__c}));
+            }else if(Template.CaseID__c.isBlank()){ 
+                insertedActivities.addAll((wrts_prcgvrActivity_c[]) ActivityIntegration.createFromTemplate(templateSales.wrts_prcgvr__Code__c, new Map<String,Object>{'objectId' => OrderID__c}));
+            }
+        }
+        return insertedActivities;
     }
 
-    /**
-    * @author Marco Arci (marco.arci@webresults.it)
-    * @date 23/07/2021
-    * @description HDT_UTL_Scarti.createScartoForMarketingCloudSMS - Creazione attività PClick
-    * @param1 inputData - list of SMSTracking__c
-    * @return List<object> 
-    */
-    public static List<Object> createScartoForMarketingCloudSms(List<Object> inputData){        
-        return inputdata;
-    }
 }
