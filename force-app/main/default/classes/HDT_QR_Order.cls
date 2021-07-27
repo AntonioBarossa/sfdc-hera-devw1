@@ -375,7 +375,10 @@ public inherited sharing class HDT_QR_Order {
             DocumentLow80__c,
             AutorizationVolturaThirdTrader__c,
             VolturaThirdTrader__c,
-            Phase__c
+            Phase__c,
+            ComfortCallDaysDue__c,
+            QualityCall__c,
+            QualityCallUnique__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -441,7 +444,8 @@ public inherited sharing class HDT_QR_Order {
             Instance326__c,
             DocumentLow80__c,
             AutorizationVolturaThirdTrader__c,
-            Phase__c
+            Phase__c,
+            SupplyAddressFormula__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
