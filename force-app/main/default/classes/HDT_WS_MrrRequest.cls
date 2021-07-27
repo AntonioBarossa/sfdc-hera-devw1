@@ -67,14 +67,14 @@ global with sharing class HDT_WS_MrrRequest {
             }
 
             //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
-            List<HDT_UTL_Scarti.AttivitaAnonimaData> dataForAttivitaAnonimaCreation = new List<HDT_UTL_Scarti.AttivitaAnonimaData>();
+            List<HDT_UTL_Scarti.HDT_WRP_AttivitaAnonimaData> dataForAttivitaAnonimaCreation = new List<HDT_UTL_Scarti.HDT_WRP_AttivitaAnonimaData>();
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
                 mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
                 for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : mrrResponseItem.objects){
                     for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
                         if('ATTIVITA'.equalsIgnoreCase(curField.name) 
                             && 'Richiesta non identificata'.equalsIgnoreCase(curField.value)){
-                            HDT_UTL_Scarti.AttivitaAnonimaData newData = new HDT_UTL_Scarti.AttivitaAnonimaData();
+                            HDT_UTL_Scarti.HDT_WRP_AttivitaAnonimaData newData = new HDT_UTL_Scarti.HDT_WRP_AttivitaAnonimaData();
                             for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
                                 if('ERROR_MESSAGE'.equalsIgnoreCase(curField2.name)) newData.errorMessage = curField2.value;
                                 if('UTENZA'.equalsIgnoreCase(curField2.name)) newData.utenza = curField2.value;
