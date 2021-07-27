@@ -86,12 +86,6 @@ export default class HdtSelfReading extends LightningElement {
         }
 
         this.windowColumns = columns;
-
-        this.readingWindows.push({
-            startWindowDate: '21/07/2021',
-            endWindowDate: '26/07/2021'
-        });
-
         this.oldTotalReadingValue = 0;
         this.newTotalReadingValue = 0;
         this.readingCustomerDate = this.sysdate();
