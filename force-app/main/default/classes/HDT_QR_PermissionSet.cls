@@ -1,3 +1,10 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 14/05/2021
+* @description HDT_QR_PermissionSet.cls
+* @history Lorenzo – 14/05/2021 – created class
+*/
+
 public with sharing class HDT_QR_PermissionSet {
     public List<PermissionSetAssignment> getPermissionSetAssignment(String permissionsetid,String assigneeId){
         return [SELECT Id FROM PermissionSetAssignment where permissionsetid = :permissionsetid AND assigneeId = :assigneeId];  
