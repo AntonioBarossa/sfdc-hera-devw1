@@ -8,8 +8,20 @@ import {FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEve
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const columns = [
-    { label: 'Lettura Inseribile Dal', fieldName: 'startWindowDate', type: 'date', typeAttributes: { year: "numeric", month: "long", day: "2-digit" } },
-    { label: 'Lettura Inseribile Fino Al', fieldName: 'endWindowDate', type: 'date', typeAttributes: { year: "numeric", month: "long", day: "2-digit" } }
+    {
+        label: 'Lettura Inseribile Dal',
+        fieldName: 'startWindowDate',
+        type: 'date', 
+        typeAttributes: { year: "numeric", month: "long", day: "2-digit" }, 
+        cellAttributes: { class: { fieldName: 'windowClass' } } 
+    },
+    {
+        label: 'Lettura Inseribile Fino Al',
+        fieldName: 'endWindowDate',
+        type: 'date',
+        typeAttributes: { year: "numeric", month: "long", day: "2-digit" },
+        cellAttributes: { class: { fieldName: 'windowClass' } }
+    }
 ];
 
 export default class HdtSelfReading extends LightningElement {
@@ -223,12 +235,14 @@ export default class HdtSelfReading extends LightningElement {
                 windows.forEach(window => {
                     let splittedFromDate = window.dataDa.split('/');
                     let splittedToDate = window.dataA.split('/');
-    
                     let dateFrom = new Date(parseInt(splittedFromDate[2], 10), parseInt(splittedFromDate[1], 10) - 1, parseInt(splittedFromDate[0], 10));
                     let dateTo = new Date(parseInt(splittedToDate[2], 10), parseInt(splittedToDate[1], 10) - 1, parseInt(splittedToDate[0], 10));
+                    let today = new Date();
+                    let dateClass = today >= dateFrom && today <= dateTo ? 'slds-text-color_success' : 'slds-text-color_error';
                     dateWindows.push({
                         startWindowDate: dateFrom,
-                        endWindowDate: dateTo
+                        endWindowDate: dateTo,
+                        windowClass: dateClass
                     });
                 });
                 console.log('reading windows: ' + JSON.stringify(dateWindows));
