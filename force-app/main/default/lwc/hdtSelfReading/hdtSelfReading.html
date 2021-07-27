@@ -59,12 +59,17 @@
                 <!-- modal body start -->        
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height: min-content;">
                     <div class="slds-form slds-m-top_x-large slds-m-bottom_x-large" >
-                        <lightning-datatable
+                        <template if:true={hasReadingWindows}>
+                            <lightning-datatable
                             key-field="Id"
                             data={readingWindows}
                             hide-checkbox-column
                             columns={windowColumns}>
                         </lightning-datatable>
+                        </template>
+                        <template if:false={hasReadingWindows}>
+                            <p><lightning-formatted-text value="Finestre Autolettura non disponibili per questo POD/PDR."></lightning-formatted-text></p>
+                        </template>
                     </div>
                 </div>
                 <!-- modal footer start-->

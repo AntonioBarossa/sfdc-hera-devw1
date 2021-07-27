@@ -1,4 +1,12 @@
 public with sharing class HDT_SRV_SelfReadings {
+
+    public static void handleSelfReadingIntegrations(SObject selfReadingCase) {
+
+        System.enqueueJob(new HDT_QBL_SelfReadingsCallouts((Case) selfReadingCase, 'CheckAutolettura'));
+
+    }
+
+
     public static HDT_WRP_GenericSapIntegration generateJson(HDT_WRP_GenericSapIntegration inputParams){
         System.debug('Generating JSON for request type: ' + inputParams.requestType);
         switch on inputParams.requestType {
@@ -134,6 +142,7 @@ public with sharing class HDT_SRV_SelfReadings {
 
         if (readingCase.CommodityFormula__c == 'Gas') {
             gen.writeStartObject();
+            gen.writeStringField('counter', '1');
             gen.writeStringField('typology', reading.ReadingTypeMeter__c);
             gen.writeStringField('identifier', reading.ReadingSerialNumberMeter__c);
             gen.writeStringField('section', reading.ReadingBandMeter__c);
@@ -146,6 +155,7 @@ public with sharing class HDT_SRV_SelfReadings {
 
             if (reading.ReadingValueCorrector__c != null) {
                 gen.writeStartObject();
+                gen.writeStringField('counter', '2');
                 gen.writeStringField('typology', reading.ReadingTypeCorrector__c);
                 gen.writeStringField('identifier', reading.ReadingSerialNumberCorrector__c);
                 gen.writeStringField('section', reading.ReadingBandCorrector__c);
@@ -161,6 +171,7 @@ public with sharing class HDT_SRV_SelfReadings {
             for (Integer i = 1; i <= registersCount; i++) {
                 List<String> indexParam = new List<String> { String.valueOf(i) };
                 gen.writeStartObject();
+                gen.writeStringField('counter', String.valueOf(i));
                 gen.writeStringField('typology', (String) reading.get(String.format('ReadingType{0}__c', indexParam)));
                 gen.writeStringField('identifier', (String) reading.get(String.format('ReadingSerialNumber{0}__c', indexParam)));
                 gen.writeStringField('section', (String) reading.get(String.format('ReadingBand{0}__c', indexParam)));
@@ -204,8 +215,8 @@ public with sharing class HDT_SRV_SelfReadings {
         String caseId = sapIntegration.recordId;
         Boolean responseOk = true;
 
-        Case readingCase = new Case();
-        readingCase.Id = caseId;
+        Case readingCaseToUpdate = new Case();
+        readingCaseToUpdate.Id = caseId;
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
 
         // SAP restituisce codice 502 in caso di check preliminare non superato.
@@ -215,17 +226,38 @@ public with sharing class HDT_SRV_SelfReadings {
             if (errorDetails != null && !errorDetails.isEmpty()) {
                 Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
                 String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
-                readingCase.Phase__c = 'Check preliminari KO';
-                readingCase.Description = errorMessage;
+                readingCaseToUpdate.Phase__c = 'Check preliminari KO';
+
+                HDT_QR_Case queryCase = new HDT_QR_Case();
+                List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
+                if (!cases.isEmpty()) {
+                    Case currentReadingCase = cases[0];
+                    String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
+                    String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
+                    readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
+                    if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
+                        HDT_UTL_Case.createActivity(caseId, errorMessage, 'Check preliminari KO');
+                    }
+                }
             }
         } else {
-            readingCase.Phase__c = 'Check preliminari OK';
+            readingCaseToUpdate.Phase__c = 'Check preliminari OK';
         }
 
-        HDT_UTL_DatabaseService.updateSObject(readingCase);
-
+        //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+        String serializedCase = JSON.serialize(readingCaseToUpdate);
+        updateFuture(serializedCase);
 
         return responseOk;
+    }
+
+    @Future
+    private static void updateFuture(String inputString) {
+
+        Case c = (Case) JSON.deserialize(inputString, Case.class);
+
+        HDT_UTL_DatabaseService.updateSObject(c);
+
     }
 
     private static Boolean handleResponseInvioLetture(HDT_WRP_GenericSapIntegration sapIntegration) {
@@ -233,8 +265,8 @@ public with sharing class HDT_SRV_SelfReadings {
         String caseId = sapIntegration.recordId;
         Boolean responseOk = true;
 
-        Case readingCase = new Case();
-        readingCase.Id = caseId;
+        Case readingCaseToUpdate = new Case();
+        readingCaseToUpdate.Id = caseId;
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
 
         if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
@@ -243,17 +275,37 @@ public with sharing class HDT_SRV_SelfReadings {
             // if (errorDetails != null && !errorDetails.isEmpty()) {
             //     Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
             //     String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
-            //     readingCase.Phase__c = 'Check preliminari KO';
-            //     readingCase.Description = errorMessage;
+            //     readingCaseToUpdate.Phase__c = 'Check preliminari KO';
+            //     readingCaseToUpdate.Description = errorMessage;
             // }
         } else {
-            readingCase.Phase__c = 'Esito OK da SAP';
+            readingCaseToUpdate.Phase__c = 'Esito OK da SAP';
         }
 
-        HDT_UTL_DatabaseService.updateSObject(readingCase);
-
+        //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+        String serializedCase = JSON.serialize(readingCaseToUpdate);
+        updateFuture(serializedCase);
 
         return responseOk;
+    }
+
+    // Verifica se per il dato Canale è prevista la creazione di Activity per l'errore restituito dal Check Autolettura.
+    private static Boolean isErrorWithActivity(String msg, String origin) {
+        if (String.isBlank(origin) || String.isBlank(msg)) {
+            return False;
+        }
+
+        Boolean createActivity = False;
+        switch on origin {
+            when 'Sportello', 'Telefono Inbound' {
+                createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('inferiore valore minimo concesso') || msg.contains('registri incompleti');
+            }
+            when else {
+                // TODO
+            }
+        }
+
+        return createActivity;
     }
 
 }

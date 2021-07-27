@@ -15,6 +15,7 @@ export default class HdtGenericTable extends LightningElement {
     @track altMessage;
     @track loader;
 
+    notFoundMessage = 'Nessun record trovato. Assicurarsi che vi siano richieste eleggibili sul cliente, in caso il problema dovesse persiste contattare l\'amministratore di sistema.';
     //data are retrieved on the callback, on error alternate will be shown
     connectedCallback(){
         this.loader = true;
@@ -23,9 +24,15 @@ export default class HdtGenericTable extends LightningElement {
                 let objData = JSON.parse(data);
                 console.log('Data -> ' + JSON.stringify(objData.columns));
                 console.log('Rows -> ' + JSON.stringify(objData.rowData));
-                this.columns = objData.columns;
-                this.rowData = objData.rowData;
-                this.loader = false;
+                if(objData.rowData === null || objData.rowData === undefined || objData.rowData.length === 0){
+                    console.log('Inside No Record Condition')
+                    this.altMessage = this.notFoundMessage;
+                    this.loader = false;
+                } else {
+                    this.columns = objData.columns;
+                    this.rowData = objData.rowData;
+                    this.loader = false;
+                }
                 //console.log('Columns -> ' + JSON.stringify(data.columns));
                 //console.log('RowData -> ' + JSON.stringify(data.rowData));
             })
