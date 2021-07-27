@@ -464,6 +464,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.loading = false;
             this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
             this.dispatchEvent(new CustomEvent('tablerefresh'));
+            this.dispatchEvent(new CustomEvent('documentalrefresh'));
             this.disabled = false;
         }).catch(error => {
             this.loading = false;

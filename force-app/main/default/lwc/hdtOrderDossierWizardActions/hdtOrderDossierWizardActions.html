@@ -9,10 +9,19 @@
                 <li>
                     <lightning-button onclick={handleCancel} disabled={isCancelButtonDisabled} icon-name="utility:cancel_file_request" variant="brand" label="Annulla" title="Cancel action"></lightning-button>
                 </li>
-                <li>
-                    <!--EVERIS: Bottone riportato in brand come richiesto BSN-->
-                    <lightning-button onclick={handleSave} class="slds-m-left_x-small" disabled={isSaveButtonDisabled} icon-name="utility:save" variant="brand" label="Stampa" title="Save action"></lightning-button>
-                </li>
+                <template if:true={enableDocumental}>
+                    <li>
+                        <lightning-button onclick={handlePreview} class="slds-m-left_x-small" disabled={isSaveButtonDisabled} icon-name="utility:save" variant="brand" label="Preview" title="Preview action"></lightning-button>
+                    </li>
+                    <li>
+                        <lightning-button onclick={sendDocumentFile} class="slds-m-left_x-small" disabled={isPrintButtonDisabled} icon-name="utility:save" variant="brand" label="Stampa" title="Save action"></lightning-button>
+                    </li>
+                </template>
+                <template if:false={enableDocumental}>
+                    <li>
+                        <lightning-button onclick={handleSave} class="slds-m-left_x-small" disabled={isSaveButtonDisabled} icon-name="utility:save" variant="brand" label="Conferma pratica" title="Save action"></lightning-button>
+                    </li>
+                </template>
             </ul>
             <c-hdt-confirmation-dialog-dropdown
                            object-api-name="Order"

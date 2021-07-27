@@ -228,7 +228,16 @@ public class HDT_SRV_DocumentalManagement{
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalTemplate templateInfo = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalTemplate();
 		try {
 			//signInfo
-			String telephoneNumber = (String) formParams.get('telefono');
+			String telephoneNumberCase = HDT_UTL_DocumentalManagement.getValue('Case','PhoneNumber__c',0,inputs,formParams);
+			String telephoneNumberOrder = HDT_UTL_DocumentalManagement.getValue('Order','PhoneNumber__c',0,inputs,formParams);
+			String telephoneNumber = '+39';
+			
+			if(String.isNotBlank(telephoneNumberCase)){
+				telephoneNumber = telephoneNumber + telephoneNumberCase;
+			}else {
+				telephoneNumber = telephoneNumber + telephoneNumberOrder;
+			}
+			
 			DocusignSettings__c docusignCustomSettings = DocusignSettings__c.getInstance();
 			signInfo.customerEnvironmentId = docusignCustomSettings.CustomerEnviromentId__c;
 			signInfo.idCheckConfigurationName = docusignCustomSettings.IdCheckConfigurationName__c;
@@ -242,7 +251,11 @@ public class HDT_SRV_DocumentalManagement{
 			String vatCode = HDT_UTL_DocumentalManagement.getValue('Account','VATNumber__c',0,inputs,formParams);
 			String fiscalCode = HDT_UTL_DocumentalManagement.getValue('Account','FiscalCode__c',0,inputs,formParams);
 			String accountName = HDT_UTL_DocumentalManagement.getValue('Account','Name',0,inputs,formParams);
-			String processType = (String) formParams.get('processType');
+			String processTypeCase = HDT_UTL_DocumentalManagement.getValue('Case','DocumentalProcessType__c',0,inputs,formParams);
+			String processType = 'Plico contrattuale';
+			if(String.isNotBlank(processTypeCase)){
+				processType = processTypeCase;
+			}
 			customerInfo.email = email;
 			customerInfo.fiscalCode = fiscalCode;
 			customerInfo.vatNumber = vatCode;
