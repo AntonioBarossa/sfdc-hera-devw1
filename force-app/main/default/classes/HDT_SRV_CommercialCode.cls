@@ -1,8 +1,8 @@
 /**
 * @author Fatjola Memishaj (fatjola.memishaj@dunegroup.it)
-* @date 27/07/2021
+* @date 06/05/2021
 * @description Initialize security access instance
-* @history Fatjola Memishaj 27/07/2021 Created class
+* @history Fatjola Memishaj 06/05/2021 Created class
 */
 
 public inherited sharing class HDT_SRV_CommercialCode {
