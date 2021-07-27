@@ -35,7 +35,8 @@ export default class HdtComunicationsSearchList extends LightningElement {
         customerAccount: '',
         startDate: '',
         endDate: ''
-    }
+    };
+    recordValue;
 
     connectedCallback(){
         console.log('>>> otherParams ' + JSON.stringify(this.otherParams));
@@ -45,16 +46,16 @@ export default class HdtComunicationsSearchList extends LightningElement {
 
         this.muleRequest.customerAccount = this.customerCode;
 
+        for(var i in this.otherParams){
+            this.muleRequest[i] = this.otherParams[i];
+        }
+
         switch (objParameters.type) {
             case 'bills':
                 this.columns = billsColumns;
                 break;
             case 'rate':
-                //this.muleRequest.billingProfile = '';
-                for(var i in this.otherParams){
-                    this.muleRequest[i] = this.otherParams[i];
-                }
-
+                //billingProfile
                 this.muleRequest.documentCategory = 'Comunicazioni';
                 this.columns = rateColumns;
                 break;
@@ -95,16 +96,25 @@ export default class HdtComunicationsSearchList extends LightningElement {
     }
 
     interrogation(event){
-
+        try{
+            this.spinner = true;
+            this.data = [];
+            this.getDataFromWs();
+        } catch(ex){
+            console.log(ex);
+        }
     }
 
-    getSelectedRow(event) {
-        const selectedRow = event.detail.selectedRows;
-        console.log('>>> SELECTION: ' + selectedRow[0].billNumber);
-    }
+    //getSelectedRow(event) {
+    //    const selectedRow = event.detail.selectedRows;
+    //    console.log('>>> SELECTION: ' + selectedRow[0].billNumber);
+    //    this.recordValue = selectedRow[0].billNumber;
+    //}
 
     apply(event){
-
+        var el = this.template.querySelector('lightning-datatable');
+        var selected = el.getSelectedRows();
+        console.log('>>> I WANT PDF ABOUT > ' + JSON.stringify(selected));
     }
 
     closeModal(event){

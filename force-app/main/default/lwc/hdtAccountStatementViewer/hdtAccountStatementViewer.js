@@ -290,9 +290,27 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.showFilters2 = true;
     }
 
+    viewReminders(event){
+        this.billParameters = event.currentTarget.dataset.parameters;
+        this.otherParams = '';
+        this.showBillList = true;  
+    }
+
     modalHandler(event){
         this.billParameters = event.detail.parameters;
         this.otherParams = event.detail.muleRequestParams;
+        this.showBillList = true;
+    }
+
+    showRate(event){
+        this.billParameters = event.currentTarget.dataset.parameters;
+
+        //var muleRequestParams = {
+        //    billingProfile: this.firstLevel.contoContrattuale,
+        //    startDate: this.firstLevel.dataEmissione
+        //};
+
+        this.otherParams = '';
         this.showBillList = true;
     }
 
