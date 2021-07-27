@@ -144,4 +144,21 @@ public inherited sharing class HDT_QR_Case {
         return nonReqContr;
     }
 
+    public Case getNonReqContrOrder(String relatedOrder){
+        Case nonReqContr = new Case();
+        try{
+            nonReqContr = [SELECT Id,
+            Phase__c,
+            Type
+            FROM Case
+            WHERE Type = 'Contratto Non Richiesto'
+            AND Order__c = :relatedOrder
+            WITH SECURITY_ENFORCED
+            LIMIT 1];
+        } catch(Exception e){
+            System.debug('Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+        }
+        return nonReqContr;
+    }
+
 }

@@ -318,7 +318,7 @@
             <assignToReference>GetRelatedCase.CancellationReasonDescription__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Revoca risoluzione per errata trasmissione</stringValue>
+                <stringValue>Revoca risoluzione per pratica errata</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -500,7 +500,7 @@
         <locationX>1898</locationX>
         <locationY>2017</locationY>
         <assignmentItems>
-            <assignToReference>GetRelatedCase.Phase__c</assignToReference>
+            <assignToReference>GetRelatedOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullamento - Da inviare</stringValue>
@@ -514,42 +514,42 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetRelatedCase.CancellationReason__c</assignToReference>
+            <assignToReference>GetRelatedOrder.CancellationReason__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetCaseAggiornato.Reason__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetRelatedCase.CancellationReasonDescription__c</assignToReference>
+            <assignToReference>GetRelatedOrder.CancellationReasonDescription__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Revoca risoluzione per errata trasmissione</stringValue>
+                <stringValue>Revoca risoluzione per pratica errata</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetRelatedCase.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetRelatedOrder.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>OrderCancellationCodeFormula</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetRelatedCase.CancellationRequestDate__c</assignToReference>
+            <assignToReference>GetRelatedOrder.CancellationRequestDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetRelatedCase.CancellationNote__c</assignToReference>
+            <assignToReference>GetRelatedOrder.CancellationNote__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetCaseAggiornato.Note__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetRelatedCase.NotCancellable__c</assignToReference>
+            <assignToReference>GetRelatedOrder.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -800,7 +800,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Prova</targetReference>
+                <targetReference>Seleziona_Correlata</targetReference>
             </connector>
             <label>Nuovo</label>
         </rules>
@@ -1412,8 +1412,8 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Prova</name>
-        <label>Prova</label>
+        <name>Seleziona_Correlata</name>
+        <label>Seleziona Correlata</label>
         <locationX>1106</locationX>
         <locationY>481</locationY>
         <allowBack>true</allowBack>
@@ -1488,7 +1488,7 @@
             <inputParameters>
                 <name>searchTerm</name>
                 <value>
-                    <stringValue>0011j000014IyTNAA0</stringValue>
+                    <elementReference>GetInputCase.AccountId</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1511,7 +1511,7 @@
             <targetReference>GetInputCase</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
