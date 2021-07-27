@@ -5184,6 +5184,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.HasOptedOutOfEmail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.HasOptedOutSoftSpam__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.HerokuPracticeCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5470,6 +5480,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Market__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.MarketingPrivacy__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5855,6 +5870,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.ProductTypeVAS__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.ProfilingPrivacy__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
