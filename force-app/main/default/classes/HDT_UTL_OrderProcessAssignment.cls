@@ -223,7 +223,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         String sub = 'Subentro';
         boolean r = false;
         for(SaleServiceItem__c ser :transitionlist ){
-            if((ser.ServicePoint__r.PlugPresence__c== 'NO')||ser.ServicePoint__r.PowerRequested__c!= ser.ServicePoint__r.PowerContractual__c){
+            if((ser.ServicePoint__r.PlugPresence__c== 'NO')||(ser.ServicePoint__r.PowerRequested__c != null && (ser.ServicePoint__r.PowerRequested__c!= ser.ServicePoint__r.PowerContractual__c))){
                //Sale__c s = new Sale__c(Id=sale.Id);
                 s.isTransition__c=true;
                 check = true;
@@ -237,7 +237,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             saleSrv.updateRecord(s);
         }
         res = String.join(listRes,',');
-        if(res == null || res == ''){
+        if(r){
             res = 'Subentro';
         }
         System.debug('*****VUOIANNA2:' + res);
