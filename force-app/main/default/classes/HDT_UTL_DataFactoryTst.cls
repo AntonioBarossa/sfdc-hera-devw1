@@ -577,4 +577,49 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return tstBillingProfileList;
 	}
+
+	public static List<SBQQ__Quote__c> createQuote (Integer amount, Boolean doInsert, Id orderId, Id opportunityId, Id saleId, String type) {
+
+		List<SBQQ__Quote__c> quoteList = new List<SBQQ__Quote__c>();
+
+		for (Integer i = 0; i<amount; i++) {
+			
+			SBQQ__Quote__c quote = new SBQQ__Quote__c();
+			quote.SBQQ__Type__c = type;
+			quote.OrderReference__c = orderId;
+			quote.SBQQ__Opportunity2__c = opportunityId; 
+			quote.Sale__c = saleId;
+
+			quoteList.add(quote);
+		}
+		
+		if (doInsert){
+
+			insert quoteList;
+		}
+
+		return quoteList;
+	}
+
+	public static List<Pricebook2> createPricebook (Integer amount, Boolean doInsert) {
+
+		List<Pricebook2> pricebookList = new List<Pricebook2>();
+
+		for (Integer i = 0; i<amount; i++) {
+
+			Pricebook2 pricebook = new Pricebook2();
+			
+			pricebook.Name = 'Test Price Book'+i;
+			pricebook.IsActive = true;
+
+			pricebookList.add(pricebook);
+		}
+
+		if (doInsert){
+
+			insert pricebookList;
+		}
+
+		return pricebookList;
+	}
 }

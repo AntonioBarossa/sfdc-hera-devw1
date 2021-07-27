@@ -7,81 +7,76 @@ import checkLastReadings from '@salesforce/apex/HDT_LC_SelfReading.checkLastRead
 import {FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
+const columns = [
+    {
+        label: 'Lettura Inseribile Dal',
+        fieldName: 'startWindowDate',
+        type: 'date', 
+        typeAttributes: { year: "numeric", month: "long", day: "2-digit" }, 
+        cellAttributes: { class: { fieldName: 'windowClass' } } 
+    },
+    {
+        label: 'Lettura Inseribile Fino Al',
+        fieldName: 'endWindowDate',
+        type: 'date',
+        typeAttributes: { year: "numeric", month: "long", day: "2-digit" },
+        cellAttributes: { class: { fieldName: 'windowClass' } }
+    }
+];
+
 export default class HdtSelfReading extends LightningElement {
 
     @api commodity;
-
     @api recordId;
-
     @api object;
-
     @api servicePointId;
-
     @api isVolture;
-
     @api isRetroactive;
-
     @api availableActions = [];
-
     @api saveDraft;
-
     @api cancelCase;
-
     @api nextLabel;
-
     @api nextVariant;
-    
     @api resumedFromDraft;
-
     @api showDraftButton;
-
     @api showBackButton;
-
     @api showCancelButton;
-
     @api readingCustomerDate;
-
     @api disabledReadingDate;
-
     @api isSaved = false;
-
     @api allowSmallerReading = false;
-
     @api oldTotalReadingValue;
-
     @api newTotalReadingValue;
-
     @api selectedReadingValue;
-
     @api selectedReadingsList;
-
     @api isRettificaConsumi;
-
     @api tipizzazioneRettificaConsumi;
+    @api showReadingWindows;
 
     @track isLoading = false;
+    @track windowColumns;
+    @track readingWindows = [];
+    @track showWindowsModal = false;
 
     recordKey;
-
     selfReadingObj = [];
-
     rowObj = []
-
     outputObj = {};
-
     rowNumber;
-
     lastReading;
-
     buttonDisabled = false;
-
     advanceError = undefined;
-
     recordTypeId;
-
     errorAdvanceMessage = '';
-
     lastReadingsChecked = false;
+
+    hideModal(){
+        this.showWindowsModal = false;
+    }
+
+    showModal(){
+        this.showWindowsModal = true;
+    }
 
     connectedCallback(){
 
@@ -89,6 +84,13 @@ export default class HdtSelfReading extends LightningElement {
             console.log('selectedReadingsList: ' + this.selectedReadingsList);
             this.selectedReadingsList = JSON.parse(this.selectedReadingsList);
         }
+
+        this.windowColumns = columns;
+
+        this.readingWindows.push({
+            startWindowDate: '21/07/2021',
+            endWindowDate: '26/07/2021'
+        });
 
         this.oldTotalReadingValue = 0;
         this.newTotalReadingValue = 0;
@@ -227,12 +229,38 @@ export default class HdtSelfReading extends LightningElement {
 
     }
 
+    /**
+     * Effettua il parsing del JSON della response del WS di Verifica Ultima Lettura,
+     * restituendo l'array di registri valorizzato.
+     */
     fillLastReadingsArray(lastReadingsResponse){
-        /*
-        [{"register":"1", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F1","readingSerialNumber":"R00100000002956134", "readingOldValue":"1620"},{"register":"2", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F2","readingSerialNumber":"R00100000002956134", "readingOldValue":"1390"},{"register":"3", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F3","readingSerialNumber":"R00100000002956134", "readingOldValue":"1410"}]'
-        */
 
         const lastReadings = lastReadingsResponse.data;
+
+        if ('intervalloFatturazione' in lastReadings) {
+            try {
+                let windows = lastReadings['intervalloFatturazione'];
+                // SAP manda le date nel formate DD/MM/YYYY, effettuiamo il parsing per ottenere oggetti Date
+                let dateWindows = [];
+                windows.forEach(window => {
+                    let splittedFromDate = window.dataDa.split('/');
+                    let splittedToDate = window.dataA.split('/');
+                    let dateFrom = new Date(parseInt(splittedFromDate[2], 10), parseInt(splittedFromDate[1], 10) - 1, parseInt(splittedFromDate[0], 10));
+                    let dateTo = new Date(parseInt(splittedToDate[2], 10), parseInt(splittedToDate[1], 10) - 1, parseInt(splittedToDate[0], 10));
+                    let today = new Date();
+                    let dateClass = today >= dateFrom && today <= dateTo ? 'slds-text-color_success' : 'slds-text-color_error';
+                    dateWindows.push({
+                        startWindowDate: dateFrom,
+                        endWindowDate: dateTo,
+                        windowClass: dateClass
+                    });
+                });
+                console.log('reading windows: ' + JSON.stringify(dateWindows));
+                this.readingWindows = dateWindows;
+            } catch (e) {
+                console.log('error parsing dates: ' + e);
+            }
+        }
 
         let registers = [];
         let finalRegisters = []
@@ -283,8 +311,8 @@ export default class HdtSelfReading extends LightningElement {
                 } else if (key.startsWith('herRegistro')) {
                     registers[i].readingRegister = lastReadings[key];
                 } else if (key.startsWith('herCifrePrecedentiLaVirgola')) {
-                registers[i].readingDigitNumber = lastReadings[key];
-                } 
+                    registers[i].readingDigitNumber = lastReadings[key];
+                }
             }
 
             // Lasciamo solo i registri che hanno una lettura, ovvero quelli che hanno la property readingDate.
