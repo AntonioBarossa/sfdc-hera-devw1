@@ -11,11 +11,14 @@ public with sharing class HDT_UTL_Account {
 
     public static HDT_WS_RicCreBpCaRequest callBpCaSearch(Account a,contact c ){
         HDT_WS_RicCreBpCaRequest req = new HDT_WS_RicCreBpCaRequest();
+        Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+        Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
+
         String recordType = '';
-        if(a.recordtype.developername == 'HDT_RT_Residenziale'){
+        if(a.recordtypeId == accRecordTypeIdResidenziale){
             recordType = 'Persona fisica';
         } 
-        else if(a.recordtype.developername == '	HDT_RT_Business'){
+        else if(a.recordtypeId == accRecordTypeIdBusiness){
             recordType = 'Organizzazione';
         }
         req.codiceCausale            ='SRC';
@@ -32,10 +35,14 @@ public with sharing class HDT_UTL_Account {
     public static HDT_WS_RicCreBpCaRequest callBpCaCreate(Account a,contact c ){
         HDT_WS_RicCreBpCaRequest req = new HDT_WS_RicCreBpCaRequest();
         String recordType = '';
-        if(a.recordtype.developername == 'HDT_RT_Residenziale'){
+
+        Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+        Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
+
+        if(a.recordtypeId == accRecordTypeIdResidenziale){
             recordType = 'Persona fisica';
         } 
-        else if(a.recordtype.developername == '	HDT_RT_Business'){
+        else if(a.recordtypeId == accRecordTypeIdBusiness){
             recordType = 'Organizzazione';
         }
         if(recordType == 'Persona fisica'){
@@ -72,10 +79,13 @@ public with sharing class HDT_UTL_Account {
     public static HDT_WS_RicCreBpCaRequest callAmCaCreate(Account a,contact c ){
         HDT_WS_RicCreBpCaRequest req = new HDT_WS_RicCreBpCaRequest();
         String recordType = '';
-        if(a.recordtype.developername == 'HDT_RT_Residenziale'){
+        Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+        Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
+
+        if(a.recordtypeId == accRecordTypeIdResidenziale){
             recordType = 'Persona fisica';
         } 
-        else if(a.recordtype.developername == '	HDT_RT_Business'){
+        else if(a.recordtypeId == accRecordTypeIdBusiness){
             recordType = 'Organizzazione';
         }
         if(recordType == 'Persona fisica'){
@@ -149,7 +159,8 @@ public with sharing class HDT_UTL_Account {
                 acc.Code__c = res.data.codiceBP;
                 update acc;
             }
-            else if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c)) {
+          
+            else if(('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c))&& ('BP non rilevato'.equalsIgnoreCase(res.data.commenti))) {
                 // amministratore di condominio viene identificato  dalla category 
                 req = callAmCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert amministratore
@@ -159,7 +170,7 @@ public with sharing class HDT_UTL_Account {
                     update acc;
                 } // TODO gestire l'errore 
             }
-            else {
+            else if ( 'BP non rilevato'.equalsIgnoreCase(res.data.commenti)){
                 req=callBpCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
                 System.debug('resCreate BP : ' + resCreate);
