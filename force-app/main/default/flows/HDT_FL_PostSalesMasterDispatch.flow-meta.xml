@@ -714,11 +714,11 @@
         </defaultConnector>
         <defaultConnectorLabel>Non Arricchimento</defaultConnectorLabel>
         <rules>
-            <name>Contratto_Non_Richiesto_0</name>
+            <name>Arricchimento</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>Contains</operator>
+                <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Contratto Non Richiesto</stringValue>
                 </rightValue>
@@ -726,7 +726,7 @@
             <connector>
                 <targetReference>Selezione_Fornitura_Notifiche_0</targetReference>
             </connector>
-            <label>Contratto Non Richiesto</label>
+            <label>Arricchimento</label>
         </rules>
     </decisions>
     <decisions>

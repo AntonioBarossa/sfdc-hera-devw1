@@ -130,7 +130,7 @@
         <locationX>1106</locationX>
         <locationY>961</locationY>
         <assignmentItems>
-            <assignToReference>GetInputCase.RelatedCase__c</assignToReference>
+            <assignToReference>GetInputCase.Order__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>hdtGenericTableFlow.recordId</elementReference>
@@ -356,8 +356,8 @@
     <assignments>
         <name>AssegnaValoriRelated_0_0_0</name>
         <label>AssegnaValoriRelated</label>
-        <locationX>842</locationX>
-        <locationY>2017</locationY>
+        <locationX>851</locationX>
+        <locationY>1985</locationY>
         <assignmentItems>
             <assignToReference>GetRelatedOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -369,7 +369,7 @@
             <assignToReference>GetRelatedOrder.Status</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Closed</stringValue>
+                <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -386,7 +386,7 @@
     <assignments>
         <name>AssegnaValoriRelated_0_0_0_0</name>
         <label>AssegnaValoriRelated</label>
-        <locationX>1106</locationX>
+        <locationX>1105</locationX>
         <locationY>2137</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
