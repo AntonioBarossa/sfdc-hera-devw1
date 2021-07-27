@@ -194,7 +194,7 @@ export default class HdtSelezFornituraFlow extends LightningElement {
 
     @api
     validate() {
-        if (this.recordId || this.template.querySelector("lightning-input").checked) { 
+        if (this.recordId) {
             return { isValid: true }; 
         }
         else {

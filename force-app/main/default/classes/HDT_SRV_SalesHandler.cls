@@ -264,7 +264,9 @@ public with sharing class HDT_SRV_SalesHandler {
             }
 
             when 'NOTIF_VAS'{
-                Map<String, String> requestInformations = new Map<String, String>();
+                HDT_UTL_NotifVas.handleVasNotify(request, mrrResponseItem);
+
+                /*Map<String, String> requestInformations = new Map<String, String>();
                 for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                     requestInformations.put(field.Name, field.value);
                 }
@@ -284,7 +286,7 @@ public with sharing class HDT_SRV_SalesHandler {
                     }else{
                         //KO -> Scarti, distinguere KO definitivo da Ko scarti
                     }
-                }
+                }*/
             }
             when 'RICH_PASS' {
 
@@ -339,6 +341,7 @@ public with sharing class HDT_SRV_SalesHandler {
                 HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
                 RestContext.response.statusCode = 200;
             }
+            /*
             when 'CMPDMP_PRV'{
                
                 if (request.objects.get(0).fields.get(0) != null) {
@@ -407,6 +410,7 @@ public with sharing class HDT_SRV_SalesHandler {
                     }
                 }
             }
+            */
             when else {
 
                 responseField.fieldType = 'TEXT';

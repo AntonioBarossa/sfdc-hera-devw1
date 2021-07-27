@@ -57,7 +57,7 @@ public with sharing class HDT_UTL_VasManagement {
     private static Order getOrderData(Id orderId) {
         //TODO: move query in HDT_QR_Order class
         return [SELECT SalesCompany__c, ContractAccountCode__c, CustomerCode__c, CustomerFiscalCode__c, CustomerVATNumber__c,
-            ServicePointCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c, OrderNumber,
+            ServicePointCode__c, SalesCompanyCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c, OrderNumber,
             VasServiceActivationDate__c, ShippingStreetToponym__c, ShippingStreetName__c, ShippingStreetNumber__c,
             ShippingCity__c, ShippingPlace__c, ShippingPostalCode__c, ShippingProvince__c, PhoneNumber__c, ShippingMail__c, SignedDate__c,
             ContractReference__r.SAPContractCode__c,
@@ -99,7 +99,8 @@ public with sharing class HDT_UTL_VasManagement {
         Date dataCessazione;
 
         public HDT_WRP_VASReq(Order currentOrder) {
-            societa = currentOrder.SalesCompany__c;
+            //societa = currentOrder.SalesCompany__c;
+            societa = currentOrder.SalesCompanyCode__c;
             partner = currentOrder.CustomerCode__c;
             codFiscale = currentOrder.CustomerFiscalCode__c;
             partitaIva = currentOrder.CustomerVATNumber__c;
