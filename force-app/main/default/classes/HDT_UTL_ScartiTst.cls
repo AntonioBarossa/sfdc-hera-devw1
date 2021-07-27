@@ -20,7 +20,7 @@ public with sharing class HDT_UTL_ScartiTst {
         Account BonusAccount= new Account(Name='BonusAccount', CustomerCode__c='clienteidbonus',CompanyOwner__c='HERA COMM',CustomerMarking__c='Condominio', Category__c='Grandi Condomini', VATNumber__c='123testiva');
         multipleAccounts.add(CanoneAccount);
         multipleAccounts.add(BonusAccount);
-        insert(multipleAccounts);    
+        insert(multipleAccounts);
     }
     @isTest private static void setLookupFieldsTst(){
         wrts_prcgvr__Activity__c CanoneActivity= new wrts_prcgvr__Activity__c(BPCode__c='clienteidcanone', Type__c='Canone');
@@ -38,5 +38,13 @@ public with sharing class HDT_UTL_ScartiTst {
         wrts_prcgvr__ActivityTemplate__c bonusTemplateId=[SELECT Id FROM wrts_prcgvr__ActivityTemplate__c WHERE Name='Bonus'];
         system.assertEquals(canoneTemplateId.Id, results[0].wrts_prcgvr__ActivityTemplate__c, 'canone: lookup template');
         system.assertEquals(bonusTemplateId.Id, results[1].wrts_prcgvr__ActivityTemplate__c, 'bonus: lookup template');
+    }
+    @isTest private static void executeTst(){
+        Map<String, Object> argsMap = new Map<String, Object>{'transition'=>null,
+                                                              'action'=>null,
+                                                              'method'=>'checkActivityCreation(Canone)',
+                                                              'sender'=>null};
+        HDT_UTL_Scarti classInstance = new HDT_UTL_Scarti();
+        classInstance.execute(argsMap);
     }
 }

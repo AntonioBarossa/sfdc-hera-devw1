@@ -11,10 +11,10 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api objectapiname;
     @api fieldsAddressObject=[];
     @api wrapObjectInput= [];
-    @api wrapAddressObject;
+    @api wrapaddressobject;
     @api fieldsDataReq;
     @api selectedservicepoint;
-    @api servicePointRetrievedData ;
+    @api servicepointretrieveddata ;
     @api herokuAddressServiceData;
     hasAddressBeenVerified = false;
     @track submitedAddressFields = {};
@@ -178,69 +178,69 @@ handleAddressFromAccount()
 }
 
 @api
-handleAddressValuesIfSap(servicePointRetrievedData){
+handleAddressValuesIfSap(servicepointretrieveddata){
     console.log('handleAddressValuesIfSap START');
-    console.log('handleAddressValuesIfSap servicePointRetrievedData :' + JSON.stringify(servicePointRetrievedData));
+    console.log('handleAddressValuesIfSap servicepointretrieveddata :' + JSON.stringify(servicepointretrieveddata));
     
-    Object.keys(servicePointRetrievedData).forEach(key=>{
+    Object.keys(servicepointretrieveddata).forEach(key=>{
         switch(key){
             case 'SupplyCountry__c':
-                this.stato = servicePointRetrievedData[key] ;
-                this.theRecord['Stato'] = servicePointRetrievedData[key] ;
+                this.stato = servicepointretrieveddata[key] ;
+                this.theRecord['Stato'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyCity__c':
-                this.comune= servicePointRetrievedData[key] ;
-                this.theRecord['Comune'] = servicePointRetrievedData[key] ;
+                this.comune= servicepointretrieveddata[key] ;
+                this.theRecord['Comune'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyProvince__c':
-                this.provincia= servicePointRetrievedData[key] ;
-                this.theRecord['Provincia'] = servicePointRetrievedData[key] ;
+                this.provincia= servicepointretrieveddata[key] ;
+                this.theRecord['Provincia'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyPostalCode__c':
-                this.cap = servicePointRetrievedData[key] ;
-                this.theRecord['CAP'] = servicePointRetrievedData[key] ;
+                this.cap = servicepointretrieveddata[key] ;
+                this.theRecord['CAP'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyStreet__c':
-                this.via = servicePointRetrievedData[key] ;
-                this.theRecord['Via'] = servicePointRetrievedData[key] ;
+                this.via = servicepointretrieveddata[key] ;
+                this.theRecord['Via'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyStreetNumberExtension__c':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.estensCivico = servicePointRetrievedData[key] ;
-                this.theRecord['Estens.Civico'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.estensCivico = servicepointretrieveddata[key] ;
+                this.theRecord['Estens.Civico'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyStreetNumber__c':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.civico = servicePointRetrievedData[key] ;
-                this.theRecord['Civico'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.civico = servicepointretrieveddata[key] ;
+                this.theRecord['Civico'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplySAPCityCode__c':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.codComuneSAP = servicePointRetrievedData[key] ;
-                this.theRecord['Codice Comune SAP'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.codComuneSAP = servicepointretrieveddata[key] ;
+                this.theRecord['Codice Comune SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplySAPStreetCode__c':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.codStradarioSAP = servicePointRetrievedData[key] ;
-                this.theRecord['Codice Stradario SAP'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.codStradarioSAP = servicepointretrieveddata[key] ;
+                this.theRecord['Codice Stradario SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyIsAddressVerified__c':
 
-            console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-            this.flagVerificato = servicePointRetrievedData[key] ;
-            this.theRecord['Flag Verificato'] = servicePointRetrievedData[key] ;
+            console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+            this.flagVerificato = servicepointretrieveddata[key] ;
+            this.theRecord['Flag Verificato'] = servicepointretrieveddata[key] ;
 
             break;
             case 'SupplyPlace__c':
 
-            this.CodiceLocalita = servicePointRetrievedData[key] ;
-            this.theRecord['Codice Localita'] = servicePointRetrievedData[key] ;
+            this.CodiceLocalita = servicepointretrieveddata[key] ;
+            this.theRecord['Codice Localita'] = servicepointretrieveddata[key] ;
 
             break;
             case 'SupplyPlaceCode__c':
 
-            this.Localita = servicePointRetrievedData[key] ;
-            this.theRecord['Localita'] = servicePointRetrievedData[key] ;
+            this.Localita = servicepointretrieveddata[key] ;
+            this.theRecord['Localita'] = servicepointretrieveddata[key] ;
 
             break;
 
@@ -710,59 +710,59 @@ handleAddressValuesIfSap(servicePointRetrievedData){
 
 
 @api
-handleAddressValues(servicePointRetrievedData){
-    console.log('handleAddressValues START - servicePointRetrievedData :' + JSON.stringify(servicePointRetrievedData));
-    Object.keys(servicePointRetrievedData).forEach(key=>{
+handleAddressValues(servicepointretrieveddata){
+    console.log('handleAddressValues START - servicepointretrieveddata :' + JSON.stringify(servicepointretrieveddata));
+    Object.keys(servicepointretrieveddata).forEach(key=>{
         switch(key){
             case 'Stato':
-                this.stato = servicePointRetrievedData[key] ;
-                this.theRecord['Stato'] = servicePointRetrievedData[key] ;
+                this.stato = servicepointretrieveddata[key] ;
+                this.theRecord['Stato'] = servicepointretrieveddata[key] ;
             break;
             case 'Provincia':
-                this.provincia= servicePointRetrievedData[key] ;
-                this.theRecord['Provincia'] = servicePointRetrievedData[key] ;
+                this.provincia= servicepointretrieveddata[key] ;
+                this.theRecord['Provincia'] = servicepointretrieveddata[key] ;
             break;
             case 'Comune':
-                this.comune= servicePointRetrievedData[key] ;
-                this.theRecord['Comune'] = servicePointRetrievedData[key] ;
+                this.comune= servicepointretrieveddata[key] ;
+                this.theRecord['Comune'] = servicepointretrieveddata[key] ;
             break;
             case 'CAP':
-                this.cap = servicePointRetrievedData[key] ;
-                this.theRecord['CAP'] = servicePointRetrievedData[key] ;
+                this.cap = servicepointretrieveddata[key] ;
+                this.theRecord['CAP'] = servicepointretrieveddata[key] ;
             break;
             case 'Via':
-                this.via = servicePointRetrievedData[key] ;
-                this.theRecord['Via'] = servicePointRetrievedData[key] ;
+                this.via = servicepointretrieveddata[key] ;
+                this.theRecord['Via'] = servicepointretrieveddata[key] ;
             break;
             case 'Civico':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.civico = servicePointRetrievedData[key] ;
-                this.theRecord['Civico'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.civico = servicepointretrieveddata[key] ;
+                this.theRecord['Civico'] = servicepointretrieveddata[key] ;
             break;
             case 'EstensCivico':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.estensCivico = servicePointRetrievedData[key] ;
-                this.theRecord['Estens.Civico'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.estensCivico = servicepointretrieveddata[key] ;
+                this.theRecord['Estens.Civico'] = servicepointretrieveddata[key] ;
             break;
             case 'CodiceComuneSAP':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.codComuneSAP = servicePointRetrievedData[key] ;
-                this.theRecord['Codice Comune SAP'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.codComuneSAP = servicepointretrieveddata[key] ;
+                this.theRecord['Codice Comune SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'CodiceViaStradarioSAP':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.codStradarioSAP = servicePointRetrievedData[key] ;
-                this.theRecord['Codice Via Stradario SAP'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.codStradarioSAP = servicepointretrieveddata[key] ;
+                this.theRecord['Codice Via Stradario SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'IndirizzoEstero':
-                this.IndEstero = servicePointRetrievedData[key] ;
+                this.IndEstero = servicepointretrieveddata[key] ;
                 this.theRecord['Indirizzo Estero'] = this.IndEstero;
 
             break;
             case 'FlagVerificato':
 
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.flagVerificato = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.flagVerificato = servicepointretrieveddata[key] ;
                 this.theRecord['Flag Verificato'] = this.flagVerificato;
 
             break;
@@ -875,18 +875,20 @@ handleChangeComune(event){
                     console.log("Sucessoooooooooooo:" + JSON.stringify(data));
                     this.herokuAddressServiceData = data['prestazione'];
                     this.headertoshow = 'Comune';
+                    console.log('TryTestHOLA210');
                     if(this.IndEstero==true)
                     {
+                        console.log('TryTestHOLA211');
                         this.booleanForm=false;
                     }
                     else
                     {
                         this.booleanForm=true;
-
+                        console.log('TryTestHOLA212');
                         this.template.querySelector('c-hdt-selection-address-response').openedForm();
                         this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Citta');
                         this.template.querySelector('c-hdt-selection-address-response').handleFilterDataTable(event);
-
+                        console.log('TryTestHOLA213');
                     }
                     
                 }
@@ -961,9 +963,9 @@ handleChangeComune(event){
                 break;
         }
         this.flagVerificatoFalse();
-        this.wrapAddressObject = this.toObjectAddressInit(this.theRecord);
+        this.wrapaddressobject = this.toObjectAddressInit(this.theRecord);
        
-        console.log('wrapAddressObject -handleTextChange ********************'+ JSON.stringify(this.wrapAddressObject));
+        console.log('wrapaddressobject -handleTextChange ********************'+ JSON.stringify(this.wrapaddressobject));
 
 }
 
@@ -1056,8 +1058,8 @@ handleChangeIndirizz(event){
                 break;
         }
         this.flagVerificatoFalse();
-        this.wrapAddressObject = this.toObjectAddressInit(this.theRecord);
-        console.log('wrapAddressObject -handleTextChange ********************'+ JSON.stringify(this.wrapAddressObject));
+        this.wrapaddressobject = this.toObjectAddressInit(this.theRecord);
+        console.log('wrapaddressobject -handleTextChange ********************'+ JSON.stringify(this.wrapaddressobject));
 
 }
 
@@ -1113,8 +1115,8 @@ handleTextChange(event){
         }
         this.flagVerificatoFalse();
         
-        this.wrapAddressObject = this.toObjectAddressInit(this.theRecord);
-        console.log('wrapAddressObject -handleTextChange ********************'+ JSON.stringify(this.wrapAddressObject));
+        this.wrapaddressobject = this.toObjectAddressInit(this.theRecord);
+        console.log('wrapaddressobject -handleTextChange ********************'+ JSON.stringify(this.wrapaddressobject));
         if(this.codComuneSAP != null && this.codStradarioSAP != null && this.civico != null){
             this.disableVerifIndiButton = false;
         }
@@ -1126,7 +1128,7 @@ handleTextChange(event){
 
 @api
     handleAddressFields(){
-        console.log('saveAddressField - wrapAddressObject START '+ JSON.stringify(this.theRecord));
+        console.log('saveAddressField - wrapaddressobject START '+ JSON.stringify(this.theRecord));
         return this.theRecord;
 
     }
@@ -1187,20 +1189,20 @@ disabledverifyFieldsAddressDisabled(){
 
 
 @api
-    getInstanceWrapObject(servicePointRetrievedData){
+    getInstanceWrapObject(servicepointretrieveddata){
         console.log('getInstanceWrapObject - START');
-        console.log('getInstanceWrapObject - servicePointRetrievedData' +JSON.stringify(servicePointRetrievedData));
-        getInstanceWrapAddressObject({s:servicePointRetrievedData}).then(data => {
+        console.log('getInstanceWrapObject - servicepointretrieveddata' +JSON.stringify(servicepointretrieveddata));
+        getInstanceWrapAddressObject({s:servicepointretrieveddata}).then(data => {
             this.handleAddressValues(data);
-            console.log('getInstanceWrapObject - getInstanceWrapAddressObject Start '+ JSON.stringify(data));
-            //this.wrapAddressObject = this.toObjectAddressInit(data);
+            console.log('getInstanceWrapObject - getInstancewrapaddressobject Start '+ JSON.stringify(data));
+            //this.wrapaddressobject = this.toObjectAddressInit(data);
             if(this.codComuneSAP != null && this.codStradarioSAP != null && this.civico != null){
                 this.disableVerifIndiButton = false;
             }
             else{
                 this.disableVerifIndiButton = true;
             }
-            console.log('getInstanceWrapObject - wrapAddressObject' + JSON.stringify(this.wrapAddressObject));
+            console.log('getInstanceWrapObject - wrapaddressobject' + JSON.stringify(this.wrapaddressobject));
             //this.toObjectAddress();
             
         });
@@ -1225,7 +1227,7 @@ disabledverifyFieldsAddressDisabled(){
      */
     
     /*get verifyFieldsAddressDisabled(){
-        console.log('verifyFieldsAddressDisabled - START ' + JSON.stringify(this.wrapAddressObject));
+        console.log('verifyFieldsAddressDisabled - START ' + JSON.stringify(this.wrapaddressobject));
         let result = true;       
         
 
@@ -1248,16 +1250,16 @@ disabledverifyFieldsAddressDisabled(){
     }*/
 @api
     stampWrapObject(){
-        console.log('wrapAddressObject in StampWrapAddressObject*******************'+ this.wrapAddressObject);
+        console.log('wrapaddressobject in Stampwrapaddressobject*******************'+ this.wrapaddressobject);
     }
 
   @api  
-     objectToMap(wrapAddressObject) {
+     objectToMap(wrapaddressobject) {
         console.log('hdtTargetObjectAddressFields - objectToMap START');  
         let wrapObjectInput=[];
         console.log('arrivo qui');
 
-        const ObjArray = Object.getOwnPropertyNames(wrapAddressObject);
+        const ObjArray = Object.getOwnPropertyNames(wrapaddressobject);
         console.log('arrivo qui1');
         for(let i = 0; i < ObjArray.length; i++){
             console.log('entra nel for'+ ObjArray[i]);
@@ -1271,8 +1273,8 @@ disabledverifyFieldsAddressDisabled(){
     @api
      toObjectAddress(){
         console.log('hdtTargetObjectAddressFields - toObjectAddress START');
-        this.fieldsAddressObject= this.wrapAddressObject;
-        /*let fieldMap = this.objectToMap(this.wrapAddressObject);
+        this.fieldsAddressObject= this.wrapaddressobject;
+        /*let fieldMap = this.objectToMap(this.wrapaddressobject);
         console.log(''+fieldMap.keys);
         fieldMap.forEach(element => {
 

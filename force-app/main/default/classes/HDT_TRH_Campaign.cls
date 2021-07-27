@@ -10,7 +10,8 @@ public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
     }
     
     public override void beforeUpdate() {
-
+        HDT_UTL_CampaignMember.activateCampaign(trigger.new, trigger.old);
         HDT_UTL_CampaignMember.createCampaignMemberStatus(trigger.new, trigger.old);  
+        HDT_UTL_CampaignMember.campaignSuspension(trigger.new, trigger.old);
     }
 }

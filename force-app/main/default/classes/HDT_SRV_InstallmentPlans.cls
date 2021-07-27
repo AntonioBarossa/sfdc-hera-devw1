@@ -10,7 +10,6 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
 
         HDT_QR_InstallmentPlans installmentsQr = new HDT_QR_InstallmentPlans();
         HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
-        HDT_QR_Payments paymentsQr = new HDT_QR_Payments();
 
         List<HDT_SRV_AccountInstallmentsCheck.HDT_SRV_AccountInstallmentsCheckInput> inputsCheck = 
             new List<HDT_SRV_AccountInstallmentsCheck.HDT_SRV_AccountInstallmentsCheckInput>();
@@ -20,7 +19,6 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             new List<HDT_SRV_AccountInstallmentsCheck.HDT_SRV_AccountInstallmentsCheckOutput>();
 
         Case currentCase = new Case();
-        Case recordCase = new Case();
 
         String recordId = inputs[0].recordId;
         String accountId = inputs[0].accountId;
@@ -31,9 +29,8 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         currentCase.Id = recordId;
 
         inputCheck.customerCode = customerCode;
-        inputsCheck.add(inputCheck);
 
-        recordCase = paymentsQr.getCaseById(recordId);
+        inputsCheck.add(inputCheck);
         
         //Lookup for cases 'Sospensione Fornitura' with same Account and completed
         List<Case> suspensionCases = new List<Case>();
@@ -61,7 +58,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         currentCase.CAWithOrWithoutSEPA__c = (paymentMethod != null && paymentMethod != '' && paymentMethod == 'RID');
 
         //SetExpirationDate at CreatedDate+20businessDay
-        DateTime createdCase = recordCase.CreatedDate;
+        DateTime createdCase = installmentsQr.getCaseById(recordId).CreatedDate;
         System.debug('SRV_InstallmentPlans created date -> ' + createdCase);
         currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 19;
         currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(currentCase.ExpirationDate__c, 1);
@@ -72,22 +69,24 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         List<DocumentSelected__c> raiFeeDocuments = installmentsQr.getDocumentSelectedByCase(recordId);
         Decimal totalRaiFeeResidual = 0.0;
         Decimal documentTotalAmount = 0.0;
-        Decimal totalResidue = recordCase.TotalResidue__c;
-        Decimal totalResiudeRaiFee = recordCase.TotalPaidCustomer__c;
-        Decimal amount;
+        Decimal totalResidue = installmentsQr.getCaseById(recordId).TotalResidue__c;
+        Decimal amountInstallment;
         String customerAssisted;
 
+        for(DocumentSelected__c document : raiFeeDocuments){
+            totalRaiFeeResidual += document.TvFeeResidual__c;
+        }
         if(totalResidue == 0){
             for(DocumentSelected__c document : raiFeeDocuments){
                 documentTotalAmount += document.Amount__c;
             }
-            amount = documentTotalAmount;
+            amountInstallment = documentTotalAmount;
         } else {
-            amount = totalResidue;
+            amountInstallment = totalResidue;
         }
 
-        currentCase.AmountToPayInInstallments__c = amount - totalResiudeRaiFee;
-        currentCase.Amount__c = amount;
+        currentCase.AmountToPayInInstallments__c = amountInstallment - totalRaiFeeResidual;
+        currentCase.InstallmentAmount__c = amountInstallment;
 
         //Set CustomerAssisted
         customerAssisted = installmentsQr.getCustomerAssistedKpi(accountId);
@@ -110,8 +109,8 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         Case currentCase = new Case();
         String pretty;
 
-        currentCase = paymentsQr.getCaseById(recordId);
-        documents = paymentsQr.getDocumentSelectedByCase(recordId);
+        currentCase = installmentsQr.getCaseById(recordId);
+        documents = installmentsQr.getDocumentSelectedByCase(recordId);
 
         System.debug('SRV_InstallmentPlans Case--> '+currentCase);
         System.debug('SRV_InstallmentPlans Documetns--> '+documents);
@@ -119,9 +118,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
         Decimal total;
         if(currentCase.DepositAmount__c != null){
-            total = currentCase.Amount__c - currentCase.DepositAmount__c;
+            total = currentCase.InstallmentAmount__c - currentCase.DepositAmount__c;
         }else{
-            total = currentCase.Amount__c;
+            total = currentCase.InstallmentAmount__c;
         }
        
 

@@ -134,13 +134,22 @@ export default class hdtSaleServiceContainer extends LightningElement {
     handleNext(){
         this.loading = true;
 
-        fieldsTransition({sp:this.servicePoint,sale: this.saleRecord}).then(data =>{
-            if(data){
+        fieldsTransition({sale: this.saleRecord}).then(data =>{
+            if(data == null || data == '' ||  data == 'Subentro'){
+                if(data == 'Subentro'){
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'warning',
+                        message: 'Per i punti di fornitura gas se si tratta di Subentro ricordarsi di prendere l\'appuntamento su Siebel oppure annullare la vendita ed inserire la richiesta su Siebel.',
+                        variant: 'warning'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+                }
+                //this.dispatchEvent(toastErrorMessage);
                 this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});  
             }else{
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
-                    message: 'Transitorio: Processo non Innescabile da Salesforce',
+                    message: 'Transitorio: Processo non Innescabile da Salesforce Per i Seguenti Punti Di Fornitura:' + data,
                     variant: 'error'
                 });
                 this.dispatchEvent(toastErrorMessage);
