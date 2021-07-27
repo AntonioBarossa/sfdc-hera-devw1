@@ -291,7 +291,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Gestione_Annullamento_Subflow</targetReference>
+            <targetReference>Gestione_Contratto_Non_Richiesto</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -4350,8 +4350,8 @@
     <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>4912</locationX>
-        <locationY>1214</locationY>
+        <locationX>4780</locationX>
+        <locationY>1118</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -4385,6 +4385,19 @@
         <locationX>4384</locationX>
         <locationY>1574</locationY>
         <flowName>HDT_FL_GestioneCanoneRai</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Contratto_Non_Richiesto</name>
+        <label>Gestione Contratto Non Richiesto</label>
+        <locationX>5044</locationX>
+        <locationY>878</locationY>
+        <flowName>HDT_FL_GestioneContrattoNonRichiesto</flowName>
         <inputAssignments>
             <name>InputCase</name>
             <value>
