@@ -3,6 +3,7 @@ public class HDT_WRP_IntegrationObject{
 		public String objectName;
 		public String fields;
 		public String controllingField;
+		public String condition;
 		public List<HDT_WRP_IntegrationRelatedObject> relatedObject;
 		public List<HDT_WRP_IntegrationLookupObject> lookupObject;
 	}
