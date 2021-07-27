@@ -1,4 +1,12 @@
 public with sharing class HDT_SRV_SelfReadings {
+
+    public static void handleSelfReadingIntegrations(SObject selfReadingCase) {
+
+        System.enqueueJob(new HDT_QBL_SelfReadingsCallouts((Case) selfReadingCase, 'CheckAutolettura'));
+
+    }
+
+
     public static HDT_WRP_GenericSapIntegration generateJson(HDT_WRP_GenericSapIntegration inputParams){
         System.debug('Generating JSON for request type: ' + inputParams.requestType);
         switch on inputParams.requestType {
@@ -236,10 +244,20 @@ public with sharing class HDT_SRV_SelfReadings {
             readingCaseToUpdate.Phase__c = 'Check preliminari OK';
         }
 
-        HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
-
+        //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+        String serializedCase = JSON.serialize(readingCaseToUpdate);
+        updateFuture(serializedCase);
 
         return responseOk;
+    }
+
+    @Future
+    private static void updateFuture(String inputString) {
+
+        Case c = (Case) JSON.deserialize(inputString, Case.class);
+
+        HDT_UTL_DatabaseService.updateSObject(c);
+
     }
 
     private static Boolean handleResponseInvioLetture(HDT_WRP_GenericSapIntegration sapIntegration) {
@@ -247,8 +265,8 @@ public with sharing class HDT_SRV_SelfReadings {
         String caseId = sapIntegration.recordId;
         Boolean responseOk = true;
 
-        Case readingCase = new Case();
-        readingCase.Id = caseId;
+        Case readingCaseToUpdate = new Case();
+        readingCaseToUpdate.Id = caseId;
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
 
         if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
@@ -257,15 +275,16 @@ public with sharing class HDT_SRV_SelfReadings {
             // if (errorDetails != null && !errorDetails.isEmpty()) {
             //     Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
             //     String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
-            //     readingCase.Phase__c = 'Check preliminari KO';
-            //     readingCase.Description = errorMessage;
+            //     readingCaseToUpdate.Phase__c = 'Check preliminari KO';
+            //     readingCaseToUpdate.Description = errorMessage;
             // }
         } else {
-            readingCase.Phase__c = 'Esito OK da SAP';
+            readingCaseToUpdate.Phase__c = 'Esito OK da SAP';
         }
 
-        HDT_UTL_DatabaseService.updateSObject(readingCase);
-
+        //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+        String serializedCase = JSON.serialize(readingCaseToUpdate);
+        updateFuture(serializedCase);
 
         return responseOk;
     }
