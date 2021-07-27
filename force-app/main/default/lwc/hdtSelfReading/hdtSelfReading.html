@@ -43,6 +43,13 @@
 
     </table>
 
+    <lightning-datatable
+        key-field="Id"
+        data={readingWindows}
+        hide-checkbox-column
+        columns={windowColumns}>
+    </lightning-datatable>
+
     <div if:true={isLoading}>
         <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
     </div>
