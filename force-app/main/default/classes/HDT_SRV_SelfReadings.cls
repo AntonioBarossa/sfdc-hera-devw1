@@ -134,6 +134,7 @@ public with sharing class HDT_SRV_SelfReadings {
 
         if (readingCase.CommodityFormula__c == 'Gas') {
             gen.writeStartObject();
+            gen.writeStringField('counter', '1');
             gen.writeStringField('typology', reading.ReadingTypeMeter__c);
             gen.writeStringField('identifier', reading.ReadingSerialNumberMeter__c);
             gen.writeStringField('section', reading.ReadingBandMeter__c);
@@ -146,6 +147,7 @@ public with sharing class HDT_SRV_SelfReadings {
 
             if (reading.ReadingValueCorrector__c != null) {
                 gen.writeStartObject();
+                gen.writeStringField('counter', '2');
                 gen.writeStringField('typology', reading.ReadingTypeCorrector__c);
                 gen.writeStringField('identifier', reading.ReadingSerialNumberCorrector__c);
                 gen.writeStringField('section', reading.ReadingBandCorrector__c);
@@ -161,6 +163,7 @@ public with sharing class HDT_SRV_SelfReadings {
             for (Integer i = 1; i <= registersCount; i++) {
                 List<String> indexParam = new List<String> { String.valueOf(i) };
                 gen.writeStartObject();
+                gen.writeStringField('counter', String.valueOf(i));
                 gen.writeStringField('typology', (String) reading.get(String.format('ReadingType{0}__c', indexParam)));
                 gen.writeStringField('identifier', (String) reading.get(String.format('ReadingSerialNumber{0}__c', indexParam)));
                 gen.writeStringField('section', (String) reading.get(String.format('ReadingBand{0}__c', indexParam)));
