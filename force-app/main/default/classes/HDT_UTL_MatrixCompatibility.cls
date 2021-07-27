@@ -59,7 +59,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             if(entityType == Case.sObjectType){
                 Case cs= (Case) obj;
                 srvRequest.ServicePointCode__c= cs.PODPDRFormula__c;
-                srvRequest.Status__c= cs.Status;
+                srvRequest.Status__c= getStatus(cs.Status,'Case');
                 srvRequest.CommoditySector__c= cs.CommodityFormula__c;
                 srvRequest.Type__c= 'Case';
                 if(cs.ServicePoint__c != null){
@@ -73,7 +73,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             // }else{
             //     Order ord= (Order) obj;
             //     srvRequest.ServicePointCode__c= ord.ServicePointCodeFormula__c;
-            //     srvRequest.Status__c= ord.Status;
+            //     srvRequest.Status__c= getStatus(ord.Status,'Order');
             //     srvRequest.CommoditySector__c= ord.CommodityFormula__c;
             //     srvRequest.Type__c= 'Order';
             //     if(ord.ServicePoint__c != null){
@@ -121,7 +121,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         for(ServiceRequest__c c : incompatibilities){
             conflictIds.add(c.Id);
         }
-        for(ServiceRequest__c s : [SELECT Id,ProcessType__c, Order__c,Case__c FROM ServiceRequest__c WHERE Id IN :conflictIds]) {
+        for(ServiceRequest__c s : [SELECT Id, Order__c,Case__c,Type__c FROM ServiceRequest__c WHERE Id IN :conflictIds]) {
             if(s.Type__c=='Case'){
                 conflicts.add(s.Case__c);
             }else{
@@ -132,6 +132,41 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
 
         String[] conflictsString = new List<String>(conflicts);
         return String.join(conflictsString, ', ');
+    }
+
+    private static String getStatus(String status, String type){
+        String sts='';
+        if(type == 'Case'){
+            switch on status {
+                when 'New' {
+                    sts = 'Bozza';
+                }when 'In Lavorazione' {
+                    sts = 'In Lavorazione';
+                }when 'Sequenzializzato' {
+                    sts = 'Sequenzializzato';
+                }when 'Closed' {
+                    sts = 'Chiuso';
+                }
+            }
+        }else{
+            switch on status {
+                when 'Draft' {
+                    sts = 'Bozza';
+                }when 'In Lavorazione' {
+                    sts = 'In Lavorazione';
+                }when 'Activated' {
+                    sts = 'Chiuso';
+                }when 'Completed' {
+                    sts = 'Completato';
+                }when 'Annullato' {
+                    sts = 'Annullato';
+                }when 'Sequenzializzato' {
+                    sts = 'Sequenzializzato';
+                }
+            } 
+        }
+        
+        return sts;
     }
 
     private static String getProcessTypeOrder(String pType, Object commoditySector){
