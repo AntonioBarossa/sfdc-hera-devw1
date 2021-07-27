@@ -224,9 +224,9 @@ public with sharing class HDT_SRV_SelfReadings {
                     String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                     String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
                     readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
-                    // if (HDT_QR_SelfReadings.getCheckAutoletturaErrorsWithActivities().size() > 0) {
-                    //     createActivity();
-                    // }
+                    if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
+                        HDT_UTL_Case.createActivity(caseId, errorMessage, 'Check preliminari KO');
+                    }
                 }
             }
         } else {
@@ -265,6 +265,25 @@ public with sharing class HDT_SRV_SelfReadings {
 
 
         return responseOk;
+    }
+
+    // Verifica se per il dato Canale è prevista la creazione di Activity per l'errore restituito dal Check Autolettura.
+    private static Boolean isErrorWithActivity(String msg, String origin) {
+        if (String.isBlank(origin) || String.isBlank(msg)) {
+            return False;
+        }
+
+        Boolean createActivity = False;
+        switch on origin {
+            when 'Sportello', 'Telefono Inbound' {
+                createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('inferiore valore minimo concesso') || msg.contains('registri incompleti');
+            }
+            when else {
+                // TODO
+            }
+        }
+
+        return createActivity;
     }
 
 }
