@@ -43,46 +43,4 @@ public with sharing class HDT_LC_ActivityDetail {
         system.debug(JSON.serializePretty(objectFields));
         return objectFields;
     }
-
-        /*
-        @AuraEnabled
-        public static map<string,list<Object>> getDetail(Id idActivity){
-            map<string,list<Object>> details= new Map<String,list<Object>>();
-            list<wrts_prcgvr__Activity__c> activity=[SELECT Id, wrts_prcgvr__ActivityTemplate__c FROM wrts_prcgvr__Activity__c WHERE Id=:idActivity];
-            details.put('activity',activity);
-            list<wrts_prcgvr__ActivityTemplate__c> activityTemplate=[SELECT Id, wrts_prcgvr__FieldsTemplate__c FROM wrts_prcgvr__ActivityTemplate__c WHERE Id=:activity[0].wrts_prcgvr__ActivityTemplate__c];
-            details.put('activityTemplate',activityTemplate);
-            list<wrts_prcgvr__FieldsTemplate__c> fieldsTemplate=[SELECT Id FROM wrts_prcgvr__FieldsTemplate__c WHERE Id=:activityTemplate[0].wrts_prcgvr__FieldsTemplate__c];
-            details.put('fieldsTemplate',fieldsTemplate);
-            list<wrts_prcgvr__DynamicSection__c> dynamicSection=[SELECT Id, wrts_prcgvr__Layout__c FROM wrts_prcgvr__DynamicSection__c WHERE wrts_prcgvr__Layout__c IN: fieldsTemplate];
-            details.put('dynamicSection',dynamicSection);
-            list<wrts_prcgvr__DynamicField__c> dynamicField=[SELECT Id, wrts_prcgvr__Section__c, wrts_prcgvr__ObjectName__c, wrts_prcgvr__Field__c FROM wrts_prcgvr__DynamicField__c WHERE wrts_prcgvr__Section__c IN: dynamicSection];
-            details.put('dynamicField',dynamicField);
-            system.debug(details);
-            return details;
-        }
-        */
-        /*
-        @AuraEnabled
-        public static map<id,list<Object>> getSectionsFields(id fieldsTemplate){
-            list<Object> vett= new list<Object>();
-            map<id,list<Object>> sectionsFields= new map<id,list<Object>>();
-            list<object> listSections= [SELECT Id, wrts_prcgvr__Layout__c FROM wrts_prcgvr__DynamicSection__c WHERE wrts_prcgvr__Layout__c =: fieldsTemplate];
-            set<id> idSec= new set<id>();
-            for(object var: listSections){
-                idSec.add(var.id);
-            }
-            list<object> listFields= [SELECT Id, wrts_prcgvr__Section__c, wrts_prcgvr__Field__c FROM wrts_prcgvr__DynamicField__c WHERE wrts_prcgvr__Section__c IN: idSec];
-            for(id idSec: listSections){
-                for(object fie: listFields){
-                    if(fie.wrts_prcgvr__Section__c==sec.Id){
-                        vett.add(fie);
-                    }
-                }
-                sectionsFields.push(sec.Id,vett);
-                vett.clear();
-            }
-            return sectionsFields;
-        }
-        */
 }
