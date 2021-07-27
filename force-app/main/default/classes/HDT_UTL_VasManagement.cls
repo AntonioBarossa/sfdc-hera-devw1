@@ -2,7 +2,7 @@
  * @description       : Generating requests for activating/disactivating VAS
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-07-21
+ * @last modified on  : 2021-07-26
  * @last modified by  : gabriele.rota@webresults.it
  * Modifications Log 
  * Ver   Date         Author                        Modification
@@ -25,14 +25,26 @@ public with sharing class HDT_UTL_VasManagement {
     }
 
     /**
-    * @description Generates VAS disactivation request
+    * @description Generates VAS deactivation request
     * @author gabriele.rota@webresults.it | 2021-07-12 
     * @param orderId 
     * @return HDT_WRP_VASActivationReq 
     **/
-    public static HDT_WRP_VASDisactivationReq getDisactivationRequest(Id orderId) {
+    public static HDT_WRP_VASDisactivationReq getDeactivationRequest(Id caseId) {
+        Case currentCase = [SELECT CaseNumber, VasDeactivationCausal__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
+            Subscription__r.SBQQ__Contract__r.SBQQ__Order__c
+            FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED LIMIT 1];
+        
+        Id orderId = currentCase.Order__c;
+        if (String.isBlank(orderId)) {
+            orderId = currentCase.Asset.SBQQ__OrderProduct__r.OrderId;
+        }
+        if (String.isBlank(orderId)) {
+            orderId = currentCase.Subscription__r.SBQQ__Contract__r.SBQQ__Order__c;
+        }
+
         Order currentOrder = getOrderData(orderId);
-        HDT_WRP_VASDisactivationReq disactReq = new HDT_WRP_VASDisactivationReq(currentOrder);
+        HDT_WRP_VASDisactivationReq disactReq = new HDT_WRP_VASDisactivationReq(currentOrder, currentCase);
         return disactReq;
     }
 
@@ -48,7 +60,6 @@ public with sharing class HDT_UTL_VasManagement {
             ServicePointCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c, OrderNumber,
             VasServiceActivationDate__c, ShippingStreetToponym__c, ShippingStreetName__c, ShippingStreetNumber__c,
             ShippingCity__c, ShippingPlace__c, ShippingPostalCode__c, ShippingProvince__c, PhoneNumber__c, ShippingMail__c, SignedDate__c,
-            VasAfterthoughtCausal__c,
             ContractReference__r.SAPContractCode__c,
             SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c, SBQQ__Quote__r.SBQQ__PriceBook__r.Name,
             SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
@@ -98,10 +109,15 @@ public with sharing class HDT_UTL_VasManagement {
             intestatario = joinStringValues(strValues);
 
             servizioIp = currentOrder.CommercialProduct__c;
-            versione = currentOrder.CommercialProductVersion__c;
+            versione = currentOrder.CommercialProductVersion__c.split('\\.\\d+')[0];
             keyServizio = currentOrder.OrderNumber;
 
             //dataCessazione = null
+        }
+
+        public HDT_WRP_VASReq(Order currentOrder, Case currentCase) {
+            this(currentOrder);
+            this.keyServizio = currentCase.CaseNumber;
         }
     }
 
@@ -110,13 +126,13 @@ public with sharing class HDT_UTL_VasManagement {
         String numDocRif;
         String statoPratica;
 
-        public HDT_WRP_VASDisactivationReq(Order currentOrder) {
-            super(currentOrder);
+        public HDT_WRP_VASDisactivationReq(Order currentOrder, Case currentCase) {
+            super(currentOrder, currentCase);
 
             nrContrattoIp = currentOrder.ContractReference__r?.SAPContractCode__c;
 
             //numDocRif = null
-            statoPratica = currentOrder.VasAfterthoughtCausal__c;
+            statoPratica = currentCase.VasDeactivationCausal__c;
         }
     }
 
@@ -185,7 +201,7 @@ public with sharing class HDT_UTL_VasManagement {
             region = currentOrder.ShippingProvince__c;
             telefono = currentOrder.PhoneNumber__c;
             mail = currentOrder.ShippingMail__c;
-            modalitaFatturazione = parentOrderItem?.VASBillingMode__c;
+            modalitaFatturazione = parentOrderItem?.VASBillingMode__c.substring(0,1);
             dataDecorrenza = parentOrderItem?.VasActivationDate__c;
             dataFirma = currentOrder.SignedDate__c;
             durataServizioGg = parentOrderItem?.DurationDay__c;
