@@ -918,6 +918,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
                 || this.order.RecordType.DeveloperName === 'HDT_RT_VAS'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
                 ,
                 data: [
                     {
@@ -1118,7 +1119,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'datiPrecedenteIntestatario',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
                     {
                         'label': 'Nome precedente intestatario',
@@ -1191,7 +1192,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt',
+                || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                data: [
                 {
                     'label': 'POD/PdR',
@@ -1626,7 +1628,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
                     {
                         'label': 'Comune',
@@ -1716,7 +1719,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
 
                 data: [
                     {
@@ -1807,7 +1811,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura')
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch')
                 && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
                 data:[
                     {
@@ -2060,7 +2065,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
 
                 data: [
                     {
@@ -2198,7 +2204,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 hasIvaAcciseUploadButton: true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' 
+                                || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' 
+                                || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' 
+                                || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica' 
+                                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' 
+                                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+                                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
                     {
                         'label': 'Flag Agevolazione IVA',
@@ -2261,7 +2273,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
                     {
                         'label': 'Modalità di Pagamento',
@@ -2443,7 +2456,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'),
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'),
                 data: [
                     {
                         'label': 'Metodo firma',
