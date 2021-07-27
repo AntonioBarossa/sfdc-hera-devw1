@@ -10,6 +10,10 @@
 
 global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Interfaces_1_0.IApexAction {
     
+    private static final String VAS_SERVICE_TYPE = 'Servizio';
+    private static final String ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT = 'In attesa tempi di ripensamento';
+    private static final String ORDER_PHASE_VAS_COMMUNICATION = 'Comunicazione Motore VAS';
+
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     
     global Object execute(Object args){
@@ -21,8 +25,6 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         SObject sender = (SObject) argsMap.get('sender');
 
         Id objectId = (Id) sender.get('Id');
-
-        
 
         switch on method{
             when 'activation'{
@@ -38,15 +40,17 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
                 );
             }
             when 'updatePhase'{
+                Id orderId = objectId;
+                Order currentOrder = (Order) sender;
+                Boolean isServiceType = (currentOrder.VASType__c==VAS_SERVICE_TYPE);
+                String newPhase = isServiceType?ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT:ORDER_PHASE_VAS_COMMUNICATION;
+
                 system.enqueueJob(new HDT_QBL_AsycnronousUpdate(
-                    objectId, 'Comunicazione Motore VAS'
+                    objectId, newPhase
                     )
                 );
-                
             }
         }
-
-
         
         return null;
     }
