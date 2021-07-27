@@ -28,11 +28,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         return null;
     }
 
-    public class AttivitaAnonimaData{
+    public class HDT_WRP_AttivitaAnonimaData{
         public String errorMessage {get; set;}
         public String utenza {get; set;}
         public String dataEvento {get; set;}
-        public AttivitaAnonimaData(){}
+        public HDT_WRP_AttivitaAnonimaData(){}
     }
 
     /**
@@ -42,9 +42,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 recordId - Id of a record
     * @return void
     */
-    public static void createAttivitaAnonimeHeroku(List<AttivitaAnonimaData> sourceData){        
+    public static void createAttivitaAnonimeHeroku(List<HDT_WRP_AttivitaAnonimaData> sourceData){        
         List<wrts_prcgvr__Activity__c> toInsert = new List<wrts_prcgvr__Activity__c>();
-        for(AttivitaAnonimaData curData : sourceData){
+        for(HDT_WRP_AttivitaAnonimaData curData : sourceData){
             wrts_prcgvr__Activity__c newAct = new wrts_prcgvr__Activity__c();
             newAct.Type__c = 'Richiesta non identificata';
             newAct.CreatedByUsername__c = curData.utenza;
@@ -52,7 +52,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
             //newAct.DiscardDescription__c = curData.errorMessage;
             toInsert.add(newAct);
         }
-        insert toInsert;
+        HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
 
     /**
