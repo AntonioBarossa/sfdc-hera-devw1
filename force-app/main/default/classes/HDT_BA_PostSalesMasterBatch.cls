@@ -34,32 +34,37 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                 }
 
                 when Case currentCase{
+                    if(currentCase.Type.equalsIgnoreCase('Piano Rateizzazione')){
+                        SObject transition;
+                        SObject action;
+                        String method = 'HDT_InstallmentPlans';
+                        Map<String, Object> args = new Map<String,Object>();
+                        Case newCase = new Case();
+                        newCase.Id = currentCase.Id;
+                        args.put('transition', transition);
+                        args.put('action', action);
+                        args.put('method',method);
+                        args.put('sender', currentCase);
 
-                    SObject transition;
-                    SObject action;
-                    String method = 'HDT_InstallmentPlans';
-                    Map<String, Object> args = new Map<String,Object>();
-                    Case newCase = new Case();
-                    newCase.Id = currentCase.Id;
-                    args.put('transition', transition);
-                    args.put('action', action);
-                    args.put('method',method);
-                    args.put('sender', currentCase);
+                        HDT_WS_Payments paymentsWs = new HDT_WS_Payments();
+                        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
+                        responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) paymentsWs.execute(args);
 
-                    HDT_WS_Payments paymentsWs = new HDT_WS_Payments();
-                    wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
-                    responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) paymentsWs.execute(args);
-
-                    //TO trigger Technical Phase
-                    HDT_UTL_DatabaseService.updateSObject(newCase);
+                        //TO trigger Technical Phase
+                        HDT_UTL_DatabaseService.updateSObject(newCase);
+                    }
 
                 }
-
+                when Order currentOrder{
+                    if(currentOrder.Cases1__r != null){
+                        Case currentCase = new Case();
+                        currentCase.Id = currentOrder.Cases1__r[0].Id;
+                        currentCase.Phase__c = 'Da Inviare';
+                        HDT_UTL_DatabaseService.updateSObject(currentCase);
+                    }
+                }
             }
-
-
         }
-
     }
 
 

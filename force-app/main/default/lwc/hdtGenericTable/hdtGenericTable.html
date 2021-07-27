@@ -2,7 +2,7 @@
     <template if:true={loader}>
         <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
     </template>
-    <div if:false={loader} class="container-table">
+    <div if:false={loader} class="container-table" style="height: 500px;">
         <lightning-datatable 
             data={rowData}
             columns={columns}
