@@ -188,7 +188,8 @@ public inherited sharing class HDT_QR_Order {
             OwnerId,                                        // @Picchiri  10/06/21
             OrderReferenceNumber,                            // @Picchiri  15/06/21
             IsSequanzialized__c,                             // @Picchiri  24/06/21
-            SalesCompanyCode__c
+            SalesCompanyCode__c,
+            Owner.Username                                  // @De Felice  27/07/21
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
