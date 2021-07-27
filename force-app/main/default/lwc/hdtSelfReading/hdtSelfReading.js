@@ -51,10 +51,12 @@ export default class HdtSelfReading extends LightningElement {
     @api selectedReadingsList;
     @api isRettificaConsumi;
     @api tipizzazioneRettificaConsumi;
+    @api showReadingWindows;
 
     @track isLoading = false;
     @track windowColumns;
     @track readingWindows = [];
+    @track showWindowsModal = false;
 
     recordKey;
     selfReadingObj = [];
@@ -67,6 +69,14 @@ export default class HdtSelfReading extends LightningElement {
     recordTypeId;
     errorAdvanceMessage = '';
     lastReadingsChecked = false;
+
+    hideModal(){
+        this.showWindowsModal = false;
+    }
+
+    showModal(){
+        this.showWindowsModal = true;
+    }
 
     connectedCallback(){
 
