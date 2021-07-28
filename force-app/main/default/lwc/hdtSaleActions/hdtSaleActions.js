@@ -6,6 +6,7 @@ import cancel from '@salesforce/apex/HDT_LC_SaleActions.cancel';
 
 export default class hdtSaleActions extends LightningElement {
     @api saleRecord;
+    @api campaignMemberId;
     loading = false;
     currentStep = 4;
     isDialogVisible = false;
@@ -49,7 +50,7 @@ export default class hdtSaleActions extends LightningElement {
 
     saveSaleCall(){
         this.loading = true;
-        save({sale: this.saleRecord}).then(data =>{
+        save({sale: this.saleRecord, campaignMemberId: this.campaignMemberId}).then(data =>{
             this.loading = false;
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',

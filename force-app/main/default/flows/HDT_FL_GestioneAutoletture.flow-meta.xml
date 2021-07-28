@@ -254,6 +254,9 @@
         <label>Set Fase Attesa check preliminari</label>
         <locationX>1928</locationX>
         <locationY>241</locationY>
+        <connector>
+            <targetReference>Spinner</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -281,6 +284,9 @@
         <label>Set Fase Da Inviare</label>
         <locationX>1918</locationX>
         <locationY>510</locationY>
+        <connector>
+            <targetReference>Spinner</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -474,6 +480,12 @@
                     <elementReference>Get_Case.ServicePoint__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>showReadingWindows</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -506,6 +518,31 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Spinner</name>
+        <label>Spinner</label>
+        <locationX>2155</locationX>
+        <locationY>379</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>hdtSpinnerFlow</name>
+            <extensionName>c:hdtSpinnerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>

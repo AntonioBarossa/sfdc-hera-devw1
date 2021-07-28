@@ -111,6 +111,8 @@ public inherited sharing class HDT_QR_Order {
             //FINE SVILUPPI EVERIS
             ServicePoint__r.RecordType.DeveloperName,
             ServicePoint__r.Account__c,
+            ServicePoint__r.distributor__r.name,
+            ServicePoint__r.distributor__c,
             ServicePoint__r.MeterClass__c,
             ServicePoint__r.MeterStatus__c,
             ServicePoint__r.PlugPresence__c,
@@ -187,13 +189,17 @@ public inherited sharing class HDT_QR_Order {
             OrderReferenceNumber,                            // @Picchiri  15/06/21
             IsSequanzialized__c,                             // @Picchiri  24/06/21
             SalesCompanyCode__c,
-            CustomerType__c
+            CustomerType__c,
+            IsWinback__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
         ];
     }
 
+    public Order getOrderbyId(String id){
+        return [Select id,FriendCode__c from Order Where id = :id][0];
+    }
     public List<Order> getOrderByIdForSalesCallout(String id){
         return [
             SELECT 
@@ -323,7 +329,8 @@ public inherited sharing class HDT_QR_Order {
             OrderReferenceNumber,
             SalesCompanyCode__c,
             IsSequanzialized__c,
-            CustomerType__c
+            CustomerType__c,
+            IsWinback__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -437,7 +444,8 @@ public inherited sharing class HDT_QR_Order {
             Instance326__c,
             DocumentLow80__c,
             AutorizationVolturaThirdTrader__c,
-            Phase__c
+            Phase__c,
+            SupplyAddressFormula__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -606,7 +614,7 @@ public inherited sharing class HDT_QR_Order {
         String devName = [SELECT DeveloperName FROM RecordType WHERE id = :id].DeveloperName;
         return devName;
     }
-
+	
     public List<order> getOrderForComfortQualityResult(String parentOrderId){
         return [SELECT 
             Id,

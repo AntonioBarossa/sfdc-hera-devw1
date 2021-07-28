@@ -17,6 +17,10 @@ public inherited sharing class HDT_QR_Case {
             AccountId,
             CaseNumber,
             HerokuPracticeCode__c,
+            /*** Sviluppo Gest Appuntamento */
+            ServicePoint__r.distributor__r.name,
+            ServicePoint__r.distributor__c,
+            /*** FINE */
             ContactId,
             ServicePoint__c,
             Contract__c,
@@ -63,7 +67,7 @@ public inherited sharing class HDT_QR_Case {
     }
 
     /*****Sviluppo per Campagne */
-    //Everis: Aggiunto WITH SECURITY_ENFORCED alla query altrimenti vengo bloccato da Clayton.
+
     public List<Case> getRecordCreatedYesterdayDifferentBy(String cluster){
         return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND createddate = Yesterday WITH SECURITY_ENFORCED];
     }
@@ -107,6 +111,54 @@ public inherited sharing class HDT_QR_Case {
             System.debug('ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
         }
         return activities;
+    }
+
+    public List<Case> getServicePointCaseWinBack(String servicePointId){
+        return [
+        SELECT 
+        Id,
+        Phase__c,
+        DistributorName__c
+        FROM Case
+        WHERE ServicePoint__c = :servicePointId
+        AND Type = 'Switch Out SII'
+        AND Status = 'In Lavorazione'
+        WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public Case getNonReqContrCase(String relatedCase){
+        Case nonReqContr = new Case();
+        try{
+            nonReqContr = [SELECT Id,
+            Phase__c,
+            Type
+            FROM Case
+            WHERE Type = 'Contratto Non Richiesto'
+            AND RelatedCase__c = :relatedCase
+            WITH SECURITY_ENFORCED
+            LIMIT 1];
+        } catch(Exception e){
+            System.debug('Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+        }
+        return nonReqContr;
+    }
+
+    public Case getNonReqContrOrder(String relatedOrder){
+        Case nonReqContr = new Case();
+        try{
+            nonReqContr = [SELECT Id,
+            Phase__c,
+            Type
+            FROM Case
+            WHERE Type = 'Contratto Non Richiesto'
+            AND Order__c = :relatedOrder
+            WITH SECURITY_ENFORCED
+            LIMIT 1];
+        } catch(Exception e){
+            System.debug('Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+        }
+        return nonReqContr;
     }
 
 }

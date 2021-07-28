@@ -7,6 +7,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
             req.setMethod('POST');
             req.setBody(body);
             req.setHeader('Content-Type','application/json');
+            req.setTimeout(120000);
             Http http = new Http();
             HTTPResponse res = http.send(req);
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
@@ -30,6 +31,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
             req.setMethod('POST');
             req.setBody(body);
             req.setHeader('Content-Type','application/json');
+            req.setTimeout(120000);
             Http http = new Http();
             HTTPResponse res = http.send(req);
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());

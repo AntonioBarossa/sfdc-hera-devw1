@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Gestione Calamit�</value>
+        <value xsi:type="xsd:string">Gestione Calamità</value>
     </values>
 </CustomMetadata>

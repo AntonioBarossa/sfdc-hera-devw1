@@ -234,6 +234,15 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             );
         }
 
+        //winback check start
+
+        servicePointSrv.updateRecord(new ServicePoint__c(
+            Id = servicePoint.Id,
+            SwitchInWinback__c = HDT_UTL_Sales.isWinback(servicePoint.Id)
+        ));
+
+        //winback check end
+
         List<String> fields = helperMethods.getObjAttrList(newSaleServiceItem);
 
         checkCreateAccess(String.join(fields, ','));

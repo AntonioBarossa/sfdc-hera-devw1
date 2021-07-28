@@ -258,6 +258,57 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return orderList;
 	}
 
+
+	public static List<Order> createChildOrder(Integer amount, Boolean doInsert, Id accId, List<Sale__c> sales, Id parentOrderId, Id contactId){
+
+		List<Order> orderList=new List<Order>();
+
+		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
+
+		Id rtVoltura=constRecordType.ORDER_RECORDTYPEID_VOLTURA;
+
+		for (Integer i=0; i<amount; i++){
+
+			Order childOrder=new Order();
+
+			childOrder.RecordTypeId=rtVoltura;
+			childOrder.ParentOrder__c=parentOrderId;
+			childOrder.Name='testChildOrderName';
+			childOrder.Status='Draft';
+			childOrder.EffectiveDate=Date.today();
+			childOrder.AccountId=accId;
+			childOrder.EstimateAmount__c=1000;
+			childOrder.PowerQuote__c=1000;
+			childOrder.AdministrativeBurden__c=1;
+			childOrder.EstimatedVAT__c=1;
+			childOrder.ValidityDateEstimate__c=Date.today().addDays(30);
+			childOrder.Phase__c='Bozza';
+			childOrder.CIAccoutn__c='Richiesto';
+			childOrder.QuickQuote__c='Richiesto';
+			childOrder.ChamberCommerceRegistration__c='Richiesto';
+			childOrder.Instance326__c='Richiesto';
+			childOrder.DocumentLow80__c='Richiesto';
+			childOrder.AutorizationVolturaThirdTrader__c='Richiesto';
+			childOrder.ContractSigned__c=true;
+			childOrder.SignedDate__c=Date.today();
+			childOrder.SignatureMethod__c='Vocal Order';
+			childOrder.DocSendingMethod__c='E-mail';
+			childOrder.Sale__c=sales[0].Id;
+			childOrder.Contact__c=contactId;
+			childOrder.ProcessType__c='To define';
+
+			orderList.add(childOrder);
+		}
+
+		if (doInsert){
+
+			insert orderList;
+		}
+
+		return orderList;
+	}
+
+
 	public static List<Order> createOrderWithPricebook(Integer amount, Boolean doInsert, Id accId, List<Sale__c> sales, Id pricebook2Id){
 
 		List<Order> orderList=new List<Order>();
@@ -525,5 +576,50 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return tstBillingProfileList;
+	}
+
+	public static List<SBQQ__Quote__c> createQuote (Integer amount, Boolean doInsert, Id orderId, Id opportunityId, Id saleId, String type) {
+
+		List<SBQQ__Quote__c> quoteList = new List<SBQQ__Quote__c>();
+
+		for (Integer i = 0; i<amount; i++) {
+			
+			SBQQ__Quote__c quote = new SBQQ__Quote__c();
+			quote.SBQQ__Type__c = type;
+			quote.OrderReference__c = orderId;
+			quote.SBQQ__Opportunity2__c = opportunityId; 
+			quote.Sale__c = saleId;
+
+			quoteList.add(quote);
+		}
+		
+		if (doInsert){
+
+			insert quoteList;
+		}
+
+		return quoteList;
+	}
+
+	public static List<Pricebook2> createPricebook (Integer amount, Boolean doInsert) {
+
+		List<Pricebook2> pricebookList = new List<Pricebook2>();
+
+		for (Integer i = 0; i<amount; i++) {
+
+			Pricebook2 pricebook = new Pricebook2();
+			
+			pricebook.Name = 'Test Price Book'+i;
+			pricebook.IsActive = true;
+
+			pricebookList.add(pricebook);
+		}
+
+		if (doInsert){
+
+			insert pricebookList;
+		}
+
+		return pricebookList;
 	}
 }

@@ -67,6 +67,7 @@ public with sharing class HDT_UTL_CaseProcess {
     }
 
     public static Boolean manageCancellationProcess(List<Case> caseList, Map<Id,SObject> caseOldMap){
+        HDT_QR_Case caseQr = new HDT_QR_Case();
 		Case caseNew = caseList[0];
 		Case caseOld = (Case) caseOldMap.get(caseNew.Id);
 		String newPhase = caseNew.Phase__c;
@@ -82,8 +83,7 @@ public with sharing class HDT_UTL_CaseProcess {
                 }
                 //Annullamento Case di Richiesta Parere legati al case di Reclamo
                 //Annullamento activities legate al case di Richiesta Parere
-                if(caseNew.Type.equalsIgnoreCase('Reclamo Scritto/Rich. Info')){
-                    HDT_QR_Case caseQr = new HDT_QR_Case();
+                if(caseNew.Type.equalsIgnoreCase('Reclamo Scritto/Rich. Info')){    
                     List<Case> childCases = new List<Case>();
                     List<String> caseIds = new List<String>();
                     List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
@@ -110,6 +110,14 @@ public with sharing class HDT_UTL_CaseProcess {
                         updateList.addAll(childCases);
                         HDT_UTL_DatabaseService.updateSObject(updateList);
                     }
+                }
+                if(newPhase.equalsIgnoreCase('Annullato')){
+                    Case nonReqContr = new Case();
+                    nonReqContr = caseQr.getNonReqContrCase(caseNew.Id);
+                    if(nonReqContr != null){
+                        nonReqContr.Phase__c = 'Completata';
+                    }
+                    HDT_UTL_DatabaseService.updateSObject(nonReqContr);
                 }
                 return true;
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
