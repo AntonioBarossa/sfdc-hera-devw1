@@ -340,6 +340,16 @@
                 <label>Stima errata per tipo utilizzo</label>
             </value>
             <value>
+                <fullName>Volontà estorta</fullName>
+                <default>false</default>
+                <label>Volontà estorta</label>
+            </value>
+            <value>
+                <fullName>Firma falsa</fullName>
+                <default>false</default>
+                <label>Firma falsa</label>
+            </value>
+            <value>
                 <fullName>Agevolazioni non Energy indirette</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -595,6 +605,14 @@
         <valueSettings>
             <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
             <valueName>Errata Emissione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
+            <valueName>Volontà estorta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
+            <valueName>Firma falsa</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
