@@ -4,8 +4,6 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
         Map<String,Object> arg = new Map<String,Object>();
-        //List<Case> caseToUpdate = new List<Case>();
-        Case currentCase = new Case();
         String recordId;
         Map<String,Object> argsMap = (Map<String,Object>) args;
         String method = (String) argsMap.get('method');
@@ -22,7 +20,7 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
             response.message = responseOk ? 'OK' : 'KO';
 
         } catch(Exception ex){
-            System.debug('HDT_SRV_SelfReadingsFacade: exception ' + ex.getMessage());
+            System.debug('HDT_SRV_SelfReadingsFacade: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
         }
 
         return response;
@@ -37,8 +35,7 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
             sapIntegration.requestType = requestType;
             sapIntegration = support.submitRequest(sapIntegration);
         } catch (Exception ex) {
-            System.debug('HDT_SRV_SelfReadingsFacade: exception at line ' + ex.getLineNumber());
-            System.debug(ex.getMessage()); 
+            System.debug('HDT_SRV_SelfReadingsFacade: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
         }
         return sapIntegration;
         
