@@ -2,8 +2,8 @@
  * @description       : Generating requests for activating/disactivating VAS
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-07-28
- * @last modified by  : gabriele.rota@webresults.it
+ * @last modified on  : 28-07-2021
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
  * Modifications Log 
  * Ver   Date         Author                        Modification
  * 1.0   2021-07-12   gabriele.rota@webresults.it   Initial Version
@@ -87,6 +87,11 @@ public with sharing class HDT_UTL_VasManagement {
         return String.join(finalStrValues, ' ');
     }
 
+    private static String getCompanyCode(String salesCompany){
+        List<HDT_HeraCompany__mdt> companies = [select SalesCompany__c from HDT_HeraCompany__mdt where SalesCompany__c=:salesCompany WITH SECURITY_ENFORCED];
+        return companies.isEmpty()? null : companies?.get(0)?.SalesCompany__c;
+    }
+
     public virtual class HDT_WRP_VasReq extends HDT_WS_Request{
         String societa;
         String partner;
@@ -100,16 +105,16 @@ public with sharing class HDT_UTL_VasManagement {
         Date dataCessazione;
 
         public HDT_WRP_VASReq(Order currentOrder) {
-            //societa = currentOrder.SalesCompany__c;
-            societa = currentOrder.SalesCompanyCode__c;
+            societa = getCompanyCode(currentOrder.SalesCompany__c);
+            //societa = currentOrder.SalesCompanyCode__c;
             partner = currentOrder.CustomerCode__c;
             codFiscale = currentOrder.CustomerFiscalCode__c;
             partitaIva = currentOrder.CustomerVATNumber__c;
             if(String.isNotBlank(currentOrder.ServicePointCode__c)){
                 pod = currentOrder.ServicePointCode__c;
-            }else if(OrderReference__c!=null){
+            }else if(currentOrder.OrderReference__c!=null){
                 pod = currentOrder.OrderReference__r.ServicePointCodeFormula__c;
-            }else if(ContractReference__c!=null){
+            }else if(currentOrder.ContractReference__c!=null){
                 pod = currentOrder.ContractReference__r.ServicePoint__r?.ServicePointCode__c;
             }
 
