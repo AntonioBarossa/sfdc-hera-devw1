@@ -623,10 +623,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return pricebookList;
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f0a0e12bac27a83a1ad78c3ffd00d41f1fa6aaa2
 	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id Account){
 
 		List<Attachment> tstAttachmentList=new List<Attachment>();
