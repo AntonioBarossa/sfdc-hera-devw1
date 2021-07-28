@@ -194,7 +194,7 @@ public with sharing class HDT_UTL_CaseProcess {
         List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(caseIds, 'Case__c');
         for(ServiceRequest__c s: srvRequests){
             ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
-            s.Status__c= caseStatuses.get(s.Case__c);
+            s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(caseStatuses.get(s.Case__c), 'Case');
             sReqToUpdate.add(s);
         }
         HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
