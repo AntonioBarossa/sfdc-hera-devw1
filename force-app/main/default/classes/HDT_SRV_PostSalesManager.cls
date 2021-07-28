@@ -94,6 +94,9 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             when 'updateServicePoint'{
                 psmUtl.updateServicePoint(sender);
             }
+            when 'handleSelfReadingIntegrations'{
+                HDT_SRV_SelfReadings.handleSelfReadingIntegrations(sender);
+            }
         }
 
         return null;

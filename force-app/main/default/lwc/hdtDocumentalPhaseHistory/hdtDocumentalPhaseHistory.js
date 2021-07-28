@@ -36,7 +36,7 @@ export default class HdtDocumentalPhaseHistory extends LightningElement {
             this.signMode = 'SignatureMethod__c';
             this.email = 'ShippingMail__c';
             this.phone = 'PhoneNumber__c';
-            this.address = 'ShippingStreetName__c';
+            this.address = 'ShippingAddressFormula__c';
             this.dataLoaded = true;
         }
     }

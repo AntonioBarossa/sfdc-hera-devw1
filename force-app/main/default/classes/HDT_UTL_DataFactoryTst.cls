@@ -578,6 +578,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return tstBillingProfileList;
 	}
 
+<<<<<<< HEAD
 	/**
     * @author Andrea Arosio (andrea.arosio@webresults.it)
     * @date 22/07/2021
@@ -727,13 +728,109 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			depMatrixList.add(depM);
 
+=======
+	public static List<SBQQ__Quote__c> createQuote (Integer amount, Boolean doInsert, Id orderId, Id opportunityId, Id saleId, String type) {
+
+		List<SBQQ__Quote__c> quoteList = new List<SBQQ__Quote__c>();
+
+		for (Integer i = 0; i<amount; i++) {
+			
+			SBQQ__Quote__c quote = new SBQQ__Quote__c();
+			quote.SBQQ__Type__c = type;
+			quote.OrderReference__c = orderId;
+			quote.SBQQ__Opportunity2__c = opportunityId; 
+			quote.Sale__c = saleId;
+
+			quoteList.add(quote);
+		}
+		
+		if (doInsert){
+
+			insert quoteList;
+		}
+
+		return quoteList;
+	}
+
+	public static List<Pricebook2> createPricebook (Integer amount, Boolean doInsert) {
+
+		List<Pricebook2> pricebookList = new List<Pricebook2>();
+
+		for (Integer i = 0; i<amount; i++) {
+
+			Pricebook2 pricebook = new Pricebook2();
+			
+			pricebook.Name = 'Test Price Book'+i;
+			pricebook.IsActive = true;
+
+			pricebookList.add(pricebook);
 		}
 
 		if (doInsert){
 
+			insert pricebookList;
+		}
+
+		return pricebookList;
+	}
+
+
+	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id Account){
+
+		List<Attachment> tstAttachmentList=new List<Attachment>();
+
+		string tempString='Blob body test';
+		Blob tempBlob=Blob.valueOf(tempString);
+
+		for (Integer i=0; i<amount; i++){
+
+			Attachment testAttachment=new Attachment();
+			testAttachment.Name='test';
+			testAttachment.ParentId=Account;
+			testAttachment.Body=tempBlob;
+
+			tstAttachmentList.add(testAttachment);
+		}
+
+		if (doInsert){
+
+			insert tstAttachmentList;
+		}
+
+		return tstAttachmentList;
+	}
+
+
+	public static List<ContentVersion> createContentVers(Integer amount, Boolean doInsert){
+
+		List<ContentVersion> tstContentVersList=new List<ContentVersion>();
+
+		string tempString='Version Data test';
+		Blob tempBlob=Blob.valueOf(tempString);
+
+		for (Integer i=0; i<amount; i++){
+
+			ContentVersion testContentVers =new ContentVersion();
+			testContentVers.PathOnClient='test';
+			testContentVers.Title='test';
+			testContentVers.VersionData=tempBlob;
+
+			tstContentVersList.add(testContentVers);
+>>>>>>> DEVW1
+		}
+
+		if (doInsert){
+
+<<<<<<< HEAD
 			insert depMatrixList;
 		}
 
 		return depMatrixList;
+=======
+			insert tstContentVersList;
+		}
+
+		return tstContentVersList;
+>>>>>>> DEVW1
 	}
 }

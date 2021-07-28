@@ -468,6 +468,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
 				return true;
 			}
+            if(orderNew.Cluster__c.equalsIgnoreCase('Volutra')){
+                Case nonReqContract = new Case();
+                HDT_QR_Case caseQr = new HDT_QR_Case(); 
+                nonReqContract = caseQr.getNonReqContrOrder(orderNew.Id);
+                if(nonReqContract != null){
+                    nonReqContract.Phase__c = 'Completata';
+                    HDT_UTL_DatabaseService.updateSObject(nonReqContract);
+                }
+            }
 		}
 		return false;
 	}
