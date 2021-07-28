@@ -10,7 +10,7 @@ global with sharing class HDT_WS_MrrRequest {
 
     private Static HDT_SRV_SalesHandler salesHandlerSrv = new HDT_SRV_SalesHandler();
     
-    private Static final Set<String> ATTIVITA_TRACCIATURA_TYPES = new Set<String>{'Richiesta non identificata',
+    private Static final Set<String> TRACCIATURATYPES = new Set<String>{'Richiesta non identificata',
                                                                                  'Esito ricevuto su richiesta chiusa',
                                                                                  'Esito non elaborato',
                                                                                  'Errore invio a SAP',
@@ -60,7 +60,7 @@ global with sharing class HDT_WS_MrrRequest {
                 HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
                 for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
                     for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
-                        if('ATTIVITA'.equalsIgnoreCase(curField.name) && ATTIVITA_TRACCIATURA_TYPES.contains(curField.value)){
+                        if('ATTIVITA'.equalsIgnoreCase(curField.name) && TRACCIATURATYPES.contains(curField.value)){
                             HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData newData = new HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData();
                             for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
                                 if('ERROR_MESSAGE'.equalsIgnoreCase(curField2.name)) newData.errorMessage = curField2.value;
