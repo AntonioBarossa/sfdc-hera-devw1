@@ -88,9 +88,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Gas', false, true),
             new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false),
             new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false, false),
+            new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','', new Set<String>{'Inattivo','Bozza','Attivo'}, new Set<String>(), 'Si', false, false, false, false, null, false, false),
             // new HDT_WRP_Process('Switch In Reseller', 'HDT_RT_SwitchIn','', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, null, false), //temporarily commented
             new HDT_WRP_Process('Voltura Ele', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', false, false, false, false, 'HDT_RT_Ele', false, false),
-            new HDT_WRP_Process('Voltura Gas', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero','Regolamentato'}, 'Si', false, false, false, false, 'HDT_RT_Gas', false, false)
+            new HDT_WRP_Process('Voltura Gas', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero','Regolamentato'}, null, false, false, false, false, 'HDT_RT_Gas', false, false)
         };
     }
 
@@ -223,7 +224,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         String sub = 'Subentro';
         boolean r = false;
         for(SaleServiceItem__c ser :transitionlist ){
-            if((ser.ServicePoint__r.PlugPresence__c== 'NO')||ser.ServicePoint__r.PowerRequested__c!= ser.ServicePoint__r.PowerContractual__c){
+            if((ser.ServicePoint__r.PlugPresence__c== 'NO')||(ser.ServicePoint__r.PowerRequested__c != null && (ser.ServicePoint__r.PowerRequested__c!= ser.ServicePoint__r.PowerContractual__c))){
                //Sale__c s = new Sale__c(Id=sale.Id);
                 s.isTransition__c=true;
                 check = true;
@@ -237,7 +238,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             saleSrv.updateRecord(s);
         }
         res = String.join(listRes,',');
-        if(res == null || res == ''){
+        if(r){
             res = 'Subentro';
         }
         System.debug('*****VUOIANNA2:' + res);

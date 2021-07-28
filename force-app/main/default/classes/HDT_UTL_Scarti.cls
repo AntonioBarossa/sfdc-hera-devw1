@@ -6,10 +6,13 @@
  */
 
 global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.IApexAction{
+<<<<<<< HEAD
     static final string CANONERAI_TEMPLATENAME='CBS_CAR002__CANONE_RAI';
     static final string BONUSSOCIALE_TEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
     static final string SCARTODOCUMENTALE_POSTSALES_TEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
     static final string SCARTODOCUMENTALE_SALES_TEMPLATENAME='CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
+=======
+>>>>>>> DEVW1
 
     global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
@@ -32,8 +35,35 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         return null;
     }
 
+    public class HDT_WRP_AttivitaAnonimaData{
+        public String errorMessage {get; set;}
+        public String utenza {get; set;}
+        public String dataEvento {get; set;}
+        public HDT_WRP_AttivitaAnonimaData(){}
+    }
+
     /**
-    * @author Marco Arci (marco.arci@webresults.it)
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
+    * @date 22/07/2021
+    * @description HDT_UTL_Scarti.checkActivityCreation - Check on activity creation
+    * @param1 recordId - Id of a record
+    * @return void
+    */
+    public static void createAttivitaAnonimeHeroku(List<HDT_WRP_AttivitaAnonimaData> sourceData){        
+        List<wrts_prcgvr__Activity__c> toInsert = new List<wrts_prcgvr__Activity__c>();
+        for(HDT_WRP_AttivitaAnonimaData curData : sourceData){
+            wrts_prcgvr__Activity__c newAct = new wrts_prcgvr__Activity__c();
+            newAct.Type__c = 'Richiesta non identificata';
+            newAct.CreatedByUsername__c = curData.utenza;
+            //newAct.StartDate__c = curData.dataEvento;
+            //newAct.DiscardDescription__c = curData.errorMessage;
+            toInsert.add(newAct);
+        }
+        HDT_UTL_DatabaseService.insertSObject(toInsert);
+    }
+
+    /**
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 22/07/2021
     * @description HDT_UTL_Scarti.checkActivityCreation - Check on activity creation
     * @param1 recordId - Id of a record

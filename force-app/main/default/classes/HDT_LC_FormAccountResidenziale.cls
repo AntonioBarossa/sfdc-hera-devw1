@@ -42,7 +42,10 @@ public with sharing class HDT_LC_FormAccountResidenziale {
             }
 
         }
-        HDT_UTL_Account.makeRequest(account,contact);
+       // HDT_UTL_Account.makeRequest(account,contact);
+        Id jobID = System.enqueueJob(new HDT_QBL_BpCaRequest(account,contact));
+        System.debug('jobId: '+jobID);
+
         // List<String> emails= new List<String>();
         // emails.add(cont.Email);
         // List<String> phones= new List<String>();
