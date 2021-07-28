@@ -78,6 +78,13 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     }
 
     @api
+    getSelectedReadingDate = () =>{
+        let readingDate;
+        let selectedRows = this.template.querySelector('lightning-datatable').getSelectedRows();
+        return selectedRows[0].meterReadingData;
+    }
+
+    @api
     getSelectedReadingsList() {
 
         return this.template.querySelector('lightning-datatable').getSelectedRows();
