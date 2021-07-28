@@ -30,6 +30,9 @@
 
             <property name="selectedReadingValues" type="String" label="Valore Letture Selezionate" description="Elenco delle Letture selezionate" role="outputOnly"/>
 
+            <!--Data Lettura-->
+            <property name="selectedReadingDate" type="Date" label="Data Lettura Selezionata" description="Data Lettura Selezionata" role="outputOnly"/>
+
             <property name="cancelCase" type="Boolean" label="cancelCase" description="if true case has to be cancelled" role="outputOnly"/>
             
         </targetConfig>
