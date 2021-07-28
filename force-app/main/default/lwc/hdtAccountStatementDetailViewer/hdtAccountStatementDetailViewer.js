@@ -31,7 +31,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             this.applyInterrogation(this.staticObj);
         }
 
-        this.updateButtonConfig();
+        //this.updateButtonConfig();
 
         return this.accountdetails;
     }
@@ -423,6 +423,61 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     showRate(event){
         var paramObj = event.currentTarget.dataset.parameters;
         console.log('on child - ' + paramObj);
+
+        var el = this.template.querySelector('lightning-datatable');
+        var selected = el.getSelectedRows();
+
+        console.log(JSON.stringify(selected));
+        
+        if(selected.length > 1){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non puoi selezionare più record',
+                    variant: 'warning'
+                })
+            );
+            return;
+        } else if(selected.length === 0){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non hai selezionato nessun record',
+                    variant: 'warning'
+                })
+            );
+            return;
+        }
+
+        switch (this.tabCode) {
+            case 'EC':
+                if(selected.dataEmissionePianoRata === undefined || selected.dataEmissionePianoRata === ''){
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Attenzione',
+                            message: 'Servizio non disponibile per questo record',
+                            variant: 'warning'
+                        })
+                    );
+                    return;
+                }               
+                break;
+        
+            case 'EC9':
+                if((selected.dataEmissione === undefined || selected.dataEmissione === '') &&
+                    (selected.tipoDocumento === undefined || selected.tipoDocumento === '' || selected.tipoDocumento != 'rate')){
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Attenzione',
+                            message: 'Servizio non disponibile per questo record',
+                            variant: 'warning'
+                        })
+                    );
+                    return;
+                }
+                break;
+        }
+
 
         var muleRequestParams = {
             billingProfile: this.firstLevel.contoContrattuale,
