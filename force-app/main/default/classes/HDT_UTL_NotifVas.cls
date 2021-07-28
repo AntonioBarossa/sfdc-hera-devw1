@@ -5,7 +5,7 @@
  * @last modified on  : 2021-07-28
  * @last modified by  : gabriele.rota@webresults.it
 **/
-public class HDT_UTL_NotifVas {
+public with sharing class HDT_UTL_NotifVas {
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
