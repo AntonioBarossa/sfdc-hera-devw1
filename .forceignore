@@ -20,3 +20,15 @@ package.xml
 
 # DELETED FLOW
 **HDT_FL_SetRecordTypeSportello
+
+force-app/main/default/settings
+force-app/main/default/objects/Contract/fields/SBQQ__ActiveContract__c.field-meta.xml
+ 
+force-app/main/default/experiences
+force-app/main/default/networks
+ 
+force-app/main/default/classes/HDT_WS_Paperless.cls
+force-app/main/default/classes/HDT_WS_PaymentCommunication.cls
+force-app/main/default/classes/HDT_WS_InstallmentPlans.cls
+force-app/main/default/reportTypes
+force-app/main/default/reports
