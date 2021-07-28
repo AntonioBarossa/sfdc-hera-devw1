@@ -9,6 +9,13 @@
 global with sharing class HDT_WS_MrrRequest {
 
     private Static HDT_SRV_SalesHandler salesHandlerSrv = new HDT_SRV_SalesHandler();
+    
+    private Static final Set<String> attivitaTracciaturaTypes = new Set<String>{'Richiesta non identificata',
+                                                                                 'Esito ricevuto su richiesta chiusa',
+                                                                                 'Esito non elaborato',
+                                                                                 'Errore invio a SAP',
+                                                                                 'Eliminato esito in scarto',
+                                                                                 'Errore determinazione variante SAP'};
 
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
@@ -47,6 +54,34 @@ global with sharing class HDT_WS_MrrRequest {
 
             HDT_WRP_MrrRequest requestBody = (HDT_WRP_MrrRequest) JSON.deserialize(body, HDT_WRP_MrrRequest.class);
             
+            //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
+            List<HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData> dataForAttivitaTracciaturaCreation = new List<HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData>();
+            for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
+                mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+                for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : mrrResponseItem.objects){
+                    for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
+                        if('ATTIVITA'.equalsIgnoreCase(curField.name) && attivitaTracciaturaTypes.contains(curField.value)){
+                            HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData newData = new HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData();
+                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
+                                if('ERROR_MESSAGE'.equalsIgnoreCase(curField2.name)) newData.errorMessage = curField2.value;
+                                if('COD_PRAT_UTENTE'.equalsIgnoreCase(curField2.name)) newData.codPraticaUtente = curField2.value;
+                                if('UTENZA'.equalsIgnoreCase(curField2.name)) newData.utenza = curField2.value;
+                                if('DATA_EVENTO'.equalsIgnoreCase(curField2.name)) newData.dataEvento = curField2.value;
+                                if('RECORD_ID'.equalsIgnoreCase(curField2.name)) newData.recordId = curField2.value;
+                                if('ATTIVITA'.equalsIgnoreCase(curField2.name)) newData.tipoAttivita = curField2.value;
+                                if('METHOD'.equalsIgnoreCase(curField2.name)) newData.method = curField2.value;
+                            }
+                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField3 : mrrResponseItem.header.fields){
+                                if('PROCESS_CATEGORY'.equalsIgnoreCase(curField3.name)) newData.processCategory = curField3.value;
+                            }
+                            dataForAttivitaTracciaturaCreation.add(newData);
+                        }
+                    }
+                }
+            }
+            if(dataForAttivitaTracciaturaCreation.size() > 0) HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
+            //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività di tracciamento
+
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
                 mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
                 HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
@@ -65,28 +100,6 @@ global with sharing class HDT_WS_MrrRequest {
                 mrrResponseItem.objects.add(responseObject);
                 //FINE SVILUPPI EVERIS
             }
-
-            //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
-            List<HDT_UTL_Scarti.HDT_WRP_AttivitaAnonimaData> dataForAttivitaAnonimaCreation = new List<HDT_UTL_Scarti.HDT_WRP_AttivitaAnonimaData>();
-            for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
-                mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
-                for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : mrrResponseItem.objects){
-                    for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
-                        if('ATTIVITA'.equalsIgnoreCase(curField.name) 
-                            && 'Richiesta non identificata'.equalsIgnoreCase(curField.value)){
-                            HDT_UTL_Scarti.HDT_WRP_AttivitaAnonimaData newData = new HDT_UTL_Scarti.HDT_WRP_AttivitaAnonimaData();
-                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
-                                if('ERROR_MESSAGE'.equalsIgnoreCase(curField2.name)) newData.errorMessage = curField2.value;
-                                if('UTENZA'.equalsIgnoreCase(curField2.name)) newData.utenza = curField2.value;
-                                if('DATA_EVENTO'.equalsIgnoreCase(curField2.name)) newData.dataEvento = curField2.value;
-                            }
-                            dataForAttivitaAnonimaCreation.add(newData);
-                        }
-                    }
-                }
-            }
-            if(dataForAttivitaAnonimaCreation.size() > 0) HDT_UTL_Scarti.createAttivitaAnonimeHeroku(dataForAttivitaAnonimaCreation);
-            //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
             
         } catch (JSONException jsonEx) {
 
