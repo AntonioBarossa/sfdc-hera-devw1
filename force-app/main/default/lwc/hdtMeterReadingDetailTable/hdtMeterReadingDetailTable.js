@@ -7,6 +7,10 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     @api contractNumber;
     @api loadData;
     @api hideCheckboxColumn;
+    //addtionalInputsForNonStandAlone
+    @api nonStandAlone;
+    @api maxRows;
+
     @track meterReadingData;
     @track detailTableHeader = 'Letture';
     meterReadingError = false;
@@ -77,12 +81,6 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
         return readingsString;
     }
 
-    @api
-    getSelectedReadingDate = () =>{
-        let readingDate;
-        let selectedRows = this.template.querySelector('lightning-datatable').getSelectedRows();
-        return selectedRows[0].meterReadingData;
-    }
 
     @api
     getSelectedReadingsList() {
@@ -148,6 +146,18 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
             console.log(e);
         }
      
+    }
+
+    handleRowSelection = event => {
+        const selectRow = event.detail.selectedRows[0];
+        console.log('NonStandAlone -> ' +this.nonStandAlone);
+        console.log('Select Row -> ' + JSON.stringify(selectRow));
+        if(this.nonStandAlone){
+            console.log('InsideNonStandAloneEvent');
+            console.log('ChildEvent -> ' + selectRow);
+            this.dispatchEvent(new CustomEvent('rowselection',{detail: selectRow}));
+        }
+        return;
     }
 
     /*onHandleSort(event){
