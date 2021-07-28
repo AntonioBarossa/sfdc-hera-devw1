@@ -1,3 +1,4 @@
+// CLASSE DEPRECATA
 public inherited sharing class HDT_QBL_SelfReadingsCallouts implements Queueable, Database.AllowsCallouts {
     
     private Case selfReadingsCase;
@@ -46,20 +47,5 @@ public inherited sharing class HDT_QBL_SelfReadingsCallouts implements Queueable
         } else if (this.requestType == 'InvioLetture') {
             responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) facadeClass.execute(args);
         }
-
-        // ProcessClick non fa partire i job per le callout da contesto trigger o batch,
-        // quindi demandiamo la callout heroku ad un platform event.
-/*         System.debug('HDT_QBL_AnagAlignment: predisposizione platform event...');
-        HDT_PEV_AnagAlignment__e event = new HDT_PEV_AnagAlignment__e();
-        event.SerializedCase__c = JSON.serialize(anagAlignCase);
-
-        Database.SaveResult sr = EventBus.publish(event);
-        if (sr.isSuccess()) {
-            System.debug('Successfully published event.');
-        } else {
-            for (Database.Error err : sr.getErrors()) {
-                System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
-            }
-        } */
     }
 }

@@ -135,7 +135,7 @@ public with sharing class HDT_SRV_SelfReadings {
         JSONGenerator gen = JSON.createGenerator(false);
 
         gen.writeStartObject();
-        gen.writeStringField('serviceRequest', readingCase.CaseNumber);
+        gen.writeStringField('serviceRequest', readingCase.Id);
         gen.writeStringField('pod', readingCase.PODPDRFormula__c);
         gen.writeFieldName('element');
         gen.writeStartArray();
@@ -226,7 +226,7 @@ public with sharing class HDT_SRV_SelfReadings {
             if (errorDetails != null && !errorDetails.isEmpty()) {
                 Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
                 String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
-                readingCaseToUpdate.Phase__c = 'Check preliminari KO';
+                readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari KO';
 
                 HDT_QR_Case queryCase = new HDT_QR_Case();
                 List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
@@ -238,15 +238,17 @@ public with sharing class HDT_SRV_SelfReadings {
                     if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
                         HDT_UTL_Case.createActivity(caseId, errorMessage, 'Check preliminari KO');
                     }
+                    HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 }
             }
         } else {
-            readingCaseToUpdate.Phase__c = 'Check preliminari OK';
+            // L'aggiornamento a Check preliminari OK non possiamo farlo adesso, poichè va fatta prima la seconda callout per l'invio letture a SAP.
+            //readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
         }
 
         //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
-        String serializedCase = JSON.serialize(readingCaseToUpdate);
-        updateFuture(serializedCase);
+        // String serializedCase = JSON.serialize(readingCaseToUpdate);
+        // updateFuture(serializedCase);
 
         return responseOk;
     }
@@ -279,12 +281,20 @@ public with sharing class HDT_SRV_SelfReadings {
             //     readingCaseToUpdate.Description = errorMessage;
             // }
         } else {
-            readingCaseToUpdate.Phase__c = 'Esito OK da SAP';
+
+            // Settiamo prima l'esito precedente del Check Autolettura
+            readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
+            HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+            // Infine settiamo l'esito OK dell'Invio Lettura.
+            Case readingCaseToUpdateInvioLetture = new Case(); // Necessario un nuovo oggetto Case, altrimenti non sbianca la TechnicalPhase precedente.
+            readingCaseToUpdateInvioLetture.Id = readingCaseToUpdate.Id;
+            readingCaseToUpdateInvioLetture.Phase__c = 'Inviata a SAP';
+            String serializedCase = JSON.serialize(readingCaseToUpdateInvioLetture);
+            updateFuture(serializedCase);
         }
 
         //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
-        String serializedCase = JSON.serialize(readingCaseToUpdate);
-        updateFuture(serializedCase);
+
 
         return responseOk;
     }
