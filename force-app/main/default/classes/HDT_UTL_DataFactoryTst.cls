@@ -622,4 +622,56 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return pricebookList;
 	}
+
+
+	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id Account){
+
+		List<Attachment> tstAttachmentList=new List<Attachment>();
+
+		string tempString='Blob body test';
+		Blob tempBlob=Blob.valueOf(tempString);
+
+		for (Integer i=0; i<amount; i++){
+
+			Attachment testAttachment=new Attachment();
+			testAttachment.Name='test';
+			testAttachment.ParentId=Account;
+			testAttachment.Body=tempBlob;
+
+			tstAttachmentList.add(testAttachment);
+		}
+
+		if (doInsert){
+
+			insert tstAttachmentList;
+		}
+
+		return tstAttachmentList;
+	}
+
+
+	public static List<ContentVersion> createContentVers(Integer amount, Boolean doInsert){
+
+		List<ContentVersion> tstContentVersList=new List<ContentVersion>();
+
+		string tempString='Version Data test';
+		Blob tempBlob=Blob.valueOf(tempString);
+
+		for (Integer i=0; i<amount; i++){
+
+			ContentVersion testContentVers =new ContentVersion();
+			testContentVers.PathOnClient='test';
+			testContentVers.Title='test';
+			testContentVers.VersionData=tempBlob;
+
+			tstContentVersList.add(testContentVers);
+		}
+
+		if (doInsert){
+
+			insert tstContentVersList;
+		}
+
+		return tstContentVersList;
+	}
 }
