@@ -99,9 +99,6 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
             this.selectedReadingsConcatenated = this.template.querySelector('c-hdt-meter-reading-detail-table').getSelectedReadingsConcatenated();
             console.log('selected readings concatenated: ' + this.selectedReadingsConcatenated);
 
-            this.selectedReadingDate = this.template.querySelector('c-hdt-meter-reading-detail-table').getSelectedReadingDate();
-            console.log('selected reading Date: ' + this.selectedReadingDate);
-
             const navigateNextEvent = new FlowNavigationNextEvent();
             this.dispatchEvent(navigateNextEvent);
 
