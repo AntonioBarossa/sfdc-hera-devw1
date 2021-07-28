@@ -66,6 +66,38 @@
         </connector>
     </assignments>
     <choices>
+        <name>Causal_ANNULPERCESSAZIONE</name>
+        <choiceText>Annullato per cessazione</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ANNUL PER CESSAZIONE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Causal_ANNULPERRECESSO</name>
+        <choiceText>Annullato per recesso</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ANNUL PER RECESSO</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Causal_ANNULPERRIPENS</name>
+        <choiceText>Annullato per ripensamento</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ANNUL PER RIPENS</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Causal_CESS</name>
+        <choiceText>Cessato (Cessazione di contratto energy)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>CESS</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>ModificaDatiContattoChoice</name>
         <choiceText>Modifica Dati di Contatto (Telefono, Email, PEC, Fax, Marcatura)</choiceText>
         <dataType>String</dataType>
@@ -856,6 +888,12 @@
             <field>RecordTypeId</field>
             <value>
                 <elementReference>Get_PostSalesVAS_RT.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>VasStatus__c</field>
+            <value>
+                <elementReference>DeactivationCausal</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1937,6 +1975,17 @@
             <targetReference>Crea_Case_PostSalesVAS</targetReference>
         </connector>
         <fields>
+            <name>DeactivationCausal</name>
+            <choiceReferences>Causal_ANNULPERCESSAZIONE</choiceReferences>
+            <choiceReferences>Causal_ANNULPERRECESSO</choiceReferences>
+            <choiceReferences>Causal_ANNULPERRIPENS</choiceReferences>
+            <choiceReferences>Causal_CESS</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Causale Disattivazione</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
             <name>SelezFornitura_PostSalesVAS</name>
             <extensionName>c:hdtSelezFornituraFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -1957,7 +2006,7 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>1068</locationX>
