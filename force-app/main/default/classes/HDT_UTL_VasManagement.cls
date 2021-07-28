@@ -2,7 +2,7 @@
  * @description       : Generating requests for activating/disactivating VAS
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-07-26
+ * @last modified on  : 2021-07-28
  * @last modified by  : gabriele.rota@webresults.it
  * Modifications Log 
  * Ver   Date         Author                        Modification
@@ -31,7 +31,7 @@ public with sharing class HDT_UTL_VasManagement {
     * @return HDT_WRP_VASActivationReq 
     **/
     public static HDT_WRP_VASDisactivationReq getDeactivationRequest(Id caseId) {
-        Case currentCase = [SELECT CaseNumber, VasDeactivationCausal__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
+        Case currentCase = [SELECT CaseNumber, VasStatus__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
             Subscription__r.SBQQ__Contract__r.SBQQ__Order__c
             FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED LIMIT 1];
         
@@ -60,7 +60,8 @@ public with sharing class HDT_UTL_VasManagement {
             ServicePointCode__c, SalesCompanyCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c, OrderNumber,
             VasServiceActivationDate__c, ShippingStreetToponym__c, ShippingStreetName__c, ShippingStreetNumber__c,
             ShippingCity__c, ShippingPlace__c, ShippingPostalCode__c, ShippingProvince__c, PhoneNumber__c, ShippingMail__c, SignedDate__c,
-            ContractReference__r.SAPContractCode__c,
+            ContractReference__r.SAPContractCode__c,OrderReference__c,ContractReference__c,
+            ContractReference__r.ServicePoint__r.ServicePointCode__c, OrderReference__r.ServicePointCodeFormula__c,
             SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c, SBQQ__Quote__r.SBQQ__PriceBook__r.Name,
             SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
             (SELECT Quantity, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
@@ -104,13 +105,19 @@ public with sharing class HDT_UTL_VasManagement {
             partner = currentOrder.CustomerCode__c;
             codFiscale = currentOrder.CustomerFiscalCode__c;
             partitaIva = currentOrder.CustomerVATNumber__c;
-            pod = currentOrder.ServicePointCode__c;
+            if(String.isNotBlank(currentOrder.ServicePointCode__c)){
+                pod = currentOrder.ServicePointCode__c;
+            }else if(OrderReference__c!=null){
+                pod = currentOrder.OrderReference__r.ServicePointCodeFormula__c;
+            }else if(ContractReference__c!=null){
+                pod = currentOrder.ContractReference__r.ServicePoint__r?.ServicePointCode__c;
+            }
 
             List<String> strValues = new List<String>{currentOrder.CustomerName__c, currentOrder.CustomerName__c};
             intestatario = joinStringValues(strValues);
 
             servizioIp = currentOrder.CommercialProduct__c;
-            versione = currentOrder.CommercialProductVersion__c.split('\\.\\d+')[0];
+            versione = currentOrder.CommercialProductVersion__c?.split('\\.\\d+')[0];
             keyServizio = currentOrder.OrderNumber;
 
             //dataCessazione = null
@@ -133,7 +140,7 @@ public with sharing class HDT_UTL_VasManagement {
             nrContrattoIp = currentOrder.ContractReference__r?.SAPContractCode__c;
 
             //numDocRif = null
-            statoPratica = currentCase.VasDeactivationCausal__c;
+            statoPratica = currentCase.VasStatus__c;
         }
     }
 
@@ -202,7 +209,7 @@ public with sharing class HDT_UTL_VasManagement {
             region = currentOrder.ShippingProvince__c;
             telefono = currentOrder.PhoneNumber__c;
             mail = currentOrder.ShippingMail__c;
-            modalitaFatturazione = parentOrderItem?.VASBillingMode__c.substring(0,1);
+            modalitaFatturazione = parentOrderItem?.VASBillingMode__c?.substring(0,1);
             dataDecorrenza = parentOrderItem?.VasActivationDate__c;
             dataFirma = currentOrder.SignedDate__c;
             durataServizioGg = parentOrderItem?.DurationDay__c;
