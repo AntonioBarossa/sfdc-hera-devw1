@@ -6,13 +6,10 @@
  */
 
 global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.IApexAction{
-<<<<<<< HEAD
     static final string CANONERAI_TEMPLATENAME='CBS_CAR002__CANONE_RAI';
     static final string BONUSSOCIALE_TEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
     static final string SCARTODOCUMENTALE_POSTSALES_TEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
     static final string SCARTODOCUMENTALE_SALES_TEMPLATENAME='CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
-=======
->>>>>>> DEVW1
 
     global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
