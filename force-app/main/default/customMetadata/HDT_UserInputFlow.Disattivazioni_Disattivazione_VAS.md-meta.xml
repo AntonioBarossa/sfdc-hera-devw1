@@ -6,11 +6,6 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
   {
-    &quot;FieldName&quot;: &quot;VasDeactivationCausal__c&quot;,
-    &quot;Required&quot;: true,
-    &quot;Column&quot;: 1
-  },
-  {
     &quot;FieldName&quot;: &quot;CancellationReason__c&quot;,
     &quot;Required&quot;: true,
     &quot;Column&quot;: 1
@@ -29,32 +24,37 @@
     &quot;Column&quot;: 1
   },
   {
-    &quot;FieldName&quot;: &quot;AccountId&quot;,
+    &quot;FieldName&quot;: &quot;VasStatus__c&quot;,
+    &quot;Required&quot;: true,
     &quot;Column&quot;: 2
+  },
+  {
+    &quot;FieldName&quot;: &quot;AccountId&quot;,
+    &quot;Column&quot;: 1
   },
   {
     &quot;FieldName&quot;: &quot;SalesCompany__c&quot;,
-    &quot;Column&quot;: 1
+    &quot;Column&quot;: 2
   },
   {
     &quot;FieldName&quot;: &quot;ServicePointCode__c&quot;,
-    &quot;Column&quot;: 2
+    &quot;Column&quot;: 1
   },
   {
     &quot;FieldName&quot;: &quot;Order__c&quot;,
-    &quot;Column&quot;: 1
+    &quot;Column&quot;: 2
   },
   {
     &quot;FieldName&quot;: &quot;AssetId&quot;,
-    &quot;Column&quot;: 2
-  },
-  {
-    &quot;FieldName&quot;: &quot;Subscription__c&quot;,
     &quot;Column&quot;: 1
   },
   {
-    &quot;FieldName&quot;: &quot;Contract__c&quot;,
+    &quot;FieldName&quot;: &quot;Subscription__c&quot;,
     &quot;Column&quot;: 2
+  },
+  {
+    &quot;FieldName&quot;: &quot;Contract__c&quot;,
+    &quot;Column&quot;: 1
   }
 ]</value>
     </values>

@@ -3,8 +3,24 @@
     <label>ANNULLATO</label>
     <protected>false</protected>
     <values>
-        <field>Phase__c</field>
+        <field>AssetStatus__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>CasePhase__c</field>
         <value xsi:type="xsd:string">Annullato</value>
+    </values>
+    <values>
+        <field>CaseStatus__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>OrderPhase__c</field>
+        <value xsi:type="xsd:string">Annullato</value>
+    </values>
+    <values>
+        <field>OrderStatus__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>VasStatus__c</field>

@@ -2,7 +2,7 @@
  * @description       : Generating requests for activating/disactivating VAS
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-07-26
+ * @last modified on  : 2021-07-28
  * @last modified by  : gabriele.rota@webresults.it
  * Modifications Log 
  * Ver   Date         Author                        Modification
@@ -31,7 +31,7 @@ public with sharing class HDT_UTL_VasManagement {
     * @return HDT_WRP_VASActivationReq 
     **/
     public static HDT_WRP_VASDisactivationReq getDeactivationRequest(Id caseId) {
-        Case currentCase = [SELECT CaseNumber, VasDeactivationCausal__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
+        Case currentCase = [SELECT CaseNumber, VasStatus__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
             Subscription__r.SBQQ__Contract__r.SBQQ__Order__c
             FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED LIMIT 1];
         
@@ -57,7 +57,7 @@ public with sharing class HDT_UTL_VasManagement {
     private static Order getOrderData(Id orderId) {
         //TODO: move query in HDT_QR_Order class
         return [SELECT SalesCompany__c, ContractAccountCode__c, CustomerCode__c, CustomerFiscalCode__c, CustomerVATNumber__c,
-            ServicePointCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c, OrderNumber,
+            ServicePointCode__c, SalesCompanyCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c, OrderNumber,
             VasServiceActivationDate__c, ShippingStreetToponym__c, ShippingStreetName__c, ShippingStreetNumber__c,
             ShippingCity__c, ShippingPlace__c, ShippingPostalCode__c, ShippingProvince__c, PhoneNumber__c, ShippingMail__c, SignedDate__c,
             ContractReference__r.SAPContractCode__c,
@@ -99,7 +99,8 @@ public with sharing class HDT_UTL_VasManagement {
         Date dataCessazione;
 
         public HDT_WRP_VASReq(Order currentOrder) {
-            societa = currentOrder.SalesCompany__c;
+            //societa = currentOrder.SalesCompany__c;
+            societa = currentOrder.SalesCompanyCode__c;
             partner = currentOrder.CustomerCode__c;
             codFiscale = currentOrder.CustomerFiscalCode__c;
             partitaIva = currentOrder.CustomerVATNumber__c;
@@ -109,7 +110,7 @@ public with sharing class HDT_UTL_VasManagement {
             intestatario = joinStringValues(strValues);
 
             servizioIp = currentOrder.CommercialProduct__c;
-            versione = currentOrder.CommercialProductVersion__c;
+            versione = currentOrder.CommercialProductVersion__c?.split('\\.\\d+')[0];
             keyServizio = currentOrder.OrderNumber;
 
             //dataCessazione = null
@@ -132,7 +133,7 @@ public with sharing class HDT_UTL_VasManagement {
             nrContrattoIp = currentOrder.ContractReference__r?.SAPContractCode__c;
 
             //numDocRif = null
-            statoPratica = currentCase.VasDeactivationCausal__c;
+            statoPratica = currentCase.VasStatus__c;
         }
     }
 
@@ -201,7 +202,7 @@ public with sharing class HDT_UTL_VasManagement {
             region = currentOrder.ShippingProvince__c;
             telefono = currentOrder.PhoneNumber__c;
             mail = currentOrder.ShippingMail__c;
-            modalitaFatturazione = parentOrderItem?.VASBillingMode__c;
+            modalitaFatturazione = parentOrderItem?.VASBillingMode__c?.substring(0,1);
             dataDecorrenza = parentOrderItem?.VasActivationDate__c;
             dataFirma = currentOrder.SignedDate__c;
             durataServizioGg = parentOrderItem?.DurationDay__c;
