@@ -57,8 +57,8 @@ global with sharing class HDT_WS_MrrRequest {
             //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
             List<HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData> dataForAttivitaTracciaturaCreation = new List<HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData>();
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
-                mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
-                for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : mrrResponseItem.objects){
+                HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+                for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
                     for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
                         if('ATTIVITA'.equalsIgnoreCase(curField.name) && attivitaTracciaturaTypes.contains(curField.value)){
                             HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData newData = new HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData();
@@ -71,7 +71,7 @@ global with sharing class HDT_WS_MrrRequest {
                                 if('ATTIVITA'.equalsIgnoreCase(curField2.name)) newData.tipoAttivita = curField2.value;
                                 if('METHOD'.equalsIgnoreCase(curField2.name)) newData.method = curField2.value;
                             }
-                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField3 : mrrResponseItem.header.fields){
+                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField3 : parsedResponseItem.header.fields){
                                 if('PROCESS_CATEGORY'.equalsIgnoreCase(curField3.name)) newData.processCategory = curField3.value;
                             }
                             dataForAttivitaTracciaturaCreation.add(newData);
