@@ -11,6 +11,18 @@
             <targetReference>Esiste_Importo_Configurato</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>Get_Input_Case.CommodityFormula__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>processType</name>
+            <value>
+                <elementReference>Get_Input_Case.Type</elementReference>
+            </value>
+        </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
