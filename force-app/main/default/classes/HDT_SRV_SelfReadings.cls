@@ -226,7 +226,7 @@ public with sharing class HDT_SRV_SelfReadings {
             if (errorDetails != null && !errorDetails.isEmpty()) {
                 Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
                 String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
-                readingCaseToUpdate.Phase__c = 'Check preliminari KO';
+                readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari KO';
 
                 HDT_QR_Case queryCase = new HDT_QR_Case();
                 List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
@@ -241,12 +241,12 @@ public with sharing class HDT_SRV_SelfReadings {
                 }
             }
         } else {
-            readingCaseToUpdate.Phase__c = 'Check preliminari OK';
+            readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
         }
 
-        //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
-        String serializedCase = JSON.serialize(readingCaseToUpdate);
-        updateFuture(serializedCase);
+        HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+        // String serializedCase = JSON.serialize(readingCaseToUpdate);
+        // updateFuture(serializedCase);
 
         return responseOk;
     }
@@ -279,7 +279,7 @@ public with sharing class HDT_SRV_SelfReadings {
             //     readingCaseToUpdate.Description = errorMessage;
             // }
         } else {
-            readingCaseToUpdate.Phase__c = 'Esito OK da SAP';
+            readingCaseToUpdate.Phase__c = 'Inviata a SAP';
         }
 
         //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);

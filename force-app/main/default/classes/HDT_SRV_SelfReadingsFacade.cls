@@ -12,12 +12,27 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
 
         try {
             recordId = (String) obj.get('Id');
-            HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
-            sapIntegration = submitRequest(recordId,parameters.get('requestType'));
+            String requestType = parameters.get('requestType');
 
-            Boolean responseOk = HDT_SRV_SelfReadings.handleResponse(sapIntegration);
-            response.success = responseOk;
-            response.message = responseOk ? 'OK' : 'KO';
+            if (requestType == 'CheckAutolettura') {
+
+                HDT_WRP_GenericSapIntegration sapIntegrationCheckAutoletture = new HDT_WRP_GenericSapIntegration();
+                sapIntegrationCheckAutoletture = submitRequest(recordId, requestType);
+
+                Boolean responseOkCheckAutoletture = HDT_SRV_SelfReadings.handleResponse(sapIntegrationCheckAutoletture);
+                // Facciamo partire la seconda callout direttamente da qui, poichè PClick non supporta due callout action consecutive in seguito a due update di fase.
+                if (responseOkCheckAutoletture) {
+                    System.debug('CheckAutolettura OK, next step: InvioLetture');
+                    HDT_WRP_GenericSapIntegration sapIntegrationInvioLetture = new HDT_WRP_GenericSapIntegration();
+                    sapIntegrationInvioLetture = submitRequest(recordId, 'InvioLetture');
+                    Boolean responseOkCheckInvioLetture = HDT_SRV_SelfReadings.handleResponse(sapIntegrationInvioLetture);
+                } else {
+                    System.debug('CheckAutolettura KO');
+                }
+            }
+
+            response.success = True;
+            response.message = 'OK';
 
         } catch(Exception ex){
             System.debug('HDT_SRV_SelfReadingsFacade: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
