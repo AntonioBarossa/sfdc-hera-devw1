@@ -128,4 +128,21 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         }
         return JSON.serialize(resultMap);
     }
+
+    public static void handleDocusignNotify(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
+        String status;
+        String envelopeId;
+        String transactionId;
+        try {
+            if(requestBody != null){
+                status = requestBody.status;
+                envelopeId = requestBody.envelopeId;
+                transactionId = HDT_SRV_DocumentalManagement.getTransactionId(envelopeId);
+                SObject recordToUpdate = HDT_SRV_DocumentalManagement.getSobjectFromTransactionId(transactionId);
+                HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate,status);
+            }
+        } catch (Exception ex) {
+            System.debug('Error in method handleDocusignNotify ' + ex.getMessage());
+        }
+    }
 }
