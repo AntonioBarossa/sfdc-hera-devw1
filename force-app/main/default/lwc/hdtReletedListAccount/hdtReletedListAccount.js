@@ -30,7 +30,14 @@ const columns = [
         variant:'brand-outline',  
     }},
 ];
-
+/**
+ * Wire adapter for values for a picklist field.
+ *
+ * https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.reference_wire_adapters_picklist_values
+ *
+ * @param fieldApiName The picklist field's object-qualified API name.
+ * @param recordTypeId The record type ID. Pass '012000000000000AAA' for the master record type.
+ */
 const VAR_RECORDTYPEID='012000000000000AAA';
 export default class HdtReletedListAccount  extends NavigationMixin(LightningElement)  {
     @api recordId;
