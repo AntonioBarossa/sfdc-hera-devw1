@@ -113,7 +113,7 @@
             <name>Salva_in_bozza_outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SaveInDraft</leftValueReference>
+                <leftValueReference>hdtSelfReadingComponent.saveDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -128,7 +128,7 @@
             <name>Annullamento_outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CancelCase</leftValueReference>
+                <leftValueReference>hdtSelfReadingComponent.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -165,6 +165,11 @@
             <label>Service Point KO</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>ReadingCustomerDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>DATEVALUE(TEXT({!hdtSelfReadingComponent.readingCustomerDate}))</expression>
+    </formulas>
     <interviewLabel>Gestione Autoletture {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Autoletture</label>
     <processMetadataValues>
@@ -279,7 +284,7 @@
         <inputAssignments>
             <field>ReadingDate__c</field>
             <value>
-                <elementReference>ReadingCustomerDate</elementReference>
+                <elementReference>ReadingCustomerDateFormula</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -315,7 +320,7 @@
         <inputAssignments>
             <field>ReadingDate__c</field>
             <value>
-                <elementReference>ReadingCustomerDate</elementReference>
+                <elementReference>ReadingCustomerDateFormula</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -345,7 +350,7 @@
         <inputAssignments>
             <field>ReadingDate__c</field>
             <value>
-                <elementReference>ReadingCustomerDate</elementReference>
+                <elementReference>ReadingCustomerDateFormula</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -529,18 +534,7 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>SaveInDraft</assignToReference>
-                <name>saveDraft</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>ReadingCustomerDate</assignToReference>
-                <name>readingCustomerDate</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>CancelCase</assignToReference>
-                <name>cancelCase</name>
-            </outputParameters>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -626,13 +620,6 @@
         </inputAssignments>
     </subflows>
     <variables>
-        <name>CancelCase</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -640,24 +627,10 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>ReadingCustomerDate</name>
-        <dataType>Date</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>ResumeFromDraft</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>SaveInDraft</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
