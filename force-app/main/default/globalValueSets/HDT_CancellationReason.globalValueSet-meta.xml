@@ -135,8 +135,6 @@
         <default>false</default>
         <label>Il cliente rinuncia</label>
     </customValue>
-    <masterLabel>Motivazione Annullamento</masterLabel>
-    <sorted>false</sorted>
     <customValue>
         <fullName>Rifiutato Preventivamente</fullName>
         <default>false</default>
@@ -167,4 +165,6 @@
         <default>false</default>
         <label>Cliente Non Trovato</label>
     </customValue>
+    <masterLabel>Motivazione Annullamento</masterLabel>
+    <sorted>false</sorted>
 </GlobalValueSet>
