@@ -269,6 +269,10 @@ public with sharing class HDT_SRV_SalesHandler {
                 }                        
 
             }
+
+            when 'NOTIF_VAS'{
+                HDT_UTL_NotifVas.handleVasNotify(request, mrrResponseItem);
+            }
             when 'RICH_PASS' {
 
                 if (request.objects.get(0).fields.get(0) != null){
