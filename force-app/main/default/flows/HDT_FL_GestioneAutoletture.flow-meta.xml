@@ -80,7 +80,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Fase_Attesa_check_preliminari</targetReference>
+                <targetReference>Calcolo_Codice_Causale</targetReference>
             </connector>
             <label>Autolettura da cliente</label>
         </rules>
@@ -187,6 +187,41 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>Calcolo_Codice_Causale</name>
+        <label>Calcolo Codice Causale</label>
+        <locationX>1919</locationX>
+        <locationY>249</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Fase_Attesa_check_preliminari</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Refresh_Case.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Refresh_Case.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Refresh_Case.Type</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
         <locationX>473</locationX>
@@ -252,8 +287,8 @@
     <recordUpdates>
         <name>Set_Fase_Attesa_check_preliminari</name>
         <label>Set Fase Attesa check preliminari</label>
-        <locationX>1928</locationX>
-        <locationY>241</locationY>
+        <locationX>2076</locationX>
+        <locationY>249</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -265,6 +300,12 @@
                 <elementReference>Get_Case.Id</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>CausalCode__c</field>
+            <value>
+                <elementReference>Calcolo_Codice_Causale.CausalCode__c</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Phase__c</field>
             <value>
@@ -282,8 +323,8 @@
     <recordUpdates>
         <name>Set_Fase_Da_Inviare</name>
         <label>Set Fase Da Inviare</label>
-        <locationX>1918</locationX>
-        <locationY>510</locationY>
+        <locationX>2001</locationX>
+        <locationY>483</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -523,8 +564,8 @@
     <screens>
         <name>Spinner</name>
         <label>Spinner</label>
-        <locationX>2180</locationX>
-        <locationY>384</locationY>
+        <locationX>2337</locationX>
+        <locationY>358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
