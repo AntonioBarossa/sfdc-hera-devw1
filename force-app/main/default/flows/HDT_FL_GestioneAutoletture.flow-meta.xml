@@ -523,8 +523,8 @@
     <screens>
         <name>Spinner</name>
         <label>Spinner</label>
-        <locationX>2155</locationX>
-        <locationY>379</locationY>
+        <locationX>2180</locationX>
+        <locationY>384</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -569,6 +569,18 @@
             <name>ProcessType</name>
             <value>
                 <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>recordToCancell</name>
+            <value>
+                <elementReference>Refresh_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
             </value>
         </inputAssignments>
     </subflows>
