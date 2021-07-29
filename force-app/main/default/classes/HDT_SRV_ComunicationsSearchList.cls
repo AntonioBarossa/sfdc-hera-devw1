@@ -8,38 +8,51 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
         
         try{
 
-            HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
-            httpObj.headersMap = new Map<String, String>();
-            httpObj.endPoint = 'callout:docComunicationsSearch';    
-            httpObj.httpMethod = 'POST';
-            httpObj.headersMap.put('Content-Type', 'application/json');
+            Map<String, Object> jsonMap = (Map<String, Object>)JSON.deserializeUntyped(wrapperObj);
+            Object documentCategory = (Object)jsonMap.get('documentCategory');
+            System.debug('>>> CURRENT TYPE: ' + String.valueOf(documentCategory));
 
-            if(httpObj == null){
-                wsObj.success = false;
-                wsObj.message = 'Metadati httpObj non configurati';
-                return wsObj;
+            if(String.valueOf(documentCategory) == 'solleciti'){
+                HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
+                httpObj.headersMap = new Map<String, String>();
+                httpObj.endPoint = 'callout:docComunicationsSearch';    
+                httpObj.httpMethod = 'POST';
+                httpObj.headersMap.put('Content-Type', 'application/json');
+
+                if(httpObj == null){
+                    wsObj.success = false;
+                    wsObj.message = 'Metadati httpObj non configurati';
+                    return wsObj;
+                }
+        
+                HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(wrapperObj, httpObj);
+                System.debug('>>>> RETRIEVE FROM WS ' + responseCtrl);
+
+                if(!responseCtrl.success){
+                    wsObj.success = false;
+                    wsObj.message = responseCtrl.message;
+                    wsObj.body = responseCtrl.body;
+                    return JSON.serialize(wsObj);
+                }
+
+                wsObj.success = true;
+                wsObj.message = '';
+                wsObj.body = responseCtrl.body;
+                return JSON.serialize(wsObj);
+
+                //HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj restMessage = (HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj.class);
+
+                //if(restMessage.status != 'success'){
+                //    wsObj.success = false;
+                //    wsObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
+                //    wsObj.message += ']; Detail: ' + restMessage.errorDetails.message;
+                //    wsObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
+                //    return JSON.serialize(wsObj);
+                //}
+        
+                //System.debug('>>>> RETRIEVE FROM WS ' + restMessage);
+
             }
-    
-            HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(wrapperObj, httpObj);
-            System.debug('>>>> RETRIEVE FROM WS ' + responseCtrl);
-
-            //if(!responseCtrl.success){
-            //    wsObj.success = false;
-            //    wsObj.message = responseCtrl.message;
-            //    return JSON.serialize(wsObj);
-            //}
-
-            //HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj restMessage = (HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj.class);
-
-            //if(restMessage.status != 'success'){
-            //    wsObj.success = false;
-            //    wsObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
-            //    wsObj.message += ']; Detail: ' + restMessage.errorDetails.message;
-            //    wsObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
-            //    return JSON.serialize(wsObj);
-            //}
-    
-            //System.debug('>>>> RETRIEVE FROM WS ' + restMessage);
 
             wsObj.success = true;
             wsObj.message = '';
@@ -82,7 +95,7 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
 
     public static String getFakeData(){
         System.debug('>>> getFakeData');
-        String s = '[';
+        String s = '{"status": "success", "data":[';
 
         Integer max = 50;
         Date dd = Date.today();
@@ -99,7 +112,7 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
             }
         }
 
-        s += ']';
+        s += ']}';
         return s;
     }
 

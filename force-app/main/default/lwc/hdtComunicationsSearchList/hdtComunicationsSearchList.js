@@ -15,8 +15,8 @@ const rateColumns = [
 ];
 
 const sollecitiColumns = [
-    { label: 'Id Plico', fieldName: 'billNumber' },
-    { label: 'Data registrazione', fieldName: 'billDate'}
+    { label: 'Id Plico', fieldName: 'envelopeId' },
+    { label: 'Data registrazione', fieldName: 'issueDate'}
 ];
 
 export default class HdtComunicationsSearchList extends NavigationMixin(LightningElement){
@@ -59,6 +59,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
         switch (objParameters.type) {
             case 'bills':
+                this.muleRequest.documentCategory = 'Comunicazioni';
                 this.columns = billsColumns;
                 break;
             case 'rate':
@@ -67,6 +68,8 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
                 this.columns = rateColumns;
                 break;
             case 'solleciti':
+                this.muleRequest.billingProfile = this.customerCode;
+                delete this.muleRequest.customerAccount;
                 this.muleRequest.documentCategory = 'Solleciti';
                 this.columns = sollecitiColumns;
         }
@@ -82,11 +85,27 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
             var resultObj = JSON.parse(result);
             if(resultObj.success){
                 var dataObj = JSON.parse(resultObj.body);
-                this.data = dataObj;
+
+                if(dataObj.status === 'success'){
+                    this.data = dataObj.data;
+                } else {
+                    this.error.show = true;
+                    this.error.message = dataObj; 
+                }
+
                 this.spinner = false;
             } else {
-                this.error.show = true;
-                this.error.message = resultObj.message; 
+                var dataObj = JSON.parse(resultObj.body);
+                
+                if(dataObj.errorDetails[0].code === '102'){
+
+                } else {
+                    this.error.show = true;
+                    this.error.message = 'Codice: ' + dataObj.errorDetails[0].code;
+                    this.error.message += '; Messaggio: ' + dataObj.errorDetails[0].message;
+                    this.error.message += ' - Informazioni: ' + dataObj.errorDetails[0].additionalInfo; 
+                }
+
                 this.spinner = false;
             }
             
@@ -122,6 +141,18 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         var el = this.template.querySelector('lightning-datatable');
         var selected = el.getSelectedRows();
         console.log('>>> I WANT PDF ABOUT > ' + JSON.stringify(selected));
+
+        if(selected.length === 0){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non hai selezionato nulla',
+                    variant: 'warning'
+                }),
+            );
+            return;
+        }
+
         this.sendToApex(JSON.stringify(selected));
     }
 

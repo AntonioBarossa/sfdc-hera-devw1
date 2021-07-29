@@ -313,7 +313,28 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         }  
 
         this.billParameters = event.currentTarget.dataset.parameters;
-        this.otherParams = '';
+
+        var dateSplitted = row.dataEmissione.split('/');
+        var startDate = dateSplitted[2] + '-' + dateSplitted[1] + '-' + dateSplitted[0];
+
+        var date = dateSplitted[1] + '/' + dateSplitted[0] + '/' + dateSplitted[2];
+        var resultDate = new Date(date);
+        resultDate.setDate(resultDate.getDate() + 10);
+
+        var year = resultDate.getFullYear();
+        var currentMonth = resultDate.getMonth() + 1;
+        var month = ((currentMonth<10) ? '0' + currentMonth.toString() : currentMonth.toString());
+        var day = ((resultDate.getDate()<10) ? '0' + resultDate.getDate().toString() : resultDate.getDate().toString());
+        var endDate = year.toString() + '-' + month + '-' + day;
+        
+        var otherParam = {
+            startDate: startDate,
+            endDate: endDate
+        };
+
+        console.log('>>>>>>>>>>>>>>>> ' + JSON.stringify(otherParam));
+
+        this.otherParams = otherParam;
         this.showBillList = true;  
     }
 
