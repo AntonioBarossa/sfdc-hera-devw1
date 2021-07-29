@@ -17,7 +17,9 @@ public with sharing class HDT_LC_FormAccountResidenziale {
     public static Account insertAccount(Map<String,String> dataAccount, Map<String,String> accountAddress){
         
         Date birthdate = (dataAccount.get('birthDate') != null && dataAccount.get('birthDate') != '' ? Date.valueOf(dataAccount.get('birthDate')) : null );
-        Account account= new Account(FirstName__c= dataAccount.get('firstName'), LastName__c= dataAccount.get('lastName'), FiscalCode__c= dataAccount.get('fiscalCode') ,PhonePrefix__c= dataAccount.get('phonePrefix') ,Phone= dataAccount.get('phoneNumber'),MobilePhonePrefix__c= dataAccount.get('mobilePhonePrefix'),MobilePhone__c =dataAccount.get('mobilePhone'),Name= dataAccount.get('name'),PrimaryEmail__c= dataAccount.get('email') ,RecordTypeId= dataAccount.get('recordTypeId'),Category__c= dataAccount.get('category'),CustomerMarking__c= dataAccount.get('customerMarking'), Gender__c= dataAccount.get('gender'), OtherPhone__c= dataAccount.get('otherPhoneNumber'),DegreeOfStudies__c= dataAccount.get('education'),Profession__c= dataAccount.get('profession'), CompanyOwner__c=dataAccount.get('companyOwner'));
+        Account account= new Account(BirthDate__c=birthdate,BirthProvince__c=dataAccount.get('birthplace'),FirstName__c= dataAccount.get('firstName'), LastName__c= dataAccount.get('lastName'), FiscalCode__c= dataAccount.get('fiscalCode') ,PhonePrefix__c= dataAccount.get('phonePrefix') ,Phone= dataAccount.get('phoneNumber'),MobilePhonePrefix__c= dataAccount.get('mobilePhonePrefix'),MobilePhone__c =dataAccount.get('mobilePhone'),Name= dataAccount.get('name'),PrimaryEmail__c= dataAccount.get('email') ,RecordTypeId= dataAccount.get('recordTypeId'),Category__c= dataAccount.get('category'),CustomerMarking__c= dataAccount.get('customerMarking'), Gender__c= dataAccount.get('gender'), OtherPhone__c= dataAccount.get('otherPhoneNumber'),DegreeOfStudies__c= dataAccount.get('education'),Profession__c= dataAccount.get('profession'), 
+        CompanyOwner__c=dataAccount.get('companyOwner')
+        );
         for(String s: accountAddress.keySet()){
             if('BillingIsAddressVerified__c' == s){
                 account.put(s, accountAddress.get(s) == 'true' ? true : false);
@@ -40,7 +42,10 @@ public with sharing class HDT_LC_FormAccountResidenziale {
             }
 
         }
-        HDT_UTL_Account.makeRequest(account,contact);
+       // HDT_UTL_Account.makeRequest(account,contact);
+        Id jobID = System.enqueueJob(new HDT_QBL_BpCaRequest(account,contact));
+        System.debug('jobId: '+jobID);
+
         // List<String> emails= new List<String>();
         // emails.add(cont.Email);
         // List<String> phones= new List<String>();

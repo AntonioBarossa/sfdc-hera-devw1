@@ -5,7 +5,10 @@ public class HDT_UTL_IntegrationObject{
 		String fromString = ' FROM '+ jsonStructure.objectName;
 		String controllingField = jsonStructure.controllingField;
 		String whereString = ' WHERE ' + controllingField + ' =\''+ recordId + '\'';
-
+		String parentCondition = jsonStructure.condition;
+		if(String.isNotBlank(parentCondition)){
+			whereString = whereString + ' AND ' + parentCondition;
+		}
 		String fieldLookup = '';
 		for(HDT_WRP_IntegrationObject.HDT_WRP_IntegrationLookupObject singleLookupObject : jsonStructure.lookupObject){
 			List<String> fields = singleLookupObject.fields.split(',');
