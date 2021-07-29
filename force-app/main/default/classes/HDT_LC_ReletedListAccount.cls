@@ -34,7 +34,8 @@ public without sharing class HDT_LC_ReletedListAccount {
         if (String.isBlank(accountId)) {
             return null;
         }
-        return [SELECT Id, Name,FirstName, LastName, Title, Phone, Email,DegreeOfStudies__c FROM Contact WHERE accountId=:accountId WITH SECURITY_ENFORCED];
+        HDT_QR_Contact qr=new HDT_QR_Contact();
+        return qr.getContactsByAccount(accountId);
       
     }
     // @AuraEnabled
