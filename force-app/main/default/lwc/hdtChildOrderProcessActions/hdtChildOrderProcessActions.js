@@ -18,7 +18,8 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     get cancellationOptions() {
         return [
             { label: 'Pratica errata', value: 'Pratica errata' },
-            { label: 'Annullamento da cliente', value: 'Annullamento da cliente' }
+            { label: 'Annullamento da cliente', value: 'Annullamento da cliente' },
+            { label: 'Processo incompatibile', value: 'Processo incompatibile' }
         ];
     }
     
