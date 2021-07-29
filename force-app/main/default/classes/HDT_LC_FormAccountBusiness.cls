@@ -155,8 +155,10 @@ public with sharing class HDT_LC_FormAccountBusiness {
             // phones.add(cont.Phone);
             // HDT_UTL_GestionePrivacy.createDefaultPrivacyContact(cont.Id, emails, phones);
         }
-        HDT_UTL_Account.makeRequest(account,contact);
-        
+        //HDT_UTL_Account.makeRequest(account,contact);
+        Id jobID = System.enqueueJob(new HDT_QBL_BpCaRequest(account,contact));
+        System.debug('jobId: '+jobID);
+
     
         return acct;
     }

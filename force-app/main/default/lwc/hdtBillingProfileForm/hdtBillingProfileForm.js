@@ -93,7 +93,7 @@ export default class hdtBillingProfileForm extends LightningElement {
                             required = true;
                             break;
                         case 'InvoiceEmailAddress__c':
-                            required = true;
+                            required = false;
                             break;
                         default:
                             break;
@@ -345,6 +345,8 @@ export default class hdtBillingProfileForm extends LightningElement {
         if (event.target.fieldName === 'BillSendingMethod__c') {
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceCertifiedEmailAddress__c')].visibility = event.target.value === 'Invio tramite PEC';
             this.fields[this.fields.findIndex(el => el.fieldName === 'SendCertifiedEmailConsentDate__c')].visibility = event.target.value === 'Invio tramite PEC';
+
+            this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].required = event.target.value.includes('e-mail');
         }
 
         if(event.target.fieldName === 'IbanIsForeign__c'){
@@ -468,7 +470,8 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri');
         }
 
-        if ((this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']") !== null && this.template.querySelector("[data-id='SubjectCode__c']") !== null)
+        if ((this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value !== 'XML + carta/email')
+            && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']") !== null && this.template.querySelector("[data-id='SubjectCode__c']") !== null)
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === '')
             && (this.template.querySelector("[data-id='SubjectCode__c']").value === null || this.template.querySelector("[data-id='SubjectCode__c']").value === '')) {
             this.saveErrorMessage.push('Devi valorizzare almeno uno dei campi Codice Destinatario o PEC Fatturazione Elettronica');
@@ -725,7 +728,7 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.saveErrorMessage = [];
 
             this.dataToSubmit['Account__c'] = this.accountId;
-            this.dataToSubmit['IbanCountry__c'] = 'IT';
+            this.dataToSubmit['IbanCountry__c'] = this.dataToSubmit['PaymentMethod__c'] == 'RID' ? 'IT' : '';
 
             this.loading = true;
             createBillingProfile({billingProfile: this.dataToSubmit}).then(data =>{

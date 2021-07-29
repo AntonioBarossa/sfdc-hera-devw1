@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 19/05/2021
+* @description HDT_UTL_CommunicationLog.cls
+* @history Lorenzo – 19/05/2021 – created class
+*/
 public class HDT_UTL_CommunicationLog {
 
     public CommunicationLog__c instanceCommunicationLog(String cluster,String process,string phase,string status,string motivazioneCausale,String orderId,String caseid,String contactid,String accountId,String company,String companyOwner){

@@ -1,6 +1,7 @@
 public with sharing class HDT_UTL_Sales {
     
      private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
+     private static HDT_QR_Case caseQr = new HDT_QR_Case();
 
     public static map<String,String> mapMarcatura = new Map<String,String>();//'AAS Associazione' => 'AAS','AAS Azienda'=> 'AAS','AAS Condominio'=> 'AAS','AAS Ditta individuale'=> 'AAS','AAS Parti comuni'=> 'AAS','AAS Persona fisica'=> 'AAS'}; 
     public static String getCityAgency(String comune,boolean isEle, boolean isGas){
@@ -55,7 +56,7 @@ public with sharing class HDT_UTL_Sales {
     public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
 
         Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        if(((sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende SME' && sale.Account__r.Category__c != 'Piccoli Condomini') ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+        if(((sale.Account__c != null && sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende SME' && sale.Account__r.Category__c != 'Piccoli Condomini') ||(!stabbedData.contains(sp.SupplyProvince__c)))){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
             saleSrv.updateRecord(s);
@@ -67,7 +68,7 @@ public with sharing class HDT_UTL_Sales {
     public static Boolean isTransitionNoUp(ServicePoint__c sp, Sale__c sale){
 
         Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        if(((sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende SME' && sale.Account__r.Category__c != 'Piccoli Condomini') ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+        if(((sale.Account__c != null && sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende SME' && sale.Account__r.Category__c != 'Piccoli Condomini') ||(!stabbedData.contains(sp.SupplyProvince__c)))){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
            // saleSrv.updateRecord(s);
@@ -75,6 +76,11 @@ public with sharing class HDT_UTL_Sales {
         }else{
             return false;
         }
+    }
+
+    public static Boolean isWinback(String servicePointId){
+        List<Case> caseList = caseQr.getServicePointCaseWinBack(servicePointId);
+        return !caseList.isEmpty();
     }
 
 }

@@ -49,49 +49,31 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
     }
 
     @AuraEnabled
-    public static String checkCompatibilityPostSales(SObject obj){
+    public static String checkCompatibilityPostSales(Case cs){
         try {
-            System.debug(obj);
             String compatibility='';
-            Id objId= obj.Id;
-            Schema.sObjectType entityType = objId.getSObjectType();
             ServiceRequest__c srvRequest= new ServiceRequest__c();
-            if(entityType == Case.sObjectType){
-                Case cs= (Case) obj;
-                srvRequest.ServicePointCode__c= cs.PODPDRFormula__c;
-                srvRequest.Status__c= cs.Status;
-                srvRequest.CommoditySector__c= cs.CommodityFormula__c;
-                srvRequest.Type__c= 'Case';
-                if(cs.ServicePoint__c != null){
-                    srvRequest.ServicePoint__c= cs.ServicePoint__c;
-                }else{
-                    srvRequest.Account__c= cs.AccountId;
-                    srvRequest.BillingProfile__c= cs.BillingProfile__c;
-                }
-                srvRequest.ProcessType__c= getProcessTypeCase(cs.Type, cs.CommodityFormula__c);
+            srvRequest.Case__c= cs.Id;
+            srvRequest.ServicePointCode__c= cs.PODPDRFormula__c;
+            srvRequest.Status__c= getStatus(cs.Status,'Case');
+            srvRequest.CommoditySector__c= cs.CommodityFormula__c;
+            srvRequest.Type__c= 'Case';
+            if(cs.ServicePoint__c != null){
+                srvRequest.ServicePoint__c= cs.ServicePoint__c;
+            }else{
+                srvRequest.Account__c= cs.AccountId;
+                srvRequest.BillingProfile__c= cs.BillingProfile__c;
             }
-            // }else{
-            //     Order ord= (Order) obj;
-            //     srvRequest.ServicePointCode__c= ord.ServicePointCodeFormula__c;
-            //     srvRequest.Status__c= ord.Status;
-            //     srvRequest.CommoditySector__c= ord.CommodityFormula__c;
-            //     srvRequest.Type__c= 'Order';
-            //     if(ord.ServicePoint__c != null){
-            //         srvRequest.ServicePoint__c= ord.ServicePoint__c;
-            //     }else{
-            //         srvRequest.Account__c= ord.Account__c;
-            //         srvRequest.BillingProfile__c= ord.BillingProfile__c;
-            //     }
-                //srvRequest.ProcessType__c= getProcessType(ord.ProcessType__c, Object commoditySector);
-                ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(srvRequest);
-                wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = checkCompatibility(sReq);
-                //list of incompatible records
-                if(!result.incompatibilities.isEmpty()){
-                    compatibility = getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
-                    HDT_SRV_ServiceRequest.deleteRecord(sReq);
-                }
+            srvRequest.ProcessType__c= getProcessTypeCase(cs.Type, cs.CommodityFormula__c);
+            ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(srvRequest);
+            wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = checkCompatibility(sReq);
+            //list of incompatible records
+            if(!result.incompatibilities.isEmpty()){
+                compatibility = getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
+                HDT_SRV_ServiceRequest.deleteRecord(sReq);
+            }
                 
-                return compatibility;   
+            return compatibility;   
         }catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
@@ -121,7 +103,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         for(ServiceRequest__c c : incompatibilities){
             conflictIds.add(c.Id);
         }
-        for(ServiceRequest__c s : [SELECT Id,ProcessType__c, Order__c,Case__c FROM ServiceRequest__c WHERE Id IN :conflictIds]) {
+        for(ServiceRequest__c s : [SELECT Id, Order__c,Case__c,Type__c FROM ServiceRequest__c WHERE Id IN :conflictIds]) {
             if(s.Type__c=='Case'){
                 conflicts.add(s.Case__c);
             }else{
@@ -132,6 +114,41 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
 
         String[] conflictsString = new List<String>(conflicts);
         return String.join(conflictsString, ', ');
+    }
+
+    public static String getStatus(String status, String type){
+        String sts='';
+        if(type == 'Case'){
+            switch on status {
+                when 'New' {
+                    sts = 'Bozza';
+                }when 'In Lavorazione' {
+                    sts = 'In Lavorazione';
+                }when 'Sequenzializzato' {
+                    sts = 'Sequenzializzato';
+                }when 'Closed' {
+                    sts = 'Chiuso';
+                }
+            }
+        }else{
+            switch on status {
+                when 'Draft' {
+                    sts = 'Bozza';
+                }when 'In Lavorazione' {
+                    sts = 'In Lavorazione';
+                }when 'Activated' {
+                    sts = 'Chiuso';
+                }when 'Completed' {
+                    sts = 'Completato';
+                }when 'Annullato' {
+                    sts = 'Annullato';
+                }when 'Sequenzializzato' {
+                    sts = 'Sequenzializzato';
+                }
+            } 
+        }
+        
+        return sts;
     }
 
     private static String getProcessTypeOrder(String pType, Object commoditySector){

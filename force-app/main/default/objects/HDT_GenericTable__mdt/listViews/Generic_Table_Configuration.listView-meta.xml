@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Generic_Table_Configuration</fullName>
+    <columns>MasterLabel</columns>
+    <columns>DeveloperName</columns>
+    <columns>TableName__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Generic Table Configuration</label>
+    <language>en_US</language>
+</ListView>

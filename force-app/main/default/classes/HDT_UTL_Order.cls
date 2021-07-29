@@ -7,7 +7,7 @@ public inherited sharing class HDT_UTL_Order {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
-
+    private static HDT_SRV_Order ordSrv = new HDT_SRV_Order();
     /*public Order enrichOrder(Order newOrder){
 
         String servicePointFields = 'AnnualConsumption__c, SupplyType__c, WithdrawalClass__c, MarketOrigin__c';
@@ -49,5 +49,38 @@ public inherited sharing class HDT_UTL_Order {
 
 
     }*/
+    @auraEnabled
+    public static boolean calculateRateCategory(Order ord){
+        HDT_QR_Order orQr = new HDT_QR_Order();
+        Order o = orQr.getRecordById(ord.id);
+        List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c);
+        Map<String,String> mapCal = new Map<String,String>();
+        boolean res = false;
+        Order oUp = new Order();
+        oUp.id = o.id;
+        if(listRate != null && !listRate.isEmpty()){
+            for(RateCategory__c r: listRate){
+                if(mapCal.get(r.operatore__c) != null){
+                    mapCal.put(r.operatore__c,r.CalculatedValue__c);
+                }
+            }
+            if(mapCal.get('Diverso') != null){
+                oUp.rateCategory__c = mapCal.get('Diverso');
+                res = true;
+            }
+            else if(mapCal.get('N/A') != null){
+                oUp.rateCategory__c = mapCal.get('N/A');
+                res = true;
+            }
+            else if(mapCal.get('Uguale') != null){
+                oUp.rateCategory__c = mapCal.get('Uguale');
+                res =  true;
+            }
 
+        }
+        if(res){
+            ordSrv.updateRecord(oUp);
+        }
+        return res;
+    }
 }

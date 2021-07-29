@@ -18,6 +18,25 @@ public inherited sharing class HDT_UTL_SelfReadings {
         public String metadataRecordName;
 
     }
+
+    // Restituisce il numero di registri su cui è presente una lettura.
+    // Si assume che la lettura in input non sia su commodity Gas.
+    public static Integer getRegistersCount(Reading__c reading) {
+        if (reading == null) {
+            return 0;
+        }
+
+        Integer registersCount = 0;
+        for (Integer i = 1; i <= 9; i++) { // TODO WAVE 2|3: estendere a 12?
+            List<String> indexParam = new List<String> { String.valueOf(i) };
+            Decimal readingValue = (Decimal) reading.get(String.format('ReadingValue{0}__c', indexParam));
+            if (readingValue != null) {
+                registersCount++;
+            }
+        }
+
+        return registersCount;
+    }
     
     @InvocableMethod(label = 'isProcessReading')
     public static List<Boolean> isProcessReading(List<HDT_UTL_SelfReadingsFlowInputs> inputs) {
@@ -113,6 +132,10 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.IntegrationId__c = request.integrationId;
         c.MeterCode__c = request.serialNumber;
         c.ReadingDate__c = request.readingDate;
+
+        HDT_QR_CausalCodeCalculation causalCodeHandler = new HDT_QR_CausalCodeCalculation();
+        HDT_CausalCodeCalculation__mdt causalCodeMdt = causalCodeHandler.calculateCausalCode(c.Cluster__c, c.Type, '', request.commodity);
+        c.CausalCode__c = causalCodeMdt.CausalCode__c;
 
         switch on request.outcome {
             when 'OK' {

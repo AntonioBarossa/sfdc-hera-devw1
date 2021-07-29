@@ -102,31 +102,62 @@
         let DocumentLow80 = component.find('DocumentLow80').get('v.value');
         let AutorizationVolturaThirdTrader = component.find('AutorizationVolturaThirdTrader').get('v.value');
 
-        // order.CILegalRepresentative__c = CILegalRepresentative;
-        order.CIAccoutn__c = CIAccoutn;
-        order.QuickQuote__c = QuickQuote;
-        order.ChamberCommerceRegistration__c = ChamberCommerceRegistration;
-        order.Instance326__c = Instance326;
-        order.DocumentLow80__c = DocumentLow80;
-        order.AutorizationVolturaThirdTrader__c = AutorizationVolturaThirdTrader;
-        order.Id = component.get("v.recordId");
-        component.set("v.ordOBJ",order);
-        var action = component.get("c.saveValidation");
-        action.setParams({'ord': component.get("v.ordOBJ")});
-        action.setCallback(this,function(response){
-        	var state = response.getState();
-            if (state === "SUCCESS") {
-               console.log("HOLA");
-               $A.get("e.force:closeQuickAction").fire();
-               $A.get('e.force:refreshView').fire();  
-            }
-        });
-        $A.enqueueAction(action);          
-        //$A.get("e.force:closeQuickAction").fire();
+        let checkArray = [CIAccoutn, QuickQuote, ChamberCommerceRegistration, Instance326, DocumentLow80, AutorizationVolturaThirdTrader];
+
+        console.log('checkArray: ' + checkArray);
+        console.log('checkArray results : ' + checkArray.includes('Non Validato'));
+
+        if (checkArray.includes('Non Validato')) {
+            component.set("v.notValid", true);
+        } else {
+            // order.CILegalRepresentative__c = CILegalRepresentative;
+            order.CIAccoutn__c = CIAccoutn;
+            order.QuickQuote__c = QuickQuote;
+            order.ChamberCommerceRegistration__c = ChamberCommerceRegistration;
+            order.Instance326__c = Instance326;
+            order.DocumentLow80__c = DocumentLow80;
+            order.AutorizationVolturaThirdTrader__c = AutorizationVolturaThirdTrader;
+            order.Id = component.get("v.recordId");
+            component.set("v.ordOBJ",order);
+            var action = component.get("c.saveValidation");
+            action.setParams({'ord': component.get("v.ordOBJ")});
+            action.setCallback(this,function(response){
+                var state = response.getState();
+                if (state === "SUCCESS") {
+                console.log("HOLA");
+                $A.get("e.force:closeQuickAction").fire();
+                $A.get('e.force:refreshView').fire();  
+                }
+            });
+            $A.enqueueAction(action);          
+            //$A.get("e.force:closeQuickAction").fire();
+        }
     },
 
     handleCancel: function(component, event, helper) {
         //close the modal
         $A.get("e.force:closeQuickAction").fire();
+    },
+
+    handleDialogResponse: function(component, event, helper){
+        if(event.getParam('status') == true){
+            console.log(component.get("v.recordId"));
+            var action = component.get("c.cancelOrder");
+            action.setParams({'recordId': component.get("v.recordId")});
+            action.setCallback(this,function(response){
+                var state = response.getState();
+                console.log("first step");
+                if (state === "SUCCESS") {
+                    var res = response.getReturnValue();
+                    component.set("v.notValid", false);
+                    $A.get("e.force:closeQuickAction").fire();
+                    $A.get('e.force:refreshView').fire();  
+                }
+                component.set("v.HideSpinner",false);
+            });
+            $A.enqueueAction(action);  
+        } else {
+            component.set("v.notValid", false);
+        }
     }
 })

@@ -29,9 +29,10 @@
                     </div>
                     <div class="slds-grid">
                         <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                            <lightning-input-field field-name="Tipology__c"></lightning-input-field>
+                            <lightning-input-field field-name="Tipology__c" onchange={handleType}>
+                            </lightning-input-field>
                         </div>
-                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small parentIdField">
                             <lightning-input-field field-name="ParentId"></lightning-input-field>
                         </div>
                     </div>
@@ -78,6 +79,16 @@
                             <lightning-input-field field-name="Description"></lightning-input-field>
                         </div>
                     </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="CampaignEligibilityGroup__c"></lightning-input-field>
+                        </div>
+                        <template if:true={userRoleBackOffice}>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="CompanyOwner__c"></lightning-input-field>
+                            </div>
+                        </template>
+                    </div>
 
                     <template if:true={campaignInboundFields}>
                         <div class="slds-grid slds-wrap">
@@ -94,7 +105,7 @@
                         <div class="slds-grid slds-wrap">
                             <div class="reitekField slds-col slds-size_1-of-2 slds-p-around--x-small">
                                 <lightning-input-field field-name="ReitekIntegrationTechnology__c"
-                                    required={reitekFieldRequired}>
+                                    required={reitekFieldRequired} onchange={handleReitek}>
                                 </lightning-input-field>
                             </div>
                         </div>
@@ -154,10 +165,59 @@
                             <div class="slds-grid">
                                 <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
                                     <lightning-input-field field-name="GenerationPeriod__c"
-                                        required={recurringCampaignFieldsRequired} onchange={handleGenerationPeriodChange}></lightning-input-field>
+                                        required={recurringCampaignFieldsRequired}
+                                        onchange={handleGenerationPeriodChange}></lightning-input-field>
                                 </div>
                             </div>
                         </lightning-card>
+                    </template>
+
+                    <template if:true={campaignCommercialCodeFields}>
+                        <lightning-card title="Gestione Codici Commerciali" class="slds-col slds-size_1-of-1">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small codeManagementModelField">
+                                    <lightning-input-field field-name="CodeManagementModel__c"
+                                        onchange={handleChangeCodeManagementModel}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                    <lightning-input-field field-name="CodeGenerationRule__c"
+                                        onchange={handleChangeCodeGenerationRule}></lightning-input-field>
+                                </div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                    <lightning-input-field field-name="PrefixCode__c"></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                    <lightning-input-field field-name="CodeValidityEndDate__c"></lightning-input-field>
+                                </div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                    <lightning-input-field field-name="MaxNumberEECodeUse__c"></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                    <lightning-input-field field-name="MaxNumberGASCodeUse__c"></lightning-input-field>
+                                </div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                    <lightning-input-field field-name="MaxNumberVASCodeUse__c"></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                    <lightning-input-field field-name="CodeConventionQuantity__c">
+                                    </lightning-input-field>
+                                </div>
+                            </div>
+                        </lightning-card>
+                    </template>
+
+                    <template if:true={paperCampaignFields}>
+                        <lightning-input-field field-name="PaperCampaignParameter__c"
+                            class="slds-hide paperCampaignParameterField"></lightning-input-field>
+                        <c-hdt-paper-campaign-fields paper-record-id={paperRecId}
+                            onrecordsubmitted={handleRecordSubmitted} onerroroccurred={handleErrorOccurred}>
+                        </c-hdt-paper-campaign-fields>
                     </template>
                     <div class="slds-col slds-size_1-of-1  slds-p-around--small rightAlign slds-card__footer">
                         <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update"
