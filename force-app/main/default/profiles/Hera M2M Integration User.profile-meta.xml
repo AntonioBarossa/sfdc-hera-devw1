@@ -29751,6 +29751,9 @@
         <layout>SiebelActivity__x-SiebelActivity Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>SiebelDocumentActivity__x-SiebelDocumentActivity Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>SiebelContact__x-SiebelContact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
