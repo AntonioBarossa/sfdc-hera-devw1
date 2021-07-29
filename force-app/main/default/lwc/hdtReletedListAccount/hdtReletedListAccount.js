@@ -31,7 +31,7 @@ const columns = [
     }},
 ];
 
-
+const VAR_RECORDTYPEID='012000000000000AAA';
 export default class HdtReletedListAccount  extends NavigationMixin(LightningElement)  {
     @api recordId;
     @api showCompanyOwner = false;
@@ -103,7 +103,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
         });
     }
     
-    @wire(getPicklistValues, { recordTypeId: '012000000000000AAA' ,fieldApiName: PHONE_PREFIX })
+    @wire(getPicklistValues, { recordTypeId: VAR_RECORDTYPEID ,fieldApiName: PHONE_PREFIX })
     phonePrefixGetOptions({error, data}) {
         if (data) {
             if(data.defaultValue !=null){
@@ -112,7 +112,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
             }
         }
     };
-    @wire(getPicklistValues, { recordTypeId: '012000000000000AAA' ,fieldApiName: MOBILEPHONE_PREFIX })
+    @wire(getPicklistValues, { recordTypeId: VAR_RECORDTYPEID ,fieldApiName: MOBILEPHONE_PREFIX })
     mobilePhonePrefixGetOptions({error, data}) {
         if (data) {
             if(data.defaultValue !=null){
@@ -124,13 +124,13 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
     
     
     
-    @wire(getPicklistValues, { recordTypeId: '012000000000000AAA' ,fieldApiName: GENDER })
+    @wire(getPicklistValues, { recordTypeId: VAR_RECORDTYPEID ,fieldApiName: GENDER })
     genderOptions;
     
-    @wire(getPicklistValues, { recordTypeId: '012000000000000AAA' ,fieldApiName: PROFESSION })
+    @wire(getPicklistValues, { recordTypeId: VAR_RECORDTYPEID ,fieldApiName: PROFESSION })
     professionOptions;
     
-    @wire(getPicklistValues, { recordTypeId: '012000000000000AAA' ,fieldApiName: EDUCATIONALQUALIFICATION })
+    @wire(getPicklistValues, { recordTypeId: VAR_RECORDTYPEID ,fieldApiName: EDUCATIONALQUALIFICATION })
     educationalOptions;
     
     
