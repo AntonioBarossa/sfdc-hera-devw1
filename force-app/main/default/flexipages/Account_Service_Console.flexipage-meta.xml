@@ -28,7 +28,7 @@
                             <value>Account.cmor</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.Scheda_Cliente</value>
+                            <value>Account.HDT_PrintAccount</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
