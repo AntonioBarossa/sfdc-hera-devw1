@@ -100,7 +100,10 @@ public inherited sharing class HDT_QR_Case {
         List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
         try{
             activities = [SELECT Id,
+            OwnedByUser__c,
+            OwnerId,
             wrts_prcgvr__Status__c,
+            wrts_prcgvr__ActivityTemplate__r.Name,
             Status__c
             FROM wrts_prcgvr__Activity__c
             WHERE wrts_prcgvr__Status__c = 'Not Started'
