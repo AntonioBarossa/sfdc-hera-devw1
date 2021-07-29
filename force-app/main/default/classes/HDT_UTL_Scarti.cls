@@ -189,9 +189,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
             for(Account singleAccount: listAccounts){
                 if(activity.BPCode__c==singleAccount.CustomerCode__c){
                     activity.Account__c=singleAccount.Id;
-                    if(activity.Type__c.equalsIgnoreCase('Canone RAI')){
+                    if('Canone RAI'.equalsIgnoreCase(activity.Type__c)){
                         activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
-                    }else if(activity.Type__c.equalsIgnoreCase('Bonus sociale')){
+                    }else if('Bonus sociale'.equalsIgnoreCase(activity.Type__c)){
                         activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
                     }
                 }

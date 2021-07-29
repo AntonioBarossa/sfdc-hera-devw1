@@ -31900,6 +31900,10 @@
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_Scarti</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Scarto</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_Sportello</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_Sportello</recordType>
     </layoutAssignments>
