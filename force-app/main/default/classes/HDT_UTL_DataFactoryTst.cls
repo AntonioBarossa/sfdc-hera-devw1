@@ -578,7 +578,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return tstBillingProfileList;
 	}
 
-<<<<<<< HEAD
 	/**
     * @author Andrea Arosio (andrea.arosio@webresults.it)
     * @date 22/07/2021
@@ -727,8 +726,11 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			depM.MatchingField__c = matching;
 
 			depMatrixList.add(depM);
+		}
 
-=======
+		return depMatrixList;
+	}
+
 	public static List<SBQQ__Quote__c> createQuote (Integer amount, Boolean doInsert, Id orderId, Id opportunityId, Id saleId, String type) {
 
 		List<SBQQ__Quote__c> quoteList = new List<SBQQ__Quote__c>();
@@ -816,21 +818,13 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			testContentVers.VersionData=tempBlob;
 
 			tstContentVersList.add(testContentVers);
->>>>>>> DEVW1
 		}
 
 		if (doInsert){
 
-<<<<<<< HEAD
-			insert depMatrixList;
-		}
-
-		return depMatrixList;
-=======
 			insert tstContentVersList;
 		}
 
 		return tstContentVersList;
->>>>>>> DEVW1
 	}
 }
