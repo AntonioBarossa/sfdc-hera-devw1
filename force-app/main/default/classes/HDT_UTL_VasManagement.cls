@@ -88,8 +88,8 @@ public with sharing class HDT_UTL_VasManagement {
     }
 
     private static String getCompanyCode(String salesCompany){
-        List<HDT_HeraCompany__mdt> companies = [select SalesCompany__c from HDT_HeraCompany__mdt where SalesCompany__c=:salesCompany WITH SECURITY_ENFORCED];
-        return companies.isEmpty()? null : companies?.get(0)?.SalesCompany__c;
+        List<HDT_HeraCompany__mdt> companies = [select CompanyCode__c from HDT_HeraCompany__mdt where SalesCompany__c=:salesCompany WITH SECURITY_ENFORCED];
+        return companies.isEmpty()? null : companies?.get(0)?.CompanyCode__c;
     }
 
     public virtual class HDT_WRP_VasReq extends HDT_WS_Request{
