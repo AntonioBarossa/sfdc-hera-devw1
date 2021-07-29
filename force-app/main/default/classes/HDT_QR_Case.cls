@@ -6,6 +6,11 @@
 */
 
 public inherited sharing class HDT_QR_Case {
+
+    public List<Case> getRecordByPracticeNumber(String caseNumber){
+        return [SELECT Order__r.Id,Asset.Id,Subscription__r.Id FROM Case
+        WHERE CaseNumber = :caseNumber WITH SECURITY_ENFORCED LIMIT 1];
+    }
     
     public Case getRecordById(String Id) {
         return [

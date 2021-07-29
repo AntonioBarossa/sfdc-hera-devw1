@@ -2,8 +2,8 @@
  * @description       : Handle Vas notify requests after activation/deactivation callouts
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-07-28
- * @last modified by  : gabriele.rota@webresults.it
+ * @last modified on  : 29-07-2021
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class HDT_UTL_NotifVas {
 
@@ -144,8 +144,7 @@ public with sharing class HDT_UTL_NotifVas {
                 }
             }
             when 'Case' {
-                List<Case> cases = [SELECT Order__r.Id,Asset.Id,Subscription__r.Id FROM Case
-                    WHERE CaseNumber = :sObjectKey WITH SECURITY_ENFORCED LIMIT 1];
+                List<Case> cases = new HDT_QR_Case().getRecordByPracticeNumber(sObjectKey);
                 if (!cases.isEmpty()) {
                     sObjMap.put('Case', cases.get(0));
                 }
