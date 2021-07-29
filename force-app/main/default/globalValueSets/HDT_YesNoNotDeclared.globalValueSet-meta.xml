@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>No</fullName>
+        <fullName>NO</fullName>
         <default>false</default>
-        <label>No</label>
+        <label>NO</label>
     </customValue>
     <customValue>
         <fullName>Non espresso</fullName>
@@ -11,9 +11,9 @@
         <label>Non espresso</label>
     </customValue>
     <customValue>
-        <fullName>Si</fullName>
+        <fullName>SI</fullName>
         <default>false</default>
-        <label>Si</label>
+        <label>SI</label>
     </customValue>
     <description>Si / No / Non espresso</description>
     <masterLabel>Si / No / Non espresso</masterLabel>
