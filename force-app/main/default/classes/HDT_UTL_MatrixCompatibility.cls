@@ -116,7 +116,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         return String.join(conflictsString, ', ');
     }
 
-    private static String getStatus(String status, String type){
+    public static String getStatus(String status, String type){
         String sts='';
         if(type == 'Case'){
             switch on status {

@@ -3,7 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import save from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.save';
 import saveDraft from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.saveDraft';
 import cancel from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.cancel';
-
+import calculateRate from '@salesforce/apex/HDT_UTL_Order.calculateRateCategory';
 export default class hdtChildOrderProcessActions extends LightningElement {
     @api order;
     @api lastStepNumber;
@@ -18,7 +18,8 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     get cancellationOptions() {
         return [
             { label: 'Pratica errata', value: 'Pratica errata' },
-            { label: 'Annullamento da cliente', value: 'Annullamento da cliente' }
+            { label: 'Annullamento da cliente', value: 'Annullamento da cliente' },
+            { label: 'Processo incompatibile', value: 'Processo incompatibile' }
         ];
     }
     
@@ -109,6 +110,16 @@ export default class hdtChildOrderProcessActions extends LightningElement {
             orderToSave = this.order;
         }
 
+        calculateRate({ord: orderToSave}).then(data2 =>{
+            if(!data2){
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Warning',
+                    message: 'Non è stato possibile calcolare la RateCategory',
+                    variant: 'warning'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+            }
+
         save({order: orderToSave}).then(data =>{
             this.loading = false;
 
@@ -147,6 +158,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                 mode: 'sticky'
             });
             this.dispatchEvent(toastErrorMessage);
+        });
         });
     }
 

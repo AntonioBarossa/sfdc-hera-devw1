@@ -3,4 +3,7 @@ public inherited sharing class HDT_TRH_IndividualEmailResult extends HDT_TRH_Tri
     public override void beforeInsert(){
         HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
     }
+    public override void afterUpdate(){
+        HDT_UTL_Scarti.createScartoForMarketingCloud(trigger.new);
+    }
 }
