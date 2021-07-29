@@ -2,7 +2,7 @@
  * @description       : Handle Vas notify requests after activation/deactivation callouts
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-07-28
+ * @last modified on  : 2021-07-29
  * @last modified by  : gabriele.rota@webresults.it
 **/
 public with sharing class HDT_UTL_NotifVas {
@@ -277,10 +277,6 @@ public with sharing class HDT_UTL_NotifVas {
 
         if (String.isNotBlank(requestMap.get('DATA_CESSAZIONE'))) {
             targetRecord.put('TerminationDate__c', Date.valueOf(requestMap.get('DATA_CESSAZIONE')) );
-        }
-
-        if (String.isNotBlank(requestMap.get('DISATTIVAZIONE_COMPLETATA'))) {
-            targetRecord.put('CompletedDeactivation__c', Boolean.valueOf(requestMap.get('DISATTIVAZIONE_COMPLETATA')) );
         }
     }
 }
