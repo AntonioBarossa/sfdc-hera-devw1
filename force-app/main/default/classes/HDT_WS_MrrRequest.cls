@@ -91,14 +91,21 @@ global with sharing class HDT_WS_MrrRequest {
                     mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(request, mrrResponseItem);
                 }
             }
+
             if(requestBody.requests[0].header.fields.get(0).value == 'postsales'){
-                //INIZIO SVILUPPI EVERIS
-                mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(requestBody.requests[0]), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
-                mrrResponseItem.objects.clear();
-                postSalesRequest = requestBody.requests[0];
-                responseObject = hpsmSrv.handleInboundRequest(postSalesRequest);
-                mrrResponseItem.objects.add(responseObject);
-                //FINE SVILUPPI EVERIS
+
+                if (requestBody.requests[0].header.requestType=='NOTIF_VAS') {
+                    mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(requestBody.requests[0], mrrResponseItem);
+                }
+                else {
+                    //INIZIO SVILUPPI EVERIS
+                    mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(requestBody.requests[0]), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+                    mrrResponseItem.objects.clear();
+                    postSalesRequest = requestBody.requests[0];
+                    responseObject = hpsmSrv.handleInboundRequest(postSalesRequest);
+                    mrrResponseItem.objects.add(responseObject);
+                    //FINE SVILUPPI EVERIS
+                }
             }
             
         } catch (JSONException jsonEx) {

@@ -6,4 +6,8 @@
         <field>CompanyCode__c</field>
         <value xsi:type="xsd:string">7030</value>
     </values>
+    <values>
+        <field>SalesCompany__c</field>
+        <value xsi:type="xsd:string">EstEnergy S.p.A.</value>
+    </values>
 </CustomMetadata>
