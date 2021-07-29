@@ -75,6 +75,9 @@ public with sharing class HDT_SRV_SalesHandler {
                         Order ord = new Order();
                         ord.Id = ordRetrieved.Id;
                         ord.Phase__c = mapRequestFields.get('FASE');
+                        //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
+                        //ord.ExternalUserCompany__c = mapRequestFields.get('CMP');
+                        //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
 
                         switch on mapRequestFields.get('FASE') {
                             when 'Ammissibilità KO' {
@@ -132,6 +135,10 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.CausalCode__c = mapRequestFields.get('CODERR_ES');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+
+                                if(mapRequestFields.get('CODERR_ES') == '003' || mapRequestFields.get('CODERR_ES') == '103'){
+                                    ord.IsTechnicalTransfer__c = true;
+                                }
                             }
                             when 'Amm. Precheck OK SII' {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');

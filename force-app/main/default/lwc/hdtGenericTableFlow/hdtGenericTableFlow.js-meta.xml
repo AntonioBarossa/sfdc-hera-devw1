@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Generic Table (Flow)</masterLabel>
+    <description>Component to embed the Generic Table component</description>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <!--Inputs-->
+            <property name="saveButton" type="Boolean" label="Save Button" description="Enable Save Button" role="inputOnly"/>
+            <property name="labelSaveButton" type="String" label="Label Save Button" description="Label Save Button" role="inputOnly"/>
+            <property name="previousButton" type="Boolean" label="Previous Button" description="Enable Previous Button" role="inputOnly"/>
+            <property name="labelPreviousButton" type="String" label="Label Previous Button" description="Label Previous Button" role="inputOnly"/>
+            <property name="draftButton" type="Boolean" label="Draft Button" description="Enable Draft Button" role="inputOnly"/>
+            <property name="labelDraftButton" type="String" label="Label Draft Button" description="Label Draft Button" role="inputOnly"/>
+            <property name="cancelButton" type="Boolean" label="Cancel Button" description="Enable Cancel Button" role="inputOnly"/>
+            <property name="labelCancelButton" type="String" label="Label Cancel Button" description="Label Cancel Button" role="inputOnly"/>
+            <property name="tableName" type="String" label="Table Name" description="Name of the configuration" role="inputOnly"/>
+            <property name="searchKey" type="String" label="Search Key" description="Api Name of the search key" role="inputOnly"/>
+            <property name="searchTerm" type="String" label="Search Term" description="Value to look for the key" role="inputOnly"/>
+            <property name="maxRowSelect" type="String" label="Max Row Selection" description="Number of row that can be selected" role="inputOnly"/>
+            <!--Outputs-->
+            <property name="draft" type="Boolean" label="Draft" description="Draft branch" role="outputOnly"/>
+            <property name="cancel" type="Boolean" label="Cancel" description="Cancel branch" role="outputOnly"/>
+            <property name="recordId" type="String" label="RecordId" description="Record Id selected" role="outputOnly"/>
+            <property name="objName" type="String" label="Object Name" description="Object selected" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -202,9 +202,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         //INIT VARIABLE FOR NOTIFICATION ON CASE
         if(method.equalsIgnoreCase('esito_intermedio') || method.equalsIgnoreCase('esito_finale') || method.equalsIgnoreCase('AddAttivita')){
             if(String.isBlank(recordId) && String.isBlank(caseNumber)) throw new HDT_UTL_RichPassException('Required Field Missing: RecordId OR CaseNumber');
+            if(caseNumber != null && String.isNotBlank(caseNumber)){
+                caseNumber = caseNumber.replace('/','');
+            }
             caseParam = recordId != null? recordId:caseNumber;
             recordCase = hpsmQr.getCaseRecord(caseParam);
             currentCase.Id = recordCase.Id;
+            currentCase.Type = recordCase.Type;
             currentPhase = recordCase.Phase__c;
             quotationType = recordCase.QuotationType__c;
             nextPhase = reqWrp.requestMap.get('FASE');
@@ -329,6 +333,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     }
                 currentCase.Phase__c = type; 
             }
+            if(String.isNotBlank(type) && recordCase.Type.equalsIgnoreCase('Comunicazione Pagamento') && type.equalsIgnoreCase('Pratica Gestita')){
+                currentCase.Phase__c = 'Completata';
+            }
             if(String.isNotBlank(message)){
                 // Per il piano rate SAP manda TIPO_ATTIVITA=Paperless generato quando genera il codice bollettino paperless.
                 if(type.equalsIgnoreCase('Paperless generato')){
@@ -364,13 +371,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         return caseUpdate;
     }
     private void handleAfterNotify(Case currentCase, String storno, String activity){
+        currentCase = hpsmQr.getCaseRecord(currentCase.Id);
         if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII' || currentCase.Phase__c == 'Annullato'){
             currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Phase__c == 'Annullamento SII - Ricezione') {
             handlePassiveCancellation(currentCase, 'Case', storno, activity);
-        }else if(currentCase.Type == 'Allineamento Anagagrafica' && currentCase.Phase__c == 'Esito OK da SII'){
+        }else if(currentCase.Type == 'Allineamento Anagrafica' && currentCase.Phase__c == 'Esito OK da SII'){
             currentCase.Phase__c = 'Completata';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));

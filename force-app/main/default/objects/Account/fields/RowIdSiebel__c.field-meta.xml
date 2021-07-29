@@ -3,7 +3,7 @@
     <fullName>RowIdSiebel__c</fullName>
     <caseSensitive>false</caseSensitive>
     <description>Valorizzato solo per record migrati</description>
-    <externalId>false</externalId>
+    <externalId>true</externalId>
     <label>Row Id Siebel</label>
     <length>15</length>
     <required>false</required>

@@ -97,6 +97,13 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.InstallmentAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InstallmentAmount</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Passa_a_Da_Inviare</targetReference>
         </connector>
@@ -118,6 +125,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.InstallmentAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InstallmentAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -178,6 +192,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.InstallmentAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InstallmentAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -810,6 +831,12 @@
         <name>DataPrimaScadenza</name>
         <dataType>Date</dataType>
         <expression>DATEVALUE({!CaseInput.CreatedDate})+20</expression>
+    </formulas>
+    <formulas>
+        <name>InstallmentAmount</name>
+        <dataType>Currency</dataType>
+        <expression>{!Get_Case.AmountToPayInInstallments__c}/{!Get_Case.InstallmentNumberRequired__c}</expression>
+        <scale>2</scale>
     </formulas>
     <interviewLabel>Gestione Pagamenti - Piano Rateizzazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Piano Rateizzazione</label>

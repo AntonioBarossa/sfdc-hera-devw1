@@ -532,6 +532,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         System.debug('>>> responseCtrl > ' + String.valueOf(responseCtrl));
 
+        mulesoftResponse.bodyResponse = body;
+
         if(!responseCtrl.success){
             updateProductAfterSap(technicalOfferId, responseCtrl.message, 'ko');
             mulesoftResponse.success = false;
@@ -547,6 +549,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             mulesoftResponse.message = '';
 
             String errorMessage = '';
+            errorMessage += '[CODE: ' + mulesoftWsResponse.errorDetails[0].code + ']; DETAILS: ';
             for(Integer n=0; n < mulesoftWsResponse.errorDetails.size(); n++){
                 errorMessage += mulesoftWsResponse.errorDetails[n].message;
                 if(n < (mulesoftWsResponse.errorDetails.size()-1)){
@@ -563,7 +566,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         mulesoftResponse.success = true;
         mulesoftResponse.message = Label.HDT_OfferConfig_WS_Success + mulesoftWsResponse.keysap;
-        mulesoftResponse.bodyResponse = '{"newCode": "' + mulesoftWsResponse.keysap + '"}';
+        //mulesoftResponse.bodyResponse = '{"newCode": "' + mulesoftWsResponse.keysap + '"'}';
 
         return mulesoftResponse;
 

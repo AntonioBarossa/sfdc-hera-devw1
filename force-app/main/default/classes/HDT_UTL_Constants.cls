@@ -24,18 +24,41 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String MASSIVLOADER_PHASE_FILEPROCESSATO = 'File processato';
 
-    //Account RecordType
+    //Account RecordType Business
     @AuraEnabled
     public final String ACCOUNT_RECORDTYPE_DEVELOPERNAME_BUSINESS = 'HDT_RT_Business';
     @AuraEnabled
     public final String ACCOUNT_RECORDTYPEID_BUSINESS =
     Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(ACCOUNT_RECORDTYPE_DEVELOPERNAME_BUSINESS).getRecordTypeId();
 
+    //Account RecordType Residenziale
+    @AuraEnabled
+    public final String ACCOUNT_RECORDTYPE_DEVELOPERNAME_RESINDEZIALE = 'HDT_RT_Residenziale';
+    @AuraEnabled
+    public final String ACCOUNT_RECORDTYPEID_RESINDEZIALE =
+    Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(ACCOUNT_RECORDTYPE_DEVELOPERNAME_RESINDEZIALE).getRecordTypeId();
 
-    //Order RecordType
+
+    //Order RecordType Default
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Default';
     @AuraEnabled
     public final String ORDER_RECORDTYPEID_DEFAULT =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT).getRecordTypeId();
+
+
+    //Order RecordType Voltura
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA = 'HDT_RT_Voltura';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_VOLTURA =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA).getRecordTypeId();
+    
+
+    //Order RecordType OrderDossier
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER = 'HDT_RT_OrderDossier';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_ORDERDOSSIER =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER).getRecordTypeId();
 }

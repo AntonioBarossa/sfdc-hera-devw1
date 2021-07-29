@@ -206,6 +206,25 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             data.statoLettura = readingStatusMap.get(data.statoLettura);
             data.tipoLettura = readingTypeMap.get(data.tipoLettura);
             data.tipoNumeratore = numTypeMap.get(data.tipoNumeratore);
+
+            // In caso di lettura stornata, da as-is siebel gli unici campi da valorizzare sono: codiceContratto, apparecchiatura, dataLetturaPianificata, settoreMerceologico, letturaStornata
+            // Per cui tutti gli altri campi vanno sbiancati.
+            if (String.isNotBlank(data.letturaStornata)) {
+                data.campo = null;
+                data.posizioniPrecedentiLaVirgola = null;
+                data.decimali = null;
+                data.quantitaCalcolo = null;
+                data.tipoLettura = null;
+                data.categoriaLettura = null;
+                data.statoLettura = null;
+                data.consumoMedioGiornaliero = null;
+                data.giorniConsumo = null;
+                data.identificazioneNumeratore = null;
+                data.unitaDiMisura = null;
+                data.categoriaNumeratore = null;
+                data.tipoNumeratore = null;
+                data.motivazione = null;
+            }
         }
 
     }
@@ -230,6 +249,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         public String categoriaNumeratore;
         public String tipoNumeratore;
         public String motivazione;
+        public String letturaStornata;
     }
     
     public class HDT_WRP_EstrattoLettureResponse{

@@ -1,0 +1,36 @@
+<aura:component
+    controller="HDT_LC_ComfortQualityCallResult"
+    implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+    access="global">
+
+    <lightning:workspaceAPI aura:id="workspace"/>
+
+    <aura:attribute name="HideSpinner" type="Boolean" default="true"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <c:hdtOrdersForComfortQualityList activityId="{!v.recordId}" onresultevent="{!c.handleResultEvent}"></c:hdtOrdersForComfortQualityList>
+
+
+
+
+
+
+
+
+    <!-- <lightning:card > -->
+        <!-- <aura:set attribute="title">Esito comfort/quality call</aura:set> -->
+
+        <!-- <aura:renderif istrue="{!v.HideSpinner}">
+		    <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:renderif> -->
+        
+        <!-- <div class="slds-align_absolute-center" style="height:5rem"> -->
+            <!-- <aura:if isTrue="{!v.recordId}">
+                <c:hdtOrdersForComfortQualityList activityId="{!v.recordId}"></c:hdtOrdersForComfortQualityList>
+            </aura:if> -->
+        <!-- </div> -->
+
+    <!-- </lightning:card> -->
+
+</aura:component>	

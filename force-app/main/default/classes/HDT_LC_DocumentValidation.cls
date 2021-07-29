@@ -56,6 +56,7 @@ public inherited sharing class HDT_LC_DocumentValidation {
             } else {
                 ord.Phase__c = 'Documentazione Validata';
             }
+
         }
         System.debug('************:'+ord);
         orderSrv.updateRecord(ord);
@@ -63,5 +64,14 @@ public inherited sharing class HDT_LC_DocumentValidation {
         //return true;
         //Order ord = orderQr.getRecordById(recordId);
         //return ('Da Inviare'.equalsIgnoreCase(ord.phase__c) || 'In Attesa Validazione'.equalsIgnoreCase(ord.phase__c));
+    }
+
+    @AuraEnabled
+    public static void cancelOrder(String recordId){
+        orderSrv.updateRecord(new Order(
+            Id = recordId,
+            Status = 'Annullato', //Chiuso
+            Phase__c = 'Annullato'
+        ));
     }
 }

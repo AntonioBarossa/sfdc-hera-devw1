@@ -20,7 +20,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track accountId;
     @track documents;
     @api params;
-
+    @api disableinput;
     buttonStatefulState = false;
     @track enableEdit = false;
     @track emailRequired;
@@ -41,6 +41,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track showAddress = false;
     @track documents;
     @track tipoPlico='';
+
     connectedCallback(){
         try{
             if(this.params){
@@ -61,6 +62,9 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.sendMode = inputWrapper.sendMode;
                 if(inputWrapper.tipoPlico){
                     this.tipoPlico = inputWrapper.tipoPlico;
+                }
+                if(inputWrapper.enableEdit){
+                    this.enableEdit = true;
                 }
                 if(this.context.localeCompare('Order') === 0 || (this.quoteType != null && this.quoteType != ''  && this.quoteType.localeCompare('Analitico') === 0)){
                     console.log('Inside if');
@@ -255,6 +259,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         console.log('OK');
                         this.buttonStatefulState = !this.buttonStatefulState
                         this.enableEdit = this.buttonStatefulState;
+                        this.disableinput = true;
                         this.returnWrapper.signMode = modFirma.value;
                         this.returnWrapper.sendMode = modSpedizione.value;
                         this.returnWrapper.phone = telefono.value;

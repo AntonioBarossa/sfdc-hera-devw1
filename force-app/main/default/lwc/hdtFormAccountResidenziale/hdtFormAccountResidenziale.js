@@ -417,15 +417,27 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                     getFromFiscalCode({
                         fiscalCodes : this.fiscalCode.value.replace(/ /g,"")
                     }).then((response) => {
-                        let fiscData= response;
-                        if(this.gender === undefined || this.gender.trim()===''){
-                            this.gender= fiscData.gender;
+                        var fiscData= response;
+                        console.log('fiscData ' +JSON.stringify(fiscData));
+                        console.log('fiscalCode ' + this.fiscalCode.value);
+                        var keyCode= this.fiscalCode.value;
+                        console.log('fiscData[keyCode].gender' + fiscData[keyCode].gender);
+                        if(!this.gender  || this.gender.trim()==='' ){
+                            this.gender=fiscData[keyCode].gender;
+                            console.log('gender : ' + this.gender);
+                            //this.gender= fiscData.gender;
                         }
-                        if(this.birthDate === undefined || this.birthDate.trim()===''){
-                            this.birthDate= fiscData.birthDate;
+                        if(!this.birthDate || this.birthDate.trim()===''){
+                            this.birthDate=fiscData[keyCode].birthDate;
+                            console.log('birthDate : ' + this.birthDate);
+
+                            //this.birthDate= fiscData.birthDate;
                         }
-                        if(this.birthPlace === undefined || this.birthPlace.trim()===''){
-                            this.birthPlace= fiscData.birthPlace;
+                        if(!this.birthPlace || this.birthPlace.trim()===''){
+                            this.birthPlace=fiscData[keyCode].birthPlace;
+                            console.log('birthPlace : ' + this.birthPlace);
+
+                            //this.birthPlace= fiscData.birthPlace;
                         }
                         
                         let acc= {
