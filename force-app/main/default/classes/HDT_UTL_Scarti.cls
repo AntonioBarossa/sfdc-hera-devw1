@@ -5,10 +5,10 @@
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
 global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.IApexAction{
-    static final string CANONERAI_TEMPLATENAME='CBS_CAR002__CANONE_RAI';
-    static final string BONUSSOCIALE_TEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
-    static final string SCARTODOCUMENTALE_POSTSALES_TEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
-    static final string SCARTODOCUMENTALE_SALES_TEMPLATENAME='CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
+    static final string CANONERAITEMPLATENAME='CBS_CAR002__CANONE_RAI';
+    static final string BONUSSOCIALETEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
+    static final string SCARTODOCUMENTALEPOSTSALESTEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
+    static final string SCARTODOCUMENTALESALESTEMPLATENAME='CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
 
     static final Map<String, String> TRACCIAMENTOHEROKUSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER006__ESITO_NON_ELABORATO_DA_DLSII_SALES',
                                                                                                      'Esito non elaborato' => 'CBS_HER007__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_SALES',
@@ -176,7 +176,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         }
 
         map<string,Id> mapActivityTemplates= new map<string,Id>();
-        list<wrts_prcgvr__ActivityTemplate__c> activityTemplates=[SELECT Id, Name FROM wrts_prcgvr__ActivityTemplate__c WHERE Name =: CANONERAI_TEMPLATENAME OR Name=: BONUSSOCIALE_TEMPLATENAME];
+        list<wrts_prcgvr__ActivityTemplate__c> activityTemplates=[SELECT Id, Name FROM wrts_prcgvr__ActivityTemplate__c WHERE Name =: CANONERAITEMPLATENAME OR Name=: BONUSSOCIALETEMPLATENAME];
         for(wrts_prcgvr__ActivityTemplate__c singleTemplate: activityTemplates){
             mapActivityTemplates.put(singleTemplate.Name,singleTemplate.Id);
         }
@@ -187,9 +187,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 if(activity.BPCode__c==singleAccount.CustomerCode__c){
                     activity.Account__c=singleAccount.Id;
                     if(activity.Type__c.equalsIgnoreCase('Canone RAI')){
-                        activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAI_TEMPLATENAME); 
+                        activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
                     }else if(activity.Type__c.equalsIgnoreCase('Bonus sociale')){
-                        activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALE_TEMPLATENAME); 
+                        activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
                     }
                 }
             }
@@ -231,25 +231,25 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
 
         if(toHandle.size()!=0){
             list<wrts_prcgvr__Activity__c> insertedActivities= new list<wrts_prcgvr__Activity__c>();
-            wrts_prcgvr.Interfaces_1_1.IActivityIntegration ActivityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+            wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)wrts_prcgvr.VersionManager.newClassInstance('activityIntegration');
             list<wrts_prcgvr__ActivityTemplate__c> templates=[SELECT id, name, wrts_prcgvr__Code__c 
                                                                 FROM wrts_prcgvr__ActivityTemplate__c 
-                                                                WHERE name=: SCARTODOCUMENTALE_POSTSALES_TEMPLATENAME 
-                                                                OR name=: SCARTODOCUMENTALE_SALES_TEMPLATENAME];
+                                                                WHERE name=: SCARTODOCUMENTALEPOSTSALESTEMPLATENAME 
+                                                                OR name=: SCARTODOCUMENTALESALESTEMPLATENAME];
             map<string,string> templateCodes= new Map<String,string>();                                             
             for(wrts_prcgvr__ActivityTemplate__c template: templates){
-                if(SCARTODOCUMENTALE_POSTSALES_TEMPLATENAME.equalsIgnoreCase(template.name)){
+                if(SCARTODOCUMENTALEPOSTSALESTEMPLATENAME.equalsIgnoreCase(template.name)){
                     templateCodes.put('postSalesTemplate',template.wrts_prcgvr__Code__c);    
-                }else if(SCARTODOCUMENTALE_SALES_TEMPLATENAME.equalsIgnoreCase(template.name)){
+                }else if(SCARTODOCUMENTALESALESTEMPLATENAME.equalsIgnoreCase(template.name)){
                     templateCodes.put('salesTemplate',template.wrts_prcgvr__Code__c);    
                 }
             }
 
             for(SObject scarto: toHandle){
                 if(String.isBlank((string)scarto.get('OrderID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) ActivityIntegration.createFromTemplate(templateCodes.get('salesTemplate'), new Map<String,Object>{'objectId' => scarto.get('CaseID__c')}));
+                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('salesTemplate'), new Map<String,Object>{'objectId' => scarto.get('CaseID__c')}));
                 }else if(String.isBlank((string)scarto.get('CaseID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) ActivityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => scarto.get('OrderID__c')}));
+                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => scarto.get('OrderID__c')}));
                 }
             }
             HDT_UTL_DatabaseService.insertSObject(insertedActivities);
