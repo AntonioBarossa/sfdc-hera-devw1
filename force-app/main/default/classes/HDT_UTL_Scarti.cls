@@ -4,12 +4,23 @@
  * @description HDT_UTL_Scarti - Utility scarti
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
-
 global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.IApexAction{
     static final string CANONERAI_TEMPLATENAME='CBS_CAR002__CANONE_RAI';
     static final string BONUSSOCIALE_TEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
     static final string SCARTODOCUMENTALE_POSTSALES_TEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
     static final string SCARTODOCUMENTALE_SALES_TEMPLATENAME='CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
+
+    static final Map<String, String> TRACCIAMENTOHEROKUSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER006__ESITO_NON_ELABORATO_DA_DLSII_SALES',
+                                                                                                     'Esito non elaborato' => 'CBS_HER007__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_SALES',
+                                                                                                     'Eliminato esito in scarto' => 'CBS_HER008__ELIMINATO_ESITO_IN_SCARTO_SALES',
+                                                                                                     'Errore invio a SAP' => 'CBS_HER009__ERRORE_INVIO_A_SAP_SALES',
+                                                                                                     'Errore determinazione variante SAP' => 'CBS_HER010__ERRORE_DETERMINAZIONE_VARIANTE_SAP_SALES'};
+
+    static final Map<String, String> TRACCIAMENTOHEROKUPOSTSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER001__ESITO_NON_ELABORATO_DA_DLSII_POSTSALES',
+																						                 'Esito non elaborato' => 'CBS_HER002__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_POSTSALES',
+																						                 'Eliminato esito in scarto' => 'CBS_HER003__ELIMINATO_ESITO_IN_SCARTO_POSTSALES',
+																						                 'Errore invio a SAP' => 'CBS_HER004__ERRORE_INVIO_A_SAP_POSTSALES',
+																						                 'Errore determinazione variante SAP' => 'CBS_HER005__ERRORE_DETERMINAZIONE_VARIANTE_SAP_POSTSALES'};
 
     global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
@@ -32,30 +43,96 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         return null;
     }
 
-    public class HDT_WRP_AttivitaAnonimaData{
+    public class HDT_WRP_AttivitaTracciaturaData{
         public String errorMessage {get; set;}
         public String utenza {get; set;}
         public String dataEvento {get; set;}
-        public HDT_WRP_AttivitaAnonimaData(){}
+        public String codPraticaUtente {get; set;}
+        public String recordId {get; set;}
+        public String tipoAttivita {get; set;}
+        public String method {get; set;}
+        public String processCategory {get; set;}
+        public HDT_WRP_AttivitaTracciaturaData(){}
     }
 
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 22/07/2021
-    * @description HDT_UTL_Scarti.checkActivityCreation - Check on activity creation
+    * @description HDT_UTL_Scarti.getTemplatesMapByName - returns a map <templateName, templateObj>
+    * @param1 recordId - Id of a record
+    * @return Map<String, wrts_prcgvr__ActivityTemplate__c> name per template
+    */
+    public static Map<String, wrts_prcgvr__ActivityTemplate__c> getTemplatesMapByName(Set<String> names){
+        Map<String, wrts_prcgvr__ActivityTemplate__c> returnMap = new Map<String, wrts_prcgvr__ActivityTemplate__c>();
+        List<wrts_prcgvr__ActivityTemplate__c> queryResult = [SELECT Name,
+                                                                     wrts_prcgvr__Assignees__c,
+                                                                     wrts_prcgvr__Code__c,
+                                                                     wrts_prcgvr__DueDateField__c,
+                                                                     wrts_prcgvr__DueDateUnit__c,
+                                                                     wrts_prcgvr__DueDateValue__c,
+                                                                     wrts_prcgvr__FieldsTemplate__c,
+                                                                     wrts_prcgvr__IsRequired__c,
+                                                                     wrts_prcgvr__ObjectType__c,
+                                                                     wrts_prcgvr__Priority__c,
+                                                                     wrts_prcgvr__Subject__c
+                                                              FROM wrts_prcgvr__ActivityTemplate__c
+                                                              WHERE Name IN :names];
+
+        for(wrts_prcgvr__ActivityTemplate__c curTemplate : queryResult) returnMap.put(curTemplate.Name, curTemplate);
+        return returnMap;
+    }
+
+    /**
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
+    * @date 22/07/2021
+    * @description HDT_UTL_Scarti.createAttivitaTracciaturaHeroku - Creates attività di tracciamento Heroku
     * @param1 recordId - Id of a record
     * @return void
     */
-    public static void createAttivitaAnonimeHeroku(List<HDT_WRP_AttivitaAnonimaData> sourceData){        
+    public static void createAttivitaTracciaturaHeroku(List<HDT_WRP_AttivitaTracciaturaData> sourceData){
         List<wrts_prcgvr__Activity__c> toInsert = new List<wrts_prcgvr__Activity__c>();
-        for(HDT_WRP_AttivitaAnonimaData curData : sourceData){
-            wrts_prcgvr__Activity__c newAct = new wrts_prcgvr__Activity__c();
-            newAct.Type__c = 'Richiesta non identificata';
-            newAct.CreatedByUsername__c = curData.utenza;
-            //newAct.StartDate__c = curData.dataEvento;
-            //newAct.DiscardDescription__c = curData.errorMessage;
-            toInsert.add(newAct);
+        
+        Set<String> tracciamentoTemplateNames = new Set<String>(TRACCIAMENTOHEROKUSALES.values());
+        tracciamentoTemplateNames.addAll(TRACCIAMENTOHEROKUPOSTSALES.values());
+        Map<String, wrts_prcgvr__ActivityTemplate__c> templatesMap = getTemplatesMapByName(tracciamentoTemplateNames);
+        
+        Map<String, List<HDT_WRP_AttivitaTracciaturaData>> dataPerTemplateCode = new Map<String, List<HDT_WRP_AttivitaTracciaturaData>>(); 
+
+        Map<String, HDT_WRP_AttivitaTracciaturaData> dataForSalesHandlingByTemplateCode = new Map<String, HDT_WRP_AttivitaTracciaturaData>();
+
+        wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+        
+        for(HDT_WRP_AttivitaTracciaturaData curData : sourceData){
+            if('Richiesta non identificata'.equalsIgnoreCase(curData.tipoAttivita)){
+                wrts_prcgvr__Activity__c newAct = new wrts_prcgvr__Activity__c();
+                newAct.Type__c = curData.tipoAttivita;
+                newAct.CreatedByUsername__c = curData.utenza;
+                //newAct.StartDate__c = curData.dataEvento;
+                //newAct.DiscardDescription__c = curData.errorMessage;
+                toInsert.add(newAct);
+            }
+            else if(TRACCIAMENTOHEROKUSALES.keySet().contains(curData.tipoAttivita)){//va bene controllare solo su una mappa, tanto i keyset sono uguali
+                if('sales'.equalsIgnoreCase(curData.processCategory)) dataForSalesHandlingByTemplateCode.put(curData.recordId, curData);
+                else if('postsales'.equalsIgnoreCase(curData.processCategory)){
+                    String templateCode = templatesMap.get(TRACCIAMENTOHEROKUPOSTSALES.get(curData.tipoAttivita)).wrts_prcgvr__Code__c;
+                    List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(templateCode, new Map<String,Object>{'objectId'=>curData.recordId});
+                    //qui si possono integrare eventuali campi aggiuntivi sull'activity
+                    toInsert.addAll(activities);
+                }
+            }
         }
+
+        if(!dataForSalesHandlingByTemplateCode.keySet().isEmpty()){
+            Map<Id, Order> orders = new Map<Id, Order>([SELECT Id FROM Order WHERE OrderNumber IN :dataForSalesHandlingByTemplateCode.keySet()]);
+            for(Order curOrder : orders.values()){
+                HDT_WRP_AttivitaTracciaturaData curData = dataForSalesHandlingByTemplateCode.get(curOrder.OrderNumber);
+                String templateCode = templatesMap.get(TRACCIAMENTOHEROKUSALES.get(curData.tipoAttivita)).wrts_prcgvr__Code__c;
+                List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(templateCode, new Map<String,Object>{'objectId'=>curOrder.Id});
+                //qui si possono integrare eventuali campi aggiuntivi sull'activity
+                toInsert.addAll(activities);
+            }
+        }
+
         HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
 
@@ -77,6 +154,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
             if(template != null){
                 wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
                 List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>recordId});
+                HDT_UTL_DatabaseService.insertSObject(activities);
             }
         }
     }
@@ -177,5 +255,4 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
             HDT_UTL_DatabaseService.insertSObject(insertedActivities);
         }
     }
-
 }

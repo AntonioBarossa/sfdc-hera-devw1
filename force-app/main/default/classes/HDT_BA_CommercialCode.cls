@@ -15,7 +15,7 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         //return new campaignMembers
-        String query = 'Select Id, FirstName, LastName, CampaignId, PromoCommercialCode__c, Campaign.CodeManagementModel__c, Campaign.PrefixCode__c, Campaign.CodeGenerationRule__c, PromoCommercialCode__r.FullCode__c FROM CampaignMember WHERE Id IN :campaignMembers AND Campaign.CodeGenerationRule__c != \'Manuale\' AND Campaign.CodeManagementModel__c IN (\'Per singolo Campaign Member\',\'Porta un amico\')';
+        String query = 'Select Id, FirstName, LastName, CampaignId,Campaign.MaxNumberEECodeUse__c,Campaign.MaxNumberGASCodeUse__c,Campaign.MaxNumberVASCodeUse__c , PromoCommercialCode__c, Campaign.CodeManagementModel__c, Campaign.PrefixCode__c, Campaign.CodeGenerationRule__c, PromoCommercialCode__r.FullCode__c FROM CampaignMember WHERE Id IN :campaignMembers AND Campaign.CodeGenerationRule__c != \'Manuale\' AND Campaign.CodeManagementModel__c IN (\'Per singolo Campaign Member\',\'Porta un amico\')';
         return Database.getQueryLocator(query);
     }
 
@@ -64,7 +64,13 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
             CommercialCode__c cc = new CommercialCode__c(
                 Name = newCode,
                 Campaign__c = this.campaignId,
-                FullCode__c = newCode
+                FullCode__c = newCode,
+                MaximalUsesEE__c = cm.Campaign.MaxNumberEECodeUse__c   ,
+                MaximalUsesGAS__c = cm.Campaign.MaxNumberGASCodeUse__c   ,
+                MaximalUsesVAS__c = cm.Campaign.MaxNumberVASCodeUse__c  ,
+                AvailabilityUsesGAS__c = 0  ,
+                AvailabilityUsesEE__c = 0   ,
+                AvailabilityUsesVAS__c = 0
             );
             ccList.add(cc);
             memberCode.put(cm.Id, newCode);
