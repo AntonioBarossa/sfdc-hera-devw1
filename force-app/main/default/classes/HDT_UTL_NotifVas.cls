@@ -277,9 +277,5 @@ public with sharing class HDT_UTL_NotifVas {
         if (String.isNotBlank(requestMap.get('DATA_CESSAZIONE'))) {
             targetRecord.put('TerminationDate__c', Date.valueOf(requestMap.get('DATA_CESSAZIONE')) );
         }
-
-        if (String.isNotBlank(requestMap.get('DISATTIVAZIONE_COMPLETATA'))) {
-            targetRecord.put('CompletedDeactivation__c', Boolean.valueOf(requestMap.get('DISATTIVAZIONE_COMPLETATA')) );
-        }
     }
 }
