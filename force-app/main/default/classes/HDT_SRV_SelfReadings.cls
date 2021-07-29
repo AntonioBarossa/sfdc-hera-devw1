@@ -1,11 +1,19 @@
 public with sharing class HDT_SRV_SelfReadings {
+
+    public static void handleInvioLettureForzato(SObject selfReadingCase) {
+
+        System.enqueueJob(new HDT_QBL_SelfReadingsCallouts((Case) selfReadingCase, 'InvioLettureForzato'));
+
+    }
+
+
     public static HDT_WRP_GenericSapIntegration generateJson(HDT_WRP_GenericSapIntegration inputParams){
         System.debug('Generating JSON for request type: ' + inputParams.requestType);
         switch on inputParams.requestType {
             when 'CheckAutolettura' {
                 return generateJsonCheckAutolettura(inputParams);
             }
-            when 'InvioLetture' {
+            when 'InvioLetture', 'InvioLettureForzato' {
                 return generateJsonInvioLetture(inputParams);
             }
             when else {
@@ -127,7 +135,7 @@ public with sharing class HDT_SRV_SelfReadings {
         JSONGenerator gen = JSON.createGenerator(false);
 
         gen.writeStartObject();
-        gen.writeStringField('serviceRequest', readingCase.CaseNumber);
+        gen.writeStringField('serviceRequest', readingCase.Id);
         gen.writeStringField('pod', readingCase.PODPDRFormula__c);
         gen.writeFieldName('element');
         gen.writeStartArray();
@@ -196,6 +204,9 @@ public with sharing class HDT_SRV_SelfReadings {
             when 'InvioLetture' {
                 return handleResponseInvioLetture(sapIntegration);
             }
+            when 'InvioLettureForzato' {
+                return handleResponseInvioLettureForzato(sapIntegration);
+            }
             when else {
                return null;
             }
@@ -218,7 +229,7 @@ public with sharing class HDT_SRV_SelfReadings {
             if (errorDetails != null && !errorDetails.isEmpty()) {
                 Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
                 String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
-                readingCaseToUpdate.Phase__c = 'Check preliminari KO';
+                readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari KO';
 
                 HDT_QR_Case queryCase = new HDT_QR_Case();
                 List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
@@ -230,16 +241,28 @@ public with sharing class HDT_SRV_SelfReadings {
                     if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
                         HDT_UTL_Case.createActivity(caseId, errorMessage, 'Check preliminari KO');
                     }
+                    HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 }
             }
         } else {
-            readingCaseToUpdate.Phase__c = 'Check preliminari OK';
+            // L'aggiornamento a Check preliminari OK non possiamo farlo adesso, poichè va fatta prima la seconda callout per l'invio letture a SAP.
+            //readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
         }
 
-        HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
-
+        //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+        // String serializedCase = JSON.serialize(readingCaseToUpdate);
+        // updateFuture(serializedCase);
 
         return responseOk;
+    }
+
+    @Future
+    private static void updateFuture(String inputString) {
+
+        Case c = (Case) JSON.deserialize(inputString, Case.class);
+
+        HDT_UTL_DatabaseService.updateSObject(c);
+
     }
 
     private static Boolean handleResponseInvioLetture(HDT_WRP_GenericSapIntegration sapIntegration) {
@@ -247,8 +270,8 @@ public with sharing class HDT_SRV_SelfReadings {
         String caseId = sapIntegration.recordId;
         Boolean responseOk = true;
 
-        Case readingCase = new Case();
-        readingCase.Id = caseId;
+        Case readingCaseToUpdate = new Case();
+        readingCaseToUpdate.Id = caseId;
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
 
         if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
@@ -257,14 +280,54 @@ public with sharing class HDT_SRV_SelfReadings {
             // if (errorDetails != null && !errorDetails.isEmpty()) {
             //     Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
             //     String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
-            //     readingCase.Phase__c = 'Check preliminari KO';
-            //     readingCase.Description = errorMessage;
+            //     readingCaseToUpdate.Phase__c = 'Check preliminari KO';
+            //     readingCaseToUpdate.Description = errorMessage;
             // }
         } else {
-            readingCase.Phase__c = 'Esito OK da SAP';
+
+            // Settiamo prima l'esito precedente del Check Autolettura
+            readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
+            HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+            // Infine settiamo l'esito OK dell'Invio Lettura.
+            Case readingCaseToUpdateInvioLetture = new Case(); // Necessario un nuovo oggetto Case, altrimenti non sbianca la TechnicalPhase precedente.
+            readingCaseToUpdateInvioLetture.Id = readingCaseToUpdate.Id;
+            readingCaseToUpdateInvioLetture.Phase__c = 'Inviata a SAP';
+            String serializedCase = JSON.serialize(readingCaseToUpdateInvioLetture);
+            updateFuture(serializedCase);
         }
 
-        HDT_UTL_DatabaseService.updateSObject(readingCase);
+        //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+
+
+        return responseOk;
+    }
+
+    private static Boolean handleResponseInvioLettureForzato(HDT_WRP_GenericSapIntegration sapIntegration) {
+
+        String caseId = sapIntegration.recordId;
+        Boolean responseOk = true;
+
+        Case readingCaseToUpdate = new Case();
+        readingCaseToUpdate.Id = caseId;
+        Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
+
+        if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
+            responseOk = false;
+            // List<Object> errorDetails = (List<Object>) body.get('errorDetails');
+            // if (errorDetails != null && !errorDetails.isEmpty()) {
+            //     Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
+            //     String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
+            //     readingCaseToUpdate.Phase__c = 'Check preliminari KO';
+            //     readingCaseToUpdate.Description = errorMessage;
+            // }
+        } else {
+
+            readingCaseToUpdate.Phase__c = 'Inviata a SAP';
+            String serializedCase = JSON.serialize(readingCaseToUpdate);
+            updateFuture(serializedCase);
+        }
+
+        //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
 
 
         return responseOk;

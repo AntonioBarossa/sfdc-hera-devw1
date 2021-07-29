@@ -133,6 +133,10 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.MeterCode__c = request.serialNumber;
         c.ReadingDate__c = request.readingDate;
 
+        HDT_QR_CausalCodeCalculation causalCodeHandler = new HDT_QR_CausalCodeCalculation();
+        HDT_CausalCodeCalculation__mdt causalCodeMdt = causalCodeHandler.calculateCausalCode(c.Cluster__c, c.Type, '', request.commodity);
+        c.CausalCode__c = causalCodeMdt.CausalCode__c;
+
         switch on request.outcome {
             when 'OK' {
                 c.Phase__c = 'Check preliminari OK';

@@ -4,8 +4,6 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
         Map<String,Object> arg = new Map<String,Object>();
-        //List<Case> caseToUpdate = new List<Case>();
-        Case currentCase = new Case();
         String recordId;
         Map<String,Object> argsMap = (Map<String,Object>) args;
         String method = (String) argsMap.get('method');
@@ -14,15 +12,36 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
 
         try {
             recordId = (String) obj.get('Id');
-            HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
-            sapIntegration = submitRequest(recordId,parameters.get('requestType'));
+            String requestType = parameters.get('requestType');
 
-            Boolean responseOk = HDT_SRV_SelfReadings.handleResponse(sapIntegration);
-            response.success = responseOk;
-            response.message = responseOk ? 'OK' : 'KO';
+            if (requestType == 'CheckAutolettura') {
+
+                HDT_WRP_GenericSapIntegration sapIntegrationCheckAutoletture = new HDT_WRP_GenericSapIntegration();
+                sapIntegrationCheckAutoletture = submitRequest(recordId, requestType);
+
+                Boolean responseOkCheckAutoletture = HDT_SRV_SelfReadings.handleResponse(sapIntegrationCheckAutoletture);
+                // Facciamo partire la seconda callout direttamente da qui, poichè PClick non supporta due callout action consecutive in seguito a due update di fase.
+                if (responseOkCheckAutoletture) {
+                    System.debug('CheckAutolettura OK, next step: InvioLetture');
+                    HDT_WRP_GenericSapIntegration sapIntegrationInvioLetture = new HDT_WRP_GenericSapIntegration();
+                    sapIntegrationInvioLetture = submitRequest(recordId, 'InvioLetture');
+                    Boolean responseOkCheckInvioLetture = HDT_SRV_SelfReadings.handleResponse(sapIntegrationInvioLetture);
+                } else {
+                    System.debug('CheckAutolettura KO');
+                }
+            } else if (requestType == 'InvioLettureForzato') {
+                HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
+                sapIntegration = submitRequest(recordId, requestType);
+                Boolean responseOk = HDT_SRV_SelfReadings.handleResponse(sapIntegration);
+            }
+
+            response.success = True;
+            response.message = 'OK';
 
         } catch(Exception ex){
-            System.debug('HDT_SRV_SelfReadingsFacade: exception ' + ex.getMessage());
+            response.success = False;
+            response.message = 'KO';
+            System.debug('HDT_SRV_SelfReadingsFacade: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
         }
 
         return response;
@@ -37,8 +56,7 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
             sapIntegration.requestType = requestType;
             sapIntegration = support.submitRequest(sapIntegration);
         } catch (Exception ex) {
-            System.debug('HDT_SRV_SelfReadingsFacade: exception at line ' + ex.getLineNumber());
-            System.debug(ex.getMessage()); 
+            System.debug('HDT_SRV_SelfReadingsFacade: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
         }
         return sapIntegration;
         
