@@ -1,4 +1,4 @@
-public without sharing class HDT_LC_ReletedListAccount {
+public with sharing class HDT_LC_ReletedListAccount {
 
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
     private static HDT_QR_AccountContactRelation accoContRelQr = new HDT_QR_AccountContactRelation();
