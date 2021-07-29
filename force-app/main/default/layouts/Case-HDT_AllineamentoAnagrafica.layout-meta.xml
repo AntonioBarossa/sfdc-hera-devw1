@@ -311,6 +311,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>CancellationHerokuPracticeCode__c
+                </field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>CancellationRequestDate__c</field>
             </layoutItems>
         </layoutColumns>
