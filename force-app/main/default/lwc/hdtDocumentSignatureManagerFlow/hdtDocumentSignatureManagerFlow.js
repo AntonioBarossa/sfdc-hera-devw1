@@ -22,7 +22,8 @@ import InvoicingCountry from '@salesforce/schema/Case.InvoicingCountry__c';
 import InvoicingProvince from '@salesforce/schema/Case.InvoicingProvince__c';
 import AddressFormula from '@salesforce/schema/Case.AddressFormula__c';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
-
+import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
+import { NavigationMixin } from 'lightning/navigation';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 const FIELDS = ['Case.ContactMobile', 
                 'Case.ContactEmail',
@@ -54,7 +55,7 @@ const FIELDS = ['Case.ContactMobile',
 				'Case.InvoicingCountry__c',
                 'Case.InvoicingProvince__c'];
 
-export default class HdtDocumentSignatureManagerFlow extends LightningElement {
+export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(LightningElement) {
     @api processType;
     @api quoteType;
     @api recordId;
@@ -216,6 +217,66 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     handlePreview(event){
         let returnValue = this.template.querySelector('c-hdt-document-signature-manager').handlePreview();
     }
+
+    sendAndViewDocument(formParams){
+        previewDocumentFile({
+            recordId: this.recordId,
+            context: 'Case',
+            formParams: JSON.stringify(formParams)
+        }).then(result => {
+            var resultParsed = JSON.parse(result);
+            if(resultParsed.code === '200' || resultParsed.code === '201'){
+                if(resultParsed.result === '000'){
+                    var base64 = resultParsed.base64;
+                    var sliceSize = 512;
+                    base64 = base64.replace(/^[^,]+,/, '');
+                    base64 = base64.replace(/\s/g, '');
+                    var byteCharacters = window.atob(base64);
+                    var byteArrays = [];
+
+                    for ( var offset = 0; offset < byteCharacters.length; offset = offset + sliceSize ) {
+                        var slice = byteCharacters.slice(offset, offset + sliceSize);
+                        var byteNumbers = new Array(slice.length);
+                        for (var i = 0; i < slice.length; i++) {
+                            byteNumbers[i] = slice.charCodeAt(i);
+                        }
+                        var byteArray = new Uint8Array(byteNumbers);
+
+                        byteArrays.push(byteArray);
+                    }
+
+                    this.blob = new Blob(byteArrays, { type: 'application/pdf' });
+
+                    const blobURL = URL.createObjectURL(this.blob);
+                    this.url = blobURL;
+                    this.fileName = 'myFileName.pdf';
+                    this.showFile = true;
+                    this.showSpinner = false;
+                    this[NavigationMixin.Navigate](
+                        {
+                            type: 'standard__webPage',
+                            attributes: {
+                                url: blobURL
+                            }
+                        }
+                    );
+                    this.dispatchEvent(new CustomEvent('previewexecuted'));
+                    this.handleGoNext();
+                }else{
+                    this.showSpinner = false;
+                    this.showMessage('Attenzione',resultParsed.message,'error');
+                }
+            }else{
+                this.showSpinner = false;
+                this.showMessage('Attenzione','Errore nella composizione del plico','error');
+            }
+        })
+        .catch(error => {
+            this.showSpinner = false;
+            console.error(error);
+        });
+    }
+
     handleConfirmData(event){
         console.log('dati confermati ' + event.detail);
         this.confirmData = event.detail;
@@ -249,6 +310,8 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                 .then(() => {
                     // Display fresh data in the form
                     console.log('Record aggiornato');
+                    this.enableNext = true;
+                    this.handleConfirm();
                     return refreshApex(this.wiredCase);
                 })
                 .catch(error => {
@@ -262,7 +325,7 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                     );
                 });
             this.enableNext = true;
-            this.handleConfirm();
+            
         }else{
             this.enableNext = false;
         }
@@ -326,16 +389,20 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                 mode : 'Print',
                 Archiviato : 'Y'
             }
-            sendDocument({
-                recordId: this.recordId,
-                context: 'Case',
-                formParams: JSON.stringify(formParams)
-            }).then(result => {
-                this.handleGoNext();
-            }).catch(error => {
-                this.showToast('Errore nell\'invio del documento al cliente.');
-                console.error(error);
-            });
+            if(sendMode.localeCompare('Sportello') ===0){
+                this.sendAndViewDocument(formParams);
+            }else{
+                sendDocument({
+                    recordId: this.recordId,
+                    context: 'Case',
+                    formParams: JSON.stringify(formParams)
+                }).then(result => {
+                    this.handleGoNext();
+                }).catch(error => {
+                    this.showToast('Errore nell\'invio del documento al cliente.');
+                    console.error(error);
+                });
+            }
         }catch(error){
             console.error(error);
         }
