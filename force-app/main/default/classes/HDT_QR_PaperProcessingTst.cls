@@ -1,0 +1,32 @@
+/**
+* @author Luis Bispo (luis.bispo@engdb.com.br)
+* @date 27/07/2021
+* @description HDT_QR_PaperProcessing for Test Classes
+* @history Luis Bispo – 27/07/2021 – Created class
+*/
+@isTest
+public with sharing class HDT_QR_PaperProcessingTst {
+
+
+    @TestSetup
+    static void setup(){
+        PaperProcessing__c pProcessing = new PaperProcessing__c();
+        insert pProcessing;
+    }
+    
+
+    @isTest
+    public static void testGetParameterForName(){
+        List<String> lstString = new List<String>();
+        PaperProcessing__c paperProcessing = [SELECT Id FROM PaperProcessing__c LIMIT 1];
+        lstString.add(paperProcessing.Id);
+        Test.startTest();
+
+        PaperProcessing__c testPaper = HDT_QR_PaperProcessing.getParameterForName(lstString);
+        system.assertEquals(testPaper != null, true);
+        system.assertNotEquals(testPaper == null, true);
+        Test.stopTest();
+    }
+
+
+}
