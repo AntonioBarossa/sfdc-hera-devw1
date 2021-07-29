@@ -29,12 +29,18 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
                 } else {
                     System.debug('CheckAutolettura KO');
                 }
+            } else if (requestType == 'InvioLettureForzato') {
+                HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
+                sapIntegration = submitRequest(recordId, requestType);
+                Boolean responseOk = HDT_SRV_SelfReadings.handleResponse(sapIntegration);
             }
 
             response.success = True;
             response.message = 'OK';
 
         } catch(Exception ex){
+            response.success = False;
+            response.message = 'KO';
             System.debug('HDT_SRV_SelfReadingsFacade: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
         }
 

@@ -1,4 +1,3 @@
-// CLASSE DEPRECATA
 public inherited sharing class HDT_QBL_SelfReadingsCallouts implements Queueable, Database.AllowsCallouts {
     
     private Case selfReadingsCase;
@@ -32,19 +31,7 @@ public inherited sharing class HDT_QBL_SelfReadingsCallouts implements Queueable
         HDT_SRV_SelfReadingsFacade facadeClass = new HDT_SRV_SelfReadingsFacade();
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
 
-        if (this.requestType == 'CheckAutolettura') {
-
-            try {
-                responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) facadeClass.execute(args);
-                // Chiamiamo a cascata la prossima callout
-                System.debug('HDT_QBL_SelfReadingsCallouts: chaining next job...');
-                System.enqueueJob(new HDT_QBL_SelfReadingsCallouts(this.selfReadingsCase, 'InvioLetture'));
-
-            } catch (Exception ex){
-                System.debug('HDT_QBL_SelfReadingsCallouts: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
-            }
-
-        } else if (this.requestType == 'InvioLetture') {
+        if (this.requestType == 'InvioLettureForzato') {
             responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) facadeClass.execute(args);
         }
     }
