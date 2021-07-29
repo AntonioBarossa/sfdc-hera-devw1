@@ -230,7 +230,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 check = true;
                 listRes.add(ser.ServicePoint__r.ServicePointCode__c);
             }
-            if(ser.ServicePoint__r.CommoditySector__c == 'Gas' && (ser.ServicePoint__r.MeterStatus__c == 'Attivo' || ser.ServicePoint__r.MeterStatus__c == 'Bozza')){
+            if(ser.ServicePoint__r.CommoditySector__c == 'Gas' && ser.ServicePoint__r.MeterStatus__c != 'Attivo'){
                 r = true;
             }
         }

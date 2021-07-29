@@ -80,7 +80,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Fase_Attesa_check_preliminari</targetReference>
+                <targetReference>Calcolo_Codice_Causale</targetReference>
             </connector>
             <label>Autolettura da cliente</label>
         </rules>
@@ -113,7 +113,7 @@
             <name>Salva_in_bozza_outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SaveInDraft</leftValueReference>
+                <leftValueReference>hdtSelfReadingComponent.saveDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -128,7 +128,7 @@
             <name>Annullamento_outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CancelCase</leftValueReference>
+                <leftValueReference>hdtSelfReadingComponent.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -165,6 +165,11 @@
             <label>Service Point KO</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>ReadingCustomerDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>DATEVALUE(TEXT({!hdtSelfReadingComponent.readingCustomerDate}))</expression>
+    </formulas>
     <interviewLabel>Gestione Autoletture {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Autoletture</label>
     <processMetadataValues>
@@ -186,6 +191,41 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>Calcolo_Codice_Causale</name>
+        <label>Calcolo Codice Causale</label>
+        <locationX>1919</locationX>
+        <locationY>249</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Fase_Attesa_check_preliminari</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Refresh_Case.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Refresh_Case.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Refresh_Case.Type</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
@@ -244,7 +284,7 @@
         <inputAssignments>
             <field>ReadingDate__c</field>
             <value>
-                <elementReference>ReadingCustomerDate</elementReference>
+                <elementReference>ReadingCustomerDateFormula</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -252,8 +292,8 @@
     <recordUpdates>
         <name>Set_Fase_Attesa_check_preliminari</name>
         <label>Set Fase Attesa check preliminari</label>
-        <locationX>1928</locationX>
-        <locationY>241</locationY>
+        <locationX>2076</locationX>
+        <locationY>249</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -266,6 +306,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>CausalCode__c</field>
+            <value>
+                <elementReference>Calcolo_Codice_Causale.CausalCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Attesa check preliminari</stringValue>
@@ -274,7 +320,7 @@
         <inputAssignments>
             <field>ReadingDate__c</field>
             <value>
-                <elementReference>ReadingCustomerDate</elementReference>
+                <elementReference>ReadingCustomerDateFormula</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -282,8 +328,8 @@
     <recordUpdates>
         <name>Set_Fase_Da_Inviare</name>
         <label>Set Fase Da Inviare</label>
-        <locationX>1918</locationX>
-        <locationY>510</locationY>
+        <locationX>2001</locationX>
+        <locationY>483</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -304,7 +350,7 @@
         <inputAssignments>
             <field>ReadingDate__c</field>
             <value>
-                <elementReference>ReadingCustomerDate</elementReference>
+                <elementReference>ReadingCustomerDateFormula</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -488,18 +534,7 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>SaveInDraft</assignToReference>
-                <name>saveDraft</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>ReadingCustomerDate</assignToReference>
-                <name>readingCustomerDate</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>CancelCase</assignToReference>
-                <name>cancelCase</name>
-            </outputParameters>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -523,8 +558,8 @@
     <screens>
         <name>Spinner</name>
         <label>Spinner</label>
-        <locationX>2155</locationX>
-        <locationY>379</locationY>
+        <locationX>2337</locationX>
+        <locationY>358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -571,14 +606,19 @@
                 <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>recordToCancell</name>
+            <value>
+                <elementReference>Refresh_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
     </subflows>
-    <variables>
-        <name>CancelCase</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
@@ -587,24 +627,10 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>ReadingCustomerDate</name>
-        <dataType>Date</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>ResumeFromDraft</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>SaveInDraft</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
