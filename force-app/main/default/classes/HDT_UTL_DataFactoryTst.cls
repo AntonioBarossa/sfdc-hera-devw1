@@ -623,10 +623,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return pricebookList;
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f0a0e12bac27a83a1ad78c3ffd00d41f1fa6aaa2
 	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id Account){
 
 		List<Attachment> tstAttachmentList=new List<Attachment>();
@@ -651,11 +647,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return tstAttachmentList;
 	}
+	
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f0a0e12bac27a83a1ad78c3ffd00d41f1fa6aaa2
 	public static List<ContentVersion> createContentVers(Integer amount, Boolean doInsert){
 
 		List<ContentVersion> tstContentVersList=new List<ContentVersion>();
@@ -680,7 +673,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return tstContentVersList;
 	}
-<<<<<<< HEAD
 
 	public static List<Campaign> createCampaign (Integer amount, Boolean doInsert) {
 
@@ -725,6 +717,5 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return campaignMemberStatusList; 
 	}
-=======
->>>>>>> f0a0e12bac27a83a1ad78c3ffd00d41f1fa6aaa2
+
 }
