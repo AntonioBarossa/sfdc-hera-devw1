@@ -1,6 +1,6 @@
 import { LightningElement,track,api } from 'lwc';
 import getConfigurationData from '@salesforce/apex/HDT_LC_MeterReadingController.getConfigurationData';
-import { FlowNavigationNextEvent, FlowNavigationFinishEvent, FlowNavigationBackEvent } from 'lightning/flowSupport';
+import { FlowNavigationNextEvent, FlowNavigationFinishEvent, FlowNavigationBackEvent, FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
 export default class HdtMeterReadingDetailTableFlow extends LightningElement {
 
@@ -12,6 +12,12 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
     @api totalReadingValue; // UNUSED
     @api selectedReadingValues;
     @api selectedReadingsConcatenated;
+    @api selectedReadingDate; //UNUSED
+    @api selectedReadingDateString;
+
+    //buttons
+    @api nonStandAlone = false;
+    @api maxRows;
 
     @api contractNumber;
     @track meterReadingColumns;
@@ -65,6 +71,17 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
         this.spinner = event.detail.spinner;
     }
 
+    handleRowSelection = event =>{
+        if(event.detail != null){
+            console.log('Event' + event.detail);
+            console.log('Data Lettura ->' + event.detail.dataLetturaPianificata);
+            let readingDate = event.detail.dataLetturaPianificata;
+            let dateParse = readingDate.split("/");
+            readingDate = dateParse[2] + '-' + dateParse[1] + '-' + dateParse[0];
+            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedReadingDateString', readingDate);
+            this.dispatchEvent(attributeChangeEvent);
+        }
+    }
 
     handleGoNext() {
 

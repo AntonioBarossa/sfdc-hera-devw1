@@ -515,7 +515,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(orderIds, 'Order__c');
             for(ServiceRequest__c s: srvRequests){
                 ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
-                s.Status__c= orderStatuses.get(s.Order__c);
+                s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
                 sReqToUpdate.add(s);
             }
             HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
