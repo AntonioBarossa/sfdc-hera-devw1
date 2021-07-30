@@ -435,17 +435,20 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             if(result.status == 'failed'){
                 toastErrorMessage = new ShowToastEvent({
                     title: 'CreditCheck KO',
-                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    message: result.errorDetails[0].code + ' ' + JSON.stringify(result.errorDetails[0].message),
                     variant: 'warning', 
                     mode:'dismissible'
                 });
+                this.dispatchEvent(toastErrorMessage);
                 //throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
             }
+            
 
             //this.restryEsitiCreditCheck();
             this.loading = false;
         })
         .catch(error => {
+            debugger;
             console.log('error callServiceCreditCheck error ---> : ');
             console.log(JSON.parse(JSON.stringify(error)));
             let toastErrorMessage = new ShowToastEvent({
@@ -488,8 +491,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(this.order.Account.CustomerType__c !== undefined){
             bpType = this.order.Account.CustomerType__c;
         }
-        if(this.order.ProcessType__c !== undefined){
-            operation = this.order.ProcessType__c;
+        if( this.selectedProcessObject.processType !== undefined){
+            operation = this.selectedProcessObject.processType;
         }
         if(this.order.Market__c !== undefined){
             market = this.order.Market__c;
@@ -497,8 +500,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(this.order.Catalog__c !== undefined){
             offerType = this.order.Catalog__c;
         }
-        if("/D\d - ".test(this.order.Account.CustomerMarking__c)){
+        if(new RegExp("/D\d - ").test(this.order.Account.CustomerMarking__c)){
             bpClass=this.order.Account.CustomerMarking__c.replace("/D\d - ", "");
+        }else{
+            bpClass=this.order.Account.CustomerMarking__c;
         }
         console.log("typeOfCommodity: " + typeOfCommodity);
         console.log("this.selectedProcessObject: " + JSON.stringify(this.selectedProcessObject));
@@ -509,8 +514,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             crmEntity:"Order",
             crmId:this.order.OrderNumber,
             userId: this.order.CreatedById,
-            activationUser:Owner.UserName, //Owner.UserName (parte prima @)
-            account:Owner.UserName, //Owner.UserName (parte prima @)
+            activationUser:this.order.Owner.Username, //Owner.UserName (parte prima @)
+            account:this.order.Owner.Username, //Owner.UserName (parte prima @)
             jobTitle:this.order.Channel__c,//capire come convertire valori
             internalCustomerId:this.order.Account.CustomerCode__c,
             companyName:companyName,
