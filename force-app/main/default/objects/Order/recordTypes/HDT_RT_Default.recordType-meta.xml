@@ -1986,6 +1986,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Priority__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
             <fullName>Aggiunta Sconti o Bonus VAS</fullName>
