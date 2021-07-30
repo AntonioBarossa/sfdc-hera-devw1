@@ -46,7 +46,20 @@ public with sharing class HDT_UTL_ServicePoint {
 			spNew.RequestPhase__c  = mapRes.get('FASE');
 		}
 */
+    if(mapRes.get('ACCISE')!=null){
+        if(mapRes.get('DESCRCOMM')=='Gas'){
+            spNew.ExciseGas__c  = mapRes.get('ACCISE');
 
+        }else if(mapRes.get('DESCRCOMM')=='Energia Elettrica'){
+        spNew.ExciseEle__c  = mapRes.get('ACCISE');
+
+        }
+    }
+
+    if(mapRes.get('ALIQUOTAIVA')!=null){
+        spNew.Vat__c  = mapRes.get('ALIQUOTAIVA');
+
+    }
 		if(spNew.MeterStatus__c  != 'Sospeso'){
             system.debug('entra in stato device');
             if(mapRes.get('STATODEVICE')== 'A'){

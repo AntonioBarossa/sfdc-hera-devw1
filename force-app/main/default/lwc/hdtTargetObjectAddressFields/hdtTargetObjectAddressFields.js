@@ -21,6 +21,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     verifyDisabledOnUpdate = true;
     verifyFieldsAddressDisabled= true;
     disableVerifIndiButton = true;
+    disableLocalita= false;
     @api recordtype;
     @api headertoshow;
     @api checkBoxFieldValue = false;
@@ -81,7 +82,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     boolVia = false;
     boolCivico = false;
     statusCodeComune='';
-    
+    localit='';
     
 
     handleSelectedValue(event) {
@@ -1111,6 +1112,9 @@ handleTextChange(event){
                 break;
             case 'Codice Via Stradario SAP':
                 this.codStradarioSAP = event.target.value;
+                break;
+            case 'Localita':
+                this.localit = event.target.value;
                 break;
         }
         this.flagVerificatoFalse();

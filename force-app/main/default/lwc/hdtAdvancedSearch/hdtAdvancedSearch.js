@@ -32,6 +32,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     confirmButtonDisabled = true;
     @api servicePointRetrievedData;
     @api additionalfilter;
+    @api additionalFilterFinal;
     rowToSend;
     @api maxRowSelected=false;
     @api disabledinput;
@@ -71,12 +72,13 @@ export default class HdtAdvancedSearch extends LightningElement {
             console.log('data.FornitureCliente__c  '+JSON.stringify(data.FornitureCliente__c ));
             console.log('data.StatoContratto__c  '+JSON.stringify(data.StatoContratto__c ));
             console.log('data.ContrattiCliente__c '+ JSON.stringify(data.ContrattiCliente__c ));
+            console.log('data.statoFornitura '+ JSON.stringify(data.StatoFornitura__c ));
 
             let statusSplit=[];
             let TipoServizioSplit=[];
 
 
-            if(data.ContrattiCliente__c =='SI'){
+           /* if(data.ContrattiCliente__c =='SI'){
 
                 if(data.StatoContratto__c != undefined && data.StatoContratto__c!='')
                 {
@@ -84,45 +86,63 @@ export default class HdtAdvancedSearch extends LightningElement {
                     statusSplit = data.StatoContratto__c.split(",");
                     console.log('statusSplit *****'+JSON.stringify(statusSplit));
                 }
-            }
-            if(data.FornitureCliente__c == 'SI'){
+            }*/
+            if(data.FornitureCliente__c == 'SI')
+            {
+                console.log('entra in forniture cliente == SI');
+
+                if(data.StatoFornitura__c != undefined && data.StatoFornitura__c!='')
+                {
+
+                    statusSplit = data.StatoFornitura__c.split(",");
+                    console.log('statusSplit in statoFornitura *****'+JSON.stringify(statusSplit));
+                    console.log('statusSplit in statoFornitura *****'+JSON.stringify(statusSplit));
+
+                    if(statusSplit.length > 1 && statusSplit.length < 3){
+            
+                        this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\')';
+                        console.log('entra in lenght==1 ');
+                    
+                   }
+                   else if(statusSplit.length > 2){
+                    
+                    this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\''+'OR MeterStatus__c = \''+statusSplit[2]+'\')';
+                    console.log('entra in lenght>2 si');
+                
+                    }
+                   else if(statusSplit.length > 0)
+                   {
+        
+                        this.additionalfilter= 'AND MeterStatus__c =\''+data.StatoFornitura__c+'\''; 
+                   }
+                }
                 
                 if(data.TipoServizio__c!= undefined&&data.TipoServizio__c!='')
                 {
                     TipoServizioSplit = data.TipoServizio__c.split(",");
                     console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
-                    this.submitFornitura();
+                    //this.submitFornitura();
                 }
                 
-            }
-
-            if(statusSplit.length > 1){
             
-                this.additionalfilter= 'AND (status =\''+statusSplit[0]+'\''+'OR status = \''+statusSplit[1]+'\')';
-                console.log('entra in contratti si');
-                this.handleAdditionalFilter(this.processtype);
+
+
+                if(TipoServizioSplit.length >1){
+
+                    this.additionalfilter+=' AND (CommoditySector__c = \''+TipoServizioSplit[0]+'\''+'OR CommoditySector__c = \''+TipoServizioSplit[1]+'\')';
+                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                }
+                else
+                {     
+                    this.additionalfilter+=' AND CommoditySector__c = \''+data.TipoServizio__c+'\'';
+                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                }
             
-           }
-           else if(statusSplit.length > 0)
-           {
-
-                this.additionalfilter= 'AND status =\''+data.StatoContratto__c+'\''; 
-                this.handleAdditionalFilter(this.processtype);
-           }
-           if(TipoServizioSplit.length >1){
-
-                    this.additionalfilter='AND (CommoditySector__c = \''+TipoServizioSplit[0]+'\''+'OR CommoditySector__c = \''+TipoServizioSplit[1]+'\')';
-                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    this.handleAdditionalFilter(this.processtype);
+                console.log('additionalFilter pre final :  '+ this.additionalfilter);
+                this.additionalFilterFinal = this.additionalfilter;
+                console.log('additionalFilter post final :  '+ this.additionalFilterFinal);
+                this.submitFornitura();
             }
-            else if(TipoServizioSplit.length >0)
-            {     
-                    this.additionalfilter='AND CommoditySector__c = \''+data.TipoServizio__c+'\'';
-                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    this.handleAdditionalFilter(this.processtype);
-        }
-
-
         });
     }
 
@@ -131,6 +151,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         }else {
             this.maxRowSelected = this.originalData.length
         }
+        
     }
 
     @api
@@ -307,10 +328,10 @@ export default class HdtAdvancedSearch extends LightningElement {
 @api
     submitFornitura(){
         this.preloading = true;
-        console.log('executing query search', this.accountid);
-        console.log('additionlFilter**********************************'+this.additionalfilter)
+        console.log('executing query search'+ this.accountid);
+        console.log('additionlFilterFinal**********************************'+this.additionalFilterFinal)
         
-        getForniture({accountid:this.accountid,additionalFilter:this.additionalfilter}).then(data =>{
+        getForniture({accountid:this.accountid,additionalFilter:this.additionalFilterFinal}).then(data =>{
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));

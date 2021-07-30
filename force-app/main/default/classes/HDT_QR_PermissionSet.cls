@@ -19,4 +19,21 @@ public with sharing class HDT_QR_PermissionSet {
         	return null;    
         }
     }    
+
+    public List<PermissionSetAssignment> getPermissionSetAssignmentByName(String permissionSetName, String assigneeId){
+        return [
+            SELECT 
+            Id, 
+            PermissionSetId, 
+            PermissionSet.Name, 
+            PermissionSet.ProfileId, 
+            PermissionSet.Profile.Name, 
+            AssigneeId, 
+            Assignee.Name 
+            FROM PermissionSetAssignment 
+            WHERE PermissionSet.Name = :permissionSetName //ex. 'HDT_SuperUserCPQ'
+            AND AssigneeId = :assigneeId //userId
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }
