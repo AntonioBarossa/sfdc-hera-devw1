@@ -114,7 +114,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         if(!this.isRetroactive && !this.isProcessReading){
 
-            var index = this.registerObj.findIndex(p => p.label.name === 'readingDate');
+            var index = this.registerObj.findIndex(p => p.name === 'readingDate');
 
             if(Date.parse(readingCustomerDate) <= Date.parse(this.registerObj[index].value)){
 
