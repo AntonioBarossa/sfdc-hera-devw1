@@ -230,11 +230,13 @@ public with sharing class HDT_SRV_SelfReadings {
                 Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
                 String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
                 readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari KO';
-
                 HDT_QR_Case queryCase = new HDT_QR_Case();
                 List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
                 if (!cases.isEmpty()) {
                     Case currentReadingCase = cases[0];
+                    if (isClosingError(errorMessage, currentReadingCase.Origin)) {
+                        readingCaseToUpdate.Status = 'Closed';
+                    }
                     String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                     String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
                     readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
@@ -342,7 +344,7 @@ public with sharing class HDT_SRV_SelfReadings {
         Boolean createActivity = False;
         switch on origin {
             when 'Sportello', 'Telefono Inbound' {
-                createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('inferiore valore minimo concesso') || msg.contains('registri incompleti');
+                createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('registri incompleti');
             }
             when else {
                 // TODO
@@ -350,6 +352,25 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         return createActivity;
+    }
+
+    // Verifica se per il dato Canale l'errore deve chiudere il Case.
+    private static Boolean isClosingError(String msg, String origin) {
+        if (String.isBlank(origin) || String.isBlank(msg)) {
+            return False;
+        }
+
+        Boolean closeCase = False;
+        switch on origin {
+            when 'Sportello', 'Telefono Inbound' {
+                closeCase = msg.contains('data fuori finestra (non acquisibile)') || msg.contains('inferiore valore minimo concesso');
+            }
+            when else {
+                // TODO
+            }
+        }
+
+        return closeCase;
     }
 
 }
