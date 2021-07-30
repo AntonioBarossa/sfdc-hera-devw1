@@ -7961,6 +7961,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contract.VAT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contract.WithdrawalTimeUnitNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
