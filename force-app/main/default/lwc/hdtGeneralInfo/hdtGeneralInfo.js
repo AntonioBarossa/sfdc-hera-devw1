@@ -6,6 +6,7 @@ import getChannelAgency from '@salesforce/apex/HDT_LC_GeneralInfo.getChannelAgen
 import getAgents from '@salesforce/apex/HDT_LC_GeneralInfo.getAgents';
 import handleAutomaticAgentAssign from '@salesforce/apex/HDT_LC_GeneralInfo.handleAutomaticAgentAssign';
 import getSaleContactRole from '@salesforce/apex/HDT_LC_GeneralInfo.getSaleContactRole';
+import initComp from '@salesforce/apex/HDT_LC_GeneralInfo.initComp';
 export default class HdtGeneralInfo extends LightningElement {
     @api saleRecord = {};
     @api campaignId;
@@ -52,6 +53,7 @@ export default class HdtGeneralInfo extends LightningElement {
     @track ChannelSelection ='';
     @track additionalData=[];
     @track agentListForFilter = [];
+    userRole = '';
 
 
 
@@ -127,7 +129,7 @@ export default class HdtGeneralInfo extends LightningElement {
 
             }
 
-            if (Channel == 'Telefono' || Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound') {
+            if (this.userRole !== 'HDT_BackOffice' && (Channel == 'Telefono' || Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound')) {
                 //this.hiddenFilterAgent = true;
                 this.hiddenAgency = true;
                 handleAutomaticAgentAssign ({Channel:Channel,saleId:this.saleRecord.Id }).then(data =>{
@@ -195,6 +197,38 @@ export default class HdtGeneralInfo extends LightningElement {
         });
     }
 
+    initCompAction() {
+        this.loading = true;
+        initComp().then(data => {
+            this.loading = false;
+            console.log('HDT_LC_GeneralInfo - initCompAction: ' + JSON.stringify(data));
+
+            this.userRole = data.userRole;
+
+        }).catch(error => {
+            this.loading = false;
+
+            let errorMessage = '';
+
+            if (error.body.message !== undefined) {
+                errorMessage = error.body.message;
+            } else if(error.message !== undefined){
+                errorMessage = error.message;
+            } else if(error.body.pageErrors !== undefined){
+                errorMessage = error.body.pageErrors[0].message;
+            }
+
+            console.log('Error: ', errorMessage);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: errorMessage,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
+
     setUserName() {
         this.loading = true;
         getCurrentUserName().then(data => {
@@ -257,6 +291,8 @@ export default class HdtGeneralInfo extends LightningElement {
     connectedCallback() {
         console.log('hdtGeneralInfo - connectedCallback - campaignId: ', this.campaignId);
 
+        this.initCompAction();
+
         //Set CreatedBy of Sale on component mount
         if (this.saleRecord.CreatedBy__c === '' || this.saleRecord.CreatedBy__c === null || this.saleRecord.CreatedBy__c === undefined) {
             this.setUserName();
@@ -268,7 +304,6 @@ export default class HdtGeneralInfo extends LightningElement {
         if (this.saleRecord.CurrentStep__c != this.currentStep) {
             this.toggle();
         }
-
 
     }
 

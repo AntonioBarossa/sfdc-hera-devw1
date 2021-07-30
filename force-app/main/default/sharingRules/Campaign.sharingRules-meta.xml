@@ -18,7 +18,7 @@
         <accessLevel>Edit</accessLevel>
         <label>HDT_SR_CampaignHERACOMM</label>
         <sharedTo>
-            <role>HDT_FrontOffice_HERA_COMM</role>
+            <roleAndSubordinates>HDT_FrontOffice_HERA_COMM</roleAndSubordinates>
         </sharedTo>
         <criteriaItems>
             <field>CompanyOwner__c</field>
@@ -37,19 +37,6 @@
             <field>CompanyOwner__c</field>
             <operation>equals</operation>
             <value>MMS</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>HDT_SR_CampaignOutbound</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>HDT_SR_CampaignOutbound</label>
-        <sharedTo>
-            <roleAndSubordinates>Outbound</roleAndSubordinates>
-        </sharedTo>
-        <criteriaItems>
-            <field>CompanyOwner__c</field>
-            <operation>equals</operation>
-            <value>HERA COMM</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
