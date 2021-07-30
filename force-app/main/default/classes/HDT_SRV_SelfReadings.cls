@@ -199,14 +199,14 @@ public with sharing class HDT_SRV_SelfReadings {
         public String checkAutoletturaDescription;
     }
 
-    public static HDT_WRP_SelfReadingResponse handleResponse(HDT_WRP_GenericSapIntegration sapIntegration) {
+    public static HDT_WRP_SelfReadingResponse handleResponse(HDT_WRP_GenericSapIntegration sapIntegration, String checkAutoletturaDescription) {
         System.debug('Handling response for request type: ' + sapIntegration.requestType);
         switch on sapIntegration.requestType {
             when 'CheckAutolettura' {
                 return handleResponseCheckAutolettura(sapIntegration);
             }
             when 'InvioLetture' {
-                return handleResponseInvioLetture(sapIntegration);
+                return handleResponseInvioLetture(sapIntegration, checkAutoletturaDescription);
             }
             when 'InvioLettureForzato' {
                 return handleResponseInvioLettureForzato(sapIntegration);
@@ -254,6 +254,12 @@ public with sharing class HDT_SRV_SelfReadings {
         } else {
             // L'aggiornamento a Check preliminari OK non possiamo farlo adesso, poichè va fatta prima la seconda callout per l'invio letture a SAP.
             //readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
+            // Salviamo nel wrp object il messaggio che in seguito dovremo scrivere sul campo Description del Case.
+            Map<String, Object> data = (Map<String, Object>) body.get('data');
+            String message = (String) data.get('message');
+            if (message == 'data fuori finestra acquisibile') {
+                retWrap.checkAutoletturaDescription = message;
+            }
         }
 
         //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
@@ -272,7 +278,7 @@ public with sharing class HDT_SRV_SelfReadings {
 
     }
 
-    private static HDT_WRP_SelfReadingResponse handleResponseInvioLetture(HDT_WRP_GenericSapIntegration sapIntegration) {
+    private static HDT_WRP_SelfReadingResponse handleResponseInvioLetture(HDT_WRP_GenericSapIntegration sapIntegration, String checkAutoletturaDescription) {
 
         String caseId = sapIntegration.recordId;
         HDT_WRP_SelfReadingResponse retWrap = new HDT_WRP_SelfReadingResponse();
@@ -287,6 +293,7 @@ public with sharing class HDT_SRV_SelfReadings {
         } else {
             // Settiamo prima l'esito precedente del Check Autolettura
             readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
+            readingCaseToUpdate.Description = checkAutoletturaDescription;
             HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
             // Infine settiamo l'esito OK dell'Invio Lettura.
             Case readingCaseToUpdateInvioLetture = new Case(); // Necessario un nuovo oggetto Case, altrimenti non sbianca la TechnicalPhase precedente.
