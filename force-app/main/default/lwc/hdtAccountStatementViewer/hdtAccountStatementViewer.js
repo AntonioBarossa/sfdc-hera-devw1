@@ -354,9 +354,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         }
         
         var selected = this.allData.filter(c => { return c[this.uniqueId] == selectedId })[0];
-        console.log('>>> contoContrattuale: ' + row.contoContrattuale);
-        console.log('>>> dataEmissione: ' + row.dataEmissione);
-        console.log('>>> tipoDocumento: ' + row.tipoDocumento);
+        console.log('>>> contoContrattuale: ' + selected.contoContrattuale);
+        console.log('>>> dataEmissione: ' + selected.dataEmissione);
+        console.log('>>> tipoDocumento: ' + selected.tipoDocumento);
 
         var returnError = false;
 
@@ -366,8 +366,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             }               
     
         } else if(this.tabCode==='EC1' || this.tabCode==='paperless'){
-            if((selected.dataEmissione === undefined || selected.dataEmissione === '') &&
-                (selected.tipoDocumento === undefined || selected.tipoDocumento === '' || selected.tipoDocumento != 'rate')){
+            if((selected.dataEmissione === undefined || selected.dataEmissione === '') ||
+                (selected.tipoDocumento === undefined || selected.tipoDocumento === '' || selected.tipoDocumento != 'RATE')){
                     returnError = true;
             }
         }
@@ -384,8 +384,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         }
 
         var muleRequestParams = {
-            billingProfile: row.contoContrattuale,
-            startDate: row.dataEmissione
+            billingProfile: selected.contoContrattuale,
+            startDate: selected.dataEmissione
         };
 
         this.otherParams = muleRequestParams;
@@ -1433,6 +1433,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     closeModalHandler(event){
         try{
             this[event.detail.booleanVar] = false;
+            if(event.detail.booleanVar==='showBillList'){
+                this.resetIdList();
+            }
         } catch(e){
             console.log('>>>>>> flop ');
         }        

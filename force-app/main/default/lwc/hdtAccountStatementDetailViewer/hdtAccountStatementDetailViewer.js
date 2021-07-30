@@ -449,33 +449,29 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             return;
         }
 
-        switch (this.tabCode) {
-            case 'EC':
-                if(selected.dataEmissionePianoRata === undefined || selected.dataEmissionePianoRata === ''){
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Attenzione',
-                            message: 'Servizio non disponibile per questo record',
-                            variant: 'warning'
-                        })
-                    );
-                    return;
-                }               
-                break;
-        
-            case 'EC9':
-                if((selected.dataEmissione === undefined || selected.dataEmissione === '') &&
-                    (selected.tipoDocumento === undefined || selected.tipoDocumento === '' || selected.tipoDocumento != 'rate')){
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Attenzione',
-                            message: 'Servizio non disponibile per questo record',
-                            variant: 'warning'
-                        })
-                    );
-                    return;
-                }
-                break;
+        if(this.tabCode === 'EC') {
+            if(selected.dataEmissionePianoRata === undefined || selected.dataEmissionePianoRata === ''){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Servizio non disponibile per questo record',
+                        variant: 'warning'
+                    })
+                );
+                return;
+            }
+        } else if(this.tabCode === 'EC9' || this.tabCode === 'EC6' || this.tabCode === 'EC5') {
+            if((selected.dataEmissione === undefined || selected.dataEmissione === '') &&
+                (selected.tipoDocumento === undefined || selected.tipoDocumento === '' || selected.tipoDocumento != 'rate')){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Servizio non disponibile per questo record',
+                        variant: 'warning'
+                    })
+                );
+                return;
+            }
         }
 
 

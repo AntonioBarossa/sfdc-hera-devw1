@@ -138,6 +138,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
     //}
 
     apply(event){
+        
         var el = this.template.querySelector('lightning-datatable');
         var selected = el.getSelectedRows();
         console.log('>>> I WANT PDF ABOUT > ' + JSON.stringify(selected));
@@ -153,6 +154,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
             return;
         }
 
+        this.spinner = true;
         this.sendToApex(JSON.stringify(selected));
     }
 
@@ -236,6 +238,8 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
                 toastObj.variant = 'warning';
             }
         
+            this.spinner = false;
+
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: toastObj.title,
