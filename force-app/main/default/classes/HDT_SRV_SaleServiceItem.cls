@@ -220,7 +220,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 LoginGroup__c = groupLoginString,
                 Role__c = userRoleProfile[0].UserRole.Name,
                 Profile__c = userRoleProfile[0].Profile.Name,
-                NewClient__c = newClient
+                NewClient__c = newClient,
+                SuperUser__c = helperMethods.isSuperUser() ? 'Y' : 'N'
             ));
 
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
