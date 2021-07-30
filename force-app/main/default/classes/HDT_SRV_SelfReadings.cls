@@ -1,8 +1,8 @@
 public with sharing class HDT_SRV_SelfReadings {
 
-    public static void handleSelfReadingIntegrations(SObject selfReadingCase) {
+    public static void handleInvioLettureForzato(SObject selfReadingCase) {
 
-        System.enqueueJob(new HDT_QBL_SelfReadingsCallouts((Case) selfReadingCase, 'CheckAutolettura'));
+        System.enqueueJob(new HDT_QBL_SelfReadingsCallouts((Case) selfReadingCase, 'InvioLettureForzato'));
 
     }
 
@@ -13,7 +13,7 @@ public with sharing class HDT_SRV_SelfReadings {
             when 'CheckAutolettura' {
                 return generateJsonCheckAutolettura(inputParams);
             }
-            when 'InvioLetture' {
+            when 'InvioLetture', 'InvioLettureForzato' {
                 return generateJsonInvioLetture(inputParams);
             }
             when else {
@@ -204,6 +204,9 @@ public with sharing class HDT_SRV_SelfReadings {
             when 'InvioLetture' {
                 return handleResponseInvioLetture(sapIntegration);
             }
+            when 'InvioLettureForzato' {
+                return handleResponseInvioLettureForzato(sapIntegration);
+            }
             when else {
                return null;
             }
@@ -290,6 +293,37 @@ public with sharing class HDT_SRV_SelfReadings {
             readingCaseToUpdateInvioLetture.Id = readingCaseToUpdate.Id;
             readingCaseToUpdateInvioLetture.Phase__c = 'Inviata a SAP';
             String serializedCase = JSON.serialize(readingCaseToUpdateInvioLetture);
+            updateFuture(serializedCase);
+        }
+
+        //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+
+
+        return responseOk;
+    }
+
+    private static Boolean handleResponseInvioLettureForzato(HDT_WRP_GenericSapIntegration sapIntegration) {
+
+        String caseId = sapIntegration.recordId;
+        Boolean responseOk = true;
+
+        Case readingCaseToUpdate = new Case();
+        readingCaseToUpdate.Id = caseId;
+        Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
+
+        if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
+            responseOk = false;
+            // List<Object> errorDetails = (List<Object>) body.get('errorDetails');
+            // if (errorDetails != null && !errorDetails.isEmpty()) {
+            //     Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
+            //     String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
+            //     readingCaseToUpdate.Phase__c = 'Check preliminari KO';
+            //     readingCaseToUpdate.Description = errorMessage;
+            // }
+        } else {
+
+            readingCaseToUpdate.Phase__c = 'Inviata a SAP';
+            String serializedCase = JSON.serialize(readingCaseToUpdate);
             updateFuture(serializedCase);
         }
 

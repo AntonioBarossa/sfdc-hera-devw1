@@ -78,7 +78,7 @@ public inherited sharing class HDT_QR_SelfReadings {
 
         if(objRes.isAccessible()) {
 
-            String query = 'SELECT Id, EffectiveDate__c, CreatedDate FROM Order';
+            String query = 'SELECT Id, EffectiveDate__c, CreatedDate, RecordType.DeveloperName FROM Order';
 
             if (String.isNotBlank(accountId)) {
                 query += ' WHERE AccountId = :accountId';

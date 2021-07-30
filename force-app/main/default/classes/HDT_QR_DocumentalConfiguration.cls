@@ -91,4 +91,13 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
         return null;
     }
 
+    public static SObject getDocumentSendTracking(String transactionId){
+        List<DocumentSendTracking__c> toReturn = [SELECT Id,Case__c,Order__c FROM DocumentSendTracking__c WHERE EnvelopeId__c=:transactionId WITH SECURITY_ENFORCED];
+        if(!toReturn.isEmpty()){
+            return toReturn[0];
+        }else {
+            return null;
+        }
+    }
+
 }
