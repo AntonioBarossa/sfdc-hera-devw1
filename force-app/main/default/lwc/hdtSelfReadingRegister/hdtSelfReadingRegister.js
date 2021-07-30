@@ -9,6 +9,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
     @api commodity;
     @api isRetroactive;
     @api isVolture;
+    @api isProcessReading;
     @api isVisible;
     @api allowSmallerReading = false;
     advanceError;
@@ -111,7 +112,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         }
 
-        if(!this.isRetroactive){
+        if(!this.isRetroactive && !this.isProcessReading){
 
             var index = this.registerObj.findIndex(p => p.label.name === 'readingDate');
 
@@ -271,7 +272,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         console.log('isRetroactive? '+this.isRetroactive);
 
-        if(event.target.label.includes('Nuova Lettura') && !this.isRetroactive){
+        if(event.target.label.includes('Nuova Lettura') && !this.isRetroactive && !this.isProcessReading){
             
             var indexReading = this.registerObj.findIndex(p => {
 

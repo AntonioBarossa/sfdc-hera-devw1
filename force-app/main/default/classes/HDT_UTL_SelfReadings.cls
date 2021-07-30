@@ -19,6 +19,17 @@ public inherited sharing class HDT_UTL_SelfReadings {
 
     }
 
+    public class HDT_UTL_SelfReadingsFlowOutputs {
+        @InvocableVariable
+        public Boolean isProcessReading;
+    
+        @InvocableVariable
+        public String orderId;
+
+        @InvocableVariable
+        public String orderRecordType;
+    }
+
     // Restituisce il numero di registri su cui è presente una lettura.
     // Si assume che la lettura in input non sia su commodity Gas.
     public static Integer getRegistersCount(Reading__c reading) {
@@ -39,8 +50,9 @@ public inherited sharing class HDT_UTL_SelfReadings {
     }
     
     @InvocableMethod(label = 'isProcessReading')
-    public static List<Boolean> isProcessReading(List<HDT_UTL_SelfReadingsFlowInputs> inputs) {
-        List<Boolean> results = new List<Boolean>();
+    public static List<HDT_UTL_SelfReadingsFlowOutputs> isProcessReading(List<HDT_UTL_SelfReadingsFlowInputs> inputs) {
+        List<HDT_UTL_SelfReadingsFlowOutputs> results = new List<HDT_UTL_SelfReadingsFlowOutputs>();
+        HDT_UTL_SelfReadingsFlowOutputs result = new HDT_UTL_SelfReadingsFlowOutputs();
 
         String servicePointId = inputs[0].servicePointId;
         String accountId = inputs[0].accountId;
@@ -50,7 +62,8 @@ public inherited sharing class HDT_UTL_SelfReadings {
         List<HDT_SelfReadings__mdt> configs = queryHandler.getConfigurationByName(metadataRecordName);
         if (configs.isEmpty()) {
             System.debug('HDT_UTL_SelfReadings: Nessun custom metadata trovato.');
-            results.add(false);
+            result.isProcessReading = false;
+            results.add(result);
             return results; 
         }
 
@@ -82,13 +95,17 @@ public inherited sharing class HDT_UTL_SelfReadings {
 
             if (caseCreatedDate > minimumDate && caseCreatedDate < maximumDate) {
                 System.debug('Trovato processo elegibile per innesco autolettura da processo.');
-                results.add(true);
+                result.isProcessReading = true;
+                result.orderId = activeOrder.Id;
+                result.orderRecordType = activeOrder.RecordType.DeveloperName;
+                results.add(result);
                 return results;
             }
         }
         
         System.debug('Nessun processo trovato per innescare una autolettura da processo.');
-        results.add(false);
+        result.isProcessReading = false;
+        results.add(result);
         return results; 
     }
 

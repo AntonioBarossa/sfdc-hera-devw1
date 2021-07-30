@@ -195,6 +195,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         //CHECK CROSS MINIMUM FIELD
         if(String.isBlank(method)) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
         
+        //START>> 27/07/2021 costanzo.lomele@webresults.it - campo company
+        if(!String.isBlank(reqWrp.requestMap.get('CMP'))){
+            currentCase.ExternalUserCompany__c = reqWrp.requestMap.get('CMP');
+        }
+        //END>> 27/07/2021 costanzo.lomele@webresults.it - campo company
         if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita') && !method.equalsIgnoreCase('aggiornaRCU')){
             //gestione scarti
             return caseUpdate;

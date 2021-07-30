@@ -48,12 +48,27 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
     */
     @AuraEnabled
     public static void updateQuoteLinesBillingProfile(List<SObject> quoteLinesToUpdate, String billingProfileId){
+
+        //get only ids from selected quoteLines
+        Set<String> quoteLineIdsSet = (new Map<String,SObject>(quoteLinesToUpdate)).keySet().clone();
+
+        List<String> quoteLineIdsList = new List<String>();
+        quoteLineIdsList.addAll(quoteLineIdsSet);
+
+        //get only ids from analisiConsumi quotelines
+        List<SBQQ__QuoteLine__c> analisiConsumiList = quoteLineQr.getQuoteLineAnalisiConsumi(quoteLineIdsList);
+
+        if (!analisiConsumiList.isEmpty()) {
+            Set<String> quoteLineAnalisiConsumiIdsSet = (new Map<String,SObject>(analisiConsumiList)).keySet().clone();
+            quoteLineIdsList.addAll(quoteLineAnalisiConsumiIdsSet);
+        }
         
+        //update billing profile on all retrieved quoteLines
         List<SBQQ__QuoteLine__c> quoteLineListUpdate = new List<SBQQ__QuoteLine__c>();
 
-        for (SObject quoteLine : quoteLinesToUpdate) {
+        for (String quoteLineId : quoteLineIdsList) {
             SBQQ__QuoteLine__c quoteLineUpdate = new SBQQ__QuoteLine__c(
-                Id = quoteLine.Id,
+                Id = quoteLineId,
                 BillingProfile__c = billingProfileId
             );
             quoteLineListUpdate.add(quoteLineUpdate);
