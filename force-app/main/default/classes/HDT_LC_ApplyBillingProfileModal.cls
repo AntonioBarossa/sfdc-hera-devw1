@@ -31,10 +31,14 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         
         System.debug('query result vas: ' + quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(saleId));
         List<SBQQ__QuoteLine__c> listVas = quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(saleId);
+        
+        System.debug('query result listVasCambioOfferta: ' + quoteLineQr.getQuoteLinesWithCambioOfferta(saleId));
+        List<SBQQ__QuoteLine__c> listVasCambioOfferta = quoteLineQr.getQuoteLinesWithCambioOfferta(saleId);
 
         Map<String, List<SBQQ__QuoteLine__c>> quoteLineMap = new Map<String, List<SBQQ__QuoteLine__c>>();
         quoteLineMap.put('listPodPdr', listPodPdr);
         quoteLineMap.put('listVas', listVas);
+        quoteLineMap.put('listVasCambioOfferta', listVasCambioOfferta);
 
         return quoteLineMap;
     }
