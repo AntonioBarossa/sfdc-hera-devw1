@@ -7,6 +7,7 @@ export default class HdtGenericTableFlow extends LightningElement {
     //buttons
     @api availableActions = [];
     @api saveButton;
+    @api disabledSaveButton = false;
     @api cancelButton;
     @api previousButton;
     @api draftButton;
@@ -53,5 +54,8 @@ export default class HdtGenericTableFlow extends LightningElement {
         console.log('SelectedId' + event.detail[0]["_id"]);
         this.recordId = event.detail[0]["_id"];
         this.objName  = event.detail[0]["_objName"];
+    }
+    disableButton(event){
+        this.disabledSaveButton = true;
     }
 }
