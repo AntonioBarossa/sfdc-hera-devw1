@@ -125,8 +125,22 @@ public inherited sharing class HDT_QR_QuoteLine {
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND SBQQ__Quote__r.ContractReference__c = null
             AND SBQQ__Quote__r.OrderReference__c = null
+            AND SBQQ__Product__r.Name != 'Analisi Consumi'
             AND (SBQQ__ProductFamily__c = 'VAS Fatturabili' OR SBQQ__ProductFamily__c = 'VAS Prodotto' OR SBQQ__ProductFamily__c = 'VAS Servizio')
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<SBQQ__QuoteLine__c> getQuoteLineAnalisiConsumi(List<String> mainQuoteLineIds){
+        return [
+            SELECT
+            Id,
+            BillingProfile__c,
+            SBQQ__RequiredBy__r.BillingProfile__c
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__RequiredBy__c IN :mainQuoteLineIds
+            AND SBQQ__Product__r.Name = 'Analisi Consumi'
             WITH SECURITY_ENFORCED
         ];
     }

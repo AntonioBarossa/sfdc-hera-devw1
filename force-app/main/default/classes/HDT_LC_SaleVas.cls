@@ -83,6 +83,37 @@ public inherited sharing class HDT_LC_SaleVas {
     }
 
     /**
+    * @description Getting list of Orders/Assets/Subscription
+    * @author gabriele.rota@webresults.it | 2021-07-21 
+    * @param accountId 
+    * @param key 
+    * @return List<SObject> 
+    **/
+    @AuraEnabled
+    public static List<SObject> getFornitura(Id accountId, String key){
+        List<SObject> records;
+
+        switch on key {
+            when 'ORDERS_IN_PROGRESS_VAS'{
+                records = [SELECT Type, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                    FROM Order
+                    WHERE RecordType.DeveloperName='HDT_RT_VAS' AND Status='In Lavorazione' AND SBQQ__Quote__r.IsVAS__c = true
+                    AND SBQQ__Quote__r.AmendmentAllowed__c != true AND AccountId=:accountId WITH SECURITY_ENFORCED];
+            }
+            when 'ASSETS_ACTIVATED'{
+                records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
+                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:accountId WITH SECURITY_ENFORCED];
+            }
+            when 'SUBS_ANALISI_CONSUMI'{ 
+                records = [SELECT SBQQ__Contract__r.ContractNumber,
+                    SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
+                    FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:accountId WITH SECURITY_ENFORCED];
+            }
+        }
+        return records;
+    }
+
+    /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get map with lists of active contracts and orders
      * @param String accountId

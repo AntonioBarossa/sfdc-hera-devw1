@@ -19,6 +19,11 @@ public with sharing class HDT_QR_City {
             return '';
         }
     }
+    public static List<City__c> getCitySDVList(List<String> city){
+
+        String query = 'SELECT Name,SDV__c,ServiceGas__c,ServiceEle__c FROM City__c WHERE Name IN :city  AND SDV__c != null WITH SECURITY_ENFORCED';
+        return Database.query(query);
+    }
     public static String getCitySDVGas(String city){
 
         String query = 'SELECT SDV__c FROM City__c WHERE Name = :city AND ServiceGas__c = true AND SDV__c != null WITH SECURITY_ENFORCED';

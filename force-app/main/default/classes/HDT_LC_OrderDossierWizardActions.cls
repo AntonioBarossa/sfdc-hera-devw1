@@ -29,6 +29,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 String phase = childOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' ? childOrder.Phase__c : 
                 checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione';
 
+                if(childOrder.RecordType.DeveloperName == 'HDT_RT_CambioUso'){ //for cambio uso phase should always be 'In attesa validazione'
+                    phase = 'In attesa validazione';
+                }
+
                 if (childOrder.ComfortCallDaysDue__c != null) { //comform call logic
                     phase = 'In attesa conferma cliente';
                 }
@@ -56,6 +60,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
                 String phase = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione';
                 // Date dateComfortCall = null;
+
+                if(childOrder.RecordType.DeveloperName == 'HDT_RT_CambioUso'){ //for cambio uso phase should always be 'In attesa validazione'
+                    phase = 'In attesa validazione';
+                }
 
                 if (childOrder.ComfortCallDaysDue__c != null) { //comform call logic
                     phase = 'In attesa conferma cliente';

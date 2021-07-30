@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 12/05/2021
+* @description HDT_UTL_CheckFiscalCodeTaxNumber.cls
+* @history Lorenzo – 12/05/2021 – created class
+*/
 public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
     private static Map<String,Object> dataFromFiscalCode=new Map<String,Object>();
     private static Map<String, String> monthsLetters=new Map<String, String>{
@@ -53,6 +59,12 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 }
                 birthDate = year +'-'+ month +'-'+day;
                 city= cities.get(fiscalCode.substring(11,15));
+
+                if (String.isBlank(gender)||String.isBlank(city) || String.isBlank(day) || String.isBlank(year)) {
+                    throw new AuraHandledException('Enter a valid fiscal code');
+                }
+
+
                 dataFromFiscalCode.put('gender', gender);
                 dataFromFiscalCode.put('birthDate', birthDate);
                 dataFromFiscalCode.put('birthPlace', city);

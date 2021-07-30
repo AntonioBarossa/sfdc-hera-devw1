@@ -1,3 +1,10 @@
+/**
+* @author Fatjola Memishaj (fatjola.memishaj@dunegroup.it)
+* @date 06/05/2021
+* @description Initialize security access instance
+* @history Fatjola Memishaj 06/05/2021 Created class
+*/
+
 public inherited sharing class HDT_SRV_CommercialCode {
     
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();

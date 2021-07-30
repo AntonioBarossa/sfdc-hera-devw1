@@ -189,13 +189,18 @@ public inherited sharing class HDT_QR_Order {
             OrderReferenceNumber,                            // @Picchiri  15/06/21
             IsSequanzialized__c,                             // @Picchiri  24/06/21
             SalesCompanyCode__c,
-            Owner.Username                                  // @De Felice  27/07/21
+            Owner.Username,                                 // @De Felice  27/07/21
+            CustomerType__c,
+            IsWinback__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
         ];
     }
 
+    public Order getOrderbyId(String id){
+        return [Select id,FriendCode__c from Order Where id = :id][0];
+    }
     public List<Order> getOrderByIdForSalesCallout(String id){
         return [
             SELECT 
@@ -324,7 +329,9 @@ public inherited sharing class HDT_QR_Order {
             OwnerId,                                        
             OrderReferenceNumber,
             SalesCompanyCode__c,
-            IsSequanzialized__c
+            IsSequanzialized__c,
+            CustomerType__c,
+            IsWinback__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -369,7 +376,10 @@ public inherited sharing class HDT_QR_Order {
             DocumentLow80__c,
             AutorizationVolturaThirdTrader__c,
             VolturaThirdTrader__c,
-            Phase__c
+            Phase__c,
+            ComfortCallDaysDue__c,
+            QualityCall__c,
+            QualityCallUnique__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -435,7 +445,8 @@ public inherited sharing class HDT_QR_Order {
             Instance326__c,
             DocumentLow80__c,
             AutorizationVolturaThirdTrader__c,
-            Phase__c
+            Phase__c,
+            SupplyAddressFormula__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -603,6 +614,30 @@ public inherited sharing class HDT_QR_Order {
     public static String getRecordTypesDeveloperNameById(Id id){
         String devName = [SELECT DeveloperName FROM RecordType WHERE id = :id].DeveloperName;
         return devName;
+    }
+	
+    public List<order> getOrderForComfortQualityResult(String parentOrderId){
+        return [SELECT 
+            Id,
+            AccountId,
+            Account.Name,
+            Recordtypeid,
+            Recordtype.Name,
+            Recordtype.DeveloperName,
+            Status,
+            Phase__c,
+            OrderNumber,
+            ProcessType__c,
+            DateComfortCall__c,
+            ComfortCallDaysDue__c,
+            QualityCall__c,
+            QualityCallUnique__c,
+            ConfirmCustomerContract__c,
+            CancellationReason__c
+        FROM Order
+        WHERE ParentOrder__c = :parentOrderId
+        WITH SECURITY_ENFORCED
+        ];
     }
 
 }

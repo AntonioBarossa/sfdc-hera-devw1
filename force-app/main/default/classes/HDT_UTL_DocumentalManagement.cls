@@ -91,23 +91,33 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem> serviceItemList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem>();
 			serviceItemList.addAll(response.deliverPackageResponse.serviceList);
 			List<DocumentalEnvelopeAttachment__c> envelopeList = new List<DocumentalEnvelopeAttachment__c>();
+			List<Order> orderList = new List<Order>();
 			for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem serviceItem : serviceItemList){
 				recordId = (Id) serviceItem.serviceId;
 				for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : serviceItem.attachmentList){
 					DocumentalEnvelopeAttachment__c envelope = new DocumentalEnvelopeAttachment__c();
 					envelope.AttachmentCode__c = singleAttachment.code;
-					envelope.Required__c = singleAttachment.mandatory == 'Y'? true:false;
+					envelope.Required__c = singleAttachment.mandatory == '1'? true:false;
 					envelope.Version__c = singleAttachment.version;
 					if(context.equalsIgnoreCase('Case')){
 						envelope.Case__c = recordId;
 					}else if(context.equalsIgnoreCase('Order')){
 						envelope.Order__c = recordId;
+						if(String.isNotBlank(singleAttachment.code) && singleAttachment.code.indexOf('CGC') > -1){
+							Order singleOrder = new Order();
+							singleOrder.Id = recordId;
+							singleOrder.GeneralContractConditions__c = singleAttachment.code;
+							orderList.add(singleOrder);
+						}
 					}
 					envelopeList.add(envelope);
 				}
 			}
 			if(envelopeList.size()>0){
 				Boolean result = HDT_UTL_DatabaseService.insertSObject(envelopeList);
+			}
+			if(orderList.size()>0){
+				Boolean resultOrder = HDT_UTL_DatabaseService.updateSObject(orderList);
 			}
 			
 		} catch (Exception ex) {
@@ -119,7 +129,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
 		attachmentList.addAll(response.deliverPackageResponse.serviceList[0].attachmentList);
 		for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : attachmentList){
-			if(singleAttachment.mandatory == 'Y')
+			if(singleAttachment.mandatory == '1')
 				return true;
 		}
 		return false;

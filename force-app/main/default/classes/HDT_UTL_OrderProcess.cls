@@ -115,11 +115,17 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for (Order newOrder : newOrdersList) {
             for (Order oldOrder : oldOrdersList) {
 
-                if(newOrder.Status == 'In Lavorazione' && newOrder.ProcessType__c != null && (newOrder.ProcessType__c.contains('Switch in') || newOrder.ProcessType__c == 'Cambio Offerta') &&
-                    (newOrder.SignedDate__c != oldOrder.SignedDate__c && (newOrder.WizardCompletedDate__c != null || newOrder.WizardCompletedDate__c != oldOrder.WizardCompletedDate__c)) || 
-                    ((oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku') || (oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku') || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')) || 
-                    (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK') || 
-                    (oldOrder.IsSequanzialized__c == true && newOrder.IsSequanzialized__c == false)
+                if(newOrder.Status == 'In Lavorazione'
+                    && newOrder.ProcessType__c != null
+                    && newOrder.SignedDate__c != null
+                    && (newOrder.ProcessType__c.contains('Switch in') || newOrder.ProcessType__c == 'Cambio Offerta')
+                    && ( (newOrder.SignedDate__c != oldOrder.SignedDate__c && newOrder.WizardCompletedDate__c != null)
+                        ||(oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                        ||(oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                        || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                        || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')
+                        || (oldOrder.IsSequanzialized__c == true && newOrder.IsSequanzialized__c == false)
+                    )
                 ){
                     ricalculateDate = true;
                 }
@@ -461,6 +467,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
 				return true;
 			}
+            if(orderNew.Cluster__c.equalsIgnoreCase('Volutra')){
+                Case nonReqContract = new Case();
+                HDT_QR_Case caseQr = new HDT_QR_Case(); 
+                nonReqContract = caseQr.getNonReqContrOrder(orderNew.Id);
+                if(!(String.isBlank(nonReqContract.Id))){
+                    nonReqContract.Phase__c = 'Completata';
+                    HDT_UTL_DatabaseService.updateSObject(nonReqContract);
+                }
+            }
 		}
 		return false;
 	}
@@ -499,7 +514,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(orderIds, 'Order__c');
             for(ServiceRequest__c s: srvRequests){
                 ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
-                s.Status__c= orderStatuses.get(s.Order__c);
+                s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
                 sReqToUpdate.add(s);
             }
             HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);

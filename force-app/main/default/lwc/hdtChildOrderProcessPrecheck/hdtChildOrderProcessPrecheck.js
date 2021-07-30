@@ -74,13 +74,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
             this.disabledDeliberation = this.order.Step__c !== undefined;
         }
-        else if(selectedProcess.recordType === 'HDT_RT_Subentro')
-        {
-            this.precheck = true;
-            this.compatibilita = true;
-            this.causale = '';
-            this.showDeliberation = false;
-        }
+        // else if(selectedProcess.recordType === 'HDT_RT_Subentro')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = true;
+        //     this.causale = '';
+        //     this.showDeliberation = false;
+        // }
         else if(selectedProcess.recordType === 'HDT_RT_SwitchIn')
         {
             // this.precheck = false;
@@ -93,13 +93,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showEsitoCheck = false;
 
         }
-        else if(selectedProcess.recordType === 'HDT_RT_AttivazioneConModifica')
-        {
-            this.precheck = true;
-            this.compatibilita = true;
-            this.causale = '';
-            this.showDeliberation = false;
-        }
+        // else if(selectedProcess.recordType === 'HDT_RT_AttivazioneConModifica')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = true;
+        //     this.causale = '';
+        //     this.showDeliberation = false;
+        // }
         else if(selectedProcess.recordType === 'HDT_RT_VAS')
         {
             this.selectedProcessObject.recordType = 'HDT_RT_VAS';
@@ -108,20 +108,41 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causale = '';
             this.showDeliberation = false;
         }
-        else if(selectedProcess.recordType === 'HDT_RT_CambioOfferta')
-        {
-            this.precheck = true;
-            this.compatibilita = true;
-            this.causale = '';
-            this.showDeliberation = false;
-        }
-        else if(selectedProcess.recordType === 'HDT_RT_ScontiBonus')
-        {
-            this.precheck = true;
-            this.compatibilita = true;
-            this.causale = '';
-            this.showDeliberation = false;
-        }
+        // else if(selectedProcess.recordType === 'HDT_RT_CambioOfferta')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = true;
+        //     this.causale = '';
+        //     this.showDeliberation = false;
+        // }
+        // else if(selectedProcess.recordType === 'HDT_RT_ScontiBonus')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = true;
+        //     this.causale = '';
+        //     this.showDeliberation = false;
+        // }
+        // else if(selectedProcess.recordType === 'HDT_RT_ConnessioneConAttivazione')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = true;
+        //     this.causale = '';
+        //     this.showDeliberation = false;
+        // }
+        // else if(selectedProcess.recordType === 'HDT_RT_TemporaneaNuovaAtt')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = true;
+        //     this.causale = '';
+        //     this.showDeliberation = false;
+        // }
+        // else if(selectedProcess.recordType === 'HDT_RT_CambioUso')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = true;
+        //     this.causale = '';
+        //     this.showDeliberation = false;
+        // }
         //INIZIO SVILUPPI EVERIS
         else if(selectedProcess.recordType === 'HDT_RT_Voltura'){
             this.selectedProcessObject.recordType = 'HDT_RT_Voltura';
@@ -131,7 +152,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showDeliberation = false;
         }
         //FINE SVILUPPI EVERIS 
+        else{
+            this.precheck = true;
+            this.compatibilita = true;
+            this.causale = '';
+            this.showDeliberation = false;
 
+        }
     }
 
     incompatibilityfound(selectedProcess, compatibility){
@@ -154,13 +181,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
             this.disabledDeliberation = this.order.Step__c !== undefined;
         }
-        else if(selectedProcess.recordType === 'HDT_RT_Subentro')
-        {
-            this.precheck = true;
-            this.compatibilita = false;
-            this.causaleCompatibilita = compatibility;
-            this.showDeliberation = false;
-        }
+        // else if(selectedProcess.recordType === 'HDT_RT_Subentro')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = false;
+        //     this.causaleCompatibilita = compatibility;
+        //     this.showDeliberation = false;
+        // }
         else if(selectedProcess.recordType === 'HDT_RT_SwitchIn')
         {
             // this.precheck = false;
@@ -173,13 +200,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showEsitoCheck = false;
 
         }
-        else if(selectedProcess.recordType === 'HDT_RT_AttivazioneConModifica')
-        {
-            this.precheck = true;
-            this.compatibilita = false;
-            this.causaleCompatibilita = compatibility;
-            this.showDeliberation = false;
-        }
+        // else if(selectedProcess.recordType === 'HDT_RT_AttivazioneConModifica')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = false;
+        //     this.causaleCompatibilita = compatibility;
+        //     this.showDeliberation = false;
+        // }
         else if(selectedProcess.recordType === 'HDT_RT_VAS')
         {
             this.selectedProcessObject.recordType = 'HDT_RT_VAS';
@@ -188,20 +215,41 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causaleCompatibilita = compatibility;
             this.showDeliberation = false;
         }
-        else if(selectedProcess.recordType === 'HDT_RT_CambioOfferta')
-        {
-            this.precheck = true;
-            this.compatibilita = false;
-            this.causaleCompatibilita = compatibility;
-            this.showDeliberation = false;
-        }
-        else if(selectedProcess.recordType === 'HDT_RT_ScontiBonus')
-        {
-            this.precheck = true;
-            this.compatibilita = false;
-            this.causaleCompatibilita = compatibility;
-            this.showDeliberation = false;
-        }
+        // else if(selectedProcess.recordType === 'HDT_RT_CambioOfferta')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = false;
+        //     this.causaleCompatibilita = compatibility;
+        //     this.showDeliberation = false;
+        // }
+        // else if(selectedProcess.recordType === 'HDT_RT_ScontiBonus')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = false;
+        //     this.causaleCompatibilita = compatibility;
+        //     this.showDeliberation = false;
+        // }
+        // else if(selectedProcess.recordType === 'HDT_RT_ConnessioneConAttivazione')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = false;
+        //     this.causaleCompatibilita = compatibility;
+        //     this.showDeliberation = false;
+        // }
+        // else if(selectedProcess.recordType === 'HDT_RT_TemporaneaNuovaAtt')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = false;
+        //     this.causaleCompatibilita = compatibility;
+        //     this.showDeliberation = false;
+        // }
+        // else if(selectedProcess.recordType === 'HDT_RT_CambioUso')
+        // {
+        //     this.precheck = true;
+        //     this.compatibilita = false;
+        //     this.causaleCompatibilita = compatibility;
+        //     this.showDeliberation = false;
+        // }
         //INIZIO SVILUPPI EVERIS
         else if(selectedProcess.recordType === 'HDT_RT_Voltura'){
             this.selectedProcessObject.recordType = 'HDT_RT_Voltura';
@@ -212,6 +260,12 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         //FINE SVILUPPI EVERIS 
 
+        else{
+            this.precheck = true;
+            this.compatibilita = false;
+            this.causaleCompatibilita = compatibility;
+            this.showDeliberation = false;
+        }
     }
 
     handleSelectProcess(event){
@@ -234,8 +288,21 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         //EVERIS: Aggiunta variabile Order
         next({order: this.order,orderId: this.order.Id, selectedProcessObject: this.selectedProcessObject, deliberate: this.deliberation, extraParams: extraParams, srRequest: this.serviceRequest}).then(data =>{
-            this.loaded = true;
-            this.dispatchEvent(new CustomEvent('refreshorderchild'));
+            if(data != ''){
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Processo incompatibile!',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+
+                this.incompatibilityfound(this.selectedProcessObject, data);
+                this.loaded = true;
+            }else{
+                this.loaded = true;
+                this.dispatchEvent(new CustomEvent('refreshorderchild'));
+            }
 
         }).catch(error => {
             this.loaded = true;

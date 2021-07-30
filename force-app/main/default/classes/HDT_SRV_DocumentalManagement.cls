@@ -165,6 +165,66 @@ public class HDT_SRV_DocumentalManagement{
 		return postelResponse;
 	}
 
+	public static String getTransactionId(String envelopeId){
+		String transactionId;
+		DocusignSettings__c docusignCustomSettings = DocusignSettings__c.getInstance();
+		String addonUrl = '?customerId='+docusignCustomSettings.CustomerEnviromentId__c+'&envelopeId='+envelopeId;
+		Http http = new Http();
+		HttpRequest request = new HttpRequest();
+		request.setEndpoint('Callout:DocusignTransaction'+addonUrl);
+		request.setMethod('GET');
+		HttpResponse response = http.send(request);
+		if (response.getStatusCode() == 200) {
+			Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+			System.debug('Response: ' + results);
+			if (results.containsKey('data')) {
+				Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(JSON.serialize(results.get('data')));
+				transactionId = (String) data.get('transactionId');
+			}
+			
+			System.debug('Received the following transactionId: ' + transactionId);
+		}
+		return transactionId;
+	}
+	public static SObject getSobjectFromTransactionId(String transactionId){
+		if(String.isBlank(transactionId)) return null;
+		SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
+		if(docSendTracking != null){
+			if(docSendTracking.get('Case__c') != null){
+				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
+				return caseList[0];
+			}else {
+				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+				return orderList[0];
+			}
+		}else{
+			return null;
+		}
+	}
+
+	public static void updateSobjectFromDocusign(SObject record,String status){
+		if(record != null){
+			String processType = (String)record.get('DocumentalProcessType__c');
+			String cluster = (String)record.get('Cluster__c');
+			if(record.getSobjectType() == Case.getSobjectType()){
+				if(status.equalsIgnoreCase('completed')){
+					record.put('DocumentalPhase__c','Plico firmato');
+					if(cluster.equalsIgnoreCase('Preventivi')){
+						record.put('Phase__c','Preventivo accettato');
+					}
+				}else{
+					//Che fase documentale settare?
+					if(cluster.equalsIgnoreCase('Preventivi')){
+						record.put('Phase__c','Preventivo rifiutato');
+					}
+				}
+			}else {
+				//tbd
+			}
+			HDT_UTL_DatabaseService.upsertSObject(record);
+		}
+	}
+
 	@future
 	private static void manageResponseFuture(String responseString, String context){
 		HDT_WRP_DocumentalResponse response = (HDT_WRP_DocumentalResponse) JSON.deserialize(responseString, HDT_WRP_DocumentalResponse.class);
@@ -228,7 +288,17 @@ public class HDT_SRV_DocumentalManagement{
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalTemplate templateInfo = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalTemplate();
 		try {
 			//signInfo
-			String telephoneNumber = (String) formParams.get('telefono');
+			String telephoneNumberCase = HDT_UTL_DocumentalManagement.getValue('Case','PhoneNumber__c',0,inputs,formParams);
+			String telephoneNumberOrder = HDT_UTL_DocumentalManagement.getValue('Order','PhoneNumber__c',0,inputs,formParams);
+			String telephoneNumber = '+39';
+			String emailCase = HDT_UTL_DocumentalManagement.getValue('Case','Email__c',0,inputs,formParams);
+			String emailOrder = HDT_UTL_DocumentalManagement.getValue('Order','ShippingMail__c',0,inputs,formParams);
+			if(String.isNotBlank(telephoneNumberCase)){
+				telephoneNumber = telephoneNumber + telephoneNumberCase;
+			}else {
+				telephoneNumber = telephoneNumber + telephoneNumberOrder;
+			}
+			
 			DocusignSettings__c docusignCustomSettings = DocusignSettings__c.getInstance();
 			signInfo.customerEnvironmentId = docusignCustomSettings.CustomerEnviromentId__c;
 			signInfo.idCheckConfigurationName = docusignCustomSettings.IdCheckConfigurationName__c;
@@ -237,13 +307,18 @@ public class HDT_SRV_DocumentalManagement{
 			signInfo.status = docusignCustomSettings.Status__c;
 			signInfo.senderProvidedNumbers.add(telephoneNumber);
 			//customerInfo
-			String email = (String) formParams.get('email');
+			String email = emailCase != null?emailCase:emailOrder;
 			String creationUrl = formParams.get('signMode') == 'OTP Remoto'? 'false':'true';
 			String vatCode = HDT_UTL_DocumentalManagement.getValue('Account','VATNumber__c',0,inputs,formParams);
 			String fiscalCode = HDT_UTL_DocumentalManagement.getValue('Account','FiscalCode__c',0,inputs,formParams);
-			String accountName = HDT_UTL_DocumentalManagement.getValue('Account','Name',0,inputs,formParams);
-			String processType = (String) formParams.get('processType');
+			String accountName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','Name',0,inputs,formParams);
+			String processTypeCase = HDT_UTL_DocumentalManagement.getValue('Case','DocumentalProcessType__c',0,inputs,formParams);
+			String processType = 'Plico contrattuale';
+			if(String.isNotBlank(processTypeCase)){
+				processType = processTypeCase;
+			}
 			customerInfo.email = email;
+			customerInfo.name = accountName;
 			customerInfo.fiscalCode = fiscalCode;
 			customerInfo.vatNumber = vatCode;
 			customerInfo.creationUrl = creationUrl;
