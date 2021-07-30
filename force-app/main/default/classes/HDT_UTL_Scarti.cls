@@ -16,7 +16,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                                                                                                      'Errore invio a SAP' => 'CBS_HER009__ERRORE_INVIO_A_SAP_SALES',
                                                                                                      'Errore determinazione variante SAP' => 'CBS_HER010__ERRORE_DETERMINAZIONE_VARIANTE_SAP_SALES'};
 
+
     static final Map<String, String> TRACCIAMENTOHEROKUPOSTSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER001__ESITO_NON_ELABORATO_DA_DLSII_POSTSALES',
+
 																						                 'Esito non elaborato' => 'CBS_HER002__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_POSTSALES',
 																						                 'Eliminato esito in scarto' => 'CBS_HER003__ELIMINATO_ESITO_IN_SCARTO_POSTSALES',
 																						                 'Errore invio a SAP' => 'CBS_HER004__ERRORE_INVIO_A_SAP_POSTSALES',
@@ -111,6 +113,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 //newAct.DiscardDescription__c = curData.errorMessage;
                 toInsert.add(newAct);
             }
+          
             else if(TRACCIAMENTOHEROKUSALES.keySet().contains(curData.tipoAttivita)){//va bene controllare solo su una mappa, tanto i keyset sono uguali
                 if('sales'.equalsIgnoreCase(curData.processCategory)) dataForSalesHandlingByTemplateCode.put(curData.recordId, curData);
                 else if('postsales'.equalsIgnoreCase(curData.processCategory)){
@@ -186,9 +189,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
             for(Account singleAccount: listAccounts){
                 if(activity.BPCode__c==singleAccount.CustomerCode__c){
                     activity.Account__c=singleAccount.Id;
-                    if(activity.Type__c.equalsIgnoreCase('Canone RAI')){
+                    if('Canone RAI'.equalsIgnoreCase(activity.Type__c)){
                         activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
-                    }else if(activity.Type__c.equalsIgnoreCase('Bonus sociale')){
+                    }else if('Bonus sociale'.equalsIgnoreCase(activity.Type__c)){
                         activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
                     }
                 }
@@ -215,15 +218,17 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 inputData - list of et4ae5__IndividualEmailResult__c
     * @return List<object> 
     */
-    public static void createScartoForMarketingCloud(List<SObject> inputData){
+    public static void createScartoForMarketingCloud(List<SObject> inputData, Map<Id,SObject> oldData){
         list<SObject> toHandle= new list<SObject>();
         for(SObject singleData: inputData){
             if(singleData.getSObjectType()==schema.et4ae5__IndividualEmailResult__c.getSObjectType()){
-                if(String.isNotBlank((string)singleData.get('BounceSubCategory__c'))){
+                if(String.isNotBlank((string)singleData.get('BounceSubCategory__c')) && 
+                    oldData.get((Id)singleData.get('Id')).get('BounceSubCategory__c')!=((string)singleData.get('BounceSubCategory__c'))){
                     toHandle.add(singleData);
                 }
             }else if(singleData.getSObjectType()==schema.SMSTracking__c.getSObjectType()){
-                if(singleData.get('Undelivered__c')==true){
+                if(singleData.get('Undelivered__c')==true &&
+                oldData.get((Id)singleData.get('Id')).get('Undelivered__c')!=((string)singleData.get('Undelivered__c'))){
                     toHandle.add(singleData);
                 }
             }
@@ -247,9 +252,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
 
             for(SObject scarto: toHandle){
                 if(String.isBlank((string)scarto.get('OrderID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('salesTemplate'), new Map<String,Object>{'objectId' => scarto.get('CaseID__c')}));
+                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => scarto.get('CaseID__c')}));
                 }else if(String.isBlank((string)scarto.get('CaseID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => scarto.get('OrderID__c')}));
+                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('salesTemplate'), new Map<String,Object>{'objectId' => scarto.get('OrderID__c')}));
                 }
             }
             HDT_UTL_DatabaseService.insertSObject(insertedActivities);
