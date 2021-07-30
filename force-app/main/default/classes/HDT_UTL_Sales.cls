@@ -172,6 +172,7 @@ public with sharing class HDT_UTL_Sales {
         }
     }
 
+
     public static Boolean isWinback(String servicePointId){
         List<Case> caseList = caseQr.getServicePointCaseWinBack(servicePointId);
         return !caseList.isEmpty();
