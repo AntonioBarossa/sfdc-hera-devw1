@@ -18,10 +18,41 @@ public inherited sharing class HDT_UTL_SelfReadings {
         public String metadataRecordName;
 
     }
+
+    public class HDT_UTL_SelfReadingsFlowOutputs {
+        @InvocableVariable
+        public Boolean isProcessReading;
+    
+        @InvocableVariable
+        public String orderId;
+
+        @InvocableVariable
+        public String orderRecordType;
+    }
+
+    // Restituisce il numero di registri su cui è presente una lettura.
+    // Si assume che la lettura in input non sia su commodity Gas.
+    public static Integer getRegistersCount(Reading__c reading) {
+        if (reading == null) {
+            return 0;
+        }
+
+        Integer registersCount = 0;
+        for (Integer i = 1; i <= 9; i++) { // TODO WAVE 2|3: estendere a 12?
+            List<String> indexParam = new List<String> { String.valueOf(i) };
+            Decimal readingValue = (Decimal) reading.get(String.format('ReadingValue{0}__c', indexParam));
+            if (readingValue != null) {
+                registersCount++;
+            }
+        }
+
+        return registersCount;
+    }
     
     @InvocableMethod(label = 'isProcessReading')
-    public static List<Boolean> isProcessReading(List<HDT_UTL_SelfReadingsFlowInputs> inputs) {
-        List<Boolean> results = new List<Boolean>();
+    public static List<HDT_UTL_SelfReadingsFlowOutputs> isProcessReading(List<HDT_UTL_SelfReadingsFlowInputs> inputs) {
+        List<HDT_UTL_SelfReadingsFlowOutputs> results = new List<HDT_UTL_SelfReadingsFlowOutputs>();
+        HDT_UTL_SelfReadingsFlowOutputs result = new HDT_UTL_SelfReadingsFlowOutputs();
 
         String servicePointId = inputs[0].servicePointId;
         String accountId = inputs[0].accountId;
@@ -31,7 +62,8 @@ public inherited sharing class HDT_UTL_SelfReadings {
         List<HDT_SelfReadings__mdt> configs = queryHandler.getConfigurationByName(metadataRecordName);
         if (configs.isEmpty()) {
             System.debug('HDT_UTL_SelfReadings: Nessun custom metadata trovato.');
-            results.add(false);
+            result.isProcessReading = false;
+            results.add(result);
             return results; 
         }
 
@@ -63,13 +95,17 @@ public inherited sharing class HDT_UTL_SelfReadings {
 
             if (caseCreatedDate > minimumDate && caseCreatedDate < maximumDate) {
                 System.debug('Trovato processo elegibile per innesco autolettura da processo.');
-                results.add(true);
+                result.isProcessReading = true;
+                result.orderId = activeOrder.Id;
+                result.orderRecordType = activeOrder.RecordType.DeveloperName;
+                results.add(result);
                 return results;
             }
         }
         
         System.debug('Nessun processo trovato per innescare una autolettura da processo.');
-        results.add(false);
+        result.isProcessReading = false;
+        results.add(result);
         return results; 
     }
 
@@ -113,6 +149,10 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.IntegrationId__c = request.integrationId;
         c.MeterCode__c = request.serialNumber;
         c.ReadingDate__c = request.readingDate;
+
+        HDT_QR_CausalCodeCalculation causalCodeHandler = new HDT_QR_CausalCodeCalculation();
+        HDT_CausalCodeCalculation__mdt causalCodeMdt = causalCodeHandler.calculateCausalCode(c.Cluster__c, c.Type, '', request.commodity);
+        c.CausalCode__c = causalCodeMdt.CausalCode__c;
 
         switch on request.outcome {
             when 'OK' {

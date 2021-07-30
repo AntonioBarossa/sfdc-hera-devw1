@@ -467,6 +467,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
 				return true;
 			}
+            if(orderNew.Cluster__c.equalsIgnoreCase('Volutra')){
+                Case nonReqContract = new Case();
+                HDT_QR_Case caseQr = new HDT_QR_Case(); 
+                nonReqContract = caseQr.getNonReqContrOrder(orderNew.Id);
+                if(!(String.isBlank(nonReqContract.Id))){
+                    nonReqContract.Phase__c = 'Completata';
+                    HDT_UTL_DatabaseService.updateSObject(nonReqContract);
+                }
+            }
 		}
 		return false;
 	}
@@ -505,7 +514,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(orderIds, 'Order__c');
             for(ServiceRequest__c s: srvRequests){
                 ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
-                s.Status__c= orderStatuses.get(s.Order__c);
+                s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
                 sReqToUpdate.add(s);
             }
             HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);

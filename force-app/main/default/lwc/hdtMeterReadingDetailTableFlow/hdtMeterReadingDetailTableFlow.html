@@ -2,11 +2,14 @@
 
     <c-hdt-meter-reading-detail-table
         columnsobj={meterReadingColumns}
-        contract-number={contractNumber}>
+        contract-number={contractNumber}
+        max-rows={maxRows}
+        onrowselection={handleRowSelection}
+        non-stand-alone={nonStandAlone}>
     </c-hdt-meter-reading-detail-table>
 
 
-    <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+    <div if:false={nonStandAlone} class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
         <div class="actionsLeft">
         </div>
         <div class="actionsRight">

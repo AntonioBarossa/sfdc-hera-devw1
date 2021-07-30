@@ -11,6 +11,7 @@
     <aura:attribute name="AutorizationVolturaThirdTrader" type="Boolean" default="true" />
     <aura:attribute name="formValid" type="Boolean" default="true"/>
     <aura:attribute name="HideSpinner" type="Boolean" default="true"/>
+    <aura:attribute name="notValid" type="Boolean" default="false"/>
     <aura:attribute name="ordOBJ" type="Order"/>
     
 	<aura:renderif istrue="{!v.HideSpinner}">
@@ -49,4 +50,12 @@
             <lightning:card title="Validazione Non richiesta o Gia Effettuata"/> 
         </aura:set>
     </aura:if>
+        <c:hdtConfirmationDialog title="Documento non valido"
+                        message="Documento non valido. Confermi annullamento ordine?"
+                        confirmLabel='Si'
+                        cancelLabel='No'
+                        visible="{!v.notValid}"
+                        name="confirmOrderCancellation"
+                        onclick="{!c.handleDialogResponse}">
+        </c:hdtConfirmationDialog>
 </aura:component>

@@ -6,6 +6,11 @@
 */
 
 public inherited sharing class HDT_QR_Case {
+
+    public List<Case> getRecordByPracticeNumber(String caseNumber){
+        return [SELECT Order__r.Id,Asset.Id,Subscription__r.Id FROM Case
+        WHERE CaseNumber = :caseNumber WITH SECURITY_ENFORCED LIMIT 1];
+    }
     
     public Case getRecordById(String Id) {
         return [
@@ -69,11 +74,11 @@ public inherited sharing class HDT_QR_Case {
     /*****Sviluppo per Campagne */
 
     public List<Case> getRecordCreatedYesterdayDifferentBy(String cluster){
-        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND createddate = Yesterday ];
+        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND createddate = Yesterday WITH SECURITY_ENFORCED];
     }
 
     public List<Case> getRecordCreatedLastWeekEqualsBy(String cluster){
-        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c = : cluster AND CreatedDate = LAST_N_DAYS:7];
+        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c = : cluster AND CreatedDate = LAST_N_DAYS:7 WITH SECURITY_ENFORCED];
     }
 
 
@@ -100,7 +105,10 @@ public inherited sharing class HDT_QR_Case {
         List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
         try{
             activities = [SELECT Id,
+            OwnedByUser__c,
+            OwnerId,
             wrts_prcgvr__Status__c,
+            wrts_prcgvr__ActivityTemplate__r.Name,
             Status__c
             FROM wrts_prcgvr__Activity__c
             WHERE wrts_prcgvr__Status__c = 'Not Started'
@@ -125,6 +133,40 @@ public inherited sharing class HDT_QR_Case {
         AND Status = 'In Lavorazione'
         WITH SECURITY_ENFORCED
         ];
+    }
+
+    public Case getNonReqContrCase(String relatedCase){
+        Case nonReqContr = new Case();
+        try{
+            nonReqContr = [SELECT Id,
+            Phase__c,
+            Type
+            FROM Case
+            WHERE Type = 'Contratto Non Richiesto'
+            AND RelatedCase__c = :relatedCase
+            WITH SECURITY_ENFORCED
+            LIMIT 1];
+        } catch(Exception e){
+            System.debug('Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+        }
+        return nonReqContr;
+    }
+
+    public Case getNonReqContrOrder(String relatedOrder){
+        Case nonReqContr = new Case();
+        try{
+            nonReqContr = [SELECT Id,
+            Phase__c,
+            Type
+            FROM Case
+            WHERE Type = 'Contratto Non Richiesto'
+            AND Order__c = :relatedOrder
+            WITH SECURITY_ENFORCED
+            LIMIT 1];
+        } catch(Exception e){
+            System.debug('Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+        }
+        return nonReqContr;
     }
 
 }

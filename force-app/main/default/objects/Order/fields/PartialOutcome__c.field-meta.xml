@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PartialOutcome__c</fullName>
+    <description>Indica l&apos;esito intermedio ricevuto durante lo scarto</description>
+    <externalId>false</externalId>
+    <label>Esito intermedio</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

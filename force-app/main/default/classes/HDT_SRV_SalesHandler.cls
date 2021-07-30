@@ -75,6 +75,9 @@ public with sharing class HDT_SRV_SalesHandler {
                         Order ord = new Order();
                         ord.Id = ordRetrieved.Id;
                         ord.Phase__c = mapRequestFields.get('FASE');
+                        //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
+                        ord.ExternalUserCompany__c = mapRequestFields.get('CMP');
+                        //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
 
                         switch on mapRequestFields.get('FASE') {
                             when 'Ammissibilità KO' {
@@ -265,6 +268,10 @@ public with sharing class HDT_SRV_SalesHandler {
 
                 }                        
 
+            }
+
+            when 'NOTIF_VAS'{
+                HDT_UTL_NotifVas.handleVasNotify(request, mrrResponseItem);
             }
             when 'RICH_PASS' {
 

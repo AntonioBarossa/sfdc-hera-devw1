@@ -3,6 +3,8 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     Date todayDate = System.today();
     String phaseInstallments = 'Pratica In Attesa';
     String typeInstallments = 'Piano Rateizzazione';
+    String nonRequestedContract = 'Contratto Non Richiesto';
+    String phaseQuotations = 'Attesa conferma preventivo cliente';
 
     public List<Knowledge__kav> getExpiredArticle(){
 
@@ -32,5 +34,41 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         ];
 
     }
+
+    public List<Order> getRelatedOred(){
+        return [SELECT Id,
+        Phase__c,
+        EffectiveDate__c,
+        (SELECT Id,
+        Phase__c,
+        EffectiveDate__c
+        FROM Cases1__r
+        WHERE Type = :this.nonRequestedContract
+        AND Phase__c = : this.phaseInstallments
+        LIMIT 1)
+        FROM Order
+        WHERE ProcessType__c = 'Switch in Ele'
+        OR ProcessType__c = 'Switch in Gas'
+        OR ProcessType__c = 'Switch in Reseller'
+        WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Case> getQuotationCase(){
+        
+        return [SELECT Id,
+        Phase__c,
+        Type,
+        Cluster__c,
+        QuotationType__c,
+        QuotationValidityDate__c
+        FROM Case
+        WHERE QuotationValidityDate__c < :this.todayDate
+        AND Phase__c = :this.phaseQuotations
+        WITH SECURITY_ENFORCED];
+
+    }
+
+
 
 }
