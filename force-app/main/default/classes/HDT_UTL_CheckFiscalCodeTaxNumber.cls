@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 12/05/2021
+* @description HDT_UTL_CheckFiscalCodeTaxNumber.cls
+* @history Lorenzo – 12/05/2021 – created class
+*/
 public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
     private static Map<String,Object> dataFromFiscalCode=new Map<String,Object>();
     private static Map<String, String> monthsLetters=new Map<String, String>{

@@ -20,4 +20,17 @@ public with sharing class HDT_QR_MatriceAgenti {
                 AND distributor__c LIKE :likeCondiction
                 ];
     }
+    public static List<HDT_MatriceSocietaVendita__mdt> getAgenteExceptionList(){
+        //String likeCondiction = '%' + distributor + '%';
+        return [SELECT Service__c,distributor__c, isActive__c, Marcatura__c, Comune__c, SellerCompany__c, SalesCompanyCode__c, Offerta__c, QualifiedApiName, Label, NamespacePrefix, DeveloperName, Id 
+                FROM HDT_MatriceSocietaVendita__mdt
+                where distributor__c != 'ALTRO'
+                ];
+    }
+    public static List<HDT_MatriceSocietaVendita__mdt> getAgenteList(){
+        return [SELECT Service__c,distributor__c, isActive__c, Marcatura__c, Comune__c, SellerCompany__c, SalesCompanyCode__c, Offerta__c, QualifiedApiName, Label, NamespacePrefix, DeveloperName, Id 
+                FROM HDT_MatriceSocietaVendita__mdt
+                where distributor__c = 'ALTRO'
+                ];
+    }
 }

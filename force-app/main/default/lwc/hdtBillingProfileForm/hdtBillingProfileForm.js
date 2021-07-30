@@ -659,7 +659,7 @@ export default class hdtBillingProfileForm extends LightningElement {
         if(this.cloneObject['InvoicingProvince__c'] != undefined){
             this.wrapAddressObject['Provincia'] = this.cloneObject['InvoicingProvince__c'];
         }
-        if(this.dataToSubmit['InvoicingStreetNumberExtension__c'] != undefined){
+        if(this.cloneObject['InvoicingStreetNumberExtension__c'] != undefined){
             this.wrapAddressObject['Estens.Civico'] = this.cloneObject['InvoicingStreetNumberExtension__c'];
         }
         if(this.cloneObject['InvoicingStreetNumber__c'] != undefined){
@@ -676,9 +676,10 @@ export default class hdtBillingProfileForm extends LightningElement {
         if(this.cloneObject['InvoicingPlace__c'] != undefined){
             this.wrapAddressObject['Localita'] = this.cloneObject['InvoicingPlace__c'];
         }
-        if(this.dataToSubmit['InvoicingPlaceCode__c'] != undefined){
+        if(this.cloneObject['InvoicingPlaceCode__c'] != undefined){
             this.wrapAddressObject['Codice Localita'] = this.cloneObject['InvoicingPlaceCode__c'];
         }
+        
 
         this.template.querySelector("c-hdt-target-object-address-fields").getInstanceWrapObjectBilling(this.wrapAddressObject);
 

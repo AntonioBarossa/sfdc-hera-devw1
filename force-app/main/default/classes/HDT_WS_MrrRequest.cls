@@ -93,7 +93,6 @@ global with sharing class HDT_WS_MrrRequest {
             }
 
             if(requestBody.requests[0].header.fields.get(0).value == 'postsales'){
-
                 if (requestBody.requests[0].header.requestType=='NOTIF_VAS') {
                     mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(requestBody.requests[0], mrrResponseItem);
                 }
@@ -107,7 +106,6 @@ global with sharing class HDT_WS_MrrRequest {
                     //FINE SVILUPPI EVERIS
                 }
             }
-            
         } catch (JSONException jsonEx) {
 
             System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
