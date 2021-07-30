@@ -298,6 +298,10 @@
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
+        <name>CS_PublicLinkKnowledge__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
         <name>CS_GestioneScript__c</name>
     </customSettingAccesses>
     <customSettingAccesses>

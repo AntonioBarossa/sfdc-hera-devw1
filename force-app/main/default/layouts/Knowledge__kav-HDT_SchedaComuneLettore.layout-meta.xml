@@ -13,14 +13,10 @@
                 <field>UrlName</field>
             </layoutItems>
             <layoutItems>
-                <field>ToPublishDate__c</field>
+                <field>Language</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <field>CreatedById</field>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
