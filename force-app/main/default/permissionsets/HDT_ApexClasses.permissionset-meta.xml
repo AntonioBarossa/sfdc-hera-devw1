@@ -1925,6 +1925,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_WRP_SelfReadingsOutcome</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_WRP_TechnicalOffer</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2118,6 +2122,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_SelfReadings</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_SelfReadingsOutcome</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

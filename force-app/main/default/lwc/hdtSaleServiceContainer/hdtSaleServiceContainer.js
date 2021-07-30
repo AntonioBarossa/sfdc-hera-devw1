@@ -146,6 +146,14 @@ export default class hdtSaleServiceContainer extends LightningElement {
                 }
                 //this.dispatchEvent(toastErrorMessage);
                 this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});  
+            }
+            else if(data == 'Remi'){
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Non è Stato Possibile Calcolare i Codici Remi per i PDR di riferimento',
+                    variant: 'error'
+                });
+                this.dispatchEvent(toastErrorMessage);
             }else{
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
