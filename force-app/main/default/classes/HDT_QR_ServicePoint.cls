@@ -55,6 +55,15 @@ public inherited sharing class HDT_QR_ServicePoint {
         return servicePoints;
 	}
 
+	public List<ServicePoint__c> getRecordByIdList(List<String> id, String fields) {
+		contractSrv.checkReadAccess(fields);
+        String query = 'SELECT '+ fields +
+                ' FROM ServicePoint__c WHERE Id IN :id ';
+        List<ServicePoint__c> servicePoints = Database.query(query);
+
+        return servicePoints;
+	}
+
 	public List<ServicePoint__c> getRecordByCode(String code, String fields) {
 		contractSrv.checkReadAccess(fields);
         String query = 'SELECT '+ fields +

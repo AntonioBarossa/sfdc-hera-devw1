@@ -157,6 +157,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         Quote__r.Name,
         ServicePoint__c,
         ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.CommoditySector__c,
         ServicePoint__r.PlugPresence__c,
         ServicePoint__r.PowerRequested__c,
         ServicePoint__r.PowerContractual__c,
