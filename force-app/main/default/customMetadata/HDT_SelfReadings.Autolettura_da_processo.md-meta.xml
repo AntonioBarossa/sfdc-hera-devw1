@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>OrderRecordTypes__c</field>
-        <value xsi:type="xsd:string">HDT_RT_SwitchIn,HDT_RT_Voltura</value>
+        <value xsi:type="xsd:string">HDT_RT_SwitchIn,HDT_RT_Voltura,HDT_RT_VolturaConSwitch</value>
     </values>
     <values>
         <field>ReadingDateDecrease__c</field>
