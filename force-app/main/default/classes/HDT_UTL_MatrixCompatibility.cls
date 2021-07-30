@@ -7,7 +7,7 @@
 public inherited sharing class HDT_UTL_MatrixCompatibility {
 
     @AuraEnabled
-    public static Map<String,Object> checkCompatibilitySales(Map<String,Object> servReq){
+    public static Map<String,Object> checkCompatibilitySales(Map<String,Object> servReq, Boolean isPostSales){
         try {
             System.debug(servReq);
             Map<String,Object> resMap = new Map<String,Object>();
@@ -23,20 +23,32 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                 srRequest.Account__c = String.valueOf(servReq.get('account'));
                 srRequest.BillingProfile__c = String.valueOf(servReq.get('billingProfile'));
             }
-            if(servReq.get('processType') != null){
-                srRequest.ProcessType__c= getProcessTypeOrder(String.valueOf(servReq.get('processType')),servReq.get('commoditySector'));
-
+            System.debug(isPostSales);
+            if(isPostSales!= null &&isPostSales){
+                if(servReq.get('processType') != null){
+                    srRequest.ProcessType__c= getProcessTypeCase(String.valueOf(servReq.get('processType')).trim(),String.valueOf(servReq.get('commoditySector')));
+                }
+            }else{
+                if(servReq.get('processType') != null){
+                    srRequest.ProcessType__c= getProcessTypeOrder(String.valueOf(servReq.get('processType')).trim(),servReq.get('commoditySector'));
+    
+                }
             }
 
             ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(srRequest);
             System.debug(srRequest);
             wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = checkCompatibility(sReq);
             System.debug(result);
-            HDT_SRV_ServiceRequest.deleteRecord(sReq);
+            if(isPostSales== null){
+                HDT_SRV_ServiceRequest.deleteRecord(sReq);
+            }
             //list of incompatible records
             resMap.put('ServiceRequest', srRequest);
             if(!result.incompatibilities.isEmpty()){
                 resMap.put('compatibility', getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities));
+                if(isPostSales!= null &&isPostSales){
+                    HDT_SRV_ServiceRequest.deleteRecord(sReq);
+                }
             }else{
                 resMap.put('compatibility', '');
             }
@@ -105,7 +117,11 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         }
         for(ServiceRequest__c s : [SELECT Id, Order__c,Case__c,Type__c FROM ServiceRequest__c WHERE Id IN :conflictIds]) {
             if(s.Type__c=='Case'){
-                conflicts.add(s.Case__c);
+                if(s.Case__c != null){
+                    conflicts.add(s.Case__c);
+                }else{
+                    conflicts.add('Processo bloccante!');
+                }
             }else{
                 conflicts.add(s.Order__c);
             }
@@ -224,7 +240,6 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
 
     private static String getProcessTypeCase(String pType, String comodity){
         String processType='';
-
         switch on pType {
             when 'Modifica Alert' {
                 processType = 'Alert';
@@ -628,6 +643,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                 }
             } 
         }
+        System.debug(processType);
         return processType;
     }
 }
