@@ -431,6 +431,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Interaction__c.Lead__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Interaction__c.SubjectEmail__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8008,6 +8013,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.TotalTurnoverVATExempted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.VAT__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
