@@ -218,15 +218,17 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 inputData - list of et4ae5__IndividualEmailResult__c
     * @return List<object> 
     */
-    public static void createScartoForMarketingCloud(List<SObject> inputData){
+    public static void createScartoForMarketingCloud(List<SObject> inputData, Map<Id,SObject> oldData){
         list<SObject> toHandle= new list<SObject>();
         for(SObject singleData: inputData){
             if(singleData.getSObjectType()==schema.et4ae5__IndividualEmailResult__c.getSObjectType()){
-                if(String.isNotBlank((string)singleData.get('BounceSubCategory__c'))){
+                if(String.isNotBlank((string)singleData.get('BounceSubCategory__c')) && 
+                    oldData.get((Id)singleData.get('Id')).get('BounceSubCategory__c')!=((string)singleData.get('BounceSubCategory__c'))){
                     toHandle.add(singleData);
                 }
             }else if(singleData.getSObjectType()==schema.SMSTracking__c.getSObjectType()){
-                if(singleData.get('Undelivered__c')==true){
+                if(singleData.get('Undelivered__c')==true &&
+                oldData.get((Id)singleData.get('Id')).get('Undelivered__c')!=((string)singleData.get('Undelivered__c'))){
                     toHandle.add(singleData);
                 }
             }
@@ -248,11 +250,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 }
             }
 
-            for(SObject scarto: toHandle){
-                if(String.isBlank((string)scarto.get('OrderID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('salesTemplate'), new Map<String,Object>{'objectId' => scarto.get('CaseID__c')}));
-                }else if(String.isBlank((string)scarto.get('CaseID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => scarto.get('OrderID__c')}));
+            for(SObject handlesItem: toHandle){
+                if(String.isBlank((string)handlesItem.get('OrderID__c'))){ 
+                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => handlesItem.get('CaseID__c')}));
+                }else if(String.isBlank((string)handlesItem.get('CaseID__c'))){ 
+                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('salesTemplate'), new Map<String,Object>{'objectId' => handlesItem.get('OrderID__c')}));
                 }
             }
             HDT_UTL_DatabaseService.insertSObject(insertedActivities);
