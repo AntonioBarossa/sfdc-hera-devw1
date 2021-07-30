@@ -364,9 +364,15 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         .then(result => {
             console.log('result callServiceCreditCheck ---> : ');
             console.log(JSON.parse(JSON.stringify(result)));
-
+            let toastErrorMessage;
             if(result.status == 'failed'){
-                throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
+                toastErrorMessage = new ShowToastEvent({
+                    title: 'CreditCheck KO',
+                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    variant: 'warning', 
+                    mode:'dismissible'
+                });
+                //throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
             }
 
             //this.restryEsitiCreditCheck();
@@ -395,6 +401,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         var operation = null;
         var market = null; 
         var offerType = null; 
+        let bpClass=null;
+        
         console.log("RecordType: " + this.order.RecordType.DeveloperName);
         console.log("typeOfCommodity: " + typeOfCommodity);
         var fiscalData = null;
@@ -422,6 +430,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(this.order.Catalog__c !== undefined){
             offerType = this.order.Catalog__c;
         }
+        if("/D\d - ".test(this.order.Account.CustomerMarking__c)){
+            bpClass=this.order.Account.CustomerMarking__c.replace("/D\d - ", "");
+        }
         console.log("typeOfCommodity: " + typeOfCommodity);
         console.log("this.selectedProcessObject: " + JSON.stringify(this.selectedProcessObject));
         
@@ -431,14 +442,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             crmEntity:"Order",
             crmId:this.order.OrderNumber,
             userId: this.order.CreatedById,
-            activationUser:"AccountCommercialePRM", //Owner.UserName (parte prima @)
-            account:"AccountCommercialePRM", //Owner.UserName (parte prima @)
-            jobTitle:this.order.Channel__c,
+            activationUser:Owner.UserName, //Owner.UserName (parte prima @)
+            account:Owner.UserName, //Owner.UserName (parte prima @)
+            jobTitle:this.order.Channel__c,//capire come convertire valori
             internalCustomerId:this.order.Account.CustomerCode__c,
             companyName:companyName,
             externalCustomerId:this.order.Account.FiscalCode__c,
             secondaryCustomerId:secondaryCustomerId,
-            bpClass:this.order.Account.CustomerMarking__c, //se contiene Dn - rimuovere la parte prima del trattino
+            bpClass:bpClass, //se contiene Dn - rimuovere la parte prima del trattino
             bpCategory:this.order.Account.Category__c,
             bpType:bpType,
             customerType:"CT0",        
