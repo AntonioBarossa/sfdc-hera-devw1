@@ -250,11 +250,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 }
             }
 
-            for(SObject scarto: toHandle){
-                if(String.isBlank((string)scarto.get('OrderID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => scarto.get('CaseID__c')}));
-                }else if(String.isBlank((string)scarto.get('CaseID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('salesTemplate'), new Map<String,Object>{'objectId' => scarto.get('OrderID__c')}));
+            for(SObject handlesItem: toHandle){
+                if(String.isBlank((string)handlesItem.get('OrderID__c'))){ 
+                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => handlesItem.get('CaseID__c')}));
+                }else if(String.isBlank((string)handlesItem.get('CaseID__c'))){ 
+                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('salesTemplate'), new Map<String,Object>{'objectId' => handlesItem.get('OrderID__c')}));
                 }
             }
             HDT_UTL_DatabaseService.insertSObject(insertedActivities);
