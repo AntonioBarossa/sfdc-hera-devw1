@@ -224,11 +224,12 @@ export default class HdtSelfReadingRegister extends LightningElement {
                         this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';
                     } 
                 });
-            } else {
+            } else if (this.rowObj.id === 'Meter') {
+                // Per l'autolettura da processo richiedo le obbligatorietà solo sul registro del Misuratore, poichè non sappiamo a priori se c'è anche un Correttore.
                 this.registerObj.forEach(element => {
                     if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
                         this.advanceError = 'Impossibile procedere: il campo ' + element.label + ' deve essere valorizzato.';
-                    } 
+                    }
                 });
             }
 
