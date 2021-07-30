@@ -262,6 +262,16 @@ export default class HdtSelfReading extends LightningElement {
                 readingRegister: null,
                 readingDigitNumber: null
             });
+            emptyRegisters.push({
+                register: 'Correttore',
+                readingType: null,
+                readingSerialNumber: null,
+                readingDate: null,
+                readingOldValue: null,
+                readingUnit: null,
+                readingRegister: null,
+                readingDigitNumber: null
+            });
         }
 
         return emptyRegisters;
