@@ -11,7 +11,15 @@
         <value xsi:type="xsd:string">Temporanea permanente</value>
     </values>
     <values>
+        <field>DistributorFixedQuote__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>EnergyUseCase__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>PowerQuote__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
@@ -29,6 +37,18 @@
     <values>
         <field>RequestPhase__c</field>
         <value xsi:type="xsd:string">Trifase</value>
+    </values>
+    <values>
+        <field>SellerFixedQuote__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">QuotationType</value>
+    </values>
+    <values>
+        <field>VAT__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>VendDistr__c</field>

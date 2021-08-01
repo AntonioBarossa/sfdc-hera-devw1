@@ -11,8 +11,16 @@
         <value xsi:type="xsd:string">Temporanea</value>
     </values>
     <values>
+        <field>DistributorFixedQuote__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>EnergyUseCase__c</field>
         <value xsi:type="xsd:string">Ripr cine tv(Temp Straord 8h)</value>
+    </values>
+    <values>
+        <field>PowerQuote__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>PowerRange__c</field>
@@ -28,6 +36,18 @@
     </values>
     <values>
         <field>RequestPhase__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>SellerFixedQuote__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">QuotationType</value>
+    </values>
+    <values>
+        <field>VAT__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
