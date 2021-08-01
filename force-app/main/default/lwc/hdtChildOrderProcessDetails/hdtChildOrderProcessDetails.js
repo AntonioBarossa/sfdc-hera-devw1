@@ -12,6 +12,8 @@ import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
 import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
 //FINE SVILUPPI EVERIS
 
+import getQuoteTypeMtd from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getQuoteTypeMtd';
+
 // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
 import ConsumptionsCorrectionType__c from '@salesforce/schema/Case.ConsumptionsCorrectionType__c';
@@ -50,6 +52,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @api analisiConsumi;
     acceptedFormatsIvaAcciseUpload = ['.pdf', '.png'];
     @track lastStepData = {};
+
+    get orderWithData(){
+        return { ...this.order, ...this.sectionDataToSubmit };
+    }
 
     get previousTraderOptions(){ return [
         {"label":"ENEL ENERGIA SPA-10V0000006","value":"ENEL ENERGIA SPA-10V0000006"},
@@ -784,10 +790,29 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             console.log('isSavedReading--> '+this.isSavedReading);
             
         }
+        //f.defelice
+        if(this.order.RecordType.DeveloperName=="HDT_RT_ConnessioneConAttivazione" || this.order.RecordType.DeveloperName=="HDT_RT_TemporaneaNuovaAtt"){
+            this.getQuoteType(currentSectionIndex, nextSectionStep);
+            return;
+        }
 
         this.updateProcess(currentSectionIndex, nextSectionStep);
 
     }
+
+    async getQuoteType(currentSectionIndex, nextSectionStep){
+        try{
+            let quoteType = await getQuoteTypeMtd({order:
+                {Id: this.order.Id, Step__c: nextSectionStep, 
+                    ...this.sectionDataToSubmit, }
+            });
+            this.sectionDataToSubmit['QuotationType__c'] = quoteType;
+        }catch(e){
+            console.log("Exception in getQuoteType "+e);
+        }
+        this.updateProcess(currentSectionIndex, nextSectionStep);
+    }
+
 
     handleSectionToggle(event) {
         this.activeSections = [this.choosenSection];

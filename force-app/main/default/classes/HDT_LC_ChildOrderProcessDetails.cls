@@ -111,6 +111,78 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         //Check RequestOption__c (Opzione di Distribuzione) END
     }
 
+
+
+   
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 01-08-2021 
+    * @param ord 
+    * @return string 
+    **/
+    @AuraEnabled
+    public static string getQuoteTypeMtd(Order ord){
+        String quoteType;
+        try {
+            
+            String checkPrPc= getPrPc(ord);
+            String powerRange=HDT_UTL_QuoteManagement.getRangeValue(ord.PowerRequested__c);
+
+            Boolean isDispatcherInMtd= HDT_UTL_QuoteManagement.checkLocalDispatcher(ord.ServicePoint__r.Distributor__r.Name);
+            String distributor = isDispatcherInMtd ? 'InRete' : 'ExtraRete';
+                            
+
+            system.debug('RequestPhase '+ord.RequestPhase__c);
+            system.debug('ConnectionType__c '+ord.ConnectionType__c);
+            system.debug('ProcessCode__c '+ord.ProcessCode__c);
+            system.debug('VendDistr__c '+distributor);
+            system.debug('EnergyUseCase__c '+ord.UseTypeEnergy__c);
+            system.debug('PowerRange__c '+powerRange);
+            system.debug('ComparePowReq__c '+checkPrPc);
+
+            List<HDT_CalcoloPreventivi__mdt> metas;
+            if(ord.ProcessCode__c=='PN1'){
+                //ConnessioneConAttivazione
+                metas= [SELECT QuotationType__c FROM HDT_CalcoloPreventivi__mdt WHERE Type__c='QuotationType' AND ProcessCode__c=:ord.ProcessCode__c WITH SECURITY_ENFORCED] ;
+            }else{            
+                metas = [SELECT QuotationType__c FROM HDT_CalcoloPreventivi__mdt 
+                    WHERE Type__c='QuotationType'
+                        AND RequestPhase__c =:ord.RequestPhase__c AND ConnectionType__c=:ord.ConnectionType__c 
+                        AND ProcessCode__c=:ord.ProcessCode__c AND VendDistr__c =:distributor 
+                        AND ( EnergyUseCase__c= :ord.UseTypeEnergy__c OR EnergyUseCase__c='')
+                        AND PowerRange__c=:powerRange AND ComparePowReq__c=:checkPrPc
+                    WITH SECURITY_ENFORCED
+                    ORDER BY EnergyUseCase__c DESC
+                ];
+            }
+            if(!metas.isEmpty()){
+                quoteType= metas[0].QuotationType__c;     
+            }
+        } catch (Exception e) {
+            system.debug(e.getMessage());
+            throw new AuraHandledException(e.getMessage());
+        }
+        return quoteType;
+    }
+
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 29-07-2021 
+    * @param ord 
+    * @return String 
+    **/
+    private static String getPrPc(Order ord){
+        if(ord.PowerRequested__c != null && ord.PowerCommitted__c != null ){
+            if(ord.PowerRequested__c > ord.PowerCommitted__c){
+                return 'MAG';
+            }else if (ord.PowerRequested__c < ord.PowerCommitted__c){
+                return 'MIN';
+            }
+        }
+        return '';
+    }
+
+
     // @START Alessio Murru Credit Check 07.06.21   
     @AuraEnabled
     public static Order retrieveOrderCreditCheck(String idOrder){
@@ -143,12 +215,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
     }
 
-    @AuraEnabled
+    /* @AuraEnabled
     public static Order getDates(String recordId){
         Order ord = new Order();
         ord = orderQr.getDates(recordId);
 
         return ord;
-    }
+    } */ //decommenta
     //EVERIS
 }
