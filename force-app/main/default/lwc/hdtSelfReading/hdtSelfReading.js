@@ -53,6 +53,7 @@ export default class HdtSelfReading extends LightningElement {
     @api isRettificaConsumi;
     @api tipizzazioneRettificaConsumi;
     @api showReadingWindows;
+    @api isMono;
 
     @track isLoading = false;
     @track windowColumns;
@@ -316,6 +317,7 @@ export default class HdtSelfReading extends LightningElement {
 
         let registers = [];
         let finalRegisters = []
+        let isBiorario = false;
 
         try {
             for (const key in lastReadings) {
@@ -367,16 +369,27 @@ export default class HdtSelfReading extends LightningElement {
                 }
             }
 
-            // Lasciamo solo i registri che hanno una lettura, ovvero quelli che hanno la property readingDate.
             registers.forEach(register => {
+                // Lasciamo solo i registri che hanno una lettura, ovvero quelli che hanno la property readingDate.
                 if ('readingDate' in register) {
                     finalRegisters.push(register);
+
+                    // Se la response contiene il secondo registro, ovvero la lettura per F2, vuol dire che l'impianto supporta letture bi-orarie.
+                    // In tutti gli altri casi (es. solo reg. 1, o solo reg. 1-4-7) assumiamo che l'impianto è mono-orario.
+                    if (this.commodity === 'Energia Elettrica' && register.register === '2') {
+                        console.log('lettura bi-oraria');
+                        isBiorario = true;
+                    }
                 }
             });
+        } catch (error) {
+        console.error(error);
+        }
 
-          } catch (error) {
-            console.error(error);
-          }
+        if (this.commodity === 'Energia Elettrica') {
+            this.isMono = !isBiorario;
+            console.log('mono orario? ' + this.isMono);
+        }
 
         return finalRegisters;
     }
