@@ -5689,7 +5689,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.ODVcreato__c</field>
+        <field>Case.ODVcreated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
