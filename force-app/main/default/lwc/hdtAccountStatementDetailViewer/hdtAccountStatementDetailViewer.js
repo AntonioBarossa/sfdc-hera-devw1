@@ -458,7 +458,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                         variant: 'warning'
                     })
                 );
-                return;
+                //return;
             }
         } else if(this.tabCode === 'EC9' || this.tabCode === 'EC6' || this.tabCode === 'EC5') {
             if((selected.dataEmissione === undefined || selected.dataEmissione === '') &&
@@ -473,7 +473,6 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                 return;
             }
         }
-
 
         var muleRequestParams = {
             billingProfile: this.firstLevel.contoContrattuale,

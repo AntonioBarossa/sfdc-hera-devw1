@@ -63,6 +63,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     showOperationModal;
     billParameters;
     otherParams;
+    startDateString;
 
     totRecs;
     fromRec;
@@ -313,34 +314,19 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         }  
 
         this.billParameters = event.currentTarget.dataset.parameters;
-
-        var dateSplitted = row.dataEmissione.split('/');
-        var startDate = dateSplitted[2] + '-' + dateSplitted[1] + '-' + dateSplitted[0];
-
-        var date = dateSplitted[1] + '/' + dateSplitted[0] + '/' + dateSplitted[2];
-        var resultDate = new Date(date);
-        resultDate.setDate(resultDate.getDate() + 10);
-
-        var year = resultDate.getFullYear();
-        var currentMonth = resultDate.getMonth() + 1;
-        var month = ((currentMonth<10) ? '0' + currentMonth.toString() : currentMonth.toString());
-        var day = ((resultDate.getDate()<10) ? '0' + resultDate.getDate().toString() : resultDate.getDate().toString());
-        var endDate = year.toString() + '-' + month + '-' + day;
-        
-        var otherParam = {
-            startDate: startDate,
-            endDate: endDate
-        };
-
-        console.log('>>>>>>>>>>>>>>>> ' + JSON.stringify(otherParam));
-
-        this.otherParams = otherParam;
+        this.startDateString = row.dataEmissione;
         this.showBillList = true;  
     }
 
     modalHandler(event){
         this.billParameters = event.detail.parameters;
-        this.otherParams = event.detail.muleRequestParams;
+
+        var muleRequestParams = {
+            billingProfile: event.detail.muleRequestParams.billingProfile
+        };
+
+        this.otherParams = muleRequestParams;
+        this.startDateString = event.detail.muleRequestParams.startDate;
         this.showBillList = true;
     }
 
@@ -384,17 +370,20 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         }
 
         var muleRequestParams = {
-            billingProfile: selected.contoContrattuale,
-            startDate: selected.dataEmissione
+            billingProfile: selected.contoContrattuale
         };
 
+        this.startDateString = selected.dataEmissione;
         this.otherParams = muleRequestParams;
+        console.log('>>>>>>>>>>>>>>>> ' + JSON.stringify(this.otherParam));
+
         this.showBillList = true;
     }
 
     billList(event){
         this.billParameters = event.currentTarget.dataset.parameters;
-        //this.otherParams = muleRequestParams;
+        //this.otherParams = ?;
+        this.startDateString = '21/01/2021';
         this.showBillList = true;
     }
 

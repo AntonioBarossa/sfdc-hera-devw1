@@ -24,6 +24,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
     @api parameters;
     @api customerCode;
     @api otherParams;
+    @api startDateString;
     modalHeader;
     error = {
         show: false,
@@ -46,16 +47,25 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
     blob;
 
     connectedCallback(){
+        console.log('>>> customerCode ' + JSON.stringify(this.customerCode));
+        console.log('>>> parameters ' + JSON.stringify(this.parameters));
         console.log('>>> otherParams ' + JSON.stringify(this.otherParams));
+        console.log('>>> startDateString ' + JSON.stringify(this.startDateString));
 
         var objParameters = JSON.parse(this.parameters);
         this.modalHeader = objParameters.header;
 
         this.muleRequest.customerAccount = this.customerCode;
 
+        var dateArray = this.setDateValue(this.startDateString);
+
         for(var i in this.otherParams){
             this.muleRequest[i] = this.otherParams[i];
         }
+
+        this.muleRequest.startDate = dateArray[0];
+        this.muleRequest.endDate = dateArray[1];
+
 
         switch (objParameters.type) {
             case 'bills':
@@ -77,8 +87,30 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         this.getDataFromWs();
     }
 
+    setDateValue(inputDate){
+        var dateArray = [];
+        var dateSplitted = inputDate.split('/');
+        var startDate = dateSplitted[2] + '-' + dateSplitted[1] + '-' + dateSplitted[0];
+
+        var date = dateSplitted[1] + '/' + dateSplitted[0] + '/' + dateSplitted[2];
+        var resultDate = new Date(date);
+        resultDate.setDate(resultDate.getDate() + 10);
+
+        var year = resultDate.getFullYear();
+        var currentMonth = resultDate.getMonth() + 1;
+        var month = ((currentMonth<10) ? '0' + currentMonth.toString() : currentMonth.toString());
+        var day = ((resultDate.getDate()<10) ? '0' + resultDate.getDate().toString() : resultDate.getDate().toString());
+        var endDate = year.toString() + '-' + month + '-' + day;
+        dateArray.push(startDate);
+        dateArray.push(endDate);
+        return dateArray;
+    }
+
     getDataFromWs(){
         var muleRequestString = JSON.stringify(this.muleRequest);
+
+        console.log('>>> muleRequest ' + muleRequestString);
+
         getWsData({wrapperObj: muleRequestString})
         .then(result => {
             //console.log(result);
@@ -123,6 +155,21 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
     interrogation(event){
         try{
+
+            console.log('>>> ' + JSON.stringify(this.muleRequest));
+
+            if(this.muleRequest.startDate === undefined || this.muleRequest.startDate === null || this.muleRequest.startDate === '' || 
+               this.muleRequest.endDate === undefined || this.muleRequest.endDate === null || this.muleRequest.endDate === ''){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Questi due valori sono obbligatori!',
+                        variant: 'warning'
+                    }),
+                );
+                return;
+            }
+
             this.spinner = true;
             this.data = [];
             this.getDataFromWs();

@@ -38,10 +38,10 @@
 
                             <div class="slds-grid slds-gutters slds-m-bottom_medium">
                                 <div class="slds-col slds-size_1-of-3">
-                                    <lightning-input type="date" name="startDate" label="Data inizio" onchange={onChangeHandler} ></lightning-input>
+                                    <lightning-input type="date" name="startDate" label="Data inizio" value={muleRequest.startDate} onchange={onChangeHandler} ></lightning-input>
                                 </div>
                                 <div class="slds-col slds-size_1-of-3">
-                                    <lightning-input type="date" name="endDate" label="Data fine" onchange={onChangeHandler} ></lightning-input>
+                                    <lightning-input type="date" name="endDate" label="Data fine" value={muleRequest.endDate} onchange={onChangeHandler} ></lightning-input>
                                 </div>
                                 <div class="slds-col slds-size_1-of-3">
                                     <div class="slds-m-top_large">
