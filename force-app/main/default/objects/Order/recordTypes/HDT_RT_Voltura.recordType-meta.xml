@@ -1930,6 +1930,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>OdvCreated__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>OfferType__c</picklist>
         <values>
             <fullName>Progetto</fullName>
