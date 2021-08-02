@@ -39,15 +39,15 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
-        <name>Assign_TAS</name>
-        <label>Assign TAS</label>
-        <locationX>1015</locationX>
-        <locationY>50</locationY>
+        <name>Assign_codice_causale_da_switch</name>
+        <label>Assign codice causale (da switch)</label>
+        <locationX>1150</locationX>
+        <locationY>65</locationY>
         <assignmentItems>
             <assignToReference>CausalCodeProcessReading</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>TAS</stringValue>
+                <elementReference>Calcolo_Codice_Causale_Lettura_da_Switch.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -55,15 +55,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_TAV</name>
-        <label>Assign TAV</label>
-        <locationX>1005</locationX>
-        <locationY>157</locationY>
+        <name>Assign_Codice_Causale_da_voltura</name>
+        <label>Assign Codice Causale (da voltura)</label>
+        <locationX>1148</locationX>
+        <locationY>179</locationY>
         <assignmentItems>
             <assignToReference>CausalCodeProcessReading</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>TAV</stringValue>
+                <elementReference>Calcolo_Codice_Causale_Lettura_da_Voltura.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -99,10 +99,10 @@
         <name>Check_Codice_Causale_Autolettura_da_processo</name>
         <label>Codice Causale Autolettura da processo?</label>
         <locationX>793</locationX>
-        <locationY>111</locationY>
+        <locationY>112</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>TAS</name>
+            <name>Lettura_da_switch</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Cerca_Processi_di_vendita_elegibili.orderRecordType</leftValueReference>
@@ -119,12 +119,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_TAS</targetReference>
+                <targetReference>Calcolo_Codice_Causale_Lettura_da_Switch</targetReference>
             </connector>
-            <label>TAS</label>
+            <label>Lettura da switch</label>
         </rules>
         <rules>
-            <name>TAV</name>
+            <name>Lettura_da_voltura</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Cerca_Processi_di_vendita_elegibili.orderRecordType</leftValueReference>
@@ -134,9 +134,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_TAV</targetReference>
+                <targetReference>Calcolo_Codice_Causale_Lettura_da_Voltura</targetReference>
             </connector>
-            <label>TAV</label>
+            <label>Lettura da voltura</label>
         </rules>
     </decisions>
     <decisions>
@@ -311,6 +311,76 @@ TODO: Formula da adeguare in Wave 2.</description>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Calcolo_Codice_Causale_Lettura_da_Switch</name>
+        <label>Calcolo Codice Causale Lettura da Switch</label>
+        <locationX>1025</locationX>
+        <locationY>65</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_codice_causale_da_switch</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Autolettura_switch</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Calcolo_Codice_Causale_Lettura_da_Voltura</name>
+        <label>Calcolo Codice Causale Lettura da Voltura</label>
+        <locationX>1013</locationX>
+        <locationY>176</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Codice_Causale_da_voltura</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Autolettura_voltura</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
         <locationX>466</locationX>
@@ -406,8 +476,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordUpdates>
         <name>Set_Dati_Autolettura_da_processo</name>
         <label>Set Dati Autolettura da processo</label>
-        <locationX>1228</locationX>
-        <locationY>87</locationY>
+        <locationX>1331</locationX>
+        <locationY>106</locationY>
         <connector>
             <targetReference>Set_Codice_Venditore</targetReference>
         </connector>

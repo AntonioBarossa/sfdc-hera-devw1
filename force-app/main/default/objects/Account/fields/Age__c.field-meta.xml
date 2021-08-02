@@ -8,7 +8,7 @@ YEAR (Today()) - YEAR ( BirthDate__c ),
 YEAR (Today()) - YEAR ( BirthDate__c ) -1 ),
 Null)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Età</label>
+    <label>Età</label> 
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

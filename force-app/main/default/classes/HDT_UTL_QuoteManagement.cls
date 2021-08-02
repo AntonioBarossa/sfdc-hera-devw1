@@ -100,8 +100,9 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		return HDT_QR_QuoteManagement.queryString(fields, conditions);
 
 	}
-	
-	private static boolean checkLocalDispatcher(String localDispatcher){
+
+
+	public static boolean checkLocalDispatcher(String localDispatcher){
 		if(localDispatcher != null && String.isNotBlank(localDispatcher)){
 			Integer dispatcherList = [SELECT COUNT() FROM HDT_LocalDispatcherInrete__mdt WHERE DispatcherDesc__c =: localDispatcher];
 			if(dispatcherList != null && dispatcherList > 0){
@@ -113,7 +114,7 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		return false;
     }
     
-	private static String getRangeValue(Decimal power){
+	public static String getRangeValue(Decimal power){
 		String result = '';
 		if(power != null){
 			List<HDT_PowerRangeValue__mdt> powerRangeValueList = [SELECT Range__c FROM HDT_PowerRangeValue__mdt WHERE Low__c <: power AND High__c >= :power WITH SECURITY_ENFORCED];

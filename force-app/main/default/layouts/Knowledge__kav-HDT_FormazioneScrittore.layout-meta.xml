@@ -23,6 +23,9 @@
             <layoutItems>
                 <field>FormationDocumentationType__c</field>
             </layoutItems>
+            <layoutItems>
+                <field>PublicLink__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
