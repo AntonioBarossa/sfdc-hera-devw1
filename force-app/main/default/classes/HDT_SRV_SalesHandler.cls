@@ -108,6 +108,27 @@ public with sharing class HDT_SRV_SalesHandler {
 
                                 if (mapRequestFields.get('IMP_PREV_DIST') != null && !String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
+                                    
+                                    switch on mapRequestFields.get('TIPOLOGIA_INTER VENTO') {
+                                        when 'A Preventivo' {
+                                            ord.QuotationType__c='Analitico';
+                                            ord.ValidityDateEstimate__c=Date.today().addDays(15);
+                                        }
+                                        when 'Attivazione' {
+                                            ord.QuotationType__c='Predeterminabile';
+                                            ord.ValidityDateEstimate__c=Date.today().addDays(5);
+                                        }
+                                        when 'Lavoro Semplice' {
+                                            ord.QuotationType__c='Predeterminabile';
+                                            ord.ValidityDateEstimate__c=Date.today().addDays(5);
+                                        }
+                                    }
+                                    
+                                }else{
+                                    if(mapRequestFields.get('TIPOLOGIA_INTER VENTO')=='Lavoro Semplice'){
+                                        ord.QuotationType__c='Rapido';
+                                        ord.ValidityDateEstimate__c=Date.today().addDays(5);
+                                    }
                                 }
 
                                 // if(ord.CausalCode__c == '034' 
