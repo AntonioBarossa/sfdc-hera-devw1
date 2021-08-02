@@ -10,7 +10,7 @@ public with sharing class HDT_UTL_CaseProcess {
     public static void checkSatisfationIndex(Map<Id,SObject> newMap, Map<Id,SObject> oldMap) {
         List<Account> accountsToUpdate = new List<Account>();
         for(Case newCase : (List<Case>) newMap.values()) {
-            if(((List<Case>) oldMap.get(newCase.Id)).PraxidiaOverrallSatisfaction__c != newCase.PraxidiaOverrallSatisfaction__c) {
+            if(((Case) oldMap.get(newCase.Id)).PraxidiaOverrallSatisfaction__c != newCase.PraxidiaOverrallSatisfaction__c) {
                 accountsToUpdate.add(new Account(
                     Id = newCase.AccountId,
                     SatisfactionIndexCtrl__c = newCase.PraxidiaOverrallSatisfaction__c
