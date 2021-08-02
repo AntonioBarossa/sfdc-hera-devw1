@@ -7925,6 +7925,14 @@
             <fullName>Inviato al SII</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
@@ -7940,15 +7948,15 @@
     <picklistValues>
         <picklist>Priority</picklist>
         <values>
-            <fullName>High</fullName>
+            <fullName>1</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Low</fullName>
+            <fullName>2</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Medium</fullName>
+            <fullName>3</fullName>
             <default>true</default>
         </values>
     </picklistValues>
@@ -10897,6 +10905,10 @@
         </values>
         <values>
             <fullName>Votive Modena Pagamenti Morosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch Out per Voltura</fullName>
             <default>false</default>
         </values>
     </picklistValues>
