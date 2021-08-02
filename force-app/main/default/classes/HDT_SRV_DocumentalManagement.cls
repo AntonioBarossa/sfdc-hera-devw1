@@ -112,8 +112,20 @@ public class HDT_SRV_DocumentalManagement{
 	@future
 	public static void createPublicLinkFuture(String recordId,String base64,String fileName){
 		String publicLink = createPublicLink(recordId,base64,fileName);
-		//updateOrder con link?
+		Order ord = new Order();
+		ord.Id = recordId;
+		switch on fileName{
+			when 'MODULISTICA_NO_B12'{
+				ord.InformationFormLink__c = publicLink;
+			}when 'MODULISTICA_B12'{
+				ord.SendFormLink__c = publicLink;
+			}when 'DELIBERA_40'{
+				ord.Decision40Link__c = publicLink;
+			}
+		}
+		HDT_UTL_DatabaseService.updateSObject(ord);
 	}
+
 	public static String createPublicLink(String recordId,String base64,String fileName){
 		try {
 			ContentVersion cv = HDT_UTL_DocumentalManagement.createContectVersion(base64,fileName);
@@ -262,7 +274,10 @@ public class HDT_SRV_DocumentalManagement{
 		try{
 			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC') || context.equalsIgnoreCase('Account')){
 				parsedContext = 'Case';
-			}else {
+			}else if(context.equalsIgnoreCase('DocumentazioneAnticipata')){
+				parsedContext='Order';
+			}
+			else {
 				parsedContext=context;
 			}
 			if(context.equalsIgnoreCase('Case')){
