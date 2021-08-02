@@ -568,8 +568,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             currentCase.Phase__c = 'Bozza';
                             currentCase.Status = 'New';
-                        }when 'Voltura'{
+                        }when 'Volture'{
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
+                            currentCase.Cluster__c = 'Voltura';
                             if(dataDecorrenza != null){
                                 currentCase.SwitchOutDate__c = Date.valueOf(dataDecorrenza);
                                 if(contract != null && contract.EndDate !=null) {
@@ -579,6 +580,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                                     }
                                 }
                             }
+                            currentCase.Status = 'In Lavorazione';
+                            currentCase.Phase__c = 'In Lavorazione SAP';
                         }
                         when else{
                             throw new HDT_UTL_RichPassException('Errore tecnico nella definizione del RecordType', '04');
