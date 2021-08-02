@@ -215,12 +215,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
     }
 
-    /* @AuraEnabled
+    @AuraEnabled
     public static Order getDates(String recordId){
         Order ord = new Order();
         ord = orderQr.getDates(recordId);
 
         return ord;
-    } */ //decommenta
+    }
     //EVERIS
 }
