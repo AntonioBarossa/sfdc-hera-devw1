@@ -195,6 +195,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         //CHECK CROSS MINIMUM FIELD
         if(String.isBlank(method)) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
         
+        //START>> 27/07/2021 costanzo.lomele@webresults.it - campo company
+        if(!String.isBlank(reqWrp.requestMap.get('CMP'))){
+            currentCase.ExternalUserCompany__c = reqWrp.requestMap.get('CMP');
+        }
+        //END>> 27/07/2021 costanzo.lomele@webresults.it - campo company
         if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita') && !method.equalsIgnoreCase('aggiornaRCU')){
             //gestione scarti
             return caseUpdate;
@@ -437,6 +442,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String contoContrattuale = '';
         String sapContractCode = null;
         String containerCaseNumber = '';
+        String herokuCode = '';
         String containerId = '';
         Contract contract;
         ServicePoint__c sp;
@@ -458,6 +464,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             codiceContratto = reqWrp.requestMap.get('CODICE_CONTRATTO');
             contoContrattuale = reqWrp.requestMap.get('CONTO_CONTRATTUALE');
             containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
+            herokuCode = reqWrp.requestMap.get('COD_PRAT_UTENTE');
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }
@@ -490,6 +497,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.Mobile__c = contact?.MobilePhone;
                     currentCase.Email__c = contact?.Email;
                     currentCase.CompanyOwner__c = contact?.CompanyOwner__c;
+                    if(String.isNotBlank(herokuCode) && herokuCode != null){
+                        currentCase.HerokuPracticeCode__c = herokuCode;
+                    }
                     //Aggiunto PhoneNumber
                     currentCase.PhoneNumber__c = contact?.MobilePhone;
                     sp = qrClass.getServicePoint(pod);
@@ -558,7 +568,19 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             currentCase.Phase__c = 'Bozza';
                             currentCase.Status = 'New';
-                        }when else{
+                        }when 'Voltura'{
+                            currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
+                            if(dataDecorrenza != null){
+                                currentCase.SwitchOutDate__c = Date.valueOf(dataDecorrenza);
+                                if(contract != null && contract.EndDate !=null) {
+                                    Date dataSwitchOut =  Date.valueOf(dataDecorrenza);
+                                    if(dataSwitchOut < contract.EndDate){
+                                        currentCase.EarlyRecess__c = true;
+                                    }
+                                }
+                            }
+                        }
+                        when else{
                             throw new HDT_UTL_RichPassException('Errore tecnico nella definizione del RecordType', '04');
                         }
                     }
@@ -702,7 +724,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     private void handleContractUpdate(String contractCode,String contractStatus, Date contractEndDate){
         try{
-            String queryString = 'SELECT Id, Status FROM Contract WHERE SAPContractCode__c = \''+contractCode+'\'';
+            String queryString = 'SELECT Id, Status, SAPContractCode__c FROM Contract WHERE SAPContractCode__c = \''+contractCode+'\'';
             String objectq = 'Contract';
             List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectq);
             Contract contracRecord = (Contract) recordList[0];

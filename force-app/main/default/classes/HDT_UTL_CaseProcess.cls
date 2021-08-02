@@ -86,6 +86,8 @@ public with sharing class HDT_UTL_CaseProcess {
                     List<String> caseIds = new List<String>();
                     List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
                     List<SObject> updateList = new List<SObject>();
+                    Set<String> activitiesOwnerId = new Set<String>();
+                    String activityId = '';
                     childCases = caseQr.getChildCase(caseNew.Id);
                     if(childCases != null){
                         for(Case child : childCases){
@@ -96,11 +98,31 @@ public with sharing class HDT_UTL_CaseProcess {
                             }
                         }
                         if(caseIds != null){
+                            HDT_QR_Knowledge knowledgeQr = new HDT_QR_Knowledge();
+                            CustomNotificationType customNotif = new CustomNotificationType();
+                            customNotif = knowledgeQr.getCustomNotificationType();
                             activities = caseQr.getCaseActivities(caseIds);
                             if(activities != null){
                                 for(wrts_prcgvr__Activity__c activity : activities){
+                                    activitiesOwnerId.clear();
+                                    if(activity.OwnedByUser__c != null && String.isNotBlank(activity.OwnedByUser__c)){
+                                        activityId = activity.OwnedByUser__c;
+                                    }else{
+                                        activityId = activity.OwnerId;
+                                    }
+                                    activitiesOwnerId.add(activityId);
                                     activity.wrts_prcgvr__Status__c = 'Completed';
                                     activity.Status__c = 'Annullata';
+                                    //Notification Fire to activity's owner
+                                    try{
+                                        if(customNotif != null && activitiesOwnerId.size() > 0){
+                                            String title = 'Activity Annullata';
+                                            String body = 'L\'Activity ' + activity.wrts_prcgvr__ActivityTemplate__r.Name + ' è stata annullata';
+                                            HDT_UTL_NewsNotificationCenter.fireNotification(title,body,activity.Id,activitiesOwnerId);
+                                        }
+                                    } catch(Exception e){
+                                        System.debug('Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
+                                    }
                                 }
                                 updateList.addAll(activities);
                             }
@@ -109,13 +131,16 @@ public with sharing class HDT_UTL_CaseProcess {
                         HDT_UTL_DatabaseService.updateSObject(updateList);
                     }
                 }
+                //Contratto Non Richiesto
                 if(newPhase.equalsIgnoreCase('Annullato')){
                     Case nonReqContr = new Case();
                     nonReqContr = caseQr.getNonReqContrCase(caseNew.Id);
-                    if(nonReqContr != null){
+                    System.debug('Id ' + nonReqContr.Id);
+                    System.debug('Id Cond ' + String.isBlank(nonReqContr.Id));
+                    if(!(String.isBlank(nonReqContr.Id))){
                         nonReqContr.Phase__c = 'Completata';
+                        HDT_UTL_DatabaseService.updateSObject(nonReqContr);
                     }
-                    HDT_UTL_DatabaseService.updateSObject(nonReqContr);
                 }
                 return true;
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){

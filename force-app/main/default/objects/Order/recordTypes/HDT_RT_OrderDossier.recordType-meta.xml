@@ -255,7 +255,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cliente Non Trovato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consegna%2FInstallazione Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Installazione Fallita</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pratica errata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reso %28Prodotto%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rifiutato Preventivamente</fullName>
             <default>false</default>
         </values>
     </picklistValues>

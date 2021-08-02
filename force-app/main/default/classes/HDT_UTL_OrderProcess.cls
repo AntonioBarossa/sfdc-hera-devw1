@@ -472,7 +472,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 Case nonReqContract = new Case();
                 HDT_QR_Case caseQr = new HDT_QR_Case(); 
                 nonReqContract = caseQr.getNonReqContrOrder(orderNew.Id);
-                if(nonReqContract != null){
+                if(!(String.isBlank(nonReqContract.Id))){
                     nonReqContract.Phase__c = 'Completata';
                     HDT_UTL_DatabaseService.updateSObject(nonReqContract);
                 }

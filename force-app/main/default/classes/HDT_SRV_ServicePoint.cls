@@ -94,4 +94,9 @@ public inherited sharing class HDT_SRV_ServicePoint {
         }
 
     }
+    public void updateRecordRemiCode(List<ServicePoint__c> servicePointList){
+
+ 
+        HDT_UTL_DatabaseService.updateSObject(servicePointList);
+    }
 }
