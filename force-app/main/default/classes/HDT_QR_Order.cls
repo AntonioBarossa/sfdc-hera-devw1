@@ -186,7 +186,8 @@ public inherited sharing class HDT_QR_Order {
             OwnerId,                                        // @Picchiri  10/06/21
             OrderReferenceNumber,                            // @Picchiri  15/06/21
             IsSequanzialized__c,                             // @Picchiri  24/06/21
-            SalesCompanyCode__c
+            SalesCompanyCode__c,
+            IsCloned__c                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
