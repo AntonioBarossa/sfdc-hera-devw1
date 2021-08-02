@@ -118,6 +118,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.BillingStreetNumber__c='55';
 			acc.LastName__c='test account'+i;
 			acc.FiscalCode__c='SXSRLA45H28H501K';
+			acc.BillingIsAddressVerified__c = true;
 
 			accList.add(acc);
 
@@ -659,9 +660,10 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 
 			ContentVersion testContentVers =new ContentVersion();
-			testContentVers.PathOnClient='test';
+			testContentVers.PathOnClient='S';
 			testContentVers.Title='test';
 			testContentVers.VersionData=tempBlob;
+			testContentVers.ContentLocation = 'S';
 
 			tstContentVersList.add(testContentVers);
 		}
