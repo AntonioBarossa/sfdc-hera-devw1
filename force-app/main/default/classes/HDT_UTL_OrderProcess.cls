@@ -6,10 +6,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
     private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
 
-    public static void checkSatisfationIndex(Map<Id,Order> newMap, Map<Id,Order> oldMap) {
+    public static void checkSatisfationIndex(Map<Id,SObject> newMap, Map<Id,SObject> oldMap) {
         List<Account> accountsToUpdate = new List<Account>();
-        for(Order newOrder : newMap.values()) {
-            if(oldMap.get(newOrder.Id).PraxidiaOverrallSatisfaction__c != newOrder.PraxidiaOverrallSatisfaction__c) {
+        for(Order newOrder : (List<Order>) newMap.values()) {
+            if(((List<Order>) oldMap.get(newOrder.Id)).PraxidiaOverrallSatisfaction__c != newOrder.PraxidiaOverrallSatisfaction__c) {
                 accountsToUpdate.add(new Account(
                     Id = newOrder.AccountId,
                     SatisfactionIndexCtrl__c = newOrder.PraxidiaOverrallSatisfaction__c
