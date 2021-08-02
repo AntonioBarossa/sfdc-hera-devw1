@@ -212,7 +212,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             && this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas') {
             this.showDelibera40 = true;
         }
-    }
+    } 
 
     handleShowInviaModulistica(){
 
@@ -803,7 +803,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     async getQuoteType(currentSectionIndex, nextSectionStep){
         try{
             let quoteType = await getQuoteTypeMtd({order:
-                {Id: this.order.Id, Step__c: nextSectionStep, 
+                {...this.order, 
                     ...this.sectionDataToSubmit, }
             });
             this.sectionDataToSubmit['QuotationType__c'] = quoteType;
