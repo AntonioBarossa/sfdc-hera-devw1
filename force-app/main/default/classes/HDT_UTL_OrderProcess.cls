@@ -4,8 +4,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
-    private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog(); 
-    
+    private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
+
+    public static void checkSatisfationIndex(Map<Id,Order> newMap, Map<Id,Order> oldMap) {
+        List<Account> accountsToUpdate = new List<Account>();
+        for(Order newOrder : newMap.values()) {
+            if(oldMap.get(newOrder.Id).PraxidiaOverrallSatisfaction__c != newOrder.PraxidiaOverrallSatisfaction__c) {
+                accountsToUpdate.add(new Account(
+                    Id = newOrder.AccountId,
+                    SatisfactionIndexCtrl__c = newOrder.PraxidiaOverrallSatisfaction__c
+                ));
+            }
+        }
+        update accountsToUpdate;
+    }
+
     public static void salesProcessManagementBefore(list<Order> newOrderList,List<Order> oldOrderList){
 
         /*Transitorio
