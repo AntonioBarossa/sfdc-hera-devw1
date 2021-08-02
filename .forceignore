@@ -20,3 +20,5 @@ package.xml
 
 # DELETED FLOW
 **HDT_FL_SetRecordTypeSportello
+
+force-app/main/default/objects/Case/recordTypes
