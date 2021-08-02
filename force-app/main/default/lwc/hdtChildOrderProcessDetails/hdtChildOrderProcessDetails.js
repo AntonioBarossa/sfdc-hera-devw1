@@ -33,7 +33,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track availableSteps = [];
     @track availableStepsFirst = []; 
     @track confirmedSteps = [];
-    @track pendingSteps = [];
+    @track pendingSteps = []
+
+
     loading = false;
     showModuloInformativo = false;
     showDelibera40 = false;
@@ -169,7 +171,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         if (this.currentSection.name === 'dateOrdine') {
             if(event.target.fieldName === 'IsActivationDeferred__c') {
-                this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
+                // this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
+ //                 this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
 
                 if (event.target.value && this.sectionDataToSubmit.EffectiveDate__c === undefined) {
                     this.sectionDataToSubmit['EffectiveDate__c'] = this.order.EffectiveDate__c;
@@ -257,7 +260,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
                 // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
                 // this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
-                //     nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+                // nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
             }
         }
 
@@ -375,6 +378,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     getPendingSteps(){
         //EVERIS: MODIFICATO LAYOUT PER RENDERLO PIU FRIENDLY E AGGIUNTE SEZIONI
+        console.log("PREFILTER:" + this.availableStepsFirst); 
         this.pendingSteps = this.availableStepsFirst.filter(section => (section.name === 'reading' 
         || section.name === 'processVariables'
         || section.name === 'creditCheck' 
@@ -391,7 +395,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             );
         }
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
-        
+        console.log('PENDING HOLA:' + this.pendingSteps);
     }
 
     @api
@@ -518,6 +522,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
+        console.log("currentSectionName "+currentSectionName);
         let currentSection = this.availableSteps.filter(section => section.name === currentSectionName);
         let currentObjectApiName = currentSection[0].objectApiName;
         let currentRecordId = currentSection[0].recordId;
@@ -791,7 +796,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             
         }
         //f.defelice
-        if(this.order.RecordType.DeveloperName=="HDT_RT_ConnessioneConAttivazione" || this.order.RecordType.DeveloperName=="HDT_RT_TemporaneaNuovaAtt"){
+        
+        if((this.order.RecordType.DeveloperName=="HDT_RT_ConnessioneConAttivazione" || this.order.RecordType.DeveloperName=="HDT_RT_TemporaneaNuovaAtt") && currentSectionName === "dettaglioImpianto"){
             this.getQuoteType(currentSectionIndex, nextSectionStep);
             return;
         }
@@ -802,7 +808,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     async getQuoteType(currentSectionIndex, nextSectionStep){
         try{
-            let quoteType = await getQuoteTypeMtd({order:
+            let quoteType = await getQuoteTypeMtd({ord:
                 {...this.order, 
                     ...this.sectionDataToSubmit, }
             });
@@ -815,6 +821,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
 
     handleSectionToggle(event) {
+        console.log('handleSecToggle '+this.choosenSection);
         this.activeSections = [this.choosenSection];
     }
 
@@ -2673,11 +2680,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         this.availableStepsFirst = this.fields.filter(section => section.processVisibility === true);
 
+        console.log("********AVAIBLESTEP:" + JSON.stringify(this.availableStepsFirst));
         this.getFirstStepName();
 
         this.loadAccordion();
 
-        //EVERIS
+       /* //EVERIS
         if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
             this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura';
             console.log('IsVolture--> '+this.isVolture);
@@ -2686,8 +2694,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             console.log('CommoditySector -> ' + this.order.ServicePoint__r.CommoditySector__c)
             this.readingDisabled = (this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
             console.log('ReadingDisabled? ->' +this.readingDisabled);
-        }
+        }*/
         //EVERIS
+        console.log('CheckVariables');
     }
 
     renderedCallback(){
