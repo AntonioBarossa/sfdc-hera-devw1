@@ -54,6 +54,9 @@ public inherited sharing class HDT_UTL_Order {
         HDT_QR_Order orQr = new HDT_QR_Order();
         Order o = orQr.getRecordById(ord.id);
         List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c);
+        if(listRate == null || !listRate.isEmpty()){
+            listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,'N/A');
+        }
         Map<String,String> mapCal = new Map<String,String>();
         boolean res = false;
         Order oUp = new Order();
