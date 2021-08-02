@@ -7,7 +7,7 @@ import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import  voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck';
 import getDates from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getDates';
-
+import sendAdvanceDocumentation from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendAdvanceDocumentation';
 import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
 import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
 //FINE SVILUPPI EVERIS
@@ -366,13 +366,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         && section.name !== 'indirizzoSpedizione' 
         && section.name !== 'ivaAccise'
         && section.name !== 'dateOrdine'));
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            let exitingCustomerIndex = this.confirmedSteps.indexOf(section => (section.name === 'clienteUscente'));
-            console.log('exitingCustomerIndex ' + exitingCustomerIndex)
-            if(exitingCustomerIndex > -1){
-                this.confirmedSteps.splice(exitingCustomerIndex, 1);
-            }
-        }
+        // if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        //     let exitingCustomerIndex = this.confirmedSteps.indexOf(section => (section.name === 'clienteUscente'));
+        //     console.log('exitingCustomerIndex ' + exitingCustomerIndex)
+        //     if(exitingCustomerIndex > -1){
+        //         this.confirmedSteps.splice(exitingCustomerIndex, 1);
+        //     }
+        // }
 
     }
 
@@ -389,11 +389,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         || section.name === 'indirizzoSpedizione' 
         || section.name === 'ivaAccise'
         || section.name === 'dateOrdine'));
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            this.pendingSteps.push(
-                this.availableStepsFirst.filter(section => section.name === 'clienteUscente')
-            );
-        }
+        // if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        //     this.pendingSteps.push(
+        //         this.availableStepsFirst.filter(section => section.name === 'clienteUscente')
+        //     );
+        // }
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
         console.log('PENDING HOLA:' + this.pendingSteps);
     }
@@ -870,7 +870,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     
         this.fields = [
             {
-                step: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' ? 6 : '',
+                step: '',
                 label: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' ? 'Riepilogo e Cliente Uscente' : 'Cliente Uscente',
                 name: 'clienteUscente',
                 objectApiName: 'Account',
@@ -2709,6 +2709,43 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
     }
 
+    handleDocAnticipata(event){
+        var buttonLabel = event.target.label;
+        var tipoDoc = '';
+        if(buttonLabel=='Modulo informativo'){
+            tipoDoc = 'MODULISTICA_NO_B12';
+        }else if(buttonLabel=='Delibera 40'){
+            tipoDoc = 'DELIBERA_40';
+        }else{
+            tipoDoc = 'MODULISTICA_B12';
+        }
+        var formParams = {     
+            mode : 'Print',
+            Archiviato : 'Y',
+            TipoPlico:tipoDoc,
+        };
+        sendAdvanceDocumentation({
+            recordId: this.order.Id,
+            context: 'Documentazione Anticipata',
+            formParams: JSON.stringify(formParams)
+        }).then(result => {
+            const event = new ShowToastEvent({
+                title: 'Successo',
+                message: 'Documentazione inviata',
+                variant: 'success',
+            });
+            this.dispatchEvent(event);
+        }).catch(error => {
+            const event = new ShowToastEvent({
+                title: 'Attenzione',
+                message: 'Non è stato possibile inviare la documentazione al cliente',
+                variant: 'error',
+            });
+            this.dispatchEvent(event);
+            console.error(error);
+        });
+
+    }
     
 
     retryEsitiCreditCheck(){        
