@@ -363,13 +363,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         && section.name !== 'indirizzoSpedizione' 
         && section.name !== 'ivaAccise'
         && section.name !== 'dateOrdine'));
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            let exitingCustomerIndex = this.confirmedSteps.indexOf(section => (section.name === 'clienteUscente'));
-            console.log('exitingCustomerIndex ' + exitingCustomerIndex)
-            if(exitingCustomerIndex > -1){
-                this.confirmedSteps.splice(exitingCustomerIndex, 1);
-            }
-        }
+        // if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        //     let exitingCustomerIndex = this.confirmedSteps.indexOf(section => (section.name === 'clienteUscente'));
+        //     console.log('exitingCustomerIndex ' + exitingCustomerIndex)
+        //     if(exitingCustomerIndex > -1){
+        //         this.confirmedSteps.splice(exitingCustomerIndex, 1);
+        //     }
+        // }
 
     }
 
@@ -385,11 +385,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         || section.name === 'indirizzoSpedizione' 
         || section.name === 'ivaAccise'
         || section.name === 'dateOrdine'));
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            this.pendingSteps.push(
-                this.availableStepsFirst.filter(section => section.name === 'clienteUscente')
-            );
-        }
+        // if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        //     this.pendingSteps.push(
+        //         this.availableStepsFirst.filter(section => section.name === 'clienteUscente')
+        //     );
+        // }
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
         
     }
@@ -863,7 +863,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     
         this.fields = [
             {
-                step: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' ? 6 : '',
+                step: '',
                 label: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' ? 'Riepilogo e Cliente Uscente' : 'Cliente Uscente',
                 name: 'clienteUscente',
                 objectApiName: 'Account',
