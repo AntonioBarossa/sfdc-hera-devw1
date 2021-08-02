@@ -120,4 +120,20 @@ public class HDT_LC_EligibilityCriteriaControllerTst {
         HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj muniObj2 = HDT_LC_EligibilityCriteriaController.getEligibilityCriteriaRecord(criteria.Id);
         Test.stopTest();
     }
+
+    @isTest
+    static void handleRecordDelete(){
+
+        EligibilityCriteria__c criteria = [
+            SELECT Id, Product__c
+            FROM EligibilityCriteria__c
+            LIMIT 1
+        ];
+
+        Test.startTest();
+        HDT_LC_EligibilityCriteriaCtrlHelper.handleRecordDelete(false, criteria.Id);
+        HDT_LC_EligibilityCriteriaCtrlHelper.handleRecordDelete(true, criteria.Id);
+        Test.stopTest();
+    }
+
 }
