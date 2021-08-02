@@ -10,6 +10,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
+    private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_Sale saleQr = new HDT_QR_Sale();
     private static HDT_QR_SaleServiceItem saleItQr = new HDT_QR_SaleServiceItem();
@@ -212,15 +213,16 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     @AuraEnabled
     public static String fieldsTransition(Sale__c sale){
         ServicePoint__c serpoint = new ServicePoint__c();
+        HDT_QR_ServicePoint srQr = new HDT_QR_ServicePoint();
+        Sale__c sal = saleQr.getRecordById(sale.id,'id,isTransition__c,Account__r.customerMarking__c');
         Sale__c s = new Sale__c(Id=sale.Id);
         boolean check = false;
         String res = '';
         List<String> listRes = new List<String>();
         List<SaleServiceItem__c> transitionlist =saleItQr.getRecordsBySaleIdFilter(sale.id);
         System.debug('*****MAVUOIANNA:'+ transitionlist);
-        /*if(!transitionlist.isEmpty()){
-            serpoint = transitionlist[0];
-           }*/
+        if(sal.isTransition__c){
+            //Map<String,
         String sub = 'Subentro';
         boolean r = false;
         for(SaleServiceItem__c ser :transitionlist ){
@@ -240,7 +242,36 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         res = String.join(listRes,',');
         if(r){
             res = 'Subentro';
+            }
         }
+        if(res == null || res == '' || res == 'Subentro'){
+            List<String> spListId = new List<String>();
+            for(SaleServiceItem__c ser :transitionlist ){
+                if(ser.ServicePoint__r.CommoditySector__c == 'Gas'){
+                    spListId.add(ser.ServicePoint__c);
+                }
+            }
+            List<ServicePoint__c> spList = srQr.getRecordByIdList(spListId,'id,CommoditySector__c,SupplyCity__c,distributor__r.code__c');
+            Map<String,String> mapRemiCode = new Map<String,String>();
+            List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRecord();
+            for(MatriceRemiCode__c m : remiList){
+                mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, m.RemiCode__c);
+            }
+            Map<String,String> serviceSocieta = HDT_UTL_Sales.getAgentNameAndCodeList(spList,sal.Account__r.customerMarking__c);
+            for(ServicePoint__c sr :spList){
+                if(mapRemiCode.get(sr.SupplyCity__c + '_' + serviceSocieta.get(sr.id)) != null){
+                    sr.RemiCode__c = mapRemiCode.get(sr.SupplyCity__c + '_' + serviceSocieta.get(sr.id));
+                }
+                else{
+                    res = 'Remi';
+                }
+            }
+            if(res != 'Remi'){
+                servicePointSrv.updateRecordRemiCode(spList);
+            }
+        }
+
+
         System.debug('*****VUOIANNA2:' + res);
         return res;
     }

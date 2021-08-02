@@ -23,29 +23,6 @@ public inherited sharing class HDT_LC_AccountStatementController {
         return HDT_LC_AccountStatementCtrlHelper.createMulesoftCall(techObj, requestObj);
     }
     
-    @AuraEnabled
-    public static HDT_WRP_AccountStatement.HDT_WRP_ResponseObj sendFileToPrint(String dataList){
-        System.debug('# saveNewOfferConfigured #');
-        System.debug(dataList);
-
-        HDT_WRP_AccountStatement.HDT_WRP_ResponseObj responseObj = new HDT_WRP_AccountStatement.HDT_WRP_ResponseObj();
-
-        try{
-            HDT_WS_EngageOnePrint.HDT_WRP_ReturnObj returnObj = HDT_WS_EngageOnePrint.sendFile(dataList);
-            responseObj.success = returnObj.success;
-            responseObj.bodyBase64 = returnObj.bodyBase64;
-            responseObj.message = returnObj.message;
-
-        } catch (Exception ex){
-            responseObj.success = false;
-            responseObj.message = ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber());
-            return responseObj;
-        }
-
-        return responseObj;
-
-    }
-
     @AuraEnabled(Cacheable=true)
     public static String getPicklistValue(String tabCode, String fieldName){
         return HDT_LC_AccountStatementCtrlHelper.getPicklistValueHelper(tabCode, fieldName);

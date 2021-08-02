@@ -7,10 +7,12 @@ import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import  voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck';
 import getDates from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getDates';
-
+import sendAdvanceDocumentation from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendAdvanceDocumentation';
 import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
 import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
 //FINE SVILUPPI EVERIS
+
+import getQuoteTypeMtd from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getQuoteTypeMtd';
 
 // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
@@ -50,6 +52,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @api analisiConsumi;
     acceptedFormatsIvaAcciseUpload = ['.pdf', '.png'];
     @track lastStepData = {};
+
+    get orderWithData(){
+        return { ...this.order, ...this.sectionDataToSubmit };
+    }
 
     get previousTraderOptions(){ return [
         {"label":"ENEL ENERGIA SPA-10V0000006","value":"ENEL ENERGIA SPA-10V0000006"},
@@ -784,10 +790,29 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             console.log('isSavedReading--> '+this.isSavedReading);
             
         }
+        //f.defelice
+        if(this.order.RecordType.DeveloperName=="HDT_RT_ConnessioneConAttivazione" || this.order.RecordType.DeveloperName=="HDT_RT_TemporaneaNuovaAtt"){
+            this.getQuoteType(currentSectionIndex, nextSectionStep);
+            return;
+        }
 
         this.updateProcess(currentSectionIndex, nextSectionStep);
 
     }
+
+    async getQuoteType(currentSectionIndex, nextSectionStep){
+        try{
+            let quoteType = await getQuoteTypeMtd({order:
+                {Id: this.order.Id, Step__c: nextSectionStep, 
+                    ...this.sectionDataToSubmit, }
+            });
+            this.sectionDataToSubmit['QuotationType__c'] = quoteType;
+        }catch(e){
+            console.log("Exception in getQuoteType "+e);
+        }
+        this.updateProcess(currentSectionIndex, nextSectionStep);
+    }
+
 
     handleSectionToggle(event) {
         this.activeSections = [this.choosenSection];
@@ -1906,17 +1931,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'processVisibility': ''
                     },
                     {
-                        'label': 'Uso energia ele',
+                        'label': 'Uso energia',
                         'apiname': 'UseTypeEnergy__c',
-                        'typeVisibility': this.typeVisibility('ele'),
-                        'required': false,
-                        'disabled': true,
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Categoria d\'uso',
-                        'apiname': 'UseTypeEnergy__c',
-                        'typeVisibility': this.typeVisibility('gas'),
+                        'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
                         'processVisibility': ''
@@ -1929,6 +1946,39 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'disabled': true,
                         'processVisibility': ''
                     },
+                    {
+                        'label': 'Recapito telefonico',
+                        'apiname': 'DisconnectibilityPhone__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Azione commerciale',
+                        'apiname': 'CommercialAction__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': false,
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Tipo bonus',
+                        'apiname': 'CommercialProduct__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': false,
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Data Firma',
+                        'apiname': 'SignedDate__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': this.order.ParentOrder__r.SignedDate__c,
+                        'processVisibility': ''
+                    }
                 ]
             },
             {
@@ -2650,6 +2700,43 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
     }
 
+    handleDocAnticipata(event){
+        var buttonLabel = event.target.label;
+        var tipoDoc = '';
+        if(buttonLabel=='Modulo informativo'){
+            tipoDoc = 'MODULISTICA_NO_B12';
+        }else if(buttonLabel=='Delibera 40'){
+            tipoDoc = 'DELIBERA_40';
+        }else{
+            tipoDoc = 'MODULISTICA_B12';
+        }
+        var formParams = {     
+            mode : 'Print',
+            Archiviato : 'Y',
+            TipoPlico:tipoDoc,
+        };
+        sendAdvanceDocumentation({
+            recordId: this.order.Id,
+            context: 'Documentazione Anticipata',
+            formParams: JSON.stringify(formParams)
+        }).then(result => {
+            const event = new ShowToastEvent({
+                title: 'Successo',
+                message: 'Documentazione inviata',
+                variant: 'success',
+            });
+            this.dispatchEvent(event);
+        }).catch(error => {
+            const event = new ShowToastEvent({
+                title: 'Attenzione',
+                message: 'Non è stato possibile inviare la documentazione al cliente',
+                variant: 'error',
+            });
+            this.dispatchEvent(event);
+            console.error(error);
+        });
+
+    }
     
 
     retryEsitiCreditCheck(){        
