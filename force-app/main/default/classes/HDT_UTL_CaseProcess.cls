@@ -13,7 +13,8 @@ public with sharing class HDT_UTL_CaseProcess {
             if(((Case) oldMap.get(newCase.Id)).PraxidiaOverrallSatisfaction__c != newCase.PraxidiaOverrallSatisfaction__c) {
                 accountsToUpdate.add(new Account(
                     Id = newCase.AccountId,
-                    SatisfactionIndexCtrl__c = newCase.PraxidiaOverrallSatisfaction__c
+                    SatisfactionIndexCtrl__c = newCase.PraxidiaOverrallSatisfaction__c,
+                    PraxidiaUpdateDate__c = newCase.PraxidiaDateOutcome__c  
                 ));
             }
         }
