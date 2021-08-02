@@ -1062,11 +1062,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cliente Non Trovato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Codice ABI obsoleto</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Consegna%2FInstallazione Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Contattare banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1079,6 +1091,10 @@
         </values>
         <values>
             <fullName>Firma falsa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Installazione Fallita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1106,6 +1122,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Reso %28Prodotto%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Revoca ai sensi del comma 14%2E3 del TIMOE</fullName>
             <default>false</default>
         </values>
@@ -1115,6 +1135,10 @@
         </values>
         <values>
             <fullName>Revoca ai sensi del comma 8%2E2 del TIMG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rifiutato Preventivamente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8791,6 +8815,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ODVcreated__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>OperationSubType__c</picklist>
         <values>
             <fullName>Prezzo energia negoziato</fullName>
@@ -8894,6 +8933,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
+        <values>
+            <fullName>Accettato Motore VAS</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Accettazione Voltura Tecnica</fullName>
             <default>false</default>
@@ -9055,6 +9098,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comunicazione verso Motore VAS KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Motore VAS OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Comunicazioni con il DL</fullName>
             <default>false</default>
         </values>
@@ -9072,6 +9123,10 @@
         </values>
         <values>
             <fullName>Dati Tecnici Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9267,6 +9322,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Motore VAS KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Non Inviata a SAP</fullName>
             <default>false</default>
         </values>
@@ -9372,6 +9431,10 @@
         </values>
         <values>
             <fullName>Ripensato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensato KO</fullName>
             <default>false</default>
         </values>
         <values>

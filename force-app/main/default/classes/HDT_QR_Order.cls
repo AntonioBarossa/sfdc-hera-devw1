@@ -192,6 +192,7 @@ public inherited sharing class HDT_QR_Order {
             OrderReferenceNumber,                            // @Picchiri  15/06/21
             IsSequanzialized__c,                             // @Picchiri  24/06/21
             SalesCompanyCode__c,
+            Owner.Username,                                 // @De Felice  27/07/21
             CustomerType__c,
             IsWinback__c
             FROM Order 

@@ -465,8 +465,10 @@ public with sharing class HDT_UTL_LeadProcess {
                     }      
                     if(mapRequestFields.get('FILE') != null && mapRequestFields.get('FILE') != ''){
                         ContentDocumentLink cdl = new ContentDocumentLink();
+                        HDT_QR_ContentVersion conDocQr = new HDT_QR_ContentVersion();
+                        ContentVersion cvdl = conDocQr.getRecordById(mapRequestFields.get('FILE'));
                         cdl.LinkedEntityId = l.Id;
-                        cdl.ContentDocumentId = mapRequestFields.get('FILE');
+                        cdl.ContentDocumentId = cvdl.contentDocumentId;
                         Insert cdl;
                     }              
     

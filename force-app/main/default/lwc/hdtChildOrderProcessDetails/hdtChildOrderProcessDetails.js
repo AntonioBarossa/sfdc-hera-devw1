@@ -1931,17 +1931,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'processVisibility': ''
                     },
                     {
-                        'label': 'Uso energia ele',
+                        'label': 'Uso energia',
                         'apiname': 'UseTypeEnergy__c',
-                        'typeVisibility': this.typeVisibility('ele'),
-                        'required': false,
-                        'disabled': true,
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Categoria d\'uso',
-                        'apiname': 'UseTypeEnergy__c',
-                        'typeVisibility': this.typeVisibility('gas'),
+                        'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
                         'processVisibility': ''
@@ -1954,6 +1946,39 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'disabled': true,
                         'processVisibility': ''
                     },
+                    {
+                        'label': 'Recapito telefonico',
+                        'apiname': 'DisconnectibilityPhone__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Azione commerciale',
+                        'apiname': 'CommercialAction__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': false,
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Tipo bonus',
+                        'apiname': 'CommercialProduct__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': false,
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Data Firma',
+                        'apiname': 'SignedDate__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': this.order.ParentOrder__r.SignedDate__c,
+                        'processVisibility': ''
+                    }
                 ]
             },
             {
