@@ -169,7 +169,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 inputData - list of wrts_prcgvr__Activity__c
     * @return List<wrts_prcgvr__Activity__c> 
     */
-    public static List<wrts_prcgvr__Activity__c> setLookupFields(List<wrts_prcgvr__Activity__c> inputData){               
+    public static List<wrts_prcgvr__Activity__c> setLookupFields(List<wrts_prcgvr__Activity__c> inputData){
+        System.debug('setLookupFields start' + inputData);
         list<string> codiciClienti= new list<String>();        
         set<string> activityTypes= new set<string>();
 
@@ -179,6 +180,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
             if(activity.Account__c == null) codiciClienti.add(activity.BPCode__c);
             if(activity.wrts_prcgvr__ActivityTemplate__c == null) activityTypes.add(activity.Type__c);
         }
+        System.debug('setLookupFields codiciClienti' + codiciClienti);
+        System.debug('setLookupFields activityTypes' + activityTypes);
 
         map<string,Id> mapActivityTemplates= new map<string,Id>();
         list<wrts_prcgvr__ActivityTemplate__c> activityTemplates=[SELECT Id, Name FROM wrts_prcgvr__ActivityTemplate__c WHERE Name =: CANONERAITEMPLATENAME OR Name=: BONUSSOCIALETEMPLATENAME];
@@ -197,9 +200,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 }else if('Bonus sociale'.equalsIgnoreCase(activity2.Type__c)){
                     activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
                 }
+                if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
             }
             if(activity2.RecordTypeDevName__c == 'HDT_RT_Scarto' && activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
         }
+        System.debug('setLookupFields end' + inputData);
         return inputData;
     }
 
