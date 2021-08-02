@@ -12,7 +12,7 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
             Object documentCategory = (Object)jsonMap.get('documentCategory');
             System.debug('>>> CURRENT TYPE: ' + String.valueOf(documentCategory));
 
-            if(String.valueOf(documentCategory) == 'solleciti'){
+            //if(String.valueOf(documentCategory) == 'solleciti'){
                 HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
                 httpObj.headersMap = new Map<String, String>();
                 httpObj.endPoint = 'callout:docComunicationsSearch';    
@@ -35,32 +35,15 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
                     return JSON.serialize(wsObj);
                 }
 
-                wsObj.success = true;
-                wsObj.message = '';
-                wsObj.body = responseCtrl.body;
-                return JSON.serialize(wsObj);
-
-                //HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj restMessage = (HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj.class);
-
-                //if(restMessage.status != 'success'){
-                //    wsObj.success = false;
-                //    wsObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
-                //    wsObj.message += ']; Detail: ' + restMessage.errorDetails.message;
-                //    wsObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
-                //    return JSON.serialize(wsObj);
-                //}
-        
-                //System.debug('>>>> RETRIEVE FROM WS ' + restMessage);
-
-            }
+            //    wsObj.success = true;
+            //    wsObj.message = '';
+            //    wsObj.body = responseCtrl.body;
+            //    return JSON.serialize(wsObj);
+            //}
 
             wsObj.success = true;
             wsObj.message = '';
             wsObj.body = getFakeData();
-
-            //Account a = new Account();
-            //a.Id = '';
-            //insert a;
 
         } catch (Exception ex){
             wsObj.success = false;

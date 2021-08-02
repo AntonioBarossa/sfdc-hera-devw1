@@ -131,6 +131,24 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
                 
                 if(dataObj.errorDetails[0].code === '102'){
 
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Attenzione',
+                            message: 'Non è stato trovato nessun dato',
+                            variant: 'info'
+                        }),
+                    );
+
+                } else if(dataObj.errorDetails[0].code === '107'){
+
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Attenzione',
+                            message: 'Sono presenti molti dati, riprova restringendo il range delle date',
+                            variant: 'info'
+                        }),
+                    );
+
                 } else {
                     this.error.show = true;
                     this.error.message = 'Codice: ' + dataObj.errorDetails[0].code;
