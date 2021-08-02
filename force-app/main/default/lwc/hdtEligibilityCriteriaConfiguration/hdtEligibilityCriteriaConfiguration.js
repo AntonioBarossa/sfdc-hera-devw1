@@ -601,8 +601,11 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         }
 
         this.cityZipCode.provinceList = this.cityZipCode.provinceOptions;
+        this.cityZipCode.provinceOptions = [];
         //this.cityZipCode.eligibleForAllCities = ((n > 0) ? false : this.eligibleForAllCities);
         this.cityZipCode.eligibleForAllCities = ((n > 0) ? false : true);
+
+        console.log(JSON.stringify(this.cityZipCode));
 
         //saveEligibilityCriteria({productId: this.productid, record: criteriaRecord, dataReceived: JSON.stringify(this.cityZipCode.provinceOptions)})
         saveEligibilityCriteria({productId: this.productid, record: criteriaRecord, dataReceived: JSON.stringify(this.cityZipCode)})
