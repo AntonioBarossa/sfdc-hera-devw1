@@ -2085,11 +2085,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SupplyStreetToponym__c</field>
-            <table>wrts_prcgvr__Activity__c.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>TotalCover__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns>
