@@ -61,4 +61,22 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String ORDER_RECORDTYPEID_ORDERDOSSIER =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER).getRecordTypeId();
+
+    //Hera internal Profiles
+    @AuraEnabled
+    public final String SYSTEM_ADMINISTRATOR_NAME = 'System Administrator';    
+    @AuraEnabled
+    public final String HERA_M2M_INTEGRATION_NAME = 'Hera M2M Integration User';
+    @AuraEnabled
+    public final String HERA_STANDARD_USER_NAME = 'Hera Standard User';
+    @AuraEnabled
+    public final String HERA_SYSTEM_ADMINISTRATOR_NAME = 'Hera System Administrator';
+    @AuraEnabled
+    public final String HERA_SYSTEM_INTEGRATOR_NAME = 'Hera System Integrator';
+
+    //Hera partner Profiles
+    @AuraEnabled
+    public final String HERA_DOOR2DOOR_PARTNER_NAME = 'Hera Door2Door Partner User';
+    @AuraEnabled
+    public final String HERA_TELESELLER_PARTNER_NAME = 'Hera Teleseller Partner User';
 }
