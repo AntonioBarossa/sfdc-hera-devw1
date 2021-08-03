@@ -15,7 +15,8 @@
                   )
             )
       )
-)</formula>
+)
+</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Bontà Cliente</label>
     <required>false</required>
