@@ -6,12 +6,11 @@ export default class HdtManualActivityCreator extends NavigationMixin(LightningE
     
     selectedType;
     saved;
-
+    
     get activityTypes(){
-        return [ { label: 'Tipo 1', value: 'one' },
-                 { label: 'Tipo 2', value: 'two' },
-                 { label: 'Tipo 3', value: 'three' },
-                 { label: 'Tipo 4', value: 'four' } ];
+        return [ { label: 'Contattare il cliente',      value: 'CBS_CRP001__CONTATTARE_IL_CLIENTE' },
+                 { label: 'Giro contatore da gestire',  value: 'CBS_AUT005__GIRO_CONTATORE_DA_GESTIRE' },
+                 { label: 'Preavviso Cessazione',       value: 'CBS_MOR007_PREAVVISO_CESSAZIONE' } ];
     }
     
     get saveDisabled(){
