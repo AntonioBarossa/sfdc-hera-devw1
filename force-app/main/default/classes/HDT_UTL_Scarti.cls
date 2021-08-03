@@ -38,8 +38,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         //di conseguenza lo switch è poco funzionale, perchè bisognerebbe scrivere n righe per quanti template vengono rigchiesti... è anche poco manutenibile
         //dinamicamente, con substring, si vede il prefisso (checkActivityCreation) e poi si estrae il nome del template dalle parentesi tonde
         
-        if(method.startsWith('checkActivityCreation(')){
-            checkActivityCreation((Id)sender.get('Id'), method.substringAfter('(').substringBefore(')'));
+        if(method.startsWith('checkActivityCreation')){
+            checkActivityCreation((Id)sender.get('Id'), method.substringAfter('___'));
         }
 
         return null;
@@ -92,6 +92,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @return void
     */
     public static void createAttivitaTracciaturaHeroku(List<HDT_WRP_AttivitaTracciaturaData> sourceData){
+        System.debug('createAttivitaTracciaturaHeroku start' + sourceData);
         List<wrts_prcgvr__Activity__c> toInsert = new List<wrts_prcgvr__Activity__c>();
         
         Set<String> tracciamentoTemplateNames = new Set<String>(TRACCIAMENTOHEROKUSALES.values());
@@ -109,8 +110,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 wrts_prcgvr__Activity__c newAct = new wrts_prcgvr__Activity__c();
                 newAct.Type__c = curData.tipoAttivita;
                 newAct.CreatedByUsername__c = curData.utenza;
-                //newAct.StartDate__c = curData.dataEvento;
-                //newAct.DiscardDescription__c = curData.errorMessage;
+                newAct.StartDate__c = Date.valueOf(curData.dataEvento);
+                newAct.DiscardDescription__c = curData.errorMessage;
                 toInsert.add(newAct);
             }
           
@@ -136,6 +137,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
             }
         }
 
+        System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
         HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
 
@@ -169,14 +171,19 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 inputData - list of wrts_prcgvr__Activity__c
     * @return List<wrts_prcgvr__Activity__c> 
     */
-    public static List<wrts_prcgvr__Activity__c> setLookupFields(List<wrts_prcgvr__Activity__c> inputData){               
+    public static List<wrts_prcgvr__Activity__c> setLookupFields(List<wrts_prcgvr__Activity__c> inputData){
+        System.debug('setLookupFields start' + inputData);
         list<string> codiciClienti= new list<String>();        
         set<string> activityTypes= new set<string>();
 
+        RecordType rtScarto = new HDT_QR_RecordType().getRecordType('HDT_RT_Scarto', 'wrts_prcgvr__Activity__c');
+
         for(wrts_prcgvr__Activity__c activity: inputData){
-            codiciClienti.add(activity.BPCode__c);
-            activityTypes.add(activity.Type__c);
+            if(activity.Account__c == null) codiciClienti.add(activity.BPCode__c);
+            if(activity.wrts_prcgvr__ActivityTemplate__c == null) activityTypes.add(activity.Type__c);
         }
+        System.debug('setLookupFields codiciClienti' + codiciClienti);
+        System.debug('setLookupFields activityTypes' + activityTypes);
 
         map<string,Id> mapActivityTemplates= new map<string,Id>();
         list<wrts_prcgvr__ActivityTemplate__c> activityTemplates=[SELECT Id, Name FROM wrts_prcgvr__ActivityTemplate__c WHERE Name =: CANONERAITEMPLATENAME OR Name=: BONUSSOCIALETEMPLATENAME];
@@ -185,18 +192,21 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         }
 
         List<Account> listAccounts=[SELECT Id, CustomerCode__c FROM Account WHERE CustomerCode__c IN: codiciClienti];
-        for(wrts_prcgvr__Activity__c activity: inputData){
-            for(Account singleAccount: listAccounts){
-                if(activity.BPCode__c==singleAccount.CustomerCode__c){
-                    activity.Account__c=singleAccount.Id;
-                    if('Canone RAI'.equalsIgnoreCase(activity.Type__c)){
-                        activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
-                    }else if('Bonus sociale'.equalsIgnoreCase(activity.Type__c)){
-                        activity.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
-                    }
+        Map<String, Id> accIdsPerBPcode = new Map<String, Id>();
+        for(Account singleAccount: listAccounts) accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount.Id);
+        for(wrts_prcgvr__Activity__c activity2: inputData){
+            if(activity2.Account__c == null) activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c);
+            if(activity2.wrts_prcgvr__ActivityTemplate__c == null){
+                if('Canone RAI'.equalsIgnoreCase(activity2.Type__c)){
+                    activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
+                }else if('Bonus sociale'.equalsIgnoreCase(activity2.Type__c)){
+                    activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
                 }
+                if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
             }
+            if(activity2.RecordTypeDevName__c == 'HDT_RT_Scarto' && activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
         }
+        System.debug('setLookupFields end' + inputData);
         return inputData;
     }
 
