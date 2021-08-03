@@ -140,16 +140,48 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Lettura</name>
+        <label>Check Lettura</label>
+        <locationX>1676</locationX>
+        <locationY>551</locationY>
+        <defaultConnector>
+            <targetReference>Refresh_Case_Final</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Mono_da_ritipizzare</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Refresh_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Autolettura da processo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtSelfReadingComponent.isMono</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Revert_to_Lettura_da_Cliente</targetReference>
+            </connector>
+            <label>Mono da ritipizzare</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Processo</name>
         <label>Check Processo</label>
-        <locationX>1653</locationX>
-        <locationY>551</locationY>
+        <locationX>2138</locationX>
+        <locationY>549</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Autolettura_da_cliente</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Refresh_Case.Type</leftValueReference>
+                <leftValueReference>Refresh_Case_Final.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Autolettura da cliente</stringValue>
@@ -164,7 +196,7 @@
             <name>Autolettura_da_processo</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Refresh_Case.Type</leftValueReference>
+                <leftValueReference>Refresh_Case_Final.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Autolettura da processo</stringValue>
@@ -182,7 +214,7 @@
         <locationX>1402</locationX>
         <locationY>551</locationY>
         <defaultConnector>
-            <targetReference>Check_Processo</targetReference>
+            <targetReference>Check_Lettura</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
         <rules>
@@ -278,8 +310,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordLookups>
         <name>Calcolo_Codice_Causale</name>
         <label>Calcolo Codice Causale</label>
-        <locationX>1919</locationX>
-        <locationY>435</locationY>
+        <locationX>2395</locationX>
+        <locationY>441</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Fase_Attesa_check_preliminari</targetReference>
@@ -289,21 +321,21 @@ TODO: Formula da adeguare in Wave 2.</description>
             <field>Cluster__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Refresh_Case.Cluster__c</elementReference>
+                <elementReference>Refresh_Case_Final.Cluster__c</elementReference>
             </value>
         </filters>
         <filters>
             <field>Commodity__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Refresh_Case.CommodityFormula__c</elementReference>
+                <elementReference>Refresh_Case_Final.CommodityFormula__c</elementReference>
             </value>
         </filters>
         <filters>
             <field>Process__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Refresh_Case.Type</elementReference>
+                <elementReference>Refresh_Case_Final.Type</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -422,6 +454,51 @@ TODO: Formula da adeguare in Wave 2.</description>
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Refresh_Case_Final</name>
+        <label>Refresh Case</label>
+        <locationX>1948</locationX>
+        <locationY>546</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Processo</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Revert_to_Lettura_da_Cliente</name>
+        <label>Revert to Lettura da Cliente</label>
+        <locationX>1806</locationX>
+        <locationY>255</locationY>
+        <connector>
+            <targetReference>Refresh_Case_Final</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Autolettura da cliente</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Set_Codice_Venditore</name>
         <label>Set Codice Venditore + Distributore</label>
@@ -512,8 +589,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordUpdates>
         <name>Set_Fase_Attesa_check_preliminari</name>
         <label>Set Fase Attesa check preliminari</label>
-        <locationX>2076</locationX>
-        <locationY>435</locationY>
+        <locationX>2552</locationX>
+        <locationY>441</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -548,8 +625,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordUpdates>
         <name>Set_Fase_Da_Inviare</name>
         <label>Set Fase Da Inviare</label>
-        <locationX>2001</locationX>
-        <locationY>669</locationY>
+        <locationX>2477</locationX>
+        <locationY>675</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -760,8 +837,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <screens>
         <name>Spinner</name>
         <label>Spinner</label>
-        <locationX>2337</locationX>
-        <locationY>544</locationY>
+        <locationX>2813</locationX>
+        <locationY>550</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
