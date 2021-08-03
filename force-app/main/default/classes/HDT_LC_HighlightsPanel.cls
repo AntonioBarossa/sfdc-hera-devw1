@@ -5,7 +5,7 @@ public with sharing class HDT_LC_HighlightsPanel {
             Account oldAccount = [SELECT Id, Recaller__c, ComplaintRateNum__c FROM Account WHERE Id = :accountId WITH SECURITY_ENFORCED];
             Account newAccount = new Account(
                 Id = accountId,
-                Recaller__c = getRecallerCount(accountId),
+                Recaller__c = getRecallerPercentage(accountId),
                 ComplaintRateNum__c = getComplaintRate(accountId)
             );
 
@@ -22,7 +22,7 @@ public with sharing class HDT_LC_HighlightsPanel {
         }
     }
 
-    private static Integer getRecallerCount(String accountId){
+    private static Integer getRecallerPercentage(String accountId){
         Integer x = 0;
         Integer y;
         try {
@@ -32,8 +32,11 @@ public with sharing class HDT_LC_HighlightsPanel {
                     x = y;
                 }
             }
-
-            return (x > 0 ? x - 1 : 0);
+            x = (x > 0 ? x - 1 : 0);
+            AggregateResult caseCount = [SELECT COUNT(Id) FROM Case WHERE AccountId = :accountId AND CreatedDate = LAST_N_DAYS:15 AND Origin IN ('Web','Chat','Sportello','Telefono Inbound') WITH SECURITY_ENFORCED];
+            y = (Integer) caseCount.get('expr0');
+            y = y > 0 ? y : 1;
+            return (x / y) * 100;
         } catch (Exception e) {
             throw e;
         }

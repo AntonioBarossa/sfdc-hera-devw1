@@ -20,6 +20,15 @@ public with sharing class HDT_LC_DocumentSignatureManager {
         }
         return jsonReturn;
     }
+
+    @AuraEnabled
+    public static void sendAdvanceDocumentation(String recordId,String context,String formParams){
+        try {
+            HDT_SRV_DocumentalManagementFacade.sendAdvanceDocumentation(recordId, context, formParams);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
     @AuraEnabled
     public static string getInfoAccountStatement(String accountId){
         String jsonReturn;
