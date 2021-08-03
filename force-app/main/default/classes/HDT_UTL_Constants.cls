@@ -79,4 +79,10 @@ public with sharing class HDT_UTL_Constants {
     public final String HERA_DOOR2DOOR_PARTNER_NAME = 'Hera Door2Door Partner User';
     @AuraEnabled
     public final String HERA_TELESELLER_PARTNER_NAME = 'Hera Teleseller Partner User';
+
+    //Hera CPQ Permission Sets
+    @AuraEnabled
+    public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME = 'HDT_SalesforceCPQAdmin';
+    @AuraEnabled
+    public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME = 'HDT_SalesforceCPQLicense';
 }
