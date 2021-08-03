@@ -19,11 +19,11 @@ const fields = [
 var items = [{
     "label": "Customer Life Cycle: ",
     "name": "clc",
-    "expanded": false,
+    "expanded": true,
     "items": [{
         "label": "Life Cycle Energy: ",
         "name": "clcEnergy",
-        "expanded": false,
+        "expanded": true,
         "items": [{
             "label": "Commodity Life Cycle EE: ",
             "name": "clcEE",
