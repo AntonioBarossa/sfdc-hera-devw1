@@ -716,4 +716,136 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return campaignMemberStatusList;
 	}
+
+	public static String getProfileId(String profileName) {
+		String profileId = '';
+
+		if (String.isNotEmpty(profileName)) {
+			profileId = [SELECT Id FROM Profile WHERE Name =: profileName].Id;
+		}
+
+		return profileId;
+	}
+
+	public static String getPermissionSetId(String permissionSetName) {
+        String  permissionSetId = '';
+
+        if (!String.isEmpty(permissionSetName)) {
+            permissionSetId = [SELECT Id FROM permissionSet WHERE Name = :permissionSetName].Id;
+        }
+
+        return permissionSetId;
+    }
+
+	public static User createInternalUser(String profileId, Boolean doInsert) {
+
+        User internalUser = new User(
+            Alias = 'crmuser',
+            FirstName = 'FirstName',
+            LastName = 'LastName',
+            Email = 'crmuser@test.com',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'it',
+            LocaleSidKey = 'it',
+            ProfileId = profileId,
+            TimeZoneSidKey = 'Europe/Rome',
+            UserName = 'crmuser@test.com' + DateTime.now().getTime()
+        );
+        if(doInsert) {
+
+            insert internalUser;
+        }
+        return internalUser;
+    }
+
+	public static PermissionSetAssignment assignPermissionSet(User u, String permissionSet, Boolean doInsert) {
+
+        PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = getPermissionSetId(permissionSet), AssigneeId = u.Id);
+
+        if(doInsert) {
+
+            insert psa;
+
+        }
+
+        return psa;
+
+    }
+  
+	public static List<ContentDocumentLink> createContentDocumentLink (Integer Amount, Boolean doInsert, Id OpportunityId, Id ContentDocId) {
+
+		List<ContentDocumentLink> contentDocLinkList = new List<ContentDocumentLink>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ContentDocumentLink contentDocLink = new ContentDocumentLink();
+
+			contentDocLink.LinkedEntityId = OpportunityId;
+			contentDocLink.ContentDocumentId = ContentDocId;
+			contentDocLink.ShareType = 'V';
+
+			contentDocLinkList.add(contentDocLink);
+		}
+
+		if (doInsert){
+
+			insert contentDocLinkList;
+		}
+
+		return contentDocLinkList;
+	}
+
+	public static List<FileTemplate__c> createFileTemplate (Integer Amount, Boolean doInsert) {
+
+		List<FileTemplate__c> ftList = new List<FileTemplate__C>();
+
+		for (Integer i=0; i<amount; i++){
+
+			FileTemplate__c fileTemplate = new FileTemplate__c();
+
+			fileTemplate.HeadLineIndex__c = 1.0;
+			fileTemplate.FileTemplateName__c = 'Test File Template';
+			fileTemplate.FileTemplateApiName__c = 'Test File Template Api';
+			fileTemplate.FileDelimiter__c = ',';
+			fileTemplate.FileExtension__c = '.csv';
+			fileTemplate.FileType__c = 'CSV';
+
+			ftList.add(fileTemplate);
+		}
+
+		if (doInsert){
+
+			insert ftList;
+		}
+
+		return ftList;
+	}
+
+	public static List<FileTemplateColumn__c> createFileTemplateColumn (Integer Amount, Boolean doInsert, Id fileTemplateId) {
+
+		List<FileTemplateColumn__c> ftcList = new List<FileTemplateColumn__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			FileTemplateColumn__c fileTemplateCol = new FileTemplateColumn__c();
+
+			fileTemplateCol.FileTemplate__c = fileTemplateId;
+			fileTemplateCol.HeaderApiName__c = 'Test Header API Name';
+			fileTemplateCol.HeaderName__c = 'Test Header Name';
+			fileTemplateCol.Index__c = 1.0;
+			fileTemplateCol.Mandatory__c = true;
+			fileTemplateCol.DataType__c = 'Text';
+			fileTemplateCol.ValidationRegex__c = 'Test Validation Regex';
+			fileTemplateCol.SobjectType__c = 'Opportunity';
+
+			ftcList.add(fileTemplateCol);
+		}
+
+		if (doInsert){
+
+			insert ftcList;
+		}
+
+		return ftcList;
+	}
 }
