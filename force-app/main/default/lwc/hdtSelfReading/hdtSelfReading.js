@@ -373,10 +373,10 @@ export default class HdtSelfReading extends LightningElement {
                 // Lasciamo solo i registri che hanno una lettura, ovvero quelli che hanno la property readingDate.
                 if ('readingDate' in register) {
                     finalRegisters.push(register);
-
-                    // Se la response contiene il secondo registro, ovvero la lettura per F2, vuol dire che l'impianto supporta letture bi-orarie.
-                    // In tutti gli altri casi (es. solo reg. 1, o solo reg. 1-4-7) assumiamo che l'impianto è mono-orario.
-                    if (this.commodity === 'Energia Elettrica' && register.register === '2') {
+                    
+                    // Se la response contiene almeno un registro con banda=F1|F2|F3, vuol dire che l'impianto supporta letture bi-orarie.
+                    // Diversmente assumiamo che l'impianto è mono-orario (tutti i registri valorizzati dovrebbero avere banda=M)
+                    if (this.commodity === 'Energia Elettrica' && register.readingBand != null && register.readingBand.startsWith('F')) {
                         console.log('lettura bi-oraria');
                         isBiorario = true;
                     }
