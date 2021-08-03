@@ -110,7 +110,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 wrts_prcgvr__Activity__c newAct = new wrts_prcgvr__Activity__c();
                 newAct.Type__c = curData.tipoAttivita;
                 newAct.CreatedByUsername__c = curData.utenza;
-                newAct.StartDate__c = curData.dataEvento;
+                newAct.StartDate__c = Date.valueOf(curData.dataEvento);
                 newAct.DiscardDescription__c = curData.errorMessage;
                 toInsert.add(newAct);
             }
