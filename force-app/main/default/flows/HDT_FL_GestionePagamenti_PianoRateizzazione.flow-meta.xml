@@ -66,7 +66,7 @@
         <name>Sottometti_ad_Approvazione</name>
         <label>Sottometti ad Approvazione</label>
         <locationX>314</locationX>
-        <locationY>3782</locationY>
+        <locationY>3326</locationY>
         <actionName>HDT_UTL_CaseApprovalProcess</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -82,7 +82,7 @@
         <name>Assegna_Fase</name>
         <label>Assegna Fase</label>
         <locationX>842</locationX>
-        <locationY>3542</locationY>
+        <locationY>3086</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -112,7 +112,7 @@
         <name>Assegna_Fase_0</name>
         <label>Assegna Fase</label>
         <locationX>314</locationX>
-        <locationY>3542</locationY>
+        <locationY>3086</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -165,7 +165,7 @@
         <name>Assegna_Fase_0_0_0</name>
         <label>Assegna Fase</label>
         <locationX>578</locationX>
-        <locationY>3662</locationY>
+        <locationY>3206</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -232,7 +232,7 @@
         <name>AssegnaCodiceCausale</name>
         <label>AssegnaCodiceCausale</label>
         <locationX>578</locationX>
-        <locationY>3302</locationY>
+        <locationY>2846</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -398,38 +398,6 @@
             <stringValue>Cliente revoca la domiciliazione</stringValue>
         </value>
     </choices>
-    <decisions>
-        <name>Avanzamento</name>
-        <label>Avanzamento</label>
-        <locationX>578</locationX>
-        <locationY>2846</locationY>
-        <defaultConnector>
-            <targetReference>Annullamento_Prestazione_0_0_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Annulla</defaultConnectorLabel>
-        <rules>
-            <name>ConfermaDocumentale</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>GetCodiceCausale</targetReference>
-            </connector>
-            <label>Conferma</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
@@ -624,7 +592,7 @@
         <name>Processo_Approvativo</name>
         <label>Processo Approvativo?</label>
         <locationX>578</locationX>
-        <locationY>3422</locationY>
+        <locationY>2966</locationY>
         <defaultConnector>
             <targetReference>Assegna_Fase</targetReference>
         </defaultConnector>
@@ -783,7 +751,7 @@
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 AND 2) OR (3 OR 4)</conditionLogic>
             <conditions>
                 <leftValueReference>hdtRecordEditForm_00.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
@@ -798,14 +766,28 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>hdtDocumentSignatureManager.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtDocumentSignatureManager.cancelCase</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Screen_Documentale</targetReference>
+                <targetReference>GetCodiceCausale</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
         <rules>
             <name>Annulla_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 AND 2) OR 3</conditionLogic>
             <conditions>
                 <leftValueReference>hdtRecordEditForm_00.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
@@ -820,6 +802,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>hdtDocumentSignatureManager.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Annullamento_Prestazione_0</targetReference>
             </connector>
@@ -827,6 +816,11 @@
         </rules>
     </decisions>
     <description>Flow per la Gestione del processo Piano Rateizzazione del Cluster Pagamenti</description>
+    <formulas>
+        <name>AttachmentManagementFormula</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT({!RentProcessRuleOutput.AttachmentManagement__c})</expression>
+    </formulas>
     <formulas>
         <name>DataPrimaScadenza</name>
         <dataType>Date</dataType>
@@ -926,7 +920,7 @@
         <name>GetCodiceCausale</name>
         <label>GetCodiceCausale</label>
         <locationX>578</locationX>
-        <locationY>3182</locationY>
+        <locationY>2726</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaCodiceCausale</targetReference>
@@ -968,7 +962,7 @@
         <name>GetSuspensioDays</name>
         <label>GetSuspensioDays</label>
         <locationX>578</locationX>
-        <locationY>3542</locationY>
+        <locationY>3086</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Fase_0_0_0</targetReference>
@@ -1013,7 +1007,7 @@
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>842</locationX>
-        <locationY>3662</locationY>
+        <locationY>3206</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1030,7 +1024,7 @@
         <name>Passa_In_Attesa_Approvazione</name>
         <label>Passa &quot;In Attesa Approvazione&quot;</label>
         <locationX>314</locationX>
-        <locationY>3662</locationY>
+        <locationY>3206</locationY>
         <connector>
             <targetReference>Sottometti_ad_Approvazione</targetReference>
         </connector>
@@ -1040,7 +1034,7 @@
         <name>Passa_In_Attesa_Approvazione_0</name>
         <label>Passa &quot;In Attesa Approvazione&quot;</label>
         <locationX>578</locationX>
-        <locationY>3782</locationY>
+        <locationY>3326</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <screens>
@@ -1075,19 +1069,13 @@
             <inputParameters>
                 <name>addContentDocument</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>cancelButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>contentDocumentLabel</name>
-                <value>
-                    <stringValue>Aggiungere Documenti se Necessario</stringValue>
+                    <elementReference>AttachmentManagementFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1097,15 +1085,9 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>documentRecordId</name>
-                <value>
-                    <elementReference>Get_Case.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>draftButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>AttachmentManagementFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1123,7 +1105,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1135,7 +1117,7 @@
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>AttachmentManagementFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1153,7 +1135,7 @@
             <inputParameters>
                 <name>saveButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>AttachmentManagementFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1165,6 +1147,48 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>hdtDocumentSignatureManager</name>
+            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>Get_Case.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>quoteType</name>
+                <value>
+                    <stringValue>Rapido</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RentProcessRuleOutput.AttachmentManagement__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -1389,57 +1413,6 @@
                 <name>previousButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Screen_Documentale</name>
-        <label>Screen Documentale</label>
-        <locationX>578</locationX>
-        <locationY>2726</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Avanzamento</targetReference>
-        </connector>
-        <fields>
-            <name>DisplayTextDocumentSignature</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>hdtDocumentSignature</name>
-            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>accountId</name>
-                <value>
-                    <elementReference>CaseInput.Account.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextVariant</name>
-                <value>
-                    <stringValue>brand</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>CaseInput.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Analitico</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1685,34 +1658,6 @@
         <label>Annullamento Prestazione</label>
         <locationX>1634</locationX>
         <locationY>1478</locationY>
-        <flowName>HDT_FL_GestioneAnnullamento</flowName>
-        <inputAssignments>
-            <name>InputCase</name>
-            <value>
-                <elementReference>CaseInput.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ProcessType</name>
-            <value>
-                <stringValue>Annullamento prestazione</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>sObjectRecordToCancell</name>
-            <value>
-                <stringValue>Case</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Annullamento_Prestazione_0_0_0</name>
-        <label>Annullamento Prestazione</label>
-        <locationX>666</locationX>
-        <locationY>2966</locationY>
-        <connector>
-            <targetReference>GetCodiceCausale</targetReference>
-        </connector>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

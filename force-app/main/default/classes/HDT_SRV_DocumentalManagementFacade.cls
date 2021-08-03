@@ -45,13 +45,13 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         String baseSixtyFour = '';
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : null;
-        String fileName = (String) formParamsMap.get('fileName');
-        String sendMode = (String) formParamsMap.get('sendMode');
+        String tipoPlico = (String) formParamsMap.get('TipoPlico');
+        //String sendMode = (String) formParamsMap.get('sendMode');
         try{
             baseSixtyFour = getBase64(recordId,context,formParams);
-            if(sendMode.equalsIgnoreCase('E-mail')){
-                HDT_SRV_DocumentalManagement.createPublicLinkFuture(recordId,baseSixtyFour,fileName);
-            }
+            //if(sendMode.equalsIgnoreCase('E-mail')){
+                HDT_SRV_DocumentalManagement.createPublicLinkFuture(recordId,baseSixtyFour,tipoPlico);
+            //}
         }catch(Exception ex){
             System.debug(ex.getMessage());
         }
