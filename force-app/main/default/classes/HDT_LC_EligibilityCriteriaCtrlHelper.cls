@@ -194,39 +194,39 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         return errorData;
     }
 
-    public static Map<String, Set<String>> deserializeUntypedMethod(Map<String, Set<String>> existingMuniMap, List<EligibleMunicipality__c> muniList){
-        String jsonInput = '{';
+    //public static Map<String, Set<String>> deserializeUntypedMethod(Map<String, Set<String>> existingMuniMap, List<EligibleMunicipality__c> muniList){
+    //    String jsonInput = '{';
 
-        for(Integer n=0; n < muniList.size(); n++){
-            existingMuniMap.put(muniList[n].AreaCode__c, new Set<String>());
-            jsonInput += '"' + muniList[n].Id + '":';
-            jsonInput += muniList[n].JSONCode__c;
-            if((n+1) < muniList.size()){
-                jsonInput += ',';
-            }
-        }
-        jsonInput += '}';
-        
-        Map<String, Object> m =  (Map<String, Object>)JSON.deserializeUntyped(jsonInput);
+    //    for(Integer n=0; n < muniList.size(); n++){
+    //        existingMuniMap.put(muniList[n].AreaCode__c, new Set<String>());
+    //        jsonInput += '"' + muniList[n].Id + '":';
+    //        jsonInput += muniList[n].JSONCode__c;
+    //        if((n+1) < muniList.size()){
+    //            jsonInput += ',';
+    //        }
+    //    }
+    //    jsonInput += '}';
+    //    
+    //    Map<String, Object> m =  (Map<String, Object>)JSON.deserializeUntyped(jsonInput);
 
-        for(String k : m.keySet()){
-             
-            Map<String, Object> objMap = (Map<String, Object>)m.get(k);
-            List<Object> cityAvailable = (List<Object>)objMap.get('cityAvailable');
-            String areaCode = String.valueOf(objMap.get('value'));
+    //    for(String k : m.keySet()){
+    //         
+    //        Map<String, Object> objMap = (Map<String, Object>)m.get(k);
+    //        List<Object> cityAvailable = (List<Object>)objMap.get('cityAvailable');
+    //        String areaCode = String.valueOf(objMap.get('value'));
 
-            Set<String> tempSet = existingMuniMap.get(areaCode);
-            for(Object city : cityAvailable){
-                Map<String, Object> cityMap = (Map<String, Object>)city;
-                tempSet.add(String.valueOf(cityMap.get('value')));
-            }
-            existingMuniMap.put(areaCode, tempSet);
+    //        Set<String> tempSet = existingMuniMap.get(areaCode);
+    //        for(Object city : cityAvailable){
+    //            Map<String, Object> cityMap = (Map<String, Object>)city;
+    //            tempSet.add(String.valueOf(cityMap.get('value')));
+    //        }
+    //        existingMuniMap.put(areaCode, tempSet);
 
-        }
+    //    }
 
-        return existingMuniMap;
+    //    return existingMuniMap;
 
-    }
+    //}
 
     public static Map<String, Set<String>> deserializeMethod(Map<String, Set<String>> existingMuniMap, List<EligibleMunicipality__c> muniList){
             HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
