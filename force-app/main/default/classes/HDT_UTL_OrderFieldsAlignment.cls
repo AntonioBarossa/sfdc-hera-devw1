@@ -15,6 +15,34 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
 
+    Map<String,String> mapIvaIdToValue = new Map<String,String>{
+    '01' => 'Iva 10% (Cod. 01)',
+'02' => 'Iva 22% (Cod. 02)',
+'03' => 'Iva 10% Soc. Controllate (Cod. 03)',
+'04' => 'Iva 22% Soc. Controllate (Cod. 04)',
+'05' => 'Iva 10% Soc. Collegate (Cod. 05)',
+'06' => 'Iva 22% Soc. Collegate (Cod. 06)',
+'07' => 'Iva 10% Soc. Controllanti (Cod. 07)',
+'08' => 'Iva 22% Soc. Controllanti (Cod. 08)',
+'09' => 'Iva 10% Soc. del Gruppo (Cod. 09)',
+'10' => 'Iva 22% Soc. del Gruppo (Cod. 10)',
+'12' => 'Iva esente-non imp Art 72 (Cod. 12)',
+'13' => 'Iva Fuori Campo Autofatt. Art 2 (Cod. 13)',
+'14' => 'Iva 10% Soc. Partecipate (Cod. 14)',
+'17' => 'Iva esente-non imp art 8 S. Marino (Cod. 17)',
+'19' => 'Iva Fuori Campo Livigno (Cod. 19)',
+'25' => 'Iva Reverse Charge (Cod. 25)',
+'26' => 'Iva Reseller esente (Cod. 26)',
+'27' => 'Iva 10% Consociate (Cod. 27)',
+'28' => 'Iva 22% Consociate (Cod. 28)',
+'S1' => 'Iva Split payment 10% (Cod. S1)',
+'S2' => 'Iva Split payment 22% (Cod. S2)',
+'S3' => 'Iva Split payment 10% Soc. del Gruppo (Cod. S3)',
+'S4' => 'Iva Split payment 22% Soc. del Gruppo (Cod. S4)'
+    };
+
+
+
     private static void alignBillingProfileFields(Order orderToUpdate, String billingProfileId){
 
         billingProfileSrv.checkReadAccess('IbanCountry__c,CreateContractAccount__c,SendCertifiedEmailConsentDate__c,SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanABI__c,IbanCAB__c,IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingPostalCode__c,InvoicingCityCode__c,InvoiceEmailAddress__c');
@@ -60,7 +88,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         orderToUpdate.exciseEle__c =  servicePoint.exciseEle__c;
         orderToUpdate.ExciseGas__c =  ServicePoint.ExciseGas__c;
-        orderToUpdate.vat__c = ServicePoint.Vat__c;
+        orderToUpdate.Vat__c = mapIvaIdToValue.get(ServicePoint.Vat__c);
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
         orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
         orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
@@ -107,7 +135,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CustomerRequestDate__c = Date.today();
         //Aggiunta valorizzazione Commodity
         orderToUpdate.Commodity__c = servicePoint.CommoditySector__c;
-        orderToUpdate.IsWinback__c = servicePoint.SwitchInWinback__c;
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
