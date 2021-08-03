@@ -118,6 +118,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.BillingStreetNumber__c='55';
 			acc.LastName__c='test account'+i;
 			acc.FiscalCode__c='SXSRLA45H28H501K';
+			acc.BillingIsAddressVerified__c=true;
 
 			accList.add(acc);
 
@@ -258,7 +259,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return orderList;
 	}
 
-
 	public static List<Order> createChildOrder(Integer amount, Boolean doInsert, Id accId, List<Sale__c> sales, Id parentOrderId, Id contactId){
 
 		List<Order> orderList=new List<Order>();
@@ -307,7 +307,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return orderList;
 	}
-
 
 	public static List<Order> createOrderWithPricebook(Integer amount, Boolean doInsert, Id accId, List<Sale__c> sales, Id pricebook2Id){
 
@@ -578,21 +577,21 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return tstBillingProfileList;
 	}
 
-	public static List<SBQQ__Quote__c> createQuote (Integer amount, Boolean doInsert, Id orderId, Id opportunityId, Id saleId, String type) {
+	public static List<SBQQ__Quote__c> createQuote(Integer amount, Boolean doInsert, Id orderId, Id opportunityId, Id saleId, String type){
 
-		List<SBQQ__Quote__c> quoteList = new List<SBQQ__Quote__c>();
+		List<SBQQ__Quote__c> quoteList=new List<SBQQ__Quote__c>();
 
-		for (Integer i = 0; i<amount; i++) {
-			
-			SBQQ__Quote__c quote = new SBQQ__Quote__c();
-			quote.SBQQ__Type__c = type;
-			quote.OrderReference__c = orderId;
-			quote.SBQQ__Opportunity2__c = opportunityId; 
-			quote.Sale__c = saleId;
+		for (Integer i=0; i<amount; i++){
+
+			SBQQ__Quote__c quote=new SBQQ__Quote__c();
+			quote.SBQQ__Type__c=type;
+			quote.OrderReference__c=orderId;
+			quote.SBQQ__Opportunity2__c=opportunityId;
+			quote.Sale__c=saleId;
 
 			quoteList.add(quote);
 		}
-		
+
 		if (doInsert){
 
 			insert quoteList;
@@ -601,16 +600,16 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return quoteList;
 	}
 
-	public static List<Pricebook2> createPricebook (Integer amount, Boolean doInsert) {
+	public static List<Pricebook2> createPricebook(Integer amount, Boolean doInsert){
 
-		List<Pricebook2> pricebookList = new List<Pricebook2>();
+		List<Pricebook2> pricebookList=new List<Pricebook2>();
 
-		for (Integer i = 0; i<amount; i++) {
+		for (Integer i=0; i<amount; i++){
 
-			Pricebook2 pricebook = new Pricebook2();
-			
-			pricebook.Name = 'Test Price Book'+i;
-			pricebook.IsActive = true;
+			Pricebook2 pricebook=new Pricebook2();
+
+			pricebook.Name='Test Price Book'+i;
+			pricebook.IsActive=true;
 
 			pricebookList.add(pricebook);
 		}
@@ -647,7 +646,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return tstAttachmentList;
 	}
-	
 
 	public static List<ContentVersion> createContentVers(Integer amount, Boolean doInsert){
 
@@ -658,10 +656,11 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		for (Integer i=0; i<amount; i++){
 
-			ContentVersion testContentVers =new ContentVersion();
-			testContentVers.PathOnClient='test';
+			ContentVersion testContentVers=new ContentVersion();
+			testContentVers.PathOnClient='S';
 			testContentVers.Title='test';
 			testContentVers.VersionData=tempBlob;
+			testContentVers.ContentLocation='S';
 
 			tstContentVersList.add(testContentVers);
 		}
@@ -674,15 +673,15 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return tstContentVersList;
 	}
 
-	public static List<Campaign> createCampaign (Integer amount, Boolean doInsert) {
+	public static List<Campaign> createCampaign(Integer amount, Boolean doInsert){
 
-		List<Campaign> campaignList = new List<Campaign>();
+		List<Campaign> campaignList=new List<Campaign>();
 
 		for (Integer i=0; i<amount; i++){
 
-			Campaign cp = new Campaign();
+			Campaign cp=new Campaign();
 
-			cp.Name = 'Test Campaign';
+			cp.Name='Test Campaign';
 
 			campaignList.add(cp);
 		}
@@ -692,20 +691,20 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			insert campaignList;
 		}
 
-		return campaignList; 
+		return campaignList;
 	}
 
-	public static List<CampaignMemberStatus> createCampaignMemberStatus(Integer amount, Boolean doInsert, Id CampaignId) {
+	public static List<CampaignMemberStatus> createCampaignMemberStatus(Integer amount, Boolean doInsert, Id CampaignId){
 
-		List<CampaignMemberStatus> campaignMemberStatusList = new List<CampaignMemberStatus>();
+		List<CampaignMemberStatus> campaignMemberStatusList=new List<CampaignMemberStatus>();
 
 		for (Integer i=0; i<amount; i++){
 
-			CampaignMemberStatus cpms = new CampaignMemberStatus();
+			CampaignMemberStatus cpms=new CampaignMemberStatus();
 
-			cpms.Label = 'Test Label';
-			cpms.CampaignId = CampaignId;
-            cpms.IsDefault = true;
+			cpms.Label='Test Label';
+			cpms.CampaignId=CampaignId;
+			cpms.IsDefault=true;
 
 			campaignMemberStatusList.add(cpms);
 		}
@@ -715,7 +714,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			insert campaignMemberStatusList;
 		}
 
-		return campaignMemberStatusList; 
+		return campaignMemberStatusList;
 	}
-
 }
