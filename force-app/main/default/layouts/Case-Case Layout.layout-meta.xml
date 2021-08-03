@@ -186,7 +186,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Campaign__c</field>
             </layoutItems>
             <layoutItems>
