@@ -12,7 +12,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(((Order) oldMap.get(newOrder.Id)).PraxidiaOverrallSatisfaction__c != newOrder.PraxidiaOverrallSatisfaction__c) {
                 accountsToUpdate.add(new Account(
                     Id = newOrder.AccountId,
-                    SatisfactionIndexCtrl__c = newOrder.PraxidiaOverrallSatisfaction__c
+                    SatisfactionIndexCtrl__c = newOrder.PraxidiaOverrallSatisfaction__c,
+                    PraxidiaUpdateDate__c = newOrder.PraxidiaDateOutcome__c  
                 ));
             }
         }
