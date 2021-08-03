@@ -92,6 +92,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @return void
     */
     public static void createAttivitaTracciaturaHeroku(List<HDT_WRP_AttivitaTracciaturaData> sourceData){
+        System.debug('createAttivitaTracciaturaHeroku start' + sourceData);
         List<wrts_prcgvr__Activity__c> toInsert = new List<wrts_prcgvr__Activity__c>();
         
         Set<String> tracciamentoTemplateNames = new Set<String>(TRACCIAMENTOHEROKUSALES.values());
@@ -109,8 +110,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 wrts_prcgvr__Activity__c newAct = new wrts_prcgvr__Activity__c();
                 newAct.Type__c = curData.tipoAttivita;
                 newAct.CreatedByUsername__c = curData.utenza;
-                //newAct.StartDate__c = curData.dataEvento;
-                //newAct.DiscardDescription__c = curData.errorMessage;
+                newAct.StartDate__c = curData.dataEvento;
+                newAct.DiscardDescription__c = curData.errorMessage;
                 toInsert.add(newAct);
             }
           
@@ -136,6 +137,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
             }
         }
 
+        System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
         HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
 

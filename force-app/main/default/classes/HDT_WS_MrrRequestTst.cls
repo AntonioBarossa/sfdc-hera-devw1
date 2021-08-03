@@ -29,6 +29,26 @@ public with sharing class HDT_WS_MrrRequestTst {
     }
 
     @isTest
+    private static Void postNotifEsScarti() {
+
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+
+        req.requestURI = 'services/apexrest/MRRInboundService';
+        req.httpMethod = 'POST';
+        req.requestBody = Blob.valueOf('{"header":null,"requests":[{"header":{"requestId":"A00000001222","requestTimestamp":null,"requestType":"NOTIF_ES","fields":[{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"objects":[{"fields":[{"fieldType":"TEXT","name":"COD_PRAT_UTENTE","value":"A00000001222"},{"fieldType":"TEXT","name":"RECORD_ID","value":"5003N000008q5AAQAY"},{"fieldType":"TEXT","name":"ATTIVITA","value":"Esito non elaborato"},{"fieldType":"TEXT","name":"METHOD","value":"esito_intermedio"},{"fieldType":"TEXT","name":"UTENZA","value":"utente_hera"},{"fieldType":"TEXT","name":"DATA_EVENTO","value":"2021-06-22 12:44:31"}],"id":null,"name":null,"objectType":null,"objects":null}]}]}');
+
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        HDT_WS_MrrRequest.doPost();
+
+        System.debug(RestContext.response.responseBody.toString());
+        
+        System.assertEquals(200, RestContext.response.statusCode, 'Rest API requestType NOTIF_ES failed');
+    }
+
+    @isTest
     private static Void postNotifEsFail() {
 
         RestRequest req = new RestRequest();
