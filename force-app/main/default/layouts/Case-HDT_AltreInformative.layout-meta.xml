@@ -44,6 +44,10 @@
         <label>Informazioni aggiuntive</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Status</field>
             </layoutItems>
@@ -121,6 +125,7 @@
                 <behavior>Readonly</behavior>
                 <field>SiebelData__c</field>
             </layoutItems>
+
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SiebelAttributeData__c</field>
