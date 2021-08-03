@@ -1,10 +1,15 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import createActivity from '@salesforce/apex/HDT_LC_ManualActivityCreator.createActivity';
+import getAccounts from '@salesforce/apex/HDT_LC_ManualActivityCreator.getAccounts';
 
 export default class HdtManualActivityCreator extends NavigationMixin(LightningElement) {
     
     selectedType;
+    selectedAccount;
+
+    accountList;
+
     saved;
     
     get activityTypes(){
@@ -13,16 +18,28 @@ export default class HdtManualActivityCreator extends NavigationMixin(LightningE
                  { label: 'Preavviso Cessazione',       value: 'CBS_MOR007_PREAVVISO_CESSAZIONE' } ];
     }
     
+    get accounts(){
+        let optionList = [];
+        accounts.forEach(element => {
+            if(element.Name.includes(this.accountFilter)) optionList.push({ label: element.Name, value: element.Id })
+        });
+        return optionList;
+    }
+    
     get saveDisabled(){
-        return selectedType == null;
+        return this.selectedType == null;
     }
     
     get cancelDisabled(){
-        return saved;
+        return this.saved;
+    }
+
+    connectedCallback(){
+        getAccounts().then(result => this.accountList = result);
     }
 
     handleSave(){
-        saved = true;
+        this.saved = true;
     }
 
     handleCancel(){

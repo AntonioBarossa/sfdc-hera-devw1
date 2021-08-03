@@ -2,22 +2,30 @@
     <lightning-card  title="Nuova attività manuale">
         <div slot="footer">
             <lightning-layout horizontal-align="end">
-                <lightning-layout-item></lightning-layout-item>
-                <lightning-layout-item></lightning-layout-item>
+                <lightning-layout-item>
+                    <lightning-button label="Save"
+                                      disabled={saveDisabled}
+                                      onclick={handleSave}></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <lightning-button label="Cancel"
+                                      disabled={cancelDisabled}
+                                      onclick={handleCancel}></lightning-button>
+                </lightning-layout-item>
             </lightning-layout>
-            <lightning-button label="Save"
-                              disabled={saveDisabled}
-                              onclick={handleSave}></lightning-button>
-            <lightning-button label="Cancel"
-                              disabled={cancelDisabled}
-                              onclick={handleCancel}></lightning-button>
         </div>
 
         <lightning-combobox label="Tipo attività"
                             value={selectedType}
-                            placeholder="Select Progress"
-                            options={activityTypes}
-                            onchange={handleChange}></lightning-combobox>
+                            options={activityTypes}></lightning-combobox>
+                            
+        <lightning-input label="Filtro cliente"
+                         value={accountFilter}
+                         type="search"></lightning-input>
+
+        <lightning-combobox label="Cliente"
+                            value={selectedAccount}
+                            options={accounts}></lightning-combobox>
 
     </lightning-card>
 </template>
