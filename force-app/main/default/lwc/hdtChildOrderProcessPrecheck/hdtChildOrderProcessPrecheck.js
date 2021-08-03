@@ -431,24 +431,15 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         .then(result => {
             console.log('result callServiceCreditCheck ---> : ');
             console.log(JSON.parse(JSON.stringify(result)));
-            let toastErrorMessage;
+
             if(result.status == 'failed'){
-                toastErrorMessage = new ShowToastEvent({
-                    title: 'CreditCheck KO',
-                    message: result.errorDetails[0].code + ' ' + JSON.stringify(result.errorDetails[0].message),
-                    variant: 'warning', 
-                    mode:'dismissible'
-                });
-                this.dispatchEvent(toastErrorMessage);
-                //throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
+                throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
             }
-            
 
             //this.restryEsitiCreditCheck();
             this.loading = false;
         })
         .catch(error => {
-            debugger;
             console.log('error callServiceCreditCheck error ---> : ');
             console.log(JSON.parse(JSON.stringify(error)));
             let toastErrorMessage = new ShowToastEvent({
@@ -471,8 +462,6 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         var operation = null;
         var market = null; 
         var offerType = null; 
-        let bpClass=null;
-        
         console.log("RecordType: " + this.order.RecordType.DeveloperName);
         console.log("typeOfCommodity: " + typeOfCommodity);
         var fiscalData = null;
@@ -491,8 +480,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(this.order.Account.CustomerType__c !== undefined){
             bpType = this.order.Account.CustomerType__c;
         }
-        if( this.selectedProcessObject.processType !== undefined){
-            operation = this.selectedProcessObject.processType;
+        if(this.order.ProcessType__c !== undefined){
+            operation = this.order.ProcessType__c;
         }
         if(this.order.Market__c !== undefined){
             market = this.order.Market__c;
@@ -500,38 +489,33 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(this.order.Catalog__c !== undefined){
             offerType = this.order.Catalog__c;
         }
-        if(new RegExp("/D\d - ").test(this.order.Account.CustomerMarking__c)){
-            bpClass=this.order.Account.CustomerMarking__c.replace("/D\d - ", "");
-        }else{
-            bpClass=this.order.Account.CustomerMarking__c;
-        }
         console.log("typeOfCommodity: " + typeOfCommodity);
         console.log("this.selectedProcessObject: " + JSON.stringify(this.selectedProcessObject));
         
         let data = {
-            sistema: "eEnergy", //Capire SAP/Atos se possibile aggiungere "SalesForce" o lasciare eEnergy
+            sistema: "eEnergy",
             caso:"Transazionale",
             crmEntity:"Order",
             crmId:this.order.OrderNumber,
             userId: this.order.CreatedById,
-            activationUser:this.order.Owner.Username, //Owner.UserName (parte prima @)
-            account:this.order.Owner.Username, //Owner.UserName (parte prima @)
-            jobTitle:this.order.Channel__c,//capire come convertire valori
+            activationUser:"AccountCommercialePRM",
+            account:"AccountCommercialePRM",
+            jobTitle:this.order.Channel__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
             companyName:companyName,
             externalCustomerId:this.order.Account.FiscalCode__c,
             secondaryCustomerId:secondaryCustomerId,
-            bpClass:bpClass, //se contiene Dn - rimuovere la parte prima del trattino
+            bpClass:this.order.Account.CustomerMarking__c,
             bpCategory:this.order.Account.Category__c,
             bpType:bpType,
-            customerType:"CT0",        
+            customerType:"CT0",                                                 //da definire campo SF con business            
             operation:operation,
-            companyGroup:this.order.SalesCompany__c, //OK
+            companyGroup:"Hera S.p.A.",
             market:market,
             offerType:offerType,
             details:[{
                 commodity:typeOfCommodity
-            }]		 
+            }]		
         }
 
         if(this.selectedProcessObject.recordType !== 'HDT_RT_VAS'){

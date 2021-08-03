@@ -24,11 +24,11 @@
     </values>
     <values>
         <field>IsVisible__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Parameters__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">{&quot;type&quot;:&quot;rate&quot;,&quot;header&quot;:&quot;Visualizza rate&quot;}</value>
     </values>
     <values>
         <field>Tab__c</field>
