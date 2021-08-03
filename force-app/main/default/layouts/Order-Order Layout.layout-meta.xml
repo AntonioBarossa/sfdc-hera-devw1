@@ -157,6 +157,10 @@
                 <behavior>Readonly</behavior>
                 <field>ActivatedDate</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

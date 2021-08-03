@@ -83,6 +83,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Subject</field>
             </layoutItems>
             <layoutItems>
@@ -171,6 +175,7 @@
                 <behavior>Readonly</behavior>
                 <field>SiebelData__c</field>
             </layoutItems>
+           
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SiebelAttributeData__c</field>
