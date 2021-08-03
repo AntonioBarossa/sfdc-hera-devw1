@@ -34,7 +34,7 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
         try{
             if(wrp.quoteType=='Rapido'){
                 getFixedQuotes(ord, wrp);
-                wrp.validityDate=DateTime.now().addDays(5).format('dd/MM/yyyy');
+                wrp.validityDate=DateTime.now().addDays(5).format('dd-MM-yyyy');
             }
         }catch(Exception e){
             system.debug(e.getStackTraceString()+' at line '+e.getLineNumber());

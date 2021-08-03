@@ -14,8 +14,24 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
     estimatedVAT;
     validityDateEstimate; //DD-MM-YYYY format
     //change date to YYYY-MM-DD format
-    dateParts = this.validityDateEstimate.split("-");
-    dateValue = `${this.dateParts[2]}-${this.dateParts[1]}-${this.dateParts[0]}`;
+
+    get dateParts(){
+        if(this.validityDateEstimate!=null){
+            return this.validityDateEstimate.split("-");
+        }
+        else{
+            return;
+        } 
+    }
+
+    get dateValue(){
+        if(this.dateParts){
+            return `${this.dateParts[2]}-${this.dateParts[1]}-${this.dateParts[0]}`;
+        }else{
+            return;
+        }
+    }
+
     quoteType;
 
     get isRapido(){
@@ -25,7 +41,8 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
     openModal() {
         // to open modal set isModalOpen track value as true
         //this.isModalOpen = true;
-        this.getQuoteType()
+        
+        this.getQuoteType();
         console.log(this.recordId);
     }
 
@@ -72,7 +89,7 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
     async getQuoteType(){
         let wrapper;
         try{
-            wrapper = await getQuoteTypeMtd({order:this.order});
+            wrapper = await getQuoteTypeMtd({ord:this.order});
             this.quoteType=wrapper.quoteType;
             if(this.isRapido && wrapper.estimatedAmount!=null){
                 this.estimatedVAT=wrapper.fixedQuotes.VAT__c;

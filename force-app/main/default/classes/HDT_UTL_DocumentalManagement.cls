@@ -13,7 +13,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 			when 'Context4'{
 				return getRecordObjectsListContext4(recordsList);
-			}when else {
+			}
+			when 'Context5'{
+				return getRecordObjectsListContext1(recordsList);
+			}
+			when else {
 				return null;
 			}
 		}
@@ -595,7 +599,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				return 'Context3';
 			}
 			when 'DocumentazioneAnticipata'{
-				return 'Context2';
+				return 'Context4';
 			}
 			when else {
 				return null;
