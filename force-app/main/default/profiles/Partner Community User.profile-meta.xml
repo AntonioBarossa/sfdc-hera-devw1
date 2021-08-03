@@ -8573,11 +8573,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ServicePoint__c.SupplyStreetToponym__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>ServicePoint__c.SupplyStreet__c</field>
         <readable>false</readable>
     </fieldPermissions>
