@@ -165,6 +165,7 @@ public inherited sharing class HDT_QR_Case {
             Phase__c,
             Type
             FROM Case
+            where
             Order__c = :relatedOrder
             WITH SECURITY_ENFORCED
             LIMIT 1];
