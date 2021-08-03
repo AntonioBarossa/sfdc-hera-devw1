@@ -1865,11 +1865,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SupplyStreetToponym__c</field>
-            <table>Campaign.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>TotalCover__c</field>
             <table>Campaign.Cases__r</table>
         </columns>
