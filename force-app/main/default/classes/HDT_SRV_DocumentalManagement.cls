@@ -130,7 +130,7 @@ public class HDT_SRV_DocumentalManagement{
 		try {
 			ContentVersion cv = HDT_UTL_DocumentalManagement.createContectVersion(base64,fileName);
 			ContentDocumentLink cl = HDT_UTL_DocumentalManagement.createContentLink(cv.Id, recordId);
-			String publicLink =  HDT_UTL_DocumentalManagement.createContentDistribution(cv.Id);
+			String publicLink =  HDT_UTL_DocumentalManagement.createContentDistribution(cv.Id,fileName);
 			return publicLink;
 		} catch (Exception ex) {
 			System.debug('Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());

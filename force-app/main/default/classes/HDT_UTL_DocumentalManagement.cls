@@ -71,10 +71,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		
 	}
 
-	public static String createContentDistribution(String contentVersionId){
+	public static String createContentDistribution(String contentVersionId,String fileName){
 		if (contentVersionId == null) { return null; }
 		ContentDistribution cd = new ContentDistribution();
-		cd.Name = 'Test';
+		cd.Name = fileName;
 		cd.ContentVersionId = contentVersionId;
 		cd.PreferencesAllowViewInBrowser= true;
 		cd.PreferencesLinkLatestVersion=true;
