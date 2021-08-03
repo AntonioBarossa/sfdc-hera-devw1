@@ -24070,11 +24070,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ServicePoint__c.Potentiality__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>ServicePoint__c.PowerAvailable__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26271,11 +26266,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>et4ae5__IndividualEmailResult__c.BounceSubCategory__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>et4ae5__IndividualEmailResult__c.BounceType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

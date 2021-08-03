@@ -1,3 +1,10 @@
+/**
+* @author Fatjola Memishaj (fatjola.memishaj@dunegroup.it)
+* @date 18/03/2021
+* @description HDT_UTL_CampaignMember
+* @history Fatjola Memishaj – 18/03/2021 – Created class
+*/
+
 public with sharing class HDT_UTL_CampaignMember {
 
     public static void createCampaignMemberStatus(List<Campaign> newCampaigns, List<Campaign> oldCampaigns){

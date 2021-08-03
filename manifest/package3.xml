@@ -1,64 +1,134 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>AbiCode__c.HDT_AbiCode</members>
-        <name>ListView</name>
+        <members>Escalation</members>
+        <name>QuickAction</name>
     </types>
     <types>
-        <members>Case.HDT_RT_VolturaTecnica</members>
-        <name>RecordType</name>
-    </types>
-    <types>
-        <members>AbiCode__c</members>
-        <name>CustomTab</name>
-    </types>
-    <types>
-        <members>AbiCode__c-Codice ABI Layout</members>
+        <members>Account-CPQ Account Layout Service Console</members>
+        <members>Case-Case Layout</members>
+        <members>Case-HDT_AlertDisassociazioneUtenteWeb</members>
+        <members>Case-HDT_AllineamentoAnagrafica</members>
+        <members>Case-HDT_AltreInformative</members>
+        <members>Case-HDT_Annullamento</members>
+        <members>Case-HDT_Autolettura</members>
+        <members>Case-HDT_CanoneRai</members>
+        <members>Case-HDT_ComportamentoVenditori</members>
+        <members>Case-HDT_ComunicazionePagamento</members>
+        <members>Case-HDT_Disattivazioni</members>
+        <members>Case-HDT_Domiciliazione</members>
+        <members>Case-HDT_FatturazioneConsumi</members>
+        <members>Case-HDT_GestioneBonusSociale</members>
+        <members>Case-HDT_GestionePrivacy</members>
+        <members>Case-HDT_Indennizzo</members>
+        <members>Case-HDT_Informative</members>
+        <members>Case-HDT_InversioneContatore</members>
+        <members>Case-HDT_Morosita</members>
+        <members>Case-HDT_PagamentiAltriProcessi</members>
+        <members>Case-HDT_PianoRateizzazione</members>
+        <members>Case-HDT_PraticaInVolo</members>
+        <members>Case-HDT_PreventiviEle</members>
+        <members>Case-HDT_PreventiviGas</members>
+        <members>Case-HDT_ReclamiScrittiRichInfo</members>
+        <members>Case-HDT_RichiestaParere</members>
+        <members>Case-HDT_Rimborso</members>
+        <members>Case-HDT_SospensioneRiattivazione</members>
+        <members>Case-HDT_UnificazioneSeparazioneCABolletta</members>
+        <members>Case-HDT_VariazioneAmministratore</members>
+        <members>Case-HDT_VariazioneAnagraficaCliente</members>
+        <members>Case-HDT_VariazioniEle</members>
+        <members>Case-HDT_VariazioniGas</members>
+        <members>Case-HDT_VerificaDatiAlDl</members>
+        <members>Case-HDT_VerificaTitolaritaPodPdr</members>
+        <members>Case-HDT_VerificheEle</members>
+        <members>Case-HDT_VerificheGas</members>
+        <members>Case-HDT_VolturaTecnica</members>
+        <members>Case-HDT_VotiveModena</members>
+        <members>CaseClose-Close Case Layout</members>
+        <members>Contact-Contact Layout</members>
+        <members>Contact-HDT_Create</members>
+        <members>Global-Global Layout</members>
+        <members>Order-Dossier</members>
+        <members>Order-HDT_PraticaInVolo</members>
+        <members>Order-HDT_Voltura</members>
+        <members>Order-Order Layout</members>
+        <members>Order-Prima attivazione con modifica</members>
+        <members>Order-Prima attivazione</members>
+        <members>Order-Subentro</members>
+        <members>Order-Switch in</members>
+        <members>wrts_prcgvr__Activity__c-HDT_HCPoint</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_BA_CampaignBolletta</members>
-        <members>HDT_LC_DocumentSignatureManager</members>
-        <members>HDT_LC_HighlightsPanel</members>
-        <members>HDT_QR_HerokuPostSalesManager</members>
+        <members>HDT_AgentMatrixManagement</members>
+        <members>HDT_ApexClasses</members>
+        <members>HDT_CampaignManager</members>
+        <members>HDT_EditPublicListView</members>
+        <members>HDT_MarketingCloud</members>
+        <members>HDT_MassiveLoader</members>
+        <members>HDT_SalesforceCPQAdmin</members>
+        <members>HDT_SalesforceCPQPartner</members>
+        <members>HDT_SalesforceCPQUser</members>
+        <members>Marketing_Cloud_Connected_App</members>
+        <members>Sales_User</members>
+        <members>TH_Permission_Set</members>
+        <members>sfdcInternalInt__sfdc_activityplatform</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_LC_ActivityReassignmentTool</members>
+        <members>HDT_LC_CalculateEstimatedCost</members>
+        <members>HDT_LC_CalculateEstimatedCostTst</members>
+        <members>HDT_LC_ChildOrderProcessDetails</members>
+        <members>HDT_LC_DocumentSignatureManagerTst</members>
+        <members>HDT_LC_DocumentalPhaseHistoryTst</members>
+        <members>HDT_LC_SaleActions</members>
+        <members>HDT_QR_ContentDocumentLinkTst</members>
+        <members>HDT_QR_ContentVersionTst</members>
         <members>HDT_QR_Order</members>
         <members>HDT_SRV_DocumentalManagement</members>
         <members>HDT_SRV_DocumentalManagementFacade</members>
-        <members>HDT_TRH_Case</members>
-        <members>HDT_TRH_Order</members>
-        <members>HDT_UTL_CaseProcess</members>
-        <members>HDT_UTL_CaseValidations</members>
+        <members>HDT_UTL_ActiveServicesKpi</members>
+        <members>HDT_UTL_CampaignMember</members>
+        <members>HDT_UTL_CampaignMemberTst</members>
+        <members>HDT_UTL_DataFactoryTst</members>
         <members>HDT_UTL_DocumentalManagement</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_UTL_Order</members>
         <members>HDT_UTL_OrderFieldsAlignment</members>
-        <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_WS_CreditCheckResponse</members>
+        <members>HDT_UTL_Scarti</members>
+        <members>HDT_WS_DocumentalIntegrationTstMock</members>
+        <members>HDT_WS_MrrRequestTst</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Account.RecallerFormula__c</members>
-        <name>CustomField</name>
+        <members>HDT_LCP_RedirectToRecord</members>
+        <members>HDT_LCP_ReminderQuickAction</members>
+        <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>CaseType</members>
-        <name>StandardValueSet</name>
-    </types>
-    <types>
+        <members>hdtCalculateEstimatedCost</members>
         <members>hdtChildOrderProcessDetails</members>
-        <members>hdtChildOrderProcessPrecheck</members>
-        <members>hdtHighlightsPanel</members>
+        <members>hdtCreateCampaign</members>
+        <members>hdtSaleServiceContainer</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_CausalCodeCalculation.Voltura_Switch_Out_per_Voltura</members>
-        <members>HDT_CausalCodeCalculation.Voltura_Switch_Out_per_Voltura_Gas</members>
-        <members>HDT_IntegrationObject.Documentale_Context5</members>
-        <name>CustomMetadata</name>
+        <members>Admin</members>
+        <members>Door2Door Profile</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <members>Partner Community User</members>
+        <name>Profile</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneInnescoDocumentaleCase</members>
-        <members>HDT_FL_GestionePagamenti_PianoRateizzazione</members>
-        <members>HDT_FL_GestionePagamenti_VariazioneDomiciliazione</members>
+        <members>HDT_FL_ActivityCarryPriority</members>
+        <members>HDT_FL_ActivityForwardToAgency</members>
+        <members>HDT_FL_ActivityReminder</members>
+        <members>HDT_FL_LinkQueueToWrapper</members>
         <name>Flow</name>
     </types>
     <version>49</version>
