@@ -178,11 +178,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>BounceType__c</field>
-            <table>et4ae5__IndividualEmailResult__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>et4ae5__Tracking_As_Of__c</field>
             <table>et4ae5__IndividualEmailResult__c</table>
         </columns>

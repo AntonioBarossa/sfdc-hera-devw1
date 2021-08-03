@@ -458,7 +458,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			testCase.ContactId=contactId;
 			testCase.ServicePoint__c=servPointId;
 			testCase.Contract__c=contractId;
-			testCase.VulturePracticeReference__c=orderId;
+			//testCase.VulturePracticeReference__c=orderId;
 			testCase.Cluster__c='Pagamenti';
 
 
@@ -847,5 +847,5 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return ftcList;
-	}
+  }
 }

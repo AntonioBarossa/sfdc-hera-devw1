@@ -27,7 +27,7 @@
     <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
-        <locationX>842</locationX>
+        <locationX>841</locationX>
         <locationY>1113</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.RelatedCase__c</assignToReference>
@@ -118,6 +118,27 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>GetRelatedRecord.Contract__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.DistributorCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedRecord.DistributorCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedRecord.SalesCompanyCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedRecord.SalesCompany__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -215,6 +236,27 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>GetRelatedRecord_0.ContractReference__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.DistributorCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedRecord_0.DistributorCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedRecord_0.SalesCompanyCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedRecord_0.SalesCompany__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -439,7 +481,7 @@
     <assignments>
         <name>AssegnaValoriRelated_0_0_0_0_0</name>
         <label>AssegnaValoriRelated</label>
-        <locationX>1370</locationX>
+        <locationX>1369</locationX>
         <locationY>2409</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
@@ -824,7 +866,7 @@
     <decisions>
         <name>ResumeFromDraft_0</name>
         <label>ResumeFromDraft?</label>
-        <locationX>1447</locationX>
+        <locationX>1448</locationX>
         <locationY>478</locationY>
         <defaultConnector>
             <targetReference>Input_Screen</targetReference>
@@ -832,12 +874,26 @@
         <defaultConnectorLabel>Riprendi</defaultConnectorLabel>
         <rules>
             <name>Nuovo</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
             <conditions>
                 <leftValueReference>ResumeFromDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.Order__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.RelatedCase__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
