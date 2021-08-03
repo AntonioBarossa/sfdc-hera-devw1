@@ -13,7 +13,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 			when 'Context4'{
 				return getRecordObjectsListContext4(recordsList);
-			}when else {
+			}
+			when 'Context5'{
+				return getRecordObjectsListContext1(recordsList);
+			}
+			when else {
 				return null;
 			}
 		}
@@ -162,23 +166,26 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		return HDT_UTL_DatabaseService.updateSObject(processRecord);
 	}
 
-	public static sObject getProcessRecord(Id requestId, String context){
+	public static sObject getProcessRecord(String requestId, String context){
 		String fieldString = '';
 		String fromString = '';
-		String whereString = 'Id = \''+requestId + '\'';
+		String whereString = '';
 		String queryString = 'SELECT ';
 		switch on context {
 			when 'Order' {
 				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c';
 				fromString = 'Order';
+				whereString = ' OrderNumber = \''+requestId + '\'';
 			}
 			when 'Case'{
 				fieldString = 'Id, AccountId,SendMode__c ,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c,QuotationType__c';
 				fromString = 'Case';
+				whereString = ' CaseNumber = \''+requestId + '\'';
 			}
 			when else {
 				fieldString = 'Id,PrimaryEmail__c,SendMode__c';
 				fromString = 'Account';
+				whereString = 'Id = \''+requestId + '\'';
 			}
 		}
 		queryString += fieldString + ' FROM ' + fromString + ' WHERE ' + whereString;
@@ -592,7 +599,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				return 'Context3';
 			}
 			when 'DocumentazioneAnticipata'{
-				return 'Context2';
+				return 'Context4';
 			}
 			when else {
 				return null;

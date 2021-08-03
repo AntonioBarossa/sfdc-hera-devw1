@@ -81,6 +81,7 @@ public inherited sharing class HDT_LC_SaleActions {
             quote.SBQQ__Ordered__c = true;
             quote.SBQQ__LineItemsGrouped__c = true;
             quote.SBQQ__OrderByQuoteLineGroup__c = true;
+            quote.CancellationReason__c = null;
             quote.CampaignEleggibilityGroup__c = campaignElegibilityGroup;
         }
 

@@ -82,6 +82,7 @@ export default class HdtCreateCampaign extends LightningElement {
     }
 
     handleChangeCategory(event) {
+        this.channelFieldRequired=true;
         this.campaignCommercialCodeFields = (event.detail.value === 'Campagna Marketing Cloud' || event.detail.value === 'Campagna CRM') ? true : false;
         this.statusField = this.template.querySelector('.statusField > lightning-input-field').value;
         let categoryField = this.template.querySelector('.categoryField > lightning-input-field').value;
@@ -98,6 +99,9 @@ export default class HdtCreateCampaign extends LightningElement {
             this.campaignBillingFields = channelField.includes('Bolletta') ? true : false;
             this.recurringCampaignFieldsRequired = recurringField;
         } else {
+            if ("Campagna Contenitore" == event.detail.value ){
+                this.channelFieldRequired=false;
+            }
             this.startDateFieldRequired = false;
             this.recurringCampaignFieldsRequired = false;
             this.reitekFieldRequired = false;

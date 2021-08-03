@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Cerca_Processi_di_vendita_elegibili</name>
         <label>Cerca Processi di vendita elegibili</label>
-        <locationX>659</locationX>
-        <locationY>337</locationY>
+        <locationX>642</locationX>
+        <locationY>346</locationY>
         <actionName>HDT_UTL_SelfReadings</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -39,15 +39,15 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
-        <name>Assign_TAS</name>
-        <label>Assign TAS</label>
-        <locationX>1015</locationX>
-        <locationY>50</locationY>
+        <name>Assign_codice_causale_da_switch</name>
+        <label>Assign codice causale (da switch)</label>
+        <locationX>1150</locationX>
+        <locationY>65</locationY>
         <assignmentItems>
             <assignToReference>CausalCodeProcessReading</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>TAS</stringValue>
+                <elementReference>Calcolo_Codice_Causale_Lettura_da_Switch.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -55,15 +55,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_TAV</name>
-        <label>Assign TAV</label>
-        <locationX>1005</locationX>
-        <locationY>157</locationY>
+        <name>Assign_Codice_Causale_da_voltura</name>
+        <label>Assign Codice Causale (da voltura)</label>
+        <locationX>1148</locationX>
+        <locationY>179</locationY>
         <assignmentItems>
             <assignToReference>CausalCodeProcessReading</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>TAV</stringValue>
+                <elementReference>Calcolo_Codice_Causale_Lettura_da_Voltura.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -73,10 +73,10 @@
     <decisions>
         <name>Autolettura_da_processo_check</name>
         <label>Autolettura da processo?</label>
-        <locationX>793</locationX>
+        <locationX>780</locationX>
         <locationY>440</locationY>
         <defaultConnector>
-            <targetReference>Refresh_Case</targetReference>
+            <targetReference>Set_Codice_Venditore</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Autolettura da cliente</defaultConnectorLabel>
         <rules>
@@ -99,10 +99,10 @@
         <name>Check_Codice_Causale_Autolettura_da_processo</name>
         <label>Codice Causale Autolettura da processo?</label>
         <locationX>793</locationX>
-        <locationY>111</locationY>
+        <locationY>112</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>TAS</name>
+            <name>Lettura_da_switch</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Cerca_Processi_di_vendita_elegibili.orderRecordType</leftValueReference>
@@ -119,12 +119,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_TAS</targetReference>
+                <targetReference>Calcolo_Codice_Causale_Lettura_da_Switch</targetReference>
             </connector>
-            <label>TAS</label>
+            <label>Lettura da switch</label>
         </rules>
         <rules>
-            <name>TAV</name>
+            <name>Lettura_da_voltura</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Cerca_Processi_di_vendita_elegibili.orderRecordType</leftValueReference>
@@ -134,9 +134,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_TAV</targetReference>
+                <targetReference>Calcolo_Codice_Causale_Lettura_da_Voltura</targetReference>
             </connector>
-            <label>TAV</label>
+            <label>Lettura da voltura</label>
         </rules>
     </decisions>
     <decisions>
@@ -219,8 +219,8 @@
     <decisions>
         <name>Check_Service_Point</name>
         <label>Check Service Point</label>
-        <locationX>647</locationX>
-        <locationY>561</locationY>
+        <locationX>636</locationX>
+        <locationY>562</locationY>
         <defaultConnector>
             <targetReference>Cerca_Processi_di_vendita_elegibili</targetReference>
         </defaultConnector>
@@ -241,6 +241,14 @@
             <label>Service Point KO</label>
         </rules>
     </decisions>
+    <formulas>
+        <description>Calcola il codice venditore per le autoletture, che non possono richiamare arricchimento dati.
+
+TODO: Formula da adeguare in Wave 2.</description>
+        <name>CompanyCodeFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!Get_Case.CommodityFormula__c} = &apos;Gas&apos;, &apos;10V0000160&apos;, &apos;13V0000000&apos;)</expression>
+    </formulas>
     <formulas>
         <name>ReadingCustomerDateFormula</name>
         <dataType>Date</dataType>
@@ -303,10 +311,80 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Calcolo_Codice_Causale_Lettura_da_Switch</name>
+        <label>Calcolo Codice Causale Lettura da Switch</label>
+        <locationX>1025</locationX>
+        <locationY>65</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_codice_causale_da_switch</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Autolettura_switch</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Calcolo_Codice_Causale_Lettura_da_Voltura</name>
+        <label>Calcolo Codice Causale Lettura da Voltura</label>
+        <locationX>1013</locationX>
+        <locationY>176</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Codice_Causale_da_voltura</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Autolettura_voltura</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>473</locationX>
-        <locationY>559</locationY>
+        <locationX>466</locationX>
+        <locationY>560</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Service_Point</targetReference>
@@ -326,8 +404,8 @@
     <recordLookups>
         <name>Refresh_Case</name>
         <label>Refresh Case</label>
-        <locationX>1060</locationX>
-        <locationY>549</locationY>
+        <locationX>1137</locationX>
+        <locationY>551</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Inserimento_Letture</targetReference>
@@ -344,6 +422,36 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Set_Codice_Venditore</name>
+        <label>Set Codice Venditore + Distributore</label>
+        <locationX>994</locationX>
+        <locationY>552</locationY>
+        <connector>
+            <targetReference>Refresh_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>DistributorCode__c</field>
+            <value>
+                <elementReference>Get_Case.ServicePoint__r.Distributor__r.Code__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SalesCompanyCode__c</field>
+            <value>
+                <elementReference>CompanyCodeFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Set_Data_Lettura_Cliente</name>
         <label>Set Data Lettura Cliente</label>
@@ -368,10 +476,10 @@
     <recordUpdates>
         <name>Set_Dati_Autolettura_da_processo</name>
         <label>Set Dati Autolettura da processo</label>
-        <locationX>1228</locationX>
-        <locationY>87</locationY>
+        <locationX>1331</locationX>
+        <locationY>106</locationY>
         <connector>
-            <targetReference>Refresh_Case</targetReference>
+            <targetReference>Set_Codice_Venditore</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -470,7 +578,7 @@
     <screens>
         <name>Inserimento_Letture</name>
         <label>Inserimento Letture</label>
-        <locationX>1237</locationX>
+        <locationX>1265</locationX>
         <locationY>549</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -620,6 +728,12 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>isProcessReading</name>
+                <value>
+                    <elementReference>Cerca_Processi_di_vendita_elegibili.isProcessReading</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -630,7 +744,7 @@
     <screens>
         <name>Invalid_Case_Screen</name>
         <label>Invalid Case Screen</label>
-        <locationX>655</locationX>
+        <locationX>645</locationX>
         <locationY>780</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -669,8 +783,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>541</locationY>
+        <locationX>47</locationX>
+        <locationY>542</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
         </connector>

@@ -10,6 +10,8 @@ public class HDT_SRV_DocumentalManagement{
 		String documentalContext = HDT_UTL_DocumentalManagement.getDocumentalContext(context);
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure payloadStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration(documentalContext);
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure driverStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration('Driver3');
+		//inserito per gestire la documentazione anticipata che si basa su single Order. Sfrutta il Context4 per recuperare la struttura del payload e il context5 per la struttura record
+		documentalContext = context.equalsIgnoreCase('DocumentazioneAnticipata')?'Context5':documentalContext;
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject integrationObjConfig =  HDT_UTL_IntegrationObject.getIntegrationObjectConfiguration('HDT_IntegrationObject__mdt', 'Id, JSON__c', 'DeveloperName = \'Documentale_'+ documentalContext + '\'', 'JSON__c');
 		Map<String,String> recordQueryMap = HDT_UTL_IntegrationObject.generateQueryString(integrationObjConfig,recordId); 
 		List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(recordQueryMap.get('queryString'), recordQueryMap.get('parentObject'));
@@ -110,8 +112,20 @@ public class HDT_SRV_DocumentalManagement{
 	@future
 	public static void createPublicLinkFuture(String recordId,String base64,String fileName){
 		String publicLink = createPublicLink(recordId,base64,fileName);
-		//updateOrder con link?
+		Order ord = new Order();
+		ord.Id = recordId;
+		switch on fileName{
+			when 'MODULISTICA_NO_B12'{
+				ord.InformationFormLink__c = publicLink;
+			}when 'MODULISTICA_B12'{
+				ord.SendFormLink__c = publicLink;
+			}when 'DELIBERA_40'{
+				ord.Decision40Link__c = publicLink;
+			}
+		}
+		HDT_UTL_DatabaseService.updateSObject(ord);
 	}
+
 	public static String createPublicLink(String recordId,String base64,String fileName){
 		try {
 			ContentVersion cv = HDT_UTL_DocumentalManagement.createContectVersion(base64,fileName);
@@ -233,13 +247,14 @@ public class HDT_SRV_DocumentalManagement{
 
 	private static void manageResponse(HDT_WRP_DocumentalResponse response, String context){
 		try{
-			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((Id) response.deliverPackageResponse.requestId, context);
+			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((String) response.deliverPackageResponse.requestId, context);
+			Id recordId = (Id)processRecord.get('Id');
 			if(context == 'Order' || context == 'Case'){
 				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
 			}
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
 				if(response.responseCode == 200 || response.responseCode == 201 ){
-					HDT_UTL_DocumentalManagement.createDocumentSendTracking(response.deliverPackageResponse.message,response.deliverPackageResponse.requestId, response.deliverPackageResponse.packageIds,processRecord);
+					HDT_UTL_DocumentalManagement.createDocumentSendTracking(response.deliverPackageResponse.message,recordId, response.deliverPackageResponse.packageIds,processRecord);
 					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response,context);
 				}
 			}
@@ -255,13 +270,24 @@ public class HDT_SRV_DocumentalManagement{
 		String context = (String) formParams.get('Contesto') != null? (String) formParams.get('Contesto'):'';
 		String signMode = (String) formParams.get('signMode') != null? (String) formParams.get('signMode'):'';
 		String parsedContext = '';
+		String processNumber = '';
 		try{
 			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC') || context.equalsIgnoreCase('Account')){
 				parsedContext = 'Case';
-			}else {
+			}else if(context.equalsIgnoreCase('DocumentazioneAnticipata')){
+				parsedContext='Order';
+			}
+			else {
 				parsedContext=context;
 			}
-			sPackageRequest.requestId = recordId;
+			if(context.equalsIgnoreCase('Case')){
+				processNumber = HDT_UTL_DocumentalManagement.getValue('Case', 'CaseNumber', 0, inputs, formParams);
+			}else if(context.equalsIgnoreCase('Order')){
+				processNumber = HDT_UTL_DocumentalManagement.getValue('Order', 'OrderNumber', 0, inputs, formParams);
+			}else{
+				processNumber = recordId;
+			}
+			sPackageRequest.requestId = processNumber;
 			sPackageRequest.objectName = parsedContext;
 			sPackageRequest.objectId = recordId;
 			sPackageRequest.signMode = signMode;
