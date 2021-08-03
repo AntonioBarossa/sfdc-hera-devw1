@@ -1950,11 +1950,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CreditCheckResultsFinal__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>AppoitmentTimeSlotConfirmed__c</field>
             <table>Case.Activities__r</table>
         </columns>
