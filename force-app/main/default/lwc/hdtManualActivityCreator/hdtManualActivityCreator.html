@@ -1,31 +1,38 @@
 <template>
     <lightning-card  title="Nuova attività manuale">
+
+        <lightning-layout horizontal-align="center" multiple-rows>
+            <lightning-layout-item size="7">
+                <lightning-combobox label="Tipo attività"
+                                    value={selectedType}
+                                    options={activityTypes}></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item size="7">
+                <lightning-input label="Filtro cliente"
+                                 value={accountFilter}
+                                 type="search"></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="7">
+                <lightning-combobox label="Cliente"
+                                    value={selectedAccount}
+                                    options={accounts}></lightning-combobox>
+            </lightning-layout-item>
+        </lightning-layout>
+
         <div slot="footer">
             <lightning-layout horizontal-align="end">
-                <lightning-layout-item>
+                <lightning-layout-item size="3">
                     <lightning-button label="Save"
-                                      disabled={saveDisabled}
-                                      onclick={handleSave}></lightning-button>
+                                        disabled={saveDisabled}
+                                        onclick={handleSave}></lightning-button>
                 </lightning-layout-item>
-                <lightning-layout-item>
+                <lightning-layout-item size="3">
                     <lightning-button label="Cancel"
-                                      disabled={cancelDisabled}
-                                      onclick={handleCancel}></lightning-button>
+                                        disabled={cancelDisabled}
+                                        onclick={handleCancel}></lightning-button>
                 </lightning-layout-item>
             </lightning-layout>
         </div>
-
-        <lightning-combobox label="Tipo attività"
-                            value={selectedType}
-                            options={activityTypes}></lightning-combobox>
-                            
-        <lightning-input label="Filtro cliente"
-                         value={accountFilter}
-                         type="search"></lightning-input>
-
-        <lightning-combobox label="Cliente"
-                            value={selectedAccount}
-                            options={accounts}></lightning-combobox>
 
     </lightning-card>
 </template>
