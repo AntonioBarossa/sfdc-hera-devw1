@@ -46,12 +46,16 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : null;
         String tipoPlico = (String) formParamsMap.get('TipoPlico');
-        //String sendMode = (String) formParamsMap.get('sendMode');
+        String result = '';
         try{
             baseSixtyFour = getBase64(recordId,context,formParams);
-            //if(sendMode.equalsIgnoreCase('E-mail')){
+            Map<String,Object> respMap = (Map<String,Object>) JSON.deserializeUntyped(baseSixtyFour);
+            baseSixtyFour = (String) respMap.get('base64');
+            result = (String) respMap.get('result');
+            if(result == '000'){
                 HDT_SRV_DocumentalManagement.createPublicLinkFuture(recordId,baseSixtyFour,tipoPlico);
-            //}
+            }
+
         }catch(Exception ex){
             System.debug(ex.getMessage());
         }

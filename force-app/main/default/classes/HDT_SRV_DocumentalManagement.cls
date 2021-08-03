@@ -253,7 +253,7 @@ public class HDT_SRV_DocumentalManagement{
 				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
 			}
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
-				if(response.responseCode == 200 || response.responseCode == 201 ){
+				if((response.responseCode == 200 || response.responseCode == 201) && response.deliverPackageResponse.result == '000'){
 					HDT_UTL_DocumentalManagement.createDocumentSendTracking(response.deliverPackageResponse.message,recordId, response.deliverPackageResponse.packageIds,processRecord);
 					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response,context);
 				}
@@ -282,7 +282,7 @@ public class HDT_SRV_DocumentalManagement{
 			}
 			if(context.equalsIgnoreCase('Case')){
 				processNumber = HDT_UTL_DocumentalManagement.getValue('Case', 'CaseNumber', 0, inputs, formParams);
-			}else if(context.equalsIgnoreCase('Order')){
+			}else if(context.equalsIgnoreCase('Order') || context.equalsIgnoreCase('DocumentazioneAnticipata')){
 				processNumber = HDT_UTL_DocumentalManagement.getValue('Order', 'OrderNumber', 0, inputs, formParams);
 			}else{
 				processNumber = recordId;
