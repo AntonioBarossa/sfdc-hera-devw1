@@ -22,9 +22,13 @@
                             </lightning-input-field>
                         </div>
                         <div class="slds-col slds-size_1-of-2 slds-p-around--x-small channelField">
+                           <template if:true={channelFieldRequired}>
                             <lightning-input-field field-name="Channel__c" onchange={handleChangeChannel}
-                                required={channelFieldRequired} value={channelValues}>
+                                 required={channelFieldRequired} value={channelValues}>
                             </lightning-input-field>
+
+                           </template>
+                   
                         </div>
                     </div>
                     <div class="slds-grid">

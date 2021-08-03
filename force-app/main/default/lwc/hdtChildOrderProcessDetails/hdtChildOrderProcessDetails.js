@@ -7,7 +7,7 @@ import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import  voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck';
 import getDates from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getDates';
-
+import sendAdvanceDocumentation from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendAdvanceDocumentation';
 import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
 import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
 //FINE SVILUPPI EVERIS
@@ -33,7 +33,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track availableSteps = [];
     @track availableStepsFirst = []; 
     @track confirmedSteps = [];
-    @track pendingSteps = [];
+    @track pendingSteps = []
+
+
     loading = false;
     showModuloInformativo = false;
     showDelibera40 = false;
@@ -169,7 +171,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         if (this.currentSection.name === 'dateOrdine') {
             if(event.target.fieldName === 'IsActivationDeferred__c') {
-                this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
+                // this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
+ //                 this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
 
                 if (event.target.value && this.sectionDataToSubmit.EffectiveDate__c === undefined) {
                     this.sectionDataToSubmit['EffectiveDate__c'] = this.order.EffectiveDate__c;
@@ -212,7 +215,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             && this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas') {
             this.showDelibera40 = true;
         }
-    }
+    } 
 
     handleShowInviaModulistica(){
 
@@ -257,7 +260,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
                 // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
                 // this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
-                //     nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
+                // nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
             }
         }
 
@@ -375,6 +378,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     getPendingSteps(){
         //EVERIS: MODIFICATO LAYOUT PER RENDERLO PIU FRIENDLY E AGGIUNTE SEZIONI
+        console.log("PREFILTER:" + this.availableStepsFirst); 
         this.pendingSteps = this.availableStepsFirst.filter(section => (section.name === 'reading' 
         || section.name === 'processVariables'
         || section.name === 'creditCheck' 
@@ -391,7 +395,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         //     );
         // }
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
-        
+        console.log('PENDING HOLA:' + this.pendingSteps);
     }
 
     @api
@@ -518,6 +522,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
+        console.log("currentSectionName "+currentSectionName);
         let currentSection = this.availableSteps.filter(section => section.name === currentSectionName);
         let currentObjectApiName = currentSection[0].objectApiName;
         let currentRecordId = currentSection[0].recordId;
@@ -791,7 +796,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             
         }
         //f.defelice
-        if(this.order.RecordType.DeveloperName=="HDT_RT_ConnessioneConAttivazione" || this.order.RecordType.DeveloperName=="HDT_RT_TemporaneaNuovaAtt"){
+        
+        if((this.order.RecordType.DeveloperName=="HDT_RT_ConnessioneConAttivazione" || this.order.RecordType.DeveloperName=="HDT_RT_TemporaneaNuovaAtt") && currentSectionName === "dettaglioImpianto"){
             this.getQuoteType(currentSectionIndex, nextSectionStep);
             return;
         }
@@ -802,8 +808,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     async getQuoteType(currentSectionIndex, nextSectionStep){
         try{
-            let quoteType = await getQuoteTypeMtd({order:
-                {Id: this.order.Id, Step__c: nextSectionStep, 
+            let quoteType = await getQuoteTypeMtd({ord:
+                {...this.order, 
                     ...this.sectionDataToSubmit, }
             });
             this.sectionDataToSubmit['QuotationType__c'] = quoteType;
@@ -815,6 +821,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
 
     handleSectionToggle(event) {
+        console.log('handleSecToggle '+this.choosenSection);
         this.activeSections = [this.choosenSection];
     }
 
@@ -2673,11 +2680,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         this.availableStepsFirst = this.fields.filter(section => section.processVisibility === true);
 
+        console.log("********AVAIBLESTEP:" + JSON.stringify(this.availableStepsFirst));
         this.getFirstStepName();
 
         this.loadAccordion();
 
-        //EVERIS
+       //EVERIS
         if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
             this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura';
             console.log('IsVolture--> '+this.isVolture);
@@ -2688,6 +2696,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             console.log('ReadingDisabled? ->' +this.readingDisabled);
         }
         //EVERIS
+        console.log('CheckVariables');
     }
 
     renderedCallback(){
@@ -2700,6 +2709,43 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
     }
 
+    handleDocAnticipata(event){
+        var buttonLabel = event.target.label;
+        var tipoDoc = '';
+        if(buttonLabel=='Modulo informativo'){
+            tipoDoc = 'MODULISTICA_NO_B12';
+        }else if(buttonLabel=='Delibera 40'){
+            tipoDoc = 'DELIBERA_40';
+        }else{
+            tipoDoc = 'MODULISTICA_B12';
+        }
+        var formParams = {     
+            mode : 'Print',
+            Archiviato : 'Y',
+            TipoPlico:tipoDoc,
+        };
+        sendAdvanceDocumentation({
+            recordId: this.order.Id,
+            context: 'Documentazione Anticipata',
+            formParams: JSON.stringify(formParams)
+        }).then(result => {
+            const event = new ShowToastEvent({
+                title: 'Successo',
+                message: 'Documentazione inviata',
+                variant: 'success',
+            });
+            this.dispatchEvent(event);
+        }).catch(error => {
+            const event = new ShowToastEvent({
+                title: 'Attenzione',
+                message: 'Non è stato possibile inviare la documentazione al cliente',
+                variant: 'error',
+            });
+            this.dispatchEvent(event);
+            console.error(error);
+        });
+
+    }
     
 
     retryEsitiCreditCheck(){        

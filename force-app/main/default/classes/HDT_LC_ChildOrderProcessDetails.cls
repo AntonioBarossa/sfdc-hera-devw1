@@ -40,7 +40,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true){
                 if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0){                
                     throw new AuraHandledException('Necessario completare un Case di \'Cambio Contatore Non Registrato\'');
-                
                 }
             } else if(order.EffectiveDate__c != null){
 
@@ -122,9 +121,18 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     **/
     @AuraEnabled
     public static string getQuoteTypeMtd(Order ord){
+        system.debug(ord);
         String quoteType;
         try {
-            
+            List<HDT_CalcoloPreventivi__mdt> metas;
+
+            if(ord.ProcessCode__c=='PN1'){
+                //ConnessioneConAttivazione
+                metas= [SELECT QuotationType__c FROM HDT_CalcoloPreventivi__mdt WHERE Type__c='QuotationType' AND ProcessCode__c=:ord.ProcessCode__c WITH SECURITY_ENFORCED] ;
+                quoteType= metas[0].QuotationType__c; 
+                return quoteType;
+            }
+
             String checkPrPc= getPrPc(ord);
             String powerRange=HDT_UTL_QuoteManagement.getRangeValue(ord.PowerRequested__c);
 
@@ -136,15 +144,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             system.debug('ConnectionType__c '+ord.ConnectionType__c);
             system.debug('ProcessCode__c '+ord.ProcessCode__c);
             system.debug('VendDistr__c '+distributor);
+            system.debug('PowerRequested__c '+ord.PowerRequested__c);
+            system.debug('PowerAvailable__c '+ ord.PowerAvailable__c);
             system.debug('EnergyUseCase__c '+ord.UseTypeEnergy__c);
             system.debug('PowerRange__c '+powerRange);
             system.debug('ComparePowReq__c '+checkPrPc);
 
-            List<HDT_CalcoloPreventivi__mdt> metas;
-            if(ord.ProcessCode__c=='PN1'){
-                //ConnessioneConAttivazione
-                metas= [SELECT QuotationType__c FROM HDT_CalcoloPreventivi__mdt WHERE Type__c='QuotationType' AND ProcessCode__c=:ord.ProcessCode__c WITH SECURITY_ENFORCED] ;
-            }else{            
+            
+            if(ord.ProcessCode__c!='PN1'){            
                 metas = [SELECT QuotationType__c FROM HDT_CalcoloPreventivi__mdt 
                     WHERE Type__c='QuotationType'
                         AND RequestPhase__c =:ord.RequestPhase__c AND ConnectionType__c=:ord.ConnectionType__c 
@@ -159,7 +166,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 quoteType= metas[0].QuotationType__c;     
             }
         } catch (Exception e) {
-            system.debug(e.getMessage());
+            system.debug(e.getStackTraceString()+' at line '+e.getLineNumber());
+            system.debug(e.getMessage()+' '+e.getCause());
             throw new AuraHandledException(e.getMessage());
         }
         return quoteType;
