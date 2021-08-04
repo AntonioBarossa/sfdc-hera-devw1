@@ -438,7 +438,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaCase</targetReference>
+            <targetReference>AggiornaOrder</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -475,14 +475,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaCase</targetReference>
+            <targetReference>AggiornaOrder</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssegnaValoriRelated_0_0_0_0_0</name>
         <label>AssegnaValoriRelated</label>
-        <locationX>1369</locationX>
-        <locationY>2409</locationY>
+        <locationX>1405</locationX>
+        <locationY>2427</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -518,8 +518,8 @@
     <assignments>
         <name>AssegnaValoriRelated_0_0_0_0_0_0</name>
         <label>AssegnaValoriRelated</label>
-        <locationX>1634</locationX>
-        <locationY>2409</locationY>
+        <locationX>1655</locationX>
+        <locationY>2420</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -555,8 +555,8 @@
     <assignments>
         <name>AssegnaValoriRelated_0_0_0_0_0_0_0</name>
         <label>AssegnaValoriRelated</label>
-        <locationX>1898</locationX>
-        <locationY>2169</locationY>
+        <locationX>1253</locationX>
+        <locationY>2306</locationY>
         <assignmentItems>
             <assignToReference>GetRelatedOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -614,7 +614,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaCase</targetReference>
+            <targetReference>AggiornaOrder</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -1360,11 +1360,8 @@
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
-        <locationX>1370</locationX>
-        <locationY>2721</locationY>
-        <connector>
-            <targetReference>AggiornaOrder</targetReference>
-        </connector>
+        <locationX>1458</locationX>
+        <locationY>2790</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1394,8 +1391,11 @@
     <recordUpdates>
         <name>AggiornaOrder</name>
         <label>AggiornaOrder</label>
-        <locationX>1370</locationX>
-        <locationY>2841</locationY>
+        <locationX>1022</locationX>
+        <locationY>2594</locationY>
+        <connector>
+            <targetReference>AggiornaCase</targetReference>
+        </connector>
         <inputReference>GetRelatedOrder</inputReference>
     </recordUpdates>
     <screens>
