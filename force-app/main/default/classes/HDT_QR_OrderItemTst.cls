@@ -31,8 +31,6 @@ public with sharing class HDT_QR_OrderItemTst {
         List<Product2> prod = HDT_UTL_DataFactoryTst.createProduct2(1, false);
         prod[0].Name = 'PDR';
         prod[0].Family = 'VAS Opzione prodotto';
-        // prod[1].Name = 'Analisi Consumi';
-        // prod[1].Family = 'VAS Opzione prodotto';
 
         insert prod;
 
