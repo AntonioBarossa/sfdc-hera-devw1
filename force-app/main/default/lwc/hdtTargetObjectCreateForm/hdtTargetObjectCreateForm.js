@@ -6,8 +6,8 @@ import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
-import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint';
-import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint';
+import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint2';
+import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint2';
 import getDistributorPointCode from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getDistributorPointCode';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.callService';
@@ -1037,13 +1037,34 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
         console.log('allSubmitedFields'+JSON.stringify(this.servicePointRetrievedData));
 
-        if(this.allSubmitedFields['ServicePointCode__c']!= undefined && (JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length < 16 || JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length > 17 )){
+        if((this.allSubmitedFields['ServicePointCode__c']!= undefined && (JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length < 16 || JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length > 17 ))){
             isValid = false;
             this.isValidFields = false;
             console.log('lenght field'+JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length);
             console.log('field value : '+JSON.stringify(this.allSubmitedFields['ServicePointCode__c']));
 
             this.alert('Errore','Codice POD/PDR non valido','error');
+        }
+        //(JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).substring(0,2)!='IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica')
+        if((this.isNumeric(this.allSubmitedFields['ServicePointCode__c'])!=true && this.allSubmitedFields['CommoditySector__c'] == 'Gas')){
+            isValid = false;
+            this.isValidFields = false;
+
+            this.alert('Errore','Codice POD/PDR non valido','error');
+        }
+        if(this.allSubmitedFields['ServicePointCode__c']!=undefined){
+            if(this.allSubmitedFields['ServicePointCode__c'].substring(0,2)!='IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica'){
+                isValid = false;
+                this.isValidFields = false;
+                this.alert('Errore','Codice POD/PDR non valido','error');
+            }
+
+        }else{
+            if(this.servicePointRetrievedData['ServicePointCode__c'].substring(0,2)!='IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica'){
+                isValid = false;
+                this.isValidFields = false;
+                this.alert('Errore','Codice POD/PDR non valido','error');
+            }
         }
         
         console.log('validFields END');
@@ -1063,7 +1084,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             isBlacklist=data;
         
         if(isBlacklist == false){
-
+        
         this.theRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log('this.theRecord'+JSON.stringify(this.theRecord));
 
@@ -1181,8 +1202,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     create(){
 								  
 																				  
+        console.log('this.AllSubmittedFields ******************' + JSON.stringify(this.allSubmitedFields));
+        createServicePoint({servicePoint: this.allSubmitedFields, sale: this.sale}).then(data =>{
+            console.log('this.AllSubmittedFields ******************' + JSON.stringify(this.allSubmitedFields));
+            console.log('data ******************' + JSON.stringify(this.allSubmitedFields));
 
-        createServicePoint({servicePoint: this.allSubmitedFields}).then(data =>{
             this.loading = false;
             this.closeCreateTargetObjectModal();
             this.servicePointId = data.id;
@@ -1231,7 +1255,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             console.log('REMOVE END');
 
         }
-        confirmServicePoint({servicePoint: this.allSubmitedFields, sap: this.isSap}).then(data =>{
+        confirmServicePoint({servicePoint: this.allSubmitedFields, sap: this.isSap, sale : this.sale}).then(data =>{
 																				
             this.loading = false;
             this.closeCreateTargetObjectModal();
@@ -1290,5 +1314,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.isDistributor=true;
         this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
     }
+
+    @api
+    isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+      }
 
 }
