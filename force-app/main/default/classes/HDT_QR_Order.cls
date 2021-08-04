@@ -88,6 +88,7 @@ public inherited sharing class HDT_QR_Order {
             Account.ShippingAddress,
             Account.FirstName__c,
             Account.LastName__c,
+            Vat__c,
             Account.RecordType.Developername,
             Account.Category__c,
             Name,
@@ -195,6 +196,7 @@ public inherited sharing class HDT_QR_Order {
             OrderReferenceNumber,                            // @Picchiri  15/06/21
             IsSequanzialized__c,                             // @Picchiri  24/06/21
             SalesCompanyCode__c,
+            Owner.Username,
             CustomerType__c,
             IsWinback__c
             FROM Order 
@@ -404,6 +406,7 @@ public inherited sharing class HDT_QR_Order {
         return [
             SELECT
             Phase__c,
+            isTransition__c ,
             recordtype.developername
             FROM
             Order
