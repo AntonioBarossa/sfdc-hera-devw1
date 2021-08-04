@@ -70,7 +70,10 @@
             
             <property name="isVolture" type="Boolean" label="Is Volture?" description="Discriminates if the process is a Volture" role="inputOnly"/>
             
-            
+
+            <property name="isProcessReading" type="Boolean" label="Autolettura da processo?" description="Discriminates a process reading" role="inputOnly"/>
+
+
             <property name="isRettificaConsumi" type="Boolean" label="Rettifica Consumi?" description="Discriminates if the process is Rettifica Consumi" role="inputOnly"/>
             
 
@@ -119,6 +122,9 @@
             <property name="showReadingWindows" type="Boolean" label="Show Reading Windows" description="If true shows reading windows button" role="inputOnly" default="false"/>
 
             
+            <property name="isMono" type="Boolean" label="Is Mono?" description="Indica se la lettura è mono-oraria" role="outputOnly"/>
+
+
         </targetConfig>
         
         

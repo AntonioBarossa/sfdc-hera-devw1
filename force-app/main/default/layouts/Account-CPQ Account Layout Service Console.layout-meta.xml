@@ -277,13 +277,13 @@
         <fields>SendCertifiedEmailConsentDate__c</fields>
         <relatedList>BillingProfile__c.Account__c</relatedList>
     </relatedLists>
-    <relatedLists>
+    <!-- <relatedLists>
         <fields>FULL_NAME</fields>
         <fields>CONTACT.TITLE</fields>
         <fields>CONTACT.EMAIL</fields>
         <fields>CONTACT.PHONE1</fields>
         <relatedList>RelatedContactList</relatedList>
-    </relatedLists>
+    </relatedLists> -->
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>ORDERS.STATUS</fields>
@@ -401,7 +401,6 @@
         <fields>et4ae5__DateOpened__c</fields>
         <fields>CaseID__c</fields>
         <fields>OrderID__c</fields>
-        <fields>BounceType__c</fields>
         <fields>et4ae5__Contact_ID__c</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.Account__c</relatedList>
     </relatedLists>

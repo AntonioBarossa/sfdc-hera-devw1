@@ -326,6 +326,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>CancellationHerokuPracticeCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>CancellationReasonDescription__c</field>
             </layoutItems>
             <layoutItems>
@@ -341,6 +345,10 @@
         <editHeading>true</editHeading>
         <label>Informazioni aggiuntive</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Status</field>

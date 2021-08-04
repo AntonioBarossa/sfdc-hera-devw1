@@ -48,13 +48,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         || caseType == 'BP/CA - errata categoria'
         || caseType == 'Modifica/Azzeramento Consumo Annuo'
         || caseType == 'Modifica Tariffa Residente/Non Residente'
+        || caseType == 'Modifica Layout di dettaglio'
         || caseType == 'Mancata Telelettura/lettura'
         || caseType == 'Cambio contatore non registrato'
         || caseType == 'Fiscale'){
 
             System.debug('Inside Variazioni Validations');
 
-            result = validateVariazioni(fields,recordId,caseType, subprocess);
+            result = validateVariazioni(fields,recordId,caseType, subprocess, currentCase);
 
         } else if(caseType == 'Chiusura Contatore'){
 
@@ -75,9 +76,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateVerificaTitolarita(currentCase);
 
-        } else if (caseType == 'Nuovo Impianto - Aggiunta Attacco'){
+        /*} else if (caseType == 'Nuovo Impianto - Aggiunta Attacco'){
 
-            result = validateVariazioni(fields, caseType);
+            result = validateVariazioni(fields, caseType)*/
         
         } else if(caseType == 'Voltura Tecnica'){
 
@@ -108,25 +109,17 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 : null;
 
             if(attachmentManagement != null ){
-
-                if(attachmentManagement){
-
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                /*if(attachmentManagement){
                     List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
-
                     if(attachedDocument.size() == 0){
-                    
                         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
-                        
                     }else{
-                    
                         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-                        
                     }
                 }else{
-
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-                
-                }
+                }*/
 
             } else {
             
@@ -697,7 +690,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    public String validateVariazioni(String fields, String recordId, String caseType, String subprocess){
+    public String validateVariazioni(String fields, String recordId, String caseType, String subprocess, Case currentCase){
 
         String result;
 
@@ -837,6 +830,15 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
             }
+        }else if(caseType == 'Modifica Layout di dettaglio'){
+
+            Boolean detail = Boolean.valueOf(getFieldValue(fields, 'ElementDetail__c'));
+
+            if(detail == currentCase.ElementDetail__c){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Necessario modificare i dati per poter procedere con la pratica.'));
+            } else {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+            }
 
         } else {
 
@@ -961,7 +963,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
     }
 
-    private String validateVariazioni(String fields, String caseType){
+    /*private String validateVariazioni(String fields, String caseType){
 
         String commodity = getFieldValue(fields, 'Commodity__c');
         String supplyType = getFieldValue(fields, 'SupplyType__c');
@@ -983,7 +985,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }
 
 
-    }
+    }*/
 
     public String validateVolturaTecnica(String fields){
 

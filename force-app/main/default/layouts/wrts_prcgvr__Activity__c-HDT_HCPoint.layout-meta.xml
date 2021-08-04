@@ -73,7 +73,7 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>wrts_prcgvr__Activity__c.Completa_Attivit</actionName>
+            <actionName>wrts_prcgvr__Activity__c.CompleteActivity</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>

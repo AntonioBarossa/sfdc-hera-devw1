@@ -6,6 +6,11 @@
 */
 
 public inherited sharing class HDT_QR_Case {
+
+    public List<Case> getRecordByPracticeNumber(String caseNumber){
+        return [SELECT Order__r.Id,Asset.Id,Subscription__r.Id FROM Case
+        WHERE CaseNumber = :caseNumber WITH SECURITY_ENFORCED LIMIT 1];
+    }
     
     public Case getRecordById(String Id) {
         return [
@@ -100,7 +105,10 @@ public inherited sharing class HDT_QR_Case {
         List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
         try{
             activities = [SELECT Id,
+            OwnedByUser__c,
+            OwnerId,
             wrts_prcgvr__Status__c,
+            wrts_prcgvr__ActivityTemplate__r.Name,
             Status__c
             FROM wrts_prcgvr__Activity__c
             WHERE wrts_prcgvr__Status__c = 'Not Started'

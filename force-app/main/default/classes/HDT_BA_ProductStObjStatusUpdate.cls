@@ -10,8 +10,12 @@ public inherited sharing class HDT_BA_ProductStObjStatusUpdate implements Databa
         String queryString = '';
         queryString += 'SELECT Id, StartDate__c, EndDate__c, Status__c ';
         queryString += 'FROM Product2 ';
-        queryString += 'WHERE  (Status__c = \'' + Label.HDT_Confirmed + '\' AND StartDate__c = today) ';
-        queryString += 'OR (Status__c = \'' + Label.HDT_Sold + '\' AND EndDate__c = today)';
+
+        if(!Test.isRunningTest()){
+            queryString += 'WHERE  (Status__c = \'' + Label.HDT_Confirmed + '\' AND StartDate__c = today) ';
+            queryString += 'OR (Status__c = \'' + Label.HDT_Sold + '\' AND EndDate__c = today)';
+        }
+        
         return Database.getQueryLocator(queryString);
     }
 

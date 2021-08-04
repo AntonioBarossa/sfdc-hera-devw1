@@ -58,6 +58,22 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
         return null;
     }
 
+    public static DocumentSendTracking__c getDocumentSendTrackingById(String recordId){
+
+        List<DocumentSendTracking__c> sends = [
+            SELECT Id, EnvelopeId__c
+            FROM DocumentSendTracking__c
+            WHERE Id = :recordId
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (!sends.isEmpty()) {
+            return sends[0];
+        }
+
+        return null;
+    }
+
     // Restituisce un oggetto DocumentalActivity__c o DocumentSendTracking__c a seconda dell'Id passato in input.
     public static SObject getDocumentalObjectById(Id recordId){
         if (String.isBlank(recordId)) {
@@ -89,6 +105,15 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
         }
 
         return null;
+    }
+
+    public static SObject getDocumentSendTracking(String transactionId){
+        List<DocumentSendTracking__c> toReturn = [SELECT Id,Case__c,Order__c FROM DocumentSendTracking__c WHERE EnvelopeId__c=:transactionId WITH SECURITY_ENFORCED];
+        if(!toReturn.isEmpty()){
+            return toReturn[0];
+        }else {
+            return null;
+        }
     }
 
 }
