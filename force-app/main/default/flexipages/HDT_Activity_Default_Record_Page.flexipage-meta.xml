@@ -4,16 +4,77 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.CompleteActivity</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completed</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.Reminder</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completed</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.Reassign</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Sportello</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Chiamata inbound</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Chiamata outbound</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completed</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.ForwardToAgency</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completed</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsInNative</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
@@ -21,7 +82,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>3</value>
+                    <value>4</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>
