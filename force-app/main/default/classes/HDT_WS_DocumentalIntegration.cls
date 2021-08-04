@@ -70,7 +70,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
         return postelResponse;
     }
 
-    public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeResendDocusignEnvelopeCalloutRequest(String body){
+    public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse submitResendDocusignEnvelopeRequest(String body){
         HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
         try{
             HttpRequest req = new HttpRequest();

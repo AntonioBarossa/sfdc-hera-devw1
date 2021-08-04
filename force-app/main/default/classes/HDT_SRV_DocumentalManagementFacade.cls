@@ -151,7 +151,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         return JSON.serialize(resultMap);
     }
 
-    public static String discardDocusignEnvelope(String envelopeId){
+    /*public static String discardDocusignEnvelope(String envelopeId){
         String body='';
         String result='';
         String responseCode;
@@ -167,7 +167,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             resultMap.put('errorMessage', ex.getMessage());
         }
         return JSON.serialize(resultMap);
-    }
+    }*/
 
     public static void handleDocusignNotify(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
         String status;
