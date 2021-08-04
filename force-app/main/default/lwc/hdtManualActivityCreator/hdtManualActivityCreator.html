@@ -1,21 +1,24 @@
 <template>
     <lightning-card  title="Nuova attività manuale">
+        <div if:true={showSpinner} class="slds-is-relative">
+            <lightning-spinner variant="brand" size="large" alternative-text="Loading"></lightning-spinner>
+        </div>
 
         <lightning-layout horizontal-align="center" multiple-rows>
             <lightning-layout-item size="7">
                 <lightning-combobox label="Tipo attività"
-                                    value={selectedType}
-                                    options={activityTypes}></lightning-combobox>
+                                    options={activityTypes}
+                                    onchange={handleTypeChange}></lightning-combobox>
             </lightning-layout-item>
             <lightning-layout-item size="7">
                 <lightning-input label="Filtro cliente"
-                                 value={accountFilter}
-                                 type="search"></lightning-input>
+                                 type="search"
+                                 onchange={handleFilterChange}></lightning-input>
             </lightning-layout-item>
             <lightning-layout-item size="7">
                 <lightning-combobox label="Cliente"
-                                    value={selectedAccount}
-                                    options={accounts}></lightning-combobox>
+                                    options={accounts}
+                                    onchange={handleAccountChange}></lightning-combobox>
             </lightning-layout-item>
         </lightning-layout>
 

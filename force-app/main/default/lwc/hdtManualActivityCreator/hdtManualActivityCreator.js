@@ -6,6 +6,7 @@ import getAccounts from '@salesforce/apex/HDT_LC_ManualActivityCreator.getAccoun
 export default class HdtManualActivityCreator extends NavigationMixin(LightningElement) {
     
     selectedType;
+    accountFilter;
     selectedAccount;
 
     accountList;
@@ -20,28 +21,27 @@ export default class HdtManualActivityCreator extends NavigationMixin(LightningE
     
     get accounts(){
         let optionList = [];
-        accounts.forEach(element => {
-            if(element.Name.includes(this.accountFilter)) optionList.push({ label: element.Name, value: element.Id })
-        });
+        if(this.accountList){
+            this.accountList.forEach(element => {
+                if(element.Name.includes(this.accountFilter)) optionList.push({ label: element.Name, value: element.Id })
+            });
+        }
         return optionList;
     }
     
-    get saveDisabled(){
-        return this.selectedType == null;
-    }
-    
-    get cancelDisabled(){
-        return this.saved;
-    }
+    get saveDisabled(){ return this.selectedType == null || this.selectedAccount == null; }
+    get cancelDisabled(){ return this.saved; }
 
     connectedCallback(){
-        getAccounts().then(result => this.accountList = result);
+        this.showSpinner = true;
+        getAccounts().then(result => this.accountList = result).finally(() => { this.showSpinner = false; });
     }
 
-    handleSave(){
-        this.saved = true;
-    }
+    handleTypeChange(event){ this.selectedType = event.target.value; }
+    handleFilterChange(event){ this.accountFilter = event.target.value; }
+    handleAccountChange(event){ this.selectedAccount = event.target.value; }
 
+    handleSave(){ this.saved = true; }
     handleCancel(){
         this[NavigationMixin.Navigate]({
             "type": "standard__objectPage",

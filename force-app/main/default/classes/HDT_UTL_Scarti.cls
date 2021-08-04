@@ -136,7 +136,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 toInsert.addAll(activities);
             }
         }
-
+        
         System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
         HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
@@ -173,14 +173,14 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     */
     public static List<wrts_prcgvr__Activity__c> setLookupFields(List<wrts_prcgvr__Activity__c> inputData){
         System.debug('setLookupFields start' + inputData);
-        list<string> codiciClienti= new list<String>();        
+        list<string> codiciClienti= new list<String>();
         set<string> activityTypes= new set<string>();
 
         RecordType rtScarto = new HDT_QR_RecordType().getRecordType('HDT_RT_Scarto', 'wrts_prcgvr__Activity__c');
 
         for(wrts_prcgvr__Activity__c activity: inputData){
-            if(activity.Account__c == null) codiciClienti.add(activity.BPCode__c);
-            if(activity.wrts_prcgvr__ActivityTemplate__c == null) activityTypes.add(activity.Type__c);
+            if(activity.Account__c == null && !String.isBlank(activity.BPCode__c)) codiciClienti.add(activity.BPCode__c);
+            if(activity.wrts_prcgvr__ActivityTemplate__c == null && !String.isBlank(activity.Type__c)) activityTypes.add(activity.Type__c);
         }
         System.debug('setLookupFields codiciClienti' + codiciClienti);
         System.debug('setLookupFields activityTypes' + activityTypes);
@@ -191,21 +191,24 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
             mapActivityTemplates.put(singleTemplate.Name,singleTemplate.Id);
         }
 
-        List<Account> listAccounts=[SELECT Id, CustomerCode__c FROM Account WHERE CustomerCode__c IN: codiciClienti];
-        Map<String, Id> accIdsPerBPcode = new Map<String, Id>();
-        for(Account singleAccount: listAccounts) accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount.Id);
-        for(wrts_prcgvr__Activity__c activity2: inputData){
-            if(activity2.Account__c == null) activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c);
-            if(activity2.wrts_prcgvr__ActivityTemplate__c == null){
-                if('Canone RAI'.equalsIgnoreCase(activity2.Type__c)){
-                    if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
-                    activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
-                }else if('Bonus sociale'.equalsIgnoreCase(activity2.Type__c)){
-                    if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
-                    activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
+
+        if(!codiciClienti.isEmpty()){
+            List<Account> listAccounts=[SELECT Id, CustomerCode__c FROM Account WHERE CustomerCode__c IN: codiciClienti];
+            Map<String, Id> accIdsPerBPcode = new Map<String, Id>();
+            for(Account singleAccount: listAccounts) accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount.Id);
+            for(wrts_prcgvr__Activity__c activity2: inputData){
+                if(activity2.Account__c == null) activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c);
+                if(activity2.wrts_prcgvr__ActivityTemplate__c == null){
+                    if('Canone RAI'.equalsIgnoreCase(activity2.Type__c)){
+                        if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
+                        activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
+                    }else if('Bonus sociale'.equalsIgnoreCase(activity2.Type__c)){
+                        if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
+                        activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
+                    }
                 }
+                if(activity2.RecordTypeDevName__c == 'HDT_RT_Scarto' && activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
             }
-            if(activity2.RecordTypeDevName__c == 'HDT_RT_Scarto' && activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
         }
         System.debug('setLookupFields end' + inputData);
         return inputData;
