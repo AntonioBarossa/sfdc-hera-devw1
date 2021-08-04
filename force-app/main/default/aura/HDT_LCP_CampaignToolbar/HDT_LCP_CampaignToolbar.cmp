@@ -1,0 +1,6 @@
+<aura:component
+    implements="force:hasRecordId,flexipage:availableForAllPageTypes,lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes,force:hasRecordId"
+    access="global">
+    <aura:attribute name="recordId" type="String" />
+    <c:hdtCampaignTelesellingToolbar recordId="{!v.recordId}" objectApiName="campaignmember"/>
+</aura:component>
