@@ -3556,6 +3556,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>CampaignMember.reitekAgentUserId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMember.CampaignMemberUniqueCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
