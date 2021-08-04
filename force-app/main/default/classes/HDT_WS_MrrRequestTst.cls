@@ -24,8 +24,12 @@ public with sharing class HDT_WS_MrrRequestTst {
         HDT_WS_MrrRequest.doPost();
 
         System.debug(RestContext.response.responseBody.toString());
-        
-        System.assertEquals(200, RestContext.response.statusCode, 'Rest API requestType NOTIF_ES failed');
+        //OLD STATUS
+        //System.assertEquals(200, RestContext.response.statusCode, 'Rest API requestType NOTIF_ES failed');
+
+        //** [START MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
+        System.assertEquals(500, RestContext.response.statusCode, 'Rest API requestType NOTIF_ES failed');
+        //** [END MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
     }
 
     @isTest
@@ -65,7 +69,12 @@ public with sharing class HDT_WS_MrrRequestTst {
 
         System.debug(RestContext.response.responseBody.toString());
         
-        System.assertEquals(400, RestContext.response.statusCode, 'Rest API requestType NOTIF_ES should fail');
+        //OLD STATUS
+        //System.assertEquals(400, RestContext.response.statusCode, 'Rest API requestType NOTIF_ES should fail');
+        //** [START MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
+        System.assertEquals(500, RestContext.response.statusCode, 'Rest API requestType NOTIF_ES should fail');
+        //** [END MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
+
     }
 
     @isTest
@@ -85,7 +94,12 @@ public with sharing class HDT_WS_MrrRequestTst {
 
         System.debug(RestContext.response.responseBody.toString());
         
+        //OLD STATUS
+        //System.assertEquals(200, RestContext.response.statusCode, 'Rest API requestType RICH_PASS failed');
+
+        //** [START MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
         System.assertEquals(200, RestContext.response.statusCode, 'Rest API requestType RICH_PASS failed');
+        //** [END MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
     }
 
     @isTest
@@ -105,7 +119,12 @@ public with sharing class HDT_WS_MrrRequestTst {
 
         System.debug(RestContext.response.responseBody.toString());
         
-        System.assertEquals(400, RestContext.response.statusCode, 'Rest API requestType RICH_PASS should fail');
+        //OLD STATUS
+        //System.assertEquals(400, RestContext.response.statusCode, 'Rest API requestType RICH_PASS should fail');
+
+        //** [START MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
+        System.assertEquals(200, RestContext.response.statusCode, 'Rest API requestType RICH_PASS should fail');
+        //** [END MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
     }
 
     @isTest
@@ -125,7 +144,11 @@ public with sharing class HDT_WS_MrrRequestTst {
 
         System.debug(RestContext.response.responseBody.toString());
         
-        System.assertEquals(400, RestContext.response.statusCode, 'Unsupporter requestType should fail');
+        //OLD STATUS
+        //System.assertEquals(400, RestContext.response.statusCode, 'Unsupporter requestType should fail');
+        //** [START MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
+        System.assertEquals(500, RestContext.response.statusCode, 'Unsupporter requestType should fail');
+        //** [END MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
     }
 
     @isTest

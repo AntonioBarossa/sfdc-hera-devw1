@@ -1069,6 +1069,31 @@
             }
             createDefaultPrivacyContact(contactIds,mapMobilePhone,mapPhone,mapEmail,mobilePrefixes,phonePrefixes);
         }
-
+        @AuraEnabled
+        public static boolean  resendContactEmailToMarketing (String contactEmailId){
+            boolean res = true;
+            try{
+                    ContactPointEmail cpe = new ContactPointEmail();
+                    cpe.id = contactEmailId;
+                    cpe.SendToMarketingCloud__c = true;
+                    HDT_SRV_ContactPoint.upsertContactPointEmail(new List<ContactPointEmail>{cpe});
+            }catch(Exception e){
+                res = false;
+            }
+            return res;
+        }
+        @AuraEnabled
+        public static boolean  resendContactPhoneToMarketing (String contactPhoneId){
+            boolean res = true;
+            try{
+                    ContactPointPhone cpe = new ContactPointPhone();
+                    cpe.id = contactPhoneId;
+                    cpe.SendToMarketingCloud__c = true;
+                    HDT_SRV_ContactPoint.updateContactPointPhone(new List<ContactPointPhone>{cpe});
+            }catch(Exception e){
+                res = false;
+            }
+            return res;
+        }
 
 }

@@ -12,6 +12,7 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
         String phase;
         String invoiceList = '';
         String documentList = '';
+        String causalCode = '';
 
         String recordId = inputs[0].recordId;
         String reimburseMethod = inputs[0].reimburseMethod;
@@ -76,11 +77,14 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
             if(debitDocument > 0 && creditDocument > 0){
 
                 creditDebit = true;
+                causalCode = 'COF';
 
             } else if(creditDocument == documents.size()){
 
                 onlyCredit = true;
-
+                causalCode = 'FAD';
+            } else if(debitDocument == documents.size()){
+                causalCode = 'COM';
             }
             //Controlli sui documenti
 
@@ -128,6 +132,7 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
         output.phase = phase;
         output.invoiceList = invoiceList;
         output.documentList = documentList;
+        output.causalCode = causalCode;
 
         outputs.add(output);
 
@@ -161,6 +166,9 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
 
         @InvocableVariable
         public String documentList;
+
+        @InvocableVariable
+        public String causalCode;
     }
 
   

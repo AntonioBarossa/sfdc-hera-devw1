@@ -122,6 +122,9 @@
             <property name="showReadingWindows" type="Boolean" label="Show Reading Windows" description="If true shows reading windows button" role="inputOnly" default="false"/>
 
             
+            <property name="isMono" type="Boolean" label="Is Mono?" description="Indica se la lettura è mono-oraria" role="outputOnly"/>
+
+
         </targetConfig>
         
         

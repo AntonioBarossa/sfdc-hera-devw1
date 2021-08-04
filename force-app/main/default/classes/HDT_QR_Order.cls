@@ -88,6 +88,7 @@ public inherited sharing class HDT_QR_Order {
             Account.ShippingAddress,
             Account.FirstName__c,
             Account.LastName__c,
+            Vat__c,
             Account.RecordType.Developername,
             Account.Category__c,
             Name,
@@ -119,6 +120,8 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.PlugPresence__c,
             ServicePoint__r.UseTypeEnergy__c,
             ServicePoint__r.UseCategory__c,
+            PowerAvailable__c,
+            UseTypeEnergy__c,
             BillingProfile__c,
             Deliberation__c,
             ParentOrder__c,
@@ -402,6 +405,7 @@ public inherited sharing class HDT_QR_Order {
         return [
             SELECT
             Phase__c,
+            isTransition__c ,
             recordtype.developername
             FROM
             Order
