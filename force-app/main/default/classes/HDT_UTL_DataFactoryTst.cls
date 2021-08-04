@@ -848,4 +848,69 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return ftcList;
   }
+	public static List<DocumentalPayloadAdministration__c> createDocumentalPayloadAdm(){
+		List<DocumentalPayloadAdministration__c> lstSobj = new List<DocumentalPayloadAdministration__c>();
+		DocumentalPayloadAdministration__c sobj = new DocumentalPayloadAdministration__c();
+		sobj.IsData__c = false;
+		sobj.Iterative__c = 'NO';
+		sobj.ManageAmount__c = false;
+		sobj.PayloadField__c = 'TESTATA DRIVER';
+		sobj.OrderPayloadField__c = 0;
+		sobj.OrderSection__c = 0;
+		sobj.Type__c = 'DRV01';
+		lstSobj.add(sobj);
+
+		sobj = new DocumentalPayloadAdministration__c();
+		sobj.IsData__c = false;
+		sobj.Expression__c = 'IF|FormParameters.IsFromBatch|=|Y|Batch|Hera';
+		sobj.Iterative__c = '';
+		sobj.ManageAmount__c = false;
+		sobj.PayloadField__c = 'SOURCE';
+		sobj.OrderPayloadField__c = 1;
+		sobj.OrderSection__c = 0;
+		sobj.Type__c = 'DRV01';
+		lstSobj.add(sobj);
+
+		sobj = new DocumentalPayloadAdministration__c();
+		sobj.IsData__c = false;
+		sobj.Iterative__c = '';
+		sobj.ManageAmount__c = false;
+		sobj.PayloadField__c = 'CLUSTER';
+		sobj.OrderPayloadField__c = 2;
+		sobj.OrderSection__c = 0;
+		sobj.Type__c = 'DRV01';
+		sobj.Object1__c = 'Order';
+		sobj.Object2__c = 'Case';
+		sobj.Field1__c = 'Cluster__c';
+		sobj.Field2__c = 'Cluster__c';
+		lstSobj.add(sobj);
+		insert lstSobj;
+		
+		return lstSobj;
+	}
+	public static void createJsonPayload(){
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult wrpPayload = HDT_LC_DocumentalConfigController.controllerHandler();
+	}
+
+	public static void createDriverJson(){
+		Id folderId = [SELECT Id FROM Folder WHERE DeveloperName  =: 'DocumentalPayloadAdministration' LIMIT 1].Id;
+		List<DocumentalPayloadAdministration__c> docPayloadAdminList;
+		docPayloadAdminList = HDT_QR_DocumentalConfiguration.getDocumentalPayloadAdministration(docPayloadAdminList);
+		Map<String, List<DocumentalPayloadAdministration__c>> contextOneMap = new Map<String, List<DocumentalPayloadAdministration__c>>();
+		for(DocumentalPayloadAdministration__c dpa : docPayloadAdminList){
+			if(contextOneMap.containsKey(dpa.Type__c)){
+				contextOneMap.get(dpa.Type__c).add(dpa);
+			} else {
+				contextOneMap.put(dpa.Type__c, new List<DocumentalPayloadAdministration__c>{dpa});
+			}
+		}
+		List<Document> docList = new List<Document>();
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure docOneStructure;
+		docOneStructure = HDT_LC_DocumentalConfigController.convertMapToStructure(contextOneMap, docOneStructure);
+		Document docOne = HDT_LC_DocumentalConfigController.generateDocumentObject(docOneStructure, 'Driver3', folderId);
+		docList.add(docOne);
+		docOneStructure = null;
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult;
+		databaseResult = HDT_LC_DocumentalConfigController.databaseInsert(docList, databaseResult);
+	}
 }
