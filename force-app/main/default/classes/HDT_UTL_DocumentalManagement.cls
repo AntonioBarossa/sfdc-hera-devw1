@@ -26,7 +26,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		ContentVersion cv = new ContentVersion();
 		cv.VersionData = EncodingUtil.base64Decode(base64);
 		cv.Title = filename;
-		cv.PathOnClient = filename;
+		cv.PathOnClient = filename + '.pdf';
+		cv.ContentLocation = 'S';
 		try {
 			insert cv;
 			return cv;
@@ -70,10 +71,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		
 	}
 
-	public static String createContentDistribution(String contentVersionId){
+	public static String createContentDistribution(String contentVersionId,String fileName){
 		if (contentVersionId == null) { return null; }
 		ContentDistribution cd = new ContentDistribution();
-		cd.Name = 'Test';
+		cd.Name = fileName;
 		cd.ContentVersionId = contentVersionId;
 		cd.PreferencesAllowViewInBrowser= true;
 		cd.PreferencesLinkLatestVersion=true;
@@ -172,7 +173,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String whereString = '';
 		String queryString = 'SELECT ';
 		switch on context {
-			when 'Order' {
+			when 'Order','DocumentazioneAnticipata' {
 				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c';
 				fromString = 'Order';
 				whereString = ' OrderNumber = \''+requestId + '\'';

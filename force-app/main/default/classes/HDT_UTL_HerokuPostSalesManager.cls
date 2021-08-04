@@ -328,6 +328,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(contractCode != null || contractCode != ''){
 
             }
+            if(currentPhase.equalsIgnoreCase('Validazione OK DL simulata') && nextPhase != null && (nextPhase.equalsIgnoreCase('Validazione OK da DL') || nextPhase.equalsIgnoreCase('Validazione KO da DL'))){
+                currentCase.Phase__c = currentPhase; // non sono previsti cambi di fase.
+                newDescription = nowDateFormat + ': Esito ricevuto dal DL.\n';
+                currentCase.Description = newDescription + '\n' + currentDescription;
+            }
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
             String message = reqWrp.requestMap.get('MESSAGGIO');

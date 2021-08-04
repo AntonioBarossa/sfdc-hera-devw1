@@ -78,7 +78,7 @@ public class HDT_SRV_DocumentalManagement{
 
 	public static String generateGetEnvelopeRequest(SObject documentalObject){
 		if (documentalObject == null) {
-			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c o DocumentSendTracking__c per visualizzare il documento.');
+			throw new HDT_UTL_HeraException('Necessario passare in input una instanza di DocumentalActivity__c o DocumentSendTracking__c per visualizzare il documento.');
 		}
 
 		String envelopeId = (String) documentalObject.get('EnvelopeId__c');
@@ -109,6 +109,33 @@ public class HDT_SRV_DocumentalManagement{
 		return body;
 	}
 
+	public static String generateResendDocusignEnvelopeRequest(String recordId){
+		if (String.isBlank(recordId)) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentSendTracking__c per re-inviare la busta.');
+		}
+
+		DocumentSendTracking__c sendTrack = HDT_QR_DocumentalConfiguration.getDocumentSendTrackingById(recordId);
+		if (sendTrack == null) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentSendTracking__c per re-inviare la busta.');
+		}
+
+		if (String.isBlank(sendTrack.EnvelopeId__c)) {
+			throw new HDT_UTL_HeraException('Impossibile re-inviare la busta, Id Plico non disponibile.');
+		}
+
+		JSONGenerator gen = JSON.createGenerator(false);
+		DocusignSettings__c docusignCustomSettings = DocusignSettings__c.getInstance();
+
+		gen.writeStartObject();
+		gen.writeStringField('customerId', docusignCustomSettings.CustomerEnviromentId__c);
+		gen.writeStringField('transactionId', sendTrack.EnvelopeId__c);
+		gen.writeEndObject();
+
+		String body = gen.getAsString();
+		System.debug('Intesa body: ' + body);
+		return body;
+	}
+
 	@future
 	public static void createPublicLinkFuture(String recordId,String base64,String fileName){
 		String publicLink = createPublicLink(recordId,base64,fileName);
@@ -130,7 +157,7 @@ public class HDT_SRV_DocumentalManagement{
 		try {
 			ContentVersion cv = HDT_UTL_DocumentalManagement.createContectVersion(base64,fileName);
 			ContentDocumentLink cl = HDT_UTL_DocumentalManagement.createContentLink(cv.Id, recordId);
-			String publicLink =  HDT_UTL_DocumentalManagement.createContentDistribution(cv.Id);
+			String publicLink =  HDT_UTL_DocumentalManagement.createContentDistribution(cv.Id,fileName);
 			return publicLink;
 		} catch (Exception ex) {
 			System.debug('Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
@@ -176,6 +203,15 @@ public class HDT_SRV_DocumentalManagement{
 			// TODO: invoke Intesa callout.
 		}
 
+		return postelResponse;
+	}
+
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeResendDocusignEnvelopeCalloutRequest(String body){
+		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+		postelResponse = HDT_WS_DocumentalIntegration.submitResendDocusignEnvelopeRequest(body);
+		if (postelResponse.responseCode != 200) {
+			//throw new HDT_UTL_HeraException('Errore Postel nel recupero del documento archiviato');
+		}
 		return postelResponse;
 	}
 
@@ -253,7 +289,7 @@ public class HDT_SRV_DocumentalManagement{
 				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
 			}
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
-				if(response.responseCode == 200 || response.responseCode == 201 ){
+				if((response.responseCode == 200 || response.responseCode == 201) && response.deliverPackageResponse.result == '000'){
 					HDT_UTL_DocumentalManagement.createDocumentSendTracking(response.deliverPackageResponse.message,recordId, response.deliverPackageResponse.packageIds,processRecord);
 					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response,context);
 				}
@@ -282,7 +318,7 @@ public class HDT_SRV_DocumentalManagement{
 			}
 			if(context.equalsIgnoreCase('Case')){
 				processNumber = HDT_UTL_DocumentalManagement.getValue('Case', 'CaseNumber', 0, inputs, formParams);
-			}else if(context.equalsIgnoreCase('Order')){
+			}else if(context.equalsIgnoreCase('Order') || context.equalsIgnoreCase('DocumentazioneAnticipata')){
 				processNumber = HDT_UTL_DocumentalManagement.getValue('Order', 'OrderNumber', 0, inputs, formParams);
 			}else{
 				processNumber = recordId;

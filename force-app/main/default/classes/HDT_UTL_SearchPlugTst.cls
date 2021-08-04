@@ -94,22 +94,18 @@ public class HDT_UTL_SearchPlugTst {
         techOffeItems.add(tecOffItem);
         insert techOffeItems;
 
+        p.Status__c = 'Confermata';
+        p.StartDate__c = Date.today().addDays(2);
+        p.EndDate__c = Date.today().addDays(3);
+        update p;
+
+        HDT_BA_ProductStObjStatusUpdate batch = new HDT_BA_ProductStObjStatusUpdate();
+        Id batchId = Database.executeBatch(batch); 
+
     }
 
     @isTest
-    static void getTabsMetaData(){
-        Product2 p = [
-            SELECT Id, Status__c
-            FROM Product2
-            WITH SECURITY_ENFORCED
-            LIMIT 1
-        ];
-
-        p.Status__c = 'Confermata';
-        update p;
-
-        p.Status__c = 'Vendibile';
-        update p;      
+    static void getAdditionalSuggestFilters(){
 
         SBQQ__Quote__c quote = [
             SELECT Id, SBQQ__PricebookId__c
@@ -121,6 +117,143 @@ public class HDT_UTL_SearchPlugTst {
         Test.startTest();
         HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
         controller.getAdditionalSuggestFilters(quote, null);
+        Test.stopTest();
+
+    }
+
+    @isTest
+    static void HDT_UTL_SearchPlug(){
+        HDT_UTL_SearchPlug searchPlug = new HDT_UTL_SearchPlug();
+    }
+
+    @isTest
+    static void isFilterHidden(){
+
+        SBQQ__Quote__c quote = [
+            SELECT Id, SBQQ__PricebookId__c,SBQQ__Status__c
+            FROM SBQQ__Quote__c
+            WITH SECURITY_ENFORCED
+            LIMIT 1 
+        ];
+
+        Test.startTest();
+        HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
+        controller.isFilterHidden(quote, 'ProductCode');
+        Test.stopTest();
+
+    }
+
+    @isTest
+    static void getFilterDefaultValue(){
+
+        Test.startTest();
+        HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
+        controller.getFilterDefaultValue(null, 'ProductCode');
+        Test.stopTest();
+
+    } 
+    
+    @isTest
+    static void isSearchCustom(){
+
+        Test.startTest();
+        HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
+        controller.isSearchCustom(null, null);
+        Test.stopTest();
+
+    }
+    
+    @isTest
+    static void getAdditionalSearchFilters(){
+
+        SBQQ__Quote__c quote = [
+            SELECT Id, SBQQ__PricebookId__c
+            FROM SBQQ__Quote__c
+            WITH SECURITY_ENFORCED
+            LIMIT 1 
+        ];
+
+        Test.startTest();
+        HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
+        controller.getAdditionalSearchFilters(quote, null);
+        Test.stopTest();
+
+    }
+    
+    //@isTest
+    //static void search(){
+//
+    //    SBQQ__Quote__c quote = [
+    //        SELECT Id, SBQQ__PricebookId__c
+    //        FROM SBQQ__Quote__c
+    //        WITH SECURITY_ENFORCED
+    //        LIMIT 1 
+    //    ];
+//
+    //    Map<String,Object> fieldValuesMap = new Map<String,Object>();
+    //    Test.startTest();
+    //    HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
+    //    controller.search(quote, fieldValuesMap);
+    //    Test.stopTest();
+//
+    //}
+
+    @isTest
+    static void isInputHidden(){
+
+        SBQQ__Quote__c quote = [
+            SELECT Id, SBQQ__PricebookId__c
+            FROM SBQQ__Quote__c
+            WITH SECURITY_ENFORCED
+            LIMIT 1 
+        ];
+
+        Test.startTest();
+        HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
+        controller.isInputHidden(quote, 'Comune__c');
+        Test.stopTest();
+
+    }
+    
+    @isTest
+    static void getInputDefaultValue(){
+
+        SBQQ__Quote__c quote = [
+            SELECT Id, SBQQ__PricebookId__c
+            FROM SBQQ__Quote__c
+            WITH SECURITY_ENFORCED
+            LIMIT 1 
+        ];
+
+        Test.startTest();
+        HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
+        controller.getInputDefaultValue(quote, '');
+        Test.stopTest();
+
+    }
+
+    @isTest
+    static void isSuggestCustom(){
+
+        SBQQ__Quote__c quote = [
+            SELECT Id, SBQQ__PricebookId__c
+            FROM SBQQ__Quote__c
+            WITH SECURITY_ENFORCED
+            LIMIT 1 
+        ];
+
+        Test.startTest();
+        HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
+        controller.isSuggestCustom(quote, null);
+        Test.stopTest();
+
+    }
+    
+    @isTest
+    static void suggest(){
+        Test.startTest();
+        HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
+        controller.suggest(null, null);
         Test.stopTest();
 
     }
