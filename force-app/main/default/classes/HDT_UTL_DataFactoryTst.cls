@@ -19,6 +19,12 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		wrts_prcgvr__PhaseManagerSObjectSetting__c setting=new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name='Order', wrts_prcgvr__ObjectType__c='Order', wrts_prcgvr__PivotField__c='Phase__c');
 		insert setting;
 	}
+	//Method to avoid PClick for CasePhase Errors
+	public static void pClickCasePhase(){
+		wrts_prcgvr.InstallIntegration.install();
+		wrts_prcgvr__PhaseManagerSObjectSetting__c setting=new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name='Case', wrts_prcgvr__ObjectType__c='Case', wrts_prcgvr__PivotField__c='Phase__c');
+		insert setting;
+	}
 
 	public static List<Lead> createLead(Integer amount, Boolean doInsert){
 
@@ -782,4 +788,20 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult;
 		databaseResult = HDT_LC_DocumentalConfigController.databaseInsert(docList, databaseResult);
 	}
+
+	public static void createPhaseTransition(Boolean doInsert, String destinationPhase, String originPhase, String recordTypeId, String recordTypeName){
+		List<wrts_prcgvr__PhaseTransition__c> phaseTransitions = new List<wrts_prcgvr__PhaseTransition__c>();
+		wrts_prcgvr__PhaseTransition__c phaseTransition = new wrts_prcgvr__PhaseTransition__c();
+		phaseTransition.wrts_prcgvr__Code__c = Math.random()+'';
+		phaseTransition.wrts_prcgvr__DestinationPhase__c = destinationPhase;
+		phaseTransition.wrts_prcgvr__OriginPhase__c = originPhase;
+		phaseTransition.wrts_prcgvr__RecordTypeId__c = recordTypeId;
+		phaseTransition.wrts_prcgvr__RecordTypeName__c = recordTypeName;
+		phaseTransition.wrts_prcgvr__Type__c = 'A';
+		phaseTransitions.add(phaseTransition); 
+		if(doInsert){
+			insert phaseTransitions;
+		}
+	}
+
 }
