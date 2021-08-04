@@ -135,6 +135,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }
         if(currentCase.Phase__c  == 'Da Inviare' 
         || currentCase.Phase__c == 'Preventivo accettato' 
+        || currentCase.Phase__c == 'Esito OK da SAP' // per le autoletture da cliente.
         || currentCase.Phase__c == 'Comunicazione verso Heroku KO'
         || currentCase.Phase__c == 'Annullamento - Da inviare'){
 
