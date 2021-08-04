@@ -3,7 +3,10 @@
     <fullName>NotRethinkable__c</fullName>
     <description>Indica se il processo è ripensabile</description>
     <externalId>false</externalId>
-    <formula>DATE(YEAR(EffectiveDate__c),MONTH(EffectiveDate__c)-1,10) &lt; TODAY()</formula>
+    <formula>OR(
+				CONTAINS(TEXT(Phase__c), &quot;Ripensamento&quot;), 
+				DATE(YEAR(EffectiveDate__c),MONTH(EffectiveDate__c)-1,10) &lt; TODAY()
+				)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Non Ripensabile?</label>
     <trackHistory>false</trackHistory>
