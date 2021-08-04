@@ -21,14 +21,14 @@ public class HDT_TRH_PaperProcessing extends HDT_TRH_TriggerHandler {
     }
     
     public override void beforeUpdate(){  
-        System.debug('beforeUpdate ');
+
         List<PaperProcessing__c> triggerNew = trigger.new;
         Map<String,PaperProcessing__c> paperMap = new Map<String,PaperProcessing__c>();
         List<PaperProcessing__c> paperList = HDT_UTL_PaperProcessing.exportFile2(trigger.new,trigger.old);
         for (PaperProcessing__c paperItem : paperList) {
             paperMap.put(paperItem.Id, paperItem);
         }
-        
+
         for (PaperProcessing__c newPaper : triggerNew) {
             if(paperMap.get(newPaper.Id) != null) {
                 PaperProcessing__c pp = paperMap.get(newPaper.Id);
