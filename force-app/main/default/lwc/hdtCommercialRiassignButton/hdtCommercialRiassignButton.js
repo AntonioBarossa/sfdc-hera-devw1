@@ -13,9 +13,9 @@ export default class HdtCommercialRiassignButton extends LightningElement {
 
 
     connectedCallback(){
-
+        console.log('IDDDDD:' + this.recordId);
         getRecord({
-            recordId: this.recordId
+            activityId: this.recordId
         }).then(result => {
             this.caseid = result.case__c;
             if(result.case__r.phase__c == 'In Lavorazione'){
