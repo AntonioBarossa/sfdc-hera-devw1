@@ -9,5 +9,6 @@ public with sharing class HDT_SRV_ContentVersion {
 
         HDT_UTL_DatabaseService.insertSObject(cv);
         return cv;
+        
     }
 }

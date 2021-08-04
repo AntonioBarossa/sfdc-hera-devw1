@@ -6,5 +6,6 @@ public with sharing class HDT_SRV_ContentDocumentLink {
         cdl.shareType = shareType;
         HDT_UTL_DatabaseService.insertSObject(cdl);
         return cdl;
+        
     }
 }
