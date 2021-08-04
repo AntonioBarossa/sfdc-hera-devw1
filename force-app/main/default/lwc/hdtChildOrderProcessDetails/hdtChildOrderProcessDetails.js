@@ -2723,10 +2723,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             mode : 'Print',
             Archiviato : 'Y',
             TipoPlico:tipoDoc,
+            sendMode:'Sportello'
         };
         sendAdvanceDocumentation({
             recordId: this.order.Id,
-            context: 'Documentazione Anticipata',
+            context: 'DocumentazioneAnticipata',
             formParams: JSON.stringify(formParams)
         }).then(result => {
             const event = new ShowToastEvent({
