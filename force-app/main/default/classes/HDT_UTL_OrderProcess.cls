@@ -79,7 +79,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }
         //List<id> docVali = filterByRecordTypeAndPhase(orderList,)
-        updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Comunicazione Siebel','Documentazione Validata','Comunicazione Motore VAS');
+        updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Esportazione VS Siebel','Documentazione Validata','Comunicazione Motore VAS');
 
         updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS');
 		insertLogForOrderChangedPhase(orderMapOld,orderMapNew);
@@ -203,7 +203,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             orderIds.add(newOrder.Id);
         }
 
-        List<String> orderIdsToReturn = new List<String>();
+        List<Order> orderIdsToReturn = new List<Order>();
 
         orderSrv.checkReadAccess('RecordType.DeveloperName, Phase__c');
         List<Order> ordersFullList = orderQr.getRecordsByIds(orderIds);
@@ -212,7 +212,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         for (Order order : ordersFullList) {
             if (order.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && order.Phase__c == 'Documentazione Gestita') {
-                orderIdsToReturn.add(order.Id);
+                orderIdsToReturn.add(order);
             }
 
             // if (order.RecordType.DeveloperName != 'HDT_RT_OrderDossier' && order.Status == 'Chiuso' && orderMapNewToOld.get(order.Id) != null && orderMapNewToOld.get(order.Id).Status != 'Chiuso') {
@@ -225,7 +225,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         // system.debug('****ordersToUpdateContract: ' + ordersToUpdateContract);
         // orderSrv.updateRecords(ordersToUpdateContract);
 
-        return ordersFullList;
+        return orderIdsToReturn;
     }
 
     // @Future
@@ -270,12 +270,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
             else{
+                if('Esportazione VS Siebel' == newPhase){
                 if (childOrder.Phase__c == currentPhase) {
                     Order orderToUpdate = new Order(
                         Id = childOrder.Id,
-                        Phase__c = newPhase
+                            Phase__c = newPhase,
+                            isTransition__c = childOrder.isTransition__c
                     );
                     childOrdersToUpdate.add(orderToUpdate);
+                    }
                 }
             }
         }
