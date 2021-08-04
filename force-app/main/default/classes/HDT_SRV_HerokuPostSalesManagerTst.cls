@@ -13,7 +13,14 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
-        List<ContentVersion> contentVersionList = HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'Callout_Template', '','Callout_Template.json');
+        List<ContentVersion> contentVersionList = HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'Callout_Template', 
+        '{"name": "Case","label": "Caso","sObjectType": "Case","queryable": true,"fields": ['
+        +'{"name": "CreatedDate","label": "DT_RIC_UTENTE"},'
+        +'{"name": "CaseNumber","label": "RIF_RICH"},'
+        +'{"name": "Type","label": "TIPO_OPERAZIONE"},'
+        +'{"name": "Id","label": "RECORD_ID"}'
+        +']}'
+        ,'Callout_Template.json');
         List<wrts_prcgvr__CalloutTemplate__c> calloutTemplates = HDT_UTL_DataFactoryTst.createCalloutTemplate(1,true,'Callout_Prova','prova',true,'Case','Flat',contentVersionList[0].ContentDocumentId);
         HDT_UTL_DataFactoryTst.createEndpointRule(1, true, 'Prova');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Comunicazione verso Heroku OK', 'Bozza', rtId, rtName);
@@ -22,9 +29,10 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
     @isTest
     static void executeTst()
     {
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
         HDT_SRV_HerokuPostSalesManager herokuSrv = new HDT_SRV_HerokuPostSalesManager();
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
-        Case testCase = [SELECT Id, Type, Phase__c, Status FROM Case LIMIT 1];
+        Case testCase = [SELECT Id, CaseNumber, Type, Phase__c, Status FROM Case LIMIT 1];
         SObject transition;
         SObject action;
         String method = 'execute';
@@ -36,6 +44,9 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         };
         Test.startTest();
         response = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) herokuSrv.execute(args);
+        Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, Status FROM Case LIMIT 1];
+        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c);
+        System.assertEquals('00002349', testCaseUpd.HerokuPracticeCode__c);
         Test.stopTest();
         
     }
