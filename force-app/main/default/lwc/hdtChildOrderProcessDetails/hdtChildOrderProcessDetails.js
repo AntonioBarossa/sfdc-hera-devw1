@@ -2710,6 +2710,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     handleDocAnticipata(event){
+        this.loading = true;
         var buttonLabel = event.target.label;
         var tipoDoc = '';
         if(buttonLabel=='Modulo informativo'){
@@ -2730,6 +2731,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             context: 'DocumentazioneAnticipata',
             formParams: JSON.stringify(formParams)
         }).then(result => {
+            this.loading = false;
             const event = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Documentazione inviata',
@@ -2744,6 +2746,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             });
             this.dispatchEvent(event);
             console.error(error);
+            this.loading = false;
         });
 
     }
