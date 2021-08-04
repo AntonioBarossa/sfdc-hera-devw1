@@ -54,8 +54,7 @@ public with sharing class HDT_LC_DocumentSignatureManager {
 
     @AuraEnabled
     public static string resendDocusignEnvelope(String recordId){
-        //String serializedOutput = HDT_SRV_DocumentalManagementFacade.resendDocusignEnvelope(recordId);
-        String serializedOutput = '';
+        String serializedOutput = HDT_SRV_DocumentalManagementFacade.resendDocusignEnvelope(recordId);
         return serializedOutput;
     }
 }
