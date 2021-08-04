@@ -16,15 +16,13 @@ public with sharing class HDT_UTL_ActiveServicesKpi {
         Contract oldContract;
         for(Contract c : (List<Contract>) newMap.values()) {
             account = accountMap.get(c.AccountId);
-            if(account != null) {
-                service = contractMap.get(c.Id).ServicePoint__r.CommoditySector__c;
-                oldContract = oldMap != null ? (Contract) oldMap.get(c.Id) : null;
-                
-                if(oldContract == null || (c.Status == 'Attivo' && oldContract.Status != 'Attivo')) {
-                    updateServicesCount(account, service, 1);
-                } else if(c.Status != 'Attivo' && oldContract.Status == 'Attivo') {
-                    updateServicesCount(account, service, -1);
-                }
+            service = contractMap.get(c.Id).ServicePoint__r.CommoditySector__c;
+            oldContract = oldMap != null ? (Contract) oldMap.get(c.Id) : null;
+
+            if(oldContract == null || (c.Status == 'Attivo' && oldContract.Status != 'Attivo')) {
+                updateServicesCount(account, service, 1);
+            } else if(c.Status != 'Attivo' && oldContract.Status == 'Attivo') {
+                updateServicesCount(account, service, -1);
             }
         }
 
