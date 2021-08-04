@@ -9,7 +9,7 @@ export default class HdtLeadAddress extends LightningElement {
     @api addressObject;
     flag = true;
     @api objectApiName;
-    @track currentObjectName = 'Lead';
+    @api currentObjectName = 'Lead';
     @api leadAddress = [];
     @api fieldsToUpdate = []; 
     isVerified= false;
