@@ -34,7 +34,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtCampaignsApp</componentName>
+                <componentName>HDT_LCP_CampaignToContactList</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>

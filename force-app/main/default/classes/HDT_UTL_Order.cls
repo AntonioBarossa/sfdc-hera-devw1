@@ -6,6 +6,9 @@ public inherited sharing class HDT_UTL_Order {
     private static HDT_QR_AccountContactRelation accountContactRelQr = new HDT_QR_AccountContactRelation();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
+    private static HDT_QR_Case caseQr = new HDT_QR_Case();
+    private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
     private static HDT_SRV_Order ordSrv = new HDT_SRV_Order();
     /*public Order enrichOrder(Order newOrder){
@@ -54,9 +57,10 @@ public inherited sharing class HDT_UTL_Order {
         HDT_QR_Order orQr = new HDT_QR_Order();
         Order o = orQr.getRecordById(ord.id);
         List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c);
-        if(listRate == null || !listRate.isEmpty()){
+        if(listRate == null || listRate.isEmpty()){
             listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,'N/A');
         }
+        System.debug('**********:' + listRate);
         Map<String,String> mapCal = new Map<String,String>();
         boolean res = false;
         Order oUp = new Order();
@@ -86,4 +90,24 @@ public inherited sharing class HDT_UTL_Order {
         }
         return res;
     }
+    @auraEnabled
+    public static boolean annullaContratti(String orderId){
+
+        List<Order> getOrderChildVas = new List<Order>();//orderQr.getOrderVasToDelete(orderId);
+        Case cb = caseQr.getCaseRelated(orderId);
+        List<Order> ordToUpdate = new List<Order>(); 
+        for(Order ord : getOrderChildVas){
+            ord.status = 'Annullato';
+            ord.phase__c = 'Annullato';
+            ord.CancellationReason__c = 'Annullamento per Dati Discordanti';
+            ordToUpdate.add(ord);
+        }
+        cb.status = 'Annullato';
+        cb.phase__c = 'Annullato';
+        cb.CancellationReason__c = 'Annullamento per Dati Discordanti';
+        ordSrv.updateRecords(ordToUpdate);
+        caseSrv.updateRecord(cb);
+        return true;
+    }
+
 }

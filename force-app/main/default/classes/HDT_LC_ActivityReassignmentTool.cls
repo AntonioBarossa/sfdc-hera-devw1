@@ -35,7 +35,22 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
     @AuraEnabled
     public static String reassignActivity(String recordId, String assigneeId, String wrapperId, String workGroup, String agency) {
         try {
-            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
+            wrts_prcgvr__Activity__c activity = [SELECT Id, Type__c, ParentActivity__c, ParentActivity__r.Order__r.Agency__c FROM wrts_prcgvr__Activity__c WHERE Id = : recordId];
+            if(activity.Type__c == 'Gestione Agenzia' && activity.ParentActivity__c != null) {
+                if(
+                    activity.ParentActivity__r.Order__c != null &&
+                    activity.ParentActivity__r.Order__r.Agency__c != null &&
+                    activity.ParentActivity__r.Order__r.Agency__c != agency
+                ) {
+                    return 'La coda selezionata non è gestita dall\'Agenzia corretta.';
+                }
+                HDT_UTL_DatabaseService.updateSObject(new wrts_prcgvr__Activity__c(
+                    Id = activity.ParentActivity__c,
+                    wrts_prcgvr__Status__c = 'Aperta'
+                ));
+            }
+
+            activity = new wrts_prcgvr__Activity__c(
                 Id = recordId,
                 AssigneeType__c = 'Utente',
                 OwnerId = assigneeId
