@@ -457,6 +457,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			Case testCase=new Case();
 			testCase.AccountId=accId;
 			testCase.Status='In Lavorazione';
+			testCase.Phase__c = 'Bozza';
 			testCase.Subject='test';
 			testCase.Type='BP/CA - errata categoria';
 			testCase.Subprocess__c='Account';
@@ -933,5 +934,57 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		docOneStructure = null;
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult;
 		databaseResult = HDT_LC_DocumentalConfigController.databaseInsert(docList, databaseResult);
+	}
+
+	public static List<ContentVersion> createContentVersion(Integer amount, Boolean doInsert, string title, String body, String pathOnClient){
+		List<ContentVersion> contentVersionList = new List<ContentVersion>();
+		Blob bodyBlob = Blob.valueOf(body);
+		for(Integer i=0; i<amount; ++i){
+			ContentVersion contentVersion = new ContentVersion();
+			contentVersion.Title = title;
+			contentVersion.VersionData = bodyBlob;
+			contentVersion.PathOnClient = pathOnClient;
+			contentVersionList.add(contentVersion);
+		}
+		if(doInsert){
+			insert contentVersionList;
+		}
+		List<ContentVersion> contentVersionListUpd = [SELECT Id, Title, VersionData, PathOnClient, ContentDocumentId FROM ContentVersion];
+		return contentVersionListUpd;
+	}
+
+	public static List<wrts_prcgvr__CalloutTemplate__c> createCalloutTemplate(Integer amount, Boolean doInsert, String name, String code, boolean nullFields, String objName, String structure, String configFile){
+		List<wrts_prcgvr__CalloutTemplate__c> calloutTemplatesList = new List<wrts_prcgvr__CalloutTemplate__c>();
+		for(Integer i = 0; i<amount; ++i){
+			wrts_prcgvr__CalloutTemplate__c calloutTemplate = new wrts_prcgvr__CalloutTemplate__c();
+			calloutTemplate.Name = name;
+			calloutTemplate.wrts_prcgvr__Code__c = code;
+			calloutTemplate.wrts_prcgvr__ConfigurationFile__c = configFile;
+			calloutTemplate.wrts_prcgvr__IncludeNullFields__c = nullFields;
+			calloutTemplate.wrts_prcgvr__ObjectType__c	= objName;
+			calloutTemplate.wrts_prcgvr__Structure__c = structure;
+			calloutTemplatesList.add(calloutTemplate);
+		}
+		if(doInsert){
+			insert calloutTemplatesList;
+		}
+		return calloutTemplatesList;
+	}
+
+	public static void createEndpointRule(Integer amount, Boolean doInsert, String name){
+		List<wrts_prcgvr__EndpointRule__c> endpointRuleList = new List<wrts_prcgvr__EndpointRule__c>();
+		for(Integer i = 0; i<amount; ++i){
+			wrts_prcgvr__EndpointRule__c endpointRule = new wrts_prcgvr__EndpointRule__c();
+			endpointRule.Name = name;
+			endpointRule.wrts_prcgvr__ClientType__c = 'REST';
+			endpointRule.wrts_prcgvr__ContentType__c = 'application/json';
+			endpointRule.wrts_prcgvr__IsActive__c = true;
+			endpointRule.wrts_prcgvr__NamedCredential__c = name;
+			endpointRule.wrts_prcgvr__Order__c = 1;
+			endpointRuleList.add(endpointRule);
+		}
+		if(doInsert){
+			insert endpointRuleList;
+		}
 	}
 }
