@@ -428,7 +428,7 @@
         <name>AssegnaValori_00_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>2390</locationY>
+        <locationY>2270</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -440,14 +440,7 @@
             <assignToReference>Get_Case_Aggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetCodiceCausale_0.CausalCode__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case_Aggiornato.OperationCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetCodiceCausale_0.OperationCode__c</elementReference>
+                <elementReference>Check_Documenti.causalCode</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -462,6 +455,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Check_Documenti.documentList</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -494,6 +494,13 @@
                 <elementReference>Check_Documenti.documentList</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0</targetReference>
         </connector>
@@ -502,7 +509,7 @@
         <name>AssegnaValori_00_0_0_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>2778</locationX>
-        <locationY>1478</locationY>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -514,14 +521,7 @@
             <assignToReference>Get_Case_Aggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetCodiceCausale_0_0.CausalCode__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case_Aggiornato.OperationCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetCodiceCausale_0_0.OperationCode__c</elementReference>
+                <elementReference>Check_Documenti_0.causalCode</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -590,7 +590,7 @@
         <name>AssegnaValori_00_0_0_0_0_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>1106</locationX>
-        <locationY>4358</locationY>
+        <locationY>4238</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -602,14 +602,7 @@
             <assignToReference>GetCaseAggiornato2.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetCodiceCausale_0_0_0.CausalCode__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato2.OperationCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetCodiceCausale_0_0_0.OperationCode__c</elementReference>
+                <elementReference>Check_Documenti_1.causalCode</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -1119,7 +1112,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetCodiceCausale_0</targetReference>
+                <targetReference>AssegnaValori_00_0_0_0</targetReference>
             </connector>
             <label>Da Inviare</label>
         </rules>
@@ -1144,7 +1137,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetCodiceCausale_0_0</targetReference>
+                <targetReference>AssegnaValori_00_0_0_0_0_0</targetReference>
             </connector>
             <label>Da Inviare</label>
         </rules>
@@ -1169,7 +1162,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetCodiceCausale_0_0_0</targetReference>
+                <targetReference>AssegnaValori_00_0_0_0_0_0_0_0</targetReference>
             </connector>
             <label>Da Inviare</label>
         </rules>
@@ -1552,137 +1545,11 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>GetCodiceCausale_0</name>
-        <label>GetCodiceCausale</label>
-        <locationX>50</locationX>
-        <locationY>2270</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>AssegnaValori_00_0_0_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Cluster__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.Cluster__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Process__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.Type</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Subprocess__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.Subprocess__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Commodity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.CommodityFormula__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>HDT_CausalCodeCalculation__mdt</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>GetCodiceCausale_0_0</name>
-        <label>GetCodiceCausale</label>
-        <locationX>2778</locationX>
-        <locationY>1358</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>AssegnaValori_00_0_0_0_0_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Cluster__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case_Aggiornato.Cluster__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Process__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case_Aggiornato.Type</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Subprocess__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case_Aggiornato.Subprocess__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Commodity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case_Aggiornato.CommodityFormula__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>HDT_CausalCodeCalculation__mdt</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>GetCodiceCausale_0_0_0</name>
-        <label>GetCodiceCausale</label>
-        <locationX>1106</locationX>
-        <locationY>4238</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>AssegnaValori_00_0_0_0_0_0_0_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Cluster__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.Cluster__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Process__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.Type</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Subprocess__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.Subprocess__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Commodity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.CommodityFormula__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>HDT_CausalCodeCalculation__mdt</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>2510</locationY>
+        <locationY>2390</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
         </connector>
@@ -1699,7 +1566,7 @@
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>2778</locationX>
-        <locationY>1598</locationY>
+        <locationY>1478</locationY>
         <connector>
             <targetReference>Loading_Screen_0_0</targetReference>
         </connector>
@@ -1716,7 +1583,7 @@
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>1106</locationX>
-        <locationY>4478</locationY>
+        <locationY>4358</locationY>
         <connector>
             <targetReference>Loading_Screen_0_0_0</targetReference>
         </connector>
@@ -1743,7 +1610,7 @@
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
         <locationX>50</locationX>
-        <locationY>2630</locationY>
+        <locationY>2510</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1774,7 +1641,7 @@
         <name>Loading_Screen_0_0</name>
         <label>Loading Screen</label>
         <locationX>2778</locationX>
-        <locationY>1718</locationY>
+        <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1805,7 +1672,7 @@
         <name>Loading_Screen_0_0_0</name>
         <label>Loading Screen</label>
         <locationX>1106</locationX>
-        <locationY>4598</locationY>
+        <locationY>4478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

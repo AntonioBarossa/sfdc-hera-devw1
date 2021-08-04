@@ -76,7 +76,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         ord.Id = ordRetrieved.Id;
                         ord.Phase__c = mapRequestFields.get('FASE');
                         //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
-                        //ord.ExternalUserCompany__c = mapRequestFields.get('CMP');
+                        ord.ExternalUserCompany__c = mapRequestFields.get('CMP');
                         //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
 
                         switch on mapRequestFields.get('FASE') {
@@ -108,6 +108,27 @@ public with sharing class HDT_SRV_SalesHandler {
 
                                 if (mapRequestFields.get('IMP_PREV_DIST') != null && !String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
+                                    
+                                    switch on mapRequestFields.get('TIPO_INTERVENTO') {
+                                        when 'A Preventivo' {
+                                            ord.QuotationType__c='Analitico';
+                                            ord.ValidityDateEstimate__c=Date.today().addDays(15);
+                                        }
+                                        when 'Attivazione' {
+                                            ord.QuotationType__c='Predeterminabile';
+                                            ord.ValidityDateEstimate__c=Date.today().addDays(5);
+                                        }
+                                        when 'Lavoro Semplice' {
+                                            ord.QuotationType__c='Predeterminabile';
+                                            ord.ValidityDateEstimate__c=Date.today().addDays(5);
+                                        }
+                                    }
+                                    
+                                }else{
+                                    if(mapRequestFields.get('TIPO_INTERVENTO')=='Lavoro Semplice'){
+                                        ord.QuotationType__c='Rapido';
+                                        ord.ValidityDateEstimate__c=Date.today().addDays(5);
+                                    }
                                 }
 
                                 // if(ord.CausalCode__c == '034' 
@@ -168,6 +189,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Annullamento - Ammissibilità OK', 'Annullamento - Ammissibilità KO' {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                                ord.CancellationHerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 if(previousPhase.indexOf('Ripensamento') >-1){
                                     nextPhase = nextPhase.replace('Annullamento', 'Ripensamento');
                                 }
@@ -268,6 +290,10 @@ public with sharing class HDT_SRV_SalesHandler {
 
                 }                        
 
+            }
+
+            when 'NOTIF_VAS'{
+                HDT_UTL_NotifVas.handleVasNotify(request, mrrResponseItem);
             }
             when 'RICH_PASS' {
 

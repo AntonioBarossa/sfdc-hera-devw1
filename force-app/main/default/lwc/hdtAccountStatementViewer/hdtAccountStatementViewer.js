@@ -2,7 +2,6 @@ import { LightningElement, track, api } from 'lwc';
 import getTabConfiguration from '@salesforce/apex/HDT_LC_AccountStatementController.getTabConfiguration';
 //import callMulesoft from '@salesforce/apexContinuation/HDT_LC_AccountStatementController.callMulesoftAsync';
 import callMulesoft from '@salesforce/apex/HDT_LC_AccountStatementController.callMulesoft';
-import sendFileToPrint from '@salesforce/apex/HDT_LC_AccountStatementController.sendFileToPrint';
 import serviceCatalogBackendHandler from '@salesforce/apex/HDT_LC_AccountStatementController.serviceCatalogBackendHandler';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
@@ -62,15 +61,18 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     filterPagination = false;
     showFilterFirstLevel = false;
     showOperationModal;
+    billParameters;
+    otherParams;
+    startDateString;
 
     totRecs;
     fromRec;
     toRec;
     avoidSort;
-    blob;
-    url;
-    fileName;
-    showFile = false;
+    //blob;
+    //url;
+    //fileName;
+    //showFile = false;
     showAcctStmt = false;;
     @track acctStmt = 'label';
     @track confObj = [];
@@ -287,14 +289,104 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.filterType = 'paperlessFilters';
         this.showFilters2 = true;
     }
-    billList(event){
-        this.billListHeader = 'Elenco bollette';
-        this.showBillList = true;
-    }
+
     viewReminders(event){
-        this.billListHeader = 'Visualizza Solleciti';
+
+        var selectedId = this.getSingleSelectedId();
+
+        if(selectedId==undefined){
+            return;
+        }
+        
+        var row = this.allData.filter(c => { return c[this.uniqueId] == selectedId })[0];
+        console.log('>>> contoContrattuale: ' + row.contoContrattuale);
+        console.log('>>> dataEmissione: ' + row.dataEmissione);
+
+        if(row.dataEmissione === undefined || row.dataEmissione === ''){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Servizio non disponibile per questo record',
+                    variant: 'warning'
+                })
+            );
+            return;
+        }  
+
+        this.billParameters = event.currentTarget.dataset.parameters;
+        this.startDateString = row.dataEmissione;
+        this.showBillList = true;  
+    }
+
+    modalHandler(event){
+        this.billParameters = event.detail.parameters;
+
+        var muleRequestParams = {
+            billingProfile: event.detail.muleRequestParams.billingProfile
+        };
+
+        this.otherParams = muleRequestParams;
+        this.startDateString = event.detail.muleRequestParams.startDate;
         this.showBillList = true;
     }
+
+    showRate(event){
+        this.billParameters = event.currentTarget.dataset.parameters;
+
+        var selectedId = this.getSingleSelectedId();
+
+        if(selectedId==undefined){
+            return;
+        }
+        
+        var selected = this.allData.filter(c => { return c[this.uniqueId] == selectedId })[0];
+        console.log('>>> contoContrattuale: ' + selected.contoContrattuale);
+        console.log('>>> dataEmissione: ' + selected.dataEmissione);
+        console.log('>>> tipoDocumento: ' + selected.tipoDocumento);
+
+        var returnError = false;
+
+        if(this.tabCode==='EC4' || this.tabCode==='EC6'){
+            if(selected.dataEmissione === undefined || selected.dataEmissione === ''){
+                returnError = true;
+            }               
+    
+        } else if(this.tabCode==='EC1' || this.tabCode==='paperless'){
+            if((selected.dataEmissione === undefined || selected.dataEmissione === '') ||
+                (selected.tipoDocumento === undefined || selected.tipoDocumento === '' || selected.tipoDocumento != 'RATE')){
+                    returnError = true;
+            }
+        }
+
+        if(returnError){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Servizio non disponibile per questo record',
+                    variant: 'warning'
+                })
+            );
+            return;
+        }
+
+        var muleRequestParams = {
+            billingProfile: selected.contoContrattuale
+        };
+
+        this.startDateString = selected.dataEmissione;
+        this.otherParams = muleRequestParams;
+        console.log('>>>>>>>>>>>>>>>> ' + JSON.stringify(this.otherParam));
+
+        this.showBillList = true;
+    }
+
+    billList(event){
+        this.billParameters = event.currentTarget.dataset.parameters;
+        //this.otherParams = ?;
+        this.startDateString = '21/01/2021';
+        this.showBillList = true;
+    }
+
     refreshRecord(){
         //refresh all data in the same service
         this.filterOn = false;
@@ -306,12 +398,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.totAmount = this.totAmountStored;
         this.showAccountData = true;
         this.avoidSort = '';
-        this.showFile = false;
+        //this.showFile = false;
         for (var key in this.interObj) {
             this.interObj[key] = '';
         }
         this.firstLevelFilterObj = {};
-        this.resetFile();
+        //this.resetFile();
         this.resetIdList();
         this.refreshSortButton();
         this.setButtonForFilterApplied(false);
@@ -417,27 +509,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     viewResult(event){
         console.log('# viewResult #');
 
-        if(idlist.length > 1){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Attenzione',
-                    message: 'Puoi selezionare solo un record',
-                    variant: 'warning'
-                })
-            );
-            return;
-        } else if(idlist.length == 0){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Attenzione',
-                    message: 'Non hai selezionato nessun record',
-                    variant: 'warning'
-                })
-            );
+        var selectedId = this.getSingleSelectedId();
+
+        if(selectedId==undefined){
             return;
         }
 
-        var nf = this.allData.filter(c => { return c[this.uniqueId] == idlist[0] })[0].numeroFattura;
+        var nf = this.allData.filter(c => { return c[this.uniqueId] == selectedId })[0].numeroFattura;
 
         if(!nf){
             this.dispatchEvent(
@@ -458,6 +536,30 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         //this.focusOnButton(event.target.name);
 
     }
+
+    getSingleSelectedId(){
+        if(idlist.length > 1){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Puoi selezionare solo un record',
+                    variant: 'warning'
+                })
+            );
+            return;
+        } else if(idlist.length == 0){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non hai selezionato nessun record',
+                    variant: 'warning'
+                })
+            );
+            return;
+        }
+        return idlist[0];
+    }
+
     handleClosePrintModal(event){
         this.showPrintModal = false;
     }
@@ -1226,108 +1328,23 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     }
 
-    sendToApex(){
-        console.log('# sendToApex #');
-        sendFileToPrint({dataList: JSON.stringify(listToPrint)})
-        .then(result => {
-            console.log('# save success #');
-            console.log('>>> resp: ' + result.success);
-    
-            var toastObj = {
-                title: '',
-                message: '',
-                variant: ''
-            };
-    
-            if(result.success){
-                toastObj.title = 'Great Success!';
-                toastObj.message = 'The selected record have been printed!';
-                toastObj.variant = 'success';
+    //openFile(){
+    //    console.log('# openFile #');
+    //    this[NavigationMixin.Navigate](
+    //        {
+    //            type: 'standard__webPage',
+    //            attributes: {
+    //                url: this.url
+    //            }
+    //        }
+    //    );        
+    //}
 
-
-                try{
-
-                    var base64 = result.bodyBase64; 
-                    var sliceSize = 512;
-                    base64 = base64.replace(/^[^,]+,/, '');
-                    base64 = base64.replace(/\s/g, '');
-                    var byteCharacters = window.atob(base64);
-                    var byteArrays = [];
-        
-                    for ( var offset = 0; offset < byteCharacters.length; offset = offset + sliceSize ) {
-                        var slice = byteCharacters.slice(offset, offset + sliceSize);
-                        var byteNumbers = new Array(slice.length);
-                        for (var i = 0; i < slice.length; i++) {
-                            byteNumbers[i] = slice.charCodeAt(i);
-                        }
-                        var byteArray = new Uint8Array(byteNumbers);
-        
-                        byteArrays.push(byteArray);
-                    }
-        
-                    this.blob = new Blob(byteArrays, { type: 'application/pdf' });
-                    //var data = new FormData();
-                    //data.append("file", blob, "file");
-
-                    const blobURL = URL.createObjectURL(this.blob);
-                    //console.log('url-' + blobURL);
-                    //window.open(blobURL);
-                    this.url = blobURL;
-                    this.fileName = 'myFileName.pdf';
-                    this.showFile = true;
-
-                    this[NavigationMixin.Navigate](
-                        {
-                            type: 'standard__webPage',
-                            attributes: {
-                                url: blobURL
-                            }
-                        }
-                    );
-
-                }catch(err){
-                    console.log(err.message);
-                }
-
-
-            } else {
-                toastObj.title = 'Something goes wrong!';
-                toastObj.message = result.message;
-                toastObj.variant = 'warning';
-            }
-        
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: toastObj.title,
-                    message: toastObj.message,
-                    variant: toastObj.variant
-                }),
-            );
-    
-        })
-        .catch(error => {
-            this.handleError(error);
-        });
-        
-    }
-
-    openFile(){
-        console.log('# openFile #');
-        this[NavigationMixin.Navigate](
-            {
-                type: 'standard__webPage',
-                attributes: {
-                    url: this.url
-                }
-            }
-        );        
-    }
-
-    resetFile(){
-        console.log('# resetFile #');
-        this.blob = null;
-        this.blobURL = URL.revokeObjectURL();
-    }
+    //resetFile(){
+    //    console.log('# resetFile #');
+    //    this.blob = null;
+    //    this.blobURL = URL.revokeObjectURL();
+    //}
 
     applyFilter(event){
         console.log('# applyFilter on parent #');
@@ -1355,7 +1372,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             this.filteredData = [];
             this.secondLevelList = [];
             
-            this.resetFile();
+            //this.resetFile();
             this.resetIdList();
             this.refreshSortButton();
             this.backendCall(requestType, requestObj);// Chiamata in backend
@@ -1405,6 +1422,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     closeModalHandler(event){
         try{
             this[event.detail.booleanVar] = false;
+            if(event.detail.booleanVar==='showBillList'){
+                this.resetIdList();
+            }
         } catch(e){
             console.log('>>>>>> flop ');
         }        
@@ -1429,17 +1449,5 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             console.error('# Stack => ' + e.stack );
         }
     }
-
-    showRate(event){
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: 'Attenzione',
-                message: 'Servizio in sviluppo',
-                variant: 'info'
-            })
-        );
-    }
-
-
 
 }

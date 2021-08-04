@@ -75,6 +75,10 @@
                 <behavior>Readonly</behavior>
                 <field>ServicePointCodeFormula__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

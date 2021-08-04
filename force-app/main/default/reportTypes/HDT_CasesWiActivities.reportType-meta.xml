@@ -1702,11 +1702,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SupplyStreetToponym__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>TotalCover__c</field>
             <table>Case</table>
         </columns>
@@ -1845,11 +1840,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>FinalReason__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Mobile__c</field>
             <table>Case.Activities__r</table>
         </columns>
@@ -1956,11 +1946,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CreditCheckResults__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CreditCheckResultsFinal__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
