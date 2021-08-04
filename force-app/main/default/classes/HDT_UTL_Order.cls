@@ -60,6 +60,7 @@ public inherited sharing class HDT_UTL_Order {
         if(listRate == null || listRate.isEmpty()){
             listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,'N/A');
         }
+        System.debug('**********:' + listRate);
         Map<String,String> mapCal = new Map<String,String>();
         boolean res = false;
         Order oUp = new Order();
@@ -92,7 +93,7 @@ public inherited sharing class HDT_UTL_Order {
     @auraEnabled
     public static boolean annullaContratti(String orderId){
 
-        List<Order> getOrderChildVas = orderQr.getOrderVasToDelete(orderId);
+        List<Order> getOrderChildVas = new List<Order>();//orderQr.getOrderVasToDelete(orderId);
         Case cb = caseQr.getCaseRelated(orderId);
         List<Order> ordToUpdate = new List<Order>(); 
         for(Order ord : getOrderChildVas){
