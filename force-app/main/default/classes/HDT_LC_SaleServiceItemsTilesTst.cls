@@ -75,11 +75,7 @@ public class HDT_LC_SaleServiceItemsTilesTst{
 
 			update orders;
 
-			SaleServiceItem__c saleServItem=new SaleServiceItem__c();
-			saleServItem.Opportunity__c=opportunities[0].Id;
-			saleServItem.Quote__c=quotes[0].Id;
-			saleServItem.ServicePoint__c=servicePoints[0].Id;
-			insert saleServItem;
+            List<SaleServiceItem__c> saleServiceItens = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opportunities[0].Id, quotes[0].Id, servicePoints[0].Id);
 		}
 	}
 
