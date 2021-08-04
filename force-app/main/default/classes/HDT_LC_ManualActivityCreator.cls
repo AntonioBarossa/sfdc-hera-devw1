@@ -8,6 +8,6 @@ public with sharing class HDT_LC_ManualActivityCreator {
     
     @AuraEnabled
     public static List<Account> getAccounts(){
-        return [SELECT Id, Name FROM Account];
+        return new HDT_QR_Account().getAllAccounts();
     }
 }
