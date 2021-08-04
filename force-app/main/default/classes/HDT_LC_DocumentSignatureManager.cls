@@ -51,4 +51,11 @@ public with sharing class HDT_LC_DocumentSignatureManager {
         String serializedOutput = HDT_SRV_DocumentalManagementFacade.showArchivedAttachment(recordId);
         return serializedOutput;
     }
+
+    @AuraEnabled
+    public static string resendDocusignEnvelope(String recordId){
+        //String serializedOutput = HDT_SRV_DocumentalManagementFacade.resendDocusignEnvelope(recordId);
+        String serializedOutput = '';
+        return serializedOutput;
+    }
 }

@@ -6,8 +6,8 @@ public without sharing class HDT_WS_MulesoftCallerCpq {
 
         HttpRequest req = new HttpRequest();
 
-        String endPoint;
-        String authValueString;
+        //String endPoint;
+        //String authValueString;
 
         try{
 

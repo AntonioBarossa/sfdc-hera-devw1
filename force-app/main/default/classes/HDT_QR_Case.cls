@@ -168,5 +168,17 @@ public inherited sharing class HDT_QR_Case {
         }
         return nonReqContr;
     }
+    public Case getCaseRelated(String relatedOrder){
+        Case nonReqContr = [SELECT Id,
+            Phase__c,
+            Type
+            FROM Case
+            where
+            Order__c = :relatedOrder
+            WITH SECURITY_ENFORCED
+            LIMIT 1];
+        
+        return nonReqContr;
+    }
 
 }
