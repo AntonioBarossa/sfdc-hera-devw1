@@ -140,7 +140,7 @@ public with sharing class HDT_UTL_PaperProcessing {
         csvFile += '</table>';
 
         //Create Document
-        ContentVersion cv = contentVersionSrv.createRecord(fileName, fileName+'.xlsx', csvFile);
+        ContentVersion cv = contentVersionSrv.createRecord(fileName, fileName+'.xls', csvFile);
         System.debug('ContentVersionId: ' + cv.Id);
 
         //Get Content Document
