@@ -369,7 +369,7 @@ public class HDT_SRV_DocumentalManagement{
 			signInfo.status = docusignCustomSettings.Status__c;
 			signInfo.senderProvidedNumbers.add(telephoneNumber);
 			//customerInfo
-			String email = emailCase != null?emailCase:emailOrder;
+			String email = String.isNotBlank(emailCase)?emailCase:emailOrder;
 			String creationUrl = formParams.get('signMode') == 'OTP Remoto'? 'false':'true';
 			String vatCode = HDT_UTL_DocumentalManagement.getValue('Account','VATNumber__c',0,inputs,formParams);
 			String fiscalCode = HDT_UTL_DocumentalManagement.getValue('Account','FiscalCode__c',0,inputs,formParams);
