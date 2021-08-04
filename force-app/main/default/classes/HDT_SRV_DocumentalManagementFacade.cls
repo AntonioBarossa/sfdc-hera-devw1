@@ -139,10 +139,10 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         String responseCode;
         String responseStatus;
         Map<String,String> resultMap = new Map<String,String>();
-        HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+        HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
         try{
             body = HDT_SRV_DocumentalManagement.generateResendDocusignEnvelopeRequest(recordId);
-            postelResponse = HDT_SRV_DocumentalManagement.executeResendDocusignEnvelopeCalloutRequest(body);
+            responseWrap = HDT_SRV_DocumentalManagement.executeResendDocusignEnvelopeCalloutRequest(body);
             resultMap.put('outcome','OK');
         }catch(Exception ex){
             resultMap.put('outcome','KO');
