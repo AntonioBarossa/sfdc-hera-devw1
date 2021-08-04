@@ -1,5 +1,6 @@
 public with sharing class HDT_WRP_PaperProcessing {
     @AuraEnabled public String codCliente { get; set;}
+    @AuraEnabled public String codCliente { get; set;}
     @AuraEnabled public String ragSociale { get; set;}
     @AuraEnabled public String nome { get; set;}
     @AuraEnabled public String cognome { get; set;}
