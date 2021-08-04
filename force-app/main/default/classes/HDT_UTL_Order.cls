@@ -107,6 +107,7 @@ public inherited sharing class HDT_UTL_Order {
         cb.CancellationReason__c = 'Annullamento per Dati Discordanti';
         ordSrv.updateRecords(ordToUpdate);
         caseSrv.updateRecord(cb);
+        return true;
     }
 
 }
