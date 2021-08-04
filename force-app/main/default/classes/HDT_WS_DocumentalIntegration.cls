@@ -74,7 +74,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
         HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
         try{
             HttpRequest req = new HttpRequest();
-            req.setEndpoint('Callout:MulesoftBasePath' + '/resend/communications');
+            req.setEndpoint('Callout:MulesoftBasePath/resend/communications');
             req.setMethod('POST');
             req.setBody(body);
             req.setHeader('Content-Type','application/json');
