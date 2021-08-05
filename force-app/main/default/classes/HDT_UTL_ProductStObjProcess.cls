@@ -316,12 +316,12 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
     }
 
-    public static List<String> chechProductToConfirm(List<String> resp, Id ProductId){
-        resp = new List<String>();
-        resp.add('OK');
-        resp.add('OK');
-        return resp; 
-    }
+    //public static List<String> chechProductToConfirm(List<String> resp, Id ProductId){
+    //    resp = new List<String>();
+    //    resp.add('OK');
+    //    resp.add('OK');
+    //    return resp; 
+    //}
 
     public static Map<Id, Integer> generateTechnicalOfferMap(Map<Id, Integer> technicalOfferMap, Set<Id> product2IdList){
         technicalOfferMap = new Map<Id, Integer>();

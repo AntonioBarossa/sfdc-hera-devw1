@@ -193,6 +193,31 @@ public inherited sharing class HDT_QR_CampaignMember {
             WITH SECURITY_ENFORCED];
     }
 
+    public CampaignMember getByEcid(String ecid) {
+        List<CampaignMember> cmList = [
+            SELECT
+            Id, 
+            Status  
+            FROM CampaignMember 
+            WHERE Ecid__c = :ecid
+            AND isToSendStatusReitek__c = true
+            WITH SECURITY_ENFORCED
+        ];
+        return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
+    }
+
+    public CampaignMember getEcidById(String id) {
+        List<CampaignMember> cmList = [
+            SELECT
+            Id,
+            reitekAgentUserId__c , 
+            Ecid__c
+            FROM CampaignMember 
+            WHERE id = :id
+        ];
+        return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
+    }
+
     
     public List<CampaignMember> getContactsWithinDistance(Decimal latitude, Decimal longitude, Decimal distanceKm) {
         Date d = Date.today();
