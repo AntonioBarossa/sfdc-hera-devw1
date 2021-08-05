@@ -1000,7 +1000,31 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return ftcList;
-  }
+	}
+
+	public static List<SaleServiceItem__c> createSaleServiceItem (Integer amount, Boolean doInsert, Id oppId, Id quoteId, Id servicePointId){
+
+		List<SaleServiceItem__c> saleServiceItemList=new List<SaleServiceItem__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SaleServiceItem__c saleServiceItem =new SaleServiceItem__c();
+
+			saleServiceItem.Opportunity__c=oppId;
+			saleServiceItem.Quote__c=quoteId;
+			saleServiceItem.ServicePoint__c=servicePointId;
+
+			saleServiceItemList.add(saleServiceItem);
+		}
+
+		if (doInsert){
+
+			insert saleServiceItemList;
+		}
+
+		return saleServiceItemList;
+	}
+
 	public static List<DocumentalPayloadAdministration__c> createDocumentalPayloadAdm(){
 		List<DocumentalPayloadAdministration__c> lstSobj = new List<DocumentalPayloadAdministration__c>();
 		DocumentalPayloadAdministration__c sobj = new DocumentalPayloadAdministration__c();
@@ -1041,6 +1065,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		
 		return lstSobj;
 	}
+	
 	public static void createJsonPayload(){
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult wrpPayload = HDT_LC_DocumentalConfigController.controllerHandler();
 	}
@@ -1066,4 +1091,5 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult;
 		databaseResult = HDT_LC_DocumentalConfigController.databaseInsert(docList, databaseResult);
 	}
+
 }
