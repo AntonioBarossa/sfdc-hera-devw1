@@ -39,7 +39,7 @@
                 </header>
                 <!--Modal/Popup Box Body Starts here-->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                    <p><b>Verranno verificata eventuali campagne obligatorie per l'account Id: {!v.varId}
+                    <p><b>Sicuro di voler chiudere il tab AccountId: {!v.varId} ?
                         </b>
                     </p>
                 </div>
@@ -52,7 +52,7 @@
                 <footer class="slds-modal__footer">
 
                     <lightning:button label="Chiudi" title="Chiudi" onclick="{!c.closedNow}" />
-                    <!-- <lightning:button label="Annulla" title="Annulla" onclick="{!c.goBack}" /> -->
+                    <lightning:button label="Annulla" title="Annulla" onclick="{!c.goBack}" />
 
                 </footer>
             </div>
