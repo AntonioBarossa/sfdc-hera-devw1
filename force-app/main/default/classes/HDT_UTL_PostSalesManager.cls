@@ -85,6 +85,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             } else if(parentCase.Type.equalsIgnoreCase('Gestione Disalimentabilità')){
                 wrts_prcgvr__Activity__c activity = createActivity('Eseguire Gestione Manuale SAP');
                 activity.Case__c = parentCase.Id;
+                activity.wrts_prcgvr__IsRequired__c	= true;
                 HDT_UTL_DatabaseService.insertSObject(activity);
             }
 
