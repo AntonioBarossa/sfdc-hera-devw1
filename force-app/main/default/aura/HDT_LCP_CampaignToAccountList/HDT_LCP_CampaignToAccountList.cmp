@@ -2,7 +2,7 @@
     <lightning:workspaceAPI aura:id="workspace" />
     <aura:attribute name="recordId" type="String" />
     <aura:attribute name="pageReference" type="Object"/>
-
+    <aura:attribute name="currentTab" type="String"/>
 
 
     <aura:attribute name="sObjectName" type="String" />
