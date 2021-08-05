@@ -116,4 +116,13 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
         }
     }
 
+    public static Order getParentOrder(String orderId){
+        List<Order> orders = [SELECT Id,ParentOrder__c FROM Order WHERE Id =:orderId WITH SECURITY_ENFORCED];
+        if(!orders.isEmpty()){
+            return orders[0];
+        }else {
+            return null;
+        }
+    }
+
 }

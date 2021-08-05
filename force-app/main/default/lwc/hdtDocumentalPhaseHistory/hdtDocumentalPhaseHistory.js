@@ -2,6 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getDocumentalPhaseHistory from '@salesforce/apex/HDT_LC_DocumentalPhaseHistory.getDocumentalPhaseHistory';
+import getParentOrderId from '@salesforce/apex/HDT_LC_DocumentalPhaseHistory.getParentOrderId';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 
 const columns  = [
@@ -15,6 +16,7 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
     @api objectApiName;
     data = [];
     columns = columns;
+    parentOrderId;
     @track sendMode;
     @track signMode;
     @track email;
@@ -27,6 +29,10 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
         console.log(this.recordId + ' ' + this.objectApiName);
         this.getHistory();
         this.setEditFormVariables();
+
+        if(this.objectApiName && this.objectApiName.localeCompare('Order') === 0){
+            this.getParentOrderId();
+        }
     }
 
     setEditFormVariables(){
@@ -47,6 +53,20 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
         }
     }
 
+    getParentOrderId(){
+        getParentOrderId({
+            orderId: this.recordId
+        }).then(result => {
+            if(result != null && result.length>0)
+                this.parentOrderId = result;
+            else   
+                this.parentOrderId = null;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+
     getHistory(){
         getDocumentalPhaseHistory({
             recordId: this.recordId,
@@ -65,6 +85,13 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
     handlePreview(){
         try{
             this.showSpinner = true;
+            let targetId = '';
+            if(this.objectApiName && this.objectApiName.localeCompare('Order') === 0){
+                targetId = this.parentOrderId;
+            }else{
+                targetId = this.recordId;
+            }
+
             const formParams = {
                 mode : 'Preview',
                 Archiviato : 'N'
@@ -79,7 +106,7 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
             }
             
             previewDocumentFile({
-                recordId: this.recordId, // TODO: se Order va recuperato l'Id dell'Order padre. 
+                recordId: targetId,
                 context: context,
                 formParams: JSON.stringify(formParams)
             }).then(result => {
