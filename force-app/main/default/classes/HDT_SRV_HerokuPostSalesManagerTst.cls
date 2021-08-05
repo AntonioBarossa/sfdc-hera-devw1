@@ -48,15 +48,21 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
         response = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) herokuSrv.execute(args);
         Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, Status FROM Case LIMIT 1];
+        Test.stopTest();
         System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c);
         System.assertEquals('00002349', testCaseUpd.HerokuPracticeCode__c);
-        Test.stopTest();
         
     }
     @isTest
     static void updatefutureTst()
-    {
-
+    {   
+        Case testCase = [SELECT Id, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
+        Test.startTest();
+        testCase.Phase__c = 'Comunicazione verso Heroku OK';
+        HDT_SRV_HerokuPostSalesManager.updateFuture(JSON.serialize(testCase));
+        Test.stopTest();
+        Case testCaseUpd = [SELECT Id, Phase__c FROM Case LIMIT 1];
+        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c);
     }
     @isTest
     static void handleInboundRequestTst()

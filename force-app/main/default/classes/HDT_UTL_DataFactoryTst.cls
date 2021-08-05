@@ -415,6 +415,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			Contact testContact=new Contact();
 			testContact.FirstName='test';
 			testContact.LastName='tester';
+			//@frpanico 05/08 Added Company and Company Owner
+			testContact.Company__c = 'HC+HCM+EENE';
+			testContact.CompanyOwner__c = 'HERA COMM';
 			testContact.AccountId=accId;
 
 			contactList.add(testContact);
@@ -470,7 +473,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			//testCase.VulturePracticeReference__c=orderId;
 			testCase.Cluster__c='Pagamenti';
 			testCase.RecordTypeId = rtId;
-
+			testCase.CompanyOwner__c = 'HERA COMM';
 
 			caseList.add(testCase);
 		}
