@@ -49,7 +49,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             return false;
         }
     }
-/*
+
     public static void createActivityWithParams(Map<String,String> params){
 
         system.debug('HDT_UTL_ActivityCustom START');
