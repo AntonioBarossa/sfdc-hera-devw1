@@ -21,4 +21,15 @@ public with sharing class HDT_LC_DocumentalPhaseHistory {
         System.debug('query ' + queryString);
         return HDT_QR_GenericQuery.getGenericRecords(queryString, fromString);
     }
+
+    @AuraEnabled
+    public static String getParentOrderId(String orderId){
+        
+        Order parentOrder = HDT_QR_DocumentalConfiguration.getParentOrder(orderId);
+        if (parentOrder != null) {
+            return parentOrder.Id;
+        }
+
+        return null;
+    }
 }
