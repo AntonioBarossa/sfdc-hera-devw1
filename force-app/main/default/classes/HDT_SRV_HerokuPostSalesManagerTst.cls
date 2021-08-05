@@ -4,8 +4,8 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
     @TestSetup
     static void setup(){
         HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
-        String rtName =  constantsUtl.caseRecordType;
-        String rtId = constantsUtl.caseRecordTypeId;
+        String rtName =  constantsUtl.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA;
+        String rtId = constantsUtl.CASE_RECORDTYPEID_MOROSITA;
         HDT_UTL_DataFactoryTst.pClickCasePhase();
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
