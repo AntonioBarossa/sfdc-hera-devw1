@@ -88,6 +88,7 @@ public inherited sharing class HDT_QR_Order {
             Account.ShippingAddress,
             Account.FirstName__c,
             Account.LastName__c,
+            Vat__c,
             Account.RecordType.Developername,
             Account.Category__c,
             Name,
@@ -113,11 +114,14 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.Account__c,
             ServicePoint__r.distributor__r.name,
             ServicePoint__r.distributor__c,
+            ServicePoint__r.distributor__r.code__c,
             ServicePoint__r.MeterClass__c,
             ServicePoint__r.MeterStatus__c,
             ServicePoint__r.PlugPresence__c,
             ServicePoint__r.UseTypeEnergy__c,
             ServicePoint__r.UseCategory__c,
+            PowerAvailable__c,
+            UseTypeEnergy__c,
             BillingProfile__c,
             Deliberation__c,
             ParentOrder__c,
@@ -144,6 +148,9 @@ public inherited sharing class HDT_QR_Order {
             Campaign__c,
             Campaign__r.Name,
             ContractReference__c,
+			RequestPhase__c,
+			ConnectionType__c,
+			ProcessCode__c,
             ContractReference__r.ServicePoint__c,
             OrderReference__c,
             ContractReference__r.ContractNumber,
@@ -189,6 +196,7 @@ public inherited sharing class HDT_QR_Order {
             OrderReferenceNumber,                            // @Picchiri  15/06/21
             IsSequanzialized__c,                             // @Picchiri  24/06/21
             SalesCompanyCode__c,
+            Owner.Username,
             CustomerType__c,
             IsWinback__c
             FROM Order 
@@ -398,6 +406,7 @@ public inherited sharing class HDT_QR_Order {
         return [
             SELECT
             Phase__c,
+            isTransition__c ,
             recordtype.developername
             FROM
             Order

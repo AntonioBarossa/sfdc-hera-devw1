@@ -1,5 +1,9 @@
 public with sharing class HDT_UTL_PaperProcessing {
 
+    public static HDT_SRV_ContentVersion contentVersionSrv = new HDT_SRV_ContentVersion();
+    public static HDT_QR_ContentVersion contentVersionQr = new HDT_QR_ContentVersion();
+    public static HDT_SRV_ContentDocumentLink contentDocumentLinkSrv = new HDT_SRV_ContentDocumentLink();
+
 
     public static void createCommunication(List<PaperProcessing__c> newPaper,List<PaperProcessing__c> oldPaper){
         map<String,PaperProcessing__c> mapOld = new map<String,PaperProcessing__c>();
@@ -21,13 +25,13 @@ public with sharing class HDT_UTL_PaperProcessing {
         for(PaperProcessing__c p  : newPaper){
             idCampaign.add(p.Campaign__c);
         }
-        List<Campaign> listC = HDT_QR_Campaign.getCampaign(idCampaign);
-        for(Campaign c : listC){
+        List<Campaign> listCmp = HDT_QR_Campaign.getCampaign(idCampaign);
+        for(Campaign c : listCmp){
             mapCampaign.put(c.id,c);
         }
         for(PaperProcessing__c p : newPaper){
             Campaign c = mapCampaign.get(p.campaign__c);
-            p.name = c.PaperCampaignParameter__r.LetterType__c + '_' + date.today().year() + date.today().month() + date.today().day() + '_' + c.PaperCampaignParameter__r.CostCenter__c;
+            p.Name = c.PaperCampaignParameter__r.LetterType__c + '_' + date.today().year() + date.today().month() + date.today().day() + '_' + c.PaperCampaignParameter__r.CostCenter__c;
         }
     }
 
@@ -36,6 +40,7 @@ public with sharing class HDT_UTL_PaperProcessing {
     //execute batch
     public static void exportFile(List<PaperProcessing__c> newPaper,List<PaperProcessing__c> oldPaper) {
         map<String,PaperProcessing__c> mapOld = new map<String,PaperProcessing__c>();
+        List<PaperProcessing__c> paperToUpdate = new List<PaperProcessing__c>();
         for(PaperProcessing__c p : oldPaper){
             mapOld.put(p.id,p);
         }
@@ -44,13 +49,44 @@ public with sharing class HDT_UTL_PaperProcessing {
                 //execute batch
                 HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(pp.Id);
                 ID batchProcessId = Database.executeBatch(ppBatch, 10000);
-                pp.TriggerCustomerReport__c = false;
-                pp.status__c = 'In Corso';
+                PaperProcessing__c newpp = new PaperProcessing__c();
+                newpp.Id = pp.Id;
+                newpp.TriggerCustomerReport__c = false;
+                newpp.status__c = 'In Corso';
+                paperToUpdate.add(newpp);
                 System.debug(batchProcessId);
             }
         }
-        HDT_SRV_PaperProcessing.updateRecords(newPaper);
+
+        if (paperToUpdate.size() > 0) {
+            HDT_SRV_PaperProcessing.updateRecords(paperToUpdate);
+        }
     }
+
+    //execute batch
+    public static List<PaperProcessing__c> exportFile2(List<PaperProcessing__c> newPaper,List<PaperProcessing__c> oldPaper) {
+        map<String,PaperProcessing__c> mapOld = new map<String,PaperProcessing__c>();
+        List<PaperProcessing__c> paperToUpdate = new List<PaperProcessing__c>();
+        for(PaperProcessing__c p : oldPaper){
+            mapOld.put(p.id,p);
+        }
+        for (PaperProcessing__c pp : newPaper) {
+            if (mapOld.get(pp.id) != null && mapOld.get(pp.id).TriggerCustomerReport__c == false && pp.TriggerCustomerReport__c == true) {
+                //execute batch
+                HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(pp.Id);
+                ID batchProcessId = Database.executeBatch(ppBatch, 10000);
+                PaperProcessing__c newpp = new PaperProcessing__c();
+                newpp.Id = pp.Id;
+                newpp.TriggerCustomerReport__c = false;
+                newpp.status__c = 'In Corso';
+                paperToUpdate.add(newpp);
+                System.debug(batchProcessId);
+            }
+        }
+
+        return paperToUpdate;
+    }
+
     public static void exportFileNotTrigger(List<PaperProcessing__c> newPaper) {
         for (PaperProcessing__c pp : newPaper) {
             if (pp.TriggerCustomerReport__c == true) {
@@ -67,6 +103,7 @@ public with sharing class HDT_UTL_PaperProcessing {
 
     //Generate xls file
     public static String generateFile(List<HDT_WRP_PaperProcessing> ppList, String paperProcessingId, String fileName){
+        System.debug('generateFile method');
         String csvFile = '';
 
         List<String> tableHeader = new List<String>{'codCliente','ragSociale','nome','cognome','codFiscale','pIva','resIndirizo','resCivico','resCap','resComune','resProv','codContratto','protocollo','dataLettera','servizio','codCa','codPodPdr','offerta','societa','dataAttivazione','impianto','frnIndirizzo','frnCivico','frnCap','frnComune','frnProv','tipoLettera','modalitaSpedizione','aggregazione','lotto','dataLotto','recIntestatario','recIndirizzo','recCivico','recCap','recComune','recProv','recNazione','raccoMittente','raccoIndirizzo','raccoCivico','raccoCap','raccoComune','raccoProv','campo2','campo3','campo4','campo5','campo6','campo7','campo8','campo9','campo10','campo11','campo12','campo13','campo14','campo15','campo16','campo17','campo18','campo19','campo20','campo21','campo22','campo23','campo24','campo25','campo26','campo27','campo28','campo29','campo30','campo31','campo32','campo33','campo34','campo35','campo36','campo37','campo38','campo39','campo40'};
@@ -103,23 +140,15 @@ public with sharing class HDT_UTL_PaperProcessing {
         csvFile += '</table>';
 
         //Create Document
-        ContentVersion cv = new ContentVersion();
-        cv.Title = fileName;
-        cv.PathOnClient = fileName+'.xlsx';
-        cv.VersionData = Blob.valueOf(csvFile);
-        cv.IsMajorVersion = true;
-        Insert cv;
+        ContentVersion cv = contentVersionSrv.createRecord(fileName, fileName+'.xlsx', csvFile);
+        System.debug('ContentVersionId: ' + cv.Id);
 
-        //Get Content Documents
-        Id conDocId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =:cv.Id].ContentDocumentId;
+        //Get Content Document
+        ContentVersion conDoc = contentVersionQr.getRecordById(cv.Id);
         
-        //Create ContentDocumentLink 
-        ContentDocumentLink cdl = New ContentDocumentLink();
-        cdl.LinkedEntityId = paperProcessingId;
-        cdl.ContentDocumentId = conDocId;
-        cdl.shareType = 'I';
-        Insert cdl;
-
+        //Create ContentDocumentLink
+        ContentDocumentLink cdl = contentDocumentLinkSrv.createRecord(paperProcessingId, conDoc.ContentDocumentId, 'I');
+        System.debug('ContentDocumentLinkId: ' + cdl.Id);
         return cv.Id;
     }
 

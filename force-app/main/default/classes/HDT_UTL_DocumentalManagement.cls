@@ -13,7 +13,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 			when 'Context4'{
 				return getRecordObjectsListContext4(recordsList);
-			}when else {
+			}
+			when 'Context5'{
+				return getRecordObjectsListContext1(recordsList);
+			}
+			when else {
 				return null;
 			}
 		}
@@ -22,7 +26,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		ContentVersion cv = new ContentVersion();
 		cv.VersionData = EncodingUtil.base64Decode(base64);
 		cv.Title = filename;
-		cv.PathOnClient = filename;
+		cv.PathOnClient = filename + '.pdf';
+		cv.ContentLocation = 'S';
 		try {
 			insert cv;
 			return cv;
@@ -66,10 +71,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		
 	}
 
-	public static String createContentDistribution(String contentVersionId){
+	public static String createContentDistribution(String contentVersionId,String fileName){
 		if (contentVersionId == null) { return null; }
 		ContentDistribution cd = new ContentDistribution();
-		cd.Name = 'Test';
+		cd.Name = fileName;
 		cd.ContentVersionId = contentVersionId;
 		cd.PreferencesAllowViewInBrowser= true;
 		cd.PreferencesLinkLatestVersion=true;
@@ -162,23 +167,26 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		return HDT_UTL_DatabaseService.updateSObject(processRecord);
 	}
 
-	public static sObject getProcessRecord(Id requestId, String context){
+	public static sObject getProcessRecord(String requestId, String context){
 		String fieldString = '';
 		String fromString = '';
-		String whereString = 'Id = \''+requestId + '\'';
+		String whereString = '';
 		String queryString = 'SELECT ';
 		switch on context {
-			when 'Order' {
+			when 'Order','DocumentazioneAnticipata' {
 				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c';
 				fromString = 'Order';
+				whereString = ' OrderNumber = \''+requestId + '\'';
 			}
 			when 'Case'{
 				fieldString = 'Id, AccountId,SendMode__c ,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c,QuotationType__c';
 				fromString = 'Case';
+				whereString = ' CaseNumber = \''+requestId + '\'';
 			}
 			when else {
 				fieldString = 'Id,PrimaryEmail__c,SendMode__c';
 				fromString = 'Account';
+				whereString = 'Id = \''+requestId + '\'';
 			}
 		}
 		queryString += fieldString + ' FROM ' + fromString + ' WHERE ' + whereString;
@@ -592,7 +600,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				return 'Context3';
 			}
 			when 'DocumentazioneAnticipata'{
-				return 'Context2';
+				return 'Context4';
 			}
 			when else {
 				return null;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <defaultValue>&quot;QuotationType&quot;</defaultValue>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>QuotationType</fullName>
+                <default>true</default>
+                <label>QuotationType</label>
+            </value>
+            <value>
+                <fullName>Domestico</fullName>
+                <default>false</default>
+                <label>Domestico</label>
+            </value>
+            <value>
+                <fullName>Non Domestico</fullName>
+                <default>false</default>
+                <label>Non Domestico</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

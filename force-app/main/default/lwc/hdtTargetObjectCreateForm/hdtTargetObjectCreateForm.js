@@ -6,8 +6,8 @@ import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
-import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint';
-import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint';
+import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint2';
+import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint2';
 import getDistributorPointCode from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getDistributorPointCode';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.callService';
@@ -1203,7 +1203,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 								  
 																				  
         console.log('this.AllSubmittedFields ******************' + JSON.stringify(this.allSubmitedFields));
-        createServicePoint({servicePoint: this.allSubmitedFields}).then(data =>{
+        createServicePoint({servicePoint: this.allSubmitedFields, sale: this.sale}).then(data =>{
             console.log('this.AllSubmittedFields ******************' + JSON.stringify(this.allSubmitedFields));
             console.log('data ******************' + JSON.stringify(this.allSubmitedFields));
 
@@ -1255,7 +1255,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             console.log('REMOVE END');
 
         }
-        confirmServicePoint({servicePoint: this.allSubmitedFields, sap: this.isSap}).then(data =>{
+        confirmServicePoint({servicePoint: this.allSubmitedFields, sap: this.isSap, sale : this.sale}).then(data =>{
 																				
             this.loading = false;
             this.closeCreateTargetObjectModal();

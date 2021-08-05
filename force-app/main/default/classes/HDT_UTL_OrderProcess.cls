@@ -4,8 +4,22 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
-    private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog(); 
-    
+    private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
+
+    public static void checkSatisfationIndex(Map<Id,SObject> newMap, Map<Id,SObject> oldMap) {
+        List<Account> accountsToUpdate = new List<Account>();
+        for(Order newOrder : (List<Order>) newMap.values()) {
+            if(((Order) oldMap.get(newOrder.Id)).PraxidiaOverrallSatisfaction__c != newOrder.PraxidiaOverrallSatisfaction__c) {
+                accountsToUpdate.add(new Account(
+                    Id = newOrder.AccountId,
+                    SatisfactionIndexCtrl__c = newOrder.PraxidiaOverrallSatisfaction__c,
+                    PraxidiaUpdateDate__c = newOrder.PraxidiaDateOutcome__c  
+                ));
+            }
+        }
+        update accountsToUpdate;
+    }
+
     public static void salesProcessManagementBefore(list<Order> newOrderList,List<Order> oldOrderList){
 
         /*Transitorio
@@ -65,7 +79,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }
         //List<id> docVali = filterByRecordTypeAndPhase(orderList,)
-        updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Comunicazione Siebel','Documentazione Validata','Comunicazione Motore VAS');
+        updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Esportazione VS Siebel','Documentazione Validata','Comunicazione Motore VAS');
 
         updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS');
 		insertLogForOrderChangedPhase(orderMapOld,orderMapNew);
@@ -189,7 +203,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             orderIds.add(newOrder.Id);
         }
 
-        List<String> orderIdsToReturn = new List<String>();
+        List<Order> orderIdsToReturn = new List<Order>();
 
         orderSrv.checkReadAccess('RecordType.DeveloperName, Phase__c');
         List<Order> ordersFullList = orderQr.getRecordsByIds(orderIds);
@@ -198,7 +212,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         for (Order order : ordersFullList) {
             if (order.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && order.Phase__c == 'Documentazione Gestita') {
-                orderIdsToReturn.add(order.Id);
+                orderIdsToReturn.add(order);
             }
 
             // if (order.RecordType.DeveloperName != 'HDT_RT_OrderDossier' && order.Status == 'Chiuso' && orderMapNewToOld.get(order.Id) != null && orderMapNewToOld.get(order.Id).Status != 'Chiuso') {
@@ -211,7 +225,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         // system.debug('****ordersToUpdateContract: ' + ordersToUpdateContract);
         // orderSrv.updateRecords(ordersToUpdateContract);
 
-        return ordersFullList;
+        return orderIdsToReturn;
     }
 
     // @Future
@@ -256,12 +270,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
             else{
+                if('Esportazione VS Siebel' == newPhase){
                 if (childOrder.Phase__c == currentPhase) {
                     Order orderToUpdate = new Order(
                         Id = childOrder.Id,
-                        Phase__c = newPhase
+                            Phase__c = newPhase,
+                            isTransition__c = childOrder.isTransition__c
                     );
                     childOrdersToUpdate.add(orderToUpdate);
+                    }
                 }
             }
         }

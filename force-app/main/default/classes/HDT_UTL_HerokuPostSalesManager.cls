@@ -135,6 +135,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }
         if(currentCase.Phase__c  == 'Da Inviare' 
         || currentCase.Phase__c == 'Preventivo accettato' 
+        || currentCase.Phase__c == 'Esito OK da SAP' // per le autoletture da cliente.
         || currentCase.Phase__c == 'Comunicazione verso Heroku KO'
         || currentCase.Phase__c == 'Annullamento - Da inviare'){
 
@@ -308,7 +309,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Phase__c = 'Inviare preventivo';
             }else{
                 currentCase.Phase__c = nextPhase;
-                handleEntityUpdate(reqWrp);
+                Map<String, Object> extraParams = new Map<String,Object>();
+                extraParams.put('oldContractCode',recordCase?.ContractCode__c); 
+                handleEntityUpdate(reqWrp, extraParams);
             }
 
             if(noteSap != null && noteSap != ''){
@@ -326,6 +329,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(contractCode != null || contractCode != ''){
 
             }
+            // Sviluppo inizialmente previsto sul processo di autolettura, ma poi superato dalla gestione definita sulla CB Scarti.
+            /*if(currentPhase.equalsIgnoreCase('Validazione OK DL simulata') && nextPhase != null && (nextPhase.equalsIgnoreCase('Validazione OK da DL') || nextPhase.equalsIgnoreCase('Validazione KO da DL'))){
+                currentCase.Phase__c = currentPhase; // non sono previsti cambi di fase.
+                newDescription = nowDateFormat + ': Esito ricevuto dal DL.\n';
+                currentCase.Description = newDescription + '\n' + currentDescription;
+            }*/
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
             String message = reqWrp.requestMap.get('MESSAGGIO');
@@ -442,6 +451,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String contoContrattuale = '';
         String sapContractCode = null;
         String containerCaseNumber = '';
+        String herokuCode = '';
         String containerId = '';
         Contract contract;
         ServicePoint__c sp;
@@ -463,6 +473,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             codiceContratto = reqWrp.requestMap.get('CODICE_CONTRATTO');
             contoContrattuale = reqWrp.requestMap.get('CONTO_CONTRATTUALE');
             containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
+            herokuCode = reqWrp.requestMap.get('COD_PRAT_UTENTE');
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }
@@ -495,6 +506,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.Mobile__c = contact?.MobilePhone;
                     currentCase.Email__c = contact?.Email;
                     currentCase.CompanyOwner__c = contact?.CompanyOwner__c;
+                    if(String.isNotBlank(herokuCode) && herokuCode != null){
+                        currentCase.HerokuPracticeCode__c = herokuCode;
+                    }
                     //Aggiunto PhoneNumber
                     currentCase.PhoneNumber__c = contact?.MobilePhone;
                     sp = qrClass.getServicePoint(pod);
@@ -563,7 +577,22 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             currentCase.Phase__c = 'Bozza';
                             currentCase.Status = 'New';
-                        }when else{
+                        }when 'Volture'{
+                            currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
+                            currentCase.Cluster__c = 'Voltura';
+                            if(dataDecorrenza != null){
+                                currentCase.SwitchOutDate__c = Date.valueOf(dataDecorrenza);
+                                if(contract != null && contract.EndDate !=null) {
+                                    Date dataSwitchOut =  Date.valueOf(dataDecorrenza);
+                                    if(dataSwitchOut < contract.EndDate){
+                                        currentCase.EarlyRecess__c = true;
+                                    }
+                                }
+                            }
+                            currentCase.Status = 'In Lavorazione';
+                            currentCase.Phase__c = 'In Lavorazione SAP';
+                        }
+                        when else{
                             throw new HDT_UTL_RichPassException('Errore tecnico nella definizione del RecordType', '04');
                         }
                     }
@@ -691,9 +720,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     }
 
-    private void handleEntityUpdate(HDT_WRP_HerokuPostSalesManager wrapper){
+    private void handleEntityUpdate(HDT_WRP_HerokuPostSalesManager wrapper, Map<String, Object> extraParams){
         String contractCode = wrapper.requestMap.get('VERTRAG');
         String contractStatus = wrapper.requestMap.get('VERTRAG_ST');
+        String oldContractCode = (String) extraParams.get('oldContractCode');
         Date contractEndDate;
         try{
             contractEndDate = Date.valueOf(wrapper.requestMap.get('DT_FINE_VERT'));
@@ -701,13 +731,18 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug('UTL_CLASS_ContractEndDate_error--> '+e.getMessage());
         }
         if(contractCode != null){
-           handleContractUpdate(contractCode,contractStatus,contractEndDate);
+           handleContractUpdate(contractCode, oldContractCode,contractStatus,contractEndDate);
         }
     }
 
-    private void handleContractUpdate(String contractCode,String contractStatus, Date contractEndDate){
+    private void handleContractUpdate(String contractCode, String oldContractCode,String contractStatus, Date contractEndDate){
         try{
-            String queryString = 'SELECT Id, Status FROM Contract WHERE SAPContractCode__c = \''+contractCode+'\'';
+            String queryString = '';
+            if(oldContractCode != null && oldContractCode != contractCode){
+                queryString = 'SELECT Id, Status, SAPContractCode__c FROM Contract WHERE SAPContractCode__c = \''+oldContractCode+'\'';
+            } else{
+                queryString = 'SELECT Id, Status, SAPContractCode__c FROM Contract WHERE SAPContractCode__c = \''+contractCode+'\'';
+            }
             String objectq = 'Contract';
             List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectq);
             Contract contracRecord = (Contract) recordList[0];

@@ -24,6 +24,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return generateSection70(inputs,formParams);
                 }when 'generateSectionReclami'{
                     return generateSectionReclami(inputs,formParams);
+                }when 'handleFlagDeliveryAddress'{
+                    return handleFlagDeliveryAddress(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -33,6 +35,20 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             System.debug('Si è verificato un errore nel richiamo del metodo ' + method + ': ' + ex.getMessage() + ' alla riga ' + ex.getLineNumber());
         }
         return result;
+    }
+
+    private String handleFlagDeliveryAddress(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String context = (String) formParams.get('Contesto');
+        if(!context.equalsIgnoreCase('Order')) return '';
+        String contractCode = HDT_UTL_DocumentalManagement.getValue('Order', 'ContractId', 1, inputs, formParams);
+        if(String.isNotBlank(contractCode))return '';
+        String accountAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'ResidentialStreetName__c', 1, inputs, formParams);
+        String deliveryAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'ShippingStreetName__c', 1, inputs, formParams);
+        String supplyAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'SupplyStreetName__c', 1, inputs, formParams);
+        if(supplyAddress.equalsIgnoreCase(supplyAddress)) return 'IF';
+        if(supplyAddress.equalsIgnoreCase(accountAddress)) return 'SL';
+
+        return '';
     }
 
     private String calculateCompanyCode(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
