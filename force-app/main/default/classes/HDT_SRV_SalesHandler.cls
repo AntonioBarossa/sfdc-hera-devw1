@@ -43,17 +43,16 @@ public with sharing class HDT_SRV_SalesHandler {
                     if (mapRequestFields.get('ATTIVITA') != null) {
                         switch on mapRequestFields.get('ATTIVITA'){
                             when 'Gestione Switch in Ripristinatorio'{
-                                /** Commented for Sit blocking bug */
-                                // HDT_UTL_ActivityCustom.createActivityWithParams(new Map<String,String>{
-                                //     'RecordTypeDeveloperName' => 'HDT_RT_AttivitaGestionali',
-                                //     'Type__c'                 => 'Gestione Switch in Ripristinatorio',
-                                //     'Status__c'               => 'Creata',
-                                //     'ServicePointCode__c'     => mapRequestFields.get('COD_PDR'),
-                                //     'FiscalCode__c'           => mapRequestFields.get('CODICE_FISCALE'),
-                                //     'VATNumber__c'            => mapRequestFields.get('PIVA'),
-                                //     'EffectiveDate__c'        => mapRequestFields.get('DATA_DECORRENZA'),
-                                //     'HerokuPracticeCode__c'   => mapRequestFields.get('COD_PRAT_UTENTE')
-                                // });
+                                HDT_UTL_ActivityCustom.createActivityWithParams(new Map<String,String>{
+                                    'RecordTypeDeveloperName' => 'HDT_RT_AttivitaGestionali',
+                                    'Type__c'                 => 'Gestione Switch in Ripristinatorio',
+                                    'Status__c'               => 'Creata',
+                                    'ServicePointCode__c'     => mapRequestFields.get('COD_PDR'),
+                                    'FiscalCode__c'           => mapRequestFields.get('CODICE_FISCALE'),
+                                    'VATNumber__c'            => mapRequestFields.get('PIVA'),
+                                    'EffectiveDate__c'        => mapRequestFields.get('DATA_DECORRENZA'),
+                                    'HerokuPracticeCode__c'   => mapRequestFields.get('COD_PRAT_UTENTE')
+                                });
                             }
                         }
                     }

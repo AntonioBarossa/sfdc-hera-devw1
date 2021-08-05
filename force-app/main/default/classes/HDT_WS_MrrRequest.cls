@@ -73,16 +73,15 @@ global with sharing class HDT_WS_MrrRequest {
             //if(dataForAttivitaTracciaturaCreation.keySet().size() > 0) HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
             //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività di tracciamento
 
-            /** Commented for sit blocking bug */
-            // for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
-            //     mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
-            //     HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
-            //     mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
-            //     mrrResponseItem.objects.clear();
-            //     if (header.fields.get(0).value == 'sales') {
-            //         mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(request, mrrResponseItem);
-            //     }
-            // }
+            for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
+                mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
+                HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
+                mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+                mrrResponseItem.objects.clear();
+                if (header.fields.get(0).value == 'sales') {
+                    mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(request, mrrResponseItem);
+                }
+            }
 
             if(requestBody.requests[0].header.fields.get(0).value == 'postsales'){
                 if (requestBody.requests[0].header.requestType=='NOTIF_VAS') {
