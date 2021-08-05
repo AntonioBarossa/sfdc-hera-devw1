@@ -2,7 +2,7 @@
  * @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
  * @date 29/06/2021
  * @description Data Factory for Test Classes
- * @history Luis Bispo – 13/07/2021 – Created City Object
+ * @history Lucas Fernandes 05/08/2021 – Created 'createAccountShare' method
  */
 public with sharing class HDT_UTL_DataFactoryTst{
 	//Method to avoid 'ObjectCompatibility' errors from ProcessClick
@@ -694,6 +694,57 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return campaignList;
 	}
 
+
+	//** [START MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem
+
+	public static List<CampaignMemberAssigment__c> createCampaignMemberAssigment (Integer amount,  Boolean doInsert, Boolean active, String name){
+
+		List<CampaignMemberAssigment__c> campaignMemberAssigmentList = new List<CampaignMemberAssigment__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CampaignMemberAssigment__c cma = new CampaignMemberAssigment__c();
+
+			cma.Active__c = active;
+			cma.Name = name;
+
+			campaignMemberAssigmentList.add(cma);
+		}
+
+		if (doInsert){
+
+			insert campaignMemberAssigmentList;
+		}
+
+		return campaignMemberAssigmentList;
+	}
+
+
+	public static List<CampaignMemberAssigmentItem__c> createCampaignMemberAssigmentItem(Integer amount, Boolean doInsert, Id accountId, Id CampaingMemberAssigmentId, String ProcessingType, Decimal PercentageAllocation){
+
+		List<CampaignMemberAssigmentItem__c> campaignMemberAssigmentItemList = new List<CampaignMemberAssigmentItem__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CampaignMemberAssigmentItem__c cma = new CampaignMemberAssigmentItem__c();
+
+			cma.Agency__c = accountId;
+			cma.CampaingMemberAssigment__c = CampaingMemberAssigmentId;
+			cma.PercentageAllocation__c = PercentageAllocation;
+			cma.ProcessingType__c = ProcessingType;
+
+			campaignMemberAssigmentItemList.add(cma);
+		}
+
+		if (doInsert){
+
+			insert campaignMemberAssigmentItemList;
+		}
+
+		return campaignMemberAssigmentItemList;
+	}
+	//** [END MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem
+
 	public static List<CampaignMemberStatus> createCampaignMemberStatus(Integer amount, Boolean doInsert, Id CampaignId){
 
 		List<CampaignMemberStatus> campaignMemberStatusList=new List<CampaignMemberStatus>();
@@ -939,4 +990,44 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		databaseResult = HDT_LC_DocumentalConfigController.databaseInsert(docList, databaseResult);
 	}
 
+	public static List<SBQQ__QuoteLine__c> createQuoteLines(String productId, String quoteId, Integer amount, Boolean doInsert) {
+
+		List<SBQQ__QuoteLine__c> quoteLines = new List<SBQQ__QuoteLine__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+			quoteLines.add(new SBQQ__QuoteLine__c(SBQQ__Quote__c = quoteId, SBQQ__Product__c = productId));
+		}
+
+		if (doInsert) {
+			insert quoteLines;
+		}
+
+		return quoteLines;
+
+	}
+
+	public static List<AccountShare> createAccountShare (Integer Amount, Boolean doInsert, Id AccountId, Id UserOrGroupId) {
+
+		List<AccountShare> accShareList = new List<AccountShare>();
+
+		for (Integer i=0; i<amount; i++){
+
+			AccountShare accShare = new AccountShare();
+
+			accShare.AccountId = AccountId;
+			accShare.UserOrGroupId = UserOrGroupId;
+			accShare.AccountAccessLevel = 'Edit';
+            accShare.OpportunityAccessLevel = 'Edit';
+            accShare.ContactAccessLevel = 'Edit';
+
+			accShareList.add(accShare);
+		}
+
+		if (doInsert){
+
+			insert accShareList;
+		}
+
+		return accShareList;
+	}
 }
