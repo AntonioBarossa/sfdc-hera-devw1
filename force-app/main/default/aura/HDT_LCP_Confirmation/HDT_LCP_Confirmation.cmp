@@ -1,0 +1,64 @@
+<aura:component
+    implements="flexipage:availableForAllPageTypes,lightning:isUrlAddressable,force:hasRecordId,force:hasSObjectName,flexipage:availableForRecordHome"
+    controller="HDT_LC_CampaignsController" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+
+    <aura:attribute name="varId" type="String" />
+    <aura:attribute name="varTabId" type="String" />
+    <div class="slds-card">
+        <aura:if isTrue="{!v.loaded}">
+            <div class="backgroundInverse">
+                <lightning:spinner alternativeText="Loading" size="small" />
+            </div>
+        </aura:if>
+        <!-- <div class="slds-card__body slds-card__body_inner slds-p-top_medium">
+            Hello {!v.varId} {!v.varClose}
+            <lightning:button label="Chiudi" title="Chiudi" onclick="{!c.closedNow}" />
+            <lightning:button  label="Annulla" title="Annulla" onclick="{!c.goBack}" />
+        </div> -->
+    </div>
+
+    <!--Boolean attribute to indicate if modal is open or not 
+       default value is false as modal is closed when page is loaded 
+    -->
+    <aura:attribute name="isModalOpen" type="boolean" default="false" />
+
+    <div class="slds-m-around_xx-large">
+
+
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close"
+                        variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Chiusura Tab</h2>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p><b>Verranna verificata la presenza di eventuali campagne obligatorie per l'account Id: {!v.varId}
+                        </b>
+                    </p>
+                </div>
+                <aura:if isTrue="{!v.loaded}">
+                    <div class="backgroundInverse">
+                        <lightning:spinner alternativeText="Loading" size="small" />
+                    </div>
+                </aura:if>
+                <!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+
+                    <lightning:button label="Chiudi" title="Chiudi" onclick="{!c.closedNow}" />
+                    <!-- <lightning:button label="Annulla" title="Annulla" onclick="{!c.goBack}" /> -->
+
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+    </div>
+</aura:component>
