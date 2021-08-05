@@ -15,16 +15,10 @@ public with sharing class HDT_QR_ContentDocumentLinkTst {
 
         List<ContentVersion> contentVersion = HDT_UTL_DataFactoryTst.createContentVers(1, true);
 
-        ContentDocumentLink contentDocLink = new ContentDocumentLink();
+        Id contentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: contentVersion[0].Id].ContentDocumentId;
 
-        contentDocLink.LinkedEntityId = oppList[0].Id;
-        contentDocLink.ContentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: contentVersion[0].Id].ContentDocumentId;
-        contentDocLink.ShareType = 'V';
-
-        System.debug('Content Document ID: '+[SELECT ContentDocumentId FROM ContentVersion WHERE Id =: contentVersion[0].Id]);
-
-        insert contentDocLink;
-
+        List<ContentDocumentLink> contentDocLinkList = HDT_UTL_DataFactoryTst.createContentDocumentLink(1, true, oppList[0].Id, contentDocumentId);
+        
     }
 
     @isTest

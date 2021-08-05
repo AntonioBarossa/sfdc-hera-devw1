@@ -225,6 +225,10 @@
         <label>Informazioni aggiuntive</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Status</field>
             </layoutItems>
@@ -304,6 +308,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Case.Escalation</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>99</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Case.HDT_SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -358,7 +367,6 @@
         <fields>et4ae5__DateSent__c</fields>
         <fields>et4ae5__DateOpened__c</fields>
         <fields>et4ae5__Contact_ID__c</fields>
-        <fields>BounceType__c</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>

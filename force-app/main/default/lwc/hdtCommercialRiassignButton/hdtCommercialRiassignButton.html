@@ -1,0 +1,9 @@
+<template>
+    <template if:true={isRiassignButton}>
+        <lightning-button onclick={handleSave} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Riassegna Pratica" title="Riassegna"></lightning-button>
+    </template>
+    <template if:true={isApproveFase}>
+        <lightning-button onclick={approve} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Approva" title="Riassegna"></lightning-button>
+        <lightning-button onclick={notapprove} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Rigetta" title="Riassegna"></lightning-button>
+    </template>
+</template>

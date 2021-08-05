@@ -2,7 +2,7 @@
  * @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
  * @date 29/06/2021
  * @description Data Factory for Test Classes
- * @history Luis Bispo – 13/07/2021 – Created City Object
+ * @history Luca Belometti -WR – 05/08/2021 – Created Merhods for creation CampaingMemberAssignment and its relative Item
  */
 public with sharing class HDT_UTL_DataFactoryTst{
 	//Method to avoid 'ObjectCompatibility' errors from ProcessClick
@@ -458,7 +458,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			testCase.ContactId=contactId;
 			testCase.ServicePoint__c=servPointId;
 			testCase.Contract__c=contractId;
-			testCase.VulturePracticeReference__c=orderId;
+			//testCase.VulturePracticeReference__c=orderId;
 			testCase.Cluster__c='Pagamenti';
 
 
@@ -694,6 +694,57 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return campaignList;
 	}
 
+
+	//** [START MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem
+
+	public static List<CampaignMemberAssigment__c> createCampaignMemberAssigment (Integer amount,  Boolean doInsert, Boolean active, String name){
+
+		List<CampaignMemberAssigment__c> campaignMemberAssigmentList = new List<CampaignMemberAssigment__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CampaignMemberAssigment__c cma = new CampaignMemberAssigment__c();
+
+			cma.Active__c = active;
+			cma.Name = name;
+
+			campaignMemberAssigmentList.add(cma);
+		}
+
+		if (doInsert){
+
+			insert campaignMemberAssigmentList;
+		}
+
+		return campaignMemberAssigmentList;
+	}
+
+
+	public static List<CampaignMemberAssigmentItem__c> createCampaignMemberAssigmentItem(Integer amount, Boolean doInsert, Id accountId, Id CampaingMemberAssigmentId, String ProcessingType, Decimal PercentageAllocation){
+
+		List<CampaignMemberAssigmentItem__c> campaignMemberAssigmentItemList = new List<CampaignMemberAssigmentItem__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CampaignMemberAssigmentItem__c cma = new CampaignMemberAssigmentItem__c();
+
+			cma.Agency__c = accountId;
+			cma.CampaingMemberAssigment__c = CampaingMemberAssigmentId;
+			cma.PercentageAllocation__c = PercentageAllocation;
+			cma.ProcessingType__c = ProcessingType;
+
+			campaignMemberAssigmentItemList.add(cma);
+		}
+
+		if (doInsert){
+
+			insert campaignMemberAssigmentItemList;
+		}
+
+		return campaignMemberAssigmentItemList;
+	}
+	//** [END MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem
+
 	public static List<CampaignMemberStatus> createCampaignMemberStatus(Integer amount, Boolean doInsert, Id CampaignId){
 
 		List<CampaignMemberStatus> campaignMemberStatusList=new List<CampaignMemberStatus>();
@@ -772,4 +823,171 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
     }
   
+	public static List<ContentDocumentLink> createContentDocumentLink (Integer Amount, Boolean doInsert, Id OpportunityId, Id ContentDocId) {
+
+		List<ContentDocumentLink> contentDocLinkList = new List<ContentDocumentLink>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ContentDocumentLink contentDocLink = new ContentDocumentLink();
+
+			contentDocLink.LinkedEntityId = OpportunityId;
+			contentDocLink.ContentDocumentId = ContentDocId;
+			contentDocLink.ShareType = 'V';
+
+			contentDocLinkList.add(contentDocLink);
+		}
+
+		if (doInsert){
+
+			insert contentDocLinkList;
+		}
+
+		return contentDocLinkList;
+	}
+
+	public static List<FileTemplate__c> createFileTemplate (Integer Amount, Boolean doInsert) {
+
+		List<FileTemplate__c> ftList = new List<FileTemplate__C>();
+
+		for (Integer i=0; i<amount; i++){
+
+			FileTemplate__c fileTemplate = new FileTemplate__c();
+
+			fileTemplate.HeadLineIndex__c = 1.0;
+			fileTemplate.FileTemplateName__c = 'Test File Template';
+			fileTemplate.FileTemplateApiName__c = 'Test File Template Api';
+			fileTemplate.FileDelimiter__c = ',';
+			fileTemplate.FileExtension__c = '.csv';
+			fileTemplate.FileType__c = 'CSV';
+
+			ftList.add(fileTemplate);
+		}
+
+		if (doInsert){
+
+			insert ftList;
+		}
+
+		return ftList;
+	}
+
+	public static List<FileTemplateColumn__c> createFileTemplateColumn (Integer Amount, Boolean doInsert, Id fileTemplateId) {
+
+		List<FileTemplateColumn__c> ftcList = new List<FileTemplateColumn__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			FileTemplateColumn__c fileTemplateCol = new FileTemplateColumn__c();
+
+			fileTemplateCol.FileTemplate__c = fileTemplateId;
+			fileTemplateCol.HeaderApiName__c = 'Test Header API Name';
+			fileTemplateCol.HeaderName__c = 'Test Header Name';
+			fileTemplateCol.Index__c = 1.0;
+			fileTemplateCol.Mandatory__c = true;
+			fileTemplateCol.DataType__c = 'Text';
+			fileTemplateCol.ValidationRegex__c = 'Test Validation Regex';
+			fileTemplateCol.SobjectType__c = 'Opportunity';
+
+			ftcList.add(fileTemplateCol);
+		}
+
+		if (doInsert){
+
+			insert ftcList;
+		}
+
+		return ftcList;
+	}
+
+	public static List<SaleServiceItem__c> createSaleServiceItem (Integer amount, Boolean doInsert, Id oppId, Id quoteId, Id servicePointId){
+
+		List<SaleServiceItem__c> saleServiceItemList=new List<SaleServiceItem__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SaleServiceItem__c saleServiceItem =new SaleServiceItem__c();
+
+			saleServiceItem.Opportunity__c=oppId;
+			saleServiceItem.Quote__c=quoteId;
+			saleServiceItem.ServicePoint__c=servicePointId;
+
+			saleServiceItemList.add(saleServiceItem);
+		}
+
+		if (doInsert){
+
+			insert saleServiceItemList;
+		}
+
+		return saleServiceItemList;
+	}
+
+	public static List<DocumentalPayloadAdministration__c> createDocumentalPayloadAdm(){
+		List<DocumentalPayloadAdministration__c> lstSobj = new List<DocumentalPayloadAdministration__c>();
+		DocumentalPayloadAdministration__c sobj = new DocumentalPayloadAdministration__c();
+		sobj.IsData__c = false;
+		sobj.Iterative__c = 'NO';
+		sobj.ManageAmount__c = false;
+		sobj.PayloadField__c = 'TESTATA DRIVER';
+		sobj.OrderPayloadField__c = 0;
+		sobj.OrderSection__c = 0;
+		sobj.Type__c = 'DRV01';
+		lstSobj.add(sobj);
+
+		sobj = new DocumentalPayloadAdministration__c();
+		sobj.IsData__c = false;
+		sobj.Expression__c = 'IF|FormParameters.IsFromBatch|=|Y|Batch|Hera';
+		sobj.Iterative__c = '';
+		sobj.ManageAmount__c = false;
+		sobj.PayloadField__c = 'SOURCE';
+		sobj.OrderPayloadField__c = 1;
+		sobj.OrderSection__c = 0;
+		sobj.Type__c = 'DRV01';
+		lstSobj.add(sobj);
+
+		sobj = new DocumentalPayloadAdministration__c();
+		sobj.IsData__c = false;
+		sobj.Iterative__c = '';
+		sobj.ManageAmount__c = false;
+		sobj.PayloadField__c = 'CLUSTER';
+		sobj.OrderPayloadField__c = 2;
+		sobj.OrderSection__c = 0;
+		sobj.Type__c = 'DRV01';
+		sobj.Object1__c = 'Order';
+		sobj.Object2__c = 'Case';
+		sobj.Field1__c = 'Cluster__c';
+		sobj.Field2__c = 'Cluster__c';
+		lstSobj.add(sobj);
+		insert lstSobj;
+		
+		return lstSobj;
+	}
+	
+	public static void createJsonPayload(){
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult wrpPayload = HDT_LC_DocumentalConfigController.controllerHandler();
+	}
+
+	public static void createDriverJson(){
+		Id folderId = [SELECT Id FROM Folder WHERE DeveloperName  =: 'DocumentalPayloadAdministration' LIMIT 1].Id;
+		List<DocumentalPayloadAdministration__c> docPayloadAdminList;
+		docPayloadAdminList = HDT_QR_DocumentalConfiguration.getDocumentalPayloadAdministration(docPayloadAdminList);
+		Map<String, List<DocumentalPayloadAdministration__c>> contextOneMap = new Map<String, List<DocumentalPayloadAdministration__c>>();
+		for(DocumentalPayloadAdministration__c dpa : docPayloadAdminList){
+			if(contextOneMap.containsKey(dpa.Type__c)){
+				contextOneMap.get(dpa.Type__c).add(dpa);
+			} else {
+				contextOneMap.put(dpa.Type__c, new List<DocumentalPayloadAdministration__c>{dpa});
+			}
+		}
+		List<Document> docList = new List<Document>();
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure docOneStructure;
+		docOneStructure = HDT_LC_DocumentalConfigController.convertMapToStructure(contextOneMap, docOneStructure);
+		Document docOne = HDT_LC_DocumentalConfigController.generateDocumentObject(docOneStructure, 'Driver3', folderId);
+		docList.add(docOne);
+		docOneStructure = null;
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult;
+		databaseResult = HDT_LC_DocumentalConfigController.databaseInsert(docList, databaseResult);
+	}
+
 }

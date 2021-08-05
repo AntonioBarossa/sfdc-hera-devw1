@@ -10,11 +10,19 @@
             case "FINISHED":
             case "FINISHED_SCREEN":
                 var toastEvent = $A.get("e.force:showToast");
-                toastEvent.setParams({
-                    "type": "success",
-                    "title": "Successo",
-                    "message": "L'attività è stata sollecitata."
-                });
+                if(event.getParam("outputVariables")[0].value == 'not_remindable') {
+                    toastEvent.setParams({
+                        "type": "successwarning",
+                        "title": "Attenzione",
+                        "message": "L'attività è stata sollecitata o creata in data odierna. Sarà possibile sollecitare nuovamente domani."
+                    });
+                } else {
+                    toastEvent.setParams({
+                        "type": "success",
+                        "title": "Successo",
+                        "message": "L'attività è stata sollecitata."
+                    });
+                }
                 toastEvent.fire();
                 $A.get('e.force:refreshView').fire();
             break;

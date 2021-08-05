@@ -39,4 +39,9 @@ public with sharing class HDT_WRP_DocumentalResponse {
         public String responseStatus;
         public String content;
     }
+
+    public class HDT_WRP_IntesaResponse{
+        public Integer responseCode;
+        public String responseStatus;
+    }
 }

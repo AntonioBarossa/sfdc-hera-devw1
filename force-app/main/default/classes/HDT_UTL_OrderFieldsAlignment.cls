@@ -105,13 +105,49 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         'S3' => 'Iva Split payment 10% Soc. del Gruppo (Cod. S3)',
         'S4' => 'Iva Split payment 22% Soc. del Gruppo (Cod. S4)'
             };
+
+            Map<String,String> mapAcciseEle = new Map<String,String>{
+            'E_IE_M04' => 'Imposta ordinaria Altri Usi (Cod. E_IE_M04)',
+            'E_IE_14A' => 'Imposta C En>50% unità prod (Cod. E_IE_14A)',
+            'E_IE_L11' => 'Imposta Usi Chim Elettrol Metal No Sog. Obbl. (Cod. E_IE_L11)',
+            'E_IE_L10' => 'Imposta Esente Forze Armate NATO (Cod. E_IE_L10)',
+            'E_IE_L03' => 'Imposta FFSS (Cod. E_IE_L03)',
+            'E_IE_L98' => 'Imposta Grossiti EE Non Domest (Cod. E_IE_L98)',
+            'E_IE_L01' => 'Imposta Illum Pubbl (Cod. E_IE_L01)',
+            'E_IE_06C' => 'No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C)',
+            'E_IE_L13' => 'Imposta Opifici (Cod. E_IE_L13)',
+            'E_IE_L06' => 'Imposta esente Prod.EE (Cod. E_IE_L06)',
+            'E_IE_L02' => 'Imposta Sedi Diplomatiche (Cod.E_IE_L02)',
+            'E_IE_L04' => 'Imposta Trasp Urb. (Cod. E_IE_L04)',
+            'E_IE_11D' => 'Imposta % Usi Chim Metall No Sog. Obbl. (Cod. E_IE_11D)',
+            'E_IE_11C' => 'Imposta % Usi Mineral No Sog. Obbl. (Cod. E_IE_11C)',
+            'E_IE_11A' => 'Imposta Usi Mineral No Sog. Obbl. (Cod. E_IE_11A)',
+            'ALTRO' => 'Imposta usi domestici'
+                };
+            
+                Map<String,String> mapAcciseGas = new Map<String,String>{
+                    'G_I09' => 'Imposta ordinaria Altri Usi (Cod. E_IE_M04)',
+                    'G_I15' => 'Imposta C En>50% unità prod (Cod. E_IE_14A)',
+                    'G_I22' => 'Imposta Usi Chim Elettrol Metal No Sog. Obbl. (Cod. E_IE_L11)',
+                    'G_I23' => 'Imposta Esente Forze Armate NATO (Cod. E_IE_L10)',
+                    'G_I24' => 'Imposta FFSS (Cod. E_IE_L03)',
+                    'G_ICD' => 'Imposta Grossiti EE Non Domest (Cod. E_IE_L98)',
+                    'G_ICC10' => 'Imposta Illum Pubbl (Cod. E_IE_L01)',
+                    'G_ICC' => 'No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C)',
+                    'G_I04' => 'Imposta Opifici (Cod. E_IE_L13)',
+                    'G_I21' => 'Imposta esente Prod.EE (Cod. E_IE_L06)',
+                    'G_I25' => 'Imposta Sedi Diplomatiche (Cod.E_IE_L02)',
+                    'G_I26' => 'Imposta Trasp Urb. (Cod. E_IE_L04)',
+                    'ALTRO' => 'Altro'
+                        };
+
         servicePointSrv.checkReadAccess('CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
         List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,SwitchInWinback__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
 
-        orderToUpdate.exciseEle__c =  servicePoint.exciseEle__c;
-        orderToUpdate.ExciseGas__c =  ServicePoint.ExciseGas__c;
+        orderToUpdate.exciseEle__c =  servicePoint.exciseEle__c == 'ALTRO' ? 'Imposta usi domestici' : mapAcciseEle.get(servicePoint.exciseEle__c);
+        orderToUpdate.ExciseGas__c =  ServicePoint.ExciseGas__c == 'ALTRO' ? 'Altro' : mapAcciseGas.get(ServicePoint.ExciseGas__c);
         orderToUpdate.vat__c = mapIvaIdToValue2.get(ServicePoint.Vat__c);
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
         orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
