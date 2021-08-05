@@ -3,8 +3,8 @@ public inherited sharing class HDT_QBL_SelfReadingsOutcome implements Queueable,
     private List<Case> casesToUpdate;
     private List<wrts_prcgvr__Activity__c> activitiesToCreate;
 
-    private static Integer MAX_CASES = 500;
-    private static Integer MAX_ACTIVITIES = 500;
+    private static Integer maxCases = 500;
+    private static Integer maxActivities = 500;
 
     public HDT_QBL_SelfReadingsOutcome(List<Case> casesToUpdate, List<wrts_prcgvr__Activity__c> activitiesToCreate) {
         this.casesToUpdate = casesToUpdate != null ? casesToUpdate : new List<Case>();
@@ -22,13 +22,19 @@ public inherited sharing class HDT_QBL_SelfReadingsOutcome implements Queueable,
         }
 
         List<Case> casesToProcess = new List<Case>();
+        List<Case> casesForHeroku = new List<Case>();
         List<Case> casesToDelegate = new List<Case>();
         List<wrts_prcgvr__Activity__c> activitiesToProcess = new List<wrts_prcgvr__Activity__c>();
         List<wrts_prcgvr__Activity__c> activitiesToDelegate = new List<wrts_prcgvr__Activity__c>();
 
         for (Integer i = 0; i < this.casesToUpdate.size(); i++) {
             Case c = this.casesToUpdate[i];
-            if (i < MAX_CASES) {
+            if (i < maxCases) {
+/*                 if (c.Phase__c == 'Esito OK da SAP') {
+                    casesForHeroku.add(c);
+                } else {
+                    casesToProcess.add(c);
+                } */
                 casesToProcess.add(c);
             } else {
                 casesToDelegate.add(c);
@@ -37,7 +43,7 @@ public inherited sharing class HDT_QBL_SelfReadingsOutcome implements Queueable,
 
         for (Integer i = 0; i < this.activitiesToCreate.size(); i++) {
             wrts_prcgvr__Activity__c act = this.activitiesToCreate[i];
-            if (i < MAX_ACTIVITIES) {
+            if (i < maxActivities) {
                 activitiesToProcess.add(act);
             } else {
                 activitiesToDelegate.add(act);
