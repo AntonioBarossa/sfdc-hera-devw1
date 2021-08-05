@@ -477,7 +477,7 @@ export default class HdtGeneralInfo extends LightningElement {
         let selectedRows = event.detail.selectedRows;
         this.selectedFromCompleteListAgent = (selectedRows[0] !== undefined) ? selectedRows[0] : {};
 
-        console.log('getSelectedFromCompleteListAgent: ', this.selectedFromCompleteListAgent);
+        console.log('getSelectedFromCompleteListAgent: '+ JSON.stringify(this.selectedFromCompleteListAgent));
         this.disabledSave = false;
 
 
@@ -501,6 +501,8 @@ export default class HdtGeneralInfo extends LightningElement {
             //this.template.querySelector('[data-name="Agency__c"]').setAttribute('value', this.selectedFromCompleteList.AgencyName__c);
             this.template.querySelector("[data-id='Agency__c']").value = this.selectedFromCompleteList.AgencyName__c;
             this.template.querySelector("[data-id='CommercialId']").value = this.selectedFromCompleteListAgent.AgentCode__c;
+            this.template.querySelector("[data-id='VendorFirstName__c']").value = this.selectedFromCompleteListAgent.AgentFirstName__c;
+            this.template.querySelector("[data-id='VendorLastName__c']").value = this.selectedFromCompleteListAgent.AgentLastName__c;
 
         }
 
@@ -659,6 +661,3 @@ export default class HdtGeneralInfo extends LightningElement {
     }
 
 }
-
-
-
