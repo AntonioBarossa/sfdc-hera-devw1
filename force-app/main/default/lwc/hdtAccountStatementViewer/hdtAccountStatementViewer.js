@@ -64,6 +64,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     billParameters;
     otherParams;
     startDateString;
+    contractAccount;
 
     totRecs;
     fromRec;
@@ -322,9 +323,10 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.billParameters = event.detail.parameters;
 
         var muleRequestParams = {
-            billingProfile: event.detail.muleRequestParams.billingProfile
+            //billingProfile: event.detail.muleRequestParams.billingProfile
         };
 
+        this.contractAccount = event.detail.muleRequestParams.billingProfile;
         this.otherParams = muleRequestParams;
         this.startDateString = event.detail.muleRequestParams.startDate;
         this.showBillList = true;
@@ -370,9 +372,10 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         }
 
         var muleRequestParams = {
-            billingProfile: selected.contoContrattuale
+            //billingProfile: selected.contoContrattuale
         };
 
+        this.contractAccount = selected.contoContrattuale;
         this.startDateString = selected.dataEmissione;
         this.otherParams = muleRequestParams;
         console.log('>>>>>>>>>>>>>>>> ' + JSON.stringify(this.otherParam));
@@ -383,6 +386,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     billList(event){
         this.billParameters = event.currentTarget.dataset.parameters;
         //this.otherParams = ?;
+        this.contractAccount = '20000000000';
         this.startDateString = '21/01/2021';
         this.showBillList = true;
     }
