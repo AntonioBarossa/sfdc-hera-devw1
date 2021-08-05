@@ -421,6 +421,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.VATNumberUdb__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.RateCategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13383,6 +13388,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.VATfacilitationFlag__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.VATNumberUdb__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
