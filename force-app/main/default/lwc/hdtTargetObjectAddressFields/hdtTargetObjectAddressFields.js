@@ -73,8 +73,8 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     disableCap=false;
     disableCodComuneSap=false;
     disableCodViaSap=false;
-    visibleCopiaResidenza=false;
-    visibleSelezioneIndirizzi=false;
+    @api visibleCopiaResidenza=false;
+    @api visibleSelezioneIndirizzi=false;
     disableFlagVerificato=false;
     boolProvincia=false;
     boolCap = false;

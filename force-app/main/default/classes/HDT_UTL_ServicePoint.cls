@@ -46,12 +46,12 @@ public with sharing class HDT_UTL_ServicePoint {
 			spNew.RequestPhase__c  = mapRes.get('FASE');
 		}
 */
-    if(mapRes.get('ACCISE')!=null){
+    if(mapRes.get('IMPOSTE')!=null){
         if(mapRes.get('DESCRCOMM')=='Gas'){
-            spNew.ExciseGas__c  = mapRes.get('ACCISE');
+            spNew.ExciseGas__c  = mapRes.get('IMPOSTE') != null ? mapRes.get('IMPOSTE') : 'ALTRO';
 
         }else if(mapRes.get('DESCRCOMM')=='Energia Elettrica'){
-        spNew.ExciseEle__c  = mapRes.get('ACCISE');
+        spNew.ExciseEle__c  = mapRes.get('IMPOSTE') != null ? mapRes.get('IMPOSTE') : 'ALTRO';
 
         }
     }

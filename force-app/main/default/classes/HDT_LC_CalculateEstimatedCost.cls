@@ -49,6 +49,7 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
         wrp.fixedQuotes=fixedQuotes;
         Decimal variableAmount =  fixedQuotes.PowerQuote__c*((ord.PowerRequested__c*(ord.PowerAvailable__c>30?1.0:1.1))-ord.PowerAvailable__c);
         wrp.estimatedAmount=(variableAmount+fixedQuotes.DistributorFixedQuote__c+fixedQuotes.SellerFixedQuote__c)*(1+(fixedQuotes.VAT__c/100));
+        wrp.estimatedAmount=wrp.estimatedAmount.setScale(2);
         return;
     }
 
