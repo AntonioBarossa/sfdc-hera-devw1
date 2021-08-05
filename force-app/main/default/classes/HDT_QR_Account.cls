@@ -79,6 +79,13 @@ public inherited sharing class HDT_QR_Account {
         ];
     }
 
+    public List<Account> getAllAccounts() {
+        return [ SELECT Id, Name
+                 FROM Account 
+                 WITH SECURITY_ENFORCED
+                 LIMIT 10000 ];
+    }
+
     public List<Account> getAccountByVat(String vat) {
         return [
             SELECT
