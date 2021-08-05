@@ -206,13 +206,10 @@ public class HDT_SRV_DocumentalManagement{
 		return postelResponse;
 	}
 
-	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeResendDocusignEnvelopeCalloutRequest(String body){
-		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
-		postelResponse = HDT_WS_DocumentalIntegration.submitResendDocusignEnvelopeRequest(body);
-		if (postelResponse.responseCode != 200) {
-			//throw new HDT_UTL_HeraException('Errore Postel nel recupero del documento archiviato');
-		}
-		return postelResponse;
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse executeResendDocusignEnvelopeCalloutRequest(String body){
+		HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
+		responseWrap = HDT_WS_DocumentalIntegration.submitResendDocusignEnvelopeRequest(body);
+		return responseWrap;
 	}
 
 	public static String getTransactionId(String envelopeId){
@@ -369,7 +366,7 @@ public class HDT_SRV_DocumentalManagement{
 			signInfo.status = docusignCustomSettings.Status__c;
 			signInfo.senderProvidedNumbers.add(telephoneNumber);
 			//customerInfo
-			String email = emailCase != null?emailCase:emailOrder;
+			String email = String.isNotBlank(emailCase)?emailCase:emailOrder;
 			String creationUrl = formParams.get('signMode') == 'OTP Remoto'? 'false':'true';
 			String vatCode = HDT_UTL_DocumentalManagement.getValue('Account','VATNumber__c',0,inputs,formParams);
 			String fiscalCode = HDT_UTL_DocumentalManagement.getValue('Account','FiscalCode__c',0,inputs,formParams);
