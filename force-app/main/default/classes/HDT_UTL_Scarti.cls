@@ -23,6 +23,20 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                                                                                             'Errore invio a SAP' => 'CBS_HER004__ERRORE_INVIO_A_SAP_POSTSALES',
                                                                                             'Errore determinazione variante SAP' => 'CBS_HER005__ERRORE_DETERMINAZIONE_VARIANTE_SAP_POSTSALES'};
 
+    static final Map<String, String> ANONIMAMAPPING = new Map<String, String>{ 'Type__c' => 'ATTIVITA',
+                                                                               'CreatedByUsername__c' => 'UTENZA',
+                                                                               'StartDate__c' => 'DATA_EVENTO',
+                                                                               'DiscardDescription__c' => 'ERROR_MESSAGE'};
+
+    static final Map<String, String> TRACCIAMENTOMAPPING = new Map<String, String>{ 'dadefinire' => 'COUNTER',
+                                                                                    'dadefinire' => 'COD_PRAT_UTENTE',
+                                                                                    'dadefinire' => 'CMP',
+                                                                                    'dadefinire' => 'NOTE_ERR',
+                                                                                    'dadefinire' => 'STEP_ERR',
+                                                                                    'dadefinire' => 'NOTA_HK',
+                                                                                    'CreatedByUsername__c' => 'UTENZA',
+                                                                                    'StartDate__c' => 'DATA_EVENTO',
+                                                                                    'DiscardDescription__c' => 'ERROR_MESSAGE'};
     global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
         SObject transition = (SObject) argsMap.get('transition');
@@ -42,18 +56,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         }
 
         return null;
-    }
-
-    public class HDT_WRP_AttivitaTracciaturaData{
-        public String errorMessage {get; set;}
-        public String utenza {get; set;}
-        public String dataEvento {get; set;}
-        public String codPraticaUtente {get; set;}
-        public String recordId {get; set;}
-        public String tipoAttivita {get; set;}
-        public String method {get; set;}
-        public String processCategory {get; set;}
-        public HDT_WRP_AttivitaTracciaturaData(){}
     }
 
     /**
@@ -90,7 +92,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 recordId - Id of a record
     * @return void
     */
-    public static void createAttivitaTracciaturaHeroku(List<HDT_WRP_AttivitaTracciaturaData> sourceData){
+    public static void createAttivitaTracciaturaHeroku(List<Map<String,String>> sourceData){
         System.debug('createAttivitaTracciaturaHeroku start' + sourceData);
         List<wrts_prcgvr__Activity__c> toInsert = new List<wrts_prcgvr__Activity__c>();
         
@@ -98,41 +100,46 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         tracciamentoTemplateNames.addAll(TRACCIAMENTOHEROKUPOSTSALES.values());
         Map<String, wrts_prcgvr__ActivityTemplate__c> templatesMap = getTemplatesMapByName(tracciamentoTemplateNames);
         
-        Map<String, List<HDT_WRP_AttivitaTracciaturaData>> dataPerTemplateCode = new Map<String, List<HDT_WRP_AttivitaTracciaturaData>>(); 
+        Map<String, List<Map<String,String>>> dataPerTemplateCode = new Map<String, List<Map<String,String>>>(); 
 
-        Map<String, HDT_WRP_AttivitaTracciaturaData> dataForSalesHandlingByTemplateCode = new Map<String, HDT_WRP_AttivitaTracciaturaData>();
+        Map<String, Map<String,String>> dataForSalesHandlingByTemplateCode = new Map<String, Map<String,String>>();
 
         wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
         
-        for(HDT_WRP_AttivitaTracciaturaData curData : sourceData){
-            if('Richiesta non identificata'.equalsIgnoreCase(curData.tipoAttivita)){
+        for(Map<String,String> curData : sourceData){
+            if('Richiesta non identificata'.equalsIgnoreCase(curData.get('ATTIVITA'))){
                 wrts_prcgvr__Activity__c newAct = new wrts_prcgvr__Activity__c();
-                newAct.Type__c = curData.tipoAttivita;
-                newAct.CreatedByUsername__c = curData.utenza;
-                newAct.StartDate__c = Date.valueOf(curData.dataEvento);
-                newAct.DiscardDescription__c = curData.errorMessage;
+                for(String curActField : ANONIMAMAPPING.keySet()){
+                    if('StartDate__c'.equalsIgnoreCase(curActField)) newAct.put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
+                    else newAct.put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
+                }
                 toInsert.add(newAct);
-            }
-          
-            else if(TRACCIAMENTOHEROKUSALES.keySet().contains(curData.tipoAttivita)){//va bene controllare solo su una mappa, tanto i keyset sono uguali
-                if('sales'.equalsIgnoreCase(curData.processCategory)) dataForSalesHandlingByTemplateCode.put(curData.recordId, curData);
-                else if('postsales'.equalsIgnoreCase(curData.processCategory)){
-                    String templateCode = templatesMap.get(TRACCIAMENTOHEROKUPOSTSALES.get(curData.tipoAttivita)).wrts_prcgvr__Code__c;
-                    List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(templateCode, new Map<String,Object>{'objectId'=>curData.recordId});
-                    //qui si possono integrare eventuali campi aggiuntivi sull'activity
+            }          
+            else if(TRACCIAMENTOHEROKUSALES.keySet().contains(curData.get('ATTIVITA')) && !String.isBlank(curData.get('RECORD_ID'))){//va bene controllare solo su una mappa, tanto i keyset sono uguali
+                if('sales'.equalsIgnoreCase(curData.get('PROCESS_CATEGORY'))) dataForSalesHandlingByTemplateCode.put(curData.get('RECORD_ID'), curData);
+                else if('postsales'.equalsIgnoreCase(curData.get('PROCESS_CATEGORY'))){
+                    String templateCode = templatesMap.get(TRACCIAMENTOHEROKUPOSTSALES.get(curData.get('ATTIVITA'))).wrts_prcgvr__Code__c;
+                    List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(templateCode, new Map<String,Object>{'objectId'=>curData.get('RECORD_ID')});
+                    for(String curActField : ANONIMAMAPPING.keySet()){
+                        if('StartDate__c'.equalsIgnoreCase(curActField)) activities[0].put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
+                        else activities[0].put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
+                    }
                     toInsert.addAll(activities);
                 }
             }
         }
-
+        
         System.debug('createAttivitaTracciaturaHeroku dataForSalesHandlingByTemplateCode' + dataForSalesHandlingByTemplateCode);
         if(!dataForSalesHandlingByTemplateCode.keySet().isEmpty()){
             Map<Id, Order> orders = new Map<Id, Order>([SELECT Id, OrderNumber FROM Order WHERE OrderNumber IN :dataForSalesHandlingByTemplateCode.keySet()]);
             for(Order curOrder : orders.values()){
-                HDT_WRP_AttivitaTracciaturaData curData = dataForSalesHandlingByTemplateCode.get(curOrder.OrderNumber);
-                String templateCode = templatesMap.get(TRACCIAMENTOHEROKUSALES.get(curData.tipoAttivita)).wrts_prcgvr__Code__c;
+                Map<String,String> curData = dataForSalesHandlingByTemplateCode.get(curOrder.OrderNumber);
+                String templateCode = templatesMap.get(TRACCIAMENTOHEROKUSALES.get(curData.get('ATTIVITA'))).wrts_prcgvr__Code__c;
                 List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(templateCode, new Map<String,Object>{'objectId'=>curOrder.Id});
-                //qui si possono integrare eventuali campi aggiuntivi sull'activity
+                for(String curActField : ANONIMAMAPPING.keySet()){
+                    if('StartDate__c'.equalsIgnoreCase(curActField)) activities[0].put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
+                    else activities[0].put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
+                }
                 toInsert.addAll(activities);
             }
         }
