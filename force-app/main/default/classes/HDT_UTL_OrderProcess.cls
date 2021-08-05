@@ -537,4 +537,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
         }
 
+        public static void updateChildsOrder(List<Order> orderNewList){
+            List<String> orderIds = new List<String>();
+            for(Order o : orderNewList){
+                orderIds.add(o.Id);
+            }
+            List<Order> childOrders = orderQr.getChildOrdersByParentIds(orderIds);
+            List<Order> ordersToUpdate = new List<Order>();
+            for(Order childOr : childOrders){
+             Order order = new Order();
+              order.Id = childOr.Id;
+              order.SignedDate__c = Date.today();
+              order.MethodSignedAccepted__c = 'Web Assist';
+              ordersToUpdate.add(order);
+            }
+         
+            orderSrv.updateRecords(ordersToUpdate);
+      }
 }
