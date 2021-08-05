@@ -20,7 +20,9 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
     @track email;
     @track phone;
     @track address;
-    @track dataLoaded=false;;
+    @track dataLoaded=false;
+    @track showSpinner = false;
+
     connectedCallback(){
         console.log(this.recordId + ' ' + this.objectApiName);
         this.getHistory();
@@ -62,7 +64,7 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
 
     handlePreview(){
         try{
-            //this.showSpinner = true;
+            this.showSpinner = true;
             const formParams = {
                 mode : 'Preview',
                 Archiviato : 'N'
@@ -85,21 +87,23 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
                 if(resultParsed.code === '200' || resultParsed.code === '201'){
                     if(resultParsed.result === '000'){
                         const base64 = resultParsed.base64;
+                        this.showSpinner = false;
                         this.showPdfFromBase64(base64);
                     }else{
-                        //this.showSpinner = false;
+                        this.showSpinner = false;
                         this.showMessage('Attenzione',resultParsed.message,'error');
                     }
                 }else{
-                    //this.showSpinner = false;
+                    this.showSpinner = false;
                     this.showMessage('Attenzione','Errore nella composizione del plico','error');
                 }
             })
             .catch(error => {
-                //this.showSpinner = false;
+                this.showSpinner = false;
                 console.error(error);
             });
         }catch(error){
+            this.showSpinner = false;
             console.error();
         }
     }
