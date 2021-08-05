@@ -2,7 +2,7 @@
  * @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
  * @date 29/06/2021
  * @description Data Factory for Test Classes
- * @history Luis Bispo – 13/07/2021 – Created City Object
+ * @history Luca Belometti -WR – 05/08/2021 – Created Merhods for creation CampaingMemberAssignment and its relative Item
  */
 public with sharing class HDT_UTL_DataFactoryTst{
 	//Method to avoid 'ObjectCompatibility' errors from ProcessClick
@@ -694,6 +694,57 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return campaignList;
 	}
 
+
+	//** [START MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem
+
+	public static List<CampaignMemberAssigment__c> createCampaignMemberAssigment (Integer amount,  Boolean doInsert, Boolean active, String name){
+
+		List<CampaignMemberAssigment__c> campaignMemberAssigmentList = new List<CampaignMemberAssigment__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CampaignMemberAssigment__c cma = new CampaignMemberAssigment__c();
+
+			cma.Active__c = active;
+			cma.Name = name;
+
+			campaignMemberAssigmentList.add(cma);
+		}
+
+		if (doInsert){
+
+			insert campaignMemberAssigmentList;
+		}
+
+		return campaignMemberAssigmentList;
+	}
+
+
+	public static List<CampaignMemberAssigmentItem__c> createCampaignMemberAssigmentItem(Integer amount, Boolean doInsert, Id accountId, Id CampaingMemberAssigmentId, String ProcessingType, Decimal PercentageAllocation){
+
+		List<CampaignMemberAssigmentItem__c> campaignMemberAssigmentItemList = new List<CampaignMemberAssigmentItem__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CampaignMemberAssigmentItem__c cma = new CampaignMemberAssigmentItem__c();
+
+			cma.Agency__c = accountId;
+			cma.CampaingMemberAssigment__c = CampaingMemberAssigmentId;
+			cma.PercentageAllocation__c = PercentageAllocation;
+			cma.ProcessingType__c = ProcessingType;
+
+			campaignMemberAssigmentItemList.add(cma);
+		}
+
+		if (doInsert){
+
+			insert campaignMemberAssigmentItemList;
+		}
+
+		return campaignMemberAssigmentItemList;
+	}
+	//** [END MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem
+
 	public static List<CampaignMemberStatus> createCampaignMemberStatus(Integer amount, Boolean doInsert, Id CampaignId){
 
 		List<CampaignMemberStatus> campaignMemberStatusList=new List<CampaignMemberStatus>();
@@ -847,7 +898,31 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return ftcList;
-  }
+	}
+
+	public static List<SaleServiceItem__c> createSaleServiceItem (Integer amount, Boolean doInsert, Id oppId, Id quoteId, Id servicePointId){
+
+		List<SaleServiceItem__c> saleServiceItemList=new List<SaleServiceItem__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SaleServiceItem__c saleServiceItem =new SaleServiceItem__c();
+
+			saleServiceItem.Opportunity__c=oppId;
+			saleServiceItem.Quote__c=quoteId;
+			saleServiceItem.ServicePoint__c=servicePointId;
+
+			saleServiceItemList.add(saleServiceItem);
+		}
+
+		if (doInsert){
+
+			insert saleServiceItemList;
+		}
+
+		return saleServiceItemList;
+	}
+
 	public static List<DocumentalPayloadAdministration__c> createDocumentalPayloadAdm(){
 		List<DocumentalPayloadAdministration__c> lstSobj = new List<DocumentalPayloadAdministration__c>();
 		DocumentalPayloadAdministration__c sobj = new DocumentalPayloadAdministration__c();
@@ -888,6 +963,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		
 		return lstSobj;
 	}
+	
 	public static void createJsonPayload(){
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult wrpPayload = HDT_LC_DocumentalConfigController.controllerHandler();
 	}
@@ -913,4 +989,5 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult;
 		databaseResult = HDT_LC_DocumentalConfigController.databaseInsert(docList, databaseResult);
 	}
+
 }
