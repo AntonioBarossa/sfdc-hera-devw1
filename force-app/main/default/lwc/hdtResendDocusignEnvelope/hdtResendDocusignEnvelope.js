@@ -23,8 +23,10 @@ export default class HdtResendDocusignEnvelope extends NavigationMixin(Lightning
                 recordId: this.recordId
             }).then(result => {
                 var resultParsed = JSON.parse(result);
+                console.log('result: ' + result);
                 if(resultParsed.outcome === 'OK'){
                     this.closeAction();
+                    this.showSuccessMessage('Re-invio busta effettuato con successo.');
                 }else{
                     if(resultParsed.errorMessage != null && resultParsed.errorMessage != undefined){
                         this.closeAction();
@@ -56,6 +58,16 @@ export default class HdtResendDocusignEnvelope extends NavigationMixin(Lightning
                 title: 'Errore',
                 message: errorMessage,
                 variant: 'error'
+            }),
+        );
+    }
+
+    showSuccessMessage(successMessage){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: '',
+                message: successMessage,
+                variant: 'success'
             }),
         );
     }

@@ -29,7 +29,7 @@ export default class hdtSupplySelection extends LightningElement {
     connectedCallback(){
         
 
-        console.log('connectedCallback START');
+        console.log('connectedCallback START:' + JSON.stringify(this.saleRecord) );
         console.log('targetObject 2*****'+ JSON.stringify(this.targetObject));
         console.log('processType '+ JSON.stringify(this.processType));
         if(this.processType === undefined || this.processType === ''){

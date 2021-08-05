@@ -37,7 +37,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Documenti relativi alla Legge 80.
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
-                orderToUpdate.ServiceCost__c = getFixedFee(order.id, order.RecordType.DeveloperName).setScale(2);
+                System.debug('order.RecordType.DeveloperName' + order.RecordType.DeveloperName);
+                Decimal serCost = getFixedFee(order.id, order.RecordType.DeveloperName);
+                orderToUpdate.ServiceCost__c = serCost != null ? serCost.setScale(2) : null;
             }
             // Calculate Date @Picchiri 20/05/21
             when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn   
@@ -161,7 +163,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Istanza 326.
                     orderToUpdate.Instance326__c = 'Richiesto';
                 }
-                orderToUpdate.ServiceCost__c = getFixedFee(order.Id, order.RecordType.DeveloperName).setScale(2);
+                Decimal serCost = getFixedFee(order.id, order.RecordType.DeveloperName);
+                orderToUpdate.ServiceCost__c = serCost != null ? serCost.setScale(2) : null;
             }
             when 'HDT_RT_AttivazioneConModifica' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
