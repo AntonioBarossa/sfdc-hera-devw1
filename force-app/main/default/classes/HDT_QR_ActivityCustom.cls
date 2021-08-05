@@ -21,12 +21,32 @@ public inherited sharing class HDT_QR_ActivityCustom {
             SELECT
             Id,
             Account__c,
+            status__c,
+            case__c,
+            case__r.phase__c,
             Contact__c,
             Distributor__c,
             AppointmentDate__c
             FROM wrts_prcgvr__Activity__c
             WHERE Id= :activityId
             WITH SECURITY_ENFORCED
+        ];
+    }
+    @AuraEnabled
+    public static wrts_prcgvr__Activity__c getRecordByIdS(String activityId) {
+        return [
+            SELECT
+            Id,
+            Account__c,
+            status__c,
+            case__c,
+            case__r.phase__c,
+            Contact__c,
+            Distributor__c,
+            AppointmentDate__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE Id= :activityId
+            limit 1
         ];
     }
 
