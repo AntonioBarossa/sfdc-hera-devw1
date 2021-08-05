@@ -56,16 +56,52 @@ public inherited sharing class HDT_UTL_Order {
     public static boolean calculateRateCategory(Order ord){
         HDT_QR_Order orQr = new HDT_QR_Order();
         Order o = orQr.getRecordById(ord.id);
+        boolean res = false;
+        String code = '';
         List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c);
-        if(listRate == null || listRate.isEmpty()){
+        for(RateCategory__c r : listRate){
+            if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
+                code = r.CalculatedValue__c;
+                res = true;
+                break;
+            }
+            else if(r.DistributorCode__c != o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Diverso'){
+                code = r.CalculatedValue__c;
+                res = true;
+                break;
+            }
+            else if(r.operatore__c == 'N/A'){
+                code = r.CalculatedValue__c;
+                res = true;
+                break;
+            }
+        }
+        if(!res){
             listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,'N/A');
+            for(RateCategory__c r : listRate){
+                if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
+                    code = r.CalculatedValue__c;
+                    res = true;
+                    break;
+                }
+                else if(r.DistributorCode__c != o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Diverso'){
+                    code = r.CalculatedValue__c;
+                    res = true;
+                    break;
+                }
+                else if(r.operatore__c == 'N/A'){
+                    code = r.CalculatedValue__c;
+                    res = true;
+                    break;
+                }
+            }
         }
         System.debug('**********:' + listRate);
         Map<String,String> mapCal = new Map<String,String>();
-        boolean res = false;
         Order oUp = new Order();
         oUp.id = o.id;
-        if(listRate != null && !listRate.isEmpty()){
+        oUp.rateCategory__c = code;
+        /*if(listRate != null && !listRate.isEmpty()){
             for(RateCategory__c r: listRate){
                 if(mapCal.get(r.operatore__c) != null){
                     mapCal.put(r.operatore__c,r.CalculatedValue__c);
@@ -84,7 +120,8 @@ public inherited sharing class HDT_UTL_Order {
                 res =  true;
             }
 
-        }
+        }*/
+
         if(res){
             ordSrv.updateRecord(oUp);
         }
