@@ -72,11 +72,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>FinalReason__c</field>
-            <table>wrts_prcgvr__Activity__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Mobile__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
@@ -183,11 +178,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CreditCheckResults__c</field>
-            <table>wrts_prcgvr__Activity__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CreditCheckResultsFinal__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -2081,11 +2071,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>UseTypeEnergy__c</field>
-            <table>wrts_prcgvr__Activity__c.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>SupplyStreetToponym__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns>
         <columns>

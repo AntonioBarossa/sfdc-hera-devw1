@@ -458,7 +458,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			testCase.ContactId=contactId;
 			testCase.ServicePoint__c=servPointId;
 			testCase.Contract__c=contractId;
-			testCase.VulturePracticeReference__c=orderId;
+			//testCase.VulturePracticeReference__c=orderId;
 			testCase.Cluster__c='Pagamenti';
 
 
@@ -868,5 +868,202 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return campaignMemberStatusList;
+	}
+
+	public static String getProfileId(String profileName) {
+		String profileId = '';
+
+		if (String.isNotEmpty(profileName)) {
+			profileId = [SELECT Id FROM Profile WHERE Name =: profileName].Id;
+		}
+
+		return profileId;
+	}
+
+	public static String getPermissionSetId(String permissionSetName) {
+        String  permissionSetId = '';
+
+        if (!String.isEmpty(permissionSetName)) {
+            permissionSetId = [SELECT Id FROM permissionSet WHERE Name = :permissionSetName].Id;
+        }
+
+        return permissionSetId;
+    }
+
+	public static User createInternalUser(String profileId, Boolean doInsert) {
+
+        User internalUser = new User(
+            Alias = 'crmuser',
+            FirstName = 'FirstName',
+            LastName = 'LastName',
+            Email = 'crmuser@test.com',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'it',
+            LocaleSidKey = 'it',
+            ProfileId = profileId,
+            TimeZoneSidKey = 'Europe/Rome',
+            UserName = 'crmuser@test.com' + DateTime.now().getTime()
+        );
+        if(doInsert) {
+
+            insert internalUser;
+        }
+        return internalUser;
+    }
+
+	public static PermissionSetAssignment assignPermissionSet(User u, String permissionSet, Boolean doInsert) {
+
+        PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = getPermissionSetId(permissionSet), AssigneeId = u.Id);
+
+        if(doInsert) {
+
+            insert psa;
+
+        }
+
+        return psa;
+
+    }
+  
+	public static List<ContentDocumentLink> createContentDocumentLink (Integer Amount, Boolean doInsert, Id OpportunityId, Id ContentDocId) {
+
+		List<ContentDocumentLink> contentDocLinkList = new List<ContentDocumentLink>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ContentDocumentLink contentDocLink = new ContentDocumentLink();
+
+			contentDocLink.LinkedEntityId = OpportunityId;
+			contentDocLink.ContentDocumentId = ContentDocId;
+			contentDocLink.ShareType = 'V';
+
+			contentDocLinkList.add(contentDocLink);
+		}
+
+		if (doInsert){
+
+			insert contentDocLinkList;
+		}
+
+		return contentDocLinkList;
+	}
+
+	public static List<FileTemplate__c> createFileTemplate (Integer Amount, Boolean doInsert) {
+
+		List<FileTemplate__c> ftList = new List<FileTemplate__C>();
+
+		for (Integer i=0; i<amount; i++){
+
+			FileTemplate__c fileTemplate = new FileTemplate__c();
+
+			fileTemplate.HeadLineIndex__c = 1.0;
+			fileTemplate.FileTemplateName__c = 'Test File Template';
+			fileTemplate.FileTemplateApiName__c = 'Test File Template Api';
+			fileTemplate.FileDelimiter__c = ',';
+			fileTemplate.FileExtension__c = '.csv';
+			fileTemplate.FileType__c = 'CSV';
+
+			ftList.add(fileTemplate);
+		}
+
+		if (doInsert){
+
+			insert ftList;
+		}
+
+		return ftList;
+	}
+
+	public static List<FileTemplateColumn__c> createFileTemplateColumn (Integer Amount, Boolean doInsert, Id fileTemplateId) {
+
+		List<FileTemplateColumn__c> ftcList = new List<FileTemplateColumn__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			FileTemplateColumn__c fileTemplateCol = new FileTemplateColumn__c();
+
+			fileTemplateCol.FileTemplate__c = fileTemplateId;
+			fileTemplateCol.HeaderApiName__c = 'Test Header API Name';
+			fileTemplateCol.HeaderName__c = 'Test Header Name';
+			fileTemplateCol.Index__c = 1.0;
+			fileTemplateCol.Mandatory__c = true;
+			fileTemplateCol.DataType__c = 'Text';
+			fileTemplateCol.ValidationRegex__c = 'Test Validation Regex';
+			fileTemplateCol.SobjectType__c = 'Opportunity';
+
+			ftcList.add(fileTemplateCol);
+		}
+
+		if (doInsert){
+
+			insert ftcList;
+		}
+
+		return ftcList;
+  }
+	public static List<DocumentalPayloadAdministration__c> createDocumentalPayloadAdm(){
+		List<DocumentalPayloadAdministration__c> lstSobj = new List<DocumentalPayloadAdministration__c>();
+		DocumentalPayloadAdministration__c sobj = new DocumentalPayloadAdministration__c();
+		sobj.IsData__c = false;
+		sobj.Iterative__c = 'NO';
+		sobj.ManageAmount__c = false;
+		sobj.PayloadField__c = 'TESTATA DRIVER';
+		sobj.OrderPayloadField__c = 0;
+		sobj.OrderSection__c = 0;
+		sobj.Type__c = 'DRV01';
+		lstSobj.add(sobj);
+
+		sobj = new DocumentalPayloadAdministration__c();
+		sobj.IsData__c = false;
+		sobj.Expression__c = 'IF|FormParameters.IsFromBatch|=|Y|Batch|Hera';
+		sobj.Iterative__c = '';
+		sobj.ManageAmount__c = false;
+		sobj.PayloadField__c = 'SOURCE';
+		sobj.OrderPayloadField__c = 1;
+		sobj.OrderSection__c = 0;
+		sobj.Type__c = 'DRV01';
+		lstSobj.add(sobj);
+
+		sobj = new DocumentalPayloadAdministration__c();
+		sobj.IsData__c = false;
+		sobj.Iterative__c = '';
+		sobj.ManageAmount__c = false;
+		sobj.PayloadField__c = 'CLUSTER';
+		sobj.OrderPayloadField__c = 2;
+		sobj.OrderSection__c = 0;
+		sobj.Type__c = 'DRV01';
+		sobj.Object1__c = 'Order';
+		sobj.Object2__c = 'Case';
+		sobj.Field1__c = 'Cluster__c';
+		sobj.Field2__c = 'Cluster__c';
+		lstSobj.add(sobj);
+		insert lstSobj;
+		
+		return lstSobj;
+	}
+	public static void createJsonPayload(){
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult wrpPayload = HDT_LC_DocumentalConfigController.controllerHandler();
+	}
+
+	public static void createDriverJson(){
+		Id folderId = [SELECT Id FROM Folder WHERE DeveloperName  =: 'DocumentalPayloadAdministration' LIMIT 1].Id;
+		List<DocumentalPayloadAdministration__c> docPayloadAdminList;
+		docPayloadAdminList = HDT_QR_DocumentalConfiguration.getDocumentalPayloadAdministration(docPayloadAdminList);
+		Map<String, List<DocumentalPayloadAdministration__c>> contextOneMap = new Map<String, List<DocumentalPayloadAdministration__c>>();
+		for(DocumentalPayloadAdministration__c dpa : docPayloadAdminList){
+			if(contextOneMap.containsKey(dpa.Type__c)){
+				contextOneMap.get(dpa.Type__c).add(dpa);
+			} else {
+				contextOneMap.put(dpa.Type__c, new List<DocumentalPayloadAdministration__c>{dpa});
+			}
+		}
+		List<Document> docList = new List<Document>();
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure docOneStructure;
+		docOneStructure = HDT_LC_DocumentalConfigController.convertMapToStructure(contextOneMap, docOneStructure);
+		Document docOne = HDT_LC_DocumentalConfigController.generateDocumentObject(docOneStructure, 'Driver3', folderId);
+		docList.add(docOne);
+		docOneStructure = null;
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult;
+		databaseResult = HDT_LC_DocumentalConfigController.databaseInsert(docList, databaseResult);
 	}
 }

@@ -136,6 +136,7 @@
                 <behavior>Readonly</behavior>
                 <field>CancellationReasonCode__c</field>
             </layoutItems>
+           
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -145,6 +146,10 @@
         <editHeading>true</editHeading>
         <label>Informazioni aggiuntive</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Status</field>

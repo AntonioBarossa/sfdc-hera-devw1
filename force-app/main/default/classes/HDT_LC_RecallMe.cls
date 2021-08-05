@@ -1,6 +1,19 @@
 public with sharing class HDT_LC_RecallMe {
+    public static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
+
     @AuraEnabled
-    public static List<wrapReturn> postSlotRequest(DateTime startRange, String idUser, String username, String ecid){
+    public static List<wrapReturn> postSlotRequest(String startRange, String campaignMemberId){
+        system.debug(campaignMemberId);
+        
+        DateTime start = Datetime.valueOfGMT(startRange + ' 00:00:00');
+        System.debug('******:' + start);
+        CampaignMember cm = campaignMemberQr.getEcidById(campaignMemberId);
+        system.debug(cm.Ecid__c);
+        return postSlotRequestEcid(start,null,cm.reitekAgentUserId__c,cm.Ecid__c);
+    }
+
+    @AuraEnabled
+    public static List<wrapReturn> postSlotRequestEcid(DateTime startRange, Long idUser, String username, String ecid){
         String nomeApi = 'postSlotRequest';
         Long startDate = startRange.getTime();
         Long endDate = startRange.addDays(1).getTime();
@@ -22,7 +35,7 @@ public with sharing class HDT_LC_RecallMe {
        req.ecid= ecid;
      //  req.token= token + ;
      //   String body = '{"startRange":"'+startRange+'", "token":"'+token+'","endRange":"'+endRange+'", "appointmentType":"'+appointmentType+'", "idUser":"'+idUser+'", "username":"'+username+'", "ecid":"'+ecid+'"}';
-        HDT_WS_RecallMeResponse wsCall = HDT_WS_RecallMe.postRecallMe(nomeApi, req);
+        HDT_WS_RecallMeResponse wsCall = (HDT_WS_RecallMeResponse)HDT_WS_RecallMe.postRecallMe(nomeApi, req);
         if (wsCall.status == 'success') {
             List<wrapReturn> resList = new List<wrapReturn>();
             
@@ -58,25 +71,39 @@ public with sharing class HDT_LC_RecallMe {
         @AuraEnabled public datetime endDate;
         @AuraEnabled public Integer availability;
     }
-    
+
+
     @AuraEnabled
-    public static String postAppointment(DateTime appointment, String appointmentType, Long idUser, String username, String ecid){
+    public static boolean postAppointment(DateTime appointment, String appointmentType,String campaignMemberId){
+        CampaignMember cm = campaignMemberQr.getEcidById(campaignMemberId);
+        System.debug('HOAHOAHOAO:' + campaignMemberId);
+        try{
+            postAppointmentEcid(appointment,appointmentType, null, cm.reitekAgentUserId__c,cm.Ecid__c);
+            return true;
+        }catch(exception e){
+            return false;
+        }
+    }
+  // String campaignMemberId
+    @AuraEnabled
+    public static String postAppointmentEcid(DateTime appointment, String appointmentType, Long idUser, String username, String ecid){
         String nomeApi = 'postAppointment';
         Long timestamp = appointment.getTime();
        // Long endDate = endRange.getTime();
 
         HDT_WS_RecallMeConfirmRequest req = new HDT_WS_RecallMeConfirmRequest();
-        req.timestamp = Long.valueOf('1626798600000');//timestamp;
+        req.timestamp = timestamp;
         req.appointmentType= appointmentType;
         req.idUser=idUser ;
         req.username= username;
         req.ecid= ecid;
         req.communicationType = 'CALL_AUTOMATIC';
 
-        HDT_WS_Response wsCall = HDT_WS_RecallMe.postRecallMeAppointment(nomeApi, req);
+        System.debug('HOLAAQUI' + req);
+       HDT_WS_Response wsCall = HDT_WS_RecallMe.postRecallMeAppointment(nomeApi, req);
 
         if (wsCall.status == 'success') {
-            System.debug('- - - - - ' + wsCall.status); 
+          System.debug('- - - - - ' + wsCall.status); 
             return wsCall.status;
         } else {
             System.debug('Error: ' + wsCall.errorDetails);

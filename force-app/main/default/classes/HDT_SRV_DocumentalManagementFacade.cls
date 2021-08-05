@@ -46,12 +46,16 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : null;
         String tipoPlico = (String) formParamsMap.get('TipoPlico');
-        //String sendMode = (String) formParamsMap.get('sendMode');
+        String result = '';
         try{
             baseSixtyFour = getBase64(recordId,context,formParams);
-            //if(sendMode.equalsIgnoreCase('E-mail')){
+            Map<String,Object> respMap = (Map<String,Object>) JSON.deserializeUntyped(baseSixtyFour);
+            baseSixtyFour = (String) respMap.get('base64');
+            result = (String) respMap.get('result');
+            if(result == '000'){
                 HDT_SRV_DocumentalManagement.createPublicLinkFuture(recordId,baseSixtyFour,tipoPlico);
-            //}
+            }
+
         }catch(Exception ex){
             System.debug(ex.getMessage());
         }
@@ -128,6 +132,42 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         }
         return JSON.serialize(resultMap);
     }
+
+    public static String resendDocusignEnvelope(String recordId){
+        String body='';
+        String result='';
+        String responseCode;
+        String responseStatus;
+        Map<String,String> resultMap = new Map<String,String>();
+        HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
+        try{
+            body = HDT_SRV_DocumentalManagement.generateResendDocusignEnvelopeRequest(recordId);
+            responseWrap = HDT_SRV_DocumentalManagement.executeResendDocusignEnvelopeCalloutRequest(body);
+            resultMap.put('outcome','OK');
+        }catch(Exception ex){
+            resultMap.put('outcome','KO');
+            resultMap.put('errorMessage', ex.getMessage());
+        }
+        return JSON.serialize(resultMap);
+    }
+
+    /*public static String discardDocusignEnvelope(String envelopeId){
+        String body='';
+        String result='';
+        String responseCode;
+        String responseStatus;
+        Map<String,String> resultMap = new Map<String,String>();
+        HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+        try{
+            body = HDT_SRV_DocumentalManagement.generateDiscardDocusignEnvelopeRequest(recordId);
+            postelResponse = HDT_SRV_DocumentalManagement.executeDiscardDocusignEnvelopeCalloutRequest(body);
+            resultMap.put('outcome','OK');
+        }catch(Exception ex){
+            resultMap.put('outcome','KO');
+            resultMap.put('errorMessage', ex.getMessage());
+        }
+        return JSON.serialize(resultMap);
+    }*/
 
     public static void handleDocusignNotify(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
         String status;
