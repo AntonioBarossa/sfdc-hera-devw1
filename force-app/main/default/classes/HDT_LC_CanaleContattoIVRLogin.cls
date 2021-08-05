@@ -44,7 +44,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
             //mapReturn.put('base64','UFJPVkFET1dOTE9BRFBST1ZB');
             //String s = HDT_LC_DocumentSignatureManager.showOriginalDocument(dc.id);
            // System.debug('*********:'+ s);
-            mapReturn = qrsha.getPlico(dc.id);
+            mapReturn = qrsha.getPlico(dc.id); 
             System.debug('*********:'+ mapReturn);//(Map<String,String>)JSON.deserialize(s, Map<String,String>.class);
            /*  Order ord = orderQr.getRecordById(orderId);
             String recordId = ord.DocumentalActivity__c;
