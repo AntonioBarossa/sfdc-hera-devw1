@@ -16,7 +16,6 @@ public with sharing class HDT_QR_CampaignMemberAssigmentItemTst {
         List<CampaignMemberAssigment__c> campaignMemeberAssignmentList = HDT_UTL_DataFactoryTst.createCampaignMemberAssigment(1, true,true, 'CampaignMemberAssigmentNameTest');
         List<CampaignMemberAssigmentItem__c> campaignMemeberAssignmentItemList = HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true,accList[0].Id,campaignMemeberAssignmentList[0].Id,'Preview',10);
     }
-
     
     @isTest
     private static Void testGetRecordById() {

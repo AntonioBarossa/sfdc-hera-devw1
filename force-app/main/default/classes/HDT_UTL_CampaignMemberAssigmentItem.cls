@@ -32,6 +32,7 @@ public with sharing class HDT_UTL_CampaignMemberAssigmentItem {
             Decimal totalPercentage = queryResultValue + newItemValue;
             //** [END MOD 2021-08-05] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Added this check by 2 vars to avoid the error of null values
             //throw Error if the total is > 100
+            
             if (totalPercentage > 100) {
                 item.addError('trigger error ' + totalPercentage);
             }

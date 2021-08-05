@@ -699,7 +699,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 	public static List<CampaignMemberAssigment__c> createCampaignMemberAssigment (Integer amount,  Boolean doInsert, Boolean active, String name){
 
-		List<CampaignMemberAssigment__c> CampaignMemberAssigmentList = new List<CampaignMemberAssigment__c>();
+		List<CampaignMemberAssigment__c> campaignMemberAssigmentList = new List<CampaignMemberAssigment__c>();
 
 		for (Integer i=0; i<amount; i++){
 
@@ -708,21 +708,21 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			cma.Active__c = active;
 			cma.Name = name;
 
-			CampaignMemberAssigmentList.add(cma);
+			campaignMemberAssigmentList.add(cma);
 		}
 
 		if (doInsert){
 
-			insert CampaignMemberAssigmentList;
+			insert campaignMemberAssigmentList;
 		}
 
-		return CampaignMemberAssigmentList;
+		return campaignMemberAssigmentList;
 	}
 
 
 	public static List<CampaignMemberAssigmentItem__c> createCampaignMemberAssigmentItem(Integer amount, Boolean doInsert, Id accountId, Id CampaingMemberAssigmentId, String ProcessingType, Decimal PercentageAllocation){
 
-		List<CampaignMemberAssigmentItem__c> CampaignMemberAssigmentItemList = new List<CampaignMemberAssigmentItem__c>();
+		List<CampaignMemberAssigmentItem__c> campaignMemberAssigmentItemList = new List<CampaignMemberAssigmentItem__c>();
 
 		for (Integer i=0; i<amount; i++){
 
@@ -733,15 +733,15 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			cma.PercentageAllocation__c = PercentageAllocation;
 			cma.ProcessingType__c = ProcessingType;
 
-			CampaignMemberAssigmentItemList.add(cma);
+			campaignMemberAssigmentItemList.add(cma);
 		}
 
 		if (doInsert){
 
-			insert CampaignMemberAssigmentItemList;
+			insert campaignMemberAssigmentItemList;
 		}
 
-		return CampaignMemberAssigmentItemList;
+		return campaignMemberAssigmentItemList;
 	}
 	//** [END MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem
 
