@@ -731,7 +731,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	public static List<SBQQ__Quote__c> createQuote (Integer amount, Boolean doInsert, Id orderId, Id opportunityId, Id saleId, String type) {
-	public static List<SBQQ__Quote__c> createQuote(Integer amount, Boolean doInsert, Id orderId, Id opportunityId, Id saleId, String type){
 
 		List<SBQQ__Quote__c> quoteList=new List<SBQQ__Quote__c>();
 
