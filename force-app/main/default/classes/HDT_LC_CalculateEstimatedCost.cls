@@ -16,7 +16,8 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
             PowerQuote__c = order.PowerQuote__c,
             AdministrativeBurden__c = order.AdministrativeBurden__c,
             EstimatedVAT__c = order.EstimatedVAT__c,
-            ValidityDateEstimate__c = order.ValidityDateEstimate__c
+            ValidityDateEstimate__c = order.ValidityDateEstimate__c,
+            QuotationType__c = order.QuotationType__c
         ));
     }
 
