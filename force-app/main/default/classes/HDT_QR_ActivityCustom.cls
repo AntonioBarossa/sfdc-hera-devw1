@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 04/06/2021
+* @description Apex class HDT_QR_ActivityCustom
+* @history Keltin Mesonjesi – 04/06/2021 – Created class
+*/
 public inherited sharing class HDT_QR_ActivityCustom {
     public static List<wrts_prcgvr__Activity__c> getRecordByTypeAndStatusAndAccountAndServicePoint(String type, String status, String accountId, String servicePointCode) {
         return [
