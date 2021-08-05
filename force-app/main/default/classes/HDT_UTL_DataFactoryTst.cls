@@ -2,7 +2,7 @@
  * @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
  * @date 29/06/2021
  * @description Data Factory for Test Classes
- * @history Luis Bispo – 13/07/2021 – Created City Object
+ * @history Luca Belometti -WR – 05/08/2021 – Created Merhods for creation CampaingMemberAssignment and its relative Item
  */
 public with sharing class HDT_UTL_DataFactoryTst{
 	//Method to avoid 'ObjectCompatibility' errors from ProcessClick
@@ -693,6 +693,57 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return campaignList;
 	}
+
+
+	//** [START MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem
+
+	public static List<CampaignMemberAssigment__c> createCampaignMemberAssigment (Integer amount,  Boolean doInsert, Boolean active, String name){
+
+		List<CampaignMemberAssigment__c> CampaignMemberAssigmentList = new List<CampaignMemberAssigment__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CampaignMemberAssigment__c cma = new CampaignMemberAssigment__c();
+
+			cma.Active__c = active;
+			cma.Name = name;
+
+			CampaignMemberAssigmentList.add(cma);
+		}
+
+		if (doInsert){
+
+			insert CampaignMemberAssigmentList;
+		}
+
+		return CampaignMemberAssigmentList;
+	}
+
+
+	public static List<CampaignMemberAssigmentItem__c> createCampaignMemberAssigmentItem(Integer amount, Boolean doInsert, Id accountId, Id CampaingMemberAssigmentId, String ProcessingType, Decimal PercentageAllocation){
+
+		List<CampaignMemberAssigmentItem__c> CampaignMemberAssigmentItemList = new List<CampaignMemberAssigmentItem__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CampaignMemberAssigmentItem__c cma = new CampaignMemberAssigmentItem__c();
+
+			cma.Agency__c = accountId;
+			cma.CampaingMemberAssigment__c = CampaingMemberAssigmentId;
+			cma.PercentageAllocation__c = PercentageAllocation;
+			cma.ProcessingType__c = ProcessingType;
+
+			CampaignMemberAssigmentItemList.add(cma);
+		}
+
+		if (doInsert){
+
+			insert CampaignMemberAssigmentItemList;
+		}
+
+		return CampaignMemberAssigmentItemList;
+	}
+	//** [END MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem
 
 	public static List<CampaignMemberStatus> createCampaignMemberStatus(Integer amount, Boolean doInsert, Id CampaignId){
 
