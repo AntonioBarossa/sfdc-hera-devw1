@@ -91,6 +91,8 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
         try{
             wrapper = await getQuoteTypeMtd({ord:this.order});
             this.quoteType=wrapper.quoteType;
+            console.log(wrapper.quoteType);
+            console.log(this.quoteType);
             if(this.isRapido && wrapper.estimatedAmount!=null){
                 this.estimatedVAT=wrapper.fixedQuotes.VAT__c;
                 this.validityDateEstimate=wrapper.validityDate;
