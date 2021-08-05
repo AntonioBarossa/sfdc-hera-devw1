@@ -155,11 +155,11 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
                 }else{
                     validated= false;        
                 }
-            }else if(element.fieldName=="ReassignmentReason__c"){
+            }/*else if(element.fieldName=="ReassignmentReason__c"){
                 if(element.value!= null){
                     cs.ReassignmentReason__c=element.value;
                 }
-            }
+            }*/
         },this);
         if(this.selectedOperationType != null && this.selectedOperationType != undefined && this.selectedOperationType!= "" ){
             cs.OperationType__c = this.selectedOperationType;

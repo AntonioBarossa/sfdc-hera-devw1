@@ -1103,12 +1103,19 @@
         <defaultConnectorLabel>Non Da Inviare</defaultConnectorLabel>
         <rules>
             <name>Da_Inviare</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Check_Documenti.phase</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Da Inviare</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Check_Documenti.phase</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Attesa Modulo Firmato</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1128,12 +1135,19 @@
         <defaultConnectorLabel>Non Da Inviare</defaultConnectorLabel>
         <rules>
             <name>Da_Inviare_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Check_Documenti_0.phase</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Da Inviare</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Check_Documenti_0.phase</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Attesa Modulo Firmato</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1153,12 +1167,19 @@
         <defaultConnectorLabel>Non Da Inviare</defaultConnectorLabel>
         <rules>
             <name>Da_Inviare_0_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Check_Documenti_1.phase</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Da Inviare</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Check_Documenti_1.phase</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Attesa Modulo Firmato</stringValue>
                 </rightValue>
             </conditions>
             <connector>
