@@ -15,7 +15,13 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
             //if(String.valueOf(documentCategory) == 'solleciti'){
             HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
             httpObj.headersMap = new Map<String, String>();
-            httpObj.endPoint = 'callout:docComunicationsSearch';    
+
+            if(String.valueOf(documentCategory) == 'Bollette'){
+                httpObj.endPoint = 'callout:documentaryBillsSearch';
+            } else {
+                httpObj.endPoint = 'callout:docComunicationsSearch';
+            }
+
             httpObj.httpMethod = 'POST';
             httpObj.headersMap.put('Content-Type', 'application/json');
 
@@ -53,14 +59,34 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
         return JSON.serialize(wsObj);
     }
 
-    public static HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj sendFileToPrint(String dataList){
+    public static HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj sendFileToPrint(String body){
         System.debug('# saveNewOfferConfigured #');
-        System.debug(dataList);
+        System.debug('>>> body: ' + body);
 
         HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj responseObj = new HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj();
 
         try{
-            HDT_WS_EngageOnePrint.HDT_WRP_ReturnObj returnObj = HDT_WS_EngageOnePrint.sendFile(dataList);
+            //String bodyString = '';
+            //bodyString += '{';
+            //bodyString += '"billNumber": "",';
+            //bodyString += '"channel": "",';
+            //bodyString += '"date": "",';
+            //bodyString += '"documentType": "",';
+            //bodyString += '"company": ""';
+            //bodyString += '}';
+
+            HttpRequest req = new HttpRequest();
+            //req.setEndpoint('https://monted-dev-ed.my.salesforce.com/services/apexrest/getFileToPrint/0');
+            req.setEndpoint('callout:documentaryInvoices');
+            req.setMethod('POST');
+            //req.setHeader('Authorization', 'Bearer ' + Label.MockSessionId);
+            req.setHeader('Content-Type', 'application/json');
+            req.setbody(body);
+            req.setTimeout(120000); // timeout in milliseconds
+
+            HDT_WS_DocumentaryInvoices.HDT_WRP_ReturnObj returnObj = HDT_WS_DocumentaryInvoices.sendFile(req);
+
+            //HDT_WS_EngageOnePrint.HDT_WRP_ReturnObj returnObj = HDT_WS_EngageOnePrint.sendFile(dataList);
             responseObj.success = returnObj.success;
             responseObj.bodyBase64 = returnObj.bodyBase64;
             responseObj.message = returnObj.message;

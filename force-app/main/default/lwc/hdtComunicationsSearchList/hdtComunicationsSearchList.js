@@ -42,6 +42,13 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         startDate: '',
         endDate: ''
     };
+    docInvoiceObj = {
+        billNumber: 'test',
+        channel: 'test',
+        date: 'test',
+        documentType: 'test',
+        company: 'test'
+    };
     recordValue;
     url;
     fileName;
@@ -226,7 +233,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         }
 
         this.spinner = true;
-        this.sendToApex(JSON.stringify(selected));
+        this.sendToApex(JSON.stringify(this.docInvoiceObj));
     }
 
     closeModal(event){
@@ -239,9 +246,10 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         this.dispatchEvent(closeEvent);
     }
 
-    sendToApex(toPrint){
+    sendToApex(bodyString){
         console.log('# sendToApex #');
-        sendFileToPrint({dataList: toPrint})
+        console.log('>>> TO SEND ' + bodyString);
+        sendFileToPrint({body: bodyString})
         .then(result => {
             console.log('# save success #');
             console.log('>>> resp: ' + result.success);
