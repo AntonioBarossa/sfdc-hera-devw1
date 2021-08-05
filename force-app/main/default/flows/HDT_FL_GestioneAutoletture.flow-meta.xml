@@ -149,7 +149,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Mono_da_ritipizzare</name>
+            <name>Autolettura_da_processo_Multi_oraria</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Refresh_Case.Type</leftValueReference>
@@ -162,13 +162,13 @@
                 <leftValueReference>hdtSelfReadingComponent.isMono</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Revert_to_Lettura_da_Cliente</targetReference>
+                <targetReference>Annullamento_Autolettura_Multi_oraria</targetReference>
             </connector>
-            <label>Mono da ritipizzare</label>
+            <label>Autolettura da processo Multi-oraria</label>
         </rules>
     </decisions>
     <decisions>
@@ -380,8 +380,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordLookups>
         <name>Calcolo_Codice_Causale_Lettura_da_Voltura</name>
         <label>Calcolo Codice Causale Lettura da Voltura</label>
-        <locationX>1013</locationX>
-        <locationY>176</locationY>
+        <locationX>1026</locationX>
+        <locationY>179</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Codice_Causale_da_voltura</targetReference>
@@ -476,13 +476,11 @@ TODO: Formula da adeguare in Wave 2.</description>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Revert_to_Lettura_da_Cliente</name>
-        <label>Revert to Lettura da Cliente</label>
-        <locationX>1806</locationX>
-        <locationY>255</locationY>
-        <connector>
-            <targetReference>Refresh_Case_Final</targetReference>
-        </connector>
+        <description>Il tracciato del DL prevede solo autoletture da processo ELE mono-orario, in caso di multi annulliamo il Case che rimane solo su sfdc per tracciatura.</description>
+        <name>Annullamento_Autolettura_Multi_oraria</name>
+        <label>Annullamento Autolettura Multi-oraria</label>
+        <locationX>1684</locationX>
+        <locationY>214</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -492,9 +490,21 @@ TODO: Formula da adeguare in Wave 2.</description>
             </value>
         </filters>
         <inputAssignments>
-            <field>Type</field>
+            <field>CancellationNote__c</field>
             <value>
-                <stringValue>Autolettura da cliente</stringValue>
+                <stringValue>Lettura di processo multi-orario non acquisibile dal DL.</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CancellationReason__c</field>
+            <value>
+                <stringValue>Autolettura non acquisibile</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza Annullata</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
