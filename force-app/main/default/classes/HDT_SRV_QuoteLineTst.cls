@@ -11,9 +11,8 @@ public class HDT_SRV_QuoteLineTst{
 	static void setup(){
 
 		Id standardUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.HERA_STANDARD_USER_NAME);
-		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.HERA_STANDARD_USER_NAME);
 
-		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(standardUserProfileId, false);
 
 		internalUser.UserPermissionsMarketingUser=true;
 
@@ -69,23 +68,8 @@ public class HDT_SRV_QuoteLineTst{
 
 			update orders;
 
-			Quote tQuote=new Quote();
-			tQuote.Name='test';
-			tQuote.OpportunityId=opportunities[0].Id;
-			tquote.Pricebook2Id=pricebookId;
-
-			insert tQuote;
-
-			List<QuoteLineItem> quoteLineItems=new List<QuoteLineItem>();
-			QuoteLineItem quoteLineItem=new QuoteLineItem();
-			quoteLineItem.Description='test';
-			quoteLineItem.QuoteId=tQuote.Id;
-			quoteLineItem.PricebookEntryId=pricebookEntry[0].Id;
-			quoteLineItem.Quantity=1;
-			quoteLineItem.UnitPrice=10;
-			quoteLineItem.Product2=products[0];
-
-			insert quoteLineItem;
+			HDT_UTL_DataFactoryTst.createQuoteLines(products.get(0).Id, quotes.get(0).Id, 2, true);
+			
 		}
 	}
 
@@ -104,11 +88,6 @@ public class HDT_SRV_QuoteLineTst{
 		System.runAs(u){
 			tstQuoteLineSrv.checkAccessInit('SupplyCity__c, SBQQ__Quote__c', 'create');
 		}
-
-
-		// System.assertEquals('', '', '');
-
-		// System.assertNotEquals('', '');
 
 		Test.stopTest();
 	}
@@ -129,10 +108,6 @@ public class HDT_SRV_QuoteLineTst{
 			tstQuoteLineSrv.checkReadAccess('SupplyCity__c, SBQQ__Quote__c');
 		}
 
-		// System.assertEquals('', '', '');
-
-		// System.assertNotEquals('', '');
-
 		Test.stopTest();
 	}
 
@@ -151,10 +126,6 @@ public class HDT_SRV_QuoteLineTst{
 		System.runAs(u){
 			tstQuoteLineSrv.checkCreateAccess('SupplyCity__c, SBQQ__Quote__c');
 		}
-
-		// System.assertEquals('', '', '');
-
-		// System.assertNotEquals('', '');
 
 		Test.stopTest();
 	}
@@ -176,10 +147,6 @@ public class HDT_SRV_QuoteLineTst{
 			tstQuoteLineSrv.checkUpdateAccess('SupplyCity__c, SBQQ__Quote__c');
 		}
 
-		// System.assertEquals('', '', '');
-
-		// System.assertNotEquals('', '');
-
 		Test.stopTest();
 	}
 
@@ -196,52 +163,52 @@ public class HDT_SRV_QuoteLineTst{
 
 			Test.startTest();
 
-			SBQQ__Quote__c tQuote=[SELECT Id, SBQQ__Type__c
-			                       FROM SBQQ__Quote__c
-			                       Where SBQQ__Type__c='Amendment'
-			                       LIMIT 1];
+				SBQQ__Quote__c tQuote=[SELECT Id, SBQQ__Type__c
+									FROM SBQQ__Quote__c
+									Where SBQQ__Type__c='Amendment'
+									LIMIT 1];
 
-			Product2 tProduct=[SELECT Id, Name
-			                   FROM Product2 
-			                   WHERE Name='POD'
-			                   LIMIT 1];
+				Product2 tProduct=[SELECT Id, Name
+								FROM Product2 
+								WHERE Name='POD'
+								LIMIT 1];
 
-			ServicePoint__c tServPoint=[SELECT Id, ServicePointCode__c
-			                            FROM ServicePoint__c
-			                            WHERE ServicePointCode__c='testServicePointCode'
-			                            LIMIT 1];
+				ServicePoint__c tServPoint=[SELECT Id, ServicePointCode__c
+											FROM ServicePoint__c
+											WHERE ServicePointCode__c='testServicePointCode'
+											LIMIT 1];
 
-			BillingProfile__c tBillProfile=[SELECT Id
-			                                FROM BillingProfile__c
-			                                LIMIT 1];
+				BillingProfile__c tBillProfile=[SELECT Id
+												FROM BillingProfile__c
+												LIMIT 1];
 
-			Account tAccount=[SELECT Id, CompanyOwner__c
-			                  FROM Account
-			                  WHERE CompanyOwner__c='HERA COMM'
-			                  LIMIT 1];
+				Account tAccount=[SELECT Id, CompanyOwner__c
+								FROM Account
+								WHERE CompanyOwner__c='HERA COMM'
+								LIMIT 1];
 
-			List<SBQQ__QuoteLine__c> quoteLines=new List<SBQQ__QuoteLine__c>();
-			SBQQ__QuoteLine__c quoteLine=new SBQQ__QuoteLine__c();
-			quoteLine.SBQQ__Quote__c=tQuote.Id;
-			quoteLine.SBQQ__Product__c=tProduct.Id;
-			quoteLine.ServicePoint__c=tServPoint.Id;
-			quoteLine.SupplyCity__c='test city';
-			quoteLine.BillingProfile__c=tBillProfile.Id;
-			quoteLine.Agency__c=tAccount.Id;
-			quoteLine.OwnerAC__c='Si';
+				List<SBQQ__QuoteLine__c> quoteLines=new List<SBQQ__QuoteLine__c>();
+				SBQQ__QuoteLine__c quoteLine=new SBQQ__QuoteLine__c();
+				quoteLine.SBQQ__Quote__c=tQuote.Id;
+				quoteLine.SBQQ__Product__c=tProduct.Id;
+				quoteLine.ServicePoint__c=tServPoint.Id;
+				quoteLine.SupplyCity__c='test city';
+				quoteLine.BillingProfile__c=tBillProfile.Id;
+				quoteLine.Agency__c=tAccount.Id;
+				quoteLine.OwnerAC__c='Si';
 
-			quoteLines.add(quoteLine);
+				quoteLines.add(quoteLine);
 
 
-			HDT_SRV_QuoteLine tstQuoteLineSrv=new HDT_SRV_QuoteLine();
+				HDT_SRV_QuoteLine tstQuoteLineSrv=new HDT_SRV_QuoteLine();
 
-			List<SBQQ__QuoteLine__c> quotLinTest=tstQuoteLineSrv.createRecords(quoteLines);
+				List<SBQQ__QuoteLine__c> quotLinTest=tstQuoteLineSrv.createRecords(quoteLines);
 
-			System.debug('quotLinTest = '+quotLinTest);
+				System.debug('quotLinTest = '+quotLinTest);
 
-			System.assertEquals('test city', quotLinTest[0].SupplyCity__c, 'Quote Line not created');
+				System.assertEquals('test city', quotLinTest[0].SupplyCity__c, 'Quote Line not created');
 
-			System.assertNotEquals('', quotLinTest[0].SupplyCity__c);
+				System.assertNotEquals('', quotLinTest[0].SupplyCity__c);
 
 			Test.stopTest();
 
@@ -261,57 +228,22 @@ public class HDT_SRV_QuoteLineTst{
 
 			Test.startTest();
 
-			SBQQ__Quote__c tQuote=[SELECT Id, SBQQ__Type__c
-			                       FROM SBQQ__Quote__c
-			                       Where SBQQ__Type__c='Amendment'
-			                       LIMIT 1];
+				SBQQ__QuoteLine__c existingQuoteLine = [SELECT Id, SBQQ__Description__c FROM SBQQ__QuoteLine__c WHERE CreatedbyId = :u.Id LIMIT 1];
 
-			Product2 tProduct=[SELECT Id, Name
-			                   FROM Product2 
-			                   WHERE Name='POD'
-			                   LIMIT 1];
+				SBQQ__QuoteLine__c quoteLineToUpdate = new SBQQ__QuoteLine__c(Id = existingQuoteLine.Id, SBQQ__Description__c = 'test description');
 
-			ServicePoint__c tServPoint=[SELECT Id, ServicePointCode__c
-			                            FROM ServicePoint__c
-			                            WHERE ServicePointCode__c='testServicePointCode'
-			                            LIMIT 1];
+				HDT_SRV_QuoteLine tstQuoteLineSrv=new HDT_SRV_QuoteLine();
+				
 
-			BillingProfile__c tBillProfile=[SELECT Id
-			                                FROM BillingProfile__c
-			                                LIMIT 1];
+				tstQuoteLineSrv.updateRecord(quoteLineToUpdate);	
 
-			Account tAccount=[SELECT Id, CompanyOwner__c
-			                  FROM Account
-			                  WHERE CompanyOwner__c='HERA COMM'
-			                  LIMIT 1];
+				
 
-			SBQQ__QuoteLine__c quoteLine=new SBQQ__QuoteLine__c();
-			quoteLine.SBQQ__Quote__c=tQuote.Id;
-			quoteLine.SBQQ__Product__c=tProduct.Id;
-			quoteLine.ServicePoint__c=tServPoint.Id;
-			quoteLine.SupplyCity__c='test city';
-			quoteLine.BillingProfile__c=tBillProfile.Id;
-			quoteLine.Agency__c=tAccount.Id;
-			quoteLine.OwnerAC__c='Si';
+				SBQQ__QuoteLine__c tstUpdQuoteLine=[SELECT Id, SBQQ__Description__c
+													FROM SBQQ__QuoteLine__c
+													WHERE Id =: existingQuoteLine.Id];
 
-			insert quoteline;
-
-			quoteline.SBQQ__Description__c='test@test.com';
-
-			HDT_SRV_QuoteLine tstQuoteLineSrv=new HDT_SRV_QuoteLine();
-
-			tstQuoteLineSrv.updateRecord(quoteLine);
-
-			SBQQ__QuoteLine__c tstUpdQuoteLine=[SELECT Id, SBQQ__Description__c
-			                                    FROM SBQQ__QuoteLine__c
-			                                    WHERE Id=:quoteline.id
-			                                    LIMIT 1];
-
-			System.debug('tstUpdQuoteLine = '+tstUpdQuoteLine);
-
-			//System.assertEquals('test updated city', tstUpdQuoteLine.SupplyCity__c, 'Quote Line not updated');
-
-			//System.assertNotEquals('', tstUpdQuoteLine.SupplyCity__c);
+				System.assertEquals(quoteLineToUpdate.SBQQ__Description__c, tstUpdQuoteLine.SBQQ__Description__c, 'Quote Line was not updated');
 
 			Test.stopTest();
 
@@ -331,64 +263,23 @@ public class HDT_SRV_QuoteLineTst{
 
 			Test.startTest();
 
-			SBQQ__Quote__c tQuote=[SELECT Id, SBQQ__Type__c
-			                       FROM SBQQ__Quote__c
-			                       Where SBQQ__Type__c='Amendment'
-			                       LIMIT 1];
+				List<SBQQ__QuoteLine__c> existingQuoteLines = [SELECT Id, SBQQ__Description__c FROM SBQQ__QuoteLine__c WHERE CreatedbyId = :u.Id LIMIT 2];
 
-			Product2 tProduct=[SELECT Id, Name
-			                   FROM Product2 
-			                   WHERE Name='POD'
-			                   LIMIT 1];
+				List<SBQQ__QuoteLine__c> quoteLinesToUpdate = new List<SBQQ__QuoteLine__c>();
 
-			ServicePoint__c tServPoint=[SELECT Id, ServicePointCode__c
-			                            FROM ServicePoint__c
-			                            WHERE ServicePointCode__c='testServicePointCode'
-			                            LIMIT 1];
+				HDT_SRV_QuoteLine tstQuoteLineSrv=new HDT_SRV_QuoteLine();
 
-			BillingProfile__c tBillProfile=[SELECT Id
-			                                FROM BillingProfile__c
-			                                LIMIT 1];
+				for (SBQQ__QuoteLine__c ql : existingQuoteLines) {
+					
+					quoteLinesToUpdate.add(new SBQQ__QuoteLine__c(Id = ql.Id, SBQQ__Description__c = 'test description' + ql.Id));
+				}
 
-			Account tAccount=[SELECT Id, CompanyOwner__c
-			                  FROM Account
-			                  WHERE CompanyOwner__c='HERA COMM'
-			                  LIMIT 1];
+				tstQuoteLineSrv.updateRecords(quoteLinesToUpdate);
 
-			List<SBQQ__QuoteLine__c> quoteLines=new List<SBQQ__QuoteLine__c>();
-			SBQQ__QuoteLine__c quoteLine=new SBQQ__QuoteLine__c();
-			quoteLine.SBQQ__Quote__c=tQuote.Id;
-			quoteLine.SBQQ__Product__c=tProduct.Id;
-			quoteLine.ServicePoint__c=tServPoint.Id;
-			quoteLine.SupplyCity__c='test city';
-			quoteLine.BillingProfile__c=tBillProfile.Id;
-			quoteLine.Agency__c=tAccount.Id;
-			quoteLine.OwnerAC__c='Si';
+				List<SBQQ__QuoteLine__c> tstUpdQuoteLines=[SELECT Id, SBQQ__Description__c FROM SBQQ__QuoteLine__c WHERE Id IN :existingQuoteLines];
 
-			quoteLines.add(quoteLine);
-
-
-			insert quoteLines;
-
-			quoteline.EmailRecipientVAS__c='test@test.com';
-
-			quoteLines.add(quoteLine);
-
-
-			HDT_SRV_QuoteLine tstQuoteLineSrv=new HDT_SRV_QuoteLine();
-
-			tstQuoteLineSrv.updateRecords(quoteLines);
-
-			SBQQ__QuoteLine__c tstUpdQuoteLine=[SELECT Id, EmailRecipientVAS__c
-			                                    FROM SBQQ__QuoteLine__c
-			                                    WHERE EmailRecipientVAS__c='test@test.com'
-			                                    LIMIT 1];
-
-			System.debug('tstUpdQuoteLine = '+tstUpdQuoteLine);
-
-			//System.assertEquals('test updated city', tstUpdQuoteLine.SupplyCity__c, 'Quote Line not updated');
-
-			//System.assertNotEquals('', tstUpdQuoteLine.SupplyCity__c);
+				System.assertEquals('test description' + tstUpdQuoteLines.get(0).Id, tstUpdQuoteLines.get(0).SBQQ__Description__c, 'Quote Lines [1] were not updated');
+				System.assertEquals('test description' + tstUpdQuoteLines.get(1).Id, tstUpdQuoteLines.get(1).SBQQ__Description__c, 'Quote Lines [2] were not updated');
 
 			Test.stopTest();
 
@@ -408,54 +299,16 @@ public class HDT_SRV_QuoteLineTst{
 
 			Test.startTest();
 
-			List<SBQQ__Quote__c> tQuote=[SELECT Id, SBQQ__Type__c
-			                             FROM SBQQ__Quote__c
-			                             Where SBQQ__Type__c='Amendment'
-			                             LIMIT 1];
+				List<SBQQ__QuoteLine__c> existingQuoteLines = [SELECT Id, SBQQ__Description__c, SBQQ__Quote__c, SBQQ__Quote__r.Id FROM SBQQ__QuoteLine__c WHERE CreatedbyId = :u.Id LIMIT 2];
+				SBQQ__Quote__c quote = new SBQQ__Quote__c(Id = existingQuoteLines.get(0).SBQQ__Quote__c);
 
-			Product2 tProduct=[SELECT Id, Name
-			                   FROM Product2 
-			                   WHERE Name='POD'
-			                   LIMIT 1];
+				HDT_SRV_QuoteLine tstQuoteLineSrv = new HDT_SRV_QuoteLine();
 
-			ServicePoint__c tServPoint=[SELECT Id, ServicePointCode__c
-			                            FROM ServicePoint__c
-			                            WHERE ServicePointCode__c='testServicePointCode'
-			                            LIMIT 1];
+				List<Map<String, List<SObject>>> quoteLineMap = tstQuoteLineSrv.groupRecordsByQuote(new List<SBQQ__Quote__c>{quote}, existingQuoteLines);
 
-			BillingProfile__c tBillProfile=[SELECT Id
-			                                FROM BillingProfile__c
-			                                LIMIT 1];
+				System.debug('methodReturn = ' + quoteLineMap.get(0));
 
-			Account tAccount=[SELECT Id, CompanyOwner__c
-			                  FROM Account
-			                  WHERE CompanyOwner__c='HERA COMM'
-			                  LIMIT 1];
-
-			List<SBQQ__QuoteLine__c> quoteLines=new List<SBQQ__QuoteLine__c>();
-			SBQQ__QuoteLine__c quoteLine=new SBQQ__QuoteLine__c();
-			quoteLine.SBQQ__Quote__c=tQuote[0].Id;
-			quoteLine.SBQQ__Product__c=tProduct.Id;
-			quoteLine.ServicePoint__c=tServPoint.Id;
-			quoteLine.SupplyCity__c='test city';
-			quoteLine.BillingProfile__c=tBillProfile.Id;
-			quoteLine.Agency__c=tAccount.Id;
-			quoteLine.OwnerAC__c='Si';
-
-			quoteLines.add(quoteLine);
-
-
-			insert quoteLines;
-
-			HDT_SRV_QuoteLine tstQuoteLineSrv=new HDT_SRV_QuoteLine();
-
-			List<Map<String, List<SObject>>> methodReturn=tstQuoteLineSrv.groupRecordsByQuote(tQuote, quoteLines);
-
-			System.debug('methodReturn = '+methodReturn);
-
-			//System.assertEquals('test updated city', tstUpdQuoteLine.SupplyCity__c, 'Quote Line not updated');
-
-			//System.assertNotEquals('', tstUpdQuoteLine.SupplyCity__c);
+				System.assertEquals(2, quoteLineMap.get(0).get('quoteLines').size(), 'The quote lines weren\'t grouped correctly');
 
 			Test.stopTest();
 
