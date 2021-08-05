@@ -13,8 +13,8 @@ public inherited sharing class HDT_QBL_SelfReadingsOutcome implements Queueable,
 
     public void execute(QueueableContext context) {
         System.debug('HDT_QBL_SelfReadingsOutcome start');
-        System.debug('# cases to process: ' + this.casesToUpdate.size());
-        System.debug('# activities to process: ' + this.activitiesToCreate.size());
+        System.debug('# cases in input: ' + this.casesToUpdate.size());
+        System.debug('# activities in input: ' + this.activitiesToCreate.size());
 
         if (this.casesToUpdate.isEmpty() && this.activitiesToCreate.isEmpty()) {
             System.debug('Nothing to do.');
@@ -30,12 +30,11 @@ public inherited sharing class HDT_QBL_SelfReadingsOutcome implements Queueable,
         for (Integer i = 0; i < this.casesToUpdate.size(); i++) {
             Case c = this.casesToUpdate[i];
             if (i < maxCases) {
-/*                 if (c.Phase__c == 'Esito OK da SAP') {
+                if (c.Phase__c == 'Esito OK da SAP') {
                     casesForHeroku.add(c);
                 } else {
                     casesToProcess.add(c);
-                } */
-                casesToProcess.add(c);
+                }
             } else {
                 casesToDelegate.add(c);
             }
@@ -50,20 +49,24 @@ public inherited sharing class HDT_QBL_SelfReadingsOutcome implements Queueable,
             }
         }
 
+        if (!casesToProcess.isEmpty()) {
+            System.debug('# cases to update: ' + casesToProcess.size());
+            HDT_UTL_DatabaseService.updateSObject(casesToProcess);
+        }
+
+        if (!activitiesToProcess.isEmpty()) {
+            System.debug('# activities to create: ' + activitiesToProcess.size());
+            HDT_UTL_DatabaseService.insertSObject(activitiesToProcess);
+        }
+
         // ProcessClick non fa partire i job per le callout da contesto queueable,
         // quindi demandiamo la DML che triggera la callout heroku ad un platform event.
         System.debug('HDT_QBL_SelfReadingsOutcome: setting up platform events...');
         List<HDT_PEV_SelfReading__e> events = new List<HDT_PEV_SelfReading__e>();
 
-        for (Case c : casesToProcess) {
+        for (Case c : casesForHeroku) {
             HDT_PEV_SelfReading__e event = new HDT_PEV_SelfReading__e();
             event.SerializedCase__c = JSON.serialize(c);
-            events.add(event);
-        }
-
-        for (wrts_prcgvr__Activity__c act : activitiesToProcess) {
-            HDT_PEV_SelfReading__e event = new HDT_PEV_SelfReading__e();
-            event.SerializedActivity__c = JSON.serialize(act);
             events.add(event);
         }
 
