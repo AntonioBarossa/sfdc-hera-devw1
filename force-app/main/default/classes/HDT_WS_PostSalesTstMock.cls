@@ -1,6 +1,6 @@
 @isTest
-global  with sharing class HDT_WS_PostSalesTstMock implements HttpCalloutMock{
-    global HttpResponse respond(HTTPRequest request){
+global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
+    global HTTPResponse  respond(HTTPRequest request){
         String endpoint = request.getEndpoint();
         System.debug(endpoint);
         return creaRicResponse(request);

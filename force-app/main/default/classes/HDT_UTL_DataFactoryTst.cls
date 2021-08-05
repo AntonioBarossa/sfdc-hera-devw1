@@ -451,6 +451,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	public static List<Case> createCase(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
 
 		List<Case> caseList=new List<Case>();
+		HDT_UTL_Constants constUtl = new HDT_UTL_Constants();
+		String rtId = constUtl.CASE_RECORDTYPEID_DEFAULT;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -467,6 +469,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			testCase.Contract__c=contractId;
 			//testCase.VulturePracticeReference__c=orderId;
 			testCase.Cluster__c='Pagamenti';
+			testCase.RecordTypeId = rtId;
 
 
 			caseList.add(testCase);
@@ -724,7 +727,16 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return campaignMemberStatusList;
 	}
 
-	public static void createPhaseTransition(Boolean doInsert, String destinationPhase, String originPhase, String recordTypeId, String recordTypeName){
+	public static void createPhaseTransition(Boolean doInsert, 
+		String destinationPhase, 
+		String originPhase, 
+		String recordTypeId, 
+		String recordTypeName,
+		String type,
+		String calloutTemplate,
+		String calloutParameters,
+		String apexCalloutAction
+		){
 		List<wrts_prcgvr__PhaseTransition__c> phaseTransitions = new List<wrts_prcgvr__PhaseTransition__c>();
 		wrts_prcgvr__PhaseTransition__c phaseTransition = new wrts_prcgvr__PhaseTransition__c();
 		phaseTransition.wrts_prcgvr__Code__c = Math.random()+'';
@@ -732,7 +744,10 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		phaseTransition.wrts_prcgvr__OriginPhase__c = originPhase;
 		phaseTransition.wrts_prcgvr__RecordTypeId__c = recordTypeId;
 		phaseTransition.wrts_prcgvr__RecordTypeName__c = recordTypeName;
-		phaseTransition.wrts_prcgvr__Type__c = 'A';
+		phaseTransition.wrts_prcgvr__Type__c = type;
+		phaseTransition.wrts_prcgvr__CalloutTemplate__c = calloutTemplate;
+		phaseTransition.wrts_prcgvr__CalloutParameters__c = calloutParameters;
+		phaseTransition.wrts_prcgvr__ApexCalloutActions__c = apexCalloutAction;
 		phaseTransitions.add(phaseTransition); 
 		if(doInsert){
 			insert phaseTransitions;
