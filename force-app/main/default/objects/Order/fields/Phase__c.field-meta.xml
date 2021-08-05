@@ -496,14 +496,14 @@
                 <label>Esportazione VS Siebel</label>
             </value>
             <value>
-                <fullName>Caricamento Siebel OK</fullName>
+                <fullName>Caricamento OK</fullName>
                 <default>false</default>
-                <label>Caricamento Siebel OK</label>
+                <label>Caricamento OK</label>
             </value>
             <value>
-                <fullName>Caricamento Siebel KO</fullName>
+                <fullName>Caricamento KO</fullName>
                 <default>false</default>
-                <label>Caricamento Siebel KO</label>
+                <label>Caricamento KO</label>
             </value>
             <value>
                 <fullName>Sequenzializzato</fullName>
