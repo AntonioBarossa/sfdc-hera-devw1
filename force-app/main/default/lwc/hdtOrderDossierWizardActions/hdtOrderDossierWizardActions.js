@@ -193,7 +193,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccessMessage);
-            this.sendDocumentFile();
+            //this.sendDocumentFile();
 
         }).catch(error => {
             this.loading = false;

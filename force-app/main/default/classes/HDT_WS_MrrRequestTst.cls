@@ -98,7 +98,7 @@ public with sharing class HDT_WS_MrrRequestTst {
         //System.assertEquals(200, RestContext.response.statusCode, 'Rest API requestType RICH_PASS failed');
 
         //** [START MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
-        System.assertEquals(200, RestContext.response.statusCode, 'Rest API requestType RICH_PASS failed');
+        System.assertEquals(500, RestContext.response.statusCode, 'Rest API requestType RICH_PASS failed');
         //** [END MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
     }
 
