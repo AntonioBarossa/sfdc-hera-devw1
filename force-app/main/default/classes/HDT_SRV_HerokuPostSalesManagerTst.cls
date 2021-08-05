@@ -47,8 +47,8 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
         response = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) herokuSrv.execute(args);
-        Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, Status FROM Case LIMIT 1];
         Test.stopTest();
+        Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, Status FROM Case LIMIT 1];
         System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c);
         System.assertEquals('00002349', testCaseUpd.HerokuPracticeCode__c);
         
@@ -67,7 +67,9 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
     @isTest
     static void handleInboundRequestTst()
     {
-
+        HDT_WRP_MrrRequest.HDT_WRP_Request notifEs = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+        HDT_WRP_MrrRequest.HDT_WRP_Request richPass = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+        HDT_WRP_MrrRequest.HDT_WRP_Request richKo = new HDT_WRP_MrrRequest.HDT_WRP_Request();
     }
     @isTest
     static void handleRichPassResponseFieldTst()
