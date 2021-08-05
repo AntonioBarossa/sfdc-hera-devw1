@@ -64,10 +64,10 @@ public with sharing class HDT_UTL_Constants {
 
     //Case RecordType default Morosita
     @AuraEnabled
-    public final String CASE_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Morosita';
+    public final String caseRecordType = 'HDT_RT_Morosita';
     @AuraEnabled
-    public final String CASE_RECORDTYPEID_DEFAULT =
-    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_DEFAULT).getRecordTypeId();
+    public final String caseRecordTypeId =
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(caseRecordType).getRecordTypeId();
     
     //Hera internal Profiles
     @AuraEnabled

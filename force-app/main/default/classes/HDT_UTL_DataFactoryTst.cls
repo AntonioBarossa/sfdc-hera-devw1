@@ -455,7 +455,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Case> caseList=new List<Case>();
 		HDT_UTL_Constants constUtl = new HDT_UTL_Constants();
-		String rtId = constUtl.CASE_RECORDTYPEID_DEFAULT;
+		String rtId = constUtl.caseRecordTypeId;
 
 		for (Integer i=0; i<amount; i++){
 
