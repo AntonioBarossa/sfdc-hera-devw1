@@ -1,0 +1,41 @@
+<template>
+    <lightning-card  title="Nuova attività manuale">
+        <div if:true={showSpinner} class="slds-is-relative">
+            <lightning-spinner variant="brand" size="large" alternative-text="Loading"></lightning-spinner>
+        </div>
+
+        <lightning-layout horizontal-align="center" multiple-rows>
+            <lightning-layout-item size="7">
+                <lightning-combobox label="Tipo attività"
+                                    options={activityTypes}
+                                    onchange={handleTypeChange}></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item size="7">
+                <lightning-input label="Filtro cliente"
+                                 type="search"
+                                 onchange={handleFilterChange}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="7">
+                <lightning-combobox label="Cliente"
+                                    options={accounts}
+                                    onchange={handleAccountChange}></lightning-combobox>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <div slot="footer">
+            <lightning-layout horizontal-align="end">
+                <lightning-layout-item size="3">
+                    <lightning-button label="Save"
+                                        disabled={saveDisabled}
+                                        onclick={handleSave}></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <lightning-button label="Cancel"
+                                        disabled={cancelDisabled}
+                                        onclick={handleCancel}></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+
+    </lightning-card>
+</template>
