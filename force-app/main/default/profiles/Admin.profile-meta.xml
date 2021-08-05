@@ -32020,6 +32020,9 @@
         <layout>SBQQ__ErrorCondition__c-CPQ - Error Condition Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>SBQQ__ProductRule__c-Product Rule Layout CPQ</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Scorecard-Scorecard Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
