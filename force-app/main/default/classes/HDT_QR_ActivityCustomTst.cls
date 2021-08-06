@@ -10,13 +10,12 @@ public with sharing class HDT_QR_ActivityCustomTst{
 	@TestSetup
 	static void setup(){
 
-		Id standardUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.HERA_STANDARD_USER_NAME);
 		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
 
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
 
 		internalUser.UserPermissionsMarketingUser=true;
-        internalUser.Title = 'srTest';
+		internalUser.Title='srTest';
 
 		insert internalUser;
 
@@ -40,48 +39,38 @@ public with sharing class HDT_QR_ActivityCustomTst{
 			List<BillingProfile__c> billProfs=HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accounts[0].Id);
 			List<Product2> products=HDT_UTL_DataFactoryTst.createProduct2(1, true);
 			List<SBQQ__Quote__c> quotes=HDT_UTL_DataFactoryTst.createQuote(1, true, orders[0].Id, opps[0].Id, sales[0].Id, 'Amendment');
-			SBQQ__QuoteLine__c quoteLine=new SBQQ__QuoteLine__c();
-			quoteline.SBQQ__Quote__c=quotes[0].Id;
-			quoteLine.SBQQ__Product__c=products[0].Id;
-			quoteLine.ServicePoint__c=servpoints[0].Id;
-			quoteLine.SupplyCity__c='test city';
-			quoteLine.BillingProfile__c=billProfs[0].Id;
-			quoteLine.Agency__c=accounts[0].Id;
-			quoteLine.OwnerAC__c='Si';
-			insert quoteLine;
+			List<SBQQ__QuoteLine__c> quoteLines=HDT_UTL_DataFactoryTst.createQuoteLines(products[0].Id, quotes[0].Id, 1, false);
+			quoteLines[0].ServicePoint__c=servpoints[0].Id;
+			quoteLines[0].SupplyCity__c='test city';
+			quoteLines[0].BillingProfile__c=billProfs[0].Id;
+			quoteLines[0].Agency__c=accounts[0].Id;
+			quoteLines[0].OwnerAC__c='Si';
+			insert quoteLines;
 
-			wrts_prcgvr__Activity__c actCustom=new wrts_prcgvr__Activity__c();
-			actCustom.Account__c=accounts[0].Id;
-			actCustom.ServicePoint__c=servpoints[0].Id;
-			actCustom.Status__c='Creata';
-			actCustom.Type__c='Approvazione Quote';
-			actCustom.ServicePointCode__c='test';
-			actCustom.Order__c=orders[0].Id;
-			actCustom.Approved__c='Si';
-			actCustom.Case__c=cases[0].Id;
-			actCustom.QuoteLine__c=quoteLine.Id;
-			actCustom.OwnerId=internalUser.Id;
+			List<wrts_prcgvr__Activity__c> actCustoms=HDT_UTL_DataFactoryTst.createActivityCustom(2, false, accounts[0].Id);
+			actCustoms[0].ServicePoint__c=servpoints[0].Id;
+			actCustoms[0].Status__c='Creata';
+			actCustoms[0].Type__c='Approvazione Quote';
+			actCustoms[0].ServicePointCode__c='test';
+			actCustoms[0].Order__c=orders[0].Id;
+			actCustoms[0].Approved__c='Si';
+			actCustoms[0].Case__c=cases[0].Id;
+			actCustoms[0].QuoteLine__c=quoteLines[0].Id;
+			actCustoms[0].OwnerId=internalUser.Id;
 
-			System.debug('actCustom.OwnerId = '+actCustom.OwnerId);
+			actCustoms[1].Account__c=accounts[0].Id;
+			actCustoms[1].ServicePoint__c=servpoints[0].Id;
+			actCustoms[1].Status__c='Creata';
+			actCustoms[1].Type__c='Approvazione Quote';
+			actCustoms[1].ServicePointCode__c='test 2';
+			actCustoms[1].Order__c=orders[0].Id;
+			actCustoms[1].Approved__c='Si';
+			actCustoms[1].Case__c=cases[0].Id;
+			actCustoms[1].QuoteLine__c=quoteLines[0].Id;
+			actCustoms[1].OwnerId=internalUser.Id;
+			actCustoms[1].ParentActivity__c=actCustoms[0].Id;
 
-			insert actCustom;
-
-			wrts_prcgvr__Activity__c actCustom2=new wrts_prcgvr__Activity__c();
-			actCustom2.Account__c=accounts[0].Id;
-			actCustom2.ServicePoint__c=servpoints[0].Id;
-			actCustom2.Status__c='Creata';
-			actCustom2.Type__c='Approvazione Quote';
-			actCustom2.ServicePointCode__c='test 2';
-			actCustom2.Order__c=orders[0].Id;
-			actCustom2.Approved__c='Si';
-			actCustom2.Case__c=cases[0].Id;
-			actCustom2.QuoteLine__c=quoteLine.Id;
-			actCustom2.OwnerId=internalUser.Id;
-			actCustom2.ParentActivity__c=actCustom.Id;
-
-			System.debug('actCustom2.ParentActivity__c = '+actCustom2.ParentActivity__c);
-
-			insert actCustom2;
+			insert actCustoms;
 		}
 	}
 
@@ -94,9 +83,6 @@ public with sharing class HDT_QR_ActivityCustomTst{
 		              WHERE CompanyOwner__c='HERA COMM'
 		              LIMIT 1];
 
-		ServicePoint__c tServPoint=[SELECT Id, ServicePointCode__c
-		                            FROM ServicePoint__c
-		                            WHERE ServicePointCode__c='testServicePointCode'];
 
 		List<wrts_prcgvr__Activity__c> tActivity=HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePoint('Approvazione Quote', 'Creata', tAcc.Id, 'test');
 		System.debug('tActivity = '+tActivity);
@@ -215,9 +201,6 @@ public with sharing class HDT_QR_ActivityCustomTst{
 		List<String> userIds=new List<String>();
 		userIds.add(tUser[0].Id);
 
-		System.debug('tUser = '+tUser);
-		System.debug('userIds = '+userIds);
-
 		List<wrts_prcgvr__Activity__c> tActivity=HDT_QR_ActivityCustom.getRecordByOwnerId(userIds);
 		System.debug('tActivity = '+tActivity);
 
@@ -246,9 +229,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 			Set<Id> orderIds=new Set<Id>();
 			orderIds.add(tOrder[0].Id);
 
-			HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-			Id rt=constRecordType.ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE;
+			Id rt=constants.ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE;
 
 			List<wrts_prcgvr__Activity__c> tActCust=[SELECT Id, Type__c
 			                                         FROM wrts_prcgvr__Activity__c
@@ -257,10 +238,6 @@ public with sharing class HDT_QR_ActivityCustomTst{
 			tActCust[0].RecordTypeId=rt;
 
 			update tActCust;
-
-			System.debug('tOrder = '+tOrder);
-			System.debug('orderIds = '+orderIds);
-			System.debug('tActCust = '+tActCust);
 
 			List<wrts_prcgvr__Activity__c> tActivity=HDT_QR_ActivityCustom.getActivityListCrediCheck(orderIds);
 			System.debug('tActivity = '+tActivity);
@@ -283,33 +260,28 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 		System.runAs(tUser){
 
-			List<wrts_prcgvr__Activity__c> tActivityCust=[SELECT Id, Status__c, Type__c
+			List<wrts_prcgvr__Activity__c> tActivityCust=[SELECT Id, Status__c, Type__c, ServicePointCode__c, ParentActivity__c
 			                                              FROM wrts_prcgvr__Activity__c
-			                                              WHERE Status__c='Creata'
+			                                              WHERE ServicePointCode__c='test'
 			                                              LIMIT 1];
 
 			Set<Id> actCustIds=new Set<Id>();
 			actCustIds.add(tActivityCust[0].Id);
 
-			HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
+			Id rt=constants.ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE;
 
-			Id rt=constRecordType.ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE;
-
-			List<wrts_prcgvr__Activity__c> tActCust=[SELECT Id, ServicePointCode__c
+			List<wrts_prcgvr__Activity__c> tActCust=[SELECT Id, ServicePointCode__c, Type__c, ParentActivity__c
 			                                         FROM wrts_prcgvr__Activity__c
 			                                         WHERE ServicePointCode__c='test 2'
 			                                         LIMIT 1];
 			tActCust[0].RecordTypeId=rt;
 			tActCust[0].Type__c='Scarto Comunicazione';
+			tactcust[0].ParentActivity__c=tActivityCust[0].Id;
 
-			update tActCust;
-
-			System.debug('tActivityCust = '+tActivityCust);
-			System.debug('actCustIds = '+actCustIds);
-			System.debug('tActCust = '+tActCust);
+			update tActCust[0];
 
 			List<wrts_prcgvr__Activity__c> tActivity=HDT_QR_ActivityCustom.getRejectedActivities(actCustIds, rt);
-			System.debug('tActivity = '+tActivity);
+			System.debug('***!!tActivity = '+tActivity);
 
 			System.assertEquals('Scarto Comunicazione', tActivity[0].Type__c, 'query return is wrong');
 			System.assertNotEquals(null, tActivity[0].Type__c);
@@ -345,7 +317,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 		}
 	}
 
-    @isTest
+	@isTest
 	public static void testgetRecordByParentIds(){
 		Test.startTest();
 
@@ -356,17 +328,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 		System.runAs(tUser){
 
-			// List<wrts_prcgvr__Activity__c> tActivityCust=[SELECT Id, Status__c, Type__c
-			//                                               FROM wrts_prcgvr__Activity__c
-			//                                               WHERE Status__c='Creata'
-			//                                               LIMIT 1];
-
-			// Set<String> actCustIds=new Set<String>();
-			// actCustIds.add(tActivityCust[0].Id);
-
-			HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-			Id rt=constRecordType.ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE;
+			Id rt=constants.ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE;
 
 			List<wrts_prcgvr__Activity__c> tActCust=[SELECT Id, ServicePointCode__c
 			                                         FROM wrts_prcgvr__Activity__c
@@ -377,12 +339,8 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 			update tActCust;
 
-            Set<String> actCustIds=new Set<String>();
+			Set<String> actCustIds=new Set<String>();
 			actCustIds.add(tActCust[0].Id);
-
-			//System.debug('tActivityCust = '+tActivityCust);
-			System.debug('actCustIds = '+actCustIds);
-			System.debug('tActCust = '+tActCust);
 
 			List<wrts_prcgvr__Activity__c> tActivity=HDT_QR_ActivityCustom.getRecordByParentIds(actCustIds, rt);
 			System.debug('tActivity = '+tActivity);
