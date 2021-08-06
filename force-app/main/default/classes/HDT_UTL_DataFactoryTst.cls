@@ -125,6 +125,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.LastName__c='test account'+i;
 			acc.FiscalCode__c='SXSRLA45H28H501K';
 			acc.BillingIsAddressVerified__c=true;
+			//@frpanico 06/08 added Customer Code
+			acc.CustomerCode__c = '1003616210';
 
 			accList.add(acc);
 
@@ -161,6 +163,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.BillingStreetNumber__c='55';
 			acc.LastName__c='test account'+i;
 			acc.FiscalCode__c='SXSRLA45H28H501K';
+			//@frpanico 06/08 added Customer Code
+			acc.CustomerCode__c = '1003616210';
 
 			accList.add(acc);
 
@@ -395,6 +399,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			servPoint.Name='testServicePoint'+i;
 			servPoint.ServicePointCode__c='testServicePointCode';
 
+
 			servPointList.add(servPoint);
 		}
 
@@ -439,6 +444,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			Contract testContract=new Contract();
 			testContract.AccountId=accId;
+			//@frpanico 06/08 Added contract code
+			testContract.SAPContractCode__c = '3011913470';
 
 			contractList.add(testContract);
 		}
@@ -578,6 +585,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			BillingProfile__c testBillingProfile=new BillingProfile__c();
 			testBillingProfile.Account__c=Account;
+			//@frpanico 06/08 added CaCode
+			testBillingProfile.ContractAccountCode__c = '200008867681';
 
 			tstBillingProfileList.add(testBillingProfile);
 		}
@@ -1096,11 +1105,32 @@ public with sharing class HDT_UTL_DataFactoryTst{
         +'{"fieldType": "TEXT","name": "VERTRAG_ST","value": "Cessato"},'
         +'{"fieldType": "TEXT","name": "SERVICEID_DIS","value": "10D00000AU"},'
         +'{"fieldType": "TEXT","name": "UTENZA","value": "BS_030_001"},'
-        +'{"fieldType": "TEXT","name": "DATA_EVENTO","value": "2021-07-28 10:11:45"},'
-        +'{"fieldType": "TEXT","name": "RECORD_ID","value": "5001j000008Nl9YAAS"}'
+        +'{"fieldType": "TEXT","name": "DATA_EVENTO","value": "2021-07-28 10:11:45"}'
         +'],"id": null,"name": null,"objectType": null,"objects": null}]}]}';
 	}
-	
+
+	public static String richPassReq(String spCode, String bpCode, String caCode, String contractCode, String subtypeSiebel, String processType,
+		String cluster, String origin, String effectiveDate, String salesforceKey, String herokuCode){
+		return '{"header":null,"requests":[{"header":{"requestId":null,"requestTimestamp":null,"requestType":"RICH_PASS","fields":['
+        +'{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"objects":[{"fields":['
+        +'{"fieldType":"TEXT","name":"CODICE_PRESA", "value":"'+spCode+'"},'
+        +'{"fieldType":"TEXT","name":"CODICE_CLIENTE", "value":"'+bpCode+'"},'
+        +'{"fieldType":"TEXT","name":"CONTO_CONTRATTUALE", "value":"'+caCode+'"},' 
+        +'{"fieldType":"TEXT","name":"CODICE_CONTRATTO", "value":"'+contractCode+'"},'
+        +'{"fieldType":"TEXT","name":"TIPO_SIEBEL", "value":"Credito"},'
+        +'{"fieldType":"TEXT","name":"SOTTOTIPO_SIEBEL", "value":"'+subtypeSiebel+'"},'
+        +'{"fieldType":"TEXT","name":"COD_FISCALE", "value":"RSSSLD50D25G453V"},'
+        +'{"fieldType":"TEXT","name":"RECAPITO", "value":"3401540441"},'
+        +'{"fieldType":"TEXT","name":"PROCESS_TYPE", "value":"'+processType+'"},'
+        +'{"fieldType":"TEXT", "name":"UFFICIO_COMPETENTE","value":"HCM"},'
+		+'{"fieldType":"TEXT", "name":"CLUSTER","value":"'+cluster+'"},'
+		+'{"fieldType":"TEXT", "name":"CANALE","value":"'+origin+'"},'
+		+'{"fieldType":"TEXT", "name":"DATA_DECORRENZA","value":"'+effectiveDate+'"},'
+		+'{"fieldType":"TEXT", "name":"SALESFORCE_KEY","value":"'+salesforceKey+'"},'
+		+'{"fieldType":"TEXT", "name":"COD_PRAT_UTENTE","value":"'+herokuCode+'"}'
+        +'],"id":null,"name":null,"objectType":null,"objects":null}]}]}';
+	}
+
 	public static List<SBQQ__QuoteLine__c> createQuoteLines(String productId, String quoteId, Integer amount, Boolean doInsert) {
 
 		List<SBQQ__QuoteLine__c> quoteLines = new List<SBQQ__QuoteLine__c>();

@@ -11,6 +11,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+        List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         List<ContentVersion> contentVersionList = HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'Callout_Template', 
@@ -67,25 +68,28 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
     @isTest
     static void handleInboundRequestTst()
     {
-        Case testCase = [SELECT Id, CaseNumber, Phase__c, Type FROM Case LIMIT 1];
-        HDT_WRP_MrrRequest.HDT_WRP_Request notifEs = new HDT_WRP_MrrRequest.HDT_WRP_Request();
-        HDT_WRP_MrrRequest.HDT_WRP_Request richPass = new HDT_WRP_MrrRequest.HDT_WRP_Request();
-        HDT_WRP_MrrRequest.HDT_WRP_Request richKo = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+        HDT_SRV_HerokuPostSalesManager herokuSrv = new HDT_SRV_HerokuPostSalesManager();
+        Account testAccount = [SELECT CustomerCode__c FROM Account LIMIT 1];
+        ServicePoint__c testSp = [SELECT Name FROM ServicePoint__c LIMIT 1];
+        Contract testContract = [SELECT SAPContractCode__c FROM Contract LIMIT 1];
+        BillingProfile__c testBillingProfile = [SELECT ContractAccountCode__c FROM BillingProfile__c LIMIT 1];
+        Case testCase = [SELECT CaseNumber, Phase__c, Type FROM Case LIMIT 1];
+        HDT_WRP_MrrResponse.HDT_WRP_Object responseObj = new HDT_WRP_MrrResponse.HDT_WRP_Object();
+        HDT_WRP_MrrRequest notifEs = new HDT_WRP_MrrRequest();
+        HDT_WRP_MrrRequest richPass = new HDT_WRP_MrrRequest();
+        HDT_WRP_MrrRequest richKo = new HDT_WRP_MrrRequest();
         String notifEsString = HDT_UTL_DataFactoryTst.notifEsReq('postsales',testCase.Id, 'Comunicazione verso Heroku OK','esito_intermedio');
-        String richPassString = '{"header":null,"requests":[{"header":{"requestId":null,"requestTimestamp":null,"requestType":"RICH_PASS","fields":['
-        +'{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"objects":[{"fields":['
-        +'{"fieldType":"TEXT","name":"CODICE_PRESA", "value":""},'
-        +'{"fieldType":"TEXT","name":"CODICE_CLIENTE", "value":"1006322046"},'
-        +'{"fieldType":"TEXT","name":"CONTO_CONTRATTUALE", "value":"200005882313"},'
-        +'{"fieldType":"TEXT","name":"CODICE_CONTRATTO", "value":"3020243910"},'
-        +'{"fieldType":"TEXT","name":"TIPO_SIEBEL", "value":"Credito"},'
-        +'{"fieldType":"TEXT","name":"SOTTOTIPO_SIEBEL", "value":"Morosita"},'
-        +'{"fieldType":"TEXT","name":"COD_FISCALE", "value":"RSSSLD50D25G453V"},'
-        +'{"fieldType":"TEXT","name":"RECAPITO", "value":"3401540441"},'
-        +'{"fieldType":"TEXT","name":"PROCESS_TYPE", "value":"Sospensione Fornitura"},'
-        +'{"fieldType":"TEXT", "name":"UFFICIO_COMPETENTE","value":"HCM"}'
-        +'],"id":null,"name":null,"objectType":null,"objects":null}]}]}';
-    }
+        String richPassString = HDT_UTL_DataFactoryTst.richPassReq(testSp.Name, testAccount.CustomerCode__c, testBillingProfile.ContractAccountCode__c, 
+            testContract.SAPContractCode__c, 'Morosita', 'Sospensione Fornitura', '', 'Da PGM', '20220102', '', '');
+        String notifEsKo = HDT_UTL_DataFactoryTst.notifEsReq('postsales',testCase.Id, 'Completata','esito_intermedio');
+        notifEs = (HDT_WRP_MrrRequest) JSON.deserialize(notifEsString, HDT_WRP_MrrRequest.class);
+        Test.startTest();
+        System.debug(RestContext.response);
+        responseObj = herokuSrv.handleInboundRequest(notifEs.requests[0]);
+        Test.stopTest();
+        Case testCaseUpd = [SELECT CaseNumber, Phase__c, Type FROM Case LIMIT 1];
+        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c);
+    }   
     @isTest
     static void handleRichPassResponseFieldTst()
     {
