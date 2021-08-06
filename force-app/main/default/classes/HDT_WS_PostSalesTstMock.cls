@@ -40,7 +40,20 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
     public static HttpResponse creaEnrichResposne(HttpRequest request){
         HttpResponse response = new HttpResponse();
         String body = request.getBody();
-        String bodyResponse = '';
+        String bodyResponse = '{"status": "success","correlationId": "2a0c1340-f6b5-11eb-bb88-068530f44c42","timestamp": "2021-08-06T14:52:33",'
+        +'"data": {"testata": {"esito": "OK"},"posizioni": ['
+        +'{"campo": "DATACESSAZIONE","valore": "99991231"},'
+        +'{"campo": "ALIQUOTAIVA","valore": "01"},'
+        +'{"campo": "CA","valore": "200008867681"},'
+        +'{"campo": "DESCRFATTURAZCOLL","valore": "Il contratto può essere fatturato con altri contratti"},'
+        +'{"campo": "ANNOFABBRCONT","valore": "2000"},'
+        +'{"campo": "CALIBRO1","valore": "GRT003"},'
+        +'{"campo": "PRESENZACORRETTORE","valore": "NO"},'
+        +'{"campo": "OPZIONE","valore": "E_UD_TDR"},'
+        +'{"campo": "MOTIVOBLOCCOCALCOLO","valore": "T1"},'
+        +'{"campo": "ACCISE","valore": "0.02270000"},'
+        +'{"campo": "CODICE_ATECO","valore": "999999"}'
+        +']}}';
         response.setHeader('Content-Type', 'application/json');
         response.setBody(bodyResponse);
         response.setStatusCode(200);

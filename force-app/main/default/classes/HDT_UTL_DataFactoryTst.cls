@@ -436,6 +436,19 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return contactList;
 	}
 
+	public static AccountContactRelation createAccountContactRelation(Boolean doInsert, String accountId, String contactId){
+		AccountContactRelation accCtcRel = new AccountContactRelation();
+		accCtcRel.AccountId = accountId;
+		accCtcRel.ContactId = contactId;
+		accCtcRel.Roles = 'Titolare';
+
+		if(doInsert){
+			insert accCtcRel;
+		}
+
+		return accCtcRel;
+	}
+
 	public static List<Contract> createContract(Integer amount, Boolean doInsert, Id accId){
 
 		List<Contract> contractList=new List<Contract>();
@@ -1146,5 +1159,39 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return quoteLines;
 
 	}
+
+	/*public static HDT_DataEnrichmentTransocode__mdt	 createTranscodeConfig(String name, Boolean isNumber, Integer precision, Boolean isTranscode, 
+		String method, String sapField, String sfdcField){
+		HDT_DataEnrichmentTransocode__mdt transcodeConfig = new HDT_DataEnrichmentTransocode__mdt();
+		transcodeConfig.DeveloperName = name;
+		transcodeConfig.Label = name;
+		transcodeConfig.IsNumber__c = isNumber;
+		transcodeConfig.Precision__c = precision;
+		transcodeConfig.IsTranscode__c = isTranscode;
+		transcodeConfig.Method__c = method;
+		transcodeConfig.SapField__c = sapField;
+		transcodeConfig.SfdcField__c = sfdcField;
+
+		return transcodeConfig;
+	}
+
+	public static void insertTranscodeConfigs(List<HDT_DataEnrichmentTransocode__mdt> transcodeConfigs){
+		insert transcodeConfigs;
+	}
+
+	public static void createCausalCodeConfig(String name, String causalCode, String operationCode, String cluster, String commodity,
+		String process, String subprocess){
+			HDT_CausalCodeCalculation__mdt causalCodeConfig = new HDT_CausalCodeCalculation__mdt();
+			causalCodeConfig.DeveloperName = name;
+			causalCodeConfig.Label = name;
+			causalCodeConfig.CausalCode__c = causalCode;
+			causalCodeConfig.OperationCode__c = operationCode;
+			causalCodeConfig.Cluster__c = cluster;
+			causalCodeConfig.Process__c = process;
+			causalCodeConfig.Commodity__c = commodity;
+			causalCodeConfig.Subprocess__c = subprocess;
+
+			insert causalCodeConfig;
+	}*/
 
 }
