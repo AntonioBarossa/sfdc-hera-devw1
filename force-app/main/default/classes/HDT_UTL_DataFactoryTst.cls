@@ -1100,5 +1100,21 @@ public with sharing class HDT_UTL_DataFactoryTst{
         +'{"fieldType": "TEXT","name": "RECORD_ID","value": "5001j000008Nl9YAAS"}'
         +'],"id": null,"name": null,"objectType": null,"objects": null}]}]}';
 	}
+	
+	public static List<SBQQ__QuoteLine__c> createQuoteLines(String productId, String quoteId, Integer amount, Boolean doInsert) {
+
+		List<SBQQ__QuoteLine__c> quoteLines = new List<SBQQ__QuoteLine__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+			quoteLines.add(new SBQQ__QuoteLine__c(SBQQ__Quote__c = quoteId, SBQQ__Product__c = productId));
+		}
+
+		if (doInsert) {
+			insert quoteLines;
+		}
+
+		return quoteLines;
+
+	}
 
 }

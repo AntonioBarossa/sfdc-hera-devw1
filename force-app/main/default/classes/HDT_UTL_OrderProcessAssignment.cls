@@ -263,10 +263,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                     sr.RemiCode__c = mapRemiCode.get(sr.SupplyCity__c + '_' + serviceSocieta.get(sr.id));
                 }
                 else{
-                    res = 'Remi';
+                    res += '_Remi';
                 }
             }
-            if(res != 'Remi'){
+            if(res != '_Remi' && res !='Subentro_Remi'){
                 servicePointSrv.updateRecordRemiCode(spList);
             }
         }
