@@ -33,7 +33,7 @@
                             <lightning:icon iconName="standard:account" alternativeText="Account" title="Account" />
 
                         </span>
-                        <span><b> &nbsp; Sicuro di voler chiudere il tab AccountId: {!v.varId} ?</b></span>
+                        <span><b> &nbsp; Sicuro di voler chiudere il tab Account ?</b></span>
                     </div>
                 </div>
                 <aura:if isTrue="{!v.loaded}">
