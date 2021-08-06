@@ -3,7 +3,11 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
     global HTTPResponse  respond(HTTPRequest request){
         String endpoint = request.getEndpoint();
         System.debug(endpoint);
-        return creaRicResponse(request);
+        if(endpoint.equalsIgnoreCase('ArricchimentoDatiTemp')){
+            return creaEnrichResposne(request);
+        }else{
+            return creaRicResponse(request);
+        }
     }
     public static HttpResponse creaRicResponse(HTTPRequest request){
         HttpResponse response = new HttpResponse();
@@ -28,6 +32,17 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
             +'"id":null,"name":null,"objectType":null,"objects":null}]}]}';
         response.setHeader('Content-Type', 'application/json');
         response.setBody(responseStr);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        return response;
+    }
+
+    public static HttpResponse creaEnrichResposne(HttpRequest request){
+        HttpResponse response = new HttpResponse();
+        String body = request.getBody();
+        String bodyResponse = '';
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
         response.setStatusCode(200);
         response.setStatus('OK');
         return response;
