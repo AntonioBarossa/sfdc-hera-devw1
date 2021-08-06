@@ -5,6 +5,8 @@ public inherited sharing class HDT_QBL_SelfReadingsOutcome implements Queueable,
 
     private static Integer maxCases = 500;
     private static Integer maxActivities = 500;
+    private static Integer maxQueueableJobs = 50; // equivalente a Limits.getLimitQueueableJobs() da contesto sync. 
+
 
     public HDT_QBL_SelfReadingsOutcome(List<Case> casesToUpdate, List<wrts_prcgvr__Activity__c> activitiesToCreate) {
         this.casesToUpdate = casesToUpdate != null ? casesToUpdate : new List<Case>();
@@ -31,7 +33,11 @@ public inherited sharing class HDT_QBL_SelfReadingsOutcome implements Queueable,
             Case c = this.casesToUpdate[i];
             if (i < maxCases) {
                 if (c.Phase__c == 'Esito OK da SAP') {
-                    casesForHeroku.add(c);
+                    if (casesForHeroku.size() < maxQueueableJobs - 1) {
+                        casesForHeroku.add(c);
+                    } else {
+                        casesToDelegate.add(c);
+                    }
                 } else {
                     casesToProcess.add(c);
                 }
@@ -61,24 +67,17 @@ public inherited sharing class HDT_QBL_SelfReadingsOutcome implements Queueable,
 
         // ProcessClick non fa partire i job per le callout da contesto queueable,
         // quindi demandiamo la DML che triggera la callout heroku ad un platform event.
-        System.debug('HDT_QBL_SelfReadingsOutcome: setting up platform events...');
-        List<HDT_PEV_SelfReading__e> events = new List<HDT_PEV_SelfReading__e>();
-
-        for (Case c : casesForHeroku) {
+        if (!casesForHeroku.isEmpty()) {
+            System.debug('HDT_QBL_SelfReadingsOutcome: setting up platform event, # cases for heroku: ' + casesForHeroku.size());
             HDT_PEV_SelfReading__e event = new HDT_PEV_SelfReading__e();
-            event.SerializedCase__c = JSON.serialize(c);
-            events.add(event);
-        }
+            event.SerializedCases__c = JSON.serialize(casesForHeroku);
 
-        if (!events.isEmpty()) {
-            List<Database.SaveResult> results = EventBus.publish(events);
-            for (Database.SaveResult sr : results) {
-                if (sr.isSuccess()) {
-                    System.debug('Successfully published event.');
-                } else {
-                    for(Database.Error err : sr.getErrors()) {
-                        System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
-                    }
+            Database.SaveResult sr = EventBus.publish(event);
+            if (sr.isSuccess()) {
+                System.debug('Successfully published event.');
+            } else {
+                for (Database.Error err : sr.getErrors()) {
+                    System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
                 }
             }
         }
