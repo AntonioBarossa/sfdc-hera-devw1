@@ -252,28 +252,43 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 }
             }
             List<ServicePoint__c> spList = srQr.getRecordByIdList(spListId,'id,CommoditySector__c,SupplyCity__c,distributor__r.code__c');
-            Map<String,String> mapRemiCode = new Map<String,String>();
+            Map<String,HDT_WRP_RemiUbd> mapRemiCode = new Map<String,HDT_WRP_RemiUbd>();
             List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRecord();
             for(MatriceRemiCode__c m : remiList){
-                mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, m.RemiCode__c);
+                //mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, m.RemiCode__c);
+                HDT_WRP_RemiUbd wrp = new HDT_WRP_RemiUbd(m.RemiCode__c, m.VATNumberUdb__c);
+                mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, wrp);
             }
             Map<String,String> serviceSocieta = HDT_UTL_Sales.getAgentNameAndCodeList(spList,sal.Account__r.customerMarking__c);
             for(ServicePoint__c sr :spList){
                 if(mapRemiCode.get(sr.SupplyCity__c + '_' + serviceSocieta.get(sr.id)) != null){
-                    sr.RemiCode__c = mapRemiCode.get(sr.SupplyCity__c + '_' + serviceSocieta.get(sr.id));
+                    HDT_WRP_RemiUbd wrp = mapRemiCode.get(sr.SupplyCity__c + '_' + serviceSocieta.get(sr.id));
+                    sr.RemiCode__c = wrp.remiCode;
+                    sr.VATNumberUdb__c = wrp.vatUbd;
+                    system.debug(wrp);
+                    system.debug('SP to Update '+sr.VATNumberUdb__c);
                 }
                 else{
                     res += '_Remi';
                 }
             }
-            if(res != '_Remi' && res !='Subentro_Remi'){
-                servicePointSrv.updateRecordRemiCode(spList);
-            }
+            servicePointSrv.updateRecordRemiCode(spList);
         }
 
 
         System.debug('*****VUOIANNA2:' + res);
         return res;
+    }
+
+
+    private class HDT_WRP_RemiUbd{
+        public String remiCode {get;set;}
+        public String vatUbd {get;set;}
+
+        public HDT_WRP_RemiUbd(String remiCode, String vatUbd){
+            this.remiCode=remiCode;
+            this.vatUbd=vatUbd;
+        }
     }
 
 }
