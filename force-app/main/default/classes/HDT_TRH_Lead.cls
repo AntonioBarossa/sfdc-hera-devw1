@@ -108,11 +108,13 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                                 
                                 
                         Lead li = mapAccountLead.get(a.id);
-            
+                      
                         a.FirstName__c = li.FirstName;
                         a.LastName__c = li.LastName;
                         a.PrimaryEmail__c= li.Email;
                         a.Description= li.Description;
+                        String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
+                        a.Name=expectedNewName;
                         accToUpdate.add(a);
                     }
                         
