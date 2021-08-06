@@ -86,10 +86,10 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
         try{
             
             HttpRequest req = new HttpRequest();
-            req.setEndpoint('https://monted-dev-ed.my.salesforce.com/services/apexrest/getFileToPrint/0');
-            //req.setEndpoint('callout:documentaryInvoices');
+            //req.setEndpoint('https://monted-dev-ed.my.salesforce.com/services/apexrest/getFileToPrint/0');
+            req.setEndpoint('callout:documentaryInvoices');
             req.setMethod('POST');
-            req.setHeader('Authorization', 'Bearer ' + Label.MockSessionId);
+            //req.setHeader('Authorization', 'Bearer ' + Label.MockSessionId);
             req.setHeader('Content-Type', 'application/json');
             req.setbody(body);
             req.setTimeout(120000); // timeout in milliseconds
