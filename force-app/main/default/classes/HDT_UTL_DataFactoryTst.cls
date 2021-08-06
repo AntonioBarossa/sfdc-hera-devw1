@@ -2,6 +2,7 @@
  * @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
  * @date 29/06/2021
  * @description Data Factory for Test Classes
+ * @history Luca Belometti -WR – 05/08/2021 – Created Merhods for creation CampaingMemberAssignment and its relative Item
  * @history Lucas Fernandes 05/08/2021 – Created 'createAccountShare' method
  */
 public with sharing class HDT_UTL_DataFactoryTst{
