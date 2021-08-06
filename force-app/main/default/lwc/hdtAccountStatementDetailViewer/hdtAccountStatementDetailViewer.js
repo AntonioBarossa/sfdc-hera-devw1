@@ -438,9 +438,9 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         }
 
         var docInvoiceObj = {
-            billNumber: 'secondLevel',
+            billNumber: '',
             channel: 'CRM',
-            date: 'secondLevel',
+            date: '',
             documentType: 'Bollette',
             company: ''
         };
