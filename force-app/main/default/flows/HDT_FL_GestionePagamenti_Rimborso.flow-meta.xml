@@ -1914,12 +1914,6 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Analitico</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>processType</name>
                 <value>
                     <elementReference>CaseInput.Type</elementReference>
@@ -1974,12 +1968,6 @@
                 <name>nextVariant</name>
                 <value>
                     <stringValue>brand</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Analitico</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
