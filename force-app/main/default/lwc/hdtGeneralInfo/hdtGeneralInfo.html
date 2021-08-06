@@ -53,8 +53,9 @@
                     </lightning-layout-item>
                 </lightning-layout>
           
-              <template if:true={isOutbound}>
+              <template if:true={isoutbound}>
                 <lightning-layout>
+
                     <lightning-layout-item padding="horizontal-large" size="12">
                         <template if:true={isCampaignVisible}>
                             <div class="slds-text-heading_small slds-m-vertical_small">Selezione campagna Commissioning</div>
@@ -65,7 +66,7 @@
                             </template>
                         </template>
                         <template if:false={isCampaignInputVisibleCommissioning}>
-                            <c-hdt-campaign-to-account-list campaign-type="sale" object-api-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid={handleEmitCampaignIdEvent2} onemitvisibility={handleCampaignVisibility2} campaign-category='Campagna Outbound' campaign-channel='Telefonico Outbound' ></c-hdt-campaign-to-account-list>
+                            <c-hdt-campaign-to-account-list2 campaign-type="sale" object-api-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid={handleEmitCampaignIdEvent2} onemitvisibility={handleCampaignVisibility2} campaign-category={categoriacampagna} campaign-channel={canalecampagna} ></c-hdt-campaign-to-account-list2>
                         </template>
                     </lightning-layout-item>
                 </lightning-layout>
