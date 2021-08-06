@@ -77,7 +77,7 @@ public inherited sharing class HDT_UTL_Order {
             }
         }
         if(!res){
-            listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,'N/A');
+            listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,'N/A',o.SupplyType__c);
             for(RateCategory__c r : listRate){
                 if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
                     code = r.CalculatedValue__c;
