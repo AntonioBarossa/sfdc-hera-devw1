@@ -43,11 +43,11 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         endDate: ''
     };
     docInvoiceObj = {
-        billNumber: 'test',
-        channel: 'test',
-        date: 'test',
-        documentType: 'test',
-        company: 'test'
+        billNumber: '',
+        channel: '',
+        date: '',
+        documentType: '',
+        company: ''
     };
     recordValue;
     url;
@@ -233,6 +233,19 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         }
 
         this.spinner = true;
+
+        //billNumber: il numero della bolletta, oppure l’id plico restituito dal servizio web di Doxee (per le rate e i solleciti), 
+        //channel: deve contenere sempre il valore fisso “CRM”, 
+        //date: data del documento, oppure la data restituita da Doxee (per le rate e i solleciti) 
+        //documentType: deve contenere il valore “Comunicazioni” per le rate, “Solleciti” per i solleciti, “bollette” per le bollette e “fattura” per le fatture o le bollette di tipo "FATTURAZIONE SD". 
+        //company: il codice della società a cui si riferisce la bolletta (ad esempio, 1070 per Heracomm) 
+
+        //this.docInvoiceObj.billNumber = 
+        //this.docInvoiceObj.channel = 'CRM';
+        //this.docInvoiceObj.date = 
+        //this.docInvoiceObj.documentType = this.muleRequest.documentCategory;
+        //this.docInvoiceObj.company = 
+
         this.sendToApex(JSON.stringify(this.docInvoiceObj));
     }
 
