@@ -4,6 +4,7 @@ import getOrdersList from '@salesforce/apex/HDT_LC_SaleVas.getOrdersList';
 import getContractsList from '@salesforce/apex/HDT_LC_SaleVas.getContractsList';
 import getContractsAndOrdersMap from '@salesforce/apex/HDT_LC_SaleVas.getContractsAndOrdersMap';
 import confirmAction from '@salesforce/apex/HDT_LC_SaleVas.confirmAction';
+import checkTransition from '@salesforce/apex/HDT_LC_SaleVas.transitionCheck';
 
 export default class hdtSaleVas extends LightningElement {
 
@@ -252,48 +253,67 @@ export default class hdtSaleVas extends LightningElement {
 
     handleConfirmEvent(){
         this.isLoading = true;
-        confirmAction({
-            selectedOption:this.confirmedSelectedOption,
-            order:this.selectedOrder,
-            contract:this.selectedContract,
-            supplyCity:this.inputText,
-            accountId: this.accountId,
-            sale: this.sale
-            }).then(data =>{
-            this.isLoading = false;
-            // this.isModalVisible = false;
-            this.isInputVisible = false;
-            this.isOrderListVisible = false;
-            this.isContractsListVisible = false;
-            this.isCompleteListVisible = false;
-            this.selectedOption = '';
-            this.confirmedSelectedOption = '';
-            this.inputText = '';
-            this.totalPages = 0;
+        console.log('********' + JSON.stringify(this.sale));
+        checkTransition({
 
-            this.dispatchEvent(new CustomEvent('createvas'));
-            const toastSuccessMessage = new ShowToastEvent({
-                title: 'Successo',
-                message: 'VAS confermato con successo',
-                variant: 'success'
-            });
-            this.dispatchEvent(toastSuccessMessage);
+            salesId : this.sale.Id
 
-            this.dispatchEvent(new CustomEvent('salewizard__refreshproductstable', {
-                bubbles: true,
-                composed: true
-            }));
-
-        }).catch(error => {
-            this.isLoading = false;
-            console.log('Error: ', error.body.message);
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: error.body.message,
-                variant: 'error'
-            });
-            this.dispatchEvent(toastErrorMessage);
+        }).then(data =>{
+            if(data){
+                confirmAction({
+                    selectedOption:this.confirmedSelectedOption,
+                    order:this.selectedOrder,
+                    contract:this.selectedContract,
+                    supplyCity:this.inputText,
+                    accountId: this.accountId,
+                    sale: this.sale
+                    }).then(data =>{
+                    this.isLoading = false;
+                    // this.isModalVisible = false;
+                    this.isInputVisible = false;
+                    this.isOrderListVisible = false;
+                    this.isContractsListVisible = false;
+                    this.isCompleteListVisible = false;
+                    this.selectedOption = '';
+                    this.confirmedSelectedOption = '';
+                    this.inputText = '';
+                    this.totalPages = 0;
+        
+                    this.dispatchEvent(new CustomEvent('createvas'));
+                    const toastSuccessMessage = new ShowToastEvent({
+                        title: 'Successo',
+                        message: 'VAS confermato con successo',
+                        variant: 'success'
+                    });
+                    this.dispatchEvent(toastSuccessMessage);
+        
+                    this.dispatchEvent(new CustomEvent('salewizard__refreshproductstable', {
+                        bubbles: true,
+                        composed: true
+                    }));
+        
+                }).catch(error => {
+                    this.isLoading = false;
+                    console.log('Error: ', error.body.message);
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: error.body.message,
+                        variant: 'error'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+                });
+            }else{
+                this.isLoading = false;
+                //this.dispatchEvent(new CustomEvent('createvas'));
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Error',
+                    message: 'VAS Non innescabile per Transitorio',
+                    variant: 'Error'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+            }
         });
+       
     }
 
     getSelectedOrder(event){

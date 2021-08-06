@@ -328,6 +328,7 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.Account__r.CustomerCode__c,                  
             ServicePoint__r.Account__r.FiscalCode__c,                    
             CommercialProduct__c, 
+            HerokuPracticeCode__c, 
             sale__r.isTransition__c,                           
             AnnualConsumption__c,                            
             Catalog__c,                                     
@@ -337,6 +338,7 @@ public inherited sharing class HDT_QR_Order {
             OrderReferenceNumber,
             SalesCompanyCode__c,
             IsSequanzialized__c,
+            isTransition__c,
             CustomerType__c,
             IsWinback__c
             FROM Order 
