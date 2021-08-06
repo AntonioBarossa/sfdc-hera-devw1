@@ -19,7 +19,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
             System.debug('It\'s inside the method checkContractualEnvelope');
             //  ConsumptionCode__c consumptionCode = consumptionCodeQr.getRecordById(consumptionCodeId);
               Order order = orderQr.getRecordById(orderId);
-
+            System.debug('********');
               return order;    
         } catch (Exception e) {
             System.debug(e.getMessage()); 
