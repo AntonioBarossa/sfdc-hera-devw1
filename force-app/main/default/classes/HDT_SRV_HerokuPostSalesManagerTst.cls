@@ -68,27 +68,38 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
     @isTest
     static void handleInboundRequestTst()
     {
+        //Declaration
         HDT_SRV_HerokuPostSalesManager herokuSrv = new HDT_SRV_HerokuPostSalesManager();
+        HDT_WRP_MrrResponse.HDT_WRP_Object responseObj = new HDT_WRP_MrrResponse.HDT_WRP_Object();
+        HDT_WRP_MrrRequest notifEs = new HDT_WRP_MrrRequest();
+        HDT_WRP_MrrRequest richPass = new HDT_WRP_MrrRequest();
+        HDT_WRP_MrrRequest richKo = new HDT_WRP_MrrRequest();
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        RestContext.request = req;
+        RestContext.response = res;
+        //Entity Query
         Account testAccount = [SELECT CustomerCode__c FROM Account LIMIT 1];
         ServicePoint__c testSp = [SELECT Name FROM ServicePoint__c LIMIT 1];
         Contract testContract = [SELECT SAPContractCode__c FROM Contract LIMIT 1];
         BillingProfile__c testBillingProfile = [SELECT ContractAccountCode__c FROM BillingProfile__c LIMIT 1];
         Case testCase = [SELECT CaseNumber, Phase__c, Type FROM Case LIMIT 1];
-        HDT_WRP_MrrResponse.HDT_WRP_Object responseObj = new HDT_WRP_MrrResponse.HDT_WRP_Object();
-        HDT_WRP_MrrRequest notifEs = new HDT_WRP_MrrRequest();
-        HDT_WRP_MrrRequest richPass = new HDT_WRP_MrrRequest();
-        HDT_WRP_MrrRequest richKo = new HDT_WRP_MrrRequest();
+        //Create Requests
         String notifEsString = HDT_UTL_DataFactoryTst.notifEsReq('postsales',testCase.Id, 'Comunicazione verso Heroku OK','esito_intermedio');
         String richPassString = HDT_UTL_DataFactoryTst.richPassReq(testSp.Name, testAccount.CustomerCode__c, testBillingProfile.ContractAccountCode__c, 
             testContract.SAPContractCode__c, 'Morosita', 'Sospensione Fornitura', '', 'Da PGM', '20220102', '', '');
         String notifEsKo = HDT_UTL_DataFactoryTst.notifEsReq('postsales',testCase.Id, 'Completata','esito_intermedio');
         notifEs = (HDT_WRP_MrrRequest) JSON.deserialize(notifEsString, HDT_WRP_MrrRequest.class);
+        richKo  = (HDT_WRP_MrrRequest) JSON.deserialize(notifEsKo, HDT_WRP_MrrRequest.class);
+        //Test
         Test.startTest();
-        System.debug(RestContext.response);
         responseObj = herokuSrv.handleInboundRequest(notifEs.requests[0]);
+        responseObj = herokuSrv.handleInboundRequest(richKo.requests[0]);
         Test.stopTest();
+        //Assertions
         Case testCaseUpd = [SELECT CaseNumber, Phase__c, Type FROM Case LIMIT 1];
         System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c);
+        System.assertEquals(400, res.statusCode);
     }   
     @isTest
     static void handleRichPassResponseFieldTst()
