@@ -67,9 +67,24 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
     @isTest
     static void handleInboundRequestTst()
     {
+        Case testCase = [SELECT Id, CaseNumber, Phase__c, Type FROM Case LIMIT 1];
         HDT_WRP_MrrRequest.HDT_WRP_Request notifEs = new HDT_WRP_MrrRequest.HDT_WRP_Request();
         HDT_WRP_MrrRequest.HDT_WRP_Request richPass = new HDT_WRP_MrrRequest.HDT_WRP_Request();
         HDT_WRP_MrrRequest.HDT_WRP_Request richKo = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+        String notifEsString = HDT_UTL_DataFactoryTst.notifEsReq('postsales',testCase.Id, 'Comunicazione verso Heroku OK','esito_intermedio');
+        String richPassString = '{"header":null,"requests":[{"header":{"requestId":null,"requestTimestamp":null,"requestType":"RICH_PASS","fields":['
+        +'{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"objects":[{"fields":['
+        +'{"fieldType":"TEXT","name":"CODICE_PRESA", "value":""},'
+        +'{"fieldType":"TEXT","name":"CODICE_CLIENTE", "value":"1006322046"},'
+        +'{"fieldType":"TEXT","name":"CONTO_CONTRATTUALE", "value":"200005882313"},'
+        +'{"fieldType":"TEXT","name":"CODICE_CONTRATTO", "value":"3020243910"},'
+        +'{"fieldType":"TEXT","name":"TIPO_SIEBEL", "value":"Credito"},'
+        +'{"fieldType":"TEXT","name":"SOTTOTIPO_SIEBEL", "value":"Morosita"},'
+        +'{"fieldType":"TEXT","name":"COD_FISCALE", "value":"RSSSLD50D25G453V"},'
+        +'{"fieldType":"TEXT","name":"RECAPITO", "value":"3401540441"},'
+        +'{"fieldType":"TEXT","name":"PROCESS_TYPE", "value":"Sospensione Fornitura"},'
+        +'{"fieldType":"TEXT", "name":"UFFICIO_COMPETENTE","value":"HCM"}'
+        +'],"id":null,"name":null,"objectType":null,"objects":null}]}]}';
     }
     @isTest
     static void handleRichPassResponseFieldTst()

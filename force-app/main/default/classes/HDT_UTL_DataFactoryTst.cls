@@ -1081,4 +1081,24 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			insert endpointRuleList;
 		}
 	}
+
+	public static String notifEsReq(String processCategory, String recordId, String phase, String method){
+		return '{"header": null,"requests": ['
+        +'{"header": {"requestId": "C00000000261","requestTimestamp": null,"requestType": "NOTIF_ES","fields": ['
+        +'{"fieldType": "TEXT","name": "PROCESS_CATEGORY","value": "'+processCategory+'"}]},"objects": [{"fields": ['
+        +'{"fieldType": "TEXT","name": "COD_PRAT_UTENTE","value": "Z00000000097"},'
+        +'{"fieldType": "TEXT","name": "COD_FLUSSO","value": "0150"},'
+        +'{"fieldType": "TEXT","name": "RECORD_ID","value": "'+recordId+'"},'
+        +'{"fieldType": "TEXT","name": "TESTO_ERRR","value": ""},'
+        +'{"fieldType": "TEXT","name": "FASE","value": "'+phase+'"},'
+        +'{"fieldType": "TEXT","name": "METHOD","value": "'+method+'"},'
+        +'{"fieldType": "TEXT","name": "VERTRAG","value": "3010147771"},'
+        +'{"fieldType": "TEXT","name": "VERTRAG_ST","value": "Cessato"},'
+        +'{"fieldType": "TEXT","name": "SERVICEID_DIS","value": "10D00000AU"},'
+        +'{"fieldType": "TEXT","name": "UTENZA","value": "BS_030_001"},'
+        +'{"fieldType": "TEXT","name": "DATA_EVENTO","value": "2021-07-28 10:11:45"},'
+        +'{"fieldType": "TEXT","name": "RECORD_ID","value": "5001j000008Nl9YAAS"}'
+        +'],"id": null,"name": null,"objectType": null,"objects": null}]}]}';
+	}
+
 }
