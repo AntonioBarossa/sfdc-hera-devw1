@@ -683,6 +683,22 @@
             <targetReference>Beneficiario_Erede_0</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>AssegnaVariabili</name>
+        <label>AssegnaVariabili</label>
+        <locationX>4098</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>CaseInput.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase_NonBozza</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>BlankIban</name>
         <choiceText>Inserimento Manuale</choiceText>
@@ -1702,6 +1718,13 @@
         </connector>
         <inputReference>Get_Case_Aggiornato</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCase_NonBozza</name>
+        <label>AggiornaCase</label>
+        <locationX>4098</locationX>
+        <locationY>518</locationY>
+        <inputReference>CaseInput</inputReference>
+    </recordUpdates>
     <screens>
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
@@ -2373,6 +2396,9 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>AssegnaVariabili</targetReference>
+        </connector>
         <fields>
             <name>DisplayHeader</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
