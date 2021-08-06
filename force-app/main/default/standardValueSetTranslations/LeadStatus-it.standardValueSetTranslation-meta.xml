@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSetTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <valueTranslation>
+        <masterLabel>Expired</masterLabel>
+        <translation>Scaduto</translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>New</masterLabel>
+        <translation>Nuovo</translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Not converted</masterLabel>
+        <translation>Non convertito</translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Qualified</masterLabel>
+        <translation>Qualificato</translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Working</masterLabel>
+        <translation>In lavorazione</translation>
+    </valueTranslation>
+</StandardValueSetTranslation>

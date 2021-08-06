@@ -49,7 +49,8 @@
 
     <template if:true={showBillList} >
         <c-hdt-comunications-search-list
-            customer-code={techObj.customerCode}
+            business-partner={techObj.customerCode}
+            contract-account={contractAccount}
             parameters={billParameters}
             other-params={otherParams}
             start-date-string={startDateString}

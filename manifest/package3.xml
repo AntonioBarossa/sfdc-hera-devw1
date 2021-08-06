@@ -1,124 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>DocumentSendTracking__c.HDT_ResendDocusignEnvelope</members>
-        <members>wrts_prcgvr__Activity__c.ForwardToAgency</members>
-        <name>QuickAction</name>
-    </types>
-    <types>
-        <members>Account_Service_Console</members>
-        <members>HDT_Activity_Default_Record_Page</members>
-        <members>HDT_Scarti</members>
+        <members>Hera_Service_Console_UtilityBar</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>Account-Account Layout</members>
-        <members>Account-CPQ Account Layout Service Console</members>
-        <members>Account-Partner Community</members>
-        <members>Case-Case Layout</members>
-        <members>Case-HDT_AlertDisassociazioneUtenteWeb</members>
-        <members>Case-HDT_AllineamentoAnagrafica</members>
-        <members>Case-HDT_AltreInformative</members>
-        <members>Case-HDT_Annullamento</members>
-        <members>Case-HDT_Autolettura</members>
-        <members>Case-HDT_CanoneRai</members>
-        <members>Case-HDT_ComportamentoVenditori</members>
-        <members>Case-HDT_ComunicazionePagamento</members>
-        <members>Case-HDT_Disattivazioni</members>
-        <members>Case-HDT_Domiciliazione</members>
-        <members>Case-HDT_FatturazioneConsumi</members>
-        <members>Case-HDT_GestioneBolletta</members>
-        <members>Case-HDT_GestioneBonusSociale</members>
-        <members>Case-HDT_GestionePrivacy</members>
-        <members>Case-HDT_Indennizzo</members>
-        <members>Case-HDT_Informative</members>
-        <members>Case-HDT_InversioneContatore</members>
-        <members>Case-HDT_Morosita</members>
-        <members>Case-HDT_PagamentiAltriProcessi</members>
-        <members>Case-HDT_PianoRateizzazione</members>
-        <members>Case-HDT_PraticaInVolo</members>
-        <members>Case-HDT_PreventiviEle</members>
-        <members>Case-HDT_PreventiviGas</members>
-        <members>Case-HDT_ReclamiScrittiRichInfo</members>
-        <members>Case-HDT_RichiestaParere</members>
-        <members>Case-HDT_Rimborso</members>
-        <members>Case-HDT_SospensioneRiattivazione</members>
-        <members>Case-HDT_UnificazioneSeparazioneCABolletta</members>
-        <members>Case-HDT_VariazioneAmministratore</members>
-        <members>Case-HDT_VariazioneAnagraficaCliente</members>
-        <members>Case-HDT_VariazioniEle</members>
-        <members>Case-HDT_VariazioniGas</members>
-        <members>Case-HDT_VerificaDatiAlDl</members>
-        <members>Case-HDT_VerificaTitolaritaPodPdr</members>
-        <members>Case-HDT_VerificheEle</members>
-        <members>Case-HDT_VerificheGas</members>
-        <members>Case-HDT_VolturaTecnica</members>
-        <members>Case-HDT_VotiveModena</members>
-        <members>Interaction__c-Interazione Layout</members>
-        <members>Order-Dossier</members>
-        <members>Order-HDT_PraticaInVolo</members>
-        <members>Order-HDT_Voltura</members>
-        <members>Order-Order Layout</members>
-        <members>Order-Prima attivazione con modifica</members>
-        <members>Order-Prima attivazione</members>
-        <members>Order-Sconti o Bonus VAS</members>
-        <members>Order-Subentro</members>
-        <members>Order-Switch in</members>
-        <members>Order-VAS</members>
-        <name>Layout</name>
+        <members>HDT_PEV_SelfReading__e</members>
+        <name>CustomObject</name>
     </types>
     <types>
-        <members>HDT_LC_CalculateEstimatedCost</members>
-        <members>HDT_LC_ChildOrderProcessActions</members>
-        <members>HDT_LC_DocumentSignatureManager</members>
-        <members>HDT_LC_SaleServiceItemsTilesTst</members>
-        <members>HDT_LC_TargetObjectCreateForm</members>
-        <members>HDT_QR_ActivityCustom</members>
-        <members>HDT_QR_CampaignMemberAssigmentItemTst</members>
-        <members>HDT_QR_DocumentalConfiguration</members>
-        <members>HDT_QR_HerokuPostSalesManager</members>
-        <members>HDT_QR_OrderItemTst</members>
-        <members>HDT_SRV_BillingProfileTst</members>
-        <members>HDT_SRV_DocumentalManagement</members>
-        <members>HDT_SRV_DocumentalManagementFacade</members>
-        <members>HDT_UTL_ActivityCustom</members>
-        <members>HDT_UTL_CampaignMemberAssigmentItem</members>
-        <members>HDT_UTL_Constants</members>
-        <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_OrderFieldsAlignment</members>
-        <members>HDT_UTL_ServicePoint</members>
-        <members>HDT_WRP_DocumentalResponse</members>
-        <members>HDT_WS_DocumentalIntegration</members>
-        <name>ApexClass</name>
+        <members>HDT_SendMode</members>
+        <name>GlobalValueSet</name>
     </types>
     <types>
-        <members>Case.Phase__c</members>
-        <members>Order.Phase__c</members>
-        <members>Order.QuotationType__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>HDT_SmileyWhite</members>
-        <name>StaticResource</name>
-    </types>
-    <types>
-        <members>HDT_LCP_CampaignToolbar</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>hdtCalculateEstimatedCost</members>
-        <members>hdtCampaignToContactList</members>
-        <members>hdtCommercialRiassignButton</members>
-        <members>hdtCtToolbarContainer</members>
+        <members>hdtAccountStatementDetailViewer</members>
+        <members>hdtAccountStatementViewer</members>
+        <members>hdtCambioUso</members>
+        <members>hdtCampaignToAccountList2</members>
+        <members>hdtCanaleContattoIVRLogin</members>
+        <members>hdtComunicationsSearchList</members>
+        <members>hdtDocumentSignatureManager</members>
+        <members>hdtDocumentalPhaseHistory</members>
+        <members>hdtFormAccountResidenziale</members>
         <members>hdtGeneralInfo</members>
-        <members>hdtLeadAddress</members>
-        <members>hdtOrderDossierWizardActions</members>
-        <members>hdtRecordEditFormFlowSales</members>
-        <members>hdtResendDocusignEnvelope</members>
+        <members>hdtManualActivityCreator</members>
         <members>hdtSaleServiceContainer</members>
-        <members>hdtSupplySelection</members>
-        <members>hdtTargetObjectAddressFields</members>
+        <members>hdtSaleVas</members>
         <members>hdtTargetObjectCreateForm</members>
         <name>LightningComponentBundle</name>
     </types>
@@ -137,12 +44,125 @@
         <name>CustomApplication</name>
     </types>
     <types>
+        <members>HDT_FL_CambioUso</members>
+        <members>HDT_FL_GestioneAnnullamento</members>
         <members>HDT_FL_GestionePagamenti</members>
+        <members>HDT_FL_GestionePagamenti_Rimborso</members>
         <name>Flow</name>
     </types>
     <types>
-        <members>GeneralTermsCondition__c.HDT_RequiredProductRule</members>
-        <name>ValidationRule</name>
+        <members>LeadStatus-it</members>
+        <name>StandardValueSetTranslation</name>
+    </types>
+    <types>
+        <members>ContactPointEmail-Layout Email punto di contatto</members>
+        <members>ContactPointPhone-Layout Telefono punto di contatto</members>
+        <members>Individual-Prototipo_2</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_ApexClasses</members>
+        <members>HDT_OmniSupervisorPermissionSet</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_BA_PaperCampaignClosing</members>
+        <members>HDT_BA_PaperProcessing</members>
+        <members>HDT_LC_AccountDataEnrichmentTst</members>
+        <members>HDT_LC_CambioUso</members>
+        <members>HDT_LC_CanaleContattoIVRLogin</members>
+        <members>HDT_LC_CanaleIVRNoShare</members>
+        <members>HDT_LC_ComunicationsSearchList</members>
+        <members>HDT_LC_DocumentalPhaseHistory</members>
+        <members>HDT_LC_FormAccountResidenziale</members>
+        <members>HDT_LC_LastBillTst</members>
+        <members>HDT_LC_ManualActivityCreator</members>
+        <members>HDT_LC_MeterReadingControllerTst</members>
+        <members>HDT_LC_MeterReadingControllerTstMock</members>
+        <members>HDT_LC_OrderDossierWizard</members>
+        <members>HDT_LC_RecordEditFormSales</members>
+        <members>HDT_LC_SaleVas</members>
+        <members>HDT_LC_TargetObjectCreateForm</members>
+        <members>HDT_QBL_SelfReadingsOutcome</members>
+        <members>HDT_QR_Account</members>
+        <members>HDT_QR_ActivityCustom</members>
+        <members>HDT_QR_Case</members>
+        <members>HDT_QR_DocumentalConfiguration</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_RateCategory</members>
+        <members>HDT_QR_SaleServiceItem</members>
+        <members>HDT_SRV_CampaignMember</members>
+        <members>HDT_SRV_ComunicationsSearchList</members>
+        <members>HDT_SRV_DocumentalManagement</members>
+        <members>HDT_SRV_DocumentalManagementFacade</members>
+        <members>HDT_SRV_HerokuPostSalesManager</members>
+        <members>HDT_SRV_HerokuPostSalesManagerTst</members>
+        <members>HDT_SRV_QuoteLineTst</members>
+        <members>HDT_TRH_Lead</members>
+        <members>HDT_TRH_PaperProcessing</members>
+        <members>HDT_TRH_SelfReadingEvent</members>
+        <members>HDT_UTL_ActivityCustom</members>
+        <members>HDT_UTL_CaseValidations</members>
+        <members>HDT_UTL_Constants</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_Order</members>
+        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_OrderProcessAssignment</members>
+        <members>HDT_UTL_PaperProcessing</members>
+        <members>HDT_UTL_Sales</members>
+        <members>HDT_UTL_Scarti</members>
+        <members>HDT_WS_DocumentalIntegration</members>
+        <members>HDT_WS_DocumentaryInvoices</members>
+        <members>HDT_WS_MrrRequest</members>
+        <members>HDT_WS_MrrRequestTst</members>
+        <members>HDT_WS_PostSalesTstMock</members>
+        <members>HDT_WS_SelfReadingsOutcome</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Account.ChurnkRisk__c</members>
+        <members>Account.CreditFormula__c</members>
+        <members>HDT_PEV_SelfReading__e.SerializedActivity__c</members>
+        <members>HDT_PEV_SelfReading__e.SerializedCase__c</members>
+        <members>HDT_PEV_SelfReading__e.SerializedCases__c</members>
+        <members>MatriceRemiCode__c.VATNumberUdb__c</members>
+        <members>Order.Password__c</members>
+        <members>Order.Phase__c</members>
+        <members>Order.RdoCodeSiebel__c</members>
+        <members>Order.RdsCodeSiebel__c</members>
+        <members>Order.UniqueCredentials__c</members>
+        <members>Order.Username__c</members>
+        <members>Order.VATNumberUdb__c</members>
+        <members>PaperCommunication__c.CommunicationId__c</members>
+        <members>PaperCommunication__c.DateOfMailing__c</members>
+        <members>PaperCommunication__c.Note__c</members>
+        <members>PaperCommunication__c.PdfUniqueId__c</members>
+        <members>PaperCommunication__c.Response__c</members>
+        <members>RateCategory__c.Fornitura__c</members>
+        <members>Sale__c.SalesContactRole__c</members>
+        <members>ServicePoint__c.VATNumberUdb__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>LeadStatus</members>
+        <name>StandardValueSet</name>
+    </types>
+    <types>
+        <members>HDT_LCP_CambioUso</members>
+        <members>HDT_LCP_CambioUso2</members>
+        <members>HDT_LCP_ManualActivityCreator</members>
+        <members>HDT_LCP_SellingWizard</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>HDT_PaperProcessing</members>
+        <members>HDT_SelfReadingEvent</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>OmniChannel</members>
+        <name>Settings</name>
     </types>
     <version>49</version>
 </Package>

@@ -1,0 +1,21 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes,lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes">
+
+    <aura:attribute name="processType" type="String"/>
+    <aura:attribute name="recordId" type="String"  />
+    <aura:attribute name="objectName" type="String"  />
+    <aura:attribute name="accountId" type="String"  />
+    <aura:attribute name="saveButton" type="Boolean"  />
+    <aura:attribute name="cancelButton" type="Boolean" />           
+    <aura:attribute name="draftButton" type="Boolean"  />
+    <aura:attribute name="saveInDraft" type="Boolean" />
+    <aura:attribute name="cancelCase" type="Boolean"  />
+    <aura:attribute name="showComp" type="Boolean"  default="false"/>
+    <aura:attribute name="isRunFromFlow" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <lightning:workspaceAPI aura:id="workspace"/> 
+    <lightning:navigation aura:id="navService" />
+    <aura:if isTrue="{!v.showComp}">
+        <c:hdtCambioUso oncloseaction="{!c.closeTabMain}" processtype="{!v.processType}"  recordid="{!v.recordId}"  objectName="{!v.objectname}"  accountId="{!v.accountId}"   saveButton="{!v.saveButton}"   cancelButton="{!v.cancelButton}"   draftButton="{!v.draftButton}"  saveInDraft="{!v.draftButton}"   cancelCase="{!v.cancelCase}"   isRunFromFlow="{!v.isRunFromFlow}"></c:hdtCambioUso>
+    </aura:if>
+</aura:component>	
