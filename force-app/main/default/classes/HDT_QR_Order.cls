@@ -647,5 +647,25 @@ public inherited sharing class HDT_QR_Order {
         WITH SECURITY_ENFORCED
         ];
     }
+    public List<Order>  getOrderByUsernamePassword(String username, String password) {
+        HDT_LC_CanaleIVRNoShare qrS = new HDT_LC_CanaleIVRNoShare();
+        
+        return qrS.getOrderByUsernamePassword(username,password);
 
+    
+    }
+	
+	public List<Order> getChildOrdersDocumentalActivityByParentId(String parentOrderId){
+        return [
+            SELECT 
+            Id
+           // DocumentalActivity__c,
+           // DocumentalActivity__r.Name
+            FROM
+            Order
+            WHERE ParentOrder__c = :parentOrderId
+            AND Phase__c NOT IN ('Annullato')
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

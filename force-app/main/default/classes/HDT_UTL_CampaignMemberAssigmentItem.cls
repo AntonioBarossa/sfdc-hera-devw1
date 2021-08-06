@@ -24,8 +24,15 @@ public with sharing class HDT_UTL_CampaignMemberAssigmentItem {
 
         for (CampaignMemberAssigmentItem__c item : newAssgnmentItem) {
             //Add the new inserted value to the existing total percentage to check it's validity
-            Decimal totalPercentage = queryResults.get(item.CampaingMemberAssigment__c) + newItem.get(item.CampaingMemberAssigment__c);
+            //** [START MOD 2021-08-05] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Added this check by 2 vars to avoid the error of null values 
+            Decimal queryResultValue = queryResults.get(item.CampaingMemberAssigment__c) != null ? queryResults.get(item.CampaingMemberAssigment__c) : 0;
+            Decimal newItemValue = newItem.get(item.CampaingMemberAssigment__c) != null ? newItem.get(item.CampaingMemberAssigment__c) : 0;
+            //OLD VALUE of TotalPercentage
+            //Decimal totalPercentage = queryResults.get(item.CampaingMemberAssigment__c) + newItem.get(item.CampaingMemberAssigment__c);
+            Decimal totalPercentage = queryResultValue + newItemValue;
+            //** [END MOD 2021-08-05] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Added this check by 2 vars to avoid the error of null values
             //throw Error if the total is > 100
+            
             if (totalPercentage > 100) {
                 item.addError('trigger error ' + totalPercentage);
             }

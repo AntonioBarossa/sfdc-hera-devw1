@@ -136,6 +136,33 @@ public class HDT_SRV_DocumentalManagement{
 		return body;
 	}
 
+	public static String generateDiscardDocusignEnvelopeRequest(String recordId){
+		if (String.isBlank(recordId)) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentSendTracking__c per re-inviare la busta.');
+		}
+
+		DocumentSendTracking__c sendTrack = HDT_QR_DocumentalConfiguration.getDocumentSendTrackingById(recordId);
+		if (sendTrack == null) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentSendTracking__c per re-inviare la busta.');
+		}
+
+		if (String.isBlank(sendTrack.EnvelopeId__c)) {
+			throw new HDT_UTL_HeraException('Impossibile re-inviare la busta, Id Plico non disponibile.');
+		}
+
+		JSONGenerator gen = JSON.createGenerator(false);
+		DocusignSettings__c docusignCustomSettings = DocusignSettings__c.getInstance();
+
+		gen.writeStartObject();
+		gen.writeStringField('customerId', docusignCustomSettings.CustomerEnviromentId__c);
+		gen.writeStringField('transactionId', sendTrack.EnvelopeId__c);
+		gen.writeEndObject();
+
+		String body = gen.getAsString();
+		System.debug('Intesa body: ' + body);
+		return body;
+	}
+
 	@future
 	public static void createPublicLinkFuture(String recordId,String base64,String fileName){
 		String publicLink = createPublicLink(recordId,base64,fileName);
@@ -209,6 +236,12 @@ public class HDT_SRV_DocumentalManagement{
 	public static HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse executeResendDocusignEnvelopeCalloutRequest(String body){
 		HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
 		responseWrap = HDT_WS_DocumentalIntegration.submitResendDocusignEnvelopeRequest(body);
+		return responseWrap;
+	}
+
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse executeDiscardDocusignEnvelopeCalloutRequest(String body){
+		HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
+		responseWrap = HDT_WS_DocumentalIntegration.submitDiscardDocusignEnvelopeRequest(body);
 		return responseWrap;
 	}
 
