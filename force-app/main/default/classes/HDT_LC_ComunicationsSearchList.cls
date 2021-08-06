@@ -9,4 +9,9 @@ public inherited sharing class HDT_LC_ComunicationsSearchList {
         return HDT_SRV_ComunicationsSearchList.sendFileToPrint(body);
     }
 
+    @AuraEnabled
+    public static String getCompanyCode(String companyName){
+        return HDT_SRV_ComunicationsSearchList.getCompanyCodeHelper(companyName);
+    }
+
 }

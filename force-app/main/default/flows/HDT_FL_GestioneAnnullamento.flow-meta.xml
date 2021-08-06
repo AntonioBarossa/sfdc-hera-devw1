@@ -864,6 +864,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetOrder.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Amm. Precheck OK SII</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Fase_Precedente_0</targetReference>
             </connector>
