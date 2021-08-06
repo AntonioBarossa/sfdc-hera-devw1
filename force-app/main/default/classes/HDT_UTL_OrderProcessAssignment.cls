@@ -272,7 +272,9 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                     res += '_Remi';
                 }
             }
-            servicePointSrv.updateRecordRemiCode(spList);
+            if(res != '_Remi' && res !='Subentro_Remi'){
+                servicePointSrv.updateRecordRemiCode(spList);
+            }
         }
 
 

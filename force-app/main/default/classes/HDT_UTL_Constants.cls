@@ -62,6 +62,13 @@ public with sharing class HDT_UTL_Constants {
     public final String ORDER_RECORDTYPEID_ORDERDOSSIER =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER).getRecordTypeId();
 
+    //@frpanico 05/08 Case RecordType default Morosita
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA = 'HDT_RT_Morosita';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_MOROSITA =
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA).getRecordTypeId();
+    
     //Hera internal Profiles
     @AuraEnabled
     public final String SYSTEM_ADMINISTRATOR_NAME = 'System Administrator';    

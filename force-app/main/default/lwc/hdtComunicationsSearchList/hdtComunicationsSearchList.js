@@ -22,9 +22,10 @@ const sollecitiColumns = [
 export default class HdtComunicationsSearchList extends NavigationMixin(LightningElement){
 
     @api parameters;
-    @api customerCode;
-    @api otherParams;
+    @api  businessPartner;
+    @api contractAccount;
     @api startDateString;
+    @api otherParams;
     modalHeader;
     error = {
         show: false,
@@ -36,9 +37,17 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
     columns;
     muleRequest = {
         documentCategory: '',
-        customerAccount: '',
+        businessPartner: '',
+        contractAccount: '',
         startDate: '',
         endDate: ''
+    };
+    docInvoiceObj = {
+        billNumber: 'test',
+        channel: 'test',
+        date: 'test',
+        documentType: 'test',
+        company: 'test'
     };
     recordValue;
     url;
@@ -47,7 +56,6 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
     blob;
 
     connectedCallback(){
-        console.log('>>> customerCode ' + JSON.stringify(this.customerCode));
         console.log('>>> parameters ' + JSON.stringify(this.parameters));
         console.log('>>> otherParams ' + JSON.stringify(this.otherParams));
         console.log('>>> startDateString ' + JSON.stringify(this.startDateString));
@@ -55,36 +63,41 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         var objParameters = JSON.parse(this.parameters);
         this.modalHeader = objParameters.header;
 
-        this.muleRequest.customerAccount = this.customerCode;
-
         var dateArray = this.setDateValue(this.startDateString);
+        this.muleRequest.startDate = dateArray[0];
+        this.muleRequest.endDate = dateArray[1];
+
+        switch (objParameters.type) {
+            case 'bills':
+                this.muleRequest.documentCategory = 'Bollette';
+                this.muleRequest.businessPartner = this.businessPartner;
+                this.muleRequest.contractAccount = this.contractAccount;
+
+                this.columns = billsColumns;
+                break;
+
+            case 'rate':
+                this.muleRequest.documentCategory = 'Comunicazioni';
+                this.muleRequest.businessPartner = this.businessPartner;
+                this.muleRequest.contractAccount = this.contractAccount;
+
+                this.columns = rateColumns;
+                break;
+
+            case 'solleciti':
+                this.muleRequest.documentCategory = 'Solleciti';
+                this.muleRequest.businessPartner = this.businessPartner;
+                delete this.muleRequest.contractAccount;
+
+                this.columns = sollecitiColumns;
+        }
 
         for(var i in this.otherParams){
             this.muleRequest[i] = this.otherParams[i];
         }
 
-        this.muleRequest.startDate = dateArray[0];
-        this.muleRequest.endDate = dateArray[1];
-
-
-        switch (objParameters.type) {
-            case 'bills':
-                this.muleRequest.documentCategory = 'Comunicazioni';
-                this.columns = billsColumns;
-                break;
-            case 'rate':
-                //billingProfile
-                this.muleRequest.documentCategory = 'Comunicazioni';
-                this.columns = rateColumns;
-                break;
-            case 'solleciti':
-                this.muleRequest.billingProfile = this.customerCode;
-                delete this.muleRequest.customerAccount;
-                this.muleRequest.documentCategory = 'Solleciti';
-                this.columns = sollecitiColumns;
-        }
-
         this.getDataFromWs();
+
     }
 
     setDateValue(inputDate){
@@ -130,6 +143,24 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
                 var dataObj = JSON.parse(resultObj.body);
                 
                 if(dataObj.errorDetails[0].code === '102'){
+
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Attenzione',
+                            message: 'Non è stato trovato nessun dato',
+                            variant: 'info'
+                        }),
+                    );
+
+                } else if(dataObj.errorDetails[0].code === '107'){
+
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Attenzione',
+                            message: 'Sono presenti molti dati, riprova restringendo il range delle date',
+                            variant: 'info'
+                        }),
+                    );
 
                 } else {
                     this.error.show = true;
@@ -202,7 +233,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         }
 
         this.spinner = true;
-        this.sendToApex(JSON.stringify(selected));
+        this.sendToApex(JSON.stringify(this.docInvoiceObj));
     }
 
     closeModal(event){
@@ -215,9 +246,10 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         this.dispatchEvent(closeEvent);
     }
 
-    sendToApex(toPrint){
+    sendToApex(bodyString){
         console.log('# sendToApex #');
-        sendFileToPrint({dataList: toPrint})
+        console.log('>>> TO SEND ' + bodyString);
+        sendFileToPrint({body: bodyString})
         .then(result => {
             console.log('# save success #');
             console.log('>>> resp: ' + result.success);
