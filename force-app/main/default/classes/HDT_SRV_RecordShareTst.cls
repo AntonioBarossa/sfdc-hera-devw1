@@ -17,18 +17,19 @@ public with sharing class HDT_SRV_RecordShareTst {
         Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
  
         User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+
+        User standardUser = HDT_UTL_DataFactoryTst.createInternalUser(standardUserProfileId, true);
  
         internalUser.UserPermissionsMarketingUser=true;
- 
         insert internalUser;
 
         System.runAs(internalUser) {
         
             List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             
-            List<AccountShare> asList = new List<AccountShare>();
+            List<AccountShare> asList = HDT_UTL_DataFactoryTst.createAccountShare(1, true, acc[0].Id, standardUser.Id);
 
-            insert asList;
+            System.debug('AccountShare'+asList);
         }
     }
 
@@ -47,9 +48,9 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         Test.startTest();
 
-        AccountShare accShare = new AccountShare();
+        Id testUser = [SELECT Id FROM User WHERE UserPermissionsMarketingUser = false AND Email = 'crmuser@test.com'].Id;
 
-        accShare = [SELECT Id FROM AccountShare];
+        AccountShare accShare = [SELECT Id FROM AccountShare WHERE UserOrGroupId =: testUser];
 
         HDT_SRV_RecordShare.checkCreateAccess(accShare);
 
@@ -61,12 +62,15 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         Test.startTest();
 
-            AccountShare accShare = [SELECT Id, UserOrGroupId, AccountId FROM AccountShare];
+            Id testUser = [SELECT Id FROM User 
+                          WHERE UserPermissionsMarketingUser = false 
+                          AND Email = 'crmuser@test.com'].Id;
+
+            AccountShare accShare = [SELECT Id, UserOrGroupId, AccountId FROM AccountShare 
+                                    WHERE UserOrGroupId =: testUser];
 
             List<AccountShare> aShare = HDT_UTL_DataFactoryTst.createAccountShare(1, false, 
-                                    [SELECT Id FROM Account].Id, [SELECT Id FROM USER 
-                                    WHERE UserPermissionsMarketingUser=true AND IsActive=true
-                                    LIMIT 1].Id);
+                                        [SELECT Id FROM Account].Id, testUser);
 
             aShare[0] = HDT_SRV_RecordShare.createRecord(aShare[0]);
 
@@ -82,12 +86,15 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         Test.startTest();
 
-            AccountShare accShare = [SELECT Id, UserOrGroupId, AccountId FROM AccountShare];
+            Id testUser = [SELECT Id FROM User 
+                          WHERE UserPermissionsMarketingUser = false 
+                          AND Email = 'crmuser@test.com'].Id;
+
+            AccountShare accShare = [SELECT Id, UserOrGroupId, AccountId FROM AccountShare 
+                                    WHERE UserOrGroupId =: testUser];
 
             List<AccountShare> asList = HDT_UTL_DataFactoryTst.createAccountShare(1, false, 
-                                    [SELECT Id FROM Account].Id, [SELECT Id FROM USER 
-                                    WHERE UserPermissionsMarketingUser=true AND IsActive=true
-                                    LIMIT 1].Id);
+                                        [SELECT Id FROM Account].Id, testUser);
 
             asList = HDT_SRV_RecordShare.createRecord(asList);
 
@@ -103,12 +110,15 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         Test.startTest();
 
-            AccountShare accShare = [SELECT Id, UserOrGroupId, AccountId FROM AccountShare];
+            Id testUser = [SELECT Id FROM User 
+                          WHERE UserPermissionsMarketingUser = false 
+                          AND Email = 'crmuser@test.com'].Id;
+
+            AccountShare accShare = [SELECT Id, UserOrGroupId, AccountId FROM AccountShare 
+                                    WHERE UserOrGroupId =: testUser];
 
             List<AccountShare> asList = HDT_UTL_DataFactoryTst.createAccountShare(1, false, 
-                                    [SELECT Id FROM Account].Id, [SELECT Id FROM USER 
-                                    WHERE UserPermissionsMarketingUser=true AND IsActive=true
-                                    LIMIT 1].Id);
+                                        [SELECT Id FROM Account].Id, testUser);
 
             asList = HDT_SRV_RecordShare.createRecordWithout(asList);
 
@@ -124,9 +134,10 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         Test.startTest();
 
-        AccountShare accShare = new AccountShare();
+        Id testUser = [SELECT Id FROM User WHERE UserPermissionsMarketingUser = false 
+                                           AND Email = 'crmuser@test.com'].Id;
 
-        accShare = [SELECT Id FROM AccountShare];
+        AccountShare accShare = [SELECT Id FROM AccountShare WHERE UserOrGroupId =: testUser];
 
         HDT_SRV_RecordShare.checkUpdateAccess(accShare);
 
@@ -139,16 +150,22 @@ public with sharing class HDT_SRV_RecordShareTst {
         Test.startTest();
 
         User tUser=[SELECT Id, FirstName FROM USER
-                    WHERE Email = 'crmuser@test.com'
-                    LIMIT 1];
+                    WHERE UserPermissionsMarketingUser = true 
+                    AND Email = 'crmuser@test.com'];
 
         System.runAs(tUser){
 
-            AccountShare accShare = [SELECT Id, UserOrGroupId, AccountId, ContactAccessLevel FROM AccountShare];
+            Id testUser = [SELECT Id FROM User 
+                          WHERE UserPermissionsMarketingUser = false 
+                          AND Email = 'crmuser@test.com'].Id;
+                          
+            AccountShare accShare = [SELECT Id, UserOrGroupId, AccountId, ContactAccessLevel 
+                                    FROM AccountShare
+                                    WHERE UserOrGroupId =: testUser];
 
             AccountShare aShare = accShare;
 
-            accShare.ContactAccessLevel = 'Edit';
+            accShare.ContactAccessLevel = 'Read';
 
             accShare = HDT_SRV_RecordShare.updateRecord(accShare);
 
@@ -166,16 +183,22 @@ public with sharing class HDT_SRV_RecordShareTst {
         Test.startTest();
 
         User tUser=[SELECT Id, FirstName FROM USER
-                    WHERE Email = 'crmuser@test.com'
-                    LIMIT 1];
+                    WHERE UserPermissionsMarketingUser = true 
+                    AND Email = 'crmuser@test.com'];
 
         System.runAs(tUser){
 
-            AccountShare accShare = [SELECT Id, UserOrGroupId, AccountId, ContactAccessLevel FROM AccountShare];
+            Id testUser = [SELECT Id FROM User 
+                          WHERE UserPermissionsMarketingUser = false 
+                          AND Email = 'crmuser@test.com'].Id;
+                          
+            AccountShare accShare = [SELECT Id, UserOrGroupId, AccountId, ContactAccessLevel 
+                                    FROM AccountShare
+                                    WHERE UserOrGroupId =: testUser];
 
             AccountShare aShare = accShare;
 
-            accShare.ContactAccessLevel = 'Edit';
+            accShare.ContactAccessLevel = 'Read';
 
             List<AccountShare> accShareList = new List<AccountShare>();
             accShareList.add(accShare);

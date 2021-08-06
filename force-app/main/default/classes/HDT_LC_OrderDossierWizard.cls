@@ -189,6 +189,15 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         return check;
     }
     
+    public static boolean checkDatiDiscordanti(String orderid){
+
+        boolean res = HDT_UTL_Order.checkToDiscordanti(orderid);
+
+
+        return res;
+    }
+
+
     @AuraEnabled
     public static boolean saveProsegui(String orderParentId){
         Boolean check = true;

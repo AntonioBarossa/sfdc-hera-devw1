@@ -1,5 +1,19 @@
 public inherited sharing class HDT_SRV_ComunicationsSearchList {
 
+    public static String getCompanyCodeHelper(String companyName){
+
+            List<HDT_HeraCompany__mdt> companyList;
+            companyList = HDT_QR_AccountStatement.getCompanyList(companyList);
+
+            for(HDT_HeraCompany__mdt company : companyList){
+                if(company.label.equalsIgnoreCase(companyName)){
+                    return company.CompanyCode__c;
+                }
+            }
+
+            return '';
+    }
+
     public static Object getWsData(String wrapperObj) {
 
         System.debug('>>> wrapperObj ' + wrapperObj);
@@ -18,6 +32,10 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
 
             if(String.valueOf(documentCategory) == 'Bollette'){
                 httpObj.endPoint = 'callout:documentaryBillsSearch';
+                //wsObj.success = true;
+                //wsObj.message = '';
+                //wsObj.body = getFakeData();
+                //return JSON.serialize(wsObj);
             } else {
                 httpObj.endPoint = 'callout:docComunicationsSearch';
             }
@@ -66,15 +84,7 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
         HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj responseObj = new HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj();
 
         try{
-            //String bodyString = '';
-            //bodyString += '{';
-            //bodyString += '"billNumber": "",';
-            //bodyString += '"channel": "",';
-            //bodyString += '"date": "",';
-            //bodyString += '"documentType": "",';
-            //bodyString += '"company": ""';
-            //bodyString += '}';
-
+            
             HttpRequest req = new HttpRequest();
             //req.setEndpoint('https://monted-dev-ed.my.salesforce.com/services/apexrest/getFileToPrint/0');
             req.setEndpoint('callout:documentaryInvoices');
@@ -85,8 +95,6 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
             req.setTimeout(120000); // timeout in milliseconds
 
             HDT_WS_DocumentaryInvoices.HDT_WRP_ReturnObj returnObj = HDT_WS_DocumentaryInvoices.sendFile(req);
-
-            //HDT_WS_EngageOnePrint.HDT_WRP_ReturnObj returnObj = HDT_WS_EngageOnePrint.sendFile(dataList);
             responseObj.success = returnObj.success;
             responseObj.bodyBase64 = returnObj.bodyBase64;
             responseObj.message = returnObj.message;
@@ -101,27 +109,27 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
 
     }
 
-    //public static String getFakeData(){
-    //    System.debug('>>> getFakeData');
-    //    String s = '{"status": "success", "data":[';
+    public static String getFakeData(){
+        System.debug('>>> getFakeData');
+        String s = '{"status": "success", "data":[';
 
-    //    Integer max = 50;
-    //    Date dd = Date.today();
-    //    Date currentDate;
-    //    String stringDate;
-    //    for(Integer n=1; n <= max; n++){
-    //        currentDate = dd.addDays(n);
-    //        String d = (currentDate.day()<10) ? '0' + String.valueOf(currentDate.day()) : String.valueOf(currentDate.day());
-    //        String m = (currentDate.month()<10) ? '0' + String.valueOf(currentDate.month()) : String.valueOf(currentDate.month());
-    //        stringDate = d + '/' + m + '/' + String.valueOf(currentDate.year());
-    //        s += '{"id": "' + String.valueOf(n) + '", "billNumber": "' + String.valueOf(n) + '", "billDate": "' + stringDate + '"}';
-    //        if(n != max){
-    //            s += ',';
-    //        }
-    //    }
+        Integer max = 50;
+        Date dd = Date.today();
+        Date currentDate;
+        String stringDate;
+        for(Integer n=1; n <= max; n++){
+            currentDate = dd.addDays(n);
+            String d = (currentDate.day()<10) ? '0' + String.valueOf(currentDate.day()) : String.valueOf(currentDate.day());
+            String m = (currentDate.month()<10) ? '0' + String.valueOf(currentDate.month()) : String.valueOf(currentDate.month());
+            stringDate = d + '/' + m + '/' + String.valueOf(currentDate.year());
+            s += '{"id": "' + String.valueOf(n) + '", "envelopeId": "' + String.valueOf(n) + '", "issueDate": "' + stringDate + '"}';
+            if(n != max){
+                s += ',';
+            }
+        }
 
-    //    s += ']}';
-    //    return s;
-    //}
+        s += ']}';
+        return s;
+    }
 
 }

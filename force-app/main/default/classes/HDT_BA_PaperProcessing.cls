@@ -36,12 +36,12 @@ public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<s
     }
 
     public void execute(Database.BatchableContext BC, List<CampaignMember> scope) {
-        system.debug(scope.size());
         List<HDT_WRP_PaperProcessing> ppWrapList = new List<HDT_WRP_PaperProcessing>();
         for(CampaignMember cm : scope) { 
             //cm.PaperProcess__c = paperProcessingId;
             //campaignMembers.add(cm);
             HDT_WRP_PaperProcessing ppwrap =  new HDT_WRP_PaperProcessing();
+            ppwrap.CRM_communication_Id =this.paperProcessingId+'_'+cm.id;
             ppwrap.codCliente = cm.Contact.Account.CustomerCode__c;
             ppwrap.nome = (cm.Contact.FirstName != '' && cm.Contact.FirstName != null) ? cm.Contact.FirstName : cm.Lead.FirstName;
             ppwrap.cognome = (cm.Contact.LastName != '' && cm.Contact.LastName != null) ? cm.Contact.LastName : cm.Lead.LastName;
@@ -113,10 +113,8 @@ public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<s
             ppWrapList.add(ppwrap);
         }
         String fileName = 'Report_Clienti_' + this.paperProcessingId + date.today().year() + date.today().month() + date.today().day();
-        System.debug(fileName);
         contentVersionIdList.add(HDT_UTL_PaperProcessing.generateFile(ppWrapList, this.paperProcessingId, fileName));
         //update campaignMembers;
-        //System.debug('-------- '+campaignMembers.size());
         System.debug('------ '+ppWrapList.size());
     }
 
