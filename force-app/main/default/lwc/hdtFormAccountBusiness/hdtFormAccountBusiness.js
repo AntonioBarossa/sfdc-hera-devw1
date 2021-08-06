@@ -1,5 +1,7 @@
 import { LightningElement,track, api, wire} from 'lwc';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+
 import CUSTOMERTYPE_FIELD from '@salesforce/schema/Account.CustomerType__c';
 import CONTACT_OBJECT from '@salesforce/schema/Contact';
 import COMPANY_FIELD from '@salesforce/schema/Contact.Company__c';
@@ -50,7 +52,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @api RecordTypeId;
     @track companyOptions;
 
-    @wire(getPicklistValues, { objectApiName: CONTACT_OBJECT })
+    @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
     contactInfo;
   
 
@@ -210,6 +212,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-show');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-hide');
             this.makerequired= false;
+            this.customerType='Organizzazione';
+
             this.template.querySelector('[data-id="fiscalCode"]').classList.remove('slds-has-error');
         }
    }
@@ -345,7 +349,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let phonePrefix= this.template.querySelector('[data-id="phonePrefix"]');
         let mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
         let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
-        this.customerTypeValue=this.template.querySelector('[data-id="customerType"]').value;
+        let customerTypeValue=this.template.querySelector('[data-id="customerType"]').value;
 
 
         // let address =this.template.querySelector('[data-id="address"]');
@@ -601,7 +605,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             "companyOwner" : companyOwner.value ,
                             "phonePrefix" : phonePrefix.value ,
                             "mobilePhonePrefix" : mobilePhonePrefix.value,
-                            "customerTypeValue": customerTypeValue.value,
+                            "customerTypeValue": customerTypeValue,
                         };
                         console.log("LOG14");
                         insertAccount({
@@ -610,7 +614,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         }).then((response) => {
                             console.log("LOG15");
                             const event = new ShowToastEvent({
-                                message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                                message: 'Account '+response.name+' has been created!',
                                 variant: 'success',
                                 mode: 'dismissable'
                             });
@@ -692,7 +696,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         accountAddress: this.fieldsToUpdate
                     }).then((response) => {
                         const event = new ShowToastEvent({
-                            message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                            message: 'Account '+response.name +' has been created!',
                             variant: 'success',
                             mode: 'dismissable'
                         });
