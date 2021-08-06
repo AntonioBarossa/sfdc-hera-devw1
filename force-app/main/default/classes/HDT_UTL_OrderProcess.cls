@@ -152,7 +152,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for (Order newOrder : newOrdersList) {
             for (Order oldOrder : oldOrdersList) {
 
-                if(newOrder.Status == 'In Lavorazione'
+                if(newOrder.id == oldOrder.id 
+                    && newOrder.Status == 'In Lavorazione'
                     && newOrder.ProcessType__c != null
                     && newOrder.SignedDate__c != null
                     && (newOrder.ProcessType__c.contains('Switch in') || newOrder.ProcessType__c == 'Cambio Offerta')
