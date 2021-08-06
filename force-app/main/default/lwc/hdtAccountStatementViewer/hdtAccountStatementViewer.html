@@ -1,5 +1,7 @@
 <template>
 
+    <c-hdt-pdf-viewer-handler ></c-hdt-pdf-viewer-handler>
+
     <template if:true={showAcctStmt} >
         <c-hdt-acct-stmt-type-choise
             stmt-type={statementType}
@@ -49,10 +51,13 @@
 
     <template if:true={showBillList} >
         <c-hdt-comunications-search-list
-            customer-code={techObj.customerCode}
+            business-partner={techObj.customerCode}
+            contract-account={contractAccount}
             parameters={billParameters}
             other-params={otherParams}
             start-date-string={startDateString}
+            company={company}
+            onprintpdf={printPdf}
             onclosemodal={closeModalHandler}
         ></c-hdt-comunications-search-list>
     </template>
@@ -327,6 +332,7 @@
                 onclosemainspinner={closeMainSpinner}
                 onmodalhandler={modalHandler}
                 onservicecatalog={serviceCatalogEventFromChild}
+                onprintpdf={printPdf}
             ></c-hdt-account-statement-detail-viewer>
         </div>
 

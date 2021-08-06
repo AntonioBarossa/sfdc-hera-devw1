@@ -16,7 +16,8 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
             PowerQuote__c = order.PowerQuote__c,
             AdministrativeBurden__c = order.AdministrativeBurden__c,
             EstimatedVAT__c = order.EstimatedVAT__c,
-            ValidityDateEstimate__c = order.ValidityDateEstimate__c
+            ValidityDateEstimate__c = order.ValidityDateEstimate__c,
+            QuotationType__c = order.QuotationType__c
         ));
     }
 
@@ -49,6 +50,7 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
         wrp.fixedQuotes=fixedQuotes;
         Decimal variableAmount =  fixedQuotes.PowerQuote__c*((ord.PowerRequested__c*(ord.PowerAvailable__c>30?1.0:1.1))-ord.PowerAvailable__c);
         wrp.estimatedAmount=(variableAmount+fixedQuotes.DistributorFixedQuote__c+fixedQuotes.SellerFixedQuote__c)*(1+(fixedQuotes.VAT__c/100));
+        wrp.estimatedAmount=wrp.estimatedAmount.setScale(2);
         return;
     }
 

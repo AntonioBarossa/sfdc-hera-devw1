@@ -102,7 +102,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
     return response;
      
 }
-
+    @TestVisible
     private static void updateFuture(String inputString){
 
         Case c = (Case) JSON.deserialize(inputString, Case.class);
