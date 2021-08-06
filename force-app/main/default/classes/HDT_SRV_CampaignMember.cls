@@ -62,11 +62,11 @@ public inherited sharing class HDT_SRV_CampaignMember {
     
 
     public void updateRecords(List<CampaignMember> cmembers){
-
-        for (CampaignMember cm : cmembers) {
-            List<String> fields = helperMethods.getObjAttrList(cm);
-            checkUpdateAccess(String.join(fields, ','));
-        }
+    //! non riabilitare perche da dei falsi positivi sull' oggetto CampaignMember
+        // for (CampaignMember cm : cmembers) {
+        //     List<String> fields = helperMethods.getObjAttrList(cm);
+            // checkUpdateAccess(String.join(fields, ','));
+        // }
 
         HDT_UTL_DatabaseService.updateSObject(cmembers);
     }

@@ -1,5 +1,8 @@
 import { LightningElement, track ,api, wire} from 'lwc';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import CONTACT_OBJECT from '@salesforce/schema/Contact';
+import COMPANY_FIELD from '@salesforce/schema/Contact.Company__c';
 import PHONE_PREFIX from '@salesforce/schema/Account.PhonePrefix__c';
 import MOBILEPHONE_PREFIX from '@salesforce/schema/Account.MobilePhonePrefix__c';
 import CUSTOM_MARKING from '@salesforce/schema/Account.CustomerMarking__c';
@@ -14,6 +17,8 @@ import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber
 import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountResidenziale.insertAccount';
 import checkRole from '@salesforce/apex/HDT_UTL_Account.checkIsBackoffice';
+
+
 export default class HdtFormAccountResidenziale extends NavigationMixin(LightningElement) {
 
     @api showCompanyOwner = false;
@@ -31,6 +36,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     @api categoryData = [];
     @api markingValue;
     @api categoryValue;
+    customerType='Persona Fisica'
     currentObjectApiName = 'Account';
     settlementRegion;
     settlementDistrict;
@@ -45,11 +51,27 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     gender;
     birthDate;
     birthPlace;
+    valueCompany='';
     accountAddress;
     fieldsToUpdate= {};
     isVerified= false;
     showModal= true;
     @api RecordTypeId;
+
+ 
+    @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
+    contactInfo;
+    @track companyOptions;
+
+   
+    @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId', fieldApiName: COMPANY_FIELD })
+    companyFieldInfo({ data, error }) {
+        if (data) this.companyFieldData = data;
+    }
+    companyPicklist( comp) {
+        let key = this.companyFieldData.controllerValues[comp];
+        this.companyOptions = this.companyFieldData.values.filter(opt => opt.validFor.includes(key));
+    }
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PHONE_PREFIX })
     phonePrefixGetOptions({error, data}) {
@@ -105,13 +127,17 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         console.log("***************CHANGE" + event.target.value);
         let key = this.customerData.controllerValues[event.target.value];
         this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.companyPicklist( event.target.value);
         this.markingValue = '';
         this.categoryValue = '';
+      
     }
     handleCustomerChange(event) {
         let key = this.categoryData.controllerValues[event.target.value];
         this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
         this.categoryValue = '';
+     
+
     }
     closeModal() {
         this.showModal = false;
@@ -127,29 +153,39 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['HERA COMM'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                this.companyPicklist(this.companyDefault);
+
             }else if(response == 'HDT_FrontOffice_Reseller'){
                 this.companyDefault = 'Reseller';
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['Reseller'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                this.companyPicklist(this.companyDefault);
             }
             else if(response == 'HDT_FrontOffice_MMS'){
                 this.companyDefault = 'MMS';
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['MMS'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                this.companyPicklist(this.companyDefault);
+
             }
             else if(response == 'HDT_FrontOffice_AAAEBT'){
                 this.companyDefault = 'AAA-EBT';
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['AAA-EBT'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                this.companyPicklist(this.companyDefault);
+              
+
             }
             else{
                 this.companyDefault = 'HERA COMM';
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['HERA COMM'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                this.companyPicklist(this.companyDefault);
+      
             }
         });
     }
@@ -279,6 +315,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         let mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
         let role= this.template.querySelector('[data-id="role"]');
         let companyOwner= this.template.querySelector('[data-id="companyOwner"]');
+        let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
         // let settlDistrict= this.template.querySelector('[data-id="settlementDistrict"]');
         // let settlMunicipality= this.template.querySelector('[data-id="settlementMunicipality"]');
         // let settlAddress= this.template.querySelector('[data-id="settlementAddress"]');
@@ -459,7 +496,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             "birthDate" : this.birthDate,
                             "companyOwner" : companyOwner.value ,
                             "phonePrefix" : phonePrefix.value ,
-                            "mobilePhonePrefix" : mobilePhonePrefix.value   
+                            "mobilePhonePrefix" : mobilePhonePrefix.value, 
+                            "company":companyValue.value,
+                            "customerType":this.customerType,
                         };
                         insertAccount({
                             dataAccount : acc,
@@ -519,7 +558,10 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         "birthDate" : this.birthDate,
                         "companyOwner" : companyOwner.value ,
                         "phonePrefix" : phonePrefix.value ,
-                        "mobilePhonePrefix" : mobilePhonePrefix.value 
+                        "mobilePhonePrefix" : mobilePhonePrefix.value,
+                        "company":companyValue.value,
+                        "customerType":this.customerType,
+                     
                     };
                     insertAccount({
                         dataAccount : acc,
@@ -576,7 +618,6 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     copyAddressHandler(event){
         let checkboxSelected= event.target.checked;
         if(checkboxSelected){
-
             let residenceRegion =this.template.querySelector('[data-id="residenceRegion"]');
             let residenceDistrict= this.template.querySelector('[data-id="residenceDistrict"]');
             let residenceMunicipality= this.template.querySelector('[data-id="residenceMunicipality"]');
