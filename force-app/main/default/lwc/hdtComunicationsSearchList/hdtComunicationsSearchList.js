@@ -1,17 +1,18 @@
 import { LightningElement, api } from 'lwc';
+import getCompanyCode from '@salesforce/apex/HDT_LC_ComunicationsSearchList.getCompanyCode';
 import getWsData from '@salesforce/apex/HDT_LC_ComunicationsSearchList.getWsData';
-import sendFileToPrint from '@salesforce/apex/HDT_LC_ComunicationsSearchList.sendFileToPrint';
+//import sendFileToPrint from '@salesforce/apex/HDT_LC_ComunicationsSearchList.sendFileToPrint';
 import { NavigationMixin } from 'lightning/navigation';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 const billsColumns = [
-    { label: 'Numero bolletta', fieldName: 'billNumber' },
-    { label: 'Data registrazione', fieldName: 'billDate'}
+    { label: 'Numero bolletta', fieldName: 'envelopeId' },
+    { label: 'Data registrazione', fieldName: 'issueDate'}
 ];
 
 const rateColumns = [
-    { label: 'Id Plico', fieldName: 'billNumber' },
-    { label: 'Data registrazione', fieldName: 'billDate'}
+    { label: 'Id Plico', fieldName: 'envelopeId' },
+    { label: 'Data registrazione', fieldName: 'issueDate'}
 ];
 
 const sollecitiColumns = [
@@ -22,10 +23,11 @@ const sollecitiColumns = [
 export default class HdtComunicationsSearchList extends NavigationMixin(LightningElement){
 
     @api parameters;
-    @api  businessPartner;
+    @api businessPartner;
     @api contractAccount;
     @api startDateString;
     @api otherParams;
+    @api company;
     modalHeader;
     error = {
         show: false,
@@ -59,6 +61,8 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         console.log('>>> parameters ' + JSON.stringify(this.parameters));
         console.log('>>> otherParams ' + JSON.stringify(this.otherParams));
         console.log('>>> startDateString ' + JSON.stringify(this.startDateString));
+
+        this.getCompanyCodeService();
 
         var objParameters = JSON.parse(this.parameters);
         this.modalHeader = objParameters.header;
@@ -98,6 +102,19 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
         this.getDataFromWs();
 
+    }
+
+    getCompanyCodeService(){
+        console.log('>>> convert this company ' + this.company);
+
+        getCompanyCode({companyName: this.company})
+        .then(result => {
+            console.log('>>> getCompanyCode ' + result);
+            this.docInvoiceObj.company = result;
+        }).catch(error => {
+            this.error.show = true;
+            this.error.message = 'CATCH ERROR MESSAGE';
+        });
     }
 
     setDateValue(inputDate){
@@ -232,21 +249,22 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
             return;
         }
 
-        this.spinner = true;
-
-        //billNumber: il numero della bolletta, oppure l’id plico restituito dal servizio web di Doxee (per le rate e i solleciti), 
-        //channel: deve contenere sempre il valore fisso “CRM”, 
-        //date: data del documento, oppure la data restituita da Doxee (per le rate e i solleciti) 
-        //documentType: deve contenere il valore “Comunicazioni” per le rate, “Solleciti” per i solleciti, “bollette” per le bollette e “fattura” per le fatture o le bollette di tipo "FATTURAZIONE SD". 
-        //company: il codice della società a cui si riferisce la bolletta (ad esempio, 1070 per Heracomm) 
-
-        //this.docInvoiceObj.billNumber = 
-        //this.docInvoiceObj.channel = 'CRM';
-        //this.docInvoiceObj.date = 
-        //this.docInvoiceObj.documentType = this.muleRequest.documentCategory;
-        //this.docInvoiceObj.company = 
+        this.docInvoiceObj.billNumber = selected[0].envelopeId;
+        this.docInvoiceObj.channel = 'CRM';
+        this.docInvoiceObj.date = selected[0].issueDate;
+        this.docInvoiceObj.documentType = this.muleRequest.documentCategory;
 
         this.sendToApex(JSON.stringify(this.docInvoiceObj));
+    }
+
+    sendToApex(bodyString){
+        console.log('# closeModal #');
+        const sendToApex = new CustomEvent("printpdf", {
+            detail: {obj: bodyString}
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(sendToApex);
     }
 
     closeModal(event){
@@ -257,126 +275,6 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
         // Dispatches the event.
         this.dispatchEvent(closeEvent);
-    }
-
-    sendToApex(bodyString){
-        console.log('# sendToApex #');
-        console.log('>>> TO SEND ' + bodyString);
-        sendFileToPrint({body: bodyString})
-        .then(result => {
-            console.log('# save success #');
-            console.log('>>> resp: ' + result.success);
-    
-            var toastObj = {
-                title: '',
-                message: '',
-                variant: ''
-            };
-    
-            if(result.success){
-                toastObj.title = 'Great Success!';
-                toastObj.message = 'The selected record have been printed!';
-                toastObj.variant = 'success';
-
-
-                try{
-
-                    var base64 = result.bodyBase64; 
-                    var sliceSize = 512;
-                    base64 = base64.replace(/^[^,]+,/, '');
-                    base64 = base64.replace(/\s/g, '');
-                    var byteCharacters = window.atob(base64);
-                    var byteArrays = [];
-        
-                    for ( var offset = 0; offset < byteCharacters.length; offset = offset + sliceSize ) {
-                        var slice = byteCharacters.slice(offset, offset + sliceSize);
-                        var byteNumbers = new Array(slice.length);
-                        for (var i = 0; i < slice.length; i++) {
-                            byteNumbers[i] = slice.charCodeAt(i);
-                        }
-                        var byteArray = new Uint8Array(byteNumbers);
-        
-                        byteArrays.push(byteArray);
-                    }
-        
-                    this.blob = new Blob(byteArrays, { type: 'application/pdf' });
-                    //var data = new FormData();
-                    //data.append("file", blob, "file");
-
-                    const blobURL = URL.createObjectURL(this.blob);
-                    //console.log('url-' + blobURL);
-                    //window.open(blobURL);
-                    this.url = blobURL;
-                    this.fileName = 'myFileName.pdf';
-                    this.showFile = true;
-
-                    this[NavigationMixin.Navigate](
-                        {
-                            type: 'standard__webPage',
-                            attributes: {
-                                url: blobURL
-                            }
-                        }
-                    );
-
-                }catch(err){
-                    console.log(err.message);
-                }
-
-
-            } else {
-                toastObj.title = 'Something goes wrong!';
-                toastObj.message = result.message;
-                toastObj.variant = 'warning';
-            }
-        
-            this.spinner = false;
-
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: toastObj.title,
-                    message: toastObj.message,
-                    variant: toastObj.variant
-                }),
-            );
-    
-        })
-        .catch(error => {
-            this.handleError(error);
-        });
-        
-    }
-
-    openFile(){
-        console.log('# openFile #');
-        this[NavigationMixin.Navigate](
-            {
-                type: 'standard__webPage',
-                attributes: {
-                    url: this.url
-                }
-            }
-        );        
-    }
-
-    handleError(error){
-        console.error('e.name => ' + error.name );
-        console.error('e.message => ' + error.message);
-        console.error('e.stack => ' + error.stack);
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: error.name,
-                message: error.message,
-                variant: 'error',
-                mode: 'sticky'
-            })
-        );
-    }
-
-    resetFile(){
-        console.log('# resetFile #');
-        this.blob = null;
-        this.blobURL = URL.revokeObjectURL();
     }
 
 }

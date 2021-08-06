@@ -1,6 +1,7 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import getSecondLevelColumns from '@salesforce/apex/HDT_LC_AccountStatementController.getSecondLevelColumns';
 import serviceCatalogBackendHandler from '@salesforce/apex/HDT_LC_AccountStatementController.serviceCatalogBackendHandler';
+import getCompanyCode from '@salesforce/apex/HDT_LC_ComunicationsSearchList.getCompanyCode';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 const filterObject = {};
@@ -411,13 +412,63 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     }
 
     showSingleBill(event){
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: 'Attenzione',
-                message: 'Servizio in sviluppo',
-                variant: 'info'
-            })
-        );
+        var el = this.template.querySelector('lightning-datatable');
+        var selected = el.getSelectedRows();
+
+        console.log(JSON.stringify(selected));
+        
+        if(selected.length > 1){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non puoi selezionare più record',
+                    variant: 'warning'
+                })
+            );
+            return;
+        } else if(selected.length === 0){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non hai selezionato nessun record',
+                    variant: 'warning'
+                })
+            );
+            return;
+        }
+
+        var docInvoiceObj = {
+            billNumber: 'secondLevel',
+            channel: 'CRM',
+            date: 'secondLevel',
+            documentType: 'Bollette',
+            company: ''
+        };
+
+        this.sendPrint(docInvoiceObj);
+
+    }
+
+    sendPrint(docInvoice){
+        
+        getCompanyCode({companyName: this.firstLevel.societa})
+        .then(result => {
+            console.log('>>> getCompanyCode ' + result);
+            
+            docInvoice.company = result;
+            
+            const sendToApex = new CustomEvent("printpdf", {
+                detail: {obj: JSON.stringify(docInvoice)}
+            });
+    
+            // Dispatches the event.
+            this.dispatchEvent(sendToApex);
+
+        }).catch(error => {
+            this.error.show = true;
+            this.error.message = 'CATCH ERROR MESSAGE';
+        });
+
     }
 
     showRate(event){
