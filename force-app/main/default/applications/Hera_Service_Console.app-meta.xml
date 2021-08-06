@@ -787,6 +787,8 @@
     <tabs>standard-Case</tabs>
     <tabs>wrts_prcgvr__Activity__c</tabs>
     <tabs>BillingProfile__c</tabs>
+    <tabs>standard-OmniSupervisorLightning</tabs>
+    <tabs>standard-OmnichannelInventory</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Hera_Service_Console_UtilityBar</utilityBar>
     <workspaceConfig>
@@ -812,6 +814,12 @@
         </mappings>
         <mappings>
             <tab>standard-Lead</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-OmniSupervisorLightning</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-OmnichannelInventory</tab>
         </mappings>
         <mappings>
             <tab>standard-home</tab>
