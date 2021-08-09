@@ -111,7 +111,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     }
 
 
-
+    
    
     /**
     * @description 
@@ -120,17 +120,19 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     * @return string 
     **/
     @AuraEnabled
-    public static string getQuoteTypeMtd(Order ord){
+    public static HDT_WRP_QuoteType getQuoteTypeMtd(Order ord){
         system.debug(ord);
         String quoteType;
+        HDT_WRP_QuoteType wrp = new HDT_WRP_QuoteType();
         try {
             List<HDT_CalcoloPreventivi__mdt> metas;
 
-            if(ord.ProcessCode__c=='PN1'){
+            if(ord.recordType.DeveloperName=='HDT_RT_ConnessioneConAttivazione'){
                 //ConnessioneConAttivazione
-                metas= [SELECT QuotationType__c FROM HDT_CalcoloPreventivi__mdt WHERE Type__c='QuotationType' AND ProcessCode__c=:ord.ProcessCode__c WITH SECURITY_ENFORCED] ;
-                quoteType= metas[0].QuotationType__c; 
-                return quoteType;
+                metas= [SELECT QuotationType__c, OperationCode__c FROM HDT_CalcoloPreventivi__mdt WHERE Type__c='QuotationType' AND ProcessCode__c=:ord.ProcessCode__c AND RT__c='HDT_RT_ConnessioneConAttivazione' WITH SECURITY_ENFORCED] ;
+                wrp.quoteType= metas[0].QuotationType__c; 
+                wrp.quoteCode=metas[0].OperationCode__c; 
+                return wrp;
             }
 
             String checkPrPc= getPrPc(ord);
@@ -149,21 +151,23 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             system.debug('EnergyUseCase__c '+ord.UseTypeEnergy__c);
             system.debug('PowerRange__c '+powerRange);
             system.debug('ComparePowReq__c '+checkPrPc);
+            system.debug('RT '+ord.recordType.DeveloperName);
 
             
-            if(ord.ProcessCode__c!='PN1'){            
-                metas = [SELECT QuotationType__c FROM HDT_CalcoloPreventivi__mdt 
+            if(ord.recordType.DeveloperName!='HDT_RT_ConnessioneConAttivazione'){            
+                metas = [SELECT QuotationType__c, OperationCode__c FROM HDT_CalcoloPreventivi__mdt 
                     WHERE Type__c='QuotationType'
                         AND RequestPhase__c =:ord.RequestPhase__c AND ConnectionType__c=:ord.ConnectionType__c 
                         AND ProcessCode__c=:ord.ProcessCode__c AND VendDistr__c =:distributor 
                         AND ( EnergyUseCase__c= :ord.UseTypeEnergy__c OR EnergyUseCase__c='')
-                        AND PowerRange__c=:powerRange AND ComparePowReq__c=:checkPrPc
+                        AND PowerRange__c=:powerRange AND ComparePowReq__c=:checkPrPc AND RT__C =:ord.recordType.DeveloperName
                     WITH SECURITY_ENFORCED
-                    ORDER BY EnergyUseCase__c DESC
+                    ORDER BY EnergyUseCase__c NULLS LAST
                 ];
             }
             if(!metas.isEmpty()){
-                quoteType= metas[0].QuotationType__c;     
+                wrp.quoteType= metas[0].QuotationType__c;  
+                wrp.quoteCode= metas[0].OperationCode__c;   
             }
         } catch (Exception e) {
             system.debug(e.getStackTraceString()+' at line '+e.getLineNumber());
@@ -188,6 +192,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             }
         }
         return '';
+    }
+
+
+    public class HDT_WRP_QuoteType{
+        @AuraEnabled public String quoteType {get;set;}
+        @AuraEnabled public String quoteCode {get;set;}
     }
 
 
