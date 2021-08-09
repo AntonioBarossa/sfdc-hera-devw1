@@ -56,7 +56,7 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
 
         switch on reimburseMethod {
             when 'Bonifico' {
-                if(documents.size() >= 1 && debitDocument == documents.size()){
+                if(documents.size() >= 1 && creditDocument == documents.size()){
                     if(!isForeign){
                         causalCode = 'FAD';
                         phase = beneficiary == 'Erede' ? 'Attesa Modulo Firmato' : 'Da Inviare';
@@ -71,7 +71,7 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
                 }
             }
             when 'Assegno'{
-                if(documents.size() >= 1 && debitDocument == documents.size()){
+                if(documents.size() >= 1 && creditDocument == documents.size()){
                     phase = 'Elaborazione Manuale';
                 }else if(creditDocument > 0 && debitDocument > 0){
                     causalCode = 'COM';

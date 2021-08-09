@@ -26,9 +26,10 @@ export default class HdtGeneralInfo extends LightningElement {
     selectedFromCompleteList = {};
     saleContactRoles = '';
     @track isCampaignTableVisible = false;
-
+    @api categoriacampagna = 'Campagna Outbound';
+    @api canalecampagna ='Telefonico Outbound';
     @track isCampaignTableCommissioningVisible = false;
-    @track isOutbound = false;
+    @api isoutbound = false;
 
     @track disabledSave = true;
     totalPages = 0;
@@ -661,6 +662,3 @@ export default class HdtGeneralInfo extends LightningElement {
     }
 
 }
-
-
-

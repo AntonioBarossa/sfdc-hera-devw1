@@ -9,11 +9,13 @@ public inherited sharing class HDT_QR_CampaignMember {
     public List<CampaignMember> getActiveCampaignsByContact(String contactId){
         return [
             SELECT 
+            id,
             CampaignId,
             Campaign.Name,
             Campaign.Status,
             Campaign.Channel__c,
-            Campaign.EndDate
+            Campaign.EndDate,
+            Status
             FROM CampaignMember
             where ContactId = :contactId
             AND Campaign.isActive = true

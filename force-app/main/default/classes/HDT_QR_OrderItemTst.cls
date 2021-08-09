@@ -67,8 +67,8 @@ public with sharing class HDT_QR_OrderItemTst {
 
         oiList = qrOi.getRecordsByOrderIdListFilteredPdrPod(orderIds);
 
-        System.assertEquals(orderId, oiList[0].OrderId);
-        System.assertNotEquals(orderId, null);
+        System.assertEquals(orderId, oiList[0].OrderId, 'Order IDs match.');
+        System.assertNotEquals(orderId, null, 'Order IDs mismatch.');
 
         Test.stopTest();
     }
@@ -90,8 +90,8 @@ public with sharing class HDT_QR_OrderItemTst {
 
         System.debug('oiList: '+ oiList);
 
-        System.assertEquals(orderId, String.valueOf(oiList[0].OrderId));
-        System.assertNotEquals(orderId, null);
+        System.assertEquals(orderId, String.valueOf(oiList[0].OrderId), 'Order IDs match.');
+        System.assertNotEquals(orderId, null, 'Order IDs mismatch.');
 
         Test.stopTest();
     }
@@ -112,8 +112,8 @@ public with sharing class HDT_QR_OrderItemTst {
 
         oiList = qrOi.getRecordsWithBillingProfile(orderIds);
 
-        System.assertEquals(orderId, oiList[0].OrderId);
-        System.assertNotEquals(orderId, null);
+        System.assertEquals(orderId, oiList[0].OrderId, 'Order IDs match.');
+        System.assertNotEquals(orderId, null, 'Order IDs mismatch.');
 
         Test.stopTest();
     }
@@ -138,8 +138,8 @@ public with sharing class HDT_QR_OrderItemTst {
 
         System.debug('oiList: '+oiList);
 
-        System.assertEquals(orderId, oiList[0].OrderId);
-        System.assertNotEquals(orderId, null);
+        System.assertEquals(orderId, oiList[0].OrderId, 'Order IDs match.');
+        System.assertNotEquals(orderId, null, 'Order IDs mismatch.');
 
         Test.stopTest();
     }
@@ -161,8 +161,8 @@ public with sharing class HDT_QR_OrderItemTst {
 
         System.debug('oiList: '+ oiList);
 
-        System.assertEquals(orderId, String.valueOf(oiList[0].OrderId));
-        System.assertNotEquals(orderId, null);
+        System.assertEquals(orderId, String.valueOf(oiList[0].OrderId), 'Order IDs match.');
+        System.assertNotEquals(orderId, null, 'Order IDs mismatch.');
 
         Test.stopTest();
     }
@@ -190,8 +190,8 @@ public with sharing class HDT_QR_OrderItemTst {
 
         System.debug('oiList: '+ oiList);
 
-        System.assertEquals(orderId, String.valueOf(oiList[0].OrderId));
-        System.assertNotEquals(orderId, null);
+        System.assertEquals(orderId, String.valueOf(oiList[0].OrderId), 'Order IDs match.');
+        System.assertNotEquals(orderId, null, 'Order IDs mismatch.');
 
         Test.stopTest();
     }
