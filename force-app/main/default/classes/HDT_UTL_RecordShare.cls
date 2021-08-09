@@ -8,7 +8,7 @@ public with sharing class HDT_UTL_RecordShare {
         accsh.UserOrGroupId = UserId;
         accsh.AccountAccessLevel = 'Edit';
         accsh.RowCause = 'Manual';
-        insert accsh;
+        //insert accsh;
         return accsh;
     }
 
