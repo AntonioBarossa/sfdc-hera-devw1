@@ -192,7 +192,12 @@
                 mapPhone.put(l.id,l.phone == null ? '' : l.phone);
                 mapEmail.put(l.id,l.email == null ? '' : l.email);
             }
+            Map<id, id> mapContactByIndividual = new Map<id, id>();
+
             for(Lead l : leadNew){
+                if (String.isNotBlank(l.ConvertedContactId) &&  String.isNotBlank(l.IndividualId)) {
+                    mapContactByIndividual.put(l.IndividualId,l.ConvertedContactId);
+                }
                 boolean check = false;
                 if(mapMobilePhone.get(l.id) != null && mapMobilePhone.get(l.id) != l.MobilePhone && l.MobilePhone != '' && l.MobilePhone != null){
                     if(mapMobilePhone.get(l.id) == ''){
@@ -452,7 +457,19 @@
                      ceToUpdate.add(c);
                 }
             }
-    */
+    */      
+            if (!mapContactByIndividual.isEmpty()) {
+                for (ContactPointEmail tempContEmail : ceToUpdate) {
+                    if (mapContactByIndividual.get(tempContEmail.ParentId)!=null) {
+                        tempContEmail.Contact__c=mapContactByIndividual.get(tempContEmail.ParentId);
+                    }
+                }
+                for (ContactPointPhone tempContp : cpToUpdate) {
+                    if (mapContactByIndividual.get(tempContp.ParentId)!=null) {
+                        tempContp.Contact__c=mapContactByIndividual.get(tempContp.ParentId);
+                    }
+                }
+            }
             if(ceToUpdate != null && ceToUpdate.size() > 0){
                 HDT_SRV_ContactPoint.upsertContactPointEmail(ceToUpdate);
             }
