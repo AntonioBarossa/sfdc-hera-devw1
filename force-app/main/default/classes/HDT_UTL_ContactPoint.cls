@@ -31,12 +31,14 @@ public with sharing class HDT_UTL_ContactPoint {
         HDT_SRV_ContactPoint.upsertContactPointEmail(emailsList);
         return emailsList;
     }
-    public static List<ContactPointEmail> createContactPointEmailContact(Map<String,String> primaryEmail,Map<String,List<String>> emails){
+ 
+    public static List<ContactPointEmail> createContactPointEmailContact(Map<String,String> primaryEmail,Map<String,List<String>> emails,Map<String,String> mapContactByIndividual){
         List<ContactPointEmail> emailsList = new List<ContactPointEmail>();
         
         for(String id: primaryEmail.keySet()){
             if( !String.isblank(primaryEmail.get(id))) {
                 ContactPointEmail emailCont= instanceContactPointEmail( primaryEmail.get(id), true);
+                emailCont.Contact__c=mapContactByIndividual.get(id);
                 emailCont.ParentId = id;
                 emailCont.SendToMarketingCloud__c = true;
                 emailsList.add(emailCont);

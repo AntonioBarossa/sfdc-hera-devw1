@@ -96,6 +96,7 @@
         for(Contact c: contacts){
             contactsOb.put(c.Id, c);
         }
+        Map<String, String> mapContactByIndividual = new Map<String, String>();
         for(String id: mapEmail.keySet()){
             Contact contact= contactsOb.get(id);
             List<String> email= mapEmail.get(id);
@@ -104,9 +105,10 @@
                 email.remove(0);
                 primaryEmail.put(contact.IndividualId, emPrimary);
                 emails.put(contact.IndividualId, email);
+                mapContactByIndividual.put(contact.IndividualId,id);
             }
         }
-        HDT_UTL_ContactPoint.createContactPointEmailContact(primaryEmail, emails);
+        HDT_UTL_ContactPoint.createContactPointEmailContact(primaryEmail, emails,mapContactByIndividual);
         Map<String,boolean> mapCheck = new map<String,Boolean>();
         for(String id: mapMobilePhone.keySet()){
             Contact contact= contactsOb.get(id);
