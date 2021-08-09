@@ -258,6 +258,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CommercialId__c = sale.CommercialId__c;
         orderToUpdate.AgencyCode__c = sale.AgencyCode__c;
         orderToUpdate.Agency__c = sale.Agency__c;
+
+        try {
+            HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate.Id);
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+        }
     }
 
     private static void alignPrimaryProduct(Order orderToUpdate, String quoteId) {
