@@ -12104,6 +12104,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ChangePhaseDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ChangeStatusDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.Channel__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13695,6 +13705,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.WizardCompletedDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.WorkableFileNumberDay__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
