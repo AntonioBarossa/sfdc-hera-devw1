@@ -993,7 +993,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         //Validate address
         
-        if(!this.theRecord['Indirizzo Estero']){
+        if(this.theRecord['Indirizzo Estero']==false){
             console.log('entra in if ind estero');
             if (this.theRecord['Flag Verificato']== false) {
                 console.log('entra in flag verificato false ');
@@ -1021,9 +1021,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if (this.theRecord['Civico'] === undefined || this.theRecord['Civico'] === '') {
                 concatAddressErrorFields = concatAddressErrorFields.concat('Civico, ');
-            }
-            if (this.theRecord['CAP'] === undefined || this.theRecord['CAP'] === '') {
-                concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
             }
             if (this.theRecord['CAP'] === undefined || this.theRecord['CAP'] === '') {
                 concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
