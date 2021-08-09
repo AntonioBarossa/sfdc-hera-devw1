@@ -256,6 +256,10 @@
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
+        <name>CS_DependecyPhaseCheck__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
         <name>HDT_WebServiceConfiguration__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
