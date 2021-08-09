@@ -122,7 +122,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     @AuraEnabled
     public static HDT_WRP_QuoteType getQuoteTypeMtd(Order ord){
         system.debug(ord);
-        String quoteType;
         HDT_WRP_QuoteType wrp = new HDT_WRP_QuoteType();
         try {
             List<HDT_CalcoloPreventivi__mdt> metas;
@@ -174,7 +173,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             system.debug(e.getMessage()+' '+e.getCause());
             throw new AuraHandledException(e.getMessage());
         }
-        return quoteType;
+        return wrp;
     }
 
     /**
