@@ -511,6 +511,26 @@ public inherited sharing class HDT_QR_Order {
             WITH SECURITY_ENFORCED
         ];
     }
+    public List<Order> getRecordsByAccountId(String accountId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            OrderNumber,
+            Status,
+            Agency__c,
+            Market__c,
+            Channel__c,
+            FriendCode__c,
+            CampaignCode__c,
+            CreatedBy__c
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND ParentOrder__c = null
+            WITH SECURITY_ENFORCED
+        ];
+    }
 
     public List<Order> getActiveRecordsByAccountIdNotParent(String accountId){
         return [
