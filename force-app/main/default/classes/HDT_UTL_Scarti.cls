@@ -159,16 +159,22 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     public static wrts_prcgvr__Activity__c createActivityByObjectIdAndTemplateName(String objectId, String templateName){
         system.debug('HDT_UTL_Scarti objectId ' + objectId);
         system.debug('HDT_UTL_Scarti templateName ' + templateName);
-        Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName});
-        system.debug('HDT_UTL_Scarti template ' + template);
-        if(template.values().size() > 0){
-            wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
-            List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>objectId});
-            system.debug('HDT_UTL_Scarti end' + activities.get(0));
-            return activities.get(0);
+        try{
+            Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName});
+            system.debug('HDT_UTL_Scarti template ' + template);
+            if(template.values().size() > 0){
+                wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+                List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>objectId});
+                system.debug('HDT_UTL_Scarti end ' + activities.get(0));
+                return activities.get(0);
+            }
+            system.debug('HDT_UTL_Scarti end');
+            return null;
         }
-        system.debug('HDT_UTL_Scarti end');
-        return null;
+        catch(Exception e){
+            system.debug('HDT_UTL_Scarti catch ' + e);
+            return null;
+        }
     }
 
     /**
