@@ -60,19 +60,19 @@ public inherited sharing class HDT_UTL_Dependencies {
                 if(!oldCase.Phase__c.equalsIgnoreCase(caseProcess.Phase__c) && dependenciesCheckCs.contains(caseProcess.Phase__c)){
                     cases.put(caseProcess.ID, caseProcess);
                 }
-                try{
-                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Case__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
-                                    FROM ServiceRequest__c 
-                                    WHERE Case__r.ID IN: cases.keySet()
-                                    WITH SECURITY_ENFORCED];
-                    for(ServiceRequest__c sr : srs){
-                        sr.NextPhase__c = cases.get(sr.Case__c).Phase__c;
-                        incomingProcesses.add(sr);
-                    }
-                    
-                }catch(Exception ex){
-                    System.debug(ex.getMessage());
+            }
+            try{
+                List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Case__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
+                                FROM ServiceRequest__c 
+                                WHERE Case__r.ID IN: cases.keySet()
+                                WITH SECURITY_ENFORCED];
+                for(ServiceRequest__c sr : srs){
+                    sr.NextPhase__c = cases.get(sr.Case__c).Phase__c;
+                    incomingProcesses.add(sr);
                 }
+                
+            }catch(Exception ex){
+                System.debug(ex.getMessage());
             }
         }
         

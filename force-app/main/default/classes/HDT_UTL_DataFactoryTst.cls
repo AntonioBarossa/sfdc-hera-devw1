@@ -663,7 +663,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 				wrts_prcgvr__ButtonStyle__c = buttonStyle,
 				wrts_prcgvr__CalloutParameters__c = calloutParameters,
 				wrts_prcgvr__CalloutTemplate__c = calloutTemplate,
-				wrts_prcgvr__Code__c = String.isBlank(code) ? generateGUID() : code,
+				wrts_prcgvr__Code__c = String.isBlank(code) ? generateGuid() : code,
 				wrts_prcgvr__Description__c = description,
 				wrts_prcgvr__DestinationPhase__c = destinationPhase,
 				wrts_prcgvr__EnsureChildren__c =  ensureChildren,
@@ -692,7 +692,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
     * @date 22/07/2021
     * @return void
     */
-	public static String generateGUID() {
+	public static String generateGuid() {
         String kHexChars = '0123456789abcdefABCDEF';
         String returnValue = '';
         Integer nextByte = 0;
