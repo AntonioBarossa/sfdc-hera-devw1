@@ -5,6 +5,15 @@
     <description>Lookup ad un Billing Profile da accorpare, specifico per processo &quot;Unificazione CA&quot;</description>
     <externalId>false</externalId>
     <label>Billing Profile Definitivo</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>BillingProfile__c.Account__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.AccountId</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>BillingProfile__c</referenceTo>
     <relationshipLabel>Cases (Billing Profile Definitivo)</relationshipLabel>
     <relationshipName>Cases</relationshipName>

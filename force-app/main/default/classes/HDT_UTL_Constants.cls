@@ -38,6 +38,20 @@ public with sharing class HDT_UTL_Constants {
     public final String ACCOUNT_RECORDTYPEID_RESINDEZIALE =
     Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(ACCOUNT_RECORDTYPE_DEVELOPERNAME_RESINDEZIALE).getRecordTypeId();
 
+    //Activity Custom RecordType Credit Check KO
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_CREDITCHECKKO = 'HDT_RT_CreditCheckKO';
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPEID_CREDITCHECKKO =
+    Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_CREDITCHECKKO).getRecordTypeId();
+
+    //Activity Custom RecordType Credit Check KO
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_KOPRECEDETECLIENTE = 'HDT_RT_KoPrecedeteCliente';
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE =
+    Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_KOPRECEDETECLIENTE).getRecordTypeId();
+
 
     //Order RecordType Default
     @AuraEnabled
