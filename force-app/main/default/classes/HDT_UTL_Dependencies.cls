@@ -9,7 +9,7 @@ public inherited sharing class HDT_UTL_Dependencies {
     public static final String STATUS_LAVORAZIONE = 'In Lavorazione';
     public static final String STATUS_SEQUENZIALIZZATO = 'Sequenzializzato';
 
-    private static final String PHASE_SEQUENZIALIZZATO = 'In sequenzializzazione';
+    private static final String PHASE_SEQUENZIALIZZATO = 'Sequenzializzato';
 
     private static final String MATCH_BILLING = 'Billing Profile';
     private static final String MATCH_ACCOUNT = 'Account';

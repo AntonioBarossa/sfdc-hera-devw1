@@ -9497,6 +9497,10 @@
             <fullName>Verifica in laboratorio</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>

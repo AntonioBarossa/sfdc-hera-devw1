@@ -8,14 +8,14 @@ public with sharing class HDT_UTL_DependenciesTestWithoutData {
 
     @testSetup
     static void setup() {
-        final String ORDER_TYPE = 'Cambio offerta';
+        final String ORDER_TYPE = 'Cambio Offerta';
         final String PROCESS_TYPE = 'Cambio offerta - EE';
         final String ORDER_RECORDTYPEID_CONFERMA =
         Schema.SObjectType.Order.getRecordTypeInfosByName().get(ORDER_TYPE).getRecordTypeId();
         final String PHASE_BLK = 'In attesa conferma cliente';
         final String PHASE_INC = 'Bozza';
         final String PHASE_INC_NEXT = 'Comunicazione verso Heroku';
-        final String PHASE_INC_SEQ = 'In sequenzializzazione';
+        final String PHASE_INC_SEQ = 'Sequenzializzato';
         final String DEPENDENCY_MATCH = 'Service Point';
 
         wrts_prcgvr.PostInstall postinstall = new wrts_prcgvr.PostInstall();
@@ -33,8 +33,8 @@ public with sharing class HDT_UTL_DependenciesTestWithoutData {
         wrts_prcgvr__PhaseTransition__c ptSH = HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Sequenzializzazione To Heroku',
             PHASE_INC_NEXT,null,null,null,false, PHASE_INC_SEQ, null,null,
             ORDER_RECORDTYPEID_CONFERMA, [Select DeveloperName from RecordType where Id =:ORDER_RECORDTYPEID_CONFERMA][0].DeveloperName, null, 'A', true);
-        HDT_UTL_DataFactoryTst.createDependenciesMatrix(1, true, PROCESS_TYPE, PROCESS_TYPE, PHASE_INC_NEXT, DEPENDENCY_MATCH);
-        
+        List<DependenciesMatrix__c> dmtxs = HDT_UTL_DataFactoryTst.createDependenciesMatrix(1, true, PROCESS_TYPE, PROCESS_TYPE, PHASE_INC_NEXT, DEPENDENCY_MATCH);
+
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordListBlk = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, PHASE_INC);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, false, accList[0].id); 
@@ -64,7 +64,7 @@ public with sharing class HDT_UTL_DependenciesTestWithoutData {
     @isTest
     static void sequentializationOrderTest() {
 
-        final String ORDER_TYPE = 'Cambio offerta';
+        final String ORDER_TYPE = 'Cambio Offerta';
         final String PROCESS_TYPE = 'Cambio offerta - EE';
         final String ORDER_RECORDTYPEID_CONFERMA =
         Schema.SObjectType.Order.getRecordTypeInfosByName().get(ORDER_TYPE).getRecordTypeId();
@@ -73,7 +73,7 @@ public with sharing class HDT_UTL_DependenciesTestWithoutData {
         Account acc = [SELECT Id FROM Account WHERE Account.Name LIKE :'test account%' LIMIT 1];
         Contact contact = [SELECT Id FROM Contact WHERE Contact.Company__c = :'HCM' LIMIT 1];
         ServicePoint__c servPoint = [SELECT Id, ServicePointCode__c FROM ServicePoint__c WHERE ServicePointCode__c = :'testServicePointCode' LIMIT 1];
-        
+       
         Test.startTest();
 
         List<Order> ordListInc = HDT_UTL_DataFactoryTst.createOrder(1, false, acc.id, 'Bozza'); 
@@ -103,7 +103,7 @@ public with sharing class HDT_UTL_DependenciesTestWithoutData {
             System.debug(orderAfterUpdate);
             System.debug(srAfterUpdate);
             System.assertEquals('Sequenzializzato', orderAfterUpdate.Status);
-            System.assertEquals('In sequenzializzazione', orderAfterUpdate.Phase__c);
+            System.assertEquals('Sequenzializzato', orderAfterUpdate.Phase__c);
         }
         Test.stopTest();
 

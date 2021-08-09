@@ -2075,6 +2075,10 @@
             <fullName>OK SAP</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PressureLevel__c</picklist>

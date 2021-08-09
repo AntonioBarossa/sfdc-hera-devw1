@@ -7917,6 +7917,10 @@ q<?xml version="1.0" encoding="UTF-8"?>
             <fullName>Risposta Parere Ricevuta</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>

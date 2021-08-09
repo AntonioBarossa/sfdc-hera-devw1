@@ -8,7 +8,7 @@ public with sharing class HDT_BA_DependenciesTestWithData {
     
     @isTest(SeeAllData=true)
     static void batchDesquentializationTest(){
-        final String ORDER_TYPE = 'Cambio offerta';
+        final String ORDER_TYPE = 'Cambio Offerta';
         final String PROCESS_TYPE = 'Cambio offerta - EE';
         final String ORDER_RECORDTYPEID_CONFERMA =
         Schema.SObjectType.Order.getRecordTypeInfosByName().get(ORDER_TYPE).getRecordTypeId();

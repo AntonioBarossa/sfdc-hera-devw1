@@ -727,6 +727,11 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			depMatrixList.add(depM);
 		}
 
+		if (doInsert){
+
+			insert depMatrixList;
+		}
+
 		return depMatrixList;
 	}
 

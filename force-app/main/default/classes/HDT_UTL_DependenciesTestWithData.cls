@@ -9,7 +9,7 @@ public with sharing class HDT_UTL_DependenciesTestWithData {
     @isTest(SeeAllData=true)
     static void sequentializationOrderTest() {
         
-        final String ORDER_TYPE = 'Cambio offerta';
+        final String ORDER_TYPE = 'Cambio Offerta';
         final String PROCESS_TYPE = 'Cambio offerta - EE';
         final String ORDER_RECORDTYPEID_CONFERMA =
         Schema.SObjectType.Order.getRecordTypeInfosByName().get(ORDER_TYPE).getRecordTypeId();
@@ -71,7 +71,7 @@ public with sharing class HDT_UTL_DependenciesTestWithData {
             System.debug(orderAfterUpdate);
             System.debug(srAfterUpdate);
             System.assertEquals('Sequenzializzato', orderAfterUpdate.Status);
-            System.assertEquals('In sequenzializzazione', orderAfterUpdate.Phase__c);
+            System.assertEquals('Sequenzializzato', orderAfterUpdate.Phase__c);
         }
         Test.stopTest();
 

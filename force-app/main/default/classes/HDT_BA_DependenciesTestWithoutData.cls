@@ -8,7 +8,7 @@ public with sharing class HDT_BA_DependenciesTestWithoutData {
 
     @testSetup
     static void setup() {
-        final String ORDER_TYPE = 'Cambio offerta';
+        final String ORDER_TYPE = 'Cambio Offerta';
         final String PROCESS_TYPE = 'Cambio offerta - EE';
         final String ORDER_RECORDTYPEID_CONFERMA =
         Schema.SObjectType.Order.getRecordTypeInfosByName().get(ORDER_TYPE).getRecordTypeId();
@@ -16,7 +16,7 @@ public with sharing class HDT_BA_DependenciesTestWithoutData {
         final String PHASE_BLK = 'In attesa conferma cliente';
         final String PHASE_INC = 'Bozza';
         final String PHASE_INC_NEXT = 'Comunicazione verso Heroku';
-        final String PHASE_INC_SEQ = 'In sequenzializzazione';
+        final String PHASE_INC_SEQ = 'Sequenzializzato';
         final String DEPENDENCY_MATCH = 'Service Point';
 
         wrts_prcgvr.PostInstall postinstall = new wrts_prcgvr.PostInstall();
@@ -65,7 +65,7 @@ public with sharing class HDT_BA_DependenciesTestWithoutData {
     
     @isTest
     static void batchDesquentializationTest(){
-        final String ORDER_TYPE = 'Cambio offerta';
+        final String ORDER_TYPE = 'Cambio Offerta';
         final String PROCESS_TYPE = 'Cambio offerta - EE';
         final String ORDER_RECORDTYPEID_CONFERMA =
         Schema.SObjectType.Order.getRecordTypeInfosByName().get(ORDER_TYPE).getRecordTypeId();
