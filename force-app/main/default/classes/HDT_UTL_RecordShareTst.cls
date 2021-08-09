@@ -26,6 +26,7 @@ public with sharing class HDT_UTL_RecordShareTst {
         String idsToCheckAccShare = accShareCompiled.Id;
         Test.stopTest();
         //List<AccountShare> accShareCheck = [SELECT Id FROM AccountShare];
+        //SomeMods
 
         System.assertEquals(idsToCheckAccShare, accShareCompiled.Id, 'It Has the Same Ids');
         //System.assertNotEquals(null, accShareCheck[0].Id, 'It has the Ids populated');

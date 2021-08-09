@@ -9,6 +9,7 @@ public with sharing class HDT_UTL_RecordShare {
         accsh.AccountAccessLevel = 'Edit';
         accsh.RowCause = 'Manual';
         //insert accsh;
+        //removed DML
         return accsh;
     }
 
