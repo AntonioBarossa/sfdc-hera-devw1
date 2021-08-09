@@ -28,12 +28,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                                                                                'StartDate__c' => 'DATA_EVENTO',
                                                                                'DiscardDescription__c' => 'ERROR_MESSAGE'};
 
-    static final Map<String, String> TRACCIAMENTOMAPPING = new Map<String, String>{ 'dadefinire' => 'COUNTER',
-                                                                                    'dadefinire' => 'COD_PRAT_UTENTE',
-                                                                                    'dadefinire' => 'CMP',
-                                                                                    'dadefinire' => 'NOTE_ERR',
-                                                                                    'dadefinire' => 'STEP_ERR',
-                                                                                    'dadefinire' => 'NOTA_HK',
+    static final Map<String, String> TRACCIAMENTOMAPPING = new Map<String, String>{ 'DiscardCount__c' => 'COUNTER',
+                                                                                    'HerokuPracticeCode__c' => 'COD_PRAT_UTENTE',
+                                                                                    'ExternalUserCompany__c' => 'CMP',
+                                                                                    'ExternalErrorDescription__c' => 'NOTE_ERR',
+                                                                                    'ExternalErrorStep__c' => 'STEP_ERR',
+                                                                                    'Note__c' => 'NOTA_HK',
                                                                                     'CreatedByUsername__c' => 'UTENZA',
                                                                                     'StartDate__c' => 'DATA_EVENTO',
                                                                                     'DiscardDescription__c' => 'ERROR_MESSAGE'};
@@ -147,6 +147,29 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
         HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
+    
+    /**
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
+    * @date 06/08/2021
+    * @description HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName 
+    * @param1 objectId - Id of the parent record of the activity
+    * @param1 templateName - name of an activityTemplate
+    * @return void
+    */
+    public static wrts_prcgvr__Activity__c createActivityByObjectIdAndTemplateName(String objectId, String templateName){
+        system.debug('HDT_UTL_Scarti objectId ' + objectId);
+        system.debug('HDT_UTL_Scarti templateName ' + templateName);
+        Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName});
+        system.debug('HDT_UTL_Scarti template ' + template);
+        if(template.values().size() > 0){
+            wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+            List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>objectId});
+            system.debug('HDT_UTL_Scarti end' + activities.get(0));
+            return activities.get(0);
+        }
+        system.debug('HDT_UTL_Scarti end');
+        return null;
+    }
 
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
@@ -159,15 +182,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         //TODO: check campi del case/order per vedere se va annullata la pratica o creata l'attività
         if(Schema.Case.SObjectType == recordId.getSobjectType()
             || Schema.Order.SObjectType == recordId.getSobjectType()){
-            wrts_prcgvr__ActivityTemplate__c template = [SELECT Id, wrts_prcgvr__Code__c 
-                                                        FROM wrts_prcgvr__ActivityTemplate__c
-                                                        WHERE Name = :templateName
-                                                        LIMIT 1];
-            if(template != null){
-                wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
-                List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>recordId});
-                HDT_UTL_DatabaseService.insertSObject(activities);
-            }
+            wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(recordId, templateName);
+            if(newAct != null) HDT_UTL_DatabaseService.insertSObject(newAct);
         }
     }
 
@@ -219,17 +235,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         }
         System.debug('setLookupFields end' + inputData);
         return inputData;
-    }
-
-    /**
-    * @author Marco Arci (marco.arci@webresults.it)
-    * @date 23/07/2021
-    * @description HDT_UTL_Scarti.createScartoForDocusign - populating lookup fields
-    * @param1 inputData - list of ?DocumentSendTracking__c?                             //DA CONFERMARE!
-    * @return List<object> 
-    */
-    public static List<Object> createScartoForDocusign(List<Object> inputData){
-        return inputdata;
     }
 
     /**
