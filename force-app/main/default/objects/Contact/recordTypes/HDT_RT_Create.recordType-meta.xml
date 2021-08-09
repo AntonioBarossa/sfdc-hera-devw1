@@ -37,6 +37,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EENE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC</fullName>
             <default>false</default>
         </values>
@@ -46,10 +50,6 @@
         </values>
         <values>
             <fullName>HCM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCNE</fullName>
             <default>false</default>
         </values>
         <values>
