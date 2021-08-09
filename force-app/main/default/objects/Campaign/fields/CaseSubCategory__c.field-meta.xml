@@ -301,11 +301,6 @@
                 <label>Processi generici - Dettaglio bolletta</label>
             </value>
             <value>
-                <fullName>Recesso per altri motivi</fullName>
-                <default>false</default>
-                <label>Recesso per altri motivi</label>
-            </value>
-            <value>
                 <fullName>Recesso per rifiuto voltura</fullName>
                 <default>false</default>
                 <label>Recesso per rifiuto voltura</label>
