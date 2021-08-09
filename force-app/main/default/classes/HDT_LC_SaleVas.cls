@@ -12,6 +12,7 @@ public inherited sharing class HDT_LC_SaleVas {
     private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
     private static HDT_SRV_Opportunity opportunitySrv = new HDT_SRV_Opportunity();
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
+    private static HDT_QR_Sale saleQr = new HDT_QR_Sale();
     private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
@@ -40,6 +41,21 @@ public inherited sharing class HDT_LC_SaleVas {
             }
             
         }
+    }
+    @AuraEnabled
+    public static boolean transitionCheck(String salesId){
+        Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c');
+        boolean check = true;
+        //HDT_UTL_Sales.isTransitionNoUp()
+        //System.debug('*****MAVUOIANNA:'+ transitionlist);
+        //ServicePoint__c sa = new ServicePoint__c(SupplyProvince__c = 'AQ');
+        if(HDT_UTL_Sales.isTransitionNoUp(sal)){
+            check = false;
+        }
+
+
+        System.debug('*****VUOIANNA2:' + check);
+        return check;
     }
 
     /**

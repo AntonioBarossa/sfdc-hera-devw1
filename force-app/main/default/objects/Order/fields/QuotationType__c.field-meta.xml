@@ -3,7 +3,7 @@
     <fullName>QuotationType__c</fullName>
     <externalId>false</externalId>
     <label>Tipo Preventivo</label>
-    <length>10</length>
+    <length>25</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Text</type>
