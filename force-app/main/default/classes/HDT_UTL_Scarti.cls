@@ -10,33 +10,33 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     static final string SCARTODOCUMENTALEPOSTSALESTEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
     static final string SCARTODOCUMENTALESALESTEMPLATENAME='CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
 
-    static final Map<String, String> TRACCIAMENTOHEROKUSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER007__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_SALES',
-                                                                                        'Esito non elaborato' => 'CBS_HER006__ESITO_NON_ELABORATO_DA_DLSII_SALES',
-                                                                                        'Eliminato esito in scarto' => 'CBS_HER008__ELIMINATO_ESITO_IN_SCARTO_SALES',
-                                                                                        'Errore invio a SAP' => 'CBS_HER009__ERRORE_INVIO_A_SAP_SALES',
-                                                                                        'Errore determinazione variante SAP' => 'CBS_HER010__ERRORE_DETERMINAZIONE_VARIANTE_SAP_SALES'};
+    static final Map<String, String> TRACCIAMENTOHEROKUSALES = new Map<String, String>{'Esito ricevuto su richiesta chiusa' => 'CBS_HER007__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_SALES',
+                                                                                       'Esito non elaborato' => 'CBS_HER006__ESITO_NON_ELABORATO_DA_DLSII_SALES',
+                                                                                       'Eliminato esito in scarto' => 'CBS_HER008__ELIMINATO_ESITO_IN_SCARTO_SALES',
+                                                                                       'Errore invio a SAP' => 'CBS_HER009__ERRORE_INVIO_A_SAP_SALES',
+                                                                                       'Errore determinazione variante SAP' => 'CBS_HER010__ERRORE_DETERMINAZIONE_VARIANTE_SAP_SALES'};
 
 
-    static final Map<String, String> TRACCIAMENTOHEROKUPOSTSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER002__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_POSTSALES',
-                                                                                            'Esito non elaborato' => 'CBS_HER001__ESITO_NON_ELABORATO_DA_DLSII_POSTSALES',
-                                                                                            'Eliminato esito in scarto' => 'CBS_HER003__ELIMINATO_ESITO_IN_SCARTO_POSTSALES',
-                                                                                            'Errore invio a SAP' => 'CBS_HER004__ERRORE_INVIO_A_SAP_POSTSALES',
-                                                                                            'Errore determinazione variante SAP' => 'CBS_HER005__ERRORE_DETERMINAZIONE_VARIANTE_SAP_POSTSALES'};
+    static final Map<String, String> TRACCIAMENTOHEROKUPOSTSALES = new Map<String, String>{'Esito ricevuto su richiesta chiusa' => 'CBS_HER002__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_POSTSALES',
+                                                                                           'Esito non elaborato' => 'CBS_HER001__ESITO_NON_ELABORATO_DA_DLSII_POSTSALES',
+                                                                                           'Eliminato esito in scarto' => 'CBS_HER003__ELIMINATO_ESITO_IN_SCARTO_POSTSALES',
+                                                                                           'Errore invio a SAP' => 'CBS_HER004__ERRORE_INVIO_A_SAP_POSTSALES',
+                                                                                           'Errore determinazione variante SAP' => 'CBS_HER005__ERRORE_DETERMINAZIONE_VARIANTE_SAP_POSTSALES'};
 
-    static final Map<String, String> ANONIMAMAPPING = new Map<String, String>{ 'Type__c' => 'ATTIVITA',
-                                                                               'CreatedByUsername__c' => 'UTENZA',
-                                                                               'StartDate__c' => 'DATA_EVENTO',
-                                                                               'DiscardDescription__c' => 'ERROR_MESSAGE'};
+    static final Map<String, String> ANONIMAMAPPING = new Map<String, String>{'Type__c' => 'ATTIVITA',
+                                                                              'CreatedByUsername__c' => 'UTENZA',
+                                                                              'StartDate__c' => 'DATA_EVENTO',
+                                                                              'DiscardDescription__c' => 'ERROR_MESSAGE'};
 
-    static final Map<String, String> TRACCIAMENTOMAPPING = new Map<String, String>{ 'DiscardCount__c' => 'COUNTER',
-                                                                                    'HerokuPracticeCode__c' => 'COD_PRAT_UTENTE',
-                                                                                    'ExternalUserCompany__c' => 'CMP',
-                                                                                    'ExternalErrorDescription__c' => 'NOTE_ERR',
-                                                                                    'ExternalErrorStep__c' => 'STEP_ERR',
-                                                                                    'Note__c' => 'NOTA_HK',
-                                                                                    'CreatedByUsername__c' => 'UTENZA',
-                                                                                    'StartDate__c' => 'DATA_EVENTO',
-                                                                                    'DiscardDescription__c' => 'ERROR_MESSAGE'};
+    static final Map<String, String> TRACCIAMENTOMAPPING = new Map<String, String>{'DiscardCount__c' => 'COUNTER',
+                                                                                   'HerokuPracticeCode__c' => 'COD_PRAT_UTENTE',
+                                                                                   'ExternalUserCompany__c' => 'CMP',
+                                                                                   'ExternalErrorDescription__c' => 'NOTE_ERR',
+                                                                                   'ExternalErrorStep__c' => 'STEP_ERR',
+                                                                                   'Note__c' => 'NOTA_HK',
+                                                                                   'CreatedByUsername__c' => 'UTENZA',
+                                                                                   'StartDate__c' => 'DATA_EVENTO',
+                                                                                   'DiscardDescription__c' => 'ERROR_MESSAGE'};
     global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
         SObject transition = (SObject) argsMap.get('transition');
