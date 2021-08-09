@@ -1,17 +1,18 @@
 import { LightningElement, api } from 'lwc';
+import getCompanyCode from '@salesforce/apex/HDT_LC_ComunicationsSearchList.getCompanyCode';
 import getWsData from '@salesforce/apex/HDT_LC_ComunicationsSearchList.getWsData';
-import sendFileToPrint from '@salesforce/apex/HDT_LC_ComunicationsSearchList.sendFileToPrint';
+//import sendFileToPrint from '@salesforce/apex/HDT_LC_ComunicationsSearchList.sendFileToPrint';
 import { NavigationMixin } from 'lightning/navigation';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 const billsColumns = [
-    { label: 'Numero bolletta', fieldName: 'billNumber' },
-    { label: 'Data registrazione', fieldName: 'billDate'}
+    { label: 'Numero bolletta', fieldName: 'envelopeId' },
+    { label: 'Data registrazione', fieldName: 'issueDate'}
 ];
 
 const rateColumns = [
-    { label: 'Id Plico', fieldName: 'billNumber' },
-    { label: 'Data registrazione', fieldName: 'billDate'}
+    { label: 'Id Plico', fieldName: 'envelopeId' },
+    { label: 'Data registrazione', fieldName: 'issueDate'}
 ];
 
 const sollecitiColumns = [
@@ -22,9 +23,11 @@ const sollecitiColumns = [
 export default class HdtComunicationsSearchList extends NavigationMixin(LightningElement){
 
     @api parameters;
-    @api customerCode;
-    @api otherParams;
+    @api businessPartner;
+    @api contractAccount;
     @api startDateString;
+    @api otherParams;
+    @api company;
     modalHeader;
     error = {
         show: false,
@@ -36,9 +39,17 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
     columns;
     muleRequest = {
         documentCategory: '',
-        customerAccount: '',
+        businessPartner: '',
+        contractAccount: '',
         startDate: '',
         endDate: ''
+    };
+    docInvoiceObj = {
+        billNumber: '',
+        channel: '',
+        date: '',
+        documentType: '',
+        company: ''
     };
     recordValue;
     url;
@@ -47,44 +58,63 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
     blob;
 
     connectedCallback(){
-        console.log('>>> customerCode ' + JSON.stringify(this.customerCode));
         console.log('>>> parameters ' + JSON.stringify(this.parameters));
         console.log('>>> otherParams ' + JSON.stringify(this.otherParams));
         console.log('>>> startDateString ' + JSON.stringify(this.startDateString));
 
+        this.getCompanyCodeService();
+
         var objParameters = JSON.parse(this.parameters);
         this.modalHeader = objParameters.header;
 
-        this.muleRequest.customerAccount = this.customerCode;
-
         var dateArray = this.setDateValue(this.startDateString);
+        this.muleRequest.startDate = dateArray[0];
+        this.muleRequest.endDate = dateArray[1];
+
+        switch (objParameters.type) {
+            case 'bills':
+                this.muleRequest.documentCategory = 'Bollette';
+                this.muleRequest.businessPartner = this.businessPartner;
+                this.muleRequest.contractAccount = this.contractAccount;
+
+                this.columns = billsColumns;
+                break;
+
+            case 'rate':
+                this.muleRequest.documentCategory = 'Comunicazioni';
+                this.muleRequest.businessPartner = this.businessPartner;
+                this.muleRequest.contractAccount = this.contractAccount;
+
+                this.columns = rateColumns;
+                break;
+
+            case 'solleciti':
+                this.muleRequest.documentCategory = 'Solleciti';
+                this.muleRequest.businessPartner = this.businessPartner;
+                delete this.muleRequest.contractAccount;
+
+                this.columns = sollecitiColumns;
+        }
 
         for(var i in this.otherParams){
             this.muleRequest[i] = this.otherParams[i];
         }
 
-        this.muleRequest.startDate = dateArray[0];
-        this.muleRequest.endDate = dateArray[1];
-
-
-        switch (objParameters.type) {
-            case 'bills':
-                this.muleRequest.documentCategory = 'Comunicazioni';
-                this.columns = billsColumns;
-                break;
-            case 'rate':
-                //billingProfile
-                this.muleRequest.documentCategory = 'Comunicazioni';
-                this.columns = rateColumns;
-                break;
-            case 'solleciti':
-                this.muleRequest.billingProfile = this.customerCode;
-                delete this.muleRequest.customerAccount;
-                this.muleRequest.documentCategory = 'Solleciti';
-                this.columns = sollecitiColumns;
-        }
-
         this.getDataFromWs();
+
+    }
+
+    getCompanyCodeService(){
+        console.log('>>> convert this company ' + this.company);
+
+        getCompanyCode({companyName: this.company})
+        .then(result => {
+            console.log('>>> getCompanyCode ' + result);
+            this.docInvoiceObj.company = result;
+        }).catch(error => {
+            this.error.show = true;
+            this.error.message = 'CATCH ERROR MESSAGE';
+        });
     }
 
     setDateValue(inputDate){
@@ -130,6 +160,24 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
                 var dataObj = JSON.parse(resultObj.body);
                 
                 if(dataObj.errorDetails[0].code === '102'){
+
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Attenzione',
+                            message: 'Non è stato trovato nessun dato',
+                            variant: 'info'
+                        }),
+                    );
+
+                } else if(dataObj.errorDetails[0].code === '107'){
+
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Attenzione',
+                            message: 'Sono presenti molti dati, riprova restringendo il range delle date',
+                            variant: 'info'
+                        }),
+                    );
 
                 } else {
                     this.error.show = true;
@@ -201,8 +249,22 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
             return;
         }
 
-        this.spinner = true;
-        this.sendToApex(JSON.stringify(selected));
+        this.docInvoiceObj.billNumber = selected[0].envelopeId;
+        this.docInvoiceObj.channel = 'CRM';
+        this.docInvoiceObj.date = selected[0].issueDate;
+        this.docInvoiceObj.documentType = this.muleRequest.documentCategory;
+
+        this.sendToApex(JSON.stringify(this.docInvoiceObj));
+    }
+
+    sendToApex(bodyString){
+        console.log('# closeModal #');
+        const sendToApex = new CustomEvent("printpdf", {
+            detail: {obj: bodyString}
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(sendToApex);
     }
 
     closeModal(event){
@@ -213,125 +275,6 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
         // Dispatches the event.
         this.dispatchEvent(closeEvent);
-    }
-
-    sendToApex(toPrint){
-        console.log('# sendToApex #');
-        sendFileToPrint({dataList: toPrint})
-        .then(result => {
-            console.log('# save success #');
-            console.log('>>> resp: ' + result.success);
-    
-            var toastObj = {
-                title: '',
-                message: '',
-                variant: ''
-            };
-    
-            if(result.success){
-                toastObj.title = 'Great Success!';
-                toastObj.message = 'The selected record have been printed!';
-                toastObj.variant = 'success';
-
-
-                try{
-
-                    var base64 = result.bodyBase64; 
-                    var sliceSize = 512;
-                    base64 = base64.replace(/^[^,]+,/, '');
-                    base64 = base64.replace(/\s/g, '');
-                    var byteCharacters = window.atob(base64);
-                    var byteArrays = [];
-        
-                    for ( var offset = 0; offset < byteCharacters.length; offset = offset + sliceSize ) {
-                        var slice = byteCharacters.slice(offset, offset + sliceSize);
-                        var byteNumbers = new Array(slice.length);
-                        for (var i = 0; i < slice.length; i++) {
-                            byteNumbers[i] = slice.charCodeAt(i);
-                        }
-                        var byteArray = new Uint8Array(byteNumbers);
-        
-                        byteArrays.push(byteArray);
-                    }
-        
-                    this.blob = new Blob(byteArrays, { type: 'application/pdf' });
-                    //var data = new FormData();
-                    //data.append("file", blob, "file");
-
-                    const blobURL = URL.createObjectURL(this.blob);
-                    //console.log('url-' + blobURL);
-                    //window.open(blobURL);
-                    this.url = blobURL;
-                    this.fileName = 'myFileName.pdf';
-                    this.showFile = true;
-
-                    this[NavigationMixin.Navigate](
-                        {
-                            type: 'standard__webPage',
-                            attributes: {
-                                url: blobURL
-                            }
-                        }
-                    );
-
-                }catch(err){
-                    console.log(err.message);
-                }
-
-
-            } else {
-                toastObj.title = 'Something goes wrong!';
-                toastObj.message = result.message;
-                toastObj.variant = 'warning';
-            }
-        
-            this.spinner = false;
-
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: toastObj.title,
-                    message: toastObj.message,
-                    variant: toastObj.variant
-                }),
-            );
-    
-        })
-        .catch(error => {
-            this.handleError(error);
-        });
-        
-    }
-
-    openFile(){
-        console.log('# openFile #');
-        this[NavigationMixin.Navigate](
-            {
-                type: 'standard__webPage',
-                attributes: {
-                    url: this.url
-                }
-            }
-        );        
-    }
-
-    handleError(error){
-        console.error('e.name => ' + error.name );
-        console.error('e.message => ' + error.message);
-        console.error('e.stack => ' + error.stack);
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: error.name,
-                message: error.message,
-                variant: 'error',
-                mode: 'sticky'
-            })
-        );
-    }
-
-    resetFile(){
-        console.log('# resetFile #');
-        this.blob = null;
-        this.blobURL = URL.revokeObjectURL();
     }
 
 }
