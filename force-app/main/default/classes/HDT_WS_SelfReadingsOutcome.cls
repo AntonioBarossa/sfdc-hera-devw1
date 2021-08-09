@@ -94,14 +94,8 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
             casesToUpdate.add(caseToUpdate);
         }
 
-
-        if (casesToUpdate.size() > 0) {
-            HDT_UTL_DatabaseService.updateSObject(casesToUpdate);
-        }
-
-        if (activitiesToCreate.size() > 0) {
-            HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);
-        }
+        // Deleghiamo le DML ad un queueable per non fare andare in timeout Mulesoft.
+        System.enqueueJob(new HDT_QBL_SelfReadingsOutcome(casesToUpdate, activitiesToCreate));
 
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse res = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
         if (casesToUpdate.isEmpty() && activitiesToCreate.isEmpty()) {

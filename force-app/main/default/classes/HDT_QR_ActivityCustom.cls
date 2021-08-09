@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 04/06/2021
+* @description Apex class HDT_QR_ActivityCustom
+* @history Keltin Mesonjesi – 04/06/2021 – Created class
+*/
 public inherited sharing class HDT_QR_ActivityCustom {
     public static List<wrts_prcgvr__Activity__c> getRecordByTypeAndStatusAndAccountAndServicePoint(String type, String status, String accountId, String servicePointCode) {
         return [
@@ -193,6 +199,25 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     RecordTypeId
                     FROM wrts_prcgvr__Activity__c 
                     WHERE id IN: ids AND RecordTypeId =: recordTypeId 
+                    WITH SECURITY_ENFORCED 
+                ];
+        }
+
+        public static List<wrts_prcgvr__Activity__c> getRecordScartoDiscordante(string servicePoint,string accountid){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Contact__c,
+                    order__c,
+                    Distributor__c,
+                    AppointmentDate__c,
+                    RecordTypeId
+                    FROM wrts_prcgvr__Activity__c
+                    where 
+                    RecordType.developername = 'HDT_RT_Scarto'
+                    AND account__c = :accountid
+                    AND order__r.servicePoint__c = :servicePoint
+                    AND wrts_prcgvr__Status__c = 'Not Started'
                     WITH SECURITY_ENFORCED 
                 ];
         }

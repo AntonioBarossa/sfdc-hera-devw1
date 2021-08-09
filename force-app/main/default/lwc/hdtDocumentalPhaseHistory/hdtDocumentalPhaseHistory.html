@@ -1,4 +1,9 @@
 <template>
+
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    
     <template if:true={dataLoaded}>
         <!--<lightning-record-view-form record-id={recordId}
                                         object-api-name={objectApiName}>
@@ -57,7 +62,7 @@
                             <div class="slds-page-header__control">
                                 <ul class="slds-button-group-list">
                                     <li>
-                                        <button class="slds-button slds-button_neutral">Stampa</button>
+                                        <lightning-button variant="neutral" label="Preview" title="Preview" onclick={handlePreview}></lightning-button>
                                     </li>
                                 </ul>
                             </div>

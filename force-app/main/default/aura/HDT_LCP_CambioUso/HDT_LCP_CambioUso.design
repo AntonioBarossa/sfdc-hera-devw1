@@ -1,0 +1,14 @@
+<design:component >
+    <design:attribute name="processType" label="Process Type" description="process type passed by the flow"/>
+    <design:attribute name="recordId"  label="Record Id" description="Id of the record to edit" />
+    <design:attribute name="objectName" label="Object Name" description="Name of the object to edit" />
+    <design:attribute name="accountId"  label="Account Id" description="account id" />
+    <design:attribute name="saveButton"  label="Save Button" description="Enable Save Button" />
+    <design:attribute name="cancelButton"  label="Cancel Button" description="Enable Cancel Button"/>           
+    <design:attribute name="draftButton"  label="Draft Button" description="Enable Draft Button" />
+    <design:attribute name="saveInDraft"  label="Save in Draft" description="Is true if the user press the Draft Button" />
+    <design:attribute name="cancelCase"  label="Cancellation" description="Is true if the user press the Cancel Button" />
+    <design:attribute name="isRunFromFlow" label="isRunFromFlow" description="process type passed by the flow" />
+
+
+</design:component>
