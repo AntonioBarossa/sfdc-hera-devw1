@@ -499,7 +499,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         }
         console.log("LOG5");
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
+        
             if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
+                isValidated=false;
+                messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
+            }
+            if( String(phoneNumber.value).charAt(0)!='0'){
                 isValidated=false;
                 messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
