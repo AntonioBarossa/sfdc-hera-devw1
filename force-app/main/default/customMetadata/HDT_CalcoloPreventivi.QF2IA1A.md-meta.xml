@@ -19,6 +19,10 @@
         <value xsi:type="xsd:string">Luminarie (Temp Straord 16h)</value>
     </values>
     <values>
+        <field>OperationCode__c</field>
+        <value xsi:type="xsd:double">8.0</value>
+    </values>
+    <values>
         <field>PowerQuote__c</field>
         <value xsi:nil="true"/>
     </values>
@@ -33,6 +37,10 @@
     <values>
         <field>QuotationType__c</field>
         <value xsi:type="xsd:string">Predeterminabile</value>
+    </values>
+    <values>
+        <field>RT__c</field>
+        <value xsi:type="xsd:string">HDT_RT_TemporaneaNuovaAtt</value>
     </values>
     <values>
         <field>RequestPhase__c</field>

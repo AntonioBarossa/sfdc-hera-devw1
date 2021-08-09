@@ -1,3 +1,10 @@
+/**
+* @author Lorenzo
+* @date 05/2021
+* @description HDT_SRV_RecordShare Classes
+* @history Lorenzo – 05/2021 – Created class
+*/
+
 public with sharing class HDT_SRV_RecordShare {
     private static final String CREATEPERMISSION = 'create';
     private static final String UPDATEPERMISSION = 'update';

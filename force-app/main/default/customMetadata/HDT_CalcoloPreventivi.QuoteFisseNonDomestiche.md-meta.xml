@@ -19,6 +19,10 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>OperationCode__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>PowerQuote__c</field>
         <value xsi:type="xsd:double">71.04</value>
     </values>
@@ -32,6 +36,10 @@
     </values>
     <values>
         <field>QuotationType__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>RT__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>

@@ -1,5 +1,10 @@
 import { LightningElement,track, api, wire} from 'lwc';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+
+import CUSTOMERTYPE_FIELD from '@salesforce/schema/Account.CustomerType__c';
+import CONTACT_OBJECT from '@salesforce/schema/Contact';
+import COMPANY_FIELD from '@salesforce/schema/Contact.Company__c';
 import CUSTOM_MARKING from '@salesforce/schema/Account.CustomerMarking__c';
 import CATEGORY from '@salesforce/schema/Account.Category__c';
 import PHONE_PREFIX from '@salesforce/schema/Account.PhonePrefix__c';
@@ -36,7 +41,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @api categoryOptions = [];
     @api customerData = [];
     @api categoryData = [];
-
+    customerType='Organizzazione';
     gender;
     birthDate;
     birthPlace;
@@ -45,7 +50,21 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     fieldsToUpdate= {};
     isVerified= false;
     @api RecordTypeId;
+    @track companyOptions;
 
+    @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
+    contactInfo;
+  
+
+   
+    @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId', fieldApiName: COMPANY_FIELD })
+    companyFieldInfo({ data, error }) {
+        if (data) this.companyFieldData = data;
+    }
+    companyPicklist( comp) {
+        let key = this.companyFieldData.controllerValues[comp];
+        this.companyOptions = this.companyFieldData.values.filter(opt => opt.validFor.includes(key));
+    }
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PHONE_PREFIX })
     phonePrefixGetOptions({error, data}) {
         if (data) {
@@ -118,7 +137,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: GENDER })
     genderOptions;
-
+    @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOMERTYPE_FIELD })
+    customerTypeOptions;
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PROFESSION })
     professionOptions;
 
@@ -150,8 +170,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     }
 
     handleCompanyOwnerChange(event) {
+        
         let key = this.customerData.controllerValues[event.target.value];
         this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.companyPicklist(event.target.value);
         this.markingValue = '';
         this.categoryValue = '';
     }
@@ -171,16 +193,27 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         //    this.template.querySelector('[data-id="legalForm"]').readOnly = true;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-show');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-hide');
+            this.template.querySelector('[data-id="showDiv2"]').classList.add('slds-show');
+            this.template.querySelector('[data-id="showDiv2"]').classList.remove('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.remove('slds-show');
+            this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-hide');
+            this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-show');
+            this.customerType='Persona fisica';
             this.makerequired= true;
         }else{
          //   this.template.querySelector('[data-id="legalForm"]').readOnly = false;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-show');
+            this.template.querySelector('[data-id="showDiv2"]').classList.add('slds-hide');
+            this.template.querySelector('[data-id="showDiv2"]').classList.remove('slds-show');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.add('slds-show');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.remove('slds-hide');
+            this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-show');
+            this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-hide');
             this.makerequired= false;
+            this.customerType='Organizzazione';
+
             this.template.querySelector('[data-id="fiscalCode"]').classList.remove('slds-has-error');
         }
    }
@@ -315,6 +348,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let companyOwner= this.template.querySelector('[data-id="companyOwner"]');
         let phonePrefix= this.template.querySelector('[data-id="phonePrefix"]');
         let mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
+        let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
+        let customerTypeValue=this.template.querySelector('[data-id="customerType"]').value;
+
+
         // let address =this.template.querySelector('[data-id="address"]');
         // let location =this.template.querySelector('[data-id="location"]');
         // let myAddress =this.template.querySelector('[data-id="myAddress"]');
@@ -462,7 +499,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         }
         console.log("LOG5");
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
+        
             if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
+                isValidated=false;
+                messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
+            }
+            if( String(phoneNumber.value).charAt(0)!='0'){
                 isValidated=false;
                 messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
@@ -567,7 +609,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             "recordTypeId" : this.RecordTypeId,
                             "companyOwner" : companyOwner.value ,
                             "phonePrefix" : phonePrefix.value ,
-                            "mobilePhonePrefix" : mobilePhonePrefix.value 
+                            "mobilePhonePrefix" : mobilePhonePrefix.value,
+                            "customerTypeValue": customerTypeValue,
                         };
                         console.log("LOG14");
                         insertAccount({
@@ -576,7 +619,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         }).then((response) => {
                             console.log("LOG15");
                             const event = new ShowToastEvent({
-                                message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                                message: 'Account '+response.name+' has been created!',
                                 variant: 'success',
                                 mode: 'dismissable'
                             });
@@ -646,7 +689,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "recordTypeId" : this.RecordTypeId,
                         "companyOwner" : companyOwner.value ,
                         "phonePrefix" : phonePrefix.value ,
-                        "mobilePhonePrefix" : mobilePhonePrefix.value 
+                        "mobilePhonePrefix" : mobilePhonePrefix.value,
+                        "company":companyValue.value,
+                        "customerTypeValue": customerTypeValue.value,
+
                     };
                     console.log("*******DOP");
                     console.log("LOG17");
@@ -655,7 +701,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         accountAddress: this.fieldsToUpdate
                     }).then((response) => {
                         const event = new ShowToastEvent({
-                            message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                            message: 'Account '+response.name +' has been created!',
                             variant: 'success',
                             mode: 'dismissable'
                         });

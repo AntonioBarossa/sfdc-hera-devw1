@@ -111,8 +111,8 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                         Agency__c = queue.Agency__c,
                         WorkGroup__c = queue.Group__c,
                         AssigneeType__c = 'Coda',
-                        Queue__c = (Id) queue.Id,
-                        RuleChosenQueue__c = (Id) queue.QueueId__c,
+                        Queue__c = queue.Id,
+                        RuleChosenQueue__c = queue.Id,
                         OwnerId = (Id) queue.QueueId__c
                     );
                     if(queue.DailyCapacity__c != null) queueUsageMap.put(queue.QueueId__c, ++queueUsage);

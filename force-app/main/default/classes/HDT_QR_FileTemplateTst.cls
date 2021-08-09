@@ -28,9 +28,9 @@ public with sharing class HDT_QR_FileTemplateTst {
 
         ft = qrft.getRecordByTemplateName('Test File Template Api');
 
-        System.assertEquals('CSV', ft[0].FileType__c);
+        System.assertEquals('CSV', ft[0].FileType__c, 'File Template Type matches.');
 
-        System.assertNotEquals('CSV', null);
+        System.assertNotEquals('CSV', null, 'File Template Type does not match.');
 
         Test.stopTest();
     }
