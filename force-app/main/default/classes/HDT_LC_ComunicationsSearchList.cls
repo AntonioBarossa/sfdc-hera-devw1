@@ -5,8 +5,13 @@ public inherited sharing class HDT_LC_ComunicationsSearchList {
     }
 
     @AuraEnabled
-    public static HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj sendFileToPrint(String dataList){
-        return HDT_SRV_ComunicationsSearchList.sendFileToPrint(dataList);
+    public static HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj sendFileToPrint(String body){
+        return HDT_SRV_ComunicationsSearchList.sendFileToPrint(body);
+    }
+
+    @AuraEnabled
+    public static String getCompanyCode(String companyName){
+        return HDT_SRV_ComunicationsSearchList.getCompanyCodeHelper(companyName);
     }
 
 }
