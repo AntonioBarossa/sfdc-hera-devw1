@@ -144,7 +144,7 @@ public with sharing class HDT_UTL_ContactPoint {
     //     HDT_SRV_ContactPoint.upsertContactPointPhone(phonesList);
     //     return phonesList;
     // }
-    public static List<ContactPointPhone> createContactPointPhoneContact( Map<String,String> primary,Map<String,List<String>> phones,Map<String,String> prefixes,String tipologia){
+    public static List<ContactPointPhone> createContactPointPhoneContact( Map<String,String> primary,Map<String,List<String>> phones,Map<String,String> prefixes,String tipologia,Map<String,String> mapContactByIndividual){
         List<ContactPointPhone> phonesList = new List<ContactPointPhone>();
 
         for(String id: primary.keySet()){
@@ -161,6 +161,7 @@ public with sharing class HDT_UTL_ContactPoint {
                     if(!String.isblank(p)){
                         ContactPointPhone phoneContact= instanceContactPointPhone( p, prefixes.get(p), false);
                         phoneContact.ParentId = id;
+                        phoneContact.Contact__c =mapContactByIndividual.get(id);
                         phoneContact.Type__c = tipologia;
                         phoneContact.SendToMarketingCloud__c = true;
                         phonesList.add(phoneContact);

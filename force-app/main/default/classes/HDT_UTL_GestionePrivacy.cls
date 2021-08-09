@@ -110,6 +110,8 @@
         }
         HDT_UTL_ContactPoint.createContactPointEmailContact(primaryEmail, emails,mapContactByIndividual);
         Map<String,boolean> mapCheck = new map<String,Boolean>();
+        Map<String, String> mapContactByIndividualPhone = new Map<String, String>();
+
         for(String id: mapMobilePhone.keySet()){
             Contact contact= contactsOb.get(id);
             List<String> mobile= mapMobilePhone.get(id);
@@ -120,12 +122,13 @@
                 mobile.remove(0);
                 primaryMobile.put(contact.IndividualId, emMobile);
                 mobiles.put(contact.IndividualId, mobile);
+                mapContactByIndividualPhone.put(contact.IndividualId,id);
             }
             else{
                 mapCheck.put(contact.IndividualId,false);
             }
         }
-        HDT_UTL_ContactPoint.createContactPointPhoneContact(primaryMobile, mobiles,mobilePrefixes, 'Mobile');
+        HDT_UTL_ContactPoint.createContactPointPhoneContact(primaryMobile, mobiles,mobilePrefixes, 'Mobile',mapContactByIndividualPhone);
 
         for(String id: mapPhone.keySet()){
             Contact contact= contactsOb.get(id);
@@ -152,7 +155,7 @@
             if(primaryPhone == null){
                 primaryPhone= new Map<String,String>();
             }    
-            HDT_UTL_ContactPoint.createContactPointPhoneContact(primaryPhone,phones ,phonePrefixes ,'Casa');
+            HDT_UTL_ContactPoint.createContactPointPhoneContact(primaryPhone,phones ,phonePrefixes ,'Casa',mapContactByIndividualPhone);
             //else{
                // if(phonesHome.size()>0){
               //      phonesHome.remove(primaryPhone);
