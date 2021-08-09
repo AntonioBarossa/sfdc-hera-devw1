@@ -635,7 +635,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
     * @date 22/07/2021
     * @return void
     */
-	public static void installCSDependecyPhaseCheckSetting() {
+	public static void installCsDependecyPhaseCheckSetting() {
         try{
             CS_DependecyPhaseCheck__c setting = new CS_DependecyPhaseCheck__c(Name = 'Comunicazione verso Heroku',
 			Phase__c = 'Comunicazione verso Heroku');
@@ -754,14 +754,14 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		for (Integer i=0; i<amount; i++){
 
-			DependenciesMatrix__c depM=new DependenciesMatrix__c();
+			DependenciesMatrix__c depMtx=new DependenciesMatrix__c();
 
-			depM.IncomingProcessType__c = incoming;
-			depM.BlockingProcessType__c = blocking;
-			depM.CheckingPhase__c = checking;
-			depM.MatchingField__c = matching;
+			depMtx.IncomingProcessType__c = incoming;
+			depMtx.BlockingProcessType__c = blocking;
+			depMtx.CheckingPhase__c = checking;
+			depMtx.MatchingField__c = matching;
 
-			depMatrixList.add(depM);
+			depMatrixList.add(depMtx);
 		}
 
 		if (doInsert){

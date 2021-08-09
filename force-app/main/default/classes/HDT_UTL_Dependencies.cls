@@ -28,42 +28,50 @@ public inherited sharing class HDT_UTL_Dependencies {
     */
     public static void processSequentializationBefore(Map<Id,SObject> newSObjectMap,Map<Id,SObject> oldSObjectMap, String tipology){
         List<ServiceRequest__c> incomingProcesses = new List<ServiceRequest__c>();
-        List<String> dependenciesCheckCS = new List<String>();
+        Map<Id,Order> orders = new Map<Id,Order>();
+        Map<Id,Case> cases = new Map<Id,Case>();
+        List<String> dependenciesCheckCs = new List<String>();
         for(CS_DependecyPhaseCheck__c dependecyPhaseCheck : CS_DependecyPhaseCheck__c.getAll().values()){
-            dependenciesCheckCS.add(dependecyPhaseCheck.Phase__c);
+            dependenciesCheckCs.add(dependecyPhaseCheck.Phase__c);
         }
         if(tipology.equalsIgnoreCase(TIPOLOGY_SALES)){
             for(Order order : (List<Order>)newSObjectMap.values()){
                 Order oldOrder = (Order)oldSObjectMap.get(order.ID);
-                if(!oldOrder.Phase__c.equalsIgnoreCase(order.Phase__c) && dependenciesCheckCS.contains(order.Phase__c)){
-                    try{
-                        ServiceRequest__c sr = [SELECT ID, ProcessType__c, Order__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
-                                        FROM ServiceRequest__c 
-                                        WHERE Order__r.ID=: order.ID
-                                        WITH SECURITY_ENFORCED LIMIT 1];
-                        sr.NextPhase__c = order.Phase__c;
-                        incomingProcesses.add(sr);
-                        
-                    }catch(Exception ex){
-                        System.debug(ex.getMessage());
-                    }
+                if(!oldOrder.Phase__c.equalsIgnoreCase(order.Phase__c) && dependenciesCheckCs.contains(order.Phase__c)){
+                    orders.put(order.ID, order);
                 }
+            }
+            try{
+                List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
+                                FROM ServiceRequest__c 
+                                WHERE Order__r.ID IN: orders.keySet()
+                                WITH SECURITY_ENFORCED];
+                for(ServiceRequest__c sr : srs){
+                    sr.NextPhase__c = orders.get(sr.Order__c).Phase__c;
+                    incomingProcesses.add(sr);
+                }
+                
+            }catch(Exception ex){
+                System.debug(ex.getMessage());
             }
         }else if(tipology.equalsIgnoreCase(TIPOLOGY_POSTSALES)){
             for(Case caseProcess : (list<Case>)newSObjectMap.values()){
                 Case oldCase = (Case)oldSObjectMap.get(caseProcess.ID);
-                if(!oldCase.Phase__c.equalsIgnoreCase(caseProcess.Phase__c)){//&& AGGIUNGERE CONTROLLO SE caseProcess.Phase__c IN CS
-                    try{
-                        ServiceRequest__c sr = [SELECT ID, ProcessType__c, Case__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
-                                        FROM ServiceRequest__c 
-                                        WHERE Case__r.ID=: caseProcess.ID
-                                        WITH SECURITY_ENFORCED LIMIT 1];
-                        sr.NextPhase__c = caseProcess.Phase__c;
+                if(!oldCase.Phase__c.equalsIgnoreCase(caseProcess.Phase__c) && dependenciesCheckCs.contains(caseProcess.Phase__c)){
+                    cases.put(caseProcess.ID, caseProcess);
+                }
+                try{
+                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Case__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
+                                    FROM ServiceRequest__c 
+                                    WHERE Case__r.ID IN: cases.keySet()
+                                    WITH SECURITY_ENFORCED];
+                    for(ServiceRequest__c sr : srs){
+                        sr.NextPhase__c = cases.get(sr.Case__c).Phase__c;
                         incomingProcesses.add(sr);
-                        
-                    }catch(Exception ex){
-                        System.debug(ex.getMessage());
                     }
+                    
+                }catch(Exception ex){
+                    System.debug(ex.getMessage());
                 }
             }
         }
