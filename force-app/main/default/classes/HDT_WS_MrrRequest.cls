@@ -70,7 +70,7 @@ global with sharing class HDT_WS_MrrRequest {
                 }
             }
             System.debug('MRREQUEST dataForAttivitaTracciaturaCreation' + dataForAttivitaTracciaturaCreation);
-            //if(dataForAttivitaTracciaturaCreation.keySet().size() > 0) HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
+            if(dataForAttivitaTracciaturaCreation.size() > 0) HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
             //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività di tracciamento
 
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {

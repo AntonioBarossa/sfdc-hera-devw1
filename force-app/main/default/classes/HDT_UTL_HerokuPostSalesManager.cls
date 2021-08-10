@@ -295,7 +295,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     System.debug('DATA Exception -> ' + e.getMessage());
                 }
             }
-            
+            // Esito dal DL ricevuto su autolettura chiusa, non prevediamo un cambio di fase ma solo una nota sul Case.
+            if(currentPhase.equalsIgnoreCase('Validazione OK DL simulata') && activity != null && activity.equalsIgnoreCase('Esito ricevuto su richiesta chiusa')){
+                currentCase.Phase__c = currentPhase; // non sono previsti cambi di fase.
+                String currentDescription = recordCase.Description != null?recordCase.Description:'';
+                String newDescription = nowDateFormat + ': + ' + activity + '\n';
+                currentCase.Description = newDescription + '\n' + currentDescription;
+            }
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
@@ -329,12 +335,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(contractCode != null || contractCode != ''){
 
             }
-            // Sviluppo inizialmente previsto sul processo di autolettura, ma poi superato dalla gestione definita sulla CB Scarti.
-            /*if(currentPhase.equalsIgnoreCase('Validazione OK DL simulata') && nextPhase != null && (nextPhase.equalsIgnoreCase('Validazione OK da DL') || nextPhase.equalsIgnoreCase('Validazione KO da DL'))){
-                currentCase.Phase__c = currentPhase; // non sono previsti cambi di fase.
-                newDescription = nowDateFormat + ': Esito ricevuto dal DL.\n';
-                currentCase.Description = newDescription + '\n' + currentDescription;
-            }*/
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
             String message = reqWrp.requestMap.get('MESSAGGIO');

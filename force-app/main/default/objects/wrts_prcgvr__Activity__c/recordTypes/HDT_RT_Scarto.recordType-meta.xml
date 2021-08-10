@@ -1788,6 +1788,14 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
+            <fullName>Amm%2E Precheck KO SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Quote</fullName>
             <default>false</default>
         </values>
@@ -1820,6 +1828,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>KO Motore VAS da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lavorazione Reclamo Post Survey</fullName>
             <default>false</default>
         </values>
@@ -1832,11 +1844,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Precheck KO precedente intestatario</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rapporti con i distributori e SII</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Reporting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scarto transitorio</fullName>
             <default>false</default>
         </values>
         <values>
