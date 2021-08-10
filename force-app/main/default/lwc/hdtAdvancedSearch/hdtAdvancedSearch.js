@@ -480,6 +480,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 'type': 'Case'
             };
             let isPostSales = true;
+            let iconCompatibility= '';
             checkCompatibility({servReq: srvRequest, isPostSales: isPostSales}).then(data =>{
                 if(data.compatibility == ''){
                     iconCompatibility='action:approval';

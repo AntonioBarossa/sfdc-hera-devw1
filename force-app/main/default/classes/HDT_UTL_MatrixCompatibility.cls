@@ -122,7 +122,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             }
         }
         if(conflicts.isEmpty()){
-            conflicts.add('Processo bloccante!');
+            conflicts.add('Attenzione! Non è possibile avanzare. Esiste un processo Bloccante!');
         }
         System.debug('conflicts: '+ conflicts);
 
