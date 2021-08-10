@@ -22,7 +22,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     * @param String objectApiName
     * @param SObject objectToUpdate
     */
-
+    @AuraEnabled
     public static void createActivityAccise(boolean flagAccise,boolean flagVat,String orderId,String accountId){
         System.debug('******');
         Order o = new Order();
