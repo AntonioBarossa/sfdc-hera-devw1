@@ -8,6 +8,7 @@ public with sharing class HDT_LC_CopiaContratto {
 
         return orderQr.getRecordsByAccountId(accountId);
         
+        
     }
     @AuraEnabled
     public static List<Order> getOrderChild(String orderId){
@@ -26,7 +27,7 @@ public with sharing class HDT_LC_CopiaContratto {
         case c = new case();
         String res = '';
         c.id = caseId;
-        c.CopyType__c = tipoFirma;
+        c.CopyType__c = tipoFirma; 
         if(rc !=null){
             recTypeId= rc.Id;
         }
