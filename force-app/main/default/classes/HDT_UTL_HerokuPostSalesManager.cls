@@ -135,6 +135,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }
         if(currentCase.Phase__c  == 'Da Inviare' 
         || currentCase.Phase__c == 'Preventivo accettato' 
+        || currentCase.Phase__c == 'Esito OK da SAP' // per le autoletture da cliente.
         || currentCase.Phase__c == 'Comunicazione verso Heroku KO'
         || currentCase.Phase__c == 'Annullamento - Da inviare'){
 
@@ -294,7 +295,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     System.debug('DATA Exception -> ' + e.getMessage());
                 }
             }
-            
+            // Esito dal DL ricevuto su autolettura chiusa, non prevediamo un cambio di fase ma solo una nota sul Case.
+            if(currentPhase.equalsIgnoreCase('Validazione OK DL simulata') && activity != null && activity.equalsIgnoreCase('Esito ricevuto su richiesta chiusa')){
+                currentCase.Phase__c = currentPhase; // non sono previsti cambi di fase.
+                String currentDescription = recordCase.Description != null?recordCase.Description:'';
+                String newDescription = nowDateFormat + ': + ' + activity + '\n';
+                currentCase.Description = newDescription + '\n' + currentDescription;
+            }
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');

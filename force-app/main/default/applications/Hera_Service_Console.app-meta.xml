@@ -89,6 +89,15 @@
         <type>Flexipage</type>
         <pageOrSobjectType>Knowledge__kav</pageOrSobjectType>
     </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>HDT_Comunicazione_Documentale_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>DocumentSendTracking__c</pageOrSobjectType>
+    </actionOverrides>
     <brand>
         <headerColor>#0070D2</headerColor>
         <logo>logo_new</logo>
@@ -778,6 +787,8 @@
     <tabs>standard-Case</tabs>
     <tabs>wrts_prcgvr__Activity__c</tabs>
     <tabs>BillingProfile__c</tabs>
+    <tabs>standard-OmniSupervisorLightning</tabs>
+    <tabs>standard-OmnichannelInventory</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Hera_Service_Console_UtilityBar</utilityBar>
     <workspaceConfig>
@@ -803,6 +814,12 @@
         </mappings>
         <mappings>
             <tab>standard-Lead</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-OmniSupervisorLightning</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-OmnichannelInventory</tab>
         </mappings>
         <mappings>
             <tab>standard-home</tab>

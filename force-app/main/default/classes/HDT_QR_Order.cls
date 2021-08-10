@@ -198,7 +198,8 @@ public inherited sharing class HDT_QR_Order {
             SalesCompanyCode__c,
             Owner.Username,
             CustomerType__c,
-            IsWinback__c
+            IsWinback__c, 
+            IsBillableVas__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -328,6 +329,7 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.Account__r.CustomerCode__c,                  
             ServicePoint__r.Account__r.FiscalCode__c,                    
             CommercialProduct__c, 
+            HerokuPracticeCode__c, 
             sale__r.isTransition__c,                           
             AnnualConsumption__c,                            
             Catalog__c,                                     
@@ -337,6 +339,7 @@ public inherited sharing class HDT_QR_Order {
             OrderReferenceNumber,
             SalesCompanyCode__c,
             IsSequanzialized__c,
+            isTransition__c,
             CustomerType__c,
             IsWinback__c
             FROM Order 
@@ -647,5 +650,25 @@ public inherited sharing class HDT_QR_Order {
         WITH SECURITY_ENFORCED
         ];
     }
+    public List<Order>  getOrderByUsernamePassword(String username, String password) {
+        HDT_LC_CanaleIVRNoShare qrs = new HDT_LC_CanaleIVRNoShare();
+        
+        return qrS.getOrderByUsernamePassword(username,password);
 
+    
+    }
+	
+	public List<Order> getChildOrdersDocumentalActivityByParentId(String parentOrderId){
+        return [
+            SELECT 
+            Id
+           // DocumentalActivity__c,
+           // DocumentalActivity__r.Name
+            FROM
+            Order
+            WHERE ParentOrder__c = :parentOrderId
+            AND Phase__c NOT IN ('Annullato')
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

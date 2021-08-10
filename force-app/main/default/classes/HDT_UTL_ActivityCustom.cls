@@ -8,6 +8,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     
     private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
+    private static HDT_QR_Case caseQr = new HDT_QR_Case();
+    private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -15,6 +17,39 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     * @description Create new wrts_prcgvr__Activity__c based on passed params
     * @param Map<String,String> params
     */
+    
+    @AuraEnabled
+    public static boolean riassegnaComCod(string recordId){
+        try{
+            HDT_QR_Case caseQr = new HDT_QR_Case();
+            wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
+            Case c = caseQr.getRecordById(s.case__c);
+            c.phase__c	='In Attesa Approvazione';
+            caseSrv.updateRecord(c);
+            return true;
+        }catch(exception e){
+            return false;
+        }
+        
+    }
+    @AuraEnabled
+    public static boolean cambiaphaseComm(string recordId,string causale){
+        try{
+            HDT_QR_Case caseQr = new HDT_QR_Case();
+            wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
+            s.wrts_prcgvr__status__c = 'Completed';
+            s.approved__c = causale;
+            activityCustomSrv.updateRecord(s);
+            Case c = caseQr.getRecordById(s.case__c);
+            c.phase__c	='In Lavorazione';
+            caseSrv.updateRecord(c);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+
     public static void createActivityWithParams(Map<String,String> params){
 
         system.debug('HDT_UTL_ActivityCustom START');
@@ -68,4 +103,5 @@ public inherited sharing class HDT_UTL_ActivityCustom {
 
         return recordTypeId;
     }
+    
 }

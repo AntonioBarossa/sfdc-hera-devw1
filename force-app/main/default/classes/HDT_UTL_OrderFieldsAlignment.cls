@@ -105,13 +105,49 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         'S3' => 'Iva Split payment 10% Soc. del Gruppo (Cod. S3)',
         'S4' => 'Iva Split payment 22% Soc. del Gruppo (Cod. S4)'
             };
-        servicePointSrv.checkReadAccess('CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,SwitchInWinback__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+
+            Map<String,String> mapAcciseEle = new Map<String,String>{
+            'E_IE_M04' => 'Imposta ordinaria Altri Usi (Cod. E_IE_M04)',
+            'E_IE_14A' => 'Imposta C En>50% unità prod (Cod. E_IE_14A)',
+            'E_IE_L11' => 'Imposta Usi Chim Elettrol Metal No Sog. Obbl. (Cod. E_IE_L11)',
+            'E_IE_L10' => 'Imposta Esente Forze Armate NATO (Cod. E_IE_L10)',
+            'E_IE_L03' => 'Imposta FFSS (Cod. E_IE_L03)',
+            'E_IE_L98' => 'Imposta Grossiti EE Non Domest (Cod. E_IE_L98)',
+            'E_IE_L01' => 'Imposta Illum Pubbl (Cod. E_IE_L01)',
+            'E_IE_06C' => 'No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C)',
+            'E_IE_L13' => 'Imposta Opifici (Cod. E_IE_L13)',
+            'E_IE_L06' => 'Imposta esente Prod.EE (Cod. E_IE_L06)',
+            'E_IE_L02' => 'Imposta Sedi Diplomatiche (Cod.E_IE_L02)',
+            'E_IE_L04' => 'Imposta Trasp Urb. (Cod. E_IE_L04)',
+            'E_IE_11D' => 'Imposta % Usi Chim Metall No Sog. Obbl. (Cod. E_IE_11D)',
+            'E_IE_11C' => 'Imposta % Usi Mineral No Sog. Obbl. (Cod. E_IE_11C)',
+            'E_IE_11A' => 'Imposta Usi Mineral No Sog. Obbl. (Cod. E_IE_11A)',
+            'ALTRO' => 'Imposta usi domestici'
+                };
+            
+                Map<String,String> mapAcciseGas = new Map<String,String>{
+                    'G_I09' => 'Imposta Autotrazione (Cod. G_I09)',
+                    'G_I15' => 'Imosta Autopr-Prod EE Industr (Cod. G_I15)',
+                    'G_I22' => 'Imposta Processi Metallurgici (Cod. G_I22)',
+                    'G_I23' => 'Imposta Processi Mineralogici (Cod. G_I23)',
+                    'G_I24' => 'Imposta Forze Armate Nazionali (Cod. G_I24)',
+                    'G_ICD' => 'Imposta Usi Domestici (Cod. G_ICD)',
+                    'G_ICC10' => 'Imposta usi non domestici iva 10% (Cod. G_ICC10)',
+                    'G_ICC' => 'Imposta usi non domestici iva 22% (Cod. G_ICC)',
+                    'G_I04' => 'Imposta usi industriali (Cod. G_I04)',
+                    'G_I21' => 'Imposta Processi Elettrolitici (Cod. G_I21)',
+                    'G_I25' => 'Imposta Forze Armate NATO (Cod. G_I25)',
+                    'G_I26' => 'Imposta Sedi Diplomatiche - Art.22 (Cod. G_I26)',
+                    'ALTRO' => 'Altro'
+                        };
+
+        servicePointSrv.checkReadAccess('CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,SwitchInWinback__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
 
-        orderToUpdate.exciseEle__c =  servicePoint.exciseEle__c;
-        orderToUpdate.ExciseGas__c =  ServicePoint.ExciseGas__c;
+        orderToUpdate.exciseEle__c =  servicePoint.exciseEle__c == 'ALTRO' ? 'Imposta usi domestici' : mapAcciseEle.get(servicePoint.exciseEle__c);
+        orderToUpdate.ExciseGas__c =  ServicePoint.ExciseGas__c == 'ALTRO' ? 'Altro' : mapAcciseGas.get(ServicePoint.ExciseGas__c);
         orderToUpdate.vat__c = mapIvaIdToValue2.get(ServicePoint.Vat__c);
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
         orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
@@ -125,6 +161,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.MeterSN__c = servicePoint.MeterSN__c;
         orderToUpdate.Resident__c = servicePoint.Resident__c;
         orderToUpdate.RemiCode__c = servicePoint.RemiCode__c;
+        orderToUpdate.VATNumberUdb__c = servicePoint.VATNumberUdb__c;
         orderToUpdate.SupplyCity__c = servicePoint.SupplyCity__c;
         orderToUpdate.SupplyStreetName__c = servicePoint.SupplyStreet__c;
         orderToUpdate.SupplyStreetNumber__c = servicePoint.SupplyStreetNumber__c;
@@ -221,6 +258,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CommercialId__c = sale.CommercialId__c;
         orderToUpdate.AgencyCode__c = sale.AgencyCode__c;
         orderToUpdate.Agency__c = sale.Agency__c;
+
+        try {
+            HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate.Id);
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+        }
     }
 
     private static void alignPrimaryProduct(Order orderToUpdate, String quoteId) {
@@ -248,7 +291,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if (order.SalesCompany__c == null) {
             orderToUpdate.SalesCompany__c = quote.SalesCompany__c;
         }
-
+        orderToUpdate.isBillableVas__c=quote.isBillableVas__c;
     }
 
     public static String calculateRequestedOption(String implantType, Decimal powerContractual){

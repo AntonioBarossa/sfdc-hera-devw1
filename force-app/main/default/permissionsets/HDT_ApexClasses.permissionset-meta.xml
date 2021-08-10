@@ -53,6 +53,18 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_BA_Dependencies</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_DependenciesTestWithData</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_DependenciesTestWithoutData</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_ImportFubFile</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -433,6 +445,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_ManualActivityCreator</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_MassiveLoader</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -581,6 +597,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_SendCertificationRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_ServicePointCustomSettings</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -618,6 +638,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QBL_SelfReadingsCallouts</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QBL_SelfReadingsOutcome</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1457,6 +1481,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_TRH_SelfReadingEvent</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_TRH_Asset</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1714,6 +1742,18 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_DataEnrichmentPostSales</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_Dependencies</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_DependenciesTestWithData</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_DependenciesTestWithoutData</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

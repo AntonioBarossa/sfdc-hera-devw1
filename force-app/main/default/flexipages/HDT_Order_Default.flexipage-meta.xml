@@ -328,7 +328,7 @@
                         <valueListItems>
                             <value>CustomButton.Order.HDT_Ripensamento</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+                                <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.ProcessType__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -343,6 +343,26 @@
                                     <leftValue>{!Record.NotRethinkable__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Ammissibilità KO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Esito KO da DL</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Esito KO da SII</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Amm. Precheck KO SII</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

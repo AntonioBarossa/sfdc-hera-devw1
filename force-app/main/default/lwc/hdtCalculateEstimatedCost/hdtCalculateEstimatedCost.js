@@ -33,6 +33,7 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
     }
 
     quoteType;
+    operationCode;
 
     get isRapido(){
         return this.quoteType=="Rapido";
@@ -55,6 +56,7 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
         const fields = {};
         fields['Id'] = this.recordId;
         fields['QuotationType__c'] = this.quoteType;
+        fields['OperationCode__c'] = this.operationCode;
         if(this.estimateAmount!=null && this.isRapido){
             fields['EstimateAmount__c'] = this.estimateAmount;
             fields['PowerQuote__c'] = this.powerQuote;
@@ -90,7 +92,10 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
         let wrapper;
         try{
             wrapper = await getQuoteTypeMtd({ord:this.order});
+            this.operationCode=wrapper.quoteCode;
             this.quoteType=wrapper.quoteType;
+            console.log(wrapper.quoteType);
+            console.log(this.quoteType);
             if(this.isRapido && wrapper.estimatedAmount!=null){
                 this.estimatedVAT=wrapper.fixedQuotes.VAT__c;
                 this.validityDateEstimate=wrapper.validityDate;

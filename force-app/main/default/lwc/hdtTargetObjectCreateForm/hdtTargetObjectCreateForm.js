@@ -6,8 +6,8 @@ import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
-import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint';
-import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint';
+import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint2';
+import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint2';
 import getDistributorPointCode from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getDistributorPointCode';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.callService';
@@ -993,7 +993,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         //Validate address
         
-        if(!this.theRecord['Indirizzo Estero']){
+        if(this.theRecord['Indirizzo Estero']==false){
             console.log('entra in if ind estero');
             if (this.theRecord['Flag Verificato']== false) {
                 console.log('entra in flag verificato false ');
@@ -1025,9 +1025,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.theRecord['CAP'] === undefined || this.theRecord['CAP'] === '') {
                 concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
             }
-            if (this.theRecord['CAP'] === undefined || this.theRecord['CAP'] === '') {
-                concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
-            }
             if (concatAddressErrorFields !== '') {
                 isValid = false;
                 this.isValidFields = false;
@@ -1037,7 +1034,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
         console.log('allSubmitedFields'+JSON.stringify(this.servicePointRetrievedData));
 
-        if((this.allSubmitedFields['ServicePointCode__c']!= undefined && (JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length < 16 || JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length > 17 ))){
+        if((this.allSubmitedFields['ServicePointCode__c']!= undefined && (JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length < 14 || JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length > 16 ))){
             isValid = false;
             this.isValidFields = false;
             console.log('lenght field'+JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length);
@@ -1203,7 +1200,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 								  
 																				  
         console.log('this.AllSubmittedFields ******************' + JSON.stringify(this.allSubmitedFields));
-        createServicePoint({servicePoint: this.allSubmitedFields}).then(data =>{
+        createServicePoint({servicePoint: this.allSubmitedFields, sale: this.sale}).then(data =>{
             console.log('this.AllSubmittedFields ******************' + JSON.stringify(this.allSubmitedFields));
             console.log('data ******************' + JSON.stringify(this.allSubmitedFields));
 
@@ -1255,7 +1252,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             console.log('REMOVE END');
 
         }
-        confirmServicePoint({servicePoint: this.allSubmitedFields, sap: this.isSap}).then(data =>{
+        confirmServicePoint({servicePoint: this.allSubmitedFields, sap: this.isSap, sale : this.sale}).then(data =>{
 																				
             this.loading = false;
             this.closeCreateTargetObjectModal();

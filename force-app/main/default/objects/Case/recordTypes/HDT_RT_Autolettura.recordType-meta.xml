@@ -673,6 +673,10 @@
             <fullName>Volontà estorta</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Gestione Scarto</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Category__c</picklist>
@@ -7923,6 +7927,10 @@
         </values>
         <values>
             <fullName>KO Rilavorato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
             <default>false</default>
         </values>
     </picklistValues>

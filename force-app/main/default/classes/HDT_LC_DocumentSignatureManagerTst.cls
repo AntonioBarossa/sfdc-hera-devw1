@@ -27,4 +27,38 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         System.assertEquals('000', (String)resultMap.get('result'));
         Test.stopTest();
     }
+
+    @isTest
+    static void sendDocumentFile() {
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalIntegrationTstMock());
+        Test.startTest();
+        Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
+        Map<String,String> formParams = new Map<String,String>();
+        Map<String,Object> resultMap = new Map<String,Object>();
+        HDT_LC_DocumentSignatureManager.sendDocumentFile(tCase.Id, 'Case', JSON.serialize(formParams));
+        System.assertEquals('000', '000');
+        Test.stopTest();
+    }
+
+    @isTest
+    static void getSignSendMode() {
+        Test.startTest();
+        Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
+        Map<String,String> formParams = new Map<String,String>();
+        String result = HDT_LC_DocumentSignatureManager.getSignSendMode('Variazione Potenza','Sportello');
+        System.assert(String.isNotBlank(result));
+        Test.stopTest();
+    }
+
+    @isTest
+    static void getInfoAccountStatement() {
+        Test.startTest();
+        Account tAccount = [SELECT Id FROM Account LIMIT 1];
+        Map<String,String> formParams = new Map<String,String>();
+        String result = HDT_LC_DocumentSignatureManager.getInfoAccountStatement(tAccount.Id);
+        System.assert(String.isNotBlank(result));
+        Test.stopTest();
+    }
+
+    
 }

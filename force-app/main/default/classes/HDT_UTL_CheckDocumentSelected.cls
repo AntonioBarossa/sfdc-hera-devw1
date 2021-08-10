@@ -9,7 +9,7 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
         List<DocumentSelected__c> documents = new List<DocumentSelected__c>();
 
         HDT_UTL_FlowOutputs output = new HDT_UTL_FlowOutputs();
-        String phase;
+        String phase = '';
         String invoiceList = '';
         String documentList = '';
         String causalCode = '';
@@ -22,12 +22,79 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
         Decimal residualSum = 0;
         Integer creditDocument = 0;
         Integer debitDocument = 0;
-        Boolean creditDebit = false;
-        Boolean onlyCredit = false;
+        //Boolean creditDebit = false;
+        //Boolean onlyCredit = false;
 
         documents = reimbursementQr.getDocumentSelectedByCaseId(recordId);
 
-        if(documents.size() == 1){
+        // Controlli sui documenti
+        for(DocumentSelected__c document : documents){
+
+            if(document.DocumentResidue__c > 0){
+
+                ++debitDocument;
+
+            } else if(document.DocumentResidue__c < 0){
+
+                ++creditDocument;
+
+            }
+
+            residualSum += document.DocumentResidue__c;
+
+            // Concatenazione numeri fattura/documento per Heroku.
+            String documentNumber = document.DocumentNumber__c;
+            if(String.isNotBlank(documentNumber)){
+                if(documentNumber.startsWith('0')){
+                    invoiceList += documentNumber + ';';
+                } else {
+                    documentList += documentNumber + ';';
+                }
+            }
+
+        }
+
+        switch on reimburseMethod {
+            when 'Bonifico' {
+                if(documents.size() >= 1 && creditDocument == documents.size()){
+                    if(!isForeign){
+                        causalCode = 'FAD';
+                        phase = beneficiary == 'Erede' ? 'Attesa Modulo Firmato' : 'Da Inviare';
+                    }else{
+                        phase = 'Elaborazione Manuale';
+                    }
+                }else if(debitDocument > 0 && creditDocument > 0){
+                    causalCode = isForeign ? 'COM' : 'COF';
+                    phase = beneficiary == 'Erede' ? 'Attesa Modulo Firmato' : 'Da Inviare';
+                } else {
+                    phase = 'Elaborazione Manuale';
+                }
+            }
+            when 'Assegno'{
+                if(documents.size() >= 1 && creditDocument == documents.size()){
+                    phase = 'Elaborazione Manuale';
+                }else if(creditDocument > 0 && debitDocument > 0){
+                    causalCode = 'COM';
+                    phase = beneficiary == 'Erede' ? 'Attesa Modulo Firmato' : 'Da Inviare';
+                }else{
+                    phase = 'Elaborazione Manuale';
+                }
+            }
+            when 'Compensazione'{
+                if(creditDocument > 0 && debitDocument > 0){
+                    causalCode = 'COM';
+                    phase = beneficiary == 'Erede' ? 'Attesa Modulo Firmato' : 'Da Inviare';
+                }else{
+                    phase = 'Elaborazione Manuale';
+                }
+            }
+            when else {
+                phase = 'Elaborazione Manuale';
+            }
+        }
+
+
+        /*if(documents.size() == 1){
 
             if(reimburseMethod == 'Assegno' || (isForeign != null && isForeign == true) || documents[0].DocumentResidue__c == 0){
 
@@ -127,7 +194,7 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
                 phase = 'Elaborazione Manuale';
             }
 
-        }
+        }*/
 
         output.phase = phase;
         output.invoiceList = invoiceList;

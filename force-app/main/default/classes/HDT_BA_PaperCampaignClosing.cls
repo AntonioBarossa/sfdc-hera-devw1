@@ -26,8 +26,10 @@ public with sharing class HDT_BA_PaperCampaignClosing implements Database.Batcha
             pc.Contact__c = cm.ContactId;
             pc.Campaign__c = cm.CampaignId;
             pc.Date__c = this.daten;
+            pc.CommunicationId__c=this.paperProcessingId+'_'+cm.id;
             cm.status = 'Gestito da CRM';
             ppWrapList.add(pc);
+            
         }
         HDT_SRV_PaperCommunication.insertRecords(ppWrapList);
         campSRV.updateRecords(scope);

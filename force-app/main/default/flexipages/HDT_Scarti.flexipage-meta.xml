@@ -4,16 +4,92 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.CompleteActivity</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completed</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.Reminder</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completed</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.Reassign</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completed</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.ForwardToAgency</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completed</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Edit</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ammissibilità KO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Amm. Precheck KO SII</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>KO Motore VAS da gestire</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Precheck KO precedente intestatario</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto transitorio</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsInNative</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
@@ -21,7 +97,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>3</value>
+                    <value>5</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>

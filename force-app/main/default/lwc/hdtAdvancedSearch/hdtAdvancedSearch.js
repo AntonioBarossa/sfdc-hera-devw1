@@ -8,6 +8,7 @@ import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.cal
 import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
 import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
 import permissionForFlagContract from '@salesforce/apex/HDT_LC_AdvancedSearch.permissionForFlagContract';
+import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
 
 
 export default class HdtAdvancedSearch extends LightningElement {
@@ -46,6 +47,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     @api showbuttonforniture=false;
     @api flagContratto=false;
     @api isSuperUser=false;
+    @api serviceRequestId;
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
         'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
@@ -457,6 +459,61 @@ export default class HdtAdvancedSearch extends LightningElement {
         console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
         this.preloading = false;
         console.log('getSelectedServicePoint END');
+        
+        if(this.processtype != ''){
+            this.tableColumns.push(
+                {
+                    label: 'Compatibility', fieldName: '',
+                    cellAttributes:{ 
+                        iconName: { 
+                            fieldName: 'compatibilityIcon' 
+                        },
+                        iconPosition: 'left', 
+                        iconAlternativeText: 'Compatibility Icon' 
+                    }
+                },
+            );
+            let srvRequest= {
+                'servicePointCode': this.rowToSend['Codice Punto'],
+                'commoditySector': this.rowToSend['Settore Merceologico'],
+                'processType': this.processtype,
+                'type': 'Case'
+            };
+            let isPostSales = true;
+            let iconCompatibility= '';
+            checkCompatibility({servReq: srvRequest, isPostSales: isPostSales}).then(data =>{
+                if(data.compatibility == ''){
+                    iconCompatibility='action:approval';
+                }else{
+                    iconCompatibility='action:close';
+                }
+                this.serviceRequestId= data.ServiceRequest.Id;
+                let found= false;
+                for(var i=0; i< this.originalData.length;i++){
+                    let row= this.originalData[i];
+                    if(row['Codice Punto']== this.rowToSend['Codice Punto']){
+                        found =true;
+                    }
+                    if(found){
+                    row['compatibilityIcon']= iconCompatibility;
+                    }
+                }
+                console.log(this.originalData);
+                this.createTable(this.originalData);    
+            }).catch(error => {
+                this.loaded = true;
+                console.log(error.body.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+                this.loaded = true;
+            });
+            
+        }
     }
 
 

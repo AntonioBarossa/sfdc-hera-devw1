@@ -51,7 +51,6 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
-        <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
