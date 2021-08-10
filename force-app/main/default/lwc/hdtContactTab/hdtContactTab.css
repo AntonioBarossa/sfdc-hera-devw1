@@ -1,0 +1,17 @@
+.Contact-tile {
+    border: 1px solid #8895e0;
+    background-color: #8895da;
+    border-radius: .30rem;
+    display: block;
+}
+.MyCard:hover {
+  box-shadow: 1px 1px 25px#a3acdf;
+}
+.MainCard {
+    display: flex;
+    
+  }
+  .child  {
+    display: flex;
+    
+  }
