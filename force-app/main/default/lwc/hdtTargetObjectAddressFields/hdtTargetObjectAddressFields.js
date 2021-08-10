@@ -1388,6 +1388,9 @@ handleTextChange(event){
 @api
     handleAddressFields(){
         console.log('saveAddressField - wrapaddressobject START '+ JSON.stringify(this.theRecord));
+        if(this.theRecord['Indirizzo Estero'] == undefined){
+            this.theRecord['Indirizzo Estero'] = false;
+        }
         return this.theRecord;
 
     }
