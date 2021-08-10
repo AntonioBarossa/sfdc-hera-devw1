@@ -161,32 +161,77 @@ public inherited sharing class HDT_UTL_Dependencies {
             List<Order> ordersToBeUpdated = new List<Order>();
             List<Case> casesToBeUpdated = new List<Case>();
 
+            List<ServiceRequest__c> srBlockings = null;
+            List<String> matchValueServicePoints = new List<String>();
+            List<String> matchValueAccounts = new List<String>();
+            List<String> matchValueBillings = new List<String>();
+            List<String> matches = new List<String>();
+
             for(ServiceRequest__c sr : incomingProcesses){
                 if(dependenciesMap.containsKey(sr.ProcessType__c)){
                     for(List<String> blockingMatches : dependenciesMap.get(sr.ProcessType__c)){
                         String blockingMatch = blockingMatches.get(1);
-                        ServiceRequest__c srBlocking = null;
-                        String matchField = null;
-                        String matchValue = null;
-
                         if(blockingMatch.equalsIgnoreCase(MATCH_SERVICE_POINT)){
-                            matchField = 'ServicePointCode__c';
-                            matchValue = sr.ServicePointCode__c;
+                            matchValueServicePoints.add(sr.ServicePointCode__c);
                         }else if(blockingMatch.equalsIgnoreCase(MATCH_ACCOUNT)){
-                            matchField = 'Account__c';
-                            matchValue = sr.Account__c;
+                            matchValueAccounts.add(sr.Account__c);
                         }else if(blockingMatch.equalsIgnoreCase(MATCH_BILLING)){
-                            matchField = 'BillingProfile__c';
-                            matchValue = sr.BillingProfile__c;
+                            matchValueBillings.add(sr.BillingProfile__c);
                         }
-                        String queryServiceRequest = 'SELECT ID, Case__c, Order__c, Type__c '
+                        matches.add(blockingMatches[0]);
+                    }
+                }
+            }
+
+            String queryServiceRequest = 'SELECT ID, Case__c, Order__c, Type__c, ProcessType__c, ServicePointCode__c, BillingProfile__c '
                                     + 'FROM ServiceRequest__c '
-                                    + 'WHERE '+String.escapeSingleQuotes(matchField)+' = \''+String.escapeSingleQuotes(matchValue)+'\' AND '
+                                    + 'WHERE (ServicePointCode__c IN :matchValueServicePoints OR Account__c IN :matchValueAccounts OR BillingProfile__c IN :matchValueBillings) AND '
                                     + 'Status__c = \''+String.escapeSingleQuotes(STATUS_LAVORAZIONE)+'\' AND '
-                                    + 'ProcessType__c = \''+String.escapeSingleQuotes(blockingMatches[0])+'\' '
-                                    + 'WITH SECURITY_ENFORCED LIMIT 1';
-                        try{
-                            srBlocking = (ServiceRequest__c)Database.query(queryServiceRequest);
+                                    + 'ProcessType__c IN :matches '
+                                    + 'WITH SECURITY_ENFORCED';
+            try{
+                srBlockings = (List<ServiceRequest__c>)Database.query(queryServiceRequest);
+                
+                for(ServiceRequest__c sr : incomingProcesses){
+                    Boolean servicePoint = false;
+                    Boolean account = false;
+                    Boolean billing = false;
+
+                    String blockingMatch = '';
+                    List<String> bmatches = new List<String>();
+
+                    if(dependenciesMap.containsKey(sr.ProcessType__c)){
+                        for(List<String> blockingMatches : dependenciesMap.get(sr.ProcessType__c)){
+                            blockingMatch = blockingMatches.get(1);
+                            if(blockingMatch.equalsIgnoreCase(MATCH_SERVICE_POINT)){
+                                servicePoint = true;
+                            }else if(blockingMatch.equalsIgnoreCase(MATCH_ACCOUNT)){
+                                account = true;
+                            }else if(blockingMatch.equalsIgnoreCase(MATCH_BILLING)){
+                                billing = true;
+                            }
+                            bmatches.add(blockingMatches[0]);
+                        }
+                    }
+
+                    for(ServiceRequest__c srBlocking : srBlockings){
+                        Boolean match = false;
+                        if(bmatches.contains(srBlocking.ProcessType__c)){
+                            if(servicePoint){
+                                if(((String)sr.ServicePointCode__c).equalsIgnoreCase((String)srBlocking.ServicePointCode__c)){
+                                    match = true;
+                                }
+                            }else if(account){
+                                if(((String)sr.Account__c).equalsIgnoreCase((String)srBlocking.Account__c)){
+                                    match = true;
+                                }
+                            }else if(billing){
+                                if(((String)sr.BillingProfile__c).equalsIgnoreCase((String)srBlocking.BillingProfile__c)){
+                                    match = true;
+                                }
+                            }
+                        }
+                        if(match){
                             if(sr.Type__c.equalsIgnoreCase(TIPOLOGY_POSTSALES)){
                                 Case caseToUpdate = new Case(ID=sr.Case__c);
                                 caseToUpdate.Status = STATUS_SEQUENZIALIZZATO;
@@ -201,12 +246,13 @@ public inherited sharing class HDT_UTL_Dependencies {
                             sr.DependOn__c = srBlocking.ID;
                             sr.Status__c = STATUS_SEQUENZIALIZZATO;
                             serviceRequestsToBeSequenced.add(sr);
-                        }catch(Exception ex){
-                            System.debug(ex.getMessage());
+
+                            break;
                         }
-                        
                     }
                 }
+            }catch(Exception ex){
+                System.debug(ex.getMessage());
             }
             
             results.put('serviceRequest',serviceRequestsToBeSequenced);
