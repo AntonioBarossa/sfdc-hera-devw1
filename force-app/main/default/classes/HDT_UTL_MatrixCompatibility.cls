@@ -6,6 +6,8 @@
 
 public inherited sharing class HDT_UTL_MatrixCompatibility {
 
+    private static Boolean isBillableVas=false;
+        
     @AuraEnabled
     public static Map<String,Object> checkCompatibilitySales(Map<String,Object> servReq){
         try {
@@ -22,6 +24,9 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             }else{
                 srRequest.Account__c = String.valueOf(servReq.get('account'));
                 srRequest.BillingProfile__c = String.valueOf(servReq.get('billingProfile'));
+            }
+            if(servReq.get('isBillableVas')!=null){
+                isBillableVas=Boolean.valueOf(servReq.get('isBillableVas'));
             }
             if(servReq.get('processType') != null){
                 srRequest.ProcessType__c= getProcessTypeOrder(String.valueOf(servReq.get('processType')),servReq.get('commoditySector'));
@@ -217,7 +222,13 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                         processType = 'Voltura con switch - GAS';
                     }
                 } 
-            } 
+            }  when 'VAS' {
+                if(isBillableVas){
+                    processType='Attivazione VAS (billabile)';
+                }else{
+                    processType='Attivazione VAS (non billabile)';
+                }
+            }
         }
         return processType;
     }
