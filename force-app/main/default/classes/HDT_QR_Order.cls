@@ -89,6 +89,8 @@ public inherited sharing class HDT_QR_Order {
             Account.FirstName__c,
             Account.LastName__c,
             Vat__c,
+            ExciseGas__c,
+            ExciseEle__c,
             Account.RecordType.Developername,
             Account.Category__c,
             Name,
@@ -509,6 +511,26 @@ public inherited sharing class HDT_QR_Order {
             WHERE AccountId = :accountId
             AND ParentOrder__c = null
             AND Status = 'In Lavorazione'
+            WITH SECURITY_ENFORCED
+        ];
+    }
+    public List<Order> getRecordsByAccountId(String accountId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            OrderNumber,
+            Status,
+            Agency__c,
+            Market__c,
+            Channel__c,
+            FriendCode__c,
+            CampaignCode__c,
+            CreatedBy__c
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND ParentOrder__c = null
             WITH SECURITY_ENFORCED
         ];
     }
