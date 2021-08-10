@@ -91,29 +91,34 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 this.showCompanyOwner = false;
             }else if(response == 'HDT_FrontOffice_HERACOMM'){
                 this.companyDefault = 'HERA COMM';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['HERA COMM'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }else if(response == 'HDT_FrontOffice_Reseller'){
                 this.companyDefault = 'Reseller';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['Reseller'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
             else if(response == 'HDT_FrontOffice_MMS'){
                 this.companyDefault = 'MMS';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['MMS'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
             else if(response == 'HDT_FrontOffice_AAAEBT'){
                 this.companyDefault = 'AAA-EBT';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['AAA-EBT'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
             else{
                 this.companyDefault = 'HERA COMM';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['HERA COMM'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
