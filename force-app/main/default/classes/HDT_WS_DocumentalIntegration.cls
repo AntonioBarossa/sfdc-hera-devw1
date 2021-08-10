@@ -69,4 +69,70 @@ public with sharing class HDT_WS_DocumentalIntegration {
         }
         return postelResponse;
     }
+
+    public static HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse submitResendDocusignEnvelopeRequest(String body){
+        HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
+        try{
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint('Callout:MulesoftBasePath/resend/communications');
+            req.setMethod('POST');
+            req.setBody(body);
+            req.setHeader('Content-Type','application/json');
+            req.setTimeout(120000);
+            Http http = new Http();
+            HTTPResponse res = http.send(req);
+            Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+            if (responseBodyMap.containsKey('errorDetails')) {
+                System.debug(JSON.serialize(responseBodyMap.get('errorDetails')));
+                List<Object> errors = (List<Object>) responseBodyMap.get('errorDetails');
+                if (errors != null && !errors.isEmpty()) {
+                    Map<String, Object> errorObj = (Map<String, Object>) errors[0];
+                    String errorMessage = (String) errorObj.get('additionalInfo');
+                    if (String.isNotBlank(errorMessage)){
+                        throw new HDT_UTL_HeraException(errorMessage);
+                    }
+                }
+            }
+
+            responseWrap.responseCode = res.getStatusCode();
+            responseWrap.responseStatus =  res.getStatus();
+        }catch(Exception ex){
+            System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            throw ex;
+        }
+        return responseWrap;
+    }
+
+    public static HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse submitDiscardDocusignEnvelopeRequest(String body){
+        HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
+        try{
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint('Callout:MulesoftBasePath/envelopes');
+            req.setMethod('DELETE');
+            req.setBody(body);
+            req.setHeader('Content-Type','application/json');
+            req.setTimeout(120000);
+            Http http = new Http();
+            HTTPResponse res = http.send(req);
+            Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+            if (responseBodyMap.containsKey('errorDetails')) {
+                System.debug(JSON.serialize(responseBodyMap.get('errorDetails')));
+                List<Object> errors = (List<Object>) responseBodyMap.get('errorDetails');
+                if (errors != null && !errors.isEmpty()) {
+                    Map<String, Object> errorObj = (Map<String, Object>) errors[0];
+                    String errorMessage = (String) errorObj.get('additionalInfo');
+                    if (String.isNotBlank(errorMessage)){
+                        throw new HDT_UTL_HeraException(errorMessage);
+                    }
+                }
+            }
+
+            responseWrap.responseCode = res.getStatusCode();
+            responseWrap.responseStatus =  res.getStatus();
+        }catch(Exception ex){
+            System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            throw ex;
+        }
+        return responseWrap;
+    }
 }

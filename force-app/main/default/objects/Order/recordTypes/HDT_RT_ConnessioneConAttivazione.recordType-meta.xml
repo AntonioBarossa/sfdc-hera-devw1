@@ -365,6 +365,10 @@
             <fullName>Volontà estorta</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Gestione Scarto</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>ChamberCommerceRegistration__c</picklist>
@@ -1925,6 +1929,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>OdvCreated__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>OfferType__c</picklist>
         <values>
             <fullName>Progetto</fullName>
@@ -2246,6 +2265,21 @@
         <values>
             <fullName>MP</fullName>
             <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>

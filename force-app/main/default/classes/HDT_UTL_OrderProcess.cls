@@ -4,8 +4,22 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
-    private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog(); 
-    
+    private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
+
+    public static void checkSatisfationIndex(Map<Id,SObject> newMap, Map<Id,SObject> oldMap) {
+        List<Account> accountsToUpdate = new List<Account>();
+        for(Order newOrder : (List<Order>) newMap.values()) {
+            if(((Order) oldMap.get(newOrder.Id)).PraxidiaOverrallSatisfaction__c != newOrder.PraxidiaOverrallSatisfaction__c) {
+                accountsToUpdate.add(new Account(
+                    Id = newOrder.AccountId,
+                    SatisfactionIndexCtrl__c = newOrder.PraxidiaOverrallSatisfaction__c,
+                    PraxidiaUpdateDate__c = newOrder.PraxidiaDateOutcome__c  
+                ));
+            }
+        }
+        update accountsToUpdate;
+    }
+
     public static void salesProcessManagementBefore(list<Order> newOrderList,List<Order> oldOrderList){
 
         /*Transitorio
@@ -17,7 +31,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for (Order order : newOrderList) {
             Order oldOrder= mapOrder.get(order.Id);
             if(order.Phase__c!=oldOrder.Phase__c&&order.Phase__c=='Comunicazione Verso Heroku'&&order.isTransition__c==true){
-                order.Phase__c='Comunicazione  Siebel';
+                order.Phase__c='Esportazione VS Siebel';
             }
         }
         
@@ -32,7 +46,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Map<String,Order> orderMapNewToOld = new Map<String,Order>();
         Map<String,Order> orderMapOld = new Map<String,Order>();
         Map<String,Order> orderMapNew = new Map<String,Order>();
-        
+        List<String> olistd = new List<String>();
    /*     for (Order newOrder : newOrdersList) {
             for (Order oldOrder : oldOrdersList) {
                 if (newOrder.Id == oldOrder.Id) {
@@ -45,27 +59,50 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             orderMapOld.put(oldOrder.id,oldOrder);
         }
         for (Order newOrder : newOrdersList) {
+            olistd.add(newOrder.id);
            	orderMapNew.put(newOrder.id,newOrder);
             if(orderMapOld.get(newOrder.id)!= null){
                 orderMapNewToOld.put(newOrder.id,orderMapOld.get(newOrder.id));
             }
         }
-
+        set<Order> filtered = new set<Order>();
         //List<String> orderList = getParentOrders(newOrdersList, oldOrdersList, orderMapNewToOld);
-        List<Order> orders = getParentOrders2(newOrdersList, oldOrdersList, orderMapNewToOld);
-        List<String> ordersHeroku = new List<String>();
-        List<String> ordersSiebel = new List<String>();
+        List<String> ordersParent = new List<String>();//getParentOrders2(newOrdersList, oldOrdersList, orderMapNewToOld);
+        List<Order> ordersFullList = orderQr.getRecordsByIds(olistd);
+        List<String> onlyString = new List<String>();
+        for(Order o : ordersFullList){
+            if (o.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && o.Phase__c == 'Documentazione Gestita') {
+                ordersParent.add(o.id);
+            }
+            if(o.phase__c == 'Documentazione Validata'){
+                filtered.add(o);
+            }
+            //onlyString.add(o.id);
+        }
+        List<Order> childOrders = orderQr.getChildOrdersByParentIds(ordersParent);
+        //set<Order> filtered = new set<Order>();
+        for(Order o1 : childOrders){
+            if(o1.phase__c == 'Documentazione Validata'){
+                filtered.add(o1);
+            }
+        }
+        
+        List<Order> ordersHeroku = new List<Order>();
+        List<Order> ordersSiebel = new List<Order>();
 
-        for(Order o:orders){
+       // List<Order> childOrders = orderQr.getChildOrdersByParentIds(parentOrderIds);
+
+
+        for(Order o:filtered){
             if(o.sale__r.isTransition__c==true){
 
-                ordersSiebel.add(o.Id);
+                ordersSiebel.add(o);
             }else{
-                ordersHeroku.add(o.Id);
+                ordersHeroku.add(o);
             }
         }
         //List<id> docVali = filterByRecordTypeAndPhase(orderList,)
-        updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Comunicazione Siebel','Documentazione Validata','Comunicazione Motore VAS');
+        updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Esportazione VS Siebel ','Documentazione Validata','Comunicazione Motore VAS');
 
         updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS');
 		insertLogForOrderChangedPhase(orderMapOld,orderMapNew);
@@ -189,7 +226,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             orderIds.add(newOrder.Id);
         }
 
-        List<String> orderIdsToReturn = new List<String>();
+        List<Order> orderIdsToReturn = new List<Order>();
 
         orderSrv.checkReadAccess('RecordType.DeveloperName, Phase__c');
         List<Order> ordersFullList = orderQr.getRecordsByIds(orderIds);
@@ -198,7 +235,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         for (Order order : ordersFullList) {
             if (order.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && order.Phase__c == 'Documentazione Gestita') {
-                orderIdsToReturn.add(order.Id);
+                orderIdsToReturn.add(order);
             }
 
             // if (order.RecordType.DeveloperName != 'HDT_RT_OrderDossier' && order.Status == 'Chiuso' && orderMapNewToOld.get(order.Id) != null && orderMapNewToOld.get(order.Id).Status != 'Chiuso') {
@@ -211,7 +248,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         // system.debug('****ordersToUpdateContract: ' + ordersToUpdateContract);
         // orderSrv.updateRecords(ordersToUpdateContract);
 
-        return ordersFullList;
+        return orderIdsToReturn;
     }
 
     // @Future
@@ -238,7 +275,54 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         orderSrv.updateRecords(childOrdersToUpdate);
     }
-    private static void updateChildOrdersPhase(List<String> parentOrderIds, String currentPhase, String newPhase,String currentVasPhase,String newVasPhase) {
+    private static void updateChildOrdersPhase(List<Order> parentOrderIds, String currentPhase, String newPhase,String currentVasPhase,String newVasPhase) {
+        
+        List<Order> childOrdersToUpdate = new List<Order>();
+        
+        orderSrv.checkReadAccess('Phase__c');
+        //List<Order> childOrders = orderQr.getChildOrdersByParentIds(parentOrderIds);
+        System.debug('***********1');
+        for (Order childOrder : parentOrderIds) {
+            if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
+                if (childOrder.Phase__c == currentVasPhase) {
+                    Order orderToUpdate = new Order(
+                        Id = childOrder.Id,
+                        Phase__c = newVasPhase
+                    );
+                    childOrdersToUpdate.add(orderToUpdate);
+                }
+            }
+            else{
+                if('Esportazione VS Siebel ' == newPhase){
+                    System.debug('***********2');
+                    if (childOrder.Phase__c == currentPhase) {
+                        System.debug('***********3');
+                        Order orderToUpdate = new Order(
+                            Id = childOrder.Id,
+                                Phase__c = newPhase,
+                                isTransition__c = childOrder.isTransition__c
+                        );
+                        childOrdersToUpdate.add(orderToUpdate);
+                    }
+                }
+                else{
+                    System.debug('***********4');
+                    if (childOrder.Phase__c == currentPhase) {
+                        System.debug('***********5');
+                        Order orderToUpdate = new Order(
+                            Id = childOrder.Id,
+                                Phase__c = newPhase
+                               // isTransition__c = childOrder.isTransition__c
+                        );
+                        childOrdersToUpdate.add(orderToUpdate);
+                    }
+                }
+            }
+        }
+
+        orderSrv.updateRecords(childOrdersToUpdate);
+    }
+    private static void updateChildOrdersPhaseChild(List<String> parentOrderIds, String currentPhase, String newPhase,String currentVasPhase,String newVasPhase) {
         
         List<Order> childOrdersToUpdate = new List<Order>();
         
@@ -256,12 +340,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
             else{
+                if('Esportazione VS Siebel' == newPhase){
                 if (childOrder.Phase__c == currentPhase) {
                     Order orderToUpdate = new Order(
                         Id = childOrder.Id,
-                        Phase__c = newPhase
+                            Phase__c = newPhase,
+                            isTransition__c = childOrder.isTransition__c
                     );
                     childOrdersToUpdate.add(orderToUpdate);
+                    }
                 }
             }
         }

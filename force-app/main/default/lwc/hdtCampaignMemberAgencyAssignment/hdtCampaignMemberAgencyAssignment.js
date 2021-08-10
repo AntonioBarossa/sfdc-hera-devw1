@@ -149,7 +149,7 @@ export default class HdtCampaignMemberAgencyAssignment extends LightningElement 
         });
         console.log(JSON.stringify(assignedObj));
         console.log(totalValues + ' - ' + this.totalResults);
-        if (totalValues > 0 && totalValues <= this.totalResults) {
+        if (totalValues => 0 && totalValues <= this.totalResults) {
             //update the agencies
             assignCampaignMemberAgency({ campaignId: this.recordId, toAssignObj: assignedObj }).then((result) => {
                 //console.log(JSON.stringify(result));

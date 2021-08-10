@@ -15,7 +15,7 @@ export default class HdtGenericTable extends LightningElement {
     @track altMessage;
     @track loader;
 
-    notFoundMessage = 'Nessun record trovato. Assicurarsi che vi siano richieste eleggibili sul cliente, in caso il problema dovesse persiste contattare l\'amministratore di sistema.';
+    notFoundMessage = 'Nessun record trovato. Assicurarsi che vi siano richieste eleggibili sul cliente, in caso il problema dovesse persistere contattare l\'amministratore di sistema.';
     //data are retrieved on the callback, on error alternate will be shown
     connectedCallback(){
         this.loader = true;
@@ -28,6 +28,7 @@ export default class HdtGenericTable extends LightningElement {
                     console.log('Inside No Record Condition')
                     this.altMessage = this.notFoundMessage;
                     this.loader = false;
+                    this.dispatchEvent(new CustomEvent('disableadvance'));
                 } else {
                     this.columns = objData.columns;
                     this.rowData = objData.rowData;

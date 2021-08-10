@@ -1,5 +1,7 @@
 <template>
 
+    <c-hdt-pdf-viewer-handler ></c-hdt-pdf-viewer-handler>
+
     <template if:true={showAcctStmt} >
         <c-hdt-acct-stmt-type-choise
             stmt-type={statementType}
@@ -48,10 +50,16 @@
     </template>
 
     <template if:true={showBillList} >
-        <c-hdt-bill-list
-            modal-header={billListHeader}
+        <c-hdt-comunications-search-list
+            business-partner={techObj.customerCode}
+            contract-account={contractAccount}
+            parameters={billParameters}
+            other-params={otherParams}
+            start-date-string={startDateString}
+            company={company}
+            onprintpdf={printPdf}
             onclosemodal={closeModalHandler}
-        ></c-hdt-bill-list>
+        ></c-hdt-comunications-search-list>
     </template>
 
     <template if:true={showViewResult} >
@@ -207,7 +215,8 @@
                         </div>
                         <div class="slds-col slds-box slds-box_xx-small" style="padding:0.2rem;background:#16325c">
                             <div class="slds-text-body_regular slds-text-color_inverse slds-m-right_small slds-m-left_small">
-                                {fromRec}&nbsp;-&nbsp;{toRec}&nbsp;of&nbsp;{totRecs}
+                                <!--{fromRec}&nbsp;->&nbsp;{toRec}&nbsp;tot&nbsp;{totRecs}-->
+                                {fromRec}->{toRec}&nbsp;tot&nbsp;{totRecs}
                             </div>
                         </div>
                     </div>
@@ -321,7 +330,9 @@
                 filter-applied={filterApplied}
                 onopenmainspinner={openMainSpinner}
                 onclosemainspinner={closeMainSpinner}
+                onmodalhandler={modalHandler}
                 onservicecatalog={serviceCatalogEventFromChild}
+                onprintpdf={printPdf}
             ></c-hdt-account-statement-detail-viewer>
         </div>
 

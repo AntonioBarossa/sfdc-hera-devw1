@@ -6,8 +6,11 @@ public inherited sharing class HDT_UTL_Order {
     private static HDT_QR_AccountContactRelation accountContactRelQr = new HDT_QR_AccountContactRelation();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
+    private static HDT_QR_Case caseQr = new HDT_QR_Case();
+    private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
-
+    private static HDT_SRV_Order ordSrv = new HDT_SRV_Order();
     /*public Order enrichOrder(Order newOrder){
 
         String servicePointFields = 'AnnualConsumption__c, SupplyType__c, WithdrawalClass__c, MarketOrigin__c';
@@ -49,5 +52,179 @@ public inherited sharing class HDT_UTL_Order {
 
 
     }*/
+    @auraEnabled
+    public static boolean calculateRateCategory(Order ord){
+        HDT_QR_Order orQr = new HDT_QR_Order();
+        Order o = orQr.getRecordById(ord.id);
+        boolean res = false;
+        String code = '';
+        List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c,o.SupplyType__c);
+        for(RateCategory__c r : listRate){
+            if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
+                code = r.CalculatedValue__c;
+                res = true;
+                break;
+            }
+            else if(r.DistributorCode__c != o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Diverso'){
+                code = r.CalculatedValue__c;
+                res = true;
+                break;
+            }
+            else if(r.operatore__c == 'N/A'){
+                code = r.CalculatedValue__c;
+                res = true;
+                break;
+            }
+        }
+        if(!res){
+            listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,'N/A',o.SupplyType__c);
+            for(RateCategory__c r : listRate){
+                if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
+                    code = r.CalculatedValue__c;
+                    res = true;
+                    break;
+                }
+                else if(r.DistributorCode__c != o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Diverso'){
+                    code = r.CalculatedValue__c;
+                    res = true;
+                    break;
+                }
+                else if(r.operatore__c == 'N/A'){
+                    code = r.CalculatedValue__c;
+                    res = true;
+                    break;
+                }
+            }
+        }
+        System.debug('**********:' + listRate);
+        Map<String,String> mapCal = new Map<String,String>();
+        Order oUp = new Order();
+        oUp.id = o.id;
+        oUp.rateCategory__c = code;
+        /*if(listRate != null && !listRate.isEmpty()){
+            for(RateCategory__c r: listRate){
+                if(mapCal.get(r.operatore__c) != null){
+                    mapCal.put(r.operatore__c,r.CalculatedValue__c);
+                }
+            }
+            if(mapCal.get('Diverso') != null){
+                oUp.rateCategory__c = mapCal.get('Diverso');
+                res = true;
+            }
+            else if(mapCal.get('N/A') != null){
+                oUp.rateCategory__c = mapCal.get('N/A');
+                res = true;
+            }
+            else if(mapCal.get('Uguale') != null){
+                oUp.rateCategory__c = mapCal.get('Uguale');
+                res =  true;
+            }
+
+        }*/
+
+        if(res){
+            ordSrv.updateRecord(oUp);
+        }
+        return res;
+    }
+    @auraEnabled
+    public static boolean annullaContratti(String orderId){
+        try{
+        List<Order> getOrderChildVas = new List<Order>();//orderQr.getOrderVasToDelete(orderId);
+        Case cb = caseQr.getCaseRelated(orderId);
+        List<Order> ordToUpdate = new List<Order>(); 
+        for(Order ord : getOrderChildVas){
+            ord.status = 'Annullato';
+            ord.phase__c = 'Annullato';
+            ord.CancellationReason__c = 'Annullamento per Dati Discordanti';
+            ordToUpdate.add(ord);
+        }
+        cb.status = 'Annullato';
+        cb.phase__c = 'Annullato';
+        cb.CancellationReason__c = 'Annullamento per Dati Discordanti';
+        ordSrv.updateRecords(ordToUpdate);
+        caseSrv.updateRecord(cb);
+        return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+
+    @AuraEnabled
+    public static boolean checkToDiscordanti(String OrderId){
+        try{
+            Order newOrder = orderQr.getRecordById(OrderId);
+            HDT_SRV_ActivityCustom actSrv = new HDT_SRV_ActivityCustom();
+            List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getRecordScartoDiscordante(newOrder.ServicePoint__c,newOrder.AccountId);
+            if(listActivity != null && !listActivity.isEmpty()){
+                wrts_prcgvr__Activity__c wr = listActivity[0];
+                wr.wrts_prcgvr__Status__c = 'Completed';
+                actSrv.updateRecord(wr);
+                Order oldOrder = orderQr.getRecordById(wr.order__c);
+                travasaOrder(oldOrder,newOrder);
+                //return true;
+            }
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+    @AuraEnabled
+    public static void travasaOrder(Order oldOrder, order orderToUpdate){
+
+        orderToUpdate.exciseEle__c =  oldOrder.exciseEle__c;
+        orderToUpdate.ExciseGas__c =  oldOrder.ExciseGas__c;
+        orderToUpdate.vat__c = oldOrder.vat__c;
+        orderToUpdate.AnnualConsumption__c = oldOrder.AnnualConsumption__c;
+        orderToUpdate.MarketOrigin__c = oldOrder.MarketOrigin__c;
+        orderToUpdate.recordtypeId = oldOrder.recordtypeid;
+        orderToUpdate.Market__c = oldOrder.Market__c;
+        orderToUpdate.PowerAvailable__c = oldOrder.PowerAvailable__c;
+        orderToUpdate.VoltageLevel__c = oldOrder.VoltageLevel__c;
+        orderToUpdate.processType__c = oldOrder.recordtype.developername == 'HDT_RT_SwitchIn' ? 'Switch in Fittizio' : oldOrder.processtype__c;
+        orderToUpdate.AllowSwitchInDummy__c = oldOrder.recordtype.developername == 'HDT_RT_SwitchIn' ? true : false;
+        orderToUpdate.DisconnectibilityPhone__c = oldOrder.DisconnectibilityPhone__c;
+        orderToUpdate.MaxRequiredPotential__c = oldOrder.MaxRequiredPotential__c;
+        orderToUpdate.HerokuPracticeCode__c = oldOrder.HerokuPracticeCode__c;
+        orderToUpdate.UseTypeEnergy__c = oldOrder.UseTypeEnergy__c;
+        orderToUpdate.UseCategory__c = oldOrder.UseCategory__c;
+        orderToUpdate.MeterSN__c = oldOrder.MeterSN__c;
+        orderToUpdate.Resident__c = oldOrder.Resident__c;
+        orderToUpdate.RemiCode__c = oldOrder.RemiCode__c;
+        orderToUpdate.SupplyCity__c = oldOrder.SupplyCity__c;
+        orderToUpdate.SupplyStreetName__c = oldOrder.SupplyStreetName__c;
+        orderToUpdate.SupplyStreetNumber__c = oldOrder.SupplyStreetNumber__c;
+        orderToUpdate.SupplyPlace__c = oldOrder.SupplyPlace__c;
+        orderToUpdate.SupplyPostalCode__c = oldOrder.SupplyPostalCode__c;
+        orderToUpdate.SupplyCountry__c = oldOrder.SupplyCountry__c;
+        orderToUpdate.PowerCommitted__c = oldOrder.PowerCommitted__c;
+        orderToUpdate.ServicePointCode__c = oldOrder.ServicePointCode__c;
+        orderToUpdate.SAPImplantCode__c = oldOrder.SAPImplantCode__c;
+        orderToUpdate.ImplantType__c = oldOrder.ImplantType__c;
+        orderToUpdate.SupplyCityCode__c = oldOrder.SupplyCityCode__c;
+        orderToUpdate.SupplyState__c = oldOrder.SupplyState__c;
+        orderToUpdate.Disconnectable__c = oldOrder.Disconnectable__c;
+        orderToUpdate.DisconnectibilityType__c = oldOrder.DisconnectibilityType__c;
+        orderToUpdate.ConnectionType__c = oldOrder.ConnectionType__c;
+        orderToUpdate.InstanceSelfCertification__c = oldOrder.InstanceSelfCertification__c;
+        orderToUpdate.ConnectionMandate__c = oldOrder.ConnectionMandate__c;
+        orderToUpdate.SelfCertificationConnection__c = oldOrder.SelfCertificationConnection__c;
+        orderToUpdate.RequestOption__c = oldOrder.RequestOption__c;
+        orderToUpdate.MeterClass__c =oldOrder.MeterClass__c;
+        orderToUpdate.WithdrawalClass__c = oldOrder.WithdrawalClass__c;
+        orderToUpdate.SupplyType__c = oldOrder.SupplyType__c;
+        orderToUpdate.DistributorCode__c = oldOrder.DistributorCode__c;
+        orderToUpdate.PressureLevel__c = oldOrder.PressureLevel__c;
+        orderToUpdate.RequestPhase__c = oldOrder.RequestPhase__c;
+        orderToUpdate.Phase__c = 'Comunicazione Verso Heroku';
+        orderToUpdate.PowerRequested__c = oldOrder.PowerRequested__c;
+        orderToUpdate.EnergyService__c = oldOrder.EnergyService__c;
+        orderToUpdate.LiftingPeople__c = oldOrder.LiftingPeople__c;
+        orderToUpdate.MeterType__c = oldOrder.MeterType__c;
+        orderToUpdate.IsRemoteManaged__c = oldOrder.IsRemoteManaged__c;
+        orderToUpdate.CustomerRequestDate__c = oldOrder.CustomerRequestDate__c;
+        orderToUpdate.Commodity__c = oldOrder.Commodity__c;
+        update orderToUpdate;
+    }
 
 }

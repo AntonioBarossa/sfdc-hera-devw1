@@ -61,6 +61,13 @@
                 <stringValue>Completata</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Get_Activity</targetReference>
         </connector>
@@ -75,6 +82,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
             </value>
         </assignmentItems>
         <connector>

@@ -9,11 +9,13 @@ public inherited sharing class HDT_QR_CampaignMember {
     public List<CampaignMember> getActiveCampaignsByContact(String contactId){
         return [
             SELECT 
+            id,
             CampaignId,
             Campaign.Name,
             Campaign.Status,
             Campaign.Channel__c,
-            Campaign.EndDate
+            Campaign.EndDate,
+            Status
             FROM CampaignMember
             where ContactId = :contactId
             AND Campaign.isActive = true
@@ -191,6 +193,31 @@ public inherited sharing class HDT_QR_CampaignMember {
             CampaignMember
             where ContactId IN :contacts
             WITH SECURITY_ENFORCED];
+    }
+
+    public CampaignMember getByEcid(String ecid) {
+        List<CampaignMember> cmList = [
+            SELECT
+            Id, 
+            Status  
+            FROM CampaignMember 
+            WHERE Ecid__c = :ecid
+            AND isToSendStatusReitek__c = true
+            WITH SECURITY_ENFORCED
+        ];
+        return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
+    }
+
+    public CampaignMember getEcidById(String id) {
+        List<CampaignMember> cmList = [
+            SELECT
+            Id,
+            reitekAgentUserId__c , 
+            Ecid__c
+            FROM CampaignMember 
+            WHERE id = :id
+        ];
+        return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
     }
 
     

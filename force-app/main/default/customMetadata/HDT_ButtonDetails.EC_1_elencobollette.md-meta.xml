@@ -28,7 +28,10 @@
     </values>
     <values>
         <field>Parameters__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">{
+  &quot;type&quot;: &quot;bills&quot;,
+  &quot;header&quot;: &quot;Elenco bollette&quot;
+}</value>
     </values>
     <values>
         <field>Tab__c</field>

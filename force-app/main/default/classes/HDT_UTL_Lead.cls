@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 12/05/2021
+* @description HDT_UTL_Lead.cls
+* @history Lorenzo – 12/05/2021 – created class
+*/
 public with sharing class HDT_UTL_Lead {
     public static HDT_QR_Lead leadqr = new HDT_QR_Lead();
     

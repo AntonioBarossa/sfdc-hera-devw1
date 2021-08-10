@@ -157,6 +157,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         Quote__r.Name,
         ServicePoint__c,
         ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.CommoditySector__c,
         ServicePoint__r.PlugPresence__c,
         ServicePoint__r.PowerRequested__c,
         ServicePoint__r.PowerContractual__c,
@@ -167,6 +168,34 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         createdDate
         FROM SaleServiceItem__c
         WHERE ServicePoint__c = :servicepoint
+        AND Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+        WITH SECURITY_ENFORCED
+        ORDER BY CreatedDate DESC
+        ];
+    }
+    public List<SaleServiceItem__c> getSaleByServicePointFilterCode(String servicepointCode){
+
+        return [SELECT 
+        Id,
+        Opportunity__c,
+        Opportunity__r.Sale__c,
+        Opportunity__r.Name,
+        Opportunity__r.CreatedDate,
+        Quote__c,
+        Quote__r.Name,
+        ServicePoint__c,
+        ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.CommoditySector__c,
+        ServicePoint__r.PlugPresence__c,
+        ServicePoint__r.PowerRequested__c,
+        ServicePoint__r.PowerContractual__c,
+        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
+        ServicePoint__r.SupplyCity__c,
+        ServicePoint__r.MarketOrigin__c,
+        createdDate
+        FROM SaleServiceItem__c
+        WHERE ServicePoint__r.ServicePointCode__c = :servicepointCode
         AND Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
         WITH SECURITY_ENFORCED
         ORDER BY CreatedDate DESC

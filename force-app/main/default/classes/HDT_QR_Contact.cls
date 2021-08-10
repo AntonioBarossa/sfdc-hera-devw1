@@ -68,8 +68,7 @@ public inherited sharing class HDT_QR_Contact {
     public List<Contact> getContactsByAccount(String accountId){
         return [
             SELECT
-            Id,
-            Email
+            Id, Name,FirstName, LastName, Title, Phone, Email,DegreeOfStudies__c 
             FROM Contact
             WHERE AccountId = :accountId
             WITH SECURITY_ENFORCED

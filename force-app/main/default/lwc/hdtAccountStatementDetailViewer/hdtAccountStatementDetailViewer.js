@@ -1,6 +1,7 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import getSecondLevelColumns from '@salesforce/apex/HDT_LC_AccountStatementController.getSecondLevelColumns';
 import serviceCatalogBackendHandler from '@salesforce/apex/HDT_LC_AccountStatementController.serviceCatalogBackendHandler';
+import getCompanyCode from '@salesforce/apex/HDT_LC_ComunicationsSearchList.getCompanyCode';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 const filterObject = {};
@@ -30,6 +31,8 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         if(this.filterApplied && this.bShowModal === false){
             this.applyInterrogation(this.staticObj);
         }
+
+        //this.updateButtonConfig();
 
         return this.accountdetails;
     }
@@ -91,6 +94,26 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                     mode: 'sticky'
                 })
             );
+        });
+    }
+
+    updateButtonConfig(){
+        var dataEmissione = '';
+        for(var i in this.firstLevel){
+            if(i === 'dataEmissione' && this.firstLevel[i] != undefined){
+                dataEmissione = this.firstLevel[i];
+            }
+        }
+
+        this.template.querySelectorAll('button').forEach(c => {    
+            if(c.name === 'showRate'){
+                if(dataEmissione===''){
+                    c.setAttribute('disabled', '');
+                } else {
+                    c.removeAttribute('disabled');
+                }
+            }
+
         });
     }
 
@@ -389,23 +412,130 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     }
 
     showSingleBill(event){
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: 'Attenzione',
-                message: 'Servizio in sviluppo',
-                variant: 'info'
-            })
-        );
+        var el = this.template.querySelector('lightning-datatable');
+        var selected = el.getSelectedRows();
+
+        console.log(JSON.stringify(selected));
+        
+        if(selected.length > 1){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non puoi selezionare più record',
+                    variant: 'warning'
+                })
+            );
+            return;
+        } else if(selected.length === 0){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non hai selezionato nessun record',
+                    variant: 'warning'
+                })
+            );
+            return;
+        }
+
+        var docInvoiceObj = {
+            billNumber: '',
+            channel: 'CRM',
+            date: '',
+            documentType: 'Bollette',
+            company: ''
+        };
+
+        this.sendPrint(docInvoiceObj);
+
+    }
+
+    sendPrint(docInvoice){
+        
+        getCompanyCode({companyName: this.firstLevel.societa})
+        .then(result => {
+            console.log('>>> getCompanyCode ' + result);
+            
+            docInvoice.company = result;
+            
+            const sendToApex = new CustomEvent("printpdf", {
+                detail: {obj: JSON.stringify(docInvoice)}
+            });
+    
+            // Dispatches the event.
+            this.dispatchEvent(sendToApex);
+
+        }).catch(error => {
+            this.error.show = true;
+            this.error.message = 'CATCH ERROR MESSAGE';
+        });
+
     }
 
     showRate(event){
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: 'Attenzione',
-                message: 'Servizio in sviluppo',
-                variant: 'info'
-            })
-        );
+        var paramObj = event.currentTarget.dataset.parameters;
+        console.log('on child - ' + paramObj);
+
+        var el = this.template.querySelector('lightning-datatable');
+        var selected = el.getSelectedRows();
+
+        console.log(JSON.stringify(selected));
+        
+        if(selected.length > 1){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non puoi selezionare più record',
+                    variant: 'warning'
+                })
+            );
+            return;
+        } else if(selected.length === 0){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non hai selezionato nessun record',
+                    variant: 'warning'
+                })
+            );
+            return;
+        }
+
+        if(this.tabCode === 'EC') {
+            if(selected.dataEmissionePianoRata === undefined || selected.dataEmissionePianoRata === ''){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Servizio non disponibile per questo record',
+                        variant: 'warning'
+                    })
+                );
+                return;
+            }
+        } else if(this.tabCode === 'EC9' || this.tabCode === 'EC6' || this.tabCode === 'EC5') {
+            if((selected.dataEmissione === undefined || selected.dataEmissione === '') &&
+                (selected.tipoDocumento === undefined || selected.tipoDocumento === '' || selected.tipoDocumento != 'rate')){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Servizio non disponibile per questo record',
+                        variant: 'warning'
+                    })
+                );
+                return;
+            }
+        }
+
+        var muleRequestParams = {
+            billingProfile: this.firstLevel.contoContrattuale,
+            startDate: this.firstLevel.dataEmissione
+        };
+        
+        const modal = new CustomEvent("modalhandler", {
+            detail:  {parameters: paramObj, muleRequestParams: muleRequestParams}
+        });
+        // Dispatches the event.
+        this.dispatchEvent(modal);
+
     }
 
     viewInvoice(event){
