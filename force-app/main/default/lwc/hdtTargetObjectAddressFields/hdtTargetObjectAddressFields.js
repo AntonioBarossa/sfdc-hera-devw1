@@ -416,6 +416,7 @@ handleAddressFromAccount()
             this.theRecord['Codice Comune SAP']=data['Codice Comune SAP'];
             this.theRecord['Codice Via Stradario SAP']= data['Codice Via Stradario SAP'];
             this.theRecord['Flag Verificato']= true;
+            this.theRecord['Indirizzo Estero']=false;
             
 
         }
