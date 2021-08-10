@@ -21,6 +21,26 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     * @param String objectApiName
     * @param SObject objectToUpdate
     */
+
+    public static void createActivityAccise(boolean flagAccise,boolean flagVat,String orderId,String accountId){
+
+        Order o = new Order();
+        o.id = orderId;
+        o.FacilitationExcise__c = flagAccise;
+        o.VATfacilitationFlag__c = flagVat;
+        orderSrv.updateRecord(o);
+        RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
+        String res = '';
+        ID recTypeId;
+        if(rc !=null){
+            recTypeId= rc.Id;
+        }
+        wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(order__c = orderId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Iva e Accise da validare');
+        System.debug(activity);
+        activitySrv.createRecord(activity);
+        
+    }
+
     @AuraEnabled
     public static void updateProcessStep(Order order,
         //INIZIO SVILUPPI EVERIS 

@@ -12,6 +12,7 @@ import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
 import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
 //FINE SVILUPPI EVERIS
 
+import createActivityAccise from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.createActivityAccise'
 import getQuoteTypeMtd from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getQuoteTypeMtd';
 
 // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
@@ -746,7 +747,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(currentSectionName === 'ivaAccise'){
 
             let errorMessageIvaAccise = '';
-
+            let checkIsFlag = false;
             if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true && this.template.querySelector("[data-id='VAT__c']").value === ''){
                 errorMessageIvaAccise = 'Popolare IVA';
             }
@@ -771,6 +772,27 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 });
                 this.dispatchEvent(toastErrorMessageIvaAccise);
                 return;
+            }
+            else{
+                if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true || this.template.querySelector("[data-id='FacilitationExcise__c']") === true){
+                    let vatFacilitation = this.template.querySelector("[data-id='VATfacilitationFlag__c']");
+                    let exciseFacilitation = this.template.querySelector("[data-id='FacilitationExcise__c']");
+                    createActivityAccise({
+                        flagAccise : this.template.querySelector("[data-id='FacilitationExcise__c']") === true,
+                        flagVat : this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true,
+                        orderId : this.order.Id,
+                        accountId : this.order.AccountId
+                    }).then(response =>{
+                        this.loading = false;
+                        const toastErrorMessageIvaAccise = new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Attivita Creata con Successo',
+                        variant: 'success',
+                        mode: 'sticky'
+                        });
+                        this.dispatchEvent(toastErrorMessageIvaAccise);
+                    });
+                }
             }
         }
 
@@ -2293,7 +2315,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': false,
-                        'value': '',
+                        'value': this.order.Vat__c,
                         'processVisibility': ''
                     },
                     {
@@ -2302,7 +2324,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('ele'),
                         'required': false,
                         'disabled': true,
-                        'value': '',
+                        'value': this.order.ExciseEle__c,
                         'processVisibility': ''
                     },
                     {
@@ -2311,7 +2333,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('gas'),
                         'required': false,
                         'disabled': false,
-                        'value': '',
+                        'value': this.order.ExciseGas__c,
                         'processVisibility': ''
                     },
                 ]
