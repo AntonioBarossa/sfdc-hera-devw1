@@ -27,7 +27,7 @@
                         <div class="slds-media__body">
                             <h2 class="slds-card__header-title">
                                 <a href="#" class="slds-card__header-link slds-truncate" title="Referenti">
-                                    <span>Referenti</span>
+                                    <span>Referenti ({numberOfContacts})</span>
                                 </a>
 
                             </h2>
@@ -44,9 +44,20 @@
                     </a>
                 </footer>
 
-                <lightning-datatable key-field="Id"
-                data={contacts} columns={columns} hide-checkbox-column="true" onrowaction={handleRowActions}
-                show-row-number-column="true"></lightning-datatable>
+                <lightning-layout multiple-rows="true" pull-to-boundary="small">
+
+
+
+                    <template for:each={contacts} for:item="c">
+                        <lightning-layout-item  padding="around-small" key={c.Id} size="4">
+    
+    
+                            <c-hdt-contact-tab accountcontactrel={c}></c-hdt-contact-tab>
+                        </lightning-layout-item>
+    
+    
+                    </template>
+                </lightning-layout>
 
             </article>
         </div>
