@@ -24,6 +24,12 @@ public with sharing class HDT_TRH_AssetTst {
 
         insert assetList;
 
+        Asset assetTest = [SELECT Id FROM Asset WHERE Name = 'testAssetList' AND CompanyOwner__c = 'HERA COMM' LIMIT 1];
+
+        System.assertEquals(assetTest.Id, assetList[0].Id, 'Asset ID match.');
+
+        System.assertNotEquals(assetList[0].Id, '', 'Asset ID does not match.');
+
         Test.stopTest();
     }
 }
