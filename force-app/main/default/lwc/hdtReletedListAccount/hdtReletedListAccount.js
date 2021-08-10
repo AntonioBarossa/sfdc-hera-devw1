@@ -1,6 +1,9 @@
 import { LightningElement, track ,api, wire} from 'lwc';
 
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import CONTACT_OBJECT from '@salesforce/schema/Contact';
+
 import PHONE_PREFIX from '@salesforce/schema/Contact.PhonePrefix__c';
 import MOBILEPHONE_PREFIX from '@salesforce/schema/Contact.MobilePhonePrefix__c';
 import GENDER from '@salesforce/schema/Contact.Gender__c';
@@ -13,23 +16,21 @@ import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber
 import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertContact from '@salesforce/apex/HDT_LC_ReletedListAccount.insertContact';
 import contactList from '@salesforce/apex/HDT_LC_ReletedListAccount.getContList';
-// import getRecordTypeAccount from '@salesforce/apex/HDT_LC_ReletedListAccount.getRecordTypeAccount';
+import getRecordTypeAccount from '@salesforce/apex/HDT_LC_ReletedListAccount.getRecordTypeAccount';
 import {refreshApex} from '@salesforce/apex';
 
-const columns = [
-    { label: 'Nome', fieldName: 'Name' },
-    { label: 'Titolo di studio', fieldName: 'DegreeOfStudies__c' },
-    { label: 'Cellulare', fieldName: 'Phone', type: 'phone' },
-    { label: 'Email', fieldName: 'Email', type: 'email' },
-    { label: 'Dettagli' ,type: "button", initialWidth: 150,typeAttributes: {  
-        label: 'Dettagli',
-        title: 'Dettagli',  
-        name:  'Dettagli',  
-        value: 'Dettagli',  
-        disabled: false,
-        variant:'brand-outline',  
-    }},
-];
+// const columns = [
+//     { label: 'Nome', fieldName: 'contact.Name' },
+ 
+//     { label: 'Dettagli' ,type: "button", initialWidth: 150,typeAttributes: {  
+//         label: 'Dettagli',
+//         title: 'Dettagli',  
+//         name:  'Dettagli',  
+//         value: 'Dettagli',  
+//         disabled: false,
+//         variant:'brand-outline',  
+//     }},
+// ];
 /**
  * Wire adapter for values for a picklist field.
  *
@@ -38,9 +39,10 @@ const columns = [
  * @param fieldApiName The picklist field's object-qualified API name.
  * @param recordTypeId The record type ID. Pass '012000000000000AAA' for the master record type.
  */
-const VAR_RECORDTYPEID='012000000000000AAA';
+//const VAR_RECORDTYPEID='012000000000000AAA';
 export default class HdtReletedListAccount  extends NavigationMixin(LightningElement)  {
     @api recordId;
+    @track numberOfContacts=0;
     @api showCompanyOwner = false;
     @track spinner;
     @track errorMessage='';
@@ -76,10 +78,12 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
     isVerified= false;
     showModal=false;
     error;
-    columns = columns;
+   // columns = columns;
     contacts;
     recordType;
-    
+    @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
+    contactInfo;
+
     buttonNew(){
         console.log('recordId :'+this.recordId);
         this.showModal=true;
@@ -110,7 +114,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
         });
     }
     
-    @wire(getPicklistValues, { recordTypeId: VAR_RECORDTYPEID ,fieldApiName: PHONE_PREFIX })
+    @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId' ,fieldApiName: PHONE_PREFIX })
     phonePrefixGetOptions({error, data}) {
         if (data) {
             if(data.defaultValue !=null){
@@ -119,7 +123,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
             }
         }
     };
-    @wire(getPicklistValues, { recordTypeId: VAR_RECORDTYPEID ,fieldApiName: MOBILEPHONE_PREFIX })
+    @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId' ,fieldApiName: MOBILEPHONE_PREFIX })
     mobilePhonePrefixGetOptions({error, data}) {
         if (data) {
             if(data.defaultValue !=null){
@@ -131,20 +135,28 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
     
     
     
-    @wire(getPicklistValues, { recordTypeId: VAR_RECORDTYPEID ,fieldApiName: GENDER })
+    @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId' ,fieldApiName: GENDER })
     genderOptions;
     
-    @wire(getPicklistValues, { recordTypeId: VAR_RECORDTYPEID ,fieldApiName: PROFESSION })
+    @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId' ,fieldApiName: PROFESSION })
     professionOptions;
     
-    @wire(getPicklistValues, { recordTypeId: VAR_RECORDTYPEID ,fieldApiName: EDUCATIONALQUALIFICATION })
+    @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId' ,fieldApiName: EDUCATIONALQUALIFICATION })
     educationalOptions;
     
     
-    roleOptions=[
+    @track roleOptions=[];
+    roleOptionsBus= [
+    { label: 'Titolare', value: 'Titolare' },
+    { label: 'Legale rappresentante', value: 'Legale rappresentante' },
+    { label: 'Amministratore condominio', value: 'Amministratore condominio' },
+    { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' }];
+    roleOptionsRes= [
         { label: 'Titolare', value: 'Titolare' },
-        { label: 'Familiare', value: 'Familiare' }
+        { label: 'Familiare', value: 'Familiare' },
     ];
+
+
     handleCompanyOwnerChange(event) {
         console.log("***************CHANGE" + event.target.value);
         let key = this.customerData.controllerValues[event.target.value];
@@ -162,16 +174,33 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
         this.currentObjectApiName= 'Account';
         // this.getCurrentRecordType();
         this.getAllContact();
+        this.getRoleByRecordType();
     }
     
     
-    
+    getRoleByRecordType(){
+        getRecordTypeAccount({ accountId: this.recordId } )
+        .then(result => {
+            console.log(JSON.stringify('result '+result));
+            if (result==='HDT_RT_Business') {
+               this.roleOptions=this.roleOptionsBus;
+            }
+            else if(result==='HDT_RT_Residenziale'){
+                this.roleOptions=this.roleOptionsRes;
+            }
+          
+        })
+        .catch(error => {
+            this.error = error;
+        });
+    }
     getAllContact(){
         contactList({ accountId: this.recordId } )
         .then(result => {
             console.log(JSON.stringify('result '+result));
             
             this.contacts = result;
+            this.numberOfContacts=this.contacts.length;
         })
         .catch(error => {
             this.error = error;
@@ -352,6 +381,10 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
             if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
                 isValidated=false;
                 messageError=" Il numero di telefono deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
+            }
+            if( String(phoneNumber.value).charAt(0)!='0'){
+                isValidated=false;
+                messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
         }
         if(!(email.value=== undefined || email.value.trim()==='')){

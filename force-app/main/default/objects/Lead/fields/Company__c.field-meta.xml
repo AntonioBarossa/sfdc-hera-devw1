@@ -3,7 +3,7 @@
     <fullName>Company__c</fullName>
     <description>Identifica la company di appartenenza</description>
     <externalId>false</externalId>
-    <label>Società Company Owner</label>
+    <label>Società Silos</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>

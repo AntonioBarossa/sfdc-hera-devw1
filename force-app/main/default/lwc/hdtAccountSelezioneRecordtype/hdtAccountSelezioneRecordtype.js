@@ -1,5 +1,6 @@
 import { LightningElement, track, wire } from 'lwc';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import ACCOUNT_OBJECT from '@salesforce/schema/Account';
 import getRecordTypesForAccount from '@salesforce/apex/HDT_LC_AccountSelezionaRecordtype.getRecordTypesForAccount';
 
