@@ -3,7 +3,7 @@
     <fullName>ageing__c</fullName>
     <externalId>false</externalId>
     <label>Ageing</label>
-    <precision>20</precision>
+    <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>
