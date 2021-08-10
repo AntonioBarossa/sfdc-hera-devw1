@@ -117,6 +117,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 let key = this.customerData.controllerValues['HERA COMM'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
+            this.filterMarkingOptions();
+
         });
     }
 
@@ -173,9 +175,29 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         
         let key = this.customerData.controllerValues[event.target.value];
         this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.filterMarkingOptions();
         this.companyPicklist(event.target.value);
         this.markingValue = '';
         this.categoryValue = '';
+    }
+    filterMarkingOptions(){
+        var customMarkingOptions=[];
+        this.customerMarkingOptions.forEach(function callbackFn(element, index) {
+            var arrayToRemove=[];
+            for (let i = 0; i < 20; i++) {
+                arrayToRemove.push('D'+i+' -');
+            }
+            console.log(JSON.stringify(element.value));
+            var startSubString=element.value;
+            startSubString=element.label.substring(0, 4);
+            if(!arrayToRemove.includes(startSubString)){
+                
+                customMarkingOptions.push(element);
+            }
+            
+            
+        })        
+        this.customerMarkingOptions=customMarkingOptions;
     }
     handleCustomerChange(event) {
         let key = this.categoryData.controllerValues[event.target.value];
@@ -499,7 +521,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         }
         console.log("LOG5");
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
+        
             if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
+                isValidated=false;
+                messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
+            }
+            if( String(phoneNumber.value).charAt(0)!='0'){
                 isValidated=false;
                 messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }

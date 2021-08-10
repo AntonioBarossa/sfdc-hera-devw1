@@ -808,11 +808,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     async getQuoteType(currentSectionIndex, nextSectionStep){
         try{
-            let quoteType = await getQuoteTypeMtd({ord:
+            let wrap = await getQuoteTypeMtd({ord:
                 {...this.order, 
                     ...this.sectionDataToSubmit, }
             });
-            this.sectionDataToSubmit['QuotationType__c'] = quoteType;
+            this.sectionDataToSubmit['QuotationType__c'] = wrap.quoteType;
+            this.sectionDataToSubmit["OperationCode__c"] = wrap.quoteCode;
         }catch(e){
             console.log("Exception in getQuoteType "+e);
         }

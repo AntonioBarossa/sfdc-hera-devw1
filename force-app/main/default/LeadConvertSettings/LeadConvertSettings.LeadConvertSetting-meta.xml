@@ -88,6 +88,10 @@
             <outputField>FiscalCode__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>Company__c</inputField>
+            <outputField>Company__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>DegreeOfStudies__c</inputField>
             <outputField>DegreeOfStudies__c</outputField>
         </mappingFields>

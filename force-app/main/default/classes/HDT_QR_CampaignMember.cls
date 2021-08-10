@@ -9,6 +9,7 @@ public inherited sharing class HDT_QR_CampaignMember {
     public List<CampaignMember> getActiveCampaignsByContact(String contactId){
         return [
             SELECT 
+            id,
             CampaignId,
             Campaign.Name,
             Campaign.Status,
