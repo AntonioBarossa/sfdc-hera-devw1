@@ -3,18 +3,17 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
     public static List<Map<String,String>> getAssignees(String queryString) {
         List<Map<String,String>> results = new List<Map<String,String>>();
         queryString = '%' + queryString + '%';
-        if(String.isNotBlank(UserInfo.getUserRoleId())) {
-            User currentUser = [SELECT Id, UserRole.Name, UserCompany__c FROM User WHERE Id = :UserInfo.getUserId()];
-            if(currentUser.UserRole.Name.contains('Supervisore')) {
-                // WIP WHERE CLAUSE
-                List<User> users = [SELECT Id, Name FROM User WHERE UserCompany__c = :currentUser.UserCompany__c AND Name LIKE :queryString WITH SECURITY_ENFORCED];
-                for(User user : users) {
-                    results.add(new Map<String,String>{
-                        'id' => user.Id,
-                        'name' => user.Name,
-                        'icon' => 'standard:user'
-                    });
-                }
+        User currentUser = [SELECT Id, UserCompany__c FROM User WHERE Id = :UserInfo.getUserId()];
+        List<PermissionSetAssignment> assignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :currentUser.Id AND PermissionSet.Name = 'HDT_OmniSupervisorPermissionSet'];
+        if(!assignments.isEmpty()) {
+            // WIP WHERE CLAUSE
+            List<User> users = [SELECT Id, Name FROM User WHERE UserCompany__c = :currentUser.UserCompany__c AND Name LIKE :queryString WITH SECURITY_ENFORCED];
+            for(User user : users) {
+                results.add(new Map<String,String>{
+                    'id' => user.Id,
+                    'name' => user.Name,
+                    'icon' => 'standard:user'
+                });
             }
         }
         List<Queue__c> queues = [SELECT Id, Name, QueueId__c, Group__c, Agency__c FROM Queue__c WHERE Name LIKE :queryString WITH SECURITY_ENFORCED];
