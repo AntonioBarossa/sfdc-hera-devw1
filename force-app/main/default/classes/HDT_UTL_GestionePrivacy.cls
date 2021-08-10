@@ -457,7 +457,7 @@
                      ceToUpdate.add(c);
                 }
             }
-    */      
+    */       
             if (!mapContactByIndividual.isEmpty()) {
                 for (ContactPointEmail tempContEmail : ceToUpdate) {
                     if (mapContactByIndividual.get(tempContEmail.ParentId)!=null) {
