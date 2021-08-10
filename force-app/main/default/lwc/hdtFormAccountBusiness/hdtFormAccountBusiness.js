@@ -51,6 +51,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     isVerified= false;
     @api RecordTypeId;
     @track companyOptions;
+    @track customerTypeOptions;
 
     @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
     contactInfo;
@@ -136,11 +137,29 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.inizializeInit();
         }
     };
+    @wire(getPicklistValues,{recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOMERTYPE_FIELD })
+    customerTypeFunction({error, data}) {
+        if (data){
+            var customTypeOptions=[];
+            this.customerTypeOptions = data;
+            data.values.forEach(function callbackFn(element, index) {
+                
+            console.log(JSON.stringify(element.value));   
+             if(element.value!='Persona Fisica'){
+                    
+                customTypeOptions.push(element);
+            }
+                
+                
+         })        
+           this.customerTypeOptions=customTypeOptions;
 
+        }
+    };
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: GENDER })
     genderOptions;
-    @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOMERTYPE_FIELD })
-    customerTypeOptions;
+    // @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOMERTYPE_FIELD })
+    // customerTypeOptions;
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PROFESSION })
     professionOptions;
 

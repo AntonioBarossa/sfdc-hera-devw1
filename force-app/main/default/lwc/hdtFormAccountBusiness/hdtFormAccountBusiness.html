@@ -122,9 +122,9 @@
                              
                                 <!-- <lightning-input type="text" data-id="customerType" value={customerType}
                                 label="Cliente Finale" disabled="true"> </lightning-input> -->
-                                <template if:true={customerTypeOptions.data}>
+                                <template if:true={customerTypeOptions}>
                                     <lightning-combobox data-id="ClienteFinale" name="Cliente Finale" label="Cliente Finale"
-                                      options={customerTypeOptions.data.values} value={customerType} disabled={makerequired}>
+                                      options={customerTypeOptions} value={customerType} disabled={makerequired}>
                                     </lightning-combobox  >
                                 </template>
                             <!-- <template if:true={categoryOptions}>
