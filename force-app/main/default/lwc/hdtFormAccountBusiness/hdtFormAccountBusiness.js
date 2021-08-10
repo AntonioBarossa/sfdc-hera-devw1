@@ -117,6 +117,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 let key = this.customerData.controllerValues['HERA COMM'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
+            this.filterMarkingOptions();
+
         });
     }
 
@@ -173,9 +175,29 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         
         let key = this.customerData.controllerValues[event.target.value];
         this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.filterMarkingOptions();
         this.companyPicklist(event.target.value);
         this.markingValue = '';
         this.categoryValue = '';
+    }
+    filterMarkingOptions(){
+        var customMarkingOptions=[];
+        this.customerMarkingOptions.forEach(function callbackFn(element, index) {
+            var arrayToRemove=[];
+            for (let i = 0; i < 20; i++) {
+                arrayToRemove.push('D'+i+' -');
+            }
+            console.log(JSON.stringify(element.value));
+            var startSubString=element.value;
+            startSubString=element.label.substring(0, 4);
+            if(!arrayToRemove.includes(startSubString)){
+                
+                customMarkingOptions.push(element);
+            }
+            
+            
+        })        
+        this.customerMarkingOptions=customMarkingOptions;
     }
     handleCustomerChange(event) {
         let key = this.categoryData.controllerValues[event.target.value];
