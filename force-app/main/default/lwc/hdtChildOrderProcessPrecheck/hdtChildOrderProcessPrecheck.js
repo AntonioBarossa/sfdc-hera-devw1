@@ -515,7 +515,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             userId: this.order.CreatedById,
             activationUser:"AccountCommercialePRM", //this.order.Owner.Username (parte prima @)
             account:"AccountCommercialePRM", //this.order.Owner.Username (parte prima @)
-            jobTitle:this.order.Channel__c,//capire come convertire valori
+            jobTitle:this.order.ChannelTransCode__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
             companyName:companyName,//this.order.SalesCompany__c
             externalCustomerId:this.order.Account.FiscalCode__c,

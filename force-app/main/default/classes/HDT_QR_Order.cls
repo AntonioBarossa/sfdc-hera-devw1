@@ -199,7 +199,8 @@ public inherited sharing class HDT_QR_Order {
             Owner.Username,
             CustomerType__c,
             IsWinback__c, 
-            IsBillableVas__c
+            IsBillableVas__c,
+            ChannelTransCode__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
