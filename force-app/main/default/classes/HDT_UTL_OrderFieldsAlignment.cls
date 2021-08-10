@@ -291,7 +291,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if (order.SalesCompany__c == null) {
             orderToUpdate.SalesCompany__c = quote.SalesCompany__c;
         }
-
+        orderToUpdate.isBillableVas__c=quote.isBillableVas__c;
     }
 
     public static String calculateRequestedOption(String implantType, Decimal powerContractual){

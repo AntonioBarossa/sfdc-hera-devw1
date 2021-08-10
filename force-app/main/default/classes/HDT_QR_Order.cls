@@ -198,7 +198,8 @@ public inherited sharing class HDT_QR_Order {
             SalesCompanyCode__c,
             Owner.Username,
             CustomerType__c,
-            IsWinback__c
+            IsWinback__c, 
+            IsBillableVas__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -650,7 +651,7 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
     public List<Order>  getOrderByUsernamePassword(String username, String password) {
-        HDT_LC_CanaleIVRNoShare qrS = new HDT_LC_CanaleIVRNoShare();
+        HDT_LC_CanaleIVRNoShare qrs = new HDT_LC_CanaleIVRNoShare();
         
         return qrS.getOrderByUsernamePassword(username,password);
 
