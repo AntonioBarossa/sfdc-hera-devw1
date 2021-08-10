@@ -23,11 +23,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     */
 
     public static void createActivityAccise(boolean flagAccise,boolean flagVat,String orderId,String accountId){
-
+        System.debug('******');
         Order o = new Order();
         o.id = orderId;
         o.FacilitationExcise__c = flagAccise;
-        o.VATfacilitationFlag__c = flagVat;
+        o.VATfacilitationFlag__c = flagVat; 
         orderSrv.updateRecord(o);
         RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
         String res = '';
