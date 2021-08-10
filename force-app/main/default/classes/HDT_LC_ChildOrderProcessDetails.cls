@@ -13,6 +13,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
+    private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Update order process step
