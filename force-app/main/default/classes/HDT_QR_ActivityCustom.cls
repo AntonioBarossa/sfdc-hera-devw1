@@ -62,7 +62,8 @@ public inherited sharing class HDT_QR_ActivityCustom {
             
             Id,
             Approved__c,
-            Name
+            Name,
+            wrts_prcgvr__status__c
             FROM wrts_prcgvr__Activity__c
             WHERE Case__c= :caseId
             WITH SECURITY_ENFORCED
