@@ -42,7 +42,7 @@ public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
                         comCode.Campaign__c         = tempCamp.id;
                         Integer num=mapKeyToNumber.get(tempCamp.id)!=null?mapKeyToNumber.get(tempCamp.id)+1:1;
                         comCode.FullCode__c         = tempCamp.PrefixCode__c+num;
-                        comCode.Name                = tempCamp.PrefixCode__c;
+                        comCode.Name                = tempCamp.PrefixCode__c+num;
                         comCode.MaximalUsesEE__c    = tempCamp.MaxNumberEECodeUse__c;
                         comCode.MaximalUsesGAS__c   = tempCamp.MaxNumberGASCodeUse__c;
                         comCode.MaximalUsesVAS__c   = tempCamp.MaxNumberVASCodeUse__c;
