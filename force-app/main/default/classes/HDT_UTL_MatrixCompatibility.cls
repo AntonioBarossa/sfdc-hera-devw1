@@ -114,11 +114,11 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         for(ServiceRequest__c c : incompatibilities){
             conflictIds.add(c.Id);
         }
-        for(ServiceRequest__c s : [SELECT Id, Order__c,Case__c,Type__c FROM ServiceRequest__c WHERE Id IN :conflictIds]) {
+        for(ServiceRequest__c s : [SELECT Id, Order__r.OrderNumber, Case__r.CaseNumber,Type__c FROM ServiceRequest__c WHERE Id IN :conflictIds]) {
             if(s.Type__c=='Case'){
-                conflicts.add(s.Case__c);
+                conflicts.add(s.Case__r.CaseNumber);
             }else{
-                conflicts.add(s.Order__c);
+                conflicts.add(s.Order__r.OrderNumber);
             }
         }
         if(conflicts.isEmpty()){
