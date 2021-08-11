@@ -1536,7 +1536,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'RequestOption__c',
                     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
                     'required': true,
-                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_Subentro',
+                    // 'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_Subentro',
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1572,7 +1573,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'AtecoCode__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business' && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    // 'disabled': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business' && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
