@@ -12,6 +12,7 @@ import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
 import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
 //FINE SVILUPPI EVERIS
 
+import createActivityAccise from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.createActivityAccise'
 import getQuoteTypeMtd from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getQuoteTypeMtd';
 
 // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
@@ -171,8 +172,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         if (this.currentSection.name === 'dateOrdine') {
             if(event.target.fieldName === 'IsActivationDeferred__c') {
-                // this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
- //                 this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
+                console.log("IsActivationDeferred__c");
+                this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
 
                 if (event.target.value && this.sectionDataToSubmit.EffectiveDate__c === undefined) {
                     this.sectionDataToSubmit['EffectiveDate__c'] = this.order.EffectiveDate__c;
@@ -746,7 +747,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(currentSectionName === 'ivaAccise'){
 
             let errorMessageIvaAccise = '';
-
+            let checkIsFlag = false;
             if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true && this.template.querySelector("[data-id='VAT__c']").value === ''){
                 errorMessageIvaAccise = 'Popolare IVA';
             }
@@ -771,6 +772,27 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 });
                 this.dispatchEvent(toastErrorMessageIvaAccise);
                 return;
+            }
+            else{
+                if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true || this.template.querySelector("[data-id='FacilitationExcise__c']") === true){
+                    let vatFacilitation = this.template.querySelector("[data-id='VATfacilitationFlag__c']");
+                    let exciseFacilitation = this.template.querySelector("[data-id='FacilitationExcise__c']");
+                    createActivityAccise({
+                        flagAccise : this.template.querySelector("[data-id='FacilitationExcise__c']") === true,
+                        flagVat : this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true,
+                        orderId : this.order.Id,
+                        accountId : this.order.AccountId
+                    }).then(response =>{
+                        this.loading = false;
+                        const toastErrorMessageIvaAccise = new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Attivita Creata con Successo',
+                        variant: 'success',
+                        mode: 'sticky'
+                        });
+                        this.dispatchEvent(toastErrorMessageIvaAccise);
+                    });
+                }
             }
         }
 
@@ -1514,7 +1536,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'RequestOption__c',
                     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
                     'required': true,
-                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_Subentro',
+                    // 'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_Subentro',
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1550,7 +1573,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'AtecoCode__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business' && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    // 'disabled': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business' && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -2286,7 +2310,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': false,
-                        'value': '',
+                        'value': this.order.Vat__c,
                         'processVisibility': ''
                     },
                     {
@@ -2295,7 +2319,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('ele'),
                         'required': false,
                         'disabled': true,
-                        'value': '',
+                        'value': this.order.ExciseEle__c,
                         'processVisibility': ''
                     },
                     {
@@ -2304,7 +2328,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('gas'),
                         'required': false,
                         'disabled': false,
-                        'value': '',
+                        'value': this.order.ExciseGas__c,
                         'processVisibility': ''
                     },
                 ]
@@ -2483,7 +2507,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': 'Data decorrenza',
                         'apiname': 'EffectiveDate__c',
-                        'typeVisibility': false,
+                        'typeVisibility': this.order.IsActivationDeferred__c,
                         'required': false,
                         'disabled': false,
                         'value': '',

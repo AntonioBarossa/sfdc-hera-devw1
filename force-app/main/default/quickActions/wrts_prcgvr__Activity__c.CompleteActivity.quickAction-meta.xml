@@ -20,7 +20,7 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>wrts_prcgvr__Status__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <uiBehavior>Readonly</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
         <quickActionLayoutColumns/>

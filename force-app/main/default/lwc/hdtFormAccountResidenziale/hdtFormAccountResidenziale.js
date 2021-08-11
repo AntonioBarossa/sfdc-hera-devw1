@@ -20,7 +20,7 @@ import checkRole from '@salesforce/apex/HDT_UTL_Account.checkIsBackoffice';
 
 
 export default class HdtFormAccountResidenziale extends NavigationMixin(LightningElement) {
-
+    
     @api showCompanyOwner = false;
     @track spinner=false;
     @track errorMessage='';
@@ -58,12 +58,11 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     showModal= true;
     @api RecordTypeId;
 
- 
     @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
     contactInfo;
     @track companyOptions;
-
-   
+    
+    
     @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId', fieldApiName: COMPANY_FIELD })
     companyFieldInfo({ data, error }) {
         if (data) this.companyFieldData = data;
@@ -71,34 +70,43 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     companyPicklist( comp) {
         let key = this.companyFieldData.controllerValues[comp];
         this.companyOptions = this.companyFieldData.values.filter(opt => opt.validFor.includes(key));
-    }
+        var customCompanyOptions=[];
+        this.companyOptions.forEach(function callbackFn(element, index) {
+            if(element.value!='HC+HCM+EENE'){ 
+                customCompanyOptions.push(element);
+            }
+        })
+        
+        this.companyOptions=customCompanyOptions;
 
+    }
+    
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PHONE_PREFIX })
     phonePrefixGetOptions({error, data}) {
         if (data) {
-          if(data.defaultValue !=null){
-            this.phonePrefixValue = data.defaultValue.value;
-            this.phonePrefixOptions= data.values;
-          }
+            if(data.defaultValue !=null){
+                this.phonePrefixValue = data.defaultValue.value;
+                this.phonePrefixOptions= data.values;
+            }
         }
     };
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: MOBILEPHONE_PREFIX })
     mobilePhonePrefixGetOptions({error, data}) {
         if (data) {
-          if(data.defaultValue !=null){
-            this.mobilePhonePrefixValue = data.defaultValue.value;
-            this.mobilePhonePrefixOptions= data.values;
-          }
+            if(data.defaultValue !=null){
+                this.mobilePhonePrefixValue = data.defaultValue.value;
+                this.mobilePhonePrefixOptions= data.values;
+            }
         }
     };
-
+    
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOM_MARKING })
     customerGetMarkingOptions({error, data}) {
         if (data){
             this.customerData = data;
         }
     };
-
+    
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CATEGORY })
     categoryGetOptions({error, data}) {
         if (data){
@@ -106,19 +114,19 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             this.inizializeInit();
         }
     };
-
+    
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: GENDER })
     genderOptions;
-
+    
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PROFESSION })
     professionOptions;
     
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: EDUCATIONALQUALIFICATION })
     educationalOptions;
-
+    
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: COMPANY_OWNER })
     companyOwnerOptions;
-
+    
     roleOptions=[
         { label: 'Titolare', value: 'Titolare' },
         { label: 'Familiare', value: 'Familiare' }
@@ -127,23 +135,41 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         console.log("***************CHANGE" + event.target.value);
         let key = this.customerData.controllerValues[event.target.value];
         this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.filterMarkingOptions();
         this.companyPicklist( event.target.value);
         this.markingValue = '';
         this.categoryValue = '';
-      
+        
+    }
+    filterMarkingOptions(){
+        var customMarkingOptions=[];
+        this.customerMarkingOptions.forEach(function callbackFn(element, index) {
+            var arrayToRemove=[];
+            for (let i = 0; i < 20; i++) {
+                arrayToRemove.push('D'+i+' -');
+            }
+            console.log(JSON.stringify(element.value));
+            var startSubString=element.value;
+            startSubString=element.label.substring(0, 4);            
+            if(!arrayToRemove.includes(startSubString)){ 
+                customMarkingOptions.push(element);
+            }
+        })
+        
+        this.customerMarkingOptions=customMarkingOptions;
     }
     handleCustomerChange(event) {
         let key = this.categoryData.controllerValues[event.target.value];
         this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
         this.categoryValue = '';
-     
-
+        
+        
     }
     closeModal() {
         this.showModal = false;
         window.history.back();
     }
-
+    
     inizializeInit(){
         checkRole({}).then((response) => {
             if(response == 'HDT_BackOffice'){
@@ -154,7 +180,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 let key = this.customerData.controllerValues['HERA COMM'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
-
+                
             }else if(response == 'HDT_FrontOffice_Reseller'){
                 this.companyDefault = 'Reseller';
                 this.showCompanyOwner = true;
@@ -168,7 +194,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 let key = this.customerData.controllerValues['MMS'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
-
+                
             }
             else if(response == 'HDT_FrontOffice_AAAEBT'){
                 this.companyDefault = 'AAA-EBT';
@@ -176,8 +202,8 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 let key = this.customerData.controllerValues['AAA-EBT'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
-              
-
+                
+                
             }
             else{
                 this.companyDefault = 'HERA COMM';
@@ -185,17 +211,19 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 let key = this.customerData.controllerValues['HERA COMM'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
                 this.companyPicklist(this.companyDefault);
-      
+                
             }
+            this.filterMarkingOptions();
+
         });
     }
-
+    
     connectedCallback(){
         this.currentObjectApiName= 'Account';
     }
-
+    
     handleCalculation(){
-
+        
         var isValidated= true;
         let firstName =this.template.querySelector('[data-id="firstName"]').value;
         let lastName= this.template.querySelector('[data-id="lastName"]').value;
@@ -203,7 +231,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         this.birthDate=this.template.querySelector('[data-id="birthDate"]').value;
         this.fiscalCode= this.template.querySelector('[data-id="fiscalCode"]');
         this.birthPlace=this.template.querySelector('[data-id="birthPlace"]').value;
-
+        
         if(firstName=== undefined || firstName.trim()===''){
             isValidated= false;
         }
@@ -221,19 +249,19 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         }
         if(isValidated){
             var information={
-                                firstName:firstName, 
-                                lastName:lastName, 
-                                gender: this.gender, 
-                                birthDate: this.birthDate, 
-                                birthPlace: this.birthPlace
-                            };
+                firstName:firstName, 
+                lastName:lastName, 
+                gender: this.gender, 
+                birthDate: this.birthDate, 
+                birthPlace: this.birthPlace
+            };
             calculateFiscalCode({infoData: information}).then((response) => {
                 if(response == null){
                     //this.showError(errorMsg);
                     const event = new ShowToastEvent({
-                    message: 'Comune inserito NON presente a sistema',
-                    variant: 'error',
-                    mode: 'dismissable'
+                        message: 'Comune inserito NON presente a sistema',
+                        variant: 'error',
+                        mode: 'dismissable'
                     });
                     this.dispatchEvent(event);
                 }else{
@@ -258,9 +286,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         }
     }
     getAccountAdress(){
-
+        
         if(this.accountAddress!= undefined){
-
+            
             if(this.accountAddress['Via'] != null){
                 this.fieldsToUpdate['BillingStreet'] = this.accountAddress['Via'];
                 this.fieldsToUpdate['BillingStreetName__c'] = this.accountAddress['Via'];
@@ -301,10 +329,10 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             }
         }
     }
-
+    
     handleSave(){
         console.log(this.RecordTypeId);
-
+        
         let isValidated= true;
         let firstName =this.template.querySelector('[data-id="firstName"]');
         let lastName= this.template.querySelector('[data-id="lastName"]');
@@ -337,7 +365,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         this.spinner= true;
         let messageError= "Completare tutti i campi obbligatori !";
         var mailFormat = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
-
+        
         if(!firstName.reportValidity()){
             isValidated=false;
         } 
@@ -413,7 +441,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 messageError=" Il Codice fiscale deve essere lungo 16 cifre!";
             }
         }
-
+        
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
             if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
                 isValidated=false;
@@ -436,7 +464,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 messageError=" Formato email errato !";
             }
         }
-
+        
         if(isValidated){
             this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
             this.getAccountAdress();
@@ -452,8 +480,8 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                     isEmpty= true;
                 }
                 if(isEmpty){
-
-
+                    
+                    
                     
                     getFromFiscalCode({
                         fiscalCodes : this.fiscalCode.value.replace(/ /g,"")
@@ -471,13 +499,13 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         if(!this.birthDate || this.birthDate.trim()===''){
                             this.birthDate=fiscData[keyCode].birthDate;
                             console.log('birthDate : ' + this.birthDate);
-
+                            
                             //this.birthDate= fiscData.birthDate;
                         }
                         if(!this.birthPlace || this.birthPlace.trim()===''){
                             this.birthPlace=fiscData[keyCode].birthPlace;
                             console.log('birthPlace : ' + this.birthPlace);
-
+                            
                             //this.birthPlace= fiscData.birthPlace;
                         }
                         
@@ -565,7 +593,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         "mobilePhonePrefix" : mobilePhonePrefix.value,
                         "company":companyValue.value,
                         "customerType":this.customerType,
-                     
+                        
                     };
                     insertAccount({
                         dataAccount : acc,
@@ -616,9 +644,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             this.dispatchEvent(event);
             this.spinner=false;
         }
-            
+        
     }
-
+    
     copyAddressHandler(event){
         let checkboxSelected= event.target.checked;
         if(checkboxSelected){
@@ -643,9 +671,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             this.settlementIntern= residenceIntern.value;
             this.settlementPostalCode= residencePostalCode.value;
         }
-
+        
     }
-
+    
     showError(error){
         this.errorMessage='';
         if(error.body.message){
@@ -657,7 +685,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 }
             }
         }
-            
+        
     }
-
+    
 }

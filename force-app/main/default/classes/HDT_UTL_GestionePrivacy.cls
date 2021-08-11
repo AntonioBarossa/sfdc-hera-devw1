@@ -96,6 +96,7 @@
         for(Contact c: contacts){
             contactsOb.put(c.Id, c);
         }
+        Map<String, String> mapContactByIndividual = new Map<String, String>();
         for(String id: mapEmail.keySet()){
             Contact contact= contactsOb.get(id);
             List<String> email= mapEmail.get(id);
@@ -104,10 +105,13 @@
                 email.remove(0);
                 primaryEmail.put(contact.IndividualId, emPrimary);
                 emails.put(contact.IndividualId, email);
+                mapContactByIndividual.put(contact.IndividualId,id);
             }
         }
-        HDT_UTL_ContactPoint.createContactPointEmailContact(primaryEmail, emails);
+        HDT_UTL_ContactPoint.createContactPointEmailContact(primaryEmail, emails,mapContactByIndividual);
         Map<String,boolean> mapCheck = new map<String,Boolean>();
+        Map<String, String> mapContactByIndividualPhone = new Map<String, String>();
+
         for(String id: mapMobilePhone.keySet()){
             Contact contact= contactsOb.get(id);
             List<String> mobile= mapMobilePhone.get(id);
@@ -118,12 +122,13 @@
                 mobile.remove(0);
                 primaryMobile.put(contact.IndividualId, emMobile);
                 mobiles.put(contact.IndividualId, mobile);
+                mapContactByIndividualPhone.put(contact.IndividualId,id);
             }
             else{
                 mapCheck.put(contact.IndividualId,false);
             }
         }
-        HDT_UTL_ContactPoint.createContactPointPhoneContact(primaryMobile, mobiles,mobilePrefixes, 'Mobile');
+        HDT_UTL_ContactPoint.createContactPointPhoneContact(primaryMobile, mobiles,mobilePrefixes, 'Mobile',mapContactByIndividualPhone);
 
         for(String id: mapPhone.keySet()){
             Contact contact= contactsOb.get(id);
@@ -150,7 +155,7 @@
             if(primaryPhone == null){
                 primaryPhone= new Map<String,String>();
             }    
-            HDT_UTL_ContactPoint.createContactPointPhoneContact(primaryPhone,phones ,phonePrefixes ,'Casa');
+            HDT_UTL_ContactPoint.createContactPointPhoneContact(primaryPhone,phones ,phonePrefixes ,'Casa',mapContactByIndividualPhone);
             //else{
                // if(phonesHome.size()>0){
               //      phonesHome.remove(primaryPhone);
@@ -187,7 +192,12 @@
                 mapPhone.put(l.id,l.phone == null ? '' : l.phone);
                 mapEmail.put(l.id,l.email == null ? '' : l.email);
             }
+            Map<id, id> mapContactByIndividual = new Map<id, id>();
+
             for(Lead l : leadNew){
+                if (String.isNotBlank(l.ConvertedContactId) &&  String.isNotBlank(l.IndividualId)) {
+                    mapContactByIndividual.put(l.IndividualId,l.ConvertedContactId);
+                }
                 boolean check = false;
                 if(mapMobilePhone.get(l.id) != null && mapMobilePhone.get(l.id) != l.MobilePhone && l.MobilePhone != '' && l.MobilePhone != null){
                     if(mapMobilePhone.get(l.id) == ''){
@@ -447,7 +457,19 @@
                      ceToUpdate.add(c);
                 }
             }
-    */
+    */       
+            if (!mapContactByIndividual.isEmpty()) {
+                for (ContactPointEmail tempContEmail : ceToUpdate) {
+                    if (mapContactByIndividual.get(tempContEmail.ParentId)!=null) {
+                        tempContEmail.Contact__c=mapContactByIndividual.get(tempContEmail.ParentId);
+                    }
+                }
+                for (ContactPointPhone tempContp : cpToUpdate) {
+                    if (mapContactByIndividual.get(tempContp.ParentId)!=null) {
+                        tempContp.Contact__c=mapContactByIndividual.get(tempContp.ParentId);
+                    }
+                }
+            }
             if(ceToUpdate != null && ceToUpdate.size() > 0){
                 HDT_SRV_ContactPoint.upsertContactPointEmail(ceToUpdate);
             }

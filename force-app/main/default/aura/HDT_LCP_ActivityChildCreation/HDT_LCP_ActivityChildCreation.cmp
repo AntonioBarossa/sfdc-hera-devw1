@@ -1,0 +1,5 @@
+<aura:component implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes" access="global" controller="HDT_LC_ActivityChildCreationController">
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>    
+    <lightning:workspaceAPI aura:id="workspace"/>
+</aura:component>

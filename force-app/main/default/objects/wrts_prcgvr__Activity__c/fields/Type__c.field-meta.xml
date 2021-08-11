@@ -271,6 +271,21 @@
                 <label>Segnalazioni Commissioni Agenzie</label>
             </value>
             <value>
+                <fullName>Invio registrazione</fullName>
+                <default>false</default>
+                <label>Invio registrazione</label>
+            </value>
+            <value>
+                <fullName>Recupero contratto da Postel</fullName>
+                <default>false</default>
+                <label>Recupero contratto da Postel</label>
+            </value>
+            <value>
+                <fullName>Invio Contratto</fullName>
+                <default>false</default>
+                <label>Invio Contratto</label>
+            </value>
+            <value>
                 <fullName>Amm. Precheck KO SII</fullName>
                 <default>false</default>
                 <label>Amm. Precheck KO SII</label>
