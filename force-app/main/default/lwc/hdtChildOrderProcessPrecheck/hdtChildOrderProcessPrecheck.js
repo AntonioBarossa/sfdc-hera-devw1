@@ -511,13 +511,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             sistema: "eEnergy",
             caso:"Transazionale",
             crmEntity:"Order",
-            crmId:this.order.OrderNumber,
+            crmId:this.order.Id.slice(0,15),
             userId: this.order.CreatedById,
-            activationUser:this.order.Owner.Username, //Owner.UserName (parte prima @)
-            account:this.order.Owner.Username, //Owner.UserName (parte prima @)
-            jobTitle:this.order.Channel__c,//capire come convertire valori
+            activationUser:"AccountCommercialePRM", //this.order.Owner.Username (parte prima @)
+            account:"AccountCommercialePRM", //this.order.Owner.Username (parte prima @)
+            jobTitle:this.order.ChannelTransCode__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
-            companyName:companyName,
+            companyName:companyName,//this.order.SalesCompany__c
             externalCustomerId:this.order.Account.FiscalCode__c,
             secondaryCustomerId:secondaryCustomerId,
             bpClass:bpClass,
@@ -562,13 +562,16 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         this.loaded = false;
         let sRequest= {
             'servicePoint': this.order.ServicePoint__c,
-            'servicePointCode': this.order.ServicePoint__r.ServicePointCode__c,
+            'servicePointCode': this.order.ServicePoint__r?.ServicePointCode__c,
             'status': this.order.Status,
             'order': this.order.Id,
-            'commoditySector': this.order.ServicePoint__r.CommoditySector__c,
+            'commoditySector': this.order.ServicePoint__r?.CommoditySector__c,
             'type': 'Order',
             'processType' : this.selectedProcessObject.processType
         };
+        if(this.selectedProcessObject.processType=="VAS"){
+            sRequest["isBillableVas"]=this.order.IsBillableVas__c;
+        }
         checkCompatibility({servReq: sRequest}).then(data =>{
             if(data.compatibility == ''){
                 this.applySelectionLogic(this.selectedProcessObject);

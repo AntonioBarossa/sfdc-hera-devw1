@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 04/06/2021
+* @description Apex class HDT_QR_ActivityCustom
+* @history Keltin Mesonjesi – 04/06/2021 – Created class
+*/
 public inherited sharing class HDT_QR_ActivityCustom {
     public static List<wrts_prcgvr__Activity__c> getRecordByTypeAndStatusAndAccountAndServicePoint(String type, String status, String accountId, String servicePointCode) {
         return [
@@ -27,6 +33,52 @@ public inherited sharing class HDT_QR_ActivityCustom {
             Contact__c,
             Distributor__c,
             AppointmentDate__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE Id= :activityId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+    public static wrts_prcgvr__Activity__c getRecordByIdAccise(String activityId) {
+        return [
+            SELECT
+            Id,
+            Account__c,
+            status__c,
+            wrts_prcgvr__Status__c,
+            order__c,
+            order__r.FacilitationExcise__c,
+            order__r.VATfacilitationFlag__c,
+            Contact__c,
+            Distributor__c,
+            AppointmentDate__c,
+            ageing__c, 
+            isDenominazioneIncongruente__c,
+            isIva10Module__c, 
+            isIvaActivityCode__c, 
+            isIvaAnagrafici__c, 
+            isIvaAtecoCode__c, 
+            isIvaCopyDocument__c, 
+            isIvaFirmLegalOwner__c, 
+            isIvaMatricola__c, 
+            isIvaSupplyAddress__c, 
+            isManualAppoitment__c, 
+            isSchoolCategory__c, 
+            CraftsmenRegisterNumber__c,
+            CheckActivityBox__c,
+            RequiredOfficeActivity__c,
+            CciaaData__c,
+            IdentityDocument__c,
+            AssociationStatute__c,
+            Signature__c,
+            AtecoCode__c,
+            CciaaSelfCertModule__c,
+            isAcciseModuleRequest__c,
+            isAcciseSupply__c,
+            PersonalData__c,
+            NumberOfAttempt__c,
+            isAccisePdrPod__c,
+            CompletationDateDocument__c,
+            createddate
             FROM wrts_prcgvr__Activity__c
             WHERE Id= :activityId
             WITH SECURITY_ENFORCED
@@ -193,6 +245,25 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     RecordTypeId
                     FROM wrts_prcgvr__Activity__c 
                     WHERE id IN: ids AND RecordTypeId =: recordTypeId 
+                    WITH SECURITY_ENFORCED 
+                ];
+        }
+
+        public static List<wrts_prcgvr__Activity__c> getRecordScartoDiscordante(string servicePoint,string accountid){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Contact__c,
+                    order__c,
+                    Distributor__c,
+                    AppointmentDate__c,
+                    RecordTypeId
+                    FROM wrts_prcgvr__Activity__c
+                    where 
+                    RecordType.developername = 'HDT_RT_Scarto'
+                    AND account__c = :accountid
+                    AND order__r.servicePoint__c = :servicePoint
+                    AND wrts_prcgvr__Status__c = 'Not Started'
                     WITH SECURITY_ENFORCED 
                 ];
         }

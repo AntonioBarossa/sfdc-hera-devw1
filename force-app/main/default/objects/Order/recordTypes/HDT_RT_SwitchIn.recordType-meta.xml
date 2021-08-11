@@ -366,6 +366,10 @@
             <fullName>Volontà estorta</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Gestione Scarto</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>ChamberCommerceRegistration__c</picklist>
@@ -2182,6 +2186,10 @@
         </values>
         <values>
             <fullName>Voltura c%2Fo VT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
             <default>false</default>
         </values>
     </picklistValues>

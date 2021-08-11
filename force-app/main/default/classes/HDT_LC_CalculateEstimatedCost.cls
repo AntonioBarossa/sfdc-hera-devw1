@@ -17,6 +17,7 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
             AdministrativeBurden__c = order.AdministrativeBurden__c,
             EstimatedVAT__c = order.EstimatedVAT__c,
             ValidityDateEstimate__c = order.ValidityDateEstimate__c,
+            OperationCode__c = Order.OperationCode__c,
             QuotationType__c = order.QuotationType__c
         ));
     }
@@ -31,7 +32,9 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
     @AuraEnabled
     public static HDT_WRP_ExtimatedCost getExtimatedCost(Order ord){
         HDT_WRP_ExtimatedCost wrp = new HDT_WRP_ExtimatedCost();
-        wrp.quoteType=HDT_LC_ChildOrderProcessDetails.getQuoteTypeMtd(ord);
+        HDT_LC_ChildOrderProcessDetails.HDT_WRP_QuoteType typeAndCode = HDT_LC_ChildOrderProcessDetails.getQuoteTypeMtd(ord);
+        wrp.quoteType=typeAndCode.quoteType;
+        wrp.quoteCode=typeAndCode.quoteCode;
         try{
             if(wrp.quoteType=='Rapido'){
                 getFixedQuotes(ord, wrp);
@@ -56,6 +59,7 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
 
     public class HDT_WRP_ExtimatedCost{
         @AuraEnabled public String quoteType {get;set;}
+        @AuraEnabled public String quoteCode {get;set;}
         @AuraEnabled public HDT_CalcoloPreventivi__mdt fixedQuotes {get;set;}
         @AuraEnabled public String validityDate {get;set;}
         @AuraEnabled public Decimal estimatedAmount {get;set;}

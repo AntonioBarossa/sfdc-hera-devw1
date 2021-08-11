@@ -38,6 +38,20 @@ public with sharing class HDT_UTL_Constants {
     public final String ACCOUNT_RECORDTYPEID_RESINDEZIALE =
     Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(ACCOUNT_RECORDTYPE_DEVELOPERNAME_RESINDEZIALE).getRecordTypeId();
 
+    //Activity Custom RecordType Credit Check KO
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_CREDITCHECKKO = 'HDT_RT_CreditCheckKO';
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPEID_CREDITCHECKKO =
+    Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_CREDITCHECKKO).getRecordTypeId();
+
+    //Activity Custom RecordType Credit Check KO
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_KOPRECEDETECLIENTE = 'HDT_RT_KoPrecedeteCliente';
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE =
+    Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_KOPRECEDETECLIENTE).getRecordTypeId();
+
 
     //Order RecordType Default
     @AuraEnabled
@@ -62,6 +76,13 @@ public with sharing class HDT_UTL_Constants {
     public final String ORDER_RECORDTYPEID_ORDERDOSSIER =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER).getRecordTypeId();
 
+    //@frpanico 05/08 Case RecordType default Morosita
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA = 'HDT_RT_Morosita';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_MOROSITA =
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA).getRecordTypeId();
+    
     //Hera internal Profiles
     @AuraEnabled
     public final String SYSTEM_ADMINISTRATOR_NAME = 'System Administrator';    
@@ -85,4 +106,15 @@ public with sharing class HDT_UTL_Constants {
     public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME = 'HDT_SalesforceCPQAdmin';
     @AuraEnabled
     public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME = 'HDT_SalesforceCPQLicense';
+
+    //Contact Point picklist domains
+    @AuraEnabled
+    public final String CONTACTPOINT_STATUS_VERIFICATO = 'Verificato';
+    @AuraEnabled
+    public final String CONTACTPOINT_STATUS_NON_VERIFICATO = 'Non Verificato';
+
+    //Account picklist domains
+    public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_CUSTOMER = 'Customer';
+    public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_EX_CUSTOMER = 'Ex-Customer';
+    public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_PROSPECT = 'Prospect';
 }

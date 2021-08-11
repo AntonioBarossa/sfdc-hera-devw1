@@ -171,6 +171,18 @@ public with sharing class HDT_UTL_Sales {
             return false;
         }
     }
+    public static Boolean isTransitionNoUp(Sale__c sale){
+
+       // Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        if(sale.Account__c != null && sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende SME' && sale.Account__r.Category__c != 'Piccoli Condomini'){
+            Sale__c s = new Sale__c(Id=sale.Id);
+            s.isTransition__c=true;
+           // saleSrv.updateRecord(s);
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
     public static Boolean isWinback(String servicePointId){
