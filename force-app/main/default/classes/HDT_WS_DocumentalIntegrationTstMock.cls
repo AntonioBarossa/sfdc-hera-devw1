@@ -6,6 +6,8 @@ global class HDT_WS_DocumentalIntegrationTstMock implements HttpCalloutMock {
             return responseEngage(request);
         }else if(endpoint.endsWithIgnoreCase('GetAttachmentPostel')){
              return responsePostel(request);
+        }else if(endpoint.endsWithIgnoreCase('GetEnvelopePostel')){
+            return responsePostel(request);
         }else{
             return responseIntesa(request);
         }
@@ -26,7 +28,7 @@ global class HDT_WS_DocumentalIntegrationTstMock implements HttpCalloutMock {
     public static HttpResponse responsePostel(HTTPRequest request){
         HttpResponse response = new HttpResponse();
         response.setHeader('Content-Type', 'application/json');
-        response.setBody('{"status": "success","correlationId": "92293250-df3b-11eb-a73c-0200a41fc6da","timestamp": "2021-07-07T17:54:13","data": []}');
+        response.setBody('{"status": "success","correlationId": "92293250-df3b-11eb-a73c-0200a41fc6da","timestamp": "2021-07-07T17:54:13","data": {"content":"base64"}}');
         response.setStatusCode(200);
         response.setStatus('OK');
         return response; 

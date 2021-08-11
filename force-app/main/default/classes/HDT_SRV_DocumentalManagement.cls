@@ -972,8 +972,12 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				signMode = o.SignatureMethod__c;
 			}
 		}
-
-		return signMode.contains('OTP') ? 'zip' : 'pdf';
+		if (String.isNotBlank(signMode)) {
+			return signMode.contains('OTP') ? 'zip' : 'pdf';	
+		}else {
+			return 'pdf';
+		}
+		
 	}
 
 	public static String getSignModeConfiguration(String processType, String source){
