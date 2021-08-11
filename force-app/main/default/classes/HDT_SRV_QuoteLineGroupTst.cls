@@ -4,7 +4,7 @@
 * @version 1.0
 * @description: This is the ApexTestClass to test the creation and crud permission about the fields/records of the QuoteLineGroup Object
 * @history
-* Created: 2021-08-19
+* Created: 2021-08-10
 * Modified By:
 **/
 
@@ -72,10 +72,8 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
         quoteLineGroupClass.createRecords(qlgList);
 
         List<SBQQ__QuoteLineGroup__c> testCreationOfQLG = [SELECT Id FROM SBQQ__QuoteLineGroup__c LIMIT 1];
-        Integer numbersOfQLG =  testCreationOfQLG.size();
 
-        System.assertEquals(1, numbersOfQLG, 'Exist the record of QLG --just created');
-        System.assertNotEquals(0, 1, 'The ORG has the record just created');
+        System.assertNotEquals(null, testCreationOfQLG[0].Id, 'The ORG has the record, just created -- there is a Id in the ORG');
 
         Test.stopTest();
     }
@@ -95,9 +93,7 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
         quoteLineGroupClass.createRecord(qlg);
 
         List<SBQQ__QuoteLineGroup__c> testCreationOfQLG = [SELECT Id FROM SBQQ__QuoteLineGroup__c LIMIT 1];
-        Integer numbersOfQLG =  testCreationOfQLG.size();
-        System.assertEquals(1, numbersOfQLG, 'Exist the record of QLG --just created');
-        System.assertNotEquals(0, 1, 'The ORG has the record just created');
+        System.assertNotEquals(null, testCreationOfQLG[0].Id, 'The ORG has the record, just created -- there is a Id in the ORG');
 
         Test.stopTest();
     }
