@@ -32,6 +32,14 @@ export default class HdtCreateCampaign extends LightningElement {
     @track channelValues;
     @track paperRecId;
     @track userRoleBackOffice = false;
+    // campaign Commercial Code Fields
+    @track codeGenerationRuleRequired = false;
+    @track prefixCodeRequired = false;
+    @track codeValidityEndDateRequired = false;
+    @track maxNumberEECodeUseRequired = false;
+    @track maxNumberGASCodeUseRequired = false;
+    @track maxNumberVASCodeUseRequired = false;
+    @track codeConventionQuantityRequired = false;
 
     @wire(getUserRole, {
         userId: USER_ID
@@ -82,7 +90,7 @@ export default class HdtCreateCampaign extends LightningElement {
     }
 
     handleChangeCategory(event) {
-        this.channelFieldRequired=true;
+        this.channelFieldRequired = true;
         this.campaignCommercialCodeFields = (event.detail.value === 'Campagna Marketing Cloud' || event.detail.value === 'Campagna CRM') ? true : false;
         this.statusField = this.template.querySelector('.statusField > lightning-input-field').value;
         let categoryField = this.template.querySelector('.categoryField > lightning-input-field').value;
@@ -99,8 +107,8 @@ export default class HdtCreateCampaign extends LightningElement {
             this.campaignBillingFields = channelField.includes('Bolletta') ? true : false;
             this.recurringCampaignFieldsRequired = recurringField;
         } else {
-            if ("Campagna Contenitore" == event.detail.value ){
-                this.channelFieldRequired=false;
+            if ("Campagna Contenitore" == event.detail.value) {
+                this.channelFieldRequired = false;
             }
             this.startDateFieldRequired = false;
             this.recurringCampaignFieldsRequired = false;
@@ -131,10 +139,25 @@ export default class HdtCreateCampaign extends LightningElement {
 
     handleChangeCodeManagementModel(event) {
         this.selectedCodeManagementModel = event.detail.value;
+        this.codeGenerationRuleRequired = (event.detail.value != '' && event.detail.value != 'Nessuno') ? true : false;
+        if (!this.codeGenerationRuleRequired) {
+            this.prefixCodeRequired = false;
+            this.codeValidityEndDateRequired = false;
+            this.maxNumberEECodeUseRequired = false;
+            this.maxNumberGASCodeUseRequired = false;
+            this.maxNumberVASCodeUseRequired = false;
+            this.codeConventionQuantityRequired = false;
+        }
     }
 
     handleChangeCodeGenerationRule(event) {
         this.selectedCodeGenerationRule = event.detail.value;
+        this.prefixCodeRequired = event.detail.value != '' ? true : false;
+        this.codeValidityEndDateRequired = event.detail.value != '' ? true : false;
+        this.maxNumberEECodeUseRequired = event.detail.value != '' ? true : false;
+        this.maxNumberGASCodeUseRequired = event.detail.value != '' ? true : false;
+        this.maxNumberVASCodeUseRequired = event.detail.value != '' ? true : false;
+        this.codeConventionQuantityRequired = event.detail.value != '' ? true : false;
     }
 
     handleRecurringCampaignChange(event) {

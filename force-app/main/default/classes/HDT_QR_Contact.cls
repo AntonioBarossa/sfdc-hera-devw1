@@ -176,4 +176,19 @@ public inherited sharing class HDT_QR_Contact {
             WITH SECURITY_ENFORCED
         ];
     }
+
+        /**
+     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
+     * @description Get Contact Point records by Id
+     * @param String individualId Id of the individual to filter the Leads
+     * @param String fields fields to retrieve separated by ,
+     */
+    public List<Contact> getRecordByIndividual(String individualId, String fields) {
+
+        String query = 'SELECT '+ fields +
+                ' FROM Contact WHERE IndividualId = :individualId WITH SECURITY_ENFORCED';
+
+        return Database.query(query);
+
+    }
 }

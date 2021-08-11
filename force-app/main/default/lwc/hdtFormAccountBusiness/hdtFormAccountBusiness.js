@@ -51,6 +51,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     isVerified= false;
     @api RecordTypeId;
     @track companyOptions;
+    @track customerTypeOptions;
 
     @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
     contactInfo;
@@ -90,33 +91,40 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 this.showCompanyOwner = false;
             }else if(response == 'HDT_FrontOffice_HERACOMM'){
                 this.companyDefault = 'HERA COMM';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['HERA COMM'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }else if(response == 'HDT_FrontOffice_Reseller'){
                 this.companyDefault = 'Reseller';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['Reseller'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
             else if(response == 'HDT_FrontOffice_MMS'){
                 this.companyDefault = 'MMS';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['MMS'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
             else if(response == 'HDT_FrontOffice_AAAEBT'){
                 this.companyDefault = 'AAA-EBT';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['AAA-EBT'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
             else{
                 this.companyDefault = 'HERA COMM';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['HERA COMM'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
+            this.filterMarkingOptions();
+
         });
     }
 
@@ -134,11 +142,29 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.inizializeInit();
         }
     };
+    @wire(getPicklistValues,{recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOMERTYPE_FIELD })
+    customerTypeFunction({error, data}) {
+        if (data){
+            var customTypeOptions=[];
+            this.customerTypeOptions = data;
+            data.values.forEach(function callbackFn(element, index) {
+                
+            console.log(JSON.stringify(element.value));   
+             if(element.value!='Persona Fisica'){
+                    
+                customTypeOptions.push(element);
+            }
+                
+                
+         })        
+           this.customerTypeOptions=customTypeOptions;
 
+        }
+    };
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: GENDER })
     genderOptions;
-    @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOMERTYPE_FIELD })
-    customerTypeOptions;
+    // @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOMERTYPE_FIELD })
+    // customerTypeOptions;
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PROFESSION })
     professionOptions;
 
@@ -173,9 +199,29 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         
         let key = this.customerData.controllerValues[event.target.value];
         this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.filterMarkingOptions();
         this.companyPicklist(event.target.value);
         this.markingValue = '';
         this.categoryValue = '';
+    }
+    filterMarkingOptions(){
+        var customMarkingOptions=[];
+        this.customerMarkingOptions.forEach(function callbackFn(element, index) {
+            var arrayToRemove=[];
+            for (let i = 0; i < 20; i++) {
+                arrayToRemove.push('D'+i+' -');
+            }
+            console.log(JSON.stringify(element.value));
+            var startSubString=element.value;
+            startSubString=element.label.substring(0, 4);
+            if(!arrayToRemove.includes(startSubString)){
+                
+                customMarkingOptions.push(element);
+            }
+            
+            
+        })        
+        this.customerMarkingOptions=customMarkingOptions;
     }
     handleCustomerChange(event) {
         let key = this.categoryData.controllerValues[event.target.value];

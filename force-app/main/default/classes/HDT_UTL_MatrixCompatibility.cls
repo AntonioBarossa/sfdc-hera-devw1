@@ -6,6 +6,7 @@
 
 public inherited sharing class HDT_UTL_MatrixCompatibility {
 
+        
     @AuraEnabled
     public static Map<String,Object> checkCompatibilitySales(Map<String,Object> servReq, Boolean isPostSales){
         try {
@@ -23,14 +24,18 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                 srRequest.Account__c = String.valueOf(servReq.get('account'));
                 srRequest.BillingProfile__c = String.valueOf(servReq.get('billingProfile'));
             }
-            if(isPostSales!= null &&isPostSales){
-                if(servReq.get('processType') != null){
+            if(servReq.get('isBillableVas')!=null){
+                Boolean isBillableVas=Boolean.valueOf(servReq.get('isBillableVas'));
+                String searchVas = isBillableVas? 'Vas Billabile' : 'Vas Non Billabile';
+                servReq.put('processType', searchVas);
+            }
+
+
+            if(servReq.get('processType') != null){
+                if(isPostSales!= null &&isPostSales){
                     srRequest.ProcessType__c= getProcessType(String.valueOf(servReq.get('processType')), 'Case', String.valueOf(servReq.get('commoditySector')));
-                }
-            }else{
-                if(servReq.get('processType') != null){
+                }else{
                     srRequest.ProcessType__c= getProcessType(String.valueOf(servReq.get('processType')), 'Order', String.valueOf(servReq.get('commoditySector')));
-    
                 }
             }
 
@@ -164,6 +169,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         
         return sts;
     }
+
     private static String getProcessType(String pType, String type, String commoditySector){
         String processType='';
         List<HDT_MatrixCompatibilityMap__mdt> mdtList= HDT_QR_MatrixCompatibilityMap.getProcessTypeMap(pType.trim(),type);
