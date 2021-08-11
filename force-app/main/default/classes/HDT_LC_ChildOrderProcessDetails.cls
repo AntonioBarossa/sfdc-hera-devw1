@@ -197,7 +197,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
     private static String formatCode(Decimal floatCode){
         Integer code = Integer.valueOf(floatCode);
-        return code<10? '0'+code : code;
+        return code<10? '0'+code : ''+code;
     }
 
 
