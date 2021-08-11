@@ -33950,14 +33950,14 @@
 
 
 
-    <tabVisibilities>
+    <!-- <tabVisibilities>
         <tab>Queue__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>AssignmentRule__c</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities>
+    </tabVisibilities> -->
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
