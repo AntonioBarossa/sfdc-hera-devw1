@@ -33730,10 +33730,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>wrts_prcgvr__Dependency__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>wrts_prcgvr__IntegrationHome</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -33950,6 +33946,10 @@
 
 
 
+    <tabVisibilities>
+        <tab>wrts_prcgvr__Dependency__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
     <!-- <tabVisibilities>
         <tab>Queue__c</tab>
         <visibility>Hidden</visibility>
