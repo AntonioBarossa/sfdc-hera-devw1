@@ -36,13 +36,14 @@ public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
             List<CommercialCode__c> listCommercialCode = new List<CommercialCode__c>();
             for (Campaign tempCamp : mapNewItem.values()) {
                 if (String.isNotBlank((String.valueOf(tempCamp.CodeConventionQuantity__c)))&&tempCamp.CodeConventionQuantity__c!=0&& 'Convenzione'.equalsIgnoreCase( tempCamp.CodeManagementModel__c) && 'Pianificata'.equalsIgnoreCase(mapOldItem.get(tempCamp.id).Status)
-                && 'PrefissoProgressivo'.equalsIgnoreCase( tempCamp.CodeGenerationRule__c)) {
+                && 'PrefissoProgressivo'.equalsIgnoreCase( tempCamp.CodeGenerationRule__c)
+                && 'In Corso'.equalsIgnoreCase(mapNewItem.get(tempCamp.id).Status)) {
                     for (Integer i = 0; i < tempCamp.CodeConventionQuantity__c; i++) { 
                         CommercialCode__c comCode = new CommercialCode__c ();
                         comCode.Campaign__c         = tempCamp.id;
                         Integer num=mapKeyToNumber.get(tempCamp.id)!=null?mapKeyToNumber.get(tempCamp.id)+1:1;
                         comCode.FullCode__c         = tempCamp.PrefixCode__c+num;
-                        comCode.Name                = tempCamp.PrefixCode__c;
+                        comCode.Name                = tempCamp.PrefixCode__c+num;
                         comCode.MaximalUsesEE__c    = tempCamp.MaxNumberEECodeUse__c;
                         comCode.MaximalUsesGAS__c   = tempCamp.MaxNumberGASCodeUse__c;
                         comCode.MaximalUsesVAS__c   = tempCamp.MaxNumberVASCodeUse__c;
