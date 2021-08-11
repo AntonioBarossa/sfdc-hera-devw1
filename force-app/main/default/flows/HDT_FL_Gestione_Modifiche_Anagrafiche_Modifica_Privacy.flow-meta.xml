@@ -177,6 +177,31 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_Bozza_Ripresa</name>
+        <label>Bozza Ripresa?</label>
+        <locationX>1634</locationX>
+        <locationY>635</locationY>
+        <defaultConnector>
+            <targetReference>Next_Step_Processo</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Bozza ripresa</defaultConnectorLabel>
+        <rules>
+            <name>Bozza_non_ripresa</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Predefault_Case</targetReference>
+            </connector>
+            <label>Bozza non ripresa</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Consenso_Marketing_Aggiornato</name>
         <label>Consenso Marketing Aggiornato?</label>
         <locationX>3232</locationX>
@@ -267,6 +292,13 @@
                     <stringValue>Bozza</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Selezione_Contatto</targetReference>
             </connector>
@@ -343,7 +375,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Predefault_Case</targetReference>
+                <targetReference>Check_Bozza_Ripresa</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -388,7 +420,7 @@
     <decisions>
         <name>Next_Step_0</name>
         <label>Next Step?</label>
-        <locationX>2050</locationX>
+        <locationX>2214</locationX>
         <locationY>327</locationY>
         <defaultConnector>
             <targetReference>Set_Fase_Attesa_Modulo_Firmato</targetReference>
@@ -413,7 +445,7 @@
     <decisions>
         <name>Next_Step_Processo</name>
         <label>Next Step Processo</label>
-        <locationX>1751</locationX>
+        <locationX>1900</locationX>
         <locationY>455</locationY>
         <defaultConnector>
             <targetReference>Inserimento_Dati</targetReference>
@@ -606,8 +638,8 @@
     <recordUpdates>
         <name>Predefault_Case</name>
         <label>Predefault Case</label>
-        <locationX>1623</locationX>
-        <locationY>453</locationY>
+        <locationX>1745</locationX>
+        <locationY>347</locationY>
         <connector>
             <targetReference>Next_Step_Processo</targetReference>
         </connector>
@@ -648,8 +680,8 @@
     <recordUpdates>
         <name>Set_Fase_Attesa_Modulo_Firmato</name>
         <label>Set Fase Attesa Modulo Firmato</label>
-        <locationX>2431</locationX>
-        <locationY>386</locationY>
+        <locationX>2487</locationX>
+        <locationY>388</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -780,6 +812,90 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
+            <name>formIndividual</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva in bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Individual</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Modifica Privacy - Individual</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>IndividualId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>DT2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire i nuovi consensi privacy ed allegare il modulo privacy firmato:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>formCase</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -872,97 +988,13 @@
                 <name>saveInDraft</name>
             </outputParameters>
         </fields>
-        <fields>
-            <name>DT2</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire i nuovi consensi privacy ed allegare il modulo privacy firmato:&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>formIndividual</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva in bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Conferma pratica</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextStep</name>
-                <value>
-                    <stringValue>NEXT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Individual</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <stringValue>Modifica Privacy - Individual</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>IndividualId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>addContentDocument</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
-        <locationX>1938</locationX>
+        <locationX>2105</locationX>
         <locationY>325</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1183,6 +1215,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
