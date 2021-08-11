@@ -10,6 +10,7 @@ public with sharing class HDT_LC_SendCertificationRequest {
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_QR_Lead leadQr = new HDT_QR_Lead();
+    private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     
     @AuraEnabled
     public static Map<String, Object> initialize(String objectapiname, String recordId){
@@ -43,7 +44,7 @@ public with sharing class HDT_LC_SendCertificationRequest {
 
                     switch on ((Id) parentId).getSobjectType().getDescribe().getName() {
 
-                        when 'individual' {
+                        when 'Individual' {
 
                             if (!leadQr.getRecordByIndividual(parentId, 'Id, IndividualId').isEmpty()) {
                                 
@@ -52,7 +53,18 @@ public with sharing class HDT_LC_SendCertificationRequest {
 
                             } else {
 
-                                needsUpdate = true;
+                                List<Contact> contacts = contactQr.getRecordByIndividual(parentId, 'Id, IndividualId, Account.CustomerAccountStatus__c');
+
+                                if (!contacts.isEmpty() && contacts.get(0).Account.CustomerAccountStatus__c != constants.ACCOUNT_CUSTOMER_ACCOUNT_STATUS_CUSTOMER) {
+                                    
+                                    result.put('error', true);
+                                    result.put('errorMessage', Label.AccountCantBeCertified);
+
+                                } else {
+                                    
+                                    needsUpdate = true;
+
+                                }
 
                             }                            
 
