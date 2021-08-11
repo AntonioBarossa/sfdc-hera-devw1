@@ -3,18 +3,19 @@
  
 
 		<div class="MyCard" onclick={genericRedirect} data-id={campaignmember.Id} data-name="CampaignMember">
-			<lightning-card title={campaignmember.Campaign.Name} class="Campaign-tile">
+			<lightning-card icon-name="standard:campaign_members" title={campaignmember.Campaign.Name} class="Campaign-tile">
 
 
-				<div class="slds-var-p-horizontal_small bear-tile-body">
+				<div class="slds-var-p-horizontal_small ">
 
 
-					<div class="slds-media">
+					<!-- <div class="slds-media">
 						<lightning-icon icon-name="standard:campaign_members" alternative-text="campaign members"
 							title="campaign members">
 						</lightning-icon>
 
-					</div>
+					</div> -->
+					
 					<div class="slds-media__body">
 						<p class="slds-var-m-bottom_xx-small"><b>Stato Campagna:</b>
 							&nbsp;{campaignmember.Campaign.Status}</p>

@@ -12,7 +12,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
-
+    private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
+    private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Update order process step
@@ -21,6 +22,26 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     * @param String objectApiName
     * @param SObject objectToUpdate
     */
+    @AuraEnabled
+    public static void createActivityAccise(boolean flagAccise,boolean flagVat,String orderId,String accountId){
+        System.debug('******');
+        Order o = new Order();
+        o.id = orderId;
+        o.FacilitationExcise__c = flagAccise;
+        o.VATfacilitationFlag__c = flagVat; 
+        orderSrv.updateRecord(o);
+        RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
+        String res = '';
+        ID recTypeId;
+        if(rc !=null){
+            recTypeId= rc.Id;
+        }
+        wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(order__c = orderId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Iva e Accise da validare');
+        System.debug(activity);
+        activitySrv.createRecord(activity);
+        
+    }
+
     @AuraEnabled
     public static void updateProcessStep(Order order,
         //INIZIO SVILUPPI EVERIS 

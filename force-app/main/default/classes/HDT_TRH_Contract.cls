@@ -1,3 +1,10 @@
+
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 19/04/2021
+* @description Class HDT_TRH_Contract
+* @history Keltin Mesonjesi – 19/04/2021 – Created class
+*/
 public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
     public override void beforeInsert() {
 

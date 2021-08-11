@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ChangeStatusDate__c</fullName>
+    <description>Campo necessario per l&apos;attività Iva e accise al fine di calcolare il tempo intercorso tra l’invio della one shot o contatto cliente e rientro documentazione da parte del cliente.</description>
+    <externalId>false</externalId>
+    <label>Data Cambio Stato</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Date</type>
+</CustomField>

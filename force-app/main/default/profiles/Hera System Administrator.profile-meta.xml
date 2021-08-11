@@ -256,6 +256,10 @@
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
+        <name>CS_DependecyPhaseCheck__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
         <name>HDT_WebServiceConfiguration__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
@@ -1227,6 +1231,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.isSendToReitek__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.IsBillableVas__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6015,6 +6024,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.QrCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.QuotationAcceptanceDate__c</field>
         <readable>true</readable>
@@ -7042,6 +7056,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.Company__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contact.CompanyOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7237,6 +7256,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.SourceDetail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contact.Title</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7392,6 +7416,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ContactPointEmail.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ContactPointEmail.EmailDomain</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7498,6 +7527,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ContactPointPhone.BestTimeToContactTimezone</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ContactPointPhone.Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12232,6 +12266,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ChangePhaseDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ChangeStatusDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.Channel__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12727,6 +12771,96 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ageing__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isIvaActivityCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isIvaAnagrafici__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isIvaAtecoCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isIvaFirmLegalOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isIvaMatricola__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isIvaSupplyAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isSchoolCategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isIva10Module__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isAcciseSupply__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isAccisePdrPod__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isAcciseModuleRequest__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isAcciseExclusionType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isAcciseExclusionModuleAccise__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isAcciseCopyTechnicalRelation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.IsAcciseContractualPower__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.CompletationDateDocument__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.NumberOfAttempt__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CreditCheckReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12893,6 +13027,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.OneshotCustomer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.OperationCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13863,6 +14002,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.WizardCompletedDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.WorkableFileNumberDay__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30602,6 +30746,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.IsAppointmentToEdit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.IsApprovalRequired__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32173,6 +32322,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>WorkThanks-Thanks Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_GestioneAppuntamento</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_Call</layout>

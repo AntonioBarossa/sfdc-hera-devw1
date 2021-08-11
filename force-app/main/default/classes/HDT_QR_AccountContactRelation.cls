@@ -42,7 +42,9 @@ public inherited sharing class HDT_QR_AccountContactRelation {
     public List<AccountContactRelation> getRecordByAccountId(String accountId){
 
         return [
-            SELECT ContactId,
+            SELECT 
+            Id,Contact.name,Roles,Contact.HomePhone,
+            ContactId,Contact.Phone,
             Contact.MobilePhone,
             Contact.Email
             FROM AccountContactRelation

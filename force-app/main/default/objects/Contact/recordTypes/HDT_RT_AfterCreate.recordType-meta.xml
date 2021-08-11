@@ -37,6 +37,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EENE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC</fullName>
             <default>false</default>
         </values>
@@ -46,10 +50,6 @@
         </values>
         <values>
             <fullName>HCM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCNE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2053,6 +2053,33 @@
         </values>
         <values>
             <fullName>Studente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SourceDetail__c</picklist>
+        <values>
+            <fullName>ADSALA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ecc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>prodotti HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>sito standard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>sito standard proattivo</fullName>
             <default>false</default>
         </values>
     </picklistValues>

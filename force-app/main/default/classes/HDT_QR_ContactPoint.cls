@@ -211,5 +211,22 @@ public inherited sharing class HDT_QR_ContactPoint {
         List <ContactPointPhone> contphone = Database.query(query);
         return contphone; 
     }
+
+       /**
+     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
+     * @description Get Contact Point records by Id
+     * @param String objectType either ContactPointPhone or ContactPointEmail
+     * @param String recordId Id of the record to retrieve
+     * @param String fields fields to retrieve separated by ,
+     */
+
+    public static sObject getContactPointByIdAndObjectType(String objectType, String recordId, String fields) {
+
+        String query = 'SELECT '+ fields +
+                ' FROM ' + objectType + ' WHERE Id = :recordId';
+        
+        return Database.query(query);
+
+    }
     
 }
