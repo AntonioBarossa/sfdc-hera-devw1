@@ -1,0 +1,26 @@
+<template>
+	<div>
+
+
+		<div class="MyCard" onclick={genericRedirect} data-id={accountcontactrel.ContactId} data-name="Contact">
+			<lightning-card icon-name="standard:contact" title={accountcontactrel.Contact.Name} class="Contact-tile">
+				<div class="slds-var-p-horizontal_small ">
+					<div class="slds-media__body">
+						<!-- <p class="slds-var-m-bottom_xx-small"><b>Nome:</b>
+							&nbsp;{accountcontactrel.Contact.Name}</p>  -->
+						<p class="slds-var-m-bottom_xx-small"><b>Ruolo:</b>
+							&nbsp;{accountcontactrel.Roles}</p>
+						<p class="slds-var-m-bottom_xx-small"><b>Telefono Cellulare:</b>
+							&nbsp;{accountcontactrel.Contact.MobilePhone}</p>
+						<p class="slds-var-m-bottom_xx-small"><b>Telefono fisso:</b>
+							&nbsp;{accountcontactrel.Contact.Phone}</p>
+						<p class="slds-var-m-bottom_xx-small"><b>Email:</b>
+							&nbsp;{accountcontactrel.Contact.Email}</p>
+						</br>
+					</div>
+				</div>
+
+			</lightning-card>
+		</div>
+	</div>
+</template>

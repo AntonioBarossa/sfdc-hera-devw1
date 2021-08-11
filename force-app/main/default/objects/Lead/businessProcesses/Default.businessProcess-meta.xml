@@ -7,15 +7,11 @@
         <default>true</default>
     </values>
     <values>
-        <fullName>Nurturing</fullName>
+        <fullName>Not converted</fullName>
         <default>false</default>
     </values>
     <values>
         <fullName>Qualified</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Unqualified</fullName>
         <default>false</default>
     </values>
     <values>
