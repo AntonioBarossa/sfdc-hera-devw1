@@ -130,8 +130,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 //ConnessioneConAttivazione
                 metas= [SELECT QuotationType__c, OperationCode__c FROM HDT_CalcoloPreventivi__mdt WHERE Type__c='QuotationType' AND ProcessCode__c=:ord.ProcessCode__c AND RT__c='HDT_RT_ConnessioneConAttivazione' WITH SECURITY_ENFORCED] ;
                 wrp.quoteType= metas[0].QuotationType__c; 
-                Integer code = Integer.valueOf(metas[0].OperationCode__c);
-                wrp.quoteCode=String.valueOf(code);
+                wrp.quoteCode=formatCode(metas[0].OperationCode__c); 
                 return wrp;
             }
 
@@ -168,10 +167,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             if(!metas.isEmpty()){
                 wrp.quoteType= metas[0].QuotationType__c;  
                 Integer code = Integer.valueOf(metas[0].OperationCode__c);
-                wrp.quoteCode=String.valueOf(code); 
-                if(code<10){
-                    wrp.quoteCode='0'+wrp.quoteCode;
-                }            
+                wrp.quoteCode=formatCode(metas[0].OperationCode__c);        
             }
         } catch (Exception e) {
             system.debug(e.getStackTraceString()+' at line '+e.getLineNumber());
@@ -196,6 +192,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             }
         }
         return '';
+    }
+
+    private static String formatCode(Decimal floatCode){
+        Integer code = Integer.valueOf(floatCode);
+        return code<10? '0'+code : code;
     }
 
 
