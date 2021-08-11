@@ -739,6 +739,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             String indemnityMotivation = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityMotivation__c', 0, inputs, formParams);
             String indemnityDueSendResponse = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueSendResponse__c', 0, inputs, formParams);
             String indemnityDueBillingCorrection = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueBilllingCorrection__c', 0, inputs, formParams);
+            String correctionDocumentEmissionDate = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionDocumentEmissionDay__c', 0, inputs, formParams);
+            //         Boolean expiredCorrection = indemnityDueBillingCorrection != null;
 
             String[] record = new List<String>();
             record.add('00310');
@@ -754,7 +756,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             // Importo indennizzo, se presente.
             if (complaintClassification == 'Reclamo Scritto' && Decimal.valueOf(indemnityDueSendResponse) > 0) {
                 record.add(String.valueOf(indemnityDueSendResponse));
-            } else if (complaintClassification == '	Rettifica Doppia Fatturazione' && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+            } else if (complaintClassification == 'Rettifica Doppia Fatturazione' && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
                 record.add(String.valueOf(indemnityDueBillingCorrection));
             }
             // Aggiungiamo anche | e l'endLine poichè il record indennizzi è opzionale e il 310|120 non può aggiungere a prenscindere un endline finale.
@@ -762,6 +764,45 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
 
         return payloadSection;
+    }
+
+    public static String calculateIndemnityBox(String complaintClassification, Boolean indemnityConfirmed, String indemnityMotivation, String correctionRight, Boolean expiredCorrection, String correctionDocumentEmissionDate) {
+        String boxType = '';
+
+        // Emissione rettifica non prevista, indennizzo per solo ritardo nella risposta
+        if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight != 'Si') {
+            boxType = '1';
+        }
+        // Emissione rettifica prevista ma non scaduta, indennizzo per solo ritardo nella risposta
+        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && !expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {
+            boxType = '1';
+        }
+        // Emissione rettifica prevista e scaduta, indennizzi per ritardo nella risposta e nella rettifica
+        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {
+            boxType = '4';
+        }
+        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && String.isBlank(correctionDocumentEmissionDate)) {
+            // TODO: come capire se lo SLA è superato o meno?
+        }
+        // Emissione rettifica prevista ma data emissione ancora non presente
+        else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isBlank(correctionDocumentEmissionDate)) {
+            boxType = '';
+        }
+        // Emissione rettifica prevista e scaduta
+        else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && expiredCorrection) {
+            boxType = '2';
+        }
+        // Emissione rettifica prevista ma non scaduta
+        else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && !expiredCorrection) {
+            boxType = '';
+        }
+
+        // Check finale se indennizzo già inviato in stesso anno
+        if (!indemnityConfirmed && indemnityMotivation == 'Altro indennizzo stesso anno solare') {
+            boxType = '6';
+        }
+
+        return boxType;
     }
 
     // Restituisce la data nel formato richiesto da Engage1
