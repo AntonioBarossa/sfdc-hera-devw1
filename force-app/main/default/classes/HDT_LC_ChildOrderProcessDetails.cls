@@ -131,6 +131,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 metas= [SELECT QuotationType__c, OperationCode__c FROM HDT_CalcoloPreventivi__mdt WHERE Type__c='QuotationType' AND ProcessCode__c=:ord.ProcessCode__c AND RT__c='HDT_RT_ConnessioneConAttivazione' WITH SECURITY_ENFORCED] ;
                 wrp.quoteType= metas[0].QuotationType__c; 
                 wrp.quoteCode=formatCode(metas[0].OperationCode__c); 
+                system.debug(metas);
                 return wrp;
             }
 
@@ -155,17 +156,30 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             system.debug('ComparePowReq__c '+checkPrPc);
             system.debug('RT '+ord.recordType.DeveloperName);
 
-            
-            metas = [SELECT QuotationType__c, OperationCode__c FROM HDT_CalcoloPreventivi__mdt 
-                WHERE Type__c='QuotationType'
-                    AND RequestPhase__c =:ord.RequestPhase__c AND ConnectionType__c=:ord.ConnectionType__c 
-                    AND ProcessCode__c=:ord.ProcessCode__c AND VendDistr__c =:distributor AND VoltageLevel__c =:ord.VoltageLevel__c
-                    AND ( EnergyUseCase__c= :ord.UseTypeEnergy__c OR EnergyUseCase__c='')
-                    AND PowerRange__c=:powerRange AND ComparePowReq__c=:checkPrPc AND RT__C =:ord.recordType.DeveloperName
-                WITH SECURITY_ENFORCED
-                ORDER BY EnergyUseCase__c NULLS LAST
-            ];
-            if(!metas.isEmpty()){
+            if(ord.recordType.DeveloperName=='HDT_RT_TemporaneaNuovaAtt'){
+                system.debug('if1 ok');
+                metas = [SELECT QuotationType__c, OperationCode__c FROM HDT_CalcoloPreventivi__mdt 
+                    WHERE Type__c='QuotationType'
+                        AND ProcessCode__c=:ord.ProcessCode__c AND VendDistr__c =:distributor AND VoltageLevel__c =:ord.VoltageLevel__c
+                        AND ( EnergyUseCase__c= :ord.UseTypeEnergy__c OR EnergyUseCase__c='')
+                        AND PowerRange__c=:powerRange AND ComparePowReq__c=:checkPrPc AND RT__C =:ord.recordType.DeveloperName
+                    WITH SECURITY_ENFORCED
+                    ORDER BY EnergyUseCase__c NULLS LAST
+                ];
+            }else if(ord.recordType.DeveloperName=='HDT_RT_AttivazioneConModifica'){
+                system.debug('if2 ok');
+                metas = [SELECT QuotationType__c, OperationCode__c FROM HDT_CalcoloPreventivi__mdt 
+                    WHERE Type__c='QuotationType'
+                        AND RequestPhase__c =:ord.RequestPhase__c AND ConnectionType__c=:ord.ConnectionType__c 
+                        AND ProcessCode__c=:ord.ProcessCode__c AND VendDistr__c =:distributor AND VoltageLevel__c =:ord.VoltageLevel__c
+                        AND ( EnergyUseCase__c= :ord.UseTypeEnergy__c OR EnergyUseCase__c='')
+                        AND PowerRange__c=:powerRange AND ComparePowReq__c=:checkPrPc AND RT__C =:ord.recordType.DeveloperName
+                    WITH SECURITY_ENFORCED
+                    ORDER BY EnergyUseCase__c NULLS LAST
+                ];
+            }
+            system.debug(metas);
+            if(!metas?.isEmpty()){
                 wrp.quoteType= metas[0].QuotationType__c;  
                 Integer code = Integer.valueOf(metas[0].OperationCode__c);
                 wrp.quoteCode=formatCode(metas[0].OperationCode__c);        
