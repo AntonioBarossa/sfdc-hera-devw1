@@ -272,7 +272,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>activityReminder</stringValue>
+                <stringValue>HDT_ActivityReminder</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
