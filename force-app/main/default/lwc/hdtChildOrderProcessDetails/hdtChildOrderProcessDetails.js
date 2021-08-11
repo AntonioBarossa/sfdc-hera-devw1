@@ -172,8 +172,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         if (this.currentSection.name === 'dateOrdine') {
             if(event.target.fieldName === 'IsActivationDeferred__c') {
-                // this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
- //                 this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
+                console.log("IsActivationDeferred__c");
+                this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
 
                 if (event.target.value && this.sectionDataToSubmit.EffectiveDate__c === undefined) {
                     this.sectionDataToSubmit['EffectiveDate__c'] = this.order.EffectiveDate__c;
@@ -2505,7 +2505,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': 'Data decorrenza',
                         'apiname': 'EffectiveDate__c',
-                        'typeVisibility': false,
+                        'typeVisibility': this.order.IsActivationDeferred__c,
                         'required': false,
                         'disabled': false,
                         'value': '',
