@@ -739,26 +739,28 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             String indemnityMotivation = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityMotivation__c', 0, inputs, formParams);
             String indemnityDueSendResponse = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueSendResponse__c', 0, inputs, formParams);
             String indemnityDueBillingCorrection = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueBilllingCorrection__c', 0, inputs, formParams);
+            String correctionRight = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionRight__c', 0, inputs, formParams);
             String correctionDocumentEmissionDate = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionDocumentEmissionDay__c', 0, inputs, formParams);
-            //         Boolean expiredCorrection = indemnityDueBillingCorrection != null;
+            Boolean expiredCorrection = indemnityDueBillingCorrection != null;
 
             String[] record = new List<String>();
             record.add('00310');
             record.add('130');
             // Calcolo tipologia di indennizzo attesa da Engage1.
-            if (indemnityConfirmed) {
-                record.add('1');
-            } else if (indemnityMotivation == 'Altro indennizzo stesso anno solare') {
-                record.add('2');
-            } else {
-                record.add('3');
+            String boxType = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate) {
+            if (String.isNotBlank(boxType)) {
+                record.add(boxType);
+                // Importo indennizzo, se necessario.
+                if ((boxType == '1' || boxType == '5') && indemnityDueSendResponse != null && Decimal.valueOf(indemnityDueSendResponse) > 0) {
+                    record.add(indemnityDueSendResponse);
+                } else if (boxType == '2' && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+                    record.add(indemnityDueBillingCorrection);
+                } else if (boxType == '4' && indemnityDueSendResponse != null && Decimal.valueOf(indemnityDueSendResponse) > 0 && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+                    record.add(indemnityDueSendResponse);
+                    record.add(indemnityDueBillingCorrection);
+                }
             }
-            // Importo indennizzo, se presente.
-            if (complaintClassification == 'Reclamo Scritto' && Decimal.valueOf(indemnityDueSendResponse) > 0) {
-                record.add(String.valueOf(indemnityDueSendResponse));
-            } else if (complaintClassification == 'Rettifica Doppia Fatturazione' && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
-                record.add(String.valueOf(indemnityDueBillingCorrection));
-            }
+
             // Aggiungiamo anche | e l'endLine poichè il record indennizzi è opzionale e il 310|120 non può aggiungere a prenscindere un endline finale.
             payloadSection += '|' + endLine + String.join(record, div);
         }
