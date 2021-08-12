@@ -1345,7 +1345,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'VoltageLevel__c',
                     'typeVisibility': this.typeVisibility('ele'),
                     'required': true,
-                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    // 'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1486,24 +1487,24 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                {
-                    'label': 'ConnectionMandate__c',
-                    'apiname': 'ConnectionMandate__c',
-                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'),
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Autocert. contr connessione',
-                    'apiname': 'SelfCertificationConnection__c',
-                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
+                // {
+                //     'label': 'ConnectionMandate__c',
+                //     'apiname': 'ConnectionMandate__c',
+                //     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'),
+                //     'required': true,
+                //     'disabled': false,
+                //     'value': '',
+                //     'processVisibility': ''
+                // },
+                // {
+                //     'label': 'Autocert. contr connessione',
+                //     'apiname': 'SelfCertificationConnection__c',
+                //     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
+                //     'required': true,
+                //     'disabled': false,
+                //     'value': '',
+                //     'processVisibility': ''
+                // },
                 {
                     'label': 'ConnectionType__c',
                     'apiname': 'ConnectionType__c',
@@ -1531,16 +1532,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                {
-                    'label': 'Opzione richiesta',
-                    'apiname': 'RequestOption__c',
-                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
-                    'required': true,
-                    // 'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_Subentro',
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
+                // {
+                //     'label': 'Opzione richiesta',
+                //     'apiname': 'RequestOption__c',
+                //     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
+                //     'required': true,
+                //     // 'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_Subentro',
+                //     'disabled': true,
+                //     'value': '',
+                //     'processVisibility': ''
+                // },
                 {
                     'label': 'Recapito telefonico',
                     'apiname': 'PhoneNumber__c',
@@ -1655,7 +1656,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'MeterType__c',
                     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt') ,
                     'required': true,
-                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    // 'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
