@@ -188,7 +188,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         }
         return check;
     }
-    
+    @AuraEnabled
     public static boolean checkDatiDiscordanti(String orderid){
 
         boolean res = HDT_UTL_Order.checkToDiscordanti(orderid);
