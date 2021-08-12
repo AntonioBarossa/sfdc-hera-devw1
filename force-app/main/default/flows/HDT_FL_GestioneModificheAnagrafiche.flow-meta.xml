@@ -1629,6 +1629,12 @@ Inserisci manualmente i seguenti campi:</description>
                 <elementReference>InputCase</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>ResumeFromDraft</name>
+            <value>
+                <elementReference>ResumeFromDraft</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Gestione_Variazione_Amministratore</name>
