@@ -28,6 +28,12 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		insert setting;
 	}
 
+		//Method to create PClick Phase Transitions
+		public static void newPhaseTransition(String DestinationPhase, String OriginPhase, id recordTypeId, String recordTypeName){
+			insert new Wrts_prcgvr__PhaseTransition__c(Wrts_prcgvr__Code__c=Math.random()+'', Wrts_prcgvr__DestinationPhase__c=DestinationPhase, Wrts_prcgvr__OriginPhase__c=OriginPhase, Wrts_prcgvr__RecordTypeId__c=recordTypeId, Wrts_prcgvr__RecordTypeName__c=recordTypeName, Wrts_prcgvr__Type__c='A');
+
+		}
+
 	public static List<Lead> createLead(Integer amount, Boolean doInsert){
 
 		List<Lead> leadList=new List<Lead>();
