@@ -7,7 +7,7 @@
                     </lightning-input-field>
                 </div>
                 <div class="slds-col">
-                    <lightning-combobox name="companyOwner" field-name="CompanyOwner__c"
+                    <lightning-combobox name="companyOwner" data-id="companyOwner" field-name="CompanyOwner__c"
                         label="Silos" placeholder="Seleziona Società"
                         options={companyOwnerPicklist}  disabled={disableCompanyOwner} value={companyDefault} required>
                     </lightning-combobox>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <!-- Used by the stantard form submit -->
-        <lightning-input-field field-name="CompanyOwner__c" id="companyOwner" data-id="companyOwner" value={companyDefault} class="slds-hidden">
+        <lightning-input-field field-name="CompanyOwner__c" id="companyOwner" value={companyDefault} class="slds-hidden">
         </lightning-input-field>
     </lightning-record-edit-form>
 </template>

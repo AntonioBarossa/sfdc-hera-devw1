@@ -12,7 +12,15 @@ export default class HdtCampaignNewOverride extends LightningElement {
     companyDefault = '';
 
     @api handleSubmit() {
-        this.template.querySelector('lightning-record-edit-form').submit();
+        
+        if( this.template.querySelector('[data-id="companyOwner"]').value == '' ) {
+
+            this.template.querySelector('[data-id="companyOwner"]').reportValidity();
+
+        } else {
+            this.template.querySelector('lightning-record-edit-form').submit();
+        }
+        
     }
 
     /** The recordtype id is the system default for the Master RecordType */
