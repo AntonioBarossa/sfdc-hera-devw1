@@ -22,6 +22,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
 
         //custom logic ...
+
+        system.debug(json.serialize(transition));
        
         System.debug('********INPUTFIELD:' + argsMap);
         
@@ -59,7 +61,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             List<Integer> indexOfObjectToRemove = new List<Integer>();
             Map<Integer,Integer> indexOffieldToRemove = new Map<Integer,Integer>();
             for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
-                    
+                system.debug('obj '+w.objectType);
                 if(w.objectType == 'OrderItem'){
                     boolean find = false;
                     Integer k = 0;
@@ -80,6 +82,14 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                     if(!find){
                         System.debug('************EnterRemove');
                         indexOfObjectToRemove.add(count);
+                    }
+                }
+                if(w.objectType == 'Order'){
+                    for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
+                        if(f.name == 'TIPO_OPERAZIONE' && String.isNotBlank(f.value)){
+                            f.value=f.value.replaceAll( '\\s+', '');
+                            system.debug('value found '+f.value);
+                        }
                     }
                 }
                 count++;
