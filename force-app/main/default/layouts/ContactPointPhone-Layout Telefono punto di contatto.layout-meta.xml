@@ -44,7 +44,7 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>HDT_SendSms</actionName>
+            <actionName>ContactPointPhone.HDT_SendCertificationRequest</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>

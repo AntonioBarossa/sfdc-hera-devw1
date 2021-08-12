@@ -35,6 +35,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             }
         } else if (caseType == 'Esercizio Diritti Privacy') {
             result = validateEsercizioDirittiPrivacy(fields);
+        } else if (caseType == 'Modifica Privacy') {
+            result = validateModificaPrivacy(fields, recordId);
         } else if (caseType == 'Inversione del Contatore') {
             result = validateInversioneContatore(recordId, fields, caseType);
         } else if (caseType == 'Gestione Bonus Sociale') {
@@ -1003,6 +1005,43 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         return result;
 
+    }
+
+    public String validateModificaPrivacy(String fields, String recordId){
+
+        String fieldq = 'Id,MarketingPrivacy__c,ProfilingPrivacy__c,HasOptedOutSoftSpam__c,HasOptedOutOfEmail__c';
+        String fromq = 'Case';
+        String whereq = 'Id = \''+recordId+'\'';
+        String queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
+        List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
+        Case c = (Case) sobjectRecordList[0];
+
+        System.debug('Validating case: ' + c);
+        System.debug('Fields modified: ' + fields);
+
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+
+        Boolean currentHasOptedOutOfEmail = (Boolean) c.get('HasOptedOutOfEmail__c');
+        Boolean newHasOptedOutOfEmail = Boolean.valueOf(getFieldValue(fields, 'HasOptedOutOfEmail__c'));
+        if (newHasOptedOutOfEmail && !currentHasOptedOutOfEmail) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Non è possibile disiscrivere il cliente dalle liste di distribuzione.'));
+            return result;
+        }
+
+        String newMarketingPrivacy = getFieldValue(fields, 'MarketingPrivacy__c') != null ? getFieldValue(fields, 'MarketingPrivacy__c') : '';
+        String newProfilingPrivacy = getFieldValue(fields, 'ProfilingPrivacy__c') != null ? getFieldValue(fields, 'ProfilingPrivacy__c') : '';
+        Boolean newHasOptedOutSoftSpam = Boolean.valueOf(getFieldValue(fields, 'HasOptedOutSoftSpam__c'));
+
+        Boolean currentHasOptedOutSoftSpam = (Boolean) c.get('HasOptedOutSoftSpam__c');
+        String currentMarketingPrivacy = (String) c.get('MarketingPrivacy__c') != null ? (String) c.get('MarketingPrivacy__c') : '';
+        String currentProfilingPrivacy = (String) c.get('ProfilingPrivacy__c') != null ? (String) c.get('ProfilingPrivacy__c') : '';
+
+        if (newHasOptedOutOfEmail == currentHasOptedOutOfEmail && newHasOptedOutSoftSpam == currentHasOptedOutSoftSpam && 
+            newMarketingPrivacy.equals(currentMarketingPrivacy) && newProfilingPrivacy.equals(currentProfilingPrivacy)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un consenso privacy per poter proseguire.'));
+        }
+
+        return result;
     }
 
     // Validazione CF. Se il CF è vuoto lo consideriamo valido.

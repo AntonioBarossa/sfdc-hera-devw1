@@ -66,7 +66,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         //Get servicePoint data start
         servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SwitchInWinback__c,ServicePointCode__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
         servicePoint = existingServicePoint[0];
         //Get servicePoint data end
 
@@ -236,11 +236,13 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         }
 
         //winback check start
+        if(!servicePoint.SwitchInWinback__c){
+            servicePointSrv.updateRecord(new ServicePoint__c(
+                Id = servicePoint.Id,
+                SwitchInWinback__c = HDT_UTL_Sales.isWinback(servicePoint.Id)
+            ));
+        }
 
-        servicePointSrv.updateRecord(new ServicePoint__c(
-            Id = servicePoint.Id,
-            SwitchInWinback__c = HDT_UTL_Sales.isWinback(servicePoint.Id)
-        ));
 
         //winback check end
 

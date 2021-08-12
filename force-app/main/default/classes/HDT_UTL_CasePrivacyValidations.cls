@@ -1,3 +1,4 @@
+// CLASSE DEPRECATA
 public inherited sharing class HDT_UTL_CasePrivacyValidations implements HDT_UTL_CaseValidationInterface {
 
     HDT_QR_CaseValidations caseValidationQr = new HDT_QR_CaseValidations();

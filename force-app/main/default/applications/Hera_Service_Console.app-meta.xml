@@ -29,6 +29,24 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>HDT_KnowledgeGeneralPage</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Knowledge__kav</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>HDT_KnowledgeGeneralPage</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Knowledge__kav</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
         <comment>Action override updated by Lightning App Builder during activation.</comment>
         <content>HDT_Order_Default</content>
         <formFactor>Small</formFactor>
@@ -70,24 +88,6 @@
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>HDT_KnowledgeGeneralPage</content>
-        <formFactor>Small</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>Knowledge__kav</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>HDT_KnowledgeGeneralPage</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>Knowledge__kav</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -777,6 +777,132 @@
         <recordType>Order.HDT_RT_Voltura</recordType>
         <type>Flexipage</type>
         <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
     </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Lead</tabs>

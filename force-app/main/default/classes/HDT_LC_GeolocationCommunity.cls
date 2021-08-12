@@ -1,3 +1,10 @@
+/**
+ * @author Fatjola
+ * @date 14/05/2021
+ * @description Data Factory for Test Classes
+ * @history Fatjola – 14/05/2021 – Class creation
+ */
+
 public with sharing class HDT_LC_GeolocationCommunity {
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();

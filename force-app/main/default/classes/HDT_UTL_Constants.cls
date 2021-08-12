@@ -109,9 +109,24 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String HERA_TELESELLER_PARTNER_NAME = 'Hera Teleseller Partner User';
 
+    //Standard Salesforce Profiles
+    @AuraEnabled
+    public final string MINIMUM_ACCESS_SALESFORCE = 'Minimum Access - Salesforce';
+
     //Hera CPQ Permission Sets
     @AuraEnabled
     public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME = 'HDT_SalesforceCPQAdmin';
     @AuraEnabled
     public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME = 'HDT_SalesforceCPQLicense';
+
+    //Contact Point picklist domains
+    @AuraEnabled
+    public final String CONTACTPOINT_STATUS_VERIFICATO = 'Verificato';
+    @AuraEnabled
+    public final String CONTACTPOINT_STATUS_NON_VERIFICATO = 'Non Verificato';
+
+    //Account picklist domains
+    public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_CUSTOMER = 'Customer';
+    public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_EX_CUSTOMER = 'Ex-Customer';
+    public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_PROSPECT = 'Prospect';
 }
