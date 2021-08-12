@@ -80,7 +80,8 @@ public inherited sharing class HDT_QR_Quote {
             IsVAS__c,
             AmendmentAllowed__c,
             SalesCompanyCode__c,
-            SalesCompany__c
+            SalesCompany__c,
+            isBillableVas__c
             FROM SBQQ__Quote__c
             WHERE Id = :quoteId
             WITH SECURITY_ENFORCED

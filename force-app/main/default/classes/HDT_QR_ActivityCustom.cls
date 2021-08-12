@@ -38,6 +38,52 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+    public static wrts_prcgvr__Activity__c getRecordByIdAccise(String activityId) {
+        return [
+            SELECT
+            Id,
+            Account__c,
+            status__c,
+            wrts_prcgvr__Status__c,
+            order__c,
+            order__r.FacilitationExcise__c,
+            order__r.VATfacilitationFlag__c,
+            Contact__c,
+            Distributor__c,
+            AppointmentDate__c,
+            ageing__c, 
+            isDenominazioneIncongruente__c,
+            isIva10Module__c, 
+            isIvaActivityCode__c, 
+            isIvaAnagrafici__c, 
+            isIvaAtecoCode__c, 
+            isIvaCopyDocument__c, 
+            isIvaFirmLegalOwner__c, 
+            isIvaMatricola__c, 
+            isIvaSupplyAddress__c, 
+            isManualAppoitment__c, 
+            isSchoolCategory__c, 
+            CraftsmenRegisterNumber__c,
+            CheckActivityBox__c,
+            RequiredOfficeActivity__c,
+            CciaaData__c,
+            IdentityDocument__c,
+            AssociationStatute__c,
+            Signature__c,
+            AtecoCode__c,
+            CciaaSelfCertModule__c,
+            isAcciseModuleRequest__c,
+            isAcciseSupply__c,
+            PersonalData__c,
+            NumberOfAttempt__c,
+            isAccisePdrPod__c,
+            CompletationDateDocument__c,
+            createddate
+            FROM wrts_prcgvr__Activity__c
+            WHERE Id= :activityId
+            WITH SECURITY_ENFORCED
+        ];
+    }
     @AuraEnabled
     public static wrts_prcgvr__Activity__c getRecordByIdS(String activityId) {
         return [

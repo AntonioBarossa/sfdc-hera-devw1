@@ -1,0 +1,7 @@
+<aura:component implements="force:hasSObjectName,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId">
+    <aura:attribute name="sobjecttype" type="String" default="{!v.sObjectName}"/>
+    <aura:attribute name="recordId" type="String" default="{!v.recordId}"/>
+      
+    <c:hdtSendCertificationRequest objectapiname="{!v.sObjectName}" recordId="{!v.recordId}" onoperationcompleted="{!c.handleActionClose}"/>
+
+</aura:component>
