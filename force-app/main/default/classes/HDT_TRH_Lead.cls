@@ -63,7 +63,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 }
                 }
         }*/
-        HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
+        HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
 
         }
           

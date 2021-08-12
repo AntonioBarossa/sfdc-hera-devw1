@@ -14,6 +14,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_Sale saleQr = new HDT_QR_Sale();
     private static HDT_QR_SaleServiceItem saleItQr = new HDT_QR_SaleServiceItem();
+    private static Order orderRecived = null;
 
 
 
@@ -76,7 +77,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Prima Attivazione Fuori delibera', 'HDT_RT_Attivazione','A01', new Set<String>{'Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false),
             new HDT_WRP_Process('Prima Attivazione con modifica', 'HDT_RT_AttivazioneConModifica','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, true, 'HDT_RT_Ele', false, false),
             new HDT_WRP_Process('Connessione con Attivazione', 'HDT_RT_ConnessioneConAttivazione','PN1', new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false),
-            new HDT_WRP_Process('Temporanea - Nuova Attivazione', 'HDT_RT_TemporaneaNuovaAtt','PN1', new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false),
+            new HDT_WRP_Process('Temporanea - Nuova Attivazione', 'HDT_RT_TemporaneaNuovaAtt', getTempNewActivationCode(), new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false),
             new HDT_WRP_Process('Cambio Offerta Gas', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', false, false),
             new HDT_WRP_Process('Cambio Offerta Ele', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, false, false, false, 'HDT_RT_Ele', false, false),
             new HDT_WRP_Process('Cambio Uso', 'HDT_RT_CambioUso','CAU', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, true, false, false, 'HDT_RT_Ele', false, false),
@@ -98,7 +99,15 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         };
     }
 
+    private static String getTempNewActivationCode(){
+        if(orderRecived.VoltageLevel__c=='MT' || orderRecived.PowerAvailable__c>40){
+            return 'PN1';
+        }
+        return 'E02';
+    }
+
     public static List<HDT_WRP_Process> getAvailableProcesses(Order ord){
+        orderRecived=ord;
         List<HDT_WRP_Process> allProcesses = initProcesses();
         List<HDT_WRP_Process> availableProcesses = new List<HDT_WRP_Process>();
 
