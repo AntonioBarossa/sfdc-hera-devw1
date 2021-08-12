@@ -119,6 +119,10 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME = 'HDT_SalesforceCPQLicense';
 
+    //APEX Classes Permission Set
+    @AuraEnabled
+    public final String PERMISSIONSET_HDT_APEXCLASSES = 'HDT_ApexClasses';
+
     //Contact Point picklist domains
     @AuraEnabled
     public final String CONTACTPOINT_STATUS_VERIFICATO = 'Verificato';
