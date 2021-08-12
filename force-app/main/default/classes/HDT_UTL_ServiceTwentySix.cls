@@ -42,7 +42,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         }
     }
 
-    public class HDT_WRP_DtoServiceTwentySix{
+    public class HDT_WRP_DtoServiceTwentySix extends HDT_WS_Request{
         public String rdsRdo;
         public String pod;
         public String documentKey;

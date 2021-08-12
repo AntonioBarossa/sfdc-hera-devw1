@@ -103,7 +103,7 @@ public inherited sharing class HDT_LC_SaleVas {
             when 'ORDERS_ELE'{
                 records = [SELECT Type, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
                     FROM Order
-                    WHERE AccountId=:accountId WITH SECURITY_ENFORCED]; // Commodity = 'Energia Elettrica'
+                    WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:accountId WITH SECURITY_ENFORCED];
             }
             when 'ASSETS_ACTIVATED'{
                 records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
@@ -117,6 +117,7 @@ public inherited sharing class HDT_LC_SaleVas {
             when 'CONTRACT_ELE_ACTIVE'{
                 records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
                     FROM Contract WHERE Status IN ('Attivo','Activated') AND AccountId=:accountId WITH SECURITY_ENFORCED];
+                    //Chiedere per Energia Elettrica
             }
         }
         return records;
