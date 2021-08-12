@@ -4,7 +4,8 @@
     <description>Contiene il link generato da Docusign per l&apos;accesso all&apos;envelope</description>
     <externalId>false</externalId>
     <label>URL Docusign</label>
-    <required>false</required>
+    <length>32000</length>
     <trackHistory>false</trackHistory>
-    <type>Url</type>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
 </CustomField>

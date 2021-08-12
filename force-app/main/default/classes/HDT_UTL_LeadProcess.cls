@@ -744,6 +744,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     if(contactId != null && contactId != ''){
                         newLead.Contact__c = contactId;
                     }
+                    newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.Email= mapRequestFields.get('EMAIL');
                     newLead.State= mapRequestFields.get('COMUNE');
                     newLead.FirstName= mapRequestFields.get('NOME');
