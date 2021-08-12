@@ -66,7 +66,6 @@ public inherited sharing class HDT_LC_SaleActions {
         //2 - Update Opportunity stage
         opportunitySrv.checkReadAccess('StageName');
         List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName, CampaignEleggibilityGroup__c', 'Negotiation');
-
         
         for (Opportunity opp : opps) {
             opp.StageName = 'Closed Won';

@@ -32,6 +32,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
                 wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
                         RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
+                        Order__c = ord.Id,
                         Account__c = ord.AccountId,
                         Type__c = 'Quality Call',
                         Status__c = 'Creata'
