@@ -17,7 +17,8 @@ public inherited sharing class HDT_QR_UserQueries {
             Id,
             LoginChannel__c,
             CreatorGroup__c,
-            Station__c
+            Station__c,
+            UserRole.DeveloperName
             FROM User
             WHERE Id = :userId
             WITH SECURITY_ENFORCED
