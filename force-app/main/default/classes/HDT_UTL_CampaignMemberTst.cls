@@ -3,6 +3,7 @@
 * @date 29/07/2021
 * @description HDT_UTL_CampaignMember for Test Classes
 * @history Luis Bispo – 29/07/2021 – Created class
+* @Fix 12/08/2021 - Other Methods
 */
 
 @isTest
