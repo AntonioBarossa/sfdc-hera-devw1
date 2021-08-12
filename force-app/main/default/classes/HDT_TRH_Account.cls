@@ -1,6 +1,10 @@
 public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
     
    public override void beforeInsert(){
+       List<Account> listAcc = (List<Account>)trigger.new;
+       for (Account tempAcc : listAcc) {
+           tempAcc.CustomerAccountStatus__c='Prospect';
+       }
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         createKpiExtension();
     }
