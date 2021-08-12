@@ -1012,7 +1012,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 readingButton:true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
                 data:[
                     {
                         'label': 'Tipo Voltura',
@@ -1656,6 +1656,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt') ,
                     'required': true,
                     'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Tipo Voltura',
+                    'apiname': 'VoltureType__c',
+                    'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
+                    'required': true,
+                    'disabled': false,
                     'value': '',
                     'processVisibility': ''
                 }
