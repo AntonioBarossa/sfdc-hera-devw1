@@ -370,6 +370,11 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
+                for(var i=0; i<this.originalData.length; i++){
+                    this.originalData[i].Id=i.toString();
+                }
+                this.createTable(this.originalData);
+                this.formatTableHeaderColumns(this.originalData);
                 this.createTable(data);
                 this.formatTableHeaderColumns(data);
                 this.submitButtonStatus = true;
