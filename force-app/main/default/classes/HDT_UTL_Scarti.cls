@@ -221,23 +221,23 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         }
 
 
-        if(!codiciClienti.isEmpty()){
-            List<Account> listAccounts=[SELECT Id, CustomerCode__c FROM Account WHERE CustomerCode__c IN: codiciClienti];
-            Map<String, Id> accIdsPerBPcode = new Map<String, Id>();
-            for(Account singleAccount: listAccounts) accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount.Id);
-            for(wrts_prcgvr__Activity__c activity2: inputData){
-                if(activity2.Account__c == null) activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c);
-                if(activity2.wrts_prcgvr__ActivityTemplate__c == null){
-                    if('Canone RAI'.equalsIgnoreCase(activity2.Type__c)){
-                        if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
-                        activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
-                    }else if('Bonus sociale'.equalsIgnoreCase(activity2.Type__c)){
-                        if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
-                        activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
-                    }
+        List<Account> listAccounts=[SELECT Id, CustomerCode__c FROM Account WHERE CustomerCode__c IN: codiciClienti];
+        Map<String, Id> accIdsPerBPcode = new Map<String, Id>();
+        for(Account singleAccount: listAccounts) accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount.Id);
+        for(wrts_prcgvr__Activity__c activity2: inputData){
+            System.debug('setLookupFields forstart' + activity2);
+            if(activity2.Account__c == null && !String.isBlank(activity2.BPCode__c)) activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c);
+            if(activity2.wrts_prcgvr__ActivityTemplate__c == null){
+                if('Canone RAI'.equalsIgnoreCase(activity2.Type__c)){
+                    if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
+                    activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
+                }else if('Bonus sociale'.equalsIgnoreCase(activity2.Type__c)){
+                    if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
+                    activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
                 }
-                if(activity2.RecordTypeDevName__c == 'HDT_RT_Scarto' && activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
             }
+            if(activity2.RecordTypeDevName__c == 'HDT_RT_Scarto' && activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
+            System.debug('setLookupFields forend' + activity2);
         }
         System.debug('setLookupFields end' + inputData);
         return inputData;
