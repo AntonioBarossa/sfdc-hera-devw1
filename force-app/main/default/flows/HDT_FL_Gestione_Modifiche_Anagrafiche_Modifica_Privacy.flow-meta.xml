@@ -66,8 +66,8 @@
     <assignments>
         <name>Update_Campi_Consenso_Marketing</name>
         <label>Update Campi Consenso Marketing</label>
-        <locationX>3113</locationX>
-        <locationY>291</locationY>
+        <locationX>3326</locationX>
+        <locationY>292</locationY>
         <assignmentItems>
             <assignToReference>Get_Updated_Individual.PrivacyMarketingChoiceDate__c</assignToReference>
             <operator>Assign</operator>
@@ -89,8 +89,8 @@
     <assignments>
         <name>Update_Campi_Consenso_Marketing_Campi_Soft_Spam</name>
         <label>Update Campi Consenso Marketing + Campi Soft Spam</label>
-        <locationX>3131</locationX>
-        <locationY>759</locationY>
+        <locationX>3344</locationX>
+        <locationY>760</locationY>
         <assignmentItems>
             <assignToReference>Get_Updated_Individual.PrivacyMarketingChoiceDate__c</assignToReference>
             <operator>Assign</operator>
@@ -133,8 +133,8 @@
     <assignments>
         <name>Update_Campi_Consenso_Profilazione</name>
         <label>Update Campi Consenso Profilazione</label>
-        <locationX>3341</locationX>
-        <locationY>294</locationY>
+        <locationX>3554</locationX>
+        <locationY>295</locationY>
         <assignmentItems>
             <assignToReference>Get_Updated_Individual.PrivacyProfilingChoiceDate__c</assignToReference>
             <operator>Assign</operator>
@@ -156,8 +156,8 @@
     <assignments>
         <name>Update_Campi_Soft_Spam</name>
         <label>Update Campi Soft-Spam</label>
-        <locationX>3580</locationX>
-        <locationY>296</locationY>
+        <locationX>3793</locationX>
+        <locationY>297</locationY>
         <assignmentItems>
             <assignToReference>Get_Updated_Individual.PrivacySoftSpamChoiceDate__c</assignToReference>
             <operator>Assign</operator>
@@ -177,10 +177,35 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_Bozza_Ripresa</name>
+        <label>Bozza Ripresa?</label>
+        <locationX>1634</locationX>
+        <locationY>635</locationY>
+        <defaultConnector>
+            <targetReference>Next_Step_Processo</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Bozza ripresa</defaultConnectorLabel>
+        <rules>
+            <name>Bozza_non_ripresa</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Predefault_Case</targetReference>
+            </connector>
+            <label>Bozza non ripresa</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Consenso_Marketing_Aggiornato</name>
         <label>Consenso Marketing Aggiornato?</label>
-        <locationX>3021</locationX>
-        <locationY>514</locationY>
+        <locationX>3232</locationX>
+        <locationY>515</locationY>
         <defaultConnector>
             <targetReference>Check_Consenso_Profilazione_Aggiornato</targetReference>
         </defaultConnector>
@@ -196,7 +221,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Updated_Individual.MarketingPrivacy__c</leftValueReference>
+                <leftValueReference>Get_Updated_Case.MarketingPrivacy__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>SI</stringValue>
@@ -214,7 +239,7 @@
                 <leftValueReference>Get_Individual.MarketingPrivacy__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_Updated_Individual.MarketingPrivacy__c</elementReference>
+                    <elementReference>Get_Updated_Case.MarketingPrivacy__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -226,8 +251,8 @@
     <decisions>
         <name>Check_Consenso_Profilazione_Aggiornato</name>
         <label>Consenso Profilazione Aggiornato?</label>
-        <locationX>3213</locationX>
-        <locationY>505</locationY>
+        <locationX>3426</locationX>
+        <locationY>506</locationY>
         <defaultConnector>
             <targetReference>Check_Soft_spam_modificato</targetReference>
         </defaultConnector>
@@ -239,7 +264,7 @@
                 <leftValueReference>Get_Individual.ProfilingPrivacy__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_Updated_Individual.ProfilingPrivacy__c</elementReference>
+                    <elementReference>Get_Updated_Case.ProfilingPrivacy__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -265,6 +290,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Bozza</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -301,8 +333,8 @@
     <decisions>
         <name>Check_Soft_spam_modificato</name>
         <label>Soft-spam modificato?</label>
-        <locationX>3440</locationX>
-        <locationY>506</locationY>
+        <locationX>3653</locationX>
+        <locationY>507</locationY>
         <defaultConnector>
             <targetReference>Update_Individual</targetReference>
         </defaultConnector>
@@ -314,7 +346,7 @@
                 <leftValueReference>Get_Individual.HasOptedOutSoftSpam__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_Updated_Individual.HasOptedOutSoftSpam__c</elementReference>
+                    <elementReference>Get_Updated_Case.HasOptedOutSoftSpam__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -343,7 +375,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Next_Step_Processo</targetReference>
+                <targetReference>Check_Bozza_Ripresa</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -351,10 +383,10 @@
     <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
-        <locationX>2617</locationX>
+        <locationX>2551</locationX>
         <locationY>509</locationY>
         <defaultConnector>
-            <targetReference>Get_Updated_Individual</targetReference>
+            <targetReference>Get_Updated_Case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
         <rules>
@@ -388,7 +420,7 @@
     <decisions>
         <name>Next_Step_0</name>
         <label>Next Step?</label>
-        <locationX>2050</locationX>
+        <locationX>2214</locationX>
         <locationY>327</locationY>
         <defaultConnector>
             <targetReference>Set_Fase_Attesa_Modulo_Firmato</targetReference>
@@ -413,7 +445,7 @@
     <decisions>
         <name>Next_Step_Processo</name>
         <label>Next Step Processo</label>
-        <locationX>1751</locationX>
+        <locationX>1900</locationX>
         <locationY>455</locationY>
         <defaultConnector>
             <targetReference>Inserimento_Dati</targetReference>
@@ -562,10 +594,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Updated_Case</name>
+        <label>Get Updated Case</label>
+        <locationX>2791</locationX>
+        <locationY>513</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Consensi_Individual</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Updated_Individual</name>
         <label>Get Updated Individual</label>
-        <locationX>2854</locationX>
-        <locationY>512</locationY>
+        <locationX>3068</locationX>
+        <locationY>513</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Consenso_Marketing_Aggiornato</targetReference>
@@ -583,10 +636,52 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Predefault_Case</name>
+        <label>Predefault Case</label>
+        <locationX>1745</locationX>
+        <locationY>347</locationY>
+        <connector>
+            <targetReference>Next_Step_Processo</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>HasOptedOutOfEmail__c</field>
+            <value>
+                <elementReference>Get_Individual.HasOptedOutOfEmail__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>HasOptedOutSoftSpam__c</field>
+            <value>
+                <elementReference>Get_Individual.HasOptedOutSoftSpam__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MarketingPrivacy__c</field>
+            <value>
+                <elementReference>Get_Individual.MarketingPrivacy__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ProfilingPrivacy__c</field>
+            <value>
+                <elementReference>Get_Individual.ProfilingPrivacy__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Set_Fase_Attesa_Modulo_Firmato</name>
         <label>Set Fase Attesa Modulo Firmato</label>
-        <locationX>2431</locationX>
-        <locationY>386</locationY>
+        <locationX>2487</locationX>
+        <locationY>388</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -602,6 +697,48 @@
             </value>
         </inputAssignments>
         <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Consensi_Individual</name>
+        <label>Update Consensi Individual</label>
+        <locationX>2927</locationX>
+        <locationY>513</locationY>
+        <connector>
+            <targetReference>Get_Updated_Individual</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>IndividualId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>HasOptedOutOfEmail__c</field>
+            <value>
+                <elementReference>Get_Updated_Case.HasOptedOutOfEmail__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>HasOptedOutSoftSpam__c</field>
+            <value>
+                <elementReference>Get_Updated_Case.HasOptedOutSoftSpam__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MarketingPrivacy__c</field>
+            <value>
+                <elementReference>Get_Updated_Case.MarketingPrivacy__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ProfilingPrivacy__c</field>
+            <value>
+                <elementReference>Get_Updated_Case.ProfilingPrivacy__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Individual</object>
     </recordUpdates>
     <recordUpdates>
         <name>Update_ContactId</name>
@@ -630,8 +767,8 @@
     <recordUpdates>
         <name>Update_Fase</name>
         <label>Update Fase</label>
-        <locationX>3888</locationX>
-        <locationY>511</locationY>
+        <locationX>4101</locationX>
+        <locationY>512</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -651,8 +788,8 @@
     <recordUpdates>
         <name>Update_Individual</name>
         <label>Update Individual</label>
-        <locationX>3710</locationX>
-        <locationY>511</locationY>
+        <locationX>3923</locationX>
+        <locationY>512</locationY>
         <connector>
             <targetReference>Update_Fase</targetReference>
         </connector>
@@ -675,86 +812,13 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>formCase</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextStep</name>
-                <value>
-                    <stringValue>NEXT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <stringValue>Modifica Privacy - Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>FlowCase.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>addContentDocument</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>DT2</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire i nuovi consensi privacy ed allegare il modulo privacy firmato:&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
             <name>formIndividual</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>cancelButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -808,7 +872,7 @@
             <inputParameters>
                 <name>saveButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -818,15 +882,99 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>documentRecordId</name>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>DT2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire i nuovi consensi privacy ed allegare il modulo privacy firmato:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>formCase</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Modifica Privacy - Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
                 <value>
                     <elementReference>FlowCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>addContentDocument</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva in bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>documentRecordId</name>
+                <value>
+                    <elementReference>Get_Case.Id</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -846,7 +994,7 @@
     <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
-        <locationX>1938</locationX>
+        <locationX>2105</locationX>
         <locationY>325</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1067,6 +1215,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

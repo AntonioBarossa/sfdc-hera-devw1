@@ -8,6 +8,7 @@ import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.cal
 import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
 import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
 import permissionForFlagContract from '@salesforce/apex/HDT_LC_AdvancedSearch.permissionForFlagContract';
+import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
 
 
 export default class HdtAdvancedSearch extends LightningElement {
@@ -46,6 +47,10 @@ export default class HdtAdvancedSearch extends LightningElement {
     @api showbuttonforniture=false;
     @api flagContratto=false;
     @api isSuperUser=false;
+    @api serviceRequestId;
+    @track isIncompatible= false;
+    @track preSelectedRows=[];
+    @track iconCompatibility='';
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
         'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
@@ -246,7 +251,37 @@ export default class HdtAdvancedSearch extends LightningElement {
             columns = columns.concat(keys);
         });
         let columnsUniq = [...new Set(columns)];
-        columnsUniq.forEach(field => this.tableColumns.push({label: field, fieldName: field}));
+        columnsUniq.forEach(field => 
+            {
+                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id'){
+                    this.tableColumns.push({label: field, fieldName: field});
+                }else if(field == 'iconCompatibility'){
+                    if(this.isIncompatible){
+                        this.tableColumns.push(
+                            { label: 'Compatibility', fieldName: 'compatibility',
+                                type: 'button',
+                                typeAttributes: {
+                                    label: 'See more',
+                                    title: {fieldName:'compatibilityMessage'},
+                                },
+                                cellAttributes:{ 
+                                    iconName:{ fieldName: 'iconCompatibility'},
+                                    iconPosition: 'left', 
+                                    iconAlternativeText: 'Compatibility Icon' ,
+                                }
+                            });
+                    }else{
+                        this.tableColumns.push(
+                            { label: 'Compatibility', fieldName: 'compatibility',
+                                cellAttributes:{ 
+                                    iconName:{ fieldName: 'iconCompatibility'},
+                                    iconPosition: 'left', 
+                                    iconAlternativeText: 'Compatibility Icon' ,
+                                }
+                        });
+                    }
+                }
+            });
     }
 
     /**
@@ -400,6 +435,7 @@ export default class HdtAdvancedSearch extends LightningElement {
      * Call apex class and get data
      */
     submitSearch(event) {
+        this.preSelectedRows=[];
         event.preventDefault();
         console.log('event value submitSearch() '+ event.target.value);
         let isBlacklist=false;
@@ -415,9 +451,13 @@ export default class HdtAdvancedSearch extends LightningElement {
             console.log('getServicePoint data *******'+ JSON.stringify(data));
             this.preloading = false;
             if (data.length > 0) {
+                
                 this.originalData = JSON.parse(JSON.stringify(data));
-                this.createTable(data);
-                this.formatTableHeaderColumns(data);
+                for(var i=0; i<this.originalData.length; i++){
+                     this.originalData[i].Id=i.toString();
+                }
+                this.createTable(this.originalData);
+                this.formatTableHeaderColumns(this.originalData);
                 this.submitButtonStatus = true;
                 this.openmodel = true;
                 this.isLoaded = true;
@@ -452,11 +492,67 @@ export default class HdtAdvancedSearch extends LightningElement {
         console.log('getSelectedServicePoint START');
         this.preloading = true;
         let selectedRows = event.detail.selectedRows;
-        this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
-        this.preloading = false;
         console.log('getSelectedServicePoint END');
+
+        if(this.processtype != ''){
+            let srvRequest= {
+                'servicePointCode': this.rowToSend['Codice Punto'],
+                'commoditySector': this.rowToSend['Servizio'],
+                'processType': this.processtype,
+                'type': 'Case'
+            };
+            let isPostSales = true;
+            checkCompatibility({servReq: srvRequest, isPostSales: isPostSales}).then(data =>{
+                if(data.compatibility == ''){
+                    this.iconCompatibility='action:approval';
+                }else{
+                    this.iconCompatibility='action:close';
+                }
+                this.serviceRequestId= data.ServiceRequest.Id;
+                let found= false;
+                for(var i=0; i< this.originalData.length;i++){
+                    let row= this.originalData[i];
+                    if(row['Codice Punto']== this.rowToSend['Codice Punto']){
+                        found =true;
+                    }
+                    if(found){
+                        this.isIncompatible= false;
+                        row.iconCompatibility= this.iconCompatibility;
+                        if(data.compatibility != ''){
+                            this.isIncompatible=true;
+                            row.compatibilityMessage= data.compatibility;
+                            this.confirmButtonDisabled = true;
+                        }else{
+                            this.confirmButtonDisabled = false;
+                        }
+                    }
+                }
+                this.createTable(this.originalData);  
+                this.formatTableHeaderColumns(this.originalData);
+                var my_ids = [];
+                my_ids[0] = this.rowToSend.Id;
+                this.preSelectedRows = my_ids;
+
+            }).catch(error => {
+                console.log(error.body.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+                this.confirmButtonDisabled = true;
+            });
+            this.preloading = false;
+
+        }else{
+            this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
+            this.preloading = false;
+
+        }
     }
 
 

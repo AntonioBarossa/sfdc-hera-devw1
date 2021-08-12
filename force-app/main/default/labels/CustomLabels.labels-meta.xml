@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>AccountCantBeCertified</fullName>
+        <categories>SendCertificationRequest</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCantBeCertified</shortDescription>
+        <value>It is not allowed to ask for certification on a non &quot;Customer&quot; Account</value>
+    </labels>
+    <labels>
+        <fullName>CertificationAlreadyInProgress</fullName>
+        <categories>SendCertificationRequest</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CertificationAlreadyInProgress</shortDescription>
+        <value>The certification has already been requested for this Contact Point</value>
+    </labels>
+    <labels>
+        <fullName>ContactPointAlreadyCertified</fullName>
+        <categories>SendCertificationRequest</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ContactPointAlreadyCertified</shortDescription>
+        <value>It is not allowed to request certification on an already certified Contact Point</value>
+    </labels>
+    <labels>
         <fullName>Error</fullName>
         <categories>Cross</categories>
         <language>en_US</language>
@@ -575,5 +599,29 @@
         <protected>false</protected>
         <shortDescription>HDT_LWC_CriteriaModal_SaveTitle</shortDescription>
         <value>Salva il criterio</value>
+    </labels>
+    <labels>
+        <fullName>LeadCantBeCertified</fullName>
+        <categories>SendCertificationRequest</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LeadCantBeCertified</shortDescription>
+        <value>It is not allowed to certify a Lead</value>
+    </labels>
+    <labels>
+        <fullName>ObjectNotAllowedForCertification</fullName>
+        <categories>SendCertificationRequest</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ObjectNotAllowedForCertification</shortDescription>
+        <value>Operation not supported on this type of object</value>
+    </labels>
+    <labels>
+        <fullName>SuccessfulCertificationRequest</fullName>
+        <categories>SendCertificationRequest</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SuccessfulCertificationRequest</shortDescription>
+        <value>The certification request was created successfully</value>
     </labels>
 </CustomLabels>
