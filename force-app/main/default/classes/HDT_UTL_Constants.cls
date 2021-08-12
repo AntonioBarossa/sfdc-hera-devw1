@@ -101,6 +101,10 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String HERA_TELESELLER_PARTNER_NAME = 'Hera Teleseller Partner User';
 
+    //Standard Salesforce Profiles
+    @AuraEnabled
+    public final string MINIMUM_ACCESS_SALESFORCE = 'Minimum Access - Salesforce';
+
     //Hera CPQ Permission Sets
     @AuraEnabled
     public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME = 'HDT_SalesforceCPQAdmin';
