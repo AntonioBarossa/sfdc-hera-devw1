@@ -30,11 +30,9 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 			HDT_UTL_DataFactoryTst.pClickCasePhase();
 			HDT_UTL_DataFactoryTst.pClickOrderPhase();
 
-
-			insert new Wrts_prcgvr__PhaseTransition__c(Wrts_prcgvr__Code__c=Math.random()+'', Wrts_prcgvr__DestinationPhase__c='Annullato', Wrts_prcgvr__OriginPhase__c='Bozza', Wrts_prcgvr__RecordTypeId__c=rt, Wrts_prcgvr__RecordTypeName__c='HDT_RT_Morosita', Wrts_prcgvr__Type__c='A');
-			insert new Wrts_prcgvr__PhaseTransition__c(Wrts_prcgvr__Code__c=Math.random()+'', Wrts_prcgvr__DestinationPhase__c='In Lavorazione', Wrts_prcgvr__OriginPhase__c='Bozza', Wrts_prcgvr__RecordTypeId__c=rt, Wrts_prcgvr__RecordTypeName__c='HDT_RT_Morosita', Wrts_prcgvr__Type__c='A');
-			insert new Wrts_prcgvr__PhaseTransition__c(Wrts_prcgvr__Code__c=Math.random()+'', Wrts_prcgvr__DestinationPhase__c='Completata ', Wrts_prcgvr__OriginPhase__c='In Lavorazione', Wrts_prcgvr__RecordTypeId__c=rt, Wrts_prcgvr__RecordTypeName__c='HDT_RT_Morosita', Wrts_prcgvr__Type__c='A');
-
+			HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato', 'Bozza', rt, 'HDT_RT_Morosita');
+			HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione', 'Bozza', rt, 'HDT_RT_Morosita');
+			HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'In Lavorazione', rt, 'HDT_RT_Morosita');
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].id, 'Attiva');
