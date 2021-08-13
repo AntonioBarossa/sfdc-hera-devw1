@@ -18,7 +18,7 @@
 
                 <template for:each={campaignMembers} for:item="c">
                     <lightning-layout-item padding="around-small" key={c.Id} size="5">
-                        <c-hdt-contact-campaign-tab campaignmember={c} noredirect=true></c-hdt-contact-campaign-tab>
+                        <c-hdt-contact-campaign-tab campaignmember={c} redirect=false></c-hdt-contact-campaign-tab>
                     </lightning-layout-item>
                 </template>
             </template>
