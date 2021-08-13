@@ -139,6 +139,18 @@ public with sharing class HDT_SRV_SalesHandler {
                                      ord.TecnicalPhase__c = 'Annullato';
                                      ord.Status = 'Annullato';
                                  }
+                            }when 'Dati Tecnici Ricevuti'{
+                                if (!String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
+                                    ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
+                                }
+                                if(!String.isBlank(mapRequestFields.get('DT_MAX_PREV'))){
+                                    if(mapRequestFields.get('DT_MAX_PREV').getChars().size()==8){
+                                        ord.ValidityDateEstimate__c=getExpireDate(mapRequestFields.get('DT_MAX_PREV'));
+                                    }
+                                }
+                                if(!String.isBlank(mapRequestFields.get('NUMPREV'))){
+                                    ord.QuotationNumber__c=mapRequestFields.get('NUMPREV');
+                                }
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
@@ -445,5 +457,12 @@ public with sharing class HDT_SRV_SalesHandler {
         HDT_UTL_DatabaseService.updateSObject(recordOrder);
     }
     //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+
+    private static Date getExpireDate(String expireDate){
+        Integer yr = Integer.valueOf(expireDate.substring(0, 4));
+        Integer mth = Integer.valueOf(expireDate.substring(4, 6));
+        Integer dy = Integer.valueOf(expireDate.substring(6, 8));
+        return Date.newInstance(yr, mth, dy);
+    }
 
 }
