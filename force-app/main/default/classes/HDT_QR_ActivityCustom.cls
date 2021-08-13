@@ -284,4 +284,20 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     WITH SECURITY_ENFORCED 
             ];
         }
+
+        public static List<wrts_prcgvr__Activity__c> getRecordsForCancelQualityNoResult(List<Id> idlist){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Account__r.ActiveMonitoring__c,
+                    Contact__c,
+                    order__c,
+                    RecordTypeId,
+                    RecordType.DeveloperName,
+                    Status__c
+                    FROM wrts_prcgvr__Activity__c
+                    where Id in :idlist
+                    WITH SECURITY_ENFORCED 
+            ];
+        }
 }

@@ -307,5 +307,34 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
         
     // }
+    
+    public static void cancelQualityNoResult(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
 
+        Set<id> activityIdSet = Trigger.newMap.keySet();
+        List<Id> activityIdList = new List<Id>();
+        activityIdList.addAll(activityIdSet);
+
+        List<wrts_prcgvr__Activity__c> activities = HDT_QR_ActivityCustom.getRecordsForCancelQualityNoResult(activityIdList);
+
+        HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
+        String recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_ComfortQualityCall');
+        List<Order> ordersToUpdate = new List<Order>();
+        for (wrts_prcgvr__Activity__c activity : activities) {
+            if (activity.RecordTypeId == recordtypeid 
+                && activity.Status__c == 'Non Esitata'
+                && activity.Account__r.ActiveMonitoring__c) {
+                ordersToUpdate.add(new Order(
+                    Id = activity.Order__c,
+                    Status = 'Annullato', //Chiuso
+                    Phase__c = 'Annullato'
+                ));
+            }
+        }
+
+        if (!ordersToUpdate.isEmpty()) {
+            HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+            orderSrv.updateRecords(ordersToUpdate);
+        }
+
+    }
 }

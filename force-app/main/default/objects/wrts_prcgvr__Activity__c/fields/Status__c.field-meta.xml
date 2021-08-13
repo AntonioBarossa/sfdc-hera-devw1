@@ -91,6 +91,16 @@
                 <default>false</default>
                 <label>KO Forzato</label>
             </value>
+            <value>
+                <fullName>Esitata</fullName>
+                <default>false</default>
+                <label>Esitata</label>
+            </value>
+            <value>
+                <fullName>Non Esitata</fullName>
+                <default>false</default>
+                <label>Non Esitata</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

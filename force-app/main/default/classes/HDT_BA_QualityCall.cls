@@ -30,9 +30,10 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 ));
             } else {
 
+                orderMap.put(ord.Id, ord);
+
                 wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
                         RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
-                        Order__c = ord.Id,
                         Account__c = ord.AccountId,
                         Type__c = 'Quality Call',
                         Status__c = 'Creata'
@@ -45,6 +46,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     activity.Order__c = ord.Id;
                     callActivities.add(activity);
                 }
+
+                orderActivityMap.put(ord.id, activity);
             }
         }
 
@@ -53,18 +56,36 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         insert callActivities;
 
 
-        for (String ordId : orderActivityMap.keySet()) {
-            if ( orderMap.get(ordId).Contact__c != null) {
-                campaignMembersInsert.add(new CampaignMember(
-                    ContactId = orderMap.get(ordId).Contact__c,
-                    PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-                    RelatedActivity__c = orderActivityMap.get(ordId).Id
-                ));
-            }
-        }
+        // for (String ordId : orderActivityMap.keySet()) {
+        //     if ( orderMap.get(ordId).Contact__c != null && orderMap.get(ordId).CommissioningCampaign__c != null) {
+        //         List<CampaignMember> campaignMembers = campaignMemberQr.getCampaignMemberByCampaingAndContact(orderMap.get(ordId).CommissioningCampaign__c, orderMap.get(ordId).Contact__c);
+        //         CampaignMember campaignMember = new CampaignMember();
+                
+        //         if (!campaignMembers.isEmpty()) {
+        //             campaignMember = campaignMembers[0];
 
-        insert campaignMembersInsert;
-        update campaignMembersUpdate;
+        //             campaignMembersUpdate.add(new CampaignMember(
+        //                 Id = campaignMember.Id,
+        //                 RelatedActivity__c = orderActivityMap.get(ordId).Id
+        //             ));
+
+        //         } else {
+        //             campaignMembersInsert.add(new CampaignMember(
+        //                 ContactId = orderMap.get(ordId).Contact__c,
+        //                 CampaignId = orderMap.get(ordId).CommissioningCampaign__c,
+        //                 PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
+        //                 RelatedActivity__c = orderActivityMap.get(ordId).Id
+        //             ));
+        //         }
+        //     }
+        // }
+
+        // insert campaignMembersInsert;
+
+        // if(!campaignMembersUpdate.isEmpty()){
+        //     update campaignMembersUpdate;
+        // }
+
     }
     public void finish(Database.BatchableContext bc){
         system.debug('HDT_BA_QualityCall - end');
