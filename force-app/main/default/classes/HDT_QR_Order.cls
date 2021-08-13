@@ -203,7 +203,8 @@ public inherited sharing class HDT_QR_Order {
             IsWinback__c, 
             IsBillableVas__c,
             ChannelTransCode__c,
-            IsActivationDeferred__c
+            IsActivationDeferred__c,
+            ConfirmCustomerContract__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -692,6 +693,19 @@ public inherited sharing class HDT_QR_Order {
             Order
             WHERE ParentOrder__c = :parentOrderId
             AND Phase__c NOT IN ('Annullato')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Order> getOrderForActiveMonitoringCheck(String id){
+        return [
+            Select 
+            id,
+            AccountId,
+            Account.ActiveMonitoring__c 
+            from Order 
+            Where id = :id
+            AND Account.ActiveMonitoring__c = true
             WITH SECURITY_ENFORCED
         ];
     }
