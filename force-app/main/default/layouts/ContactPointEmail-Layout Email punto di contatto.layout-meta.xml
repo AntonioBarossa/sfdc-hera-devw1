@@ -65,7 +65,6 @@
         <fields>ContactPoint</fields>
         <fields>DataUsePurpose</fields>
         <fields>PrivacyConsentStatus</fields>
-        <relatedList>ContactPointConsents</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
