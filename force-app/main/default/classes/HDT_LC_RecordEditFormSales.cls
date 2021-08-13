@@ -1,3 +1,9 @@
+/**
+* @author Sabina Levonja (sabina.levonja@dunegroup.it)
+* @date 16/06/21
+* @description HDT_LC_RecordEditFormSales
+* @history Sabina Levonja – 16/06/21 – created class
+*/
 public with sharing class HDT_LC_RecordEditFormSales {
 
     public static HDT_SRV_Case caseSRV= new HDT_SRV_Case();

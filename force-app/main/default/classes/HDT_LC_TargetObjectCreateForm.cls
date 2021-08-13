@@ -93,6 +93,23 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         return servicePoint;
     }
 
+    /** @author Andrei Necsulescu (andrei.necsulescu@webresults.it) 
+     * This method is necessary because passing the object directly Removes the decimals from the numbers */
+    @AuraEnabled
+    public static ServicePoint__c createServicePoinString(String servicePoint, Sale__c sale){
+        
+        System.debug('createServicePoint_tmp received servicepoint string ' + servicePoint);
+        
+        ServicePoint__c servicePointObject = (ServicePoint__c)JSON.deserialize(servicePoint, ServicePoint__c.class);
+
+        System.debug('createServicePoint_tmp converted servicepoint string ' + servicePointObject);
+
+        createServicePoint2(servicePointObject, sale);
+
+        return servicePointObject;
+
+    }
+
    // @future(callout=true)
     public static void updateServicePoint(ServicePoint__c servicePo)
     {   
