@@ -21,27 +21,26 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                                                                                         'Errore invio a SAP' => 'CBS_HER009__ERRORE_INVIO_A_SAP_SALES',
                                                                                         'Errore determinazione variante SAP' => 'CBS_HER010__ERRORE_DETERMINAZIONE_VARIANTE_SAP_SALES'};
 
+    static final Map<String, String> TRACCIAMENTOHEROKUPOSTSALES = new Map<String, String>{'Esito ricevuto su richiesta chiusa' => 'CBS_HER002__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_POSTSALES',
+                                                                                           'Esito non elaborato' => 'CBS_HER001__ESITO_NON_ELABORATO_DA_DLSII_POSTSALES',
+                                                                                           'Eliminato esito in scarto' => 'CBS_HER003__ELIMINATO_ESITO_IN_SCARTO_POSTSALES',
+                                                                                           'Errore invio a SAP' => 'CBS_HER004__ERRORE_INVIO_A_SAP_POSTSALES',
+                                                                                           'Errore determinazione variante SAP' => 'CBS_HER005__ERRORE_DETERMINAZIONE_VARIANTE_SAP_POSTSALES'};
 
-    static final Map<String, String> TRACCIAMENTOHEROKUPOSTSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER002__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_POSTSALES',
-                                                                                            'Esito non elaborato' => 'CBS_HER001__ESITO_NON_ELABORATO_DA_DLSII_POSTSALES',
-                                                                                            'Eliminato esito in scarto' => 'CBS_HER003__ELIMINATO_ESITO_IN_SCARTO_POSTSALES',
-                                                                                            'Errore invio a SAP' => 'CBS_HER004__ERRORE_INVIO_A_SAP_POSTSALES',
-                                                                                            'Errore determinazione variante SAP' => 'CBS_HER005__ERRORE_DETERMINAZIONE_VARIANTE_SAP_POSTSALES'};
+    static final Map<String, String> ANONIMAMAPPING = new Map<String, String>{'Type__c' => 'ATTIVITA',
+                                                                              'CreatedByUsername__c' => 'UTENZA',
+                                                                              'StartDate__c' => 'DATA_EVENTO',
+                                                                              'DiscardDescription__c' => 'ERROR_MESSAGE'};
 
-    static final Map<String, String> ANONIMAMAPPING = new Map<String, String>{ 'Type__c' => 'ATTIVITA',
-                                                                               'CreatedByUsername__c' => 'UTENZA',
-                                                                               'StartDate__c' => 'DATA_EVENTO',
-                                                                               'DiscardDescription__c' => 'ERROR_MESSAGE'};
-
-    static final Map<String, String> TRACCIAMENTOMAPPING = new Map<String, String>{ 'DiscardCount__c' => 'COUNTER',
-                                                                                    'HerokuPracticeCode__c' => 'COD_PRAT_UTENTE',
-                                                                                    'ExternalUserCompany__c' => 'CMP',
-                                                                                    'ExternalErrorDescription__c' => 'NOTE_ERR',
-                                                                                    'ExternalErrorStep__c' => 'STEP_ERR',
-                                                                                    'Note__c' => 'NOTA_HK',
-                                                                                    'CreatedByUsername__c' => 'UTENZA',
-                                                                                    'StartDate__c' => 'DATA_EVENTO',
-                                                                                    'DiscardDescription__c' => 'ERROR_MESSAGE'};
+    static final Map<String, String> TRACCIAMENTOMAPPING = new Map<String, String>{'DiscardCount__c' => 'COUNTER',
+                                                                                   'HerokuPracticeCode__c' => 'COD_PRAT_UTENTE',
+                                                                                   'ExternalUserCompany__c' => 'CMP',
+                                                                                   'ExternalErrorDescription__c' => 'NOTE_ERR',
+                                                                                   'ExternalErrorStep__c' => 'STEP_ERR',
+                                                                                   'Note__c' => 'NOTA_HK',
+                                                                                   'CreatedByUsername__c' => 'UTENZA',
+                                                                                   'StartDate__c' => 'DATA_EVENTO',
+                                                                                   'DiscardDescription__c' => 'ERROR_MESSAGE'};
     global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
         SObject transition = (SObject) argsMap.get('transition');
@@ -226,23 +225,21 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         }
 
 
-        if(!codiciClienti.isEmpty()){
-            List<Account> listAccounts=[SELECT Id, CustomerCode__c FROM Account WHERE CustomerCode__c IN: codiciClienti];
-            Map<String, Id> accIdsPerBPcode = new Map<String, Id>();
-            for(Account singleAccount: listAccounts) accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount.Id);
-            for(wrts_prcgvr__Activity__c activity2: inputData){
-                if(activity2.Account__c == null) activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c);
-                if(activity2.wrts_prcgvr__ActivityTemplate__c == null){
-                    if('Canone RAI'.equalsIgnoreCase(activity2.Type__c)){
-                        if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
-                        activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
-                    }else if('Bonus sociale'.equalsIgnoreCase(activity2.Type__c)){
-                        if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
-                        activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
-                    }
+        List<Account> listAccounts=[SELECT Id, CustomerCode__c FROM Account WHERE CustomerCode__c IN: codiciClienti];
+        Map<String, Id> accIdsPerBPcode = new Map<String, Id>();
+        for(Account singleAccount: listAccounts) accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount.Id);
+        for(wrts_prcgvr__Activity__c activity2: inputData){
+            if(activity2.Account__c == null && !String.isBlank(activity2.BPCode__c)) activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c);
+            if(activity2.wrts_prcgvr__ActivityTemplate__c == null){
+                if('CanoneRAI'.equalsIgnoreCase(activity2.Type__c)){
+                    if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
+                    activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
+                }else if('Bonussociale'.equalsIgnoreCase(activity2.Type__c)){
+                    if(activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
+                    activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
                 }
-                if(activity2.RecordTypeDevName__c == 'HDT_RT_Scarto' && activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
             }
+            if(activity2.RecordTypeDevName__c == 'HDT_RT_Scarto' && activity2.RecordTypeId != rtScarto.Id) activity2.RecordTypeId = rtScarto.Id;
         }
         System.debug('setLookupFields end' + inputData);
         return inputData;
