@@ -307,25 +307,34 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     */
     public static void checkForEsitiIntermedi(List<wrts_prcgvr__Activity__c> inputData){
         List<wrts_prcgvr__Activity__c> toUpdate = new List<wrts_prcgvr__Activity__c>();
+
+        set<id> parentObjectCase = new set<id>();
+        set<id> parentObjectOrder = new set<id>();
+        set<id> inputDataId = new set<id>();
         for(wrts_prcgvr__Activity__c currAct : inputData){
-            system.debug(currAct.Type__c);
-            if(ESITIINTERMEDIHEROKU.contains(currAct.Type__c)){     //set degli scarti heroku
-                system.debug('order: '+currAct.Order__c+', case: '+currAct.Case__c);
-                if(string.isNotBlank(currAct.Case__c)){ //case popolato
-                    for(wrts_prcgvr__Activity__c relatedAct : [select id, Status__c from wrts_prcgvr__Activity__c where Case__c = :currAct.Case__c and Type__c in :ESITIINTERMEDIHEROKU and Id != :currAct.Id]){
-                        system.debug(relatedAct);
-                        relatedAct.Status__c='Chiusa';
-                        toUpdate.add(relatedAct);
-                    }
-                }else if(string.isNotBlank(currAct.Order__c)){ //order popolato
-                    for(wrts_prcgvr__Activity__c relatedAct : [select id, Status__c from wrts_prcgvr__Activity__c where Order__c = :currAct.Order__c and Type__c in :ESITIINTERMEDIHEROKU and Id != :currAct.Id]){
-                        system.debug(relatedAct);
-                        relatedAct.Status__c='Chiusa';
-                        toUpdate.add(relatedAct);
-                    }
+            if(ESITIINTERMEDIHEROKU.contains(currAct.Type__c)){
+                inputDataId.add(currAct.Id);
+                if(string.isNotBlank(currAct.Case__c)){
+                    parentObjectCase.add(currAct.Case__c);
+                }else if(string.isNotBlank(currAct.Order__c)){
+                    parentObjectOrder.add(currAct.Order__c);
                 }
             }
         }
+        list<wrts_prcgvr__Activity__c> relatedActCase = [select id, Status__c from wrts_prcgvr__Activity__c where Case__c in :parentObjectCase and Type__c in :ESITIINTERMEDIHEROKU and Id not in :inputDataId];
+        list<wrts_prcgvr__Activity__c> relatedActOrder = [select id, Status__c from wrts_prcgvr__Activity__c where Order__c in :parentObjectOrder and Type__c in :ESITIINTERMEDIHEROKU and Id not in :inputDataId];
+
+        for(wrts_prcgvr__Activity__c relatedAct: relatedActCase){
+            system.debug(relatedAct);
+            relatedAct.Status__c='Chiusa';
+            toUpdate.add(relatedAct);
+        }
+        for(wrts_prcgvr__Activity__c relatedAct: relatedActOrder){
+            system.debug(relatedAct);
+            relatedAct.Status__c='Chiusa';
+            toUpdate.add(relatedAct);
+        }
+        
         if(!toUpdate.IsEmpty()){
             system.debug('lista NON vuota -> Aggiorno'+toUpdate);
             update toUpdate;
