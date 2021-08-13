@@ -3,7 +3,7 @@
         var workspaceAPI = component.find("workspace");
         workspaceAPI.getFocusedTabInfo().then(function (response) {
             var focusedTabId = response.tabId;
-            console.log(focusedTabId);
+            console.log('nel init ' + focusedTabId);
             component.set('v.tabId', focusedTabId);
         })
             .catch(function (error) {
@@ -12,16 +12,23 @@
     },
 
     cancelDialog: function (component, event, helper) {
-        // var workspaceAPI = component.find("workspace");
-        // workspaceAPI.closeTab({ tabId: component.get('v.tabId') });
         var workspaceAPI = component.find("workspace");
-        workspaceAPI.getFocusedTabInfo().then(function(response) {
-            var focusedTabId = response.tabId;
-            workspaceAPI.closeTab({tabId: focusedTabId});
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
+        
+        if (event == null) {
+
+            workspaceAPI.closeTab({ tabId: component.get('v.tabId') });
+
+        } else {
+
+            workspaceAPI.getFocusedTabInfo().then(function(response) {
+                var focusedTabId = response.tabId;
+                workspaceAPI.closeTab({tabId: focusedTabId});
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+
+        }
     },
 
     saveRecord: function (component, event, helper) {
@@ -29,9 +36,17 @@
     },
 
     afterExecution: function (component, event, helper) {
+
         console.log("salvato!");
+
         var workspaceAPI = component.find("workspace");
-        var recordId = event.getParam('newRecordId')
+        var recordId = event.getParam('newRecordId');
+
+        workspaceAPI.getFocusedTabInfo().then(function (response) {
+            var focusedTabId = response.tabId;
+            component.set('v.tabId', focusedTabId);
+        });
+
         workspaceAPI.openTab({
             recordId: recordId,
             focus: true
