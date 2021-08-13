@@ -9,6 +9,7 @@ public with sharing class HDT_UTL_LeadProcess {
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         Map<String,String> mapRequestFields = new Map<String,String>();
+        Id leadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
         System.debug('PROVA WSFORM');
         if (request.objects.get(0).fields.get(0) != null) {
             
@@ -39,6 +40,7 @@ public with sharing class HDT_UTL_LeadProcess {
                 if(campaign != null && !campaign.isEmpty()){
                     System.debug('PROVA WSFORM5');
                     Lead newLead= new Lead();
+                    newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.LeadSource= mapRequestFields.get('FONTE');
@@ -181,7 +183,8 @@ public with sharing class HDT_UTL_LeadProcess {
     public static HDT_WRP_MrrResponse.HDT_WRP_Response formWinback(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject){
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
-        
+        Id leadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
+
         Map<String,String> mapRequestFields = new Map<String,String>();
         if (request.objects.get(0).fields.get(0) != null) {
             
@@ -209,6 +212,7 @@ public with sharing class HDT_UTL_LeadProcess {
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD WINBACK');
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
+                    newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.LeadSource= mapRequestFields.get('FONTE');
@@ -346,7 +350,8 @@ public with sharing class HDT_UTL_LeadProcess {
     public static HDT_WRP_MrrResponse.HDT_WRP_Response formCaricBoll(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject){
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
-        
+        Id leadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
+
         Map<String,String> mapRequestFields = new Map<String,String>();
         
         if (request.objects.get(0).fields.get(0) != null) {
@@ -375,6 +380,7 @@ public with sharing class HDT_UTL_LeadProcess {
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
+                    newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.LeadSource= mapRequestFields.get('FONTE');
@@ -519,7 +525,8 @@ public with sharing class HDT_UTL_LeadProcess {
     public static HDT_WRP_MrrResponse.HDT_WRP_Response formHvac(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject){
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
-        
+        Id leadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
+
         Map<String,String> mapRequestFields = new Map<String,String>();
         
         if (request.objects.get(0).fields.get(0) != null) {
@@ -548,6 +555,7 @@ public with sharing class HDT_UTL_LeadProcess {
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
+                    newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.LeadSource= mapRequestFields.get('FONTE');
@@ -698,7 +706,8 @@ public with sharing class HDT_UTL_LeadProcess {
     public static HDT_WRP_MrrResponse.HDT_WRP_Response formSol(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject){
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
-        
+        Id leadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
+
         Map<String,String> mapRequestFields = new Map<String,String>();
         
         if (request.objects.get(0).fields.get(0) != null) {
@@ -738,12 +747,14 @@ public with sharing class HDT_UTL_LeadProcess {
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
+                    newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.Phone= mapRequestFields.get('TELEFONO');
                     newLead.LeadSource= mapRequestFields.get('FONTE');
                     if(contactId != null && contactId != ''){
                         newLead.Contact__c = contactId;
                     }
+                    newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.Email= mapRequestFields.get('EMAIL');
                     newLead.State= mapRequestFields.get('COMUNE');
                     newLead.FirstName= mapRequestFields.get('NOME');

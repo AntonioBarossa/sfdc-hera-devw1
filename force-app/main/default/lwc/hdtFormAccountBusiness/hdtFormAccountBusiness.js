@@ -65,6 +65,14 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     companyPicklist( comp) {
         let key = this.companyFieldData.controllerValues[comp];
         this.companyOptions = this.companyFieldData.values.filter(opt => opt.validFor.includes(key));
+        var customCompanyOptions=[];
+        this.companyOptions.forEach(function callbackFn(element, index) {
+            if(element.value!='HC+HCM+EENE'){ 
+                customCompanyOptions.push(element);
+            }
+        })
+        
+        this.companyOptions=customCompanyOptions;
     }
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PHONE_PREFIX })
     phonePrefixGetOptions({error, data}) {
