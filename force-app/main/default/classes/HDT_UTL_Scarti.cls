@@ -10,6 +10,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     static final string SCARTODOCUMENTALEPOSTSALESTEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
     static final string SCARTODOCUMENTALESALESTEMPLATENAME='CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
 
+    static final set<string> ESITIINTERMEDIHEROKU = new set<string>{'Ammissibilità KO','Esito Ko da Sap','Esito KO da DL',
+                                                                    'Richiesta non identificata/anonima',
+                                                                    'Esito non elaborato da DL/SII','Esito ricevuto su richiesta chiusa',
+                                                                    'Eliminato esito in scarto','Errore invio a SAP','Errore determinazione variante SAP'};
+
     static final Map<String, String> TRACCIAMENTOHEROKUSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER007__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_SALES',
                                                                                         'Esito non elaborato' => 'CBS_HER006__ESITO_NON_ELABORATO_DA_DLSII_SALES',
                                                                                         'Eliminato esito in scarto' => 'CBS_HER008__ELIMINATO_ESITO_IN_SCARTO_SALES',
@@ -290,6 +295,40 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 }
             }
             HDT_UTL_DatabaseService.insertSObject(insertedActivities);
+        }
+    }
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 12/08/2021
+    * @description HDT_UTL_Scarti.checkForEsitiIntermedi - annullamneto scarti dopo ricezione scarto Heroku
+    * @param1 inputData - list of Herokus's scarti (activity(custom) wrts_prcgvr__Activity__c)
+    * @return void
+    */
+    public static void checkForEsitiIntermedi(List<wrts_prcgvr__Activity__c> inputData){
+        List<wrts_prcgvr__Activity__c> toUpdate = new List<wrts_prcgvr__Activity__c>();
+        for(wrts_prcgvr__Activity__c currAct : inputData){
+            system.debug(currAct.Type__c);
+            if(ESITIINTERMEDIHEROKU.contains(currAct.Type__c)){     //set degli scarti heroku
+                system.debug('order: '+currAct.Order__c+', case: '+currAct.Case__c);
+                if(string.isNotBlank(currAct.Case__c)){ //case popolato
+                    for(wrts_prcgvr__Activity__c relatedAct : [select id, Status__c from wrts_prcgvr__Activity__c where Case__c = :currAct.Case__c and Type__c in :ESITIINTERMEDIHEROKU and Id != :currAct.Id]){
+                        system.debug(relatedAct);
+                        relatedAct.Status__c='Chiusa';
+                        toUpdate.add(relatedAct);
+                    }
+                }else if(string.isNotBlank(currAct.Order__c)){ //order popolato
+                    for(wrts_prcgvr__Activity__c relatedAct : [select id, Status__c from wrts_prcgvr__Activity__c where Order__c = :currAct.Order__c and Type__c in :ESITIINTERMEDIHEROKU and Id != :currAct.Id]){
+                        system.debug(relatedAct);
+                        relatedAct.Status__c='Chiusa';
+                        toUpdate.add(relatedAct);
+                    }
+                }
+            }
+        }
+        if(!toUpdate.IsEmpty()){
+            system.debug('lista NON vuota -> Aggiorno'+toUpdate);
+            update toUpdate;
         }
     }
 }
