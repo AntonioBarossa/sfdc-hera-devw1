@@ -67,7 +67,7 @@
             if (state === "SUCCESS") {
                 
                 console.log(state + 'return : '+response.getReturnValue());
-                setTimeout(function(){ 
+              
                     var workspaceAPI = component.find("workspace");
                     
                     workspaceAPI.getFocusedTabInfo().then(function(response) {
@@ -76,7 +76,7 @@
                     })
                     .catch(function(error) {
                         console.log(error);
-                    });    }, 200);
+                    });    }
                     if (response.getReturnValue()) {
                         component.set('v.loaded', false);
                         
