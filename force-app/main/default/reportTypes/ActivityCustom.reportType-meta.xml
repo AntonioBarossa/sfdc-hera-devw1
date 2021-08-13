@@ -838,16 +838,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CallingNumber__c</field>
-            <table>wrts_prcgvr__Activity__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CalledNumber__c</field>
-            <table>wrts_prcgvr__Activity__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>ClientNumber__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
@@ -899,11 +889,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ServicePoint__c</field>
-            <table>wrts_prcgvr__Activity__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Priority__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
