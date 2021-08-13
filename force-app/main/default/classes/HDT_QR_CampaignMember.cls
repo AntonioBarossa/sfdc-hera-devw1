@@ -86,6 +86,7 @@ public inherited sharing class HDT_QR_CampaignMember {
             CampaignId,
             Campaign.Name,
             Status,
+            Campaign.Status,
             Campaign.Category__c,
             Campaign.Channel__c,
             Campaign.EndDate,
