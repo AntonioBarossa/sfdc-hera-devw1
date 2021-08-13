@@ -263,6 +263,34 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
+        
+        if (this.template.querySelector("[data-id='Agency__c']") !== null
+            && (this.template.querySelector("[data-id='Agency__c']").value === ''
+                || this.template.querySelector("[data-id='Agency__c']").value === null)) {
+            this.loading = false;
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Popolare il campo Agenzia',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+            return;
+        }
+
+        if (this.template.querySelector("[data-id='CommercialId']") !== null
+            && (this.template.querySelector("[data-id='CommercialId']").value === ''
+                || this.template.querySelector("[data-id='CommercialId']").value === null)) {
+            this.loading = false;
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Popolare il campo Venduto Da',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+            return;
+        }
 
         if (this.template.querySelector("[data-id='Channel__c']") !== null
             && (this.template.querySelector("[data-id='Channel__c']").value === ''

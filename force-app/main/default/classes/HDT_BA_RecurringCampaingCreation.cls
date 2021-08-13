@@ -25,8 +25,13 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
             campaign.StartDate= todayDate.addDays(7);
             campaign.GenerationPeriod__c=c.GenerationPeriod__c!=null?c.GenerationPeriod__c:0.0;
             System.debug(' c.GenerationPeriod__c'+ campaign.GenerationPeriod__c);
-            campaign.enddate = campaign.StartDate.addDays(7 * (Integer.valueOf(campaign.GenerationPeriod__c)));
-            c.DateNextGeneration__c = todayDate.addDays(7 *(Integer.valueOf( campaign.GenerationPeriod__c)));
+           // campaign.enddate = campaign.StartDate.addDays(7 * (Integer.valueOf(campaign.GenerationPeriod__c)));
+            if ( todayDate.addDays(7 *(Integer.valueOf( campaign.GenerationPeriod__c)))<campaign.enddate) {
+                c.DateNextGeneration__c = todayDate.addDays(7 *(Integer.valueOf( campaign.GenerationPeriod__c)));
+            }
+            else {
+                c.DateNextGeneration__c=null;
+            }
             campaign.RecurringCampaign__c=false;
             campaign.OriginalCampaign__c=c.Id;
             campaignIdTOQuery.add(c.id);
@@ -36,11 +41,12 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
         }
         List<Campaign> campaignChildToQuery = HDT_QR_Campaign.getCampaignChild(campaignIdTOQuery);
         for(Campaign c : campaignChildToQuery){
+         
             Campaign campaign= c.clone(false,true,false,true);
             campaign.Status='Pianificata';
             String startDateMonth = c.StartDate.month() < 9 ? '0'+ String.valueOf(c.StartDate.month()) : String.valueOf(c.StartDate.month());
             String startDateDay = c.StartDate.day() < 9 ? '0'+ String.valueOf(c.StartDate.day()) : String.valueOf(c.StartDate.day());
-            campaign.Name= c.Name +'_'+todayDate.year()+ todayDate.month() +startDateDay;
+            campaign.Name= c.Name +'_'+todayDate.year()+ startDateMonth +startDateDay;
        
             campaign.IsActive=false;
             campaign.GenerationPeriod__c=null;
@@ -54,7 +60,13 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
             campaign.DateNextGeneration__c = null;
             campaign.RecurringCampaign__c=false;
             campaign.OriginalCampaign__c=c.Id;
-            clonedCampaigns.add(campaign);
+            if ( campaign.enddate>mapCampaign.get(c.ParentId).endDate) {
+                campaign.enddate=mapCampaign.get(c.ParentId).endDate;
+            }
+            if (mapCampaign.get(c.ParentId).endDate>campaign.StartDate) {
+                clonedCampaigns.add(campaign);
+            }
+           
         }
         
     }
