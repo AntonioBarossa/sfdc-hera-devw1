@@ -240,8 +240,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 orderToUpdate.QualityCallUnique__c = true;
             }
 
-            orderToUpdate.ComfortCallDaysDue__c = comfortQualityList[0].DaysComfort__c;
-            orderToUpdate.DateComfortCall__c = Date.today();
+            if (comfortQualityList[0].ComfortEnabled__c) {
+                orderToUpdate.ComfortCallDaysDue__c = comfortQualityList[0].DaysComfort__c;
+                orderToUpdate.DateComfortCall__c = Date.today();
+            }
+
         }
 
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);

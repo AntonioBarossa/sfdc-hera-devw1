@@ -54,26 +54,12 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
 
         for (String ordId : orderActivityMap.keySet()) {
-            if ( orderMap.get(ordId).Contact__c != null && orderMap.get(ordId).CommissioningCampaign__c != null) {
-                List<CampaignMember> campaignMembers = campaignMemberQr.getCampaignMemberByCampaingAndContact(orderMap.get(ordId).CommissioningCampaign__c, orderMap.get(ordId).Contact__c);
-                CampaignMember campaignMember = new CampaignMember();
-                
-                if (!campaignMembers.isEmpty()) {
-                    campaignMember = campaignMembers[0];
-
-                    campaignMembersUpdate.add(new CampaignMember(
-                        Id = campaignMember.Id,
-                        RelatedActivity__c = orderActivityMap.get(ordId).Id
-                    ));
-
-                } else {
-                    campaignMembersInsert.add(new CampaignMember(
-                        ContactId = orderMap.get(ordId).Contact__c,
-                        CampaignId = orderMap.get(ordId).CommissioningCampaign__c,
-                        PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-                        RelatedActivity__c = orderActivityMap.get(ordId).Id
-                    ));
-                }
+            if ( orderMap.get(ordId).Contact__c != null) {
+                campaignMembersInsert.add(new CampaignMember(
+                    ContactId = orderMap.get(ordId).Contact__c,
+                    PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
+                    RelatedActivity__c = orderActivityMap.get(ordId).Id
+                ));
             }
         }
 
