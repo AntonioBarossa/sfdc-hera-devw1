@@ -4,7 +4,7 @@
     <active>true</active>
     <errorConditionFormula>IF(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Business&quot;), false,
 		
-			IF(AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,  OR( Not(BillingIsAddressVerified__c),AND(ISBLANK(VATNumber__c),NOT(IsWrongFiscalData__c)), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),false , true)
+			IF(AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;, OR( Not(BillingIsAddressVerified__c),AND(ISBLANK(VATNumber__c),NOT(IsWrongFiscalData__c)), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),true , false)
 		)</errorConditionFormula>
     <errorMessage>I Seguenti campi devono essere popolati :  Marcatura , Categoria , Partita IVA ,Indirizzo ,Silos</errorMessage>
 </ValidationRule>
