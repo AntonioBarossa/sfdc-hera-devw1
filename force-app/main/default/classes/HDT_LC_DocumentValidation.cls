@@ -61,6 +61,11 @@ public inherited sharing class HDT_LC_DocumentValidation {
                 ord.Phase__c = 'Documentazione Validata';
             }
 
+            List<wrts_prcgvr__Activity__c> activityQuality = HDT_QR_ActivityCustom.getRecordByOrderAndQuality(ord.id);
+            if (!activityQuality.isEmpty() && orderRetrive.ConfirmCustomerContract__c == 'Quality call') {
+                ord.Phase__c = orderRetrive.Phase__c;
+            }
+
         }
         System.debug('************:'+ord);
         orderSrv.updateRecord(ord);
