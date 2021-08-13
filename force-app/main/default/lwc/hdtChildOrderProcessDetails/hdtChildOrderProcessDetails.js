@@ -1296,8 +1296,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Impianto',
-                    'apiname': 'ImplantTypeFormula__c',
+                    'label': '',
+                    'apiname': 'ImplantType__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': false,
                     'disabled': true,
@@ -1532,16 +1532,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                // {
-                //     'label': 'Opzione richiesta',
-                //     'apiname': 'RequestOption__c',
-                //     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
-                //     'required': true,
-                //     // 'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_Subentro',
-                //     'disabled': true,
-                //     'value': '',
-                //     'processVisibility': ''
-                // },
+                {
+                    'label': 'Opzione richiesta',
+                    'apiname': 'RequestOption__c',
+                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta'),
+                    'required': true,
+                    // 'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_Subentro',
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
                 {
                     'label': 'Recapito telefonico',
                     'apiname': 'PhoneNumber__c',
