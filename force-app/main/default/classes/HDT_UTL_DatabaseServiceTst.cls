@@ -2,7 +2,7 @@
 * @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
 * @date 30/06/2021
 * @description Test Class for HDT_UTL_DatabaseServiceTst.cls
-* @history Lucas da Silva Fernandes – 30/06/2021 – Created class
+* @history Lucas da Silva Fernandes – 13/08/2021 – Updated class to increase coverage
 */
 
 @isTest
