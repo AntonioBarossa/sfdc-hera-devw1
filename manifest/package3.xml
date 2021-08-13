@@ -1,236 +1,107 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Individual.HDT_LeadFieldShower</members>
+        <members>wrts_prcgvr__Activity__c.CompleteActivity</members>
         <name>QuickAction</name>
     </types>
     <types>
-        <members>Order.HDT_RT_CambioOfferta</members>
-        <members>Order.HDT_RT_SwitchIn</members>
-        <members>Order.HDT_RT_VAS</members>
-        <members>Order.HDT_RT_Voltura</members>
-        <name>RecordType</name>
+        <members>Account_Service_Console</members>
+        <members>HDT_Activity_Default_Record_Page</members>
+        <members>HDT_General_Case_Record_Page</members>
+        <members>HDT_Order_Default</members>
+        <members>HDT_Order_Volture_Page</members>
+        <name>FlexiPage</name>
     </types>
     <types>
-        <members>Campaign-Campaign Layout</members>
-        <members>wrts_prcgvr__Activity__c-HDT_ComfortQuality</members>
-        <name>Layout</name>
+        <members>VasSupplierTable__c</members>
+        <name>CustomObject</name>
     </types>
     <types>
-        <members>HDT_ApexClasses</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>HDT_BA_QualityCall</members>
-        <members>HDT_BA_RecurringCampaingCreation</members>
-        <members>HDT_LC_ChildOrderProcessDetails</members>
-        <members>HDT_LC_GeolocationCommunity</members>
-        <members>HDT_LC_GeolocationCommunityTst</members>
-        <members>HDT_LC_RecordEditFormSales</members>
-        <members>HDT_LC_RecordEditFormSalesTst</members>
-        <members>HDT_LC_SaleActions</members>
-        <members>HDT_LC_SaleServiceContainerTst</members>
-        <members>HDT_QR_ActivityCustom</members>
-        <members>HDT_QR_UserQueries</members>
-        <members>HDT_SCH_RecurringCampaingCreation</members>
-        <members>HDT_TRH_Account</members>
-        <members>HDT_TRH_ActivityCustom</members>
-        <members>HDT_TRH_Asset</members>
-        <members>HDT_TRH_BillingProfile</members>
-        <members>HDT_TRH_Campaign</members>
-        <members>HDT_TRH_Case</members>
-        <members>HDT_TRH_Contact</members>
-        <members>HDT_TRH_DocumentSendTracking</members>
-        <members>HDT_TRH_DocumentalActivity</members>
-        <members>HDT_TRH_Individual</members>
-        <members>HDT_TRH_IndividualEmailResult</members>
-        <members>HDT_TRH_Lead</members>
-        <members>HDT_TRH_Opportunity</members>
-        <members>HDT_TRH_PushTracking</members>
-        <members>HDT_TRH_Quote</members>
-        <members>HDT_TRH_Sale</members>
-        <members>HDT_TRH_SmsTracking</members>
-        <members>HDT_TRH_SolTracking</members>
-        <members>HDT_TRH_Subscription</members>
-        <members>HDT_UTL_CompanyOwner</members>
-        <members>HDT_UTL_Constants</members>
-        <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_LeadProcess</members>
-        <members>HDT_UTL_MatrixCompatibility</members>
-        <members>HDT_UTL_OrderProcessAssignment</members>
-        <members>HDT_UTL_Utils</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>HDT_LCP_CampaignNewOverride</members>
-        <name>AuraDefinitionBundle</name>
+        <members>AssignmentRule__c</members>
+        <members>Queue__c</members>
+        <name>CustomTab</name>
     </types>
     <types>
         <members>hdtAdvancedSearch</members>
-        <members>hdtCampaignNewOverride</members>
         <members>hdtChildOrderProcessDetails</members>
-        <members>hdtCreateCampaign</members>
-        <members>hdtGeneralInfo</members>
+        <members>hdtManualActivityCreator</members>
+        <members>hdtReletedListAccount</members>
+        <members>hdtTargetObjectCreateForm</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_Campaign</members>
-        <name>ApexTrigger</name>
-    </types>
-    <types>
-        <members>HDT_CalcoloPreventivi.DomesticFixedQuote</members>
-        <members>HDT_CalcoloPreventivi.QF2I9TT</members>
-        <members>HDT_CalcoloPreventivi.QF2I9ZI</members>
-        <members>HDT_CalcoloPreventivi.QF2I9ZJ</members>
-        <members>HDT_CalcoloPreventivi.QF2I9ZK</members>
-        <members>HDT_CalcoloPreventivi.QF2I9ZL</members>
-        <members>HDT_CalcoloPreventivi.QF2I9ZU</members>
-        <members>HDT_CalcoloPreventivi.QF2I9ZV</members>
-        <members>HDT_CalcoloPreventivi.QF2I9ZW</members>
-        <members>HDT_CalcoloPreventivi.QF2I9ZX</members>
-        <members>HDT_CalcoloPreventivi.QF2I9ZY</members>
-        <members>HDT_CalcoloPreventivi.QF2I9ZZ</members>
-        <members>HDT_CalcoloPreventivi.QF2IA00</members>
-        <members>HDT_CalcoloPreventivi.QF2IA01</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0A</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0B</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0C</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0D</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0E</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0F</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0G</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0H</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0Q</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0R</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0S</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0T</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0U</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0V</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0W</members>
-        <members>HDT_CalcoloPreventivi.QF2IA0X</members>
-        <members>HDT_CalcoloPreventivi.QF2IA16</members>
-        <members>HDT_CalcoloPreventivi.QF2IA17</members>
-        <members>HDT_CalcoloPreventivi.QF2IA18</members>
-        <members>HDT_CalcoloPreventivi.QF2IA19</members>
-        <members>HDT_CalcoloPreventivi.QF2IA1A</members>
-        <members>HDT_CalcoloPreventivi.QF2IA1B</members>
-        <members>HDT_CalcoloPreventivi.QF2IA1C</members>
-        <members>HDT_CalcoloPreventivi.QF2IA1D</members>
-        <members>HDT_CalcoloPreventivi.QF2IA1M</members>
-        <members>HDT_CalcoloPreventivi.QF2IA1N</members>
-        <members>HDT_CalcoloPreventivi.QF2IA1O</members>
-        <members>HDT_CalcoloPreventivi.QF2IA1P</members>
-        <members>HDT_CalcoloPreventivi.QF2IA1Q</members>
-        <members>HDT_CalcoloPreventivi.QF2IA1R</members>
-        <members>HDT_CalcoloPreventivi.QF2IA1S</members>
-        <members>HDT_CalcoloPreventivi.QF2IA1T</members>
-        <members>HDT_CalcoloPreventivi.QF2IA22</members>
-        <members>HDT_CalcoloPreventivi.QF2IA23</members>
-        <members>HDT_CalcoloPreventivi.QF2IA24</members>
-        <members>HDT_CalcoloPreventivi.QF2IA25</members>
-        <members>HDT_CalcoloPreventivi.QF2IA26</members>
-        <members>HDT_CalcoloPreventivi.QF2IA27</members>
-        <members>HDT_CalcoloPreventivi.QF2IA28</members>
-        <members>HDT_CalcoloPreventivi.QF2IA29</members>
-        <members>HDT_CalcoloPreventivi.QF2IA2I</members>
-        <members>HDT_CalcoloPreventivi.QF2IA2J</members>
-        <members>HDT_CalcoloPreventivi.QF2IA2K</members>
-        <members>HDT_CalcoloPreventivi.QF2IA2L</members>
-        <members>HDT_CalcoloPreventivi.QF2IA2M</members>
-        <members>HDT_CalcoloPreventivi.QF2IA2N</members>
-        <members>HDT_CalcoloPreventivi.QF2IA2O</members>
-        <members>HDT_CalcoloPreventivi.QF2IA2P</members>
-        <members>HDT_CalcoloPreventivi.QF2IA2Y</members>
-        <members>HDT_CalcoloPreventivi.QF2IA2Z</members>
-        <members>HDT_CalcoloPreventivi.QF2IA30</members>
-        <members>HDT_CalcoloPreventivi.QF2IA31</members>
-        <members>HDT_CalcoloPreventivi.QF2IA32</members>
-        <members>HDT_CalcoloPreventivi.QF2IA33</members>
-        <members>HDT_CalcoloPreventivi.QF2IA34</members>
-        <members>HDT_CalcoloPreventivi.QF2IA35</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3E</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3F</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3G</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3H</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3I</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3J</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3K</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3L</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3U</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3V</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3W</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3X</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3Y</members>
-        <members>HDT_CalcoloPreventivi.QF2IA3Z</members>
-        <members>HDT_CalcoloPreventivi.QF2IA40</members>
-        <members>HDT_CalcoloPreventivi.QF2IA41</members>
-        <members>HDT_CalcoloPreventivi.QF2IA4A</members>
-        <members>HDT_CalcoloPreventivi.QF2IA4B</members>
-        <members>HDT_CalcoloPreventivi.QF2IA4C</members>
-        <members>HDT_CalcoloPreventivi.QF2IA4D</members>
-        <members>HDT_CalcoloPreventivi.QF2IA4E</members>
-        <members>HDT_CalcoloPreventivi.QF2IA4F</members>
-        <members>HDT_CalcoloPreventivi.QF2IA4G</members>
-        <members>HDT_CalcoloPreventivi.QF2IA4H</members>
-        <members>HDT_CalcoloPreventivi.QF2IA4Q</members>
-        <members>HDT_CalcoloPreventivi.QF2IA4R</members>
-        <members>HDT_CalcoloPreventivi.QF2IA4S</members>
-        <members>HDT_CalcoloPreventivi.QF2IA4T</members>
-        <members>HDT_CalcoloPreventivi.QF3217H</members>
-        <members>HDT_CalcoloPreventivi.QF3217J</members>
-        <members>HDT_CalcoloPreventivi.QF3217K</members>
-        <members>HDT_CalcoloPreventivi.QF3217L</members>
-        <members>HDT_CalcoloPreventivi.QF3217M</members>
-        <members>HDT_CalcoloPreventivi.QF3217N</members>
-        <members>HDT_CalcoloPreventivi.QF32180</members>
-        <members>HDT_CalcoloPreventivi.QF32181</members>
-        <members>HDT_CalcoloPreventivi.QF32182</members>
-        <members>HDT_CalcoloPreventivi.QF32183</members>
-        <members>HDT_CalcoloPreventivi.QF32184</members>
-        <members>HDT_CalcoloPreventivi.QF32185</members>
-        <members>HDT_CalcoloPreventivi.QF3218I</members>
-        <members>HDT_CalcoloPreventivi.QF3218J</members>
-        <members>HDT_CalcoloPreventivi.QF3218K</members>
-        <members>HDT_CalcoloPreventivi.QF3218L</members>
-        <members>HDT_CalcoloPreventivi.QF3218M</members>
-        <members>HDT_CalcoloPreventivi.QF3218N</members>
-        <members>HDT_CalcoloPreventivi.QF3218Y</members>
-        <members>HDT_CalcoloPreventivi.QF32191</members>
-        <members>HDT_CalcoloPreventivi.QF32198</members>
-        <members>HDT_CalcoloPreventivi.QF32199</members>
-        <members>HDT_CalcoloPreventivi.QF3219A</members>
-        <members>HDT_CalcoloPreventivi.QF3219B</members>
-        <members>HDT_CalcoloPreventivi.QF3219K</members>
-        <members>HDT_CalcoloPreventivi.QF3219L</members>
-        <members>HDT_CalcoloPreventivi.QF3219M</members>
-        <members>HDT_CalcoloPreventivi.QF3219N</members>
-        <members>HDT_CalcoloPreventivi.QF3219U</members>
-        <members>HDT_CalcoloPreventivi.QF3219V</members>
-        <members>HDT_CalcoloPreventivi.QF3219W</members>
-        <members>HDT_CalcoloPreventivi.QF3219X</members>
-        <members>HDT_CalcoloPreventivi.QF321A6</members>
-        <members>HDT_CalcoloPreventivi.QF321A7</members>
-        <members>HDT_CalcoloPreventivi.QF321A8</members>
-        <members>HDT_CalcoloPreventivi.QF321A9</members>
-        <members>HDT_CalcoloPreventivi.QF321AA</members>
-        <members>HDT_CalcoloPreventivi.QF321AD</members>
-        <members>HDT_CalcoloPreventivi.QF321AE</members>
-        <members>HDT_CalcoloPreventivi.QF321AH</members>
-        <members>HDT_CalcoloPreventivi.QF321AI</members>
-        <members>HDT_CalcoloPreventivi.QF321AL</members>
-        <members>HDT_CalcoloPreventivi.QF321AM</members>
-        <members>HDT_CalcoloPreventivi.QF321AP</members>
-        <members>HDT_CalcoloPreventivi.QF321AQ</members>
-        <members>HDT_CalcoloPreventivi.QF321AT</members>
-        <members>HDT_CalcoloPreventivi.QF32QZB</members>
-        <members>HDT_CalcoloPreventivi.QF32QZC</members>
-        <members>HDT_CalcoloPreventivi.QuoteFisseNonDomestiche</members>
-        <name>CustomMetadata</name>
+        <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
     </types>
     <types>
         <members>Account.CheckBusinessFields</members>
         <members>Account.CheckResidenzialeFields</members>
         <name>ValidationRule</name>
+    </types>
+    <types>
+        <members>Queue__c.All</members>
+        <name>ListView</name>
+    </types>
+    <types>
+        <members>Account-Account Layout</members>
+        <members>ContactPointEmail-Layout Email punto di contatto</members>
+        <members>ContactPointPhone-Layout Telefono punto di contatto</members>
+        <members>Queue__c-Coda Layout</members>
+        <members>wrts_prcgvr__Activity__c-HDT_Protocollo</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_LevelZeroSupervisor</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_LC_ReletedListAccount</members>
+        <members>HDT_LC_TargetObjectCreateForm</members>
+        <members>HDT_QR_AccountContactRelation</members>
+        <members>HDT_SRV_SalesCriteriaManager</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_TRH_ActivityCustom</members>
+        <members>HDT_UTL_MatrixCompatibility</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_Scarti</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>VasSupplierTable__c.VasCommunicationDate__c</members>
+        <members>VasSupplierTable__c.VasCommunicationProgressive__c</members>
+        <members>VasSupplierTable__c.VasDeliveryDate__c</members>
+        <members>VasSupplierTable__c.VasDisabledDate__c</members>
+        <members>VasSupplierTable__c.VasEffectiveDate__c</members>
+        <members>VasSupplierTable__c.VasPolicyNumber__c</members>
+        <members>VasSupplierTable__c.VasPracticeCode__c</members>
+        <members>VasSupplierTable__c.VasPracticeDate__c</members>
+        <members>VasSupplierTable__c.VasReplacementDate__c</members>
+        <members>VasSupplierTable__c.VasReplacementRequestDate__c</members>
+        <members>VasSupplierTable__c.VasReturnedProductDate__c</members>
+        <members>VasSupplierTable__c.VasServiceActivationDate__c</members>
+        <members>VasSupplierTable__c.VasShippingDate__c</members>
+        <members>VasSupplierTable__c.VasSupplierStatusDetails__c</members>
+        <members>VasSupplierTable__c.VasSupplierStatus__c</members>
+        <members>VasSupplierTable__c.VasSupplier__c</members>
+        <members>VasSupplierTable__c.VasTrackingNr__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>HDT_LCP_CampaignNewOverride</members>
+        <members>HDT_LCP_ManualActivityCreator</members>
+        <members>HDT_LCP_RunFlowFromAura</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>HDT_ActivityCustom</members>
+        <name>ApexTrigger</name>
     </types>
     <version>49</version>
 </Package>
