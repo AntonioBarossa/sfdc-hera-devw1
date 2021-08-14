@@ -50,15 +50,6 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
         for (Order ord : orders) {
 
-            // Boolean contains = false;
-
-            // for (String orderAlreadyAssigned : ordersAlreadyAssigned) {
-            //     if (orderAlreadyAssigned == '8017Y000001QdwSQAS') {
-            //         contains = true;
-            //         break;
-            //     }
-            // }
-
             system.debug('>> ordersAlreadyAssigned contains: ' + ord.Id + ' -> ' + ordersAlreadyAssigned.contains(ord.Id));
 
             if (!ordersAlreadyAssigned.contains(ord.Id) && (ord.ParentOrder__c != null && !ordersAlreadyAssigned.contains(ord.ParentOrder__c))) {
@@ -101,28 +92,54 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         insert callActivities;
         system.debug('>> callActivities after: ' + callActivities);
 
+        List<String> commissioningCampaignList = new List<String>();
+        List<String> contactList = new List<String>();
+        for (Order orderCm : orderMap.values()) {
+            if ( orderCm.Contact__c != null && orderCm.CommissioningCampaign__c != null) {
+                commissioningCampaignList.add(orderCm.CommissioningCampaign__c);
+                contactList.add(orderCm.Contact__c);
+            }
+        }
+        system.debug('>> commissioningCampaignList: ' + commissioningCampaignList);
+        system.debug('>> contactList: ' + contactList);
+
+        List<CampaignMember> campaignMembersBulk = new List<CampaignMember>();
+        if (!commissioningCampaignList.isEmpty() && !contactList.isEmpty()) {
+            campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(commissioningCampaignList, contactList);
+            system.debug('>> campaignMembersBulk: ' + campaignMembersBulk);
+        }
 
         for (String ordId : orderActivityMap.keySet()) {
             if ( orderMap.get(ordId).Contact__c != null && orderMap.get(ordId).CommissioningCampaign__c != null) {
-            //     List<CampaignMember> campaignMembers = campaignMemberQr.getCampaignMemberByCampaingAndContact(orderMap.get(ordId).CommissioningCampaign__c, orderMap.get(ordId).Contact__c);
-            //     CampaignMember campaignMember = new CampaignMember();
-                
-            //     if (!campaignMembers.isEmpty()) {
-            //         campaignMember = campaignMembers[0];
 
-            //         campaignMembersUpdate.add(new CampaignMember(
-            //             Id = campaignMember.Id,
-            //             RelatedActivity__c = orderActivityMap.get(ordId).Id
-            //         ));
+                Boolean isCmAlready = false;
+                String cmAlreadyId = null;
 
-            //     } else {
+                if (!campaignMembersBulk.isEmpty()) {
+                    for (CampaignMember cmAlready : campaignMembersBulk) {
+                        if (cmAlready.CampaignId == orderMap.get(ordId).CommissioningCampaign__c 
+                            && cmAlready.ContactId == orderMap.get(ordId).Contact__c) {
+                            isCmAlready = true;
+                            cmAlreadyId = cmAlready.Id;
+                            break;
+                        }
+                    }
+                }
+
+                if (isCmAlready && cmAlreadyId != null) {
+                    campaignMembersUpdate.add(new CampaignMember(
+                        Id = cmAlreadyId,
+                        RelatedActivity__c = orderActivityMap.get(ordId).Id
+                    ));
+
+                } else {
                     campaignMembersInsert.add(new CampaignMember(
                         ContactId = orderMap.get(ordId).Contact__c,
                         CampaignId = orderMap.get(ordId).CommissioningCampaign__c,
                         PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
                         RelatedActivity__c = orderActivityMap.get(ordId).Id
                     ));
-                // }
+                }
             }
         }
 
