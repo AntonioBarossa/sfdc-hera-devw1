@@ -12,6 +12,9 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     public void execute(Database.BatchableContext bc, List<Order> orders){
 
+        system.debug('>>orders: ' + orders);
+        system.debug('>>orders count: ' + orders.size());
+
         Map<String,wrts_prcgvr__Activity__c> mapActivitiesParent = new Map<String,wrts_prcgvr__Activity__c>(); //in order not to get duplicate activities associated to same Parent Order
 
         List<CampaignMember> campaignMembersInsert = new List<CampaignMember>();
@@ -22,69 +25,117 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
         Date dueDate = Date.today();
 
+        Set<String> orderIdsSet = new Set<String>();
+        for (Order order : orders) {
+            orderIdsSet.add(order.Id);
+            if (order.ParentOrder__c != null) {
+                orderIdsSet.add(order.ParentOrder__c);
+            }
+        }
+        
+
+        List<String> ordersIdsList = new List<String>();
+        ordersIdsList.addAll(orderIdsSet);
+        
+        List<wrts_prcgvr__Activity__c> activitiesAssigned = HDT_QR_ActivityCustom.getRecordByOrderListAndQuality(ordersIdsList);
+        system.debug('>> activitiesAssigned: ' + activitiesAssigned);
+        system.debug('>> activitiesAssigned size: ' + activitiesAssigned.size());
+        Set<Id> ordersAlreadyAssigned = new Set<Id>();
+        for (wrts_prcgvr__Activity__c activityAssigned : activitiesAssigned) {
+            ordersAlreadyAssigned.add(activityAssigned.Order__c);
+        }
+
+        system.debug('>> ordersAlreadyAssigned: ' + ordersAlreadyAssigned);
+        system.debug('>> ordersAlreadyAssigned size: ' + ordersAlreadyAssigned.size());
+
         for (Order ord : orders) {
-            if (dueDate.daysBetween(ord.WizardCompletedDate__c) > 50) { //check number of days passed after being signed as quality
-                ordersToUpdate.add(new Order(
-                    Id = ord.Id,
-                    QualityCall__c = false
-                ));
-            } else {
 
-                orderMap.put(ord.Id, ord);
+            // Boolean contains = false;
 
-                wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-                        RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
-                        Account__c = ord.AccountId,
-                        Type__c = 'Quality Call',
-                        Status__c = 'Creata'
-                );
+            // for (String orderAlreadyAssigned : ordersAlreadyAssigned) {
+            //     if (orderAlreadyAssigned == '8017Y000001QdwSQAS') {
+            //         contains = true;
+            //         break;
+            //     }
+            // }
 
-                if (ord.QualityCallUnique__c) {
-                    activity.Order__c = ord.ParentOrder__c;
-                    mapActivitiesParent.put(ord.ParentOrder__c, activity);
+            system.debug('>> ordersAlreadyAssigned contains: ' + ord.Id + ' -> ' + ordersAlreadyAssigned.contains(ord.Id));
+
+            if (!ordersAlreadyAssigned.contains(ord.Id) && (ord.ParentOrder__c != null && !ordersAlreadyAssigned.contains(ord.ParentOrder__c))) {
+                if (dueDate.daysBetween(ord.WizardCompletedDate__c) > 50) { //check number of days passed after being signed as quality
+                    ordersToUpdate.add(new Order(
+                        Id = ord.Id,
+                        QualityCall__c = false
+                    ));
                 } else {
-                    activity.Order__c = ord.Id;
-                    callActivities.add(activity);
+                    orderMap.put(ord.Id, ord);
+    
+                    wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
+                            RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
+                            Account__c = ord.AccountId,
+                            Type__c = 'Quality Call',
+                            Status__c = 'Creata'
+                    );
+    
+                    if (ord.QualityCallUnique__c) {
+                        activity.Order__c = ord.ParentOrder__c;
+                        mapActivitiesParent.put(ord.ParentOrder__c, activity);
+                    } else {
+                        activity.Order__c = ord.Id;
+                        callActivities.add(activity);
+                    }
+    
+                    orderActivityMap.put(ord.id, activity);
                 }
-
-                orderActivityMap.put(ord.id, activity);
             }
         }
 
         callActivities.addAll(mapActivitiesParent.values());
+        system.debug('>> ordersToUpdate before: ' + ordersToUpdate);
         update ordersToUpdate;
+        system.debug('>> ordersToUpdate after: ' + ordersToUpdate);
+
+        system.debug('>> callActivities before: ' + callActivities);
+        system.debug('>> callActivities before size: ' + callActivities.size());
+
         insert callActivities;
+        system.debug('>> callActivities after: ' + callActivities);
 
 
-        // for (String ordId : orderActivityMap.keySet()) {
-        //     if ( orderMap.get(ordId).Contact__c != null && orderMap.get(ordId).CommissioningCampaign__c != null) {
-        //         List<CampaignMember> campaignMembers = campaignMemberQr.getCampaignMemberByCampaingAndContact(orderMap.get(ordId).CommissioningCampaign__c, orderMap.get(ordId).Contact__c);
-        //         CampaignMember campaignMember = new CampaignMember();
+        for (String ordId : orderActivityMap.keySet()) {
+            if ( orderMap.get(ordId).Contact__c != null && orderMap.get(ordId).CommissioningCampaign__c != null) {
+            //     List<CampaignMember> campaignMembers = campaignMemberQr.getCampaignMemberByCampaingAndContact(orderMap.get(ordId).CommissioningCampaign__c, orderMap.get(ordId).Contact__c);
+            //     CampaignMember campaignMember = new CampaignMember();
                 
-        //         if (!campaignMembers.isEmpty()) {
-        //             campaignMember = campaignMembers[0];
+            //     if (!campaignMembers.isEmpty()) {
+            //         campaignMember = campaignMembers[0];
 
-        //             campaignMembersUpdate.add(new CampaignMember(
-        //                 Id = campaignMember.Id,
-        //                 RelatedActivity__c = orderActivityMap.get(ordId).Id
-        //             ));
+            //         campaignMembersUpdate.add(new CampaignMember(
+            //             Id = campaignMember.Id,
+            //             RelatedActivity__c = orderActivityMap.get(ordId).Id
+            //         ));
 
-        //         } else {
-        //             campaignMembersInsert.add(new CampaignMember(
-        //                 ContactId = orderMap.get(ordId).Contact__c,
-        //                 CampaignId = orderMap.get(ordId).CommissioningCampaign__c,
-        //                 PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-        //                 RelatedActivity__c = orderActivityMap.get(ordId).Id
-        //             ));
-        //         }
-        //     }
-        // }
+            //     } else {
+                    campaignMembersInsert.add(new CampaignMember(
+                        ContactId = orderMap.get(ordId).Contact__c,
+                        CampaignId = orderMap.get(ordId).CommissioningCampaign__c,
+                        PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
+                        RelatedActivity__c = orderActivityMap.get(ordId).Id
+                    ));
+                // }
+            }
+        }
 
-        // insert campaignMembersInsert;
+        system.debug('>>campaignMembersInsert: ' + campaignMembersInsert);
 
-        // if(!campaignMembersUpdate.isEmpty()){
-        //     update campaignMembersUpdate;
-        // }
+        if(!campaignMembersInsert.isEmpty()) {
+            insert campaignMembersInsert;
+        }
+
+        system.debug('>>campaignMembersUpdate: ' + campaignMembersUpdate);
+        if(!campaignMembersUpdate.isEmpty()){
+            update campaignMembersUpdate;
+        }
 
     }
     public void finish(Database.BatchableContext bc){
