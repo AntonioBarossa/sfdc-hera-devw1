@@ -43,7 +43,7 @@ public with sharing class HDT_LC_ReletedListAccount {
         if (String.isBlank(accountId)) {
             return null;
         }
-        return accoContRelQr.getRecordByAccountId(accountId);
+        return accoContRelQr.getContactsByAccountWithRoles(accountId);
 
     }
     @AuraEnabled

@@ -1,3 +1,10 @@
+/**
+ * @author Keltin Mesonjesi
+ * @date 17/03/2021
+ * @description HDT_LC_QuoteAmendContract Class
+ * @history Keltin Mesonjesi - 17/03/2021 - Created Class
+ */
+
 public inherited sharing class HDT_LC_QuoteAmendContract {
     
     private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();

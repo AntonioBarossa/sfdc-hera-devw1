@@ -362,6 +362,7 @@ export default class HdtAdvancedSearch extends LightningElement {
 
 @api
     submitFornitura(){
+        this.preSelectedRows=[];
         this.preloading = true;
         console.log('executing query search'+ this.accountid);
         console.log('additionlFilterFinal**********************************'+this.additionalFilterFinal)
@@ -370,8 +371,11 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
-                this.createTable(data);
-                this.formatTableHeaderColumns(data);
+                for(var i=0; i<this.originalData.length; i++){
+                    this.originalData[i].Id=i.toString();
+                }
+                this.createTable(this.originalData);
+                this.formatTableHeaderColumns(this.originalData);
                 this.submitButtonStatus = true;
                 this.openmodel = true;
                 this.isLoaded = true;
