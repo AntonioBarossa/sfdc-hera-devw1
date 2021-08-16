@@ -10,6 +10,7 @@ export default class HdtCreateCampaign extends LightningElement {
     objectApiName = 'Campaign';
     @track reitekFieldRequired = false;
     @track startDateFieldRequired = false;
+    @track easyRequired=false;
     @track targetingModeFieldRequired = false;
     @track campaignRecurringFields = true;
     @track campaignInboundFields = false;
@@ -68,6 +69,15 @@ export default class HdtCreateCampaign extends LightningElement {
         let channelField = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
         let recurringField = this.template.querySelector('.recurringField > lightning-input-field').value;
         this.statusField = event.detail.value;
+
+
+        if ( this.statusField!='Bozza' && channelField=='Telefonico Outbound' ) {
+            this.easyRequired=true;
+        }
+        else{
+            this.easyRequired=false;
+        }
+    
         if ("Campagna Contenitore" != categoryField && event.detail.value === 'Pianificata' && categoryField != null) {
             this.startDateFieldRequired = true;
             this.campaignInboundFields = categoryField === 'Campagna CRM' ? true : false;
@@ -79,7 +89,7 @@ export default class HdtCreateCampaign extends LightningElement {
             this.paperCampaignFields = channelField.includes('Cartaceo') ? true : false;
             this.campaignCommercialCodeFields = (channelField.includes('Bolletta') || categoryField === 'Campagna Marketing Cloud' || categoryField === 'Campagna CRM') ? true : false;
             this.recurringCampaignFieldsRequired = recurringField;
-        } else {
+        } else {  
             this.startDateFieldRequired = false;
             this.recurringCampaignFieldsRequired = false;
             this.reitekFieldRequired = false;
@@ -96,7 +106,7 @@ export default class HdtCreateCampaign extends LightningElement {
         let categoryField = this.template.querySelector('.categoryField > lightning-input-field').value;
         let channelField = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
         let recurringField = this.template.querySelector('.recurringField > lightning-input-field').value;
-        // this.statusField = event.detail.value;
+
         if ("Campagna Contenitore" != event.detail.value && this.statusField === 'Pianificata') {
             this.startDateFieldRequired = true;
             this.campaignInboundFields = categoryField === 'Campagna CRM' ? true : false;
@@ -166,6 +176,7 @@ export default class HdtCreateCampaign extends LightningElement {
 
     handleChangeAssignmentTye(event) {
         this.campaignMemberAssignmentRequired = (event.detail.value === 'Peso Percentuale' && this.statusField !== 'Bozza') ? true : false;
+
     }
 
     handleGenerationPeriodChange(event) {

@@ -30,6 +30,9 @@
                         <valueListItems>
                             <value>Account.Scheda_Cliente</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Account.Escalation</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -50,7 +53,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>8</value>
+                    <value>9</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <visibilityRule>
@@ -105,6 +108,9 @@
                     <valueList>
                         <valueListItems>
                             <value>Account.Catalogo_Servizi</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Escalation</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

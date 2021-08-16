@@ -65,13 +65,6 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
-        <fields>Name</fields>
-        <fields>ContactPoint</fields>
-        <fields>DataUsePurpose</fields>
-        <fields>PrivacyConsentStatus</fields>
-        <relatedList>ContactPointConsents</relatedList>
-    </relatedLists>
-    <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

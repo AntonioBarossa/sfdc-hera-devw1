@@ -1,7 +1,8 @@
 <template>
     <lightning-card  title="Nuova attività manuale">
+
         <div if:true={showSpinner} class="slds-is-relative">
-            <lightning-spinner variant="brand" size="large" alternative-text="Loading"></lightning-spinner>
+            <lightning-spinner></lightning-spinner>
         </div>
 
         <div if:true={showToast} class="slds-notify_container slds-is-relative">
@@ -20,14 +21,6 @@
                 </span>
                 <div class="slds-notify__content">
                     <h2 class="slds-text-heading_small ">{toastMessage}</h2>
-                </div>
-                <div class="slds-notify__close">
-                    <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close">
-                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
-                        </svg>
-                        <span class="slds-assistive-text">Close</span>
-                    </button>
                 </div>
             </div>
         </div>

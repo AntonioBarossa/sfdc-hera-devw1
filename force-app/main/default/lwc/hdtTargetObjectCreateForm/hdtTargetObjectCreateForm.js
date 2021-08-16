@@ -7,6 +7,7 @@ import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
 import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint2';
+import createServicePoinString from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoinString';
 import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint2';
 import getDistributorPointCode from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getDistributorPointCode';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
@@ -1200,7 +1201,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 								  
 																				  
         console.log('this.AllSubmittedFields ******************' + JSON.stringify(this.allSubmitedFields));
-        createServicePoint({servicePoint: this.allSubmitedFields, sale: this.sale}).then(data =>{
+
+        // createServicePoint({servicePoint: this.allSubmitedFields, sale: this.sale}).then(data =>{
+        /** Andrei Necsulescu (andrei.necsulescu@webresults.it)
+         * Passing the ServicePoint__c as a String as because otherwise decimal places are removed from the record */
+        createServicePoinString({servicePoint: JSON.stringify(this.allSubmitedFields), sale: this.sale}).then(data =>{
+
             console.log('this.AllSubmittedFields ******************' + JSON.stringify(this.allSubmitedFields));
             console.log('data ******************' + JSON.stringify(this.allSubmitedFields));
 
