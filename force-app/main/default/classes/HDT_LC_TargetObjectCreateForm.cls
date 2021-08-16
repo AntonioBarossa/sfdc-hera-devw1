@@ -170,6 +170,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             System.debug('******3');
             boolean isTransitorio = false;
             //s.id = listSale[0].opportunity__r.Sale__c;
+
             if(sa!=null){
                 if(sa.id!=null){
             s = saQr.getRecordById(sa.id,'id,Account__r.Category__c');
@@ -177,6 +178,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                 }
 
             }
+
             System.debug('******4' + isTransitorio);
             if(isTransitorio){
                 System.debug('******5');
@@ -253,6 +255,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     public static ServicePoint__c confirmServicePoint2(ServicePoint__c servicePoint, Boolean sap,Sale__c sale){
         system.debug('HDT_LC_TargetObjectCreateForm confirmServicePoint START');
         system.debug('ServicePoint : ' + servicePoint);
+        system.debug('sale : ' + sale);
         system.debug('isSap = ' +  sap);
         if(sap == false){
             system.debug('entra in updateRecord');
