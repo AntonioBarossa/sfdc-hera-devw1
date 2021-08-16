@@ -84,14 +84,6 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                         indexOfObjectToRemove.add(count);
                     }
                 }
-                if(w.objectType == 'Order'){
-                    for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
-                        if(f.name == 'TIPO_OPERAZIONE' && String.isNotBlank(f.value)){
-                            f.value=f.value.replaceAll( '\\s+', '');
-                            system.debug('value found '+f.value);
-                        }
-                    }
-                }
                 count++;
             }
             for(integer i : indexOffieldToRemove.keyset())

@@ -2,14 +2,21 @@
 * @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
 * @date 30/06/2021
 * @description Test Class for HDT_UTL_DatabaseServiceTst.cls
-* @history Lucas da Silva Fernandes – 30/06/2021 – Created class
+* @history Lucas da Silva Fernandes – 13/08/2021 – Updated class to increase coverage
 */
 
 @isTest
 public with sharing class HDT_UTL_DatabaseServiceTst {
+
+    private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
     
 	@TestSetup
 	static void setup() {
+
+        Id minimumAccessProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.MINIMUM_ACCESS_SALESFORCE);
+        User minimumAccessUser=HDT_UTL_DataFactoryTst.createInternalUser(minimumAccessProfileId, false);
+        minimumAccessUser.Email = 'sales@force.com';
+        insert minimumAccessUser;
 
         HDT_UTL_DataFactoryTst.createLead(1, true);
 
@@ -75,6 +82,20 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
 
         System.assertNotEquals(false, updateLead);
 
+        User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];
+
+        System.runAs(u) {
+
+            ld.Email = 'test@salesforce.com';
+
+            try {
+                updateLead = HDT_UTL_DatabaseService.updateSObject(ld);
+            }
+            catch (Exception e) {
+                System.debug('Exception: '+ e);
+            }
+        }
+
         Test.stopTest();
     }
 
@@ -111,6 +132,18 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
                    WHERE Email LIKE 'test@test.com'
                    LIMIT 1];
 
+        User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];
+
+        System.runAs(u) {
+
+            try {
+                Boolean deleteTest = HDT_UTL_DatabaseService.deleteSObject(ld.Id);
+            }
+            catch (Exception e) {
+                System.debug('Exception: '+ e);
+            }
+        }
+
         Boolean deleteSObject = HDT_UTL_DatabaseService.deleteSObject(ld.Id);
 
         System.assertEquals(true, deleteSObject);
@@ -134,6 +167,8 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
         System.assertEquals(false, deleteEmptyLead);
 
         System.assertNotEquals(true, deleteEmptyLead);
+
+        Test.stopTest();
     }
 
     @isTest

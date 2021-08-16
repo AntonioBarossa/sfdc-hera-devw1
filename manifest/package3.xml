@@ -1,107 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>wrts_prcgvr__Activity__c.CompleteActivity</members>
+        <members>wrts_prcgvr__Activity__c.HDT_OffertaApprovata</members>
+        <members>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</members>
         <name>QuickAction</name>
     </types>
     <types>
-        <members>Account_Service_Console</members>
-        <members>HDT_Activity_Default_Record_Page</members>
-        <members>HDT_General_Case_Record_Page</members>
-        <members>HDT_Order_Default</members>
-        <members>HDT_Order_Volture_Page</members>
-        <name>FlexiPage</name>
-    </types>
-    <types>
-        <members>VasSupplierTable__c</members>
-        <name>CustomObject</name>
-    </types>
-    <types>
-        <members>AssignmentRule__c</members>
-        <members>Queue__c</members>
-        <name>CustomTab</name>
-    </types>
-    <types>
-        <members>hdtAdvancedSearch</members>
-        <members>hdtChildOrderProcessDetails</members>
-        <members>hdtManualActivityCreator</members>
-        <members>hdtReletedListAccount</members>
-        <members>hdtTargetObjectCreateForm</members>
-        <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>Admin</members>
-        <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
-        <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
-        <name>Profile</name>
-    </types>
-    <types>
-        <members>Account.CheckBusinessFields</members>
-        <members>Account.CheckResidenzialeFields</members>
-        <name>ValidationRule</name>
-    </types>
-    <types>
-        <members>Queue__c.All</members>
-        <name>ListView</name>
-    </types>
-    <types>
-        <members>Account-Account Layout</members>
-        <members>ContactPointEmail-Layout Email punto di contatto</members>
-        <members>ContactPointPhone-Layout Telefono punto di contatto</members>
-        <members>Queue__c-Coda Layout</members>
-        <members>wrts_prcgvr__Activity__c-HDT_Protocollo</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>HDT_LevelZeroSupervisor</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>HDT_LC_ReletedListAccount</members>
+        <members>HDT_BA_ComfortCall</members>
+        <members>HDT_LC_AdvancedSearch</members>
+        <members>HDT_LC_CampaignMemberAssigmentItem</members>
+        <members>HDT_LC_CampaignMemberAssigmentItemTst</members>
+        <members>HDT_LC_CampaignsController</members>
+        <members>HDT_LC_ChildOrderProcessTst</members>
+        <members>HDT_LC_ConfigurePaymentMethods</members>
+        <members>HDT_LC_ConfigureProduct</members>
+        <members>HDT_LC_QuoteAmendContract</members>
+        <members>HDT_LC_QuoteAmendContractTst</members>
         <members>HDT_LC_TargetObjectCreateForm</members>
-        <members>HDT_QR_AccountContactRelation</members>
-        <members>HDT_SRV_SalesCriteriaManager</members>
-        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_QR_Account</members>
+        <members>HDT_QR_Activity</members>
+        <members>HDT_QR_Order</members>
         <members>HDT_TRH_ActivityCustom</members>
-        <members>HDT_UTL_MatrixCompatibility</members>
-        <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_Scarti</members>
+        <members>HDT_TRH_CampaignMemberAssigmentItem</members>
+        <members>HDT_TRH_CampaignMemberAssigmentItemTst</members>
+        <members>HDT_UTL_CampaignMemberTst</members>
+        <members>HDT_UTL_Constants</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_DatabaseServiceTst</members>
+        <members>HDT_UTL_SwtichInProcess</members>
         <members>HDT_WS_SalesApexCalloutAction</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>VasSupplierTable__c.VasCommunicationDate__c</members>
-        <members>VasSupplierTable__c.VasCommunicationProgressive__c</members>
-        <members>VasSupplierTable__c.VasDeliveryDate__c</members>
-        <members>VasSupplierTable__c.VasDisabledDate__c</members>
-        <members>VasSupplierTable__c.VasEffectiveDate__c</members>
-        <members>VasSupplierTable__c.VasPolicyNumber__c</members>
-        <members>VasSupplierTable__c.VasPracticeCode__c</members>
-        <members>VasSupplierTable__c.VasPracticeDate__c</members>
-        <members>VasSupplierTable__c.VasReplacementDate__c</members>
-        <members>VasSupplierTable__c.VasReplacementRequestDate__c</members>
-        <members>VasSupplierTable__c.VasReturnedProductDate__c</members>
-        <members>VasSupplierTable__c.VasServiceActivationDate__c</members>
-        <members>VasSupplierTable__c.VasShippingDate__c</members>
-        <members>VasSupplierTable__c.VasSupplierStatusDetails__c</members>
-        <members>VasSupplierTable__c.VasSupplierStatus__c</members>
-        <members>VasSupplierTable__c.VasSupplier__c</members>
-        <members>VasSupplierTable__c.VasTrackingNr__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>HDT_LCP_CampaignNewOverride</members>
-        <members>HDT_LCP_ManualActivityCreator</members>
-        <members>HDT_LCP_RunFlowFromAura</members>
+        <members>HDT_LCP_CampaignToAccountList</members>
+        <members>HDT_LCP_Confirmation</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>HDT_ActivityCustom</members>
-        <name>ApexTrigger</name>
+        <members>hdtCampaignToContactList</members>
+        <members>hdtConfigurePaymentMethods</members>
+        <members>hdtConfirmationAccount</members>
+        <members>hdtContactCampaignTab</members>
+        <members>hdtTargetObjectCreateForm</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>AttivitaOffertaApprovata</members>
+        <members>AttivitaOffertaNonApprovata</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_CompDL</members>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_ContattiSelf</members>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_ModAppuntamento</members>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_Obbligatorieta</members>
+        <name>ValidationRule</name>
     </types>
     <version>49</version>
 </Package>
