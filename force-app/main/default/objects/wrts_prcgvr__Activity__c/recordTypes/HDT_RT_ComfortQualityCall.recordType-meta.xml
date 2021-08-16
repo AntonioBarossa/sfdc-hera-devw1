@@ -840,6 +840,14 @@
             <fullName>Presa appuntamento in corso</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Esitata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Esitata</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SuspensionReason__c</picklist>
