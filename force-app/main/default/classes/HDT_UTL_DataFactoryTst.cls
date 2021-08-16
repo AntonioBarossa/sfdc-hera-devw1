@@ -42,12 +42,12 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			Lead ld=new Lead();
 
-			ld.FirstName='FirstNameTest'+i;
-			ld.LastName='LastNameTest';
+			ld.FirstName='FirstNameTest' + i;
+			ld.LastName='LastNameTest' + i;
 			ld.CompanyOwner__c='MMS';
-			ld.Company='CompanyTest';
+			ld.Company='CompanyTest' + i;
 			ld.Status='New';
-			ld.Email='test@test.com';
+			ld.Email='test@test.com' + i;
 			ld.Birthdate__c=date.today();
 			ld.Gender__c='Maschio';
 			ld.Birthcity__c='Roma';
@@ -893,6 +893,31 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return campaignList;
+	}
+
+	//** [START MOD 2021-08-13] @Author Andrei Necsulescu  - WR (andrei.necsulescu@webresults.it) @Description: Added Method to Create a record of CampaignMember
+	public static List<CampaignMember> createCampaignMember(Integer amount, Boolean doInsert, String campaignId, String leadId, String contactId) {
+
+		List<CampaignMember> campaignMembers = new List<CampaignMember>();
+
+		for (Integer i = 0; i < amount; i++) {
+			
+			campaignMembers.add(new CampaignMember(
+				CampaignId = campaignId,
+				LeadId = leadId,
+				ContactId = contactId
+			));
+
+		}
+
+		if (doInsert) {
+
+			insert campaignMembers;
+
+		}
+
+		return campaignMembers;
+
 	}
 
 	//** [START MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem

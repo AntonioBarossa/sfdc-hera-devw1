@@ -21,8 +21,13 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         // @Picchiri 14.06.21 Credit innesco credi check al cambio dello stato        
         HDT_UTL_ActivityCustomProcess.creditCheckKoPrecedenteCliente(trigger.new,trigger.old);
 
+        //cancel orders from quality call activities with 'No esito' and ActiveMonitoring__c = true
+        HDT_UTL_ActivityCustomProcess.cancelQualityNoResult(trigger.new,trigger.old);
+
     }
 
-    public override void afterInsert(){}   
+    public override void afterInsert(){
+        HDT_UTL_Scarti.checkForEsitiIntermedi(trigger.new);
+    }   
 
 }
