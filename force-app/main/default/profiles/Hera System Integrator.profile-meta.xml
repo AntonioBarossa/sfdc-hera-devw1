@@ -144,6 +144,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_MatrixCompatibilityMap__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_IntegrationObject__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -254,10 +258,6 @@
         <enabled>true</enabled>
         <name>CS_DependecyPhaseCheck__c</name>
     </customSettingAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>true</enabled>
-        <name>HDT_MatrixCompatibilityMap__mdt</name>
-    </customMetadataTypeAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>HDT_WebServiceConfiguration__c</name>
