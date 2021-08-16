@@ -65,7 +65,7 @@ public inherited sharing class HDT_LC_SaleActions {
         
         //2 - Update Opportunity stage
         opportunitySrv.checkReadAccess('StageName');
-        List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName, CampaignEleggibilityGroup__c', 'Proposal');
+        List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName, CampaignEleggibilityGroup__c', 'Negotiation');
         
         for (Opportunity opp : opps) {
             opp.StageName = 'Closed Won';
@@ -77,7 +77,7 @@ public inherited sharing class HDT_LC_SaleActions {
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleSaveEvent(sale.Id); //quotes that have a status of not rejected
 
         for (SBQQ__Quote__c quote : quoteList) {
-            quote.SBQQ__Status__c = 'Accepted';
+            quote.SBQQ__Status__c = 'Chiusa';
             quote.SBQQ__Ordered__c = true;
             quote.SBQQ__LineItemsGrouped__c = true;
             quote.SBQQ__OrderByQuoteLineGroup__c = true;

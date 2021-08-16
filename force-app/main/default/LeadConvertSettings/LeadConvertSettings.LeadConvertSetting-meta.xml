@@ -40,6 +40,10 @@
             <outputField>CustomerMarking__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>IsMigrated__c</inputField>
+            <outputField>IsMigrated__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>ContactReason__c</inputField>
             <outputField>ContactReason__c</outputField>
         </mappingFields>
@@ -86,6 +90,10 @@
         <mappingFields>
             <inputField>FiscalCode__c</inputField>
             <outputField>FiscalCode__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>CompanyOwner__c</inputField>
+            <outputField>CompanyOwner__c</outputField>
         </mappingFields>
         <mappingFields>
             <inputField>Company__c</inputField>

@@ -1,0 +1,26 @@
+<template>
+    <div>
+        
+        <!-- <lightning-icon icon-name="standard:account" alternative-text="Account" title="Account"></lightning-icon> -->
+        <template if:true={yesCampaignMembers}>
+           
+
+            <h1><b>Vuoi chiudere il tab dell'Account {currentAccount.Name} ?</br>
+                    Le campagne non esistate verranno esitate in "Non Proposto Auto"</b> </h1>
+        </template>
+        <template if:true={noCampaignMembers}>
+            <h1><b>Vuoi chiudere il tab dell'Account {currentAccount.Name} ?</b> </h1>
+        </template>
+    </div>
+    <lightning-layout multiple-rows="true" pull-to-boundary="small">
+     
+            <template if:true={campaignMembers}>
+
+                <template for:each={campaignMembers} for:item="c">
+                    <lightning-layout-item padding="around-small" key={c.Id} size="5">
+                        <c-hdt-contact-campaign-tab campaignmember={c} redirect=false></c-hdt-contact-campaign-tab>
+                    </lightning-layout-item>
+                </template>
+            </template>
+    </lightning-layout>
+</template>
