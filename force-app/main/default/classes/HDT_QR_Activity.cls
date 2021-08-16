@@ -12,7 +12,7 @@ public inherited sharing class HDT_QR_Activity {
         activitySrv.checkReadAccess(fields);
         String type = 'Approvazione Offerte';
         String query = 'SELECT '+ fields +
-                ' FROM wrts_prcgvr__Activity__c WHERE Type__c=: type AND Account__c =: idAcc  ORDER BY CreatedDate desc LIMIT 1  WITH SECURITY_ENFORCED';
+                ' FROM wrts_prcgvr__Activity__c WHERE Type__c=: type AND Account__c =: idAcc  ORDER BY CreatedDate desc  WITH SECURITY_ENFORCED';
 
         List<wrts_prcgvr__Activity__c> activityList = Database.query(query);
         
