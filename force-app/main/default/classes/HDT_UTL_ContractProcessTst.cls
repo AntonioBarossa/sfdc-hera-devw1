@@ -37,7 +37,7 @@ public with sharing class HDT_UTL_ContractProcessTst {
         System.debug('orderList: '+orderList);
         HDT_UTL_ContractProcess.orderCompletataPhaseManagement(cttList);
 
-        System.assertEquals(orderList[0].Id, cttList[0].SBQQ__Order__c);
-        System.assertNotEquals(null, cttList[0].SBQQ__Order__c);
+        System.assertEquals(orderList[0].Id, cttList[0].SBQQ__Order__c, 'Order Id Match');
+        System.assertNotEquals(null, cttList[0].SBQQ__Order__c, 'Order Id mismatch');
     }
 }
