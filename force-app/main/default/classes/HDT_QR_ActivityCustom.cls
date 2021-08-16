@@ -285,6 +285,23 @@ public inherited sharing class HDT_QR_ActivityCustom {
             ];
         }
 
+        public static List<wrts_prcgvr__Activity__c> getRecordByOrderListAndQuality(List<Id> orderList){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Contact__c,
+                    order__c,
+                    order__r.ParentOrder__c,
+                    RecordTypeId,
+                    Status__c
+                    FROM wrts_prcgvr__Activity__c
+                    where 
+                    RecordType.developername = 'HDT_RT_ComfortQualityCall'
+                    AND order__C IN :orderList
+                    WITH SECURITY_ENFORCED 
+            ];
+        }
+
         public static List<wrts_prcgvr__Activity__c> getRecordsForCancelQualityNoResult(List<Id> idlist){
             return [SELECT 
                     Id,
