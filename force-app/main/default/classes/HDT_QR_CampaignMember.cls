@@ -370,16 +370,30 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
-public List<CampaignMember> getCampaignMemberByCampaingAndContact(String campaign, String contact){
-    return [
-        SELECT Id,
-        Contact.AccountId,
-        CampaignId,
-        Status
-        FROM CampaignMember 
-        WHERE ContactId = :contact
-        AND CampaignId = :campaign
-        WITH SECURITY_ENFORCED
-    ];
-}
+    public List<CampaignMember> getCampaignMemberByCampaingAndContact(String campaign, String contact){
+        return [
+            SELECT Id,
+            Contact.AccountId,
+            CampaignId,
+            Status
+            FROM CampaignMember 
+            WHERE ContactId = :contact
+            AND CampaignId = :campaign
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<CampaignMember> getCampaignMemberByCampaingAndContactInBulk(List<String> campaign, List<String> contact){
+        return [
+            SELECT Id,
+            ContactId,
+            Contact.AccountId,
+            CampaignId,
+            Status
+            FROM CampaignMember 
+            WHERE ContactId IN :contact
+            AND CampaignId IN :campaign
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }
