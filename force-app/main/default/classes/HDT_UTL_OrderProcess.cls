@@ -28,13 +28,27 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for(Order o: oldOrderList){
             mapOrder.put(o.Id, o);
         }
+
+       List<AgentMatrix__c> agentMatrixList = HDT_QR_AgentMatrix.getAgentMatrixIsMonitoringTrue();
+       List<String> isMonitoringList = new List<String>();
+       for (AgentMatrix__c agentMatrix : agentMatrixList) {
+           isMonitoringList.add(agentMatrix.AgencyCode__c);
+       }
+
         for (Order order : newOrderList) {
             Order oldOrder= mapOrder.get(order.Id);
             if(order.Phase__c!=oldOrder.Phase__c&&order.Phase__c=='Comunicazione Verso Heroku'&&order.isTransition__c==true){
                 order.Phase__c='Esportazione VS Siebel';
             }
+
+            if(order.Phase__c!=oldOrder.Phase__c 
+                && oldOrder.Phase__c == 'Documentazione validata' 
+                && order.Phase__c=='Comunicazione Verso Heroku'
+                && isMonitoringList.contains(order.AgencyCode__c)){
+                order.Phase__c='In attesa di quality call';
+            }
+
         }
-        
         
     }   
      
