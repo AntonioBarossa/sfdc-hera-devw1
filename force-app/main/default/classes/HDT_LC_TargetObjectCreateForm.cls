@@ -134,7 +134,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                 System.debug('******7');
                 HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
                 System.debug('******8:' + resp);
-                if(resp != null && !resp.result.isEmpty()){
+                if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                         servicePo.SwitchInWinback__c = true;
                     }
@@ -179,8 +179,8 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             if(isTransitorio){
                 System.debug('******5');
                 HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
-                System.debug('******6:' + resp.result[0].status);
-                if(resp != null && !resp.result.isEmpty()){
+                //System.debug('******6:' + resp.result[0].status);
+                if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                         servicePo.SwitchInWinback__c = true;
                         System.debug('******7:' + resp.result[0].status);
@@ -222,8 +222,8 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             if(isTransitorio){
                 System.debug('******5');
                 HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
-                System.debug('******6:' + resp.result[0].status);
-                if(resp != null && !resp.result.isEmpty()){
+                //System.debug('******6:' + resp.result[0].status);
+                if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                         servicePo.SwitchInWinback__c = true;
                         System.debug('******7:' + resp.result[0].status);
