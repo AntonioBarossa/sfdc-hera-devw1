@@ -170,9 +170,13 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             System.debug('******3');
             boolean isTransitorio = false;
             //s.id = listSale[0].opportunity__r.Sale__c;
-            if(sa.Id!=null){
-                s = saQr.getRecordById(sa.id,'id,Account__r.Category__c');
-                isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
+
+            if(sa!=null){
+                if(sa.id!=null){
+            s = saQr.getRecordById(sa.id,'id,Account__r.Category__c');
+                	isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
+                }
+
             }
 
             System.debug('******4' + isTransitorio);
