@@ -2193,6 +2193,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Preventivo scaduto</fullName>
             <default>false</default>
         </values>
