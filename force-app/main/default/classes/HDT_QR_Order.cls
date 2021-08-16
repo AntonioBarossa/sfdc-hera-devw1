@@ -203,7 +203,8 @@ public inherited sharing class HDT_QR_Order {
             IsWinback__c, 
             IsBillableVas__c,
             ChannelTransCode__c,
-            IsActivationDeferred__c
+            IsActivationDeferred__c,
+            EffectiveDate__c                                // [ 13/08/2021 gabriele.rota@webresults.it - Calcolo Data Invio al SII ]
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
