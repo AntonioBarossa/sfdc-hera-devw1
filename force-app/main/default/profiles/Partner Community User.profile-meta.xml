@@ -9108,6 +9108,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ContactName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ContactSurname__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
