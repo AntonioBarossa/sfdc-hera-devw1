@@ -20,6 +20,21 @@ import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessD
 import ConsumptionsCorrectionType__c from '@salesforce/schema/Case.ConsumptionsCorrectionType__c';
 import SystemCapacity__c from '@salesforce/schema/Case.SystemCapacity__c';
 
+class fieldData{
+    constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value) {
+        this.label = label;
+        this.apiname=apiname;
+        this.typeVisibility = typeVisibility;
+        this.required=required;
+        this.disabled=disabled;
+        this.processVisibility=processVisibility;
+        this.value=value;
+    }
+    static justLabelAndVisibilityEx(label,typeVisibility){
+        return new MyClass(label,null,typeVisibility);
+    }
+    
+}
 export default class hdtChildOrderProcessDetails extends LightningElement {
 
     @api order;
@@ -1505,33 +1520,21 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 //     'value': '',
                 //     'processVisibility': ''
                 // },
-                {
-                    'label': 'ConnectionType__c',
-                    'apiname': 'ConnectionType__c',
-                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'),
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Esecuzione Anticipata',
-                    'apiname': 'RecessNotice__c',
-                    'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
-                    'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Rinuncia Diritto di Ripensamento',
-                    'apiname': 'WaiverRightAfterthought__c',
-                    'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
+                // {
+                //     'label': 'ConnectionType__c',
+                //     'apiname': 'ConnectionType__c',
+                //     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'),
+                //     'required': false,
+                //     'disabled': true,
+                //     'value': '',
+                //     'processVisibility': ''
+                // },
+                new fieldData('ConnectionType__c','ConnectionType__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, true, '',''),
+                new fieldData('Esecuzione Anticipata','RecessNotice__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
+                new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, false, '',''),
+                new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
+
+
                 // {
                 //     'label': 'Opzione richiesta',
                 //     'apiname': 'RequestOption__c',
@@ -1656,7 +1659,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'MeterType__c',
                     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt') ,
                     'required': true,
-                    // 'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
@@ -1669,7 +1671,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
-                }
+                },
+
+
                ]
             },
             {
@@ -2062,53 +2066,23 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: '',
-                label: 'Riepilogo Dati',
-                name: 'riepilogoDatiVas',
+                step: 5,
+                label: 'Dettaglio Dati',
+                name: 'dettaglioImpianto',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
                 data: [
-                    {
-                        'label': 'Contratto di riferimento',
-                        'apiname': 'ConfirmCustomerContract__c',
-                        'typeVisibility': true,
-                        'required': false,
-                        'disabled': true,
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Ordine di riferimento',
-                        'apiname': 'OrderReferenceNumber',
-                        'typeVisibility': true,
-                        'required': false,
-                        'disabled': true,
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Società di vendita',
-                        'apiname': 'SalesCompany__c',
-                        'typeVisibility': true,
-                        'required': false,
-                        'disabled': true,
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Campagna',
-                        'apiname': 'Campaign__c',
-                        'typeVisibility': true,
-                        'required': false,
-                        'disabled': true,
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Categoria Cliente',
-                        'apiname': 'CategoriaCliente__c',
-                        'typeVisibility': true,
-                        'required': false,
-                        'disabled': true,
-                        'processVisibility': ''
-                    }
+                    //constructor(label, apiname, typeVisibility, required, disabled, processVisibility)
+                    new fieldData('Ordine di riferimento','OrderReferenceNumber', true, false, true, ''),
+                    new fieldData('Società di vendita','SalesCompany__c', true, false, true, ''),
+                    new fieldData('Campagna','Campaign__c', true, false, true, ''),
+                    new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
+                    new fieldData('POD/PDR','ServicePointCode__c', true, false, true, ''),
+                    new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
+                    new fieldData('Sottotipo VAS','VASSubtype__c', true, false, true, ''),
+                    new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, false, ''),
+                    new fieldData('Azione Commerciale','CommercialAction__c', true, false, false, '')
                 ]
             },
             {
