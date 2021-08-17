@@ -31,6 +31,8 @@ public with sharing class HDT_UTL_ContractProcessTst {
     @isTest
     public static void testOrderCompletataPhaseManagement() {
 
+        Test.startTest();
+
         List<Contract> cttList = [SELECT Id, SBQQ__Order__c, BillingProfile__c FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
         System.debug('cttList: '+cttList);
         List<Order> orderList = [SELECT Id, BillingProfile__c FROM Order WHERE Name = 'testOrderName0' LIMIT 1];
@@ -39,5 +41,7 @@ public with sharing class HDT_UTL_ContractProcessTst {
 
         System.assertEquals(orderList[0].Id, cttList[0].SBQQ__Order__c, 'Order Id Match');
         System.assertNotEquals(null, cttList[0].SBQQ__Order__c, 'Order Id mismatch');
+
+        Test.stopTest();
     }
 }

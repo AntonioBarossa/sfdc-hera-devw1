@@ -990,8 +990,139 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.isValidFields = true;
         let concatBillingErrorFields = '';
         let concatAddressErrorFields = '';
+        let concatPointErrorFields = '';
+        if(this.allSubmitedFields['ServicePointCode__c']!=undefined){
 
+        if(this.allSubmitedFields['CommoditySector__c']=='Energia Elettrica'){
+            
+            if(this.allSubmitedFields['ServicePointCode__c']===undefined ||this.allSubmitedFields['ServicePointCode__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Codice Punto, ');
+            }
+            if(this.allSubmitedFields['CommoditySector__c']===undefined ||this.allSubmitedFields['CommoditySector__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
+            }
+            if(this.allSubmitedFields['Distributor__c']===undefined ||this.allSubmitedFields['Distributor__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
+            }
+            if(this.allSubmitedFields['SupplyType__c']===undefined ||this.allSubmitedFields['SupplyType__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
+            }
+            if(this.allSubmitedFields['ImplantType__c']===undefined ||this.allSubmitedFields['ImplantType__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Impianto, ');
+            }
+            if(this.allSubmitedFields['PowerContractual__c']===undefined ||this.allSubmitedFields['PowerContractual__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Mercato di provenienza, ');
+            }
+            if(this.allSubmitedFields['PowerAvailable__c']===undefined ||this.allSubmitedFields['PowerAvailable__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Potenza Disponibile, ');
+            }
+            if(this.allSubmitedFields['PowerContractual__c']===undefined ||this.allSubmitedFields['PowerContractual__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Potenza Contrattuale, ');
+            }
+            if(this.allSubmitedFields['PlugPresence__c']===undefined ||this.allSubmitedFields['PlugPresence__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Presenza Allaccio, ');
+            }
+            if(this.allSubmitedFields['MeterType__c']===undefined ||this.allSubmitedFields['MeterType__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipo Apparecchiatura, ');
+            }
+    
+            }
+            else{
+                
+                if(this.allSubmitedFields['ServicePointCode__c']===undefined ||this.allSubmitedFields['ServicePointCode__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Codice Punto, ');
+                }
+                if(this.allSubmitedFields['CommoditySector__c']===undefined ||this.allSubmitedFields['CommoditySector__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
+                }
+                if(this.allSubmitedFields['Distributor__c']===undefined ||this.allSubmitedFields['Distributor__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
+                }
+                if(this.allSubmitedFields['SupplyType__c']===undefined ||this.allSubmitedFields['SupplyType__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
+                }
+                if(this.allSubmitedFields['MarketOrigin__c']===undefined ||this.allSubmitedFields['MarketOrigin__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Mercato di provenienza, ');
+                }
+                if(this.allSubmitedFields['WithdrawalClass__c']===undefined ||this.allSubmitedFields['WithdrawalClass__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Classe di prelievo, ');
+                }
+                if(this.allSubmitedFields['UseCategory__c']===undefined ||this.allSubmitedFields['UseCategory__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Categoria uso, ');
+                }
+            }
+            if (concatPointErrorFields !== '') {
+                isValid = false;
+                this.isValidFields = false;
+                this.alert('Dati tabella','Per poter salvare popolare i seguenti campi : ' + concatPointErrorFields.slice(0, -2),'error')
+    
+            }
+        }else{
+            if(this.servicePointRetrievedData['CommoditySector__c']=='Energia Elettrica'){
+            
+                if(this.servicePointRetrievedData['ServicePointCode__c']===undefined ||this.servicePointRetrievedData['ServicePointCode__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Codice Punto, ');
+                }
+                if(this.servicePointRetrievedData['CommoditySector__c']===undefined ||this.servicePointRetrievedData['CommoditySector__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
+                }
+                if(this.servicePointRetrievedData['Distributor__c']===undefined ||this.servicePointRetrievedData['Distributor__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
+                }
+                if(this.servicePointRetrievedData['SupplyType__c']===undefined ||this.servicePointRetrievedData['SupplyType__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
+                }
+                if(this.servicePointRetrievedData['ImplantType__c']===undefined ||this.servicePointRetrievedData['ImplantType__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Tipologia Impianto, ');
+                }
+                if(this.servicePointRetrievedData['PowerContractual__c']===undefined ||this.servicePointRetrievedData['PowerContractual__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Mercato di provenienza, ');
+                }
+                if(this.servicePointRetrievedData['PowerAvailable__c']===undefined ||this.servicePointRetrievedData['PowerAvailable__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Potenza Disponibile, ');
+                }
+                if(this.servicePointRetrievedData['PowerContractual__c']===undefined ||this.servicePointRetrievedData['PowerContractual__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Potenza Contrattuale, ');
+                }
+                if(this.servicePointRetrievedData['PlugPresence__c']===undefined ||this.servicePointRetrievedData['PlugPresence__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Presenza Allaccio, ');
+                }
+                if(this.servicePointRetrievedData['MeterType__c']===undefined ||this.servicePointRetrievedData['MeterType__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Tipo Apparecchiatura, ');
+                }
+        
+                }
+                else{
 
+                    if(this.servicePointRetrievedData['ServicePointCode__c']===undefined ||this.servicePointRetrievedData['ServicePointCode__c']==='' ){
+                        concatPointErrorFields = concatPointErrorFields.concat('Codice Punto, ');
+                    }
+                    if(this.servicePointRetrievedData['CommoditySector__c']===undefined ||this.servicePointRetrievedData['CommoditySector__c']==='' ){
+                        concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
+                    }
+                    if(this.servicePointRetrievedData['Distributor__c']===undefined ||this.servicePointRetrievedData['Distributor__c']==='' ){
+                        concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
+                    }
+                    if(this.servicePointRetrievedData['SupplyType__c']===undefined ||this.servicePointRetrievedData['SupplyType__c']==='' ){
+                        concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
+                    }
+                    if(this.servicePointRetrievedData['MarketOrigin__c']===undefined ||this.servicePointRetrievedData['MarketOrigin__c']==='' ){
+                        concatPointErrorFields = concatPointErrorFields.concat('Mercato di provenienza, ');
+                    }
+                    if(this.servicePointRetrievedData['WithdrawalClass__c']===undefined ||this.servicePointRetrievedData['WithdrawalClass__c']==='' ){
+                        concatPointErrorFields = concatPointErrorFields.concat('Classe di prelievo, ');
+                    }
+                    if(this.servicePointRetrievedData['UseCategory__c']===undefined ||this.servicePointRetrievedData['UseCategory__c']==='' ){
+                        concatPointErrorFields = concatPointErrorFields.concat('Categoria uso, ');
+                    }
+                }
+                if (concatPointErrorFields !== '') {
+                    isValid = false;
+                    this.isValidFields = false;
+                    this.alert('Dati tabella','Per poter salvare popolare i seguenti campi : ' + concatPointErrorFields.slice(0, -2),'error')
+
+                }
+        }
         //Validate address
         
         if(this.theRecord['Indirizzo Estero']==false){
@@ -1044,24 +1175,31 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.alert('Errore','Codice POD/PDR non valido','error');
         }
         //(JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).substring(0,2)!='IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica')
-        if((this.isNumeric(this.allSubmitedFields['ServicePointCode__c'])!=true && this.allSubmitedFields['CommoditySector__c'] == 'Gas')){
-            isValid = false;
-            this.isValidFields = false;
 
-            this.alert('Errore','Codice POD/PDR non valido','error');
-        }
         if(this.allSubmitedFields['ServicePointCode__c']!=undefined){
             if(this.allSubmitedFields['ServicePointCode__c'].substring(0,2)!='IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica'){
                 isValid = false;
                 this.isValidFields = false;
-                this.alert('Errore','Codice POD/PDR non valido','error');
+                this.alert('Errore','Codice POD non valido','error');
             }
+        if((this.isNumeric(this.allSubmitedFields['ServicePointCode__c'])!=true && this.allSubmitedFields['CommoditySector__c'] == 'Gas')){
+            isValid = false;
+            this.isValidFields = false;
+
+                this.alert('Errore','Codice PDR non valido','error');
+        }
 
         }else{
-            if(this.servicePointRetrievedData['ServicePointCode__c'].substring(0,2)!='IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica'){
+            if(this.servicePointRetrievedData['ServicePointCode__c'].substring(0,2)!='IT' && this.servicePointRetrievedData['CommoditySector__c'] == 'Energia Elettrica'){
                 isValid = false;
                 this.isValidFields = false;
                 this.alert('Errore','Codice POD/PDR non valido','error');
+            }
+            if((this.isNumeric(this.servicePointRetrievedData['ServicePointCode__c'])!=true && this.servicePointRetrievedData['CommoditySector__c'] == 'Gas')){
+                isValid = false;
+                this.isValidFields = false;
+    
+                this.alert('Errore','Codice PDR non valido','error');
             }
         }
         

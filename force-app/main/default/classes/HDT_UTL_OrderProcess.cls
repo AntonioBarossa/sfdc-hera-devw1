@@ -28,13 +28,39 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for(Order o: oldOrderList){
             mapOrder.put(o.Id, o);
         }
+
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+         
+        Set<Id> ordersWithActivityQuality = new Set<Id>();
+
+        for (wrts_prcgvr__Activity__c actQual : HDT_QR_ActivityCustom.getRecordByOrderListAndQuality(mapOrder.keySet())) {
+            ordersWithActivityQuality.add(actQual.Order__c);
+        }
+
         for (Order order : newOrderList) {
             Order oldOrder= mapOrder.get(order.Id);
             if(order.Phase__c!=oldOrder.Phase__c&&order.Phase__c=='Comunicazione Verso Heroku'&&order.isTransition__c==true){
                 order.Phase__c='Esportazione VS Siebel';
             }
+
+            if(order.Phase__c!=oldOrder.Phase__c 
+                && oldOrder.Phase__c == 'Documentazione validata' 
+                && order.Phase__c == 'Comunicazione Verso Heroku'
+                && ordersWithActivityQuality.contains(order.Id)
+                && isMonitoringList.contains(order.AgencyCode__c)){
+                order.Phase__c = 'In attesa di quality call';
+            }
+
+            if(order.Phase__c!=oldOrder.Phase__c 
+                && oldOrder.Phase__c == 'In attesa validazione' 
+                && order.Phase__c == 'Documentazione validata'
+                && !ordersWithActivityQuality.contains(order.Id)
+                && isMonitoringList.contains(order.AgencyCode__c)){
+                system.debug('Quality monitoring not changing phase');
+                order.Phase__c = 'In attesa validazione';
+            }
+
         }
-        
         
     }   
      
