@@ -385,6 +385,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Priority__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Process__c</picklist>
         <values>
             <fullName>Aggiunta Attacco</fullName>
@@ -1113,6 +1136,10 @@
         <values>
             <fullName>Annullata</fullName>
             <default>false</default>
+        </values>
+        <values>
+            <fullName>Aperta</fullName>
+            <default>true</default>
         </values>
         <values>
             <fullName>Appuntamento confermato</fullName>
@@ -1978,12 +2005,24 @@
     <picklistValues>
         <picklist>wrts_prcgvr__Status__c</picklist>
         <values>
+            <fullName>Aperta</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Chiusa</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Completed</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Not Started</fullName>
-            <default>true</default>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
 </RecordType>

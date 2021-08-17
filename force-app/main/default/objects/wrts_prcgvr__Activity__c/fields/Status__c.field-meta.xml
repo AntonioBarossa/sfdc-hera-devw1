@@ -101,6 +101,11 @@
                 <default>false</default>
                 <label>Non Esitata</label>
             </value>
+            <value>
+                <fullName>Aperta</fullName>
+                <default>false</default>
+                <label>Aperta</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
