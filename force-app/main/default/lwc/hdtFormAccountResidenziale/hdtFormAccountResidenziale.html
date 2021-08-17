@@ -62,12 +62,12 @@
                                     </div>
                                     <div
                                         class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
-                                      
-                                            <lightning-combobox data-id="SocietaSilos" name="SocietaSilos"
-                                                label="Società Silos" placeholder="Società Silos"
-                                                options={companyOptions}  required>
-                                            </lightning-combobox>
-                                   
+
+                                        <lightning-combobox data-id="SocietaSilos" name="SocietaSilos"
+                                            label="Società Silos" placeholder="Società Silos" options={companyOptions}
+                                            required>
+                                        </lightning-combobox>
+
 
                                     </div>
                                 </div>
@@ -126,34 +126,38 @@
                                     </div>
                                 </div>
                                 <div class="slds-col slds-grid">
-                                    <div class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <div
+                                        class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
 
                                         <lightning-input type="text" data-id="birthPlace" name="birthPlace"
                                             label="Comune di nascita"></lightning-input>
                                     </div>
                                     <div
-                                    class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                        class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
 
                                         <lightning-combobox data-id="role" name="role" label="Ruolo"
-                                            placeholder="Seleziona Ruolo" options={roleOptions} required> </lightning-combobox>
+                                            placeholder="Seleziona Ruolo" options={roleOptions} required>
+                                        </lightning-combobox>
                                     </div>
 
                                 </div>
 
-                               
+
 
 
 
 
                                 <div class="slds-col slds-grid">
-                                    <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <div
+                                        class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
 
                                         <lightning-input type="text" data-id="fiscalCode" label="Codice Fiscale"
                                             required> </lightning-input>
 
                                     </div>
 
-                                    <div  class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                    <div
+                                        class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
 
 
                                         <lightning-input type="text" data-id="customerType" value={customerType}
@@ -176,13 +180,45 @@
                             </div>
                         </lightning-card>
 
-                        <lightning-card title="Indirizzi">
+                        <lightning-card title="Domicilio">
                             <div class="slds-p-left_x-large slds-p-right_x-large">
-                                <c-hdt-target-object-address-fields objectapiname={currentObjectApiName}>
+
+
+                                <c-hdt-target-object-address-fields objectapiname={currentObjectApiName}
+                                    oncallpasstoparent={passToParent} provincia={varProvincia} comune={varComune}
+                                    cap={varCap} via={varVia} civico={varCivico} estenscivico={varEstensCivico}
+                                    codcomunesap={varCodComuneSAP} codstradariosap={varCodStradarioSAP}
+                                    codicelocalita={varCodiceLocalita} localita={varLocalita} nazione={varNazione}
+                                    flagverificato={varFlagVerificato} onchange={handleCopyAddRes}>
                                 </c-hdt-target-object-address-fields>
                             </div>
 
                         </lightning-card>
+
+
+                        <lightning-input type="toggle" label="Copia indirizzo" name="CopyAdd" data-id="CopyAdd"
+                            disabled={disableCopyAdd} onchange={handleCopyAddRes}></lightning-input>
+
+
+
+
+                        <template if:true={disableCopyRes}>
+
+
+                            <lightning-card title="Residenza">
+                                <div class="slds-p-left_x-large slds-p-right_x-large">
+                                    <c-hdt-target-object-address-fields-res objectapiname={currentObjectApiName}>
+                                    </c-hdt-target-object-address-fields-res>
+                                </div>
+
+                            </lightning-card>
+
+
+                        </template>
+
+
+
+
                         <!-- <div class="slds-m-top_x-large">
                             <h3
                                 class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container">

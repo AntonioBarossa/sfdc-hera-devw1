@@ -33,7 +33,6 @@ public with sharing class HDT_QR_PermissionSet {
             FROM PermissionSetAssignment 
             WHERE PermissionSet.Name = :permissionSetName //ex. 'HDT_SuperUserCPQ'
             AND AssigneeId = :assigneeId //userId
-            WITH SECURITY_ENFORCED
         ];
     }
 }
