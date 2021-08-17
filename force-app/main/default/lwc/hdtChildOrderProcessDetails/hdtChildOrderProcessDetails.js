@@ -1230,6 +1230,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'value': '',
                         'processVisibility': ''
                     },
+                    {
+                        'label': 'Voltura Tecnica',
+                        'apiname': 'IsTechnicalTransfer__c',
+                        'typeVisibility': true,
+                        'required': false,
+                        'disabled': false,
+                        'value': '',
+                        'processVisibility': ''
+                    }
                 ]
             },
             {
