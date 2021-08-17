@@ -46,41 +46,30 @@
             <controllingFieldValue>Campagna CRM</controllingFieldValue>
             <controllingFieldValue>Campagna Outbound</controllingFieldValue>
             <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
-            <controllingFieldValue>Campagna Contenitore</controllingFieldValue>
             <valueName>Nessuno</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Campagna CRM</controllingFieldValue>
-            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
-            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
-            <controllingFieldValue>Campagna Contenitore</controllingFieldValue>
-            <valueName>Generico</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Campagna CRM</controllingFieldValue>
-            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
-            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
-            <controllingFieldValue>Campagna Contenitore</controllingFieldValue>
-            <valueName>Per singolo Campaign Member</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Campagna CRM</controllingFieldValue>
-            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
-            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
-            <controllingFieldValue>Campagna Contenitore</controllingFieldValue>
-            <valueName>Porta un amico</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Campagna CRM</controllingFieldValue>
-            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
-            <controllingFieldValue>Campagna Contenitore</controllingFieldValue>
             <valueName>Pubblico</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Campagna CRM</controllingFieldValue>
-            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
-            <controllingFieldValue>Campagna Contenitore</controllingFieldValue>
             <valueName>Convenzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
+            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
+            <valueName>Generico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
+            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
+            <valueName>Per singolo Campaign Member</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
+            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
+            <valueName>Porta un amico</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
