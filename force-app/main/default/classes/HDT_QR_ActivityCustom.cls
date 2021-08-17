@@ -309,6 +309,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     Account__r.ActiveMonitoring__c,
                     Contact__c,
                     order__c,
+                    order__r.AgencyCode__c,
                     RecordTypeId,
                     RecordType.DeveloperName,
                     Status__c
