@@ -13089,6 +13089,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.QuotationNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.ReadingCustomerDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
