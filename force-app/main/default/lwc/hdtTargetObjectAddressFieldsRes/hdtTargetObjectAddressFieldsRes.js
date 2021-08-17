@@ -7,7 +7,7 @@ import getAddressComune from '@salesforce/apex/HDT_WS_HerokuAddressSearch.callSe
 import getAddressInd from '@salesforce/apex/HDT_WS_HerokuAddressSearch.callServiceInd';
 import getAddressRev from '@salesforce/apex/HDT_WS_HerokuAddressSearch.callServiceVer';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
-export default class hdtTargetObjectAddressFields extends LightningElement {
+export default class hdtTargetObjectAddressFieldsRes extends LightningElement {
     @api objectapiname;
     @api fieldsAddressObject=[];
     @api wrapObjectInput= [];
@@ -78,7 +78,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     disableCodViaSap=false;
     @api visibleCopiaResidenza=false;
     @api visibleSelezioneIndirizzi=false;
-    @api disableFlagVerificato=false;
+    disableFlagVerificato=false;
     boolProvincia=false;
     boolCap = false;
     boolComune = false;
@@ -1650,14 +1650,9 @@ disabledverifyFieldsAddressDisabled(){
                     this.theRecord['Codice Comune SAP']= data['prestazione'][0].cityCode;
                     this.theRecord['Codice Via Stradario SAP']= data['prestazione'][0].streetCode;
                     this.theRecord['Flag Verificato'] = true;
-                 
-                    this.dispEvent(true);
-               
                 }
                 else{
                     console.log("ErrorrrrrreeeeeeeeeEeee:" + JSON.stringify(data));
-                    this.dispEvent(false);
-
                 }
                 
     
@@ -1675,14 +1670,7 @@ disabledverifyFieldsAddressDisabled(){
             detail: this.hasAddressBeenVerified
           }));*/
     }
-    dispEvent(param){
-        const custEvent = new CustomEvent(
-            'callpasstoparent', {
-                detail: param 
-            });
-        this.dispatchEvent(custEvent);
-    }
-    
+
     handleKeyPress(event){
 													  
 
