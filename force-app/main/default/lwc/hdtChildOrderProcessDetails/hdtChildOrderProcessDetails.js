@@ -3,8 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateProcessStep from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.updateProcessStep';
 //INIZIO SVILUPPI EVERIS
 import updateOrder from '@salesforce/apex/HDT_LC_SelfReading.updateOrder';
-import { updateRecord } from 'lightning/uiRecordApi';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import { getRecord, getFieldValue, updateRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 import  voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck';
 import getDates from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getDates';
 import sendAdvanceDocumentation from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendAdvanceDocumentation';
@@ -753,7 +752,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         let nextIndex = this.availableSteps[currentSectionIndex - 1].name === 'reading'
         ? currentSectionIndex - 2
         : currentSectionIndex - 1
-        //FINE SVILUPPI EVERIS
+        //FINE SVILUPPI EVERIS 
 
         let previousSectionStep = this.availableSteps[nextIndex].step;
 
@@ -767,6 +766,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.currentSectionObjectApi = this.availableSteps[nextIndex].objectApiName;
             this.currentSectionRecordId = this.availableSteps[nextIndex].recordId;
             this.sectionDataToSubmit = {};
+            if(this.currentSection?.name==="creditCheck"){
+                getRecordNotifyChange([{recordId: this.order.Id}]);
+            }
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
 
         }).catch(error => {
