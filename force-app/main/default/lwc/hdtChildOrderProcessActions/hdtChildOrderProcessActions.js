@@ -99,8 +99,10 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         if (this.lastStepData != null) {
             let lastStepFields = this.lastStepData;
-
-            orderToSave = {...lastStepFields, ...this.order};
+            
+            //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
+            //orderToSave = {...lastStepFields, ...this.order};
+            orderToSave = {...this.order, ...lastStepFields};
 
             if (!this.validateLastStepFields(lastStepFields)) {
                 return;
@@ -109,6 +111,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         } else {
             orderToSave = this.order;
         }
+        console.log("@orderToSave "+JSON.stringify(orderToSave));
 
         calculateRate({ord: orderToSave}).then(data2 =>{
             if(!data2){
