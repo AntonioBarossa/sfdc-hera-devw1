@@ -52,6 +52,11 @@
                                     <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_ComfortQualityCall</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Non Esitata</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                     </valueList>
