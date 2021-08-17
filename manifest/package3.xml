@@ -1,60 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>wrts_prcgvr__Activity__c.HDT_OffertaApprovata</members>
-        <members>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</members>
-        <name>QuickAction</name>
-    </types>
-    <types>
-        <members>HDT_BA_ComfortCall</members>
-        <members>HDT_LC_AdvancedSearch</members>
-        <members>HDT_LC_CampaignMemberAssigmentItem</members>
-        <members>HDT_LC_CampaignMemberAssigmentItemTst</members>
-        <members>HDT_LC_CampaignsController</members>
-        <members>HDT_LC_ChildOrderProcessTst</members>
-        <members>HDT_LC_ConfigurePaymentMethods</members>
-        <members>HDT_LC_ConfigureProduct</members>
-        <members>HDT_LC_QuoteAmendContract</members>
-        <members>HDT_LC_QuoteAmendContractTst</members>
-        <members>HDT_LC_TargetObjectCreateForm</members>
-        <members>HDT_QR_Account</members>
-        <members>HDT_QR_Activity</members>
-        <members>HDT_QR_Order</members>
-        <members>HDT_TRH_ActivityCustom</members>
-        <members>HDT_TRH_CampaignMemberAssigmentItem</members>
-        <members>HDT_TRH_CampaignMemberAssigmentItemTst</members>
-        <members>HDT_UTL_CampaignMemberTst</members>
-        <members>HDT_UTL_Constants</members>
-        <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_DatabaseServiceTst</members>
-        <members>HDT_UTL_SwtichInProcess</members>
-        <members>HDT_WS_SalesApexCalloutAction</members>
+        <members>HDT_LC_FormAccountResidenziale</members>
+        <members>HDT_QR_OrderItem</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_LCP_CampaignToAccountList</members>
-        <members>HDT_LCP_Confirmation</members>
-        <name>AuraDefinitionBundle</name>
+        <members>HDT_ActivityType</members>
+        <members>HDT_LoginChannel</members>
+        <name>GlobalValueSet</name>
     </types>
     <types>
-        <members>hdtCampaignToContactList</members>
-        <members>hdtConfigurePaymentMethods</members>
-        <members>hdtConfirmationAccount</members>
-        <members>hdtContactCampaignTab</members>
+        <members>Campaign.CodeManagementModel__c</members>
+        <members>wrts_prcgvr__Activity__c.Quote__c</members>
+        <members>wrts_prcgvr__Activity__c.Sale__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtCreateCampaign</members>
+        <members>hdtFormAccountResidenziale</members>
+        <members>hdtTargetObjectAddressFields</members>
+        <members>hdtTargetObjectAddressFieldsRes</members>
         <members>hdtTargetObjectCreateForm</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>AttivitaOffertaApprovata</members>
-        <members>AttivitaOffertaNonApprovata</members>
-        <name>Flow</name>
-    </types>
-    <types>
-        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_CompDL</members>
-        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_ContattiSelf</members>
-        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_ModAppuntamento</members>
-        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_Obbligatorieta</members>
-        <name>ValidationRule</name>
+        <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
     </types>
     <version>49</version>
 </Package>
