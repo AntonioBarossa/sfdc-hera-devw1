@@ -584,8 +584,8 @@ handleAddressValuesIfSap(servicepointretrieveddata){
             this.theRecord['CodiceComuneSAP'] = this.codComuneSAP;
             this.theRecord['CodiceViaStradarioSAP'] = this.codStradarioSAP;
             this.theRecord['IndirizzoEstero'] = this.IndEstero;
-            this.theRecord['Flag Verificato'] = this.FlagVerificato;
-
+           // this.theRecord['Flag Verificato'] = this.FlagVerificato;
+           this.theRecord['Flag Verificato'] = true;
             
 
         this.preloading = false;
