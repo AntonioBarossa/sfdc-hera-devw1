@@ -101,6 +101,11 @@
                 <default>false</default>
                 <label>Non Esitata</label>
             </value>
+            <value>
+                <fullName>Sospesa</fullName>
+                <default>false</default>
+                <label>Sospesa</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
