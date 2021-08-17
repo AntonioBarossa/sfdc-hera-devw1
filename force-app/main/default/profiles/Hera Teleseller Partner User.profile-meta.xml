@@ -13089,6 +13089,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.QuotationNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.ReadingCustomerDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -19675,6 +19680,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.FriendCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.IsBillableVas__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

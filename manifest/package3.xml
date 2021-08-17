@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_LC_FormAccountResidenziale</members>
-        <members>HDT_QR_OrderItem</members>
+        <members>AgentMatrix__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Order.HDT_RT_AttivazioneConModifica</members>
+        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
+        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_LC_ChildOrderProcessActions</members>
+        <members>HDT_LC_ConfigureProduct</members>
+        <members>HDT_UTL_SwtichInProcess</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_ActivityType</members>
-        <members>HDT_LoginChannel</members>
-        <name>GlobalValueSet</name>
-    </types>
-    <types>
-        <members>Campaign.CodeManagementModel__c</members>
-        <members>wrts_prcgvr__Activity__c.Quote__c</members>
-        <members>wrts_prcgvr__Activity__c.Sale__c</members>
+        <members>Order.Phase__c</members>
+        <members>Order.QuotationNumber__c</members>
         <name>CustomField</name>
     </types>
     <types>
+        <members>hdtChildOrderProcessActions</members>
         <members>hdtChildOrderProcessDetails</members>
-        <members>hdtCreateCampaign</members>
-        <members>hdtFormAccountResidenziale</members>
         <members>hdtTargetObjectAddressFields</members>
-        <members>hdtTargetObjectAddressFieldsRes</members>
-        <members>hdtTargetObjectCreateForm</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
