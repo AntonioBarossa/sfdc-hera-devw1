@@ -34,7 +34,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         queryString = '%' + queryString + '%';
         List<Map<String,String>> results = new List<Map<String,String>>();
 
-        for(AggregateResult result : [SELECT Group__c, Agency__c FROM Queue__c WHERE Group__c LIKE :queryString GROUP BY Group__c, Agency__c]) {
+        for(AggregateResult result : [SELECT Group__c, Agency__c FROM Queue__c WHERE Group__c LIKE :queryString WITH SECURITY_ENFORCED GROUP BY Group__c, Agency__c]) {
             results.add(new Map<String,String>{
                 'name' => (String) result.get('Group__c'),
                 'agency' => (String) result.get('Agency__c')
@@ -46,7 +46,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
 
     @AuraEnabled
     public static User getCurrentUser() {
-        return [SELECT Id, UserCompany__c, LoginChannel__c, CreatorGroup__c FROM User WHERE Id = :UserInfo.getUserId()];
+        return [SELECT Id, UserCompany__c, LoginChannel__c, CreatorGroup__c FROM User WHERE Id = :UserInfo.getUserId() WITH SECURITY_ENFORCED];
     }
 
     @AuraEnabled
@@ -59,7 +59,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         List<Map<String,String>> results = new List<Map<String,String>>();
         queryString = '%' + queryString + '%';
         User currentUser = getCurrentUser();
-        List<PermissionSetAssignment> assignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :currentUser.Id AND PermissionSet.Name = 'HDT_OmniSupervisorPermissionSet'];
+        List<PermissionSetAssignment> assignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :currentUser.Id AND PermissionSet.Name = 'HDT_OmniSupervisorPermissionSet' WITH SECURITY_ENFORCED];
         if(!assignments.isEmpty()) {
             for(User user : [SELECT Id, Name, LoginChannel__c, CreatorGroup__c, UserCompany__c FROM User WHERE UserCompany__c = :currentUser.UserCompany__c AND Name LIKE :queryString WITH SECURITY_ENFORCED]) {
                 results.add(new Map<String,String>{
@@ -90,7 +90,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
     @AuraEnabled
     public static String reassignActivity(String recordId, String assigneeId, String wrapperId, String workGroup, String agency) {
         try {
-            wrts_prcgvr__Activity__c activity = [SELECT Id, Type__c, ParentActivity__c, ParentActivity__r.Order__r.Agency__c FROM wrts_prcgvr__Activity__c WHERE Id = : recordId];
+            wrts_prcgvr__Activity__c activity = [SELECT Id, Type__c, ParentActivity__c, ParentActivity__r.Order__r.Agency__c FROM wrts_prcgvr__Activity__c WHERE Id = : recordId WITH SECURITY_ENFORCED];
             if(activity.Type__c == 'Gestione Agenzia' && activity.ParentActivity__c != null) {
                 if(
                     activity.ParentActivity__r.Order__c != null &&
