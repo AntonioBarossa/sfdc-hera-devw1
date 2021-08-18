@@ -36,16 +36,20 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         }
 
         HDT_UTL_CaseProcess.updateServiceRequest(trigger.new, trigger.old);
-        
+        //Checks Mandatory Activity //BUG Start HRDTR-00_HRAWRM-264 18/08/2021  RT
+
+         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
+         .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
+        //BUG End HRDTR-00_HRAWRM-264 18/08/2021 
         Boolean skipForCancellation = HDT_UTL_CaseProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
         if(!skipForCancellation){
         //Checks Phase Transition
             ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
                     .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
         }
-        //Checks Mandatory Activity
-        ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
-                .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
+         //Checks Mandatory Activity
+        // ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
+        //         .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
 
         HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Case'); 
 
