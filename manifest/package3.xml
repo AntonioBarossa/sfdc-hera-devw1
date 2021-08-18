@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>Account.HDT_VasOrders</members>
+        <name>QuickAction</name>
+    </types>
+    <types>
+        <members>Account-Account Layout</members>
+        <members>Account-CPQ Account Layout Service Console</members>
         <members>Account-Partner Community</members>
-        <members>AccountContactRelation-Account Contact Relationship Layout</members>
-        <members>wrts_prcgvr__Activity__c-HDT_Protocollo</members>
+        <members>BillingProfile__c-Billing Profile Layout</members>
+        <members>BillingProfile__c-Profilo di fatturazione</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_BA_Dependencies</members>
-        <members>HDT_BA_DependenciesTestWithData</members>
+        <members>HDT_LC_AccountVasOrdersView</members>
+        <members>HDT_LC_ActivityDetail</members>
+        <members>HDT_LC_ApplyBillingProfileModalTst</members>
+        <members>HDT_LC_BillingProfileForm</members>
         <members>HDT_LC_ChildOrderProcessPrecheck</members>
-        <members>HDT_LC_ConfigureProduct</members>
-        <members>HDT_LC_OrderDossierWizardActions</members>
-        <members>HDT_QR_Order</members>
-        <members>HDT_QR_OrderItem</members>
-        <members>HDT_UTL_Dependencies</members>
-        <members>HDT_UTL_DependenciesTestWithData</members>
-        <members>HDT_UTL_LeadProcess</members>
-        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_TRH_Case</members>
         <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Case.ServiceRequestID__c</members>
+        <members>Order.VasSubtype__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>hdtAdvancedSearch</members>
-        <members>hdtChildOrderProcessPrecheck</members>
+        <members>HDT_LCP_OpenVasOrdersLwc</members>
+        <members>HDT_LCP_OpenVasOrdersSubtab</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>hdtAccountVasOrdersView</members>
+        <members>hdtActivityDetail</members>
+        <members>hdtChildOrderProcessActions</members>
+        <members>hdtChildOrderProcessDetails</members>
         <members>hdtConfigureProduct</members>
-        <members>hdtCreateCampaign</members>
-        <members>hdtFormAccountResidenziale</members>
-        <members>hdtTargetObjectCreateForm</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>

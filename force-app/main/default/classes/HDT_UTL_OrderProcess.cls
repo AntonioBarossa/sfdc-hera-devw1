@@ -409,11 +409,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     newOrder.TecnicalPhase__c = null;
                 }
             }
+            if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& !newOrder.SBQQ__Contracted__c) {
+                newOrder.SBQQ__Contracted__c=true; 
+            }
         }
         return newOrdersList;
     }
-
-    
+   
     // START @Picchiri Credit check Date 04.06.21
     // Viene invocata da una modifica lato ordine
     // In questo metodo viene invocata la classe per la creazione della Activiti del Credit Check Entanti (Nuovo cliente) e Uscenti (Vecchio cliente)
