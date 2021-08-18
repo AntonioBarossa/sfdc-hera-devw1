@@ -224,6 +224,7 @@
         <fields>InvoiceEmailAddress__c</fields>
         <fields>InvoiceCertifiedEmailAddress__c</fields>
         <fields>SendCertifiedEmailConsentDate__c</fields>
+        <fields>InvoicingAddressFormula__c</fields>
         <relatedList>BillingProfile__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
