@@ -108,11 +108,22 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         List<Order> childOrders = orderQr.getChildOrdersByParentIds(ordersParent);
         //set<Order> filtered = new set<Order>();
+        List<Order> childOrdersDocValid = new List<Order>();
         for(Order o1 : childOrders){
             if(o1.phase__c == 'Documentazione Validata'){
                 filtered.add(o1);
             }
+
+            if (o1.Phase__c == 'In attesa validazione') {
+                childOrdersDocValid.add(new Order(
+                    Id = o1.Id,
+                    phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o1) ? 'Documentazione Validata': 'In attesa validazione'
+                ));
+            }
         }
+
+        orderSrv.updateRecords(childOrdersDocValid);
+        
         
         List<Order> ordersHeroku = new List<Order>();
         List<Order> ordersSiebel = new List<Order>();

@@ -252,9 +252,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);
         system.debug('HDT_LC_ChildOrderProcessActions - lastStepData: ' + lastStepData);
-        for (String lastStepField : lastStepData.keySet()) {
-            orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+
+
+        if (lastStepData != null) {
+            for (String lastStepField : lastStepData.keySet()) {
+                orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+            }
         }
+        
         system.debug('HDT_LC_ChildOrderProcessActions - lastStepData - after: ' + orderToUpdate);
 
         orderSrv.updateRecord(orderToUpdate);

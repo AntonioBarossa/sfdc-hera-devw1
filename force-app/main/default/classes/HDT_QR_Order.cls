@@ -417,7 +417,14 @@ public inherited sharing class HDT_QR_Order {
             SELECT
             Phase__c,
             isTransition__c ,
-            recordtype.developername
+            recordtype.developername,
+            AutorizationVolturaThirdTrader__c,
+            CILegalRepresentative__c,
+            CIAccoutn__c,
+            QuickQuote__c,
+            ChamberCommerceRegistration__c,
+            Instance326__c,
+            DocumentLow80__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
