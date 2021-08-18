@@ -4,9 +4,10 @@ import getOrders from '@salesforce/apex/HDT_LC_AccountVasOrdersView.getOrders';
 const columns = [
     {label: 'Numero ordine', fieldName: 'RecordUrl', type: 'url', typeAttributes: {label: { fieldName: 'OrderNumber' }}},
     {label: 'Stato', fieldName: 'Status', type: 'text'},
-    {label: 'Data iniziale ordine', fieldName: 'EffectiveDate', type: 'date'},
+    {label: 'Data iniziale ordine', fieldName: 'EffectiveDate', type: 'date', typeAttributes: { year: "numeric", month: "2-digit", day: "2-digit" }},
+    {label: 'Numero contratto', fieldName: 'Contract_ContractNumber', type: 'text'},
     {label: 'Ammontare ordine', fieldName: 'TotalAmount', type: 'currency', typeAttributes: { currencyCode: 'EUR', step: '0.01'}},
-    {label: 'Numero contratto', fieldName: 'Contract_ContractNumber', type: 'text'}
+    {label: 'POD/PdR', fieldName: 'ServicePointCodeFormula__c', type: 'text'}
 ];
 
 export default class HdtAccountVasOrdersView extends LightningElement {

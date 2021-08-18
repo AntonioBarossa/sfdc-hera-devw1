@@ -16,9 +16,9 @@ public with sharing class HDT_LC_AccountVasOrdersView {
     @AuraEnabled(cacheable=true)
     public static List<Order> getOrders(Id accountId){
         try {
-            return [SELECT OrderNumber, Status, EffectiveDate, Contract.ContractNumber, TotalAmount
+            return [SELECT OrderNumber, Status, EffectiveDate, Contract.ContractNumber, TotalAmount, ServicePointCodeFormula__c
                 FROM Order
-                WHERE AccountId=:accountId AND RecordType.DeveloperName = 'HDT_RT_VAS' //TODO: solo VAS legati alla commodity
+                WHERE AccountId=:accountId AND RecordType.DeveloperName = 'HDT_RT_VAS'
                 WITH SECURITY_ENFORCED];
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
