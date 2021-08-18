@@ -193,8 +193,11 @@ export default class HdtCreateCampaign extends LightningElement {
             let startDate = this.template.querySelector('.startDate > lightning-input-field').value;
             const date = new Date(startDate);
             date.setDate(date.getDate() + 7 * value);
-            endDate = date.toISOString().slice(0, 10);
-            this.template.querySelector('.endDate > lightning-input-field').value = endDate;
+            if (startDate) {
+                endDate = date.toISOString().slice(0, 10);
+                this.template.querySelector('.endDate > lightning-input-field').value = endDate; 
+            }
+     
         }
     }
 

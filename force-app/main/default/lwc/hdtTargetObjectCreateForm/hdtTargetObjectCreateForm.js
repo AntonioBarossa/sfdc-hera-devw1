@@ -1070,10 +1070,18 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             else{
                 
                 if(this.allSubmitedFields['ServicePointCode__c']===undefined ||this.allSubmitedFields['ServicePointCode__c']==='' ){
+                    if(this.servicePointRetrievedData['ServicePointCode__c']!=undefined ||this.servicePointRetrievedData['ServicePointCode__c']!=''){
+                        this.allSubmitedFields['ServicePointCode__c']=this.servicePointRetrievedData['ServicePointCode__c'];
+                    }else{
                     concatPointErrorFields = concatPointErrorFields.concat('Codice Punto, ');
                 }
+                }
                 if(this.allSubmitedFields['CommoditySector__c']===undefined ||this.allSubmitedFields['CommoditySector__c']==='' ){
+                    if(this.servicePointRetrievedData['CommoditySector__c']!=undefined ||this.servicePointRetrievedData['CommoditySector__c']!=''){
+                        this.allSubmitedFields['CommoditySector__c']=this.servicePointRetrievedData['CommoditySector__c'];
+                    }else{
                     concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
+                    }
                 }
                 if(this.allSubmitedFields['Distributor__c']===undefined ||this.allSubmitedFields['Distributor__c']==='' ){
                     if(this.servicePointRetrievedData['Distributor__c']!=undefined ||this.servicePointRetrievedData['Distributor__c']!=''){
