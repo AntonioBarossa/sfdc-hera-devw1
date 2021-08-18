@@ -1,53 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Call</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_ComfortQualityCall</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationAccountLead</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationCase</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationGeneric</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationInteraction</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOpportunity</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOrder</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_GestioneIvaAccise</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Sportello</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_ValidazioneDocumentale</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</members>
-        <name>RecordType</name>
+        <members>Account-Partner Community</members>
+        <members>AccountContactRelation-Account Contact Relationship Layout</members>
+        <members>wrts_prcgvr__Activity__c-HDT_Protocollo</members>
+        <name>Layout</name>
     </types>
     <types>
-        <members>HDT_LC_CodiceAteco</members>
-        <members>HDT_LC_CodiceAtecoTst</members>
-        <members>HDT_LC_EditQuoteTst</members>
-        <members>HDT_UTL_ContractProcess</members>
-        <members>HDT_UTL_ContractProcessTst</members>
-        <members>HDT_UTL_DatabaseService</members>
-        <members>HDT_UTL_DatabaseServiceNoShare</members>
-        <members>HDT_UTL_DatabaseServiceNoShareTst</members>
+        <members>HDT_BA_Dependencies</members>
+        <members>HDT_BA_DependenciesTestWithData</members>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_LC_ConfigureProduct</members>
+        <members>HDT_LC_OrderDossierWizardActions</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_OrderItem</members>
+        <members>HDT_UTL_Dependencies</members>
+        <members>HDT_UTL_DependenciesTestWithData</members>
+        <members>HDT_UTL_LeadProcess</members>
+        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_UTL_OrderProcess</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Account.ShippingAddressFormula__c</members>
-        <members>Account.ShippingAddressIsForeign__c</members>
-        <members>Account.ShippingCityCode__c</members>
-        <members>Account.ShippingIsAddressVerified__c</members>
-        <members>Account.ShippingRegion__c</members>
-        <members>Account.ShippingStreetCode__c</members>
-        <members>Account.ShippingStreetName__c</members>
-        <members>Account.ShippingStreetNumberExtension__c</members>
-        <members>Account.ShippingStreetNumber__c</members>
-        <members>wrts_prcgvr__Activity__c.Status__c</members>
-        <members>wrts_prcgvr__Activity__c.Type__c</members>
+        <members>Case.ServiceRequestID__c</members>
         <name>CustomField</name>
+    </types>
+    <types>
+        <members>hdtAdvancedSearch</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtConfigureProduct</members>
+        <members>hdtCreateCampaign</members>
+        <members>hdtFormAccountResidenziale</members>
+        <members>hdtTargetObjectCreateForm</members>
+        <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>Admin</members>

@@ -4,6 +4,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
+    private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
@@ -301,7 +302,22 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if (order.SalesCompany__c == null) {
             orderToUpdate.SalesCompany__c = quote.SalesCompany__c;
         }
+        if(quote.IsVAS__c){
+            orderToUpdate.IsVAS__c=quote.IsVAS__c;
+        }
         orderToUpdate.isBillableVas__c=quote.isBillableVas__c;
+    }
+
+    private static void alignOrderItem(Order orderToUpdate) {
+
+        List<OrderItem> mainItems = orderItemQr.getMainItem(orderToUpdate.Id);
+
+        if (!mainItems.isEmpty()) {
+            orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
+            orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
+            orderToUpdate.CommercialProduct__c = mainItems[0].Product2.Name;
+            orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
+        }
     }
 
     public static String calculateRequestedOption(String implantType, Decimal powerContractual){
@@ -372,6 +388,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         if (order.ServicePoint__c != null) {
             alignServicePointFields(orderToUpdate, order.ServicePoint__c);
+        }else{
+            alignOrderItem(orderToUpdate);
         }
 
         orderSrv.updateRecord(orderToUpdate);
