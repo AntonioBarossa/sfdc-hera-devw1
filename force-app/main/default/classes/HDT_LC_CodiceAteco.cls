@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 30/06/2021
+* @description Class HDT_LC_CodiceAteco
+* @history Keltin Mesonjesi – 30/06/2021 – Created class
+*/
 public inherited sharing class HDT_LC_CodiceAteco {
 
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
