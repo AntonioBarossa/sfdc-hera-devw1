@@ -93,6 +93,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                          || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
                                  )){
                                      ord.TecnicalPhase__c = 'Annullato';
+                                     ord.Status = 'Annullato';
                                  }
                             }
                             when 'Ammissibilità OK' {
