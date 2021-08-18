@@ -96,6 +96,8 @@ public inherited sharing class HDT_QR_OrderItem {
             BillingProfile__c,
             Product2Id,
             Product2.Family,
+            Product2.Version__c,
+            Product2.ProductCode,
             Product2.Name
             FROM 
             OrderItem 
