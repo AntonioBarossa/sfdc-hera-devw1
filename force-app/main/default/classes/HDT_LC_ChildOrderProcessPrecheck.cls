@@ -145,6 +145,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 when 'Switch in Ripristinatorio'{
                     HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction(order);
                     newOrder.SignedDate__c = Date.today();
+                    newOrder.WaiverRightAfterthought__c = 'Si';
                 }
             }
 
