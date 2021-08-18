@@ -97,18 +97,21 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         let orderToSave = {};
 
+        console.log('keltin this.lastStepData: ' + JSON.stringify(this.lastStepData));
+
         if (this.lastStepData != null) {
-            let lastStepFields = this.lastStepData;
+            // let lastStepFields = this.lastStepData;
 
-            orderToSave = {...lastStepFields, ...this.order};
+            // orderToSave = {...lastStepFields, ...this.order};
 
-            if (!this.validateLastStepFields(lastStepFields)) {
+            if (!this.validateLastStepFields(this.lastStepData)) {
                 return;
             }
 
-        } else {
+        } 
+        // else {
             orderToSave = this.order;
-        }
+        // }
 
         calculateRate({ord: orderToSave}).then(data2 =>{
             if(!data2){
@@ -120,7 +123,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                 this.dispatchEvent(toastSuccessMessage);
             }
 
-        save({order: orderToSave}).then(data =>{
+        save({order: orderToSave, lastStepData: this.lastStepData}).then(data =>{
             this.loading = false;
 
             if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){

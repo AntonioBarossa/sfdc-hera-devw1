@@ -122,6 +122,7 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.PlugPresence__c,
             ServicePoint__r.UseTypeEnergy__c,
             ServicePoint__r.UseCategory__c,
+            ServicePoint__r.Vat__c,
             PowerAvailable__c,
             UseTypeEnergy__c,
             BillingProfile__c,

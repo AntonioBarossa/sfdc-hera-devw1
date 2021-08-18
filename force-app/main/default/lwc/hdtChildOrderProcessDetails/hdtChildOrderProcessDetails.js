@@ -2184,7 +2184,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': false,
-                        'value': this.order.Vat__c,
+                        // 'value': this.order.Vat__c,
                         'processVisibility': ''
                     },
                     {
@@ -2193,7 +2193,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('ele'),
                         'required': false,
                         'disabled': true,
-                        'value': this.order.ExciseEle__c,
+                        // 'value': this.order.ExciseEle__c,
                         'processVisibility': ''
                     },
                     {
@@ -2202,7 +2202,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('gas'),
                         'required': false,
                         'disabled': false,
-                        'value': this.order.ExciseGas__c,
+                        // 'value': this.order.ExciseGas__c,
                         'processVisibility': ''
                     },
                 ]
