@@ -19,7 +19,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
      * @description Execute child order process save actions
      */
     @AuraEnabled
-    public static void save(Order order){
+    public static void save(Order order, Map<String,Object> lastStepData){
         system.debug('START SAVE ORDER');        
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;
@@ -44,6 +44,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             // Calculate Date @Picchiri 20/05/21
             when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn   
                 system.debug('HDT_LC_ChildOrderProcessActions - save - HDT_RT_SwitchIn order : ' + JSON.serializepretty(order));             
+
+                //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
+                orderToUpdate.IsActivationDeferred__c = order.IsActivationDeferred__c;
                 
                 if (order.ProcessType__c == 'Switch in Ripristinatorio') {
                     orderToUpdate.DateSentToSII__c = Date.today();
@@ -248,6 +251,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
 
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);
+        system.debug('HDT_LC_ChildOrderProcessActions - lastStepData: ' + lastStepData);
+
+
+        if (lastStepData != null) {
+            for (String lastStepField : lastStepData.keySet()) {
+                orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+            }
+        }
+        
+        system.debug('HDT_LC_ChildOrderProcessActions - lastStepData - after: ' + orderToUpdate);
+
         orderSrv.updateRecord(orderToUpdate);
 
         if (order.ParentOrder__r.Status == 'Draft') {

@@ -142,8 +142,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             }
 
             switch on processType {
-                when 'Switch in Ripristinatorio	'{
+                when 'Switch in Ripristinatorio'{
                     HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction(order);
+                    newOrder.SignedDate__c = Date.today();
                 }
             }
 
@@ -159,7 +160,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             //Logica Superficie Servita Start
             newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas' && selectedProcessObject.get('recordType') != 'HDT_RT_Voltura') ? 75 : null;
             //Logica Superficie Servita End
-
             orderSrv.updateRecord(newOrder);
             //EVERIS 
         }

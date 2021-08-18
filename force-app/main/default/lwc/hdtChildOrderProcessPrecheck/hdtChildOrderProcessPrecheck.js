@@ -376,7 +376,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 data.forEach(el => {
                     this.options.push({label: el.processType, value: el.processType});
                 });
-    
+                
     
                 if (this.options.length === 1) {
                     this.selectedProcessObject = this.processesReference[0];
@@ -386,7 +386,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 }
     
                 if (this.options.length === 0) {
-                    if(this.order.SBQQ__Quote__r.IsVAS__c){
+                    if(this.order.IsVAS__c){
                         this.options.push({label: 'VAS', value: 'VAS'});
                         this.selectedProcessObject = {processType: 'VAS', recordType: 'HDT_RT_VAS'}
                         this.value = this.selectedProcessObject.processType;

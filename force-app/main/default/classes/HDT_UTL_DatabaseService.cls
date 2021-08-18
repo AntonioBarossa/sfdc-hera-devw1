@@ -1,7 +1,9 @@
 /**
- * @author 'Lorenzo Gulotta' (lorenzo.gulotta@webresults.it)
- * @description HDT_UTL_DatabaseService - 
- */
+* @author 'Lorenzo Gulotta' (lorenzo.gulotta@webresults.it)
+* @date 03/11/2020
+* @description Class HDT_UTL_DatabaseService.cls
+* @history Lucas da Silva Fernandes – 03/11/2020 – Updated Header
+*/
 
  public with sharing class HDT_UTL_DatabaseService {
     

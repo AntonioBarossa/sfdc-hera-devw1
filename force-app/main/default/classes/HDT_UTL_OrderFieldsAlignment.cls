@@ -4,6 +4,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
+    private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
@@ -148,7 +149,11 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         orderToUpdate.exciseEle__c =  servicePoint.exciseEle__c == 'ALTRO' ? 'Imposta usi domestici' : mapAcciseEle.get(servicePoint.exciseEle__c);
         orderToUpdate.ExciseGas__c =  ServicePoint.ExciseGas__c == 'ALTRO' ? 'Altro' : mapAcciseGas.get(ServicePoint.ExciseGas__c);
-        orderToUpdate.vat__c = mapIvaIdToValue2.get(ServicePoint.Vat__c);
+        
+        if (servicePoint.Vat__c != null && servicePoint.Vat__c != '') {
+            orderToUpdate.vat__c = mapIvaIdToValue2.get(ServicePoint.Vat__c);
+        }
+
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
         orderToUpdate.isWinback__c = servicePoint.SwitchInWinback__c;
         orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
@@ -199,27 +204,32 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.Commodity__c = servicePoint.CommoditySector__c;
     }
 
-    private static void alignAccountFields(Order orderToUpdate, String accountId){
+    private static void alignAccountFields(Order orderToUpdate, String accountId, Order orderOld){
 
         accountSrv.checkReadAccess('CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
         Account account = accountQr.getRecordById(accountId, 'CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
-        Order toCheck = orderQr.getRecordById(orderToUpdate.id);
+        // Order toCheck = orderQr.getRecordById(orderToUpdate.id);
         String customerName = null;
         String customerLastName = null;
-        if(toCheck.vat__c == null || toCheck.vat__c == ''){
-        if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
-            orderToUpdate.CustomerCompanyName__c = account.LastName__c;
+        // if(toCheck.vat__c == null || toCheck.vat__c == ''){
+            if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
+                orderToUpdate.CustomerCompanyName__c = account.LastName__c;
 
-            orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
-        } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
-            orderToUpdate.CustomerName__c = account.FirstName__c;
-            orderToUpdate.CustomerLastName__c = account.LastName__c;
+                if (orderOld.ServicePoint__r.Vat__c == null || orderOld.ServicePoint__r.Vat__c == '') {
+                    orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
+                }
 
-            orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
+            } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
+                orderToUpdate.CustomerName__c = account.FirstName__c;
+                orderToUpdate.CustomerLastName__c = account.LastName__c;
 
-            orderToUpdate.AtecoCode__c = '999999';
-        }
-        }
+                if (orderOld.ServicePoint__r.Vat__c == null || orderOld.ServicePoint__r.Vat__c == '') {
+                    orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
+                }
+
+                orderToUpdate.AtecoCode__c = '999999';
+            }
+        // }
         orderToUpdate.CustomerFiscalCode__c = account.FiscalCode__c;
         orderToUpdate.CustomerVATNumber__c = account.VATNumber__c;
         orderToUpdate.Email__c = account.PrimaryEmail__c;
@@ -296,7 +306,22 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if (order.SalesCompany__c == null) {
             orderToUpdate.SalesCompany__c = quote.SalesCompany__c;
         }
+        if(quote.IsVAS__c){
+            orderToUpdate.IsVAS__c=quote.IsVAS__c;
+        }
         orderToUpdate.isBillableVas__c=quote.isBillableVas__c;
+    }
+
+    private static void alignOrderItem(Order orderToUpdate) {
+
+        List<OrderItem> mainItems = orderItemQr.getMainItem(orderToUpdate.Id);
+
+        if (!mainItems.isEmpty()) {
+            orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
+            orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
+            orderToUpdate.CommercialProduct__c = mainItems[0].Product2.Name;
+            orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
+        }
     }
 
     public static String calculateRequestedOption(String implantType, Decimal powerContractual){
@@ -352,7 +377,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;
 
-        alignAccountFields(orderToUpdate, order.AccountId);
+        alignAccountFields(orderToUpdate, order.AccountId, order);
 
         alignSaleFields(orderToUpdate, order.Sale__c);
 
@@ -367,6 +392,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         if (order.ServicePoint__c != null) {
             alignServicePointFields(orderToUpdate, order.ServicePoint__c);
+        }else{
+            alignOrderItem(orderToUpdate);
         }
 
         orderSrv.updateRecord(orderToUpdate);

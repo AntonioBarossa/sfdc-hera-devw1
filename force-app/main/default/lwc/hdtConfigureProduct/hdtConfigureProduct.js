@@ -209,7 +209,7 @@ export default class hdtConfigureProduct extends LightningElement {
     updateSaleRecordNext(saleData){
         this.loaded = false;
         // logica approvazione
-        checkDueProduct({sale: saleData}).then(data =>{
+        checkDueProduct({sale: this.saleRecord}).then(data =>{
             console.log("TESTCHECK:");
             console.log("TESTCHECK:" + JSON.stringify(data));
             let check = data.wrapCheck;

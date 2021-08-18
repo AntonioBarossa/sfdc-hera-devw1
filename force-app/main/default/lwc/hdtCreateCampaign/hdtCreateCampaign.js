@@ -69,7 +69,7 @@ export default class HdtCreateCampaign extends LightningElement {
         let channelField = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
         let recurringField = this.template.querySelector('.recurringField > lightning-input-field').value;
         this.statusField = event.detail.value;
-
+        let processType = this.template.querySelector('.processType > lightning-input-field').value;
 
         if ( this.statusField!='Bozza' && channelField=='Telefonico Outbound' ) {
             this.easyRequired=true;
@@ -80,7 +80,7 @@ export default class HdtCreateCampaign extends LightningElement {
     
         if ("Campagna Contenitore" != categoryField && event.detail.value === 'Pianificata' && categoryField != null) {
             this.startDateFieldRequired = true;
-            this.campaignInboundFields = categoryField === 'Campagna CRM' ? true : false;
+            this.campaignInboundFields = (categoryField === 'Campagna CRM' && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
             this.reitekFieldRequired = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignOutboundFields = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignMemberAssignmentTypeRequired = channelField.includes('Telefonico Outbound') ? true : false;
@@ -106,10 +106,11 @@ export default class HdtCreateCampaign extends LightningElement {
         let categoryField = this.template.querySelector('.categoryField > lightning-input-field').value;
         let channelField = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
         let recurringField = this.template.querySelector('.recurringField > lightning-input-field').value;
+        let processType = this.template.querySelector('.processType > lightning-input-field').value;
 
         if ("Campagna Contenitore" != event.detail.value && this.statusField === 'Pianificata') {
             this.startDateFieldRequired = true;
-            this.campaignInboundFields = categoryField === 'Campagna CRM' ? true : false;
+            this.campaignInboundFields = (categoryField === 'Campagna CRM' && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
             this.reitekFieldRequired = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignOutboundFields = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignMemberAssignmentTypeRequired = channelField.includes('Telefonico Outbound') ? true : false;
@@ -126,6 +127,12 @@ export default class HdtCreateCampaign extends LightningElement {
             this.campaignMemberAssignmentTypeRequired = false;
             this.campaignMemberAssignmentRequired = false;
         }
+    }
+
+    handleChangeProcessType(event){
+        let processType = event.detail.value;
+        let categoryField = this.template.querySelector('.categoryField > lightning-input-field') != null ? this.template.querySelector('.categoryField > lightning-input-field').value : '';
+        this.campaignInboundFields = (categoryField === 'Campagna CRM' && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
     }
 
     handleChangeChannel(event) {
@@ -186,8 +193,11 @@ export default class HdtCreateCampaign extends LightningElement {
             let startDate = this.template.querySelector('.startDate > lightning-input-field').value;
             const date = new Date(startDate);
             date.setDate(date.getDate() + 7 * value);
-            endDate = date.toISOString().slice(0, 10);
-            this.template.querySelector('.endDate > lightning-input-field').value = endDate;
+            if (startDate) {
+                endDate = date.toISOString().slice(0, 10);
+                this.template.querySelector('.endDate > lightning-input-field').value = endDate; 
+            }
+     
         }
     }
 
