@@ -2173,7 +2173,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'VAT__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': false,
+                        'disabled': true,
                         // 'value': this.order.Vat__c,
                         'processVisibility': ''
                     },
