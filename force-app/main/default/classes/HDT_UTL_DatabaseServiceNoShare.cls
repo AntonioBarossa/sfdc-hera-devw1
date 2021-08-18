@@ -1,3 +1,10 @@
+/**
+* @author 'Lorenzo Gulotta' (lorenzo.gulotta@webresults.it)
+* @date 11/06/2021
+* @description Class HDT_UTL_DatabaseService.cls
+* @history Lucas da Silva Fernandes – 11/06/2021 – Updated Header
+*/
+
 public without sharing class HDT_UTL_DatabaseServiceNoShare {
     
     private static final String MAXNUMBERRECORDSEXCEPTION = 'Puoi Passare Massimo 10000 Record in una singola azione di DML.';

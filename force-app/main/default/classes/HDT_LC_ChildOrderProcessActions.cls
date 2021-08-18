@@ -44,6 +44,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             // Calculate Date @Picchiri 20/05/21
             when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn   
                 system.debug('HDT_LC_ChildOrderProcessActions - save - HDT_RT_SwitchIn order : ' + JSON.serializepretty(order));             
+
+                //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
+                orderToUpdate.IsActivationDeferred__c = order.IsActivationDeferred__c;
                 
                 if (order.ProcessType__c == 'Switch in Ripristinatorio') {
                     orderToUpdate.DateSentToSII__c = Date.today();

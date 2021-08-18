@@ -100,18 +100,14 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         console.log('keltin this.lastStepData: ' + JSON.stringify(this.lastStepData));
 
         if (this.lastStepData != null) {
-            // let lastStepFields = this.lastStepData;
-
-            // orderToSave = {...lastStepFields, ...this.order};
 
             if (!this.validateLastStepFields(this.lastStepData)) {
                 return;
             }
 
         } 
-        // else {
-            orderToSave = this.order;
-        // }
+        
+        orderToSave = this.order;
 
         calculateRate({ord: orderToSave}).then(data2 =>{
             if(!data2){
