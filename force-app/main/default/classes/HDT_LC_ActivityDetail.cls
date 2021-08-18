@@ -22,24 +22,24 @@ public with sharing class HDT_LC_ActivityDetail {
         list<wrts_prcgvr__FieldsTemplate__c> fieldsTemplate = [SELECT Id FROM wrts_prcgvr__FieldsTemplate__c WHERE Id=:activityTemplate[0].wrts_prcgvr__FieldsTemplate__c];
         list<wrts_prcgvr__DynamicSection__c> dynamicSection = [SELECT Id, wrts_prcgvr__Layout__c, wrts_prcgvr__Order__c FROM wrts_prcgvr__DynamicSection__c WHERE wrts_prcgvr__Layout__c IN: fieldsTemplate order by wrts_prcgvr__Order__c];
  /////////////////////       
-        map<id,list<wrts_prcgvr__DynamicField__c>> newMap= new map<id,list<wrts_prcgvr__DynamicField__c>>();
+        map<id,list<wrts_prcgvr__DynamicField__c>> mapSectionField= new map<id,list<wrts_prcgvr__DynamicField__c>>();
         for(integer i=0;i<dynamicSection.size();i++){
-            list<wrts_prcgvr__DynamicField__c> newList= new list<wrts_prcgvr__DynamicField__c>();
-            newmap.put(dynamicSection[i].Id,newList);
+            list<wrts_prcgvr__DynamicField__c> listOfFields= new list<wrts_prcgvr__DynamicField__c>();
+            mapSectionField.put(dynamicSection[i].Id,listOfFields);
         }
 //////////////////////      
         list<wrts_prcgvr__DynamicField__c> dynamicField = [SELECT Id, wrts_prcgvr__Section__c, wrts_prcgvr__ObjectName__c, wrts_prcgvr__Field__c FROM wrts_prcgvr__DynamicField__c WHERE wrts_prcgvr__Section__c IN: dynamicSection];
 /////////////////////       
         for(wrts_prcgvr__DynamicField__c item: dynamicField){
-            for(Id mapItem: newMap.keySet()){
+            for(Id mapItem: mapSectionField.keySet()){
                 if(mapItem==item.wrts_prcgvr__Section__c){
-                    newMap.get(mapItem).add(item);
+                    mapSectionField.get(mapItem).add(item);
                 }
             }
         }
         dynamicField.clear();
-        for(id mapItem: newMap.keySet()){
-            dynamicField.addAll(newMap.get(mapItem));
+        for(id mapItem: mapSectionField.keySet()){
+            dynamicField.addAll(mapSectionField.get(mapItem));
         }
 /////////////////////
         for(wrts_prcgvr__DynamicField__c field: dynamicField){
