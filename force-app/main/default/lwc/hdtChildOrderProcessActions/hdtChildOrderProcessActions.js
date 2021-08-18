@@ -97,21 +97,17 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         let orderToSave = {};
 
-        if (this.lastStepData != null) {
-            let lastStepFields = this.lastStepData;
-            
-            //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
-            //orderToSave = {...lastStepFields, ...this.order};
-            orderToSave = {...this.order, ...lastStepFields};
+        console.log('keltin this.lastStepData: ' + JSON.stringify(this.lastStepData));
 
-            if (!this.validateLastStepFields(lastStepFields)) {
+        if (this.lastStepData != null) {
+
+            if (!this.validateLastStepFields(this.lastStepData)) {
                 return;
             }
 
-        } else {
-            orderToSave = this.order;
-        }
-        console.log("@orderToSave "+JSON.stringify(orderToSave));
+        } 
+        
+        orderToSave = this.order;
 
         calculateRate({ord: orderToSave}).then(data2 =>{
             if(!data2){
@@ -123,7 +119,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                 this.dispatchEvent(toastSuccessMessage);
             }
 
-        save({order: orderToSave}).then(data =>{
+        save({order: orderToSave, lastStepData: this.lastStepData}).then(data =>{
             this.loading = false;
 
             if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
