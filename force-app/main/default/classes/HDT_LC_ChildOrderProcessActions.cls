@@ -19,7 +19,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
      * @description Execute child order process save actions
      */
     @AuraEnabled
-    public static void save(Order order){
+    public static void save(Order order, Map<String,Object> lastStepData){
         system.debug('START SAVE ORDER');        
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;
@@ -251,6 +251,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
 
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);
+        system.debug('HDT_LC_ChildOrderProcessActions - lastStepData: ' + lastStepData);
+
+
+        if (lastStepData != null) {
+            for (String lastStepField : lastStepData.keySet()) {
+                orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+            }
+        }
+        
+        system.debug('HDT_LC_ChildOrderProcessActions - lastStepData - after: ' + orderToUpdate);
+
         orderSrv.updateRecord(orderToUpdate);
 
         if (order.ParentOrder__r.Status == 'Draft') {

@@ -393,7 +393,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 this.fieldsToUpdateRes['ShippingPlace__c'] = this.accountAddressRes['Codice Localita'];
             }
             if(this.accountAddressRes['Flag Verificato'] !=null){
-               // this.fieldsToUpdateRes['BillingIsAddressVerified__c'] = this.accountAddressRes['Flag Verificato'];
+                this.fieldsToUpdateRes['ShippingIsAddressVerified__c'] = this.accountAddressRes['Flag Verificato'];
                 this.isVerifiedShipping = this.accountAddressRes['Flag Verificato'];
             }
         }
