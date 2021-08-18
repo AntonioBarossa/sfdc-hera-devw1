@@ -1198,15 +1198,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                {
-                    'label': 'Impianto',
-                    'apiname': 'ImplantTypeFormula__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
+                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), false, true, '',''),
                 {
                     'label': 'Consumi Anno',
                     'apiname': 'AnnualConsumption__c',
@@ -1420,6 +1412,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 new fieldData('Esecuzione Anticipata','RecessNotice__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
                 new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, false, '',''),
                 new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Opzione richiesta','RequestOption__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ), true, true, '',''),
 
 
                 // {
@@ -2181,7 +2174,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': false,
-                        'value': this.order.Vat__c,
+                        // 'value': this.order.Vat__c,
                         'processVisibility': ''
                     },
                     {
@@ -2190,7 +2183,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('ele'),
                         'required': false,
                         'disabled': true,
-                        'value': this.order.ExciseEle__c,
+                        // 'value': this.order.ExciseEle__c,
                         'processVisibility': ''
                     },
                     {
@@ -2199,7 +2192,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('gas'),
                         'required': false,
                         'disabled': false,
-                        'value': this.order.ExciseGas__c,
+                        // 'value': this.order.ExciseGas__c,
                         'processVisibility': ''
                     },
                 ]
