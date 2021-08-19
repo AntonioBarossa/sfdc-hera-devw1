@@ -50,7 +50,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 
                 if (order.ProcessType__c == 'Switch in Ripristinatorio') {
                     orderToUpdate.DateSentToSII__c = Date.today();
-                    orderToUpdate.EffectiveDate__c = Date.today();
+                    try {         
+                        if(order.SignedDate__c != null){                    
+                            orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);  // Data di decorrenza
+                            system.debug('Calcolo data max di decorrenza x 1');             
+                        }
+                    } catch (Exception e) { 
+                        throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
+                    }
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
                 } else {
                     if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') { // @Picchiri Only for residential customer
