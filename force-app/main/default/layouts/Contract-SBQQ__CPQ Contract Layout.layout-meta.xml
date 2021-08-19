@@ -33,10 +33,6 @@
                 <field>SBQQ__MasterContract__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__Evergreen__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ContractNumber</field>
             </layoutItems>
@@ -47,6 +43,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBQQ__Order__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Market__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -67,8 +67,12 @@
                 <field>EndDate</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>ContractTerm</field>
+                <behavior>Edit</behavior>
+                <field>SBQQ__Opportunity__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__Quote__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -99,7 +103,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ExciseGAS__c</field>
+                <field>ExciseGas__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -131,12 +135,12 @@
                 <field>Pricebook2Id</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__Opportunity__c</field>
+                <behavior>Required</behavior>
+                <field>ContractTerm</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SBQQ__Quote__c</field>
+                <field>SBQQ__Evergreen__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

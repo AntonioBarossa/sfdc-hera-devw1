@@ -71,7 +71,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ExciseGAS__c</field>
+                <field>ExciseGas__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
