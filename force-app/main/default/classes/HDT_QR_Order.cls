@@ -349,7 +349,16 @@ public inherited sharing class HDT_QR_Order {
             IsSequanzialized__c,
             isTransition__c,
             CustomerType__c,
-            IsWinback__c
+            IsWinback__c,
+            AutorizationVolturaThirdTrader__c,
+            CILegalRepresentative__c,
+            CIAccoutn__c,
+            QuickQuote__c,
+            ChamberCommerceRegistration__c,
+            Instance326__c,
+            DocumentLow80__c,
+            QualityCall__c,
+            AgencyCode__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
