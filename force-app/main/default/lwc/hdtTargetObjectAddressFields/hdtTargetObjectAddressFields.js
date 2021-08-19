@@ -483,7 +483,7 @@ handleAddressValuesIfSap(servicepointretrieveddata){
             case 'SupplyPlace__c':
 
             this.CodiceLocalita = servicepointretrieveddata[key] ;
-            this.theRecord['Codice Localita'] = servicepointretrieveddata[key] ;
+            this.theRecord['Localita'] = servicepointretrieveddata[key] ;
 
             break;
             case 'SupplyPlaceCode__c':
