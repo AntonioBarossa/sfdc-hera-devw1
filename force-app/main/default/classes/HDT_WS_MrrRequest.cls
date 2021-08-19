@@ -118,7 +118,7 @@ global with sharing class HDT_WS_MrrRequest {
 
             RestContext.response.statusCode = 400;
 
-        }catch(DuplicateVkontException e){
+        }catch(CustomMessageException e){
 
             System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
             System.debug('errorMessage: ' + e.getMessage());
@@ -132,7 +132,7 @@ global with sharing class HDT_WS_MrrRequest {
 
             responseFieldError.fieldType = 'TEXT';
             responseFieldError.name = 'ERROR_MESSAGE';
-            responseFieldError.value = 'Error on Updating Billing Profile, VKONT Already not Unique - '+ e.getMessage();
+            responseFieldError.value = e.getMessage();
 
             responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
             mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>{responseObject};
@@ -174,6 +174,6 @@ global with sharing class HDT_WS_MrrRequest {
     }
 
 
-    public class DuplicateVkontException extends Exception{}
+    public virtual class CustomMessageException extends Exception{}
 
 }
