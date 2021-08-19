@@ -7,7 +7,15 @@
 */
 public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
     public override void beforeInsert() {
-
+      
+        for (Contract tempContract :(List<Contract>)Trigger.new) {
+            if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c))) {
+                tempContract.ServicePoint__c=tempContract.SBQQ__Order__r.ServicePoint__c;
+                tempContract.BillingProfile__c=tempContract.SBQQ__Order__r.BillingProfile__c;
+            }
+           
+          
+        }
     }
 
     public override void afterInsert() {
