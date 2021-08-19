@@ -3,5 +3,5 @@
     <fullName>HDT_VR_Community</fullName>
     <active>true</active>
     <errorConditionFormula>IF( $Profile.Name==&apos;Hera Door2Door Partner User&apos;, true,   IF( $Profile.Name==&apos;Hera Teleseller Partner User&apos;, true, false) )</errorConditionFormula>
-    <errorMessage>Operazione non consentita</errorMessage>
+    <errorMessage>Non è possibile modificare la relazione</errorMessage>
 </ValidationRule>
