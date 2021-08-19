@@ -184,9 +184,9 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>	
-                    <name>active</name>	
-                    <value>true</value>	
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>body</name>
