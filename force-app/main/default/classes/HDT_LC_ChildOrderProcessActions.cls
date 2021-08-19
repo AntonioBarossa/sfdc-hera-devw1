@@ -48,14 +48,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
                 orderToUpdate.IsActivationDeferred__c = order.IsActivationDeferred__c;
 
-                try {    
-                    if(order.SignedDate__c != null && order.ProcessType__c != 'Cambio Offerta'){                         
-                        orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order); 
-                        system.debug('Calcolo getDateSentToSii x 1');             
+                try {         
+                    if(order.SignedDate__c != null){                    
+                        orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);  // Data di decorrenza
+                        system.debug('Calcolo data max di decorrenza x 1');             
                     }
                 } catch (Exception e) { 
-                    throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
-                }  
+                    throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
+                }
                 
                 if (order.ProcessType__c == 'Switch in Ripristinatorio') {
                     orderToUpdate.DateSentToSII__c = Date.today();
@@ -82,6 +82,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                                 orderToUpdate.Phase__c = 'In attesa validazione' ;                        
                             }
                 
+                            try {    
+                                if(order.SignedDate__c != null && order.ProcessType__c != 'Cambio Offerta'){                         
+                                    orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order); 
+                                    system.debug('Calcolo getDateSentToSii x 1');             
+                                }
+                            } catch (Exception e) { 
+                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
+                            }  
                             
                             // END Calcolo data Invio richiesta al SII (Data di adempimento)
     
@@ -89,15 +97,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             //orderToUpdate.ActivatedDate = HDT_UTL_SwtichInProcess.getActivatedDate(order);
                             // END Calcolo data inizio (Data attivazione contratto)
     
-                            // START 3 Calcolo Data Decorrenza (EffectiveDate__c)     
-                            try {         
-                                if(order.SignedDate__c != null){                    
-                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);  // Data di decorrenza
-                                    system.debug('Calcolo data max di decorrenza x 1');             
-                                }
-                            } catch (Exception e) { 
-                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
-                            }                     
+                            // START 3 Calcolo Data Decorrenza (EffectiveDate__c)                      
                             
                             // END Calcolo Data Decorrenza (EffectiveDate__c) 
     
