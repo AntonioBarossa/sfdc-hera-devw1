@@ -78,7 +78,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     disableCodViaSap=false;
     @api visibleCopiaResidenza=false;
     @api visibleSelezioneIndirizzi=false;
-    disableFlagVerificato=false;
+    @api disableFlagVerificato=false;
     boolProvincia=false;
     boolCap = false;
     boolComune = false;
@@ -584,8 +584,8 @@ handleAddressValuesIfSap(servicepointretrieveddata){
             this.theRecord['CodiceComuneSAP'] = this.codComuneSAP;
             this.theRecord['CodiceViaStradarioSAP'] = this.codStradarioSAP;
             this.theRecord['IndirizzoEstero'] = this.IndEstero;
-            this.theRecord['Flag Verificato'] = this.FlagVerificato;
-
+           // this.theRecord['Flag Verificato'] = this.FlagVerificato;
+           this.theRecord['Flag Verificato'] = true;
             
 
         this.preloading = false;
@@ -1650,9 +1650,14 @@ disabledverifyFieldsAddressDisabled(){
                     this.theRecord['Codice Comune SAP']= data['prestazione'][0].cityCode;
                     this.theRecord['Codice Via Stradario SAP']= data['prestazione'][0].streetCode;
                     this.theRecord['Flag Verificato'] = true;
+                 
+                    this.dispEvent(true);
+               
                 }
                 else{
                     console.log("ErrorrrrrreeeeeeeeeEeee:" + JSON.stringify(data));
+                    this.dispEvent(false);
+
                 }
                 
     
@@ -1670,7 +1675,14 @@ disabledverifyFieldsAddressDisabled(){
             detail: this.hasAddressBeenVerified
           }));*/
     }
-
+    dispEvent(param){
+        const custEvent = new CustomEvent(
+            'callpasstoparent', {
+                detail: param 
+            });
+        this.dispatchEvent(custEvent);
+    }
+    
     handleKeyPress(event){
 													  
 

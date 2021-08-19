@@ -19,7 +19,10 @@ public with sharing class HDT_UTL_DependenciesTestWithData {
         
         Test.startTest();
         
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Account> accList = [Select CompanyOwner__c From Account WHERE CompanyOwner__c like 'HERA%' LIMIT 2];
+        if(accList.size()==0){
+            accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        }
         List<Order> ordListBlk = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, PHASE_INC);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, false, accList[0].id); 
         contactList[0].Company__c = 'HCM';

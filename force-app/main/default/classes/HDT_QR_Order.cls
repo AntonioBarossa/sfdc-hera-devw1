@@ -122,6 +122,7 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.PlugPresence__c,
             ServicePoint__r.UseTypeEnergy__c,
             ServicePoint__r.UseCategory__c,
+            ServicePoint__r.Vat__c,
             PowerAvailable__c,
             UseTypeEnergy__c,
             BillingProfile__c,
@@ -205,7 +206,8 @@ public inherited sharing class HDT_QR_Order {
             ChannelTransCode__c,
             IsActivationDeferred__c,
             EffectiveDate__c ,                              // [ 13/08/2021 gabriele.rota@webresults.it - Calcolo Data Invio al SII ]
-            ConfirmCustomerContract__c
+            ConfirmCustomerContract__c,
+            IsVAS__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -416,7 +418,14 @@ public inherited sharing class HDT_QR_Order {
             SELECT
             Phase__c,
             isTransition__c ,
-            recordtype.developername
+            recordtype.developername,
+            AutorizationVolturaThirdTrader__c,
+            CILegalRepresentative__c,
+            CIAccoutn__c,
+            QuickQuote__c,
+            ChamberCommerceRegistration__c,
+            Instance326__c,
+            DocumentLow80__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds

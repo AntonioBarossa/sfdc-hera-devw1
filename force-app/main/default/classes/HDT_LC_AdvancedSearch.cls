@@ -621,6 +621,10 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 						label='Codice Contratto';
 						value=(String) con.SAPContractCode__c;
 						row.put(label,value);
+					}else{
+						label='Codice Contratto';
+						value=' ';
+						row.put(label,value);
 					}
 
 				}

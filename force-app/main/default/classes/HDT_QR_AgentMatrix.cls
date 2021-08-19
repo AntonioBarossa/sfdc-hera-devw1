@@ -113,5 +113,19 @@ public inherited sharing class HDT_QR_AgentMatrix {
             ];
 
         }
+
+        public static List<AgentMatrix__c> getAgentMatrixIsMonitoringTrue(){
+            return[
+                SELECT
+                AgencyName__c,
+                AgencyCode__c,
+                UpperChannelAgency__c,
+                LowerChannelAgency__c,
+                IsMonitoring__c	
+                FROM AgentMatrix__c
+                WHERE IsMonitoring__c = true
+                WITH SECURITY_ENFORCED
+            ];
+        }
         
 }
