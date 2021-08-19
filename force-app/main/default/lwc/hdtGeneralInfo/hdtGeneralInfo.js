@@ -470,14 +470,20 @@ export default class HdtGeneralInfo extends LightningElement {
             if (val.trim() !== '') {
                 data = data.filter(row => {
                     let found = false;
-                    Object.values(row).forEach(v => {
-                        if (v !== undefined && typeof(v)== "string" && null != v.toLowerCase() && (v.toLowerCase().search(val.toLowerCase()) !== -1)) {
+                    let rowValues=[];
+                    Object.entries(row).forEach(([key, value]) => {
+                        if(key != 'Id'){
+                            rowValues.push(value);
+                        }
+                    });
+                    rowValues.forEach(v => {
+                        if (v !== undefined && typeof(v)== "string" && v!='Id' && null != v.toLowerCase() && (v.toLowerCase().search(val.toLowerCase()) !== -1)) {
                             found = true;
                         }
                     });
                     if (found) return row;
                 })
-
+                
             }
             self.createTable(data); // redesign table
             self.currentPage = 0; // reset page
