@@ -83,6 +83,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Ammissibilità KO' {
                                 ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
                                 ord.CausalCode__c = mapRequestFields.get('CODERR');
+                                ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.Description = mapRequestFields.get('ANNOTAZIONI');

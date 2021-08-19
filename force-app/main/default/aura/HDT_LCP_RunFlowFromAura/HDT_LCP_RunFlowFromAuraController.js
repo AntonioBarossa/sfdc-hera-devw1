@@ -334,9 +334,9 @@
         var tabId = event.getParam('tabId'); 
         console.log("Tab closed: " + tabId);
         console.log("Tab Current: " +component.get("v.subTabToClose"));
-        if (component.get("v.subTabToClose") == tabId) {
-            location.reload();
-        }
+        // if (component.get("v.subTabToClose") == tabId && component.get("v.subTabToClose") ) {
+        //     location.reload();
+        // }
         //
 
     }
