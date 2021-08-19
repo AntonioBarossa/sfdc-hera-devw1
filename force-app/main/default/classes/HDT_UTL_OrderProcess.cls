@@ -30,12 +30,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
 
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
-         
-        Set<Id> ordersWithActivityQuality = new Set<Id>();
-
-        for (wrts_prcgvr__Activity__c actQual : HDT_QR_ActivityCustom.getRecordByOrderListAndQuality(mapOrder.keySet())) {
-            ordersWithActivityQuality.add(actQual.Order__c);
-        }
 
         for (Order order : newOrderList) {
             Order oldOrder= mapOrder.get(order.Id);
@@ -46,18 +40,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(order.Phase__c!=oldOrder.Phase__c 
                 && oldOrder.Phase__c == 'Documentazione validata' 
                 && order.Phase__c == 'Comunicazione Verso Heroku'
-                && ordersWithActivityQuality.contains(order.Id)
+                && order.QualityCall__c
                 && isMonitoringList.contains(order.AgencyCode__c)){
-                order.Phase__c = 'In attesa di quality call';
-            }
-
-            if(order.Phase__c!=oldOrder.Phase__c 
-                && oldOrder.Phase__c == 'In attesa validazione' 
-                && order.Phase__c == 'Documentazione validata'
-                && !ordersWithActivityQuality.contains(order.Id)
-                && isMonitoringList.contains(order.AgencyCode__c)){
-                system.debug('Quality monitoring not changing phase');
-                order.Phase__c = 'In attesa validazione';
+                String newPhase = 'In attesa di quality call';
+                order.Phase__c = newPhase;
+                DateTime nowDateTime = DateTime.now();
+                order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
             }
 
         }
@@ -97,12 +85,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<String> ordersParent = new List<String>();//getParentOrders2(newOrdersList, oldOrdersList, orderMapNewToOld);
         List<Order> ordersFullList = orderQr.getRecordsByIds(olistd);
         List<String> onlyString = new List<String>();
+        List<Order> ordersQualityOkUpdate = new List<Order>();
         for(Order o : ordersFullList){
             if (o.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && o.Phase__c == 'Documentazione Gestita') {
                 ordersParent.add(o.id);
             }
             if(o.phase__c == 'Documentazione Validata'){
                 filtered.add(o);
+            }
+            if (o.Phase__c == 'Quality Call OK') {
+                ordersQualityOkUpdate.add(new Order(
+                    Id = o.Id,
+                    Phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o) ? 'Comunicazione verso Heroku' : 'In attesa validazione'
+                ));
             }
             //onlyString.add(o.id);
         }
@@ -122,8 +117,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }
 
-        orderSrv.updateRecords(childOrdersDocValid);
+        if (!childOrdersDocValid.isEmpty()) {
+            orderSrv.updateRecords(childOrdersDocValid);
+        }
         
+        if (!ordersQualityOkUpdate.isEmpty()) {
+            orderSrv.updateRecords(ordersQualityOkUpdate);
+        }
         
         List<Order> ordersHeroku = new List<Order>();
         List<Order> ordersSiebel = new List<Order>();
@@ -321,6 +321,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         orderSrv.checkReadAccess('Phase__c');
         //List<Order> childOrders = orderQr.getChildOrdersByParentIds(parentOrderIds);
         System.debug('***********1');
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
                 if (childOrder.Phase__c == currentVasPhase) {
@@ -346,7 +347,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
                 else{
                     System.debug('***********4');
-                    if (childOrder.Phase__c == currentPhase) {
+                    if (childOrder.Phase__c == currentPhase
+                        && !childOrder.QualityCall__c
+                        && !isMonitoringList.contains(childOrder.AgencyCode__c)) {
                         System.debug('***********5');
                         Order orderToUpdate = new Order(
                             Id = childOrder.Id,
@@ -483,12 +486,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
         Map<Id,wrts_prcgvr__Activity__c> mapIdOrderToActivity = new Map<Id,wrts_prcgvr__Activity__c>();
 
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+
         for(Order orderToUpdate : orderList){
             mapIdToTotalOrder.put(orderToUpdate.id,orderToUpdate);
             String recordTypeName = rtMap.get(orderToUpdate.RecordTypeId).getDeveloperName();
             if(orderToUpdate.ParentOrder__r.Phase__c == 'Documentazione Gestita' && (orderToUpdate.Phase__c == 'Documentazione Validata' || orderToUpdate.Phase__c == 'Documentazione da inviare' )){
                 system.debug('YYY 1 --->');
-                if(orderToUpdate.recordType.Developername != 'HDT_RT_VAS'){
+                if(orderToUpdate.recordType.Developername != 'HDT_RT_VAS'
+                    && !orderToUpdate.QualityCall__c
+                    && !isMonitoringList.contains(orderToUpdate.AgencyCode__c)){
                     system.debug('YYY 2 --->');
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
                     orderListToUpdate.add(orderToUpdate);
