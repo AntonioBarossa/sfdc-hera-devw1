@@ -316,6 +316,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
             orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
             orderToUpdate.CommercialProduct__c = mainItems[0].Product2.Name;
+            orderToUpdate.VASType__c=mainItems[0].Product2.Family;
+            orderToUpdate.VASSubtype__c=mainItems[0].Product2.Name;
             orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
         }
     }
