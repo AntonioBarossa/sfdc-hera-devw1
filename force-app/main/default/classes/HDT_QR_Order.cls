@@ -31,6 +31,18 @@ public inherited sharing class HDT_QR_Order {
             WITH SECURITY_ENFORCED
             ];
     }
+    public Map<Id, Order>  getOrdersRecord(list <Id> orderId){
+        Map<Id, Order> mapIdOrder=new  Map<Id, Order>([
+            SELECT
+            Name, AccountId,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,
+            Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c  
+            FROM Order 
+            WHERE Id IN :orderId
+            WITH SECURITY_ENFORCED
+            ]);
+       
+        return mapIdOrder;
+    }
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -636,7 +648,7 @@ public inherited sharing class HDT_QR_Order {
     }
 
     public Order getDates(String recordId){
-        return [SELECT Id, EffectiveDate__c, RetroactiveDate__c
+        return [SELECT Id, EffectiveDate__c, RetroactiveDate__c,ServicePoint__c,BillingProfile__c
         FROM Order
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
