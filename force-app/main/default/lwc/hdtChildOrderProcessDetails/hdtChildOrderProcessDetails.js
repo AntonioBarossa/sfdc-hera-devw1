@@ -326,6 +326,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         && section.name !== 'indirizzodiAttivazione' 
         && section.name !== 'indirizzoSpedizione' 
         && section.name !== 'ivaAccise'
+        && section.name !== 'riepilogoDatiAmend'
         && section.name !== 'dateOrdine'));
     }
 
@@ -341,6 +342,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         || section.name === 'indirizzodiAttivazione' 
         || section.name === 'indirizzoSpedizione' 
         || section.name === 'ivaAccise'
+        || section.name === 'riepilogoDatiAmend'
         || section.name === 'dateOrdine'));
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
         console.log('PENDING HOLA:' + this.pendingSteps);
@@ -1418,7 +1420,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 // },
                 new fieldData('ConnectionType__c','ConnectionType__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, true, '',''),
                 new fieldData('Esecuzione Anticipata','RecessNotice__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
-                new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, false, '',''),
+                new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, this.order.ProcessType__c == 'Switch in Ripristinatorio', '',''),
                 new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Opzione richiesta','RequestOption__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ), true, true, '',''),
 
@@ -1565,7 +1567,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             },
 
             {
-                step: '',
+                step: 5,
                 label: 'Riepilogo Dati',
                 name: 'riepilogoDatiAmend',
                 objectApiName: 'Order',
@@ -1597,16 +1599,17 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         this.typeVisibility('both'),
                         false, false, '',''
                     ), 
+                    new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
                     new fieldData(
-                        'Tipo bonus','CommercialProduct__c', 
+                        'Sottotipo Vas','VASSubtype__c', 
                         this.typeVisibility('both'), 
-                        false, false, '',''
-                    ),                  
-                    new fieldData(
-                        'Data Firma','SignedDate__c', 
-                        this.typeVisibility('both'),
-                        false, true, '', this.order.ParentOrder__r.SignedDate__c
-                    )
+                        false, true, '',''
+                    ),
+                    new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
+                    new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, true, ''),
+                    new fieldData('Soc Vendita','SalesCompany__c', true, false, true, ''),
+
+                    
                 ]
             },
             {
@@ -1651,7 +1654,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'indirizzoFornitura',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' || this.isBillable
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
@@ -1908,7 +1911,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'fatturazione',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
@@ -2134,7 +2137,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'Invio Doc','DocSendingMethod__c', 
                         this.typeVisibility('both'), 
                         false, true, '',''
-                    )                  
+                    ),                  
+                    new fieldData(
+                        'Data Firma','SignedDate__c', 
+                        this.typeVisibility('both'),
+                        false, true, '', this.order.ParentOrder__r.SignedDate__c
+                    )
+                  
                 ]
             },  
             {
@@ -2143,7 +2152,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'metodoPagamento',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'

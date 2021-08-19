@@ -24,6 +24,10 @@
                 <field>IbanCIN_IBAN__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BankAgency__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IbanCIN__c</field>
             </layoutItems>
