@@ -83,6 +83,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Ammissibilità KO' {
                                 ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
                                 ord.CausalCode__c = mapRequestFields.get('CODERR');
+                                ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.Description = mapRequestFields.get('ANNOTAZIONI');
@@ -237,21 +238,31 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Completata' {
-                                ord.Description = mapRequestFields.get('NOTA_HK');
-                                ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
-                                ord.OrderODV__c = mapRequestFields.get('VBELN');
-                                ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
-                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
-                                
-                                if(mapRequestFields.get('VKONT') != null) {
-                                    ord.ContractAccountCode__c = mapRequestFields.get('VKONT');
 
-                                    BillingProfile__c billingProfile = new BillingProfile__c();
-                                    billingProfile.Id = ordRetrieved.BillingProfile__c;
-                                    billingProfile.ContractAccountCode__c = mapRequestFields.get('VKONT');
+                                if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti')){
+                                    ord.Phase__c = 'Inviare preventivo';
+                                }else{
+                                    ord.Description = mapRequestFields.get('NOTA_HK');
+                                    ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
+                                    ord.OrderODV__c = mapRequestFields.get('VBELN');
+                                    ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
+                                    ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                     
-                                    HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
-                                    billingProfileSrv.updateRecord(billingProfile);
+                                    if(mapRequestFields.get('VKONT') != null) {
+                                        ord.ContractAccountCode__c = mapRequestFields.get('VKONT');
+
+                                        BillingProfile__c billingProfile = new BillingProfile__c();
+                                        billingProfile.Id = ordRetrieved.BillingProfile__c;
+                                        billingProfile.ContractAccountCode__c = mapRequestFields.get('VKONT');
+                                        
+                                        HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
+                                        try{
+                                            billingProfileSrv.updateRecord(billingProfile);
+                                        }catch(Exception e){
+                                            system.debug('Exception Update Billing Profile');
+                                            throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
+                                        }
+                                    }
                                 }
                             }
                             when 'Annullamento SII - Ricezione'{

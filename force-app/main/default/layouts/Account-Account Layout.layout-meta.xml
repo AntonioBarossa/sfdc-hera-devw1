@@ -167,6 +167,14 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CAMPAIGN.CAMPAIGN_TYPE</fields>
+        <fields>CAMPAIGN.START_DATE</fields>
+        <fields>CAMPAIGN.BUDGETED_COST</fields>
+        <fields>CAMPAIGN.STATUS</fields>
+        <relatedList>RelatedAccountCampaignList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>CONTRACT.NAME</fields>

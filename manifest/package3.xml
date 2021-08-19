@@ -1,38 +1,90 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>wrts_prcgvr__Activity__c.HDT_OffertaApprovata</members>
+        <members>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</members>
+        <members>wrts_prcgvr__Activity__c.RiprendiAttivita</members>
+        <members>wrts_prcgvr__Activity__c.SospendiAttivita</members>
+        <name>QuickAction</name>
+    </types>
+    <types>
+        <members>Contact_Record_Page</members>
+        <members>Contact_Record_Page1</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>Account-Account Layout</members>
         <members>Account-CPQ Account Layout Service Console</members>
         <members>Account-Partner Community</members>
+        <members>Contract-Contract Layout</members>
+        <members>Contract-SBQQ__CPQ Contract Layout</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_LC_ActivityReassignmentTool</members>
+        <members>HDT_LC_ChildOrderProcessActions</members>
+        <members>HDT_LC_ConfigurePaymentMethods</members>
+        <members>HDT_LC_ConfigureProduct</members>
+        <members>HDT_LC_FormAccountResidenziale</members>
+        <members>HDT_QR_Activity</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_ServicePoint</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_TRH_Case</members>
+        <members>HDT_TRH_Contract</members>
         <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_WS_MrrRequest</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Order.CreatorGroup__c</members>
-        <members>Order.LoginChannel__c</members>
-        <members>Order.LoginCompany__c</members>
-        <members>Order.LoginWorkstation__c</members>
-        <members>Order.PreviousCompany__c</members>
-        <members>ServicePoint__c.PreviousCompany__c</members>
+        <members>Contract.ExciseEle__c</members>
+        <members>Contract.ExciseGas__c</members>
+        <members>Contract.Market__c</members>
+        <members>Contract.VAT__c</members>
+        <members>wrts_prcgvr__Activity__c.Status__c</members>
+        <members>wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c</members>
         <name>CustomField</name>
     </types>
     <types>
+        <members>HDT_LCP_RunFlowFromAura</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
         <members>hdtChildOrderProcessDetails</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtConfigurePaymentMethods</members>
         <members>hdtGeneralInfo</members>
+        <members>hdtTargetObjectAddressFields</members>
+        <members>hdtTargetObjectCreateForm</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
+        <members>wrts_prcgvr__Activity__c.RilavoraScarto</members>
+        <name>WebLink</name>
+    </types>
+    <types>
         <members>Admin</members>
+        <members>Door2Door Profile</members>
         <members>Hera Door2Door Partner User</members>
         <members>Hera M2M Integration User</members>
         <members>Hera Standard User</members>
         <members>Hera System Administrator</members>
         <members>Hera System Integrator</members>
         <members>Hera Teleseller Partner User</members>
+        <members>Partner Community User</members>
         <name>Profile</name>
+    </types>
+    <types>
+        <members>HDT_FL_ActivityOrderPhase</members>
+        <members>HDT_FL_RibaltamentoStatiActivityCustom</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>AccountContactRelation.HDT_VR_Community</members>
+        <name>ValidationRule</name>
     </types>
     <version>49</version>
 </Package>

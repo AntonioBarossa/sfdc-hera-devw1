@@ -1586,12 +1586,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     ), 
                     new fieldData(
                         'Uso energia','UseTypeEnergy__c', 
-                        this.typeVisibility('both'), 
+                        this.order.ServicePoint__c,
                         false, true, '',''
                     ),                  
                     new fieldData(
                         'POD/PDR','ServicePointCode__c', 
-                        this.typeVisibility('both'),
+                        this.order.ServicePoint__c,
                         false, true, '',''
                     ),  
                     new fieldData(
