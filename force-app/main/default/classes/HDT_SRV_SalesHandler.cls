@@ -252,7 +252,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                     billingProfile.ContractAccountCode__c = mapRequestFields.get('VKONT');
                                     
                                     HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
-                                    billingProfileSrv.updateRecord(billingProfile);
+                                    try{
+                                        billingProfileSrv.updateRecord(billingProfile);
+                                    }catch(Exception e){
+                                        system.debug('Exception Update Billing Profile');
+                                        throw new HDT_WS_MrrRequest.DuplicateVkontException(e.getMessage());
+                                    }
+                                    
                                 }
                             }
                             when 'Annullamento SII - Ricezione'{
