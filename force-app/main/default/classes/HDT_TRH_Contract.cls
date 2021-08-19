@@ -6,15 +6,27 @@
 * @history Keltin Mesonjesi – 19/04/2021 – Created class
 */
 public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
+
     public override void beforeInsert() {
-      
-        for (Contract tempContract :(List<Contract>)Trigger.new) {
+        HDT_QR_Order qrOrder = new HDT_QR_Order();
+        List<id> listOrderId = new List<id>();
+        for (Contract tempContract : (List<Contract>)Trigger.new) {
             if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c))) {
-                tempContract.ServicePoint__c=tempContract.SBQQ__Order__r.ServicePoint__c;
-                tempContract.BillingProfile__c=tempContract.SBQQ__Order__r.BillingProfile__c;
+              listOrderId.add(tempContract.SBQQ__Order__c);
             }
-           
-          
+
+        }
+        if (!listOrderId.isEmpty()) {
+            Map<Id, Order> mapOrder = qrOrder.getOrdersRecord(listOrderId);
+      
+            if (mapOrder!=null && !mapOrder.isEmpty() ) {
+                for (Contract tempContract :(List<Contract>)Trigger.new) {
+                    if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c))) {
+                        tempContract.ServicePoint__c=mapOrder.get(tempContract.SBQQ__Order__c).ServicePoint__c;
+                        tempContract.BillingProfile__c=mapOrder.get(tempContract.SBQQ__Order__c).BillingProfile__c;
+                    }
+                }
+            }
         }
     }
 
