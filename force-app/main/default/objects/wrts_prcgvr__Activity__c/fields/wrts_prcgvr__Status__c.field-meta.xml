@@ -23,6 +23,21 @@
                 <default>true</default>
                 <label>Not Started</label>
             </value>
+            <value>
+                <fullName>Aperta</fullName>
+                <default>false</default>
+                <label>Aperta</label>
+            </value>
+            <value>
+                <fullName>Sospesa</fullName>
+                <default>false</default>
+                <label>Sospesa</label>
+            </value>
+            <value>
+                <fullName>Chiusa</fullName>
+                <default>false</default>
+                <label>Chiusa</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
