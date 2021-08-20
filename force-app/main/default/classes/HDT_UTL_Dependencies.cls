@@ -59,8 +59,10 @@ public inherited sharing class HDT_UTL_Dependencies {
         }else if(tipology.equalsIgnoreCase(TIPOLOGY_POSTSALES)){
             for(Case caseProcess : (list<Case>)newSObjectMap.values()){
                 Case oldCase = (Case)oldSObjectMap.get(caseProcess.ID);
-                if(!oldCase.Phase__c.equalsIgnoreCase(caseProcess.Phase__c) && dependenciesCheckCs.contains(caseProcess.Phase__c)){
-                    cases.put(caseProcess.ID, caseProcess);
+                if(!String.IsEmpty(oldCase.Phase__c)){
+                    if(!oldCase.Phase__c.equalsIgnoreCase(caseProcess.Phase__c) && dependenciesCheckCs.contains(caseProcess.Phase__c)){
+                        cases.put(caseProcess.ID, caseProcess);
+                    }
                 }
             }
             if(cases.size()>0){
