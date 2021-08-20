@@ -10,7 +10,7 @@ public inherited sharing class HDT_LC_ConfigurePaymentMethods {
 
         wrts_prcgvr__Activity__c activity = activityQr.getLastActivity(idAcc,o);
         if(activity.Approved__c != null){
-            if(activity.Approved__c != 'No'){
+            if(activity.Approved__c != 'Si'){
                 return false;
             }
         }
