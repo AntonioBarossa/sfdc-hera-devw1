@@ -120,8 +120,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Integer numCustomerCode = Integer.valueOf('1003616210');
-			Integer result = numCustomerCode + i;
+			Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			Decimal result = numCustomerCode + i;
 			String stringResult = String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
@@ -175,8 +175,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Integer numCustomerCode = Integer.valueOf('1003616210');
-			Integer result = numCustomerCode + i;
+			Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			Decimal result = numCustomerCode + i;
 			String stringResult = String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
@@ -637,8 +637,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
 			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
-			Integer numCustomerCode = Integer.valueOf('200008867681');
-			Integer result = numCustomerCode + i;
+			Decimal numCustomerCode = Decimal.valueOf('200008867681');
+			Decimal result = numCustomerCode + i;
 			String stringResult = String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
 			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
