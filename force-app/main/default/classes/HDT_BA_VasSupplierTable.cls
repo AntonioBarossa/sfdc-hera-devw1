@@ -7,9 +7,9 @@
 **/
 public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<SObject>, Schedulable{
 
-    private static final String STATUS_PENDING = 'Pending';
-    private static final String STATUS_SUCCESS = 'Success';
-    private static final String STATUS_ERROR = 'Error';
+    private static final String STATUS_PENDING = 'PENDING';
+    private static final String STATUS_SUCCESS = 'SUCCESS';
+    private static final String STATUS_ERROR = 'ERROR';
 
     private static final Set<String> FIELDS_TO_COPY = new Set<String>{
         'VasPolicyNumber__c',
@@ -56,8 +56,8 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     * @param bc 
     * @param vasRecords 
     **/
-    public void execute(Database.BatchableContext bc, List<SObject> vasRecords) {
-        Map<String, SObject> vasRecordsMap = mapVasRecords(vasRecords);
+    public void execute(Database.BatchableContext bc, List<VasSupplierTable__c> vasRecords) {
+        Map<String, VasSupplierTable__c> vasRecordsMap = mapVasRecords(vasRecords);
         Set<String> codes = vasRecordsMap.keySet();
 
         List<SBQQ__Subscription__c> subs = getSubscriptions(codes);
@@ -79,12 +79,12 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     * @description Mapping Vas records by VasPracticeCode__c
     * @author gabriele.rota@webresults.it | 2021-08-13 
     * @param vasRecords 
-    * @return Map<String, SObject> 
+    * @return Map<String, VasSupplierTable__c> 
     **/
-    private Map<String, SObject> mapVasRecords(List<SObject> vasRecords) {
-        Map<String, SObject> vasRecordsMap = new Map<String, SObject>();
-        for (SObject vasRecord:vasRecords) {
-            String code = (String)vasRecord.get('VasPracticeCode__c');
+    private Map<String, VasSupplierTable__c> mapVasRecords(List<VasSupplierTable__c> vasRecords) {
+        Map<String, VasSupplierTable__c> vasRecordsMap = new Map<String, VasSupplierTable__c>();
+        for (VasSupplierTable__c vasRecord:vasRecords) {
+            String code = vasRecord.VasPracticeCode__c;
             vasRecordsMap.put(code, vasRecord);
         }
         return vasRecordsMap;
@@ -116,7 +116,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     * @param targets 
     * @param vasRecordsMap 
     **/
-    private void copyVasFields(List<SObject> targets, Map<String, SObject> vasRecordsMap) {
+    private void copyVasFields(List<SObject> targets, Map<String, VasSupplierTable__c> vasRecordsMap) {
         for (SObject target:targets) {
             String code = (String)target.get('VasPracticeCode__c');
             SObject vasRecord = vasRecordsMap.get(code);
@@ -133,26 +133,38 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     * @param targets 
     * @param vasRecordsMap 
     **/
-    private void updateRecords(List<SObject> targets, Map<String, SObject> vasRecordsMap) {
+    private void updateRecords(List<SObject> targets, Map<String, VasSupplierTable__c> vasRecordsMap) {
         Database.SaveResult[] saveResults = Database.update(targets, false);
 
         for (Integer i=0;i<saveResults.size();i++) {
             Database.SaveResult saveResult = saveResults.get(i);
             String code = (String)targets.get(i).get('VasPracticeCode__c');
-            SObject vasRecord = vasRecordsMap.get(code);
+            VasSupplierTable__c vasRecord = vasRecordsMap.get(code);
 
             if (saveResult.isSuccess()) {
-                vasRecord.put('Status__c', STATUS_SUCCESS);
+                vasRecord.Status__c = STATUS_SUCCESS;
             }
             else {
-                vasRecord.put('Status__c', STATUS_ERROR);
-
-                String errorDesc = '';
-                for(Database.Error err : saveResult.getErrors()) {
-                    errorDesc += err.getFields()+': '+err.getMessage()+' ('+err.getStatusCode()+'); ';
-                }
-                vasRecord.put('ErrorDescription__c', errorDesc);
+                vasRecord.Status__c = STATUS_ERROR;
+                vasRecord.ErrorDescription__c = getErrorDescription(saveResult);
             }
         }
+    }
+
+    /**
+    * @description Get error description from SaveResult
+    * @author gabriele.rota@webresults.it | 2021-08-20 
+    * @param targets 
+    * @param vasRecordsMap 
+    **/
+    private String getErrorDescription(Database.SaveResult saveResult) {
+        String errorDesc = '';
+        for(Database.Error err : saveResult.getErrors()) {
+            errorDesc += err.getFields()+': '+err.getMessage()+' ('+err.getStatusCode()+'); ';
+        }
+        if (errorDesc.length()>255) {
+            errorDesc = errorDesc.substring(0, 255);
+        }
+        return errorDesc;
     }
 }
