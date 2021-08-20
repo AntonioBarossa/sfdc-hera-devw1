@@ -169,13 +169,13 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
             ord.RemiCode__c = mapRequestFields.get('COD_REMI');
         }
         if (!String.isBlank(mapRequestFields.get('PRESS_MIS'))) {
-            sp.Pressure__c = mapRequestFields.get('PRESS_MIS');
+            sp.Pressure__c =Decimal.valueOf( mapRequestFields.get('PRESS_MIS'));
         }
         if (!String.isBlank(mapRequestFields.get('MAX_PRELIEVO_ORA'))) {
             sp.MaxHourWithdrawal__c = mapRequestFields.get('MAX_PRELIEVO_ORA');
         }
         if (!String.isBlank(mapRequestFields.get('CONS_ANNUO'))) {
-            sp.AnnualConsumption__c = mapRequestFields.get('CONS_ANNUO');
+            sp.AnnualConsumption__c = Decimal.valueOf( mapRequestFields.get('CONS_ANNUO'));
         }
         if (!String.isBlank(mapRequestFields.get('DATA_SCAD_DS'))) {
             sp.OrderDueDate__c = mapRequestFields.get('DATA_SCAD_DS');
@@ -195,7 +195,7 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (!String.isBlank(mapRequestFields.get('TIPO_BONUS'))) {
             bonusData.add(mapRequestFields.get('TIPO_BONUS'));
         }
-        if (bonusData != '') {
+        if (bonusData.size()>0) {
             ord.BonusData__c = String.join(bonusData, ';');
         }
     }
