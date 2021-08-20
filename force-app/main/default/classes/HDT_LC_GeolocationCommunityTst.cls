@@ -44,6 +44,7 @@ public with sharing class HDT_LC_GeolocationCommunityTst {
             insert campaignList;
 
             System.debug(campaignList[0].Id);
+            
 
             List<CampaignMember> campaignMemberList = new List<CampaignMember>();
 
