@@ -28,6 +28,12 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		insert setting;
 	}
 
+		//Method to create PClick Phase Transitions
+		public static void newPhaseTransition(String DestinationPhase, String OriginPhase, id recordTypeId, String recordTypeName){
+			insert new Wrts_prcgvr__PhaseTransition__c(Wrts_prcgvr__Code__c=Math.random()+'', Wrts_prcgvr__DestinationPhase__c=DestinationPhase, Wrts_prcgvr__OriginPhase__c=OriginPhase, Wrts_prcgvr__RecordTypeId__c=recordTypeId, Wrts_prcgvr__RecordTypeName__c=recordTypeName, Wrts_prcgvr__Type__c='A');
+
+		}
+
 	public static List<Lead> createLead(Integer amount, Boolean doInsert){
 
 		List<Lead> leadList=new List<Lead>();
@@ -36,12 +42,12 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			Lead ld=new Lead();
 
-			ld.FirstName='FirstNameTest'+i;
-			ld.LastName='LastNameTest';
+			ld.FirstName='FirstNameTest' + i;
+			ld.LastName='LastNameTest' + i;
 			ld.CompanyOwner__c='MMS';
-			ld.Company='CompanyTest';
+			ld.Company='CompanyTest' + i;
 			ld.Status='New';
-			ld.Email='test@test.com';
+			ld.Email='test@test.com' + i;
 			ld.Birthdate__c=date.today();
 			ld.Gender__c='Maschio';
 			ld.Birthcity__c='Roma';
@@ -112,6 +118,13 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		Id rt=constRecordType.ACCOUNT_RECORDTYPEID_BUSINESS;
 
 		for (Integer i=0; i<amount; i++){
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			Integer numCustomerCode = Integer.valueOf('1003616210');
+			Integer result = numCustomerCode + i;
+			String stringResult = String.valueOf(result);
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			Account acc=new Account();
 
@@ -128,7 +141,15 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.FiscalCode__c='SXSRLA45H28H501K';
 			acc.BillingIsAddressVerified__c=true;
 			//@frpanico 06/08 added Customer Code
-			acc.CustomerCode__c='1003616210';
+			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			// OLD VALUE → acc.CustomerCode__c='1003616210';
+        	acc.FirstName__c='test';
+        	acc.IsWrongFiscalData__c = false;
+        	acc.BillingIsAddressVerified__c = true;
+			acc.CustomerCode__c = stringResult;
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			accList.add(acc);
 
@@ -152,6 +173,14 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		for (Integer i=0; i<amount; i++){
 
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			Integer numCustomerCode = Integer.valueOf('1003616210');
+			Integer result = numCustomerCode + i;
+			String stringResult = String.valueOf(result);
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+
 			Account acc=new Account();
 
 			acc.RecordTypeId=rt;
@@ -166,7 +195,16 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.LastName__c='test account'+i;
 			acc.FiscalCode__c='SXSRLA45H28H501K';
 			//@frpanico 06/08 added Customer Code
-			acc.CustomerCode__c='1003616210';
+
+			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			// OLD VALUE → acc.CustomerCode__c='1003616210';
+			acc.FirstName__c='test';
+        	acc.IsWrongFiscalData__c = false;
+        	acc.BillingIsAddressVerified__c = true;
+			acc.CustomerCode__c = stringResult;
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			accList.add(acc);
 
@@ -597,11 +635,26 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		List<BillingProfile__c> tstBillingProfileList=new List<BillingProfile__c>();
 
 		for (Integer i=0; i<amount; i++){
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
+			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
+			Integer numCustomerCode = Integer.valueOf('200008867681');
+			Integer result = numCustomerCode + i;
+			String stringResult = String.valueOf(result);
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
+			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
 
 			BillingProfile__c testBillingProfile=new BillingProfile__c();
 			testBillingProfile.Account__c=Account;
 			//@frpanico 06/08 added CaCode
-			testBillingProfile.ContractAccountCode__c='200008867681';
+			
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
+			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
+			//OLDVALUE: testBillingProfile.ContractAccountCode__c='200008867681';
+			testBillingProfile.ContractAccountCode__c = stringResult;
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
+			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
+
+			
 
 			tstBillingProfileList.add(testBillingProfile);
 		}
@@ -614,7 +667,165 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return tstBillingProfileList;
 	}
 
-	public static List<SBQQ__Quote__c> createQuote(Integer amount, Boolean doInsert, Id orderId, Id opportunityId, Id saleId, String type){
+	/**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 22/07/2021
+    * @return void
+    */
+	public static void installPhaseManagerSObjectSetting() {
+        try{
+            wrts_prcgvr__PhaseManagerSObjectSetting__c setting = new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name = 'Order',
+			wrts_prcgvr__ObjectType__c = 'Order',
+			wrts_prcgvr__PivotField__c = 'Phase__c');
+            upsert setting Name;
+        }catch (Exception ex){
+            
+			System.debug('Error to upsert Phase Manager SObject Setting : '  +ex.getmessage());
+        }
+    }
+	/**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 22/07/2021
+    * @return void
+    */
+	public static void installCsDependecyPhaseCheckSetting() {
+        try{
+            CS_DependecyPhaseCheck__c setting = new CS_DependecyPhaseCheck__c(Name = 'Comunicazione verso Heroku',
+			Phase__c = 'Comunicazione verso Heroku');
+            upsert setting Name;
+        }catch (Exception ex){
+            
+			System.debug('Error to upsert CS Dependecy Phase Check : '  +ex.getmessage());
+        }
+    }
+	/**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 22/07/2021
+    * @return void
+    */
+	public static wrts_prcgvr__PhaseTransition__c insertPhaseTransition( String apexCalloutActions, String buttonStyle,
+            String calloutParameters, String calloutTemplate, String code, String description,
+            String destinationPhase, String ensureChildren, String hyperLinkTarget,
+            String hyperLinkUrl, Boolean isManualCallout, String originPhase, String label,
+            String confirmMessage, String recordTypeId, String recordTypeName, String tooltip, String type, Boolean doDml) {
+			Savepoint sp = Database.setSavePoint();
+			wrts_prcgvr__PhaseTransition__c pt = null;
+			try{
+				pt = new wrts_prcgvr__PhaseTransition__c(
+				wrts_prcgvr__ApexCalloutActions__c = apexCalloutActions,
+				wrts_prcgvr__ButtonStyle__c = buttonStyle,
+				wrts_prcgvr__CalloutParameters__c = calloutParameters,
+				wrts_prcgvr__CalloutTemplate__c = calloutTemplate,
+				wrts_prcgvr__Code__c = String.isBlank(code) ? generateGuid() : code,
+				wrts_prcgvr__Description__c = description,
+				wrts_prcgvr__DestinationPhase__c = destinationPhase,
+				wrts_prcgvr__EnsureChildren__c =  ensureChildren,
+				wrts_prcgvr__HyperLinkTarget__c =  hyperLinkTarget,
+				wrts_prcgvr__HyperLinkUrl__c =  hyperLinkUrl,
+				wrts_prcgvr__IsManualCallout__c =  isManualCallout,
+				wrts_prcgvr__OriginPhase__c = originPhase,
+				wrts_prcgvr__Label__c = label,
+				wrts_prcgvr__ConfirmMessage__c = confirmMessage,
+				wrts_prcgvr__RecordTypeId__c = recordTypeId,
+				wrts_prcgvr__RecordTypeName__c = recordTypeName,
+				wrts_prcgvr__Tooltip__c = tooltip,
+				wrts_prcgvr__Type__c = type
+			);
+            if (doDml) {
+                insert pt;
+            }
+        }catch (Exception ex){
+            Database.rollback(sp);
+            System.debug('Failed to insert PhaseTransition__c'  + ex.getmessage());
+        }
+		return pt;
+	}
+	/**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 22/07/2021
+    * @return void
+    */
+	public static String generateGuid() {
+        String kHexChars = '0123456789abcdefABCDEF';
+        String returnValue = '';
+        Integer nextByte = 0;
+        for (Integer i = 0; i < 16; i++) {
+            if (i == 4 || i == 6 || i == 8 || i == 10) {
+                returnValue += '-';
+            }
+
+            nextByte = (Math.round(Math.random() * 255) - 128) & 255;
+
+            if (i == 6) {
+                nextByte = nextByte & 15;
+                nextByte = nextByte | (4 << 4);
+            }
+
+            if (i == 8) {
+                nextByte = nextByte & 63;
+                nextByte = nextByte | 128;
+            }
+
+            returnValue += charAt(kHexChars, nextByte >> 4);
+            returnValue += charAt(kHexChars, nextByte & 15);
+        }
+        return returnValue;
+    }
+	/**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 22/07/2021
+    * @return void
+    */
+	public static String charAt(String str, Integer index) {
+        if (str == null) {
+            return null;
+        }
+
+        if (str.length() <= 0) {
+            return str;
+        }
+
+        if (index < 0 || index >= str.length()) {
+            return null;
+        }
+        return str.substring(index, index + 1);
+    }
+	/**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 22/07/2021
+	* @param1 Integer amount
+	* @param2 Boolean doInsert
+	* @param3 String incoming process
+	* @param4 String blocking process
+	* @param5 String checking phase
+	* @param6 String matching field
+    * @return List<DependenciesMatrix__c>
+    */
+	public static List<DependenciesMatrix__c> createDependenciesMatrix(Integer amount, Boolean doInsert, String incoming, String blocking, String checking, String matching){
+
+		List<DependenciesMatrix__c> depMatrixList=new List<DependenciesMatrix__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			DependenciesMatrix__c depMtx=new DependenciesMatrix__c();
+
+			depMtx.IncomingProcessType__c = incoming;
+			depMtx.BlockingProcessType__c = blocking;
+			depMtx.CheckingPhase__c = checking;
+			depMtx.MatchingField__c = matching;
+
+			depMatrixList.add(depMtx);
+		}
+
+		if (doInsert){
+
+			insert depMatrixList;
+		}
+
+		return depMatrixList;
+	}
+
+	public static List<SBQQ__Quote__c> createQuote (Integer amount, Boolean doInsert, Id orderId, Id opportunityId, Id saleId, String type) {
 
 		List<SBQQ__Quote__c> quoteList=new List<SBQQ__Quote__c>();
 
@@ -729,6 +940,31 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return campaignList;
+	}
+
+	//** [START MOD 2021-08-13] @Author Andrei Necsulescu  - WR (andrei.necsulescu@webresults.it) @Description: Added Method to Create a record of CampaignMember
+	public static List<CampaignMember> createCampaignMember(Integer amount, Boolean doInsert, String campaignId, String leadId, String contactId) {
+
+		List<CampaignMember> campaignMembers = new List<CampaignMember>();
+
+		for (Integer i = 0; i < amount; i++) {
+			
+			campaignMembers.add(new CampaignMember(
+				CampaignId = campaignId,
+				LeadId = leadId,
+				ContactId = contactId
+			));
+
+		}
+
+		if (doInsert) {
+
+			insert campaignMembers;
+
+		}
+
+		return campaignMembers;
+
 	}
 
 	//** [START MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem
