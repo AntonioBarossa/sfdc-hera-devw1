@@ -46,6 +46,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.LeadSource= mapRequestFields.get('FONTE');
                     newLead.SourceDetail__c= mapRequestFields.get('DETTAGLIOFONTE');
                     newLead.InterestProduct__c= mapRequestFields.get('PRODOTTO');
+                    newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');
                     
                     newLead.WebFormField01__c = mapRequestFields.get('CAMPO_01');
                     newLead.WebFormField02__c = mapRequestFields.get('CAMPO_02');

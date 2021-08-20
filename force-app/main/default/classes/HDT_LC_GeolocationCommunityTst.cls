@@ -34,13 +34,17 @@ public with sharing class HDT_LC_GeolocationCommunityTst {
 
             List<Campaign> campaignList = HDT_UTL_DataFactoryTst.createCampaign(1, false);
             campaignList[0].Category__c = 'Campagna Outbound';
-            campaignList[0].Channel__c = 'Door to Door';
+            //** [START MOD 2021-08-20] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Correct the wrong channel
+            //campaignList[0].Channel__c = 'Door to Door';
+            campaignList[0].Channel__c = 'Bolletta';
+            //** [END MOD 2021-08-20] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Correct the wrong channel
             campaignList[0].IsActive = true;
             campaignList[0].StartDate = Date.today();
             campaignList[0].EndDate = Date.today()+15;
             insert campaignList;
 
             System.debug(campaignList[0].Id);
+            
 
             List<CampaignMember> campaignMemberList = new List<CampaignMember>();
 
