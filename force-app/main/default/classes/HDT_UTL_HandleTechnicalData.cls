@@ -127,7 +127,7 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
 
     public void handlE300Flow(Map<String, String> mapRequestFields, Order ord){
         system.debug('flusso 300');
-        String bonusData = '';
+        List<String> bonusData = new List<String>();
         if (!String.isBlank(mapRequestFields.get('MATR_MIS'))) {
             ord.MeterSN__c = mapRequestFields.get('MATR_MIS');
         }
@@ -181,22 +181,22 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
             sp.OrderDueDate__c = mapRequestFields.get('DATA_SCAD_DS');
         }
         if (!String.isBlank(mapRequestFields.get('BONUSGAS'))) {
-            bonusData = mapRequestFields.get('BONUSGAS') + ';';
+            bonusData.add(mapRequestFields.get('BONUSGAS'));
         }
         if (!String.isBlank(mapRequestFields.get('BONUS_INIZ'))) {
-            bonusData += mapRequestFields.get('BONUS_INIZ') + ';';
+            bonusData.add(mapRequestFields.get('BONUS_INIZ'));
         }
         if (!String.isBlank(mapRequestFields.get('BONUS_FINE'))) {
-            bonusData += mapRequestFields.get('BONUS_FINE') + ';';
+            bonusData.add(mapRequestFields.get('BONUS_FINE'));
         }
         if (!String.isBlank(mapRequestFields.get('MESE_RIN'))) {
             sp.RenewalMonth__c = mapRequestFields.get('MESE_RIN');
         }
         if (!String.isBlank(mapRequestFields.get('TIPO_BONUS'))) {
-            bonusData += mapRequestFields.get('TIPO_BONUS');
+            bonusData.add(mapRequestFields.get('TIPO_BONUS'));
         }
         if (bonusData != '') {
-            ord.BonusData__c = bonusData;
+            ord.BonusData__c = String.join(bonusData, ';');
         }
     }
 
