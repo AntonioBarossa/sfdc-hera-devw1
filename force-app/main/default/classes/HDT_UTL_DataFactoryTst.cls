@@ -191,8 +191,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
-			acc.FirstName__c= 'test account'+i;
-			acc.LastName__c='test account'+i;
+			acc.FirstName__c= 'test';
+			acc.LastName__c='account'+i;
 			acc.FiscalCode__c='SXSRLA45H28H501K';
 			//@frpanico 06/08 added Customer Code
 

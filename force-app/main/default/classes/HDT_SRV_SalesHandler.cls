@@ -67,7 +67,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         else {
                             ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
                         }
-                        
+
                         String previousPhase = ordRetrieved.Phase__c;
                         String nextPhase = mapRequestFields.get('FASE');
                         String finalCancellationPhase = '';
@@ -141,18 +141,25 @@ public with sharing class HDT_SRV_SalesHandler {
                                      ord.TecnicalPhase__c = 'Annullato';
                                      ord.Status = 'Annullato';
                                  }
-                            }when 'Dati Tecnici Ricevuti'{
-                                if (!String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
-                                    ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
-                                }
-                                if(!String.isBlank(mapRequestFields.get('DT_MAX_PREV'))){
-                                    if(mapRequestFields.get('DT_MAX_PREV').getChars().size()==8){
-                                        ord.ValidityDateEstimate__c=getExpireDate(mapRequestFields.get('DT_MAX_PREV'));
+                            }
+                            when 'Dati Tecnici Ricevuti'{
+                                HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
+                                utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
+                                switch on mapRequestFields.get('COD_FLUSSO'){
+                                    when 'E154'{
+                                        utlTechData.handleE154Flow(mapRequestFields, ord);
+                                    }
+                                    when 'E150F'{
+                                        utlTechData.handleE150Flow(mapRequestFields, ord);
+                                    }
+                                    when '0351' {
+                                        utlTechData.handle351Flow(mapRequestFields, ord);
+                                    }
+                                    when '0300' {
+                                        utlTechData.handle300Flow(mapRequestFields, ord);
                                     }
                                 }
-                                if(!String.isBlank(mapRequestFields.get('NUMPREV'))){
-                                    ord.QuotationNumber__c=mapRequestFields.get('NUMPREV');
-                                }
+                                new HDT_SRV_ServicePoint().updateRecord(utlTechData.sp);
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
@@ -471,12 +478,5 @@ public with sharing class HDT_SRV_SalesHandler {
         HDT_UTL_DatabaseService.updateSObject(recordOrder);
     }
     //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
-
-    private static Date getExpireDate(String expireDate){
-        Integer yr = Integer.valueOf(expireDate.substring(0, 4));
-        Integer mth = Integer.valueOf(expireDate.substring(4, 6));
-        Integer dy = Integer.valueOf(expireDate.substring(6, 8));
-        return Date.newInstance(yr, mth, dy);
-    }
 
 }
