@@ -483,13 +483,13 @@ handleAddressValuesIfSap(servicepointretrieveddata){
             case 'SupplyPlace__c':
 
             this.CodiceLocalita = servicepointretrieveddata[key] ;
-            this.theRecord['Codice Localita'] = servicepointretrieveddata[key] ;
+            this.theRecord['Localita'] = servicepointretrieveddata[key] ;
 
             break;
             case 'SupplyPlaceCode__c':
 
             this.Localita = servicepointretrieveddata[key] ;
-            this.theRecord['Localita'] = servicepointretrieveddata[key] ;
+            this.theRecord['Codice Localita'] = servicepointretrieveddata[key] ;
 
             break;
 
@@ -584,8 +584,8 @@ handleAddressValuesIfSap(servicepointretrieveddata){
             this.theRecord['CodiceComuneSAP'] = this.codComuneSAP;
             this.theRecord['CodiceViaStradarioSAP'] = this.codStradarioSAP;
             this.theRecord['IndirizzoEstero'] = this.IndEstero;
-            this.theRecord['Flag Verificato'] = this.FlagVerificato;
-
+           // this.theRecord['Flag Verificato'] = this.FlagVerificato;
+           this.theRecord['Flag Verificato'] = true;
             
 
         this.preloading = false;
@@ -1013,6 +1013,13 @@ handleAddressValues(servicepointretrieveddata){
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
                 this.flagVerificato = servicepointretrieveddata[key] ;
                 this.theRecord['Flag Verificato'] = this.flagVerificato;
+
+            break;
+            case 'Localita':
+
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.Localita = servicepointretrieveddata[key] ;
+                this.theRecord['Localita'] = this.Localita;
 
             break;
         }

@@ -11,7 +11,7 @@ export default class hdtConfigurePaymentMethods extends LightningElement {
 
     get disabledInput(){
         let result = false;
-        disableBotton({idAcc:this.accountId}).then(data =>{
+        disableBotton({idAcc:this.accountId,sale:this.saleRecord}).then(data =>{
         if(data==true && this.saleRecord.CurrentStep__c != this.currentStep){
 
             result = true;

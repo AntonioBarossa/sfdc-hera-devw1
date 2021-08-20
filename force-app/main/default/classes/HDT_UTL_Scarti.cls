@@ -151,7 +151,51 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
         HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
+
+    public class HDT_UTL_FlowInputs{
+
+        @InvocableVariable
+        public String objectId;
+        @InvocableVariable
+        public String templateName;
+
+
+    }
     
+    public class HDT_UTL_FlowOutputs{
+
+        @InvocableVariable
+        public String esito;
+        @InvocableVariable
+        public String dettaglioEsito;
+
+    }
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 19/08/2021
+    * @description HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameFlow
+    * @param1 inputData - list<HDT_UTL_FlowInputs>
+    * @return string 
+    */
+    @InvocableMethod(label='prova')
+    public static list<HDT_UTL_FlowOutputs> createActivityByObjectIdAndTemplateNameFlow(list<HDT_UTL_FlowInputs> inputParam){
+        list<HDT_UTL_FlowOutputs> listOutputs= new list<HDT_UTL_FlowOutputs>();
+        HDT_UTL_FlowOutputs output= new HDT_UTL_FlowOutputs();
+        try{
+            wrts_prcgvr__Activity__c act= createActivityByObjectIdAndTemplateName(inputParam[0].objectId, inputParam[0].templateName);
+            insert act;
+            output.esito='OK';
+            output.dettaglioEsito=act.Id;
+        }catch(Exception e){
+            output.esito='KO';
+            output.dettaglioEsito= e.getMessage();
+        }
+        listOutputs.add(output);
+        return listOutputs;
+    }
+
+
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 06/08/2021

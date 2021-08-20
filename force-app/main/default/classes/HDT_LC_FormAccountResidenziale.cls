@@ -33,7 +33,13 @@ public with sharing class HDT_LC_FormAccountResidenziale {
                 System.debug('s+ :'+s);
                 System.debug('accountAddressRes.get(s) :'+accountAddressRes.get(s));
                 
-                 account.put(s, accountAddressRes.get(s));
+                
+                if('ShippingIsAddressVerified__c' == s){
+                    account.put(s, accountAddressRes.get(s) == 'true' ? true : false);
+                }
+                else{ 
+                    account.put(s, accountAddressRes.get(s));
+                }
 
         }
         
