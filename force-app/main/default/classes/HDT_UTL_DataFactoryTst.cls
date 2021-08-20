@@ -144,7 +144,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 			// OLD VALUE → acc.CustomerCode__c='1003616210';
-        	acc.FirstName__c='test';
         	acc.IsWrongFiscalData__c = false;
         	acc.BillingIsAddressVerified__c = true;
 			acc.CustomerCode__c = stringResult;
@@ -192,6 +191,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
+			acc.FirstName__c= 'test account'+i;
 			acc.LastName__c='test account'+i;
 			acc.FiscalCode__c='SXSRLA45H28H501K';
 			//@frpanico 06/08 added Customer Code
@@ -199,7 +199,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 			// OLD VALUE → acc.CustomerCode__c='1003616210';
-			acc.FirstName__c='test';
         	acc.IsWrongFiscalData__c = false;
         	acc.BillingIsAddressVerified__c = true;
 			acc.CustomerCode__c = stringResult;
