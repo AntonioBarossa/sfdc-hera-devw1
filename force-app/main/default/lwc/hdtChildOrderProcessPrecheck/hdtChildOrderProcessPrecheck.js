@@ -537,7 +537,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             bpType:bpType,
             customerType:"CT0", //da definire campo SF con business            
             operation:operation,
-            companyGroup:"Hera S.p.A.",
+            companyGroup:companyName,
             market:market,
             offerType:offerType,
             details:[{
