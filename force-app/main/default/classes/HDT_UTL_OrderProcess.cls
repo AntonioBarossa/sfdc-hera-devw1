@@ -29,12 +29,27 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             mapOrder.put(o.Id, o);
         }
 
+
+        //19/08/2021 gabriele.rota@webresults.it - Calcolo Data Decorrenza Cambio Offerta
+        HDT_QR_RecordType recordTypeQr = new HDT_QR_RecordType();
+        String rtCambioOfferta = recordTypeQr.getRecordTypeIdByName('HDT_RT_CambioOfferta');
+
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+
 
         for (Order order : newOrderList) {
             Order oldOrder= mapOrder.get(order.Id);
             if(order.Phase__c!=oldOrder.Phase__c&&order.Phase__c=='Comunicazione Verso Heroku'&&order.isTransition__c==true){
                 order.Phase__c='Esportazione VS Siebel';
+            }
+
+
+            //19/08/2021 gabriele.rota@webresults.it - Calcolo Data Decorrenza Cambio Offerta
+            if (order.RecordTypeId==rtCambioOfferta && order.EffectiveDate__c==null) {
+                Date refDate = (order.ContractSigned__c)?order.WizardCompletedDate__c:order.SignedDate__c;
+                if (refDate!=null) {
+                    order.EffectiveDate__c = refDate.toStartOfMonth().addMonths(1);
+                }
             }
 
             if(order.Phase__c!=oldOrder.Phase__c 
@@ -47,6 +62,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 DateTime nowDateTime = DateTime.now();
                 order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
             }
+
 
         }
         

@@ -34,7 +34,7 @@ public inherited sharing class HDT_QR_Order {
     public Map<Id, Order>  getOrdersRecord(list <Id> orderId){
         Map<Id, Order> mapIdOrder=new  Map<Id, Order>([
             SELECT
-            Name, AccountId,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,
+            Name, AccountId,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
             Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c  
             FROM Order 
             WHERE Id IN :orderId
@@ -135,6 +135,8 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.UseTypeEnergy__c,
             ServicePoint__r.UseCategory__c,
             ServicePoint__r.Vat__c,
+            ServicePoint__r.ExciseEle__c,
+            ServicePoint__r.ExciseGas__c,
             PowerAvailable__c,
             UseTypeEnergy__c,
             BillingProfile__c,

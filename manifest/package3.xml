@@ -1,90 +1,161 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>wrts_prcgvr__Activity__c.HDT_OffertaApprovata</members>
-        <members>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</members>
-        <members>wrts_prcgvr__Activity__c.RiprendiAttivita</members>
-        <members>wrts_prcgvr__Activity__c.SospendiAttivita</members>
+        <members>CreaAttivitaManuale</members>
+        <members>HDT_InformativeCallNotification</members>
+        <members>wrts_prcgvr__Activity__c.Close_Activity</members>
         <name>QuickAction</name>
     </types>
     <types>
-        <members>Contact_Record_Page</members>
-        <members>Contact_Record_Page1</members>
+        <members>HDT_Activity_Default_Record_Page</members>
         <name>FlexiPage</name>
-    </types>
-    <types>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
-        <name>RecordType</name>
-    </types>
-    <types>
-        <members>Account-Account Layout</members>
-        <members>Account-CPQ Account Layout Service Console</members>
-        <members>Account-Partner Community</members>
-        <members>Contract-Contract Layout</members>
-        <members>Contract-SBQQ__CPQ Contract Layout</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>HDT_LC_ChildOrderProcessActions</members>
-        <members>HDT_LC_ConfigurePaymentMethods</members>
-        <members>HDT_LC_ConfigureProduct</members>
-        <members>HDT_LC_FormAccountResidenziale</members>
-        <members>HDT_QR_Activity</members>
-        <members>HDT_QR_Order</members>
-        <members>HDT_QR_ServicePoint</members>
-        <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_TRH_Case</members>
-        <members>HDT_TRH_Contract</members>
-        <members>HDT_UTL_OrderFieldsAlignment</members>
-        <members>HDT_WS_MrrRequest</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>Contract.ExciseEle__c</members>
-        <members>Contract.ExciseGas__c</members>
-        <members>Contract.Market__c</members>
-        <members>Contract.VAT__c</members>
-        <members>wrts_prcgvr__Activity__c.Status__c</members>
-        <members>wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>HDT_LCP_RunFlowFromAura</members>
-        <name>AuraDefinitionBundle</name>
     </types>
     <types>
         <members>hdtChildOrderProcessDetails</members>
         <members>hdtChildOrderProcessPrecheck</members>
-        <members>hdtConfigurePaymentMethods</members>
-        <members>hdtGeneralInfo</members>
+        <members>hdtEditQuote</members>
+        <members>hdtQuoteAmendContract</members>
         <members>hdtTargetObjectAddressFields</members>
         <members>hdtTargetObjectCreateForm</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>wrts_prcgvr__Activity__c.RilavoraScarto</members>
-        <name>WebLink</name>
-    </types>
-    <types>
         <members>Admin</members>
-        <members>Door2Door Profile</members>
         <members>Hera Door2Door Partner User</members>
         <members>Hera M2M Integration User</members>
         <members>Hera Standard User</members>
         <members>Hera System Administrator</members>
         <members>Hera System Integrator</members>
         <members>Hera Teleseller Partner User</members>
-        <members>Partner Community User</members>
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_FL_ActivityOrderPhase</members>
-        <members>HDT_FL_RibaltamentoStatiActivityCustom</members>
+        <members>HDT_FL_CreationManualActivity</members>
         <name>Flow</name>
     </types>
     <types>
-        <members>AccountContactRelation.HDT_VR_Community</members>
+        <members>Case.HDT_VR_CreatedFromCallCenter</members>
         <name>ValidationRule</name>
+    </types>
+    <types>
+        <members>HDT_CP_CallCenter</members>
+        <name>CustomPermission</name>
+    </types>
+    <types>
+        <members>Order.HDT_RT_Attivazione</members>
+        <members>Order.HDT_RT_AttivazioneConModifica</members>
+        <members>Order.HDT_RT_CambioOfferta</members>
+        <members>Order.HDT_RT_CambioUso</members>
+        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
+        <members>Order.HDT_RT_Default</members>
+        <members>Order.HDT_RT_FlyingRequest</members>
+        <members>Order.HDT_RT_OrderDossier</members>
+        <members>Order.HDT_RT_Proroga</members>
+        <members>Order.HDT_RT_RiattivazioniNonMorose</members>
+        <members>Order.HDT_RT_ScontiBonus</members>
+        <members>Order.HDT_RT_Subentro</members>
+        <members>Order.HDT_RT_SwitchIn</members>
+        <members>Order.HDT_RT_SwitchInVolturaTecnica</members>
+        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
+        <members>Order.HDT_RT_VAS</members>
+        <members>Order.HDT_RT_VolturaConSwitch</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>Account-CPQ Account Layout Service Console</members>
+        <members>Global-Global Layout</members>
+        <members>Order-Cambio Offerta</members>
+        <members>Order-Dossier</members>
+        <members>Order-HDT_Voltura</members>
+        <members>Order-Prima attivazione con modifica</members>
+        <members>Order-Prima attivazione</members>
+        <members>Order-Sconti o Bonus VAS</members>
+        <members>Order-Subentro</members>
+        <members>Order-Switch in</members>
+        <members>Order-VAS</members>
+        <members>SBQQ__QuoteLine__c-SBQQ__Quote Line Layout</members>
+        <members>Sale__c-Vendita Layout</members>
+        <members>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali2</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_CallCenter</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_LC_BillingProfileFormTst</members>
+        <members>HDT_LC_CampaignsControllerTst</members>
+        <members>HDT_LC_ConfigurePaymentMethods</members>
+        <members>HDT_LC_ConfigureProduct</members>
+        <members>HDT_LC_GeolocationCommunityTst</members>
+        <members>HDT_LC_QuoteAmendContract</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_OrderItem</members>
+        <members>HDT_QR_QuoteLine</members>
+        <members>HDT_SRV_Sale</members>
+        <members>HDT_TRH_Contract</members>
+        <members>HDT_UTL_Constants</members>
+        <members>HDT_UTL_ConstantsTst</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_Dependencies</members>
+        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_Scarti</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Case.CreatedByCallCenter__c</members>
+        <members>Order.BonusData__c</members>
+        <members>Order.FareCode__c</members>
+        <members>Order.PerformanceCost__c</members>
+        <members>ServicePoint__c.AnnualVolumeReplacement__c</members>
+        <members>ServicePoint__c.Collection__c</members>
+        <members>ServicePoint__c.CorrectiveCoefficient__c</members>
+        <members>ServicePoint__c.CorrectorDigitNumber__c</members>
+        <members>ServicePoint__c.CorrectorSN__c</members>
+        <members>ServicePoint__c.CorrectorSignal__c</members>
+        <members>ServicePoint__c.CorrectorType__c</members>
+        <members>ServicePoint__c.CorrectorWithdrawal__c</members>
+        <members>ServicePoint__c.DigitNumberActive__c</members>
+        <members>ServicePoint__c.DigitNumberPower__c</members>
+        <members>ServicePoint__c.DigitNumberReactive__c</members>
+        <members>ServicePoint__c.DispatchingPoint__c</members>
+        <members>ServicePoint__c.DistributorNameFormula__c</members>
+        <members>ServicePoint__c.DistributorTreatment__c</members>
+        <members>ServicePoint__c.Forfait__c</members>
+        <members>ServicePoint__c.InstallationDateActive__c</members>
+        <members>ServicePoint__c.InstallationDatePower__c</members>
+        <members>ServicePoint__c.InstallationDateReactive__c</members>
+        <members>ServicePoint__c.MarketTypeCode__c</members>
+        <members>ServicePoint__c.MaxHourWithdrawal__c</members>
+        <members>ServicePoint__c.MeterAccessible__c</members>
+        <members>ServicePoint__c.MeterActiveSN__c</members>
+        <members>ServicePoint__c.MeterDigitNumber__c</members>
+        <members>ServicePoint__c.MeterGroup__c</members>
+        <members>ServicePoint__c.MeterPowerSN__c</members>
+        <members>ServicePoint__c.MeterReactiveSN__c</members>
+        <members>ServicePoint__c.MeterSignal__c</members>
+        <members>ServicePoint__c.MeterYear__c</members>
+        <members>ServicePoint__c.OrderDueDate__c</members>
+        <members>ServicePoint__c.PerformanceCost__c</members>
+        <members>ServicePoint__c.RegimeDate2G__c</members>
+        <members>ServicePoint__c.RenewalMonth__c</members>
+        <members>ServicePoint__c.kActive__c</members>
+        <members>ServicePoint__c.kPower__c</members>
+        <members>ServicePoint__c.kReactive__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>HDT_LCP_RunFlowManualActivity</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>Default</members>
+        <name>PathAssistant</name>
+    </types>
+    <types>
+        <members>HDT_MatrixCompatibilityMap.CaseType123</members>
+        <name>CustomMetadata</name>
     </types>
     <version>49</version>
 </Package>

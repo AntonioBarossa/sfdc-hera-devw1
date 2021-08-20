@@ -494,8 +494,8 @@ handleAddressValuesIfSap(servicepointretrieveddata){
             break;
 
         }
-        this.flagVerificato=true;
-        this.theRecord['Flag Verificato'] = this.FlagVerificato;
+     //   this.flagVerificato=true;
+     //   this.theRecord['Flag Verificato'] = this.FlagVerificato;
         
     });
     console.log('handleAddressValues END ');
