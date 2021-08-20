@@ -94,7 +94,7 @@ export default class HdtSelezioneFornituraFlow extends SaleVas {
 
     @api
     validate() {
-        if(this.ordId || this.contrId || this.template.querySelector("lightning-input").checked) { 
+        if(this.ordId || this.contrId || this.showEmptyOrdersMessage || this.showEmptyContractsMessage) { 
             return { isValid: true }; 
         }
         else { 
