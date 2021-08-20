@@ -277,9 +277,9 @@
     <relatedLists>
         <relatedList>RelatedContentNoteList</relatedList>
     </relatedLists>
-    <relatedLists>
+    <!-- <relatedLists>
         <relatedList>RelatedFileList</relatedList>
-    </relatedLists>
+    </relatedLists> -->
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
