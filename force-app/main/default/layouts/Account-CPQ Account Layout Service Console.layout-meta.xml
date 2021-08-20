@@ -404,6 +404,7 @@
         <fields>SupplyAddress__c</fields>
         <fields>MeterSN__c</fields>
         <fields>CommoditySector__c</fields>
+        <fields>DistributorNameFormula__c</fields>
         <relatedList>ServicePoint__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
