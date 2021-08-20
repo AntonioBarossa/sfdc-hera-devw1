@@ -1115,6 +1115,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Aperta</fullName>
+            <default>true</default>
+        </values>
+        <values>
             <fullName>Appuntamento confermato</fullName>
             <default>false</default>
         </values>
@@ -1172,6 +1176,10 @@
         </values>
         <values>
             <fullName>Presa appuntamento in corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospesa</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1796,7 +1804,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Approvazione Quote</fullName>
+            <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1978,12 +1986,24 @@
     <picklistValues>
         <picklist>wrts_prcgvr__Status__c</picklist>
         <values>
+            <fullName>Aperta</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Chiusa</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Completed</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Not Started</fullName>
-            <default>true</default>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
 </RecordType>

@@ -19,7 +19,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
      * @description Execute child order process save actions
      */
     @AuraEnabled
-    public static void save(Order order){
+    public static void save(Order order, Map<String,Object> lastStepData){
         system.debug('START SAVE ORDER');        
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;
@@ -44,10 +44,21 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             // Calculate Date @Picchiri 20/05/21
             when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn   
                 system.debug('HDT_LC_ChildOrderProcessActions - save - HDT_RT_SwitchIn order : ' + JSON.serializepretty(order));             
+
+                //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
+                orderToUpdate.IsActivationDeferred__c = order.IsActivationDeferred__c;
+
+                try {         
+                    if(order.SignedDate__c != null){                    
+                        orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);  // Data di decorrenza
+                        system.debug('Calcolo data max di decorrenza x 1');             
+                    }
+                } catch (Exception e) { 
+                    throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
+                }
                 
                 if (order.ProcessType__c == 'Switch in Ripristinatorio') {
                     orderToUpdate.DateSentToSII__c = Date.today();
-                    orderToUpdate.EffectiveDate__c = Date.today();
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
                 } else {
                     if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') { // @Picchiri Only for residential customer
@@ -86,15 +97,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             //orderToUpdate.ActivatedDate = HDT_UTL_SwtichInProcess.getActivatedDate(order);
                             // END Calcolo data inizio (Data attivazione contratto)
     
-                            // START 3 Calcolo Data Decorrenza (EffectiveDate__c)     
-                            try {         
-                                if(order.SignedDate__c != null){                    
-                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);  // Data di decorrenza
-                                    system.debug('Calcolo data max di decorrenza x 1');             
-                                }
-                            } catch (Exception e) { 
-                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
-                            }                     
+                            // START 3 Calcolo Data Decorrenza (EffectiveDate__c)                      
                             
                             // END Calcolo Data Decorrenza (EffectiveDate__c) 
     
@@ -248,6 +251,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
 
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);
+        system.debug('HDT_LC_ChildOrderProcessActions - lastStepData: ' + lastStepData);
+
+
+        if (lastStepData != null) {
+            for (String lastStepField : lastStepData.keySet()) {
+                orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+            }
+        }
+        
+        system.debug('HDT_LC_ChildOrderProcessActions - lastStepData - after: ' + orderToUpdate);
+
         orderSrv.updateRecord(orderToUpdate);
 
         if (order.ParentOrder__r.Status == 'Draft') {

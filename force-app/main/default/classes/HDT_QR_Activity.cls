@@ -8,11 +8,12 @@ public inherited sharing class HDT_QR_Activity {
     }
 
 
-    public wrts_prcgvr__Activity__c getLastActivity(String idAcc){
+    public wrts_prcgvr__Activity__c getLastActivity(String idAcc,Object o){
         activitySrv.checkReadAccess(fields);
         String type = 'Approvazione Offerte';
+        String status ='Creata';
         String query = 'SELECT '+ fields +
-                ' FROM wrts_prcgvr__Activity__c WHERE Type__c=: type AND Account__c =: idAcc  ORDER BY CreatedDate desc  WITH SECURITY_ENFORCED';
+                ' FROM wrts_prcgvr__Activity__c WHERE Type__c=: type AND Account__c =: idAcc AND Status__c=:status AND Sale__c=: o.id WITH SECURITY_ENFORCED';
 
         List<wrts_prcgvr__Activity__c> activityList = Database.query(query);
         
