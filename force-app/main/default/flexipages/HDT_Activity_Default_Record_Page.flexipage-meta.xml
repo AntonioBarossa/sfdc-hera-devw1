@@ -59,6 +59,12 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.HDT_OffertaApprovata</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

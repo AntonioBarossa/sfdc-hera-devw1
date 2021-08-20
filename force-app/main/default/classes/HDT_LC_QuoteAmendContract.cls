@@ -46,9 +46,9 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
         Map<id, SBQQ__QuoteLine__c> podsAndVas = new Map<id, SBQQ__QuoteLine__c>(quoteLineQr.getRecordsByContractAndProductPod(contractId, saleId));
         system.debug('HDT_LC_QuoteAmendContract - podsAndVas: ' + podsAndVas);
 
-        Map<id, List<id>> podToChilds = new Map<id, List<id>>();
-        Map<id, id> podToFather = new Map<id, id>();
-        List<SBQQ__QuoteLine__c> quoteLinePods = new List<SBQQ__QuoteLine__c>();
+        Map<id, List<id>> podToChilds = new Map<id, List<id>>(); //id pod to other QL with the same father as the pod
+        Map<id, id> podToFather = new Map<id, id>(); // this map connect father with pod, I use to increase efficiency on mapping podToChilds 
+        List<SBQQ__QuoteLine__c> quoteLinePods = new List<SBQQ__QuoteLine__c>(); //this contains just the ql pod/pdr
         
 
         for(SBQQ__QuoteLine__c ql : podsAndVas.values()){

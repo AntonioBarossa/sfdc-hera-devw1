@@ -32788,6 +32788,10 @@
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali2</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>SiebelActivity__x-SiebelActivity Layout</layout>
     </layoutAssignments>
     <layoutAssignments>

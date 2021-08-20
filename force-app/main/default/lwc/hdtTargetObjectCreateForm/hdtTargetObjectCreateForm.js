@@ -655,6 +655,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     getInstanceWrapObject(servicePointRetrievedData){
         console.log('getInstanceWrapObject - START');
         console.log('getInstanceWrapObject - servicePointRetrievedData' +JSON.stringify(servicePointRetrievedData));
+        this.allSubmitedFields=this.servicePointRetrievedData;
         getInstanceWrapAddressObject({s:servicePointRetrievedData}).then(data => {
             this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValues(data);
             console.log('getInstanceWrapObject - getInstanceWrapAddressObject Start '+ JSON.stringify(data));
@@ -986,7 +987,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     validFieldsUpdateServicePoint(){
         console.log(' validFieldsUpdateServicePoint submitted' + JSON.stringify(this.allSubmitedFields));
 
-        this.allSubmitedFields=this.servicePointRetrievedData;
+        //this.allSubmitedFields=this.servicePointRetrievedData;
 
         let isValid = true;
         let concatPointErrorFields = '';
