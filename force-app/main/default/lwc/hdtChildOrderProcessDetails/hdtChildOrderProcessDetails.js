@@ -1521,8 +1521,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'SecurityDepositExcluded__c',
                     'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'),
                     'required': true,
-                    'disabled': false,
-                    'value': '',
+                    'disabled': true,
+                    'value': 'N',
                     'processVisibility': ''
                 },
                 {
