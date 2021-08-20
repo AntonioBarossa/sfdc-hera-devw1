@@ -19,107 +19,107 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
 //NON TOCCARE
 
 
-    public void handleE150Flow(Map<String, String> mapRequestFields, Order sp){
+    public void handleE150Flow(Map<String, String> mapRequestFields, Order ord){
         system.debug('flusso E150');
         if (!String.isBlank(mapRequestFields.get('PUNTODISPACCIAMENTO'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('PUNTODISPACCIAMENTO');
+            sp.DispatchingPoint__c = mapRequestFields.get('PUNTODISPACCIAMENTO');
         }
         if (!String.isBlank(mapRequestFields.get('TIPO_MISURATORE'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('TIPO_MISURATORE');
+            sp.CorrectorType__c = mapRequestFields.get('TIPO_MISURATORE');
         }
         if (!String.isBlank(mapRequestFields.get('DATA_REGIME_2G'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('DATA_REGIME_2G');
+            sp.RegimeDate2G__c = mapRequestFields.get('DATA_REGIME_2G');
         }
         if (!String.isBlank(mapRequestFields.get('TRATTAMENTO_DT'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('TRATTAMENTO_DT');
+            sp.DistributorTreatment__c = mapRequestFields.get('TRATTAMENTO_DT');
         }
         if (!String.isBlank(mapRequestFields.get('K_ATT'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('K_ATT');
+            sp.kActive__c = mapRequestFields.get('K_ATT');
         }
         if (!String.isBlank(mapRequestFields.get('K_REATT'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('K_REATT');
+            sp.kReactive__c = mapRequestFields.get('K_REATT');
         }
         if (!String.isBlank(mapRequestFields.get('K_POT'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('K_POT');
+            sp.kPower__c = mapRequestFields.get('K_POT');
         }
         if (!String.isBlank(mapRequestFields.get('MATR_MIS_ATTIVA_NEW'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('MATR_MIS_ATTIVA_NEW');
+            sp.MeterActiveSN__c = mapRequestFields.get('MATR_MIS_ATTIVA_NEW');
         }
         if (!String.isBlank(mapRequestFields.get('MATR_MIS_REATTIVA_NEW'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('MATR_MIS_REATTIVA_NEW');
+            sp.MeterReactiveSN__c = mapRequestFields.get('MATR_MIS_REATTIVA_NEW');
         }
         if (!String.isBlank(mapRequestFields.get('MATR_MIS_POTENZA_NEW'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('MATR_MIS_POTENZA_NEW');
+            sp.MeterPowerSN__c = mapRequestFields.get('MATR_MIS_POTENZA_NEW');
         }
         if (!String.isBlank(mapRequestFields.get('DATA_INST_ATT'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('DATA_INST_ATT');
+            sp.InstallationDateActive__c = mapRequestFields.get('DATA_INST_ATT');
         }
         if (!String.isBlank(mapRequestFields.get('DATA_INST_REA'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('DATA_INST_REA');
+            sp.InstallationDateReactive__c = mapRequestFields.get('DATA_INST_REA');
         }
         if (!String.isBlank(mapRequestFields.get('DATA_INST_POT'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('DATA_INST_POT');
+            sp.InstallationDatePower__c = mapRequestFields.get('DATA_INST_POT');
         }
         if (!String.isBlank(mapRequestFields.get('CIFRE_ATTIVA'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('CIFRE_ATTIVA');
+            sp.DigitNumberActive__c = mapRequestFields.get('CIFRE_ATTIVA');
         }
         if (!String.isBlank(mapRequestFields.get('CIFRE_REATTIVA'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('CIFRE_REATTIVA');
+            sp.DigitNumberReactive__c = mapRequestFields.get('CIFRE_REATTIVA');
         }
         if (!String.isBlank(mapRequestFields.get('CIFRE_POT'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('CIFRE_POT');
+            sp.DigitNumberPower__c = mapRequestFields.get('CIFRE_POT');
         }
         if (!String.isBlank(mapRequestFields.get('GRUPPO_MIS'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('GRUPPO_MIS');
+            sp.MeterGroup__c = mapRequestFields.get('GRUPPO_MIS');
         }
         if (!String.isBlank(mapRequestFields.get('FORFAIT'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('FORFAIT');
+            sp.Forfait__c = mapRequestFields.get('FORFAIT');
         }
         if (!String.isBlank(mapRequestFields.get('CODICE_TARIFFA'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('CODICE_TARIFFA');
+            ord.FareCode__c = mapRequestFields.get('CODICE_TARIFFA');
         }
         if (!String.isBlank(mapRequestFields.get('SERV_TUTELA'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('SERV_TUTELA');
+            sp.MarketTypeCode__c = mapRequestFields.get('SERV_TUTELA');
         }
         if (!String.isBlank(mapRequestFields.get('GRUPPO_MIS_DT'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('GRUPPO_MIS_DT');
+            sp.MeterGroup__c = mapRequestFields.get('GRUPPO_MIS_DT');
         }        
     }
 
     public void handlE351Flow(Map<String, String> mapRequestFields, Order ord){
         system.debug('flusso 351');
         if (!String.isBlank(mapRequestFields.get('TRATTAMENTO_DT'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('TRATTAMENTO_DT');
+            sp.DistributorTreatment__c = mapRequestFields.get('TRATTAMENTO_DT');
         }
         if (!String.isBlank(mapRequestFields.get('MATR_MIS'))) {
             ord.MeterSN__c = mapRequestFields.get('MATR_MIS');
         }
         if (!String.isBlank(mapRequestFields.get('N_CIFRE_MIS'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('N_CIFRE_MIS');
+            sp.MeterDigitNumber__c = mapRequestFields.get('N_CIFRE_MIS');
         }
         if (!String.isBlank(mapRequestFields.get('MATR_CONV'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('MATR_CONV');
+            sp.CorrectorSN__c = mapRequestFields.get('MATR_CONV');
         }
         if (!String.isBlank(mapRequestFields.get('N_CIFRE_CONV'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('N_CIFRE_CONV');
+            sp.CorrectorDigitNumber__c = mapRequestFields.get('N_CIFRE_CONV');
         }
         if (!String.isBlank(mapRequestFields.get('COEFF_CORRETTIVO'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('COEFF_CORRETTIVO');
+            sp.CorrectiveCoefficient__c = mapRequestFields.get('COEFF_CORRETTIVO');
         }
         if (!String.isBlank(mapRequestFields.get('RACCOLTA'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('RACCOLTA');
+            sp.Collection__c = mapRequestFields.get('RACCOLTA');
         }
         if (!String.isBlank(mapRequestFields.get('VOL_ANNUO_SOST'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('VOL_ANNUO_SOST');
+            sp.AnnualVolumeReplacement__c = mapRequestFields.get('VOL_ANNUO_SOST');
         }
         if (!String.isBlank(mapRequestFields.get('CLASSE_GRUPPO_MIS'))) {
             sp.MeterClass__c = mapRequestFields.get('CLASSE_GRUPPO_MIS');
         }
         if (!String.isBlank(mapRequestFields.get('PRE_CONV'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('PRE_CONV');
+            sp.CorrectorWithdrawal__c = mapRequestFields.get('PRE_CONV');
         }
         if (!String.isBlank(mapRequestFields.get('GRUPPO_MIS_INT'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('GRUPPO_MIS_INT');
+            sp.MeterGroup__c = mapRequestFields.get('GRUPPO_MIS_INT');
         }
     }
 
@@ -127,72 +127,76 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
 
     public void handlE300Flow(Map<String, String> mapRequestFields, Order ord){
         system.debug('flusso 300');
+        String bonusData = '';
         if (!String.isBlank(mapRequestFields.get('MATR_MIS'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('MATR_MIS');
+            ord.MeterSN__c = mapRequestFields.get('MATR_MIS');
         }
         if (!String.isBlank(mapRequestFields.get('TIPO_PDR'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('TIPO_PDR');
+            ord.SupplyType__c = mapRequestFields.get('TIPO_PDR');
         }
         if (!String.isBlank(mapRequestFields.get('N_CIFRE_MIS'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('N_CIFRE_MIS');
+            sp.MeterDigitNumber__c = mapRequestFields.get('N_CIFRE_MIS');
         }
         if (!String.isBlank(mapRequestFields.get('CLASSE_GRUPPO_MIS'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('CLASSE_GRUPPO_MIS');
+            sp.MeterClass__c = mapRequestFields.get('CLASSE_GRUPPO_MIS');
         }
         if (!String.isBlank(mapRequestFields.get('ANNO_FABB_MIS'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('ANNO_FABB_MIS');
+            sp.MeterYear__c = mapRequestFields.get('ANNO_FABB_MIS');
         }
         if (!String.isBlank(mapRequestFields.get('SEGN_MIS_AVVIO'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('SEGN_MIS_AVVIO');
+            sp.MeterSignal__c = mapRequestFields.get('SEGN_MIS_AVVIO');
         }
         if (!String.isBlank(mapRequestFields.get('MATR_CONV'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('MATR_CONV');
+            sp.CorrectorSN__c = mapRequestFields.get('MATR_CONV');
         }
         if (!String.isBlank(mapRequestFields.get('N_CIFRE_CONV'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('N_CIFRE_CONV');
+            sp.CorrectorDigitNumber__c = mapRequestFields.get('N_CIFRE_CONV');
         }
         if (!String.isBlank(mapRequestFields.get('SEGN_CONV'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('SEGN_CONV');
+            sp.CorrectorSignal__c = mapRequestFields.get('SEGN_CONV');
         }
         if (!String.isBlank(mapRequestFields.get('COEFF_CORRETTIVO'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('COEFF_CORRETTIVO');
+            sp.CorrectiveCoefficient__c = mapRequestFields.get('COEFF_CORRETTIVO');
         }
         if (!String.isBlank(mapRequestFields.get('ACC_MIS'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('ACC_MIS');
+            sp.MeterAccessible__c = mapRequestFields.get('ACC_MIS');
         }
         if (!String.isBlank(mapRequestFields.get('COD_PROF_PREL'))) {
             //Gestire caso CLASSE_PRELIEVO
-            sp.EstimateAmount__c = mapRequestFields.get('COD_PROF_PREL');
+            sp.WithdrawalClass__c = mapRequestFields.get('COD_PROF_PREL');
         }
         if (!String.isBlank(mapRequestFields.get('COD_REMI'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('COD_REMI');
+            ord.RemiCode__c = mapRequestFields.get('COD_REMI');
         }
         if (!String.isBlank(mapRequestFields.get('PRESS_MIS'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('PRESS_MIS');
+            sp.Pressure__c = mapRequestFields.get('PRESS_MIS');
         }
         if (!String.isBlank(mapRequestFields.get('MAX_PRELIEVO_ORA'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('MAX_PRELIEVO_ORA');
+            sp.MaxHourWithdrawal__c = mapRequestFields.get('MAX_PRELIEVO_ORA');
         }
         if (!String.isBlank(mapRequestFields.get('CONS_ANNUO'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('CONS_ANNUO');
+            sp.AnnualConsumption__c = mapRequestFields.get('CONS_ANNUO');
         }
         if (!String.isBlank(mapRequestFields.get('DATA_SCAD_DS'))) {
-            sp.EstimateAmount__c = mapRequestFields.get('DATA_SCAD_DS');
+            sp.OrderDueDate__c = mapRequestFields.get('DATA_SCAD_DS');
         }
         if (!String.isBlank(mapRequestFields.get('BONUSGAS'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('BONUSGAS');
+            bonusData = mapRequestFields.get('BONUSGAS') + ';';
         }
         if (!String.isBlank(mapRequestFields.get('BONUS_INIZ'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('BONUS_INIZ');
+            bonusData += mapRequestFields.get('BONUS_INIZ') + ';';
         }
         if (!String.isBlank(mapRequestFields.get('BONUS_FINE'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('BONUS_FINE');
+            bonusData += mapRequestFields.get('BONUS_FINE') + ';';
         }
         if (!String.isBlank(mapRequestFields.get('MESE_RIN'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('MESE_RIN');
+            sp.RenewalMonth__c = mapRequestFields.get('MESE_RIN');
         }
         if (!String.isBlank(mapRequestFields.get('TIPO_BONUS'))) {
-            ord.EstimateAmount__c = mapRequestFields.get('TIPO_BONUS');
+            bonusData += mapRequestFields.get('TIPO_BONUS');
+        }
+        if (bonusData != '') {
+            ord.BonusData__c = bonusData;
         }
     }
 
