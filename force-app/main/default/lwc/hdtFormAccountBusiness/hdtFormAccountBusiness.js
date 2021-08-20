@@ -65,6 +65,14 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     companyPicklist( comp) {
         let key = this.companyFieldData.controllerValues[comp];
         this.companyOptions = this.companyFieldData.values.filter(opt => opt.validFor.includes(key));
+        var customCompanyOptions=[];
+        this.companyOptions.forEach(function callbackFn(element, index) {
+            if(element.value!='HC+HCM+EENE'){ 
+                customCompanyOptions.push(element);
+            }
+        })
+        
+        this.companyOptions=customCompanyOptions;
     }
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PHONE_PREFIX })
     phonePrefixGetOptions({error, data}) {
@@ -91,29 +99,34 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 this.showCompanyOwner = false;
             }else if(response == 'HDT_FrontOffice_HERACOMM'){
                 this.companyDefault = 'HERA COMM';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['HERA COMM'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }else if(response == 'HDT_FrontOffice_Reseller'){
                 this.companyDefault = 'Reseller';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['Reseller'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
             else if(response == 'HDT_FrontOffice_MMS'){
                 this.companyDefault = 'MMS';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['MMS'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
             else if(response == 'HDT_FrontOffice_AAAEBT'){
                 this.companyDefault = 'AAA-EBT';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['AAA-EBT'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
             }
             else{
                 this.companyDefault = 'HERA COMM';
+                this.companyPicklist(this.companyDefault);
                 this.showCompanyOwner = true;
                 let key = this.customerData.controllerValues['HERA COMM'];
                 this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));

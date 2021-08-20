@@ -24,7 +24,7 @@
         
         
         
-        if (tabId==component.get("v.currentTab")) {
+        if (tabId==component.get("v.currentTab") &&!tabId.includes('_')) {
             
             
             

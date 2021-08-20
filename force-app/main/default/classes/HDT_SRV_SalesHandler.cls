@@ -83,17 +83,19 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Ammissibilità KO' {
                                 ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
                                 ord.CausalCode__c = mapRequestFields.get('CODERR');
+                                ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.Description = mapRequestFields.get('ANNOTAZIONI');
 
-                                // if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
-                                //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                // )){
-                                //     ord.TecnicalPhase__c = 'Annullato';
-                                // }
+                                 if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
+                                     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                 )){
+                                     ord.TecnicalPhase__c = 'Annullato';
+                                     ord.Status = 'Annullato';
+                                 }
                             }
                             when 'Ammissibilità OK' {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
@@ -131,13 +133,26 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
                                 }
 
-                                // if(ord.CausalCode__c == '034' 
-                                //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                // )){
-                                //     ord.TecnicalPhase__c = 'Annullato';
-                                // }
+                                 if(ord.CausalCode__c == '034' 
+                                     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                 )){
+                                     ord.TecnicalPhase__c = 'Annullato';
+                                     ord.Status = 'Annullato';
+                                 }
+                            }when 'Dati Tecnici Ricevuti'{
+                                if (!String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
+                                    ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
+                                }
+                                if(!String.isBlank(mapRequestFields.get('DT_MAX_PREV'))){
+                                    if(mapRequestFields.get('DT_MAX_PREV').getChars().size()==8){
+                                        ord.ValidityDateEstimate__c=getExpireDate(mapRequestFields.get('DT_MAX_PREV'));
+                                    }
+                                }
+                                if(!String.isBlank(mapRequestFields.get('NUMPREV'))){
+                                    ord.QuotationNumber__c=mapRequestFields.get('NUMPREV');
+                                }
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
@@ -164,6 +179,8 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Amm. Precheck OK SII' {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                ord.RemiCode__c = mapRequestFields.get('EXT_CABINA_REMI');
+                                ord.VATNumberUdb__c = mapRequestFields.get('EXT_PIVA_DISTR');
                                 if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                     ord.PrecheckResultSII__c = 'OK';
                                 }
@@ -221,21 +238,31 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Completata' {
-                                ord.Description = mapRequestFields.get('NOTA_HK');
-                                ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
-                                ord.OrderODV__c = mapRequestFields.get('VBELN');
-                                ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
-                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
-                                
-                                if(mapRequestFields.get('VKONT') != null) {
-                                    ord.ContractAccountCode__c = mapRequestFields.get('VKONT');
 
-                                    BillingProfile__c billingProfile = new BillingProfile__c();
-                                    billingProfile.Id = ordRetrieved.BillingProfile__c;
-                                    billingProfile.ContractAccountCode__c = mapRequestFields.get('VKONT');
+                                if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti')){
+                                    ord.Phase__c = 'Inviare preventivo';
+                                }else{
+                                    ord.Description = mapRequestFields.get('NOTA_HK');
+                                    ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
+                                    ord.OrderODV__c = mapRequestFields.get('VBELN');
+                                    ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
+                                    ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                     
-                                    HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
-                                    billingProfileSrv.updateRecord(billingProfile);
+                                    if(mapRequestFields.get('VKONT') != null) {
+                                        ord.ContractAccountCode__c = mapRequestFields.get('VKONT');
+
+                                        BillingProfile__c billingProfile = new BillingProfile__c();
+                                        billingProfile.Id = ordRetrieved.BillingProfile__c;
+                                        billingProfile.ContractAccountCode__c = mapRequestFields.get('VKONT');
+                                        
+                                        HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
+                                        try{
+                                            billingProfileSrv.updateRecord(billingProfile);
+                                        }catch(Exception e){
+                                            system.debug('Exception Update Billing Profile');
+                                            throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
+                                        }
+                                    }
                                 }
                             }
                             when 'Annullamento SII - Ricezione'{
@@ -444,5 +471,12 @@ public with sharing class HDT_SRV_SalesHandler {
         HDT_UTL_DatabaseService.updateSObject(recordOrder);
     }
     //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+
+    private static Date getExpireDate(String expireDate){
+        Integer yr = Integer.valueOf(expireDate.substring(0, 4));
+        Integer mth = Integer.valueOf(expireDate.substring(4, 6));
+        Integer dy = Integer.valueOf(expireDate.substring(6, 8));
+        return Date.newInstance(yr, mth, dy);
+    }
 
 }

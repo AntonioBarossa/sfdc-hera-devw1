@@ -11,9 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Approvazione Quote</fullName>
+                <fullName>Approvazione Offerte</fullName>
                 <default>false</default>
-                <label>Approvazione Quote</label>
+                <label>Approvazione Offerte</label>
             </value>
             <value>
                 <fullName>Gestione dati discordanti</fullName>
@@ -269,6 +269,21 @@
                 <fullName>Segnalazioni Commissioni Agenzie</fullName>
                 <default>false</default>
                 <label>Segnalazioni Commissioni Agenzie</label>
+            </value>
+            <value>
+                <fullName>Invio registrazione</fullName>
+                <default>false</default>
+                <label>Invio registrazione</label>
+            </value>
+            <value>
+                <fullName>Recupero contratto da Postel</fullName>
+                <default>false</default>
+                <label>Recupero contratto da Postel</label>
+            </value>
+            <value>
+                <fullName>Invio Contratto</fullName>
+                <default>false</default>
+                <label>Invio Contratto</label>
             </value>
             <value>
                 <fullName>Amm. Precheck KO SII</fullName>
