@@ -2108,7 +2108,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'ExciseGAS__c',
                         'typeVisibility': this.typeVisibility('gas'),
                         'required': false,
-                        'disabled': false,
+                        'disabled': true,
                         // 'value': this.order.ExciseGas__c,
                         'processVisibility': ''
                     },
