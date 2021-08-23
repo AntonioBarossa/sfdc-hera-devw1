@@ -25,11 +25,16 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         String confirmText = type == 'Comfort' ? 'Comfort call' : 'Quality call';
 
-        orderSrv.updateRecord(new Order(
+        Order orderUpdate = new Order(
             Id = ordId,
-            Phase__c = 'Comunicazione verso Heroku',
             ConfirmCustomerContract__c = confirmText
-        ));
+        );
+
+        List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
+
+        orderUpdate.Phase__c = 'Quality Call OK';
+
+        orderSrv.updateRecord(orderUpdate);
 
         activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
             Id = activityId,

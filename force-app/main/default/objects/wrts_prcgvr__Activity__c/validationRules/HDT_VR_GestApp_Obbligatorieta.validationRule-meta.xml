@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_GestApp_Obbligatorieta</fullName>
+    <active>false</active>
+    <description>Verifica l&apos;obbligatorietà dei campi delle Activity di Appuntamento Distributore</description>
+    <errorConditionFormula>AND(RecordTypeId = &quot;0123N000002WpWEQA0&quot;,
+				OR(
+				    Account__c=&quot;&quot;,
+				    Contact__c=&quot;&quot;,
+				    AND(Case__c=&quot;&quot;, Order__c=&quot;&quot;),
+				    AND(NOT(ispickval(Status__c,&quot;Creata&quot;)),
+								    isblank(text(AppointmentCompetence__c)))
+				)
+)</errorConditionFormula>
+    <errorMessage>Uno fra i seguenti campi obbligatori non è stato popolato: (Account, Contact, Case, Order, Competenza Appuntamento)</errorMessage>
+</ValidationRule>

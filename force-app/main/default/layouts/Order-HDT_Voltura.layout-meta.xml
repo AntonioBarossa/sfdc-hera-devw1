@@ -33,7 +33,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SAPContractCode__c</field>
+                <field>SapContractCode__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_SwitchIn</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Order_Compact_Layout</compactLayoutAssignment>
     <description>Record type per gli ordini di SwitchIn</description>
     <label>SwitchIn</label>
     <picklistValues>
@@ -368,6 +369,14 @@
         </values>
         <values>
             <fullName>Gestione Scarto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato per no conferma cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Il cliente rinuncia</fullName>
             <default>false</default>
         </values>
     </picklistValues>
