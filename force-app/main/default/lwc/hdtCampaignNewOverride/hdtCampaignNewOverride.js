@@ -81,4 +81,11 @@ export default class HdtCampaignNewOverride extends LightningElement {
 
     }
 
+    handleCompanyOwnerChange(event) {
+
+        this.template.querySelector('[data-id="companyOwnerForm"]').value = event.target.value;
+        console.log('nuovo valore ' + this.template.querySelector('[data-id="companyOwnerForm"]').value);
+
+    }
+
 }
