@@ -32833,7 +32833,7 @@
         <modifyAllRecords>true</modifyAllRecords>
         <object>DiscardAnnullmentRule__c</object>
         <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>  
+    </objectPermissions> 
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
