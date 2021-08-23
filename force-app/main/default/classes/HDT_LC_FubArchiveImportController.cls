@@ -1,3 +1,10 @@
+/**
+ * @author Lorenzo Gulotta (lorenzo.gulotta@webresults.it)
+ * @date 28/06/2021
+ * @description HDT_LC_FubArchiveImportController Classes
+ * @history Lorenzo Gulotta 28/06/2021 – Created class
+ */
+
 public with sharing class HDT_LC_FubArchiveImportController {
 
     @AuraEnabled
