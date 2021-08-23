@@ -62,14 +62,6 @@ public with sharing class HDT_LC_FubArchiveImportControllerTst {
 
         Boolean fubArcImpCtrl = HDT_LC_FubArchiveImportController.fubArchiveImportBatch(fubProcessingId, '123456789, 987654312');
 
-        //Teste pra ver se volta 'false'
-        FUBProcessing__c fubProcessing = new FUBProcessing__c();
-        insert fubProcessing;
-
-        Boolean fubArcImpCtrl2 = HDT_LC_FubArchiveImportController.fubArchiveImportBatch(accId, '');
-
-        // fim do teste
-
         System.assertEquals(true, fubArcImpCtrl, 'Batch process succeded.');
 
         System.assertNotEquals(false, fubArcImpCtrl, 'Batch process failed.');
