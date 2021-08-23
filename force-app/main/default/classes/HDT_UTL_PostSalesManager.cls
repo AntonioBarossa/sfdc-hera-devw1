@@ -77,7 +77,10 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 } else {
                     parentCase.Phase__c = 'Completata';
                 }
-            } else if(parentCase.Type.equalsIgnoreCase('Allineamento Canone Rai')){
+            }else if(parentCase.Type.equalsIgnoreCase('Modifica Tariffa Residente/Non Residente')){
+                parentCase.Phase__c = 'Elaborazione Manuale';
+            }
+             else if(parentCase.Type.equalsIgnoreCase('Allineamento Canone Rai')){
                 if(currentCase.Phase__c.equalsIgnoreCase('KO definitivo')){
                     wrts_prcgvr__Activity__c activity = createActivity('Elaborazione Manuale');
                     activity.Case__c = parentCase.Id;
