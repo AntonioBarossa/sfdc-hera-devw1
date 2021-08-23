@@ -212,7 +212,7 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
             sp.SAPContractCode__c = mapRequestFields.get('VERTRAG');
         }
         if (!String.isBlank(mapRequestFields.get('VERTRAG_ST'))) {
-            sp.Status = mapRequestFields.get('VERTRAG_ST');
+            sp.Status__c = mapRequestFields.get('VERTRAG_ST');
         }
         sp.MeterStatus__c='Attivo';
         updateServicePoint();
