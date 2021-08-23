@@ -51,5 +51,20 @@ public with sharing class HDT_UTL_Utils {
         }
         return hashToString;
     }
+
+    /**​
+    * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
+    * @date 12/08/2021
+    * @description HDT_UTL_Utils.getCurrentUserRole() – Returns the DeveloperName of the user launching the class
+    * @return the DeveloperName of the user
+    */
+    @AuraEnabled
+    public static string getCurrentUserRole(){
+
+        String userId = System.UserInfo.getUserId();
+
+        return HDT_QR_UserQueries.getCurrentUser(userId).Userrole.DeveloperName;
+            
+    }
   
 }

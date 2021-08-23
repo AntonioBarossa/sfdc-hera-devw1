@@ -88,16 +88,17 @@
     
     handleRowActionEvent : function(component,event,helper){
         
-        let c__orderParent = event.getParam('c__orderParent');
-        let c__orderId = event.getParam('c__orderId');
+        var c__orderParent = event.getParam('c__orderParent');
+        var c__orderId = event.getParam('c__orderId');
         let action = event.getParam('action');
         let action2 = component.get('c.checkDatiDiscordanti');
         var navService = component.find("navService");
         var workspaceAPI = component.find("workspace");
-
-        if(action === "Avvia Processo"){
-
+        console.log('c__orderId : '+c__orderId);
+         if(action === "Avvia Processo"){
+        action2.setParams({ orderid: c__orderId});
             action2.setCallback(this, function (response) {
+                console.log(response);
                 workspaceAPI.getFocusedTabInfo().then(function(response2) {
                     var focusedTabId;
                     if(response2.parentTabId){

@@ -18,7 +18,7 @@
             </value>
             <value>
                 <fullName>Creata</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>Creata</label>
             </value>
             <value>
@@ -90,6 +90,26 @@
                 <fullName>KO Forzato</fullName>
                 <default>false</default>
                 <label>KO Forzato</label>
+            </value>
+            <value>
+                <fullName>Esitata</fullName>
+                <default>false</default>
+                <label>Esitata</label>
+            </value>
+            <value>
+                <fullName>Non Esitata</fullName>
+                <default>false</default>
+                <label>Non Esitata</label>
+            </value>
+            <value>
+                <fullName>Aperta</fullName>
+                <default>false</default>
+                <label>Aperta</label>
+            </value>
+            <value>
+                <fullName>Sospesa</fullName>
+                <default>false</default>
+                <label>Sospesa</label>
             </value>
         </valueSetDefinition>
     </valueSet>

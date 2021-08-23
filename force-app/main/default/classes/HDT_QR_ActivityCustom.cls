@@ -108,7 +108,8 @@ public inherited sharing class HDT_QR_ActivityCustom {
             
             Id,
             Approved__c,
-            Name
+            Name,
+            wrts_prcgvr__status__c
             FROM wrts_prcgvr__Activity__c
             WHERE Case__c= :caseId
             WITH SECURITY_ENFORCED
@@ -266,5 +267,72 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     AND wrts_prcgvr__Status__c = 'Not Started'
                     WITH SECURITY_ENFORCED 
                 ];
+        }
+
+        public static List<wrts_prcgvr__Activity__c> getRecordByOrderAndQuality(String orderid){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Contact__c,
+                    order__c,
+                    RecordTypeId,
+                    Status__c
+                    FROM wrts_prcgvr__Activity__c
+                    where 
+                    RecordType.developername = 'HDT_RT_ComfortQualityCall'
+                    AND order__C = :orderid
+                    WITH SECURITY_ENFORCED 
+            ];
+        }
+
+        public static List<wrts_prcgvr__Activity__c> getRecordByOrderListAndQuality(List<Id> orderList){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Contact__c,
+                    order__c,
+                    order__r.ParentOrder__c,
+                    RecordTypeId,
+                    Status__c
+                    FROM wrts_prcgvr__Activity__c
+                    where 
+                    RecordType.developername = 'HDT_RT_ComfortQualityCall'
+                    AND order__C IN :orderList
+                    WITH SECURITY_ENFORCED 
+            ];
+        }
+
+        public static List<wrts_prcgvr__Activity__c> getRecordByOrderListAndQuality(Set<String> orderList){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Contact__c,
+                    order__c,
+                    order__r.ParentOrder__c,
+                    RecordTypeId,
+                    Status__c
+                    FROM wrts_prcgvr__Activity__c
+                    where 
+                    RecordType.developername = 'HDT_RT_ComfortQualityCall'
+                    AND order__C IN :orderList
+                    WITH SECURITY_ENFORCED 
+            ];
+        }
+
+        public static List<wrts_prcgvr__Activity__c> getRecordsForCancelQualityNoResult(List<Id> idlist){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Account__r.ActiveMonitoring__c,
+                    Contact__c,
+                    order__c,
+                    order__r.AgencyCode__c,
+                    RecordTypeId,
+                    RecordType.DeveloperName,
+                    Status__c
+                    FROM wrts_prcgvr__Activity__c
+                    where Id in :idlist
+                    WITH SECURITY_ENFORCED 
+            ];
         }
 }

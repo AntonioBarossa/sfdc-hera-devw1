@@ -5,6 +5,10 @@
         <literalValue>Informative</literalValue>
     </fieldOverrides>
     <fieldOverrides>
+        <field>CreatedByCallCenter__c</field>
+        <formula>True</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>CreatorGroup__c</field>
         <formula>TEXT($User.CreatorGroup__c)</formula>
     </fieldOverrides>

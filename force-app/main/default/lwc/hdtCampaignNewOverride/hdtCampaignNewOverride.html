@@ -1,12 +1,21 @@
 <template>
     <lightning-record-edit-form object-api-name={objectApiName} onsuccess={handleSuccess} density="compact">
         <div class="slds-wrap">
-            <div class="slds-grid">
-                <div class="slds-col slds-size--1-of-1">
+            <div class="slds-grid add slds-grid_vertical">
+                <div class="slds-col">
                     <lightning-input-field field-name="Name" id="campaignName">
                     </lightning-input-field>
                 </div>
+                <div class="slds-col">
+                    <lightning-combobox name="companyOwner" data-id="companyOwner"
+                        label="Silos" placeholder="Seleziona Società" onchange={handleCompanyOwnerChange}
+                        options={companyOwnerPicklist}  disabled={disableCompanyOwner} value={companyDefault} required>
+                    </lightning-combobox>
+                </div>
             </div>
         </div>
+        <!-- Used by the stantard form submit -->
+        <lightning-input-field field-name="CompanyOwner__c" data-id="companyOwnerForm" id="companyOwner" value={companyDefault} class="slds-hidden">
+        </lightning-input-field>
     </lightning-record-edit-form>
 </template>

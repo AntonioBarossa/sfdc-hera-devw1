@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_GestApp_ContattiSelf</fullName>
+    <active>true</active>
+    <description>Vincola l&apos;inserimento di un dato di contatto</description>
+    <errorConditionFormula>AND(RecordTypeId = &quot;0123N000002WpWEQA0&quot;,
+	/*isSelfAppointment__c = TRUE,*/
+	isnull(Mobile__c),
+	isnull(Email__c)
+)</errorConditionFormula>
+    <errorMessage>Deve essere sempre valorizzato o un numero di telefono o un indirizzo email</errorMessage>
+</ValidationRule>

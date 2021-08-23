@@ -245,6 +245,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
 
     @AuraEnabled
     public static wrapReturnValidity checkApprovedProduct(Sale__c sale){
+        system.debug('sale******************************* '+sale);
         list<String> listId = new List<String>();
         list<String> idToCreateActivity = new List<String>();
         map<String,boolean> checkIsPresent = new Map<string,boolean>();
@@ -292,8 +293,9 @@ public inherited sharing class HDT_LC_ConfigureProduct {
                     }
                     List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
                     for(String s : idToCreateActivity){
-                        listActivityToCreate.add(new wrts_prcgvr__Activity__c(QuoteLine__c=s, RecordTypeId= recTypeId, Type__c= 'Approvazione Quote'));
+                        listActivityToCreate.add(new wrts_prcgvr__Activity__c(QuoteLine__c=s, RecordTypeId= recTypeId, Type__c= 'Approvazione Offerte',Account__c=sale.Account__r.Id,Sale__c=sale.id,Status__c='Creata'));
                     }
+                    System.debug('listActivityToCreate : ' + listActivityToCreate);
                     actSrv.createRecord(listActivityToCreate);
                 }
             }else{

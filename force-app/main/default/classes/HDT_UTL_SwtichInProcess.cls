@@ -63,6 +63,9 @@ public with sharing class HDT_UTL_SwtichInProcess {
 
     // Data di invio richiesta al SII
     public static Date getDateSentToSii(Order order) {
+
+        Date effDate = order.EffectiveDate__c; //13/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Invio al SII
+
         system.debug('getDateSentToSii: ');
         order = orderQr.getRecordById(order.id);
         system.debug('getDateSentToSii: ' + JSON.serializePretty(order));
@@ -72,6 +75,12 @@ public with sharing class HDT_UTL_SwtichInProcess {
         system.debug('DeveloperName: ' + order.Account.RecordType.DeveloperName);
         system.debug('WaiverRightAfterthought__c: ' + order.WaiverRightAfterthought__c);
         system.debug('getMaxAfterthoughtDate: ' + getMaxAfterthoughtDate(order));
+
+        //13/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Invio al SII
+        if (order.EffectiveDate__c!=null) {
+            effDate = order.EffectiveDate__c;
+        }
+
         Date dateSentToSii= null;
         if(signedDate != null  && order.ProcessType__c != 'Cambio Offerta'){
             if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
@@ -98,16 +107,48 @@ public with sharing class HDT_UTL_SwtichInProcess {
                 Tale ricalcolo potrà essere possibile fino all’esito di ammissibilità ok.  
                 Da quel momento in poi il sistema non dovrà più ricalcolare la data invio richiesta al SII. 
                 */          
+
+                //13/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Invio al SII - START
+                if (effDate!=null) {
+                    String processType = PROCESSTYPEBYRRECORDTYPEMAP.get(order.RecordType.DeveloperName);
+
+                    List<HDT_FulfillmentDateMatrix__c> fulfillmentRows = [SELECT FulfillmentDateFrom__c 
+                        FROM HDT_FulfillmentDateMatrix__c 
+                        WHERE OriginMarket__c =: order.MarketOrigin__c   
+                        AND Commodity__c =: order.ServicePoint__r.CommoditySector__c   
+                        AND VoltageLevel__c =: order.VoltageLevel__c 
+                        AND ProcessType__c = :processType
+                        AND SupplyType__c =: order.SupplyType__c 
+                        AND ActivationDate__c =: effDate
+                        WITH SECURITY_ENFORCED
+                    ];
+
+                    if (fulfillmentRows.isEmpty()) {
+                        throw new HDT_UTL_HeraException('No rows found in HDT_FulfillmentDateMatrix__c');
+                    }
+
+                    dateSentToSii = fulfillmentRows.get(0).FulfillmentDateFrom__c;
+
+                    if (order.RecessNotice__c!=null) {
+                        dateSentToSii = dateSentToSii.addDays(-10).toStartOfMonth().addMonths(order.RecessNotice__c.intValue()*-1).addMonths(1);
+                    }
+                }
+                //13/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Invio al SII - END
             }
         }
         
         system.debug('HDT_UTL_SwtichInProcess - getDateSentToSii: ' + dateSentToSII);
         return dateSentToSII;
 
-    }
+    } 
 
     // Data di decorrenza
     public static Date getEffectiveDate(Order order) {
+
+        //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
+        if (order.IsActivationDeferred__c==true) {
+            return order.EffectiveDate__c;
+        }
 
         Date effectiveDateTmp = null;
         Date dateDecorrenzaTmp = null;
