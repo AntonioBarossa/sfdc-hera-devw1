@@ -747,7 +747,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             record.add('00310');
             record.add('130');
             // Calcolo tipologia di indennizzo attesa da Engage1.
-            String boxType = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate) {
+            String boxType = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate);
             if (String.isNotBlank(boxType)) {
                 record.add(boxType);
                 // Importo indennizzo, se necessario.
