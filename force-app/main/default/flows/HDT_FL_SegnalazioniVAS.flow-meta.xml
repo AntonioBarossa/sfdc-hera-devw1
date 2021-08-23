@@ -1,10 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
+    <assignments>
+        <name>Set_Case</name>
+        <label>Set Case</label>
+        <locationX>314</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>Case.SignalType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Reporting_Type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.SignalCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Reporting_Category</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.SignalSubCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Reporting_Subcategory</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.SignalReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Reporting_Reason</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_UserInputFlow_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Output</name>
+        <label>Set Output</label>
+        <locationX>182</locationX>
+        <locationY>1214</locationY>
+        <assignmentItems>
+            <assignToReference>UserInputFlow</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_UserInputFlow_0.ProcessType__c</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
     <decisions>
         <name>Resume_Process_decision</name>
         <label>Resume Process?</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Reporting_Type_Selection</targetReference>
@@ -20,6 +70,9 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Get_UserInputFlow_From_Case</targetReference>
+            </connector>
             <label>Resume Process</label>
         </rules>
     </decisions>
@@ -39,7 +92,7 @@
             <field>Reporting_Category__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue></stringValue>
+                <stringValue/>
             </value>
         </filters>
         <object>HDT_Dependant_Picklist_VAS__mdt</object>
@@ -101,7 +154,7 @@
             <field>Reporting_Subcategory__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue></stringValue>
+                <stringValue/>
             </value>
         </filters>
         <object>HDT_Dependant_Picklist_VAS__mdt</object>
@@ -112,6 +165,10 @@
         <outputAssignments>
             <assignToReference>HasAttachment</assignToReference>
             <field>Has_Attachment__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>userInputFlowId</assignToReference>
+            <field>UserInputFlow__c</field>
         </outputAssignments>
         <sortField>Value__c</sortField>
         <sortOrder>Asc</sortOrder>
@@ -126,7 +183,7 @@
             <field>Reporting_Type__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue></stringValue>
+                <stringValue/>
             </value>
         </filters>
         <object>HDT_Dependant_Picklist_VAS__mdt</object>
@@ -163,7 +220,7 @@
     <recordLookups>
         <name>Get_Reporting_Reason_Records</name>
         <label>Get Reporting Reason Records</label>
-        <locationX>264</locationX>
+        <locationX>314</locationX>
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -195,108 +252,80 @@
         <object>HDT_Dependant_Picklist_VAS__mdt</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <screens>
-        <name>Case_Edit</name>
-        <label>Case Edit</label>
-        <locationX>264</locationX>
-        <locationY>878</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>CaseForm</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Conferma Pratica</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextStep</name>
-                <value>
-                    <stringValue>NEXT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <stringValue>Tipo Dati Tecnici</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>CaseId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>DeleteCase</assignToReference>
-                <name>cancelCase</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>IsDraft</assignToReference>
-                <name>saveInDraft</name>
-            </outputParameters>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
+    <recordLookups>
+        <name>Get_UserInputFlow_0</name>
+        <label>Get UserInputFlow</label>
+        <locationX>182</locationX>
+        <locationY>1094</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Output</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>userInputFlowId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_UserInputFlow__mdt</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>ProcessType__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_UserInputFlow_From_Case</name>
+        <label>Get UserInputFlow From Case</label>
+        <locationX>50</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_UserInputFlow_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Reporting_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Case.SignalType__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Reporting_Category__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Case.SignalCategory__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Reporting_Subcategory__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue/>
+            </value>
+        </filters>
+        <object>HDT_Dependant_Picklist_VAS__mdt</object>
+        <outputAssignments>
+            <assignToReference>HasAttachment</assignToReference>
+            <field>Has_Attachment__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>userInputFlowId</assignToReference>
+            <field>UserInputFlow__c</field>
+        </outputAssignments>
+    </recordLookups>
     <screens>
         <name>Description_And_Reason</name>
         <label>Description And Reason</label>
-        <locationX>264</locationX>
+        <locationX>314</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Case_Edit</targetReference>
+            <targetReference>Set_Case</targetReference>
         </connector>
         <fields>
             <name>Description_Output</name>
@@ -351,7 +380,7 @@
     <screens>
         <name>Reporting_Category_Selection</name>
         <label>Reporting Category Selection</label>
-        <locationX>264</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -373,7 +402,7 @@
     <screens>
         <name>Reporting_Type_Selection</name>
         <label>Reporting Type Selection</label>
-        <locationX>264</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -395,7 +424,7 @@
     <screens>
         <name>Subcategory_Selection</name>
         <label>Subcategory_Selection</label>
-        <locationX>264</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -415,26 +444,20 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Resume_Process_decision</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
-        <name>CaseId</name>
-        <dataType>String</dataType>
+        <name>Case</name>
+        <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>DeleteCase</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
         <isOutput>true</isOutput>
+        <objectType>Case</objectType>
     </variables>
     <variables>
         <name>Description</name>
@@ -448,13 +471,6 @@
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>IsDraft</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
         <isOutput>true</isOutput>
     </variables>
     <variables>
@@ -462,6 +478,20 @@
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>UserInputFlow</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>userInputFlowId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

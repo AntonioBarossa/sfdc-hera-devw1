@@ -488,13 +488,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
                             this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValuesIfSap(this.servicePointRetrievedData);
                                                           
-                            
+                            this.getInstanceWrapObject(this.servicePointRetrievedData);
                     });
                 }else{
                     console.log('entra in else **********************');
                     extractDataFromArriccDataServiceWithExistingSp({sp:this.servicePointRetrievedData,response:data}).then(datas =>{
                         console.log('datas*************************' +  JSON.stringify(datas));
+
                             this.servicePointRetrievedData=datas[0];
+
                             console.log('servicePointRetriviedData commodity: ******'+JSON.stringify(this.servicePointRetrievedData['CommoditySector__c']));
                             switch(this.servicePointRetrievedData['CommoditySector__c']){
                                 case 'Energia Elettrica':
@@ -514,9 +516,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
                             console.log('fieldsDataObject after handleCallServiceSap'+ JSON.stringify(this.fieldsDataObject));
                             this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValuesIfSap(this.servicePointRetrievedData);
+
+                            this.getInstanceWrapObject(this.servicePointRetrievedData);
                         });
                 }
-
 
             }else{
                 this.isSap= false;
@@ -656,6 +659,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('getInstanceWrapObject - START');
         console.log('getInstanceWrapObject - servicePointRetrievedData' +JSON.stringify(servicePointRetrievedData));
         this.allSubmitedFields=this.servicePointRetrievedData;
+
         getInstanceWrapAddressObject({s:servicePointRetrievedData}).then(data => {
             this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValues(data);
             console.log('getInstanceWrapObject - getInstanceWrapAddressObject Start '+ JSON.stringify(data));

@@ -84,7 +84,7 @@ public inherited sharing class HDT_QR_OrderItem {
             WHERE
             OrderId IN :listOrderId  
             AND Order.SBQQ__Quote__r.SBQQ__Type__c = 'Amendment'
-            AND Product2.Name IN ('PDR','POD')
+            AND (Product2.Name IN ('PDR','POD') OR Product2.Family IN  ('VAS Opzione prodotto', 'VAS Fatturabili', 'VAS Prodotto'))
             WITH SECURITY_ENFORCED
         ];
     }
