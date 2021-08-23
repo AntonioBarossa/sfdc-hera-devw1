@@ -69,8 +69,11 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             if(parentCase.Type == 'Variazione indirizzo di fornitura'){
 
                 if(currentCase.Phase__c == 'KO definitivo'
-                || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) > 0){
+                || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) == 0){
                     parentCase.Phase__c = 'Elaborazione Manuale';
+                    wrts_prcgvr__Activity__c activity = createActivity('Elaborazione Manuale');
+                    activity.Case__c = parentCase.Id;
+                    HDT_UTL_DatabaseService.insertSObject(activity);
                 } else {
                     parentCase.Phase__c = 'Completata';
                 }
