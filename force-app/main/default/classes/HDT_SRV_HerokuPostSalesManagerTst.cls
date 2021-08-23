@@ -123,12 +123,28 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
     @isTest
     static void handleRichPassResponseFieldTst()
     {
-        
+        Case testCase = [SELECT AccountId, ContactId, ServicePoint__c, Contract__c, Order__c, CaseNumber, Phase__c, Type FROM Case LIMIT 1];
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, testCase.AccountId, testCase.ContactId, testCase.ServicePoint__c, testCase.Contract__c, testCase.Order__c);
+        testCase.ParentId = caseList[0].Id;
+        update testCase;
+        testCase = [SELECT Parent.CaseNumber, CaseNumber, Phase__c, Type FROM Case WHERE Id = : testCase.Id LIMIT 1];
+        List<HDT_WRP_MrrResponse.HDT_WRP_Field> responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>();
+        HDT_SRV_HerokuPostSalesManager herokuSrv = new HDT_SRV_HerokuPostSalesManager();
+        Test.startTest();
+        responseFieldList = herokuSrv.handleRichPassResponseField(testCase);
+        Test.stopTest();
+        System.Assert(responseFieldList != null);
     }
     @isTest
     static void handleNotifEsResponseFieldTst()
     {
-        
+        Case testCase = [SELECT CaseNumber, Phase__c, Type,HerokuPracticeCode__c FROM Case LIMIT 1];
+        List<HDT_WRP_MrrResponse.HDT_WRP_Field> responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>();
+        HDT_SRV_HerokuPostSalesManager herokuSrv = new HDT_SRV_HerokuPostSalesManager();
+        Test.startTest();
+        responseFieldList = herokuSrv.handleNotifEsResponseField(testCase);
+        Test.stopTest();
+        System.Assert(responseFieldList != null);
     }
 
 }
