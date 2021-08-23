@@ -271,7 +271,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
                                     HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                     utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
-                                    utlTechData.handleCompletata();
+                                    utlTechData.handleCompletata(mapRequestFields);
                                 }
                             }
                             when 'Annullamento SII - Ricezione'{
