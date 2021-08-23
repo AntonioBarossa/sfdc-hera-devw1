@@ -225,7 +225,7 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         return Date.newInstance(yr, mth, dy);
     }
 
-    private static void updateServicePoint(){
+    private void updateServicePoint(){
         try{
             ServicePointSrv.updateRecord(sp);
         }catch(Exception e){
