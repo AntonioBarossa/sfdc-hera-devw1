@@ -31,6 +31,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             orderToUpdate.Phase__c = 'Documentazione da validare';
         }
 
+        ordersToUpdate.add(orderToUpdate);
+
         //update child orders
         for (Order childOrder : childOrders) {
             if (childOrder.ComfortCallDaysDue__c != null) {
