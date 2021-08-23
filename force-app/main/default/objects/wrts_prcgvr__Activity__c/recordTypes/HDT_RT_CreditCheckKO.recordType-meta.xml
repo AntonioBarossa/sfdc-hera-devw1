@@ -271,6 +271,10 @@
             <fullName>KO Risolto</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SuspensionReason__c</picklist>
@@ -310,7 +314,7 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
-            <fullName>Approvazione Quote</fullName>
+            <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
         <values>

@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_TemporaneaNuovaAtt</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Order_Compact_Layout</compactLayoutAssignment>
     <description>Record type per gli ordini di Temporanea Nuova Attivazione</description>
     <label>Temporanea Nuova Attivazione</label>
     <picklistValues>
@@ -2134,6 +2135,14 @@
         </values>
         <values>
             <fullName>Preventivo rifiutato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm OK</fullName>
             <default>false</default>
         </values>
         <values>

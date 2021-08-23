@@ -36,6 +36,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     @api categoryData = [];
     @api markingValue;
     @api categoryValue;
+
+    disableCopyAdd=true;
+    disableCopyRes=true;
     customerType='Persona Fisica'
     currentObjectApiName = 'Account';
     settlementRegion;
@@ -53,8 +56,11 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     birthPlace;
     valueCompany='';
     accountAddress;
+    accountAddressRes;
     fieldsToUpdate= {};
+    fieldsToUpdateRes= {};
     isVerified= false;
+    isVerifiedShipping=false;
     showModal= true;
     @api RecordTypeId;
 
@@ -221,7 +227,26 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     connectedCallback(){
         this.currentObjectApiName= 'Account';
     }
+    passToParent(event){
+            this.disableCopyAdd=!event.detail;
+            this.disableCopyRes=true;
+    }
     
+    handleCopyAddRes(event){
+     let copy=event.target.checked;
+     
+        // if (copy) {
+        //   this.accountAddressRes=this.accountAddress;    
+      
+
+        // }
+        // else{
+        //     this.accountAddressRes=[];
+         
+        // }
+        this.disableCopyRes=!copy;
+        console.log('disableCopyRes '+this.disableCopyRes);
+    }
     handleCalculation(){
         
         var isValidated= true;
@@ -329,7 +354,50 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             }
         }
     }
-    
+    getAccountAdressRes(){
+        
+        if(this.accountAddressRes!= undefined){
+            console.log( this.accountAddressRes['Via']);
+            if(this.accountAddressRes['Via'] != null){
+                this.fieldsToUpdateRes['ShippingStreet'] = this.accountAddressRes['Via'];
+               // this.fieldsToUpdateRes['ShippingStreet'] = this.accountAddressRes['Via'];
+            }
+            if(this.accountAddressRes['Comune'] != null){
+                this.fieldsToUpdateRes['ShippingCity'] = this.accountAddressRes['Comune'];
+            }
+            if(this.accountAddressRes['CAP'] != null){
+                this.fieldsToUpdateRes['ShippingPostalCode'] = this.accountAddressRes['CAP'];
+            }
+            if(this.accountAddressRes['Stato'] != null){
+                this.fieldsToUpdateRes['ShippingCountry'] = this.accountAddressRes['Stato'];
+            }
+            if(this.accountAddressRes['Provincia'] != null){
+                this.fieldsToUpdateRes['ShippingState'] = this.accountAddressRes['Provincia'];
+            }
+            if(this.accountAddressRes['Codice Comune SAP'] != null){
+                this.fieldsToUpdateRes['ShippingCityCode__c'] = this.accountAddressRes['Codice Comune SAP'];
+            }
+            if(this.accountAddressRes['Codice Via Stradario SAP'] != null){
+                this.fieldsToUpdateRes['ShippingStreetCode__c'] = this.accountAddressRes['Codice Via Stradario SAP'];
+            }
+            if(this.accountAddressRes['Estens.Civico'] != null){
+                this.fieldsToUpdateRes['ShippingStreetNumberExtension__c'] = this.accountAddressRes['Estens.Civico'];
+            }
+            if(this.accountAddressRes['Civico'] != null){
+                this.fieldsToUpdateRes['ShippingStreetNumber__c'] = this.accountAddressRes['Civico'];
+            }
+            if(this.accountAddressRes['Localita'] != null){
+                this.fieldsToUpdateRes['ShippingPlace__c'] = this.accountAddressRes['Localita'];
+            }
+            if(this.accountAddressRes['Codice Localita'] != null){
+                this.fieldsToUpdateRes['ShippingPlace__c'] = this.accountAddressRes['Codice Localita'];
+            }
+            if(this.accountAddressRes['Flag Verificato'] !=null){
+                this.fieldsToUpdateRes['ShippingIsAddressVerified__c'] = this.accountAddressRes['Flag Verificato'];
+                this.isVerifiedShipping = this.accountAddressRes['Flag Verificato'];
+            }
+        }
+    }
     handleSave(){
         console.log(this.RecordTypeId);
         
@@ -467,8 +535,18 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         
         if(isValidated){
             this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
+            console.log('accountAddressRes : '+ JSON.stringify(this.accountAddressRes));
             this.getAccountAdress();
-            if(this.isVerified){
+            if (!this.disableCopyRes) {
+                this.accountAddressRes=this.accountAddress;    
+              }
+              else{
+                  this.accountAddressRes=[];
+                  this.accountAddressRes =this.template.querySelector("c-hdt-target-object-address-fields-res").handleAddressFields();
+                  
+              }
+            this.getAccountAdressRes();
+            if(this.isVerified && this.isVerifiedShipping ){
                 var isEmpty=false;
                 if(this.gender === undefined || this.gender.trim()===''){
                     isEmpty= true;
@@ -534,7 +612,8 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         };
                         insertAccount({
                             dataAccount : acc,
-                            accountAddress: this.fieldsToUpdate
+                            accountAddress: this.fieldsToUpdate,
+                            accountAddressRes: this.fieldsToUpdateRes
                         }).then((response) => {
                             const event = new ShowToastEvent({
                                 message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
@@ -597,7 +676,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                     };
                     insertAccount({
                         dataAccount : acc,
-                        accountAddress: this.fieldsToUpdate
+                        accountAddress: this.fieldsToUpdate,
+                        accountAddressRes: this.fieldsToUpdateRes
+
                     }).then((response) => {
                         const event = new ShowToastEvent({
                             message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',

@@ -84,14 +84,6 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                         indexOfObjectToRemove.add(count);
                     }
                 }
-                if(w.objectType == 'Order'){
-                    for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
-                        if(f.name == 'TIPO_OPERAZIONE' && String.isNotBlank(f.value)){
-                            f.value=f.value.replaceAll( '\\s+', '');
-                            system.debug('value found '+f.value);
-                        }
-                    }
-                }
                 count++;
             }
             for(integer i : indexOffieldToRemove.keyset())
@@ -228,6 +220,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                         when 'Amm. Precheck OK SII' {
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            ord.RemiCode__c = fieldValueResponse.get('EXT_CABINA_REMI');
+                                            ord.VATNumberUdb__c = fieldValueResponse.get('EXT_PIVA_DISTR');
                                             if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                                 ord.PrecheckResultSII__c = 'OK';
                                             }
