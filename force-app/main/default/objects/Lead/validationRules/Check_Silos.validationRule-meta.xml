@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Silos</fullName>
+    <active>true</active>
+    <description>Controlla che l&apos;utente inserisca il corretto silos di apparteneza</description>
+    <errorConditionFormula>IF( OR( AND( $UserRole.DeveloperName = &apos;HDT_FrontOffice_AAAEBT&apos;  , NOT( ISPICKVAL(CompanyOwner__c, &apos;AAA-EBT&apos;) ) ), AND($UserRole.DeveloperName = &apos;HDT_FrontOffice_MMS&apos; ,NOT( ISPICKVAL(CompanyOwner__c, &apos;MMS&apos;) ) ) , AND( OR($UserRole.DeveloperName = &apos;HDT_FrontOffice_HERA_COMM&apos;, ISPICKVAL($User.UserType, &apos;PowerPartner&apos;) ), NOT( ISPICKVAL(CompanyOwner__c, &apos;HERA COMM&apos;) ) ) ), true, false)</errorConditionFormula>
+    <errorDisplayField>CompanyOwner__c</errorDisplayField>
+    <errorMessage>Inserire il Silos di appartenenza</errorMessage>
+</ValidationRule>
