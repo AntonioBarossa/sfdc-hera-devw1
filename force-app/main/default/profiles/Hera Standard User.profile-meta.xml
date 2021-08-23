@@ -24265,6 +24265,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ServicePoint__c.DistributorNameFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.ElectricConsumptionZone1__c</field>
         <readable>true</readable>
@@ -29985,6 +29990,17 @@
         <layout>BillingProfile__c-Billing Profile Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>BlackList__c-BlackList Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BlackList__c-BlackList Layout</layout>
+        <recordType>BlackList__c.HDT_RT_BlacklistEmail</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BlackList__c-Pod Layout</layout>
+        <recordType>BlackList__c.HDT_RT_BlacklistPod</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Campaign-Campaign Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -33083,6 +33099,17 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Asset.HDT_RT_VASServicesnotbillable</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>BlackList__c.HDT_RT_BlacklistEmail</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>BlackList__c.HDT_RT_BlacklistPod</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
