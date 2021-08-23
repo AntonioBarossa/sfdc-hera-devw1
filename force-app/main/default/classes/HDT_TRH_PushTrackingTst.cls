@@ -3,30 +3,31 @@
 * @date 10/08/2021
 * @description Test Class for HDT_TRH_PushTracking
 * @history Lucas da Silva Fernandes – 10/08/2021 – Created class
+* !history Lucas da Silva Fernandes - 23/08/2021 - Added TestSetup
 */
 @isTest
 public with sharing class HDT_TRH_PushTrackingTst {
     
+    @TestSetup
+    static void setup(){
+        
+        PushTracking__c pt = new PushTracking__c(
+            CompanyOwner__c = 'HERA COMM'
+        );
+        insert pt;
+
+    }
+
     @isTest
     public static void testPushTrackingBeforeInsert() {
 
         Test.startTest();
 
-        List<PushTracking__c> pushTrackingList = new List<PushTracking__c>();
+        PushTracking__c ptTest = [SELECT Id, CompanyOwner__c FROM PushTracking__c WHERE CompanyOwner__c = 'HERA COMM' LIMIT 1];
 
-        PushTracking__c pt = new PushTracking__c(
-            CompanyOwner__c = 'HERA COMM'
-        );
+        System.assertEquals('HERA COMM', ptTest.CompanyOwner__c, 'CompanyOwner match.');
 
-        pushTrackingList.add(pt);
-
-        insert pushTrackingList;
-
-        PushTracking__c ptTest = [SELECT Id FROM PushTracking__c WHERE CompanyOwner__c = 'HERA COMM' LIMIT 1];
-
-        System.assertEquals(ptTest.Id, pushTrackingList[0].Id, 'Asset ID match.');
-
-        System.assertNotEquals(pushTrackingList[0].Id, '', 'Asset ID does not match.');
+        System.assertNotEquals('', ptTest.CompanyOwner__c, 'Company Owner does not match.');
 
         Test.stopTest();
     }
