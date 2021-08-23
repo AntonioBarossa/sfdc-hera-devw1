@@ -116,8 +116,9 @@ public inherited sharing class HDT_LC_SaleVas {
             }
             when 'CONTRACT_ELE_ACTIVE'{
                 records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
-                    FROM Contract WHERE Status IN ('Attivo','Activated') AND AccountId=:accountId WITH SECURITY_ENFORCED];
-                    //Chiedere per Energia Elettrica
+                    FROM Contract WHERE Status IN ('Attivo','Activated') AND AccountId=:accountId
+                    AND (ServicePoint__r.CommoditySector__c='Energia Elettrica' OR SBQQ__Order__r.ServicePoint__r.CommoditySector__c='Energia Elettrica')
+                    WITH SECURITY_ENFORCED];
             }
         }
         return records;

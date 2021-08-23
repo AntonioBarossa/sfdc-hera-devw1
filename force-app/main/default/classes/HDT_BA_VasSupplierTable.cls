@@ -11,17 +11,17 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     private static final String STATUS_SUCCESS = 'SUCCESS';
     private static final String STATUS_ERROR = 'ERROR';
 
-    private static final Set<String> FIELDS_TO_COPY = new Set<String>{
-        'VasPolicyNumber__c',
-        'VasSupplierStatus__c',
-        'VasEffectiveDate__c',
+    private static final List<String> FIELDS_TO_COPY = new List<String>{
+        'VasPolicyNumber__c', //non c'è su Asset
+        'VasSupplierStatus__c', //-> Ordine.VasSupplierStatus__c
+        'VasEffectiveDate__c', //non c'è su Asset
         'VasSupplierStatusDetails__c',
         'VasSupplier__c',
         'VasPracticeDate__c',
         'VasShippingDate__c',
         'VasTrackingNr__c',
         'VasDeliveryDate__c',
-        'VasServiceActivationDate_c',
+        'VasServiceActivationDate__c',
         'VasCommunicationProgressive__c',
         'VasCommunicationDate__c',
         'VasReplacementRequestDate__c',
@@ -29,6 +29,8 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         'VasReturnedProductDate__c',
         'VasDisabledDate__c'
     };
+
+    //Asset/Subscription.SBQQ__OrderProduct__c.Order
 
     /**
     * @description Running batch
@@ -46,7 +48,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     * @return Database.QueryLocator 
     **/
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        String query = 'SELECT Id FROM VasSupplierTable__c WHERE Status__c=:STATUS_PENDING';
+        String query = 'SELECT '+String.join(FIELDS_TO_COPY, ',')+',VasPracticeCode__c FROM VasSupplierTable__c WHERE Status__c=:STATUS_PENDING';
         return Database.getQueryLocator(query);
     }
 
@@ -68,6 +70,8 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         
         updateRecords(subs, vasRecordsMap);
         updateRecords(assets, vasRecordsMap);
+
+        //TODO: stato record senza match?
 
         Database.update(vasRecords, true);
     }
@@ -160,7 +164,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     private String getErrorDescription(Database.SaveResult saveResult) {
         String errorDesc = '';
         for(Database.Error err : saveResult.getErrors()) {
-            errorDesc += err.getFields()+': '+err.getMessage()+' ('+err.getStatusCode()+'); ';
+            errorDesc += err.getStatusCode()+': '+err.getMessage()+' ('+err.getFields()+'); ';
         }
         if (errorDesc.length()>255) {
             errorDesc = errorDesc.substring(0, 255);
