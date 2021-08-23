@@ -13,6 +13,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         ExpirationDate__c
         FROM Knowledge__kav
         WHERE ExpirationDate__c < :this.todayDate
+        AND PublishStatus = 'Online'
         WITH SECURITY_ENFORCED
         ];
 
@@ -40,6 +41,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         return [SELECT Id,
         Phase__c,
         EffectiveDate__c,
+        Type,
         Order__c
         FROM Case
         WHERE Type = :this.nonRequestedContract

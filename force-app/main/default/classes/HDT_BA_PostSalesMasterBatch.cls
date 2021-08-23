@@ -62,8 +62,19 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         Order relatedOrder = postsalesQr.getRelatedOrder(currentCase.Order__c);
                         if(relatedOrder!= null){
                             if(relatedOrder.EffectiveDate__c < System.today()){
-                                currentCase.Phase__c = 'Da Inviare';
-                                HDT_UTL_DatabaseService.updateSObject(currentCase);
+                                currentCase.TecnicalPhase__c = 'Da Inviare';
+                                //Fire del platform event per inviare il flusso ad Heroku
+                                System.debug('# case da delegare ad un altro evento: ' + currentCase.size());
+                                HDT_PEV_SelfReading__e event = new HDT_PEV_SelfReading__e();
+                                event.SerializedCases__c = JSON.serialize(currentCase);
+                                Database.SaveResult sr = EventBus.publish(event);
+                                if (sr.isSuccess()) {
+                                    System.debug('Successfully published event.');
+                                } else {
+                                    for (Database.Error err : sr.getErrors()) {
+                                        System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                                    }
+                                }
                             }
                         }
                     }
