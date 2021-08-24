@@ -16,26 +16,13 @@ public with sharing class HDT_LC_FubArchiveImportControllerTst {
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Lead> leadList = HDT_UTL_DataFactoryTst.createLead(1, true);
         List<Campaign> cmpList = HDT_UTL_DataFactoryTst.createCampaign(1, true);
-
-        FUBProcessing__c fubProcessing = new FUBProcessing__c(
-            Status__c = 'Archivio FUB da importare'
-        );
-        insert fubProcessing;
-
-        FUBProcessingItem__c fubPItem = new FUBProcessingItem__c(
-            Campaign__c = cmpList[0].Id,
-            FUBProcessing__c = fubProcessing.Id
-        );
-        insert fubPItem;
-
-        Individual ind = new Individual(
-            FirstName = 'Mama',
-            LastName = 'Guzzo'
-        );
-        insert ind;
+        List<FUBProcessing__c> fubProcessingList = HDT_UTL_DataFactoryTst.createfubProcessing(1, true, 'Archivio FUB da importare');
+        List<FUBProcessingItem__c> fubProcessingItemList = HDT_UTL_DataFactoryTst.createFubProcessingItem(1, true, cmpList[0].Id, fubProcessingList[0].Id);
+        List<Individual> indList = HDT_UTL_DataFactoryTst.createIndividual(1, true);
+        List<ContactPointPhone> cppList = HDT_UTL_DataFactoryTst.createContactPointPhone(1, true, indList[0].Id);
 
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, false, accList[0].Id);
-        contactList[0].IndividualId = ind.Id;
+        contactList[0].IndividualId = indList[0].Id;
         insert contactList;
 
         List<CampaignMember> cmpMemberList = HDT_UTL_DataFactoryTst.createCampaignMember(1, false, cmpList[0].Id, leadList[0].Id, contactList[0].Id);
@@ -43,12 +30,6 @@ public with sharing class HDT_LC_FubArchiveImportControllerTst {
         cmpMemberList[0].ExcludeFub__c = 'NO';
 
         insert cmpMemberList;
-
-        ContactPointPhone cpp = new ContactPointPhone(
-            ParentId = ind.Id,
-            TelephoneNumber = '992022286'
-        );
-        insert cpp;
     }
 
     @isTest
