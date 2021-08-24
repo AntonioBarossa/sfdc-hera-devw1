@@ -521,6 +521,11 @@
                 <label>Preventivo rifiutato – Amm OK</label>
             </value>
             <value>
+                <fullName>Annullamento per Switch-out</fullName>
+                <default>false</default>
+                <label>Annullamento per Switch-out</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
