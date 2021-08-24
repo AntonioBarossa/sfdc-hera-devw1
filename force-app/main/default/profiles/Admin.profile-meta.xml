@@ -35288,6 +35288,17 @@
     <recordTypeVisibilities>
         <default>true</default>
         <personAccountDefault>true</personAccountDefault>
+        <recordType>BlackList__c.HDT_RT_BlacklistEmail</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>BlackList__c.HDT_RT_BlacklistPod</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.HDT_RT_Business</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -35959,6 +35970,10 @@
     <tabVisibilities>
         <tab>MassiveLoader</tab>
         <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>BlackList__c</tab>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>MassiveLoaderRequest__c</tab>

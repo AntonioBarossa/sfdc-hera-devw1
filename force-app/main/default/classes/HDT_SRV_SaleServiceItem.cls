@@ -350,14 +350,14 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         String name='';
         switch on sp.commoditySector__c{
             when 'Gas'{
-                if(sp.SupplyType__c.endsWithIgnoreCase('Domestico') || sp.SupplyType__c=='A-Domestico'){
+                if(sp.SupplyType__c=='Domestico' || sp.SupplyType__c=='A-Domestico'){
                     Name = 'Gas Domestico (A-Domestico)';
                 }else{
                     Name = 'Gas Non Domestico (B-Condominio, C-Aziende di pubblica utilità, D-Altri usi)';
                 }
             }
             when 'Energia Elettrica'{
-                if(sp.SupplyType__c.endsWithIgnoreCase('Domestico') || sp.SupplyType__c=='A-Domestico'){
+                if(sp.SupplyType__c=='Domestico' || sp.SupplyType__c=='A-Domestico'){
                     Name = 'Energia Elettrica Domestico';
                 }else{
                     Name = 'Energia Elettrica Non Domestico';

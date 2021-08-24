@@ -1503,4 +1503,126 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return documents;
 	}
+	public static List<DocumentalActivity__c> createDocumentalActivity(Integer numberRecords, Id orderId, Id caseId){
+		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
+		for(Integer i=0; i<numberRecords;i++){
+			DocumentalActivity__c docAct = new DocumentalActivity__c();
+			docAct.OrderId__c = String.isNotBlank(orderId)?orderId:null;
+			docAct.CaseId__c = String.isNotBlank(caseId)?caseId:null;
+			docAct.EnvelopeId__c = 'idPlico_' + i;
+			docAct.AttachmentCode__c = 'codiceAllegato_'+i;
+			docAct.PostelTimestamp__c = '2000000000';
+			docActList.add(docAct);
+		}
+		insert docActList;
+		return docActList;
+	}
+
+	public static List<AtecoMatrix__c> createAtecoMatrix(Integer amount, Boolean doInsert, String name){
+
+		List<AtecoMatrix__c> atecoMatrixList=new List<AtecoMatrix__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			AtecoMatrix__c testAtecoMatrix=new AtecoMatrix__c();
+			testAtecoMatrix.Name=name+i;
+
+			atecoMatrixList.add(testAtecoMatrix);
+		}
+
+		if (doInsert){
+
+			insert atecoMatrixList;
+		}
+
+		return atecoMatrixList;
+	}
+
+	public static List<FUBProcessing__c> createfubProcessing (Integer amount, Boolean doInsert, String status) {
+
+		List<FUBProcessing__c> fubProcessingList = new List<FUBProcessing__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			FUBProcessing__c fubProcessing = new FUBProcessing__c(
+				Status__c = status
+			);		
+
+			fubProcessingList.add(fubProcessing);
+		}
+
+		if (doInsert){
+
+			insert fubProcessingList;
+		}
+
+		return fubProcessingList;
+	}
+
+	public static List<FUBProcessingItem__c> createFubProcessingItem (Integer amount, Boolean doInsert, Id campaignId, Id FubProcessingId) {
+
+		List<FUBProcessingItem__c> fubProcessingItemList = new List<FUBProcessingItem__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			FUBProcessingItem__c fubProcessingItem = new FUBProcessingItem__c(
+				Campaign__c = campaignId,
+            	FUBProcessing__c = FubProcessingId
+			);
+
+			fubProcessingItemList.add(fubProcessingItem);
+		}
+
+		if (doInsert){
+
+			insert fubProcessingItemList;
+		}
+
+		return fubProcessingItemList;
+	}
+
+	public static List<Individual> createIndividual (Integer amount, Boolean doInsert) {
+
+		List<Individual> indList = new List<Individual>();
+
+		for (Integer i=0; i<amount; i++){
+
+			Individual ind = new Individual(
+				FirstName = 'Mama',
+				LastName = 'Guzzo'
+        	);
+
+			indList.add(ind);
+		}
+
+		if (doInsert){
+
+			insert indList;
+		}
+
+		return indList;
+	}
+
+	public static List<ContactPointPhone> createContactPointPhone (Integer amount, Boolean doInsert, Id individualId) {
+
+		List<ContactPointPhone> cppList = new List<ContactPointPhone>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ContactPointPhone cpp = new ContactPointPhone(
+            ParentId = individualId,
+            TelephoneNumber = '982591380'
+        );
+
+			cppList.add(cpp);
+		}
+
+		if (doInsert){
+
+			insert cppList;
+		}
+
+		return cppList;
+	}
+
 }

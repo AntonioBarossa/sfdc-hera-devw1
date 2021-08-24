@@ -74,6 +74,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
             {label: 'Indirizzo di fornitura', fieldName: 'SupplyAddressFormula__c', type: 'text'},
             {label: 'Phase', fieldName: 'Phase__c', type: 'text'},
             {label: 'Processo', fieldName: 'recordtypename', type: 'text'},
+            {label: 'Offerta', fieldName: 'OfferType__c', type: 'text'},
             {type:  'button',typeAttributes:{
                     iconName: 'utility:edit',
                     label: 'Avvia Processo', 

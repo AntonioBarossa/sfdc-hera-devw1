@@ -129,7 +129,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                         + 'FROM DependenciesMatrix__c '
                         + conditions 
                         + ' WITH SECURITY_ENFORCED';
-
+            
             DependenciesMatrix__c[] dependencies = Database.query(queryDependenciesMatrix);
 
             Map<String,List<List<String>>> dependenciesMap = new Map<String,List<List<String>>>();
@@ -195,6 +195,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                                     + 'Status__c = \''+String.escapeSingleQuotes(STATUS_LAVORAZIONE)+'\' AND '
                                     + 'ProcessType__c IN :matches '
                                     + 'WITH SECURITY_ENFORCED';
+
             try{
                 srBlockings = (List<ServiceRequest__c>)Database.query(queryServiceRequest);
                 
@@ -237,7 +238,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                                 }
                             }
                         }
-                        if(match){
+                        if(match && sr.Id != srBlocking.Id){
                             if(sr.Type__c.equalsIgnoreCase(TIPOLOGY_POSTSALES)){
                                 Case caseToUpdate = new Case(ID=sr.Case__c);
                                 caseToUpdate.Status = STATUS_SEQUENZIALIZZATO;

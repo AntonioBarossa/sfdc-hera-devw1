@@ -226,6 +226,40 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     }
 
     /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 24/08/2021
+    * @description HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk
+    * @param1 list of objectId - list of Ids of the parent records of the activity
+    * @param2 templateName - name of an activityTemplate
+    * @return list<wrts_prcgvr__Activity__c>
+    */
+    public static list<wrts_prcgvr__Activity__c> createActivityByObjectIdAndTemplateNameBulk(list<String> objectIds, String templateName){
+        system.debug('HDT_UTL_Scarti objectIds ' + objectIds);
+        system.debug('HDT_UTL_Scarti templateName ' + templateName);
+        try{
+            Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName});
+            system.debug('HDT_UTL_Scarti template ' + template);
+            if(template.values().size() > 0){
+                wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+                List<wrts_prcgvr__Activity__c> resultActivities = new List<wrts_prcgvr__Activity__c>();
+                for(String singleObjectId: objectIds){
+                    List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>singleObjectId});
+                    system.debug('HDT_UTL_Scarti single activity ' + activities.get(0));
+                    resultActivities.add(activities.get(0));
+                }
+                system.debug('HDT_UTL_Scarti end ' + resultActivities);
+                return resultActivities;
+            }
+            system.debug('HDT_UTL_Scarti end');
+            return null;
+        }
+        catch(Exception e){
+            system.debug('HDT_UTL_Scarti catch ' + e);
+            return null;
+        }
+    }
+
+    /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 22/07/2021
     * @description HDT_UTL_Scarti.checkActivityCreation - Check on activity creation
