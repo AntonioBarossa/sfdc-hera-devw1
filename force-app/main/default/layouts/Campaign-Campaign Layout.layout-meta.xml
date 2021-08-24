@@ -52,6 +52,10 @@
                 <behavior>Readonly</behavior>
                 <field>MacroActivityEasyCIM__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BillTypeMessage__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -96,6 +100,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CampaignEasyCIM__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>StaticTextMessageBill__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
