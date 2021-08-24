@@ -21,6 +21,13 @@ public with sharing class HDT_WS_PaymentsTst {
     @isTest
     static void executeTst()
     {
+        Map<String, Object> args = new Map<String, Object>();
+        args.put('transition', null);
+        args.put('action', null);
+        args.put('sender', null);
+        //Valutare ciclo su method per testare tutti i vari scenari
+        args.put('method', null);
+
 
     }
 

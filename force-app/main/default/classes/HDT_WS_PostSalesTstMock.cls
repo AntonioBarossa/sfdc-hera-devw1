@@ -3,8 +3,12 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
     global HTTPResponse  respond(HTTPRequest request){
         String endpoint = request.getEndpoint();
         System.debug(endpoint);
+        //Arricchimento Dati
         if(endpoint.equalsIgnoreCase('ArricchimentoDatiTemp')){
             return creaEnrichResposne(request);
+        //Pagamenti
+        }else if(endpoint.containsIgnoreCase('HDT_')){
+            return creaPaymentsResponse(request);
         }else{
             return creaRicResponse(request);
         }
@@ -59,6 +63,12 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         response.setStatusCode(200);
         response.setStatus('OK');
         return response;
+    }
+
+    public static HttpResponse creaPaymentsResponse(HttpRequest request){
+        HttpResponse response = new HttpResponse();
+        String body = request.getBody();
+        String bodyResposne = '';
     }
     
 }
