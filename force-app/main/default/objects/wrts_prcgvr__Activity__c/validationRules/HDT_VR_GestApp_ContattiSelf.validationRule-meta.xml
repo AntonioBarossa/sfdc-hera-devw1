@@ -3,7 +3,7 @@
     <fullName>HDT_VR_GestApp_ContattiSelf</fullName>
     <active>true</active>
     <description>Vincola l&apos;inserimento di un dato di contatto</description>
-    <errorConditionFormula>AND(RecordTypeId = &quot;0123N000002WpWEQA0&quot;,
+    <errorConditionFormula>AND(RecordType.DeveloperName = &quot;HDT_RT_DistributorAppointment&quot;,
 	/*isSelfAppointment__c = TRUE,*/
 	isnull(Mobile__c),
 	isnull(Email__c)
