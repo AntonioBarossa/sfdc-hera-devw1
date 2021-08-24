@@ -66,13 +66,13 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         //Get servicePoint data start
         servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SwitchInWinback__c,ServicePointCode__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SwitchInWinback__c,ServicePointCode__c,SupplyType__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
         servicePoint = existingServicePoint[0];
         //Get servicePoint data end
 
         //Get sale data start
         saleSrv.checkReadAccess('Account__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
-        Sale__c existingSale = saleQr.getRecordById(sale.id, 'Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
+        Sale__c existingSale = saleQr.getRecordById(sale.id, 'Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
         sale = existingSale;
         //Get sale data end
         
@@ -221,7 +221,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 Role__c = userRoleProfile[0].UserRole.Name,
                 Profile__c = userRoleProfile[0].Profile.Name,
                 NewClient__c = newClient,
-                SuperUser__c = helperMethods.isSuperUser() ? 'Y' : 'N'
+                SuperUser__c = helperMethods.isSuperUser() ? 'Y' : 'N',
+                SBQQ__PricebookId__c = getPricebookId(servicePoint)
             ));
 
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -336,5 +337,34 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         }
 
         return result;
+    }
+
+
+    private Id getPricebookId(ServicePoint__c sp){
+        List<Pricebook2> lp = HDT_QR_PriceBook.getRecordByName(getPricebookName(sp));
+        return lp.isEmpty()? null : lp.get(0).Id;
+    }
+
+
+    private String getPricebookName(ServicePoint__c sp){
+        String name='';
+        switch on sp.commoditySector__c{
+            when 'Gas'{
+                if(sp.SupplyType__c=='Domestico' || sp.SupplyType__c=='A-Domestico'){
+                    Name = 'Gas Domestico (A-Domestico)';
+                }else{
+                    Name = 'Gas Non Domestico (B-Condominio, C-Aziende di pubblica utilità, D-Altri usi)';
+                }
+            }
+            when 'Energia Elettrica'{
+                if(sp.SupplyType__c=='Domestico' || sp.SupplyType__c=='A-Domestico'){
+                    Name = 'Energia Elettrica Domestico';
+                }else{
+                    Name = 'Energia Elettrica Non Domestico';
+                }
+            }
+        }
+        system.debug('Pricebook Name '+name);
+        return name;
     }
 }
