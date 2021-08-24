@@ -376,10 +376,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if(expectedExec != null && expectedExec != ''){
             System.debug('#QUOTATIONTYPE -> ' + quotationType);
             System.debug('#NEXTPHASE -> ' +nextPhase);
-            if(quotationType.equalsIgnoreCase('Analitico') && nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti')){
+            if(quotationType.equalsIgnoreCase('Analitico') && (nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti') || nextPhase.containsIgnoreCase('Ammissibilità OK'))){
+                currentCase.ExpectedExecutionTime__c = expectedExec;
+            }else if(!quotationType.equalsIgnoreCase('Analitico')){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
             }else{
-                currentCase.ExpectedExecutionTime__c = expectedExec;
+                //not saving
             }
         }
         caseUpdate.add(currentCase);
