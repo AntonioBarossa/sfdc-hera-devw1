@@ -68,7 +68,14 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
     public static HttpResponse creaPaymentsResponse(HttpRequest request){
         HttpResponse response = new HttpResponse();
         String body = request.getBody();
-        String bodyResposne = '';
+        //successResponse
+        String bodyResponse = '{"status": "success","correlationId": "75d76430-04b3-11ec-98ba-022486a4808c","timestamp": "2021-08-24T10:15:38",'
+        +'"data": [{"rdsRdo": "","tipoAttivita": "Pratica avviata","note": "","numeroBollettino": "0981023981490","importoTotale": "","esito": "OK"}]}';
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        return response;
     }
     
 }

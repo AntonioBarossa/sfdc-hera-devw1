@@ -1472,4 +1472,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return accShareList;
 	}
+
+	public static List<DocumentSelected__c> createDocumentSelected(){}
 }
