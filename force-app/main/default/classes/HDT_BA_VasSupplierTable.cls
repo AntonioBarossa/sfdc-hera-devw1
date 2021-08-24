@@ -30,6 +30,8 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         'VasDisabledDate__c'
     };
 
+    private static Map<id, id> vasSupplToOrder;
+
     /**
     * @description Running batch
     * @author gabriele.rota@webresults.it | 2021-08-13 
@@ -58,6 +60,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     * @param vasRecords 
     **/
     public void execute(Database.BatchableContext bc, List<VasSupplierTable__c> vasRecords) {
+        vasSupplToOrder= new Map<Id, Id>();
         Map<String, VasSupplierTable__c> vasRecordsMap = mapVasRecords(vasRecords);
         Set<String> codes = vasRecordsMap.keySet();
 
@@ -146,6 +149,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                     OrderItem item = (OrderItem)target.getSObject('SBQQ__OrderProduct__r');
                     orderToUpdate.Id = item.OrderId;
                     orderToUpdate.VasSupplierStatus__c = vasRecord.VasSupplierStatus__c;
+                    vasSupplToOrder.put(vasRecord.Id, orderToUpdate.Id);
                 } catch (Exception e) {
                     System.debug(LoggingLevel.ERROR, e.getMessage());
                     vasRecord.Status__c = STATUS_ERROR;
@@ -232,18 +236,21 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     * @param vasRecords 
     **/
     private void saveVasRecords(List<VasSupplierTable__c> vasRecords) {
+        List<String> ordsIdScarti = new List<String>();
         for (VasSupplierTable__c vasRecord:vasRecords) {
             if (vasRecord.Status__c==STATUS_PENDING) {
                 vasRecord.Status__c = STATUS_ERROR;
                 vasRecord.ErrorDescription__c = 'NOT_FOUND: VasPracticeCode__c not found';
+            }else if(vasRecord.Status__c==STATUS_ERROR){
+                ordsIdScarti.add(vasSupplToOrder.get(vasRecord.Id));
             }
 
             if (String.isNotBlank(vasRecord.ErrorDescription__c)) {
                 vasRecord.ErrorDescription__c = vasRecord.ErrorDescription__c.abbreviate(255);
             }
         }
-
         Database.update(vasRecords, true);
+        createDraftActivities(ordsIdScarti);
     }
 
     /**
@@ -258,5 +265,15 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
             errorDesc += err.getStatusCode()+': '+err.getMessage()+' ('+err.getFields()+'); ';
         }
         return errorDesc;
+    }
+
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 24-08-2021 
+    * @param ordsIdScarti 
+    **/
+    private void createDraftActivities(List<String> ordsIdScarti){
+        list<wrts_prcgvr__Activity__c> activities = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(ordsIdScarti, 'CBS_ATT003__KO_FORNITORE');
+        HDT_UTL_DatabaseService.insertSObject(activities);
     }
 }
