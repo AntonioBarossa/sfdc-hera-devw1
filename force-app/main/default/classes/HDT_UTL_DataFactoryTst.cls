@@ -1488,6 +1488,26 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return docActList;
 	}
 
+	public static List<AtecoMatrix__c> createAtecoMatrix(Integer amount, Boolean doInsert, String name){
+
+		List<AtecoMatrix__c> atecoMatrixList=new List<AtecoMatrix__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			AtecoMatrix__c testAtecoMatrix=new AtecoMatrix__c();
+			testAtecoMatrix.Name=name+i;
+
+			atecoMatrixList.add(testAtecoMatrix);
+		}
+
+		if (doInsert){
+
+			insert atecoMatrixList;
+		}
+
+		return atecoMatrixList;
+	}
+
 	public static List<FUBProcessing__c> createfubProcessing (Integer amount, Boolean doInsert, String status) {
 
 		List<FUBProcessing__c> fubProcessingList = new List<FUBProcessing__c>();
@@ -1574,5 +1594,5 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return cppList;
 	}
-	
+
 }
