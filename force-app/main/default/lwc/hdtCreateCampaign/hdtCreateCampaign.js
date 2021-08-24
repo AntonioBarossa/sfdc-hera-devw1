@@ -41,6 +41,7 @@ export default class HdtCreateCampaign extends LightningElement {
     @track maxNumberGASCodeUseRequired = false;
     @track maxNumberVASCodeUseRequired = false;
     @track codeConventionQuantityRequired = false;
+    @track requiredPriority=false;
 
     @wire(getUserRole, {
         userId: USER_ID
@@ -62,6 +63,20 @@ export default class HdtCreateCampaign extends LightningElement {
             this.paperRecId = this.template.querySelector('lightning-input-field.paperCampaignParameterField').value;
         }
     }
+    
+    reqPrioritycheck(campReq){
+        if (this.statusField!='Bozza'&& campReq) {
+            this.requiredPriority=true;
+        }
+        else{
+            this.requiredPriority=false;
+        }
+    }
+    handleChangeReq(event){
+        console.log('handleChangeReq '+event.target.checked );
+        let campReq = this.template.querySelector("lightning-input-field[data-id=req]").value
+        this.reqPrioritycheck(campReq);
+    }
 
     handleChangeStatus(event) {
 
@@ -70,7 +85,9 @@ export default class HdtCreateCampaign extends LightningElement {
         let recurringField = this.template.querySelector('.recurringField > lightning-input-field').value;
         this.statusField = event.detail.value;
         let processType = this.template.querySelector('.processType > lightning-input-field').value;
-
+        let campReq = this.template.querySelector("lightning-input-field[data-id=req]").value
+        console.log('campReq' +campReq);
+        this.reqPrioritycheck(campReq);
         if ( this.statusField!='Bozza' && channelField=='Telefonico Outbound' ) {
             this.easyRequired=true;
         }

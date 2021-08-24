@@ -1,24 +1,97 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_QR_Order</members>
+        <members>DiscardAnnullmentRule__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Order.HDT_RT_Attivazione</members>
+        <members>Order.HDT_RT_AttivazioneConModifica</members>
+        <members>Order.HDT_RT_CambioOfferta</members>
+        <members>Order.HDT_RT_CambioUso</members>
+        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
+        <members>Order.HDT_RT_Default</members>
+        <members>Order.HDT_RT_FlyingRequest</members>
+        <members>Order.HDT_RT_OrderDossier</members>
+        <members>Order.HDT_RT_Proroga</members>
+        <members>Order.HDT_RT_ScontiBonus</members>
+        <members>Order.HDT_RT_Subentro</members>
+        <members>Order.HDT_RT_SwitchIn</members>
+        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
+        <members>Order.HDT_RT_VAS</members>
+        <members>Order.HDT_RT_Voltura</members>
+        <members>Order.HDT_RT_VolturaConSwitch</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>Account-CPQ Account Layout Service Console</members>
+        <members>BlackList__c-BlackList Layout</members>
+        <members>BlackList__c-Pod Layout</members>
+        <members>Lead-Lead Layout</members>
+        <members>Sale__c-Vendita Layout</members>
+        <members>ServicePoint__c-Service Point Ele</members>
+        <members>ServicePoint__c-Service Point Gas</members>
+        <members>ServicePoint__c-Service Point Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_LC_SaleActions</members>
+        <members>HDT_LC_SaleActionsTst</members>
+        <members>HDT_SRV_HerokuPostSalesManager</members>
+        <members>HDT_SRV_HerokuPostSalesManagerTst</members>
+        <members>HDT_SRV_SaleServiceItem</members>
         <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_UTL_HandleTechnicalData</members>
-        <members>HDT_UTL_ServicePoint</members>
+        <members>HDT_TRH_Contract</members>
+        <members>HDT_TRH_Individual</members>
+        <members>HDT_TRH_Lead</members>
+        <members>HDT_TRH_PushTrackingTst</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_UTL_Sales</members>
+        <members>HDT_WS_PaymentsTst</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>hdtSelezioneFornituraFlow</members>
-        <members>hdtTargetObjectCreateForm</members>
+        <members>Case.TrackingDiscardPhase__c</members>
+        <members>DiscardAnnullmentRule__c.ActivityType__c</members>
+        <members>DiscardAnnullmentRule__c.ControllingField__c</members>
+        <members>DiscardAnnullmentRule__c.ControllingValue__c</members>
+        <members>DiscardAnnullmentRule__c.ParentObject__c</members>
+        <members>DiscardAnnullmentRule__c.ProcessField__c</members>
+        <members>DiscardAnnullmentRule__c.ProcessValue__c</members>
+        <members>Lead.Category__c</members>
+        <members>Order.ConventionAssociation__c</members>
+        <members>Order.TrackingDiscardPhase__c</members>
+        <members>ServicePoint__c.SAPContractCode__c</members>
+        <members>wrts_prcgvr__Activity__c.DiscardCategory__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>HDT_LCP_LeadChangeRecordType</members>
+        <members>HDT_LCP_RecallMe</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>hdtCampaignNewOverride</members>
+        <members>hdtCreateCampaign</members>
+        <members>hdtRecallMeCreateForm</members>
+        <members>hdtSellingWizardHeader</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_FL_Autoelettrica</members>
-        <members>HDT_FL_HVAC</members>
-        <members>HDT_FL_PostSalesMasterDispatchSales</members>
-        <members>HDT_FL_PostSalesVAS</members>
-        <members>HDT_FL_SegnalazioniVAS</members>
-        <name>Flow</name>
+        <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>Lead.Check_Silos</members>
+        <name>ValidationRule</name>
     </types>
     <version>49</version>
 </Package>

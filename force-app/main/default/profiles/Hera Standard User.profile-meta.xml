@@ -6742,6 +6742,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.TrackingDiscardPhase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.TraderPracticeCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13863,6 +13868,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.TraderWithdrawalDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.TrackingDiscardPhase__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24255,6 +24265,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ServicePoint__c.DistributorNameFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.ElectricConsumptionZone1__c</field>
         <readable>true</readable>
@@ -24492,6 +24507,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.RowIdSiebel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SAPContractCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -28666,6 +28686,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.DiscardCategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.DiscardCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29970,6 +29995,17 @@
         <layout>BillingProfile__c-Billing Profile Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>BlackList__c-BlackList Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BlackList__c-BlackList Layout</layout>
+        <recordType>BlackList__c.HDT_RT_BlacklistEmail</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BlackList__c-Pod Layout</layout>
+        <recordType>BlackList__c.HDT_RT_BlacklistPod</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Campaign-Campaign Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -30796,6 +30832,15 @@
         <uiLoginFlowType>VisualWorkflow</uiLoginFlowType>
         <useLightningRuntime>true</useLightningRuntime>
     </loginFlows>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>DiscardAnnullmentRule__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>  
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -33059,6 +33104,17 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Asset.HDT_RT_VASServicesnotbillable</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>BlackList__c.HDT_RT_BlacklistEmail</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>BlackList__c.HDT_RT_BlacklistPod</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

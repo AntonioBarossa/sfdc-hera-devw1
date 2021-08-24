@@ -340,24 +340,12 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     }
 
 
-    /**
-    * @description 
-    * @author federico.defelice@webresults.it | 23-08-2021 
-    * @param sp 
-    * @return Id 
-    **/
     private Id getPricebookId(ServicePoint__c sp){
         List<Pricebook2> lp = HDT_QR_PriceBook.getRecordByName(getPricebookName(sp));
         return lp.isEmpty()? null : lp.get(0).Id;
     }
 
 
-    /**
-    * @description 
-    * @author federico.defelice@webresults.it | 23-08-2021 
-    * @param sp 
-    * @return String 
-    **/
     private String getPricebookName(ServicePoint__c sp){
         String name='';
         switch on sp.commoditySector__c{

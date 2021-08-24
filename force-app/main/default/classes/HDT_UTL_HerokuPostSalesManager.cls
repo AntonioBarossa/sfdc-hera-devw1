@@ -201,6 +201,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.ExternalUserCompany__c = reqWrp.requestMap.get('CMP');
         }
         //END>> 27/07/2021 costanzo.lomele@webresults.it - campo company
+        //START>> 23/08/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
+        if(!String.isBlank(reqWrp.requestMap.get('FASE'))){
+            currentCase.TrackingDiscardPhase__c = reqWrp.requestMap.get('FASE');
+        }
+        //END>> 23/08/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
         if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita') && !method.equalsIgnoreCase('aggiornaRCU')){
             //gestione scarti
             return caseUpdate;

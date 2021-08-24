@@ -15,11 +15,33 @@
                     window.open(res.url, "_self");
                 }
                 else{
+
+                   
                     var navEvt = $A.get("e.force:navigateToURL");
-                    navEvt.setParams({
-                        "url": res.url
-                    });
+                        navEvt.setParams({
+                            "url": res.url
+                        });
                     navEvt.fire();
+                    var workspaceAPI = component.find("workspace");
+                    workspaceAPI.getFocusedTabInfo().then(function(response) {
+                        var focusedTabId = response.tabId;
+                        console.log('******:' + focusedTabId);
+                        workspaceAPI.refreshTab({
+                                tabId: focusedTabId,
+                                includeAllSubtabs: true
+                        });
+                    });
+                   
+                    
+                    /*var workspaceAPI = component.find("workspace");
+                    workspaceAPI.getFocusedTabInfo().then(function(response) {
+                        var focusedTabId = response.tabId;
+                        workspaceAPI.refreshTab({
+                                tabId: focusedTabId,
+                                includeAllSubtabs: true
+                        });
+                    });*/
+
                 }
          	}
          	else
