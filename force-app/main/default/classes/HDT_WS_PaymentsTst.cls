@@ -42,7 +42,9 @@ public with sharing class HDT_WS_PaymentsTst {
         Test.startTest();
         responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) paymentsWs.execute(args);
         Test.stopTest();
+        testCase = [SELECT TecnicalPhase__c FROM Case LIMIT 1];
         System.assertEquals(true, responseReturn.success);
+        System.Assert(!testCase.TecnicalPhase__c.equalsIgnoreCase('Bozza'));
 
     }
 
