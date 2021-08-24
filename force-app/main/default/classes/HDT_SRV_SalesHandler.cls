@@ -162,7 +162,6 @@ public with sharing class HDT_SRV_SalesHandler {
                                         utlTechData.handle300Flow(mapRequestFields, ord);
                                     }
                                 }
-                                new HDT_SRV_ServicePoint().updateRecord(utlTechData.sp);
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
@@ -273,6 +272,9 @@ public with sharing class HDT_SRV_SalesHandler {
                                             throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
                                         }
                                     }
+                                    HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
+                                    utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
+                                    utlTechData.handleCompletata(mapRequestFields);
                                 }
                             }
                             when 'Annullamento SII - Ricezione'{
@@ -481,5 +483,14 @@ public with sharing class HDT_SRV_SalesHandler {
         HDT_UTL_DatabaseService.updateSObject(recordOrder);
     }
     //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+
+    private static void updateServicePoint(ServicePoint__c sp){
+        try{
+            new HDT_SRV_ServicePoint().updateRecord(sp);
+        }catch(Exception e){
+            system.debug('Exception Update ServicePoint');
+            throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating ServicePoint - '+e.getMessage());
+        }
+    }
 
 }

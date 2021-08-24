@@ -44,7 +44,7 @@ public inherited sharing class HDT_LC_SaleVas {
     }
     @AuraEnabled
     public static boolean transitionCheck(String salesId){
-        Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c');
+        Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
         boolean check = true;
         //HDT_UTL_Sales.isTransitionNoUp()
         //System.debug('*****MAVUOIANNA:'+ transitionlist);

@@ -212,6 +212,12 @@ public with sharing class HDT_UTL_CaseProcess {
                     membersToUpdate.add(updateMember);
                 }
             }
+            //update campaignMember siblings Status a 'Non Proposto Auto'
+            List<CampaignMember> siblingMembers = HDT_QR_CampaignMember.getSiblingMembersByAccountId(accountIds, newCasesList[0].Campaign__r.Channel__c);
+            List<String> campaignMembersIdList = new List<String>(new Map<String, CampaignMember>(siblingMembers).keySet());
+            if (campaignMembersIdList.size()>0) {
+                List<CampaignMember> siblingsToUpdate = HDT_LC_CampaignsController.updateCampaignMembersStatus(campaignMembersIdList, 'Non Proposto Auto');
+            }
         
 			campaignMemberSrv.updateRecords(membersToUpdate);
 		}catch(Exception e)

@@ -102,6 +102,7 @@ public with sharing class HDT_WRP_SelfReadings {
     public class HDT_WRP_SelfReadingsResponse {
         public String caseId;
         public String readingId;
+        public String integrationId;
         public String outcome;
         public String outcomeDescription;
     }
