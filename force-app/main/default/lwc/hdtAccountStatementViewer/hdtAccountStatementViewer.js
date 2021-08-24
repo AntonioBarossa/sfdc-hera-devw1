@@ -387,6 +387,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     billList(event){
 
+        //@frpanico modificato Elenco Bollette poiche non necessita della selezione del documento
         //var selectedId = this.getSingleSelectedId();
 
         /*if(selectedId==undefined){
@@ -402,8 +403,20 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         //this.otherParams = ?;
         //this.company = selected.societa;
         //this.contractAccount = selected.contoContrattuale;
-        this.startDateString = '2021/08/24'//new Date();/*selected.dataEmissione*/;
-        //TODO -360
+        var today = new Date();
+        today.setDate(today.getDate() - 365);
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        this.startDateString = dd + '/' + mm + '/' + yyyy;
+        console.log(this.startDateString);
+        /*this.startDateString = new Date();//selected.dataEmissione;
+        console.log('>>> Today Date ' + this.startDateString);
+        this.startDateString.setDate(this.startDateString - 365);
+        console.log('>>> Last year string ' + this.startDateString);
+        this.startDateString = this.startDateString.toString();
+        console.log('>>> Start Date ' + this.startDateString);*/
         this.showBillList = true;
     }
 

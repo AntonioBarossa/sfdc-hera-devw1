@@ -378,10 +378,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug('#NEXTPHASE -> ' +nextPhase);
             if(quotationType.equalsIgnoreCase('Analitico') && nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti')){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
-            }else if(!quotationType.equalsIgnoreCase('Analitico')){
-                currentCase.ExpectedExecutionTime__c = expectedExec;
             }else{
-                //not saving
+                currentCase.ExpectedExecutionTime__c = expectedExec;
             }
         }
         caseUpdate.add(currentCase);
