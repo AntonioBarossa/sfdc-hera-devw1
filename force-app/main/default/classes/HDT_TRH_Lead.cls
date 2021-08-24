@@ -73,15 +73,11 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         public override void afterUpdate(){
             System.debug('afterUpdate');
             for (Lead tempLead :   (List<Lead> ) Trigger.New) {
-                System.debug('old '+String.valueOf(mapOld.get(tempLead.id).IndividualId));
-                System.debug('new  '+ tempLead.IndividualId);
+               
                 if (tempLead.IndividualId==null&& mapOld.get(tempLead.id)!=null &&
                 mapOld.get(tempLead.id).IndividualId!=null ) {
                    // tempLead.IndividualId=mapOld.get(tempLead.id).IndividualId;
-                   system.debug('debug internal');
-                    tempLead.addError('Operazione non consentita');
-                  
-                    
+                    tempLead.addError('Operazione non consentita'); 
                 }
                 
             }
