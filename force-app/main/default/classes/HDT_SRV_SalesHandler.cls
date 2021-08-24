@@ -74,10 +74,14 @@ public with sharing class HDT_SRV_SalesHandler {
                         //EVERIS: EMD ANNULLAMENTO/RIPENSAMENTO
                         Order ord = new Order();
                         ord.Id = ordRetrieved.Id;
-                        ord.Phase__c = mapRequestFields.get('FASE');
                         //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
-                        ord.TrackingDiscardPhase__c = mapRequestFields.get('FASE');
+                        if('Errore tecnico invio a SAP'.equalsIgnoreCase(mapRequestFields.get('FASE'))
+							|| 'Flusso bloccato in assenza del precedente'.equalsIgnoreCase(mapRequestFields.get('FASE'))
+							|| 'Errore invio a DL/SII'.equalsIgnoreCase(mapRequestFields.get('FASE')))
+                        	ord.TrackingDiscardPhase__c = mapRequestFields.get('FASE');
+						else
                         //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
+                        ord.Phase__c = mapRequestFields.get('FASE');
                         //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
                         ord.ExternalUserCompany__c = mapRequestFields.get('CMP');
                         //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
