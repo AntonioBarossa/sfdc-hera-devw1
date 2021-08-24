@@ -1473,5 +1473,34 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return accShareList;
 	}
 
-	public static List<DocumentSelected__c> createDocumentSelected(){}
+	public static List<DocumentSelected__c> createDocumentSelected(Integer amount,Boolean doInsert, Boolean credit, String caseId, String ca){
+
+		List<DocumentSelected__c> documents = new List<DocumentSelected__c>();
+		Integer fixedAmount = credit ? -15 : 15;
+		for(Integer i = 0; i < amount; ++i){
+			DocumentSelected__c documentObj = new DocumentSelected__c();
+			documentObj.Name = '000041170936496' + i;
+			documentObj.Case__c = caseId;
+			documentObj.Amount__c = fixedAmount * (i + 1);
+			documentObj.Bill__c = '420174500378587' + i;
+			documentObj.ContractualAccount__c = ca;
+			documentObj.DocumentNumber__c = '000041170936496' + i;
+			documentObj.ExpirationDate__c = Date.newInstance(2019, 12, 24);
+			documentObj.Extension__c = 'SI';
+			documentObj.IssueDate__c = Date.newInstance(2019, 12, 04);
+			documentObj.IssuingCompany__c = 'IssuingCompany__c';
+			documentObj.PaymentMode__c = 'BOLLETTINO';
+			documentObj.DocumentResidue__c =  fixedAmount * (i + 1);
+			documentObj.TvFeeResidual__c = 12;
+			documentObj.PaymentChannel__c = 'Posta';
+			documentObj.Position1__c = '000';
+			documentObj.Position2__c = '0001';
+			documentObj.Position3__c = '000';
+			documents.add(documentObj);
+		}
+		if(doInsert){
+			insert documents;
+		}
+		return documents;
+	}
 }

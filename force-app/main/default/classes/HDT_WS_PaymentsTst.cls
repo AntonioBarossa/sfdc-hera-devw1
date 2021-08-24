@@ -16,6 +16,7 @@ public with sharing class HDT_WS_PaymentsTst {
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         List<Contract> contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[0].Id,billingProfileList[0].ContractAccountCode__c);
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito OK da SAP', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Completata', 'Bozza', rtId, rtName,'A','','','');
     }
@@ -28,8 +29,9 @@ public with sharing class HDT_WS_PaymentsTst {
         Case testCase = [SELECT Id FROM Case LIMIT 1];
         testCase.Amount__c = 100;
         testCase.DepositPaymentMode__c = 'Paperless';
+        testCase.Type = 'Comunicazione Pagamento';
         update testCase;
-        testCase = [SELECT CaseNumber, DepositPaymentMode__c FROM Case LIMIT 1];
+        testCase = [SELECT CaseNumber, Type, DepositPaymentMode__c FROM Case LIMIT 1];
         Map<String, Object> args = new Map<String, Object>();
         args.put('transition', null);
         args.put('action', null);
