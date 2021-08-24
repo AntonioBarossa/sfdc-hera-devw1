@@ -145,6 +145,9 @@ export default class hdtBillingProfileForm extends LightningElement {
                         case 'SignatoryType__c':
                             required = true;
                             break;
+                        case 'OtherPayer__c':
+                            required = true;
+                        break;
                         default:
                             break;
                     }
