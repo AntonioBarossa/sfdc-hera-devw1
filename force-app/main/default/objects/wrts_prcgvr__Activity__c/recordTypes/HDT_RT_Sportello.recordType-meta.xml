@@ -267,6 +267,10 @@
             <fullName>Null</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SuspensionReason__c</picklist>

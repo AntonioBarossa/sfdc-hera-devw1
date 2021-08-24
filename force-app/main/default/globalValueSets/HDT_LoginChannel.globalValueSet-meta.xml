@@ -116,16 +116,20 @@
         <label>Social</label>
     </customValue>
     <customValue>
-        <fullName>SMS</fullName>
+        <fullName>Back office Teleselling</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>SMS</label>
+        <label>Back office Teleselling</label>
     </customValue>
     <customValue>
-        <fullName>IVR</fullName>
+        <fullName>Back office Vendita</fullName>
+        <default>false</default>
+        <label>Back office Vendita</label>
+    </customValue>
+    <customValue>
+        <fullName>APP</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>IVR</label>
+        <label>APP</label>
     </customValue>
     <customValue>
         <fullName>HC_WEB</fullName>
@@ -134,10 +138,16 @@
         <label>HC_WEB</label>
     </customValue>
     <customValue>
-        <fullName>APP</fullName>
+        <fullName>IVR</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>APP</label>
+        <label>IVR</label>
+    </customValue>
+    <customValue>
+        <fullName>SMS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>SMS</label>
     </customValue>
     <customValue>
         <fullName>SOL</fullName>

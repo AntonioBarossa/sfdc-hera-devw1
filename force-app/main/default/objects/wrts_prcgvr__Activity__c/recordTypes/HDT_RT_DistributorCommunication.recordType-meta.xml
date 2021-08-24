@@ -1134,6 +1134,10 @@
             <fullName>Creata</fullName>
             <default>true</default>
         </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Subject__c</picklist>

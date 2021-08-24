@@ -62,4 +62,8 @@
         <field>VendDistr__c</field>
         <value xsi:nil="true"/>
     </values>
+    <values>
+        <field>VoltageLevel__c</field>
+        <value xsi:type="xsd:string">BT</value>
+    </values>
 </CustomMetadata>

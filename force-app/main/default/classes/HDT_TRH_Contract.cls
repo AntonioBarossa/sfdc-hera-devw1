@@ -6,8 +6,9 @@
 * @history Keltin Mesonjesi – 19/04/2021 – Created class
 */
 public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
-    public override void beforeInsert() {
 
+    public override void beforeInsert() {
+      
     }
 
     public override void afterInsert() {
@@ -23,9 +24,34 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
     }
 
     public override void beforeUpdate(){
+        System.debug('HDT_TRH_Contract.beforeUpdate');
         // system.debug('START HDT_TRH_Contract beforeUpdate');
         // HDT_UTL_ContractProcess.orderCompletataPhaseManagement(Trigger.new);
         // system.debug('END HDT_TRH_Contract beforeUpdate');
+        HDT_QR_Order qrOrder = new HDT_QR_Order();
+        List<id> listOrderId = new List<id>();
+        List<Contract> listContract = new List<Contract>();
+        for (Contract tempContract : (List<Contract>)Trigger.new) {
+            if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c))&& 
+            (String.isBlank( String.valueOf(tempContract.ServicePoint__c)) ||String.isBlank( String.valueOf(tempContract.BillingProfile__c)) )     
+            ) {
+              listOrderId.add(tempContract.SBQQ__Order__c);
+              listContract.add(tempContract);
+            }
+
+        }
+        if (!listOrderId.isEmpty()) {
+            Map<Id, Order> mapOrder = qrOrder.getOrdersRecord(listOrderId);
+      
+            if (mapOrder!=null && !mapOrder.isEmpty() ) {
+                for (Contract tempContract :listContract) {
+                    if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c)) &&mapOrder.get(tempContract.SBQQ__Order__c)!=null ) {
+                        tempContract.ServicePoint__c=mapOrder.get(tempContract.SBQQ__Order__c).ServicePoint__c;
+                        tempContract.BillingProfile__c=mapOrder.get(tempContract.SBQQ__Order__c).BillingProfile__c;
+                    }
+                }
+            }
+        }
     }
 
     public override void afterUpdate() {

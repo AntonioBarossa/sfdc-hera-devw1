@@ -52,6 +52,10 @@ public inherited sharing class HDT_QR_Case {
 
     public Case getParentCaseById(String caseId){
 
+        if (caseId == null) {
+            return null;
+        }
+
         return [SELECT Id,
         Type,
         Phase__c,

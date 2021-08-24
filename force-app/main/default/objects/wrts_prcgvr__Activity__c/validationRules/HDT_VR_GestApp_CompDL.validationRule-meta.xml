@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_GestApp_CompDL</fullName>
+    <active>false</active>
+    <description>Impedisce la movimentazione manuale degli appuntamenti AtoA gestiti da Distributore</description>
+    <errorConditionFormula>false
+/*Valido solo per Gestione appuntamento*/
+/*Vincolare anche per utenza*/
+/*AND(RecordTypeId = &quot;0123N000002WpWEQA0&quot;,
+AND(ISPICKVAL(AppointmentCompetence__c, &quot;Distributore&quot;),
+isAtoA__c = TRUE))*/</errorConditionFormula>
+    <errorDisplayField>AppointmentCompetence__c</errorDisplayField>
+    <errorMessage>Appuntamenti in AtoA in carico al Distributore non possono essere movimentabili manualmente</errorMessage>
+</ValidationRule>

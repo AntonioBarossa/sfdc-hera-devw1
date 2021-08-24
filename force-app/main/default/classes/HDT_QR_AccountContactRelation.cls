@@ -57,15 +57,17 @@ public inherited sharing class HDT_QR_AccountContactRelation {
 
     }
 
+
     // INIZIO SVILUPPI EVERIS
 
     public List<AccountContactRelation> getContactsByAccountWithRoles(String accountId) {
     
         return [
             SELECT 
-            AccountId,
-            ContactId, 
-            Roles
+            Id, AccountId,Contact.name,Roles,Contact.HomePhone,
+            ContactId,Contact.Phone,
+            Contact.MobilePhone,
+            Contact.Email
             FROM AccountContactRelation 
             WHERE 
             AccountId = :accountId 

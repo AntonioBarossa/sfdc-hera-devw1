@@ -106,4 +106,13 @@ public inherited sharing class HDT_QR_Account {
             WITH SECURITY_ENFORCED
         ];
     }
+    public List<Account> getAccountById(String id){
+        return [
+            SELECT
+            Id,Name
+            FROM Account 
+            WHERE id = :id
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

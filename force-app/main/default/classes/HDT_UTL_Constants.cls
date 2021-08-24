@@ -52,7 +52,6 @@ public with sharing class HDT_UTL_Constants {
     public final String ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE =
     Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_KOPRECEDETECLIENTE).getRecordTypeId();
 
-
     //Order RecordType Default
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Default';
@@ -60,14 +59,12 @@ public with sharing class HDT_UTL_Constants {
     public final String ORDER_RECORDTYPEID_DEFAULT =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT).getRecordTypeId();
 
-
     //Order RecordType Voltura
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA = 'HDT_RT_Voltura';
     @AuraEnabled
     public final String ORDER_RECORDTYPEID_VOLTURA =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA).getRecordTypeId();
-    
 
     //Order RecordType OrderDossier
     @AuraEnabled
@@ -75,6 +72,34 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String ORDER_RECORDTYPEID_ORDERDOSSIER =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER).getRecordTypeId();
+
+    // Order RecordType Subentro
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO = 'HDT_RT_Subentro';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_SUBENTRO =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO).getRecordTypeId();
+
+    // Order RecordType SwitchIn
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN = 'HDT_RT_SwitchIn';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_SWITCHIN =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN).getRecordTypeId();
+
+    // Order RecordType Attivazione
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE = 'HDT_RT_Attivazione';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_ATTIVAZIONE =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE).getRecordTypeId();
+
+    // Order RecordType Attivazione con Modifica
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA = 'HDT_RT_AttivazioneConModifica';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA).getRecordTypeId();
 
     //@frpanico 05/08 Case RecordType default Morosita
     @AuraEnabled

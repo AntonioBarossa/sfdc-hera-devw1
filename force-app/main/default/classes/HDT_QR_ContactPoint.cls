@@ -1,3 +1,10 @@
+/**
+ * @author Sabina Levonja (sabina.levonja@dunegroup.it)
+ * @date 21/04/2021
+ * @description HDT_QR_ContactPoint Classes
+ * @history Sabina Levonja – 21/04/2021 – Created Class
+ */
+
 public inherited sharing class HDT_QR_ContactPoint {
 
     public static ContactPointPhone getContactPhoneById (Id contactPhoneId, String fields){
@@ -83,6 +90,9 @@ public inherited sharing class HDT_QR_ContactPoint {
 
     }
 
+    /*The parameter "String phone" is not being used anywhere inside this method 
+    the method was commented after instructions from Andrei Necsulescu
+
     public static ContactPointPhone getContactEmailByPhone (String phone, Id individualId, String fields){
         ContactPointPhone res;
 
@@ -97,7 +107,10 @@ public inherited sharing class HDT_QR_ContactPoint {
 			res = null;
 		}
         return res;
-    }
+    } */
+
+    /*
+    method was commented after instructions from Andrei Necsulescu
 
     public static ContactPointPhone getContactEmailById (Id contactEmailId, String fields){
 		
@@ -114,7 +127,7 @@ public inherited sharing class HDT_QR_ContactPoint {
 		}
         return res;
     }
-
+    */
 
        
     public static ContactPointEmail searchContactPointEmail (String email){

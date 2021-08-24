@@ -1,6 +1,7 @@
 public inherited sharing class HDT_LC_CampaignsController {
     
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
+    private static HDT_QR_Account accountQr =new HDT_QR_Account();
     private static HDT_SRV_CampaignMember campaignMemberSrv = new HDT_SRV_CampaignMember();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
@@ -351,7 +352,7 @@ public inherited sharing class HDT_LC_CampaignsController {
     @AuraEnabled
     public static Boolean methodClosedTab(String id, String objectName, String category, String channel){
         List <CampaignMember> cm= getCampaigns( id,  objectName,  category,  channel);
-     
+        
         List<String> campaignMemberIds = new List<String>();
         if (cm!=null &&cm.size()>0 ) {
             
@@ -369,8 +370,49 @@ public inherited sharing class HDT_LC_CampaignsController {
             System.debug('campMemUp.size()>0 : '+String.valueOf(campMemUp.size()>0));
             return campMemUp!=null && campMemUp.size()>0?true:false;
         }
-       
+        
         return false;
         
     }
+    @AuraEnabled
+    public static  List <CampaignMember> requiredCampaignCheck(String id){
+        System.debug('id : '+id);
+        if (String.isBlank(id)) {
+            return null;
+        }
+        List <CampaignMember> cm= getCampaigns( id,  'Account',  'Campagna CRM',  '');
+        
+        
+        List<CampaignMember> campaignMemberIds = new List<CampaignMember>();
+        
+        
+        
+        for (CampaignMember tempCm : cm) {
+            if(tempCm.Campaign.Required__c == true && tempCm.Campaign.Category__c == 'Campagna CRM') {
+                
+                campaignMemberIds.add(tempCm);
+            }
+        }
+        System.debug('campaignMemberIds '+campaignMemberIds);
+        //  List<CampaignMember>campMemUp =updateCampaignMembersStatus(campaignMemberIds, 'Non Proposto Auto');
+        
+        return campaignMemberIds;
+        
+        
+    }
+    @AuraEnabled
+    public static  Account getCurrentAccount(String id){
+        System.debug('######id :' +id);
+        if (String.isBlank(id)) {
+            return null;
+        }
+        List<String> listFiels = new List<String>{'name'};
+        List<Account> listAcc =accountQr.getAccountById(id);
+        Account currentAccount = listAcc.get(0);
+        
+        return currentAccount ;
+        
+        
+    }
+    
 }

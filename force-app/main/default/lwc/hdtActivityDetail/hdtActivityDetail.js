@@ -7,7 +7,7 @@ export default class HdtActivityDetail extends LightningElement {
     @api recordId;
     @track show=false;
     @track objectList=[];
-
+    @track activeSections=['Order','Activity','Case'];
     connectedCallback(){
        this.loadContext();
     }

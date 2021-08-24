@@ -62,7 +62,7 @@ public inherited sharing class HDT_SRV_Sale {
     public Sale__c createRecord(Sale__c sale){
 
         Account account = accountQuery.getRecordById(Sale.Account__c, 'Id, Name, SalesNumber__c');
-        sale.Name = 'Vendita Account ' + account.Name + ' ' + (account.SalesNumber__c + 1);
+        sale.Name = 'Vendita ' + account.Name + ' ' + (account.SalesNumber__c + 1);
 
         List<String> fields = helperMethods.getObjAttrList(sale);
 

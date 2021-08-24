@@ -33,6 +33,11 @@
                 <default>false</default>
                 <label>Accettata</label>
             </value>
+            <value>
+                <fullName>Chiusa</fullName>
+                <default>false</default>
+                <label>Chiusa</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

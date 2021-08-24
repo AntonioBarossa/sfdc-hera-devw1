@@ -488,9 +488,9 @@
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
-    <relatedLists>
+    <!-- <relatedLists>
         <relatedList>RelatedContentNoteList</relatedList>
-    </relatedLists>
+    </relatedLists> -->
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>

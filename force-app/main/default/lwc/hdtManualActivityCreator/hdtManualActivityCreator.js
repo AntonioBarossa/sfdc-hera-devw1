@@ -75,11 +75,11 @@ export default class HdtManualActivityCreator extends NavigationMixin(LightningE
                     this.toastMessage = 'Activity created succesfully!';
                     this.showToast = true;
                     this[NavigationMixin.Navigate]({
-                        type: 'standard__recordPage',
-                        attributes: {
-                            recordId: '001xx000003DGg0AAG',
-                            objectApiName: 'wrts_prcgvr__Activity__c',
-                            actionName: 'view'
+                        'type': 'standard__recordPage',
+                        'attributes': {
+                            'recordId': result,
+                            'objectApiName': 'wrts_prcgvr__Activity__c',
+                            'actionName': 'view'
                         }
                     });
                 }
@@ -94,15 +94,16 @@ export default class HdtManualActivityCreator extends NavigationMixin(LightningE
             })
             .finally(() => {
                 this.showSpinner = false;
+                this.dispatchEvent(new CustomEvent('save', {}));
             });
     }
 
     handleCancel(){
         this[NavigationMixin.Navigate]({
-            "type": "standard__objectPage",
-            "attributes": {
-                "objectApiName": "wrts_prcgvr__Activity__c",
-                "actionName": "home"
+            'type': 'standard__objectPage',
+            'attributes': {
+                'objectApiName': 'wrts_prcgvr__Activity__c',
+                'actionName': 'home'
             }
         });
     }

@@ -48,6 +48,9 @@ export default class HdtAdvancedSearch extends LightningElement {
     @api flagContratto=false;
     @api isSuperUser=false;
     @api serviceRequestId;
+    @track isIncompatible= false;
+    @track preSelectedRows=[];
+    @track iconCompatibility='';
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
         'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
@@ -248,7 +251,38 @@ export default class HdtAdvancedSearch extends LightningElement {
             columns = columns.concat(keys);
         });
         let columnsUniq = [...new Set(columns)];
-        columnsUniq.forEach(field => this.tableColumns.push({label: field, fieldName: field}));
+        columnsUniq.forEach(field => 
+            {
+                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id'){
+                    this.tableColumns.push({label: field, fieldName: field});
+                }                 
+            });
+            if(this.processtype != ''){                 
+                if(this.isIncompatible){
+                    this.tableColumns.push(
+                        { label: 'Compatibility', fieldName: 'compatibility',
+                            type: 'button',
+                            typeAttributes: {
+                                label: 'See more',
+                                title: {fieldName:'compatibilityMessage'},
+                            },
+                            cellAttributes:{ 
+                                iconName:{ fieldName: 'iconCompatibility'},
+                                iconPosition: 'left', 
+                                iconAlternativeText: 'Compatibility Icon' ,
+                            }
+                        });
+                }else{
+                    this.tableColumns.push(
+                        { label: 'Compatibility', fieldName: 'compatibility',
+                            cellAttributes:{ 
+                                iconName:{ fieldName: 'iconCompatibility'},
+                                iconPosition: 'left', 
+                                iconAlternativeText: 'Compatibility Icon' ,
+                            }
+                        });
+                }
+            }
     }
 
     /**
@@ -329,6 +363,8 @@ export default class HdtAdvancedSearch extends LightningElement {
 
 @api
     submitFornitura(){
+        this.preSelectedRows=[];
+        this.isIncompatible= false;
         this.preloading = true;
         console.log('executing query search'+ this.accountid);
         console.log('additionlFilterFinal**********************************'+this.additionalFilterFinal)
@@ -337,8 +373,11 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
-                this.createTable(data);
-                this.formatTableHeaderColumns(data);
+                for(var i=0; i<this.originalData.length; i++){
+                    this.originalData[i].Id=i.toString();
+                }
+                this.createTable(this.originalData);
+                this.formatTableHeaderColumns(this.originalData);
                 this.submitButtonStatus = true;
                 this.openmodel = true;
                 this.isLoaded = true;
@@ -402,6 +441,8 @@ export default class HdtAdvancedSearch extends LightningElement {
      * Call apex class and get data
      */
     submitSearch(event) {
+        this.preSelectedRows=[];
+        this.isIncompatible= false;
         event.preventDefault();
         console.log('event value submitSearch() '+ event.target.value);
         let isBlacklist=false;
@@ -417,9 +458,13 @@ export default class HdtAdvancedSearch extends LightningElement {
             console.log('getServicePoint data *******'+ JSON.stringify(data));
             this.preloading = false;
             if (data.length > 0) {
+                
                 this.originalData = JSON.parse(JSON.stringify(data));
-                this.createTable(data);
-                this.formatTableHeaderColumns(data);
+                for(var i=0; i<this.originalData.length; i++){
+                     this.originalData[i].Id=i.toString();
+                }
+                this.createTable(this.originalData);
+                this.formatTableHeaderColumns(this.originalData);
                 this.submitButtonStatus = true;
                 this.openmodel = true;
                 this.isLoaded = true;
@@ -454,38 +499,23 @@ export default class HdtAdvancedSearch extends LightningElement {
         console.log('getSelectedServicePoint START');
         this.preloading = true;
         let selectedRows = event.detail.selectedRows;
-        this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
-        this.preloading = false;
         console.log('getSelectedServicePoint END');
-        
+
         if(this.processtype != ''){
-            this.tableColumns.push(
-                {
-                    label: 'Compatibility', fieldName: '',
-                    cellAttributes:{ 
-                        iconName: { 
-                            fieldName: 'compatibilityIcon' 
-                        },
-                        iconPosition: 'left', 
-                        iconAlternativeText: 'Compatibility Icon' 
-                    }
-                },
-            );
             let srvRequest= {
                 'servicePointCode': this.rowToSend['Codice Punto'],
-                'commoditySector': this.rowToSend['Settore Merceologico'],
+                'commoditySector': this.rowToSend['Servizio'],
                 'processType': this.processtype,
                 'type': 'Case'
             };
             let isPostSales = true;
-            let iconCompatibility= '';
             checkCompatibility({servReq: srvRequest, isPostSales: isPostSales}).then(data =>{
                 if(data.compatibility == ''){
-                    iconCompatibility='action:approval';
+                    this.iconCompatibility='action:approval';
                 }else{
-                    iconCompatibility='action:close';
+                    this.iconCompatibility='action:close';
                 }
                 this.serviceRequestId= data.ServiceRequest.Id;
                 let found= false;
@@ -495,13 +525,28 @@ export default class HdtAdvancedSearch extends LightningElement {
                         found =true;
                     }
                     if(found){
-                    row['compatibilityIcon']= iconCompatibility;
+                        this.isIncompatible= false;
+                        row.iconCompatibility= this.iconCompatibility;
+                        row.serviceRequestId= this.serviceRequestId;
+                        row.isCompatible= true;
+                        if(data.compatibility != ''){
+                            this.isIncompatible=true;
+                            row.isCompatible= false;
+                            row.compatibilityMessage= data.compatibility;
+                            this.confirmButtonDisabled = true;
+                        }else{
+                            this.confirmButtonDisabled = false;
+                        }
                     }
                 }
                 console.log(this.originalData);
-                this.createTable(this.originalData);    
+                this.createTable(this.originalData); 
+                this.formatTableHeaderColumns(this.originalData);
+                var my_ids = [];
+                my_ids[0] = this.rowToSend.Id;
+                this.preSelectedRows = my_ids;
+
             }).catch(error => {
-                this.loaded = true;
                 console.log(error.body.message);
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
@@ -510,9 +555,14 @@ export default class HdtAdvancedSearch extends LightningElement {
                     mode: 'sticky'
                 });
                 this.dispatchEvent(toastErrorMessage);
-                this.loaded = true;
+                this.confirmButtonDisabled = true;
             });
-            
+            this.preloading = false;
+
+        }else{
+            this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
+            this.preloading = false;
+
         }
     }
 

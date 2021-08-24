@@ -1198,6 +1198,10 @@
             <fullName>Presa appuntamento in corso</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Subject__c</picklist>
@@ -1304,7 +1308,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Approvazione Quote</fullName>
+            <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
         <values>

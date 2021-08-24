@@ -1,3 +1,10 @@
+/**
+* @author 'Keltin Mesonjesi' (keltin.mesonjesi@protonmail.ch);
+* @date 19/04/2020
+* @description Class HDT_UTL_ContractProcess.cls
+* @history Lucas da Silva Fernandes – 19/04/2020 – Updated Header
+*/
+
 public inherited sharing class HDT_UTL_ContractProcess {
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();

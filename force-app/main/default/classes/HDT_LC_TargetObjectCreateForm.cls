@@ -93,6 +93,23 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         return servicePoint;
     }
 
+    /** @author Andrei Necsulescu (andrei.necsulescu@webresults.it) 
+     * This method is necessary because passing the object directly Removes the decimals from the numbers */
+    @AuraEnabled
+    public static ServicePoint__c createServicePoinString(String servicePoint, Sale__c sale){
+        
+        System.debug('createServicePoint_tmp received servicepoint string ' + servicePoint);
+        
+        ServicePoint__c servicePointObject = (ServicePoint__c)JSON.deserialize(servicePoint, ServicePoint__c.class);
+
+        System.debug('createServicePoint_tmp converted servicepoint string ' + servicePointObject);
+
+        createServicePoint2(servicePointObject, sale);
+
+        return servicePointObject;
+
+    }
+
    // @future(callout=true)
     public static void updateServicePoint(ServicePoint__c servicePo)
     {   
@@ -109,7 +126,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             System.debug('******3');
             s.id = listSale[0].opportunity__r.Sale__c;
             System.debug('******4');
-            s = saQr.getRecordById(listSale[0].opportunity__r.Sale__c,'id,Account__r.Category__c');
+            s = saQr.getRecordById(listSale[0].opportunity__r.Sale__c,'id,Account__r.Category__c,Account__r.CompanyOwner__c');
             System.debug('******5');
             boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
             System.debug('******6:' +isTransitorio);
@@ -117,7 +134,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                 System.debug('******7');
                 HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
                 System.debug('******8:' + resp);
-                if(resp != null && !resp.result.isEmpty()){
+                if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                         servicePo.SwitchInWinback__c = true;
                     }
@@ -151,15 +168,23 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         Sale__c s = new Sale__c();
         HDT_QR_Sale saQr = new HDT_QR_Sale();
             System.debug('******3');
+            boolean isTransitorio = false;
             //s.id = listSale[0].opportunity__r.Sale__c;
-            s = saQr.getRecordById(sa.id,'id,Account__r.Category__c');
-            boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
+
+            if(sa!=null){
+                if(sa.id!=null){
+            s = saQr.getRecordById(sa.id,'id,Account__r.Category__c,Account__r.CompanyOwner__c');
+                	isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
+                }
+
+            }
+
             System.debug('******4' + isTransitorio);
             if(isTransitorio){
                 System.debug('******5');
                 HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
                 System.debug('******6:' + resp.result[0].status);
-                if(resp != null && !resp.result.isEmpty()){
+                if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                         servicePo.SwitchInWinback__c = true;
                         System.debug('******7:' + resp.result[0].status);
@@ -195,14 +220,13 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         HDT_QR_Sale saQr = new HDT_QR_Sale();
             System.debug('******3');
             //s.id = listSale[0].opportunity__r.Sale__c;
-            s = saQr.getRecordById(sa.id,'id,Account__r.Category__c');
+            s = saQr.getRecordById(sa.id,'id,Account__r.Category__c,Account__r.CompanyOwner__c');
             boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
             System.debug('******4' + isTransitorio);
             if(isTransitorio){
                 System.debug('******5');
                 HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
-                System.debug('******6:' + resp.result[0].status);
-                if(resp != null && !resp.result.isEmpty()){
+                if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                         servicePo.SwitchInWinback__c = true;
                         System.debug('******7:' + resp.result[0].status);
@@ -230,6 +254,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     public static ServicePoint__c confirmServicePoint2(ServicePoint__c servicePoint, Boolean sap,Sale__c sale){
         system.debug('HDT_LC_TargetObjectCreateForm confirmServicePoint START');
         system.debug('ServicePoint : ' + servicePoint);
+        system.debug('sale : ' + sale);
         system.debug('isSap = ' +  sap);
         if(sap == false){
             system.debug('entra in updateRecord');

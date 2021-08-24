@@ -11,9 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Approvazione Quote</fullName>
+                <fullName>Approvazione Offerte</fullName>
                 <default>false</default>
-                <label>Approvazione Quote</label>
+                <label>Approvazione Offerte</label>
             </value>
             <value>
                 <fullName>Gestione dati discordanti</fullName>

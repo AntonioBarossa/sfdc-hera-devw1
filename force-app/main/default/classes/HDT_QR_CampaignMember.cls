@@ -86,6 +86,7 @@ public inherited sharing class HDT_QR_CampaignMember {
             CampaignId,
             Campaign.Name,
             Status,
+            Campaign.Status,
             Campaign.Category__c,
             Campaign.Channel__c,
             Campaign.EndDate,
@@ -369,16 +370,55 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
-public List<CampaignMember> getCampaignMemberByCampaingAndContact(String campaign, String contact){
-    return [
-        SELECT Id,
-        Contact.AccountId,
-        CampaignId,
-        Status
-        FROM CampaignMember 
-        WHERE ContactId = :contact
-        AND CampaignId = :campaign
-        WITH SECURITY_ENFORCED
-    ];
-}
+    public List<CampaignMember> getCampaignMemberByCampaingAndContact(String campaign, String contact){
+        return [
+            SELECT Id,
+            Contact.AccountId,
+            CampaignId,
+            Status
+            FROM CampaignMember 
+            WHERE ContactId = :contact
+            AND CampaignId = :campaign
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<CampaignMember> getCampaignMemberByCampaingAndContactInBulk(List<String> campaign, List<String> contact){
+        return [
+            SELECT Id,
+            ContactId,
+            Contact.AccountId,
+            CampaignId,
+            Status
+            FROM CampaignMember 
+            WHERE ContactId IN :contact
+            AND CampaignId IN :campaign
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public static List<CampaignMember> getSiblingMembersByAccountId(List<String> accountIds, String campaignChannel) {
+        List<CampaignMember> allMembers = [
+            SELECT CampaignId 
+            FROM CampaignMember 
+            WHERE Campaign.Required__c = true
+            AND Campaign.Channel__c = :campaignChannel
+            AND Contact.AccountId IN :accountIds
+            WITH SECURITY_ENFORCED
+        ];
+        List<String> cmpList = new List<String>();
+        for (CampaignMember cm : allMembers) {
+            if (!cmpList.contains(cm.CampaignId)) {
+                cmpList.add(cm.CampaignId);
+            }
+        }
+        return [
+            SELECT Id
+            FROM CampaignMember
+            WHERE CampaignId IN :cmpList
+            AND HasResponded = false
+            AND Status != 'Non Proposto Auto'
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

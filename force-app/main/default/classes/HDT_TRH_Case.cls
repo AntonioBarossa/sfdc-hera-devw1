@@ -3,7 +3,7 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
     public override void beforeInsert(){
 
         markCasesFromCurrentUser();
-        HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
+        HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
 
     }
 
@@ -36,14 +36,14 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         }
 
         HDT_UTL_CaseProcess.updateServiceRequest(trigger.new, trigger.old);
-        
+
         Boolean skipForCancellation = HDT_UTL_CaseProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
         if(!skipForCancellation){
         //Checks Phase Transition
             ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
                     .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
         }
-        //Checks Mandatory Activity
+        // Checks Mandatory Activity
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
                 .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
 
