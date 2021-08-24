@@ -75,6 +75,9 @@ public with sharing class HDT_SRV_SalesHandler {
                         Order ord = new Order();
                         ord.Id = ordRetrieved.Id;
                         ord.Phase__c = mapRequestFields.get('FASE');
+                        //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
+                        ord.TrackingDiscardPhase__c = mapRequestFields.get('FASE');
+                        //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
                         //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
                         ord.ExternalUserCompany__c = mapRequestFields.get('CMP');
                         //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
