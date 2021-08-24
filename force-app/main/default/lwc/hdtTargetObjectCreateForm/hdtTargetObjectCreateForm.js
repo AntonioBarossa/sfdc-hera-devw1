@@ -1402,7 +1402,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('confirm Id ' + JSON.stringify(this.allSubmitedFields['Id']));
         console.log('confirm isRicercainsap ' + JSON.stringify(this.isricercainsap));
 
-        if(this.allSubmitedFields['Id'] != undefined && this.isricercainsap==true){
+        if(this.allSubmitedFields['Id'] != undefined && this.isSap == true){//&& this.isricercainsap==true){
             console.log('REMOVE START');
 
             delete this.allSubmitedFields['Id'];

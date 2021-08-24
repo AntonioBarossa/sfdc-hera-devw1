@@ -28,8 +28,8 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         for(Lead L : listNew){
             if(l.email != null){
                 String s = l.email.split('@')[1];
-                if(mapResBlacklist.get(s) != null){
-                    l.addError('Error:' + mapResBlacklist.get(s));
+                if(mapResBlacklist.get(s.toUpperCase()) != null){
+                    l.addError('Error:' + mapResBlacklist.get(s.toUpperCase()));
                 }
                 else{
                     if('Default'.equals(l.company)){
@@ -150,7 +150,18 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
             
         }
         public override void   beforeUpdate(){
-     
+            Map<String,String> mapResBlacklist = HDT_UTL_Lead.getBlackListMap();
+            List<Lead> listNew = trigger.new;
+        // List<Lead> leadToCheck = new List<Lead>();
+            //Map<String,String> leadDomain = new Map<String,String>();
+            for(Lead L : listNew){
+                if(l.email != null){
+                    String s = l.email.split('@')[1];
+                    if(mapResBlacklist.get(s.toUpperCase()) != null){
+                        l.addError('Error:' + mapResBlacklist.get(s.toUpperCase()));
+                    }
+                }
+            }
             System.debug('beforeUpdate');
            
         }
