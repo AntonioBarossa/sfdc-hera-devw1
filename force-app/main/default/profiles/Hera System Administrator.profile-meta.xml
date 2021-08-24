@@ -26905,6 +26905,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.SAPContractCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.SAPImplantCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32822,13 +32827,13 @@
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
+        <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>DiscardAnnullmentRule__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>  
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions> 
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
