@@ -57,8 +57,45 @@ const DATA_ACCESS_MAP = {
             {label: 'Prodotto', fieldName: 'ProductName', type: 'text'},
         ]
     },
+    'ASSETS_ACTIVATED_VAS':{
+        label : 'Asset attivati VAS',
+        sObjectName: 'Asset',
+        emptyMessage: 'Non ci sono asset attivi',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.ContactName = item.Contact !== undefined ? item.Contact.Name : '';
+                item.ProductName = item.Product2 !== undefined ? item.Product2.Name : '';
+            });
+        },
+        columns: [
+            {label: 'Nome', fieldName: 'Name', type: 'text'},
+            {label: 'Numero serial', fieldName: 'SerialNumber', type: 'text'},
+            {label: 'Data installazione', fieldName: 'InstallDate', type: 'date'},
+            {label: 'Referente', fieldName: 'ContactName', type: 'text'},
+            {label: 'Prodotto', fieldName: 'ProductName', type: 'text'},
+        ]
+    },
     'SUBS_ANALISI_CONSUMI':{
         label : 'Subscriptions Analisi Consumi',
+        sObjectName: 'SBQQ__Subscription__c',
+        emptyMessage: 'Non ci sono subscriptions',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.ContractNumber : '';
+                item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
+    'SUBS_VAS':{
+        label : 'Subscriptions VAS',
         sObjectName: 'SBQQ__Subscription__c',
         emptyMessage: 'Non ci sono subscriptions',
         dataProcessFunction: (data) => {
