@@ -7,13 +7,14 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         String rtName =  constantsUtl.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA;
         String rtId = constantsUtl.CASE_RECORDTYPEID_MOROSITA;
         HDT_UTL_DataFactoryTst.pClickCasePhase();
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
-        //AccountContactRelation accountContactRel = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accList[0].Id,contactList[0].Id);
+        AccountContactRelation accountContactRel = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accList[1].Id,contactList[0].Id);
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
+        List<Contract> contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         List<ContentVersion> contentVersionList = HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'Callout_Template', 
         '{"name": "Case","label": "Caso","sObjectType": "Case","queryable": true,"fields": ['
@@ -29,19 +30,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Comunicazione verso Heroku OK', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Comunicazione verso Heroku KO', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
-        /*List<HDT_DataEnrichmentTransocode__mdt> transcodeConfigs = new List<HDT_DataEnrichmentTransocode__mdt>();
-        transcodeConfigs.add(HDT_UTL_DataFactoryTst.createTranscodeConfig('ALIQUOTAIVA',false,null,true,'getPicklistValue','ALIQUOTAIVA','TaxRate__c'));
-        transcodeConfigs.add(HDT_UTL_DataFactoryTst.createTranscodeConfig('PRESENZACORRETTORE',false,null,true,'getBoolFromString','PRESENZACORRETTORE','ExistCorrector__c'));
-        transcodeConfigs.add(HDT_UTL_DataFactoryTst.createTranscodeConfig('ANNOFABBRCONT',false,null,true,'getDateByYear','ANNOFABBRCONT','YearManufactureMeter__c'));
-        transcodeConfigs.add(HDT_UTL_DataFactoryTst.createTranscodeConfig('CA',false,null,true,'getBillingProfileIdBySapCode','CA','BillingProfile__c'));
-        transcodeConfigs.add(HDT_UTL_DataFactoryTst.createTranscodeConfig('CALIBRO1',false,null,true,'getCaliber','CALIBRO1','CaliberAvailable__c'));
-        transcodeConfigs.add(HDT_UTL_DataFactoryTst.createTranscodeConfig('DESCRFATTURAZCOLL',false,null,true,'writeCollectiveBillType','DESCRFATTURACOLL','Note__c'));
-        transcodeConfigs.add(HDT_UTL_DataFactoryTst.createTranscodeConfig('OPZIONE',false,null,true,'getOpzione','OPZIONE','TensionOption__c'));
-        transcodeConfigs.add(HDT_UTL_DataFactoryTst.createTranscodeConfig('DATACESSAZIONE',false,null,true,'getDateFromString','DATACESSAZIONE','EndDate__c'));
-        transcodeConfigs.add(HDT_UTL_DataFactoryTst.createTranscodeConfig('MOTIVOBLOCCOCALCOLOT1',false,null,true,'variationsBlock','MOTIVOBLOCCOCALCOLO','CalculationBlock__c'));
-        transcodeConfigs.add(HDT_UTL_DataFactoryTst.createTranscodeConfig('MOTIVOBLOCCOCALCOCLO',false,null,true,'writeBlockCode','MOTIVOBLOCCOCALCOLO','Note__c'));
-        transcodeConfigs.add(HDT_UTL_DataFactoryTst.createTranscodeConfig('ACCISE',true,2,false,'','ACCISE','Excises__c'));
-        transcodeConfigs.add(HDT_UTL_DataFactoryTst.createTranscodeConfig('CODICE_ATECO',false,null,false,'','CODICE_ATECO','AtecoCode__c'));*/
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In Lavorazione', 'Bozza', rtId, rtName,'A','','','');
     }
     @isTest
     static void executeTst()
@@ -92,22 +81,26 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         HDT_WRP_MrrRequest richKo = new HDT_WRP_MrrRequest();
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
+        Integer statusCode;
         RestContext.request = req;
         RestContext.response = res;
         //Entity Query
-        Account testAccount = [SELECT CustomerCode__c FROM Account LIMIT 1];
-        ServicePoint__c testSp = [SELECT Name FROM ServicePoint__c LIMIT 1];
-        Contract testContract = [SELECT SAPContractCode__c FROM Contract LIMIT 1];
+        AccountContactRelation testAccount = [SELECT Account.CustomerCode__c,AccountId, ContactId, Roles FROM AccountContactRelation WHERE Roles = 'Titolare' LIMIT 1];
+        ServicePoint__c testSp = [SELECT Name,ServicePointCode__c FROM ServicePoint__c LIMIT 1];
+        Contract testContract = [SELECT SAPContractCode__c FROM Contract WHERE AccountId = :testAccount.AccountId];
         BillingProfile__c testBillingProfile = [SELECT ContractAccountCode__c FROM BillingProfile__c LIMIT 1];
         Case testCase = [SELECT CaseNumber, Phase__c, Type FROM Case LIMIT 1];
         //Update ServicePoint Commodity
         testSp.CommoditySector__c = 'Energia Elettrica';
         update testSp; 
+        testContract.ServicePoint__c = testSp.Id;
+        testContract.Status = 'Attivo';
+        update testContract;
         //Create Requests
         String notifEsString = HDT_UTL_DataFactoryTst.notifEsReq('postsales',testCase.Id, 'Comunicazione verso Heroku OK','esito_intermedio');
-        String richPassString = HDT_UTL_DataFactoryTst.richPassReq(testSp.Name, testAccount.CustomerCode__c, testBillingProfile.ContractAccountCode__c, 
+        String richPassString = HDT_UTL_DataFactoryTst.richPassReq(testSp.ServicePointCode__c, testAccount.Account.CustomerCode__c, testBillingProfile.ContractAccountCode__c, 
             testContract.SAPContractCode__c, 'Morosita', 'Sospensione Fornitura', '', 'Da PGM', '20220102', '', '');
-        String notifEsKo = HDT_UTL_DataFactoryTst.notifEsReq('postsales',testCase.Id, 'Completata','esito_intermedio');
+        String notifEsKo = HDT_UTL_DataFactoryTst.notifEsReq('postsales',testCase.Id, 'Completata','esito_finale');
         notifEs = (HDT_WRP_MrrRequest) JSON.deserialize(notifEsString, HDT_WRP_MrrRequest.class);
         richKo  = (HDT_WRP_MrrRequest) JSON.deserialize(notifEsKo, HDT_WRP_MrrRequest.class);
         richPass = (HDT_WRP_MrrRequest) JSON.deserialize(richPassString, HDT_WRP_MrrRequest.class);
@@ -117,24 +110,41 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         Test.startTest();
         responseObj = herokuSrv.handleInboundRequest(notifEs.requests[0]);
         responseObj = herokuSrv.handleInboundRequest(richKo.requests[0]);
+        statusCode = res.statusCode;
         responseObjPass = herokuSrv.handleInboundRequest(richPass.requests[0]);
         Test.stopTest();
         //Assertions
         Case testCaseUpd = [SELECT CaseNumber, Phase__c, Type FROM Case WHERE Type = :testCase.Type LIMIT 1];
         List<Case> richPassCase = [SELECT CaseNumber, Phase__c, Type FROM Case WHERE Type != :testCase.Type];
         System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c);
-        System.assertEquals(400, res.statusCode);
-        System.assertEquals(400, res.statusCode);
+        System.assertEquals(statusCode, 400);
+        System.assertEquals(richPassCase.size(), 2);
     }   
     @isTest
     static void handleRichPassResponseFieldTst()
     {
-        
+        Case testCase = [SELECT AccountId, ContactId, ServicePoint__c, Contract__c, Order__c, CaseNumber, Phase__c, Type FROM Case LIMIT 1];
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, testCase.AccountId, testCase.ContactId, testCase.ServicePoint__c, testCase.Contract__c, testCase.Order__c);
+        testCase.ParentId = caseList[0].Id;
+        update testCase;
+        testCase = [SELECT Parent.CaseNumber, CaseNumber, Phase__c, Type FROM Case WHERE Id = : testCase.Id LIMIT 1];
+        List<HDT_WRP_MrrResponse.HDT_WRP_Field> responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>();
+        HDT_SRV_HerokuPostSalesManager herokuSrv = new HDT_SRV_HerokuPostSalesManager();
+        Test.startTest();
+        responseFieldList = herokuSrv.handleRichPassResponseField(testCase);
+        Test.stopTest();
+        System.Assert(responseFieldList != null);
     }
     @isTest
     static void handleNotifEsResponseFieldTst()
     {
-        
+        Case testCase = [SELECT CaseNumber, Phase__c, Type,HerokuPracticeCode__c FROM Case LIMIT 1];
+        List<HDT_WRP_MrrResponse.HDT_WRP_Field> responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>();
+        HDT_SRV_HerokuPostSalesManager herokuSrv = new HDT_SRV_HerokuPostSalesManager();
+        Test.startTest();
+        responseFieldList = herokuSrv.handleNotifEsResponseField(testCase);
+        Test.stopTest();
+        System.Assert(responseFieldList != null);
     }
 
 }
