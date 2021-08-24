@@ -304,7 +304,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(currentPhase.equalsIgnoreCase('Validazione OK DL simulata') && activity != null && activity.equalsIgnoreCase('Esito ricevuto su richiesta chiusa')){
                 currentCase.Phase__c = currentPhase; // non sono previsti cambi di fase.
                 String currentDescription = recordCase.Description != null?recordCase.Description:'';
-                String newDescription = nowDateFormat + ': + ' + activity + '\n';
+                String newDescription = nowDateFormat + ': ' + activity + '\n';
                 currentCase.Description = newDescription + '\n' + currentDescription;
             }
         }else if(method.equalsIgnoreCase('esito_finale')){
