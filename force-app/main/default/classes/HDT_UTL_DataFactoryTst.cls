@@ -497,7 +497,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			Contract testContract=new Contract();
 			testContract.AccountId=accId;
 			//@frpanico 06/08 Added contract code
-			testContract.SAPContractCode__c='3011913470';
+			testContract.SAPContractCode__c='301191347'+i;
 
 			contractList.add(testContract);
 		}
@@ -1473,6 +1473,21 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return accShareList;
 	}
 
+	public static List<DocumentalActivity__c> createDocumentalActivity(Integer numberRecords, Id orderId, Id caseId){
+		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
+		for(Integer i=0; i<numberRecords;i++){
+			DocumentalActivity__c docAct = new DocumentalActivity__c();
+			docAct.OrderId__c = String.isNotBlank(orderId)?orderId:null;
+			docAct.CaseId__c = String.isNotBlank(caseId)?caseId:null;
+			docAct.EnvelopeId__c = 'idPlico_' + i;
+			docAct.AttachmentCode__c = 'codiceAllegato_'+i;
+			docAct.PostelTimestamp__c = '2000000000';
+			docActList.add(docAct);
+		}
+		insert docActList;
+		return docActList;
+	}
+
 	public static List<AtecoMatrix__c> createAtecoMatrix(Integer amount, Boolean doInsert, String name){
 
 		List<AtecoMatrix__c> atecoMatrixList=new List<AtecoMatrix__c>();
@@ -1491,31 +1506,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return atecoMatrixList;
-	}
-
-	public static List<DocumentalActivity__c> createDocumentalActivity(Integer amount, Boolean doInsert, Id orderId, Id caseId){
-		
-		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
-		
-		for(Integer i=0; i<amount;i++){
-
-			DocumentalActivity__c docAct = new DocumentalActivity__c(
-				OrderId__c = String.isNotBlank(orderId)?orderId:null,
-				CaseId__c = String.isNotBlank(caseId)?caseId:null,
-				EnvelopeId__c = 'idPlico_' + i,
-				AttachmentCode__c = 'codiceAllegato_'+i,
-				PostelTimestamp__c = '2000000000'
-			);
-
-			docActList.add(docAct);
-		}
-
-		if (doInsert){
-
-			insert docActList;
-		}
-
-		return docActList;
 	}
 
 	public static List<FUBProcessing__c> createfubProcessing (Integer amount, Boolean doInsert, String status) {
