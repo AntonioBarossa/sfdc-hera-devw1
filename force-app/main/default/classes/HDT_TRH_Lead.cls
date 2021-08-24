@@ -4,6 +4,8 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
     //public override void afterInsert(){}
     //public override void afterUndelete(){}
     private static HDT_QR_AccountContactRelation accoContRelQr = new HDT_QR_AccountContactRelation();
+    private static HDT_QR_Account accountQr = new HDT_QR_Account();
+    private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
 
     public override void afterInsert(){
         List<Lead> listlead = Trigger.New;
@@ -12,7 +14,6 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         // for(Lead lead :listlead){
         //     HDT_UTL_GestionePrivacy.setPrivacyForLead(lead);
         // }
-
     HDT_UTL_GestionePrivacy.setPrivacyForLead(listlead);
     }
 
@@ -64,7 +65,6 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 }
         }*/
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
-
         }
           
         public override void afterUpdate(){
@@ -78,11 +78,18 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
             List<Account> accounts=new List<Account>();
             List<String> accountIdList = new List<String>();
             Map<String,Lead> mapAccountLead = new Map<String,Lead>();
+            
             for(Lead l : listslead){
                 if(l.IsConverted){
                     if (l.ConvertedAccountId != null) {
                         accountIdList.add(l.ConvertedAccountId);
                         mapAccountLead.put(l.ConvertedAccountId,l);
+                        String leadName = l.FirstName + ' ' + l.LastName;
+                        Account acc = accountQr.getRecordById(l.ConvertedAccountId, 'Name');
+                        Contact con = contactQr.getRecordById(l.ConvertedContactId);
+                        if(leadName == acc.Name && leadName != con.Name){
+                            l.addError('Non è possibile creare un nuovo Account e selezionare un Contact già esistente!');
+                        }
                   	}  
                             
                 }
@@ -92,8 +99,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 List<Contact> conList = new List<Contact>();
                 List<String> accId = new List<String>();
                 List<String> contId = new List<String>();
-                Recordtype r = recordtypeQr.getRecordType('HDT_RT_Business', 'Account');
-            
+                Recordtype r = recordtypeQr.getRecordType('HDT_RT_Business', 'Account');  
                 accounts = accPerson.getRecordsById(accountIdList,'id,Name, firstname__c,LastName__c,PrimaryEmail__c,Description,FiscalCode__c,recordtypeid,Phone,FAX__c' );
                 For(Account a : accounts){
                     accId.add(a.id);
@@ -103,12 +109,8 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         if(r.id == a.recordtypeid){
                             Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone= a.Phone, Email= a.PrimaryEmail__c, Fax= a.FAX__c);
                             conList.add(contact);
-            
-                        }
-                                
-                                
+                        }       
                         Lead li = mapAccountLead.get(a.id);
-                      
                         a.FirstName__c = li.FirstName;
                         a.LastName__c = li.LastName;
                         a.PrimaryEmail__c= li.Email;
@@ -116,10 +118,8 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
                         a.Name=expectedNewName;
                         accToUpdate.add(a);
-                    }
-                        
+                    }     
                 }
-            
                 update accToUpdate;
                 insert conList;
                 for(Contact c : conList){
