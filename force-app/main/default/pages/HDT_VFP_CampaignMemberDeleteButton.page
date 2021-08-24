@@ -1,7 +1,7 @@
 <apex:page standardController="CampaignMember">
     <script>
         function redirectBack(){
-        	window.history.back();
+            window.history.back();
         }
     </script>
 
