@@ -30,6 +30,12 @@ public with sharing class HDT_WS_PaymentsTst {
         testCase.Amount__c = 100;
         testCase.DepositPaymentMode__c = 'Paperless';
         testCase.Type = 'Comunicazione Pagamento';
+        Map<String, String> endpointType = new Map<String, String> {
+            'HDT_PaymentCommunication' => 'Comunicazione Pagamento',
+            'HDT_InstallmentPlans'     => 'Piano Rateizzazione',
+            'HDT_Paperless'            => 'Paperless',
+            'HDT_ReminderBlock'        => 'Blocco Sollecito/Interessi'
+        };
         update testCase;
         testCase = [SELECT CaseNumber, Type, DepositPaymentMode__c FROM Case LIMIT 1];
         Map<String, Object> args = new Map<String, Object>();
