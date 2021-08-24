@@ -136,7 +136,7 @@
         <name>Assegna_Fase_In_Da_Inviare_0</name>
         <label>Assegna Fase In Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>2630</locationY>
+        <locationY>3086</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -242,7 +242,7 @@
         <name>Assegnazioni</name>
         <label>Assegnazioni</label>
         <locationX>182</locationX>
-        <locationY>2030</locationY>
+        <locationY>2486</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -298,6 +298,22 @@
             <targetReference>Aggiorna_Case_0</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assegnazioni_0_0</name>
+        <label>Assegnazioni</label>
+        <locationX>270</locationX>
+        <locationY>2270</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CreaCaseContenitore_0</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegnazioni</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>CaseTrovato</name>
         <label>CaseTrovato?</label>
@@ -321,6 +337,31 @@
                 <targetReference>AggiornaCreatedCase_0_0</targetReference>
             </connector>
             <label>Trovato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>EsisteContenitore</name>
+        <label>EsisteContenitore?</label>
+        <locationX>182</locationX>
+        <locationY>2030</locationY>
+        <defaultConnector>
+            <targetReference>CreaCaseContenitore_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Esiste</defaultConnectorLabel>
+        <rules>
+            <name>Esiste</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegnazioni</targetReference>
+            </connector>
+            <label>Esiste</label>
         </rules>
     </decisions>
     <decisions>
@@ -393,7 +434,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegnazioni</targetReference>
+                <targetReference>EsisteContenitore</targetReference>
             </connector>
             <label>Riattivazione Fornitura</label>
         </rules>
@@ -454,7 +495,7 @@
         <name>SalvaInBozzaOrConferma_0</name>
         <label>Salva In Bozza O Conferma?</label>
         <locationX>182</locationX>
-        <locationY>2390</locationY>
+        <locationY>2846</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
@@ -547,11 +588,106 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>CreaCaseContenitore_0</name>
+        <label>CreaCaseContenitore</label>
+        <locationX>270</locationX>
+        <locationY>2150</locationY>
+        <connector>
+            <targetReference>Assegnazioni_0_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>GetInputCase.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingProfile__c</field>
+            <value>
+                <elementReference>GetInputCase.BillingProfile__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <elementReference>GetInputCase.Cluster__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>GetInputCase.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>GetInputCase.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>GetInputCase.Contract__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <elementReference>GetInputCase.Email__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IsContainer__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>GetInputCase.PhoneNumber__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>GetInputCase.RecordTypeId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Contenitore Morosità</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Calcola_Codice_Causale</name>
         <label>Calcola Codice Causale</label>
         <locationX>50</locationX>
-        <locationY>2510</locationY>
+        <locationY>2966</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Fase_In_Da_Inviare_0</targetReference>
@@ -761,7 +897,7 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>182</locationX>
-        <locationY>2150</locationY>
+        <locationY>2606</locationY>
         <connector>
             <targetReference>InputDati</targetReference>
         </connector>
@@ -781,7 +917,7 @@
         <name>AggiornaCase_0</name>
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
-        <locationY>2750</locationY>
+        <locationY>3206</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -835,7 +971,7 @@
         <name>InputDati</name>
         <label>Input Dati</label>
         <locationX>182</locationX>
-        <locationY>2270</locationY>
+        <locationY>2726</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1225,7 +1361,7 @@
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
         <locationX>50</locationX>
-        <locationY>2870</locationY>
+        <locationY>3326</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
