@@ -497,7 +497,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			Contract testContract=new Contract();
 			testContract.AccountId=accId;
 			//@frpanico 06/08 Added contract code
-			testContract.SAPContractCode__c='3011913470';
+			testContract.SAPContractCode__c='301191347'+i;
 
 			contractList.add(testContract);
 		}

@@ -18,6 +18,7 @@ global with sharing class HDT_WS_SelfReadings {
                 responseWrap.outcome = 'OK';
                 responseWrap.caseId = outcomeResponse.caseId;
                 responseWrap.readingId = outcomeResponse.readingId;
+                responseWrap.integrationId = requestWrap.integrationId;
             } catch (Exception e) {
                 response.statusCode = 400;
                 responseWrap.outcome = 'KO';

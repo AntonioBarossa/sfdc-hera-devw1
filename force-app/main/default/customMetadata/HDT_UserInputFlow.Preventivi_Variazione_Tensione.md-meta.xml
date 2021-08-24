@@ -7,7 +7,7 @@
         <value xsi:type="xsd:string">[
 {&quot;FieldName&quot;:&quot;PowerRequested__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;VoltageLevelRequested__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;DistributorNote__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+{&quot;FieldName&quot;:&quot;DistributorNote__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1}
 ]</value>
     </values>
     <values>

@@ -6,6 +6,9 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
     private static HDT_QR_AccountContactRelation accoContRelQr = new HDT_QR_AccountContactRelation();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
+    private static Map<Id, Lead> mapOld =(Map<Id, Lead>)Trigger.oldMap;
+    private static Map<Id, Lead> mapNew =(Map<Id, Lead>)Trigger.newMap;
+
 
     public override void afterInsert(){
         List<Lead> listlead = Trigger.New;
@@ -68,6 +71,16 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         }
           
         public override void afterUpdate(){
+            System.debug('afterUpdate');
+            for (Lead tempLead :   (List<Lead> ) Trigger.New) {
+               
+                if (tempLead.IndividualId==null&& mapOld.get(tempLead.id)!=null &&
+                mapOld.get(tempLead.id).IndividualId!=null ) {
+                   // tempLead.IndividualId=mapOld.get(tempLead.id).IndividualId;
+                    tempLead.addError('Operazione non consentita'); 
+                }
+                
+            }
 
             List<Lead> listslead = trigger.New;
             HDT_QR_Account accPerson = new HDT_QR_Account();
@@ -135,5 +148,10 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 Database.executeBatch(ba,80);
             }
             
+        }
+        public override void   beforeUpdate(){
+     
+            System.debug('beforeUpdate');
+           
         }
 }
