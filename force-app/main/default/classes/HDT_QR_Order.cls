@@ -100,6 +100,7 @@ public inherited sharing class HDT_QR_Order {
             Account.ShippingAddress,
             Account.FirstName__c,
             Account.LastName__c,
+            Account.CompanyOwner__c,
             Vat__c,
             ExciseGas__c,
             ExciseEle__c,
