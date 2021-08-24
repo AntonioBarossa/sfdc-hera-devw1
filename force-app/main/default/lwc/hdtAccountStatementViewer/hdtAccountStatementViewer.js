@@ -387,22 +387,23 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     billList(event){
 
-        var selectedId = this.getSingleSelectedId();
+        //var selectedId = this.getSingleSelectedId();
 
-        if(selectedId==undefined){
+        /*if(selectedId==undefined){
             return;
         }
 
         var selected = this.allData.filter(c => { return c[this.uniqueId] == selectedId })[0];
         console.log('>>> società: ' + selected.societa);
         console.log('>>> contoContrattuale: ' + selected.contoContrattuale);
-        console.log('>>> dataEmissione: ' + selected.dataEmissione);
+        console.log('>>> dataEmissione: ' + selected.dataEmissione);*/
 
         this.billParameters = event.currentTarget.dataset.parameters;
         //this.otherParams = ?;
-        this.company = selected.societa;
-        this.contractAccount = selected.contoContrattuale;
-        this.startDateString = selected.dataEmissione;
+        //this.company = selected.societa;
+        //this.contractAccount = selected.contoContrattuale;
+        this.startDateString = '2021/08/24'//new Date();/*selected.dataEmissione*/;
+        //TODO -360
         this.showBillList = true;
     }
 
