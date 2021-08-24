@@ -348,7 +348,9 @@ public class HDT_SRV_DocumentalManagement{
 			}
 			if(context.equalsIgnoreCase('Case')){
 				processNumber = HDT_UTL_DocumentalManagement.getValue('Case', 'CaseNumber', 0, inputs, formParams);
-			}else if(context.equalsIgnoreCase('Order') || context.equalsIgnoreCase('DocumentazioneAnticipata')){
+			}else if(context.equalsIgnoreCase('Order')){
+				processNumber = HDT_UTL_DocumentalManagement.getValue('ParentOrder', 'OrderNumber', 0, inputs, formParams);
+			}else if(context.equalsIgnoreCase('DocumentazioneAnticipata')){
 				processNumber = HDT_UTL_DocumentalManagement.getValue('Order', 'OrderNumber', 0, inputs, formParams);
 			}else{
 				processNumber = recordId;
