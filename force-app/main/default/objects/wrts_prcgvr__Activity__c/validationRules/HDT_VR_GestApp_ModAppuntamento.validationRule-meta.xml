@@ -3,7 +3,7 @@
     <fullName>HDT_VR_GestApp_ModAppuntamento</fullName>
     <active>true</active>
     <description>Vincola l&apos;operatore a rimuovere il flag di appuntamento da modificare</description>
-    <errorConditionFormula>AND( RecordTypeId = &quot;0123N000002WpWEQA0&quot;, /*Valido solo per Gestione appuntamento*/
+    <errorConditionFormula>AND(RecordType.DeveloperName = &quot;HDT_RT_DistributorAppointment&quot;, /*Valido solo per Gestione appuntamento*/
 				NOT(AND(OR(ISPICKVAL(Status__c, &quot;Appuntamento confermato&quot;),
 											ISPICKVAL(Status__c, &quot;Modifica confermata&quot;)),
 				IsAppointmentToEdit__c =TRUE)))</errorConditionFormula>
