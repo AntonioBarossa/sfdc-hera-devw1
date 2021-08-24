@@ -1493,6 +1493,31 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return atecoMatrixList;
 	}
 
+	public static List<DocumentalActivity__c> createDocumentalActivity(Integer amount, Boolean doInsert, Id orderId, Id caseId){
+		
+		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
+		
+		for(Integer i=0; i<amount;i++){
+
+			DocumentalActivity__c docAct = new DocumentalActivity__c(
+				OrderId__c = String.isNotBlank(orderId)?orderId:null,
+				CaseId__c = String.isNotBlank(caseId)?caseId:null,
+				EnvelopeId__c = 'idPlico_' + i,
+				AttachmentCode__c = 'codiceAllegato_'+i,
+				PostelTimestamp__c = '2000000000'
+			);
+
+			docActList.add(docAct);
+		}
+
+		if (doInsert){
+
+			insert docActList;
+		}
+
+		return docActList;
+	}
+
 	public static List<FUBProcessing__c> createfubProcessing (Integer amount, Boolean doInsert, String status) {
 
 		List<FUBProcessing__c> fubProcessingList = new List<FUBProcessing__c>();
