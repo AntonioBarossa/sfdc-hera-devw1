@@ -43,6 +43,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>CommissioningCampaign__c</field>
             </layoutItems>
             <layoutItems>

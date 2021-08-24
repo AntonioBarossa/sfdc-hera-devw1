@@ -10,6 +10,7 @@ public inherited sharing class HDT_QR_Contact {
 
         List<Contact> contactsList = [
             SELECT
+            Name,
             FirstName,
             LastName,
             MobilePhone,
