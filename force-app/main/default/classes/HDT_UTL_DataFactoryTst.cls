@@ -1604,4 +1604,26 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return cppList;
 	}
+
+	public static List<ContactPointEmail> createContactPointEmail (Integer amount, Boolean doInsert, Id individualId) {
+
+		List<ContactPointEmail> cpeList = new List<ContactPointEmail>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ContactPointEmail cpe = new ContactPointEmail(
+            ParentId = individualId,
+            EmailAddress = 'sales@force.com'
+        );
+
+			cpeList.add(cpe);
+		}
+
+		if (doInsert){
+
+			insert cpeList;
+		}
+
+		return cpeList;
+	}
 }
