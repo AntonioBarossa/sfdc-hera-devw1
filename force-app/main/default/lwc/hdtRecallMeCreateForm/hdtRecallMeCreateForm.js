@@ -104,13 +104,16 @@ export default class HdtRecallMeCreateForm extends LightningElement {
         console.log('test' + interestProduct);
         console.log('mobile' + mobilePhone);
 
-        if (this.mobilePhone.value === null || this.mobilePhone.value === '') {
-            this.dispatchEvent(new ShowToastEvent({
+        if (this.mobilePhone === null || this.mobilePhone === '') {
+            console.log('prova te toast');
+            this.dispatchEvent(new ShowToastEvent({ 
                 title: '',
                 message: 'Per creare un nuovo Campaign Member devi popolare il campo Mobile del Lead!',
                 variant: 'error'
             }));
-        } else {
+            this.dispatchEvent(new CustomEvent('afterSave'));
+        }
+         else {
             createCampaignMemberFromLead({
                 leadId: this.recordId,
                 sourceAgency: sourceAgency,
