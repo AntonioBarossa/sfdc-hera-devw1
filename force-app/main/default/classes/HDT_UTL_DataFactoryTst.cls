@@ -1472,4 +1472,19 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return accShareList;
 	}
+
+	public static List<DocumentalActivity__c> createDocumentalActivity(Integer numberRecords, Id orderId, Id caseId){
+		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
+		for(Integer i=0; i<numberRecords;i++){
+			DocumentalActivity__c docAct = new DocumentalActivity__c();
+			docAct.OrderId__c = String.isNotBlank(orderId)?orderId:null;
+			docAct.CaseId__c = String.isNotBlank(caseId)?caseId:null;
+			docAct.EnvelopeId__c = 'idPlico_' + i;
+			docAct.AttachmentCode__c = 'codiceAllegato_'+i;
+			docAct.PostelTimestamp__c = '2000000000';
+			docActList.add(docAct);
+		}
+		insert docActList;
+		return docActList;
+	}
 }
