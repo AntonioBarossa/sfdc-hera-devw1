@@ -34,6 +34,9 @@
             
             <property name="cancelCase" type="Boolean" label="Cancel" description="Close Wizard" role="outputOnly"/>
             
+            <property name="serviceRequestId" type="String" label="serviceRequestId" description="serviceRequestId" role="outputOnly"/>
+            <property name="isCompatible" type="String" label="isCompatible" description="isCompatible" role="outputOnly"/>
+
         </targetConfig>
         
     </targetConfigs>
