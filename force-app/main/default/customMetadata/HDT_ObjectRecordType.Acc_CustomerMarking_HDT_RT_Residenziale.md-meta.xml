@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Acc_CustomerMarking_HDT_RT_Residenziale</label>
+    <protected>false</protected>
+    <values>
+        <field>RecordTypeDeveloperName__c</field>
+        <value xsi:type="xsd:string">HDT_RT_Residenziale</value>
+    </values>
+    <values>
+        <field>ValueToRemove__c</field>
+        <value xsi:type="xsd:string">AAS Azienda;AAS Condominio;AAS Ditta individuale;ACEL-Altro;Amga-Altro;ANTENORE ENERGY-Altro;Associazione;Azienda;BENACO-Altro;BE POWER-Altro;BLU RANTON-Altro;CMV E e I - Altro;Condominio;Ditta individuale;Enegan-Altro;ENERGETICA-Altro;ENERGIA SOCIALE-Altro;ENERGIECHIARE-Altro;ENERGYGAS ITA - Altro;ENERGYPOLIS-Altro;ERMES-Altro;EstEnergy-Altro;ETRURIA-Altro;FUTURA TR-Altro;FUTURENERGY-Altro;GENESI-Altro;GRAN SASSO-Altro;GREEN EN-Altro;ITALIANGAS-Altro;LIRENAS-Altro;LUCEEG IT SERV-Altro;MMS Associazione;MMS Azienda;MMS Condominio;MMS Ditta individuale;MOODS-Altro;NOIENERGIA-Altro;NWGENERGIA-Altro;OMNIA EN-Altro;ONOVA-Altro;PIUENERGIA SPA-Altro;TOP ENERGY-Altro;UNION-Altro;MIWA ENERGIA-Altro;NEWENRGGEL-Altro;ONE POWER-Altro;S4 ENERGIA-Altro;SGR-Alt</value>
+    </values>
+</CustomMetadata>
