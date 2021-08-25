@@ -8639,6 +8639,10 @@
             <fullName>Posta Cartacea</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Stampa Cartacea</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SendPaperlessCodeMode__c</picklist>
