@@ -1276,8 +1276,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Recapito telefonico',
                     'apiname': 'DisconnectibilityPhone__c', //3
                     'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
-                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    'required': false, // 24/08/2021 
+                    //'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', // 24/08/2021 richiesto durante i test
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1493,7 +1494,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'SurfaceServed__c',
                     'apiname': 'SurfaceServed__c',
                     'typeVisibility': this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'),
-                    'required': this.typeVisibility('gas') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    //'required': this.typeVisibility('gas') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                    'required':true, // 24/08/2021 Richiesta durante i test
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
