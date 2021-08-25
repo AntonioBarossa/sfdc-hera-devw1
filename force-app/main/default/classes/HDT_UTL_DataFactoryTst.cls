@@ -1646,4 +1646,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return cpeList;
 	}
+
+	public static List<SBQQ__QuoteProcess__c> createQuoteProcess(Integer amount, Boolean doInsert) {
+
+		List<SBQQ__QuoteProcess__c> qProcessList = new List<SBQQ__QuoteProcess__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SBQQ__QuoteProcess__c qp = new SBQQ__QuoteProcess__c(
+            	Name = 'testQuoteProcess'+i
+        	);
+
+			qProcessList.add(qp);
+		}
+
+		if (doInsert){
+
+			insert qProcessList;
+		}
+
+		return qProcessList;
+	}
 }
