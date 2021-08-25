@@ -122,15 +122,24 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         if(r.id == a.recordtypeid){
                             Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone= a.Phone, Email= a.PrimaryEmail__c, Fax= a.FAX__c);
                             conList.add(contact);
-                        }       
-                        Lead li = mapAccountLead.get(a.id);
-                        a.FirstName__c = li.FirstName;
-                        a.LastName__c = li.LastName;
-                        a.PrimaryEmail__c= li.Email;
-                        a.Description= li.Description;
-                        String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
-                        a.Name=expectedNewName;
-                        accToUpdate.add(a);
+                            Lead li = mapAccountLead.get(a.id);
+                           // a.FirstName__c = li.FirstName;
+                            a.LastName__c = li.Company;
+                            a.Name=li.Company;
+                            a.PrimaryEmail__c= li.Email;
+                            a.Description= li.Description;
+                            accToUpdate.add(a);
+                        }
+                        else{       
+                            Lead li = mapAccountLead.get(a.id);
+                            a.FirstName__c = li.FirstName;
+                            a.LastName__c = li.LastName;
+                            a.PrimaryEmail__c= li.Email;
+                            a.Description= li.Description;
+                            String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
+                            a.Name=expectedNewName;
+                            accToUpdate.add(a);
+                        }
                     }     
                 }
                 update accToUpdate;
