@@ -99,7 +99,7 @@ export default class HdtCodiceAteco extends LightningElement {
             if(data.length > 0){
                 this.showEmptyMessage = false;
                 this.createTable(data);
-            } else {
+            } else { 
                 this.showEmptyMessage = true;
             }
 
