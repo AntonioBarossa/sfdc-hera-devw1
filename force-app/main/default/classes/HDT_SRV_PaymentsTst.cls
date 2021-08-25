@@ -18,9 +18,9 @@ public with sharing class HDT_SRV_PaymentsTst {
         List<Contract> contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(4, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[0].Id,billingProfileList[0].ContractAccountCode__c);
-        List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[1].Id,billingProfileList[0].ContractAccountCode__c);
-        List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[2].Id,billingProfileList[0].ContractAccountCode__c);
-        List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[3].Id,billingProfileList[0].ContractAccountCode__c);
+        List<DocumentSelected__c> documentsTwo = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[1].Id,billingProfileList[0].ContractAccountCode__c);
+        List<DocumentSelected__c> documentsThree = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[2].Id,billingProfileList[0].ContractAccountCode__c);
+        List<DocumentSelected__c> documentsFour = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[3].Id,billingProfileList[0].ContractAccountCode__c);
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito OK da SAP', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Completata', 'Bozza', rtId, rtName,'A','','','');
     }
@@ -33,8 +33,9 @@ public with sharing class HDT_SRV_PaymentsTst {
         List<String> methods = new List<String>{'HDT_PaymentCommunication','HDT_InstallmentPlans','HDT_Paperless','HDT_ReminderBlock'};
         List<String> bodyResponses = new List<String>();
         for(Case c : testCases){
-            testCase.Amount__c = 100;
-            testCase.DepositPaymentMode__c = 'Paperless';
+            c.Amount__c = 100;
+            c.DepositPaymentMode__c = 'Paperless';
+            c.BlockType__c = 'T1';
         }
         Integer count = 0;
         update testCases;
@@ -50,6 +51,7 @@ public with sharing class HDT_SRV_PaymentsTst {
                 ++count;
             }
         }
+        System.assertEquals(methods.size(), count);
 
     }
 
