@@ -29,6 +29,24 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>HDT_KnowledgeGeneralPage</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Knowledge__kav</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>HDT_KnowledgeGeneralPage</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Knowledge__kav</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
         <comment>Action override updated by Lightning App Builder during activation.</comment>
         <content>HDT_Order_Default</content>
         <formFactor>Small</formFactor>
@@ -74,24 +92,6 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>HDT_KnowledgeGeneralPage</content>
-        <formFactor>Small</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>Knowledge__kav</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>HDT_KnowledgeGeneralPage</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>Knowledge__kav</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>HDT_Comunicazione_Documentale_Record_Page</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -112,114 +112,6 @@
     <navType>Console</navType>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>HDT_GestioneAppuntamento</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_GestioneAppuntamento</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_GestioneAppuntamento</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Teleseller Partner User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_GestioneAppuntamento</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Teleseller Partner User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_GestioneAppuntamento</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_GestioneAppuntamento</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_GestioneAppuntamento</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_GestioneAppuntamento</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_GestioneAppuntamento</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_GestioneAppuntamento</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_GestioneAppuntamento</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Door2Door Partner User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_GestioneAppuntamento</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Door2Door Partner User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>HDT_Scarti</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
@@ -352,1294 +244,6 @@
         <recordType>Account.HDT_RT_Residenziale</recordType>
         <type>Flexipage</type>
         <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_OrderDossier</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioOfferta</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioOfferta</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioOfferta</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioOfferta</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_OrderDossier</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_OrderDossier</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_OrderDossier</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_FlyingRequest</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_FlyingRequest</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_FlyingRequest</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_FlyingRequest</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_FlyingRequest</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_FlyingRequest</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_FlyingRequest</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_FlyingRequest</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Proroga</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Proroga</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Proroga</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Proroga</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Proroga</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Proroga</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Proroga</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Proroga</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Subentro</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Subentro</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Subentro</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Subentro</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Subentro</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Subentro</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Subentro</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Subentro</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchIn</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchIn</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchIn</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchIn</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchIn</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchIn</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchIn</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchIn</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VAS</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VAS</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VAS</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VAS</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VAS</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VAS</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VAS</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VAS</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VolturaConSwitch</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VolturaConSwitch</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VolturaConSwitch</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VolturaConSwitch</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VolturaConSwitch</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VolturaConSwitch</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VolturaConSwitch</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_VolturaConSwitch</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ScontiBonus</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ScontiBonus</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ScontiBonus</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ScontiBonus</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ScontiBonus</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ScontiBonus</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ScontiBonus</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ScontiBonus</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Attivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Attivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Attivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Attivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Attivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Attivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Attivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Attivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioOfferta</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioOfferta</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioOfferta</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioOfferta</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioUso</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioUso</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioUso</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioUso</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioUso</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioUso</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioUso</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_CambioUso</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Default</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Default</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Default</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Default</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Default</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Default</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Default</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Default</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_OrderDossier</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_OrderDossier</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_OrderDossier</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_OrderDossier</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1888,285 +492,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Teleseller Partner User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Teleseller Partner User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Voltura</recordType>
-        <type>Flexipage</type>
-        <profile>Partner Community User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Voltura</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Voltura</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Voltura</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_Service_Console</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.HDT_RT_Residenziale</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_Service_Console</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.HDT_RT_Residenziale</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_Service_Console</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.HDT_RT_Residenziale</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_Service_Console</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.HDT_RT_Residenziale</recordType>
-        <type>Flexipage</type>
-        <profile>Hera M2M Integration User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_Service_Console</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.HDT_RT_Residenziale</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Door2Door Partner User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_Service_Console</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.HDT_RT_Business</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_Service_Console</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.HDT_RT_Business</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_Service_Console</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.HDT_RT_Business</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_Service_Console</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.HDT_RT_Business</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_Service_Console</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.HDT_RT_Business</recordType>
-        <type>Flexipage</type>
-        <profile>Hera M2M Integration User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_Service_Console</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.HDT_RT_Business</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Door2Door Partner User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Voltura</recordType>
-        <type>Flexipage</type>
-        <profile>Hera M2M Integration User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Voltura</recordType>
-        <type>Flexipage</type>
-        <profile>Hera M2M Integration User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Door2Door Partner User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Door2Door Partner User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Hera M2M Integration User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Hera M2M Integration User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Standard User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Administrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_ComunicazioniDistributore</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <type>Flexipage</type>
-        <profile>Hera System Integrator</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>HDT_General_Case_Record_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
@@ -2302,67 +627,282 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Vendita_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Sale__c</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>HERA Tester</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Vendita_Record_Page</content>
+        <content>HDT_Order_Volture_Page</content>
         <formFactor>Large</formFactor>
-        <pageOrSobjectType>Sale__c</pageOrSobjectType>
+        <pageOrSobjectType>Order</pageOrSobjectType>
+        <recordType>Order.HDT_RT_Voltura</recordType>
         <type>Flexipage</type>
-        <profile>HERA Tester</profile>
+        <profile>Partner Community User</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Vendita_Record_Page</content>
+        <content>HDT_Order_Default</content>
         <formFactor>Small</formFactor>
-        <pageOrSobjectType>Sale__c</pageOrSobjectType>
+        <pageOrSobjectType>Order</pageOrSobjectType>
+        <recordType>Order.HDT_RT_Voltura</recordType>
         <type>Flexipage</type>
-        <profile>HERA Data Validator</profile>
+        <profile>Hera System Integrator</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Vendita_Record_Page</content>
+        <content>HDT_Order_Volture_Page</content>
         <formFactor>Small</formFactor>
-        <pageOrSobjectType>Sale__c</pageOrSobjectType>
+        <pageOrSobjectType>Order</pageOrSobjectType>
+        <recordType>Order.HDT_RT_Voltura</recordType>
         <type>Flexipage</type>
         <profile>Hera Standard User</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Vendita_Record_Page</content>
+        <content>HDT_Order_Volture_Page</content>
         <formFactor>Large</formFactor>
-        <pageOrSobjectType>Sale__c</pageOrSobjectType>
+        <pageOrSobjectType>Order</pageOrSobjectType>
+        <recordType>Order.HDT_RT_Voltura</recordType>
         <type>Flexipage</type>
         <profile>Hera Standard User</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Vendita_Record_Page</content>
+        <content>Account_Service_Console</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.HDT_RT_Residenziale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_Service_Console</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.HDT_RT_Residenziale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_Service_Console</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.HDT_RT_Residenziale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_Service_Console</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.HDT_RT_Residenziale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_Service_Console</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.HDT_RT_Residenziale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_Service_Console</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.HDT_RT_Business</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_Service_Console</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.HDT_RT_Business</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_Service_Console</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.HDT_RT_Business</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_Service_Console</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.HDT_RT_Business</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_Service_Console</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.HDT_RT_Business</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_Service_Console</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.HDT_RT_Business</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Order_Volture_Page</content>
         <formFactor>Small</formFactor>
-        <pageOrSobjectType>Sale__c</pageOrSobjectType>
+        <pageOrSobjectType>Order</pageOrSobjectType>
+        <recordType>Order.HDT_RT_Voltura</recordType>
         <type>Flexipage</type>
-        <profile>Door2Door Profile</profile>
+        <profile>Hera M2M Integration User</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Vendita_Record_Page</content>
+        <content>HDT_Order_Volture_Page</content>
         <formFactor>Large</formFactor>
-        <pageOrSobjectType>Sale__c</pageOrSobjectType>
+        <pageOrSobjectType>Order</pageOrSobjectType>
+        <recordType>Order.HDT_RT_Voltura</recordType>
         <type>Flexipage</type>
-        <profile>Door2Door Profile</profile>
+        <profile>Hera M2M Integration User</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Vendita_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Sale__c</pageOrSobjectType>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
         <type>Flexipage</type>
-        <profile>HERA Data Validator</profile>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_ComunicazioniDistributore</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
     </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Lead</tabs>
@@ -2375,15 +915,11 @@
     <tabs>BillingProfile__c</tabs>
     <tabs>standard-OmniSupervisorLightning</tabs>
     <tabs>standard-OmnichannelInventory</tabs>
-    <tabs>DependenciesMatrix__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Hera_Service_Console_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
             <tab>BillingProfile__c</tab>
-        </mappings>
-        <mappings>
-            <tab>DependenciesMatrix__c</tab>
         </mappings>
         <mappings>
             <tab>ServicePoint__c</tab>
