@@ -511,6 +511,21 @@
                 <label>Sequenzializzato</label>
             </value>
             <value>
+                <fullName>Preventivo rifiutato – Amm KO</fullName>
+                <default>false</default>
+                <label>Preventivo rifiutato – Amm KO</label>
+            </value>
+            <value>
+                <fullName>Preventivo rifiutato – Amm OK</fullName>
+                <default>false</default>
+                <label>Preventivo rifiutato – Amm OK</label>
+            </value>
+            <value>
+                <fullName>Annullamento per Switch-out</fullName>
+                <default>false</default>
+                <label>Annullamento per Switch-out</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

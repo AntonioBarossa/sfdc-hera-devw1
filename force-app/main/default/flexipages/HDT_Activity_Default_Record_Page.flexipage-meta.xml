@@ -7,7 +7,7 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.Completa_Attivit</value>
+                            <value>wrts_prcgvr__Activity__c.CompleteActivity</value>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Reminder</value>
@@ -43,6 +43,27 @@
                                     <rightValue>Sportello</rightValue>
                                 </criteria>
                             </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.HDT_EsitoQualityComfortCall</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_ComfortQualityCall</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Non Esitata</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.HDT_OffertaApprovata</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

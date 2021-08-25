@@ -118,6 +118,13 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		Id rt=constRecordType.ACCOUNT_RECORDTYPEID_BUSINESS;
 
 		for (Integer i=0; i<amount; i++){
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			Decimal result = numCustomerCode + i;
+			String stringResult = String.valueOf(result);
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			Account acc=new Account();
 
@@ -134,7 +141,14 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.FiscalCode__c='SXSRLA45H28H501K';
 			acc.BillingIsAddressVerified__c=true;
 			//@frpanico 06/08 added Customer Code
-			acc.CustomerCode__c='1003616210';
+			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			// OLD VALUE → acc.CustomerCode__c='1003616210';
+        	acc.IsWrongFiscalData__c = false;
+        	acc.BillingIsAddressVerified__c = true;
+			acc.CustomerCode__c = stringResult;
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			accList.add(acc);
 
@@ -158,6 +172,14 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		for (Integer i=0; i<amount; i++){
 
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			Decimal result = numCustomerCode + i;
+			String stringResult = String.valueOf(result);
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+
 			Account acc=new Account();
 
 			acc.RecordTypeId=rt;
@@ -169,10 +191,19 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
-			acc.LastName__c='test account'+i;
+			acc.FirstName__c= 'test';
+			acc.LastName__c='account'+i;
 			acc.FiscalCode__c='SXSRLA45H28H501K';
 			//@frpanico 06/08 added Customer Code
-			acc.CustomerCode__c='1003616210';
+
+			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			// OLD VALUE → acc.CustomerCode__c='1003616210';
+        	acc.IsWrongFiscalData__c = false;
+        	acc.BillingIsAddressVerified__c = true;
+			acc.CustomerCode__c = stringResult;
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			accList.add(acc);
 
@@ -466,7 +497,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			Contract testContract=new Contract();
 			testContract.AccountId=accId;
 			//@frpanico 06/08 Added contract code
-			testContract.SAPContractCode__c='3011913470';
+			testContract.SAPContractCode__c='301191347'+i;
 
 			contractList.add(testContract);
 		}
@@ -603,11 +634,26 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		List<BillingProfile__c> tstBillingProfileList=new List<BillingProfile__c>();
 
 		for (Integer i=0; i<amount; i++){
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
+			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
+			Decimal numCustomerCode = Decimal.valueOf('200008867681');
+			Decimal result = numCustomerCode + i;
+			String stringResult = String.valueOf(result);
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
+			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
 
 			BillingProfile__c testBillingProfile=new BillingProfile__c();
 			testBillingProfile.Account__c=Account;
 			//@frpanico 06/08 added CaCode
-			testBillingProfile.ContractAccountCode__c='200008867681';
+			
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
+			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
+			//OLDVALUE: testBillingProfile.ContractAccountCode__c='200008867681';
+			testBillingProfile.ContractAccountCode__c = stringResult;
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
+			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
+
+			
 
 			tstBillingProfileList.add(testBillingProfile);
 		}
@@ -1426,4 +1472,157 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return accShareList;
 	}
+
+	public static List<DocumentSelected__c> createDocumentSelected(Integer amount,Boolean doInsert, Boolean credit, String caseId, String ca){
+
+		List<DocumentSelected__c> documents = new List<DocumentSelected__c>();
+		Integer fixedAmount = credit ? -15 : 15;
+		for(Integer i = 0; i < amount; ++i){
+			DocumentSelected__c documentObj = new DocumentSelected__c();
+			documentObj.Name = '000041170936496' + i;
+			documentObj.Case__c = caseId;
+			documentObj.Amount__c = fixedAmount * (i + 1);
+			documentObj.Bill__c = '420174500378587' + i;
+			documentObj.ContractualAccount__c = ca;
+			documentObj.DocumentNumber__c = '000041170936496' + i;
+			documentObj.ExpirationDate__c = Date.newInstance(2019, 12, 24);
+			documentObj.Extension__c = 'SI';
+			documentObj.IssueDate__c = Date.newInstance(2019, 12, 04);
+			documentObj.IssuingCompany__c = 'IssuingCompany__c';
+			documentObj.PaymentMode__c = 'BOLLETTINO';
+			documentObj.DocumentResidue__c =  fixedAmount * (i + 1);
+			documentObj.TvFeeResidual__c = 12;
+			documentObj.PaymentChannel__c = 'Posta';
+			documentObj.Position1__c = '000';
+			documentObj.Position2__c = '0001';
+			documentObj.Position3__c = '000';
+			documents.add(documentObj);
+		}
+		if(doInsert){
+			insert documents;
+		}
+		return documents;
+	}
+	public static List<DocumentalActivity__c> createDocumentalActivity(Integer numberRecords, Id orderId, Id caseId){
+		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
+		for(Integer i=0; i<numberRecords;i++){
+			DocumentalActivity__c docAct = new DocumentalActivity__c();
+			docAct.OrderId__c = String.isNotBlank(orderId)?orderId:null;
+			docAct.CaseId__c = String.isNotBlank(caseId)?caseId:null;
+			docAct.EnvelopeId__c = 'idPlico_' + i;
+			docAct.AttachmentCode__c = 'codiceAllegato_'+i;
+			docAct.PostelTimestamp__c = '2000000000';
+			docActList.add(docAct);
+		}
+		insert docActList;
+		return docActList;
+	}
+
+	public static List<AtecoMatrix__c> createAtecoMatrix(Integer amount, Boolean doInsert, String name){
+
+		List<AtecoMatrix__c> atecoMatrixList=new List<AtecoMatrix__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			AtecoMatrix__c testAtecoMatrix=new AtecoMatrix__c();
+			testAtecoMatrix.Name=name+i;
+
+			atecoMatrixList.add(testAtecoMatrix);
+		}
+
+		if (doInsert){
+
+			insert atecoMatrixList;
+		}
+
+		return atecoMatrixList;
+	}
+
+	public static List<FUBProcessing__c> createfubProcessing (Integer amount, Boolean doInsert, String status) {
+
+		List<FUBProcessing__c> fubProcessingList = new List<FUBProcessing__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			FUBProcessing__c fubProcessing = new FUBProcessing__c(
+				Status__c = status
+			);		
+
+			fubProcessingList.add(fubProcessing);
+		}
+
+		if (doInsert){
+
+			insert fubProcessingList;
+		}
+
+		return fubProcessingList;
+	}
+
+	public static List<FUBProcessingItem__c> createFubProcessingItem (Integer amount, Boolean doInsert, Id campaignId, Id FubProcessingId) {
+
+		List<FUBProcessingItem__c> fubProcessingItemList = new List<FUBProcessingItem__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			FUBProcessingItem__c fubProcessingItem = new FUBProcessingItem__c(
+				Campaign__c = campaignId,
+            	FUBProcessing__c = FubProcessingId
+			);
+
+			fubProcessingItemList.add(fubProcessingItem);
+		}
+
+		if (doInsert){
+
+			insert fubProcessingItemList;
+		}
+
+		return fubProcessingItemList;
+	}
+
+	public static List<Individual> createIndividual (Integer amount, Boolean doInsert) {
+
+		List<Individual> indList = new List<Individual>();
+
+		for (Integer i=0; i<amount; i++){
+
+			Individual ind = new Individual(
+				FirstName = 'Mama',
+				LastName = 'Guzzo'
+        	);
+
+			indList.add(ind);
+		}
+
+		if (doInsert){
+
+			insert indList;
+		}
+
+		return indList;
+	}
+
+	public static List<ContactPointPhone> createContactPointPhone (Integer amount, Boolean doInsert, Id individualId) {
+
+		List<ContactPointPhone> cppList = new List<ContactPointPhone>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ContactPointPhone cpp = new ContactPointPhone(
+            ParentId = individualId,
+            TelephoneNumber = '982591380'
+        );
+
+			cppList.add(cpp);
+		}
+
+		if (doInsert){
+
+			insert cppList;
+		}
+
+		return cppList;
+	}
+
 }

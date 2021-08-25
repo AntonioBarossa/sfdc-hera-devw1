@@ -151,7 +151,51 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
         HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
+
+    public class HDT_UTL_FlowInputs{
+
+        @InvocableVariable
+        public String objectId;
+        @InvocableVariable
+        public String templateName;
+
+
+    }
     
+    public class HDT_UTL_FlowOutputs{
+
+        @InvocableVariable
+        public String esito;
+        @InvocableVariable
+        public String dettaglioEsito;
+
+    }
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 19/08/2021
+    * @description HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameFlow
+    * @param1 inputData - list<HDT_UTL_FlowInputs>
+    * @return string 
+    */
+    @InvocableMethod(label='prova')
+    public static list<HDT_UTL_FlowOutputs> createActivityByObjectIdAndTemplateNameFlow(list<HDT_UTL_FlowInputs> inputParam){
+        list<HDT_UTL_FlowOutputs> listOutputs= new list<HDT_UTL_FlowOutputs>();
+        HDT_UTL_FlowOutputs output= new HDT_UTL_FlowOutputs();
+        try{
+            wrts_prcgvr__Activity__c act= createActivityByObjectIdAndTemplateName(inputParam[0].objectId, inputParam[0].templateName);
+            insert act;
+            output.esito='OK';
+            output.dettaglioEsito=act.Id;
+        }catch(Exception e){
+            output.esito='KO';
+            output.dettaglioEsito= e.getMessage();
+        }
+        listOutputs.add(output);
+        return listOutputs;
+    }
+
+
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 06/08/2021
@@ -171,6 +215,40 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>objectId});
                 system.debug('HDT_UTL_Scarti end ' + activities.get(0));
                 return activities.get(0);
+            }
+            system.debug('HDT_UTL_Scarti end');
+            return null;
+        }
+        catch(Exception e){
+            system.debug('HDT_UTL_Scarti catch ' + e);
+            return null;
+        }
+    }
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 24/08/2021
+    * @description HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk
+    * @param1 list of objectId - list of Ids of the parent records of the activity
+    * @param2 templateName - name of an activityTemplate
+    * @return list<wrts_prcgvr__Activity__c>
+    */
+    public static list<wrts_prcgvr__Activity__c> createActivityByObjectIdAndTemplateNameBulk(list<String> objectIds, String templateName){
+        system.debug('HDT_UTL_Scarti objectIds ' + objectIds);
+        system.debug('HDT_UTL_Scarti templateName ' + templateName);
+        try{
+            Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName});
+            system.debug('HDT_UTL_Scarti template ' + template);
+            if(template.values().size() > 0){
+                wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+                List<wrts_prcgvr__Activity__c> resultActivities = new List<wrts_prcgvr__Activity__c>();
+                for(String singleObjectId: objectIds){
+                    List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>singleObjectId});
+                    system.debug('HDT_UTL_Scarti single activity ' + activities.get(0));
+                    resultActivities.add(activities.get(0));
+                }
+                system.debug('HDT_UTL_Scarti end ' + resultActivities);
+                return resultActivities;
             }
             system.debug('HDT_UTL_Scarti end');
             return null;

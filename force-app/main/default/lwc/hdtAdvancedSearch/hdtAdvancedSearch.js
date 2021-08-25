@@ -255,33 +255,34 @@ export default class HdtAdvancedSearch extends LightningElement {
             {
                 if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id'){
                     this.tableColumns.push({label: field, fieldName: field});
-                }else if(field == 'iconCompatibility'){
-                    if(this.isIncompatible){
-                        this.tableColumns.push(
-                            { label: 'Compatibility', fieldName: 'compatibility',
-                                type: 'button',
-                                typeAttributes: {
-                                    label: 'See more',
-                                    title: {fieldName:'compatibilityMessage'},
-                                },
-                                cellAttributes:{ 
-                                    iconName:{ fieldName: 'iconCompatibility'},
-                                    iconPosition: 'left', 
-                                    iconAlternativeText: 'Compatibility Icon' ,
-                                }
-                            });
-                    }else{
-                        this.tableColumns.push(
-                            { label: 'Compatibility', fieldName: 'compatibility',
-                                cellAttributes:{ 
-                                    iconName:{ fieldName: 'iconCompatibility'},
-                                    iconPosition: 'left', 
-                                    iconAlternativeText: 'Compatibility Icon' ,
-                                }
-                        });
-                    }
-                }
+                }                 
             });
+            if(this.processtype != ''){                 
+                if(this.isIncompatible){
+                    this.tableColumns.push(
+                        { label: 'Compatibility', fieldName: 'compatibility',
+                            type: 'button',
+                            typeAttributes: {
+                                label: 'See more',
+                                title: {fieldName:'compatibilityMessage'},
+                            },
+                            cellAttributes:{ 
+                                iconName:{ fieldName: 'iconCompatibility'},
+                                iconPosition: 'left', 
+                                iconAlternativeText: 'Compatibility Icon' ,
+                            }
+                        });
+                }else{
+                    this.tableColumns.push(
+                        { label: 'Compatibility', fieldName: 'compatibility',
+                            cellAttributes:{ 
+                                iconName:{ fieldName: 'iconCompatibility'},
+                                iconPosition: 'left', 
+                                iconAlternativeText: 'Compatibility Icon' ,
+                            }
+                        });
+                }
+            }
     }
 
     /**
@@ -363,6 +364,7 @@ export default class HdtAdvancedSearch extends LightningElement {
 @api
     submitFornitura(){
         this.preSelectedRows=[];
+        this.isIncompatible= false;
         this.preloading = true;
         console.log('executing query search'+ this.accountid);
         console.log('additionlFilterFinal**********************************'+this.additionalFilterFinal)
@@ -440,6 +442,7 @@ export default class HdtAdvancedSearch extends LightningElement {
      */
     submitSearch(event) {
         this.preSelectedRows=[];
+        this.isIncompatible= false;
         event.preventDefault();
         console.log('event value submitSearch() '+ event.target.value);
         let isBlacklist=false;
@@ -524,8 +527,11 @@ export default class HdtAdvancedSearch extends LightningElement {
                     if(found){
                         this.isIncompatible= false;
                         row.iconCompatibility= this.iconCompatibility;
+                        row.serviceRequestId= this.serviceRequestId;
+                        row.isCompatible= true;
                         if(data.compatibility != ''){
                             this.isIncompatible=true;
+                            row.isCompatible= false;
                             row.compatibilityMessage= data.compatibility;
                             this.confirmButtonDisabled = true;
                         }else{
@@ -533,7 +539,8 @@ export default class HdtAdvancedSearch extends LightningElement {
                         }
                     }
                 }
-                this.createTable(this.originalData);  
+                console.log(this.originalData);
+                this.createTable(this.originalData); 
                 this.formatTableHeaderColumns(this.originalData);
                 var my_ids = [];
                 my_ids[0] = this.rowToSend.Id;

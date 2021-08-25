@@ -20,10 +20,10 @@ public with sharing class HDT_UTL_Lead {
 
     @AuraEnabled
     public static Map<String,String> getBlackListMap(){
-        List<BlackList__c> blList = HDT_QR_Blacklist.getAllBlacklist();
+        List<BlackList__c> blList = HDT_QR_Blacklist.getAllBlacklistEmail();
         Map<String,String> res = new Map<String,String>();
         for(BlackList__c b : blList){
-            res.put(b.domain__c,b.errorMessage__c);
+            res.put(b.domain__c.touppercase(),b.errorMessage__c);
         }
         return res;
     }

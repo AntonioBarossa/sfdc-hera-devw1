@@ -739,29 +739,72 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             String indemnityMotivation = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityMotivation__c', 0, inputs, formParams);
             String indemnityDueSendResponse = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueSendResponse__c', 0, inputs, formParams);
             String indemnityDueBillingCorrection = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueBilllingCorrection__c', 0, inputs, formParams);
+            String correctionRight = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionRight__c', 0, inputs, formParams);
+            String correctionDocumentEmissionDate = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionDocumentEmissionDay__c', 0, inputs, formParams);
+            Boolean expiredCorrection = indemnityDueBillingCorrection != null;
 
             String[] record = new List<String>();
             record.add('00310');
             record.add('130');
             // Calcolo tipologia di indennizzo attesa da Engage1.
-            if (indemnityConfirmed) {
-                record.add('1');
-            } else if (indemnityMotivation == 'Altro indennizzo stesso anno solare') {
-                record.add('2');
-            } else {
-                record.add('3');
+            String boxType = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate);
+            if (String.isNotBlank(boxType)) {
+                record.add(boxType);
+                // Importo indennizzo, se necessario.
+                if ((boxType == '1' || boxType == '5') && indemnityDueSendResponse != null && Decimal.valueOf(indemnityDueSendResponse) > 0) {
+                    record.add(indemnityDueSendResponse);
+                } else if (boxType == '2' && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+                    record.add(indemnityDueBillingCorrection);
+                } else if (boxType == '4' && indemnityDueSendResponse != null && Decimal.valueOf(indemnityDueSendResponse) > 0 && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+                    record.add(indemnityDueSendResponse);
+                    record.add(indemnityDueBillingCorrection);
+                }
             }
-            // Importo indennizzo, se presente.
-            if (complaintClassification == 'Reclamo Scritto' && Decimal.valueOf(indemnityDueSendResponse) > 0) {
-                record.add(String.valueOf(indemnityDueSendResponse));
-            } else if (complaintClassification == '	Rettifica Doppia Fatturazione' && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
-                record.add(String.valueOf(indemnityDueBillingCorrection));
-            }
+
             // Aggiungiamo anche | e l'endLine poichè il record indennizzi è opzionale e il 310|120 non può aggiungere a prenscindere un endline finale.
             payloadSection += '|' + endLine + String.join(record, div);
         }
 
         return payloadSection;
+    }
+
+    public static String calculateIndemnityBox(String complaintClassification, Boolean indemnityConfirmed, String indemnityMotivation, String correctionRight, Boolean expiredCorrection, String correctionDocumentEmissionDate) {
+        String boxType = '';
+
+        // Emissione rettifica non prevista, indennizzo per solo ritardo nella risposta
+        if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight != 'Si') {
+            boxType = '1';
+        }
+        // Emissione rettifica prevista ma non scaduta, indennizzo per solo ritardo nella risposta
+        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && !expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {
+            boxType = '1';
+        }
+        // Emissione rettifica prevista e scaduta, indennizzi per ritardo nella risposta e nella rettifica
+        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {
+            boxType = '4';
+        }
+        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && String.isBlank(correctionDocumentEmissionDate)) {
+            // TODO: come capire se lo SLA è superato o meno?
+        }
+        // Emissione rettifica prevista ma data emissione ancora non presente
+        else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isBlank(correctionDocumentEmissionDate)) {
+            boxType = '';
+        }
+        // Emissione rettifica prevista e scaduta
+        else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && expiredCorrection) {
+            boxType = '2';
+        }
+        // Emissione rettifica prevista ma non scaduta
+        else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && !expiredCorrection) {
+            boxType = '';
+        }
+
+        // Check finale se indennizzo già inviato in stesso anno
+        if (!indemnityConfirmed && indemnityMotivation == 'Altro indennizzo stesso anno solare') {
+            boxType = '6';
+        }
+
+        return boxType;
     }
 
     // Restituisce la data nel formato richiesto da Engage1

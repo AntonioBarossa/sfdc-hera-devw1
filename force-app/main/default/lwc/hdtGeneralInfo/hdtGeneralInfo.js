@@ -130,7 +130,7 @@ export default class HdtGeneralInfo extends LightningElement {
 
             }
 
-            if (this.userRole !== 'HDT_BackOffice' && (Channel == 'Telefono' || Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound')) {
+            if (this.userRole !== 'HDT_BackOffice' && (Channel == 'Telefono' || Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound' || Channel == 'Sportello' )) {
                 //this.hiddenFilterAgent = true;
                 this.hiddenAgency = true;
                 handleAutomaticAgentAssign ({Channel:Channel,saleId:this.saleRecord.Id }).then(data =>{
@@ -138,6 +138,8 @@ export default class HdtGeneralInfo extends LightningElement {
                     this.loaded = true;
                     this.template.querySelector("[data-id='Agency__c']").value = data[0].AgencyName__c;
                     this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
+                    this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
+                    this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
                 }).catch(error => {
                     this.loaded = true;
                     console.log(error.body.message);
@@ -468,14 +470,20 @@ export default class HdtGeneralInfo extends LightningElement {
             if (val.trim() !== '') {
                 data = data.filter(row => {
                     let found = false;
-                    Object.values(row).forEach(v => {
-                        if (v !== undefined && typeof(v)== "string" && null != v.toLowerCase() && (v.toLowerCase().search(val.toLowerCase()) !== -1)) {
+                    let rowValues=[];
+                    Object.entries(row).forEach(([key, value]) => {
+                        if(key != 'Id'){
+                            rowValues.push(value);
+                        }
+                    });
+                    rowValues.forEach(v => {
+                        if (v !== undefined && typeof(v)== "string" && v!='Id' && null != v.toLowerCase() && (v.toLowerCase().search(val.toLowerCase()) !== -1)) {
                             found = true;
                         }
                     });
                     if (found) return row;
                 })
-
+                
             }
             self.createTable(data); // redesign table
             self.currentPage = 0; // reset page

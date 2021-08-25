@@ -28,13 +28,43 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for(Order o: oldOrderList){
             mapOrder.put(o.Id, o);
         }
+
+
+        //19/08/2021 gabriele.rota@webresults.it - Calcolo Data Decorrenza Cambio Offerta
+        HDT_QR_RecordType recordTypeQr = new HDT_QR_RecordType();
+        String rtCambioOfferta = recordTypeQr.getRecordTypeIdByName('HDT_RT_CambioOfferta');
+
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+
+
         for (Order order : newOrderList) {
             Order oldOrder= mapOrder.get(order.Id);
             if(order.Phase__c!=oldOrder.Phase__c&&order.Phase__c=='Comunicazione Verso Heroku'&&order.isTransition__c==true){
                 order.Phase__c='Esportazione VS Siebel';
             }
+
+
+            //19/08/2021 gabriele.rota@webresults.it - Calcolo Data Decorrenza Cambio Offerta
+            if (order.RecordTypeId==rtCambioOfferta && order.EffectiveDate__c==null) {
+                Date refDate = (order.ContractSigned__c)?order.WizardCompletedDate__c:order.SignedDate__c;
+                if (refDate!=null) {
+                    order.EffectiveDate__c = refDate.toStartOfMonth().addMonths(1);
+                }
+            }
+
+            if(order.Phase__c!=oldOrder.Phase__c 
+                && oldOrder.Phase__c == 'Documentazione validata' 
+                && order.Phase__c == 'Comunicazione Verso Heroku'
+                && order.QualityCall__c
+                && isMonitoringList.contains(order.AgencyCode__c)){
+                String newPhase = 'In attesa di quality call';
+                order.Phase__c = newPhase;
+                DateTime nowDateTime = DateTime.now();
+                order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
+            }
+
+
         }
-        
         
     }   
      
@@ -71,6 +101,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<String> ordersParent = new List<String>();//getParentOrders2(newOrdersList, oldOrdersList, orderMapNewToOld);
         List<Order> ordersFullList = orderQr.getRecordsByIds(olistd);
         List<String> onlyString = new List<String>();
+        List<Order> ordersQualityOkUpdate = new List<Order>();
         for(Order o : ordersFullList){
             if (o.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && o.Phase__c == 'Documentazione Gestita') {
                 ordersParent.add(o.id);
@@ -78,14 +109,43 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(o.phase__c == 'Documentazione Validata'){
                 filtered.add(o);
             }
+            if (o.Phase__c == 'Quality Call OK') {
+                ordersQualityOkUpdate.add(new Order(
+                    Id = o.Id,
+                    Phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o) ? 'Comunicazione verso Heroku' : 'In attesa validazione'
+                ));
+            }
             //onlyString.add(o.id);
         }
         List<Order> childOrders = orderQr.getChildOrdersByParentIds(ordersParent);
         //set<Order> filtered = new set<Order>();
+        List<Order> childOrdersDocValid = new List<Order>();
         for(Order o1 : childOrders){
             if(o1.phase__c == 'Documentazione Validata'){
                 filtered.add(o1);
             }
+
+            if (o1.Phase__c == 'In attesa validazione') {
+                childOrdersDocValid.add(new Order(
+                    Id = o1.Id,
+                    phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o1) ? 'Documentazione Validata': 'In attesa validazione'
+                ));
+            }
+
+            if (o1.Phase__c == 'Da Inviare') {
+                childOrdersDocValid.add(new Order(
+                    Id = o1.Id,
+                    phase__c = 'In attesa validazione'
+                ));
+            }
+        }
+
+        if (!childOrdersDocValid.isEmpty()) {
+            orderSrv.updateRecords(childOrdersDocValid);
+        }
+        
+        if (!ordersQualityOkUpdate.isEmpty()) {
+            orderSrv.updateRecords(ordersQualityOkUpdate);
         }
         
         List<Order> ordersHeroku = new List<Order>();
@@ -284,6 +344,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         orderSrv.checkReadAccess('Phase__c');
         //List<Order> childOrders = orderQr.getChildOrdersByParentIds(parentOrderIds);
         System.debug('***********1');
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
                 if (childOrder.Phase__c == currentVasPhase) {
@@ -309,7 +370,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
                 else{
                     System.debug('***********4');
-                    if (childOrder.Phase__c == currentPhase) {
+                    if (childOrder.Phase__c == currentPhase
+                        && !childOrder.QualityCall__c
+                        && !isMonitoringList.contains(childOrder.AgencyCode__c)) {
                         System.debug('***********5');
                         Order orderToUpdate = new Order(
                             Id = childOrder.Id,
@@ -372,11 +435,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     newOrder.TecnicalPhase__c = null;
                 }
             }
+            if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& !newOrder.SBQQ__Contracted__c) {
+                newOrder.SBQQ__Contracted__c=true; 
+            }
         }
         return newOrdersList;
     }
-
-    
+   
     // START @Picchiri Credit check Date 04.06.21
     // Viene invocata da una modifica lato ordine
     // In questo metodo viene invocata la classe per la creazione della Activiti del Credit Check Entanti (Nuovo cliente) e Uscenti (Vecchio cliente)
@@ -444,12 +509,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
         Map<Id,wrts_prcgvr__Activity__c> mapIdOrderToActivity = new Map<Id,wrts_prcgvr__Activity__c>();
 
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+
         for(Order orderToUpdate : orderList){
             mapIdToTotalOrder.put(orderToUpdate.id,orderToUpdate);
             String recordTypeName = rtMap.get(orderToUpdate.RecordTypeId).getDeveloperName();
             if(orderToUpdate.ParentOrder__r.Phase__c == 'Documentazione Gestita' && (orderToUpdate.Phase__c == 'Documentazione Validata' || orderToUpdate.Phase__c == 'Documentazione da inviare' )){
                 system.debug('YYY 1 --->');
-                if(orderToUpdate.recordType.Developername != 'HDT_RT_VAS'){
+                if(orderToUpdate.recordType.Developername != 'HDT_RT_VAS'
+                    && !orderToUpdate.QualityCall__c
+                    && !isMonitoringList.contains(orderToUpdate.AgencyCode__c)){
                     system.debug('YYY 2 --->');
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
                     orderListToUpdate.add(orderToUpdate);

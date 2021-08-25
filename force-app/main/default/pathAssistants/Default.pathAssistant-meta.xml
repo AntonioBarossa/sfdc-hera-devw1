@@ -15,21 +15,8 @@
         <picklistValueName>New</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Rating</fieldNames>
-        <info>&lt;strong&gt;Nurture your lead so that you’re top-of-mind.&lt;/strong&gt;&lt;br&gt;&lt;br&gt;Send emails based on time intervals and your leads’ actions on our website. Nurturing leads helps to free up time to focus on other opportunities in your pipeline.
-&lt;ul&gt;&lt;li&gt;Assign a rating to your lead based on what you’ve learned during the qualification process.&lt;/li&gt;&lt;li&gt;Work with marketing to add your lead to campaigns to further nurture the relationship.&lt;/li&gt;&lt;li&gt;Before you mark your lead Unqualified, schedule six follow-up tasks to email or call your lead.&lt;/li&gt;&lt;/ul&gt;</info>
-        <picklistValueName>Nurturing</picklistValueName>
-    </pathAssistantSteps>
-    <pathAssistantSteps>
         <info>&lt;strong&gt;Congratulations! &lt;/strong&gt;Now it’s time to convert the lead record to an opportunity. Then, continue the qualification process with your new contact.</info>
         <picklistValueName>Qualified</picklistValueName>
-    </pathAssistantSteps>
-    <pathAssistantSteps>
-        <fieldNames>Description</fieldNames>
-        <fieldNames>LeadSource</fieldNames>
-        <info>&lt;strong&gt;If your lead has neither the interest nor the authority to purchase from you, mark the lead Unqualified. &lt;/strong&gt;&lt;br&gt;&lt;br&gt;Don’t waste time on unqualified leads.
-&lt;ul&gt;&lt;li&gt;Learn about the lead source before you spend time selling them a product they&amp;#39;re not ready for.&lt;/li&gt;&lt;li&gt;Understand your lead&amp;#39;s level of decision making authority and solution requirements.&lt;/li&gt;&lt;li&gt;Determine whether your lead is likely to buy from you.&lt;/li&gt;&lt;/ul&gt;</info>
-        <picklistValueName>Unqualified</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
         <fieldNames>Description</fieldNames>

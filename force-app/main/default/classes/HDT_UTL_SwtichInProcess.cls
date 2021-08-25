@@ -140,10 +140,15 @@ public with sharing class HDT_UTL_SwtichInProcess {
         system.debug('HDT_UTL_SwtichInProcess - getDateSentToSii: ' + dateSentToSII);
         return dateSentToSII;
 
-    }
+    } 
 
     // Data di decorrenza
     public static Date getEffectiveDate(Order order) {
+
+        //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
+        if (order.IsActivationDeferred__c==true) {
+            return order.EffectiveDate__c;
+        }
 
         Date effectiveDateTmp = null;
         Date dateDecorrenzaTmp = null;

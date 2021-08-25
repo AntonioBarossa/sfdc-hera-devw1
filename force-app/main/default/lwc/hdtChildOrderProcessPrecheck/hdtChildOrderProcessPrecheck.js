@@ -16,9 +16,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     selectedProcessObject = ''; //new processSelector
     compatibilita = false;
     loaded = true;
-    deliberation = '';
+    @track deliberation = '';
     showDeliberation = false;
-    disabledDeliberation = false;
+    @track disabledDeliberation = false;
     showEsitoCheck = false;
     vasAmendDisabledInput = false;
     disabledSelectProcess = false;
@@ -68,7 +68,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causale = '';
 
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
-            this.disabledDeliberation = this.order.Step__c !== undefined;
+            this.disabledDeliberation = this.order.Step__c !== undefined || selectedProcess.processType == 'Prima Attivazione Fuori delibera' || selectedProcess.processType == 'Prima Attivazione In delibera';
         }
         else if(selectedProcess.recordType === 'HDT_RT_RiattivazioniNonMorose'){
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
@@ -175,7 +175,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causaleCompatibilita = compatibility;
 
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
-            this.disabledDeliberation = this.order.Step__c !== undefined;
+            this.disabledDeliberation = this.order.Step__c !== undefined || selectedProcess.processType == 'Prima Attivazione Fuori delibera' || selectedProcess.processType == 'Prima Attivazione In delibera';
         }
         else if(selectedProcess.recordType === 'HDT_RT_RiattivazioniNonMorose'){
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
@@ -269,7 +269,18 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     handleSelectProcess(event){
-        console.log('handleSelectProcess: ' + JSON.stringify(event.detail));
+        
+        if(event.target.value == 'Prima Attivazione In delibera') {
+            console.log('handleSelectProcess: ' + JSON.stringify(event.detail.value));
+            this.deliberation = 'In Delibera';
+            this.disabledDeliberation = true;
+        }
+
+        if(event.target.value == 'Prima Attivazione Fuori delibera') {
+            console.log('handleSelectProcess: ' + JSON.stringify(event.detail.value));
+            this.deliberation = 'Fuori delibera';
+            this.disabledDeliberation = true;
+        }
 
         this.selectedProcessObject = this.processesReference.filter(el => el.processType === event.target.value)[0];
         this.checkCompatibilityProcess();
@@ -362,6 +373,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         console.log('this.order: ', JSON.parse(JSON.stringify(this.order)));
 
         console.log('CallBack start');
+        this.deliberation = this.order.Deliberation__c;
 
         if (this.order.RecordType.DeveloperName === 'HDT_RT_Default') {
             console.log('enter default');
@@ -376,7 +388,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 data.forEach(el => {
                     this.options.push({label: el.processType, value: el.processType});
                 });
-    
+                
     
                 if (this.options.length === 1) {
                     this.selectedProcessObject = this.processesReference[0];
@@ -386,7 +398,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 }
     
                 if (this.options.length === 0) {
-                    if(this.order.SBQQ__Quote__r.IsVAS__c){
+                    if(this.order.IsVAS__c){
                         this.options.push({label: 'VAS', value: 'VAS'});
                         this.selectedProcessObject = {processType: 'VAS', recordType: 'HDT_RT_VAS'}
                         this.value = this.selectedProcessObject.processType;
@@ -525,7 +537,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             bpType:bpType,
             customerType:"CT0", //da definire campo SF con business            
             operation:operation,
-            companyGroup:"Hera S.p.A.",
+            companyGroup:companyName,
             market:market,
             offerType:offerType,
             details:[{

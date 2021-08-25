@@ -310,31 +310,45 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     
     public static void cancelQualityNoResult(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
 
-        Set<id> activityIdSet = Trigger.newMap.keySet();
-        List<Id> activityIdList = new List<Id>();
-        activityIdList.addAll(activityIdSet);
+        system.debug('>>cancelQualityNoResult start');
 
-        List<wrts_prcgvr__Activity__c> activities = HDT_QR_ActivityCustom.getRecordsForCancelQualityNoResult(activityIdList);
+        try {
+            Set<id> activityIdSet = Trigger.newMap.keySet();
+            List<Id> activityIdList = new List<Id>();
+            activityIdList.addAll(activityIdSet);
 
-        HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
-        String recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_ComfortQualityCall');
-        List<Order> ordersToUpdate = new List<Order>();
-        for (wrts_prcgvr__Activity__c activity : activities) {
-            if (activity.RecordTypeId == recordtypeid 
-                && activity.Status__c == 'Non Esitata'
-                && activity.Account__r.ActiveMonitoring__c) {
-                ordersToUpdate.add(new Order(
-                    Id = activity.Order__c,
-                    Status = 'Annullato', //Chiuso
-                    Phase__c = 'Annullato'
-                ));
+            List<AgentMatrix__c> agentMatrixList = HDT_QR_AgentMatrix.getAgentMatrixIsMonitoringTrue();
+            List<String> isMonitoringList = new List<String>();
+            for (AgentMatrix__c agentMatrix : agentMatrixList) {
+                isMonitoringList.add(agentMatrix.AgencyCode__c);
             }
+
+            List<wrts_prcgvr__Activity__c> activities = HDT_QR_ActivityCustom.getRecordsForCancelQualityNoResult(activityIdList);
+
+            HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
+            String recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_ComfortQualityCall');
+            List<Order> ordersToUpdate = new List<Order>();
+            for (wrts_prcgvr__Activity__c activity : activities) {
+                if (activity.RecordTypeId == recordtypeid 
+                    && activity.Status__c == 'Non Esitata'
+                    && isMonitoringList.contains(activity.Order__r.AgencyCode__c)) {
+                    ordersToUpdate.add(new Order(
+                        Id = activity.Order__c,
+                        Status = 'Annullato', //Chiuso
+                        Phase__c = 'Annullato'
+                    ));
+                }
+            }
+
+            if (!ordersToUpdate.isEmpty()) {
+                HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+                orderSrv.updateRecords(ordersToUpdate);
+            }
+        } catch (Exception e) {
+            System.debug('HDT_TRH_ActivityCustom - afterUpdate - cancelQualityNoResult: ' + e.getMessage());
         }
 
-        if (!ordersToUpdate.isEmpty()) {
-            HDT_SRV_Order orderSrv = new HDT_SRV_Order();
-            orderSrv.updateRecords(ordersToUpdate);
-        }
+        system.debug('>>cancelQualityNoResult end');
 
     }
 }

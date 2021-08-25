@@ -1,0 +1,12 @@
+<!--
+  @description       : Embed hdtAccountVasOrdersView lwc
+  @author            : gabriele.rota@webresults.it
+  @group             : WR
+  @last modified on  : 2021-08-18
+  @last modified by  : gabriele.rota@webresults.it
+-->
+<aura:component implements="lightning:isUrlAddressable" >
+    <aura:attribute name="recordid" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<c:hdtAccountVasOrdersView accountId="{!v.recordid}"></c:hdtAccountVasOrdersView>
+</aura:component>

@@ -39,37 +39,39 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
             serviceRequestsToBeSequenced.add(sr);
             recordsProcessed++;
         }
-        Savepoint sp = Database.setSavePoint();
-        try{
-            if (ServiceRequest__c.SObjectType.getDescribe().isAccessible()&&
-                Schema.sObjectType.ServiceRequest__c.fields.Status__c.isAccessible()&&
-                Schema.sObjectType.ServiceRequest__c.fields.Status__c.isUpdateable()&&
-                Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isAccessible()&&
-                Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isUpdateable()&&
-                Order.SObjectType.getDescribe().isAccessible()&&
-                Schema.sObjectType.Order.fields.Status.isAccessible()&&
-                Schema.sObjectType.Order.fields.Status.isUpdateable()&&
-                Schema.sObjectType.Order.fields.Phase__c.isAccessible()&&
-                Schema.sObjectType.Order.fields.Phase__c.isUpdateable()&&
-                Case.SObjectType.getDescribe().isAccessible()&&
-                Schema.sObjectType.Case.fields.Status.isAccessible()&&
-                Schema.sObjectType.Case.fields.Status.isUpdateable()&&
-                Schema.sObjectType.Case.fields.Phase__c.isAccessible()&&
-                Schema.sObjectType.Case.fields.Phase__c.isUpdateable()){
-                
-                if(serviceRequestsToBeSequenced.size()>0){
-                    update serviceRequestsToBeSequenced;
+        if(srList.size()>0){
+            Savepoint sp = Database.setSavePoint();
+            try{
+                if (ServiceRequest__c.SObjectType.getDescribe().isAccessible()&&
+                    Schema.sObjectType.ServiceRequest__c.fields.Status__c.isAccessible()&&
+                    Schema.sObjectType.ServiceRequest__c.fields.Status__c.isUpdateable()&&
+                    Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isAccessible()&&
+                    Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isUpdateable()&&
+                    Order.SObjectType.getDescribe().isAccessible()&&
+                    Schema.sObjectType.Order.fields.Status.isAccessible()&&
+                    Schema.sObjectType.Order.fields.Status.isUpdateable()&&
+                    Schema.sObjectType.Order.fields.Phase__c.isAccessible()&&
+                    Schema.sObjectType.Order.fields.Phase__c.isUpdateable()&&
+                    Case.SObjectType.getDescribe().isAccessible()&&
+                    Schema.sObjectType.Case.fields.Status.isAccessible()&&
+                    Schema.sObjectType.Case.fields.Status.isUpdateable()&&
+                    Schema.sObjectType.Case.fields.Phase__c.isAccessible()&&
+                    Schema.sObjectType.Case.fields.Phase__c.isUpdateable()){
+                    
+                    if(serviceRequestsToBeSequenced.size()>0){
+                        update serviceRequestsToBeSequenced;
+                    }
+                    if(ordersToBeUpdated.size()>0){
+                        update ordersToBeUpdated;
+                    }
+                    if(casesToBeUpdated.size()>0){
+                        update casesToBeUpdated;
+                    }
                 }
-                if(ordersToBeUpdated.size()>0){
-                    update ordersToBeUpdated;
-                }
-                if(casesToBeUpdated.size()>0){
-                    update casesToBeUpdated;
-                }
+            }catch(Exception ex){
+                System.debug(ex.getMessage());
+                Database.rollback(sp);
             }
-        }catch(Exception ex){
-            System.debug(ex.getMessage());
-            Database.rollback(sp);
         }
         System.debug(recordsProcessed + ' records unlocked in the sequentialization processing');
     }   

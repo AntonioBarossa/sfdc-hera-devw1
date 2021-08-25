@@ -32,9 +32,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
 
-        if (!orderActiveMonitoring[0].Account.ActiveMonitoring__c || 'Comfort'.equalsIgnoreCase(type)) {
-            orderUpdate.Phase__c = 'Comunicazione verso Heroku';
-        }
+        orderUpdate.Phase__c = 'Quality Call OK';
 
         orderSrv.updateRecord(orderUpdate);
 
