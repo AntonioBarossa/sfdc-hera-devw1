@@ -229,7 +229,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         system.debug('quality log 1 CustomerCategory__c: ' + order.CustomerCategory__c);
         system.debug('quality log 1 MarketOrigin__c: ' + order.MarketOrigin__c);
         system.debug('quality log 1 SignatureMethod__c: ' + order.SignatureMethod__c);
-        List<ComfortQualityCall__c> comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
+        List<ComfortQualityCall__c> comfortQualityList = order.RecordType.DeveloperName == 'HDT_RT_VAS' ? HDT_QR_ComfortQualityCall.getRecordByOrderParamsVas(order) : HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
 
         system.debug('quality log 2: ' + comfortQualityList);
 
@@ -243,8 +243,21 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 orderToUpdate.QualityCallUnique__c = true;
             }
 
-            if (comfortQualityList[0].ComfortEnabled__c) {
-                orderToUpdate.ComfortCallDaysDue__c = comfortQualityList[0].DaysComfort__c;
+            ComfortQualityCall__c comforQualityRes = comfortQualityList[0];
+
+            if (comfortQualityList.size() > 1) {
+                system.debug('HDT_LC_ChildOrderProcessActions - Vas case enter');
+                for (ComfortQualityCall__c cqc : comfortQualityList) {
+                    if (cqc.ComfortDocSendingChannel__c == order.DocSendingMethod__c) {
+                        comforQualityRes = cqc;
+                        break;
+                    }
+                }
+                system.debug('HDT_LC_ChildOrderProcessActions - Vas case end: ' + comforQualityRes);
+            }
+
+            if (comforQualityRes.ComfortEnabled__c) {
+                orderToUpdate.ComfortCallDaysDue__c = comforQualityRes.DaysComfort__c;
                 orderToUpdate.DateComfortCall__c = Date.today();
             }
 
