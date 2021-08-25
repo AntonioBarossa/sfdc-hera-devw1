@@ -77,7 +77,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         List<wrts_prcgvr__Activity__c> listActivity = new List<wrts_prcgvr__Activity__c>();
         //Id rtOldCustomer = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_KoPrecedeteCliente' limit 1].id;
         //Id rtNewCustomer = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_CreditCheckKO' limit 1].id;
-        Map<String, Schema.RecordTypeInfo> ActivityRTInfos = ((SObject)Type.forName('Schema','wrts_prcgvr__Activity__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName();
+        Map<String, Schema.RecordTypeInfo> activityRtInfos = ((SObject)Type.forName('Schema','wrts_prcgvr__Activity__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName();
         Id rtOldCustomer = activityRTInfos.get('HDT_RT_KoPrecedeteCliente').getRecordTypeId();
         Id rtNewCustomer = activityRTInfos.get('HDT_RT_CreditCheckKO').getRecordTypeId();
 
