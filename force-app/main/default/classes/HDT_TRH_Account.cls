@@ -1,26 +1,14 @@
 public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
     
     public override void beforeInsert(){
-        // List<String> listRecordTypeMarkingValue = new List<String>{'AAS Parti comuni', 'AAS Persona fisica','ACEL-Persona fisica',
-        // 'ANTENORE ENERGY-Persona fisica','Amga-Persona fisica','BE POWER-Persona fisica',
-        // 'BENACO-Persona fisica','BLU RANTON-Persona fisica','CMV E e I - Persona fisica',
-        // 'D1 - Persona fisica','D2 - Ditta individuale','D3 - Azienda','D4 - Parti comuni',
-        // 'D5 - Condominio','D6 - Associazione','D7 - BP Doppio',
-        // 'D8 - Marcatura nulla','ENERGETICA-Persona fisica',
-        // 'ENERGIA SOCIALE-Persona fisica','ENERGIECHIARE-Persona fisica',
-        // 'ENERGYGAS ITA - Persona fisica','ENERGYPOLIS-Persona fisica',
-        // 'ERMES-Persona fisica','ETRURIA-Persona fisica','Enegan-Persona fisica','EstEnergy-Persona fisica','FUTURA TR-Persona fisica', 'FUTURENERGY-Persona fisica', 'GENESI-Persona fisica','GRAN SASSO-Persona fisica', 'GREEN EN-Persona fisica','ITALIANGAS-Persona fisica','LIRENAS-Persona fisica','LUCEEG IT SERV-Persona fisica', 'MIWA ENERGIA-Persona fisica','MMS Parti comuni','MMS Persona fisica',
-        // 'MOODS-Persona fisica','NEWENRGGEL-Persona fisica', 'NOIENERGIA-Persona fisica','NWGENERGIA-Persona fisica',
-        // 'OMNIA EN-Persona fisica','ONE POWER-Persona fisica','ONOVA-Persona fisica','PIUENERGIA SPA-Persona fisica',
-        // 'Parti comuni','Persona fisica','S4 ENERGIA-Persona fisica','SGR-Persona fisica','TOP ENERGY-Persona fisica',
-        // 'UNION-Persona fisica'};
+
         HDT_ObjectRecordType__mdt accBus = HDT_ObjectRecordType__mdt.getInstance('Acc_CustomerMarking_HDT_RT_Business');
         HDT_ObjectRecordType__mdt accRes = HDT_ObjectRecordType__mdt.getInstance('Acc_CustomerMarking_HDT_RT_Residenziale');
         List<String> listDeniedRes = accRes.ValueToRemove__c.split(';');
         List<String> listDeniedBus = accBus.ValueToRemove__c.split(';');
 
         Map<String, HDT_ObjectRecordType__mdt> mcs = HDT_ObjectRecordType__mdt.getAll();
- System.debug('');
+
         Id accRecordTypeResId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
         Id accRecordTypeBusId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
  
