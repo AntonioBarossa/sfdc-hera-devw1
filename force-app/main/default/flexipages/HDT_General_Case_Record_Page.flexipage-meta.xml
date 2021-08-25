@@ -426,6 +426,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>hdtDocusignQrCode</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Case.Id</value>
