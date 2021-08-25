@@ -603,6 +603,7 @@ public inherited sharing class HDT_QR_Order {
             AccountId,
             OrderNumber,
             Status,
+            SalesCompany__c,
             Agency__c,
             Market__c,
             Channel__c,
