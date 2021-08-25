@@ -453,6 +453,20 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 }
             }
         }
+        let depositPaymentModeObj = this.objSelector('DepositPaymentMode__c');
+        console.log('#DepositPaymentMode --> ' + JSON.stringify(depositPaymentModeObj));
+        if(!(Object.keys(depositPaymentModeObj).length === 0)){
+            let depositPaymentMode = this.selector('DepositPaymentMode__c');
+            console.log('#DepositPaymentMode -> ' + depositPaymentMode.value)
+            if(depositPaymentMode.value !== null && depositPaymentMode.value !== undefined){
+                let paperlessCode = this.selector('SendPaperlessCodeMode__c');
+                if(depositPaymentMode.value === 'Paperless'){
+                    paperlessCode.disabled = false;
+                } else {
+                    paperlessCode.disabled = true;
+                }
+            }
+        }
         //let installmentTypeObj = this.objSelector('TypeInstallmentPlan__c');
         /*if(!(Object.keys(installmentTypeObj).length === 0)){
             let installmentType = this.selector('TypeInstallmentPlan__c');
