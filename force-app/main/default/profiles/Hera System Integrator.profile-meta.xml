@@ -30219,7 +30219,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali2</layout>
+        <layout>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</recordType>
     </layoutAssignments>
     <layoutAssignments>
