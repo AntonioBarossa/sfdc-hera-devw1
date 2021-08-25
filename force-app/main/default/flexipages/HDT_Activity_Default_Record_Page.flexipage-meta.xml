@@ -7,7 +7,7 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.Completa_Attivit</value>
+                            <value>wrts_prcgvr__Activity__c.CompleteActivity</value>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Reminder</value>
