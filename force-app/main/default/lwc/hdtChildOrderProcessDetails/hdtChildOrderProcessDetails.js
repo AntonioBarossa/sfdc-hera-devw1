@@ -480,7 +480,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(currentSectionName === 'dettaglioImpianto'){
             if(this.template.querySelector("[data-id='SurfaceServed__c']") !== null 
                 && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
-                && this.typeVisibility('gas')
+              //  && this.typeVisibility('gas') 25/08/2021 richiesto nei test UAT
                 && (this.template.querySelector("[data-id='SurfaceServed__c']").value === ''
                     || this.template.querySelector("[data-id='SurfaceServed__c']").value === null)) {
                 this.loading = false;
