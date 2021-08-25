@@ -3,8 +3,12 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
     global HTTPResponse  respond(HTTPRequest request){
         String endpoint = request.getEndpoint();
         System.debug(endpoint);
+        //Arricchimento Dati
         if(endpoint.equalsIgnoreCase('ArricchimentoDatiTemp')){
             return creaEnrichResposne(request);
+        //Pagamenti
+        }else if(endpoint.containsIgnoreCase('HDT_')){
+            return creaPaymentsResponse(request);
         }else{
             return creaRicResponse(request);
         }
@@ -54,6 +58,18 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         +'{"campo": "ACCISE","valore": "0.02270000"},'
         +'{"campo": "CODICE_ATECO","valore": "999999"}'
         +']}}';
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        return response;
+    }
+
+    public static HttpResponse creaPaymentsResponse(HttpRequest request){
+        HttpResponse response = new HttpResponse();
+        String body = request.getBody();
+        //successResponse
+        String bodyResponse = '{"status": "success","correlationId": "eb9117b0-04e1-11ec-89bb-06c8ff345e9a","timestamp": "2021-08-24T15:48:13","data": {"rdsRdo": "00001945","tipoAttivita": "Pratica Avviata","note": ""}}';
         response.setHeader('Content-Type', 'application/json');
         response.setBody(bodyResponse);
         response.setStatusCode(200);

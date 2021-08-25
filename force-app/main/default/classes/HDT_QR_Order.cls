@@ -471,6 +471,8 @@ public inherited sharing class HDT_QR_Order {
             AccountId,
             Account.Name,
             Name,
+            CommercialProduct__c,
+            OfferType__c,
             Recordtypeid,
             Recordtype.Name,
             Recordtype.DeveloperName,
