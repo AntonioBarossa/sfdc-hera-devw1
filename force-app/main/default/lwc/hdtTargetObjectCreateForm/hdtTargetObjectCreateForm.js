@@ -1021,7 +1021,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if((this.allSubmitedFields['MeterType__c']===undefined ||this.allSubmitedFields['MeterType__c']==='')){
                 concatPointErrorFields = concatPointErrorFields.concat('Tipo Apparecchiatura, ');
             }
-               
+            if( this.allSubmitedFields['Disconnectable__c']==='No' && (this.allSubmitedFields['DisconnectibilityType__c']===undefined ||this.allSubmitedFields['DisconnectibilityType__c']==='' )){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+            }   
             }
             else{
                 
@@ -1040,6 +1042,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 if((this.allSubmitedFields['UseCategory__c']===undefined ||this.allSubmitedFields['UseCategory__c']==='' )){
                         concatPointErrorFields = concatPointErrorFields.concat('Categoria uso, ');
                 }
+                if( this.allSubmitedFields['Disconnectable__c']==='No' && (this.allSubmitedFields['DisconnectibilityType__c']===undefined ||this.allSubmitedFields['DisconnectibilityType__c']==='' )){
+                    concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+                }  
             }
                 if (concatPointErrorFields !== '') {
                     isValid = false;
@@ -1086,6 +1091,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if(this.allSubmitedFields['MeterType__c']===undefined ||this.allSubmitedFields['MeterType__c']==='' ){
                 concatPointErrorFields = concatPointErrorFields.concat('Tipo Apparecchiatura, ');
             }
+            if( this.allSubmitedFields['Disconnectable__c']==='No' && (this.allSubmitedFields['DisconnectibilityType__c']===undefined ||this.allSubmitedFields['DisconnectibilityType__c']==='' )){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+            } 
     
             }
             else{
@@ -1111,6 +1119,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 if(this.allSubmitedFields['UseCategory__c']===undefined ||this.allSubmitedFields['UseCategory__c']==='' ){
                         concatPointErrorFields = concatPointErrorFields.concat('Categoria uso, ');
                     }
+                if( this.allSubmitedFields['Disconnectable__c']==='No' && (this.allSubmitedFields['DisconnectibilityType__c']===undefined ||this.allSubmitedFields['DisconnectibilityType__c']==='' )){
+                    concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+                } 
                     }
                 if (concatPointErrorFields !== '') {
                     isValid = false;
