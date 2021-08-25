@@ -491,7 +491,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
                             });
                         }).catch((errorMsg) => {
                             const event = new ShowToastEvent({
-                                message: 'Entra un valido codice fiscale!',
+                                message: 'Inserire un codice fiscale valido',
                                 variant: 'error',
                                 mode: 'dismissable'
                             });
