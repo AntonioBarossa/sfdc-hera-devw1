@@ -12,10 +12,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>IMPIANTO_X_ADDR_NUM_SUFF__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_HER_PEC_INVIO_BOLLETTA__c</field>
             </layoutItems>
         </layoutColumns>
@@ -55,7 +51,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>IMPIANTO_DISTRICT__c</field>
+                <field>IMPIANTO_X_ADDR_NUM_SUFF__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -139,6 +135,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>START_DT__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_END_CONTRACT__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -311,10 +311,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_END_CONTRACT__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

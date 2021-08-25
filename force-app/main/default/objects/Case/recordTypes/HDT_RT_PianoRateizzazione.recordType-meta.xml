@@ -10834,10 +10834,10 @@
             <fullName>Personalizzato</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Solo Piano Mensile</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Straordinario</fullName>
             <default>false</default>
