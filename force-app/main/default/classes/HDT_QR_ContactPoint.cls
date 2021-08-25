@@ -90,45 +90,45 @@ public inherited sharing class HDT_QR_ContactPoint {
 
     }
 
-    /*The parameter "String phone" is not being used anywhere inside this method 
-    the method was commented after instructions from Andrei Necsulescu
+    /** The parameter "String phone" is not being used anywhere inside this method 
+     *  The method was commented as it doesn't seem to be used anywhere
+     */
 
-    public static ContactPointPhone getContactEmailByPhone (String phone, Id individualId, String fields){
-        ContactPointPhone res;
+    // public static ContactPointPhone getContactEmailByPhone (String phone, Id individualId, String fields){
+    //     ContactPointPhone res;
 
-        String query = 'SELECT '+ fields +
-                ' FROM ContactPointPhone WHERE ParentId = :individualId LIMIT 1';
-        List <ContactPointPhone> contphone = Database.query(query);
+    //     String query = 'SELECT '+ fields +
+    //             ' FROM ContactPointPhone WHERE ParentId = :individualId LIMIT 1';
+    //     List <ContactPointPhone> contphone = Database.query(query);
 
-        if(contPhone != null && contPhone.size() > 0){
-			res = contphone[0];
-		}
-		else{
-			res = null;
-		}
-        return res;
-    } */
+    //     if(contPhone != null && contPhone.size() > 0){
+	// 		res = contphone[0];
+	// 	}
+	// 	else{
+	// 		res = null;
+	// 	}
+    //     return res;
+    // }
 
-    /*
-    method was commented after instructions from Andrei Necsulescu
+    /** The name of the method doesn't match the returned sObject type
+     *  The method was commented as it doesn't seem to be used anywhere
+     */
 
-    public static ContactPointPhone getContactEmailById (Id contactEmailId, String fields){
+    // public static ContactPointPhone getContactEmailById (Id contactEmailId, String fields){
 		
-		ContactPointPhone res;
+	// 	ContactPointPhone res;
 		
-        String query = 'SELECT '+ fields +
-                ' FROM ContactPointPhone WHERE Id = :contactEmailId LIMIT 1';
-        List <ContactPointPhone> contphone = Database.query(query);
-		if(contPhone != null && contPhone.size() > 0){
-			res = contphone[0];
-		}
-		else{
-			res = null;
-		}
-        return res;
-    }
-    */
-
+    //     String query = 'SELECT '+ fields +
+    //             ' FROM ContactPointPhone WHERE Id = :contactEmailId LIMIT 1';
+    //     List <ContactPointPhone> contphone = Database.query(query);
+	// 	if(contPhone != null && contPhone.size() > 0){
+	// 		res = contphone[0];
+	// 	}
+	// 	else{
+	// 		res = null;
+	// 	}
+    //     return res;
+    // }
        
     public static ContactPointEmail searchContactPointEmail (String email){
         ContactPointEmail res;
