@@ -479,10 +479,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
         if(currentSectionName === 'dettaglioImpianto'){
             if(this.template.querySelector("[data-id='SurfaceServed__c']") !== null 
-                && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
-                && this.typeVisibility('gas')
-                && (this.template.querySelector("[data-id='SurfaceServed__c']").value === ''
-                    || this.template.querySelector("[data-id='SurfaceServed__c']").value === null)) {
+           
+                && 
+                this.typeVisibility('gas') 
+                && 
+            // Start 25/08/2021 richiesto nei test UAT
+                (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta')
+            // End 25/08/2021 richiesto nei test UAT
+                && 
+                (this.template.querySelector("[data-id='SurfaceServed__c']").value === ''|| this.template.querySelector("[data-id='SurfaceServed__c']").value === null)) {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -1486,7 +1491,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'SAPImplantCode__c',
                     'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'),
                     'required': false,
-                    'disabled': false,
+                    'disabled': true, //UAT 25/08/2021
                     'value': '',
                     'processVisibility': ''
                 },
