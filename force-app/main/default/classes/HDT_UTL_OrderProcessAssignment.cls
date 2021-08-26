@@ -144,7 +144,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             if (
                 process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c)
                 && (process.marketOrigin.contains(ord.MarketOrigin__c) || process.marketOrigin.isEmpty())
-                && process.plugPresence == plugPresence
+                && (process.plugPresence == plugPresence || process.commodity == 'HDT_RT_Gas')//aggiustamento plug presence gas
                 && (process.isOwnAccount == isOwnAccount || process.isOwnAccount == null)
                 && process.isChangeUse == isChangeUse
                 && process.isSwitchInRipristinatorio == isSwitchInRipristinatorio(ord)
