@@ -60,6 +60,10 @@
     <custom>false</custom>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_ObjectRecordType__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>AccountDataEnrichment__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -5010,6 +5014,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CorrectorCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.CreatorGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6186,11 +6195,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.ProfilingPrivacy__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.QrCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9341,6 +9345,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>GeneralTermsCondition__c.Version__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.ValueToRemove__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.RecordTypeDeveloperName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -21985,6 +21999,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.IsBillableVas__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.IsChangeSalesCompany__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32716,6 +32735,9 @@
         <layout>SBQQ__ProductRule__c-Product Rule Layout CPQ</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>SBQQ__Quote__c-Quote Layout New</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Scorecard-Scorecard Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -32813,7 +32835,7 @@
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali2</layout>
+        <layout>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</recordType>
     </layoutAssignments>
     <layoutAssignments>

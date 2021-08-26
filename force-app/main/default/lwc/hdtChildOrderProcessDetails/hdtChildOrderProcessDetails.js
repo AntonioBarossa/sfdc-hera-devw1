@@ -479,10 +479,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
         if(currentSectionName === 'dettaglioImpianto'){
             if(this.template.querySelector("[data-id='SurfaceServed__c']") !== null 
-                && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'
-                && this.typeVisibility('gas')
-                && (this.template.querySelector("[data-id='SurfaceServed__c']").value === ''
-                    || this.template.querySelector("[data-id='SurfaceServed__c']").value === null)) {
+           
+                && 
+                this.typeVisibility('gas') 
+                && 
+            // Start 25/08/2021 richiesto nei test UAT
+                (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta')
+            // End 25/08/2021 richiesto nei test UAT
+                && 
+                (this.template.querySelector("[data-id='SurfaceServed__c']").value === ''|| this.template.querySelector("[data-id='SurfaceServed__c']").value === null)) {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -564,7 +569,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
-                        message: 'Popolare il campo Pressione fornitura',
+                        message: 'Popolare il campo Livello pressione',
                         variant: 'error',
                         mode: 'sticky'
                     });
@@ -1048,7 +1053,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'SAPImplantCode__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true,
+                        'disabled': true, //UAT 25/08/2021 JIRA 336
                         'value': '',
                         'processVisibility': ''
                     },
@@ -1486,7 +1491,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'SAPImplantCode__c',
                     'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'),
                     'required': false,
-                    'disabled': false,
+                    'disabled': true, //UAT 25/08/2021 JIRA 336
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1528,7 +1533,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Pressione fornitura',
+                    'label': 'Livello pressione',
                     'apiname': 'PressureLevel__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
@@ -1603,12 +1608,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     ), 
                     new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
                     new fieldData(
-                        'Sottotipo Vas','VASSubtype__c', 
+                        'Sottotipo Vas','VasSubtype__c', 
                         this.typeVisibility('both'), 
                         false, true, '',''
                     ),
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
-                    new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, true, ''),
+                    new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, false, ''),
                     new fieldData('Soc Vendita','SalesCompany__c', true, false, true, ''),
 
                     
@@ -1878,7 +1883,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
                     new fieldData('POD/PDR','ServicePointCode__c', true, false, true, ''),
                     new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
-                    new fieldData('Sottotipo VAS','VASSubtype__c', true, false, true, ''),
+                    new fieldData('Sottotipo VAS','VasSubtype__c', true, false, true, ''),
                     new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, false, ''),
                     new fieldData('Azione Commerciale','CommercialAction__c', true, false, false, '')
                 ]
@@ -1913,7 +1918,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'fatturazione',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable
+                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable || this.order.RecordType.DeveloperName=="HDT_RT_ScontiBonus"
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
@@ -2154,7 +2159,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'metodoPagamento',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable
+                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable 
+                || this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'

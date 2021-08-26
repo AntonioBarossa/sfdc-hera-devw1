@@ -28,7 +28,7 @@
 &quot;apiName&quot; : &quot;PODPDRFormula__c&quot;
 }
 ],
-&quot;whereCond&quot; : &quot;Type IN (&apos;Variazione Potenza&apos;,&apos;Variazione Fase&apos;,&apos;Variazione Tensione&apos;,&apos;Riattivazione Fornitura&apos;) AND Phase__c NOT IN (&apos;Ammissibilità KO&apos;, &apos;Annullato&apos;, &apos;Esito KO da DL&apos;,&apos;Esito KO da SII&apos;)&quot;
+&quot;whereCond&quot; : &quot;Type IN (&apos;Variazione Potenza&apos;,&apos;Variazione Fase&apos;,&apos;Variazione Tensione&apos;,&apos;Riattivazione Fornitura&apos;) AND Phase__c NOT IN (&apos;Ammissibilità KO&apos;, &apos;Annullato&apos;,&apos;Ripensato&apos;, &apos;Esito KO da DL&apos;,&apos;Esito KO da SII&apos;)&quot;
 },
 {
 &quot;obj&quot; : &quot;Order&quot;,
@@ -56,7 +56,7 @@
 &quot;apiName&quot; : &quot;ServicePointCode__c&quot;
 }
 ],
-&quot;whereCond&quot; : &quot;ProcessType__c IN (&apos;Switch in Ele&apos;,&apos;Switch in Gas&apos;,&apos;Switch in Reseller&apos;,&apos;Voltura con Switch&apos;,&apos;Voltura&apos;,&apos;Cambio Offerta&apos;) AND Phase__c NOT IN (&apos;Annullato&apos;,&apos;Ammissibilità KO&apos;,&apos;Esito KO da DL&apos;,&apos;Esito KO da SII&apos;)&quot;
+&quot;whereCond&quot; : &quot;ProcessType__c IN (&apos;Switch in Ele&apos;,&apos;Switch in Gas&apos;,&apos;Switch in Reseller&apos;,&apos;Voltura con Switch&apos;,&apos;Voltura&apos;,&apos;Cambio Offerta&apos;) AND Phase__c NOT IN (&apos;Annullato&apos;,&apos;Ripensato&apos;,&apos;Ammissibilità KO&apos;,&apos;Esito KO da DL&apos;,&apos;Esito KO da SII&apos;)&quot;
 }
 ]
 }</value>

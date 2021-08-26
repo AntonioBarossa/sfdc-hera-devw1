@@ -3,7 +3,7 @@
     <fullName>HDT_VR_GestApp_Obbligatorieta</fullName>
     <active>false</active>
     <description>Verifica l&apos;obbligatorietà dei campi delle Activity di Appuntamento Distributore</description>
-    <errorConditionFormula>AND(RecordTypeId = &quot;0123N000002WpWEQA0&quot;,
+    <errorConditionFormula>AND(RecordType.DeveloperName = &quot;HDT_RT_DistributorAppointment&quot;,
 				OR(
 				    Account__c=&quot;&quot;,
 				    Contact__c=&quot;&quot;,

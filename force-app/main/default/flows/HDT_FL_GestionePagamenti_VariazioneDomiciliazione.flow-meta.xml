@@ -1906,12 +1906,6 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Analitico</stringValue>
-                </value>
-            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1955,12 +1949,6 @@
                 <name>recordId</name>
                 <value>
                     <elementReference>CaseInput.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Analitico</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -2008,12 +1996,6 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Analitico</stringValue>
-                </value>
-            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -2057,12 +2039,6 @@
                 <name>recordId</name>
                 <value>
                     <elementReference>CaseInput.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Analitico</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
