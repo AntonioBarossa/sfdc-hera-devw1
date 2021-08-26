@@ -543,6 +543,13 @@ export default class hdtBillingProfileForm extends LightningElement {
         concatBillingErrorFields = concatBillingErrorFields.concat('Pagatore Alternativo, ');
         } 
 
+        if (this.template.querySelector("[data-id='SignatoryType__c']") !== null 
+        && this.template.querySelector("[data-id='SignatoryType__c']").value === 'Legale Rappresentante'
+        && this.template.querySelector("[data-id='LegalAgent__c']") !== null 
+        && (this.template.querySelector("[data-id='LegalAgent__c']").value === '' || this.template.querySelector("[data-id='LegalAgent__c']").value === null) ) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Legale Rapresentante, ');
+        } 
+
         if (this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']") !== null 
             && this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Codice Fiscale Sottoscrittore CC, ');
