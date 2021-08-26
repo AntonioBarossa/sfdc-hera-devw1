@@ -1665,7 +1665,13 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 
 			SBQQ__QuoteProcess__c qp = new SBQQ__QuoteProcess__c(
-            	Name = 'testQuoteProcess'+i
+            	Name = 'testQuoteProcess'+i,
+				SBQQ__Default__c = true,
+				SBQQ__GuidedOnly__c = true,
+				SBQQ__ProductAutoSelected__c = true,
+				SBQQ__ProductConfigurationInitializer__c = 'initializerTest',
+				SBQQ__ProductSearchExecutor__c = 'Executor',
+				SBQQ__SortOrder__c = 1
         	);
 
 			qProcessList.add(qp);
