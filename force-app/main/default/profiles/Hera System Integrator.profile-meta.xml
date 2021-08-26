@@ -30678,6 +30678,9 @@
         <layout>SBQQ__ProductRule__c-Product Rule Layout CPQ</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>SBQQ__Quote__c-Quote Layout New</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Scorecard-Scorecard Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
