@@ -86,7 +86,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         }
 
         currentCase.AmountToPayInInstallments__c = amountInstallment - totalRaiFeeResidual;
+        //Viene poi diviso per il numero di rate
         currentCase.InstallmentAmount__c = amountInstallment;
+        currentCase.Amount__c = amountInstallment;
 
         //Set CustomerAssisted
         customerAssisted = installmentsQr.getCustomerAssistedKpi(accountId);
@@ -118,9 +120,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
         Decimal total;
         if(currentCase.DepositAmount__c != null){
-            total = currentCase.InstallmentAmount__c - currentCase.DepositAmount__c;
+            total = currentCase.Amount__c - currentCase.DepositAmount__c;
         }else{
-            total = currentCase.InstallmentAmount__c;
+            total = currentCase.Amount__c;
         }
        
 
