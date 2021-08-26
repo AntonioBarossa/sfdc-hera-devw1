@@ -147,10 +147,17 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         ServicePoint__c servicePoint = servicePointList[0];
         
+        if(servicePoint.CommoditySector__c == 'Energia Elettrica'){
+            orderToUpdate.exciseEle__c =  mapAcciseEle.get(servicePoint.exciseEle__c) != null ? mapAcciseEle.get(servicePoint.exciseEle__c) : mapAcciseEle.get('ALTRO');
+        }
+        else if(servicePoint.CommoditySector__c == 'Gas'){
+            orderToUpdate.ExciseGas__c =  mapAcciseGas.get(servicePoint.ExciseGas__c) != null ? mapAcciseGas.get(servicePoint.ExciseGas__c) : mapAcciseGas.get('ALTRO');
+        } 
+/*
         if((servicePoint.exciseEle__c != null && servicePoint.exciseEle__c != '') || (servicePoint.ExciseGas__c != null && servicePoint.ExciseGas__c != '')){
             orderToUpdate.exciseEle__c =  servicePoint.exciseEle__c == 'ALTRO' ? 'Imposta usi domestici' : mapAcciseEle.get(servicePoint.exciseEle__c);
             orderToUpdate.ExciseGas__c =  ServicePoint.ExciseGas__c == 'ALTRO' ? 'Altro' : mapAcciseGas.get(ServicePoint.ExciseGas__c);
-        }
+        }*/
         if (servicePoint.Vat__c != null && servicePoint.Vat__c != '') {
             orderToUpdate.vat__c = mapIvaIdToValue2.get(ServicePoint.Vat__c);
         }
