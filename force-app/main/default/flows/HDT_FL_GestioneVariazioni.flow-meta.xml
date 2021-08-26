@@ -91,8 +91,8 @@
     <assignments>
         <name>Accorpamento_Campi</name>
         <label>Accorpamento Campi</label>
-        <locationX>4012</locationX>
-        <locationY>1378</locationY>
+        <locationX>4009</locationX>
+        <locationY>1476</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.DistributorNote__c</assignToReference>
             <operator>Assign</operator>
@@ -289,8 +289,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
-        <locationX>3880</locationX>
-        <locationY>1858</locationY>
+        <locationX>3869</locationX>
+        <locationY>2001</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -358,8 +358,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Elaborazione_Manuale</name>
         <label>Aggiorna Fase in Elaborazione Manuale</label>
-        <locationX>4144</locationX>
-        <locationY>1618</locationY>
+        <locationX>4141</locationX>
+        <locationY>1716</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -505,8 +505,8 @@
     <assignments>
         <name>Assegna_Codice_Causale_0_0</name>
         <label>Assegna Codice Causale</label>
-        <locationX>3880</locationX>
-        <locationY>1738</locationY>
+        <locationX>3879</locationX>
+        <locationY>1870</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -821,14 +821,18 @@
     <assignments>
         <name>Assegna_Valori_0_0_0_0_0</name>
         <label>Assegna Valori</label>
-        <locationX>4012</locationX>
-        <locationY>778</locationY>
+        <locationX>3871</locationX>
+        <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
             </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.MeterCode__c</assignToReference>
+            <operator>Assign</operator>
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_00_0_0_0_0_0</targetReference>
@@ -1026,6 +1030,50 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Avanzamento_Lettura</name>
+        <label>Avanzamento Lettura</label>
+        <locationX>3823</locationX>
+        <locationY>1328</locationY>
+        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Conferma_Reading</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtSelfReading.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtSelfReading.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetCaseAggiornato</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+        <rules>
+            <name>Annullamento</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtSelfReading.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>Annullamento</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Case_in_Bozza</name>
         <label>Case in Bozza?</label>
         <locationX>5110</locationX>
@@ -1150,8 +1198,8 @@
     <decisions>
         <name>InRete_o_ExtraRete</name>
         <label>InRete o ExtraRete?</label>
-        <locationX>4012</locationX>
-        <locationY>1498</locationY>
+        <locationX>4009</locationX>
+        <locationY>1596</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale</targetReference>
         </defaultConnector>
@@ -1557,8 +1605,8 @@
     <decisions>
         <name>OutcomeForm_0_0_0_0_0_0_0</name>
         <label>OutcomeForm</label>
-        <locationX>4012</locationX>
-        <locationY>1138</locationY>
+        <locationX>4004</locationX>
+        <locationY>1111</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annullata_0_0_0_0_0_0_0</name>
@@ -1600,7 +1648,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetCaseAggiornato</targetReference>
+                <targetReference>Screen_Autolettura</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -1777,7 +1825,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Valori_0_0_0_0_0</targetReference>
+                <targetReference>RiprendiDaBozza</targetReference>
             </connector>
             <label>Cambio Contatore</label>
         </rules>
@@ -1845,6 +1893,31 @@
                 <targetReference>Dettaglio_Bolletta</targetReference>
             </connector>
             <label>Altri Processi</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>RiprendiDaBozza</name>
+        <label>RiprendiDaBozza?</label>
+        <locationX>3938</locationX>
+        <locationY>732</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Valori_0_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Nuovo</defaultConnectorLabel>
+        <rules>
+            <name>Riprendi</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Case_00_0_0_0_0_0</targetReference>
+            </connector>
+            <label>Riprendi</label>
         </rules>
     </decisions>
     <decisions>
@@ -2106,8 +2179,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>Calcolo_Codice_Causale_0_0</name>
         <label>Calcolo Codice Causale</label>
-        <locationX>3880</locationX>
-        <locationY>1618</locationY>
+        <locationX>3879</locationX>
+        <locationY>1750</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Codice_Causale_0_0</targetReference>
@@ -2253,8 +2326,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>4012</locationX>
-        <locationY>1258</locationY>
+        <locationX>4009</locationX>
+        <locationY>1356</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Accorpamento_Campi</targetReference>
@@ -2696,8 +2769,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>4144</locationX>
-        <locationY>1738</locationY>
+        <locationX>4141</locationX>
+        <locationY>1836</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2727,8 +2800,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>3880</locationX>
-        <locationY>1978</locationY>
+        <locationX>3879</locationX>
+        <locationY>2110</locationY>
         <connector>
             <targetReference>Loading_Spinner_0</targetReference>
         </connector>
@@ -2932,8 +3005,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>Loading_Spinner_0</name>
         <label>Loading Spinner</label>
-        <locationX>3880</locationX>
-        <locationY>2098</locationY>
+        <locationX>3879</locationX>
+        <locationY>2230</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3044,6 +3117,99 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                 <name>recordId</name>
                 <value>
                     <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Autolettura</name>
+        <label>Screen Autolettura</label>
+        <locationX>4009</locationX>
+        <locationY>1227</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Avanzamento_Lettura</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeaderReading</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtSelfReading</name>
+            <extensionName>c:hdtSelfReading</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>object</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>servicePointId</name>
+                <value>
+                    <elementReference>GetInputCase.ServicePoint__r.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showBackButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showCancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showDraftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>commodity</name>
+                <value>
+                    <elementReference>GetInputCase.CommodityFormula__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>resumedFromDraft</name>
+                <value>
+                    <elementReference>ResumeFromDraft</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disabledReadingDate</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>allowSmallerReading</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -4141,8 +4307,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>ScreenInputFiscale_0_0_0_0_0_0</name>
         <label>Screen Input Fiscale</label>
-        <locationX>4012</locationX>
-        <locationY>1018</locationY>
+        <locationX>4007</locationX>
+        <locationY>1016</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4203,7 +4369,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -4814,6 +4980,16 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
         <value>
             <booleanValue>false</booleanValue>

@@ -1,7 +1,14 @@
 <apex:page standardController="CampaignMember">
-    <script>
+  <apex:includeScript value="/support/console/52.0/integration.js"/>
+    <script type="text/javascript">
         function redirectBack(){
             window.history.back();
+        }
+        var callCloseTab= function callCloseTab(result) {
+            sforce.console.closeTab(result.id);
+        }        
+        function closeTab() {
+            sforce.console.getEnclosingTabId(callCloseTab);
         }
     </script>
 
@@ -11,10 +18,10 @@
         <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
           <div class="slds-modal__container">
             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-              <p>Azione non disponibile</p>
+              <p>Azione non disponibile chiudi la scheda</p>
             </div>
             <footer class="slds-modal__footer">
-              <button class="slds-button slds-button_brand" onClick="redirectBack()">Chiudi</button>
+              <button class="slds-button slds-button_brand" onClick="closeTab();return false">Chiudi</button>
             </footer>
           </div>
         </section>

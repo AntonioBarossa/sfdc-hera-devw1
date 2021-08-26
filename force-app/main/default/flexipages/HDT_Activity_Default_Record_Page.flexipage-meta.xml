@@ -323,9 +323,9 @@
                         <rightValue>Sportello</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Chiamata</rightValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>Call</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

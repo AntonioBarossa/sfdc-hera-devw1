@@ -381,13 +381,24 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @return void
     */
     public static void checkForEsitiIntermedi(List<wrts_prcgvr__Activity__c> inputData){
+        Set<String> categories = new Set<String>();
+
+
+        Schema.DescribeFieldResult fieldResult = wrts_prcgvr__Activity__c.DiscardCategory__c.getDescribe();
+		List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+		for( Schema.PicklistEntry pickListVal : ple){
+            if(!'Manuale'.equalsIgnoreCase(pickListVal.getValue()) && pickListVal.isActive()){
+                categories.add(pickListVal.getValue());
+            }
+		}     
+
         List<wrts_prcgvr__Activity__c> toUpdate = new List<wrts_prcgvr__Activity__c>();
 
         set<id> parentObjectCase = new set<id>();
         set<id> parentObjectOrder = new set<id>();
         set<id> inputDataId = new set<id>();
         for(wrts_prcgvr__Activity__c currAct : inputData){
-            if(ESITIINTERMEDIHEROKU.contains(currAct.Type__c)){
+            if(categories.contains(currAct.DiscardCategory__c)){
                 inputDataId.add(currAct.Id);
                 if(string.isNotBlank(currAct.Case__c)){
                     parentObjectCase.add(currAct.Case__c);
@@ -396,19 +407,20 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 }
             }
         }
-        list<wrts_prcgvr__Activity__c> relatedActCase = [select id, Status__c from wrts_prcgvr__Activity__c where Case__c in :parentObjectCase and Type__c in :ESITIINTERMEDIHEROKU and Id not in :inputDataId];
-        list<wrts_prcgvr__Activity__c> relatedActOrder = [select id, Status__c from wrts_prcgvr__Activity__c where Order__c in :parentObjectOrder and Type__c in :ESITIINTERMEDIHEROKU and Id not in :inputDataId];
 
-        for(wrts_prcgvr__Activity__c relatedAct: relatedActCase){
+        list<wrts_prcgvr__Activity__c> relatedActs = [SELECT id, Status__c 
+                                                      FROM wrts_prcgvr__Activity__c 
+                                                      WHERE (Case__c IN :parentObjectCase OR Order__c IN :parentObjectOrder) 
+                                                      AND DiscardCategory__c IN :categories 
+                                                      AND Id NOT IN :inputDataId 
+                                                      AND status__c NOT IN ('Chiusa','Sospesa')];
+
+        for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
             system.debug(relatedAct);
             relatedAct.Status__c='Chiusa';
             toUpdate.add(relatedAct);
         }
-        for(wrts_prcgvr__Activity__c relatedAct: relatedActOrder){
-            system.debug(relatedAct);
-            relatedAct.Status__c='Chiusa';
-            toUpdate.add(relatedAct);
-        }
+
         
         if(!toUpdate.IsEmpty()){
             system.debug('lista NON vuota -> Aggiorno'+toUpdate);

@@ -350,6 +350,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     if(type.equalsIgnoreCase('Piano rate OK Acc. pagato')){
                         type = 'Acconto paperless pagato';
                     }
+                    else if(type.equalsIgnoreCase('KO Acc No pag rate Annullate')){
+                        type = 'Acconto Paperless Non Pagato';
+                    }
                 currentCase.Phase__c = type; 
             }
             if(String.isNotBlank(type) && recordCase.Type.equalsIgnoreCase('Comunicazione Pagamento') && type.equalsIgnoreCase('Pratica Gestita')){
@@ -366,6 +369,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
             }
             updateFuture(JSON.serialize(currentCase));
+            if(currentCase.Phase__c == 'Acconto Paperless Non Pagato'){
+                currentCase.Phase__c = 'Piano Rata Annullato';
+                updateFuture(JSON.serialize(currentCase));
+            }
             return caseUpdate;
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
