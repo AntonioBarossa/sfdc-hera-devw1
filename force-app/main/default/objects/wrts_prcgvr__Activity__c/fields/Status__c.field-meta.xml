@@ -92,6 +92,21 @@
                 <label>KO Forzato</label>
             </value>
             <value>
+                <fullName>Esitata</fullName>
+                <default>false</default>
+                <label>Esitata</label>
+            </value>
+            <value>
+                <fullName>Non Esitata</fullName>
+                <default>false</default>
+                <label>Non Esitata</label>
+            </value>
+            <value>
+                <fullName>Aperta</fullName>
+                <default>false</default>
+                <label>Aperta</label>
+            </value>
+            <value>
                 <fullName>Sospesa</fullName>
                 <default>false</default>
                 <label>Sospesa</label>
