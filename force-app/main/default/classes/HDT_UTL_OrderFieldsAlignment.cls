@@ -217,7 +217,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 orderToUpdate.CustomerCompanyName__c = account.LastName__c;
 
                 if (orderOld.ServicePoint__r.Vat__c == null || orderOld.ServicePoint__r.Vat__c == '') {
-                    orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
+                    // 26/08/2021 - gabriele.rota@webresults.it - Calcolo IVA
+                    //orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
+                    orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
                 }
 
                 if ((orderOld.ServicePoint__r.ExciseEle__c == null || orderOld.ServicePoint__r.ExciseEle__c == '') && orderOld.ServicePoint__r.RecordType.DeveloperName == 'HDT_RT_Ele') {
@@ -239,7 +241,14 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 orderToUpdate.CustomerLastName__c = account.LastName__c;
 
                 if (orderOld.ServicePoint__r.Vat__c == null || orderOld.ServicePoint__r.Vat__c == '') {
-                    orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
+
+                    // 26/08/2021 - gabriele.rota@webresults.it - Calcolo IVA
+                    if (orderOld.ServicePoint__r.Resident__c==true) {
+                        orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
+                    }
+                    else {
+                        orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
+                    }
                 }
 
                 if ((orderOld.ServicePoint__r.ExciseEle__c == null || orderOld.ServicePoint__r.ExciseEle__c == '') && orderOld.ServicePoint__r.RecordType.DeveloperName == 'HDT_RT_Ele') {

@@ -179,7 +179,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
                 envelopeId = requestBody.envelopeId;
                 transactionId = HDT_SRV_DocumentalManagement.getTransactionId(envelopeId);
                 SObject recordToUpdate = HDT_SRV_DocumentalManagement.getSobjectFromTransactionId(transactionId);
-                HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate,status);
+                HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate,requestBody);
             }
         } catch (Exception ex) {
             System.debug('Error in method handleDocusignNotify ' + ex.getMessage());
