@@ -708,6 +708,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         this.spinner=false;
                     });
                 }else{
+                    var prova = this.personFiscalCode.value;//.replace(/ /g,"");
+                    console.log("LOG12:" + prova);
+                    getFromFiscalCode2({
+                        fiscalCodes : prova
+                    }).then((response) => {
                     console.log("*******PRI");
                     console.log("LOG16");
                     dataAccount={
@@ -779,7 +784,18 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         this.spinner=false;
                         this.dispatchEvent(event);
                     });
-                }  
+                }).catch((errorMsg) => {
+                    console.log("LOG12Error");
+                    const event = new ShowToastEvent({
+                        message: 'Inserire un codice fiscale valido',
+                        variant: 'error',
+                        mode: 'dismissable'
+                    });
+                    this.dispatchEvent(event);
+                    this.spinner=false;
+                });
+                } 
+                 
             }else{
                 console.log("LOG18");
                 const event = new ShowToastEvent({

@@ -1053,7 +1053,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'SAPImplantCode__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true,
+                        'disabled': true, //UAT 25/08/2021 JIRA 336
                         'value': '',
                         'processVisibility': ''
                     },
@@ -1491,7 +1491,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'SAPImplantCode__c',
                     'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'),
                     'required': false,
-                    'disabled': true, //UAT 25/08/2021
+                    'disabled': true, //UAT 25/08/2021 JIRA 336
                     'value': '',
                     'processVisibility': ''
                 },
