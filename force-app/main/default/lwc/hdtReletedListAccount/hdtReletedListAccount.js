@@ -501,7 +501,9 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
                         
                     }
                     else{
-                        console.log('è else');
+                        getFromFiscalCode({
+                            fiscalCodes : this.fiscalCode.value.replace(/ /g,"") }).then((response) => {
+           
                         let acc= {
                             "firstName": firstName.value,
                             "lastName": lastName.value,
@@ -554,6 +556,15 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
                             this.dispatchEvent(event);
                             this.spinner=false;
                         });
+                    }).catch((errorMsg) => {
+                        const event = new ShowToastEvent({
+                            message: 'Inserire un codice fiscale valido',
+                            variant: 'error',
+                            mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
+                        this.spinner=false;
+                    });
                     }
                 }
                 else{
