@@ -12,17 +12,6 @@ public with sharing class HDT_QR_QuoteLineTst {
 
     @TestSetup
     static void setup(){
-        
-        // Id adminUserProfileId = HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
-
-		// User internalUser = HDT_UTL_DataFactoryTst.createInternalUser(AdminUserProfileId, false);
-		// internalUser.UserPermissionsMarketingUser=true;
-		// insert internalUser;
-
-		// List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, constants.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, constants.PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME, false)};
-		// insert permissionSetAssignments;
-
-		// System.runAs(internalUser){
 
 			HDT_UTL_DataFactoryTst.pClickInstance();
 			HDT_UTL_DataFactoryTst.pClickOrderPhase();
@@ -39,10 +28,6 @@ public with sharing class HDT_QR_QuoteLineTst {
             products[0].Version__c = 'version';
 			insert products;
 
-			// Id pricebookId=Test.getStandardPricebookId();
-
-			// List<PricebookEntry> pricebookEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, pricebookId);
-
 			List<BillingProfile__c> billingProfiles = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accounts[0].Id);
 
             List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accounts[0].Id);
@@ -50,15 +35,12 @@ public with sharing class HDT_QR_QuoteLineTst {
             insert contractList;
 
 			List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id, 'Bozza');
-			// orders[0].BillingProfile__c=billingProfiles[0].Id;
-			// insert orders;
 
 			List<SBQQ__Quote__c> quotes = HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].Id, opportunities[0].Id, sales[0].Id, 'Amendment');
 			quotes[0].SBQQ__Account__c = accounts[0].Id;
             quotes[0].OrderReference__c = orders[0].Id;
             quotes[0].ContractReference__c = contractList[0].Id;
             quotes[0].SBQQ__Status__c = 'Accepted';
-			// quotes[0].SBQQ__PricebookId__c=pricebookId;
 
 			insert quotes;
 
@@ -91,7 +73,6 @@ public with sharing class HDT_QR_QuoteLineTst {
             qlList[2].Channel__c = 'NHK';
 
             update qlList;
-        // }
     }
 
     @isTest
