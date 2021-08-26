@@ -22,36 +22,12 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>wrts_prcgvr__StatusIcon__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Status__c</field>
+                <field>Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IsClientInResolution153__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Order__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ContactDate__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ContactResult__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CausalQualityComfortCall__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -61,11 +37,31 @@
                 <behavior>Edit</behavior>
                 <field>ContactSurname__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Order__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecordingLink__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ContactResult__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CausalQualityComfortCall__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Type__c</field>
+                <field>Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IsClientInResolution153__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -82,6 +78,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ContactDate__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -150,21 +150,6 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>ACCOUNT.ADDRESS1_CITY</fields>
-        <fields>ACCOUNT.PHONE1</fields>
-        <relatedList>Account.Activity__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>ORDERS.ORDER_NUMBER</fields>
-        <fields>SALES.ACCOUNT.NAME</fields>
-        <fields>ORDERS.STATUS</fields>
-        <fields>ORDERS.TOTAL_AMOUNT</fields>
-        <relatedList>Order.Activity__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>STATUS</fields>
         <fields>COMPANY</fields>
@@ -179,7 +164,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7Y000001VQ0c</masterLabel>
+        <masterLabel>00h3N000002io5h</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -149,6 +149,10 @@
                 <behavior>Readonly</behavior>
                 <field>ChangeDate__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>MeterCode__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

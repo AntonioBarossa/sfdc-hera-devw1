@@ -30,6 +30,18 @@
     <!-- id del Lead oggetto del processo. -->
     <aura:attribute name="leadId" type="String"/>
 
+    <!--Attributo per innesco da Service Point-->
+    <aura:attribute name="servicePointId" type="String"/>
+
+    <!--Attributo per innesco da BillingProfile-->
+    <aura:attribute name="billingProfileId" type="String"/>
+
+    <!--Attributo per Sequenzializzazione-->
+    <aura:attribute name="serviceRequestId" type="String"/>
+
+    <!--Attributo per esito Compatibilita-->
+    <aura:attribute name="compatibile" type="Boolean"/>
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <lightning:workspaceAPI aura:id="workspace" />
     <aura:handler event="lightning:tabClosed" action="{! c.onTabClosed }"/>
