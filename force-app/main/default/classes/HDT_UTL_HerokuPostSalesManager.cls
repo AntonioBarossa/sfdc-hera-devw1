@@ -369,6 +369,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
             }
             updateFuture(JSON.serialize(currentCase));
+            if(currentCase.Phase__c == 'Acconto Paperless Non Pagato'){
+                currentCase.Phase__c = 'Piano Rata Annullato';
+                updateFuture(JSON.serialize(currentCase));
+            }
             return caseUpdate;
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
