@@ -709,6 +709,7 @@ public inherited sharing class HDT_QR_Order {
             CancellationReason__c
         FROM Order
         WHERE ParentOrder__c = :parentOrderId
+        AND QualityCall__c = true
         WITH SECURITY_ENFORCED
         ];
     }
@@ -745,5 +746,9 @@ public inherited sharing class HDT_QR_Order {
             AND Account.ActiveMonitoring__c = true
             WITH SECURITY_ENFORCED
         ];
+    }
+
+    public List<Order> getOrderForComfort(String id){
+        return [Select id,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
     }
 }

@@ -235,6 +235,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                 ) 
             }
+            else if(element=='PowerRequested__c'){
+                this.allSubmitedFields.PowerRequested__c = null;
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : mapFieldReq.get(element),
+                        value: '',
+                        disabled: false
+                    }
+                ) 
+            }
             else
             {
                 console.log('entra in else ++++' + JSON.stringify(element));
@@ -660,7 +671,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('getInstanceWrapObject - START');
         console.log('getInstanceWrapObject - servicePointRetrievedData' +JSON.stringify(servicePointRetrievedData));
         this.allSubmitedFields=this.servicePointRetrievedData;
-
+        this.allSubmitedFields.PowerRequested__c = null;
         getInstanceWrapAddressObject({s:servicePointRetrievedData}).then(data => {
             this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValues(data);
             console.log('getInstanceWrapObject - getInstanceWrapAddressObject Start '+ JSON.stringify(data));
