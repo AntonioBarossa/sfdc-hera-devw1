@@ -20,7 +20,7 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 			conditionMap =' (Email!=null OR Email!=\'\') AND (IndividualId!=null) AND Email NOT IN:setEmailContactProcessed   ';
 		}
 
-        String query = 'SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,'+
+        String query = 'SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,CreatedDate,'+
         '(SELECT id,Contact__c,Contact__r.Email,BillSendingMethod__c,PaymentMethod__c,Status__c FROM BillingProfiles__r),'+
         '(SELECT id,ContactId,Contact.Email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Cases),'+
         '(SELECT id,Contact__c,Contact__r.Email,ActivatedDate,CustomerSignedDate,EndDate,EstimatedEndDate__c,Status FROM Contract__r),'+
@@ -47,7 +47,7 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 		'orderRecordTypeId'=>'orderRecordTypeId','orderStatus'=>'Order_Status','orderType'=>'Order_Tipo','servicePointCommoditySector'=>'Settore Merceologico','accountChurnRisk'=>'Account_ChurnRisk',
 		'accountCustomerLifeCycleStatus'=>'Account_CustomerLifeCycles','accountCustomerQuality'=>'Account_Customer Quality'};
 		
-		try {
+		
 			
 			// logica duplicati Contact start
 			for (Contact tempContact : scope) {
@@ -66,11 +66,7 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 			// logica duplicati Contact end
 			
 			
-			List<Contact> listContactNotInChunk = [ SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,
-            (SELECT id,Contact__c,Contact__r.Email,BillSendingMethod__c,PaymentMethod__c,Status__c FROM BillingProfiles__r),
-            (SELECT id,ContactId,Contact.Email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Cases),
-            (SELECT id,Contact__c,Contact__r.Email,ActivatedDate,CustomerSignedDate,EndDate,EstimatedEndDate__c,Status FROM Contract__r),
-            (SELECT id,Contact__c,Contact__r.Email,Phase__c,RecordTypeId,Status,Type,ServicePoint__r.CommoditySector__c FROM Orders__r) FROM Contact  
+			List<Contact> listContactNotInChunk = [ SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,CreatedDate FROM Contact  
 			WHERE   (Email IN:mapContactByEmail.keySet() AND Email NOT IN:setEmailContactProcessed  AND Id NOT IN :mapContactByEmail.values())  ORDER BY Email,CreatedDate];
 			
 			if (listContactNotInChunk!=null && !listContactNotInChunk.isEmpty()) {	
@@ -97,10 +93,20 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 			
 			
 			for (Contact tempContact: mapContactByEmail.values()) {
-				listBillingProfile.addAll(tempContact.BillingProfiles__r);
-				listCase.addAll(tempContact.cases);
-				listContract.addAll(tempContact.Contract__r);
-				listOrder.addAll(tempContact.Orders__r);
+				if (tempContact.BillingProfiles__r.size() > 0){
+					listBillingProfile.addAll(tempContact.BillingProfiles__r);
+				}
+				if (tempContact.cases.size() > 0){
+					listCase.addAll(tempContact.cases);
+				}
+				if (tempContact.Contract__r.size() > 0){
+					listContract.addAll(tempContact.Contract__r);
+				}
+				if (tempContact.Orders__r.size() > 0){
+					listOrder.addAll(tempContact.Orders__r);
+				}
+			
+				
 				
 				if (mapEmailAttributes.get(tempContact.Email)==null) {
 					HDT_WRP_Attributes att= new HDT_WRP_Attributes();
@@ -298,16 +304,13 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 				listIdContentVersion.add(cv.Id);
 			}
 		}
-		catch (Exception e) {
-			System.debug('Exception : '+e.getMessage());
-			status='failed';
-		}
+	
     }
 
     public void finish(Database.BatchableContext bc){
         System.debug('Finish HDT_BA_ConsentContact ');
 		
-		HDT_WS_CampagenDmDmp.callService(runId,status,'attributi',listIdContentVersion);
+		HDT_WS_CampagenDmDmp.callService(runId,status,'CMPDMP_ATTR',listIdContentVersion);
 
     }
 }

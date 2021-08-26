@@ -13,7 +13,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 	}
 	
 	public Database.QueryLocator start(Database.BatchableContext bc) {
-		String query ='SELECT id,ContactReason__c,Status,CreatedDate,InterestArea__c,Rating,Email,(SELECT id,Lead__c,ContactId,Contact.Email,Lead__r.email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Cases__r)FROM lead WHERE  (email !=null OR  email!=\'\') AND (IsConverted=false)AND Status!=\'Expired\'  ORDER BY Email,CreatedDate';
+		String query ='SELECT id,ContactReason__c,Status,CreatedDate,InterestArea__c,Rating,Email,(SELECT id,Lead__c,ContactId,Contact.Email,Contact.CreatedDate,Lead__r.email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Cases__r)FROM lead WHERE  (email !=null OR  email!=\'\') AND (IsConverted=false)AND Status!=\'Expired\'  ORDER BY Email,CreatedDate';
 		return Database.getQueryLocator(query);
 	}
 	
@@ -55,10 +55,10 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 			
 			// controllo se sono presenti contact con la stessa email dei lead che sto processando
 			if (!mapLeadByEmail.isEmpty()) {
-				listContacts = [SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,
+				listContacts = [SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,CreatedDate,
 				(SELECT id,Contact__c,Contact__r.Email,BillSendingMethod__c,PaymentMethod__c,Status__c FROM BillingProfiles__r),
-				(SELECT id,ContactId,Contact.Email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Cases),
-				(SELECT id,Contact__c,Contact__r.Email,ActivatedDate,CustomerSignedDate,EndDate,EstimatedEndDate__c,Status FROM Contract__r),
+				(SELECT id,ContactId,Contact.Email,Contact.CreatedDate,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Cases),
+				(SELECT id,Contact__c,Contact__r.Email,Contact__r.CreatedDate,ActivatedDate,CustomerSignedDate,EndDate,EstimatedEndDate__c,Status FROM Contract__r),
 				(SELECT id,Contact__c,Contact__r.Email,Phase__c,RecordTypeId,Status,Type,ServicePoint__r.CommoditySector__c FROM Orders__r) FROM Contact  WHERE  Email IN:mapLeadByEmail.keySet() ORDER BY Email,CreatedDate ]; 	
 			}
 			
@@ -72,7 +72,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 				else {
 					Contact actualContact=mapContactByEmail.get(tempContact.Email);
 					
-					if (tempContact.CreatedDate>actualContact.CreatedDate) {
+					if (actualContact!=null && tempContact.CreatedDate>actualContact.CreatedDate) {
 						mapContactByEmail.put(tempContact.Email, tempContact);
 					}
 				}
@@ -353,6 +353,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 		}
 		catch (Exception e) {
 			System.debug('Exception : '+e.getMessage());
+			System.debug('lineNumber : '+e.getLineNumber());
 			status='failed';
 		}
 		

@@ -64,7 +64,7 @@ public without sharing class HDT_BA_ConsentContact  implements Database.Batchabl
 					(tempContact.Individual.PrivacyProfilingChoiceDate__c>actualContact.Individual.PrivacyProfilingChoiceDate__c)) {
 						mapContactByEmail.remove(tempContact.Email);
 					}
-					else if(tempContact.CreatedDate>actualContact.CreatedDate) {
+					else if(actualContact!=null&&tempContact.CreatedDate>actualContact.CreatedDate) {
 						mapContactByEmail.remove(tempContact.Email);
 					}
 				}
@@ -109,6 +109,6 @@ public without sharing class HDT_BA_ConsentContact  implements Database.Batchabl
 	public void finish(Database.BatchableContext bc){
 		System.debug('Finish HDT_BA_ConsentContact ');
 		
-		HDT_WS_CampagenDmDmp.callService(runId,status,'consensi',listIdContentVersion);
+		HDT_WS_CampagenDmDmp.callService(runId,status,'CMPDMP_PRV',listIdContentVersion);
 	}
 }

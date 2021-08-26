@@ -113,7 +113,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 							//mapLeadByEmail.put(tempLead.Email, tempLead);//
 							mapLeadByEmail.keySet().remove(tempLead.Email); // verrà aggiunto nel prossimo chunk
 						}
-						else if(tempLead.CreatedDate>actualLead.CreatedDate){
+						else if(actualLead!=null &&tempLead.CreatedDate>actualLead.CreatedDate){
 							mapLeadByEmail.keySet().remove(tempLead.Email); // verrà aggiunto nel prossimo chunk
 						} 
 					}
