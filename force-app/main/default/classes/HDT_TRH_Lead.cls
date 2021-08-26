@@ -114,36 +114,45 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 List<String> contId = new List<String>();
                 Recordtype r = recordtypeQr.getRecordType('HDT_RT_Business', 'Account');  
                 accounts = accPerson.getRecordsById(accountIdList,'id,Name, firstname__c,LastName__c,PrimaryEmail__c,Description,FiscalCode__c,recordtypeid,Phone,FAX__c' );
-                For(Account a : accounts){
+                for(Account a : accounts){
                     accId.add(a.id);
                     if(mapAccountLead.get(a.id) != null){
                         String lastName = (a.LastName__c != null && a.LastName__c != '' ? a.LastName__c : a.Name);
-            
-                        if(r.id == a.recordtypeid){
-                            Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone= a.Phone, Email= a.PrimaryEmail__c, Fax= a.FAX__c);
-                            conList.add(contact);
-                            Lead li = mapAccountLead.get(a.id);
-                           // a.FirstName__c = li.FirstName;
-                            a.LastName__c = li.Company;
-                            a.Name=li.Company;
-                            a.PrimaryEmail__c= li.Email;
-                            a.Description= li.Description;
-                            accToUpdate.add(a);
-                        }
-                        else{       
-                            Lead li = mapAccountLead.get(a.id);
-                            a.FirstName__c = li.FirstName;
-                            a.LastName__c = li.LastName;
-                            a.PrimaryEmail__c= li.Email;
-                            a.Description= li.Description;
-                            String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
-                            a.Name=expectedNewName;
-                            accToUpdate.add(a);
+                        if ( a.LastName__c==null) {
+                            if(r.id == a.recordtypeid){
+                                Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone= a.Phone, Email= a.PrimaryEmail__c, Fax= a.FAX__c);
+                                conList.add(contact);
+                                Lead li = mapAccountLead.get(a.id);
+                               // a.FirstName__c = li.FirstName;
+                            
+                                a.LastName__c = li.Company;
+                                a.Name=li.Company;
+                                a.PrimaryEmail__c= li.Email;
+                                a.Description= li.Description;
+                                accToUpdate.add(a);
+
+                            }
+                            else{       
+                                Lead li = mapAccountLead.get(a.id);
+                                a.FirstName__c = li.FirstName;
+                                a.LastName__c = li.LastName;
+                                a.PrimaryEmail__c= li.Email;
+                                a.Description= li.Description;
+                                String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
+                                a.Name=expectedNewName;
+                                accToUpdate.add(a);
+                            }
                         }
                     }     
                 }
-                update accToUpdate;
-                insert conList;
+                if (accToUpdate.size()>0) {
+                    update accToUpdate;
+                }
+                if (conList.size()>0) {
+                    insert conList;
+                }
+               
+             
                 for(Contact c : conList){
                     contId.add(c.id);
                 }
