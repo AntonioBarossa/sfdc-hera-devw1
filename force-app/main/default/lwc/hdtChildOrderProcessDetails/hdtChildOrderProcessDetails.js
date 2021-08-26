@@ -1213,8 +1213,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                //25/08/2021 - gabriele.rota@webresults.it - Modificabile per Prima Attivazione Ele
-                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), false, (this.order.ProcessType__c!=='Prima Attivazione Ele'), '',''),
+                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), false, true, '',''),
                 {
                     'label': 'Consumi Anno',
                     'apiname': 'AnnualConsumption__c',
