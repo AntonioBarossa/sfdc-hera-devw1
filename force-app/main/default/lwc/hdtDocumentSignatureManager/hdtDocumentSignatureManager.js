@@ -355,10 +355,14 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         this.dispatchEvent(new CustomEvent('previewexecuted'));
                     }else{
                         this.showSpinner = false;
+                        console.log('temp workaround in caso di plico non trovato'); // TODO REMOVE
+                        this.dispatchEvent(new CustomEvent('previewexecuted'));      // TODO REMOVE
                         this.showMessage('Attenzione',resultParsed.message,'error');
                     }
                 }else{
                     this.showSpinner = false;
+                    console.log('temp workaround in caso di plico non trovato'); // TODO REMOVE
+                    this.dispatchEvent(new CustomEvent('previewexecuted'));      // TODO REMOVE
                     this.showMessage('Attenzione','Errore nella composizione del plico','error');
                 }
             })
