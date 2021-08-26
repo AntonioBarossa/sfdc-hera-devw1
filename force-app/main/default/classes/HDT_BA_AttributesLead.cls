@@ -3,6 +3,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 	
 	public String runId;
 	public String status;
+	public String errorMessage;
 	public List<Id> listIdContentVersion = new List<Id>();
 	public Set<String> setEmailContactProcessed = new Set<String>();
 	
@@ -355,13 +356,14 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 			System.debug('Exception : '+e.getMessage());
 			System.debug('lineNumber : '+e.getLineNumber());
 			status='failed';
+			errorMessage=e.getMessage();
 		}
 		
 	}
 	
 	public void finish(Database.BatchableContext bc){
 		System.debug('Finish HDT_BA_AttributesLead ');
-		HDT_BA_AttributesContact attrContact = new HDT_BA_AttributesContact(runId,status,listIdContentVersion,setEmailContactProcessed); 
+		HDT_BA_AttributesContact attrContact = new HDT_BA_AttributesContact(runId,status,errorMessage,listIdContentVersion,setEmailContactProcessed); 
 		Id batchprocessid = Database.executeBatch(attrContact,1000);
 
 	}

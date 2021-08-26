@@ -2,12 +2,14 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
     
     public String runId;
     public String status;
+	public String errorMessage;
     public List<Id> listIdContentVersion = new List<Id>();
 	public Set<String> setEmailContactProcessed = new Set<String>();
 
     public Set<String> setEmailProcessed = new Set<String>();
-    public HDT_BA_AttributesContact(String paramRunId,String paramStatus,List<id> paramListIdContentVersion,Set<String> paramSetEmailProcessed ){
+    public HDT_BA_AttributesContact(String paramRunId,String paramStatus,String paramErrorMessage,List<id> paramListIdContentVersion,Set<String> paramSetEmailProcessed ){
        this.runId=paramRunId;
+	   this.errorMessage=paramErrorMessage;
 	   this.status=String.isBlank(paramStatus)?'success':paramStatus;
        this.listIdContentVersion.addAll(paramListIdContentVersion);
        this.setEmailProcessed.addAll(paramSetEmailProcessed);
@@ -20,11 +22,7 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 			conditionMap =' (Email!=null OR Email!=\'\') AND (IndividualId!=null) AND Email NOT IN:setEmailContactProcessed   ';
 		}
 
-        String query = 'SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,CreatedDate,'+
-        '(SELECT id,Contact__c,Contact__r.Email,BillSendingMethod__c,PaymentMethod__c,Status__c FROM BillingProfiles__r),'+
-        '(SELECT id,ContactId,Contact.Email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Cases),'+
-        '(SELECT id,Contact__c,Contact__r.Email,ActivatedDate,CustomerSignedDate,EndDate,EstimatedEndDate__c,Status FROM Contract__r),'+
-        '(SELECT id,Contact__c,Contact__r.Email,Phase__c,RecordTypeId,Status,Type,ServicePoint__r.CommoditySector__c FROM Orders__r) FROM Contact  WHERE '+conditionMap+'  ORDER BY Email,CreatedDate';
+        String query = 'SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,CreatedDate FROM Contact  WHERE '+conditionMap+'  ORDER BY Email,CreatedDate';
         return Database.getQueryLocator(query);
     }
 
@@ -47,7 +45,7 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 		'orderRecordTypeId'=>'orderRecordTypeId','orderStatus'=>'Order_Status','orderType'=>'Order_Tipo','servicePointCommoditySector'=>'Settore Merceologico','accountChurnRisk'=>'Account_ChurnRisk',
 		'accountCustomerLifeCycleStatus'=>'Account_CustomerLifeCycles','accountCustomerQuality'=>'Account_Customer Quality'};
 		
-		
+		try{
 			
 			// logica duplicati Contact start
 			for (Contact tempContact : scope) {
@@ -81,32 +79,28 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 			if (!setEmailContactProcessed.isEmpty()) {
 				mapContactByEmail.keySet().removeAll(setEmailContactProcessed); 
 			}
+			Set<Id> setContactId = new Set<Id>();
+			
 		
-			
-			List<BillingProfile__c> listBillingProfile  = new List<BillingProfile__c>();
-			List<Case> listCase                         = new List<Case>();
-			List<Order> listOrder                       = new List<Order>();
-			List<Contract> listContract                 = new List<Contract>();
-			
 			Map<String, HDT_WRP_Attributes> mapEmailAttributes = new Map<String,HDT_WRP_Attributes>();
 			
 			
 			
 			for (Contact tempContact: mapContactByEmail.values()) {
-				if (tempContact.BillingProfiles__r.size() > 0){
-					listBillingProfile.addAll(tempContact.BillingProfiles__r);
-				}
-				if (tempContact.cases.size() > 0){
-					listCase.addAll(tempContact.cases);
-				}
-				if (tempContact.Contract__r.size() > 0){
-					listContract.addAll(tempContact.Contract__r);
-				}
-				if (tempContact.Orders__r.size() > 0){
-					listOrder.addAll(tempContact.Orders__r);
-				}
+				// if (tempContact.BillingProfiles__r.size() > 0){
+				// 	listBillingProfile.addAll(tempContact.BillingProfiles__r);
+				// }
+				// if (tempContact.cases.size() > 0){
+				// 	listCase.addAll(tempContact.cases);
+				// }
+				// if (tempContact.Contract__r.size() > 0){
+				// 	listContract.addAll(tempContact.Contract__r);
+				// }
+				// if (tempContact.Orders__r.size() > 0){
+				// 	listOrder.addAll(tempContact.Orders__r);
+				// }
 			
-				
+				setContactId.add(tempContact.Id);
 				
 				if (mapEmailAttributes.get(tempContact.Email)==null) {
 					HDT_WRP_Attributes att= new HDT_WRP_Attributes();
@@ -126,6 +120,13 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 				
 			}
 			
+
+			List<BillingProfile__c> listBillingProfile  = [SELECT id,Contact__c,Contact__r.Email,BillSendingMethod__c,PaymentMethod__c,Status__c FROM BillingProfile__c  WHERE Contact__c IN:setContactId ];
+			List<Case> listCase                         = [SELECT id,ContactId,Contact.Email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Case WHERE ContactId IN:setContactId];
+			List<Order> listOrder                       = [SELECT id,Contact__c,Contact__r.Email,Phase__c,RecordTypeId,Status,Type,ServicePoint__r.CommoditySector__c FROM Order WHERE Contact__c IN:setContactId ];
+			List<Contract> listContract                 = [SELECT id,Contact__c,Contact__r.Email,ActivatedDate,CustomerSignedDate,EndDate,EstimatedEndDate__c,Status FROM Contract WHERE Contact__c IN:setContactId ];
+
+
 			for (Case tempCase : listCase) {
 
 				// se l'attributo nella classe wrapper non è vuoto, 
@@ -302,15 +303,24 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 				insert cv;
 				
 				listIdContentVersion.add(cv.Id);
+		
 			}
+			
+
 		}
-	
+		catch (Exception e) {
+			System.debug('Exception : '+e.getMessage());
+			System.debug('lineNumber : '+e.getLineNumber());
+			status='failed';
+			errorMessage=e.getMessage();
+		}
+
     }
 
     public void finish(Database.BatchableContext bc){
         System.debug('Finish HDT_BA_ConsentContact ');
 		
-		HDT_WS_CampagenDmDmp.callService(runId,status,'CMPDMP_ATTR',listIdContentVersion);
+		HDT_WS_CampagenDmDmp.callService(runId,status,'CMPDMP_ATTR',errorMessage,listIdContentVersion);
 
     }
 }

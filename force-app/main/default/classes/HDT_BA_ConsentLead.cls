@@ -3,6 +3,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 
 		public String runId;
 		public String status;
+		public String errorMessage;
 		public List<Id> listIdContentVersion = new List<Id>();
 		public Set<String> setEmailContactProcessed = new Set<String>();
 
@@ -152,13 +153,14 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 			} catch (Exception e) {
 				System.debug('Exception : '+e.getMessage());
 				status='failed';
+				errorMessage=e.getMessage();
 			}
 		}
 		
 		public void finish(Database.BatchableContext bc){
 			
 			System.debug('Finish HDT_BA_ConsentLead ');
-			HDT_BA_ConsentContact consentContact = new HDT_BA_ConsentContact(runId,status,listIdContentVersion,setEmailContactProcessed); 
+			HDT_BA_ConsentContact consentContact = new HDT_BA_ConsentContact(runId,status,errorMessage,listIdContentVersion,setEmailContactProcessed); 
 			Id batchprocessid = Database.executeBatch(consentContact,1000);
 
 		}
