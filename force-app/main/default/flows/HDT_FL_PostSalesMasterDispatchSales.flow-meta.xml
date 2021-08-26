@@ -1856,7 +1856,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>UserInputFlow</elementReference>
+                    <elementReference>ProcessType</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
