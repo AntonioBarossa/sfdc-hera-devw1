@@ -81,6 +81,8 @@ public inherited sharing class HDT_QR_Quote {
             AmendmentAllowed__c,
             SalesCompanyCode__c,
             SalesCompany__c,
+            SBQQ__MasterContract__r.ContractNumber,
+            SBQQ__MasterContract__r.BillingProfile__c,
             isBillableVas__c
             FROM SBQQ__Quote__c
             WHERE Id = :quoteId

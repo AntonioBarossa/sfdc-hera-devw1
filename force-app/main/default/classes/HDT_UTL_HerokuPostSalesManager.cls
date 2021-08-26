@@ -345,7 +345,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String message = reqWrp.requestMap.get('MESSAGGIO');
             if(String.isNotBlank(type) 
                 && String.isNotBlank(recordCase.Type) 
-                && (recordCase.Type.equals('Prescrizione Fatture') || recordCase.Type.equalsIgnoreCase('Piano Rateizzazione') || recordCase.Type.equalsIgnoreCase('Comunicazione Pagamento')) 
+                && (recordCase.Type.equals('Prescrizione Fatture') || recordCase.Type.equalsIgnoreCase('Piano Rateizzazione'))
                 && !(type.containsIgnoreCase('Esito Rateizzazione OK'))){
                     if(type.equalsIgnoreCase('Piano rate OK Acc. pagato')){
                         type = 'Acconto paperless pagato';
