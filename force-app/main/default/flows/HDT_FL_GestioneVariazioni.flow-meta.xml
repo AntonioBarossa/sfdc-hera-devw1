@@ -821,18 +821,14 @@
     <assignments>
         <name>Assegna_Valori_0_0_0_0_0</name>
         <label>Assegna Valori</label>
-        <locationX>3871</locationX>
-        <locationY>863</locationY>
+        <locationX>3973</locationX>
+        <locationY>781</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
             </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetInputCase.MeterCode__c</assignToReference>
-            <operator>Assign</operator>
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_00_0_0_0_0_0</targetReference>
@@ -1825,7 +1821,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>RiprendiDaBozza</targetReference>
+                <targetReference>Assegna_Valori_0_0_0_0_0</targetReference>
             </connector>
             <label>Cambio Contatore</label>
         </rules>
@@ -1893,31 +1889,6 @@
                 <targetReference>Dettaglio_Bolletta</targetReference>
             </connector>
             <label>Altri Processi</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>RiprendiDaBozza</name>
-        <label>RiprendiDaBozza?</label>
-        <locationX>3938</locationX>
-        <locationY>732</locationY>
-        <defaultConnector>
-            <targetReference>Assegna_Valori_0_0_0_0_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Nuovo</defaultConnectorLabel>
-        <rules>
-            <name>Riprendi</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ResumeFromDraft</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Aggiorna_Case_00_0_0_0_0_0</targetReference>
-            </connector>
-            <label>Riprendi</label>
         </rules>
     </decisions>
     <decisions>
