@@ -28,7 +28,7 @@
 &quot;apiName&quot; : &quot;PODPDRFormula__c&quot;
 }
 ],
-&quot;whereCond&quot; : &quot;Type IN (&apos;Variazione Potenza&apos;,&apos;Variazione Fase&apos;,&apos;Variazione Tensione&apos;,&apos;Riattivazione Fornitura&apos;) AND Phase__c NOT IN (&apos;Ammissibilità KO&apos;, &apos;Annullato&apos;, &apos;Esito KO da DL&apos;,&apos;Esito KO da SII&apos;)&quot;
+&quot;whereCond&quot; : &quot;Type IN (&apos;Variazione Potenza&apos;,&apos;Variazione Fase&apos;,&apos;Variazione Tensione&apos;,&apos;Riattivazione Fornitura&apos;) AND Phase__c NOT IN (&apos;Ammissibilità KO&apos;, &apos;Annullato&apos;,&apos;Ripensato&apos;, &apos;Esito KO da DL&apos;,&apos;Esito KO da SII&apos;)&quot;
 },
 {
 &quot;obj&quot; : &quot;Order&quot;,
