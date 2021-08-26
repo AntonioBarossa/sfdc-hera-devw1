@@ -4600,6 +4600,12 @@
                 <stringValue>Fornitura</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
+            </value>
+        </inputAssignments>
         <outputAssignments>
             <assignToReference>cancelCase</assignToReference>
             <name>cancelCase</name>
@@ -4644,6 +4650,12 @@
                 <stringValue>Fornitura</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
+            </value>
+        </inputAssignments>
         <outputAssignments>
             <assignToReference>Commodity</assignToReference>
             <name>Commodity</name>
@@ -4682,6 +4694,12 @@
             <name>TargetObject</name>
             <value>
                 <stringValue>Fornitura</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
             </value>
         </inputAssignments>
         <outputAssignments>
@@ -4724,6 +4742,12 @@
                 <stringValue>Fornitura</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
+            </value>
+        </inputAssignments>
         <outputAssignments>
             <assignToReference>Commodity</assignToReference>
             <name>Commodity</name>
@@ -4750,6 +4774,12 @@
             <name>AccountId</name>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4793,6 +4823,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>ProcessType</name>
             <value>
                 <elementReference>ProcessType</elementReference>
@@ -4830,6 +4866,12 @@
             <name>AccountId</name>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4873,6 +4915,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>ProcessType</name>
             <value>
                 <elementReference>ProcessType</elementReference>
@@ -4910,6 +4958,12 @@
             <name>AccountId</name>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4953,6 +5007,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>ProcessType</name>
             <value>
                 <elementReference>ProcessType</elementReference>
@@ -4990,6 +5050,12 @@
             <name>AccountId</name>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5033,6 +5099,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>ProcessType</name>
             <value>
                 <elementReference>ProcessType</elementReference>
@@ -5070,6 +5142,12 @@
             <name>AccountId</name>
             <value>
                 <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5172,6 +5250,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>BillingProfileId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>CampaignId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -5197,6 +5282,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Compatibile</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
@@ -5228,6 +5320,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>InputServicePointId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
@@ -5293,6 +5392,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ServiceRequestId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
