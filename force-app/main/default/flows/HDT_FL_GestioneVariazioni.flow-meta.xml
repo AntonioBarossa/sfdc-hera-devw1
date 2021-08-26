@@ -1063,13 +1063,6 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>hdtSelfReading.saveDraft</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0</targetReference>
             </connector>
@@ -3166,6 +3159,24 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>commodity</name>
+                <value>
+                    <elementReference>GetInputCase.CommodityFormula__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>resumedFromDraft</name>
+                <value>
+                    <elementReference>ResumeFromDraft</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disabledReadingDate</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -4323,7 +4334,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>

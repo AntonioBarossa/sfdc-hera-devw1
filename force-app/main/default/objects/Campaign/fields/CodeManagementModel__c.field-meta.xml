@@ -7,7 +7,6 @@
     <required>false</required>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>Category__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -41,35 +40,12 @@
                 <default>false</default>
                 <label>Convenzione</label>
             </value>
+            <value>
+                <fullName>TBD</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>TBD</label>
+            </value>
         </valueSetDefinition>
-        <valueSettings>
-            <controllingFieldValue>Campagna CRM</controllingFieldValue>
-            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
-            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
-            <valueName>Nessuno</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Campagna CRM</controllingFieldValue>
-            <valueName>Pubblico</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Campagna CRM</controllingFieldValue>
-            <valueName>Convenzione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
-            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
-            <valueName>Generico</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
-            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
-            <valueName>Per singolo Campaign Member</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
-            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
-            <valueName>Porta un amico</valueName>
-        </valueSettings>
     </valueSet>
 </CustomField>

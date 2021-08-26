@@ -1,115 +1,146 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_Activity_Default_Record_Page</members>
+        <members>HDT_General_Case_Record_Page</members>
+        <members>HDT_Order_Default</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>CampaignMember</members>
+        <members>HDT_ObjectRecordType__mdt</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>Order.Order_Compact_Layout</members>
-        <name>CompactLayout</name>
-    </types>
-    <types>
-        <members>HDT_LoginChannel</members>
+        <members>HDT_ProcessType</members>
         <name>GlobalValueSet</name>
     </types>
     <types>
-        <members>hdtAccountStatementViewer</members>
-        <members>hdtAdvancedSearch</members>
         <members>hdtBillingProfileForm</members>
         <members>hdtChildOrderProcessDetails</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtCodiceAteco</members>
+        <members>hdtDocusignQrCode</members>
+        <members>hdtFormAccountResidenziale</members>
         <members>hdtOrderDossierWizardTable</members>
-        <members>hdtRecallMeCreateForm</members>
-        <members>hdtSupplySelection</members>
+        <members>hdtReletedListAccount</members>
+        <members>hdtSupplySelectionFlow</members>
         <members>hdtTargetObjectCreateForm</members>
+        <members>hdtTargetObjectRecordTypeSelection</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
+        <members>wrts_prcgvr__Activity__c.resumeActivityButton</members>
+        <name>WebLink</name>
+    </types>
+    <types>
         <members>Admin</members>
+        <members>Door2Door Profile</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User ReadOnly</members>
         <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <members>Partner Community User</members>
         <name>Profile</name>
     </types>
     <types>
-        <members>Lead.HDT_MarkingCheck</members>
-        <members>Lead.HDT_VatNumberCheck</members>
+        <members>HDT_FL_GestioneVariazioni</members>
+        <members>HDT_FL_ResumeActivity</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_CompDL</members>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_ContattiSelf</members>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_ModAppuntamento</members>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_ObblNonAtoA</members>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_Obbligatorieta</members>
         <name>ValidationRule</name>
     </types>
     <types>
-        <members>HDT_VFP_CampaignMemberDeleteButton</members>
-        <name>ApexPage</name>
+        <members>SiebelContact__x.All</members>
+        <name>ListView</name>
     </types>
     <types>
-        <members>Case.HDT_RT_PreventiviGas</members>
-        <members>Order.HDT_RT_CambioOfferta</members>
+        <members>Account.Account_Duplicated</members>
+        <name>DuplicateRule</name>
+    </types>
+    <types>
+        <members>Order.HDT_RT_Attivazione</members>
+        <members>Order.HDT_RT_Subentro</members>
         <name>RecordType</name>
     </types>
     <types>
         <members>BlackList__c-BlackList Layout</members>
-        <members>BlackList__c-Pod Layout</members>
-        <members>Campaign-Campaign Layout</members>
-        <members>Case-HDT_FatturazioneConsumi</members>
-        <members>Case-HDT_VotiveModena</members>
-        <members>Lead-Lead Layout</members>
+        <members>Case-HDT_VariazioniEle</members>
+        <members>Case-HDT_VariazioniGas</members>
+        <members>Order-HDT_Voltura</members>
+        <members>Order-Order Layout</members>
+        <members>Order-Prima attivazione con modifica</members>
         <members>Order-Prima attivazione</members>
-        <members>Order-Subentro</members>
-        <members>Sale__c-Vendita Layout</members>
+        <members>Order-Sconti o Bonus VAS</members>
+        <members>Order-Switch in</members>
+        <members>Order-VAS</members>
+        <members>SiebelContractAttribute__x-SiebelContractAttribute Layout</members>
+        <members>SiebelContract__x-SiebelContract Layout</members>
+        <members>SiebelCustomer__x-SiebelCustomer Layout</members>
+        <members>wrts_prcgvr__Activity__c-HDT_Protocollo</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_BlacklistCreateEdit</members>
+        <members>HDT_ApexClasses</members>
+        <members>HDT_SalesforceCPQAdmin</members>
+        <members>HDT_SalesforceCPQPartner</members>
+        <members>HDT_SalesforceCPQUser</members>
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_LC_DocumentSignatureManagerTst</members>
-        <members>HDT_LC_FubArchiveImportController</members>
-        <members>HDT_LC_FubArchiveImportControllerTst</members>
-        <members>HDT_LC_QuoteAmendContractTst</members>
-        <members>HDT_LC_SaleActions</members>
+        <members>HDT_LC_DocusignQrCode</members>
         <members>HDT_LC_SaleVas</members>
-        <members>HDT_LC_SellingWizardController</members>
-        <members>HDT_LC_TargetObjectCreateForm</members>
-        <members>HDT_QR_AccountTst</members>
-        <members>HDT_QR_AtecoMatrix</members>
-        <members>HDT_QR_AtecoMatrixTst</members>
-        <members>HDT_QR_Blacklist</members>
-        <members>HDT_QR_CampaignMember</members>
-        <members>HDT_QR_Case</members>
-        <members>HDT_QR_Contact</members>
+        <members>HDT_QR_Campaign</members>
+        <members>HDT_QR_CampaignTst</members>
+        <members>HDT_QR_ContactPoint</members>
+        <members>HDT_QR_ContactPointTst</members>
         <members>HDT_QR_Order</members>
-        <members>HDT_SRV_AnagAlignment</members>
-        <members>HDT_SRV_DocumentalManagement</members>
+        <members>HDT_QR_SaleTst</members>
         <members>HDT_SRV_SaleServiceItem</members>
         <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_TRH_Account</members>
         <members>HDT_TRH_Lead</members>
-        <members>HDT_UTL_CaseProcess</members>
+        <members>HDT_UTL_ActivityCustomProcess</members>
+        <members>HDT_UTL_CampaignMember</members>
         <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_Dependencies</members>
         <members>HDT_UTL_HandleTechnicalData</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_Lead</members>
         <members>HDT_UTL_OrderProcessAssignment</members>
-        <members>HDT_UTL_PayloadManagement</members>
-        <members>HDT_UTL_PayloadManagementTst</members>
-        <members>HDT_UTL_Sales</members>
         <members>HDT_UTL_Scarti</members>
-        <members>HDT_WRP_SelfReadings</members>
-        <members>HDT_WS_DocumentalIntegrationTstMock</members>
-        <members>HDT_WS_SelfReadings</members>
+        <members>HDT_WRP_DocusignNotify</members>
+        <members>HDT_WS_Payments</members>
+        <members>HDT_WS_PaymentsTst</members>
+        <members>HDT_WS_PostSalesTstMock</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Order.Phase__c</members>
+        <members>Campaign.CodeGenerationRule__c</members>
+        <members>Campaign.CodeManagementModel__c</members>
+        <members>HDT_ObjectRecordType__mdt.RecordTypeDeveloperName__c</members>
+        <members>HDT_ObjectRecordType__mdt.ValueToRemove__c</members>
+        <members>SBQQ__Quote__c.IsBillableVas__c</members>
+        <members>SiebelRdsAttribute__x.ATTRIB_15__c</members>
+        <members>SiebelRdsAttribute__x.ATTRIB_16__c</members>
+        <members>SiebelRdsAttribute__x.ATTRIB_17__c</members>
+        <members>SiebelRdsAttribute__x.ATTRIB_18__c</members>
+        <members>SiebelRdsAttribute__x.X_PREZZO_NETTO_VAS__c</members>
+        <members>SiebelRdsAttribute__x.X_PREZZO_SCONTATO_VAS__c</members>
+        <members>wrts_prcgvr__Activity__c.CvpId__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_LCP_SellingWizard</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>HDT_IntegrationObject.Documentale_Context2</members>
+        <members>HDT_ColumnsFirstLevel.Paperless_NumeroDocumento</members>
+        <members>HDT_ColumnsFirstLevel.Paperless_POD_PDR</members>
+        <members>HDT_MatrixCompatibilityMap.OrderType28</members>
+        <members>HDT_ObjectRecordType.Acc_CustomerMarking_HDT_RT_Business</members>
+        <members>HDT_ObjectRecordType.Acc_CustomerMarking_HDT_RT_Residenziale</members>
+        <members>HDT_UserInputFlow.Variazioni_Cambio_Contatore_No_Reg</members>
         <name>CustomMetadata</name>
     </types>
     <version>49</version>

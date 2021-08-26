@@ -12,9 +12,13 @@ export default class HdtSupplySelectionFlow extends LightningElement {
     @api cancelButton;
     @api labelSaveButton;
     @api cancelCase;
+    @api isCompatible;
+    @api serviceRequestId;
 
     handleServicePointSelection(event){
         this.selectedServicePointFlow = event.detail["Codice Punto"];
+        this.serviceRequestId = event.detail["serviceRequestId"];
+        this.isCompatible = event.detail["isCompatible"];
         console.log('forn '+ this.selectedServicePointFlow);
     }
 

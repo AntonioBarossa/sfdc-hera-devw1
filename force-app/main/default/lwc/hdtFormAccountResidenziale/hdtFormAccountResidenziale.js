@@ -642,7 +642,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         });
                     }).catch((errorMsg) => {
                         const event = new ShowToastEvent({
-                            message: 'Entra un valido codice fiscale!',
+                            message: 'Inserire un codice fiscale valido',
                             variant: 'error',
                             mode: 'dismissable'
                         });
