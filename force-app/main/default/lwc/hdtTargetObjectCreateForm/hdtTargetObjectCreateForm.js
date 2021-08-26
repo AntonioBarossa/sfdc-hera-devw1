@@ -15,7 +15,7 @@ import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.cal
 import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
 import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
 
-
+import ACCOUNT_RECORDTYPE_FIELD from '@salesforce/schema/Account.RecordTypeId';
 
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
@@ -28,6 +28,24 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @api wrapAddressObject;
     @api sale;
     @api fieldsWrapObject=[];
+    
+    @track recordTypeAccount;
+
+    @wire(getRecord, { recordId: '$accountid', fields: [ACCOUNT_RECORDTYPE_FIELD] })
+     wiredRecord({ error, data }) {
+          if (data) {
+            console.log('******data:' + JSON.stringify(data));
+            let record = data;
+            console.log('********RecordType:' + record.fields.recordTypeInfo.name);
+            this.recordTypeAccount = record.fields.recordTypeInfo.name;
+          }
+          else if(error){
+            console.log('******Error:' + JSON.stringify(error));
+          } 
+    }
+
+
+
     data;
     objectApiName = 'ServicePoint__c';
     fieldsData;
@@ -211,6 +229,21 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                 ) 
             }
+            else if(element === 'Resident__c'){
+                console.log('entra in resident');
+                let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
+                console.log('entra in resident:' +resValue );
+                this.allSubmitedFields.Resident__c = resValue;
+                
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : mapFieldReq.get(element),
+                        value:resValue,
+                        disabled: false
+                    }
+                ) 
+            }
             else if(element=='SAPImplantCode__c')
             {
 
@@ -327,17 +360,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 else if(element === 'Resident__c'){
 
                     console.log('entra in resident');
-                    
-                    //25/08/2021 - gabriele.rota@webresults.it - Switch Flag Resident in base a Tipo Fornitura
-                    let residentFlag = (this.allSubmitedFields.SupplyType__c=='Domestico' || this.allSubmitedFields.SupplyType__c=='A-Domestico');
+                    let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
+                    console.log('entra in resident:' +resValue );
+                    this.allSubmitedFields.Resident__c = resValue;
 
-                    this.allSubmitedFields.Resident__c = residentFlag;
                     
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required : mapFieldReq.get(element),
-                            value: residentFlag,
+                            value:resValue,
                             disabled: false
                         }
                     ) 
@@ -598,6 +630,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
         }
 		
+
+
 
             this.customSettings = data;
             console.log(JSON.stringify(this.selectedservicepoint)+'********selectedServicePoint');
