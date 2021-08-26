@@ -15,10 +15,6 @@ public with sharing class HDT_LC_FubArchiveImportController {
        // importFile.csvNumbers = csvNumbers;
         ID batchProcessId = Database.executeBatch(importFile);
         System.debug(batchProcessId);
-        if (batchProcessId != null) {
-            return true;
-        } else {
-            return false;
-        }
+        if (batchProcessId != null) { return true; } else { return false;}
     }
 }
