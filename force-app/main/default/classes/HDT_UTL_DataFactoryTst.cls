@@ -1652,14 +1652,14 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		List<RentProcessRule__c> rules = new List<RentProcessRule__c>();
 		for(Integer i=0; i < amount; ++i)
 		{
-			RentProcessRule__c rule = new Rule();
+			RentProcessRule__c rule = new RentProcessRule__c();
 			rule.AmountToPayInInstallmentsFrom__c 		= 0.01;
 			rule.AmountToPayInInstallmentsTo__c			= 2000;
 			rule.ApplicationInterests__c				= applicationInterests;    //input
 			rule.ApprovalProcess__c						= false;
 			rule.AttachmentManagement__c				= false;
 			rule.CAWithOrWithoutSEPA__c					= false;
-			rule.Deposit__c								= depoist; //input
+			rule.Deposit__c								= deposit; //input
 			rule.ExistingInstallmentPlanUnpaidFrom__c 	= 0;
 			rule.ExistingInstallmentPlanUnpaidTo__c		= 3;
 			rule.InstallmentPlanReason__c				= 'Fattura SD'; 
