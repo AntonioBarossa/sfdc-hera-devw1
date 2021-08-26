@@ -101,7 +101,10 @@ public with sharing class HDT_UTL_CampaignMember {
             SELECT Id, Agency__c, PercentageAllocation__c, CampaingMemberAssigment__c  FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c IN (SELECT CampaignMemberAssigment__c FROM Campaign WHERE Id IN :campaignIds AND AssignmentType__c = 'Peso Percentuale') WITH SECURITY_ENFORCED ORDER BY PercentageAllocation__c DESC
         ];
 
-        String campaignMemberAssigmentId = query[0].CampaingMemberAssigment__c;
+        if (query.size()>0 && query[0].CampaingMemberAssigment__c!=null) {
+            String campaignMemberAssigmentId = query[0].CampaingMemberAssigment__c;
+ 
+     
         List<AggregateResult> totalPercentageQuery = [
             SELECT SUM(PercentageAllocation__c) totalPercentage FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c = :campaignMemberAssigmentId
         ];
@@ -141,6 +144,7 @@ public with sharing class HDT_UTL_CampaignMember {
                 totalAssigned += (Integer)toAssign;
             }
         }
+    }
     }
 
     public static void createCommercialCode(List<CampaignMember> newCampaignMember) {
