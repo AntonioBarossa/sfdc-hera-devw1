@@ -30,12 +30,6 @@ public with sharing class HDT_WS_PaymentsTst {
         testCase.Amount__c = 100;
         testCase.DepositPaymentMode__c = 'Paperless';
         testCase.Type = 'Comunicazione Pagamento';
-        Map<String, String> endpointType = new Map<String, String> {
-            'HDT_PaymentCommunication' => 'Comunicazione Pagamento',
-            'HDT_InstallmentPlans'     => 'Piano Rateizzazione',
-            'HDT_Paperless'            => 'Paperless',
-            'HDT_ReminderBlock'        => 'Blocco Sollecito/Interessi'
-        };
         update testCase;
         testCase = [SELECT CaseNumber, Type, DepositPaymentMode__c FROM Case LIMIT 1];
         Map<String, Object> args = new Map<String, Object>();
@@ -50,7 +44,7 @@ public with sharing class HDT_WS_PaymentsTst {
         Test.stopTest();
         testCase = [SELECT TecnicalPhase__c FROM Case LIMIT 1];
         System.assertEquals(true, responseReturn.success);
-        System.Assert(!testCase.TecnicalPhase__c.equalsIgnoreCase('Bozza'));
+        System.Assert(testCase.TecnicalPhase__c.equalsIgnoreCase('Esito OK da SAP'));
 
     }
 

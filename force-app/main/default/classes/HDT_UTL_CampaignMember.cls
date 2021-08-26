@@ -101,44 +101,47 @@ public with sharing class HDT_UTL_CampaignMember {
             SELECT Id, Agency__c, PercentageAllocation__c, CampaingMemberAssigment__c  FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c IN (SELECT CampaignMemberAssigment__c FROM Campaign WHERE Id IN :campaignIds AND AssignmentType__c = 'Peso Percentuale') WITH SECURITY_ENFORCED ORDER BY PercentageAllocation__c DESC
         ];
 
-        String campaignMemberAssigmentId = query[0].CampaingMemberAssigment__c;
-        List<AggregateResult> totalPercentageQuery = [
-            SELECT SUM(PercentageAllocation__c) totalPercentage FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c = :campaignMemberAssigmentId
-        ];
+        if (query.size()>0 && query[0].CampaingMemberAssigment__c!=null) {
+            String campaignMemberAssigmentId = query[0].CampaingMemberAssigment__c;
+ 
+            List<AggregateResult> totalPercentageQuery = [
+                SELECT SUM(PercentageAllocation__c) totalPercentage FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c = :campaignMemberAssigmentId WITH SECURITY_ENFORCED
+            ];
 
-        Decimal totalPercentage = (Decimal)totalPercentageQuery[0].get('totalPercentage');
+            Decimal totalPercentage = (Decimal)totalPercentageQuery[0].get('totalPercentage');
 
-        Map<String,Decimal> agencyPercentage = new Map<String,Decimal>();
-        if (totalPercentage < 100) {
-            for (CampaignMemberAssigmentItem__c row : query) {
-                Decimal perc = (Decimal)row.get('PercentageAllocation__c');
-                perc = perc/totalPercentage * 100;
-                agencyPercentage.put((String)row.get('Agency__c'), perc.round(System.RoundingMode.HALF_UP));
-            }
-        } else {
-            for (CampaignMemberAssigmentItem__c row : query) {
-                agencyPercentage.put((String)row.get('Agency__c'), (Decimal)row.get('PercentageAllocation__c'));
-            }
-        }
-
-        List<String> agencies = new List<String>(agencyPercentage.keySet());
-
-        Integer totalAssigned = 0;
-        Decimal total = newCampaignMember.size();
-
-        for (String agency : agencies) {
-            Decimal toAssign =  total * (Decimal)agencyPercentage.get(agency) / 100;
-            toAssign = toAssign.round(System.RoundingMode.HALF_UP);
-            if ((totalAssigned + toAssign) == (newCampaignMember.size() + 1)) {
-                toAssign = toAssign - 1;
-            }
-            if ((totalAssigned + toAssign) <= newCampaignMember.size()) {
-                //assign agencies to the new campaign members
-                for (Integer i = 0; i < toAssign; i++) {
-                    Integer index = i + totalAssigned;
-                    newCampaignMember[index].Agency__c = agency;
+            Map<String,Decimal> agencyPercentage = new Map<String,Decimal>();
+            if (totalPercentage < 100) {
+                for (CampaignMemberAssigmentItem__c row : query) {
+                    Decimal perc = (Decimal)row.get('PercentageAllocation__c');
+                    perc = perc/totalPercentage * 100;
+                    agencyPercentage.put((String)row.get('Agency__c'), perc.round(System.RoundingMode.HALF_UP));
                 }
-                totalAssigned += (Integer)toAssign;
+            } else {
+                for (CampaignMemberAssigmentItem__c row : query) {
+                    agencyPercentage.put((String)row.get('Agency__c'), (Decimal)row.get('PercentageAllocation__c'));
+                }
+            }
+
+            List<String> agencies = new List<String>(agencyPercentage.keySet());
+
+            Integer totalAssigned = 0;
+            Decimal total = newCampaignMember.size();
+
+            for (String agency : agencies) {
+                Decimal toAssign =  total * (Decimal)agencyPercentage.get(agency) / 100;
+                toAssign = toAssign.round(System.RoundingMode.HALF_UP);
+                if ((totalAssigned + toAssign) == (newCampaignMember.size() + 1)) {
+                    toAssign = toAssign - 1;
+                }
+                if ((totalAssigned + toAssign) <= newCampaignMember.size()) {
+                    //assign agencies to the new campaign members
+                    for (Integer i = 0; i < toAssign; i++) {
+                        Integer index = i + totalAssigned;
+                        newCampaignMember[index].Agency__c = agency;
+                    }
+                    totalAssigned += (Integer)toAssign;
+                }
             }
         }
     }

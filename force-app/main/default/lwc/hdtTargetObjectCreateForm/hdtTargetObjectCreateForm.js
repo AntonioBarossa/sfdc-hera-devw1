@@ -235,6 +235,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                 ) 
             }
+            else if(element=='PowerRequested__c'){
+                this.allSubmitedFields.PowerRequested__c = null;
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : mapFieldReq.get(element),
+                        value: '',
+                        disabled: false
+                    }
+                ) 
+            }
             else
             {
                 console.log('entra in else ++++' + JSON.stringify(element));
@@ -313,14 +324,20 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     ) 
                 }
-                else if(this.recordtype.label === 'Punto Elettrico' && element === 'Resident__c'){
+                else if(element === 'Resident__c'){
+
                     console.log('entra in resident');
-                    this.allSubmitedFields.Resident__c = true;
+                    
+                    //25/08/2021 - gabriele.rota@webresults.it - Switch Flag Resident in base a Tipo Fornitura
+                    let residentFlag = (this.allSubmitedFields.SupplyType__c=='Domestico' || this.allSubmitedFields.SupplyType__c=='A-Domestico');
+
+                    this.allSubmitedFields.Resident__c = residentFlag;
+                    
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required : mapFieldReq.get(element),
-                            value:true,
+                            value: residentFlag,
                             disabled: false
                         }
                     ) 
@@ -659,7 +676,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('getInstanceWrapObject - START');
         console.log('getInstanceWrapObject - servicePointRetrievedData' +JSON.stringify(servicePointRetrievedData));
         this.allSubmitedFields=this.servicePointRetrievedData;
-
+        this.allSubmitedFields.PowerRequested__c = null;
         getInstanceWrapAddressObject({s:servicePointRetrievedData}).then(data => {
             this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValues(data);
             console.log('getInstanceWrapObject - getInstanceWrapAddressObject Start '+ JSON.stringify(data));
@@ -790,6 +807,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
     
         }
+
+        //25/08/2021 - gabriele.rota@webresults.it - Switch Flag Resident in base a Tipo Fornitura
+        if(event.target.fieldName =='SupplyType__c'){
+            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+        }
+        
         console.log('handleFieldsDataChange END');
        
 

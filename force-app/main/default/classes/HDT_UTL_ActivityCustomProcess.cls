@@ -75,8 +75,11 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         system.debug('HDT_UTL_ActivityProcess createActivity --> orderMap : ' + JSON.serializePretty(orderMap));
         
         List<wrts_prcgvr__Activity__c> listActivity = new List<wrts_prcgvr__Activity__c>();
-        Id rtOldCustomer = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_KoPrecedeteCliente' limit 1].id;
-        Id rtNewCustomer = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_CreditCheckKO' limit 1].id;
+        //Id rtOldCustomer = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_KoPrecedeteCliente' limit 1].id;
+        //Id rtNewCustomer = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_CreditCheckKO' limit 1].id;
+        Map<String, Schema.RecordTypeInfo> activityRtInfos = ((SObject)Type.forName('Schema','wrts_prcgvr__Activity__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName();
+        Id rtOldCustomer = activityRTInfos.get('HDT_RT_KoPrecedeteCliente').getRecordTypeId();
+        Id rtNewCustomer = activityRTInfos.get('HDT_RT_CreditCheckKO').getRecordTypeId();
 
         for(String typeCustomer : orderMap.keyset()){
             for(Order order : orderMap.get(typeCustomer)){
@@ -100,6 +103,13 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 activity.Status__c = 'Creata';                
                 activity.Note__c = order.CommentForDL__c;
                 activity.OwnerId = order.OwnerId;
+                activity.CvpId__c= order.CvpId__c;
+                activity.CvpCgs__c=order.CvpCgs__c;
+
+                activity.CvpErrorCode__c=order.CvpErrorCode__c;
+                activity.CvpErrorDescription__c=order.CvpErrorDescription__c;
+                activity.CvpErrorSource__c=order.CvpErrorSource__c;
+                activity.CvpRiskRating__c=order.CvpRiskRating__c;
 
                 listActivity.add(activity);
             }

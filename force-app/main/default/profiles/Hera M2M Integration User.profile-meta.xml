@@ -6110,11 +6110,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.QrCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Case.QuotationAcceptanceDate__c</field>
         <readable>true</readable>
@@ -30145,7 +30140,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali2</layout>
+        <layout>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -30594,6 +30589,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>SBQQ__ProductRule__c-Product Rule Layout CPQ</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SBQQ__Quote__c-Quote Layout New</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Scorecard-Scorecard Layout</layout>

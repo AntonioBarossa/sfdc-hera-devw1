@@ -174,24 +174,38 @@ export default class HdtCreateCampaign extends LightningElement {
     handleChangeCodeManagementModel(event) {
         this.selectedCodeManagementModel = event.detail.value;
         this.codeGenerationRuleRequired = (event.detail.value != '' && event.detail.value != 'Nessuno') ? true : false;
-        if (!this.codeGenerationRuleRequired) {
-            this.prefixCodeRequired = false;
-            this.codeValidityEndDateRequired = false;
-            this.maxNumberEECodeUseRequired = false;
-            this.maxNumberGASCodeUseRequired = false;
-            this.maxNumberVASCodeUseRequired = false;
-            this.codeConventionQuantityRequired = false;
+        //BUG HRAWRM-226 26/08/2021 Start
+        this.maxNumberEECodeUseRequired = false;
+        this.maxNumberGASCodeUseRequired = false;
+        this.maxNumberVASCodeUseRequired = false;
+        this.codeValidityEndDateRequired = false;
+        console.log('none : ' +event.detail.value  );
+        if (event.detail.value) {
+            this.prefixCodeRequired = true;
+           
         }
+        else{
+            this.prefixCodeRequired = false;
+        }
+        if (this.selectedCodeManagementModel=='Convenzione') {
+            this.codeConventionQuantityRequired = true;
+        }
+        else{
+            this.codeConventionQuantityRequired =false;
+        }
+        //BUG HRAWRM-226 26/08/2021 End
     }
 
     handleChangeCodeGenerationRule(event) {
-        this.selectedCodeGenerationRule = event.detail.value;
-        this.prefixCodeRequired = event.detail.value != '' ? true : false;
-        this.codeValidityEndDateRequired = event.detail.value != '' ? true : false;
-        this.maxNumberEECodeUseRequired = event.detail.value != '' ? true : false;
-        this.maxNumberGASCodeUseRequired = event.detail.value != '' ? true : false;
-        this.maxNumberVASCodeUseRequired = event.detail.value != '' ? true : false;
-        this.codeConventionQuantityRequired = event.detail.value != '' ? true : false;
+        this.selectedCodeGenerationRule = event.detail.value; 
+        //BUG HRAWRM-226 26/08/2021 Start
+       // this.prefixCodeRequired = event.detail.value != '' ? true : false;
+        //this.codeValidityEndDateRequired = event.detail.value != '' ? true : false;
+      //  this.maxNumberEECodeUseRequired = event.detail.value != '' ? true : false;
+       // this.maxNumberGASCodeUseRequired = event.detail.value != '' ? true : false;
+       // this.maxNumberVASCodeUseRequired = event.detail.value != '' ? true : false;
+        //this.codeConventionQuantityRequired = event.detail.value != '' ? true : false;
+        //BUG HRAWRM-226 26/08/2021 End
     }
 
     handleRecurringCampaignChange(event) {

@@ -569,7 +569,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
-                        message: 'Popolare il campo Pressione fornitura',
+                        message: 'Popolare il campo Livello pressione',
                         variant: 'error',
                         mode: 'sticky'
                     });
@@ -1053,7 +1053,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'SAPImplantCode__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true,
+                        'disabled': true, //UAT 25/08/2021 JIRA 336
                         'value': '',
                         'processVisibility': ''
                     },
@@ -1491,7 +1491,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'SAPImplantCode__c',
                     'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'),
                     'required': false,
-                    'disabled': false,
+                    'disabled': true, //UAT 25/08/2021 JIRA 336
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1533,7 +1533,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Pressione fornitura',
+                    'label': 'Livello pressione',
                     'apiname': 'PressureLevel__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
