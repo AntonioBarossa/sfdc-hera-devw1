@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
     <assignments>
         <name>Aggancia_Contratto</name>
@@ -36,7 +36,7 @@
             <assignToReference>Case.AccountholderTypeBeneficiary__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Tipologia_Intestatario2</elementReference>
+                <elementReference>Tipologia_Intestatario</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -72,13 +72,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Contact_di_riferimento.recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Case.Contract__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Numero_Contratto2.recordId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -193,6 +186,48 @@
                 <elementReference>P_IVA</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.CarType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Tipologia_Auto</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Causal__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Causale</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.ContractCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Numero_Contratto</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.ClientCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Categoria_Cliente</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.ContractSubscriptionDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Data_Firma_Contratto</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.CustomerInterest__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Interesse_espresso_dal_cliente</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Causale_Autoelettrica2</targetReference>
         </connector>
@@ -282,14 +317,6 @@
             <label>Riprendi Processo</label>
         </rules>
     </decisions>
-    <dynamicChoiceSets>
-        <name>TipologiaIntestatarioValues</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>AccountholderTypeBeneficiary__c</picklistField>
-        <picklistObject>Case</picklistObject>
-    </dynamicChoiceSets>
     <interviewLabel>HDT_FL_Autoelettrica {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_Autoelettrica</label>
     <processMetadataValues>
@@ -350,7 +377,7 @@
                 <fields>
                     <name>Interesse_espresso_dal_cliente</name>
                     <dataType>String</dataType>
-                    <fieldText>Interesse espresso dal cliente (?)</fieldText>
+                    <fieldText>Interesse espresso dal cliente</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -383,30 +410,11 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Numero_Contratto2</name>
-                    <extensionName>flowruntime:lookup</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>label</name>
-                        <value>
-                            <stringValue>Numero Contratto</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>fieldApiName</name>
-                        <value>
-                            <stringValue>Contract__c</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>objectApiName</name>
-                        <value>
-                            <stringValue>Case</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <name>Numero_Contratto</name>
+                    <dataType>String</dataType>
+                    <fieldText>Numero Contratto</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -436,7 +444,7 @@
                 <fields>
                     <name>Tipologia_Auto</name>
                     <dataType>String</dataType>
-                    <fieldText>Tipologia Auto (?)</fieldText>
+                    <fieldText>Tipologia Auto</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -458,15 +466,17 @@
                 <fields>
                     <name>Causale</name>
                     <dataType>String</dataType>
-                    <fieldText>Causale (?)</fieldText>
+                    <fieldText>Causale</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
                     <name>Causale_Autoelettrica</name>
                     <choiceReferences>Noleggio</choiceReferences>
-                    <choiceReferences>Heraricarica</choiceReferences>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>Heraricarica</elementReference>
+                    </defaultValue>
                     <fieldText>Causale Autoelettrica</fieldText>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
@@ -509,7 +519,7 @@
                 <fields>
                     <name>Modalit_di_pagamento</name>
                     <dataType>String</dataType>
-                    <fieldText>Modalità di pagamento (?)</fieldText>
+                    <fieldText>Modalità di pagamento</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -535,11 +545,10 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Tipologia_Intestatario2</name>
-                    <choiceReferences>TipologiaIntestatarioValues</choiceReferences>
+                    <name>Tipologia_Intestatario</name>
                     <dataType>String</dataType>
                     <fieldText>Tipologia Intestatario</fieldText>
-                    <fieldType>DropdownBox</fieldType>
+                    <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -696,7 +705,7 @@
             <targetReference>Quale_Processo</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>AccountId</name>
         <dataType>String</dataType>
