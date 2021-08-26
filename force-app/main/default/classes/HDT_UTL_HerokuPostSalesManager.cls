@@ -350,6 +350,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     if(type.equalsIgnoreCase('Piano rate OK Acc. pagato')){
                         type = 'Acconto paperless pagato';
                     }
+                    else if(type.equalsIgnoreCase('KO Acc No pag rate Annullate')){
+                        type = 'Acconto Paperless Non Pagato';
+                    }
                 currentCase.Phase__c = type; 
             }
             if(String.isNotBlank(type) && recordCase.Type.equalsIgnoreCase('Comunicazione Pagamento') && type.equalsIgnoreCase('Pratica Gestita')){
