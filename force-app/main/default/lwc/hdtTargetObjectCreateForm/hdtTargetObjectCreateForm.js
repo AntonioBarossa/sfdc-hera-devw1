@@ -358,10 +358,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     ) 
                 }
                 else if(element === 'Resident__c'){
+
                     console.log('entra in resident');
                     let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
                     console.log('entra in resident:' +resValue );
                     this.allSubmitedFields.Resident__c = resValue;
+
                     
                     fieldsDataObject.push(
                         {
@@ -839,6 +841,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
     
         }
+
+        //25/08/2021 - gabriele.rota@webresults.it - Switch Flag Resident in base a Tipo Fornitura
+        if(event.target.fieldName =='SupplyType__c'){
+            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+        }
+        
         console.log('handleFieldsDataChange END');
        
 

@@ -821,8 +821,8 @@
     <assignments>
         <name>Assegna_Valori_0_0_0_0_0</name>
         <label>Assegna Valori</label>
-        <locationX>4012</locationX>
-        <locationY>778</locationY>
+        <locationX>3973</locationX>
+        <locationY>781</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -3173,6 +3173,12 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             </inputParameters>
             <inputParameters>
                 <name>disabledReadingDate</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>allowSmallerReading</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
