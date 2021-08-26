@@ -179,10 +179,13 @@ export default class HdtCreateCampaign extends LightningElement {
         this.maxNumberGASCodeUseRequired = false;
         this.maxNumberVASCodeUseRequired = false;
         this.codeValidityEndDateRequired = false;
-
-        if (!this.codeGenerationRuleRequired) {
+        console.log('none : ' +event.detail.value  );
+        if (event.detail.value) {
             this.prefixCodeRequired = true;
            
+        }
+        else{
+            this.prefixCodeRequired = false;
         }
         if (this.selectedCodeManagementModel=='Convenzione') {
             this.codeConventionQuantityRequired = true;
