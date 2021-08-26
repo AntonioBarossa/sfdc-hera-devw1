@@ -18,25 +18,9 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_CaseId</name>
-        <label>Assegna CaseId</label>
-        <locationX>1810</locationX>
-        <locationY>1430</locationY>
-        <assignmentItems>
-            <assignToReference>CaseId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Crea_Case_PostSalesVAS</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Quale_Oggetto</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>assign_Case_Id</name>
         <label>assign Case Id</label>
-        <locationX>930</locationX>
+        <locationX>1282</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -47,6 +31,59 @@
         </assignmentItems>
         <connector>
             <targetReference>getCaseToRestore</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Init_Case</name>
+        <label>Init Case</label>
+        <locationX>2514</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>Case.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_PostSalesVAS_RT.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Quale_Processo</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_CaseId</name>
+        <label>Set CaseId</label>
+        <locationX>2470</locationX>
+        <locationY>1982</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Disattivazione</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -63,6 +100,38 @@
         </assignmentItems>
         <connector>
             <targetReference>Inserimento_Dati_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>set_ProcessType_0</name>
+        <label>set ProcessType</label>
+        <locationX>1194</locationX>
+        <locationY>1070</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCaseToRestore.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Inserimento_Dati_Case_Proroga</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_ProcessType_From_Case</name>
+        <label>Set ProcessType From Case</label>
+        <locationX>2250</locationX>
+        <locationY>1070</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCaseToRestore.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Quale_Processo</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -138,10 +207,54 @@
         </value>
     </choices>
     <decisions>
+        <name>EndFLowDecision</name>
+        <label>EndFLow</label>
+        <locationX>798</locationX>
+        <locationY>1190</locationY>
+        <defaultConnector>
+            <targetReference>Order_preattivazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Continue</defaultConnectorLabel>
+        <rules>
+            <name>EndFlowOutcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SelForniture.ordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>EndFlow</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>EndFLowDecision_0</name>
+        <label>EndFLow</label>
+        <locationX>1590</locationX>
+        <locationY>1190</locationY>
+        <defaultConnector>
+            <targetReference>Get_Contract_Proroga</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Continue</defaultConnectorLabel>
+        <rules>
+            <name>EndFlowOutcome_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SelForniture_0.contrId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>EndFlow</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
-        <locationX>1194</locationX>
-        <locationY>2318</locationY>
+        <locationX>1546</locationX>
+        <locationY>2414</locationY>
         <defaultConnector>
             <targetReference>Set_Fase_in_lavorazione</targetReference>
         </defaultConnector>
@@ -175,49 +288,89 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Quale_Oggetto</name>
-        <label>Quale Oggetto?</label>
-        <locationX>1810</locationX>
-        <locationY>1550</locationY>
+        <name>Nuovo_Case</name>
+        <label>Nuovo Case?</label>
+        <locationX>2382</locationX>
+        <locationY>1742</locationY>
         <defaultConnector>
-            <targetReference>Get_Subscription</targetReference>
+            <targetReference>Crea_Case_VAS</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Subscription</defaultConnectorLabel>
+        <defaultConnectorLabel>Nuovo Case</defaultConnectorLabel>
         <rules>
-            <name>Order</name>
+            <name>Caseesistente</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SelezFornitura_PostSalesVAS.sObjectName</leftValueReference>
+                <leftValueReference>RipristinaFase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Order</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Associa_Order</targetReference>
+                <targetReference>Screen_Disattivazione</targetReference>
             </connector>
-            <label>Order</label>
+            <label>Case esistente</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Quale_Processo</name>
+        <label>Quale Processo?</label>
+        <locationX>2382</locationX>
+        <locationY>1406</locationY>
+        <defaultConnector>
+            <targetReference>Disattivazione_VAS_Subflow</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Disattivazione VAS</defaultConnectorLabel>
+        <rules>
+            <name>AutoelettricaAutoelettrica</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Autoelettrica</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Autoelettrica_Subflow</targetReference>
+            </connector>
+            <label>Autoelettrica</label>
         </rules>
         <rules>
-            <name>Asset</name>
+            <name>HVAC</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SelezFornitura_PostSalesVAS.sObjectName</leftValueReference>
+                <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Asset</stringValue>
+                    <stringValue>HVAC</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Associa_Asset</targetReference>
+                <targetReference>HVAC_Subflow</targetReference>
             </connector>
-            <label>Asset</label>
+            <label>HVAC</label>
+        </rules>
+        <rules>
+            <name>Segnalazioni_VAS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Segnalazioni VAS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Segnalazioni_VAS_Subflow</targetReference>
+            </connector>
+            <label>Segnalazioni VAS</label>
         </rules>
     </decisions>
     <decisions>
         <name>Riprendi_Processo_PostSalesVAS</name>
         <label>Riprendi Processo</label>
-        <locationX>1590</locationX>
+        <locationX>2382</locationX>
         <locationY>950</locationY>
         <defaultConnector>
             <targetReference>Get_PostSalesVAS_RT</targetReference>
@@ -234,7 +387,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Screen_Disattivazione</targetReference>
+                <targetReference>Set_ProcessType_From_Case</targetReference>
             </connector>
             <label>Riprendi Processo</label>
         </rules>
@@ -267,7 +420,7 @@
     <decisions>
         <name>RiprendiProcesso_0</name>
         <label>Riprendi Processo</label>
-        <locationX>534</locationX>
+        <locationX>600</locationX>
         <locationY>950</locationY>
         <defaultConnector>
             <targetReference>Screen_Selezione_Fornitura</targetReference>
@@ -292,7 +445,7 @@
     <decisions>
         <name>RiprendiProcesso_0_0</name>
         <label>Riprendi Processo</label>
-        <locationX>1018</locationX>
+        <locationX>1392</locationX>
         <locationY>950</locationY>
         <defaultConnector>
             <targetReference>Screen_Selezione_Fornitura_0</targetReference>
@@ -309,7 +462,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Inserimento_Dati_Case_Proroga</targetReference>
+                <targetReference>set_ProcessType_0</targetReference>
             </connector>
             <label>Riprendi Processo</label>
         </rules>
@@ -317,7 +470,7 @@
     <decisions>
         <name>Ripristina_Fase</name>
         <label>Ripristina Fase?</label>
-        <locationX>1194</locationX>
+        <locationX>1546</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Cerca_Contatto_Primario</targetReference>
@@ -342,7 +495,7 @@
     <decisions>
         <name>Switch_Subflow</name>
         <label>Switch Subflow</label>
-        <locationX>1194</locationX>
+        <locationX>1546</locationX>
         <locationY>830</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen_0</targetReference>
@@ -403,7 +556,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Modifica_Contr_Resume</leftValueReference>
+                <leftValueReference>Proroga_connessione_Resume</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -440,7 +593,7 @@
     <decisions>
         <name>Which_Process_To_Go_Back</name>
         <label>Which Process To Go Back</label>
-        <locationX>930</locationX>
+        <locationX>1282</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Switch_Subflow</targetReference>
@@ -482,6 +635,9 @@
             <conditions>
                 <leftValueReference>getCaseToRestore.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ProrogaTemporanea</stringValue>
+                </rightValue>
             </conditions>
             <connector>
                 <targetReference>Switch_Subflow</targetReference>
@@ -629,8 +785,8 @@
     <recordCreates>
         <name>Crea_Case_1_0_0</name>
         <label>Crea Case</label>
-        <locationX>666</locationX>
-        <locationY>1310</locationY>
+        <locationX>930</locationX>
+        <locationY>1430</locationY>
         <assignRecordIdToReference>CaseId</assignRecordIdToReference>
         <connector>
             <targetReference>Order_Fill_Case</targetReference>
@@ -712,8 +868,8 @@
     <recordCreates>
         <name>Crea_Case_1_0_0_0</name>
         <label>Crea Case</label>
-        <locationX>1106</locationX>
-        <locationY>1310</locationY>
+        <locationX>1722</locationX>
+        <locationY>1430</locationY>
         <assignRecordIdToReference>CaseId</assignRecordIdToReference>
         <connector>
             <targetReference>Inserimento_Dati_Case_Proroga</targetReference>
@@ -775,7 +931,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <elementReference>Get_RT_VotiveModena.Id</elementReference>
+                <elementReference>Get_RT_Generiche.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -865,44 +1021,19 @@
         <object>Case</object>
     </recordCreates>
     <recordCreates>
-        <name>Crea_Case_PostSalesVAS</name>
-        <label>Crea Case</label>
-        <locationX>1810</locationX>
-        <locationY>1310</locationY>
+        <name>Crea_Case_VAS</name>
+        <label>Crea Case VAS</label>
+        <locationX>2470</locationX>
+        <locationY>1862</locationY>
         <connector>
-            <targetReference>Assegna_CaseId</targetReference>
+            <targetReference>Set_CaseId</targetReference>
         </connector>
-        <inputAssignments>
-            <field>AccountId</field>
-            <value>
-                <elementReference>AccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>Bozza</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>Get_PostSalesVAS_RT.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>VasStatus__c</field>
-            <value>
-                <elementReference>DeactivationCausal</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <inputReference>Case</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Cerca_Contatto_Primario</name>
         <label>Cerca Contatto Primario</label>
-        <locationX>1458</locationX>
+        <locationX>1810</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -965,8 +1096,8 @@
     <recordLookups>
         <name>Get_Contract_Proroga</name>
         <label>Get Contract Proroga</label>
-        <locationX>1106</locationX>
-        <locationY>1190</locationY>
+        <locationX>1722</locationX>
+        <locationY>1310</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_1_0_0_0</targetReference>
@@ -986,11 +1117,11 @@
     <recordLookups>
         <name>Get_PostSalesVAS_RT</name>
         <label>Get PostSalesVAS RT</label>
-        <locationX>1810</locationX>
+        <locationX>2514</locationX>
         <locationY>1070</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Screen_Selezione_Fornitura_PostSalesVAS</targetReference>
+            <targetReference>Init_Case</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1014,7 +1145,7 @@
     <recordLookups>
         <name>Get_RT_Generiche</name>
         <label>Get RT Generiche</label>
-        <locationX>1458</locationX>
+        <locationX>1810</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1055,30 +1186,9 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Subscription</name>
-        <label>Get Subscription</label>
-        <locationX>2074</locationX>
-        <locationY>1670</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Associa_Contract_e_Subscription</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>SelezFornitura_PostSalesVAS.recordId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>SBQQ__Subscription__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>getCaseToRestore</name>
         <label>getCase To Restore</label>
-        <locationX>930</locationX>
+        <locationX>1282</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1099,8 +1209,8 @@
     <recordLookups>
         <name>Order_preattivazione</name>
         <label>Order preattivazione</label>
-        <locationX>666</locationX>
-        <locationY>1190</locationY>
+        <locationX>930</locationX>
+        <locationY>1310</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_1_0_0</targetReference>
@@ -1118,88 +1228,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Associa_Asset</name>
-        <label>Associa Asset</label>
-        <locationX>1810</locationX>
-        <locationY>1670</locationY>
-        <connector>
-            <targetReference>Screen_Disattivazione</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Crea_Case_PostSalesVAS</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>AssetId</field>
-            <value>
-                <elementReference>SelezFornitura_PostSalesVAS.recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Associa_Contract_e_Subscription</name>
-        <label>Associa Contract e Subscription</label>
-        <locationX>2074</locationX>
-        <locationY>1790</locationY>
-        <connector>
-            <targetReference>Screen_Disattivazione</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Crea_Case_PostSalesVAS</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Contract__c</field>
-            <value>
-                <elementReference>Get_Subscription.SBQQ__Contract__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Subscription__c</field>
-            <value>
-                <elementReference>SelezFornitura_PostSalesVAS.recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Associa_Order</name>
-        <label>Associa Order</label>
-        <locationX>1546</locationX>
-        <locationY>1670</locationY>
-        <connector>
-            <targetReference>Screen_Disattivazione</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Crea_Case_PostSalesVAS</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Order__c</field>
-            <value>
-                <elementReference>SelezFornitura_PostSalesVAS.recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
         <name>Order_Fill_Case</name>
         <label>Order Fill Case</label>
-        <locationX>666</locationX>
-        <locationY>1430</locationY>
+        <locationX>930</locationX>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>Contratto_Preattivazione</targetReference>
         </connector>
@@ -1420,8 +1452,8 @@
     <recordUpdates>
         <name>Set_Fase_in_lavorazione</name>
         <label>Set Fase in lavorazione</label>
-        <locationX>1458</locationX>
-        <locationY>2438</locationY>
+        <locationX>1810</locationX>
+        <locationY>2534</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1451,7 +1483,7 @@
     <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
-        <locationX>2338</locationX>
+        <locationX>3042</locationX>
         <locationY>950</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1467,8 +1499,8 @@
     <screens>
         <name>Inserimento_Dati_Case</name>
         <label>Inserimento Dati Case</label>
-        <locationX>534</locationX>
-        <locationY>1766</locationY>
+        <locationX>600</locationX>
+        <locationY>1982</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1567,8 +1599,8 @@
     <screens>
         <name>Inserimento_Dati_Case_Proroga</name>
         <label>Inserimento Dati Case Proroga</label>
-        <locationX>1018</locationX>
-        <locationY>1526</locationY>
+        <locationX>1392</locationX>
+        <locationY>1742</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1767,8 +1799,8 @@
     <screens>
         <name>Screen_Disattivazione</name>
         <label>Screen Disattivazione</label>
-        <locationX>1590</locationX>
-        <locationY>2102</locationY>
+        <locationX>2382</locationX>
+        <locationY>2198</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1824,7 +1856,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Disattivazione VAS</stringValue>
+                    <elementReference>UserInputFlow</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1843,6 +1875,24 @@
                 <name>showReadOnly</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <elementReference>createDocuments</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>acceptedFormats</name>
+                <value>
+                    <stringValue>.txt;.pdf;.doc;.docx</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>contentDocumentLabel</name>
+                <value>
+                    <stringValue>Allegato</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1898,13 +1948,13 @@
     <screens>
         <name>Screen_Selezione_Fornitura</name>
         <label>Screen Selezione Fornitura</label>
-        <locationX>666</locationX>
+        <locationX>798</locationX>
         <locationY>1070</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Order_preattivazione</targetReference>
+            <targetReference>EndFLowDecision</targetReference>
         </connector>
         <fields>
             <name>SelForniture</name>
@@ -1932,13 +1982,13 @@
     <screens>
         <name>Screen_Selezione_Fornitura_0</name>
         <label>Screen Selezione Fornitura</label>
-        <locationX>1106</locationX>
+        <locationX>1590</locationX>
         <locationY>1070</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Contract_Proroga</targetReference>
+            <targetReference>EndFLowDecision_0</targetReference>
         </connector>
         <fields>
             <name>SelForniture_0</name>
@@ -1963,53 +2013,8 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-    <screens>
-        <name>Screen_Selezione_Fornitura_PostSalesVAS</name>
-        <label>Screen Selezione Fornitura</label>
-        <locationX>1810</locationX>
-        <locationY>1190</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Crea_Case_PostSalesVAS</targetReference>
-        </connector>
-        <fields>
-            <name>DeactivationCausal</name>
-            <choiceReferences>Causal_ANNULPERCESSAZIONE</choiceReferences>
-            <choiceReferences>Causal_ANNULPERRECESSO</choiceReferences>
-            <choiceReferences>Causal_ANNULPERRIPENS</choiceReferences>
-            <choiceReferences>Causal_CESS</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Causale Disattivazione</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>SelezFornitura_PostSalesVAS</name>
-            <extensionName>c:hdtSelezFornituraFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>groupOptions</name>
-                <value>
-                    <stringValue>ORDERS_IN_PROGRESS_VAS;ASSETS_ACTIVATED;SUBS_ANALISI_CONSUMI</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>accountId</name>
-                <value>
-                    <elementReference>AccountId</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
-        <locationX>1068</locationX>
+        <locationX>1420</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Ripristina_Fase</targetReference>
@@ -2017,10 +2022,50 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Autoelettrica_Subflow</name>
+        <label>Autoelettrica Subflow</label>
+        <locationX>1986</locationX>
+        <locationY>1526</locationY>
+        <connector>
+            <targetReference>Nuovo_Case</targetReference>
+        </connector>
+        <flowName>HDT_FL_Autoelettrica</flowName>
+        <inputAssignments>
+            <name>AccountId</name>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Case</name>
+            <value>
+                <elementReference>Case</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ResumeProcess</name>
+            <value>
+                <elementReference>RipristinaFase</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>Case</assignToReference>
+            <name>Case</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>createDocuments</assignToReference>
+            <name>HasAttachment</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>UserInputFlow</assignToReference>
+            <name>UserInputFlow</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Contratto_Preattivazione</name>
         <label>Contratto Preattivazione</label>
-        <locationX>666</locationX>
-        <locationY>1550</locationY>
+        <locationX>930</locationX>
+        <locationY>1670</locationY>
         <connector>
             <targetReference>Inserimento_Dati_Case</targetReference>
         </connector>
@@ -2037,10 +2082,50 @@
         </outputAssignments>
     </subflows>
     <subflows>
+        <name>Disattivazione_VAS_Subflow</name>
+        <label>Disattivazione VAS Subflow</label>
+        <locationX>2778</locationX>
+        <locationY>1526</locationY>
+        <connector>
+            <targetReference>Nuovo_Case</targetReference>
+        </connector>
+        <flowName>HDT_FL_PostSalesVAS</flowName>
+        <inputAssignments>
+            <name>AccountId</name>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Case</name>
+            <value>
+                <elementReference>Case</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ResumeProcess</name>
+            <value>
+                <elementReference>RipristinaFase</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>Case</assignToReference>
+            <name>Case</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>createDocuments</assignToReference>
+            <name>HasAttachment</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>UserInputFlow</assignToReference>
+            <name>UserInputFlow</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>930</locationX>
-        <locationY>2438</locationY>
+        <locationX>1282</locationX>
+        <locationY>2534</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2066,6 +2151,74 @@
                 <stringValue>Case</stringValue>
             </value>
         </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>HVAC_Subflow</name>
+        <label>HVAC Subflow</label>
+        <locationX>2250</locationX>
+        <locationY>1526</locationY>
+        <connector>
+            <targetReference>Nuovo_Case</targetReference>
+        </connector>
+        <flowName>HDT_FL_HVAC</flowName>
+        <inputAssignments>
+            <name>Case</name>
+            <value>
+                <elementReference>Case</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ResumeProcess</name>
+            <value>
+                <elementReference>RipristinaFase</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>Case</assignToReference>
+            <name>Case</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>createDocuments</assignToReference>
+            <name>HasAttachment</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>UserInputFlow</assignToReference>
+            <name>UserInputFlow</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Segnalazioni_VAS_Subflow</name>
+        <label>Segnalazioni VAS Subflow</label>
+        <locationX>2514</locationX>
+        <locationY>1526</locationY>
+        <connector>
+            <targetReference>Nuovo_Case</targetReference>
+        </connector>
+        <flowName>HDT_FL_SegnalazioniVAS</flowName>
+        <inputAssignments>
+            <name>Case</name>
+            <value>
+                <elementReference>Case</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ResumeProcess</name>
+            <value>
+                <elementReference>RipristinaFase</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>Case</assignToReference>
+            <name>Case</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>createDocuments</assignToReference>
+            <name>HasAttachment</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>UserInputFlow</assignToReference>
+            <name>UserInputFlow</name>
+        </outputAssignments>
     </subflows>
     <variables>
         <description>Account Id passato in input dal Service Catalog</description>
@@ -2095,6 +2248,14 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Case</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
     </variables>
     <variables>
         <name>CaseId</name>
@@ -2218,6 +2379,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>UserInputFlow</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
