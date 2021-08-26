@@ -313,9 +313,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     ) 
                 }
-                else if(this.recordtype.label === 'Punto Elettrico' && element === 'Resident__c'){
+                else if(element === 'Resident__c'){
                     console.log('entra in resident');
                     this.allSubmitedFields.Resident__c = true;
+                    
                     fieldsDataObject.push(
                         {
                             fieldname: element,
