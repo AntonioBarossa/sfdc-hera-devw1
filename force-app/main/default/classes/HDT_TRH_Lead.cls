@@ -150,20 +150,18 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 }
                 if (conList.size()>0) {
                     insert conList;
+                    for(Contact c : conList){
+                        contId.add(c.id);
+                    }
+                    List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(accId, contId, 'Id');
+                    for(AccountContactRelation acc : listAccCon){
+                        acc.Roles='Azienda';
+                    }
+                    accoContRelSrv.upsertRecord(listAccCon);
+                    HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
+                    ba.dtos = accToUpdate;  
+                    Database.executeBatch(ba,80);
                 }
-               
-             
-                for(Contact c : conList){
-                    contId.add(c.id);
-                }
-                List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(accId, contId, 'Id');
-                for(AccountContactRelation acc : listAccCon){
-                    acc.Roles='Azienda';
-                }
-                accoContRelSrv.upsertRecord(listAccCon);
-                HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
-                ba.dtos = accToUpdate;  
-                Database.executeBatch(ba,80);
             }
             
         }

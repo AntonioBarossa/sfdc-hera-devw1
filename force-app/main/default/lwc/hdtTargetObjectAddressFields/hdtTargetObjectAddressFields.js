@@ -400,7 +400,7 @@ handleAddressFromAccount()
             this.comune=data['Comune'];		
             this.provincia=data['Provincia'];
             this.cap=data['CAP'];
-            this.stato=data['Stato'].toUpperCase();
+            this.stato=data['Stato']?.toUpperCase();
 			this.estensCivico=data['Est.Civico'];
             this.codComuneSAP=data['Codice Comune SAP'];
             this.codStradarioSAP=data['Codice Via Stradario SAP'];
