@@ -3174,6 +3174,12 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>disabledReadingDate</name>
                 <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>allowSmallerReading</name>
+                <value>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
