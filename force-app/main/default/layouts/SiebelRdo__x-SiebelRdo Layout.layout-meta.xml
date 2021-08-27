@@ -3519,6 +3519,7 @@
     </relatedLists>
     <relatedLists>
         <fields>ExternalId</fields>
+        <fields>DISPLAY_NAME__c</fields>
         <fields>CFG_STATE_CD__c</fields>
         <fields>DATE_VAL__c</fields>
         <fields>REQUIRED_FLG__c</fields>
