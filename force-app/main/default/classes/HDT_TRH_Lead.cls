@@ -29,8 +29,8 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         for(Lead L : listNew){
             if(l.email != null){
                 String s = l.email.split('@')[1];
-                if(mapResBlacklist.get(s) != null){
-                    l.addError('Error:' + mapResBlacklist.get(s));
+                if(mapResBlacklist.get(s.toUpperCase()) != null){
+                    l.addError('Error:' + mapResBlacklist.get(s.toUpperCase()));
                 }
                 else{
                     if('Default'.equals(l.company)){
@@ -73,11 +73,11 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         public override void afterUpdate(){
             System.debug('afterUpdate');
             for (Lead tempLead :   (List<Lead> ) Trigger.New) {
-               
+
                 if (tempLead.IndividualId==null&& mapOld.get(tempLead.id)!=null &&
-                mapOld.get(tempLead.id).IndividualId!=null ) {
-                   // tempLead.IndividualId=mapOld.get(tempLead.id).IndividualId;
-                    tempLead.addError('Operazione non consentita'); 
+                mapOld.get(tempLead.id).IndividualId!=null && !tempLead.IsConverted) {
+                    tempLead.addError('Operazione non consentita');
+                  
                 }
                 
             }
@@ -114,43 +114,70 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 List<String> contId = new List<String>();
                 Recordtype r = recordtypeQr.getRecordType('HDT_RT_Business', 'Account');  
                 accounts = accPerson.getRecordsById(accountIdList,'id,Name, firstname__c,LastName__c,PrimaryEmail__c,Description,FiscalCode__c,recordtypeid,Phone,FAX__c' );
-                For(Account a : accounts){
+                for(Account a : accounts){
                     accId.add(a.id);
                     if(mapAccountLead.get(a.id) != null){
                         String lastName = (a.LastName__c != null && a.LastName__c != '' ? a.LastName__c : a.Name);
-            
-                        if(r.id == a.recordtypeid){
-                            Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone= a.Phone, Email= a.PrimaryEmail__c, Fax= a.FAX__c);
-                            conList.add(contact);
-                        }       
-                        Lead li = mapAccountLead.get(a.id);
-                        a.FirstName__c = li.FirstName;
-                        a.LastName__c = li.LastName;
-                        a.PrimaryEmail__c= li.Email;
-                        a.Description= li.Description;
-                        String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
-                        a.Name=expectedNewName;
-                        accToUpdate.add(a);
+                        if ( a.LastName__c==null) {
+                            if(r.id == a.recordtypeid){
+                                Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone= a.Phone, Email= a.PrimaryEmail__c, Fax= a.FAX__c);
+                                conList.add(contact);
+                                Lead li = mapAccountLead.get(a.id);
+                               // a.FirstName__c = li.FirstName;
+                            
+                                a.LastName__c = li.Company;
+                                a.Name=li.Company;
+                                a.PrimaryEmail__c= li.Email;
+                                a.Description= li.Description;
+                                accToUpdate.add(a);
+
+                            }
+                            else{       
+                                Lead li = mapAccountLead.get(a.id);
+                                a.FirstName__c = li.FirstName;
+                                a.LastName__c = li.LastName;
+                                a.PrimaryEmail__c= li.Email;
+                                a.Description= li.Description;
+                                String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
+                                a.Name=expectedNewName;
+                                accToUpdate.add(a);
+                            }
+                        }
                     }     
                 }
-                update accToUpdate;
-                insert conList;
-                for(Contact c : conList){
-                    contId.add(c.id);
+                if (accToUpdate.size()>0) {
+                    update accToUpdate;
                 }
-                List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(accId, contId, 'Id');
-                for(AccountContactRelation acc : listAccCon){
-                    acc.Roles='Azienda';
+                if (conList.size()>0) {
+                    insert conList;
+                    for(Contact c : conList){
+                        contId.add(c.id);
+                    }
+                    List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(accId, contId, 'Id');
+                    for(AccountContactRelation acc : listAccCon){
+                        acc.Roles='Azienda';
+                    }
+                    accoContRelSrv.upsertRecord(listAccCon);
+                    HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
+                    ba.dtos = accToUpdate;  
+                    Database.executeBatch(ba,80);
                 }
-                accoContRelSrv.upsertRecord(listAccCon);
-                HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
-                ba.dtos = accToUpdate;  
-                Database.executeBatch(ba,80);
             }
             
         }
         public override void   beforeUpdate(){
-     
+            Map<String,String> mapResBlacklist = HDT_UTL_Lead.getBlackListMap();
+            List<Lead> listNew = trigger.new;
+        // List<Lead> leadToCheck = new List<Lead>();
+            //Map<String,String> leadDomain = new Map<String,String>();
+            for(Lead L : listNew){
+                if(l.email != null){
+                    String s = l.email.split('@')[1];
+                    if(mapResBlacklist.get(s.toUpperCase()) != null){
+                        l.addError('Error:' + mapResBlacklist.get(s.toUpperCase()));
+                    }
+                }
+            }
             System.debug('beforeUpdate');
            
         }

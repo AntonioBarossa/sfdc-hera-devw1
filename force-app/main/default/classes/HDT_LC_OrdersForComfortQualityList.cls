@@ -30,9 +30,33 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             ConfirmCustomerContract__c = confirmText
         );
 
-        List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
+        if(confirmtext == 'Comfort call'){
+            //SwitchIn, cambioOfferta -> communicazione verso heroku
+            List<Order> ordComf = orderQr.getOrderForComfort(ordId);
 
-        orderUpdate.Phase__c = 'Quality Call OK';
+            String phase = null;
+
+            switch on ordComf[0].RecordType.DeveloperName {
+                when  'HDT_RT_VAS'{
+                    phase ='Comunicazione Motore VAS';
+                }
+                when 'HDT_RT_CambioOfferta' {
+                    phase = 'Comunicazione verso Heroku';
+                }
+                when 'HDT_RT_SwitchIn' {
+                    phase = 'Comunicazione verso Heroku';
+                }
+            }
+
+            orderUpdate.Phase__c = phase;
+        } else {
+            // List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
+            
+            // if(!orderActiveMonitoring.isEmpty()){
+                orderUpdate.Phase__c = 'Quality Call OK';
+            // }
+
+        }
 
         orderSrv.updateRecord(orderUpdate);
 

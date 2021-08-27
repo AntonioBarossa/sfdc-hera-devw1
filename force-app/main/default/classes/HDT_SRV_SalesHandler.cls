@@ -252,7 +252,14 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Completata' {
 
-                                if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti')){
+                                Boolean redirectPreventivo = false;
+                                switch on ordRetrieved.ProcessType__c{
+                                    when 'Connessione con Attivazione', 'Temporanea Nuova Attivazione', 'Attivazione con Modifica'{
+                                        redirectPreventivo=true;
+                                    }
+                                }
+
+                                if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') && redirectPreventivo){
                                     ord.Phase__c = 'Inviare preventivo';
                                 }else{
                                     ord.Description = mapRequestFields.get('NOTA_HK');
@@ -260,6 +267,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.OrderODV__c = mapRequestFields.get('VBELN');
                                     ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                    ord.Status='Activated';
                                     
                                     if(mapRequestFields.get('VKONT') != null) {
                                         ord.ContractAccountCode__c = mapRequestFields.get('VKONT');

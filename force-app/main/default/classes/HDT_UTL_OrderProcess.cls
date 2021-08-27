@@ -109,12 +109,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(o.phase__c == 'Documentazione Validata'){
                 filtered.add(o);
             }
-            if (o.Phase__c == 'Quality Call OK') {
-                ordersQualityOkUpdate.add(new Order(
-                    Id = o.Id,
-                    Phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o) ? 'Comunicazione verso Heroku' : 'In attesa validazione'
-                ));
-            }
+            // if (o.Phase__c == 'Quality Call OK') {
+            //     ordersQualityOkUpdate.add(new Order(
+            //         Id = o.Id,
+            //         Phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o) ? 'Comunicazione verso Heroku' : 'In attesa validazione'
+            //     ));
+            // }
             //onlyString.add(o.id);
         }
         List<Order> childOrders = orderQr.getChildOrdersByParentIds(ordersParent);
@@ -129,6 +129,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 childOrdersDocValid.add(new Order(
                     Id = o1.Id,
                     phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o1) ? 'Documentazione Validata': 'In attesa validazione'
+                ));
+            }
+
+            if (o1.Phase__c == 'Da Inviare') {
+                childOrdersDocValid.add(new Order(
+                    Id = o1.Id,
+                    phase__c = 'In attesa validazione'
                 ));
             }
         }

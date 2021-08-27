@@ -126,7 +126,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             System.debug('******3');
             s.id = listSale[0].opportunity__r.Sale__c;
             System.debug('******4');
-            s = saQr.getRecordById(listSale[0].opportunity__r.Sale__c,'id,Account__r.Category__c');
+            s = saQr.getRecordById(listSale[0].opportunity__r.Sale__c,'id,Account__r.Category__c,Account__r.CompanyOwner__c');
             System.debug('******5');
             boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
             System.debug('******6:' +isTransitorio);
@@ -173,7 +173,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
 
             if(sa!=null){
                 if(sa.id!=null){
-            s = saQr.getRecordById(sa.id,'id,Account__r.Category__c');
+            s = saQr.getRecordById(sa.id,'id,Account__r.Category__c,Account__r.CompanyOwner__c');
                 	isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
                 }
 
@@ -220,7 +220,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         HDT_QR_Sale saQr = new HDT_QR_Sale();
             System.debug('******3');
             //s.id = listSale[0].opportunity__r.Sale__c;
-            s = saQr.getRecordById(sa.id,'id,Account__r.Category__c');
+            s = saQr.getRecordById(sa.id,'id,Account__r.Category__c,Account__r.CompanyOwner__c');
             boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
             System.debug('******4' + isTransitorio);
             if(isTransitorio){

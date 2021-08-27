@@ -44,7 +44,7 @@ public inherited sharing class HDT_LC_SaleVas {
     }
     @AuraEnabled
     public static boolean transitionCheck(String salesId){
-        Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c');
+        Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
         boolean check = true;
         //HDT_UTL_Sales.isTransitionNoUp()
         //System.debug('*****MAVUOIANNA:'+ transitionlist);
@@ -190,10 +190,12 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, order.Id, 'order')) {
             throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
         }
+        String pdrCode = order.ServicePoint__r?.ServicePointCode__c;
+        pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
             Sale__c = sale.Id,
-            Name = opportunitySrv.generateName(sale) + ' VAS',
+            Name = opportunitySrv.generateName(sale) + ' VAS'+pdrCode,
             CloseDate = Date.today().addDays(30),
             StageName = 'Proposal',
             AccountId = order.AccountId
@@ -206,13 +208,13 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__Account__c = sale.Account__c,
             SBQQ__Primary__c = true,
             Agency__c = sale.Agency__c,
-            Market__c = sale.Market__c,
+            Market__c = order.Market__c,
             Channel__c = sale.Channel__c,
             FriendCode__c = sale.FriendCode__c,
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
             SupplyCity__c = null, //to do (other logic to get SupplyCity)
-            SalesCompany__c = sale.SalesCompany__c,
+            SalesCompany__c = order.SalesCompany__c,
             Campaign__c = sale.Campaign__c,
             IsVAS__c = true,
             IsBillableVas__c = false,
@@ -239,10 +241,12 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, contract.Id, 'contract')) {
             throw new AuraHandledException('La quote con il riferimento di questo contrato esiste già!');
         }
+        String pdrCode = contract.ServicePoint__r?.ServicePointCode__c;
+        pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
             Sale__c = sale.Id,
-            Name = opportunitySrv.generateName(sale) + ' VAS',
+            Name = opportunitySrv.generateName(sale) + ' VAS'+pdrCode,
             CloseDate = Date.today().addDays(30),
             StageName = 'Proposal',
             AccountId = contract.AccountId
@@ -255,12 +259,12 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__Account__c = sale.Account__c,
             SBQQ__Primary__c = true,
             Agency__c = sale.Agency__c,
-            Market__c = sale.Market__c,
+            Market__c = 'Libero',
             Channel__c = sale.Channel__c,
             FriendCode__c = sale.FriendCode__c,
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
-            SalesCompany__c = sale.SalesCompany__c,
+            SalesCompany__c = 'Hera Comm S.p.A.',//ribaltare da contract
             Campaign__c = sale.Campaign__c,
             SupplyCity__c = null, //to do (other logic to get supplyCity)
             IsVAS__c = true,
@@ -300,12 +304,12 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__Primary__c = true,
             SupplyCity__c = supplyCity,
             Agency__c = sale.Agency__c,
-            Market__c = sale.Market__c,
+            Market__c = 'Libero',
             Channel__c = sale.Channel__c,
             FriendCode__c = sale.FriendCode__c,
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
-            SalesCompany__c = sale.SalesCompany__c,
+            SalesCompany__c = 'Hera Comm S.p.A.',
             IsVAS__c = true,
             IsBillableVas__c = false,
             SBQQ__PricebookId__c = getPricebookId('VAS Standalone')

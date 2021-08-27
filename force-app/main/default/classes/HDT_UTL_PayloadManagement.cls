@@ -26,6 +26,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return generateSectionReclami(inputs,formParams);
                 }when 'handleFlagDeliveryAddress'{
                     return handleFlagDeliveryAddress(inputs,formParams);
+                }when 'handleFlagPaperless' {
+                    return handleFlagPaperless(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -49,6 +51,19 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         if(supplyAddress.equalsIgnoreCase(accountAddress)) return 'SL';
 
         return '';
+    }
+
+    private String handleFlagPaperless(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String isPaperless = 'N';
+        String context = (String) formParams.get('Contesto');
+        if(!context.equalsIgnoreCase('Case')) return isPaperless;
+        String processType = HDT_UTL_DocumentalManagement.getValue('Case', 'Type', 0, inputs, formParams);
+        String depositPaymentMode = HDT_UTL_DocumentalManagement.getValue('Case', 'DepositPaymentMode__c', 0, inputs, formParams);
+        if(String.isBlank(processType)) return isPaperless;
+        if (processType == 'Paperless' || (processType == 'Piano Rateizzazione' && depositPaymentMode == 'Paperless')){
+            isPaperless = 'Y';
+        }
+        return isPaperless;
     }
 
     private String calculateCompanyCode(Map<String,List<sObject>> inputs, Map<String,Object> formParams){

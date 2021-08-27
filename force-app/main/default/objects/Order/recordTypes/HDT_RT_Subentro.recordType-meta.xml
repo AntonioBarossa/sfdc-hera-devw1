@@ -2078,6 +2078,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>
         </values>

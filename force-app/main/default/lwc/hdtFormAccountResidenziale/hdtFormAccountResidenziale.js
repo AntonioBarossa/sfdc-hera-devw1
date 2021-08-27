@@ -642,7 +642,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         });
                     }).catch((errorMsg) => {
                         const event = new ShowToastEvent({
-                            message: 'Entra un valido codice fiscale!',
+                            message: 'Inserire un codice fiscale valido',
                             variant: 'error',
                             mode: 'dismissable'
                         });
@@ -650,6 +650,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         this.spinner=false;
                     });
                 }else{
+                    getFromFiscalCode({
+                        fiscalCodes : this.fiscalCode.value.replace(/ /g,"")
+                    }).then((response) => {
                     let acc= {
                         "firstName": firstName.value,
                         "lastName": lastName.value,
@@ -705,6 +708,15 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         this.dispatchEvent(event);
                         this.spinner=false;
                     });
+                }).catch((errorMsg) => {
+                    const event = new ShowToastEvent({
+                        message: 'Inserire un codice fiscale valido',
+                        variant: 'error',
+                        mode: 'dismissable'
+                    });
+                    this.dispatchEvent(event);
+                    this.spinner=false;
+                });
                 }
             }else{
                 const event = new ShowToastEvent({

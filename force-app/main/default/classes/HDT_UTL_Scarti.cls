@@ -226,6 +226,40 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     }
 
     /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 24/08/2021
+    * @description HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk
+    * @param1 list of objectId - list of Ids of the parent records of the activity
+    * @param2 templateName - name of an activityTemplate
+    * @return list<wrts_prcgvr__Activity__c>
+    */
+    public static list<wrts_prcgvr__Activity__c> createActivityByObjectIdAndTemplateNameBulk(list<String> objectIds, String templateName){
+        system.debug('HDT_UTL_Scarti objectIds ' + objectIds);
+        system.debug('HDT_UTL_Scarti templateName ' + templateName);
+        try{
+            Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName});
+            system.debug('HDT_UTL_Scarti template ' + template);
+            if(template.values().size() > 0){
+                wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+                List<wrts_prcgvr__Activity__c> resultActivities = new List<wrts_prcgvr__Activity__c>();
+                for(String singleObjectId: objectIds){
+                    List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>singleObjectId});
+                    system.debug('HDT_UTL_Scarti single activity ' + activities.get(0));
+                    resultActivities.add(activities.get(0));
+                }
+                system.debug('HDT_UTL_Scarti end ' + resultActivities);
+                return resultActivities;
+            }
+            system.debug('HDT_UTL_Scarti end');
+            return null;
+        }
+        catch(Exception e){
+            system.debug('HDT_UTL_Scarti catch ' + e);
+            return null;
+        }
+    }
+
+    /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 22/07/2021
     * @description HDT_UTL_Scarti.checkActivityCreation - Check on activity creation
@@ -347,13 +381,24 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @return void
     */
     public static void checkForEsitiIntermedi(List<wrts_prcgvr__Activity__c> inputData){
+        Set<String> categories = new Set<String>();
+
+
+        Schema.DescribeFieldResult fieldResult = wrts_prcgvr__Activity__c.DiscardCategory__c.getDescribe();
+		List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+		for( Schema.PicklistEntry pickListVal : ple){
+            if(!'Manuale'.equalsIgnoreCase(pickListVal.getValue()) && pickListVal.isActive()){
+                categories.add(pickListVal.getValue());
+            }
+		}     
+
         List<wrts_prcgvr__Activity__c> toUpdate = new List<wrts_prcgvr__Activity__c>();
 
         set<id> parentObjectCase = new set<id>();
         set<id> parentObjectOrder = new set<id>();
         set<id> inputDataId = new set<id>();
         for(wrts_prcgvr__Activity__c currAct : inputData){
-            if(ESITIINTERMEDIHEROKU.contains(currAct.Type__c)){
+            if(categories.contains(currAct.DiscardCategory__c)){
                 inputDataId.add(currAct.Id);
                 if(string.isNotBlank(currAct.Case__c)){
                     parentObjectCase.add(currAct.Case__c);
@@ -362,19 +407,20 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 }
             }
         }
-        list<wrts_prcgvr__Activity__c> relatedActCase = [select id, Status__c from wrts_prcgvr__Activity__c where Case__c in :parentObjectCase and Type__c in :ESITIINTERMEDIHEROKU and Id not in :inputDataId];
-        list<wrts_prcgvr__Activity__c> relatedActOrder = [select id, Status__c from wrts_prcgvr__Activity__c where Order__c in :parentObjectOrder and Type__c in :ESITIINTERMEDIHEROKU and Id not in :inputDataId];
 
-        for(wrts_prcgvr__Activity__c relatedAct: relatedActCase){
+        list<wrts_prcgvr__Activity__c> relatedActs = [SELECT id, Status__c 
+                                                      FROM wrts_prcgvr__Activity__c 
+                                                      WHERE (Case__c IN :parentObjectCase OR Order__c IN :parentObjectOrder) 
+                                                      AND DiscardCategory__c IN :categories 
+                                                      AND Id NOT IN :inputDataId 
+                                                      AND status__c NOT IN ('Chiusa','Sospesa')];
+
+        for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
             system.debug(relatedAct);
             relatedAct.Status__c='Chiusa';
             toUpdate.add(relatedAct);
         }
-        for(wrts_prcgvr__Activity__c relatedAct: relatedActOrder){
-            system.debug(relatedAct);
-            relatedAct.Status__c='Chiusa';
-            toUpdate.add(relatedAct);
-        }
+
         
         if(!toUpdate.IsEmpty()){
             system.debug('lista NON vuota -> Aggiorno'+toUpdate);

@@ -253,7 +253,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         let columnsUniq = [...new Set(columns)];
         columnsUniq.forEach(field => 
             {
-                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id'){
+                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id' && field != 'serviceRequestId' && field != 'isCompatible'){
                     this.tableColumns.push({label: field, fieldName: field});
                 }                 
             });
@@ -527,8 +527,11 @@ export default class HdtAdvancedSearch extends LightningElement {
                     if(found){
                         this.isIncompatible= false;
                         row.iconCompatibility= this.iconCompatibility;
+                        row.serviceRequestId= this.serviceRequestId;
+                        row.isCompatible= true;
                         if(data.compatibility != ''){
                             this.isIncompatible=true;
+                            row.isCompatible= false;
                             row.compatibilityMessage= data.compatibility;
                             this.confirmButtonDisabled = true;
                         }else{
@@ -536,7 +539,8 @@ export default class HdtAdvancedSearch extends LightningElement {
                         }
                     }
                 }
-                this.createTable(this.originalData);  
+                console.log(this.originalData);
+                this.createTable(this.originalData); 
                 this.formatTableHeaderColumns(this.originalData);
                 var my_ids = [];
                 my_ids[0] = this.rowToSend.Id;

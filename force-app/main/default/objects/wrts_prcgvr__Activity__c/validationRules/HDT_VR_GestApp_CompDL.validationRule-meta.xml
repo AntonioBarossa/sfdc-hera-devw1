@@ -6,7 +6,7 @@
     <errorConditionFormula>false
 /*Valido solo per Gestione appuntamento*/
 /*Vincolare anche per utenza*/
-/*AND(RecordTypeId = &quot;0123N000002WpWEQA0&quot;,
+/*AND(RecordType.DeveloperName = &quot;HDT_RT_DistributorAppointment&quot;,
 AND(ISPICKVAL(AppointmentCompetence__c, &quot;Distributore&quot;),
 isAtoA__c = TRUE))*/</errorConditionFormula>
     <errorDisplayField>AppointmentCompetence__c</errorDisplayField>

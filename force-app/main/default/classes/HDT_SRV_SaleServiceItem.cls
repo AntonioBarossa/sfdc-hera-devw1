@@ -72,7 +72,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         //Get sale data start
         saleSrv.checkReadAccess('Account__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
-        Sale__c existingSale = saleQr.getRecordById(sale.id, 'Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
+        Sale__c existingSale = saleQr.getRecordById(sale.id, 'Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
         sale = existingSale;
         //Get sale data end
         
@@ -350,14 +350,14 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         String name='';
         switch on sp.commoditySector__c{
             when 'Gas'{
-                if(sp.SupplyType__c.endsWithIgnoreCase('Domestico') || sp.SupplyType__c=='A-Domestico'){
+                if(sp.SupplyType__c=='Domestico' || sp.SupplyType__c=='A-Domestico'){
                     Name = 'Gas Domestico (A-Domestico)';
                 }else{
                     Name = 'Gas Non Domestico (B-Condominio, C-Aziende di pubblica utilità, D-Altri usi)';
                 }
             }
             when 'Energia Elettrica'{
-                if(sp.SupplyType__c.endsWithIgnoreCase('Domestico') || sp.SupplyType__c=='A-Domestico'){
+                if(sp.SupplyType__c=='Domestico' || sp.SupplyType__c=='A-Domestico'){
                     Name = 'Energia Elettrica Domestico';
                 }else{
                     Name = 'Energia Elettrica Non Domestico';

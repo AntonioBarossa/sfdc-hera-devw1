@@ -190,8 +190,8 @@ public with sharing class HDT_UTL_CaseProcess {
             }
             Map<String,String> accountIdCase = new Map<String,String> ();
             Map<String,String> campaignIdCase = new Map<String,String>();
-            for (Case newCase : newCasesList) {
-                if (oldCaseMap.get(newCase.id) != null && oldCaseMap.get(newCase.id).status == 'New' && newCase.Status == 'In Lavorazione') {
+            for (Case newCase : newCasesList) {// Start 27/08/2021 HRAWRM-314 per processi autoconclusivi (newCase.Status == 'In Lavorazione')||newCase.Status == 'Closed')
+                if (oldCaseMap.get(newCase.id) != null && (oldCaseMap.get(newCase.id).status == 'New' && (newCase.Status == 'In Lavorazione')||newCase.Status == 'Closed')) {
                     closedCaseIds.add(newCase.Id);
                     accountIdCase.put(newCase.AccountId, newCase.Id);
                     campaignIdCase.put(newCase.Campaign__c, newCase.Id);
@@ -211,6 +211,12 @@ public with sharing class HDT_UTL_CaseProcess {
                     updateMember.Status = 'Positivo';
                     membersToUpdate.add(updateMember);
                 }
+            }
+            //update campaignMember siblings Status a 'Non Proposto Auto'
+            List<CampaignMember> siblingMembers = HDT_QR_CampaignMember.getSiblingMembersByAccountId(accountIds, newCasesList[0].Campaign__r.Channel__c);
+            List<String> campaignMembersIdList = new List<String>(new Map<String, CampaignMember>(siblingMembers).keySet());
+            if (campaignMembersIdList.size()>0) {
+                List<CampaignMember> siblingsToUpdate = HDT_LC_CampaignsController.updateCampaignMembersStatus(campaignMembersIdList, 'Non Proposto Auto');
             }
         
 			campaignMemberSrv.updateRecords(membersToUpdate);
