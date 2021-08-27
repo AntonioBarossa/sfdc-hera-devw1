@@ -11,7 +11,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Cambio contatore non registrato</value>
+        <value xsi:type="xsd:string">Cambio contatore non registrato Energia Elettrica</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
