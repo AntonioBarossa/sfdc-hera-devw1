@@ -1703,4 +1703,17 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 	}
 
+	public static String getUserRole (String userRole){
+		String userRoleId='';
+
+		if (!String.isEmpty(userRole)){
+			userRoleId=[SELECT UserRole.Name, UserRoleId
+			FROM User
+			WHERE UserRole.Name=:userRole
+			LIMIT 1].UserRoleId;
+		}
+
+		return userRoleId;
+	}
+
 }
