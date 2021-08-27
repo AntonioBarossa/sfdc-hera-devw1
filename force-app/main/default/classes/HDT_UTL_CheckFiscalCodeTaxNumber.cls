@@ -128,4 +128,87 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         }
         return res;
     }
+    // Start 27-08-2021 HRAWRM-351
+    public static Map<String,HDT_WRP_FiscalObject> getDataFromFiscalCode(Set<String> fiscalCodes){
+        System.debug('HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCode');
+        System.debug('FiscalCode: '+fiscalCodes);
+  
+        Map<String,HDT_WRP_FiscalObject> res = new Map<String,HDT_WRP_FiscalObject>();
+
+        List<String> codes      = new List<String>(); 
+        String gender= '';
+        String birthDate= '';
+        String city='';
+        String cityCode= '';
+        for(String s:fiscalCodes){
+            try {
+                cityCode= s.replaceAll( '\\s+', '').substring(11,15);
+                codes.add(cityCode);
+            } catch (Exception e) {
+                System.debug('errore :'+e.getStackTraceString());
+                HDT_WRP_FiscalObject wrp=new HDT_WRP_FiscalObject();
+                wrp.fiscalCode=s;
+                wrp.isValid=false;
+                res.put(s,wrp);
+                continue;
+            }
+        }
+        Map<String,String> cities= HDT_QR_City.getCityFromCode(codes);
+        for(String s:fiscalCodes){
+            HDT_WRP_FiscalObject wrp=new HDT_WRP_FiscalObject();
+
+            try {
+                
+           
+                String fiscalCode = s.replaceAll( '\\s+', '');
+                String year = '19' + s.substring(6,8);
+                String month = s.substring(8,9);
+                String day = s.substring(9,11);
+                Boolean isValid=true;
+                month =  monthsLetters.get(month);
+ 
+                if(Integer.valueOf(day) <=31){
+                    gender= 'Maschio';
+                }
+                else{
+                    day=  String.valueOf(Integer.valueOf(day) -40);
+                    gender= 'Femmina';
+                }
+                birthDate = year +'-'+ month +'-'+day;
+                if (cities.get(s.substring(11,15))!=null) {
+                    city= cities.get(s.substring(11,15));
+                }
+                if (String.isBlank(gender)||String.isBlank(city) || String.isBlank(day) || String.isBlank(year)|| String.isBlank(month)) {
+                    isValid=false;
+                }
+                wrp.fiscalCode=s;
+                wrp.day=day;
+                wrp.month=month;
+                wrp.year=year;
+                wrp.city=city;
+                wrp.gender=gender;
+                wrp.isValid=isValid;
+   
+                res.put(s,wrp);
+
+            } catch (Exception e) {
+               
+                wrp.fiscalCode=s;
+                wrp.isValid=false;
+                res.put(s,wrp);
+            }   
+        }
+        return res;
+    }
+    public class HDT_WRP_FiscalObject{
+       public String fiscalCode;
+       public String year; 
+       public String month;
+       public String day;
+       public String city;
+       public String gender;
+       public Boolean isValid;
+     
+    }
+    // End 27-08-2021 HRAWRM-351
 }
