@@ -190,8 +190,8 @@ public with sharing class HDT_UTL_CaseProcess {
             }
             Map<String,String> accountIdCase = new Map<String,String> ();
             Map<String,String> campaignIdCase = new Map<String,String>();
-            for (Case newCase : newCasesList) {
-                if (oldCaseMap.get(newCase.id) != null && oldCaseMap.get(newCase.id).status == 'New' && newCase.Status == 'In Lavorazione') {
+            for (Case newCase : newCasesList) {// Start 27/08/2021 HRAWRM-314 per processi autoconclusivi (newCase.Status == 'In Lavorazione')||newCase.Status == 'Closed')
+                if (oldCaseMap.get(newCase.id) != null && (oldCaseMap.get(newCase.id).status == 'New' && (newCase.Status == 'In Lavorazione')||newCase.Status == 'Closed')) {
                     closedCaseIds.add(newCase.Id);
                     accountIdCase.put(newCase.AccountId, newCase.Id);
                     campaignIdCase.put(newCase.Campaign__c, newCase.Id);
