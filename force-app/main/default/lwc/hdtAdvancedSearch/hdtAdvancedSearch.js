@@ -253,7 +253,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         let columnsUniq = [...new Set(columns)];
         columnsUniq.forEach(field => 
             {
-                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id'){
+                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id' && field != 'serviceRequestId' && field != 'isCompatible'){
                     this.tableColumns.push({label: field, fieldName: field});
                 }                 
             });

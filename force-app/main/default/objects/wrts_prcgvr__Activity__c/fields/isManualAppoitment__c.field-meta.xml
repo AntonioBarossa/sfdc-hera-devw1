@@ -5,7 +5,7 @@
     <description>Flag indicate che l&apos;appuntamento è stato gestito in maniera manuale</description>
     <externalId>false</externalId>
     <label>Fermo Sistemi</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
