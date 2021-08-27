@@ -127,10 +127,12 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 }
 
                 if (isCmAlready && cmAlreadyId != null) {
-                    campaignMembersUpdate.add(new CampaignMember(
-                        Id = cmAlreadyId,
-                        RelatedActivity__c = orderActivityMap.get(ordId).Id
-                    ));
+                    if (orderActivityMap.get(ordId).Id != null) {
+                        campaignMembersUpdate.add(new CampaignMember(
+                            Id = cmAlreadyId,
+                            RelatedActivity__c = orderActivityMap.get(ordId).Id
+                        ));
+                    }
 
                 } else {
                     campaignMembersInsert.add(new CampaignMember(
