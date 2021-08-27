@@ -12,8 +12,11 @@ public inherited sharing class HDT_UTL_CompanyOwner {
         String userId= System.UserInfo.getUserId();
         User currentUser= HDT_QR_UserQueriesWithoutSharing.getRoleAndProfile(userId)[0];
         String objectApiName='';
-        if(String.isNotBlank(currentUser.UserRole.DeveloperName)){
-            if('HDT_BackOffice'.equals(currentUser.UserRole.DeveloperName)){
+        // if(String.isNotBlank(currentUser.UserRole.DeveloperName)){
+            /** Andrei Necsulescu - 27/08/2021
+             * When the user doesn't have a Role the Company Owner is filled based on the object relationships
+             */
+            if('HDT_BackOffice'.equals(currentUser.UserRole.DeveloperName) || String.isBlank(currentUser.UserRole.DeveloperName)){
 
                 List<String> accountIds= new List<String>();
                 List<String> caseIds= new List<String>();
@@ -200,9 +203,9 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                     }
                 }
             }
-        }else{
-            //objs[0].addError('Your UserRole is empty');
-        }
+        // }else{
+        //     objs[0].addError('Your UserRole is empty');
+        // }
        
     }
 

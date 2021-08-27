@@ -318,6 +318,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 //no action needed
             }else if(currentPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && nextPhase.equalsIgnoreCase('Completata')){
                 currentCase.Phase__c = 'Inviare preventivo';
+            }else if(recordCase.Type.equalsIgnoreCase('Fiscale') && nextPhase.equalsIgnoreCase('Completata') && recordCase.CalculationBlock__c){
+                currentCase.Phase__c = 'Elaborazione Manuale';
             }else{
                 currentCase.Phase__c = nextPhase;
                 Map<String, Object> extraParams = new Map<String,Object>();

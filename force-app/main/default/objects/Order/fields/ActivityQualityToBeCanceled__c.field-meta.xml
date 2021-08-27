@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActivityQualityToBeCanceled__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Campo di tracciamento per identificare i Order soggetto a quality call che devono essere annullate</description>
+    <externalId>false</externalId>
+    <label>Quality da Annullare</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>
