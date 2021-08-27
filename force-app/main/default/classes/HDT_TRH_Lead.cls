@@ -178,14 +178,14 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     if(mapResBlacklist.get(s.toUpperCase()) != null){
                         l.addError('Error:' + mapResBlacklist.get(s.toUpperCase()));
                     }
-                    if (String.isNotBlank(l.FiscalCode__c) && mapOld.get(l.Id)!=null && (mapOld.get(l.Id).FiscalCode__c!=l.FiscalCode__c)     ) {
-                        setFiscalCodes.add(l.FiscalCode__c);
-                        leadToCheck.add(l);
-                    }
+                }
+                if (String.isNotBlank(l.FiscalCode__c) && mapOld.get(l.Id)!=null && (mapOld.get(l.Id).FiscalCode__c!=l.FiscalCode__c)     ) {
+                    setFiscalCodes.add(l.FiscalCode__c);
+                    leadToCheck.add(l);
                 }
             }   
             // Start 27-08-2021 HRAWRM-351
-            if (setFiscalCodes.size()>0) {
+            if (leadToCheck.size()>0) {
                 
             
                 Map<String,HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject> mapCodeToCheck = HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCode(setFiscalCodes);
