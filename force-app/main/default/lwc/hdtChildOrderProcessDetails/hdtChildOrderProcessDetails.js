@@ -1397,24 +1397,26 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                // {
-                //     'label': 'ConnectionMandate__c',
-                //     'apiname': 'ConnectionMandate__c',
-                //     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'),
-                //     'required': true,
-                //     'disabled': false,
-                //     'value': '',
-                //     'processVisibility': ''
-                // },
-                // {
-                //     'label': 'Autocert. contr connessione',
-                //     'apiname': 'SelfCertificationConnection__c',
-                //     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
-                //     'required': true,
-                //     'disabled': false,
-                //     'value': '',
-                //     'processVisibility': ''
-                // },
+                //25/08/2021 - gabriele.rota@webresults.it - Reso nuovamente visibile
+                {
+                    'label': 'ConnectionMandate__c',
+                    'apiname': 'ConnectionMandate__c',
+                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'),
+                    'required': true,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                //25/08/2021 - gabriele.rota@webresults.it - Reso nuovamente visibile, default per Prima Attivazione Ele
+                {
+                    'label': 'Autocert. contr connessione',
+                    'apiname': 'SelfCertificationConnection__c',
+                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
+                    'required': true,
+                    'disabled': false,
+                    'value': (this.order.ProcessType__c=='Prima Attivazione Ele')?'02':'',
+                    'processVisibility': ''
+                },
                 // {
                 //     'label': 'ConnectionType__c',
                 //     'apiname': 'ConnectionType__c',
@@ -1424,7 +1426,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 //     'value': '',
                 //     'processVisibility': ''
                 // },
-                new fieldData('ConnectionType__c','ConnectionType__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, true, '',''),
+                //25/08/2021 - gabriele.rota@webresults.it - Modificabile per Prima Attivazione Ele
+                new fieldData('ConnectionType__c','ConnectionType__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, (this.order.ProcessType__c!=='Prima Attivazione Ele'), '',''),
                 new fieldData('Esecuzione Anticipata','RecessNotice__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
                 new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, this.order.ProcessType__c == 'Switch in Ripristinatorio', '',''),
                 new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
@@ -1450,12 +1453,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
+                //25/08/2021 - gabriele.rota@webresults.it - Modificabile per Prima Attivazione Ele
                 {
                     'label': 'Fase richiesta',
                     'apiname': 'RequestPhase__c',
                     'typeVisibility': this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta',
                     'required': true,
-                    'disabled': true,
+                    'disabled': (this.order.ProcessType__c!=='Prima Attivazione Ele'),
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1608,12 +1612,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     ), 
                     new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
                     new fieldData(
-                        'Sottotipo Vas','VASSubtype__c', 
+                        'Sottotipo Vas','VasSubtype__c', 
                         this.typeVisibility('both'), 
                         false, true, '',''
                     ),
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
-                    new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, true, ''),
+                    new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, false, ''),
                     new fieldData('Soc Vendita','SalesCompany__c', true, false, true, ''),
 
                     
@@ -1883,7 +1887,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
                     new fieldData('POD/PDR','ServicePointCode__c', true, false, true, ''),
                     new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
-                    new fieldData('Sottotipo VAS','VASSubtype__c', true, false, true, ''),
+                    new fieldData('Sottotipo VAS','VasSubtype__c', true, false, true, ''),
                     new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, false, ''),
                     new fieldData('Azione Commerciale','CommercialAction__c', true, false, false, '')
                 ]
@@ -1918,7 +1922,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'fatturazione',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable
+                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable || this.order.RecordType.DeveloperName=="HDT_RT_ScontiBonus"
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
@@ -2159,7 +2163,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'metodoPagamento',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable
+                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable 
+                || this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
