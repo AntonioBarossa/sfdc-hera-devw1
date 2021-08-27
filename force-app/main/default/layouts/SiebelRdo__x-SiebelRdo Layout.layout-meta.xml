@@ -3514,6 +3514,8 @@
         <fields>TODO_CD__c</fields>
         <fields>EVT_STAT_CD__c</fields>
         <relatedList>SiebelActivity__x.ORDER_ITEM_ID__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>ExternalId</fields>
@@ -3528,7 +3530,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h0E000001goxm</masterLabel>
+        <masterLabel>00h1X000002lHvU</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
