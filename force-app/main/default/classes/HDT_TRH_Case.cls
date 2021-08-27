@@ -68,7 +68,12 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         HDT_UTL_CaseProcess.updateMemberStatusforClosedCases(trigger.new, trigger.old); 
         //**FINE SVILUPPO */
     }
-
+    // Start 27/08/2021 HRAWRM-314 per processi autoconclusivi
+    public override void afterInsert(){  
+        HDT_UTL_CaseProcess.updateMemberStatusforClosedCases(trigger.new);
+    }
+    // Start 27/08/2021 HRAWRM-314 per processi autoconclusivi
+    
     //Andrei Necsulescu - 02/07/2021: Commented as it created an exception when importing more than a certain number of Cases at a time.
     /*
     public override void afterInsert(){   
