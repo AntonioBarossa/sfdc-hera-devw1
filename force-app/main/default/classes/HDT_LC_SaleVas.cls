@@ -190,10 +190,12 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, order.Id, 'order')) {
             throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
         }
+        String pdrCode = order.ServicePoint__r?.ServicePointCode__c;
+        pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
             Sale__c = sale.Id,
-            Name = opportunitySrv.generateName(sale) + ' VAS',
+            Name = opportunitySrv.generateName(sale) + ' VAS'+pdrCode,
             CloseDate = Date.today().addDays(30),
             StageName = 'Proposal',
             AccountId = order.AccountId
@@ -239,10 +241,12 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, contract.Id, 'contract')) {
             throw new AuraHandledException('La quote con il riferimento di questo contrato esiste già!');
         }
+        String pdrCode = contract.ServicePoint__r?.ServicePointCode__c;
+        pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
             Sale__c = sale.Id,
-            Name = opportunitySrv.generateName(sale) + ' VAS',
+            Name = opportunitySrv.generateName(sale) + ' VAS'+pdrCode,
             CloseDate = Date.today().addDays(30),
             StageName = 'Proposal',
             AccountId = contract.AccountId
