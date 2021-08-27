@@ -338,8 +338,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 List<Case> parentOrder = Database.query(queryString);
                 if(!parentOrder.isEmpty()){
                     for(DiscardAnnullmentRule__c curRule : rules){
-                        if(curRule.ProcessValue__c.equalsIgnoreCase(parentOrder.get(0).get(curRule.ProcessField__c))
-                            && curRule.ControllingValue__c.equalsIgnoreCase(parentOrder.get(0).get(curRule.ControllingField__c))){
+                        if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c)))
+                            && curRule.ControllingValue__c.equalsIgnoreCase(String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c)))){
                             outcome = true;
                             break;
                         }
@@ -353,19 +353,56 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 22/07/2021
-    * @description HDT_UTL_Scarti.updateContactData - updates contact points with new data
+    * @description HDT_UTL_Scarti.updatePraticaForScartoDocumentale - updates case/order with new data
     * @param1 recordId - Id of a record
     * @return void
     */
-    public static void updateContactData(String oldPhone, String oldMail, String newPhone, String newMail){
+    public static void updatePraticaForScartoDocumentale(Id activityId){
+        String oldPhone, oldEmail;
+        wrts_prcgvr__Activity__c activity = [SELECT Id, NewEmail__c, NewMobile__c, Case__c, Order__c
+                                             FROM wrts_prcgvr__Activity__c
+                                             WHERE Id = :activityId LIMIT 1];
+        if(activity.Case__c != null){
+            Case parentCase = [SELECT Id, PhoneNumber__c, Email__c
+                                FROM Case
+                                WHERE Id = :activity.Case__c LIMIT 1];
+            oldPhone = parentCase.PhoneNumber__c;
+            oldEmail = parentCase.Email__c;
+            parentCase.PhoneNumber__c = activity.NewMobile__c;
+            parentCase.Email__c = activity.NewEmail__c;
+            update parentCase;
+        }
+        if(activity.Order__c != null){
+            Order parentOrder = [SELECT Id, PhoneNumber__c, Email__c
+                                FROM Order
+                                WHERE Id = :activity.Order__c LIMIT 1];
+            oldPhone = parentOrder.PhoneNumber__c;
+            oldEmail = parentOrder.Email__c;
+            parentOrder.PhoneNumber__c = activity.NewMobile__c;
+            parentOrder.Email__c = activity.NewEmail__c;
+            update parentOrder;
+        }
+        updateContactForScartoDocumentale(oldPhone, oldEmail, activity.NewMobile__c, activity.NewEmail__c);
+    }
+
+    /**
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
+    * @date 22/07/2021
+    * @description HDT_UTL_Scarti.updateContactForScartoDocumentale - updates contact points with new data
+    * @param1 recordId - Id of a record
+    * @return void
+    */
+    public static void updateContactForScartoDocumentale(String oldPhone, String oldEmail, String newPhone, String newMail){
         List<sObject> recordsForDML = new List<SObject>();
         if(String.isNotBlank(oldPhone)){
-            List<ContactPointPhone> cpp = [SELECT Id, TelephoneNumber, Status__c, ParentId FROM ContactPointPhone];
+            List<ContactPointPhone> cpp = [SELECT Id, TelephoneNumber, Status__c, ParentId 
+                                            FROM ContactPointPhone 
+                                            WHERE TelephoneNumber = :oldPhone];
             if(!cpp.isEmpty()){
                 if('Verificato'.equalsIgnoreCase(cpp.get(0).Status__c)){
                     ContactPointPhone newCPP = new ContactPointPhone();
                     newCPP.TelephoneNumber = newPhone;
-                    //TODO: assegnare lookUp a contatto
+                    newCPP.ParentId = cpp.get(0).ParentId; //TODO: verificare
                     recordsForDML.add(newCPP);
                 }
                 else if('Non Verificato'.equalsIgnoreCase(cpp.get(0).Status__c)){
@@ -375,13 +412,15 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 }
             }
         }
-        if(String.isNotBlank(oldMail)){
-            List<ContactPointEmail> cpe = [SELECT Id, EmailAddress, Status__c, ParentId FROM ContactPointEmail];
+        if(String.isNotBlank(oldEmail)){
+            List<ContactPointEmail> cpe = [SELECT Id, EmailAddress, Status__c, ParentId 
+                                            FROM ContactPointEmail 
+                                            WHERE EmailAddress = :oldEmail];
             if(!cpe.isEmpty()){
                 if('Verificato'.equalsIgnoreCase(cpe.get(0).Status__c)){
                     ContactPointEmail newCPE = new ContactPointEmail();
                     newCPE.EmailAddress = newMail;
-                    //TODO: assegnare lookUp a contatto
+                    newCPE.ParentId = cpe.get(0).ParentId; //TODO: verificare
                     recordsForDML.add(newCPE);
                 }
                 else if('Non Verificato'.equalsIgnoreCase(cpe.get(0).Status__c)){
