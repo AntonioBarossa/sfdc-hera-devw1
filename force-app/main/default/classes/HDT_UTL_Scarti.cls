@@ -325,8 +325,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 List<Case> parentCase = Database.query(queryString);
                 if(!parentCase.isEmpty()){
                     for(DiscardAnnullmentRule__c curRule : rules){
-                        if(curRule.ProcessValue__c.equalsIgnoreCase(parentCase.get(0).get(curRule.ProcessField__c))
-                            && curRule.ControllingValue__c.equalsIgnoreCase(parentCase.get(0).get(curRule.ControllingField__c))){
+                        if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentCase.get(0).get(curRule.ProcessField__c)))
+                            && curRule.ControllingValue__c.equalsIgnoreCase(String.valueOf(parentCase.get(0).get(curRule.ControllingField__c)))){
                             outcome = true;
                             break;
                         }
