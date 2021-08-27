@@ -178,7 +178,13 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                     flagForzato  = false;
                     flagVerificato  = true;
                 }
-
+                var tempTipoPlico = '';
+                // Gestione stampe da processo di piano rateizzazione
+                // Se il flow passa ProcessType = 'RICH_RATEIZZAZIONE' mandiamo TipoPLico = 'RICH_RATEIZZAZIONE' e stampiamo i moduli di autorizzazione del piano rata.
+                // Altrimenti mandiamo TipoPlico vuoto e stampiamo la normale ricevuta cliente.
+                if (this.processType === 'RICH_RATEIZZAZIONE'){
+                    tempTipoPlico = 'RICH_RATEIZZAZIONE';
+                }
                 var inputParams = {
                     dataConfirmed:false,
                     context:'Case',
@@ -189,6 +195,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                     email : email,
                     accountId : this.accountId,
                     quoteType : this.quoteType,
+                    tipoPlico : tempTipoPlico,
                     addressWrapper : {
                         completeAddress : completeAddress,
                         Stato : stato,
@@ -265,10 +272,14 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 }else{
                     this.showSpinner = false;
                     this.showMessage('Attenzione',resultParsed.message,'error');
+                    console.log('temp workaround in caso di plico non trovato'); // TODO REMOVE
+                    this.handleGoNext();                                         // TODO REMOVE
                 }
             }else{
                 this.showSpinner = false;
                 this.showMessage('Attenzione','Errore nella composizione del plico','error');
+                console.log('temp workaround in caso di plico non trovato'); // TODO REMOVE
+                this.handleGoNext();                                         // TODO REMOVE
             }
         })
         .catch(error => {
@@ -381,13 +392,19 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
             if(sendMode.localeCompare('Stampa Cartacea')===0){
                 sendMode = 'Sportello';
             }
+            var tipoPlico = '';
+            // Gestione stampe da processo di piano rateizzazione
+            // Se il flow passa ProcessType = 'RICH_RATEIZZAZIONE' mandiamo TipoPLico = 'RICH_RATEIZZAZIONE' e stampiamo i moduli di autorizzazione del piano rata.
+            // Altrimenti mandiamo TipoPlico vuoto e stampiamo la normale ricevuta cliente.
+            if (this.processType === 'RICH_RATEIZZAZIONE'){
+                tipoPlico = 'RICH_RATEIZZAZIONE';
+            }
             var formParams = {
                 sendMode : sendMode,
                 signMode : this.confirmData.signMode,
                 telefono : this.confirmData.telefono,      
                 email : this.confirmData.email,
-                // TODO aggiungere TipoPlico = RICH_RATEIZZAZIONE se this.processType = piano rate, anche nel method preview.
-
+                TipoPlico : tipoPlico,
                 mode : 'Print',
                 Archiviato : 'Y'
             }
@@ -436,5 +453,15 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
 
         this.dispatchEvent(navigateBackEvent);
 
+    }
+
+    showMessage(title,message,variant){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: title,
+                message: message,
+                variant: variant
+            }),
+        );
     }
 }
