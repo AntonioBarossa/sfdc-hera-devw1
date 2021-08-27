@@ -109,12 +109,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(o.phase__c == 'Documentazione Validata'){
                 filtered.add(o);
             }
-            if (o.Phase__c == 'Quality Call OK') {
-                ordersQualityOkUpdate.add(new Order(
-                    Id = o.Id,
-                    Phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o) ? 'Comunicazione verso Heroku' : 'In attesa validazione'
-                ));
-            }
+            // if (o.Phase__c == 'Quality Call OK') {
+            //     ordersQualityOkUpdate.add(new Order(
+            //         Id = o.Id,
+            //         Phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o) ? 'Comunicazione verso Heroku' : 'In attesa validazione'
+            //     ));
+            // }
             //onlyString.add(o.id);
         }
         List<Order> childOrders = orderQr.getChildOrdersByParentIds(ordersParent);

@@ -6,6 +6,9 @@
  * @history Lucas Fernandes 05/08/2021 – Created 'createAccountShare' method
  */
 public with sharing class HDT_UTL_DataFactoryTst{
+
+	private staTIC HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+
 	//Method to avoid 'ObjectCompatibility' errors from ProcessClick
 	public static void pClickInstance(){
 
@@ -113,9 +116,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Account> accList=new List<Account>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ACCOUNT_RECORDTYPEID_BUSINESS;
+		Id rt=utlConstants.ACCOUNT_RECORDTYPEID_BUSINESS;
 
 		for (Integer i=0; i<amount; i++){
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
@@ -166,9 +167,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Account> accList=new List<Account>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ACCOUNT_RECORDTYPEID_RESINDEZIALE;
+		Id rt=utlConstants.ACCOUNT_RECORDTYPEID_RESINDEZIALE;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -217,13 +216,31 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return accList;
 	}
 
+	public static List<Account> createAccountPartner(Integer amount, Boolean doInsert, String name) {
+
+		List<Account> partnerAccounts = new List<Account>();		
+
+		for (Integer i = 0; i < amount; i++) {
+			
+			partnerAccounts.add(
+				new Account(Name = name, RecordTypeId = utlConstants.ACCOUNT_RECORDTYPEID_PARTNER)
+			);
+		}
+
+		if (doInsert) {
+			
+			insert partnerAccounts;
+
+		}
+
+		return partnerAccounts;
+	}
+
 	public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, String phase){
 
 		List<Order> orderList=new List<Order>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ORDER_RECORDTYPEID_DEFAULT;
+		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -266,9 +283,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Order> orderList=new List<Order>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ORDER_RECORDTYPEID_DEFAULT;
+		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -312,9 +327,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Order> orderList=new List<Order>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rtVoltura=constRecordType.ORDER_RECORDTYPEID_VOLTURA;
+		Id rtVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -361,9 +374,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Order> orderList=new List<Order>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ORDER_RECORDTYPEID_DEFAULT;
+		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -513,8 +524,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	public static List<Case> createCase(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
 
 		List<Case> caseList=new List<Case>();
-		HDT_UTL_Constants constUtl=new HDT_UTL_Constants();
-		String rtId=constUtl.CASE_RECORDTYPEID_MOROSITA;
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_MOROSITA;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -1673,4 +1684,49 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return rules;
 	}
+	public static List<SBQQ__QuoteProcess__c> createQuoteProcess(Integer amount, Boolean doInsert) {
+
+		List<SBQQ__QuoteProcess__c> qProcessList = new List<SBQQ__QuoteProcess__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SBQQ__QuoteProcess__c qp = new SBQQ__QuoteProcess__c(
+            	Name = 'testQuoteProcess'+i,
+				SBQQ__Default__c = true,
+				SBQQ__GuidedOnly__c = true,
+				SBQQ__ProductAutoSelected__c = true,
+				SBQQ__ProductConfigurationInitializer__c = 'initializerTest',
+				SBQQ__ProductSearchExecutor__c = 'Executor',
+				SBQQ__SortOrder__c = 1
+        	);
+
+			qProcessList.add(qp);
+		}
+
+		if (doInsert){
+
+			insert qProcessList;
+		}
+
+		return qProcessList;
+	}
+
+	public static List<PaperProcessing__c> createPaperProcessing(Integer amount, Boolean doInsert, String name, String campaignId) {
+
+		List<PaperProcessing__c> paperProcessings = new List<PaperProcessing__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+			paperProcessings.add(
+				new PaperProcessing__c(Name = name, Campaign__c = campaignId)
+			);
+		}
+
+		if (doInsert) {
+			insert paperProcessings;
+		}
+
+		return paperProcessings;
+
+	}
+
 }
