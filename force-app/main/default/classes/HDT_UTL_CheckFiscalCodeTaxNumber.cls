@@ -134,7 +134,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         System.debug('FiscalCode: '+fiscalCodes);
   
         Map<String,HDT_WRP_FiscalObject> res = new Map<String,HDT_WRP_FiscalObject>();
-
+        List<String> listAlf = new List<String>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S' ,'T' ,'U', 'V', 'W', 'X', 'Y' ,'Z'};
         List<String> codes      = new List<String>(); 
         String gender= '';
         String birthDate= '';
@@ -179,6 +179,11 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                     city= cities.get(s.substring(11,15));
                 }
                 if (String.isBlank(gender)||String.isBlank(city) || String.isBlank(day) || String.isBlank(year)|| String.isBlank(month)) {
+                    isValid=false;
+                }
+
+                if (!    listAlf.contains(s.substring(15,16).toUpperCase()) 
+                ) {
                     isValid=false;
                 }
                 wrp.fiscalCode=s;
