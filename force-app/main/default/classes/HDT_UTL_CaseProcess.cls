@@ -190,17 +190,12 @@ public with sharing class HDT_UTL_CaseProcess {
             }
             Map<String,String> accountIdCase = new Map<String,String> ();
             Map<String,String> campaignIdCase = new Map<String,String>();
-            for (Case newCase : newCasesList) {
-                if (oldCaseMap.get(newCase.id) != null && oldCaseMap.get(newCase.id).status == 'New' && newCase.Status == 'In Lavorazione') {
+            for (Case newCase : newCasesList) {// Start 27/08/2021 HRAWRM-314 per processi autoconclusivi (newCase.Status == 'In Lavorazione')||newCase.Status == 'Closed')
+                if (oldCaseMap.get(newCase.id) != null && (oldCaseMap.get(newCase.id).status == 'New' && (newCase.Status == 'In Lavorazione')||newCase.Status == 'Closed')) {
                     closedCaseIds.add(newCase.Id);
                     accountIdCase.put(newCase.AccountId, newCase.Id);
                     campaignIdCase.put(newCase.Campaign__c, newCase.Id);
-                }// Start 27/08/2021 HRAWRM-314 per processi autoconclusivi
-                else if( newCase.Status == 'Closed') {     
-                        closedCaseIds.add(newCase.Id);
-                        accountIdCase.put(newCase.AccountId, newCase.Id);
-                        campaignIdCase.put(newCase.Campaign__c, newCase.Id);  
-                }// End 27/08/2021 HRAWRM-314 per processi autoconclusivi
+                }
             }
 
             List<String> accountIds = new List<String>(accountIdCase.keySet());
@@ -227,54 +222,9 @@ public with sharing class HDT_UTL_CaseProcess {
 			campaignMemberSrv.updateRecords(membersToUpdate);
 		}catch(Exception e)
 		{
-		    System.debug(e.getMessage());
-		}
-    }
-    // Start 27/08/2021 HRAWRM-314 per processi autoconclusivi
-    public static void updateMemberStatusforClosedCases(List<Case> newCasesList) {
-        try{
-            List<Id> closedCaseIds = new List<Id>();
-            Map<String,Case> oldCaseMap = new Map<String,Case>();
-            Map<String,String> accountIdCase = new Map<String,String> ();
-            Map<String,String> campaignIdCase = new Map<String,String>();
-            for (Case newCase : newCasesList) {
-                if( newCase.Status == 'Closed') {     
-                        closedCaseIds.add(newCase.Id);
-                        accountIdCase.put(newCase.AccountId, newCase.Id);
-                        campaignIdCase.put(newCase.Campaign__c, newCase.Id);  
-                }
-            }
-
-            List<String> accountIds = new List<String>(accountIdCase.keySet());
-            List<String> campaignIds = new List<String>(campaignIdCase.keySet());
-
-            List<CampaignMember> membersToUpdate = new List<CampaignMember>();
-
-            List<CampaignMember> cmembers = campaignMemberQr.getMembersByAccountAndCampaign(accountIds, campaignIds);
-            for (CampaignMember cm : cmembers) {
-                if (accountIdCase.get(cm.Contact.AccountId) == campaignIdCase.get(cm.CampaignId)) {
-                    CampaignMember updateMember = new CampaignMember();
-                    updateMember.Id = cm.Id;
-                    updateMember.Status = 'Positivo';
-                    membersToUpdate.add(updateMember);
-                }
-            }
-            //update campaignMember siblings Status a 'Non Proposto Auto'
-            List<CampaignMember> siblingMembers = HDT_QR_CampaignMember.getSiblingMembersByAccountId(accountIds, newCasesList[0].Campaign__r.Channel__c);
-            List<String> campaignMembersIdList = new List<String>(new Map<String, CampaignMember>(siblingMembers).keySet());
-            if (campaignMembersIdList.size()>0) {
-                List<CampaignMember> siblingsToUpdate = HDT_LC_CampaignsController.updateCampaignMembersStatus(campaignMembersIdList, 'Non Proposto Auto');
-            }
-            if (membersToUpdate.size()>0) {
-                campaignMemberSrv.updateRecords(membersToUpdate);
-            }
 		
-		}catch(Exception e)
-		{
-		    System.debug(e.getMessage());
 		}
     }
-    // End 27/08/2021 HRAWRM-314 per processi autoconclusivi
 
     public static void updateServiceRequest(List<Case> newCasesList, List<Case> oldCasesList){
         Map<String,Case> mapCases = new Map<String,Case>();
