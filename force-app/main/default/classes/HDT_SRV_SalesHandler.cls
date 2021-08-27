@@ -162,8 +162,10 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Errore tecnico invio a SAP', 'Flusso bloccato in assenza del precedente', 'Errore invio a DL/SII' {
                                 system.debug('previousPhase '+previousPhase);
-                            	ord.TrackingDiscardPhase__c = ord.phase__c;
-                                ord.phase__c=previousPhase;
+                                String finalPhase = ord.phase__c;
+                                if('Errore tecnico invio a SAP'.equalsIgnoreCase(finalPhase)) finalPhase = 'Errore comunicazione SAP';
+                            	ord.TrackingDiscardPhase__c = finalPhase;
+                                ord.phase__c=previousPhase; //perchè queste 3 non sono ammesse nel campo phase__c
                                 system.debug('phase__c '+ord.phase__c);
                                 system.debug('TrackingDiscardPhase__c '+ord.TrackingDiscardPhase__c);
                             }
