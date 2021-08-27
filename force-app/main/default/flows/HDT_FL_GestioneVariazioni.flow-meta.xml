@@ -1992,6 +1992,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
 )</expression>
     </formulas>
     <formulas>
+        <name>ProcessTypeCambioCont</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!GetInputCase.Type}) &amp; &quot; &quot; &amp; {!GetInputCase.CommodityFormula__c}</expression>
+    </formulas>
+    <formulas>
         <name>VariazioneFiscalePhase</name>
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!GetInputCase.Type}, &quot;Fiscale&quot;), &quot;In attesa validazione&quot;, &quot;Elaborazione Manuale&quot;)</expression>
@@ -4382,7 +4387,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>GetInputCase.Type</elementReference>
+                    <elementReference>ProcessTypeCambioCont</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
