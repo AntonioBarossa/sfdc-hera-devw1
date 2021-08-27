@@ -385,7 +385,9 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 sendMode : sendMode,
                 signMode : this.confirmData.signMode,
                 telefono : this.confirmData.telefono,      
-                email : this.confirmData.email,      
+                email : this.confirmData.email,
+                // TODO aggiungere TipoPlico = RICH_RATEIZZAZIONE se this.processType = piano rate, anche nel method preview.
+
                 mode : 'Print',
                 Archiviato : 'Y'
             }
