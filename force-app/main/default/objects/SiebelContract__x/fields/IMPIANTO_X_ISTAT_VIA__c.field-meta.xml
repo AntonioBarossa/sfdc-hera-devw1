@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Istat</label>
+    <label>Codice via</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>
