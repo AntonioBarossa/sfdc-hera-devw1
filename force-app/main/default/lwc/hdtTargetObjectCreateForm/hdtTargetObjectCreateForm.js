@@ -36,8 +36,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
           if (data) {
             console.log('******data:' + JSON.stringify(data));
             let record = data;
-            console.log('********RecordType:' + record.fields.recordTypeInfo.name);
-            this.recordTypeAccount = record.fields.recordTypeInfo.name;
+            console.log('********RecordType:' + JSON.stringify(data.recordTypeInfo));
+            console.log('********RecordType:' + data.recordTypeInfo.name);
+            this.recordTypeAccount = record.recordTypeInfo.name;
           }
           else if(error){
             console.log('******Error:' + JSON.stringify(error));
