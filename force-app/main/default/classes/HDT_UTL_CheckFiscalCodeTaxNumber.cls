@@ -20,6 +20,8 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         'S'=>'11',
         'T'=>'12'
     };
+    private static List<String> listAlf = new List<String>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S' ,'T' ,'U', 'V', 'W', 'X', 'Y' ,'Z'};
+
     @AuraEnabled
     public static Map<String,Object> getDataFromFiscalCodeData(String fiscalCodes){
         System.debug('test1234');
@@ -35,8 +37,8 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 cityCode= fiscalCodes.replaceAll( '\\s+', '').substring(11,15);
                 codes.add(cityCode);
             } catch (Exception e) {
-              //  e.setMessage('Enter a valid fiscal code');
-                throw new AuraHandledException('Enter a valid fiscal code');
+              //  e.setMessage('Inserire un codice fiscale valido');
+                throw new AuraHandledException('Inserire un codice fiscale valido');
                // return null;
             }
        // }
@@ -49,7 +51,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 String day = fiscalCode.substring(9,11);
                 month =  monthsLetters.get(month);
                 if(month== null || month == ''){
-                    throw new AuraHandledException('Enter a valid fiscal code');
+                    throw new AuraHandledException('Inserire un codice fiscale valido');
                 }
                 if(Integer.valueOf(day) <=31){
                     gender= 'Maschio';
@@ -61,17 +63,21 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 city= cities.get(fiscalCode.substring(11,15));
 
                 if (String.isBlank(gender)||String.isBlank(city) || String.isBlank(day) || String.isBlank(year)) {
-                    throw new AuraHandledException('Enter a valid fiscal code');
+                    throw new AuraHandledException('Inserire un codice fiscale valido');
                 }
+                if (!listAlf.contains(fiscalCode.substring(15,16).toUpperCase()) 
+                ) {
+                    throw new AuraHandledException('Inserire un codice fiscale valido');
 
+                }
 
                 dataFromFiscalCode.put('gender', gender);
                 dataFromFiscalCode.put('birthDate', birthDate);
                 dataFromFiscalCode.put('birthPlace', city);
                 res.put(fiscalCode,dataFromFiscalCode);
             } catch (Exception e) {
-               // e.setMessage('Enter a valid fiscal code');
-                throw new AuraHandledException('Enter a valid fiscal code');
+               // e.setMessage('Inserire un codice fiscale valido');
+                throw new AuraHandledException('Inserire un codice fiscale valido');
                 //return null;            
             }
        // }
@@ -92,8 +98,8 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 cityCode= fiscalCodes.get(s).replaceAll( '\\s+', '').substring(11,15);
                 codes.add(cityCode);
             } catch (Exception e) {
-              //  e.setMessage('Enter a valid fiscal code');
-                throw new AuraHandledException('Enter a valid fiscal code');
+              //  e.setMessage('Inserire un codice fiscale valido');
+                throw new AuraHandledException('Inserire un codice fiscale valido');
                // return null;
             }
         }
@@ -106,7 +112,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 String day = fiscalCode.substring(9,11);
                 month =  monthsLetters.get(month);
                 if(month== null || month == ''){
-                    throw new AuraHandledException('Enter a valid fiscal code');
+                    throw new AuraHandledException('Inserire un codice fiscale valido');
                 }
                 if(Integer.valueOf(day) <=31){
                     gender= 'Maschio';
@@ -121,8 +127,8 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 dataFromFiscalCode.put('birthPlace', city);
                 res.put(s,dataFromFiscalCode);
             } catch (Exception e) {
-               // e.setMessage('Enter a valid fiscal code');
-                throw new AuraHandledException('Enter a valid fiscal code');
+               // e.setMessage('Inserire un codice fiscale valido');
+                throw new AuraHandledException('Inserire un codice fiscale valido');
                 //return null;            
             }
         }
@@ -134,7 +140,6 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         System.debug('FiscalCode: '+fiscalCodes);
   
         Map<String,HDT_WRP_FiscalObject> res = new Map<String,HDT_WRP_FiscalObject>();
-        List<String> listAlf = new List<String>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S' ,'T' ,'U', 'V', 'W', 'X', 'Y' ,'Z'};
         List<String> codes      = new List<String>(); 
         String gender= '';
         String birthDate= '';
