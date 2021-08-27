@@ -6,7 +6,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         system.debug('HDT_BA_QualityCall - Start');
-        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,QualityToBeCanceled__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
+        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
         return Database.getQueryLocator(query);
     }
 
@@ -57,7 +57,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 
                 Order ordToUpd = new Order(Id = ord.Id);
 
-                if (ord.QualityToBeCanceled__c) {
+                if (ord.ActivityQualityToBeCanceled__c) {
                     ordToUpd.Phase__c = 'Annullato';
                     ordToUpd.Status = 'Activated';
                 } else {
