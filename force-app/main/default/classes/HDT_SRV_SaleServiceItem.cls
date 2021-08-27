@@ -16,6 +16,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
     private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
+    private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
+    private static HDT_UTL_Utils utils = new HDT_UTL_Utils();
     private static List<Contract> contractsForAmendmentCheck = new List<Contract>();
     private static final String READPERMISSION = 'read';
     private static final String CREATEPERMISSION = 'create';
@@ -219,11 +221,25 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 Login__c = UserInfo.getUserName(),
                 LoginGroup__c = groupLoginString,
                 Role__c = userRoleProfile[0].UserRole.Name,
-                Profile__c = userRoleProfile[0].Profile.Name,
+                // Profile__c = userRoleProfile[0].Profile.Name,
                 NewClient__c = newClient,
                 SuperUser__c = helperMethods.isSuperUser() ? 'Y' : 'N',
                 SBQQ__PricebookId__c = getPricebookId(servicePoint)
             ));
+
+            /** Andrei Necsulescu - 27/08/2021
+             *  New quote Profile__c logic using custom permission
+             */
+            if (utils.isAssignedCustomPermission(constantsUtl.CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN)) {
+
+                newQuote.Profile__c = constantsUtl.QUOTE_PROFILEFIELD_SALESFORCECPQADMIN;
+
+            } else {
+
+                newQuote.Profile__c = userRoleProfile[0].Profile.Name;
+                
+            }
+
 
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
 
