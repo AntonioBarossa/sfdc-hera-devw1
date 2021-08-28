@@ -836,9 +836,15 @@
         <expression>DATEVALUE({!CaseInput.CreatedDate})+20</expression>
     </formulas>
     <formulas>
+        <name>DepositAmount</name>
+        <dataType>Currency</dataType>
+        <expression>IF(ISNULL({!Get_Case.DepositAmount__c}),0.0,{!Get_Case.DepositAmount__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
         <name>InstallmentAmount</name>
         <dataType>Currency</dataType>
-        <expression>({!Get_Case.AmountToPayInInstallments__c} - {!Get_Case.DepositAmount__c})/{!Get_Case.InstallmentNumberRequired__c}</expression>
+        <expression>({!Get_Case.AmountToPayInInstallments__c} - {!DepositAmount})/{!Get_Case.InstallmentNumberRequired__c}</expression>
         <scale>2</scale>
     </formulas>
     <interviewLabel>Gestione Pagamenti - Piano Rateizzazione {!$Flow.CurrentDateTime}</interviewLabel>
