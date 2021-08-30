@@ -34,7 +34,7 @@
 
             <property name="source" type="String" label="Source" description="Source" role="inputOnly"/>
 
-            
+            <property name="disableSignMode" type="Boolean" label="Disable Sign Mode" description="Disable Sign Mode field" role="inputOnly"/>
             
         </targetConfig>
         

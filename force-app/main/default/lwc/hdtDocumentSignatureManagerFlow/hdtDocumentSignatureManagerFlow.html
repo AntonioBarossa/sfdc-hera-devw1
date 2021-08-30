@@ -1,6 +1,6 @@
 <template>
     <template if:true={inputParams}>
-        <c-hdt-document-signature-manager params={inputParams} onconfirmdata={handleConfirmData} onpreviewexecuted={handlePreviewExecuted}></c-hdt-document-signature-manager>
+        <c-hdt-document-signature-manager params={inputParams} disable-sign-mode={disableSignMode} onconfirmdata={handleConfirmData} onpreviewexecuted={handlePreviewExecuted}></c-hdt-document-signature-manager>
     </template>
     <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
         <div class="actionsLeft">
