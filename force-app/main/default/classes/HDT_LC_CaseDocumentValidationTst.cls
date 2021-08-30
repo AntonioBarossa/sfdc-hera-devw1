@@ -49,6 +49,8 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         Case myCase = [SELECT Id FROM Case];
         
         
+        //TODO: ANALIZZARE IL TRIGGER HANDLER HDT_TRH_Case, POSSIBILE INTERVENTO LEGATO A METADATO MANCANTE PhaseManagerIntegration
+        
         //IN ATTESA
         HDT_LC_CaseDocumentValidation.saveValidation(myCase.Id, 'Accise - Energia Elettrica', false);
         Case myCase_Check1 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
