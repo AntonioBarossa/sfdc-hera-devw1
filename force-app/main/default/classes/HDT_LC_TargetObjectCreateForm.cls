@@ -356,26 +356,24 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     }
 
     @AuraEnabled
-public static List<DistributorPointCode__c> getDistributorPointCode(String code,String commodity)
-{
-    system.debug('HDT_LC_TargetObjectCreateForm getDistributorPointCode START');
-    system.debug('code : '+ code);
+    public static List<DistributorPointCode__c> getDistributorPointCode(String code,String commodity){
 
-    HDT_QR_DistributorPointCode queryClass = new HDT_QR_DistributorPointCode();
-    List<Map<String,Object>> listCustomDistributorPoint = new List<Map<String,Object>>();
-	//Map<String,String> customDistributorPoint = new Map<String,String>();
+        system.debug('HDT_LC_TargetObjectCreateForm getDistributorPointCode START');
+        system.debug('code : '+ code);
 
-    String[] splitCode = code.split('');
-    system.debug('splitCode : '+ splitCode);
-    String finalCode = splitCode[0]+splitCode[1]+splitCode[2]+splitCode[3]+splitCode[4];
-    system.debug('finalCode : '+ finalCode);
-	List<DistributorPointCode__c> listDistributorPoint = queryClass.getDistributorPointCode(finalCode,commodity);
-    system.debug('listDistributorPoint : '+ listDistributorPoint);
-    Map<String,Object> row = new Map<String,Object>();
-    
-    system.debug('HDT_LC_TargetObjectCreateForm getDistributorPointCode END');
-    return listDistributorPoint;
-}
+        HDT_QR_DistributorPointCode queryClass = new HDT_QR_DistributorPointCode();
+        List<Map<String,Object>> listCustomDistributorPoint = new List<Map<String,Object>>();
+        //Map<String,String> customDistributorPoint = new Map<String,String>();
 
-
+        String[] splitCode = code.split('');
+        system.debug('splitCode : '+ splitCode);
+        String finalCode = splitCode[0]+splitCode[1]+splitCode[2]+splitCode[3]+splitCode[4];
+        system.debug('finalCode : '+ finalCode);
+        List<DistributorPointCode__c> listDistributorPoint = queryClass.getDistributorPointCode(finalCode,commodity);
+        system.debug('listDistributorPoint : '+ listDistributorPoint);
+        Map<String,Object> row = new Map<String,Object>();
+        
+        system.debug('HDT_LC_TargetObjectCreateForm getDistributorPointCode END');
+        return listDistributorPoint;
+    }
 }
