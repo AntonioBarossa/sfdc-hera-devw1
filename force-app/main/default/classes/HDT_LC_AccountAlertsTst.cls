@@ -137,9 +137,38 @@ public with sharing class HDT_LC_AccountAlertsTst {
     
     
     //getContactDetails
-    
-    
-    
+    @isTest
+    private static void getContactDetailsTest(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'getContactDetailsTest';
+        System.debug(debugString);
+        
+        //SETUP
+        ///ACCOUNT
+        Account acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME')[0];
+        
+        ///CONTACT
+        Contact con = HDT_UTL_DataFactoryTst.createContact(1, true, acc.Id)[0];
+        con.email = 'fake@email.test';
+        con.mobilePhone = '0123456789';
+        update con;
+        
+        //AccountContactRelation
+        AccountContactRelation acr = [SELECT Id, AccountId, Roles FROM AccountContactRelation WHERE AccountId = :acc.Id];
+        System.debug(debugString + ' - ACR: ' + acr);
+        acr.IsActive = true;
+        acr.Roles = 'Titolare';
+        update acr;
+        
+        //TESTING
+        HDT_LC_AccountAlerts.HDT_WRP_AccountContactDetails result = HDT_LC_AccountAlerts.getContactDetails(acc.Id);
+        
+        //ASSERTS
+        System.assertEquals(con.email, result.email);
+        System.assertEquals(con.mobilePhone, result.mobilePhone);
+        
+    }
     
     
     
