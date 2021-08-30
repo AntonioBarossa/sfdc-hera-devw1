@@ -188,7 +188,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 AccountId = sale.Account__c
             ));
 
-            SBQQ__Quote__c newQuote = quoteService.createRecord(new SBQQ__Quote__c(
+            SBQQ__Quote__c newQuote = new SBQQ__Quote__c(
                 Sale__c = sale.Id,
                 SBQQ__Status__c = 'In Review',
                 SBQQ__Opportunity2__c = newOpportunity.Id,
@@ -225,21 +225,26 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 NewClient__c = newClient,
                 SuperUser__c = helperMethods.isSuperUser() ? 'Y' : 'N',
                 SBQQ__PricebookId__c = getPricebookId(servicePoint)
-            ));
+            );
 
             /** Andrei Necsulescu - 27/08/2021
              *  New quote Profile__c logic using custom permission
              */
+            System.debug('HDT_SRV_SaleServiceItem.createRecord Quote-Profile__c');
             if (utils.isAssignedCustomPermission(constantsUtl.CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN)) {
-
+                System.debug('HDT_SRV_SaleServiceItem.createRecord is CPQ Admin ');
                 newQuote.Profile__c = constantsUtl.QUOTE_PROFILEFIELD_SALESFORCECPQADMIN;
 
             } else {
-
+                System.debug('HDT_SRV_SaleServiceItem.createRecord is NOT CPQ Admin ');
                 newQuote.Profile__c = userRoleProfile[0].Profile.Name;
                 
             }
 
+            /** Andrei Necsulescu - 30/08/2021
+             *  Moved actual quote creation to account for profile logic
+             */
+            quoteService.createRecord(newQuote);
 
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
 
