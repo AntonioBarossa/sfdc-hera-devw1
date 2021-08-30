@@ -55,7 +55,7 @@ public with sharing class HDT_QR_PermissionSet {
                     FROM PermissionSetAssignment
                     WHERE AssigneeId = :userId
                 )
-                WITH SECURITY_ENFORCED
+                // WITH SECURITY_ENFORCED
             ]).keySet();
     
         return [
@@ -65,7 +65,7 @@ public with sharing class HDT_QR_PermissionSet {
                     SELECT SetupEntityId
                     FROM SetupEntityAccess
                     WHERE SetupEntityType = 'CustomPermission' AND ParentId IN :assigned)
-                WITH SECURITY_ENFORCED
+                // WITH SECURITY_ENFORCED
                 ];
     }
     
