@@ -6,10 +6,29 @@
  */
 @isTest
 public class HDT_UTL_UtilsTst{
+
+	private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
+    private static HDT_UTL_Utils utils = new HDT_UTL_Utils();
+	
 	@TestSetup
 	static void setup(){
 
-		List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		User internal = HDT_UTL_DataFactoryTst.createInternalUser(HDT_UTL_DataFactoryTst.getProfileId(constantsUtl.SYSTEM_ADMINISTRATOR_NAME), false);
+		internal.UserRoleId = HDT_UTL_DataFactoryTst.getUserRoleId(constantsUtl.USERROLE_DEVELOPERNAME_BACKOFFICE);
+
+		insert internal;
+        
+        List<PermissionSetAssignment> permissionAssignments = new List<PermissionSetAssignment>(); 
+        permissionAssignments.add(HDT_UTL_DataFactoryTst.assignPermissionSet(internal, constantsUtl.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, false));
+        permissionAssignments.add(HDT_UTL_DataFactoryTst.assignPermissionSet(internal, constantsUtl.PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME, false));
+
+        insert permissionAssignments;
+
+		System.runAs(internal){
+
+			List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+
+		}
     }
 
 	@isTest
@@ -59,5 +78,38 @@ public class HDT_UTL_UtilsTst{
 		System.assertNotEquals(false, testReturn.isAlphanumeric());
 
 		Test.stopTest();
+	}
+
+	@IsTest
+	static void test (){
+
+		User u = [SELECT Id FROM User WHERE Alias = 'crmuser' LIMIT 1];
+		
+		Test.startTest();
+
+			System.runAs(u){
+				
+				HDT_UTL_Utils.getCurrentUserRole();
+				System.assertEquals(HDT_UTL_Utils.getCurrentUserRole(), constantsUtl.USERROLE_DEVELOPERNAME_BACKOFFICE, 'The UserRole Developer names don\'t mach');
+			}
+
+		Test.stopTest();
+		
+	}
+
+	@IsTest
+	static void testisAssignedCustomPermission(){
+
+        User u = [SELECT Id FROM User WHERE Alias = 'crmuser' LIMIT 1];
+		
+		Test.startTest();
+		
+			System.runAs(u){
+				
+				system.assertEquals(utils.isAssignedCustomPermission(constantsUtl.CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN), true, 'Expected Custom permission not found');
+			}
+
+		Test.stopTest();
+		
 	}
 }
