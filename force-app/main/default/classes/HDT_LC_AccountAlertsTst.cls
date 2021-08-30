@@ -103,7 +103,44 @@ public with sharing class HDT_LC_AccountAlertsTst {
         System.assertEquals(accountAlert.Account__c, acc.Id);
         System.assertEquals(accountAlert.AlertConfiguration__c, myAlert.Id);
         
+    }
+    
+    
+    //updateAlert
+    @isTest
+    private static void updateAlertTest(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'updateAlertTest';
+        System.debug(debugString);
+        
+        //SETUP
+        AlertAccountConfiguration__c myAlert = new AlertAccountConfiguration__c();
+        insert myAlert;
+        
+        //
+        myAlert.IsActive__c = true;
+        String serializedAlert = JSON.serialize(myAlert);
+        
+        //TESTING
+        Boolean result = HDT_LC_AccountAlerts.updateAlert(serializedAlert);
+        
+        //DATA RETRIEVE
+        AlertAccountConfiguration__c accountAlert = [SELECT Id, IsActive__c FROM AlertAccountConfiguration__c];
+        
+        //ASSERTS
+        System.assert(result);
+        System.assert(accountAlert != null);
+        System.assert(accountAlert.IsActive__c);
         
     }
+    
+    
+    //getContactDetails
+    
+    
+    
+    
+    
     
 }
