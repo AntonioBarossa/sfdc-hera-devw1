@@ -6,6 +6,8 @@
  */
 
 public with sharing class HDT_UTL_Utils {
+
+    private static HDT_QR_PermissionSet permissionSetQr = new HDT_QR_PermissionSet();
     
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
@@ -65,6 +67,34 @@ public with sharing class HDT_UTL_Utils {
 
         return HDT_QR_UserQueries.getCurrentUser(userId).Userrole.DeveloperName;
             
+    }
+
+    /**​
+    * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
+    * @date 27/08/2021
+    * @description HDT_UTL_Utils.isAssignedCustomPermission() – Check if the current user has a specific Custom permission assigned
+    * @param custompermissionDeveloperName The developer name of the CustomPermission
+    * @return Boolean value (true = custom permission is assigned)
+    */
+    public Boolean isAssignedCustomPermission(String custompermissionDeveloperName) {
+
+        Boolean result = false;
+
+        List<CustomPermission> customPermissions = permissionSetQr.getCustomPermissionsByUserId(UserInfo.getUserId());
+
+        for (CustomPermission cmp : customPermissions) {
+            
+            if (cmp.DeveloperName.equals(customPermissionDeveloperName)) {
+                
+                result = true;
+                break;
+
+            }
+
+        }
+
+        return result;
+        
     }
   
 }

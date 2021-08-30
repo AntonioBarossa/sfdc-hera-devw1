@@ -573,8 +573,16 @@
             }
             List<ContactPointPhone> cpToUpdate = new list<ContactPointPhone>();
             List<ContactPointEmail> ceToUpdate = new list<ContactPointEmail>();
-            map<String,ContactPointPhone> cpToUpdatePrim = new map<String,ContactPointPhone>();
-            map<string,ContactPointEmail> ceToUpdatePrim = new map<string,ContactPointEmail>();
+            // map<String,ContactPointPhone> cpToUpdatePrim = new map<String,ContactPointPhone>();
+            // map<string,ContactPointEmail> ceToUpdatePrim = new map<string,ContactPointEmail>();
+            
+            /** Andrei Necsulescu - 27/08/2021
+             * Added cpToUpdateMap map to avoid duplicated ids when removing one phone number and inserting another
+             */
+            map<String,ContactPointPhone> cpToUpdateMap = new map<String,ContactPointPhone>();
+            List<ContactPointPhone> cpToUpsert = new list<ContactPointPhone>();
+
+            
             map<string,ContactPointPhone> individualPrimary = new map<String,ContactPointPhone>();
             map<string,String> isAlreadyExistContact = new map<String,String>();
             if(phCheck){
@@ -589,8 +597,17 @@
                     if(mapToUpdatePhone.get(cp.TelephoneNumber) != null){
                         if(cp.Status__c == 'Non Verificato'){
                             cp.TelephoneNumber = mapToUpdatePhone.get(cp.TelephoneNumber);
-                            cp.Prefix__c= phonePrefixesToUpdate.get(cp.TelephoneNumber);
-                            cpToUpdate.add(cp);
+                            cp.Prefix__c = phonePrefixesToUpdate.get(cp.TelephoneNumber);
+                            // System.debug('***LINE 504 added cp: ' + cp);
+                            // cpToUpdate.add(cp);
+
+                            if (cpToUpdateMap.containsKey(cp.Id)) {
+                                cpToUpdateMap.get(cp.Id).TelephoneNumber = mapToUpdatePhone.get(cp.TelephoneNumber);
+                                cpToUpdateMap.get(cp.Id).Prefix__c = phonePrefixesToUpdate.get(cp.TelephoneNumber);
+                            } else {
+                                cpToUpdateMap.put(cp.Id, cp);
+                            }
+
                         }
                         else{
                             ContactPointPhone c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapToUpdatePhone.get(cp.TelephoneNumber),phonePrefixesToUpdate.get(cp.TelephoneNumber),false);
@@ -598,8 +615,17 @@
                             c.isPrimary = cp.isPrimary;
                             cp.isPrimary = false;
                             c.SendToMarketingCloud__c = true;
-                            cpToUpdate.add(c);
-                            cpToUpdate.add(cp);
+                            // System.debug('***LINE 602 added c: ' + c);
+                            // cpToUpdate.add(c);
+                            // System.debug('***LINE 605 added cp: ' + cp);
+                            // cpToUpdate.add(cp);
+
+                            cpToUpsert.add(c);
+                            if (cpToUpdateMap.containsKey(cp.Id)) {
+                                cpToUpdateMap.get(cp.Id).IsPrimary = false;
+                            } else {
+                                cpToUpdateMap.put(cp.Id, cp);
+                            }
                             
                         }
                     }
@@ -607,7 +633,15 @@
                         if(cp.Status__c == 'Non Verificato'){
                             cp.TelephoneNumber = mapToUpdateMobile.get(cp.TelephoneNumber);
                             cp.Prefix__c= mobilePrefixesToUpdate.get(cp.TelephoneNumber);
-                            cpToUpdate.add(cp);
+                            // System.debug('***LINE 614 added cp: ' + cp);
+                            // cpToUpdate.add(cp);
+
+                            if (cpToUpdateMap.containsKey(cp.Id)) {
+                                cpToUpdateMap.get(cp.Id).TelephoneNumber = mapToUpdateMobile.get(cp.TelephoneNumber);
+                                cpToUpdateMap.get(cp.Id).Prefix__c = mobilePrefixesToUpdate.get(cp.TelephoneNumber);
+                            } else {
+                                cpToUpdateMap.put(cp.Id, cp);
+                            }
                         }
                         else{
                             ContactPointPhone c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapToUpdateMobile.get(cp.TelephoneNumber),mobilePrefixesToUpdate.get(cp.TelephoneNumber),false);
@@ -616,17 +650,41 @@
                             c.isPrimary = cp.isPrimary;
                             cp.isPrimary = false;
                             c.SendToMarketingCloud__c = true;
-                            cpToUpdate.add(c);
-                            cpToUpdate.add(cp);
+                            // System.debug('***LINE 624 added c: ' + c);
+                            // cpToUpdate.add(c);
+                            // System.debug('***LINE 625 added cp: ' + cp);
+                            // cpToUpdate.add(cp);
+
+                            cpToUpsert.add(c);
+                            if (cpToUpdateMap.containsKey(cp.Id)) {
+                                cpToUpdateMap.get(cp.Id).IsPrimary = false;
+                            } else {
+                                cpToUpdateMap.put(cp.Id, cp);
+                            }
+                            
                         }
                     }
                     else if(mapMobilePhoneBlank.get(cp.TelephoneNumber) != null){
                         cp.IsPrimary = false;
-                        cpToUpdate.add(cp);
+                        // System.debug('***LINE 632 added cp: ' + cp);
+                        // cpToUpdate.add(cp);
+
+                        if (cpToUpdateMap.containsKey(cp.Id)) {
+                            cpToUpdateMap.get(cp.Id).IsPrimary = false;
+                        } else {
+                            cpToUpdateMap.put(cp.Id, cp);
+                        }
                     }
                     else if(mapPhoneBlank.get(cp.TelephoneNumber) != null){
                         cp.IsPrimary = false;
-                        cpToUpdate.add(cp);
+                        // System.debug('***LINE 637 added cp: ' + cp);
+                        // cpToUpdate.add(cp);
+
+                        if (cpToUpdateMap.containsKey(cp.Id)) {
+                            cpToUpdateMap.get(cp.Id).IsPrimary = false;
+                        } else {
+                            cpToUpdateMap.put(cp.Id, cp);
+                        }
                     }
 
                 }
@@ -667,26 +725,50 @@
                             ContactPointPhone cp1 = new ContactPointPhone();
                             cp1.id = individualPrimary.get(mapLeadInd.get(key)).id;
                             cp1.isPrimary = false;
-                            cpToUpdate.add(cp1);
+                            // System.debug('***LINE 679 added cp1: ' + cp1);
+                            // cpToUpdate.add(cp1);
+
+                            if (cpToUpdateMap.containsKey(cp1.Id)) {
+                                cpToUpdateMap.get(cp1.Id).IsPrimary = false;
+                            } else {
+                                cpToUpdateMap.put(cp1.Id, cp1);
+                            }
 
                         }
                         c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapCreateMobilePhone.get(key),mobilePrefixesToCreate.get(mapCreateMobilePhone.get(key)), true,'Mobile');
                         c.parentid = mapLeadInd.get(key);
                         c.SendToMarketingCloud__c = true;
-                        cpToUpdate.add(c);
+                        // System.debug('***LINE 686 added c: ' + c);
+                        // cpToUpdate.add(c);
+
+                        cpToUpsert.add(c);
                     }
                     else{
                         if(individualPrimary.get(mapLeadInd.get(key)) != null){
                             ContactPointPhone cp2 = new ContactPointPhone();
                             cp2.id = individualPrimary.get(mapLeadInd.get(key)).id;
                             cp2.isPrimary = false;
-                            cpToUpdate.add(cp2);
+                            // System.debug('***LINE 694 added cp2: ' + cp2);
+                            // cpToUpdate.add(cp2);
+
+                            if (cpToUpdateMap.containsKey(cp2.Id)) {
+                                cpToUpdateMap.get(cp2.Id).IsPrimary = false;
+                            } else {
+                                cpToUpdateMap.put(cp2.Id, cp2);
+                            }
 
                         }
                         ContactPointPhone cp1 = new ContactPointPhone();
                         cp1.id = isAlreadyExistContact.get(keyToCheck);
                         cp1.isPrimary = true;
-                        cpToUpdate.add(cp1);
+                        // System.debug('***LINE 701 added cp1: ' + cp1);
+                        // cpToUpdate.add(cp1);
+
+                        if (cpToUpdateMap.containsKey(cp1.Id)) {
+                            cpToUpdateMap.get(cp1.Id).IsPrimary = true;
+                        } else {
+                            cpToUpdateMap.put(cp1.Id, cp1);
+                        }
                     }   
                 }
             }
@@ -701,14 +783,24 @@
                         ContactPointPhone c = HDT_UTL_ContactPoint.instanceContactPointPhone(mapCreatePhone.get(key),phonePrefixesToCreate.get(mapCreatePhone.get(key)),ck,'Casa');
                         c.parentid = mapLeadInd.get(key);
                         c.SendToMarketingCloud__c = true;
-                        cpToUpdate.add(c);
+                        // System.debug('***LINE 717 added c: ' + c);
+                        // cpToUpdate.add(c);
+
+                        cpToUpsert.add(c);
                     }
                     else{
                         if(individualPrimary.get(mapLeadInd.get(key)) == null){
                             ContactPointPhone cp1 = new ContactPointPhone();
                             cp1.id = isAlreadyExistContact.get(keyToCheck);
                             cp1.isPrimary = true;
-                            cpToUpdate.add(cp1);
+                            // System.debug('***LINE 725 added cp1: ' + cp1);
+                            // cpToUpdate.add(cp1);
+
+                            if (cpToUpdateMap.containsKey(cp1.Id)) {
+                                cpToUpdateMap.get(cp1.Id).IsPrimary = true;
+                            } else {
+                                cpToUpdateMap.put(cp1.Id, cp1);
+                            }
                         }
                     }
                 }
@@ -734,9 +826,15 @@
             if(ceToUpdate != null && ceToUpdate.size() > 0){
                 HDT_SRV_ContactPoint.upsertContactPointEmail(ceToUpdate);
             }
-            if(cpToUpdate != null && cpToUpdate.size() > 0){
-                HDT_SRV_ContactPoint.upsertContactPointPhone(cpToUpdate);
+            // if(cpToUpdate != null && cpToUpdate.size() > 0){
+            //     HDT_SRV_ContactPoint.upsertContactPointPhone(cpToUpdate);
+            // }
+
+            cpToUpsert.addAll(cptoUpdateMap.values());
+            if(cpToUpsert != null && cpToUpsert.size() > 0){
+                HDT_SRV_ContactPoint.upsertContactPointPhone(cpToUpsert);
             }
+
         }
     // public static void createDefaultPrivacyLead(Id LeadId,List <String> Email,List <String> Phone) {
 
