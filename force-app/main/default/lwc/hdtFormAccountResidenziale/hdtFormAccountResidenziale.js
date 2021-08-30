@@ -616,7 +616,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             accountAddressRes: this.fieldsToUpdateRes
                         }).then((response) => {
                             const event = new ShowToastEvent({
-                                message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                                message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' creato con successo!',
                                 variant: 'success',
                                 mode: 'dismissable'
                             });
@@ -684,7 +684,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
 
                     }).then((response) => {
                         const event = new ShowToastEvent({
-                            message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                            message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' creato con successo!',
                             variant: 'success',
                             mode: 'dismissable'
                         });

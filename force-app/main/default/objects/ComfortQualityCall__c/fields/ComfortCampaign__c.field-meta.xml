@@ -4,7 +4,7 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Indicherà  le campagne relative alla quality call</description>
     <externalId>false</externalId>
-    <label>Campagna Confort</label>
+    <label>Campagna Comfort</label>
     <referenceTo>Campaign</referenceTo>
     <relationshipLabel>Comfort e Quality Call (Campagna Confort)</relationshipLabel>
     <relationshipName>ComfortCalls</relationshipName>
