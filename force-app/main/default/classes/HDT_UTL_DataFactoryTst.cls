@@ -1716,4 +1716,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return userRoleId;
 	}
 
+	public static List<DistributorPointCode__c> createDistributorPointCode (Integer amount, Boolean doInsert, Id accountId){
+
+		List<DistributorPointCode__c> dpcList = new List<DistributorPointCode__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			DistributorPointCode__c dpc = new DistributorPointCode__c(
+				Account__c = accountId
+			);
+
+			dpcList.add(dpc);
+		}
+
+		if (doInsert) {
+
+			insert dpcList;
+
+		}
+
+		return dpcList;
+	}
 }
