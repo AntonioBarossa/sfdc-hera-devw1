@@ -1213,7 +1213,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), false, true, '',''),
+                // Jira 354 30/08
+                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), false, (this.order.ProcessType__c=='Prima Attivazione Ele')?false:true, '',''),
                 {
                     'label': 'Consumi Anno',
                     'apiname': 'AnnualConsumption__c',
@@ -1397,24 +1398,26 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                // {
-                //     'label': 'ConnectionMandate__c',
-                //     'apiname': 'ConnectionMandate__c',
-                //     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'),
-                //     'required': true,
-                //     'disabled': false,
-                //     'value': '',
-                //     'processVisibility': ''
-                // },
-                // {
-                //     'label': 'Autocert. contr connessione',
-                //     'apiname': 'SelfCertificationConnection__c',
-                //     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
-                //     'required': true,
-                //     'disabled': false,
-                //     'value': '',
-                //     'processVisibility': ''
-                // },
+                //25/08/2021 - gabriele.rota@webresults.it - Reso nuovamente visibile - Jira 354
+                {
+                    'label': 'ConnectionMandate__c',
+                    'apiname': 'ConnectionMandate__c',
+                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'),
+                    'required': true,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                //25/08/2021 - gabriele.rota@webresults.it - Reso nuovamente visibile, default per Prima Attivazione Ele Jira 354
+                {
+                    'label': 'Autocert. contr connessione',
+                    'apiname': 'SelfCertificationConnection__c',
+                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
+                    'required': true,
+                    'disabled': false,
+                    'value': (this.order.ProcessType__c=='Prima Attivazione Ele')?'02':'',
+                    'processVisibility': ''
+                },
                 // {
                 //     'label': 'ConnectionType__c',
                 //     'apiname': 'ConnectionType__c',
