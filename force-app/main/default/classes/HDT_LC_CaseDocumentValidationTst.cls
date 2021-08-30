@@ -39,10 +39,10 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
     
     //saveValidation
     @isTest
-    private static void saveValidationTest_DocWait(){
+    private static void saveValidationTest(){
         
         //DEBUG
-        String debugString = TEST_NAME + ' - ' + 'saveValidationTest_DocWait';
+        String debugString = TEST_NAME + ' - ' + 'saveValidationTest';
         System.debug(debugString);
         
         //TESTING
