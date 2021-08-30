@@ -19,6 +19,7 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
     
     //TESTS
     
+    //isValidPhase
     @isTest
     private static void isValidPhaseTest(){
         
@@ -32,6 +33,38 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         
         //ASSERTS
         System.assert(result);
+        
+    }
+    
+    
+    //saveValidation
+    @isTest
+    private static void saveValidationTest_DocWait(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'saveValidationTest_DocWait';
+        System.debug(debugString);
+        
+        //TESTING
+        Case myCase = [SELECT Id FROM Case];
+        
+        
+        //IN ATTESA
+        HDT_LC_CaseDocumentValidation.saveValidation(myCase.Id, 'Accise - Energia Elettrica', false);
+        Case myCase_Check1 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
+        System.assertEquals('In attesa Documentazione', myCase_Check1.Phase__c);
+        
+        
+        //ELAB MANUALE
+        HDT_LC_CaseDocumentValidation.saveValidation(myCase.Id, 'Accise - Energia Elettrica', true);
+        Case myCase_Check2 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
+        System.assertEquals('Elaborazione Manuale', myCase_Check2.Phase__c);
+        
+        
+        //DA INVIARE
+        HDT_LC_CaseDocumentValidation.saveValidation(myCase.Id, 'Test', true);
+        Case myCase_Check3 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
+        System.assertEquals('Da Inviare', myCase_Check3.Phase__c);
         
     }
     
