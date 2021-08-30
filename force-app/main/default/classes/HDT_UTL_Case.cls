@@ -13,6 +13,7 @@ public inherited sharing class HDT_UTL_Case {
         String implantType = inputs[0].implantType;
         Decimal powerRequested = inputs[0].powerRequested;
         String salesCompany = inputs[0].salesCompany;
+        Case currentCase = inputs[0].currentCase;
         
 
         if(process == 'Voltura Tecnica'){
@@ -29,6 +30,10 @@ public inherited sharing class HDT_UTL_Case {
             output.option = calculateOption(implantType, powerRequested);
             output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
         } 
+        else if(process.equalsIgnoreCase('Compatibilita'))
+        {
+            output.isCompatible = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(currentCase);
+        }
 
         outputs.add(output);
 
@@ -51,6 +56,8 @@ public inherited sharing class HDT_UTL_Case {
         public Decimal powerRequested;
         @InvocableVariable
         public String salesCompany;
+        @InvocableVariable
+        public Case currentCase;
 
 
     }
@@ -63,6 +70,8 @@ public inherited sharing class HDT_UTL_Case {
         public String option;
         @InvocableVariable
         public String salesCompanyCode;
+        @InvocableVariable
+        public String isCompatible;
 
     }
 
