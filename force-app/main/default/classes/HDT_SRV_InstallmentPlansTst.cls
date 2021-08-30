@@ -22,7 +22,14 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
     @isTest
     static void predefaultInstallmentsValuesTst()
     {
-
+        //1. Se dovesse essere necessario creare un case di Sospensione Fornitura
+        //2. Mock per chiamata a vista rate
+        //3. Valorizzare metodo di pagamento su BillingProfile
+        //4. Creare document Selected nel Setup 
+        //5. Valorizzare il campo del Customer Assisted su Account
+        //6. Assert sugli ammontare
+        Case testCase = [SELECT Id FROM Case LIMIT 1];
+        Account testAccount = [SELECT Id FROM Account];
     }
     @isTest
     static void createRequestBody()

@@ -367,6 +367,15 @@
         </connector>
     </assignments>
     <choices>
+        <description>--None--</description>
+        <name>EmptyString</name>
+        <choiceText>--None--</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue/>
+        </value>
+    </choices>
+    <choices>
         <name>RadioButtonKOChoice</name>
         <choiceText>Passa in KO Rilavorato</choiceText>
         <dataType>Boolean</dataType>
@@ -827,9 +836,15 @@
         <expression>DATEVALUE({!CaseInput.CreatedDate})+20</expression>
     </formulas>
     <formulas>
+        <name>DepositAmount</name>
+        <dataType>Currency</dataType>
+        <expression>IF(ISNULL({!Get_Case.DepositAmount__c}),0.0,{!Get_Case.DepositAmount__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
         <name>InstallmentAmount</name>
         <dataType>Currency</dataType>
-        <expression>{!Get_Case.AmountToPayInInstallments__c}/{!Get_Case.InstallmentNumberRequired__c}</expression>
+        <expression>({!Get_Case.AmountToPayInInstallments__c} - {!DepositAmount})/{!Get_Case.InstallmentNumberRequired__c}</expression>
         <scale>2</scale>
     </formulas>
     <interviewLabel>Gestione Pagamenti - Piano Rateizzazione {!$Flow.CurrentDateTime}</interviewLabel>
@@ -1057,8 +1072,10 @@
             <name>AdditionalInfo</name>
             <choiceReferences>RevokeValue</choiceReferences>
             <choiceReferences>RejectValue</choiceReferences>
+            <choiceReferences>EmptyString</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Informazioni Aggiuntive</fieldText>
+            <defaultSelectedChoiceReference>EmptyString</defaultSelectedChoiceReference>
+            <fieldText>Se il cliente è domiciliato, inserire le seguenti informazioni aggiuntive</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
         </fields>
@@ -1167,7 +1184,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>Get_Case.Type</elementReference>
+                    <stringValue>RICH_RATEIZZAZIONE</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1602,7 +1619,7 @@
             <targetReference>Il_Case_in_Bozza</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>

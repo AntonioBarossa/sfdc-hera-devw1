@@ -12,6 +12,12 @@
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
+            <name>methodName</name>
+            <value>
+                <stringValue>createActivityByObjectIdAndTemplateName</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>objectId</name>
             <value>
                 <elementReference>Activity.Account__c</elementReference>
