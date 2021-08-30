@@ -1479,12 +1479,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>VasSupplierTable__c.ErrorDescription__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>VasSupplierTable__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4754,7 +4754,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Case.CarType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4774,7 +4774,7 @@
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Case.Causal__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4814,7 +4814,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Case.Channel__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5044,7 +5044,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Case.CustomerInterest__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6860,12 +6860,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Case.VasPracticeDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Case.VasSupplierStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
