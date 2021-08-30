@@ -80,11 +80,13 @@ export default class HdtCreateCampaign extends LightningElement {
 
     handleChangeStatus(event) {
 
-        let categoryField = this.template.querySelector('.categoryField > lightning-input-field') != null ? this.template.querySelector('.categoryField > lightning-input-field').value : '';
+        var categoryField = this.template.querySelector('.categoryField > lightning-input-field') != null ? this.template.querySelector('.categoryField > lightning-input-field').value : '';
         let channelField = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
         let recurringField = this.template.querySelector('.recurringField > lightning-input-field').value;
         this.statusField = event.detail.value;
         let processType = this.template.querySelector('.processType > lightning-input-field').value;
+        console.log('processType : '+processType);
+        console.log('categoryField : '+categoryField);
         let campReq = this.template.querySelector("lightning-input-field[data-id=req]").value
         console.log('campReq' +campReq);
         this.reqPrioritycheck(campReq);
@@ -96,8 +98,10 @@ export default class HdtCreateCampaign extends LightningElement {
         }
     
         if ("Campagna Contenitore" != categoryField && event.detail.value === 'Pianificata' && categoryField != null) {
+           
             this.startDateFieldRequired = true;
-            this.campaignInboundFields = (categoryField === 'Campagna CRM' && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
+            // 27-08-2021  HRDTR-00_HRAWRM-303  categoryField == 'Campagne Marketing Cloud'
+            this.campaignInboundFields = ((categoryField == 'Campagna CRM'|| categoryField == 'Campagna Marketing Cloud' ) && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
             this.reitekFieldRequired = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignOutboundFields = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignMemberAssignmentTypeRequired = channelField.includes('Telefonico Outbound') ? true : false;
@@ -106,7 +110,9 @@ export default class HdtCreateCampaign extends LightningElement {
             this.paperCampaignFields = channelField.includes('Cartaceo') ? true : false;
             this.campaignCommercialCodeFields = (channelField.includes('Bolletta') || categoryField === 'Campagna Marketing Cloud' || categoryField === 'Campagna CRM') ? true : false;
             this.recurringCampaignFieldsRequired = recurringField;
-        } else {  
+        } 
+     
+        else {  
             this.startDateFieldRequired = false;
             this.recurringCampaignFieldsRequired = false;
             this.reitekFieldRequired = false;
@@ -127,7 +133,8 @@ export default class HdtCreateCampaign extends LightningElement {
 
         if ("Campagna Contenitore" != event.detail.value && this.statusField === 'Pianificata') {
             this.startDateFieldRequired = true;
-            this.campaignInboundFields = (categoryField === 'Campagna CRM' && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
+            // 27-08-2021  HRDTR-00_HRAWRM-303  categoryField == 'Campagne Marketing Cloud'
+            this.campaignInboundFields = ((categoryField == 'Campagna CRM'|| categoryField == 'Campagna Marketing Cloud' ) && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
             this.reitekFieldRequired = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignOutboundFields = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignMemberAssignmentTypeRequired = channelField.includes('Telefonico Outbound') ? true : false;
@@ -149,7 +156,8 @@ export default class HdtCreateCampaign extends LightningElement {
     handleChangeProcessType(event){
         let processType = event.detail.value;
         let categoryField = this.template.querySelector('.categoryField > lightning-input-field') != null ? this.template.querySelector('.categoryField > lightning-input-field').value : '';
-        this.campaignInboundFields = (categoryField === 'Campagna CRM' && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
+       // 27-08-2021  HRDTR-00_HRAWRM-303  categoryField == 'Campagne Marketing Cloud'
+        this.campaignInboundFields = ((categoryField == 'Campagna CRM'|| categoryField == 'Campagna Marketing Cloud' ) && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
     }
 
     handleChangeChannel(event) {

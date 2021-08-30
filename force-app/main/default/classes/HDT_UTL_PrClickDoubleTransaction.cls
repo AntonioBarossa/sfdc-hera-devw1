@@ -12,7 +12,7 @@ global inherited sharing class HDT_UTL_PrClickDoubleTransaction implements wrts_
         Id objectId = (Id) sender.get('Id');
         Id orderId = objectId;
         Order currentOrder = (Order) sender;
-        String newPhase = method;
+        String newPhase = method.replaceAll('_', ' ');
 
         system.enqueueJob(new HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate(
                 objectId, newPhase
