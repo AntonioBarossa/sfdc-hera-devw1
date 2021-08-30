@@ -1729,14 +1729,16 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 	}
 
-	public static String getUserRole (String userRole){
+	public static String getUserRoleId (String userRoleDeveloperName){
 		String userRoleId='';
 
-		if (!String.isEmpty(userRole)){
-			userRoleId=[SELECT UserRole.Name, UserRoleId
-			FROM User
-			WHERE UserRole.Name=:userRole
-			LIMIT 1].UserRoleId;
+		if (!String.isEmpty(userRoleDeveloperName)){
+
+			userRoleId=[SELECT Id
+			FROM UserRole
+			WHERE DeveloperName = :userRoleDeveloperName
+			LIMIT 1].Id;
+
 		}
 
 		return userRoleId;
