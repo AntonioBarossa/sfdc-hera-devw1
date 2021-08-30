@@ -154,6 +154,15 @@ public with sharing class HDT_LC_AccountAlertsTst {
         con.mobilePhone = '0123456789';
         update con;
         
+        //TESTING EMPTY RETURN
+        HDT_LC_AccountAlerts.HDT_WRP_AccountContactDetails result_empty = HDT_LC_AccountAlerts.getContactDetails(acc.Id);
+        
+        //ASSERTS
+        System.assertEquals('', result_empty.email);
+        System.assertEquals('', result_empty.mobilePhone);
+        
+        
+        //REGULAR TESTING
         //AccountContactRelation
         AccountContactRelation acr = [SELECT Id, AccountId, Roles FROM AccountContactRelation WHERE AccountId = :acc.Id];
         System.debug(debugString + ' - ACR: ' + acr);
