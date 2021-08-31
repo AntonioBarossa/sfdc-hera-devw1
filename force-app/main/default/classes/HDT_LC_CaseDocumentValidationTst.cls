@@ -57,7 +57,7 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
     
     //saveValidation
     @isTest
-    private static void saveValidationTest_inAttesa(){
+    private static void saveValidationTest(){
         
         //DEBUG
         String debugString = TEST_NAME + ' - ' + 'saveValidationTest';
@@ -77,6 +77,8 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         String rtName = constantsUtl.CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO;
         String rtId = constantsUtl.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In attesa Documentazione', 'Bozza', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Elaborazione Manuale', 'In attesa Documentazione', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Elaborazione Manuale', rtId, rtName,'A','','','');
         
         //TODO: ANALIZZARE IL TRIGGER HANDLER HDT_TRH_Case, POSSIBILE INTERVENTO LEGATO A METADATO MANCANTE PhaseManagerIntegration
         
@@ -85,18 +87,15 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         Case myCase_Check1 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
         System.assertEquals('In attesa Documentazione', myCase_Check1.Phase__c);
         
-        /*
         //ELAB MANUALE
         HDT_LC_CaseDocumentValidation.saveValidation(myCase.Id, 'Accise - Energia Elettrica', true);
         Case myCase_Check2 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
         System.assertEquals('Elaborazione Manuale', myCase_Check2.Phase__c);
         
-        
         //DA INVIARE
         HDT_LC_CaseDocumentValidation.saveValidation(myCase.Id, 'Test', true);
         Case myCase_Check3 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
         System.assertEquals('Da Inviare', myCase_Check3.Phase__c);
-        */
         
     }
     
