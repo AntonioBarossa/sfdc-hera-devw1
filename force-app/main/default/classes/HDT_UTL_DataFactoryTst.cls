@@ -1658,6 +1658,32 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return cpeList;
 	}
 
+	public static List<RentProcessRule__c> createRentProcessRule (Integer amount, Boolean doInsert, boolean applicationInterests, boolean deposit)
+	{
+		List<RentProcessRule__c> rules = new List<RentProcessRule__c>();
+		for(Integer i=0; i < amount; ++i)
+		{
+			RentProcessRule__c rule = new RentProcessRule__c();
+			rule.AmountToPayInInstallmentsFrom__c 		= 0.01;
+			rule.AmountToPayInInstallmentsTo__c			= 2000;
+			rule.ApplicationInterests__c				= applicationInterests;    //input
+			rule.ApprovalProcess__c						= false;
+			rule.AttachmentManagement__c				= false;
+			rule.CAWithOrWithoutSEPA__c					= false;
+			rule.Deposit__c								= deposit; //input
+			rule.ExistingInstallmentPlanUnpaidFrom__c 	= 0;
+			rule.ExistingInstallmentPlanUnpaidTo__c		= 3;
+			rule.InstallmentPlanReason__c				= 'Fattura SD'; 
+			rule.MaxInstallmentsNumber__c				= 6;
+			rule.Category__c							= 'Famiglie';
+			rules.add(rule);	
+		}
+		if(doInsert)
+		{
+			insert rules;
+		}
+		return rules;
+	}
 	public static List<SBQQ__QuoteProcess__c> createQuoteProcess(Integer amount, Boolean doInsert) {
 
 		List<SBQQ__QuoteProcess__c> qProcessList = new List<SBQQ__QuoteProcess__c>();
@@ -1703,14 +1729,16 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 	}
 
-	public static String getUserRole (String userRole){
+	public static String getUserRoleId (String userRoleDeveloperName){
 		String userRoleId='';
 
-		if (!String.isEmpty(userRole)){
-			userRoleId=[SELECT UserRole.Name, UserRoleId
-			FROM User
-			WHERE UserRole.Name=:userRole
-			LIMIT 1].UserRoleId;
+		if (!String.isEmpty(userRoleDeveloperName)){
+
+			userRoleId=[SELECT Id
+			FROM UserRole
+			WHERE DeveloperName = :userRoleDeveloperName
+			LIMIT 1].Id;
+
 		}
 
 		return userRoleId;

@@ -1213,7 +1213,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), false, true, '',''),
+                // Jira 354 30/08
+                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), false, (this.order.ProcessType__c=='Prima Attivazione Ele')?false:true, '',''),
                 {
                     'label': 'Consumi Anno',
                     'apiname': 'AnnualConsumption__c',
@@ -1397,7 +1398,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                //25/08/2021 - gabriele.rota@webresults.it - Reso nuovamente visibile
+                //25/08/2021 - gabriele.rota@webresults.it - Reso nuovamente visibile - Jira 354
                 {
                     'label': 'ConnectionMandate__c',
                     'apiname': 'ConnectionMandate__c',
@@ -1407,7 +1408,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                //25/08/2021 - gabriele.rota@webresults.it - Reso nuovamente visibile, default per Prima Attivazione Ele
+                //25/08/2021 - gabriele.rota@webresults.it - Reso nuovamente visibile, default per Prima Attivazione Ele Jira 354
                 {
                     'label': 'Autocert. contr connessione',
                     'apiname': 'SelfCertificationConnection__c',
@@ -1426,8 +1427,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 //     'value': '',
                 //     'processVisibility': ''
                 // },
-                //25/08/2021 - gabriele.rota@webresults.it - Modificabile per Prima Attivazione Ele
-                new fieldData('ConnectionType__c','ConnectionType__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, (this.order.ProcessType__c!=='Prima Attivazione Ele'), '',''),
+                new fieldData('ConnectionType__c','ConnectionType__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, true, '',''),
                 new fieldData('Esecuzione Anticipata','RecessNotice__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
                 new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, this.order.ProcessType__c == 'Switch in Ripristinatorio', '',''),
                 new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
@@ -1453,13 +1453,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                //25/08/2021 - gabriele.rota@webresults.it - Modificabile per Prima Attivazione Ele
                 {
                     'label': 'Fase richiesta',
                     'apiname': 'RequestPhase__c',
                     'typeVisibility': this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta',
                     'required': true,
-                    'disabled': (this.order.ProcessType__c!=='Prima Attivazione Ele'),
+                    'disabled': false,
                     'value': '',
                     'processVisibility': ''
                 },

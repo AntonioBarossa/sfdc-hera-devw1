@@ -17,11 +17,13 @@ export default class HdtCommercialRiassignButton extends LightningElement {
         getRecord({
             activityId: this.recordId
         }).then(result => {
-            this.caseid = result.case__c;
-            if(result.case__r.phase__c == 'In Lavorazione'){
+            console.log('enter::::' + JSON.stringify(result));
+            this.caseid = result.Case__c;
+            if(result.Case__r.Phase__c == 'In Lavorazione'){
+                console.log('enter::::INLAV');
                 this.isRiassignButton = true;
             }
-            else if(result.case__r.phase__c == 'In Attesa Approvazione'){
+            else if(result.Case__r.Phase__c == 'In Attesa Approvazione'){
                 this.isApproveFase = true;
             }
             /*

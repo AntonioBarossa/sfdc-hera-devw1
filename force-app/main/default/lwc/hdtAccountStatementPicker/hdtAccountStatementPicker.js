@@ -431,9 +431,9 @@ export default class HdtAccountStatementPicker extends LightningElement {
 
         if(documents){
             documents.forEach(document =>{
-                console.log('#CalculateAmount: Residue__c -> ' + document.DocumentResidue__c);
+                console.log('#CalculateAmount: Residue__c -> ' + document.Amount__c);
                 console.log('#CalculateAmount: TvFeeResidual__c -> ' + document.TvFeeResidual__c);
-                amount += document.DocumentResidue__c;
+                amount += document.Amount__c;
                 amountFee += document.TvFeeResidual__c;
             });
         }

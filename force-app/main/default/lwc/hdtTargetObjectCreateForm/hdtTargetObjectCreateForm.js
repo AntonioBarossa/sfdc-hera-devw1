@@ -36,8 +36,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
           if (data) {
             console.log('******data:' + JSON.stringify(data));
             let record = data;
-            console.log('********RecordType:' + record.fields.recordTypeInfo.name);
-            this.recordTypeAccount = record.fields.recordTypeInfo.name;
+            console.log('********RecordType:' + JSON.stringify(data.recordTypeInfo));
+            console.log('********RecordType:' + data.recordTypeInfo.name);
+            this.recordTypeAccount = record.recordTypeInfo.name;
           }
           else if(error){
             console.log('******Error:' + JSON.stringify(error));
@@ -1080,7 +1081,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if( this.allSubmitedFields['Disconnectable__c']==='No' && (this.allSubmitedFields['DisconnectibilityType__c']===undefined ||this.allSubmitedFields['DisconnectibilityType__c']==='' )){
                 concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
-            }   
+            }  
+            //27/08/2021 - gabriele.rota@webresults.it - Tensione di Consegna obbligatoria
+            if(this.allSubmitedFields['VoltageLevel__c']===undefined ||this.allSubmitedFields['VoltageLevel__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tensione di Consegna, ');
+            } 
             }
             else{
                 
@@ -1151,7 +1156,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if( this.allSubmitedFields['Disconnectable__c']==='No' && (this.allSubmitedFields['DisconnectibilityType__c']===undefined ||this.allSubmitedFields['DisconnectibilityType__c']==='' )){
                 concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
             } 
-    
+            //27/08/2021 - gabriele.rota@webresults.it - Tensione di Consegna obbligatoria
+            if(this.allSubmitedFields['VoltageLevel__c']===undefined ||this.allSubmitedFields['VoltageLevel__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tensione di Consegna, ');
+            }
             }
             else{
                 

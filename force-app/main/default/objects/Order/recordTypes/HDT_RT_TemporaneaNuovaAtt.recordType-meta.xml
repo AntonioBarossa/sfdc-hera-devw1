@@ -2058,6 +2058,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Documentazione Validata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errore lavorazione SAP</fullName>
             <default>false</default>
         </values>
@@ -2103,6 +2107,10 @@
         </values>
         <values>
             <fullName>In attesa tempi di ripensamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
         <values>

@@ -158,7 +158,7 @@
     <label>Comfort e Quality Call</label>
     <nameField>
         <label>Comfort e Quality Call Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Comfort e Quality Call</pluralLabel>
     <searchLayouts/>

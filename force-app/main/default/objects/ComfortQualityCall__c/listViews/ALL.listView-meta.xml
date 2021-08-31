@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ALL</fullName>
+    <columns>NAME</columns>
+    <columns>ComfortCampaign__c</columns>
+    <columns>QualityCampaign__c</columns>
+    <columns>Channel__c</columns>
+    <columns>ComfortDocSendingChannel__c</columns>
+    <columns>ComfortEnabled__c</columns>
+    <columns>DaysComfort__c</columns>
+    <columns>DaysQuality__c</columns>
+    <columns>ComfortSignatureMethod__c</columns>
+    <columns>QualitySignatureMethod__c</columns>
+    <columns>Process__c</columns>
+    <columns>QualityEnabled__c</columns>
+    <columns>UniqueQuality__c</columns>
+    <columns>QualityVas__c</columns>
+    <columns>DocumentValidation__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>ALL</label>
+</ListView>

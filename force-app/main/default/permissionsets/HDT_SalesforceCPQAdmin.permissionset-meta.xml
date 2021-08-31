@@ -2008,6 +2008,10 @@
         <apexClass>SBQQ__Versionable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>HDT_CP_SalesforceCPQAdmin</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.AccountNumber</field>
