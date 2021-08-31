@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Ripristino fornitura Interrotta - Preven</label>
+    <label>Sollecito Emissione Bolletta</label>
     <protected>false</protected>
     <values>
         <field>ContrattiCliente__c</field>
@@ -16,18 +16,18 @@
     </values>
     <values>
         <field>StatoContratto__c</field>
-        <value xsi:type="xsd:string">Cessato,Sospeso</value>
+        <value xsi:type="xsd:string">Attivo,Draft,Cessato</value>
     </values>
     <values>
         <field>StatoFornitura__c</field>
-        <value xsi:type="xsd:string">Inattivo,Sospeso</value>
+        <value xsi:type="xsd:string">Attivo,Bozza,Inattivo</value>
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Ripristino Fornitura Interrotta</value>
+        <value xsi:type="xsd:string">Sollecito Emissione Bolletta</value>
     </values>
     <values>
         <field>TipoServizio__c</field>
-        <value xsi:type="xsd:string">Gas</value>
+        <value xsi:type="xsd:string">Gas,Energia Elettrica</value>
     </values>
 </CustomMetadata>
