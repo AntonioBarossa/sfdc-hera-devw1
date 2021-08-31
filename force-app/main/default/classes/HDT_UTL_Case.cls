@@ -16,6 +16,7 @@ public inherited sharing class HDT_UTL_Case {
         String implantType = inputs[0].implantType;
         Decimal powerRequested = inputs[0].powerRequested;
         String salesCompany = inputs[0].salesCompany;
+        Case currentCase = inputs[0].currentCase;
         
 
         if(process == 'Voltura Tecnica'){
@@ -62,6 +63,8 @@ public inherited sharing class HDT_UTL_Case {
         public Decimal powerRequested;
         @InvocableVariable
         public String salesCompany;
+        @InvocableVariable
+        public Case currentCase;
 
 
     }
