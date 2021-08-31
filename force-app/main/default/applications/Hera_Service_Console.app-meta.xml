@@ -932,6 +932,7 @@
             <tab>standard-Case</tab>
         </mappings>
         <mappings>
+            <fieldName>AccountId</fieldName>
             <tab>standard-Contact</tab>
         </mappings>
         <mappings>
