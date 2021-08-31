@@ -310,6 +310,8 @@
                 <field>END_DT__c</field>
             </layoutItems>
         </layoutColumns>
+        <layoutColumns>
+        </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
