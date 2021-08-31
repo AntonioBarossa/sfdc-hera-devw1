@@ -239,7 +239,7 @@ public with sharing class HDT_UTL_VasManagement {
         Decimal PercentualeIva;
 
         public HDT_WRP_VASActivationReqItem(OrderItem ordItem) {
-            ItemProdotto = ordItem.Product2?.Name;
+            ItemProdotto = ordItem.Product2?.Name.abbreviate(33).removeEnd('...');
             Quantita = ordItem.Quantity;
             PrezzoNetto = ordItem.PriceNet__c;
             PrezzoNettoScontato = ordItem.PriceNetDiscounted__c;
