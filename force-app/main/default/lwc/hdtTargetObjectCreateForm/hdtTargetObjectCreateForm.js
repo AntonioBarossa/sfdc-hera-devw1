@@ -15,7 +15,7 @@ import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.cal
 import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
 import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
 
-
+import ACCOUNT_RECORDTYPE_FIELD from '@salesforce/schema/Account.RecordTypeId';
 
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
@@ -28,6 +28,25 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @api wrapAddressObject;
     @api sale;
     @api fieldsWrapObject=[];
+    
+    @track recordTypeAccount;
+
+    @wire(getRecord, { recordId: '$accountid', fields: [ACCOUNT_RECORDTYPE_FIELD] })
+     wiredRecord({ error, data }) {
+          if (data) {
+            console.log('******data:' + JSON.stringify(data));
+            let record = data;
+            console.log('********RecordType:' + JSON.stringify(data.recordTypeInfo));
+            console.log('********RecordType:' + data.recordTypeInfo.name);
+            this.recordTypeAccount = record.recordTypeInfo.name;
+          }
+          else if(error){
+            console.log('******Error:' + JSON.stringify(error));
+          } 
+    }
+
+
+
     data;
     objectApiName = 'ServicePoint__c';
     fieldsData;
@@ -211,6 +230,21 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                 ) 
             }
+            else if(element === 'Resident__c'){
+                console.log('entra in resident');
+                let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
+                console.log('entra in resident:' +resValue );
+                this.allSubmitedFields.Resident__c = resValue;
+                
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : mapFieldReq.get(element),
+                        value:resValue,
+                        disabled: false
+                    }
+                ) 
+            }
             else if(element=='SAPImplantCode__c')
             {
 
@@ -232,6 +266,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         required : mapFieldReq.get(element),
                         value: this.servicePointRetrievedData[element],
                         disabled: true
+                    }
+                ) 
+            }
+            else if(element=='PowerRequested__c'){
+                this.allSubmitedFields.PowerRequested__c = null;
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : mapFieldReq.get(element),
+                        value: '',
+                        disabled: false
                     }
                 ) 
             }
@@ -313,14 +358,19 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     ) 
                 }
-                else if(this.recordtype.label === 'Punto Elettrico' && element === 'Resident__c'){
+                else if(element === 'Resident__c'){
+
                     console.log('entra in resident');
-                    this.allSubmitedFields.Resident__c = true;
+                    let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
+                    console.log('entra in resident:' +resValue );
+                    this.allSubmitedFields.Resident__c = resValue;
+
+                    
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required : mapFieldReq.get(element),
-                            value:true,
+                            value:resValue,
                             disabled: false
                         }
                     ) 
@@ -582,6 +632,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
 		
 
+
+
             this.customSettings = data;
             console.log(JSON.stringify(this.selectedservicepoint)+'********selectedServicePoint');
             if(this.selectedservicepoint != undefined){
@@ -659,7 +711,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('getInstanceWrapObject - START');
         console.log('getInstanceWrapObject - servicePointRetrievedData' +JSON.stringify(servicePointRetrievedData));
         this.allSubmitedFields=this.servicePointRetrievedData;
-
+        this.allSubmitedFields.PowerRequested__c = null;
         getInstanceWrapAddressObject({s:servicePointRetrievedData}).then(data => {
             this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValues(data);
             console.log('getInstanceWrapObject - getInstanceWrapAddressObject Start '+ JSON.stringify(data));
@@ -790,6 +842,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
     
         }
+
+        //25/08/2021 - gabriele.rota@webresults.it - Switch Flag Resident in base a Tipo Fornitura
+        if(event.target.fieldName =='SupplyType__c'){
+            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+        }
+        
         console.log('handleFieldsDataChange END');
        
 
@@ -1023,7 +1081,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if( this.allSubmitedFields['Disconnectable__c']==='No' && (this.allSubmitedFields['DisconnectibilityType__c']===undefined ||this.allSubmitedFields['DisconnectibilityType__c']==='' )){
                 concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
-            }   
+            }  
+            //27/08/2021 - gabriele.rota@webresults.it - Tensione di Consegna obbligatoria
+            if(this.allSubmitedFields['VoltageLevel__c']===undefined ||this.allSubmitedFields['VoltageLevel__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tensione di Consegna, ');
+            } 
             }
             else{
                 
@@ -1094,7 +1156,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if( this.allSubmitedFields['Disconnectable__c']==='No' && (this.allSubmitedFields['DisconnectibilityType__c']===undefined ||this.allSubmitedFields['DisconnectibilityType__c']==='' )){
                 concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
             } 
-    
+            //27/08/2021 - gabriele.rota@webresults.it - Tensione di Consegna obbligatoria
+            if(this.allSubmitedFields['VoltageLevel__c']===undefined ||this.allSubmitedFields['VoltageLevel__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tensione di Consegna, ');
+            }
             }
             else{
                 

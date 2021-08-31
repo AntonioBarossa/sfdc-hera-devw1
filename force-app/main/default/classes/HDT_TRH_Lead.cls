@@ -114,55 +114,98 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 List<String> contId = new List<String>();
                 Recordtype r = recordtypeQr.getRecordType('HDT_RT_Business', 'Account');  
                 accounts = accPerson.getRecordsById(accountIdList,'id,Name, firstname__c,LastName__c,PrimaryEmail__c,Description,FiscalCode__c,recordtypeid,Phone,FAX__c' );
-                For(Account a : accounts){
+                for(Account a : accounts){
                     accId.add(a.id);
                     if(mapAccountLead.get(a.id) != null){
                         String lastName = (a.LastName__c != null && a.LastName__c != '' ? a.LastName__c : a.Name);
-            
-                        if(r.id == a.recordtypeid){
-                            Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone= a.Phone, Email= a.PrimaryEmail__c, Fax= a.FAX__c);
-                            conList.add(contact);
-                        }       
-                        Lead li = mapAccountLead.get(a.id);
-                        a.FirstName__c = li.FirstName;
-                        a.LastName__c = li.LastName;
-                        a.PrimaryEmail__c= li.Email;
-                        a.Description= li.Description;
-                        String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
-                        a.Name=expectedNewName;
-                        accToUpdate.add(a);
+                        if ( a.LastName__c==null) {
+                            if(r.id == a.recordtypeid){
+                                Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone= a.Phone, Email= a.PrimaryEmail__c, Fax= a.FAX__c);
+                                conList.add(contact);
+                                Lead li = mapAccountLead.get(a.id);
+                               // a.FirstName__c = li.FirstName;
+                            
+                                a.LastName__c = li.Company;
+                                a.Name=li.Company;
+                                a.PrimaryEmail__c= li.Email;
+                                a.Description= li.Description;
+                                accToUpdate.add(a);
+
+                            }
+                            else{       
+                                Lead li = mapAccountLead.get(a.id);
+                                a.FirstName__c = li.FirstName;
+                                a.LastName__c = li.LastName;
+                                a.PrimaryEmail__c= li.Email;
+                                a.Description= li.Description;
+                                String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
+                                a.Name=expectedNewName;
+                                accToUpdate.add(a);
+                            }
+                        }
                     }     
                 }
-                update accToUpdate;
-                insert conList;
-                for(Contact c : conList){
-                    contId.add(c.id);
+                if (accToUpdate.size()>0) {
+                    update accToUpdate;
                 }
-                List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(accId, contId, 'Id');
-                for(AccountContactRelation acc : listAccCon){
-                    acc.Roles='Azienda';
+                if (conList.size()>0) {
+                    insert conList;
+                    for(Contact c : conList){
+                        contId.add(c.id);
+                    }
+                    List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(accId, contId, 'Id');
+                    for(AccountContactRelation acc : listAccCon){
+                        acc.Roles='Azienda';
+                    }
+                    accoContRelSrv.upsertRecord(listAccCon);
+                    HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
+                    ba.dtos = accToUpdate;  
+                    Database.executeBatch(ba,80);
                 }
-                accoContRelSrv.upsertRecord(listAccCon);
-                HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
-                ba.dtos = accToUpdate;  
-                Database.executeBatch(ba,80);
             }
             
         }
         public override void   beforeUpdate(){
+            System.debug('HDT_TRH_Lead.beforeUpdate');
+            Set<String> setFiscalCodes = new Set<String>();
             Map<String,String> mapResBlacklist = HDT_UTL_Lead.getBlackListMap();
             List<Lead> listNew = trigger.new;
-        // List<Lead> leadToCheck = new List<Lead>();
+            List<Lead> leadToCheck = new List<Lead>();
             //Map<String,String> leadDomain = new Map<String,String>();
-            for(Lead L : listNew){
+            for(Lead l : listNew){
                 if(l.email != null){
                     String s = l.email.split('@')[1];
                     if(mapResBlacklist.get(s.toUpperCase()) != null){
                         l.addError('Error:' + mapResBlacklist.get(s.toUpperCase()));
                     }
                 }
+                if (String.isNotBlank(l.FiscalCode__c) && mapOld.get(l.Id)!=null && (mapOld.get(l.Id).FiscalCode__c!=l.FiscalCode__c)     ) {
+                    setFiscalCodes.add(l.FiscalCode__c);
+                    leadToCheck.add(l);
+                }
+            }   
+            // Start 27-08-2021 HRAWRM-351
+            if (leadToCheck.size()>0) {
+                
+            
+                Map<String,HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject> mapCodeToCheck = HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCode(setFiscalCodes);
+                for (Lead tempLead : leadToCheck) {
+                    HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject wrp = new HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject();
+                    if (mapCodeToCheck.get(tempLead.FiscalCode__c)!=null ) {
+                        wrp=mapCodeToCheck.get(tempLead.FiscalCode__c);
+                       
+                        if ( wrp.isValid) {
+                            Date myDate = Date.newInstance(Integer.valueOf( wrp.year),Integer.valueOf(wrp.month),Integer.valueOf( wrp.day));
+                            tempLead.Birthdate__c=tempLead.Birthdate__c==null?myDate:tempLead.Birthdate__c;
+                            tempLead.Birthcity__c=String.isBlank( tempLead.Birthcity__c)? wrp.city: tempLead.Birthcity__c;
+                            tempLead.Gender__c=String.isBlank( tempLead.Gender__c)? wrp.gender: tempLead.Gender__c;
+                        }
+                        else{
+                            tempLead.addError('Inserire un codice fiscale valido');
+                        }
+                    }
+                }
             }
-            System.debug('beforeUpdate');
-           
         }
+        // End 27-08-2021 HRAWRM-351
 }

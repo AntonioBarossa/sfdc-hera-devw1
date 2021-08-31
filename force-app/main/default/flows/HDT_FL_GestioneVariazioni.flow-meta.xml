@@ -821,8 +821,8 @@
     <assignments>
         <name>Assegna_Valori_0_0_0_0_0</name>
         <label>Assegna Valori</label>
-        <locationX>4012</locationX>
-        <locationY>778</locationY>
+        <locationX>3973</locationX>
+        <locationY>781</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -1061,13 +1061,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>hdtSelfReading.saveDraft</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1997,6 +1990,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
           &quot;Avanti&quot;,
           &quot;Conferma Pratica&quot;
 )</expression>
+    </formulas>
+    <formulas>
+        <name>ProcessTypeCambioCont</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!GetInputCase.Type}) &amp; &quot; &quot; &amp; {!GetInputCase.CommodityFormula__c}</expression>
     </formulas>
     <formulas>
         <name>VariazioneFiscalePhase</name>
@@ -3166,6 +3164,30 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>commodity</name>
+                <value>
+                    <elementReference>GetInputCase.CommodityFormula__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>resumedFromDraft</name>
+                <value>
+                    <elementReference>ResumeFromDraft</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disabledReadingDate</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>allowSmallerReading</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -4323,7 +4345,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -4365,7 +4387,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>GetInputCase.Type</elementReference>
+                    <elementReference>ProcessTypeCambioCont</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>

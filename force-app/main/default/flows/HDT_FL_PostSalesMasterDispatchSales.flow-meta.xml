@@ -34,6 +34,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assign_Conferma_Fase</name>
+        <label>assign Conferma Fase</label>
+        <locationX>600</locationX>
+        <locationY>2102</locationY>
+        <assignmentItems>
+            <assignToReference>Phase_Conferma</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Sospesa</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Next_Step</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Init_Case</name>
         <label>Init Case</label>
         <locationX>2514</locationX>
@@ -1465,7 +1481,7 @@
         <inputAssignments>
             <field>Phase__c</field>
             <value>
-                <stringValue>In Lavorazione</stringValue>
+                <elementReference>Phase_Conferma</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1505,7 +1521,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Next_Step</targetReference>
+            <targetReference>assign_Conferma_Fase</targetReference>
         </connector>
         <fields>
             <name>headerDatiVotiva_0</name>
@@ -2322,6 +2338,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Phase_Conferma</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>In Lavorazione</stringValue>
+        </value>
     </variables>
     <variables>
         <description>Tipo processo passato in input dal Service Catalog</description>

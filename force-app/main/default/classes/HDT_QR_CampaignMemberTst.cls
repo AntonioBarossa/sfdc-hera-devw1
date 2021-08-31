@@ -11,19 +11,19 @@ public class HDT_QR_CampaignMemberTst{
 	static void setup(){
 
 		List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-		List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, true);
+		List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, false);
 		leads[0].Latitude=-34.397;
 		leads[0].Longitude=150.644;
 		leads[0].Country='Australia';
-		update leads;
+		insert leads;
 
-		List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
+		List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, false, accounts[0].Id);
 		contacts[0].MailingLatitude=-34.397;
 		contacts[0].MailingLongitude=150.644;
 		contacts[0].MailingCountry='Australia';
-		update contacts;
+		insert contacts;
 
-		List<Campaign> campaigns=HDT_UTL_DataFactoryTst.createCampaign(2, true);
+		List<Campaign> campaigns=HDT_UTL_DataFactoryTst.createCampaign(2, false);
 		campaigns[1].ParentId=campaigns[0].Id;
 		campaigns[0].IsActive=true;
 		campaigns[0].StartDate=Date.today().addDays(-1);
@@ -31,27 +31,17 @@ public class HDT_QR_CampaignMemberTst{
 		campaigns[0].Category__c='Campagna CRM';
 		campaigns[0].Channel__c='Telefonico Inbound';
 		campaigns[0].Required__c=true;
-		update campaigns;
+		insert campaigns;
 
-		List<CampaignMember> campMembs=HDT_UTL_DataFactoryTst.createCampaignMember(1, true, campaigns[0].Id, leads[0].Id, contacts[0].Id);
+		List<CampaignMember> campMembs=HDT_UTL_DataFactoryTst.createCampaignMember(1, false, campaigns[0].Id, leads[0].Id, contacts[0].Id);
 		campMembs[0].Ecid__c='test';
 		campMembs[0].isToSendStatusReitek__c=true;
-		update campMembs;
+		insert campMembs;
 
-		PaperProcessing__c paperProc=new PaperProcessing__c();
-		paperProc.Name='test';
-		paperProc.Campaign__c=campaigns[0].id;
-		insert paperProc;
+		HDT_UTL_DataFactoryTst.createPaperProcessing(1, true, 'test', campaigns[0].id);
 
-		Account accPartner=new Account();
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
+		HDT_UTL_DataFactoryTst.createAccountPartner(1, true, 'testPartnerAccount');
 
-		Id rt=constRecordType.ACCOUNT_RECORDTYPEID_PARTNER;
-
-		accPartner.RecordTypeId=rt;
-		accPartner.Name='testAccount';
-
-		insert accPartner;
 	}
 
 	@isTest

@@ -15,12 +15,6 @@ public with sharing class HDT_QR_QuoteProcessTst {
         
         List<SBQQ__QuoteProcess__c> qProcessList = HDT_UTL_DataFactoryTst.createQuoteProcess(1, false);
         qProcessList[0].Name = 'Vendita Guidata Offerte';
-        qProcessList[0].SBQQ__Default__c = true;
-        qProcessList[0].SBQQ__GuidedOnly__c = true;
-        qProcessList[0].SBQQ__ProductAutoSelected__c = true;
-        qProcessList[0].SBQQ__ProductConfigurationInitializer__c = 'initializerTest';
-        qProcessList[0].SBQQ__ProductSearchExecutor__c = 'Executor';
-        qProcessList[0].SBQQ__SortOrder__c = 1;
 
         insert qProcessList;
     }

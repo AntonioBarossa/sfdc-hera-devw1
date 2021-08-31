@@ -616,7 +616,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             accountAddressRes: this.fieldsToUpdateRes
                         }).then((response) => {
                             const event = new ShowToastEvent({
-                                message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                                message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' creato con successo!',
                                 variant: 'success',
                                 mode: 'dismissable'
                             });
@@ -650,6 +650,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         this.spinner=false;
                     });
                 }else{
+                    getFromFiscalCode({
+                        fiscalCodes : this.fiscalCode.value.replace(/ /g,"")
+                    }).then((response) => {
                     let acc= {
                         "firstName": firstName.value,
                         "lastName": lastName.value,
@@ -681,7 +684,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
 
                     }).then((response) => {
                         const event = new ShowToastEvent({
-                            message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                            message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' creato con successo!',
                             variant: 'success',
                             mode: 'dismissable'
                         });
@@ -705,6 +708,15 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         this.dispatchEvent(event);
                         this.spinner=false;
                     });
+                }).catch((errorMsg) => {
+                    const event = new ShowToastEvent({
+                        message: 'Inserire un codice fiscale valido',
+                        variant: 'error',
+                        mode: 'dismissable'
+                    });
+                    this.dispatchEvent(event);
+                    this.spinner=false;
+                });
                 }
             }else{
                 const event = new ShowToastEvent({

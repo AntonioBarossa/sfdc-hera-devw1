@@ -2090,6 +2090,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>DL Documentazione completa</fullName>
             <default>false</default>
         </values>

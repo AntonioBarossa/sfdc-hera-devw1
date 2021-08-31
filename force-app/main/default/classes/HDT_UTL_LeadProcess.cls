@@ -260,7 +260,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField39__c = mapRequestFields.get('CAMPO_39');
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
                     if(mapRequestFields.get('D_O_RICONTATTO') != null){
-                        newLead.ContactDate__c= DateTime.parse(mapRequestFields.get('D_O_RICONTATTO'));
+                        newLead.ContactDate__c=getDateTimeFromString(mapRequestFields.get('D_O_RICONTATTO'));
                     }
                     newLead.FirstName= 'Lead';
                     newLead.LastName= 'Winback';
@@ -428,7 +428,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField39__c = mapRequestFields.get('CAMPO_39');
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
                     if(mapRequestFields.get('D_O_RICONTATTO') != null){
-                        newLead.ContactDate__c= DateTime.parse(mapRequestFields.get('D_O_RICONTATTO'));
+                        newLead.ContactDate__c=getDateTimeFromString(mapRequestFields.get('D_O_RICONTATTO'));
                     }
                     newLead.FirstName= 'Lead';
                     newLead.LastName= 'CaricaBollete';
@@ -603,7 +603,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField39__c = mapRequestFields.get('CAMPO_39');
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
                     if(mapRequestFields.get('D_O_RICONTATTO') != null){
-                        newLead.ContactDate__c= DateTime.parse(mapRequestFields.get('D_O_RICONTATTO'));
+                        newLead.ContactDate__c=getDateTimeFromString(mapRequestFields.get('D_O_RICONTATTO'));
                     }
                     newLead.Email= mapRequestFields.get('EMAIL');
                     newLead.City= mapRequestFields.get('COMUNE');

@@ -156,7 +156,7 @@
     <gender>Feminine</gender>
     <label>BlackList</label>
     <nameField>
-        <label>BlackList Name</label>
+        <label>BlackList Name Account</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>BlackList</pluralLabel>

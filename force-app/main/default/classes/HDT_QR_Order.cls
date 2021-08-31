@@ -35,7 +35,7 @@ public inherited sharing class HDT_QR_Order {
         Map<Id, Order> mapIdOrder=new  Map<Id, Order>([
             SELECT
             Name, AccountId,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
-            Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c  
+            Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c  
             FROM Order 
             WHERE Id IN :orderId
             WITH SECURITY_ENFORCED
@@ -222,7 +222,8 @@ public inherited sharing class HDT_QR_Order {
             IsActivationDeferred__c,
             EffectiveDate__c ,                              // [ 13/08/2021 gabriele.rota@webresults.it - Calcolo Data Invio al SII ]
             ConfirmCustomerContract__c,
-            IsVAS__c
+            IsVAS__c,
+            ServicePoint__r.Resident__c                     // [ 26/08/2021 gabriele.rota@webresults.it - Calcolo IVA ]
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -603,6 +604,7 @@ public inherited sharing class HDT_QR_Order {
             AccountId,
             OrderNumber,
             Status,
+            SalesCompany__c,
             Agency__c,
             Market__c,
             Channel__c,
@@ -708,6 +710,7 @@ public inherited sharing class HDT_QR_Order {
             CancellationReason__c
         FROM Order
         WHERE ParentOrder__c = :parentOrderId
+        AND QualityCall__c = true
         WITH SECURITY_ENFORCED
         ];
     }
@@ -744,5 +747,9 @@ public inherited sharing class HDT_QR_Order {
             AND Account.ActiveMonitoring__c = true
             WITH SECURITY_ENFORCED
         ];
+    }
+
+    public List<Order> getOrderForComfort(String id){
+        return [Select id,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
     }
 }
