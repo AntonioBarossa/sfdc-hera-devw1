@@ -38,6 +38,13 @@ public with sharing class HDT_UTL_Constants {
     public final String ACCOUNT_RECORDTYPEID_RESINDEZIALE =
     Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(ACCOUNT_RECORDTYPE_DEVELOPERNAME_RESINDEZIALE).getRecordTypeId();
 
+     //Account RecordType Partner
+     @AuraEnabled
+     public final String ACCOUNT_RECORDTYPE_DEVELOPERNAME_PARTNER = 'HDT_RT_Partner';
+     @AuraEnabled
+     public final String ACCOUNT_RECORDTYPEID_PARTNER =
+     Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(ACCOUNT_RECORDTYPE_DEVELOPERNAME_PARTNER).getRecordTypeId();
+
     //Activity Custom RecordType Credit Check KO
     @AuraEnabled
     public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_CREDITCHECKKO = 'HDT_RT_CreditCheckKO';
@@ -158,4 +165,17 @@ public with sharing class HDT_UTL_Constants {
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_CUSTOMER = 'Customer';
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_EX_CUSTOMER = 'Ex-Customer';
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_PROSPECT = 'Prospect';
+
+    //Custom Permissions
+    @AuraEnabled
+    public final string CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN = 'HDT_CP_SalesforceCPQAdmin';
+
+    //User Roles
+    @AuraEnabled
+    public final string USERROLE_DEVELOPERNAME_BACKOFFICE = 'HDT_BackOffice';
+
+    //Other
+    @AuraEnabled
+    public final string QUOTE_PROFILEFIELD_SALESFORCECPQADMIN = 'Amministratore CPQ';
+
 }

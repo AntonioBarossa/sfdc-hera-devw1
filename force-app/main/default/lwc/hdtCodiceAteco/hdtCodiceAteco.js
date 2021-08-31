@@ -89,6 +89,7 @@ export default class HdtCodiceAteco extends LightningElement {
 
     submitSearch(){
         this.loading = true;
+        console.log('******:' + JSON.stringify(this.searchInputValue));
         getAtecoMatrixList({filterType: this.filterType, filterValue: this.searchInputValue}).then(data =>{
             this.loading = false;
             this.isTableVisible = true;
@@ -96,8 +97,9 @@ export default class HdtCodiceAteco extends LightningElement {
             console.log('getAtecoMatrixList: ' + JSON.stringify(data));
 
             if(data.length > 0){
+                this.showEmptyMessage = false;
                 this.createTable(data);
-            } else {
+            } else { 
                 this.showEmptyMessage = true;
             }
 

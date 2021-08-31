@@ -117,8 +117,13 @@
     </applicationVisibilities>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_ObjectRecordType__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>AccountDataEnrichment__mdt</name>
     </customMetadataTypeAccesses>
+
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_AccountDataEnrichment__mdt</name>
@@ -768,6 +773,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>PercentageRulesForAssigningVisits__c.VisitAssignmentRules__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>VasSupplierTable__c.ErrorDescription__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>VasSupplierTable__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4672,12 +4687,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CarType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.CategoryCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Causal__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4713,6 +4738,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.ChangePhaseDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Channel__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4917,6 +4947,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CorrectorCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.CreatorGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4933,6 +4968,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.CustomerComunicationDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.CustomerInterest__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6096,11 +6136,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.QrCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Case.QuotationAcceptanceDate__c</field>
         <readable>true</readable>
@@ -6749,6 +6784,16 @@
 	<fieldPermissions>
         <editable>true</editable>
         <field>Case.VasPracticeCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.VasPracticeDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.VasSupplierStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9134,6 +9179,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>GeneralTermsCondition__c.Version__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.ValueToRemove__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.RecordTypeDeveloperName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11943,6 +11998,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ActivityQualityToBeCanceled__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.AdministrativeBurden__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13653,6 +13713,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Order.SubtypeCommissioning__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.SupplyAddressFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13774,6 +13839,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.Type</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.TypeCommissioning__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13904,6 +13974,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.XMLType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.ReminderComfortCall__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30380,6 +30455,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>SBQQ__ProductRule__c-Product Rule Layout CPQ</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SBQQ__Quote__c-Quote Layout New</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Scorecard-Scorecard Layout</layout>

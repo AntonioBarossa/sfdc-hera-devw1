@@ -12,9 +12,11 @@ const columns = [
     { label: 'Canale', fieldName: 'Channel__c' },
     { label: 'Close Date', fieldName: 'EndDate', type: 'date' },
 ];
-export default class PopoverContainer extends NavigationMixin(LightningElement) {
+export default class hdtCampaignToAccountList2 extends NavigationMixin(LightningElement) {
     @api campaignType;
     @api objectApiName;
+    @api title = '';
+    @api showTag = false;
     @api entityId;
     @api campaignCategory;
     @api campaignChannel;
@@ -30,6 +32,7 @@ export default class PopoverContainer extends NavigationMixin(LightningElement) 
         this.campaignsResult = result;
         this.allCampaigns = [];
         this.campaignsNumber = 0;
+        console.log('********');
         if (result.error) {
             console.log('*******:' + error);
         } else if (result.data) {
@@ -52,11 +55,12 @@ export default class PopoverContainer extends NavigationMixin(LightningElement) 
                 this.listResults = true;
                 
                 //send visibility to parent component
-                this.dispatchEvent(new CustomEvent('emitvisibility', {
+                this.dispatchEvent(new CustomEvent('emitvisibility2', {
                     detail: {
                         isVisible: this.listResults
                     }
                 }));
+                this.showTag = true;
             }
         }
     }
@@ -70,14 +74,16 @@ export default class PopoverContainer extends NavigationMixin(LightningElement) 
     }
 
     handleRowSelection(event) {
-        this.selectedCampaignId = event.target.selectedRows[0];
-
+        console.log('Try:*****');
+           this.selectedCampaignId = event.target.selectedRows[0];
+        console.log('Try:*****');
         //send selectedCampaignId to parent component
-        this.dispatchEvent(new CustomEvent('emitcampaignid', {
+        this.dispatchEvent(new CustomEvent('emitcampaignid2', {
             detail: {
                 campaignId: this.selectedCampaignId
             }
         }));
+        console.log('Try:*****');
     }
 
     redirectToCampaign(event) {

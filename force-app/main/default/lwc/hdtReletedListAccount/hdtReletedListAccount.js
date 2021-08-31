@@ -40,6 +40,9 @@ import {refreshApex} from '@salesforce/apex';
  * @param recordTypeId The record type ID. Pass '012000000000000AAA' for the master record type.
  */
 //const VAR_RECORDTYPEID='012000000000000AAA';
+const ERROR_VARIANT='error';
+const SUCCESS_VARIANT='success';
+const DISMISSABLE_VARIANT='dismissable';
 export default class HdtReletedListAccount  extends NavigationMixin(LightningElement)  {
     @api recordId;
     @track numberOfContacts=0;
@@ -92,7 +95,14 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
     closeModal() {
         this.showModal = false;
     }
-    
+    toastMessage(myMessage,myVariant,myDismissable){
+        const event = new ShowToastEvent({
+            message:myMessage,
+            variant: myVariant,
+            mode: myDismissable
+        });
+        this.dispatchEvent(event);
+    }
     
     handleRowActions(event) {
         
@@ -158,7 +168,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
 
 
     handleCompanyOwnerChange(event) {
-        console.log("***************CHANGE" + event.target.value);
+        console.log("handleCompanyOwnerChange : " + event.target.value);
         let key = this.customerData.controllerValues[event.target.value];
         this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
         this.markingValue = '';
@@ -172,7 +182,6 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
     
     connectedCallback(){
         this.currentObjectApiName= 'Account';
-        // this.getCurrentRecordType();
         this.getAllContact();
         this.getRoleByRecordType();
     }
@@ -209,17 +218,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
         
         
     }
-    // getCurrentRecordType(){
-    //     getRecordTypeAccount({ accountId: this.recordId } )
-    //     .then(result => {            
-    //         this.recordType = result;
-    //     })
-    //     .catch(error => {
-    //         this.error = error;
-    //     });
-    
-    
-    // }
+
     
     handleCalculation(){
         
@@ -256,31 +255,19 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
             };
             calculateFiscalCode({infoData: information}).then((response) => {
                 if(response == null){
-                    const event = new onMyTost({
-                        message: 'Comune inserito NON presente a sistema',
-                        variant: 'error',
-                        mode: 'dismissable'
-                    });
-                    this.dispatchEvent(event);
-                }else{
+                    this.toastMessage('Comune inserito non presente a sistema',ERROR_VARIANT,DISMISSABLE_VARIANT);
+                }
+                else{
                     this.fiscalCode.value= response;
                 }
             }).catch((errorMsg) => { 
                 this.showError(errorMsg);
-                const event = new onMyTost({
-                    message: this.errorMessage,
-                    variant: 'error',
-                    mode: 'dismissable'
-                });
-                this.dispatchEvent(event);
+                this.toastMessage(this.errorMessage,ERROR_VARIANT,DISMISSABLE_VARIANT);
             });            
-        }else{
-            const event = new onMyTost({
-                message: 'Inserire le Informazioni Mancanti',
-                variant: 'error',
-                mode: 'dismissable'
-            });
-            this.dispatchEvent(event);
+        }
+        else{
+ 
+            this.toastMessage('Inserire le Informazioni Mancanti',ERROR_VARIANT,DISMISSABLE_VARIANT);
         }
     }
     getAccountAdress(){
@@ -421,19 +408,14 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
                             if(!this.gender  || this.gender.trim()==='' ){
                                 this.gender=fiscData[keyCode].gender;
                                 console.log('gender : ' + this.gender);
-                                //this.gender= fiscData.gender;
                             }
                             if(!this.birthDate || this.birthDate.trim()===''){
                                 this.birthDate=fiscData[keyCode].birthDate;
                                 console.log('birthDate : ' + this.birthDate);
-                                
-                                //this.birthDate= fiscData.birthDate;
                             }
                             if(!this.birthPlace || this.birthPlace.trim()===''){
                                 this.birthPlace=fiscData[keyCode].birthPlace;
                                 console.log('birthPlace : ' + this.birthPlace);
-                                
-                                //this.birthPlace= fiscData.birthPlace;
                             }
                             
                             let acc= {
@@ -461,14 +443,9 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
                                 contactAddress: this.fieldsToUpdate
                             }).then((response) => {
                                 console.log(JSON.stringify(response));
-                                const event = new ShowToastEvent({
-                                    message: 'Contact  has been created!',
-                                    variant: 'success',
-                                    mode: 'dismissable'
-                                });
-                                this.dispatchEvent(event);
+                                this.toastMessage('Referente creato con successo!',SUCCESS_VARIANT,DISMISSABLE_VARIANT);
                                 this.showModal= false;
-                                this.dispatchEvent(event);
+                      
                                 this.showModal= false;
                                 this[NavigationMixin.Navigate]({
                                     type: 'standard__recordPage',
@@ -481,27 +458,19 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
                                 
                             }).catch((errorMsg) => {
                                 this.showError(errorMsg);
-                                const event = new ShowToastEvent({
-                                    message: this.errorMessage,
-                                    variant: 'error',
-                                    mode: 'dismissable'
-                                });
-                                this.dispatchEvent(event);
+                                this. toastMessage(this.errorMessage,ERROR_VARIANT,DISMISSABLE_VARIANT);
                                 this.spinner=false;
                             });
                         }).catch((errorMsg) => {
-                            const event = new ShowToastEvent({
-                                message: 'Entra un valido codice fiscale!',
-                                variant: 'error',
-                                mode: 'dismissable'
-                            });
-                            this.dispatchEvent(event);
+                            this.toastMessage('Inserire un codice fiscale valido',ERROR_VARIANT,DISMISSABLE_VARIANT);
                             this.spinner=false;
                         });
                         
                     }
                     else{
-                        console.log('è else');
+                        getFromFiscalCode({
+                            fiscalCodes : this.fiscalCode.value.replace(/ /g,"") }).then((response) => {
+           
                         let acc= {
                             "firstName": firstName.value,
                             "lastName": lastName.value,
@@ -526,15 +495,9 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
                             contactAddress: this.fieldsToUpdate
                         }).then((response) => {
                             console.log(JSON.stringify(response));
-                            const event = new ShowToastEvent({
-                                message: 'Contact  has been created!',
-                                variant: 'success',
-                                mode: 'dismissable'
-                            });
-                            this.dispatchEvent(event);
+                            this.toastMessage('Referente creato con successo!',SUCCESS_VARIANT,DISMISSABLE_VARIANT);
                             this.showModal= false;
-                            this.dispatchEvent(event);
-                            this.showModal= false;
+                       
                             this[NavigationMixin.Navigate]({
                                 type: 'standard__recordPage',
                                 attributes: {
@@ -546,42 +509,25 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
                             
                         }).catch((errorMsg) => {
                             this.showError(errorMsg);
-                            const event = new ShowToastEvent({
-                                message: this.errorMessage,
-                                variant: 'error',
-                                mode: 'dismissable'
-                            });
-                            this.dispatchEvent(event);
+                            this.toastMessage(this.errorMessage,ERROR_VARIANT,DISMISSABLE_VARIANT);
                             this.spinner=false;
                         });
+                    }).catch((errorMsg) => {
+                        this.toastMessage('Inserire un codice fiscale valido',ERROR_VARIANT,DISMISSABLE_VARIANT);
+                        this.spinner=false;
+                    });
                     }
                 }
                 else{
-                    const event = new ShowToastEvent({
-                        message: " L\'indirizzo non è stato verificato! ",
-                        variant: 'error',
-                        mode: 'dismissable'
-                    });
-                    this.dispatchEvent(event);
+                    this.toastMessage("L\'indirizzo non è stato verificato! ",ERROR_VARIANT,DISMISSABLE_VARIANT);
                     this.spinner=false;
                 }
                 
             }
             else{
-                const event = new ShowToastEvent({
-                    message: messageError,
-                    variant: 'error',
-                    mode: 'dismissable'
-                });
-                this.dispatchEvent(event);
+                this.toastMessage(messageError,ERROR_VARIANT,DISMISSABLE_VARIANT);
                 this.spinner=false;
             }
-            
-            
-            
-            
-            
-            
         }
         
         copyAddressHandler(event){

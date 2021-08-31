@@ -22,7 +22,7 @@ export default class HdtTargetObjectRecordTypeSelection extends LightningElement
         getRecordTypesForServicePoint().then(data =>{
             console.log('hdtTargetObjectRecordTypeSelection - getRecordTypesForServicePoint: ', JSON.stringify(data));
             this.recordTypeOptions = data.filter(function(el){
-                return el.DeveloperName !== 'Master';
+                return el.DeveloperName !== 'Master' && el.DeveloperName !== 'Principale';
             });
             console.log(JSON.stringify(this.recordTypeOptions));
 

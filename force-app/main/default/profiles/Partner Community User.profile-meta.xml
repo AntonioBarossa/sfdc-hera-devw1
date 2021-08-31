@@ -3357,6 +3357,16 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.ValueToRemove__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.RecordTypeDeveloperName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>HDT_CampaignMemberStatus__mdt.Category__c</field>
         <readable>false</readable>
@@ -4589,6 +4599,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.XMLType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.ReminderComfortCall__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8034,6 +8049,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.FriendCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.IsBillableVas__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1,0 +1,595 @@
+/**
+ * @author Fabricio Petkevicius Nunes (fabricio.nunes@engdb.com.br)
+ * @date 26/08/2021
+ * @description Test Class for HDT_QR_Order.cls
+ * @history Fabricio Petkevicius Nunes – 26/08/2021 – Created class
+ */
+@isTest
+public class HDT_QR_OrderTst{
+	private static HDT_QR_Order orderQr=new HDT_QR_Order();
+	private static HDT_UTL_Constants utlConstants=new HDT_UTL_Constants();
+	@TestSetup
+	static void setup(){
+
+		HDT_UTL_DataFactoryTst.pClickInstance();
+		HDT_UTL_DataFactoryTst.pClickOrderPhase();
+
+		List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Azienda', 'Aziende SME');
+		accounts[0].ActiveMonitoring__c=true;
+		insert accounts;
+
+		List<Opportunity> opps=HDT_UTL_DataFactoryTst.createOpportunity(1, true);
+		List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
+		List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(2, true, accounts[0].Id, 'Attiva');
+		List<Pricebook2> pricebook=HDT_UTL_DataFactoryTst.createPricebook(1, true);
+		List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(2, false, accounts[0].Id, sales, pricebook[0].Id);
+		id orderdossier=utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+		orders[1].RecordTypeId=orderdossier;
+		orders[0].Username__c='test';
+		orders[0].Password__c='test1';
+		insert orders;
+
+		List<Order> childOrders=HDT_UTL_DataFactoryTst.createChildOrder(1, false, accounts[0].Id, sales, orders[0].Id, contacts[0].Id);
+		childOrders[0].QualityCall__c=true;
+		insert childOrders;
+
+		List<ServicePoint__c> servPoints=HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+		List<SBQQ__Quote__c> quotes=HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].Id, opps[0].Id, sales[0].Id, 'Amendment');
+		quotes[0].IsVAS__c=false;
+		quotes[0].AmendmentAllowed__c=false;
+		insert quotes;
+
+		orders[0].ServicePoint__c=servPoints[0].Id;
+		orders[0].SBQQ__Quote__c=quotes[0].id;
+		update orders;
+	}
+
+	@isTest
+	static void testgetRecordBySale(){
+
+		Test.startTest();
+
+		List<Sale__c> tSale=[SELECT Id, Status__c
+		                     FROM Sale__c
+		                     WHERE Status__c='Attiva'
+		                     LIMIT 1];
+
+		List<Order> getRecordBySale=orderQr.getRecordBySale(tSale[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecordBySale.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecordBySale.isEmpty());
+	}
+
+	@isTest
+	static void testgetOrdersRecord(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name
+		                    FROM Order 
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<Id> orderIds=new List<Id>();
+		orderIds.add(tOrder[0].Id);
+
+		Map<Id, Order> getOrdersRecord=orderQr.getOrdersRecord(orderIds);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getOrdersRecord.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getOrdersRecord.isEmpty());
+	}
+
+	@isTest
+	static void testgetRecordBySaleFilterRecordTypeId(){
+
+		Test.startTest();
+
+		List<Sale__c> tSale=[SELECT Id, Status__c
+		                     FROM Sale__c
+		                     WHERE Status__c='Attiva'
+		                     LIMIT 1];
+
+
+		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
+
+		List<Order> getRecordBySaleFilterRecordType=orderQr.getRecordBySaleFilterRecordTypeId(tSale[0].Id, rt);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecordBySaleFilterRecordType.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecordBySaleFilterRecordType.isEmpty());
+	}
+
+	@isTest
+	static void testgetRecordById(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name
+		                    FROM Order 
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		Order getRecordById=orderQr.getRecordById(tOrder[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecordById==null, 'Order not found');
+		System.assertNotEquals(true, getRecordById==null);
+	}
+
+	@isTest
+	static void testgetOrderbyId(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name
+		                    FROM Order 
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		Order getOrderById=orderQr.getOrderbyId(tOrder[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getOrderById==null, 'Order not found');
+		System.assertNotEquals(true, getOrderById==null);
+	}
+
+	@isTest
+	static void testgetOrderByIdForSalesCallout(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name
+		                    FROM Order 
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<Order> getOrderByIdForSaleCallout=orderQr.getOrderByIdForSalesCallout(tOrder[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getOrderByIdForSaleCallout.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getOrderByIdForSaleCallout.isEmpty());
+	}
+
+	@isTest
+	static void testgetRecordsByIds(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name
+		                    FROM Order 
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<Id> orderIds=new List<Id>();
+		orderIds.add(tOrder[0].Id);
+
+		List<Order> getRecordsByIds=orderQr.getRecordsByIds(orderIds);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecordsByIds.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecordsByIds.isEmpty());
+	}
+
+	@isTest
+	static void testgetChildOrdersByParentId(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name
+		                    FROM Order 
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<Order> getChildOrdersByParentId=orderQr.getChildOrdersByParentId(tOrder[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getChildOrdersByParentId.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getChildOrdersByParentId.isEmpty());
+	}
+
+	@isTest
+	static void testgetChildOrdersByParentIds(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name
+		                    FROM Order 
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+
+		List<String> orderIds=new List<String>();
+		orderIds.add(tOrder[0].Id);
+		List<Order> getChildOrdersByParentIds=orderQr.getChildOrdersByParentIds(orderIds);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getChildOrdersByParentIds.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getChildOrdersByParentIds.isEmpty());
+	}
+
+	@isTest
+	static void testgetChildOrdersByParentIdAllStatus(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name
+		                    FROM Order 
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<Order> getChildOrdersByParentIdAllStatus=orderQr.getChildOrdersByParentIdAllStatus(tOrder[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getChildOrdersByParentIdAllStatus.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getChildOrdersByParentIdAllStatus.isEmpty());
+	}
+
+	@isTest
+	static void testgetRecordByIdFilterStatus(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name
+		                    FROM Order 
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<Order> getRecordByIdFilterStatus=orderQr.getRecordByIdFilterStatus(tOrder[0].Id, 'Draft');
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecordByIdFilterStatus.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecordByIdFilterStatus.isEmpty());
+	}
+
+	@isTest
+	static void testgetActiveRecordsByAccountId(){
+
+		Test.startTest();
+
+		List<Account> tAccount=[SELECT Id, VATNumber__c
+		                        FROM Account
+		                        WHERE VATNumber__c='12345678901'
+		                        LIMIT 1];
+
+		List<Order> tOrder=[SELECT Id, Name
+		                    FROM Order 
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		tOrder[0].Status='In Lavorazione';
+		torder[0].ParentOrder__c=null;
+
+		update tOrder;
+
+		List<Order> getActiveRecordsByAccountId=orderQr.getActiveRecordsByAccountId(tAccount[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getActiveRecordsByAccountId.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getActiveRecordsByAccountId.isEmpty());
+	}
+
+	@isTest
+	static void testgetRecordsByAccountId(){
+
+		Test.startTest();
+
+		List<Account> tAccount=[SELECT Id, VATNumber__c
+		                        FROM Account
+		                        WHERE VATNumber__c='12345678901'
+		                        LIMIT 1];
+
+		List<Order> getRecordsbyAccountId=orderQr.getRecordsByAccountId(tAccount[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecordsbyAccountId.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecordsbyAccountId.isEmpty());
+	}
+
+	@isTest
+	static void testgetActiveRecordsByAccountIdNotParent(){
+
+		Test.startTest();
+
+		List<Account> tAccount=[SELECT Id, VATNumber__c
+		                        FROM Account
+		                        WHERE VATNumber__c='12345678901'
+		                        LIMIT 1];
+
+		List<Order> getActiveRecByAccIdNotParent=orderQr.getActiveRecordsByAccountIdNotParent(tAccount[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getActiveRecByAccIdNotParent.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getActiveRecByAccIdNotParent.isEmpty());
+	}
+
+	@isTest
+	static void testgetRecordsForVasSelection(){
+
+		Test.startTest();
+
+		List<Account> tAccount=[SELECT Id, VATNumber__c
+		                        FROM Account
+		                        WHERE VATNumber__c='12345678901'
+		                        LIMIT 1];
+
+
+		List<Order> tOrder=[SELECT Id, Name
+		                    FROM Order 
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		tOrder[0].Status='In Lavorazione';
+
+		update tOrder;
+
+		List<Order> getRecsForVasSaleSelection=orderQr.getRecordsForVasSelection(tAccount[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecsForVasSaleSelection.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecsForVasSaleSelection.isEmpty());
+	}
+
+	@isTest
+	static void testgetRecordByOrderNumber(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name, OrderNumber
+		                    FROM Order
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<Order> getRecByOrderNumber=orderQr.getRecordByOrderNumber(tOrder[0].OrderNumber);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecByOrderNumber.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecByOrderNumber.isEmpty());
+	}
+
+	@isTest
+	static void testgetRecordByOrderId(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name, OrderNumber
+		                    FROM Order
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<Order> getRecByOrderId=orderQr.getRecordByOrderId(tOrder[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecByOrderId.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecByOrderId.isEmpty());
+	}
+
+	@isTest
+	static void testgetRecordsByOrdersIdsBulk(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name, OrderNumber
+		                    FROM Order
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<String> orderIds=new List<String>();
+		orderIds.add(tOrder[0].Id);
+
+		List<Order> getRecsByOrdersIdsBulk=orderQr.getRecordsByOrdersIdsBulk(orderIds);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecsByOrdersIdsBulk.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecsByOrdersIdsBulk.isEmpty());
+	}
+
+	@isTest
+	static void testgetRoleNameByRoleId(){
+
+		id userRoleId=HDT_UTL_DataFactoryTst.getUserRoleId(utlConstants.USERROLE_DEVELOPERNAME_BACKOFFICE);
+
+		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(utlConstants.SYSTEM_ADMINISTRATOR_NAME);
+
+		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+
+		internalUser.UserRoleId=userRoleId;
+
+		insert internalUser;
+		
+		System.runAs(internalUser){
+
+			Test.startTest();
+
+			String getRoleNamebyRoleId=orderQr.getRoleNameByRoleId();
+
+			Test.stopTest();
+
+			System.assertEquals(false, getRoleNamebyRoleId==null, 'User role not found');
+			System.assertNotEquals(true, getRoleNamebyRoleId==null);
+		}
+	}
+
+	@isTest
+	static void testgetDates(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name, OrderNumber
+		                    FROM Order
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		Order getDates=orderQr.getDates(tOrder[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getDates==null, 'Order not found');
+		System.assertNotEquals(true, getDates==null);
+	}
+
+	@isTest
+	static void testgetRecordsByIdWithFields(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, Name, OrderNumber
+		                    FROM Order
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<String> orderIds=new List<String>();
+		orderIds.add(tOrder[0].Id);
+
+		List<Order> getRecsByIdWithFields=orderQr.getRecordsByIdWithFields(orderIds, 'Name, Status');
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecsByIdWithFields.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecsByIdWithFields.isEmpty());
+	}
+
+	@isTest
+	static void testgetOrderCreatedYesterday(){
+
+		List<Order> tOrder=[SELECT Id, Name, OrderNumber
+		                    FROM Order
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+
+		Datetime yesterday=Datetime.now().addDays(-1);
+		Test.setCreatedDate(tOrder[0].Id, yesterday);
+
+		Test.startTest();
+
+		List<Order> getOrderCreatedYesterday=orderQr.getOrderCreatedYesterday();
+
+		Test.stopTest();
+
+		System.assertEquals(false, getOrderCreatedYesterday.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getOrderCreatedYesterday.isEmpty());
+	}
+
+	@isTest
+	static void testgetRecordTypesDeveloperNameById(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id, RecordTypeId
+		                    FROM Order
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		String getRecTypeDevNameById=HDT_QR_Order.getRecordTypesDeveloperNameById(tOrder[0].RecordTypeId);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecTypeDevNameById==null, 'Order not found');
+		System.assertNotEquals(true, getRecTypeDevNameById==null);
+	}
+
+	@isTest
+	static void testgetOrderForComfortQualityResult(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id
+		                    FROM Order
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<Order> getOrderFromComfQualityResult=orderQr.getOrderForComfortQualityResult(tOrder[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getOrderFromComfQualityResult.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getOrderFromComfQualityResult.isEmpty());
+	}
+
+	@isTest
+	static void testgetOrderByUsernamePassword(){
+
+		Test.startTest();
+
+		List<Order> getOrderByUsernamePassword=orderQr.getOrderByUsernamePassword('test', 'test1');
+
+		Test.stopTest();
+
+		System.assertEquals(false, getOrderByUsernamePassword.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getOrderByUsernamePassword.isEmpty());
+	}
+
+	@isTest
+	static void testgetChildOrdersDocumentalActivityByParentId(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id
+		                    FROM Order
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<Order> getChildOrderDocActivityByParentId=orderQr.getChildOrdersDocumentalActivityByParentId(tOrder[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getChildOrderDocActivityByParentId.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getChildOrderDocActivityByParentId.isEmpty());
+	}
+
+	@isTest
+	static void testgetOrderForActiveMonitoringCheck(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id
+		                    FROM Order
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<Order> getOrderForActiveMonitoringCheck=orderQr.getOrderForActiveMonitoringCheck(tOrder[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getOrderForActiveMonitoringCheck.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getOrderForActiveMonitoringCheck.isEmpty());
+	}
+
+	@isTest
+	static void testgetOrderForComfort(){
+
+		Test.startTest();
+
+		List<Order> tOrder=[SELECT Id
+		                    FROM Order
+		                    WHERE Name='testOrderName0'
+		                    LIMIT 1];
+
+		List<Order> getOrderForComfort=orderQr.getOrderForComfort(tOrder[0].Id);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getOrderForComfort.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getOrderForComfort.isEmpty());
+	}
+}

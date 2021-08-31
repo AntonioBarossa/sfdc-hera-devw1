@@ -21,6 +21,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track documents;
     @api params;
     @api disableinput;
+    @api disableSignMode;
     buttonStatefulState = false;
     @track enableEdit = false;
     @track emailRequired;
@@ -42,6 +43,10 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track documents;
     @track tipoPlico='';
 
+    get disableSignModeInternal(){
+        return this.disableSignMode === true || this.disableinput === true;
+    }
+
     connectedCallback(){
         try{
             if(this.params){
@@ -60,6 +65,9 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.address = inputWrapper.addressWrapper.completeAddress;
                 this.signMode = inputWrapper.signMode;
                 this.sendMode = inputWrapper.sendMode;
+                if(this.disableSignMode === true){
+                    this.signMode = 'Cartaceo'; // Pre-default se la modalità di firma viene disabilitata.
+                }
                 if(inputWrapper.tipoPlico){
                     this.tipoPlico = inputWrapper.tipoPlico;
                 }
@@ -355,10 +363,14 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         this.dispatchEvent(new CustomEvent('previewexecuted'));
                     }else{
                         this.showSpinner = false;
+                        console.log('temp workaround in caso di plico non trovato'); // TODO REMOVE
+                        this.dispatchEvent(new CustomEvent('previewexecuted'));      // TODO REMOVE
                         this.showMessage('Attenzione',resultParsed.message,'error');
                     }
                 }else{
                     this.showSpinner = false;
+                    console.log('temp workaround in caso di plico non trovato'); // TODO REMOVE
+                    this.dispatchEvent(new CustomEvent('previewexecuted'));      // TODO REMOVE
                     this.showMessage('Attenzione','Errore nella composizione del plico','error');
                 }
             })

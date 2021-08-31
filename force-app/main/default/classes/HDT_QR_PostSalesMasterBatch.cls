@@ -42,6 +42,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         Phase__c,
         EffectiveDate__c,
         Type,
+        Cluster__c,
         Order__c
         FROM Case
         WHERE Type = :this.nonRequestedContract
