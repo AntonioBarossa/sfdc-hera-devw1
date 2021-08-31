@@ -393,6 +393,7 @@ public inherited sharing class HDT_QR_Order {
             SELECT 
             AccountId,
             Account.Name,
+            Account.Recordtype.DeveloperName,
             Name,
             Recordtypeid,
             Recordtype.Name,
