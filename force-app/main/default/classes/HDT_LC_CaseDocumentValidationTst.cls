@@ -9,7 +9,7 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
     //NOTA: skipping @testSetup per ragioni di flessibilità del setup
     
     //SETUP WITH CASE MOROSITà
-    private static void setupMorosità(){
+    private static void setupMorosita(){
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
@@ -19,9 +19,16 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         
     }
     
-    //SETUP WITH CASE MOROSITà
-    
-    
+    //SETUP WITH CASE DOCUMENTALE
+    private static void setupDocumentale(){
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseDocumentale(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        
+    }
     
     
     
@@ -36,7 +43,7 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         System.debug(debugString);
         
         //SETUP
-        setupMorosità();
+        setupMorosita();
         
         //TESTING
         Case myCase = [SELECT Id FROM Case];
@@ -55,6 +62,9 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         //DEBUG
         String debugString = TEST_NAME + ' - ' + 'saveValidationTest';
         System.debug(debugString);
+        
+        //SETUP
+        setupDocumentale();
         
         //TESTING
         Case myCase = [SELECT Id FROM Case];
