@@ -4,7 +4,8 @@
         search-key={searchKey}
         search-term={searchTerm}
         max-row-select={maxRowSelect}
-        onrowselect={onSelectedRow}>
+        onrowselect={onSelectedRow}
+        ondisableadvance={disableButton}>
     </c-hdt-generic-table>
     <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
         <div class="actionsLeft">
@@ -13,7 +14,7 @@
             <template if:true={saveButton}> 
                 <lightning-button
                     class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                    variant="brand" type="button" onclick={handleNext} name="save" label={labelSaveButton}>
+                    variant="brand" type="button" onclick={handleNext} name="save" label={labelSaveButton} disabled={disabledSaveButton}>
                 </lightning-button>
             </template>
             <template if:true={previousButton}> 

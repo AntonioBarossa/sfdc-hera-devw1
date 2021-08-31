@@ -49,6 +49,22 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_BA_CustomerLifeCycle</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_Dependencies</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_DependenciesTestWithData</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_DependenciesTestWithoutData</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_ImportFubFile</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -70,6 +86,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_BA_OldDraftSalesTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_OrderEstimateExpiration</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -110,6 +130,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_BA_RecurringCampaingCreation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_SelfReadings</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_VasEngineSender</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -173,6 +201,18 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_ActivityDetail</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_ActivityDetailTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_ActivityIvaAccise</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_ActivityReassignmentTool</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -205,6 +245,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_CambioUso</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_CampaignMemberAssigmentItem</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -214,6 +258,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_CampaignsController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_CanaleContattoIVRLogin</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_CanaleIVRNoShare</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -253,11 +305,35 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_ComunicationsSearchList</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_ComunicationsSearchListTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_ComunicationsSearchListTstMock</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_ConfigurePaymentMethods</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_ConfigureProduct</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_ContactSelection</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_CopiaContratto</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_CtToolbar</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -270,6 +346,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_DocumentSignatureManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_DocumentSignatureManagerTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -286,6 +366,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_DocumentalPhaseHistory</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_DocumentalPhaseHistoryTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_DocusignQrCode</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -389,6 +477,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_ManualActivityCreator</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_MassiveLoader</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -489,6 +581,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_ReletedListAccount</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_RequestVisitD2DCreateForm</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -533,6 +629,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_SendCertificationRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_ServicePointCustomSettings</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -561,7 +661,19 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QBL_BpCaRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QBL_DocumentalManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QBL_SelfReadingsCallouts</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QBL_SelfReadingsOutcome</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -578,6 +690,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_AccountStatement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_Activity</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -657,6 +773,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_CampaignMemberStatusMetadataTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_Case</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -701,7 +821,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_ContentDocumentLinkTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_ContentVersion</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_ContentVersionTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -757,6 +885,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_GroupTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_HerokuPostSalesManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -793,6 +925,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_LoginGroupItemTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_MassiveLoaderProcess</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -802,6 +938,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_MatriceAgenti</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_MatriceRemiCode</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_MatrixCompatibilityMap</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -822,6 +966,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_PaperProcessing</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_PaperProcessingTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -849,6 +997,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_PermissionSetTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_PostSalesManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -858,6 +1010,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_PriceBook</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_PriceBookTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -882,6 +1038,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_QuoteProcess</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_RateCategory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -934,6 +1094,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_StaticResource</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_StaticResourceTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1017,6 +1181,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SCH_RecurringCampaingCreation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_Account</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1049,6 +1217,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_AttachmentTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_BillingProfile</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1073,6 +1245,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_CampaignMemberStatusTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_CampaignTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_Case</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1081,7 +1261,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_CommercialCodeTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_CommunicationLog</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_ComunicationsSearchList</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1098,6 +1286,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_ContactPointPhone</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_ContentDocumentLink</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_ContentVersion</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1161,6 +1357,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_InteractionTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_Lead</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1177,6 +1377,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_NoteTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_Opportunity</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1189,11 +1393,23 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_OrderItemTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_PaperCommunication</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_PaperCommunicationTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_PaperProcessing</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_PaperProcessingTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1245,6 +1461,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_QuoteProcessTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_RecordShare</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1262,6 +1482,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_SaleServiceItem</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_SalesCriteriaManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1377,6 +1601,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_TRH_NonReqContractEvent</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_TRH_Opportunity</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1402,6 +1630,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_TRH_Sale</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_TRH_SelfReadingEvent</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1449,6 +1681,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_AgentMatrix</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_AmountQuote</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1466,6 +1702,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_CampaignMemberAssigmentItem</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_CampaignMemberTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1517,6 +1757,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_CheckFiscalCodeTaxNumberTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_ComboboxOptionsFactory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1526,6 +1770,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_CommunicationLog</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_CommunicationLogTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1577,6 +1825,18 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_Dependencies</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_DependenciesTestWithData</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_DependenciesTestWithoutData</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_DocumentalManagement</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1618,6 +1878,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_GestionePrivacy</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_HandleTechnicalData</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1670,6 +1934,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_Note</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_NotifVas</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1745,6 +2013,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_Scarti</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ScartiTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_SearchPlug</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1758,22 +2034,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_SelfReadings</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_SRV_SelfReadingsFacade</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_SRV_SelfReadings</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_QBL_SelfReadingsCallouts</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_WS_SelfReadingsIntegrationAdapter</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1846,6 +2106,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WRP_CampaignPraxidia</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WRP_ComunicationsSearchList</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1925,6 +2189,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_WRP_SelfReadingsOutcome</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_WRP_TechnicalOffer</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1986,6 +2254,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_DocumentalIntegration</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_DocumentalIntegrationTstMock</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_DocumentaryInvoices</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2122,6 +2398,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_SelfReadingsIntegrationAdapter</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_SelfReadingsOutcome</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

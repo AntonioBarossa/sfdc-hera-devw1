@@ -137,6 +137,56 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Tipo_Operazione_0</name>
+        <label>Tipo Operazione?</label>
+        <locationX>1726</locationX>
+        <locationY>201</locationY>
+        <defaultConnector>
+            <targetReference>Selezione_Contratti</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Unificazione CA</defaultConnectorLabel>
+        <rules>
+            <name>Separazione_CA_Outcome</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Refresh_Case.OperationType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Separazione CA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezionare_Contratto</targetReference>
+            </connector>
+            <label>Separazione CA</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Mostrare_Screen_Contratti</name>
+        <label>Mostrare Screen Contratti?</label>
+        <locationX>2113</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Input_Dati_CA</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SelezionaContratto</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>YesChoice</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Contratti</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
         <locationX>2704</locationX>
@@ -328,7 +378,7 @@
         <locationX>1814</locationX>
         <locationY>405</locationY>
         <connector>
-            <targetReference>Selezione_Contratti</targetReference>
+            <targetReference>Check_Tipo_Operazione_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -774,6 +824,35 @@
             </outputParameters>
         </fields>
         <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Selezionare_Contratto</name>
+        <label>Selezionare Contratto?</label>
+        <locationX>1968</locationX>
+        <locationY>86</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Mostrare_Screen_Contratti</targetReference>
+        </connector>
+        <fields>
+            <name>DT1_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>SelezionaContratto</name>
+            <choiceReferences>YesChoice</choiceReferences>
+            <choiceReferences>NoChoice</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>NoChoice</defaultSelectedChoiceReference>
+            <fieldText>Necessario selezionare un contratto?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>

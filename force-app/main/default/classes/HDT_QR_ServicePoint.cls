@@ -8,7 +8,7 @@
 public inherited sharing class HDT_QR_ServicePoint {
 	
 	private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
-	String fieldSp =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name,ImplantType__c,MeterStatus__c';
+	String fieldSp =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name,ImplantType__c,MeterStatus__c,SupplyPlace__c';
 	/*
 	 * Query for Getting All Account Service Points
 	 */
@@ -50,6 +50,15 @@ public inherited sharing class HDT_QR_ServicePoint {
 		contractSrv.checkReadAccess(fields);
         String query = 'SELECT '+ fields +
                 ' FROM ServicePoint__c WHERE Id = :id WITH SECURITY_ENFORCED LIMIT 1';
+        List<ServicePoint__c> servicePoints = Database.query(query);
+
+        return servicePoints;
+	}
+
+	public List<ServicePoint__c> getRecordByIdList(List<String> id, String fields) {
+		contractSrv.checkReadAccess(fields);
+        String query = 'SELECT '+ fields +
+                ' FROM ServicePoint__c WHERE Id IN :id ';
         List<ServicePoint__c> servicePoints = Database.query(query);
 
         return servicePoints;

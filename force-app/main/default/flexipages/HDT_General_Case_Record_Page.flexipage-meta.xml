@@ -426,6 +426,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>hdtDocusignQrCode</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Case.Id</value>
@@ -646,6 +651,9 @@
                                     <rightValue>Contratti/Bonus Commerciale</rightValue>
                                 </criteria>
                             </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Case.Escalation</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

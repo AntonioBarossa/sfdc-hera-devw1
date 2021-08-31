@@ -889,9 +889,6 @@
         <field>Account.Cases$ReadType__c</field>
     </columns>
     <columns>
-        <field>Account.Cases$SupplyStreetToponym__c</field>
-    </columns>
-    <columns>
         <field>Account.Cases$TotalCover__c</field>
     </columns>
     <columns>

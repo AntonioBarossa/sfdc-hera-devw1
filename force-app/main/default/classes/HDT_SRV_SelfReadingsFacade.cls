@@ -19,22 +19,28 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
                 HDT_WRP_GenericSapIntegration sapIntegrationCheckAutoletture = new HDT_WRP_GenericSapIntegration();
                 sapIntegrationCheckAutoletture = submitRequest(recordId, requestType);
 
-                Boolean responseOkCheckAutoletture = HDT_SRV_SelfReadings.handleResponse(sapIntegrationCheckAutoletture);
+                HDT_SRV_SelfReadings.HDT_WRP_SelfReadingResponse responseCheckAutoletture = HDT_SRV_SelfReadings.handleResponse(sapIntegrationCheckAutoletture, '');
                 // Facciamo partire la seconda callout direttamente da qui, poichè PClick non supporta due callout action consecutive in seguito a due update di fase.
-                if (responseOkCheckAutoletture) {
+                if (responseCheckAutoletture.isResponseOk) {
                     System.debug('CheckAutolettura OK, next step: InvioLetture');
                     HDT_WRP_GenericSapIntegration sapIntegrationInvioLetture = new HDT_WRP_GenericSapIntegration();
                     sapIntegrationInvioLetture = submitRequest(recordId, 'InvioLetture');
-                    Boolean responseOkCheckInvioLetture = HDT_SRV_SelfReadings.handleResponse(sapIntegrationInvioLetture);
+                    HDT_SRV_SelfReadings.HDT_WRP_SelfReadingResponse responseInvioLetture = HDT_SRV_SelfReadings.handleResponse(sapIntegrationInvioLetture, responseCheckAutoletture.checkAutoletturaDescription);
                 } else {
                     System.debug('CheckAutolettura KO');
                 }
+            } else if (requestType == 'InvioLettureForzato') {
+                HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
+                sapIntegration = submitRequest(recordId, requestType);
+                HDT_SRV_SelfReadings.HDT_WRP_SelfReadingResponse responseInvioLetture = HDT_SRV_SelfReadings.handleResponse(sapIntegration, '');
             }
 
             response.success = True;
             response.message = 'OK';
 
         } catch(Exception ex){
+            response.success = False;
+            response.message = 'KO';
             System.debug('HDT_SRV_SelfReadingsFacade: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
         }
 

@@ -21,61 +21,26 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
         
+        Order orderToUpdate = new Order(
+            Id = orderParent.Id
+        );
+
         if (orderParent.ContractSigned__c == false) {
-
-            //update child orders
-            for (Order childOrder : childOrders) {
-                
-                String phase = childOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' ? childOrder.Phase__c : 
-                checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione';
-
-                if (childOrder.ComfortCallDaysDue__c != null) { //comform call logic
-                    phase = 'In attesa conferma cliente';
-                }
-
-                // if (childOrder.RecordType.DeveloperName != 'HDT_RT_ScontiBonus') {
-                    ordersToUpdate.add(new Order(
-                        Id = childOrder.Id,
-                        //EVERIS: AGGIUNTA CASISTICA VOLTURA
-                        Phase__c = phase
-                    ));
-                // }
-
-            }
-
-            //update parent order
-            ordersToUpdate.add(new Order(
-                Id = orderParent.Id,
-                Phase__c = 'Documentazione da inviare' //Everis: modificato in 'Plico da inviare poiche la fase 'Plico inviato da validare' non presente a DM'
-            ));
-
+            orderToUpdate.Phase__c = 'Documentazione da inviare';
         } else {
+            orderToUpdate.Phase__c = 'Documentazione da validare';
+        }
 
-            //update child orders
-            for (Order childOrder : childOrders) {
+        ordersToUpdate.add(orderToUpdate);
 
-                String phase = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione';
-                // Date dateComfortCall = null;
-
-                if (childOrder.ComfortCallDaysDue__c != null) { //comform call logic
-                    phase = 'In attesa conferma cliente';
-                    // dateCDateComfortCall__c
-                }
-
-                // if (childOrder.RecordType.DeveloperName != 'HDT_RT_ScontiBonus') {
-                    ordersToUpdate.add(new Order(
-                        Id = childOrder.Id,
-                        Phase__c = phase
-                    ));
-                // }
+        //update child orders
+        for (Order childOrder : childOrders) {
+            if (childOrder.ComfortCallDaysDue__c != null) {
+                ordersToUpdate.add(new Order(
+                    Id = childOrder.Id,
+                    Phase__c = 'In attesa conferma cliente'
+                ));
             }
-
-            //update parent order
-            ordersToUpdate.add(new Order(
-                Id = orderParent.Id,
-                Phase__c = 'Documentazione da validare'
-            ));
-
         }
 
         orderSrv.updateRecords(ordersToUpdate);

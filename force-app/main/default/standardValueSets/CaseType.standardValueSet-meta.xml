@@ -668,4 +668,9 @@
         <default>false</default>
         <label>Indennizzo</label>
     </standardValue>
+    <standardValue>
+        <fullName>Switch Out per Voltura</fullName>
+        <default>false</default>
+        <label>Switch Out per Voltura</label>
+    </standardValue>
 </StandardValueSet>

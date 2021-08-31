@@ -21,6 +21,8 @@ export default class hdtSupplySelection extends LightningElement {
     @api outputContract;
     @api responseArriccData;
     @api isRicercainSAP=false;
+    @api isCompatible;
+    @api serviceRequestId;
 
 
     /**
@@ -29,7 +31,7 @@ export default class hdtSupplySelection extends LightningElement {
     connectedCallback(){
         
 
-        console.log('connectedCallback START');
+        console.log('connectedCallback START:' + JSON.stringify(this.saleRecord) );
         console.log('targetObject 2*****'+ JSON.stringify(this.targetObject));
         console.log('processType '+ JSON.stringify(this.processType));
         if(this.processType === undefined || this.processType === ''){
@@ -146,6 +148,8 @@ export default class hdtSupplySelection extends LightningElement {
      * Get selected service point
      */
     handleServicePointSelection(event){
+        this.isCompatible = event.detail.isCompatible;
+        this.serviceRequestId = event.detail.serviceRequestId;
         console.log('handleServicePointSelection' + JSON.stringify(event.detail));
         this.selectedServicePoint = event.detail;
         let contractNumber = this.selectedServicePoint['Contract Number'];

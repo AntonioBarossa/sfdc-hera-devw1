@@ -9,6 +9,15 @@ public inherited sharing class HDT_QR_Contract {
 
     }
 
+    public List<Contract> getRecordsWithContractsByServicePointAndAccountId(String servicePointId, String accountId){
+
+        return [
+            SELECT 
+            Id, Status,AccountId,ServicePoint__c 
+            FROM Contract 
+            WHERE AccountId =: accountId AND ServicePoint__c=: servicePointId AND Status='Attivo'
+        ];
+    }
 
     public List<BillingProfile__c> getInd(String accountId) {
         contractSrv.checkReadAccess('Status__c,Account__c,InvoicingAddressFormula__c');

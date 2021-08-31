@@ -8,6 +8,7 @@ import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.cal
 import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
 import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
 import permissionForFlagContract from '@salesforce/apex/HDT_LC_AdvancedSearch.permissionForFlagContract';
+import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
 
 
 export default class HdtAdvancedSearch extends LightningElement {
@@ -32,6 +33,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     confirmButtonDisabled = true;
     @api servicePointRetrievedData;
     @api additionalfilter;
+    @api additionalFilterFinal;
     rowToSend;
     @api maxRowSelected=false;
     @api disabledinput;
@@ -45,6 +47,10 @@ export default class HdtAdvancedSearch extends LightningElement {
     @api showbuttonforniture=false;
     @api flagContratto=false;
     @api isSuperUser=false;
+    @api serviceRequestId;
+    @track isIncompatible= false;
+    @track preSelectedRows=[];
+    @track iconCompatibility='';
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
         'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
@@ -71,12 +77,13 @@ export default class HdtAdvancedSearch extends LightningElement {
             console.log('data.FornitureCliente__c  '+JSON.stringify(data.FornitureCliente__c ));
             console.log('data.StatoContratto__c  '+JSON.stringify(data.StatoContratto__c ));
             console.log('data.ContrattiCliente__c '+ JSON.stringify(data.ContrattiCliente__c ));
+            console.log('data.statoFornitura '+ JSON.stringify(data.StatoFornitura__c ));
 
             let statusSplit=[];
             let TipoServizioSplit=[];
 
 
-            if(data.ContrattiCliente__c =='SI'){
+           /* if(data.ContrattiCliente__c =='SI'){
 
                 if(data.StatoContratto__c != undefined && data.StatoContratto__c!='')
                 {
@@ -84,45 +91,63 @@ export default class HdtAdvancedSearch extends LightningElement {
                     statusSplit = data.StatoContratto__c.split(",");
                     console.log('statusSplit *****'+JSON.stringify(statusSplit));
                 }
-            }
-            if(data.FornitureCliente__c == 'SI'){
+            }*/
+            if(data.FornitureCliente__c == 'SI')
+            {
+                console.log('entra in forniture cliente == SI');
+
+                if(data.StatoFornitura__c != undefined && data.StatoFornitura__c!='')
+                {
+
+                    statusSplit = data.StatoFornitura__c.split(",");
+                    console.log('statusSplit in statoFornitura *****'+JSON.stringify(statusSplit));
+                    console.log('statusSplit in statoFornitura *****'+JSON.stringify(statusSplit));
+
+                    if(statusSplit.length > 1 && statusSplit.length < 3){
+            
+                        this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\')';
+                        console.log('entra in lenght==1 ');
+                    
+                   }
+                   else if(statusSplit.length > 2){
+                    
+                    this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\''+'OR MeterStatus__c = \''+statusSplit[2]+'\')';
+                    console.log('entra in lenght>2 si');
+                
+                    }
+                   else if(statusSplit.length > 0)
+                   {
+        
+                        this.additionalfilter= 'AND MeterStatus__c =\''+data.StatoFornitura__c+'\''; 
+                   }
+                }
                 
                 if(data.TipoServizio__c!= undefined&&data.TipoServizio__c!='')
                 {
                     TipoServizioSplit = data.TipoServizio__c.split(",");
                     console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
-                    this.submitFornitura();
+                    //this.submitFornitura();
                 }
                 
-            }
-
-            if(statusSplit.length > 1){
             
-                this.additionalfilter= 'AND (status =\''+statusSplit[0]+'\''+'OR status = \''+statusSplit[1]+'\')';
-                console.log('entra in contratti si');
-                this.handleAdditionalFilter(this.processtype);
+
+
+                if(TipoServizioSplit.length >1){
+
+                    this.additionalfilter+=' AND (CommoditySector__c = \''+TipoServizioSplit[0]+'\''+'OR CommoditySector__c = \''+TipoServizioSplit[1]+'\')';
+                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                }
+                else
+                {     
+                    this.additionalfilter+=' AND CommoditySector__c = \''+data.TipoServizio__c+'\'';
+                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                }
             
-           }
-           else if(statusSplit.length > 0)
-           {
-
-                this.additionalfilter= 'AND status =\''+data.StatoContratto__c+'\''; 
-                this.handleAdditionalFilter(this.processtype);
-           }
-           if(TipoServizioSplit.length >1){
-
-                    this.additionalfilter='AND (CommoditySector__c = \''+TipoServizioSplit[0]+'\''+'OR CommoditySector__c = \''+TipoServizioSplit[1]+'\')';
-                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    this.handleAdditionalFilter(this.processtype);
+                console.log('additionalFilter pre final :  '+ this.additionalfilter);
+                this.additionalFilterFinal = this.additionalfilter;
+                console.log('additionalFilter post final :  '+ this.additionalFilterFinal);
+                this.submitFornitura();
             }
-            else if(TipoServizioSplit.length >0)
-            {     
-                    this.additionalfilter='AND CommoditySector__c = \''+data.TipoServizio__c+'\'';
-                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    this.handleAdditionalFilter(this.processtype);
-        }
-
-
         });
     }
 
@@ -131,6 +156,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         }else {
             this.maxRowSelected = this.originalData.length
         }
+        
     }
 
     @api
@@ -194,6 +220,11 @@ export default class HdtAdvancedSearch extends LightningElement {
     closeModal() {
         this.confirmButtonDisabled=true;
         this.openmodel = false;
+        if(this.serviceRequestId != null){
+            this.dispatchEvent(new CustomEvent('servicepointselection', {
+                detail: this.rowToSend
+            }));
+        }
     }
 
     /**
@@ -225,7 +256,38 @@ export default class HdtAdvancedSearch extends LightningElement {
             columns = columns.concat(keys);
         });
         let columnsUniq = [...new Set(columns)];
-        columnsUniq.forEach(field => this.tableColumns.push({label: field, fieldName: field}));
+        columnsUniq.forEach(field => 
+            {
+                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id' && field != 'serviceRequestId' && field != 'isCompatible'){
+                    this.tableColumns.push({label: field, fieldName: field});
+                }                 
+            });
+            if(this.processtype != ''){                 
+                if(this.isIncompatible){
+                    this.tableColumns.push(
+                        { label: 'Compatibility', fieldName: 'compatibility',
+                            type: 'button',
+                            typeAttributes: {
+                                label: 'See more',
+                                title: {fieldName:'compatibilityMessage'},
+                            },
+                            cellAttributes:{ 
+                                iconName:{ fieldName: 'iconCompatibility'},
+                                iconPosition: 'left', 
+                                iconAlternativeText: 'Compatibility Icon' ,
+                            }
+                        });
+                }else{
+                    this.tableColumns.push(
+                        { label: 'Compatibility', fieldName: 'compatibility',
+                            cellAttributes:{ 
+                                iconName:{ fieldName: 'iconCompatibility'},
+                                iconPosition: 'left', 
+                                iconAlternativeText: 'Compatibility Icon' ,
+                            }
+                        });
+                }
+            }
     }
 
     /**
@@ -306,19 +368,25 @@ export default class HdtAdvancedSearch extends LightningElement {
 
 @api
     submitFornitura(){
+        this.preSelectedRows=[];
+        this.isIncompatible= false;
         this.preloading = true;
-        console.log('executing query search', this.accountid);
-        console.log('additionlFilter**********************************'+this.additionalfilter)
+        console.log('executing query search'+ this.accountid);
+        console.log('additionlFilterFinal**********************************'+this.additionalFilterFinal)
         
-        getForniture({accountid:this.accountid,additionalFilter:this.additionalfilter}).then(data =>{
+        getForniture({accountid:this.accountid,additionalFilter:this.additionalFilterFinal}).then(data =>{
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
-                this.createTable(data);
-                this.formatTableHeaderColumns(data);
+                for(var i=0; i<this.originalData.length; i++){
+                    this.originalData[i].Id=i.toString();
+                }
+                this.createTable(this.originalData);
+                this.formatTableHeaderColumns(this.originalData);
                 this.submitButtonStatus = true;
                 this.openmodel = true;
                 this.isLoaded = true;
+                this.serviceRequestId = null;
             } else {
                 this.alert('Dati tabella','Nessun record trovato','warn')
                 this.tableData = data;
@@ -379,6 +447,8 @@ export default class HdtAdvancedSearch extends LightningElement {
      * Call apex class and get data
      */
     submitSearch(event) {
+        this.preSelectedRows=[];
+        this.isIncompatible= false;
         event.preventDefault();
         console.log('event value submitSearch() '+ event.target.value);
         let isBlacklist=false;
@@ -394,9 +464,13 @@ export default class HdtAdvancedSearch extends LightningElement {
             console.log('getServicePoint data *******'+ JSON.stringify(data));
             this.preloading = false;
             if (data.length > 0) {
+                
                 this.originalData = JSON.parse(JSON.stringify(data));
-                this.createTable(data);
-                this.formatTableHeaderColumns(data);
+                for(var i=0; i<this.originalData.length; i++){
+                     this.originalData[i].Id=i.toString();
+                }
+                this.createTable(this.originalData);
+                this.formatTableHeaderColumns(this.originalData);
                 this.submitButtonStatus = true;
                 this.openmodel = true;
                 this.isLoaded = true;
@@ -431,11 +505,71 @@ export default class HdtAdvancedSearch extends LightningElement {
         console.log('getSelectedServicePoint START');
         this.preloading = true;
         let selectedRows = event.detail.selectedRows;
-        this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
-        this.preloading = false;
         console.log('getSelectedServicePoint END');
+
+        if(this.processtype != ''){
+            let srvRequest= {
+                'servicePointCode': this.rowToSend['Codice Punto'],
+                'commoditySector': this.rowToSend['Servizio'],
+                'processType': this.processtype,
+                'type': 'Case'
+            };
+            let isPostSales = true;
+            checkCompatibility({servReq: srvRequest, isPostSales: isPostSales}).then(data =>{
+                if(data.compatibility == ''){
+                    this.iconCompatibility='action:approval';
+                }else{
+                    this.iconCompatibility='action:close';
+                }
+                this.serviceRequestId= data.ServiceRequest.Id;
+                let found= false;
+                for(var i=0; i< this.originalData.length;i++){
+                    let row= this.originalData[i];
+                    if(row['Codice Punto']== this.rowToSend['Codice Punto']){
+                        found =true;
+                    }
+                    if(found){
+                        this.isIncompatible= false;
+                        row.iconCompatibility= this.iconCompatibility;
+                        row.serviceRequestId= this.serviceRequestId;
+                        row.isCompatible= true;
+                        if(data.compatibility != ''){
+                            this.isIncompatible=true;
+                            row.isCompatible= false;
+                            row.compatibilityMessage= data.compatibility;
+                            this.confirmButtonDisabled = true;
+                        }else{
+                            this.confirmButtonDisabled = false;
+                        }
+                    }
+                }
+                console.log(this.originalData);
+                this.createTable(this.originalData); 
+                this.formatTableHeaderColumns(this.originalData);
+                var my_ids = [];
+                my_ids[0] = this.rowToSend.Id;
+                this.preSelectedRows = my_ids;
+
+            }).catch(error => {
+                console.log(error.body.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+                this.confirmButtonDisabled = true;
+            });
+            this.preloading = false;
+
+        }else{
+            this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
+            this.preloading = false;
+
+        }
     }
 
 
@@ -460,9 +594,11 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.preloading = true;
         this.closeModal();
         console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
+        if(this.serviceRequestId == null){
             this.dispatchEvent(new CustomEvent('servicepointselection', {
                 detail: this.rowToSend
-            }));       
+            }));
+        }       
         this.confirmButtonDisabled = true;
         this.preloading = false;
 

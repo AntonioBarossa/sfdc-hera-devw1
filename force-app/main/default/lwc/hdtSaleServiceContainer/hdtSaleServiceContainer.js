@@ -135,8 +135,8 @@ export default class hdtSaleServiceContainer extends LightningElement {
         this.loading = true;
 
         fieldsTransition({sale: this.saleRecord}).then(data =>{
-            if(data == null || data == '' ||  data == 'Subentro'){
-                if(data == 'Subentro'){
+            if(data == null || data == '' ||  data == 'Subentro' || data == 'Subentro_Remi' || data == '_Remi'){
+                if(data == 'Subentro' || data == 'Subentro_Remi'){
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'warning',
                         message: 'Per i punti di fornitura gas se si tratta di Subentro ricordarsi di prendere l\'appuntamento su Siebel oppure annullare la vendita ed inserire la richiesta su Siebel.',
@@ -144,7 +144,24 @@ export default class hdtSaleServiceContainer extends LightningElement {
                     });
                     this.dispatchEvent(toastErrorMessage);
                 }
+                if(data == '_Remi' || data == 'Subentro_Remi'){
+                    const toastErrorMessage2 = new ShowToastEvent({
+                        title: 'warning',
+                        message: 'Non è Stato Possibile Calcolare i Codici Remi per i PDR di riferimento',
+                        variant: 'warning'
+                    });
+                    this.dispatchEvent(toastErrorMessage2);
+                }
                 //this.dispatchEvent(toastErrorMessage);
+                this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});  
+            }
+            else if(data == 'Remi'){
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'warning',
+                    message: 'Non è Stato Possibile Calcolare i Codici Remi per i PDR di riferimento',
+                    variant: 'warning'
+                });
+                this.dispatchEvent(toastErrorMessage);
                 this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});  
             }else{
                 const toastErrorMessage = new ShowToastEvent({

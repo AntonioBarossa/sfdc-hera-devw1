@@ -13,9 +13,13 @@ public inherited sharing class HDT_UTL_Morosita {
             when 'Risoluzione no sospensione'{
                 result = 'Risoluzione No Sospensione';
             }
+            when 'Risoluzione no disalimentabile'{
+                result = 'Risoluzione No Disalimentabile';
+            }
             when else{
                 result = process;
             }
+            
         }
 
         return result;

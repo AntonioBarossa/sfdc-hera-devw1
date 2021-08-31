@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Conferma_Indennizzo</name>
         <label>Conferma Indennizzo</label>
-        <locationX>182</locationX>
+        <locationX>644</locationX>
         <locationY>278</locationY>
         <actionName>HDT_SRV_IndemnityConfirmation</actionName>
         <actionType>apex</actionType>
@@ -45,9 +45,25 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
+        <name>AggiornaFase</name>
+        <label>AggiornaFase</label>
+        <locationX>644</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Risposta Inviata</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Indennizzo_Confermato</name>
         <label>Assegna Indennizzo Confermato</label>
-        <locationX>50</locationX>
+        <locationX>512</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.IndemnityConfirmed__c</assignToReference>
@@ -63,7 +79,7 @@
     <assignments>
         <name>Assegna_Indennizzo_Confermato_0</name>
         <label>Assegna Indennizzo Confermato</label>
-        <locationX>314</locationX>
+        <locationX>776</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.IndemnityConfirmed__c</assignToReference>
@@ -76,10 +92,129 @@
             <targetReference>Aggiorna_Case_0</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>AssegnaFase</name>
+        <label>AssegnaFase</label>
+        <locationX>314</locationX>
+        <locationY>1934</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseInviato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completata</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseInviato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaFase_0</name>
+        <label>AssegnaFase</label>
+        <locationX>842</locationX>
+        <locationY>1934</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseInviato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completata</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseInviato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaFase_0_0</name>
+        <label>AssegnaFase</label>
+        <locationX>1106</locationX>
+        <locationY>1694</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseInviato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Risposta Inviata - Attesa Rettifica</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseInviato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase_0</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Avanzamento</name>
+        <label>Avanzamento</label>
+        <locationX>182</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaFase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Conferma</defaultConnectorLabel>
+        <rules>
+            <name>Annullato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditFormFlow.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annullamento_prestazione</targetReference>
+            </connector>
+            <label>Annullato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Avanzamento_0</name>
+        <label>Avanzamento</label>
+        <locationX>710</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaFase_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Conferma</defaultConnectorLabel>
+        <rules>
+            <name>Annullato_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditFormFlow_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annullamento_prestazione_0</targetReference>
+            </connector>
+            <label>Annullato</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Indennizzo_Confermato</name>
         <label>Indennizzo Confermato?</label>
-        <locationX>182</locationX>
+        <locationX>644</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Assegna_Indennizzo_Confermato_0</targetReference>
@@ -99,6 +234,60 @@
                 <targetReference>Assegna_Indennizzo_Confermato</targetReference>
             </connector>
             <label>Confermato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Quale_Fase</name>
+        <label>Quale Fase</label>
+        <locationX>644</locationX>
+        <locationY>1574</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaFase_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Attesa Rettifica</defaultConnectorLabel>
+        <rules>
+            <name>Completata</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseInviato.CorrectionRight__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>InserimentoInput</targetReference>
+            </connector>
+            <label>Completata - No indennizzo</label>
+        </rules>
+        <rules>
+            <name>Completata_Indennizzo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseInviato.CorrectionRight__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Si</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseInviato.CorrectionDocumentEmissionDay__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseInviato.IndemnityConfirmed__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>InserimentoInput_0</targetReference>
+            </connector>
+            <label>Completata - Indennizzo</label>
         </rules>
     </decisions>
     <description>Flow che simula l&apos;azione del tasto stampa e gestisce l&apos;avanzamento di fase</description>
@@ -126,7 +315,7 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>182</locationX>
+        <locationX>644</locationX>
         <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -145,9 +334,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetCaseInviato</name>
+        <label>GetCaseInviato</label>
+        <locationX>644</locationX>
+        <locationY>1334</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GestioneIndennizzi</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
-        <locationX>182</locationX>
+        <locationX>644</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -168,21 +378,251 @@
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
-        <locationX>182</locationX>
+        <locationX>644</locationX>
         <locationY>734</locationY>
         <connector>
             <targetReference>GetCaseAggiornato</targetReference>
         </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCase</name>
+        <label>AggiornaCase</label>
+        <locationX>644</locationX>
+        <locationY>1214</locationY>
+        <connector>
+            <targetReference>GetCaseInviato</targetReference>
+        </connector>
+        <inputReference>GetCaseAggiornato</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCase_0</name>
+        <label>AggiornaCase</label>
+        <locationX>644</locationX>
+        <locationY>2366</locationY>
+        <inputReference>GetCaseInviato</inputReference>
+    </recordUpdates>
+    <screens>
+        <name>InserimentoInput</name>
+        <label>InserimentoInput</label>
+        <locationX>182</locationX>
+        <locationY>1694</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Avanzamento</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compilare manualmente i dati sottostanti.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtRecordEditFormFlow</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Reclami Chiusura</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>GetInputCase.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>InserimentoInput_0</name>
+        <label>InserimentoInput</label>
+        <locationX>710</locationX>
+        <locationY>1694</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Avanzamento_0</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compilare manualmente i dati sottostanti.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtRecordEditFormFlow_0</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Reclami Chiusura</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>GetInputCase.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
-        <locationX>182</locationX>
+        <locationX>644</locationX>
         <locationY>974</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>AggiornaFase</targetReference>
+        </connector>
         <fields>
             <name>DisplayHeader</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compila manualmente i dati sottostanti&lt;/span&gt;&lt;/p&gt;</fieldText>
@@ -217,9 +657,15 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>quoteType</name>
+                <name>processType</name>
                 <value>
-                    <stringValue>Analtico</stringValue>
+                    <elementReference>GetInputCase.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disableSignMode</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -230,13 +676,67 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>518</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Annullamento_prestazione</name>
+        <label>Annullamento prestazione</label>
+        <locationX>50</locationX>
+        <locationY>1934</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annullamento_prestazione_0</name>
+        <label>Annullamento prestazione</label>
+        <locationX>578</locationX>
+        <locationY>1934</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>GestioneIndennizzi</name>
+        <label>Gestione Indennizzi</label>
+        <locationX>644</locationX>
+        <locationY>1454</locationY>
+        <connector>
+            <targetReference>Quale_Fase</targetReference>
+        </connector>
+        <flowName>HDT_FL_GestioneIndennizzi</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>IndennizzoNonConfermato</name>
         <dataType>Boolean</dataType>

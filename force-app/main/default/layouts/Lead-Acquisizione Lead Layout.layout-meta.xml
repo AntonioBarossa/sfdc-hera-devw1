@@ -16,6 +16,9 @@
                 <field>Company</field>
             </layoutItems>
             <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>MobilePhonePrefix__c</field>
             </layoutItems>
@@ -48,6 +51,10 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>CompanyOwner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Company__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -136,27 +143,27 @@
         <platformActionListItems>
             <actionName>NewEvent</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
+            <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>EmailHighlightAction</actionName>
             <actionType>ProductivityAction</actionType>
-            <sortOrder>10</sortOrder>
+            <sortOrder>9</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>FeedItem.TextPost</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>11</sortOrder>
+            <sortOrder>10</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>FeedItem.ContentPost</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>12</sortOrder>
+            <sortOrder>11</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>13</sortOrder>
+            <sortOrder>12</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
@@ -178,7 +185,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000001stx3</masterLabel>
+        <masterLabel>00h1X000002TGZl</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

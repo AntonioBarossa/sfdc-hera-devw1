@@ -29,6 +29,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>DeliveryAddress__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>PhoneNumber__c</field>
             </layoutItems>
             <layoutItems>
@@ -59,7 +63,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DeliveryAddress__c</field>
+                <field>AlternativeAddress__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -177,6 +181,10 @@
         <label>Informazioni aggiuntive</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Status</field>
             </layoutItems>
@@ -256,6 +264,16 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>HDT_SendCertifiedEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Escalation</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Case.HDT_SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -269,11 +287,6 @@
             <actionName>HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>HDT_SendCertifiedEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>3</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
@@ -327,7 +340,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002LiYX</masterLabel>
+        <masterLabel>00h1j0000020aBm</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

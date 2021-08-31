@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ID_RDS__c</fullName>
+    <description>ID_RDS</description>
+    <externalDeveloperName>ID_RDS</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Id RDS</label>
+    <length>15</length>
+    <referenceTo>SiebelRds__x</referenceTo>
+    <relationshipLabel>SiebelDocumentActivity</relationshipLabel>
+    <relationshipName>SiebelDocumentActivity</relationshipName>
+    <type>ExternalLookup</type>
+</CustomField>

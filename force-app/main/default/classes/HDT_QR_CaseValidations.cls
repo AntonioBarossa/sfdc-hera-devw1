@@ -11,6 +11,7 @@ public inherited sharing class HDT_QR_CaseValidations {
         OpinionRequest__c,
         PhoneNumber__c,
         Email__c,
+        ElementDetail__c,
         Disconnectable__c,
         AttachmentManagement__c,
         AmountToPayInInstallments__c,

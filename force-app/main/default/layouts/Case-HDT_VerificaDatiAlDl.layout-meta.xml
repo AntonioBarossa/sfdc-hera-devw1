@@ -162,6 +162,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>CancellationHerokuPracticeCode__c
+                </field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>CancellationReasonCode__c</field>
             </layoutItems>
             <layoutItems>
@@ -177,6 +182,10 @@
         <editHeading>true</editHeading>
         <label>Informazioni aggiuntive</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Status</field>
@@ -252,6 +261,11 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>Case.Escalation</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>99</sortOrder>
+        </platformActionListItems>
         <platformActionListItems>
             <actionName>Case.HDT_SendEmail</actionName>
             <actionType>QuickAction</actionType>

@@ -51,7 +51,11 @@ public inherited sharing class HDT_LC_DocumentValidation {
                 if(orderRetrive.RecordType.DeveloperName == 'HDT_RT_Voltura'){
                     ord.Phase__c = 'Documentazione Validata';
                 } else {
-                   ord.Phase__c = 'Comunicazione verso Heroku';
+                //    if(){
+                 //       ord.Phase__c = 'Comunicazione verso Heroku';
+                 //   }else{
+                        ord.Phase__c = 'Documentazione Validata';
+                 //   }
                 }
             } else {
                 ord.Phase__c = 'Documentazione Validata';

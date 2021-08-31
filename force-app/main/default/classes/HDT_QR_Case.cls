@@ -52,6 +52,10 @@ public inherited sharing class HDT_QR_Case {
 
     public Case getParentCaseById(String caseId){
 
+        if (caseId == null) {
+            return null;
+        }
+
         return [SELECT Id,
         Type,
         Phase__c,
@@ -78,7 +82,7 @@ public inherited sharing class HDT_QR_Case {
     }
 
     public List<Case> getRecordCreatedLastWeekEqualsBy(String cluster){
-        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c = : cluster AND CreatedDate = LAST_N_DAYS:7 WITH SECURITY_ENFORCED];
+        return [Select Case.MotivatedResponseSendMode__c,Case.ParentId,Case.CorrectionRight__c,ServicePoint__r.SupplyCity__c,Case.ServicePoint__c,Case.IndemnityConfirmed__c,Case.CustomerRequestNumberDay__c,Case.Subprocess__c,Case.IsReiteration__c,Case.Status,Account.CustomerCode__c,Case.SupplyType__c,Case.ClosedDate,Case.CustomerRequestDate__c,Case.CompanyOwner__c,id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c = : cluster AND CreatedDate = LAST_N_DAYS:7 WITH SECURITY_ENFORCED]; // aggiunti campi alla query
     }
 
 
@@ -105,7 +109,10 @@ public inherited sharing class HDT_QR_Case {
         List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
         try{
             activities = [SELECT Id,
+            OwnedByUser__c,
+            OwnerId,
             wrts_prcgvr__Status__c,
+            wrts_prcgvr__ActivityTemplate__r.Name,
             Status__c
             FROM wrts_prcgvr__Activity__c
             WHERE wrts_prcgvr__Status__c = 'Not Started'
@@ -163,6 +170,18 @@ public inherited sharing class HDT_QR_Case {
         } catch(Exception e){
             System.debug('Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
         }
+        return nonReqContr;
+    }
+    public Case getCaseRelated(String relatedOrder){
+        Case nonReqContr = [SELECT Id,
+            Phase__c,
+            Type
+            FROM Case
+            where
+            Order__c = :relatedOrder
+            WITH SECURITY_ENFORCED
+            LIMIT 1];
+        
         return nonReqContr;
     }
 

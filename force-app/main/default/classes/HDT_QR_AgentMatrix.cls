@@ -42,7 +42,7 @@ public inherited sharing class HDT_QR_AgentMatrix {
     */
 
     public static List<AgentMatrix__c> getRecordByAgencyName(String AgencyName){
-        Map<String,AgentMatrix__c> distinctAgency= new Map <String,AgentMatrix__c>();
+        //Map<String,AgentMatrix__c> distinctAgency= new Map <String,AgentMatrix__c>();
         List<AgentMatrix__c> agents= [
             SELECT
             Name,
@@ -62,14 +62,17 @@ public inherited sharing class HDT_QR_AgentMatrix {
             OwnerId
             FROM AgentMatrix__c WHERE AgencyName__c=:AgencyName   
             WITH SECURITY_ENFORCED
-            ];
-    
-            for (AgentMatrix__c agent : agents) {
-                distinctAgency.put((String)agent.AgencyName__c,agent);   
-            }
-            System.debug('frida distinctAgency '+ distinctAgency);
-            return distinctAgency.values();
+        ];
+
+        //27/08/2021 gabriele.rota@webresults.it - Returning records without using map
+        return agents;
+
+        /*for (AgentMatrix__c agent : agents) {
+            distinctAgency.put((String)agent.AgencyName__c,agent);   
         }
+        System.debug('frida distinctAgency '+ distinctAgency);
+        return distinctAgency.values();*/
+    }
 
         public static List<AgentMatrix__c> getRecordByAgencyNameAndChannel(String AgencyName,String Channel){
             return [
@@ -112,6 +115,20 @@ public inherited sharing class HDT_QR_AgentMatrix {
                 WITH SECURITY_ENFORCED
             ];
 
+        }
+
+        public static List<AgentMatrix__c> getAgentMatrixIsMonitoringTrue(){
+            return[
+                SELECT
+                AgencyName__c,
+                AgencyCode__c,
+                UpperChannelAgency__c,
+                LowerChannelAgency__c,
+                IsMonitoring__c	
+                FROM AgentMatrix__c
+                WHERE IsMonitoring__c = true
+                WITH SECURITY_ENFORCED
+            ];
         }
         
 }

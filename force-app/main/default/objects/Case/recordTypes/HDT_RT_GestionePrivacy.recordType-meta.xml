@@ -570,11 +570,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cliente Non Trovato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Codice ABI obsoleto</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Consegna%2FInstallazione Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Contattare banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -587,6 +599,10 @@
         </values>
         <values>
             <fullName>Firma falsa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Installazione Fallita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -614,6 +630,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Reso %28Prodotto%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Revoca ai sensi del comma 14%2E3 del TIMOE</fullName>
             <default>false</default>
         </values>
@@ -623,6 +643,10 @@
         </values>
         <values>
             <fullName>Revoca ai sensi del comma 8%2E2 del TIMG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rifiutato Preventivamente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -643,6 +667,10 @@
         </values>
         <values>
             <fullName>Volontà estorta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Scarto</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7695,6 +7723,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ODVcreated__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>OperationSubType__c</picklist>
         <values>
             <fullName>Prezzo energia negoziato</fullName>
@@ -7826,6 +7869,10 @@
             <fullName>Sospeso parere interno</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
@@ -7841,15 +7888,15 @@
     <picklistValues>
         <picklist>Priority</picklist>
         <values>
-            <fullName>High</fullName>
+            <fullName>1</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Low</fullName>
+            <fullName>2</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Medium</fullName>
+            <fullName>3</fullName>
             <default>true</default>
         </values>
     </picklistValues>

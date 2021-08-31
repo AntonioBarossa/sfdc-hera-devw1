@@ -35,6 +35,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             }
         } else if (caseType == 'Esercizio Diritti Privacy') {
             result = validateEsercizioDirittiPrivacy(fields);
+        } else if (caseType == 'Modifica Privacy') {
+            result = validateModificaPrivacy(fields, recordId);
         } else if (caseType == 'Inversione del Contatore') {
             result = validateInversioneContatore(recordId, fields, caseType);
         } else if (caseType == 'Gestione Bonus Sociale') {
@@ -48,13 +50,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         || caseType == 'BP/CA - errata categoria'
         || caseType == 'Modifica/Azzeramento Consumo Annuo'
         || caseType == 'Modifica Tariffa Residente/Non Residente'
+        || caseType == 'Modifica Layout di dettaglio'
         || caseType == 'Mancata Telelettura/lettura'
         || caseType == 'Cambio contatore non registrato'
         || caseType == 'Fiscale'){
 
             System.debug('Inside Variazioni Validations');
 
-            result = validateVariazioni(fields,recordId,caseType, subprocess);
+            result = validateVariazioni(fields,recordId,caseType, subprocess, currentCase);
 
         } else if(caseType == 'Chiusura Contatore'){
 
@@ -75,9 +78,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateVerificaTitolarita(currentCase);
 
-        } else if (caseType == 'Nuovo Impianto - Aggiunta Attacco'){
+        /*} else if (caseType == 'Nuovo Impianto - Aggiunta Attacco'){
 
-            result = validateVariazioni(fields, caseType);
+            result = validateVariazioni(fields, caseType)*/
         
         } else if(caseType == 'Voltura Tecnica'){
 
@@ -108,25 +111,17 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 : null;
 
             if(attachmentManagement != null ){
-
-                if(attachmentManagement){
-
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                /*if(attachmentManagement){
                     List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
-
                     if(attachedDocument.size() == 0){
-                    
                         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
-                        
                     }else{
-                    
                         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-                        
                     }
                 }else{
-
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-                
-                }
+                }*/
 
             } else {
             
@@ -697,7 +692,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    public String validateVariazioni(String fields, String recordId, String caseType, String subprocess){
+    public String validateVariazioni(String fields, String recordId, String caseType, String subprocess, Case currentCase){
 
         String result;
 
@@ -837,6 +832,15 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
             }
+        }else if(caseType == 'Modifica Layout di dettaglio'){
+
+            Boolean detail = Boolean.valueOf(getFieldValue(fields, 'ElementDetail__c'));
+
+            if(detail == currentCase.ElementDetail__c){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Necessario modificare i dati per poter procedere con la pratica.'));
+            } else {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+            }
 
         } else {
 
@@ -954,14 +958,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario allegare autocertificazione del cliente.'));
         }
         
-        if (sendMode != null && sendMode.equals('E-mail') && String.isBlank(email)) {
+        if (sendMode != null && sendMode.equalsIgnoreCase('E-mail') && String.isBlank(email)) {
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire una Email a cui inviare la documentazione.'));
         }
             
         return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
     }
 
-    private String validateVariazioni(String fields, String caseType){
+    /*private String validateVariazioni(String fields, String caseType){
 
         String commodity = getFieldValue(fields, 'Commodity__c');
         String supplyType = getFieldValue(fields, 'SupplyType__c');
@@ -983,7 +987,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }
 
 
-    }
+    }*/
 
     public String validateVolturaTecnica(String fields){
 
@@ -1001,6 +1005,43 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         return result;
 
+    }
+
+    public String validateModificaPrivacy(String fields, String recordId){
+
+        String fieldq = 'Id,MarketingPrivacy__c,ProfilingPrivacy__c,HasOptedOutSoftSpam__c,HasOptedOutOfEmail__c';
+        String fromq = 'Case';
+        String whereq = 'Id = \''+recordId+'\'';
+        String queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
+        List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
+        Case c = (Case) sobjectRecordList[0];
+
+        System.debug('Validating case: ' + c);
+        System.debug('Fields modified: ' + fields);
+
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+
+        Boolean currentHasOptedOutOfEmail = (Boolean) c.get('HasOptedOutOfEmail__c');
+        Boolean newHasOptedOutOfEmail = Boolean.valueOf(getFieldValue(fields, 'HasOptedOutOfEmail__c'));
+        if (newHasOptedOutOfEmail && !currentHasOptedOutOfEmail) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Non è possibile disiscrivere il cliente dalle liste di distribuzione.'));
+            return result;
+        }
+
+        String newMarketingPrivacy = getFieldValue(fields, 'MarketingPrivacy__c') != null ? getFieldValue(fields, 'MarketingPrivacy__c') : '';
+        String newProfilingPrivacy = getFieldValue(fields, 'ProfilingPrivacy__c') != null ? getFieldValue(fields, 'ProfilingPrivacy__c') : '';
+        Boolean newHasOptedOutSoftSpam = Boolean.valueOf(getFieldValue(fields, 'HasOptedOutSoftSpam__c'));
+
+        Boolean currentHasOptedOutSoftSpam = (Boolean) c.get('HasOptedOutSoftSpam__c');
+        String currentMarketingPrivacy = (String) c.get('MarketingPrivacy__c') != null ? (String) c.get('MarketingPrivacy__c') : '';
+        String currentProfilingPrivacy = (String) c.get('ProfilingPrivacy__c') != null ? (String) c.get('ProfilingPrivacy__c') : '';
+
+        if (newHasOptedOutOfEmail == currentHasOptedOutOfEmail && newHasOptedOutSoftSpam == currentHasOptedOutSoftSpam && 
+            newMarketingPrivacy.equals(currentMarketingPrivacy) && newProfilingPrivacy.equals(currentProfilingPrivacy)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un consenso privacy per poter proseguire.'));
+        }
+
+        return result;
     }
 
     // Validazione CF. Se il CF è vuoto lo consideriamo valido.

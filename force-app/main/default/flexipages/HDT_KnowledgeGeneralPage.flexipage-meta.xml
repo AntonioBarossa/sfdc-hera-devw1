@@ -31,16 +31,10 @@
                         <valueListItems>
                             <value>CreateDraftFromOnlineKnowledgeArticleVersion</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.PublishStatus}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Draft</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.ValidationStatus}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Validato Da Pubblicatore</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -50,7 +44,7 @@
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.PublishStatus}</leftValue>
-                                    <operator>NE</operator>
+                                    <operator>EQUAL</operator>
                                     <rightValue>Draft</rightValue>
                                 </criteria>
                                 <criteria>
@@ -245,11 +239,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleDataCategoryViewer</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>forceChatter:recordFeedContainer</componentName>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

@@ -3,7 +3,7 @@
     <fullName>ContactResult__c</fullName>
     <description>esito contato quality/comfort call</description>
     <externalId>false</externalId>
-    <label>Esitto contatto</label>
+    <label>Esito contatto</label>
     <length>255</length>
     <required>false</required>
     <trackHistory>false</trackHistory>

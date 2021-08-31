@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_Community</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( $Profile.Name==&apos;Hera Door2Door Partner User&apos;, true,   IF( $Profile.Name==&apos;Hera Teleseller Partner User&apos;, true, false) )</errorConditionFormula>
+    <errorMessage>Non è possibile modificare la relazione</errorMessage>
+</ValidationRule>

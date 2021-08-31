@@ -17,7 +17,7 @@
                 var campaignMemberId;
                 var campaignCommissioningId;
                 component.set('v.isCommunity', res);
-
+                console.log('*****' + res);
                 if (res){
 
                     var sPageURL = decodeURIComponent(window.location.search.substring(1)),

@@ -6,15 +6,16 @@ import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
-import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint';
-import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint';
+import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint2';
+import createServicePoinString from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoinString';
+import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint2';
 import getDistributorPointCode from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getDistributorPointCode';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.callService';
 import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
 import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
 
-
+import ACCOUNT_RECORDTYPE_FIELD from '@salesforce/schema/Account.RecordTypeId';
 
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
@@ -27,6 +28,25 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @api wrapAddressObject;
     @api sale;
     @api fieldsWrapObject=[];
+    
+    @track recordTypeAccount;
+
+    @wire(getRecord, { recordId: '$accountid', fields: [ACCOUNT_RECORDTYPE_FIELD] })
+     wiredRecord({ error, data }) {
+          if (data) {
+            console.log('******data:' + JSON.stringify(data));
+            let record = data;
+            console.log('********RecordType:' + JSON.stringify(data.recordTypeInfo));
+            console.log('********RecordType:' + data.recordTypeInfo.name);
+            this.recordTypeAccount = record.recordTypeInfo.name;
+          }
+          else if(error){
+            console.log('******Error:' + JSON.stringify(error));
+          } 
+    }
+
+
+
     data;
     objectApiName = 'ServicePoint__c';
     fieldsData;
@@ -210,6 +230,21 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                 ) 
             }
+            else if(element === 'Resident__c'){
+                console.log('entra in resident');
+                let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
+                console.log('entra in resident:' +resValue );
+                this.allSubmitedFields.Resident__c = resValue;
+                
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : mapFieldReq.get(element),
+                        value:resValue,
+                        disabled: false
+                    }
+                ) 
+            }
             else if(element=='SAPImplantCode__c')
             {
 
@@ -231,6 +266,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         required : mapFieldReq.get(element),
                         value: this.servicePointRetrievedData[element],
                         disabled: true
+                    }
+                ) 
+            }
+            else if(element=='PowerRequested__c'){
+                this.allSubmitedFields.PowerRequested__c = null;
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : mapFieldReq.get(element),
+                        value: '',
+                        disabled: false
                     }
                 ) 
             }
@@ -312,14 +358,19 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     ) 
                 }
-                else if(this.recordtype.label === 'Punto Elettrico' && element === 'Resident__c'){
+                else if(element === 'Resident__c'){
+
                     console.log('entra in resident');
-                    this.allSubmitedFields.Resident__c = true;
+                    let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
+                    console.log('entra in resident:' +resValue );
+                    this.allSubmitedFields.Resident__c = resValue;
+
+                    
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required : mapFieldReq.get(element),
-                            value:true,
+                            value:resValue,
                             disabled: false
                         }
                     ) 
@@ -487,13 +538,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
                             this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValuesIfSap(this.servicePointRetrievedData);
                                                           
-                            
+                            this.getInstanceWrapObject(this.servicePointRetrievedData);
                     });
                 }else{
                     console.log('entra in else **********************');
                     extractDataFromArriccDataServiceWithExistingSp({sp:this.servicePointRetrievedData,response:data}).then(datas =>{
                         console.log('datas*************************' +  JSON.stringify(datas));
+
                             this.servicePointRetrievedData=datas[0];
+
                             console.log('servicePointRetriviedData commodity: ******'+JSON.stringify(this.servicePointRetrievedData['CommoditySector__c']));
                             switch(this.servicePointRetrievedData['CommoditySector__c']){
                                 case 'Energia Elettrica':
@@ -513,9 +566,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
                             console.log('fieldsDataObject after handleCallServiceSap'+ JSON.stringify(this.fieldsDataObject));
                             this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValuesIfSap(this.servicePointRetrievedData);
+
+                            this.getInstanceWrapObject(this.servicePointRetrievedData);
                         });
                 }
-
 
             }else{
                 this.isSap= false;
@@ -577,6 +631,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
         }
 		
+
+
 
             this.customSettings = data;
             console.log(JSON.stringify(this.selectedservicepoint)+'********selectedServicePoint');
@@ -654,6 +710,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     getInstanceWrapObject(servicePointRetrievedData){
         console.log('getInstanceWrapObject - START');
         console.log('getInstanceWrapObject - servicePointRetrievedData' +JSON.stringify(servicePointRetrievedData));
+        this.allSubmitedFields=this.servicePointRetrievedData;
+        this.allSubmitedFields.PowerRequested__c = null;
         getInstanceWrapAddressObject({s:servicePointRetrievedData}).then(data => {
             this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValues(data);
             console.log('getInstanceWrapObject - getInstanceWrapAddressObject Start '+ JSON.stringify(data));
@@ -784,6 +842,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
     
         }
+
+        //25/08/2021 - gabriele.rota@webresults.it - Switch Flag Resident in base a Tipo Fornitura
+        if(event.target.fieldName =='SupplyType__c'){
+            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+        }
+        
         console.log('handleFieldsDataChange END');
        
 
@@ -982,20 +1046,178 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         });
         dispatchEvent(event);
     }
+    validFieldsUpdateServicePoint(){
+        console.log(' validFieldsUpdateServicePoint submitted' + JSON.stringify(this.allSubmitedFields));
 
-    validFields() {
+        //this.allSubmitedFields=this.servicePointRetrievedData;
+
+        let isValid = true;
+        let concatPointErrorFields = '';
+        if(this.allSubmitedFields['CommoditySector__c']=='Energia Elettrica'){
+            
+            if((this.allSubmitedFields['Distributor__c']===undefined ||this.allSubmitedFields['Distributor__c']==='')){
+                concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
+            }
+            if((this.allSubmitedFields['SupplyType__c']===undefined ||this.allSubmitedFields['SupplyType__c']==='' )){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
+            }
+            if((this.allSubmitedFields['ImplantType__c']===undefined ||this.allSubmitedFields.ImplantType__c==='') ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Impianto, ');
+            }
+            if((this.allSubmitedFields['MarketOrigin__c']===undefined ||this.allSubmitedFields['MarketOrigin__c']==='')){
+                concatPointErrorFields = concatPointErrorFields.concat('Mercato di provenienza, ');
+            }
+            if((this.allSubmitedFields['PowerAvailable__c']===undefined ||this.allSubmitedFields['PowerAvailable__c']==='')){
+                concatPointErrorFields = concatPointErrorFields.concat('Potenza Disponibile, ');
+            }
+            if((this.allSubmitedFields['PowerContractual__c']===undefined ||this.allSubmitedFields['PowerContractual__c']==='')){
+                concatPointErrorFields = concatPointErrorFields.concat('Potenza Contrattuale, ');
+            }
+            if((this.allSubmitedFields['PlugPresence__c']===undefined ||this.allSubmitedFields['PlugPresence__c']==='')){
+                concatPointErrorFields = concatPointErrorFields.concat('Presenza Allaccio, ');
+            }
+            if((this.allSubmitedFields['MeterType__c']===undefined ||this.allSubmitedFields['MeterType__c']==='')){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipo Apparecchiatura, ');
+            }
+            if( this.allSubmitedFields['Disconnectable__c']==='No' && (this.allSubmitedFields['DisconnectibilityType__c']===undefined ||this.allSubmitedFields['DisconnectibilityType__c']==='' )){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+            }  
+            //27/08/2021 - gabriele.rota@webresults.it - Tensione di Consegna obbligatoria
+            if(this.allSubmitedFields['VoltageLevel__c']===undefined ||this.allSubmitedFields['VoltageLevel__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tensione di Consegna, ');
+            } 
+            }
+            else{
+                
+                if((this.allSubmitedFields['Distributor__c']===undefined ||this.allSubmitedFields['Distributor__c']==='') ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
+                }
+                if((this.allSubmitedFields['SupplyType__c']===undefined ||this.allSubmitedFields['SupplyType__c']==='' )){
+                    concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
+                }
+                if((this.allSubmitedFields['MarketOrigin__c']===undefined ||this.allSubmitedFields['MarketOrigin__c']==='') ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Mercato di provenienza, ');          
+                }
+                if((this.allSubmitedFields['WithdrawalClass__c']===undefined ||this.allSubmitedFields['WithdrawalClass__c']==='') ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Classe di prelievo, ');
+                }
+                if((this.allSubmitedFields['UseCategory__c']===undefined ||this.allSubmitedFields['UseCategory__c']==='' )){
+                        concatPointErrorFields = concatPointErrorFields.concat('Categoria uso, ');
+                }
+                if( this.allSubmitedFields['Disconnectable__c']==='No' && (this.allSubmitedFields['DisconnectibilityType__c']===undefined ||this.allSubmitedFields['DisconnectibilityType__c']==='' )){
+                    concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+                }  
+            }
+                if (concatPointErrorFields !== '') {
+                    isValid = false;
+                    this.isValidFields = false;
+                    this.alert('Dati tabella','Per poter salvare popolare i seguenti campi : ' + concatPointErrorFields.slice(0, -2),'error')
+
+                }
+            
+    }
+
+    validFieldsCreateServicePoint(){
+        console.log(' validFieldsCreateServicePoint submitted' + JSON.stringify(this.allSubmitedFields));
+        let isValid = true;
+        let concatPointErrorFields = '';
+        if(this.allSubmitedFields['CommoditySector__c']=='Energia Elettrica'){
+            console.log('3');
+            if((this.allSubmitedFields['ServicePointCode__c']===undefined ||this.allSubmitedFields['ServicePointCode__c']==='')){
+                concatPointErrorFields = concatPointErrorFields.concat('Codice Punto, ');               
+            }
+            if(this.allSubmitedFields['CommoditySector__c']===undefined ||this.allSubmitedFields['CommoditySector__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
+            }
+            if(this.allSubmitedFields['Distributor__c']===undefined ||this.allSubmitedFields['Distributor__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
+            }
+            if(this.allSubmitedFields['SupplyType__c']===undefined ||this.allSubmitedFields['SupplyType__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
+            }
+            if(this.allSubmitedFields['ImplantType__c']===undefined ||this.allSubmitedFields['ImplantType__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Impianto, ');
+            }
+            if(this.allSubmitedFields['PowerContractual__c']===undefined ||this.allSubmitedFields['PowerContractual__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Mercato di provenienza, ');
+            }
+            if(this.allSubmitedFields['PowerAvailable__c']===undefined ||this.allSubmitedFields['PowerAvailable__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Potenza Disponibile, ');
+            }
+            if(this.allSubmitedFields['PowerContractual__c']===undefined ||this.allSubmitedFields['PowerContractual__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Potenza Contrattuale, ');
+            }
+            if(this.allSubmitedFields['PlugPresence__c']===undefined ||this.allSubmitedFields['PlugPresence__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Presenza Allaccio, ');
+            }
+            if(this.allSubmitedFields['MeterType__c']===undefined ||this.allSubmitedFields['MeterType__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipo Apparecchiatura, ');
+            }
+            if( this.allSubmitedFields['Disconnectable__c']==='No' && (this.allSubmitedFields['DisconnectibilityType__c']===undefined ||this.allSubmitedFields['DisconnectibilityType__c']==='' )){
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+            } 
+            //27/08/2021 - gabriele.rota@webresults.it - Tensione di Consegna obbligatoria
+            if(this.allSubmitedFields['VoltageLevel__c']===undefined ||this.allSubmitedFields['VoltageLevel__c']==='' ){
+                concatPointErrorFields = concatPointErrorFields.concat('Tensione di Consegna, ');
+            }
+            }
+            else{
+                
+                if(this.allSubmitedFields['ServicePointCode__c']===undefined ||this.allSubmitedFields['ServicePointCode__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Codice Punto, ');
+                }
+                if(this.allSubmitedFields['CommoditySector__c']===undefined ||this.allSubmitedFields['CommoditySector__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
+                }
+                if(this.allSubmitedFields['Distributor__c']===undefined ||this.allSubmitedFields['Distributor__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
+                }
+                if(this.allSubmitedFields['SupplyType__c']===undefined ||this.allSubmitedFields['SupplyType__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
+                }
+                if(this.allSubmitedFields['MarketOrigin__c']===undefined ||this.allSubmitedFields['MarketOrigin__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Mercato di provenienza, ');
+                }
+                if(this.allSubmitedFields['WithdrawalClass__c']===undefined ||this.allSubmitedFields['WithdrawalClass__c']==='' ){
+                    concatPointErrorFields = concatPointErrorFields.concat('Classe di prelievo, ');
+                }
+                if(this.allSubmitedFields['UseCategory__c']===undefined ||this.allSubmitedFields['UseCategory__c']==='' ){
+                        concatPointErrorFields = concatPointErrorFields.concat('Categoria uso, ');
+                    }
+                if( this.allSubmitedFields['Disconnectable__c']==='No' && (this.allSubmitedFields['DisconnectibilityType__c']===undefined ||this.allSubmitedFields['DisconnectibilityType__c']==='' )){
+                    concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+                } 
+                    }
+                if (concatPointErrorFields !== '') {
+                    isValid = false;
+                    this.isValidFields = false;
+                    this.alert('Dati tabella','Per poter salvare popolare i seguenti campi : ' + concatPointErrorFields.slice(0, -2),'error')
+
+                }
+            
+        }
+
+    validFields(){
         console.log('validFields START');
         let isValid = true;
         this.isValidFields = true;
         let concatBillingErrorFields = '';
         let concatAddressErrorFields = '';
-
+        console.log('retreieved ****************' + JSON.stringify(this.servicePointRetrievedData));
+        console.log('recordtype : ' + JSON.stringify(this.recordtype));
+        if(this.recordtype.label==='Punto Elettrico'||this.recordtype.label=='Punto Gas'){
+            console.log('1');
+            this.validFieldsCreateServicePoint();
+        }else{
+            console.log('2');
+            this.validFieldsUpdateServicePoint();
+        }
 
         //Validate address
         
-        if(!this.theRecord['Indirizzo Estero']){
+        if(this.theRecord['Indirizzo Estero']==false||this.theRecord['Indirizzo Estero']==undefined){
             console.log('entra in if ind estero');
-            if (this.theRecord['Flag Verificato']== false) {
+            if (this.theRecord['Flag Verificato']== false||this.theRecord['Flag Verificato']== undefined) {
                 console.log('entra in flag verificato false ');
                 isValid = false;
                 this.isValidFields = false;
@@ -1025,9 +1247,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.theRecord['CAP'] === undefined || this.theRecord['CAP'] === '') {
                 concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
             }
-            if (this.theRecord['CAP'] === undefined || this.theRecord['CAP'] === '') {
-                concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
-            }
             if (concatAddressErrorFields !== '') {
                 isValid = false;
                 this.isValidFields = false;
@@ -1037,13 +1256,41 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
         console.log('allSubmitedFields'+JSON.stringify(this.servicePointRetrievedData));
 
-        if(this.allSubmitedFields['ServicePointCode__c']!= undefined && (JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length < 16 || JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length > 17 )){
+        if((this.allSubmitedFields['ServicePointCode__c']!= undefined && (JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length < 14 || JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length > 16 ))){
             isValid = false;
             this.isValidFields = false;
             console.log('lenght field'+JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length);
             console.log('field value : '+JSON.stringify(this.allSubmitedFields['ServicePointCode__c']));
 
             this.alert('Errore','Codice POD/PDR non valido','error');
+        }
+        //(JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).substring(0,2)!='IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica')
+
+        if(this.allSubmitedFields['ServicePointCode__c']!=undefined){
+            if(this.allSubmitedFields['ServicePointCode__c'].substring(0,2)!='IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica'){
+                isValid = false;
+                this.isValidFields = false;
+                this.alert('Errore','Codice POD non valido','error');
+            }
+        if((this.isNumeric(this.allSubmitedFields['ServicePointCode__c'])!=true && this.allSubmitedFields['CommoditySector__c'] == 'Gas')){
+            isValid = false;
+            this.isValidFields = false;
+
+                this.alert('Errore','Codice PDR non valido','error');
+        }
+
+        }else{
+            if(this.servicePointRetrievedData['ServicePointCode__c'].substring(0,2)!='IT' && this.servicePointRetrievedData['CommoditySector__c'] == 'Energia Elettrica'){
+                isValid = false;
+                this.isValidFields = false;
+                this.alert('Errore','Codice POD/PDR non valido','error');
+            }
+            if((this.isNumeric(this.servicePointRetrievedData['ServicePointCode__c'])!=true && this.servicePointRetrievedData['CommoditySector__c'] == 'Gas')){
+                isValid = false;
+                this.isValidFields = false;
+    
+                this.alert('Errore','Codice PDR non valido','error');
+            }
         }
         
         console.log('validFields END');
@@ -1063,7 +1310,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             isBlacklist=data;
         
         if(isBlacklist == false){
-
+        
         this.theRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log('this.theRecord'+JSON.stringify(this.theRecord));
 
@@ -1181,8 +1428,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     create(){
 								  
 																				  
+        console.log('this.AllSubmittedFields ******************' + JSON.stringify(this.allSubmitedFields));
 
-        createServicePoint({servicePoint: this.allSubmitedFields}).then(data =>{
+        // createServicePoint({servicePoint: this.allSubmitedFields, sale: this.sale}).then(data =>{
+        /** Andrei Necsulescu (andrei.necsulescu@webresults.it)
+         * Passing the ServicePoint__c as a String as because otherwise decimal places are removed from the record */
+        createServicePoinString({servicePoint: JSON.stringify(this.allSubmitedFields), sale: this.sale}).then(data =>{
+
+            console.log('this.AllSubmittedFields ******************' + JSON.stringify(this.allSubmitedFields));
+            console.log('data ******************' + JSON.stringify(this.allSubmitedFields));
+
             this.loading = false;
             this.closeCreateTargetObjectModal();
             this.servicePointId = data.id;
@@ -1223,7 +1478,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('confirm Id ' + JSON.stringify(this.allSubmitedFields['Id']));
         console.log('confirm isRicercainsap ' + JSON.stringify(this.isricercainsap));
 
-        if(this.allSubmitedFields['Id'] != undefined && this.isricercainsap==true){
+        if(this.allSubmitedFields['Id'] != undefined && this.isSap == true){//&& this.isricercainsap==true){
             console.log('REMOVE START');
 
             delete this.allSubmitedFields['Id'];
@@ -1231,7 +1486,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             console.log('REMOVE END');
 
         }
-        confirmServicePoint({servicePoint: this.allSubmitedFields, sap: this.isSap}).then(data =>{
+        confirmServicePoint({servicePoint: this.allSubmitedFields, sap: this.isSap, sale : this.sale}).then(data =>{
 																				
             this.loading = false;
             this.closeCreateTargetObjectModal();
@@ -1290,5 +1545,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.isDistributor=true;
         this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
     }
+
+    @api
+    isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+      }
 
 }

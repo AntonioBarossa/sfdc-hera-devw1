@@ -32,6 +32,7 @@ public class HDT_WS_HTTPServiceCall {
             System.debug('**********req:' + req);
             HTTPResponse res = h.send(req);
             System.debug('*************RESP:' + res.getBody());
+            System.debug('*************STATUS:' + res.getStatusCode());
             resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
             resp.statusCode = res.getStatusCode();
         }catch(Exception e){
@@ -98,7 +99,12 @@ public class HDT_WS_HTTPServiceCall {
         String contactParamsForGet= '';
         for(String key : getParams.keyset()){
             if(getParams.get(key) != null){
-                contactParamsForGet += '&' + key + '=' + getParams.get(key);
+                if(contactParamsForGet == null || contactParamsForGet == ''){
+                    contactParamsForGet += '?' + key + '=' + getParams.get(key);
+                }
+                else{
+                    contactParamsForGet += '&' + key + '=' + getParams.get(key);
+                }
             }
         }
         if(contactParamsForGet != null){

@@ -2,7 +2,7 @@ public class HDT_WS_RecallMeRequest extends HDT_WS_Request {
     @AuraEnabled Public Long startRange;
     @AuraEnabled Public Long endRange;
     @AuraEnabled Public String appointmentType;
-    @AuraEnabled Public String idUser;
+    @AuraEnabled Public Long idUser;
     @AuraEnabled Public String username;
     @AuraEnabled Public String ecid;
    // @AuraEnabled Public String token;

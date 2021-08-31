@@ -19,15 +19,24 @@
                                 variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled class="slds-size_1-of-3" field-name="SalesContactRole__c"
                                 data-name="SalesContactRole__c" variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field disabled 
+                            <lightning-input-field disabled required 
                                 class="slds-size_1-of-3" data-id="Agency__c" data-name="Agency__c"
                                 field-name="Agency__c" variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field disabled onchange={handleDataCollection}
+                            <lightning-input-field disabled required onchange={handleDataCollection}
                                 class="slds-size_1-of-3" data-id="CommercialId" field-name="CommercialId__c" variant="label-stacked">
                             </lightning-input-field>
+
+                            <lightning-input-field disabled onchange={handleDataCollection}
+                            class="slds-size_1-of-3" field-name="VendorFirstName__c" data-id="VendorFirstName__c" variant="label-stacked">
+                            </lightning-input-field>
+                            <lightning-input-field disabled onchange={handleDataCollection}
+                            class="slds-size_1-of-3" field-name="VendorLastName__c" data-id="VendorLastName__c"  variant="label-stacked">
+                            </lightning-input-field>
+                            
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection}
                                 class="slds-size_1-of-3" field-name="FriendCode__c" variant="label-stacked">
                             </lightning-input-field>
+
                            <!-- <lightning-input-field disabled={disabledInput} onchange={handleDataCollection}
                                 class="slds-size_1-of-3" field-name="SalesCompany__c" variant="label-stacked">
                             </lightning-input-field> -->
@@ -39,37 +48,62 @@
 
            <lightning-layout>
                     <lightning-layout-item padding="horizontal-large" size="12">
-                        <template if:true={isCampaignVisible}>
+                         <!--<template if:true={isCampaignVisible}>
                             <div class="slds-text-heading_small slds-m-vertical_small">Selezione campagna</div>
                             <template if:true={isCampaignInputVisible}>
                                 <lightning-record-edit-form record-id={saleRecord.Id} object-api-name="Sale__c">
                                     <lightning-input-field disabled class="slds-size_1-of-3" value={saleRecord.Campaign__c} field-name="Campaign__c" variant="label-stacked"></lightning-input-field>
                                 </lightning-record-edit-form>
                             </template>
-                        </template>
-                        <template if:false={isCampaignInputVisible}>
-                            <c-hdt-campaign-to-account-list campaign-type="sale" object-api-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid={handleEmitCampaignIdEvent} onemitvisibility={handleCampaignVisibility} campaign-category='' campaign-channel='' ></c-hdt-campaign-to-account-list>
+                        </template>-->
+                        <template if:true={isCampaignVisible}>
+                            <div class={tabClass}>
+                                <c-hdt-campaign-to-account-list title="Selezione campagna" campaign-type="sale" object-api-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid={handleEmitCampaignIdEvent} onemitvisibility={handleCampaignVisibility} campaign-category='' campaign-channel='' ></c-hdt-campaign-to-account-list>
+                            </div>
                         </template>
                     </lightning-layout-item>
                 </lightning-layout>
-          
-              <template if:true={isOutbound}>
+          <!-- Jira : 316 - ALM : 1823-->
+            <template if:true={isCommissioningVisiEnter}>
                 <lightning-layout>
                     <lightning-layout-item padding="horizontal-large" size="12">
-                        <template if:true={isCampaignVisible}>
+                        <!--<template if:true={isCampaignCommissioningVisible}>
                             <div class="slds-text-heading_small slds-m-vertical_small">Selezione campagna Commissioning</div>
                             <template if:true={isCampaignInputVisibleCommissioning}>
                                 <lightning-record-edit-form record-id={saleRecord.Id} object-api-name="Sale__c">
-                                    <lightning-input-field disabled class="slds-size_1-of-3" value={saleRecord.CommissioningCampaign__c} field-name="CampaignCommissioning__c" variant="label-stacked"></lightning-input-field>
+                                    <lightning-input-field disabled class="slds-size_1-of-3" value={saleRecord.CommissioningCampaign__c} field-name="CommissioningCampaign__c" variant="label-stacked"></lightning-input-field>
                                 </lightning-record-edit-form>
                             </template>
                         </template>
-                        <template if:false={isCampaignInputVisibleCommissioning}>
-                            <c-hdt-campaign-to-account-list campaign-type="sale" object-api-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid={handleEmitCampaignIdEvent2} onemitvisibility={handleCampaignVisibility2} campaign-category='Campagna Outbound' campaign-channel='Telefonico Outbound' ></c-hdt-campaign-to-account-list>
-                        </template>
+                        <template if:false={isCampaignInputVisibleCommissioning}>-->
+                            <template if:true={isCampaignCommissioningVisible}>
+                                <div class={tabClass2}>
+                                    <c-hdt-campaign-to-account-list2 title="Selezione campagna Commissioning" campaign-type="sale" object-api-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid2={handleEmitCampaignIdEvent2} onemitvisibility2={handleCampaignVisibility2} campaign-category={categoriacampagna} campaign-channel={canalecampagna} ></c-hdt-campaign-to-account-list2>
+                                </div>
+                            </template>
+                        <!--</template> -->
                     </lightning-layout-item>
                 </lightning-layout>
+            </template>
+           <!-- <template if:false={isoutbound}>
+                <template if:true={isServiceCommissioning}>
+                    <lightning-layout>
+                        <lightning-layout-item padding="horizontal-large" size="12">
+                            <template if:true={isCampaignVisible}>
+                                <div class="slds-text-heading_small slds-m-vertical_small">Selezione campagna Commissioning</div>
+                                <template if:true={isCampaignInputVisibleCommissioning}>
+                                    <lightning-record-edit-form record-id={saleRecord.Id} object-api-name="Sale__c">
+                                        <lightning-input-field disabled class="slds-size_1-of-3" value={saleRecord.CommissioningCampaign__c} field-name="CampaignCommissioning__c" variant="label-stacked"></lightning-input-field>
+                                    </lightning-record-edit-form>
+                                </template>
+                            </template>
+                            <template if:false={isCampaignInputVisibleCommissioning}>
+                                <c-hdt-campaign-to-account-list3 campaign-type="sale" object-api-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid2={handleEmitCampaignIdEvent2} onemitvisibility2={handleCampaignVisibility2} campaign-category={categoriacampagna} campaign-channel={canalecampagna} ></c-hdt-campaign-to-account-list2>
+                            </template>
+                        </lightning-layout-item>
+                    </lightning-layout>
                 </template>
+            </template>-->
           
             <div class="slds-clearfix slds-p-around_small">
                 <div class="slds-float_right">

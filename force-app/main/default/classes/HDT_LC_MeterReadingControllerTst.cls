@@ -29,6 +29,25 @@ public class HDT_LC_MeterReadingControllerTst {
             LIMIT 1
         ];
 
+        ServicePoint__c sp = new ServicePoint__c();
+        sp.SAPImplantCode__c = '001';
+        sp.CommoditySector__c = 'Gas';
+        sp.MeterSN__c = 'example';
+        sp.ServicePointCode__c = 'servicePointCode';
+        insert sp;
+
+        Contract c = new Contract();
+        c.SAPContractCode__c = 'sapCode';
+        c.Status = 'Draft';
+        c.StartDate = Date.today();
+        c.EndDate = Date.today().addDays(1);
+        c.ServicePoint__c = sp.Id;
+        c.AccountId = account.Id;
+        insert c;
+
+        c.Status = 'In Approval Process';
+        update c;
+
         Test.startTest();
         contractObj = HDT_LC_MeterReadingController.getContractRecords(account.Id);
         Test.stopTest();
@@ -39,9 +58,16 @@ public class HDT_LC_MeterReadingControllerTst {
 
         HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingObj;
 
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMock());
         Test.startTest();
         meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords('1006689293');
         Test.stopTest();
+    }
+
+    @isTest
+    public static void getAccountDataEnrichment(){
+        List<HDT_AccountDataEnrichment__mdt> contractMetadataList;
+        contractMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(contractMetadataList, 'contract');
     }
 
 }

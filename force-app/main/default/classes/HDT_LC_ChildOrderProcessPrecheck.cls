@@ -82,6 +82,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     String sapCode = contracts.size() > 0
                         ? contracts[0].SAPContractCode__c
                         : '';
+                    newOrder.SapContractCode__c = sapCode;
                     try{
                         String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(order.SAPImplantCode__c, sapCode);
                         List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
@@ -94,13 +95,37 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                                 if(position.valore.equalsIgnoreCase('E_IMPOST')){
                                     condition = 'Imposta usi domestici';
                                 } 
-                                List<PicklistEntry> entryList =
+                                List<PicklistEntry> entryListEle =
                                 ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('ExciseEle__c').getDescribe().getPicklistValues();
-                                for(PicklistEntry entry : entryList){
+                                for(PicklistEntry entry : entryListEle){
 
                                     if(entry.getValue().containsIgnoreCase(condition)){
                         
                                         newOrder.ExciseEle__c = entry.getValue();                    
+                                    }
+                                }
+                                List<PicklistEntry> entryListGas =
+                                ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('ExciseGAS__c').getDescribe().getPicklistValues();
+                                for(PicklistEntry entry : entryListGas){
+
+                                    if(entry.getValue().containsIgnoreCase(condition)){
+                        
+                                        newOrder.ExciseGAS__c = entry.getValue();                    
+                                    }
+                                }
+                            }
+                            if(position.campo.equalsIgnoreCase('CATEGORIATARIFFA')){
+                                newOrder.RateCategory__c = position.valore;
+                            }
+                            if(position.campo.equalsIgnoreCase('ALIQUOTAIVA')){
+                                String condition = position.valore;
+                                List<PicklistEntry> entryList =
+                                ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('VAT__c').getDescribe().getPicklistValues();
+                                for(PicklistEntry entry : entryList){
+
+                                    if(entry.getValue().containsIgnoreCase(condition)){
+                        
+                                        newOrder.VAT__c = entry.getValue();                    
                                     }
                                 }
                             }
@@ -117,8 +142,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             }
 
             switch on processType {
-                when 'Switch in Ripristinatorio	'{
+                when 'Switch in Ripristinatorio'{
                     HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction(order);
+                    newOrder.SignedDate__c = Date.today();
+                    newOrder.WaiverRightAfterthought__c = 'Si';
                 }
             }
 
@@ -134,7 +161,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             //Logica Superficie Servita Start
             newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas' && selectedProcessObject.get('recordType') != 'HDT_RT_Voltura') ? 75 : null;
             //Logica Superficie Servita End
-
             orderSrv.updateRecord(newOrder);
             //EVERIS 
         }

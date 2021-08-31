@@ -4,7 +4,7 @@
         <name>Check_Documenti</name>
         <label>Check Documenti</label>
         <locationX>182</locationX>
-        <locationY>2030</locationY>
+        <locationY>2246</locationY>
         <actionName>HDT_UTL_CheckDocumentSelected</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -41,7 +41,7 @@
         <name>Check_Documenti_0</name>
         <label>Check Documenti</label>
         <locationX>2910</locationX>
-        <locationY>1118</locationY>
+        <locationY>1334</locationY>
         <actionName>HDT_UTL_CheckDocumentSelected</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -78,7 +78,7 @@
         <name>Check_Documenti_1</name>
         <label>Check Documenti</label>
         <locationX>1238</locationX>
-        <locationY>3998</locationY>
+        <locationY>4214</locationY>
         <actionName>HDT_UTL_CheckDocumentSelected</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -377,7 +377,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Screen_Documentale_0_0_0_0</targetReference>
+            <targetReference>Beneficiario_Erede</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -428,7 +428,7 @@
         <name>AssegnaValori_00_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>2390</locationY>
+        <locationY>2486</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -440,14 +440,7 @@
             <assignToReference>Get_Case_Aggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetCodiceCausale_0.CausalCode__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case_Aggiornato.OperationCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetCodiceCausale_0.OperationCode__c</elementReference>
+                <elementReference>Check_Documenti.causalCode</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -464,6 +457,13 @@
                 <elementReference>Check_Documenti.documentList</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0</targetReference>
         </connector>
@@ -472,7 +472,7 @@
         <name>AssegnaValori_00_0_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>314</locationX>
-        <locationY>2270</locationY>
+        <locationY>2486</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -494,6 +494,13 @@
                 <elementReference>Check_Documenti.documentList</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0</targetReference>
         </connector>
@@ -502,7 +509,7 @@
         <name>AssegnaValori_00_0_0_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>2778</locationX>
-        <locationY>1478</locationY>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -514,14 +521,7 @@
             <assignToReference>Get_Case_Aggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetCodiceCausale_0_0.CausalCode__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case_Aggiornato.OperationCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetCodiceCausale_0_0.OperationCode__c</elementReference>
+                <elementReference>Check_Documenti_0.causalCode</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -553,7 +553,7 @@
         <name>AssegnaValori_00_0_0_0_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>3042</locationX>
-        <locationY>1358</locationY>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -590,7 +590,7 @@
         <name>AssegnaValori_00_0_0_0_0_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>1106</locationX>
-        <locationY>4358</locationY>
+        <locationY>4454</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -602,14 +602,7 @@
             <assignToReference>GetCaseAggiornato2.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetCodiceCausale_0_0_0.CausalCode__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato2.OperationCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetCodiceCausale_0_0_0.OperationCode__c</elementReference>
+                <elementReference>Check_Documenti_1.causalCode</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -641,7 +634,7 @@
         <name>AssegnaValori_00_0_0_0_0_0_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>1370</locationX>
-        <locationY>4238</locationY>
+        <locationY>4454</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -687,7 +680,23 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Screen_Documentale_0_0_0</targetReference>
+            <targetReference>Beneficiario_Erede_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaVariabili</name>
+        <label>AssegnaVariabili</label>
+        <locationX>4098</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>CaseInput.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase_NonBozza</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -733,7 +742,7 @@
         <locationX>1744</locationX>
         <locationY>758</locationY>
         <defaultConnector>
-            <targetReference>Screen_Documentale_0_0</targetReference>
+            <targetReference>Beneficiario_Erede_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Compensazione</defaultConnectorLabel>
         <rules>
@@ -966,7 +975,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Screen_Documentale_0_0_0_0</targetReference>
+                <targetReference>Beneficiario_Erede</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -975,7 +984,7 @@
         <name>AvanzamentoDocumentale_0_0</name>
         <label>AvanzamentoDocumentale</label>
         <locationX>3108</locationX>
-        <locationY>998</locationY>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -984,14 +993,14 @@
             <name>ConfermaDocumentale_0_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>hdtDocumentSignature_0_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtDocumentSignature_0_0_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtDocumentSignature_0_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtDocumentSignature_0_0_0.cancelCase</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -1007,7 +1016,7 @@
         <name>AvanzamentoDocumentale_0_0_0</name>
         <label>AvanzamentoDocumentale</label>
         <locationX>380</locationX>
-        <locationY>1910</locationY>
+        <locationY>2126</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1016,14 +1025,14 @@
             <name>ConfermaDocumentale_0_0_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>hdtDocumentSignature_0_0_0_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtDocumentSignature_0_0_0_0_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtDocumentSignature_0_0_0_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtDocumentSignature_0_0_0_0_0.cancelCase</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -1039,7 +1048,7 @@
         <name>AvanzamentoDocumentale_0_0_0_0</name>
         <label>AvanzamentoDocumentale</label>
         <locationX>1436</locationX>
-        <locationY>3878</locationY>
+        <locationY>4094</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1048,14 +1057,14 @@
             <name>ConfermaDocumentale_0_0_0_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>hdtDocumentSignature_0_0_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtDocumentSignature_0_0_0_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtDocumentSignature_0_0_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtDocumentSignature_0_0_0_0.cancelCase</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -1065,6 +1074,81 @@
                 <targetReference>Check_Documenti_1</targetReference>
             </connector>
             <label>Conferma</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Beneficiario_Erede</name>
+        <label>Beneficiario: Erede?</label>
+        <locationX>380</locationX>
+        <locationY>1790</locationY>
+        <defaultConnector>
+            <targetReference>AvanzamentoDocumentale_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Erede</defaultConnectorLabel>
+        <rules>
+            <name>Erede</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Aggiornato.AccountholderTypeBeneficiary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Erede</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Documentale_0_0_0_0_0</targetReference>
+            </connector>
+            <label>Erede</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Beneficiario_Erede_0</name>
+        <label>Beneficiario: Erede?</label>
+        <locationX>1436</locationX>
+        <locationY>3758</locationY>
+        <defaultConnector>
+            <targetReference>AvanzamentoDocumentale_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Erede</defaultConnectorLabel>
+        <rules>
+            <name>Erede_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Aggiornato.AccountholderTypeBeneficiary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Erede</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Documentale_0_0_0_0</targetReference>
+            </connector>
+            <label>Erede</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Beneficiario_Erede_0_0</name>
+        <label>Beneficiario: Erede?</label>
+        <locationX>3108</locationX>
+        <locationY>878</locationY>
+        <defaultConnector>
+            <targetReference>AvanzamentoDocumentale_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Erede</defaultConnectorLabel>
+        <rules>
+            <name>Erede_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Aggiornato.AccountholderTypeBeneficiary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Erede</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Documentale_0_0_0</targetReference>
+            </connector>
+            <label>Erede</label>
         </rules>
     </decisions>
     <decisions>
@@ -1094,7 +1178,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Screen_Documentale_0_0_0</targetReference>
+                <targetReference>Beneficiario_Erede_0</targetReference>
             </connector>
             <label>Superati</label>
         </rules>
@@ -1103,23 +1187,30 @@
         <name>Fase_Da_Inviare</name>
         <label>Fase Da Inviare?</label>
         <locationX>182</locationX>
-        <locationY>2150</locationY>
+        <locationY>2366</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_00_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Da Inviare</defaultConnectorLabel>
         <rules>
             <name>Da_Inviare</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Check_Documenti.phase</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Da Inviare</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Check_Documenti.phase</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Attesa Modulo Firmato</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>GetCodiceCausale_0</targetReference>
+                <targetReference>AssegnaValori_00_0_0_0</targetReference>
             </connector>
             <label>Da Inviare</label>
         </rules>
@@ -1128,14 +1219,14 @@
         <name>Fase_Da_Inviare_0</name>
         <label>Fase Da Inviare?</label>
         <locationX>2910</locationX>
-        <locationY>1238</locationY>
+        <locationY>1454</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_00_0_0_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Da Inviare</defaultConnectorLabel>
         <rules>
             <name>Da_Inviare_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Check_Documenti_0.phase</leftValueReference>
                 <operator>Contains</operator>
@@ -1143,8 +1234,15 @@
                     <stringValue>Da Inviare</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Check_Documenti_0.phase</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Attesa Modulo Firmato</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>GetCodiceCausale_0_0</targetReference>
+                <targetReference>AssegnaValori_00_0_0_0_0_0</targetReference>
             </connector>
             <label>Da Inviare</label>
         </rules>
@@ -1153,23 +1251,30 @@
         <name>Fase_Da_Inviare_0_0</name>
         <label>Fase Da Inviare?</label>
         <locationX>1238</locationX>
-        <locationY>4118</locationY>
+        <locationY>4334</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_00_0_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Da Inviare</defaultConnectorLabel>
         <rules>
             <name>Da_Inviare_0_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Check_Documenti_1.phase</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Da Inviare</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Check_Documenti_1.phase</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Attesa Modulo Firmato</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>GetCodiceCausale_0_0_0</targetReference>
+                <targetReference>AssegnaValori_00_0_0_0_0_0_0_0</targetReference>
             </connector>
             <label>Da Inviare</label>
         </rules>
@@ -1552,137 +1657,11 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>GetCodiceCausale_0</name>
-        <label>GetCodiceCausale</label>
-        <locationX>50</locationX>
-        <locationY>2270</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>AssegnaValori_00_0_0_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Cluster__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.Cluster__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Process__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.Type</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Subprocess__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.Subprocess__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Commodity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.CommodityFormula__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>HDT_CausalCodeCalculation__mdt</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>GetCodiceCausale_0_0</name>
-        <label>GetCodiceCausale</label>
-        <locationX>2778</locationX>
-        <locationY>1358</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>AssegnaValori_00_0_0_0_0_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Cluster__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case_Aggiornato.Cluster__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Process__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case_Aggiornato.Type</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Subprocess__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case_Aggiornato.Subprocess__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Commodity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case_Aggiornato.CommodityFormula__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>HDT_CausalCodeCalculation__mdt</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>GetCodiceCausale_0_0_0</name>
-        <label>GetCodiceCausale</label>
-        <locationX>1106</locationX>
-        <locationY>4238</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>AssegnaValori_00_0_0_0_0_0_0_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Cluster__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.Cluster__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Process__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.Type</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Subprocess__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.Subprocess__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Commodity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetCaseAggiornato2.CommodityFormula__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>HDT_CausalCodeCalculation__mdt</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>2510</locationY>
+        <locationY>2606</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
         </connector>
@@ -1692,14 +1671,14 @@
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>314</locationX>
-        <locationY>2390</locationY>
+        <locationY>2606</locationY>
         <inputReference>Get_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>2778</locationX>
-        <locationY>1598</locationY>
+        <locationY>1694</locationY>
         <connector>
             <targetReference>Loading_Screen_0_0</targetReference>
         </connector>
@@ -1709,14 +1688,14 @@
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>3042</locationX>
-        <locationY>1478</locationY>
+        <locationY>1694</locationY>
         <inputReference>Get_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>1106</locationX>
-        <locationY>4478</locationY>
+        <locationY>4574</locationY>
         <connector>
             <targetReference>Loading_Screen_0_0_0</targetReference>
         </connector>
@@ -1726,7 +1705,7 @@
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>1370</locationX>
-        <locationY>4358</locationY>
+        <locationY>4574</locationY>
         <inputReference>GetCaseAggiornato2</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1739,11 +1718,18 @@
         </connector>
         <inputReference>Get_Case_Aggiornato</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCase_NonBozza</name>
+        <label>AggiornaCase</label>
+        <locationX>4098</locationX>
+        <locationY>518</locationY>
+        <inputReference>CaseInput</inputReference>
+    </recordUpdates>
     <screens>
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
         <locationX>50</locationX>
-        <locationY>2630</locationY>
+        <locationY>2726</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1774,7 +1760,7 @@
         <name>Loading_Screen_0_0</name>
         <label>Loading Screen</label>
         <locationX>2778</locationX>
-        <locationY>1718</locationY>
+        <locationY>1814</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1805,7 +1791,7 @@
         <name>Loading_Screen_0_0_0</name>
         <label>Loading Screen</label>
         <locationX>1106</locationX>
-        <locationY>4598</locationY>
+        <locationY>4694</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1833,66 +1819,15 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Screen_Documentale_0_0</name>
+        <name>Screen_Documentale_0_0_0</name>
         <label>Screen Documentale</label>
-        <locationX>3108</locationX>
-        <locationY>878</locationY>
+        <locationX>2976</locationX>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
             <targetReference>AvanzamentoDocumentale_0_0</targetReference>
-        </connector>
-        <fields>
-            <name>DisplayTextDocumentSignature_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>hdtDocumentSignature_0_0</name>
-            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>CaseInput.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>accountId</name>
-                <value>
-                    <elementReference>CaseInput.Account.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextVariant</name>
-                <value>
-                    <stringValue>brand</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Analitico</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Screen_Documentale_0_0_0</name>
-        <label>Screen Documentale</label>
-        <locationX>1436</locationX>
-        <locationY>3758</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>AvanzamentoDocumentale_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>DisplayTextDocumentSignature_0_0_0</name>
@@ -1922,9 +1857,15 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>quoteType</name>
+                <name>source</name>
                 <value>
-                    <stringValue>Analitico</stringValue>
+                    <elementReference>$User.LoginChannel__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>CaseInput.Type</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1937,13 +1878,13 @@
     <screens>
         <name>Screen_Documentale_0_0_0_0</name>
         <label>Screen Documentale</label>
-        <locationX>380</locationX>
-        <locationY>1790</locationY>
+        <locationX>1304</locationX>
+        <locationY>3878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>AvanzamentoDocumentale_0_0_0</targetReference>
+            <targetReference>AvanzamentoDocumentale_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>DisplayTextDocumentSignature_0_0_0_0</name>
@@ -1973,9 +1914,72 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>quoteType</name>
+                <name>processType</name>
                 <value>
-                    <stringValue>Analitico</stringValue>
+                    <elementReference>CaseInput.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>source</name>
+                <value>
+                    <elementReference>$User.LoginChannel__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Documentale_0_0_0_0_0</name>
+        <label>Screen Documentale</label>
+        <locationX>248</locationX>
+        <locationY>1910</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>AvanzamentoDocumentale_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayTextDocumentSignature_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtDocumentSignature_0_0_0_0_0</name>
+            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>CaseInput.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>source</name>
+                <value>
+                    <elementReference>$User.LoginChannel__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>CaseInput.Type</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -2380,6 +2384,9 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>AssegnaVariabili</targetReference>
+        </connector>
         <fields>
             <name>DisplayHeader</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
@@ -2938,7 +2945,7 @@
         <name>Annulla_Prestazione_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>3306</locationX>
-        <locationY>1118</locationY>
+        <locationY>1334</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2963,7 +2970,7 @@
         <name>Annulla_Prestazione_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>578</locationX>
-        <locationY>2030</locationY>
+        <locationY>2246</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3013,7 +3020,7 @@
         <name>Annulla_Prestazione_0_0_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1634</locationX>
-        <locationY>3998</locationY>
+        <locationY>4214</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

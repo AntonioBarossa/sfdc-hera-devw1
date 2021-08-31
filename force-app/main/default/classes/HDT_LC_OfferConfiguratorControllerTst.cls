@@ -47,7 +47,7 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         List<sObject> tableDataList;
         Test.startTest();
         for(String s : objList){
-            tableDataList = HDT_LC_OfferConfiguratorController.getTableData(s, '', '', '');
+            tableDataList = HDT_LC_OfferConfiguratorController.getTableData(s, '', '', '', '');
         }
         Test.stopTest();
 
@@ -131,6 +131,9 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         Test.startTest();
         offerMatrix = HDT_LC_OfferConfiguratorController.getOfferMatrix(p.Id, '', 'ZELE_PREZZO');
         offerMatrix = HDT_LC_OfferConfiguratorController.getOfferMatrix(p.Id, technicalOffer.Id, 'ZELE_PREZZO');
+
+        HDT_WRP_TechnicalOffer.HDT_WRP_TechnicalOfferWebService obj;
+        HDT_LC_OfferConfiguratorCtrlHelper.generateHttpBody(obj, technicalOffer);
         Test.stopTest();
 
     }
@@ -159,10 +162,65 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         technicalOffer.Product__c = p.Id;
         technicalOffer.RateCategory__c = rate.Id;
 
+        List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> matrixSingleRowList = new List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>();
+        HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow matrixSingleRow = new HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow();
+        matrixSingleRow.id = '';
+        matrixSingleRow.rowId = '0';
+        matrixSingleRow.tecName = '';
+        matrixSingleRow.definition = '';
+        matrixSingleRow.type = '';
+        matrixSingleRow.g = true;
+        matrixSingleRow.m = true;
+        matrixSingleRow.v = true;
+        matrixSingleRow.s = '';
+
+        matrixSingleRow.rateType = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+        matrixSingleRow.rateType.value = '';
+        matrixSingleRow.rateType.label = '';
+        matrixSingleRow.rateType.relatedTo = '';
+        matrixSingleRow.rateType.enabled = true;
+
+        matrixSingleRow.infoGroup = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+        matrixSingleRow.infoGroup.value = '';
+        matrixSingleRow.infoGroup.label = '';
+        matrixSingleRow.infoGroup.relatedTo = '';
+        matrixSingleRow.infoGroup.enabled = true;
+
+        matrixSingleRow.numValue = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+        matrixSingleRow.numValue.value = '';
+        matrixSingleRow.numValue.label = '';
+        matrixSingleRow.numValue.relatedTo = '';
+        matrixSingleRow.numValue.enabled = true;
+
+        matrixSingleRow.flag = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+        matrixSingleRow.flag.value = '';
+        matrixSingleRow.flag.label = '';
+        matrixSingleRow.flag.relatedTo = '';
+        matrixSingleRow.flag.enabled = true;
+
+        matrixSingleRow.priceCode = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+        matrixSingleRow.priceCode.value = '';
+        matrixSingleRow.priceCode.label = '';
+        matrixSingleRow.priceCode.relatedTo = '';
+        matrixSingleRow.priceCode.enabled = true;
+
+        matrixSingleRow.discountCode = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+        matrixSingleRow.discountCode.value = '';
+        matrixSingleRow.discountCode.label = '';
+        matrixSingleRow.discountCode.relatedTo = '';
+        matrixSingleRow.discountCode.enabled = true;
+
+        matrixSingleRow.stringValue = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+        matrixSingleRow.stringValue.value = '';
+        matrixSingleRow.stringValue.label = '';
+        matrixSingleRow.stringValue.relatedTo = '';
+        matrixSingleRow.stringValue.enabled = true;
+        matrixSingleRowList.add(matrixSingleRow);
+
 
         Test.startTest();
         //insert
-        saveResponse = HDT_LC_OfferConfiguratorController.saveNewOfferConfigured(JSON.serialize(technicalOffer), null, '', p.Id, '', 'EVVUD');
+        saveResponse = HDT_LC_OfferConfiguratorController.saveNewOfferConfigured(JSON.serialize(technicalOffer), null, JSON.serialize(matrixSingleRowList), p.Id, '', 'EVVUD');
 
         TechnicalOffer__c newTechnicalOffer = new TechnicalOffer__c();
         newTechnicalOffer.Name = p.ProductCode + ' [' + p.Version__c + '] [EVVUD]';
@@ -229,6 +287,21 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         newTechnicalOffer.NameExternalId__c = newTechnicalOffer.Name;
         newTechnicalOffer.Product__c = p.Id;
         newTechnicalOffer.RateCategory__c = rate.Id;
+        newTechnicalOffer.Market__c = 'mm';
+        newTechnicalOffer.StartDate__c = Date.today();
+        newTechnicalOffer.EndDate__c = Date.today().addDays(1);
+        newTechnicalOffer.StepAllowed__c = 'N';
+        newTechnicalOffer.ContractId__c = '1';
+        newTechnicalOffer.NumberTimeExtension__c = '1';
+        newTechnicalOffer.UnitTimeExtension__c = '1';
+        newTechnicalOffer.NumberDaysMonthsYears__c = '1';
+        newTechnicalOffer.UnitTerminationTime__c = '3';
+        newTechnicalOffer.CancellationAllowed__c = 'N';
+        newTechnicalOffer.RecessAdmitted__c = 'N';
+        newTechnicalOffer.NumberOfTimeUnits__c = '3';
+        newTechnicalOffer.UnitOfTimeMeasurement__c = '3';
+        newTechnicalOffer.AdmittingProfileModification__c = false;
+        newTechnicalOffer.OfferToBeModified__c = false;
         insert newTechnicalOffer;
 
         List<TechnicalOfferItem__c> techOffeItems = new List<TechnicalOfferItem__c>();
@@ -315,7 +388,17 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         String s = HDT_LC_OfferConfiguratorController.cloneRecord(newTechnicalOffer.Id, p.Id);
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
         saveResponse = HDT_LC_OfferConfiguratorController.deleteTechnicalOffer(p.Id, newTechnicalOffer.Id);
+        List<TechnicalOfferItem__c> technicalOfferItemList = HDT_LC_OfferConfiguratorController.getTechnicalOfferRecords(newTechnicalOffer.Id);
         Test.stopTest();
     }
+
+    //@isTest
+    //static void getTechnicalOfferRecords(){
+    //    TechnicalOffer__c offTech = [SELECT Id FROM TechnicalOffer__c LIMIT 1];
+//
+    //    Test.startTest();
+    //    
+    //    Test.stopTest();
+    //}
 
 }

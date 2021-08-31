@@ -16,6 +16,29 @@ public with sharing class HDT_UTL_Sales {
 
         return getSDVComune;
     }
+    public static Map<String,String> getCityAgencyList(Map<String,String> svIdComune,Map<String,String> svIdcommodity){
+        Map<String,String> comuneCode = new Map<String,String>();
+        map<String,City__c> comObj = new map<String,City__c> ();
+        List<city__c> lCity = HDT_QR_City.getCitySDVList(svIdComune.values());
+        for(City__c c : lCity){
+            comObj.put(c.Name,c);
+        }
+        for(String s : svIdComune.keySet()){
+            if(comObj.get(svIdComune.get(s)) != null){
+                City__c ci = comObj.get(svIdComune.get(s));
+                if((svIdcommodity.get(s) == 'Energia Elettrica' && ci.ServiceEle__c == true) || (svIdcommodity.get(s) == 'Gas' && ci.ServiceGas__c == true)){
+                    comuneCode.put(s,ci.SDV__c);
+                }
+            }
+        }
+
+        return comuneCode;
+    }
+
+    public class wrapReturnCity{
+        @AuraEnabled public String commodity;
+        @AuraEnabled public String comune;
+    }
     
 
 
@@ -53,10 +76,81 @@ public with sharing class HDT_UTL_Sales {
         return mapRes;
     }
 
+    public static Map<String,String> getAgentNameAndCodeList(List<ServicePoint__c> ServiceList,String Marcatura){
+        String marcaturaValue = '';
+        Map<String,String> mapRes = new Map<String,String>();
+        Map<String,String> serviceCom = new Map<String,String>();
+        Map<String,String> ServiceCmm = new Map<String,String>();
+        Map<String,String> mapConf1 = new Map<String,String>();
+        Map<String,String> mapConf2 = new Map<String,String>();
+
+        for(ServicePoint__c ser : ServiceList){
+            serviceCom.put(ser.id,ser.SupplyCity__c );
+            ServiceCmm.put(ser.id,ser.CommoditySector__c );
+        }
+        Map<String,String> comuneCode = getCityAgencyList(serviceCom,ServiceCmm);
+        ///String comune = getCityAgency(service.SupplyCity__c,Service.CommoditySector__c == 'Energia Elettrica' ? true:false,Service.CommoditySector__c == 'Gas' ? true:false);
+        if(mapMarcatura.get(Marcatura) != null && mapMarcatura.get(Marcatura) != ''){
+            marcaturaValue = mapMarcatura.get(Marcatura);
+        }
+        else{
+            marcaturaValue = 'ALTRO';
+        }
+        for(String r : serviceCom.keyset()){
+            if(comuneCode.get(r) == null){
+                comuneCode.put(r,'ALTRO');
+            }
+        }
+
+       /* if(comune == null || comune == ''){
+            comune = 'ALTRO';
+        }*/
+      //  System.debug('***Comune:' + comune);
+      //  System.debug('***Service:' + Service.CommoditySector__c);
+       // System.debug('***Marcatura:' + marcaturaValue);
+        List<HDT_MatriceSocietaVendita__mdt> listConf = new List<HDT_MatriceSocietaVendita__mdt>();
+        List<HDT_MatriceSocietaVendita__mdt> listConf2 = new List<HDT_MatriceSocietaVendita__mdt>();
+
+        listConf = HDT_QR_MatriceAgenti.getAgenteExceptionList();
+        
+        listConf2 = HDT_QR_MatriceAgenti.getAgenteList();
+        for(HDT_MatriceSocietaVendita__mdt md1 : listConf){
+            if(md1.distributor__c != null ){
+                for(String s :md1.distributor__c.split(',')){
+                    mapConf1.put(md1.Service__c+'_'+md1.Comune__c + '_' + md1.Marcatura__c +'_' + md1.offerta__c + '_' + s,md1.SellerCompany__c);
+                }
+            }
+        }
+        for(HDT_MatriceSocietaVendita__mdt md2 : listConf2){
+            mapConf2.put(md2.Service__c+'_'+md2.Comune__c + '_' + md2.Marcatura__c +'_' + md2.offerta__c,md2.SellerCompany__c);
+        }
+
+        for(ServicePoint__c service : ServiceList){
+            String res = '';
+            if(mapConf1.get(Service.CommoditySector__c + '_' + comuneCode.get(Service.id) +'_' + marcaturaValue + '_' + 'ALTRO' + '_' + service.distributor__r.code__c) != null){
+                res = mapConf1.get(Service.CommoditySector__c + '_' + comuneCode.get(Service.id) +'_' + marcaturaValue + '_' + 'ALTRO' + '_' + service.distributor__r.code__c);
+            }
+            else if(mapConf2.get(Service.CommoditySector__c + '_' + comuneCode.get(Service.id) +'_' + marcaturaValue + '_' + 'ALTRO') != null){
+                res = mapConf2.get(Service.CommoditySector__c + '_' + comuneCode.get(Service.id) +'_' + marcaturaValue + '_' + 'ALTRO');
+            }
+            mapRes.put(service.id,res);
+        }
+
+
+       /* if(listConf != null && !listConf.isEmpty()){
+            mapRes.put('nomeAgente',listConf[0].SellerCompany__c);
+            mapRes.put('codiceAgente',listConf[0].SalesCompanyCode__c);
+        }else{
+            mapRes.put('nomeAgente','');
+            mapRes.put('codiceAgente','');
+        }*/
+        return mapRes;
+    }
+
     public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
 
         Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        if(((sale.Account__c != null && sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende SME' && sale.Account__r.Category__c != 'Piccoli Condomini') ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+        if(((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
             saleSrv.updateRecord(s);
@@ -68,7 +162,7 @@ public with sharing class HDT_UTL_Sales {
     public static Boolean isTransitionNoUp(ServicePoint__c sp, Sale__c sale){
 
         Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        if(((sale.Account__c != null && sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende SME' && sale.Account__r.Category__c != 'Piccoli Condomini') ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+        if(((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
            // saleSrv.updateRecord(s);
@@ -77,6 +171,19 @@ public with sharing class HDT_UTL_Sales {
             return false;
         }
     }
+    public static Boolean isTransitionNoUp(Sale__c sale){
+
+       // Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+       if(sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini')) ){
+            Sale__c s = new Sale__c(Id=sale.Id);
+            s.isTransition__c=true;
+           // saleSrv.updateRecord(s);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
     public static Boolean isWinback(String servicePointId){
         List<Case> caseList = caseQr.getServicePointCaseWinBack(servicePointId);

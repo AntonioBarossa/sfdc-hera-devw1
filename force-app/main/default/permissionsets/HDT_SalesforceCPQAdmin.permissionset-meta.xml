@@ -2008,6 +2008,10 @@
         <apexClass>SBQQ__Versionable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>HDT_CP_SalesforceCPQAdmin</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.AccountNumber</field>
@@ -19785,6 +19789,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.IsBillableVas__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.IsVAS__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -24305,11 +24314,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ServicePoint__c.Potentiality__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>ServicePoint__c.PowerAvailable__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -25380,11 +25384,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>et4ae5__IndividualEmailResult__c.BounceType__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>et4ae5__IndividualEmailResult__c.CampaignID__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -25726,11 +25725,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.PraxidiaPostWorkOutcome__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.Priority__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

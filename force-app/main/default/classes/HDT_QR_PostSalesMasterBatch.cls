@@ -13,6 +13,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         ExpirationDate__c
         FROM Knowledge__kav
         WHERE ExpirationDate__c < :this.todayDate
+        AND PublishStatus = 'Online'
         WITH SECURITY_ENFORCED
         ];
 
@@ -24,6 +25,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         return [SELECT Id,
         Phase__c,
         Type,
+        Cluster__c,
         DepositPaymentMode__c,
         SuspensionEndDate__c
         FROM Case
@@ -35,23 +37,27 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
 
     }
 
-    public List<Order> getRelatedOred(){
+    public List<Case> getNonReqContract(){
         return [SELECT Id,
         Phase__c,
         EffectiveDate__c,
-        (SELECT Id,
-        Phase__c,
-        EffectiveDate__c
-        FROM Cases1__r
+        Type,
+        Cluster__c,
+        Order__c
+        FROM Case
         WHERE Type = :this.nonRequestedContract
         AND Phase__c = : this.phaseInstallments
-        LIMIT 1)
-        FROM Order
-        WHERE ProcessType__c = 'Switch in Ele'
-        OR ProcessType__c = 'Switch in Gas'
-        OR ProcessType__c = 'Switch in Reseller'
         WITH SECURITY_ENFORCED
         ];
+    }
+
+    public Order getRelatedOrder(String orderId){
+        return [SELECT Id,
+        EffectiveDate__c
+        FROM Order
+        WHERE Id = :orderId
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
     }
 
     public List<Case> getQuotationCase(){

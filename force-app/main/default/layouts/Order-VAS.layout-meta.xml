@@ -371,6 +371,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Order.Escalation</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>99</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Order.Riprendi_Processo</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -503,9 +508,9 @@
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
-    <relatedLists>
+    <!-- <relatedLists>
         <relatedList>RelatedContentNoteList</relatedList>
-    </relatedLists>
+    </relatedLists> -->
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
@@ -532,14 +537,14 @@
         <fields>NAME</fields>
         <relatedList>DocumentalActivity__c.OrderId__c</relatedList>
     </relatedLists>
-    <relatedLists>
+    <!-- <relatedLists>
         <fields>NAME</fields>
         <fields>SBQQ__NetAmount__c</fields>
         <fields>SBQQ__Status__c</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>SBQQ__Primary__c</fields>
         <relatedList>SBQQ__Quote__c.OrderReference__c</relatedList>
-    </relatedLists>
+    </relatedLists> -->
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>

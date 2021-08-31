@@ -1,0 +1,100 @@
+public with sharing class HDT_LC_CopiaContratto {
+    public static HDT_SRV_Case caseSRV= new HDT_SRV_Case();
+    public static HDT_SRV_ActivityCustom activitySrv= new HDT_SRV_ActivityCustom();
+    public static HDT_QR_RecordType rctype= new HDT_QR_RecordType();
+    @AuraEnabled
+    public static List<Order> getAccountOrder(String accountId){
+        HDT_QR_Order orderQr = new HDT_QR_Order();
+
+        return orderQr.getRecordsByAccountId(accountId);
+        
+        
+    }
+    @AuraEnabled
+    public static List<Order> getOrderChild(String orderId){
+        System.debug('***:' + orderId);
+        HDT_QR_Order orderQr = new HDT_QR_Order();
+
+        return orderQr.getChildOrdersByParentId(orderId);
+        
+    }
+
+    @AuraEnabled
+    public static string confirmAction(String caseId,String accountId,String orderParentId,String tipoAttivita,String tipoFirma){
+        
+        Id recTypeId= null;
+        RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
+        case c = new case();
+        String res = '';
+        c.id = caseId;
+        c.CopyType__c = tipoFirma; 
+        if(rc !=null){
+            recTypeId= rc.Id;
+        }
+        if('Copia della registrazione'.equalsIgnoreCase(tipoFirma)){
+  
+            wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Invio registrazione');
+            System.debug(activity);
+            activitySrv.createRecord(activity);
+            res = 'Invio registrazione';
+        }else{
+            List<DocumentSendTracking__c> listDocument = getDocumentTracking(orderParentId);
+            if(listDocument == null ||listDocument.isEmpty() ){
+                wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Recupero contratto da Postel');
+                activitySrv.createRecord(activity);
+                res = 'Recupero contratto da Postel';
+            }else{
+    
+                if('Sportello'.equalsIgnoreCase(tipoAttivita)){
+                    wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Invio Contratto');
+                    activitySrv.createRecord(activity);
+                    res = 'Invio Contratti';
+                }
+                else{
+                    c.status = 'closed';
+                    c.phase__c = 'Completata';
+                   // caseSRV.updateRecord(c); 
+                }
+            }
+        }
+        caseSRV.updateRecord(c); 
+        return res;
+    }
+
+    @AuraEnabled
+    public static boolean chiudiAttivit(String recordId){
+        try{
+            HDT_QR_Case caseQr = new HDT_QR_Case();
+            wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
+            s.wrts_prcgvr__status__c = 'Completed';
+            activitySrv.updateRecord(s);
+            Case c = caseQr.getRecordById(s.case__c);
+            c.phase__c	='In Lavorazione';
+            caseSrv.updateRecord(c);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+
+    @AuraEnabled
+    public static boolean chiudiAttivitNoCase(String recordId){
+        try{
+            HDT_QR_Case caseQr = new HDT_QR_Case();
+            wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
+            s.wrts_prcgvr__status__c = 'Completed';
+            activitySrv.updateRecord(s);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+
+    @AuraEnabled
+    public static List<DocumentSendTracking__c> getDocumentTracking(String orderId){
+        return [SELECT Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Account__c, BounceReason__c, Case__c, EnvelopeId__c, IsBounced__c, Order__c, ReadDate__c, Receiver__c, SendDate__c, SendMode__c, Sender__c, CompanyOwner__c FROM DocumentSendTracking__c where Order__c =: orderId];
+    }
+
+}

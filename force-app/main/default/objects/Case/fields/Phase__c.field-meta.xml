@@ -5,7 +5,7 @@
     <label>Phase</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -776,6 +776,36 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Risposta non Ricevuta</label>
+            </value>
+            <value>
+                <fullName>Comunicazione verso Motore VAS OK</fullName>
+                <default>false</default>
+                <label>Comunicazione verso Motore VAS OK</label>
+            </value>
+            <value>
+                <fullName>Accettato Motore VAS</fullName>
+                <default>false</default>
+                <label>Accettato Motore VAS</label>
+            </value>
+            <value>
+                <fullName>Comunicazione verso Motore VAS KO</fullName>
+                <default>false</default>
+                <label>Comunicazione verso Motore VAS KO</label>
+            </value>
+            <value>
+                <fullName>Ripensato KO</fullName>
+                <default>false</default>
+                <label>Ripensato KO</label>
+            </value>
+            <value>
+                <fullName>Motore VAS KO</fullName>
+                <default>false</default>
+                <label>Motore VAS KO</label>
+            </value>
+            <value>
+                <fullName>Disattivato</fullName>
+                <default>false</default>
+                <label>Disattivato</label>
             </value>
         </valueSetDefinition>
     </valueSet>

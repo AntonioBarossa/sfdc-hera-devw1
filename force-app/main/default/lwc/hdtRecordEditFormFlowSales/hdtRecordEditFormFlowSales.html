@@ -3,7 +3,7 @@
         <div class="slds-m-around_medium">
             <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="medium"></lightning-spinner>
             <c-hdt-upload-documents title="Allega Fatture" record-id={recordid} accepted-formats={acceptedFormats}></c-hdt-upload-documents>
-            <lightning-input label="Stato Approvazione" data-id="appState" value={statoApp} read-only></lightning-input>
+            <!--<lightning-input label="Stato Approvazione" data-id="appState" value={statoApp} read-only></lightning-input>-->
             <lightning-record-edit-form record-id={recordid}
                                 object-api-name='Case'
                                 onload={handleOnLoad}>
@@ -38,16 +38,16 @@
                 <div class="slds-form-element slds-m-top_small">
                     <lightning-input-field field-name="Contract__c" required></lightning-input-field>
                 </div>
-                <div class="slds-form-element slds-m-top_small">
+               <!-- <div class="slds-form-element slds-m-top_small">
                     <lightning-input-field field-name="ReassignmentReason__c" onchange={handleReassignmentReasonChange} >
                     </lightning-input-field>
-                </div>
+                </div> -->
                 <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
                     <div class="actionsRight">
                         <template if:true={showSubmitForApprovalButton}>
-                            <lightning-button class="slds-m-top_x-small slds-m-bottom_x-small slds-p-left_x-small slds-float--right"
+                            <!--<lightning-button class="slds-m-top_x-small slds-m-bottom_x-small slds-p-left_x-small slds-float--right"
                                 variant="neutral" type="button" name="submitForApproval" label="Sottoponi ad approvazione" onclick={submitForApproval}>
-                            </lightning-button>
+                            </lightning-button> -->
                         </template>
                         <lightning-button class="slds-m-top_x-small slds-m-bottom_x-small slds-p-left_x-small slds-float--right"
                             variant="brand" type="button" name="savePractice" label="Conferma Pratica" disabled={disableConfirmButton} onclick={handleSave}>

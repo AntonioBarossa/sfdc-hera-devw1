@@ -125,8 +125,22 @@ public inherited sharing class HDT_QR_QuoteLine {
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND SBQQ__Quote__r.ContractReference__c = null
             AND SBQQ__Quote__r.OrderReference__c = null
+            AND SBQQ__Product__r.Name != 'Analisi Consumi'
             AND (SBQQ__ProductFamily__c = 'VAS Fatturabili' OR SBQQ__ProductFamily__c = 'VAS Prodotto' OR SBQQ__ProductFamily__c = 'VAS Servizio')
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<SBQQ__QuoteLine__c> getQuoteLineAnalisiConsumi(List<String> mainQuoteLineIds){
+        return [
+            SELECT
+            Id,
+            BillingProfile__c,
+            SBQQ__RequiredBy__r.BillingProfile__c
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__RequiredBy__c IN :mainQuoteLineIds
+            AND SBQQ__Product__r.Name = 'Analisi Consumi'
             WITH SECURITY_ENFORCED
         ];
     }
@@ -355,11 +369,12 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Product__r.Name,
             SBQQ__Quote__r.Name,
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            SBQQ__RequiredBy__c,
             ServicePoint__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.ContractReference__c = :contractId
             AND SBQQ__Quote__r.Sale__c = :saleId
-            AND SBQQ__Product__r.Name IN ('POD','PDR')
+            AND (SBQQ__Product__r.Name IN ('PDR','POD') OR SBQQ__Product__r.Family IN  ('VAS Opzione prodotto', 'VAS Fatturabili', 'VAS Prodotto'))
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];
@@ -443,6 +458,42 @@ public inherited sharing class HDT_QR_QuoteLine {
             WHERE SBQQ__Quote__c = :quoteId
             AND SBQQ__Product__r.Name IN ('POD','PDR')
             AND ServicePointLinkItem__c != null
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 16/07/2021
+    * @description Get quotelines with cambio offerta
+    * @param String quoteId - SBQQ__Quote__c
+    * @return List<SBQQ__QuoteLine__c>
+    */
+    public List<SBQQ__QuoteLine__c> getQuoteLinesWithCambioOfferta(String saleId){
+
+        return [
+            SELECT
+            Id,
+            SBQQ__RequiredBy__c,
+            Name,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            BillingProfile__c,
+            BillingProfile__r.Name,
+            SBQQ__Quote__r.ContractReference__c,
+            SBQQ__Quote__r.ContractReference__r.BillingProfile__r.Name
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__r.Sale__c = :saleId
+            AND SBQQ__Quote__r.ContractReference__c != null
+            AND (SBQQ__Quote__r.AllowChangeUse__c = null OR SBQQ__Quote__r.AllowChangeUse__c = false)
+            AND (SBQQ__Quote__r.AmendmentAllowed__c = null OR SBQQ__Quote__r.AmendmentAllowed__c = false)
+            AND SBQQ__Product__r.Name NOT IN ('PDR','POD')
+            AND (SBQQ__ProductFamily__c = 'VAS Fatturabili' OR SBQQ__ProductFamily__c = 'VAS Prodotto' OR SBQQ__ProductFamily__c = 'VAS Servizio')
+            AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];
 

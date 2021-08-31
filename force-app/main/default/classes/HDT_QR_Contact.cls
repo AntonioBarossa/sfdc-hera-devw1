@@ -10,6 +10,7 @@ public inherited sharing class HDT_QR_Contact {
 
         List<Contact> contactsList = [
             SELECT
+            Name,
             FirstName,
             LastName,
             MobilePhone,
@@ -68,8 +69,7 @@ public inherited sharing class HDT_QR_Contact {
     public List<Contact> getContactsByAccount(String accountId){
         return [
             SELECT
-            Id,
-            Email
+            Id, Name,FirstName, LastName, Title, Phone, Email,DegreeOfStudies__c 
             FROM Contact
             WHERE AccountId = :accountId
             WITH SECURITY_ENFORCED
@@ -176,5 +176,20 @@ public inherited sharing class HDT_QR_Contact {
             WHERE Email = :fromEmail
             WITH SECURITY_ENFORCED
         ];
+    }
+
+        /**
+     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
+     * @description Get Contact Point records by Id
+     * @param String individualId Id of the individual to filter the Leads
+     * @param String fields fields to retrieve separated by ,
+     */
+    public List<Contact> getRecordByIndividual(String individualId, String fields) {
+
+        String query = 'SELECT '+ fields +
+                ' FROM Contact WHERE IndividualId = :individualId WITH SECURITY_ENFORCED';
+
+        return Database.query(query);
+
     }
 }

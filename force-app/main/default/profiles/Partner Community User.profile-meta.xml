@@ -2447,11 +2447,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.SupplyStreetToponym__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Case.SupplyType__c</field>
         <readable>false</readable>
@@ -2922,6 +2917,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Contract.ExciseEle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contract.ExciseGas__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Contract.BillingAccount__c</field>
         <readable>true</readable>
@@ -3350,6 +3355,16 @@
         <editable>false</editable>
         <field>FareTypeList__c.PossibleValue__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.ValueToRemove__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.RecordTypeDeveloperName__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -4584,6 +4599,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.XMLType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.ReminderComfortCall__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8033,6 +8053,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.IsBillableVas__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.Market__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8463,11 +8488,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ServicePoint__c.Potentiality__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>ServicePoint__c.PowerAvailable__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -8579,11 +8599,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.SupplyStreetNumber__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>ServicePoint__c.SupplyStreetToponym__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9073,11 +9088,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>et4ae5__IndividualEmailResult__c.BounceType__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>et4ae5__IndividualEmailResult__c.CampaignID__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -9124,6 +9134,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ContactName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ContactSurname__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -23,9 +23,11 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         
         
 
-        HDT_UTL_OrderProcess.salesProcessManagementBefore(trigger.new,trigger.old);          
+        HDT_UTL_OrderProcess.salesProcessManagementBefore(trigger.new,trigger.old); 
 
         HDT_UTL_OrderProcess.updateServiceRequest(trigger.new, trigger.old);
+        
+        HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Order'); 
         
         
     }
@@ -37,10 +39,11 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         //Handles callout (update only)
         ((wrts_prcgvr.Interfaces_1_0.ICalloutUtils) wrts_prcgvr.VersionManager.newClassInstance('CalloutUtils'))
                 .bulkSend(new Map<String,Object>{'newObjects'=>Trigger.new, 'oldObjects' => Trigger.old});
-       
 
-        HDT_UTL_OrderProcess.salesProcessManagementAfter(trigger.new,trigger.old);         
-        
+        HDT_UTL_OrderProcess.checkSatisfationIndex(trigger.newMap, trigger.oldMap);
+
+        HDT_UTL_OrderProcess.salesProcessManagementAfter(trigger.new,trigger.old);
+
         //Handle 'Plico validato Firmato' case for Order Dossier
         HDT_UTL_OrderProcess.orderPhaseManagementAfterUpdate(trigger.new,trigger.old);
 
@@ -48,10 +51,9 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         HDT_UTL_OrderProcess.orderCalulateDateUpdate(trigger.new,trigger.old);
         // END @Picchiri HRADTR-77 Calcolo Date 01.06.21
 
-        // START @Picchiri Credit Check 04.06.21                
+        // START @Picchiri Credit Check 04.06.21
         HDT_UTL_OrderProcess.creditCheckManager(trigger.new,trigger.old);
-        // END @Picchiri Credit Check 04.06.21        
-
+        // END @Picchiri Credit Check 04.06.21
     }
 
     //Andrei Necsulescu - 02/07/2021: Commented as it created an exception when importing more than a certain number of Orders at a time.

@@ -67,7 +67,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         else {
                             ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
                         }
-                        
+
                         String previousPhase = ordRetrieved.Phase__c;
                         String nextPhase = mapRequestFields.get('FASE');
                         String finalCancellationPhase = '';
@@ -76,24 +76,26 @@ public with sharing class HDT_SRV_SalesHandler {
                         ord.Id = ordRetrieved.Id;
                         ord.Phase__c = mapRequestFields.get('FASE');
                         //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
-                        //ord.ExternalUserCompany__c = mapRequestFields.get('CMP');
+                        ord.ExternalUserCompany__c = mapRequestFields.get('CMP');
                         //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
 
                         switch on mapRequestFields.get('FASE') {
                             when 'Ammissibilità KO' {
                                 ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
                                 ord.CausalCode__c = mapRequestFields.get('CODERR');
+                                ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.Description = mapRequestFields.get('ANNOTAZIONI');
 
-                                // if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
-                                //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                // )){
-                                //     ord.TecnicalPhase__c = 'Annullato';
-                                // }
+                                 if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
+                                     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                 )){
+                                     ord.TecnicalPhase__c = 'Annullato';
+                                     ord.Status = 'Annullato';
+                                 }
                             }
                             when 'Ammissibilità OK' {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
@@ -108,15 +110,64 @@ public with sharing class HDT_SRV_SalesHandler {
 
                                 if (mapRequestFields.get('IMP_PREV_DIST') != null && !String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
+                                    
+                                    switch on mapRequestFields.get('TIPO_INTERVENTO') {
+                                        when 'A Preventivo' {
+                                            ord.QuotationType__c='Analitico';
+                                            ord.ValidityDateEstimate__c=Date.today().addDays(15);
+                                        }
+                                        when 'Attivazione' {
+                                            ord.QuotationType__c='Predeterminabile';
+                                            ord.ValidityDateEstimate__c=Date.today().addDays(5);
+                                        }
+                                        when 'Lavoro Semplice' {
+                                            ord.QuotationType__c='Predeterminabile';
+                                            ord.ValidityDateEstimate__c=Date.today().addDays(5);
+                                        }
+                                    }
+                                    
+                                }else{
+                                    if(mapRequestFields.get('TIPO_INTERVENTO')=='Lavoro Semplice'){
+                                        ord.QuotationType__c='Rapido';
+                                        ord.ValidityDateEstimate__c=Date.today().addDays(5);
+                                    }
                                 }
 
-                                // if(ord.CausalCode__c == '034' 
-                                //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                // )){
-                                //     ord.TecnicalPhase__c = 'Annullato';
-                                // }
+                                 if(ord.CausalCode__c == '034' 
+                                     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                 )){
+                                     ord.TecnicalPhase__c = 'Annullato';
+                                     ord.Status = 'Annullato';
+                                 }
+                            }
+                            when 'Dati Tecnici Ricevuti'{
+                                HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
+                                utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
+                                switch on mapRequestFields.get('COD_FLUSSO'){
+                                    when 'E154'{
+                                        utlTechData.handleE154Flow(mapRequestFields, ord);
+                                    }
+                                    when 'E150F'{
+                                        utlTechData.handleE150Flow(mapRequestFields, ord);
+                                    }
+                                    when '0351' {
+                                        utlTechData.handle351Flow(mapRequestFields, ord);
+                                    }
+                                    when '0300' {
+                                        utlTechData.handle300Flow(mapRequestFields, ord);
+                                    }
+                                }
+                            }
+                            when 'Errore tecnico invio a SAP', 'Flusso bloccato in assenza del precedente', 'Errore invio a DL/SII' {
+                                system.debug('previousPhase '+previousPhase);
+                                String finalPhase = ord.phase__c;
+                                if('Errore tecnico invio a SAP'.equalsIgnoreCase(finalPhase)) finalPhase = 'Errore comunicazione SAP';
+                            	ord.TrackingDiscardPhase__c = finalPhase;
+                                ord.phase__c=previousPhase; //perchè queste 3 non sono ammesse nel campo phase__c
+                                system.debug('phase__c '+ord.phase__c);
+                                system.debug('TrackingDiscardPhase__c '+ord.TrackingDiscardPhase__c);
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
@@ -143,6 +194,8 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Amm. Precheck OK SII' {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                ord.RemiCode__c = mapRequestFields.get('EXT_CABINA_REMI');
+                                ord.VATNumberUdb__c = mapRequestFields.get('EXT_PIVA_DISTR');
                                 if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                     ord.PrecheckResultSII__c = 'OK';
                                 }
@@ -168,6 +221,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Annullamento - Ammissibilità OK', 'Annullamento - Ammissibilità KO' {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                                ord.CancellationHerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 if(previousPhase.indexOf('Ripensamento') >-1){
                                     nextPhase = nextPhase.replace('Annullamento', 'Ripensamento');
                                 }
@@ -199,21 +253,42 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Completata' {
-                                ord.Description = mapRequestFields.get('NOTA_HK');
-                                ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
-                                ord.OrderODV__c = mapRequestFields.get('VBELN');
-                                ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
-                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
-                                
-                                if(mapRequestFields.get('VKONT') != null) {
-                                    ord.ContractAccountCode__c = mapRequestFields.get('VKONT');
 
-                                    BillingProfile__c billingProfile = new BillingProfile__c();
-                                    billingProfile.Id = ordRetrieved.BillingProfile__c;
-                                    billingProfile.ContractAccountCode__c = mapRequestFields.get('VKONT');
+                                Boolean redirectPreventivo = false;
+                                switch on ordRetrieved.ProcessType__c{
+                                    when 'Connessione con Attivazione', 'Temporanea Nuova Attivazione', 'Attivazione con Modifica'{
+                                        redirectPreventivo=true;
+                                    }
+                                }
+
+                                if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') && redirectPreventivo){
+                                    ord.Phase__c = 'Inviare preventivo';
+                                }else{
+                                    ord.Description = mapRequestFields.get('NOTA_HK');
+                                    ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
+                                    ord.OrderODV__c = mapRequestFields.get('VBELN');
+                                    ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
+                                    ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                    ord.Status='Activated';
                                     
-                                    HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
-                                    billingProfileSrv.updateRecord(billingProfile);
+                                    if(mapRequestFields.get('VKONT') != null) {
+                                        ord.ContractAccountCode__c = mapRequestFields.get('VKONT');
+
+                                        BillingProfile__c billingProfile = new BillingProfile__c();
+                                        billingProfile.Id = ordRetrieved.BillingProfile__c;
+                                        billingProfile.ContractAccountCode__c = mapRequestFields.get('VKONT');
+                                        
+                                        HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
+                                        try{
+                                            billingProfileSrv.updateRecord(billingProfile);
+                                        }catch(Exception e){
+                                            system.debug('Exception Update Billing Profile');
+                                            throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
+                                        }
+                                    }
+                                    HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
+                                    utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
+                                    utlTechData.handleCompletata(mapRequestFields);
                                 }
                             }
                             when 'Annullamento SII - Ricezione'{
@@ -228,6 +303,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                         }
 
+                        system.debug('cost2 '+ord.phase__c);
                         orderSrv.updateRecord(ord);
                     	responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
@@ -422,5 +498,14 @@ public with sharing class HDT_SRV_SalesHandler {
         HDT_UTL_DatabaseService.updateSObject(recordOrder);
     }
     //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+
+    private static void updateServicePoint(ServicePoint__c sp){
+        try{
+            new HDT_SRV_ServicePoint().updateRecord(sp);
+        }catch(Exception e){
+            system.debug('Exception Update ServicePoint');
+            throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating ServicePoint - '+e.getMessage());
+        }
+    }
 
 }

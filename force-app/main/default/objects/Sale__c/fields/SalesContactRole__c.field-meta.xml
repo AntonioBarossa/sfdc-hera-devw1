@@ -3,7 +3,7 @@
     <fullName>SalesContactRole__c</fullName>
     <description>Identifica il ruolo del contatto con cui si sta facendo la vendita</description>
     <externalId>false</externalId>
-    <label>Ruolo contrattuale</label>
+    <label>Interlocutore</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

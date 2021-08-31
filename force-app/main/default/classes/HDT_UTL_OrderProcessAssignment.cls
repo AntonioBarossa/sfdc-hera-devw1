@@ -10,9 +10,11 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
+    private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_Sale saleQr = new HDT_QR_Sale();
     private static HDT_QR_SaleServiceItem saleItQr = new HDT_QR_SaleServiceItem();
+    private static Order orderRecived = null;
 
 
 
@@ -34,6 +36,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         public String commodity {get; set;}
         Boolean isAmendmentAllowed {get; set;}
         Boolean isSwitchOut {get; set;} //only for winback case is true
+        Boolean isReseller {get; set;}
 
         public HDT_WRP_Process(
             String processType,
@@ -48,7 +51,8 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             Boolean isAttivazioneConModifica,
             String commodity,
             Boolean isAmendmentAllowed,
-            Boolean isSwitchOut
+            Boolean isSwitchOut,
+            Boolean isReseller
         ) {
             this.processType = processType;
             this.recordType = recordType;
@@ -63,39 +67,57 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             this.commodity = commodity;
             this.isAmendmentAllowed = isAmendmentAllowed;
             this.isSwitchOut = isSwitchOut;
+            this.isReseller = isReseller;
         }
     }
 
     public static List<HDT_WRP_Process> initProcesses(){
         return new List<HDT_WRP_Process>{
-            new HDT_WRP_Process('Subentro Gas', 'HDT_RT_Subentro','A01', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Gas', false, false),
-            new HDT_WRP_Process('Subentro Ele', 'HDT_RT_Subentro','A10', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', false, false),
-            new HDT_WRP_Process('Prima Attivazione Ele', 'HDT_RT_Attivazione','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false),
-            new HDT_WRP_Process('Prima Attivazione In delibera', 'HDT_RT_Attivazione','A40', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false, false),
-            new HDT_WRP_Process('Prima Attivazione Fuori delibera', 'HDT_RT_Attivazione','A01', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false, false),
-            new HDT_WRP_Process('Prima Attivazione con modifica', 'HDT_RT_AttivazioneConModifica','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, true, 'HDT_RT_Ele', false, false),
-            new HDT_WRP_Process('Connessione con Attivazione', 'HDT_RT_ConnessioneConAttivazione','PN1', new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false),
-            new HDT_WRP_Process('Temporanea - Nuova Attivazione', 'HDT_RT_TemporaneaNuovaAtt','PN1', new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false),
-            new HDT_WRP_Process('Cambio Offerta Gas', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Gas', false, false),
-            new HDT_WRP_Process('Cambio Offerta Ele', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, false, false, false, 'HDT_RT_Ele', false, false),
-            new HDT_WRP_Process('Cambio Uso', 'HDT_RT_CambioUso','CAU', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, true, false, false, 'HDT_RT_Ele', false, false),
-            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', true, false),
-            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Gas', true, false),
-            new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo'}, new Set<String>(), 'Si', true, false, true, false, 'HDT_RT_Ele', false, false),
-            new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo'}, new Set<String>(), 'Si', true, false, true, false, 'HDT_RT_Gas', false, false),
-            new HDT_WRP_Process('Switch In Fittizio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', true, false, false, false, null, false, false),
-            new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', false, true),
-            new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Gas', false, true),
-            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false),
-            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false, false),
-            new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','', new Set<String>{'Inattivo','Bozza','Attivo'}, new Set<String>(), 'Si', false, false, false, false, null, false, false),
-            // new HDT_WRP_Process('Switch In Reseller', 'HDT_RT_SwitchIn','', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, null, false), //temporarily commented
-            new HDT_WRP_Process('Voltura Ele', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', false, false, false, false, 'HDT_RT_Ele', false, false),
-            new HDT_WRP_Process('Voltura Gas', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero','Regolamentato'}, null, false, false, false, false, 'HDT_RT_Gas', false, false)
+            new HDT_WRP_Process('Subentro Gas', 'HDT_RT_Subentro','A01', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
+            new HDT_WRP_Process('Subentro Ele', 'HDT_RT_Subentro','A10', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Prima Attivazione Ele', 'HDT_RT_Attivazione','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Prima Attivazione In delibera', 'HDT_RT_Attivazione','A40', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
+            new HDT_WRP_Process('Prima Attivazione Fuori delibera', 'HDT_RT_Attivazione','A01', new Set<String>{'Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
+            new HDT_WRP_Process('Prima Attivazione con modifica', 'HDT_RT_AttivazioneConModifica','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, true, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Connessione con Attivazione', 'HDT_RT_ConnessioneConAttivazione','PN1', new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Temporanea - Nuova Attivazione', 'HDT_RT_TemporaneaNuovaAtt', getTempNewActivationCode(), new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Cambio Offerta Gas', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', false, false, false),
+            new HDT_WRP_Process('Cambio Offerta Ele', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, false, false, false, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Cambio Uso', 'HDT_RT_CambioUso','CAU', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, true, false, false, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', true, false, false),
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', true, false, false),
+            new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo'}, new Set<String>(), 'Si', true, false, true, false, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo'}, new Set<String>(), null, true, false, true, false, 'HDT_RT_Gas', false, false, false),
+            new HDT_WRP_Process('Switch In Fittizio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', true, false, false, false, null, false, false, false),
+            new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', false, true, false),
+            new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', false, true, false),
+            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
+            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, true, false),
+            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, true, false),
+            new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','', new Set<String>{'Inattivo','Bozza','Attivo'}, new Set<String>(), 'Si', false, false, false, false, null, false, false, false),
+            new HDT_WRP_Process('Switch in Reseller', 'HDT_RT_SwitchIn','', new Set<String>{'Attivo'}, new Set<String>(), 'Si', false, false, false, false, null, false, false, true),//temporarily commented
+            new HDT_WRP_Process('Voltura Ele', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Voltura Gas', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero','Regolamentato'}, null, false, false, false, false, 'HDT_RT_Gas', false, false, false)
         };
     }
 
+    private static String getTempNewActivationCode(){
+        if(orderRecived.VoltageLevel__c=='MT' || orderRecived.PowerAvailable__c>40){
+            return 'PN1';
+        }
+        return 'E02';
+    }
+
+    private static String getProcessCodeReseller(){
+        if(orderRecived.ServicePoint__r.RecordType.DeveloperName=='HDT_RT_Ele'){
+            return 'SE1';
+        }
+        return 'SG1';
+    }
+
     public static List<HDT_WRP_Process> getAvailableProcesses(Order ord){
+        orderRecived=ord;
         List<HDT_WRP_Process> allProcesses = initProcesses();
         List<HDT_WRP_Process> availableProcesses = new List<HDT_WRP_Process>();
 
@@ -103,6 +125,8 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         String plugPresence = ord.ServicePoint__r.PlugPresence__c;
         Boolean isChangeUse = ord.SBQQ__Quote__r.AllowChangeUse__c;
         Boolean isAmendmentAllowed = ord.SBQQ__Quote__r.AmendmentAllowed__c;
+        Boolean isReseller = ord.Account.CompanyOwner__c.equalsIgnoreCase('reseller');
+        //isReseller=false;
 
         system.debug('getAvailableProcesses - isOwnAccount: ' + isOwnAccount);
         system.debug('getAvailableProcesses - plugPresence: ' + plugPresence);
@@ -120,7 +144,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             if (
                 process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c)
                 && (process.marketOrigin.contains(ord.MarketOrigin__c) || process.marketOrigin.isEmpty())
-                && process.plugPresence == plugPresence
+                && (process.plugPresence == plugPresence || process.commodity == 'HDT_RT_Gas')//aggiustamento plug presence gas
                 && (process.isOwnAccount == isOwnAccount || process.isOwnAccount == null)
                 && process.isChangeUse == isChangeUse
                 && process.isSwitchInRipristinatorio == isSwitchInRipristinatorio(ord)
@@ -128,6 +152,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 && (process.commodity == ord.ServicePoint__r.RecordType.DeveloperName || process.commodity == null)
                 && process.isAmendmentAllowed == isAmendmentAllowed
                 && process.isSwitchOut == ord.IsWinback__c
+                && process.isReseller == isReseller
             ) {
                 availableProcesses.add(process);
             }
@@ -212,15 +237,16 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     @AuraEnabled
     public static String fieldsTransition(Sale__c sale){
         ServicePoint__c serpoint = new ServicePoint__c();
+        HDT_QR_ServicePoint srQr = new HDT_QR_ServicePoint();
+        Sale__c sal = saleQr.getRecordById(sale.id,'id,isTransition__c,Account__r.customerMarking__c');
         Sale__c s = new Sale__c(Id=sale.Id);
         boolean check = false;
         String res = '';
         List<String> listRes = new List<String>();
         List<SaleServiceItem__c> transitionlist =saleItQr.getRecordsBySaleIdFilter(sale.id);
         System.debug('*****MAVUOIANNA:'+ transitionlist);
-        /*if(!transitionlist.isEmpty()){
-            serpoint = transitionlist[0];
-           }*/
+        if(sal.isTransition__c){
+            //Map<String,
         String sub = 'Subentro';
         boolean r = false;
         for(SaleServiceItem__c ser :transitionlist ){
@@ -230,7 +256,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 check = true;
                 listRes.add(ser.ServicePoint__r.ServicePointCode__c);
             }
-            if(ser.ServicePoint__r.CommoditySector__c == 'Gas' && (ser.ServicePoint__r.MeterStatus__c == 'Attivo' || ser.ServicePoint__r.MeterStatus__c == 'Bozza')){
+            if(ser.ServicePoint__r.CommoditySector__c == 'Gas' && ser.ServicePoint__r.MeterStatus__c != 'Attivo'){
                 r = true;
             }
         }
@@ -240,9 +266,54 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         res = String.join(listRes,',');
         if(r){
             res = 'Subentro';
+            }
         }
+        if(res == null || res == '' || res == 'Subentro'){
+            List<String> spListId = new List<String>();
+            for(SaleServiceItem__c ser :transitionlist ){
+                if(ser.ServicePoint__r.CommoditySector__c == 'Gas'){
+                    spListId.add(ser.ServicePoint__c);
+                }
+            }
+            List<ServicePoint__c> spList = srQr.getRecordByIdList(spListId,'id,CommoditySector__c,SupplyCity__c,distributor__r.code__c');
+            Map<String,HDT_WRP_RemiUbd> mapRemiCode = new Map<String,HDT_WRP_RemiUbd>();
+            List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRecord();
+            for(MatriceRemiCode__c m : remiList){
+                //mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, m.RemiCode__c);
+                HDT_WRP_RemiUbd wrp = new HDT_WRP_RemiUbd(m.RemiCode__c, m.VATNumberUdb__c);
+                mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, wrp);
+            }
+            Map<String,String> serviceSocieta = HDT_UTL_Sales.getAgentNameAndCodeList(spList,sal.Account__r.customerMarking__c);
+            for(ServicePoint__c sr :spList){
+                if(mapRemiCode.get(sr.SupplyCity__c + '_' + serviceSocieta.get(sr.id)) != null){
+                    HDT_WRP_RemiUbd wrp = mapRemiCode.get(sr.SupplyCity__c + '_' + serviceSocieta.get(sr.id));
+                    sr.RemiCode__c = wrp.remiCode;
+                    sr.VATNumberUdb__c = wrp.vatUbd;
+                    system.debug(wrp);
+                    system.debug('SP to Update '+sr.VATNumberUdb__c);
+                }
+                else{
+                    res += '_Remi';
+                }
+            }
+            if(res != '_Remi' && res !='Subentro_Remi'){
+                servicePointSrv.updateRecordRemiCode(spList);
+            }
+        }
+
+
         System.debug('*****VUOIANNA2:' + res);
         return res;
+    }
+
+    private class HDT_WRP_RemiUbd{
+        public String remiCode {get;set;}
+        public String vatUbd {get;set;}
+
+        public HDT_WRP_RemiUbd(String remiCode, String vatUbd){
+            this.remiCode=remiCode;
+            this.vatUbd=vatUbd;
+        }
     }
 
 }

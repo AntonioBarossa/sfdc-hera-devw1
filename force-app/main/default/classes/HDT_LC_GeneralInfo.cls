@@ -115,4 +115,18 @@ public inherited sharing class HDT_LC_GeneralInfo {
 
     }
 
+    @AuraEnabled
+    public static Map<String,String> initComp(){
+
+        Map<String,String> result = new Map<String,String>();
+
+        List<User> user = HDT_QR_UserQueries.getRoleAndProfile(UserInfo.getUserId());
+
+        if (user[0].UserRole != null) {
+            result.put('userRole', user[0].UserRole.DeveloperName );
+        }
+
+        return result;
+    }
+
 }

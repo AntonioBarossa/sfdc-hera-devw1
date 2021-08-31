@@ -115,6 +115,34 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             billingProfile.IBAN__c = billingProfile.IbanCountry__c + billingProfile.IbanCIN_IBAN__c + billingProfile.IbanCIN__c + billingProfile.IbanABI__c + billingProfile.IbanCAB__c + billingProfile.IbanCodeNumber__c;
         }
 
+       Account acc = accountQr.getRecordById(billingProfile.Account__c, 'CustomerMarking__c');
+
+       Map<String,String> mapCustMarkToAccClass = new Map<String,String>{
+           'D2 - Ditta individuale' => 'Small Business',
+           'D3 - Azienda' => 'Small Business',
+           'Associazione' => 'Small Business',
+           'D6 - Associazione' => 'Small Business',
+           'Ditta individuale' => 'Small Business',
+           'Azienda' => 'Small Business',
+           'MMS Parti comuni' => 'Small Business',
+           'AAS Azienda' => 'Small Business',
+           'AAS Associazione' => 'Small Business',
+           'D4 - Parti comuni' => 'Small Business',
+           'Parti comuni' => 'Small Business',
+
+           'Persona fisica' => 'Privati',
+           'D1 - Persona fisica' => 'Privati',
+           'MMS Persona fisica' => 'Privati',
+           'AAS Persona fisica' => 'Privati',
+           
+           'Condominio' => 'Piccoli Condomini',
+           'D5 - Condominio' => 'Piccoli Condomini',
+           'AAS Condominio' => 'Piccoli Condomini'
+
+       };
+
+       billingProfile.AccountClass__c = mapCustMarkToAccClass.get(acc.CustomerMarking__c);
+
         return billingProfileSrv.createRecord(billingProfile);
     }
 

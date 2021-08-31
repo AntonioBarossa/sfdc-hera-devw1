@@ -74,10 +74,11 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
             {label: 'Indirizzo di fornitura', fieldName: 'SupplyAddressFormula__c', type: 'text'},
             {label: 'Phase', fieldName: 'Phase__c', type: 'text'},
             {label: 'Processo', fieldName: 'recordtypename', type: 'text'},
+            {label: 'Offerta', fieldName: 'CommercialProduct__c', type: 'text'},
             {type:  'button',typeAttributes:{
                     iconName: 'utility:edit',
                     label: 'Avvia Processo', 
-                    name: 'editRecord', 
+                    name: 'Avvia Processo', 
                     title: 'Avvia Processo',
                     disabled: {fieldName :'disabledActionButton'},
                     value: 'Avvia Processo'
@@ -139,6 +140,12 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
         if(this.action === 'cancelOrder'){
             this.isDialogVisible = true;
         } else {
+            console.log(' c__orderParent:'+ this.orderParentRecord.Id);
+            console.log('  c__orderId:'+ this.orderId);
+            console.log('  action:'+ this.action);
+
+
+
             this.dispatchEvent(new CustomEvent('handlerowactionevent', {
                 detail:{
                     c__orderParent: this.orderParentRecord.Id,
@@ -146,11 +153,13 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                     action: this.action
                 }
             }));
+            console.log();
         }
 
     }
 
     connectedCallback(){
+        console.log('@@@@@@@@@id : '+this.orderParentRecord.id);
         this.setTableData();
     }
 

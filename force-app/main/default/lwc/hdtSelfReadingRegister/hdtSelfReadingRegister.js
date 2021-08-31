@@ -9,6 +9,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
     @api commodity;
     @api isRetroactive;
     @api isVolture;
+    @api isProcessReading;
     @api isVisible;
     @api allowSmallerReading = false;
     advanceError;
@@ -111,9 +112,9 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         }
 
-        if(!this.isRetroactive){
+        if(!this.isRetroactive && !this.isProcessReading){
 
-            var index = this.registerObj.findIndex(p => p.label.name === 'readingDate');
+            var index = this.registerObj.findIndex(p => p.name === 'readingDate');
 
             if(Date.parse(readingCustomerDate) <= Date.parse(this.registerObj[index].value)){
 
@@ -141,6 +142,13 @@ export default class HdtSelfReadingRegister extends LightningElement {
             this.isVisible = (this.rowObj.id <= readingObj.length);
         } else if (this.commodity === 'Gas') {
             this.isVisible = (this.rowObj.id === 'Meter' || (this.rowObj.id === 'Corrector' && readingObj.length === 2));
+        }
+
+        
+        // Per l'autolettura da processo la matricola deve poter essere inseribile da operatore.
+        if (this.isVisible === true) {
+            var indexSerialNumber = this.registerObj.findIndex(p => p.name === 'readingSerialNumber');
+            this.registerObj[indexSerialNumber].disabled = !this.isProcessReading;
         }
 
         var indexIn = readingObj.findIndex(p => p.register == this.rowObj.number);
@@ -210,15 +218,21 @@ export default class HdtSelfReadingRegister extends LightningElement {
     handleSave(readingCustomerDate){
 
         try {
-            this.registerObj.forEach(element => {
+            if (!this.isProcessReading) {
+                this.registerObj.forEach(element => {
+                    if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
+                        this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';
+                    } 
+                });
+            } else if (this.rowObj.id === 'Meter') {
+                // Per l'autolettura da processo richiedo le obbligatorietà solo sul registro del Misuratore, poichè non sappiamo a priori se c'è anche un Correttore.
+                this.registerObj.forEach(element => {
+                    if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
+                        this.advanceError = 'Impossibile procedere: il campo ' + element.label + ' deve essere valorizzato.';
+                    }
+                });
+            }
 
-                if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
-    
-                    this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';
-    
-                } 
-    
-            });
             const oldValue = parseInt(this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value);
             const newValue = parseInt(this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value);
 
@@ -271,7 +285,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         console.log('isRetroactive? '+this.isRetroactive);
 
-        if(event.target.label.includes('Nuova Lettura') && !this.isRetroactive){
+        if(event.target.label.includes('Nuova Lettura') && !this.isRetroactive && !this.isProcessReading){
             
             var indexReading = this.registerObj.findIndex(p => {
 
@@ -306,13 +320,14 @@ export default class HdtSelfReadingRegister extends LightningElement {
             }
 
         } else {
-
-            this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value = event.target.value; 
+            if (event.target.label.includes('Lettura')) {
+                this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value = event.target.value;
+            } else if (event.target.label.includes('Matricola')) {
+                this.registerObj[this.registerObj.findIndex(p => p.name === 'readingSerialNumber')].value = event.target.value;
+            }
 
             this.advanceError = undefined;
-
             event.target.setCustomValidity("");
-
         }
 
         event.target.reportValidity();

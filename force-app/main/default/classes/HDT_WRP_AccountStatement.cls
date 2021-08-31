@@ -56,12 +56,12 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public Boolean isAmount;
     }
 
-    public class HDT_WRP_ResponseObj {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public Boolean dataError;
-        @AuraEnabled public String bodyBase64;
-    }
+    //public class HDT_WRP_ResponseObj {
+    //    @AuraEnabled public Boolean success;
+    //    @AuraEnabled public String message;
+    //    @AuraEnabled public Boolean dataError;
+    //    @AuraEnabled public String bodyBase64;
+    //}
 
     public class HDT_WRP_ReturnPicklist {
         @AuraEnabled public Boolean success;

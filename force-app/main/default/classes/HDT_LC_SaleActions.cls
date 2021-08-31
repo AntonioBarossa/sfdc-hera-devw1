@@ -36,6 +36,7 @@ public inherited sharing class HDT_LC_SaleActions {
     public static void save(Sale__c sale, String campaignMemberId){
 
         Id campaignElegibilityGroup = (sale.Campaign__c != null && sale.Campaign__r.CampaignEligibilityGroup__c != null) ? sale.Campaign__r.CampaignEligibilityGroup__c : null;
+        Id campaignChannel = (sale.Campaign__c != null && sale.Campaign__r.Channel__c != null) ? sale.Campaign__r.Channel__c : null;
         
         //1 - Check if QuoteLines have BillingProfiles associated
         quoteLineSrv.checkReadAccess('Name,BillingProfile__c,SBQQ__Quote__c');
@@ -65,7 +66,7 @@ public inherited sharing class HDT_LC_SaleActions {
         
         //2 - Update Opportunity stage
         opportunitySrv.checkReadAccess('StageName');
-        List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName, CampaignEleggibilityGroup__c', 'Proposal');
+        List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName, CampaignEleggibilityGroup__c', 'Negotiation');
         
         for (Opportunity opp : opps) {
             opp.StageName = 'Closed Won';
@@ -77,10 +78,11 @@ public inherited sharing class HDT_LC_SaleActions {
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleSaveEvent(sale.Id); //quotes that have a status of not rejected
 
         for (SBQQ__Quote__c quote : quoteList) {
-            quote.SBQQ__Status__c = 'Accepted';
+            quote.SBQQ__Status__c = 'Chiusa';
             quote.SBQQ__Ordered__c = true;
             quote.SBQQ__LineItemsGrouped__c = true;
             quote.SBQQ__OrderByQuoteLineGroup__c = true;
+            quote.CancellationReason__c = null;
             quote.CampaignEleggibilityGroup__c = campaignElegibilityGroup;
         }
 
@@ -163,6 +165,15 @@ public inherited sharing class HDT_LC_SaleActions {
         //update campaignMember Status
         if (campaignMemberId != null) {
             CampaignMember memberToUpdate = HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, 'Positivo');
+        }
+
+        //update campaignMember siblings Status a 'Non Proposto Auto'
+        List<String> accountIds = new List<String>();
+        accountIds.add(sale.Account__c);
+        List<CampaignMember> siblingMembers = HDT_QR_CampaignMember.getSiblingMembersByAccountId(accountIds, campaignChannel);
+        List<String> campaignMembersIdList = new List<String>(new Map<String, CampaignMember>(siblingMembers).keySet());
+        if (campaignMembersIdList.size()>0) {
+            List<CampaignMember> siblingsToUpdate = HDT_LC_CampaignsController.updateCampaignMembersStatus(campaignMembersIdList, 'Non Proposto Auto');
         }
     }
 

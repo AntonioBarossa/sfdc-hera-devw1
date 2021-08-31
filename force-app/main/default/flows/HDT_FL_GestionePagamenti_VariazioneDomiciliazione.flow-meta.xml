@@ -97,52 +97,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssegnaFase</name>
-        <label>AssegnaFase</label>
-        <locationX>50</locationX>
-        <locationY>3206</locationY>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Bozza Annullata</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato2.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Closed</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Passa_a_Annullato</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssegnaFase_0</name>
-        <label>AssegnaFase</label>
-        <locationX>314</locationX>
-        <locationY>3206</locationY>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Bozza Annullata</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato2.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Closed</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Passa_a_Annullato_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>AssegnaFase_00</name>
         <label>AssegnaFase</label>
         <locationX>4802</locationX>
@@ -163,52 +117,6 @@
         </assignmentItems>
         <connector>
             <targetReference>AggiornaCaseNonBozza</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssegnaFase_0_0</name>
-        <label>AssegnaFase</label>
-        <locationX>1106</locationX>
-        <locationY>3206</locationY>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Bozza Annullata</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato2.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Closed</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Passa_a_Annullato_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssegnaFase_0_0_0</name>
-        <label>AssegnaFase</label>
-        <locationX>1370</locationX>
-        <locationY>3206</locationY>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Bozza Annullata</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato2.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Closed</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Passa_a_Annullato_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -507,10 +415,10 @@
             <name>Obsoleto</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ABI_Obsoleto_0</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>GetAbiCode</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <elementReference>AbiObsolete</elementReference>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -561,10 +469,10 @@
             <name>Obsoleto_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ABI_Obsoleto_0_0</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>GetAbiCode_0</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <elementReference>AbiObsolete</elementReference>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -993,7 +901,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Da_Sostituire_con_GetABiOsbolete_0</targetReference>
+                <targetReference>GetAbiCode</targetReference>
             </connector>
             <label>Cambio Conto</label>
         </rules>
@@ -1008,7 +916,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Da_Sostituire_con_GetABiOsbolete_0_0</targetReference>
+                <targetReference>GetAbiCode_0</targetReference>
             </connector>
             <label>Cambio Banca</label>
         </rules>
@@ -1354,6 +1262,76 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetAbiCode</name>
+        <label>GetAbiCode</label>
+        <locationX>380</locationX>
+        <locationY>2846</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ABI_Uguale</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IbanABI__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornato2.IbanABI__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EndDate__c</field>
+            <operator>LessThan</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>AbiCode__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetAbiCode_0</name>
+        <label>GetAbiCode</label>
+        <locationX>1436</locationX>
+        <locationY>2846</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ABI_Uguale_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IbanABI__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornato2.IbanABI__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EndDate__c</field>
+            <operator>LessThan</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>AbiCode__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>3374</locationX>
@@ -1447,34 +1425,6 @@
         <inputReference>GetCaseAggiornatoNonBozza</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Passa_a_Annullato</name>
-        <label>Passa a &quot;Annullato&quot;</label>
-        <locationX>50</locationX>
-        <locationY>3326</locationY>
-        <inputReference>GetCaseAggiornato2</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Passa_a_Annullato_0</name>
-        <label>Passa a &quot;Annullato&quot;</label>
-        <locationX>314</locationX>
-        <locationY>3326</locationY>
-        <inputReference>GetCaseAggiornato2</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Passa_a_Annullato_0_0</name>
-        <label>Passa a &quot;Annullato&quot;</label>
-        <locationX>1106</locationX>
-        <locationY>3326</locationY>
-        <inputReference>GetCaseAggiornato2</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Passa_a_Annullato_0_0_0</name>
-        <label>Passa a &quot;Annullato&quot;</label>
-        <locationX>1370</locationX>
-        <locationY>3326</locationY>
-        <inputReference>GetCaseAggiornato2</inputReference>
-    </recordUpdates>
-    <recordUpdates>
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>842</locationX>
@@ -1527,11 +1477,11 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>AssegnaFase</targetReference>
+            <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>AlertABIBank</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 16px; color: rgb(0, 0, 0);&quot;&gt;Codice ABI uguale a quello già presente sulla domiciliazione attiva.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;La pratica verrà annullata.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Per poter procedere alla variazione il cliente dovrà contattare la propria Banca.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 16px;&quot;&gt;Codice ABI uguale a quello già presente sulla domiciliazione attiva.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Per poter procedere alla variazione il cliente dovrà contattare la propria Banca.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Alla pressione del tasto &quot;Conferma Pratica&quot; si procederà con l&apos;annullamento.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1565,7 +1515,7 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
-                    <stringValue>Annulla</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1596,11 +1546,11 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>AssegnaFase_0_0</targetReference>
+            <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>AlertABIBank_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 16px;&quot;&gt;Impossibile Procedere &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;la domiciliazione richiesta è già presente. La pratica verrà annullata.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 16px; color: rgb(0, 0, 0);&quot;&gt;Impossibile Procedere &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;la domiciliazione richiesta è già presente. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Alla pressione del tasto &quot;Conferma Pratica&quot; si procederà con l&apos;annullamento.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1634,7 +1584,7 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
-                    <stringValue>Annulla</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1665,11 +1615,11 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>AssegnaFase_0</targetReference>
+            <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>AlertABIBank_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 16px; color: rgb(0, 0, 0);&quot;&gt;Il Codice ABI risulta obsoleto&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;La pratica verrà annullata&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 16px;&quot;&gt;Il Codice ABI risulta obsoleto&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Alla pressione del tasto &quot;Conferma Pratica&quot; si procederà con l&apos;annullamento.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1703,7 +1653,7 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
-                    <stringValue>Annulla</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1734,11 +1684,11 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>AssegnaFase_0_0_0</targetReference>
+            <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>AlertABIBank_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 16px; color: rgb(0, 0, 0);&quot;&gt;Il Codice ABI risulta obsoleto&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;La pratica verrà annullata&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 16px;&quot;&gt;Il Codice ABI risulta obsoleto&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;Alla pressione del tasto &quot;Conferma Pratica&quot; si procederà con l&apos;annullamento.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1772,7 +1722,7 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
-                    <stringValue>Annulla</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1792,64 +1742,6 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Da_Sostituire_con_GetABiOsbolete_0</name>
-        <label>Da Sostituire con GetABiOsbolete</label>
-        <locationX>380</locationX>
-        <locationY>2846</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>ABI_Uguale</targetReference>
-        </connector>
-        <fields>
-            <name>DsiplayHeader_00_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>ABI_Obsoleto_0</name>
-            <choiceReferences>AbiObsolete</choiceReferences>
-            <choiceReferences>AbiNonObsolete</choiceReferences>
-            <dataType>String</dataType>
-            <defaultSelectedChoiceReference>AbiObsolete</defaultSelectedChoiceReference>
-            <fieldText>ABI Obsoleto?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Da_Sostituire_con_GetABiOsbolete_0_0</name>
-        <label>Da Sostituire con GetABiOsbolete</label>
-        <locationX>1436</locationX>
-        <locationY>2846</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>ABI_Uguale_0</targetReference>
-        </connector>
-        <fields>
-            <name>DsiplayHeader_00_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>ABI_Obsoleto_0_0</name>
-            <choiceReferences>AbiObsolete</choiceReferences>
-            <choiceReferences>AbiNonObsolete</choiceReferences>
-            <dataType>String</dataType>
-            <defaultSelectedChoiceReference>AbiObsolete</defaultSelectedChoiceReference>
-            <fieldText>ABI Obsoleto?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -2014,12 +1906,6 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Analitico</stringValue>
-                </value>
-            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -2063,12 +1949,6 @@
                 <name>recordId</name>
                 <value>
                     <elementReference>CaseInput.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Analitico</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -2116,12 +1996,6 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Analitico</stringValue>
-                </value>
-            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -2165,12 +2039,6 @@
                 <name>recordId</name>
                 <value>
                     <elementReference>CaseInput.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>quoteType</name>
-                <value>
-                    <stringValue>Analitico</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -2972,6 +2840,106 @@
         <label>Annulla Prestazione</label>
         <locationX>3218</locationX>
         <locationY>3086</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annulla_Prestazione_0_0_0_0_0_0_0</name>
+        <label>Annulla Prestazione</label>
+        <locationX>50</locationX>
+        <locationY>3206</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annulla_Prestazione_0_0_0_0_0_0_0_0</name>
+        <label>Annulla Prestazione</label>
+        <locationX>314</locationX>
+        <locationY>3206</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annulla_Prestazione_0_0_0_0_0_0_0_0_0</name>
+        <label>Annulla Prestazione</label>
+        <locationX>1106</locationX>
+        <locationY>3206</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annulla_Prestazione_0_0_0_0_0_0_0_0_0_0</name>
+        <label>Annulla Prestazione</label>
+        <locationX>1370</locationX>
+        <locationY>3206</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

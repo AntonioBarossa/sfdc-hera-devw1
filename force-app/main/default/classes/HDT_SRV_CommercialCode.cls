@@ -49,6 +49,11 @@ public inherited sharing class HDT_SRV_CommercialCode {
         return cc;
     }
 
+    public List<CommercialCode__c> createRecords(List<CommercialCode__c> cc){
+        HDT_UTL_DatabaseService.insertSObject(cc);
+        return cc;
+    }
+
     /**
     * @author Fatjola Memishaj (fatjola.memishaj@dunegroup.it)
     * @description Check if current user has update permission on object and specified fields

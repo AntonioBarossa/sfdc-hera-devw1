@@ -81,6 +81,11 @@
                 <default>false</default>
                 <label>Sales&amp;Marketing Service</label>
             </value>
+            <value>
+                <fullName>-</fullName>
+                <default>true</default>
+                <label>-</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -55,30 +55,21 @@ global with sharing class HDT_WS_MrrRequest {
             HDT_WRP_MrrRequest requestBody = (HDT_WRP_MrrRequest) JSON.deserialize(body, HDT_WRP_MrrRequest.class);
             
             //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
-            List<HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData> dataForAttivitaTracciaturaCreation = new List<HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData>();
+            List<Map<String,String>> dataForAttivitaTracciaturaCreation = new List<Map<String,String>>();
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
                 HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
                 for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
                     for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
                         if('ATTIVITA'.equalsIgnoreCase(curField.name) && TRACCIATURATYPES.contains(curField.value)){
-                            HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData newData = new HDT_UTL_Scarti.HDT_WRP_AttivitaTracciaturaData();
-                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
-                                if('ERROR_MESSAGE'.equalsIgnoreCase(curField2.name)) newData.errorMessage = curField2.value;
-                                if('COD_PRAT_UTENTE'.equalsIgnoreCase(curField2.name)) newData.codPraticaUtente = curField2.value;
-                                if('UTENZA'.equalsIgnoreCase(curField2.name)) newData.utenza = curField2.value;
-                                if('DATA_EVENTO'.equalsIgnoreCase(curField2.name)) newData.dataEvento = curField2.value;
-                                if('RECORD_ID'.equalsIgnoreCase(curField2.name)) newData.recordId = curField2.value;
-                                if('ATTIVITA'.equalsIgnoreCase(curField2.name)) newData.tipoAttivita = curField2.value;
-                                if('METHOD'.equalsIgnoreCase(curField2.name)) newData.method = curField2.value;
-                            }
-                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField3 : parsedResponseItem.header.fields){
-                                if('PROCESS_CATEGORY'.equalsIgnoreCase(curField3.name)) newData.processCategory = curField3.value;
-                            }
+                            Map<String,String> newData = new Map<String,String>();
+                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields) newData.put(curField2.name, curField2.value);
+                            for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields) newData.put(curField3.name, curField3.value);
                             dataForAttivitaTracciaturaCreation.add(newData);
                         }
                     }
                 }
             }
+            System.debug('MRREQUEST dataForAttivitaTracciaturaCreation' + dataForAttivitaTracciaturaCreation);
             if(dataForAttivitaTracciaturaCreation.size() > 0) HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
             //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività di tracciamento
 
@@ -93,7 +84,6 @@ global with sharing class HDT_WS_MrrRequest {
             }
 
             if(requestBody.requests[0].header.fields.get(0).value == 'postsales'){
-
                 if (requestBody.requests[0].header.requestType=='NOTIF_VAS') {
                     mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(requestBody.requests[0], mrrResponseItem);
                 }
@@ -107,7 +97,6 @@ global with sharing class HDT_WS_MrrRequest {
                     //FINE SVILUPPI EVERIS
                 }
             }
-            
         } catch (JSONException jsonEx) {
 
             System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
@@ -129,7 +118,28 @@ global with sharing class HDT_WS_MrrRequest {
 
             RestContext.response.statusCode = 400;
 
-        } catch(Exception e) {
+        }catch(CustomMessageException e){
+
+            System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
+            System.debug('errorMessage: ' + e.getMessage());
+            System.debug('errorStack: ' + e.getStackTraceString());
+
+            mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
+
+            responseField.fieldType = 'TEXT';
+            responseField.name = 'ESITO';
+            responseField.value = 'KO';
+
+            responseFieldError.fieldType = 'TEXT';
+            responseFieldError.name = 'ERROR_MESSAGE';
+            responseFieldError.value = e.getMessage();
+
+            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+            mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>{responseObject};
+
+            RestContext.response.statusCode = 500;
+
+        }catch(Exception e) {
             
             System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
             System.debug('errorMessage: ' + e.getMessage());
@@ -162,5 +172,8 @@ global with sharing class HDT_WS_MrrRequest {
         RestContext.response.headers.put('Content-Type', 'application/json');
 
     }
+
+
+    public virtual class CustomMessageException extends Exception{}
 
 }

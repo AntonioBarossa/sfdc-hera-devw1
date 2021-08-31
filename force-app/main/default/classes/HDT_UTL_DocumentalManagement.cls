@@ -13,7 +13,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 			when 'Context4'{
 				return getRecordObjectsListContext4(recordsList);
-			}when else {
+			}
+			when 'Context5'{
+				return getRecordObjectsListContext1(recordsList);
+			}
+			when else {
 				return null;
 			}
 		}
@@ -22,7 +26,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		ContentVersion cv = new ContentVersion();
 		cv.VersionData = EncodingUtil.base64Decode(base64);
 		cv.Title = filename;
-		cv.PathOnClient = filename;
+		cv.PathOnClient = filename + '.pdf';
+		cv.ContentLocation = 'S';
 		try {
 			insert cv;
 			return cv;
@@ -66,10 +71,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		
 	}
 
-	public static String createContentDistribution(String contentVersionId){
+	public static String createContentDistribution(String contentVersionId,String fileName){
 		if (contentVersionId == null) { return null; }
 		ContentDistribution cd = new ContentDistribution();
-		cd.Name = 'Test';
+		cd.Name = fileName;
 		cd.ContentVersionId = contentVersionId;
 		cd.PreferencesAllowViewInBrowser= true;
 		cd.PreferencesLinkLatestVersion=true;
@@ -91,23 +96,33 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem> serviceItemList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem>();
 			serviceItemList.addAll(response.deliverPackageResponse.serviceList);
 			List<DocumentalEnvelopeAttachment__c> envelopeList = new List<DocumentalEnvelopeAttachment__c>();
+			List<Order> orderList = new List<Order>();
 			for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem serviceItem : serviceItemList){
 				recordId = (Id) serviceItem.serviceId;
 				for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : serviceItem.attachmentList){
 					DocumentalEnvelopeAttachment__c envelope = new DocumentalEnvelopeAttachment__c();
 					envelope.AttachmentCode__c = singleAttachment.code;
-					envelope.Required__c = singleAttachment.mandatory == 'Y'? true:false;
+					envelope.Required__c = singleAttachment.mandatory == '1'? true:false;
 					envelope.Version__c = singleAttachment.version;
 					if(context.equalsIgnoreCase('Case')){
 						envelope.Case__c = recordId;
 					}else if(context.equalsIgnoreCase('Order')){
 						envelope.Order__c = recordId;
+						if(String.isNotBlank(singleAttachment.code) && singleAttachment.code.indexOf('CGC') > -1){
+							Order singleOrder = new Order();
+							singleOrder.Id = recordId;
+							singleOrder.GeneralContractConditions__c = singleAttachment.code;
+							orderList.add(singleOrder);
+						}
 					}
 					envelopeList.add(envelope);
 				}
 			}
 			if(envelopeList.size()>0){
 				Boolean result = HDT_UTL_DatabaseService.insertSObject(envelopeList);
+			}
+			if(orderList.size()>0){
+				Boolean resultOrder = HDT_UTL_DatabaseService.updateSObject(orderList);
 			}
 			
 		} catch (Exception ex) {
@@ -119,7 +134,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
 		attachmentList.addAll(response.deliverPackageResponse.serviceList[0].attachmentList);
 		for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : attachmentList){
-			if(singleAttachment.mandatory == 'Y')
+			if(singleAttachment.mandatory == '1')
 				return true;
 		}
 		return false;
@@ -152,23 +167,26 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		return HDT_UTL_DatabaseService.updateSObject(processRecord);
 	}
 
-	public static sObject getProcessRecord(Id requestId, String context){
+	public static sObject getProcessRecord(String requestId, String context){
 		String fieldString = '';
 		String fromString = '';
-		String whereString = 'Id = \''+requestId + '\'';
+		String whereString = '';
 		String queryString = 'SELECT ';
 		switch on context {
-			when 'Order' {
+			when 'Order','DocumentazioneAnticipata' {
 				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c';
 				fromString = 'Order';
+				whereString = ' OrderNumber = \''+requestId + '\'';
 			}
 			when 'Case'{
 				fieldString = 'Id, AccountId,SendMode__c ,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c,QuotationType__c';
 				fromString = 'Case';
+				whereString = ' CaseNumber = \''+requestId + '\'';
 			}
 			when else {
 				fieldString = 'Id,PrimaryEmail__c,SendMode__c';
 				fromString = 'Account';
+				whereString = 'Id = \''+requestId + '\'';
 			}
 		}
 		queryString += fieldString + ' FROM ' + fromString + ' WHERE ' + whereString;
@@ -331,7 +349,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 
     public static String manageAmountDot(String valString){
 		String res = valString;
-		Integer df = valString.indexOf('\\.');
+		Integer df = valString.indexOf('.');
 		String intero = '';
 		if(df>=0){
 			if(df==0){
@@ -345,7 +363,6 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 			res=intero+','+dec;
 		}
-
 		else{
 			if(valString=='' || valString == null){
 				valString='0';
@@ -582,7 +599,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				return 'Context3';
 			}
 			when 'DocumentazioneAnticipata'{
-				return 'Context2';
+				return 'Context4';
 			}
 			when else {
 				return null;

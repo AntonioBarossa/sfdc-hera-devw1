@@ -21,37 +21,55 @@ public with sharing class HDT_SRV_CommercialCodeTst {
     @isTest
     public static void testCheckAccessInit() {
 
+        Test.startTest();
+
         HDT_SRV_CommercialCode testCommercialCode = new HDT_SRV_CommercialCode();
 
         testCommercialCode.checkAccessInit('Name', 'read');
+
+        Test.stopTest();
     }
 
     @isTest
     public static void testCheckReadAccess() {
 
+        Test.startTest();
+
         HDT_SRV_CommercialCode testCommercialCode = new HDT_SRV_CommercialCode();
 
         testCommercialCode.checkReadAccess('Name');
+
+        Test.stopTest();
     }
 
     @isTest
     public static void testCheckCreateAccess() {
 
+        Test.startTest();
+
         HDT_SRV_CommercialCode testCommercialCode = new HDT_SRV_CommercialCode();
 
         testCommercialCode.checkCreateAccess('Name');
+
+        Test.stopTest();
     }
 
     @isTest
     public static void testCheckUpdateAccess() {
 
+        Test.startTest();
+
         HDT_SRV_CommercialCode testCommercialCode = new HDT_SRV_CommercialCode();
 
         testCommercialCode.checkUpdateAccess('Name');
+
+        Test.stopTest();
     }
 
     @isTest
     public static void testCreateRecord() {
+
+        Test.startTest();
 
         CommercialCode__c commercialCode = [SELECT Id, Name FROM CommercialCode__c WHERE Name = 'Test Commercial Code' LIMIT 1];
 
@@ -66,10 +84,14 @@ public with sharing class HDT_SRV_CommercialCodeTst {
         System.assertEquals(commercialCode.Name, cc.Name);
 
         System.assertNotEquals(commercialCode.Name, '');
+
+        Test.stopTest();
     }
 
     @isTest
     public static void testUpdateRecord() {
+
+        Test.startTest();
 
         HDT_SRV_CommercialCode testCommercialCode = new HDT_SRV_CommercialCode();
 
@@ -84,6 +106,8 @@ public with sharing class HDT_SRV_CommercialCodeTst {
         System.assertEquals(cc.Name, commercialCode.Name);
 
         System.assertNotEquals(commercialCode.Name, '');
+
+        Test.stopTest();
 
     }
 }

@@ -186,7 +186,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Campaign__c</field>
             </layoutItems>
             <layoutItems>
@@ -334,6 +334,11 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>Case.Escalation</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>11</sortOrder>
+        </platformActionListItems>
         <platformActionListItems>
             <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>

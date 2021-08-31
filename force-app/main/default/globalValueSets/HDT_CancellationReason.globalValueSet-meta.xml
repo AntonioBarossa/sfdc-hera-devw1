@@ -135,6 +135,41 @@
         <default>false</default>
         <label>Il cliente rinuncia</label>
     </customValue>
+    <customValue>
+        <fullName>Rifiutato Preventivamente</fullName>
+        <default>false</default>
+        <label>Rifiutato Preventivamente</label>
+    </customValue>
+    <customValue>
+        <fullName>Consegna/Installazione Rifiutata</fullName>
+        <default>false</default>
+        <label>Consegna/Installazione Rifiutata</label>
+    </customValue>
+    <customValue>
+        <fullName>Installazione Fallita</fullName>
+        <default>false</default>
+        <label>Installazione Fallita</label>
+    </customValue>
+    <customValue>
+        <fullName>Reso (Prodotto)</fullName>
+        <default>false</default>
+        <label>Reso (Prodotto)</label>
+    </customValue>
+    <customValue>
+        <fullName>Disattivato/Disdetto (Servizio)</fullName>
+        <default>false</default>
+        <label>Disattivato/Disdetto (Servizio)</label>
+    </customValue>
+    <customValue>
+        <fullName>Cliente Non Trovato</fullName>
+        <default>false</default>
+        <label>Cliente Non Trovato</label>
+    </customValue>
+    <customValue>
+        <fullName>Autolettura non acquisibile</fullName>
+        <default>false</default>
+        <label>Autolettura non acquisibile</label>
+    </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

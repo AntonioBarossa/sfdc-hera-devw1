@@ -1,3 +1,9 @@
+/**
+* @author Sabina Levonja (sabina.levonja@dunegroup.it)
+* @date 16/06/21
+* @description HDT_LC_RecordEditFormSales
+* @history Sabina Levonja – 16/06/21 – created class
+*/
 public with sharing class HDT_LC_RecordEditFormSales {
 
     public static HDT_SRV_Case caseSRV= new HDT_SRV_Case();
@@ -26,8 +32,8 @@ public with sharing class HDT_LC_RecordEditFormSales {
     @AuraEnabled
     public static Boolean confirmForApproval(String caseId, String accountId){
         try {
-            Case cs= new Case(Id=caseId,Phase__c='In Attesa Approvazione');
-            caseSRV.updateRecord(cs); 
+           // Case cs= new Case(Id=caseId);
+           // caseSRV.updateRecord(cs); 
             List<wrts_prcgvr__Activity__c> activities= HDT_QR_ActivityCustom.getRecordByCaseId(caseId);
             if(activities != null && activities.isEmpty()){
                 Id recTypeId= null;
@@ -69,6 +75,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
             caseSRV.updateRecord(cs); 
             List<wrts_prcgvr__Activity__c> activities= HDT_QR_ActivityCustom.getRecordByCaseId(caseId);
             if(activities != null && activities.isEmpty()){
+                caseSRV.updateRecord(cs); 
                 Id recTypeId= null;
                 RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
                 if(rc !=null){
@@ -77,6 +84,11 @@ public with sharing class HDT_LC_RecordEditFormSales {
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Contratti/Bonus Commerciale');
                 System.debug(activity);
                 activitySrv.createRecord(activity);
+            }
+            else if(activities != null && activities[0].wrts_prcgvr__status__c == 'Completed'){
+                cs.status = 'closed';
+                cs.phase__c = 'Completata';
+                caseSRV.updateRecord(cs); 
             }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

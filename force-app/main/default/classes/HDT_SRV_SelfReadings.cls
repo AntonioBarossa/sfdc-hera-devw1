@@ -1,11 +1,10 @@
 public with sharing class HDT_SRV_SelfReadings {
 
-    public static void handleSelfReadingIntegrations(SObject selfReadingCase) {
+    public static void handleInvioLettureForzato(SObject selfReadingCase) {
 
-        System.enqueueJob(new HDT_QBL_SelfReadingsCallouts((Case) selfReadingCase, 'CheckAutolettura'));
+        System.enqueueJob(new HDT_QBL_SelfReadingsCallouts((Case) selfReadingCase, 'InvioLettureForzato'));
 
     }
-
 
     public static HDT_WRP_GenericSapIntegration generateJson(HDT_WRP_GenericSapIntegration inputParams){
         System.debug('Generating JSON for request type: ' + inputParams.requestType);
@@ -13,7 +12,7 @@ public with sharing class HDT_SRV_SelfReadings {
             when 'CheckAutolettura' {
                 return generateJsonCheckAutolettura(inputParams);
             }
-            when 'InvioLetture' {
+            when 'InvioLetture', 'InvioLettureForzato' {
                 return generateJsonInvioLetture(inputParams);
             }
             when else {
@@ -195,14 +194,22 @@ public with sharing class HDT_SRV_SelfReadings {
         return inputParams;
     }
 
-    public static Boolean handleResponse(HDT_WRP_GenericSapIntegration sapIntegration) {
+    public class HDT_WRP_SelfReadingResponse {
+        public Boolean isResponseOk;
+        public String checkAutoletturaDescription;
+    }
+
+    public static HDT_WRP_SelfReadingResponse handleResponse(HDT_WRP_GenericSapIntegration sapIntegration, String checkAutoletturaDescription) {
         System.debug('Handling response for request type: ' + sapIntegration.requestType);
         switch on sapIntegration.requestType {
             when 'CheckAutolettura' {
                 return handleResponseCheckAutolettura(sapIntegration);
             }
             when 'InvioLetture' {
-                return handleResponseInvioLetture(sapIntegration);
+                return handleResponseInvioLetture(sapIntegration, checkAutoletturaDescription);
+            }
+            when 'InvioLettureForzato' {
+                return handleResponseInvioLettureForzato(sapIntegration);
             }
             when else {
                return null;
@@ -210,10 +217,11 @@ public with sharing class HDT_SRV_SelfReadings {
         }
     }
 
-    private static Boolean handleResponseCheckAutolettura(HDT_WRP_GenericSapIntegration sapIntegration) {
+    private static HDT_WRP_SelfReadingResponse handleResponseCheckAutolettura(HDT_WRP_GenericSapIntegration sapIntegration) {
 
         String caseId = sapIntegration.recordId;
-        Boolean responseOk = true;
+        HDT_WRP_SelfReadingResponse retWrap = new HDT_WRP_SelfReadingResponse();
+        retWrap.isResponseOk = true;
 
         Case readingCaseToUpdate = new Case();
         readingCaseToUpdate.Id = caseId;
@@ -221,17 +229,19 @@ public with sharing class HDT_SRV_SelfReadings {
 
         // SAP restituisce codice 502 in caso di check preliminare non superato.
         if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
-            responseOk = false;
+            retWrap.isResponseOk = false;
             List<Object> errorDetails = (List<Object>) body.get('errorDetails');
             if (errorDetails != null && !errorDetails.isEmpty()) {
                 Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
                 String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
                 readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari KO';
-
                 HDT_QR_Case queryCase = new HDT_QR_Case();
                 List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
                 if (!cases.isEmpty()) {
                     Case currentReadingCase = cases[0];
+                    if (isClosingError(errorMessage, currentReadingCase.Origin)) {
+                        readingCaseToUpdate.Status = 'Closed';
+                    }
                     String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                     String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
                     readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
@@ -244,13 +254,19 @@ public with sharing class HDT_SRV_SelfReadings {
         } else {
             // L'aggiornamento a Check preliminari OK non possiamo farlo adesso, poichè va fatta prima la seconda callout per l'invio letture a SAP.
             //readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
+            // Salviamo nel wrp object il messaggio che in seguito dovremo scrivere sul campo Description del Case.
+            Map<String, Object> data = (Map<String, Object>) body.get('data');
+            String message = (String) data.get('message');
+            if (message == 'data fuori finestra acquisibile') {
+                retWrap.checkAutoletturaDescription = message;
+            }
         }
 
         //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
         // String serializedCase = JSON.serialize(readingCaseToUpdate);
         // updateFuture(serializedCase);
 
-        return responseOk;
+        return retWrap;
     }
 
     @Future
@@ -262,28 +278,22 @@ public with sharing class HDT_SRV_SelfReadings {
 
     }
 
-    private static Boolean handleResponseInvioLetture(HDT_WRP_GenericSapIntegration sapIntegration) {
+    private static HDT_WRP_SelfReadingResponse handleResponseInvioLetture(HDT_WRP_GenericSapIntegration sapIntegration, String checkAutoletturaDescription) {
 
         String caseId = sapIntegration.recordId;
-        Boolean responseOk = true;
+        HDT_WRP_SelfReadingResponse retWrap = new HDT_WRP_SelfReadingResponse();
+        retWrap.isResponseOk = true;
 
         Case readingCaseToUpdate = new Case();
         readingCaseToUpdate.Id = caseId;
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
 
         if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
-            responseOk = false;
-            // List<Object> errorDetails = (List<Object>) body.get('errorDetails');
-            // if (errorDetails != null && !errorDetails.isEmpty()) {
-            //     Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
-            //     String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
-            //     readingCaseToUpdate.Phase__c = 'Check preliminari KO';
-            //     readingCaseToUpdate.Description = errorMessage;
-            // }
+            retWrap.isResponseOk = false;
         } else {
-
             // Settiamo prima l'esito precedente del Check Autolettura
             readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari OK';
+            readingCaseToUpdate.Description = checkAutoletturaDescription;
             HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
             // Infine settiamo l'esito OK dell'Invio Lettura.
             Case readingCaseToUpdateInvioLetture = new Case(); // Necessario un nuovo oggetto Case, altrimenti non sbianca la TechnicalPhase precedente.
@@ -296,7 +306,30 @@ public with sharing class HDT_SRV_SelfReadings {
         //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
 
 
-        return responseOk;
+        return retWrap;
+    }
+
+    private static HDT_WRP_SelfReadingResponse handleResponseInvioLettureForzato(HDT_WRP_GenericSapIntegration sapIntegration) {
+
+        String caseId = sapIntegration.recordId;
+        HDT_WRP_SelfReadingResponse retWrap = new HDT_WRP_SelfReadingResponse();
+        retWrap.isResponseOk = true;
+
+        Case readingCaseToUpdate = new Case();
+        readingCaseToUpdate.Id = caseId;
+        Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
+
+        if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
+            retWrap.isResponseOk = false;
+        } else {
+            readingCaseToUpdate.Phase__c = 'Inviata a SAP';
+            String serializedCase = JSON.serialize(readingCaseToUpdate);
+            updateFuture(serializedCase);
+        }
+
+        //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+
+        return retWrap;
     }
 
     // Verifica se per il dato Canale è prevista la creazione di Activity per l'errore restituito dal Check Autolettura.
@@ -308,7 +341,7 @@ public with sharing class HDT_SRV_SelfReadings {
         Boolean createActivity = False;
         switch on origin {
             when 'Sportello', 'Telefono Inbound' {
-                createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('inferiore valore minimo concesso') || msg.contains('registri incompleti');
+                createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('registri incompleti');
             }
             when else {
                 // TODO
@@ -316,6 +349,25 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         return createActivity;
+    }
+
+    // Verifica se per il dato Canale l'errore deve chiudere il Case.
+    private static Boolean isClosingError(String msg, String origin) {
+        if (String.isBlank(origin) || String.isBlank(msg)) {
+            return False;
+        }
+
+        Boolean closeCase = False;
+        switch on origin {
+            when 'Sportello', 'Telefono Inbound' {
+                closeCase = msg.contains('data fuori finestra (non acquisibile)') || msg.contains('inferiore valore minimo concesso');
+            }
+            when else {
+                // TODO
+            }
+        }
+
+        return closeCase;
     }
 
 }

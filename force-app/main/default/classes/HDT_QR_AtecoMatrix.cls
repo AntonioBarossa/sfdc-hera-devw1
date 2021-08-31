@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 30/06/2021
+* @description Class HDT_QR_AtecoMatrix
+* @history Keltin Mesonjesi – 30/06/2021 – Created class
+*/
 public inherited sharing class HDT_QR_AtecoMatrix {
 
     public static List<AtecoMatrix__c> getAtecoMatrixByComune(String comune){

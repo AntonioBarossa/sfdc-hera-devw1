@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_OrderDossier</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Order_Compact_Layout</compactLayoutAssignment>
     <description>Record Type Ordine Padre</description>
     <label>Order Dossier</label>
     <picklistValues>
@@ -255,7 +256,35 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cliente Non Trovato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consegna%2FInstallazione Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Installazione Fallita</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pratica errata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reso %28Prodotto%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rifiutato Preventivamente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Scarto</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -397,7 +426,7 @@
     <picklistValues>
         <picklist>ConventionAssociation__c</picklist>
         <values>
-            <fullName>%C2%A05%2F3%2F21</fullName>
+            <fullName>UISMO-UISP MODENA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1818,6 +1847,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>OdvCreated__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>OfferType__c</picklist>
         <values>
             <fullName>Progetto</fullName>
@@ -1889,6 +1933,10 @@
             <fullName>Registrazione  da validare</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PressureLevel__c</picklist>
@@ -1903,6 +1951,21 @@
         <values>
             <fullName>MP</fullName>
             <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>

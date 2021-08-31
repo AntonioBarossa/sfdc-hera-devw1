@@ -17,11 +17,18 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Account__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Cluster__c</field>
+                <field>Lead__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -31,11 +38,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Contact__c</field>
+                <field>Cluster__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Process__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Note__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -56,7 +71,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1q000000FoWW</masterLabel>
+        <masterLabel>00h3N000002ZaA4</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

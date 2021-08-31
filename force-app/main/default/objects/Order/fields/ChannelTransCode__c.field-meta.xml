@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ChannelTransCode__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE( LOWER(Channel__c) , 
+	&quot;back office&quot;, &quot;Interno&quot;,
+	&quot;hc point&quot;, &quot;Hera Comm Point&quot;,
+	&quot;vendita condomini&quot;, &quot;Vendita Diretta&quot;,
+	&quot;vendita topbusiness&quot;,&quot;Vendita Diretta&quot;,
+	&quot;Associazioni&quot;,&quot;Vendita Diretta&quot;,
+	&quot;business agent&quot;, &quot;Agenzia&quot;,
+	&quot;agenzie sme&quot;, &quot;Agenzia&quot;,
+	&quot;agenzie&quot;, &quot;Agenzia&quot;,
+	&quot;punti hera&quot;, &quot;Punto Hera&quot;,
+	&quot;teleselling inbound&quot;, &quot;Teleselling&quot;,
+	&quot;teleselling outbound&quot;, &quot;Teleselling&quot;,
+	&quot;web&quot;, &quot;Assistente Web&quot;,
+	Channel__c
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Transcodifica Canale</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

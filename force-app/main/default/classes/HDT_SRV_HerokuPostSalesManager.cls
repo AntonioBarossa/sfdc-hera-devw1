@@ -102,7 +102,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
     return response;
      
 }
-
+    @TestVisible
     private static void updateFuture(String inputString){
 
         Case c = (Case) JSON.deserialize(inputString, Case.class);
@@ -173,6 +173,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         return responseObject;
     }
 
+    @TestVisible
     private List<HDT_WRP_MrrResponse.HDT_WRP_Field> handleRichPassResponseField(Case caseInsert){
         List<HDT_WRP_MrrResponse.HDT_WRP_Field> responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>();
         HDT_WRP_MrrResponse.HDT_WRP_Field rifRich = new HDT_WRP_MrrResponse.HDT_WRP_Field();
@@ -193,6 +194,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         return responseFieldList;
     }
 
+    @TestVisible
     private List<HDT_WRP_MrrResponse.HDT_WRP_Field> handleNotifEsResponseField(Case caseUpdate){
         List<HDT_WRP_MrrResponse.HDT_WRP_Field> responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>();
         HDT_WRP_MrrResponse.HDT_WRP_Field rifRich = new HDT_WRP_MrrResponse.HDT_WRP_Field();

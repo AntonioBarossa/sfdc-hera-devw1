@@ -3,7 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import save from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.save';
 import saveDraft from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.saveDraft';
 import cancel from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.cancel';
-
+import calculateRate from '@salesforce/apex/HDT_UTL_Order.calculateRateCategory';
 export default class hdtChildOrderProcessActions extends LightningElement {
     @api order;
     @api lastStepNumber;
@@ -15,6 +15,10 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     loading = false;
     isDialogVisible = false;
 
+    get notBillableVas(){
+        return this.order.RecordType.DeveloperName !== 'HDT_RT_VAS' || !this.order.IsBillableVas__c;
+    }
+    
     get cancellationOptions() {
         return [
             { label: 'Pratica errata', value: 'Pratica errata' },
@@ -38,7 +42,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         console.log('lastStepNumber disabledSave: ', this.lastStepNumber);
         console.log('this.order.Step__c disabledSave: ', this.order.Step__c);
-        return (this.order.Step__c !== this.lastStepNumber && this.order.RecordType.DeveloperName !== 'HDT_RT_ScontiBonus');
+        return (this.order.Step__c !== this.lastStepNumber && ( this.order.RecordType.DeveloperName !== 'HDT_RT_ScontiBonus' && this.notBillableVas ));
     }
 
     dateWithMonthsDelay (months) {
@@ -97,20 +101,29 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         let orderToSave = {};
 
+        console.log('keltin this.lastStepData: ' + JSON.stringify(this.lastStepData));
+
         if (this.lastStepData != null) {
-            let lastStepFields = this.lastStepData;
 
-            orderToSave = {...lastStepFields, ...this.order};
-
-            if (!this.validateLastStepFields(lastStepFields)) {
+            if (!this.validateLastStepFields(this.lastStepData)) {
                 return;
             }
 
-        } else {
-            orderToSave = this.order;
-        }
+        } 
+        
+        orderToSave = this.order;
 
-        save({order: orderToSave}).then(data =>{
+        calculateRate({ord: orderToSave}).then(data2 =>{
+            if(!data2){
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Warning',
+                    message: 'Non è stato possibile calcolare la RateCategory',
+                    variant: 'warning'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+            }
+
+        save({order: orderToSave, lastStepData: this.lastStepData}).then(data =>{
             this.loading = false;
 
             if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
@@ -148,6 +161,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                 mode: 'sticky'
             });
             this.dispatchEvent(toastErrorMessage);
+        });
         });
     }
 

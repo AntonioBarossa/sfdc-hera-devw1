@@ -57,6 +57,7 @@ public inherited sharing class HDT_QR_SelfReadings {
             SELECT 
             Id,
             AccountId,
+            ServicePoint__r.Distributor__r.Code__c,
             ServicePoint__c
             FROM Contract WHERE SAPContractCode__c = :contractCode
             WITH SECURITY_ENFORCED
@@ -78,7 +79,7 @@ public inherited sharing class HDT_QR_SelfReadings {
 
         if(objRes.isAccessible()) {
 
-            String query = 'SELECT Id, EffectiveDate__c, CreatedDate FROM Order';
+            String query = 'SELECT Id, EffectiveDate__c, CreatedDate, RecordType.DeveloperName FROM Order';
 
             if (String.isNotBlank(accountId)) {
                 query += ' WHERE AccountId = :accountId';

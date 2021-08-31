@@ -10,6 +10,7 @@ export default class HdtCreateCampaign extends LightningElement {
     objectApiName = 'Campaign';
     @track reitekFieldRequired = false;
     @track startDateFieldRequired = false;
+    @track easyRequired=false;
     @track targetingModeFieldRequired = false;
     @track campaignRecurringFields = true;
     @track campaignInboundFields = false;
@@ -32,6 +33,15 @@ export default class HdtCreateCampaign extends LightningElement {
     @track channelValues;
     @track paperRecId;
     @track userRoleBackOffice = false;
+    // campaign Commercial Code Fields
+    @track codeGenerationRuleRequired = false;
+    @track prefixCodeRequired = false;
+    @track codeValidityEndDateRequired = false;
+    @track maxNumberEECodeUseRequired = false;
+    @track maxNumberGASCodeUseRequired = false;
+    @track maxNumberVASCodeUseRequired = false;
+    @track codeConventionQuantityRequired = false;
+    @track requiredPriority=false;
 
     @wire(getUserRole, {
         userId: USER_ID
@@ -53,16 +63,45 @@ export default class HdtCreateCampaign extends LightningElement {
             this.paperRecId = this.template.querySelector('lightning-input-field.paperCampaignParameterField').value;
         }
     }
+    
+    reqPrioritycheck(campReq){
+        if (this.statusField!='Bozza'&& campReq) {
+            this.requiredPriority=true;
+        }
+        else{
+            this.requiredPriority=false;
+        }
+    }
+    handleChangeReq(event){
+        console.log('handleChangeReq '+event.target.checked );
+        let campReq = this.template.querySelector("lightning-input-field[data-id=req]").value
+        this.reqPrioritycheck(campReq);
+    }
 
     handleChangeStatus(event) {
 
-        let categoryField = this.template.querySelector('.categoryField > lightning-input-field') != null ? this.template.querySelector('.categoryField > lightning-input-field').value : '';
+        var categoryField = this.template.querySelector('.categoryField > lightning-input-field') != null ? this.template.querySelector('.categoryField > lightning-input-field').value : '';
         let channelField = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
         let recurringField = this.template.querySelector('.recurringField > lightning-input-field').value;
         this.statusField = event.detail.value;
+        let processType = this.template.querySelector('.processType > lightning-input-field').value;
+        console.log('processType : '+processType);
+        console.log('categoryField : '+categoryField);
+        let campReq = this.template.querySelector("lightning-input-field[data-id=req]").value
+        console.log('campReq' +campReq);
+        this.reqPrioritycheck(campReq);
+        if ( this.statusField!='Bozza' && channelField=='Telefonico Outbound' ) {
+            this.easyRequired=true;
+        }
+        else{
+            this.easyRequired=false;
+        }
+    
         if ("Campagna Contenitore" != categoryField && event.detail.value === 'Pianificata' && categoryField != null) {
+           
             this.startDateFieldRequired = true;
-            this.campaignInboundFields = categoryField === 'Campagna CRM' ? true : false;
+            // 27-08-2021  HRDTR-00_HRAWRM-303  categoryField == 'Campagne Marketing Cloud'
+            this.campaignInboundFields = ((categoryField == 'Campagna CRM'|| categoryField == 'Campagna Marketing Cloud' ) && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
             this.reitekFieldRequired = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignOutboundFields = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignMemberAssignmentTypeRequired = channelField.includes('Telefonico Outbound') ? true : false;
@@ -71,7 +110,9 @@ export default class HdtCreateCampaign extends LightningElement {
             this.paperCampaignFields = channelField.includes('Cartaceo') ? true : false;
             this.campaignCommercialCodeFields = (channelField.includes('Bolletta') || categoryField === 'Campagna Marketing Cloud' || categoryField === 'Campagna CRM') ? true : false;
             this.recurringCampaignFieldsRequired = recurringField;
-        } else {
+        } 
+     
+        else {  
             this.startDateFieldRequired = false;
             this.recurringCampaignFieldsRequired = false;
             this.reitekFieldRequired = false;
@@ -82,15 +123,18 @@ export default class HdtCreateCampaign extends LightningElement {
     }
 
     handleChangeCategory(event) {
+        this.channelFieldRequired = true;
         this.campaignCommercialCodeFields = (event.detail.value === 'Campagna Marketing Cloud' || event.detail.value === 'Campagna CRM') ? true : false;
         this.statusField = this.template.querySelector('.statusField > lightning-input-field').value;
         let categoryField = this.template.querySelector('.categoryField > lightning-input-field').value;
         let channelField = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
         let recurringField = this.template.querySelector('.recurringField > lightning-input-field').value;
-        // this.statusField = event.detail.value;
+        let processType = this.template.querySelector('.processType > lightning-input-field').value;
+
         if ("Campagna Contenitore" != event.detail.value && this.statusField === 'Pianificata') {
             this.startDateFieldRequired = true;
-            this.campaignInboundFields = categoryField === 'Campagna CRM' ? true : false;
+            // 27-08-2021  HRDTR-00_HRAWRM-303  categoryField == 'Campagne Marketing Cloud'
+            this.campaignInboundFields = ((categoryField == 'Campagna CRM'|| categoryField == 'Campagna Marketing Cloud' ) && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
             this.reitekFieldRequired = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignOutboundFields = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignMemberAssignmentTypeRequired = channelField.includes('Telefonico Outbound') ? true : false;
@@ -98,12 +142,22 @@ export default class HdtCreateCampaign extends LightningElement {
             this.campaignBillingFields = channelField.includes('Bolletta') ? true : false;
             this.recurringCampaignFieldsRequired = recurringField;
         } else {
+            if ("Campagna Contenitore" == event.detail.value) {
+                this.channelFieldRequired = false;
+            }
             this.startDateFieldRequired = false;
             this.recurringCampaignFieldsRequired = false;
             this.reitekFieldRequired = false;
             this.campaignMemberAssignmentTypeRequired = false;
             this.campaignMemberAssignmentRequired = false;
         }
+    }
+
+    handleChangeProcessType(event){
+        let processType = event.detail.value;
+        let categoryField = this.template.querySelector('.categoryField > lightning-input-field') != null ? this.template.querySelector('.categoryField > lightning-input-field').value : '';
+       // 27-08-2021  HRDTR-00_HRAWRM-303  categoryField == 'Campagne Marketing Cloud'
+        this.campaignInboundFields = ((categoryField == 'Campagna CRM'|| categoryField == 'Campagna Marketing Cloud' ) && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
     }
 
     handleChangeChannel(event) {
@@ -127,10 +181,39 @@ export default class HdtCreateCampaign extends LightningElement {
 
     handleChangeCodeManagementModel(event) {
         this.selectedCodeManagementModel = event.detail.value;
+        this.codeGenerationRuleRequired = (event.detail.value != '' && event.detail.value != 'Nessuno') ? true : false;
+        //BUG HRAWRM-226 26/08/2021 Start
+        this.maxNumberEECodeUseRequired = false;
+        this.maxNumberGASCodeUseRequired = false;
+        this.maxNumberVASCodeUseRequired = false;
+        this.codeValidityEndDateRequired = false;
+        console.log('none : ' +event.detail.value  );
+        if (event.detail.value) {
+            this.prefixCodeRequired = true;
+           
+        }
+        else{
+            this.prefixCodeRequired = false;
+        }
+        if (this.selectedCodeManagementModel=='Convenzione') {
+            this.codeConventionQuantityRequired = true;
+        }
+        else{
+            this.codeConventionQuantityRequired =false;
+        }
+        //BUG HRAWRM-226 26/08/2021 End
     }
 
     handleChangeCodeGenerationRule(event) {
-        this.selectedCodeGenerationRule = event.detail.value;
+        this.selectedCodeGenerationRule = event.detail.value; 
+        //BUG HRAWRM-226 26/08/2021 Start
+       // this.prefixCodeRequired = event.detail.value != '' ? true : false;
+        //this.codeValidityEndDateRequired = event.detail.value != '' ? true : false;
+      //  this.maxNumberEECodeUseRequired = event.detail.value != '' ? true : false;
+       // this.maxNumberGASCodeUseRequired = event.detail.value != '' ? true : false;
+       // this.maxNumberVASCodeUseRequired = event.detail.value != '' ? true : false;
+        //this.codeConventionQuantityRequired = event.detail.value != '' ? true : false;
+        //BUG HRAWRM-226 26/08/2021 End
     }
 
     handleRecurringCampaignChange(event) {
@@ -139,6 +222,7 @@ export default class HdtCreateCampaign extends LightningElement {
 
     handleChangeAssignmentTye(event) {
         this.campaignMemberAssignmentRequired = (event.detail.value === 'Peso Percentuale' && this.statusField !== 'Bozza') ? true : false;
+
     }
 
     handleGenerationPeriodChange(event) {
@@ -148,8 +232,11 @@ export default class HdtCreateCampaign extends LightningElement {
             let startDate = this.template.querySelector('.startDate > lightning-input-field').value;
             const date = new Date(startDate);
             date.setDate(date.getDate() + 7 * value);
-            endDate = date.toISOString().slice(0, 10);
-            this.template.querySelector('.endDate > lightning-input-field').value = endDate;
+            if (startDate) {
+                endDate = date.toISOString().slice(0, 10);
+                this.template.querySelector('.endDate > lightning-input-field').value = endDate; 
+            }
+     
         }
     }
 

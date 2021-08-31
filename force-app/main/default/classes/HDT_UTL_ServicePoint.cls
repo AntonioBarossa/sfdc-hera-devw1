@@ -1,4 +1,6 @@
 public with sharing class HDT_UTL_ServicePoint {
+
+    private static HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType(); //21/08/2021 - gabriele.rota@webresults.it
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     public HDT_UTL_ServicePoint() {
 
@@ -46,7 +48,20 @@ public with sharing class HDT_UTL_ServicePoint {
 			spNew.RequestPhase__c  = mapRes.get('FASE');
 		}
 */
+    if(mapRes.get('IMPOSTE')!=null){
+        if(mapRes.get('DESCRCOMM')=='Gas'){
+            spNew.ExciseGas__c  = mapRes.get('IMPOSTE') != null ? mapRes.get('IMPOSTE') : 'ALTRO';
 
+        }else if(mapRes.get('DESCRCOMM')=='Energia Elettrica'){
+        spNew.ExciseEle__c  = mapRes.get('IMPOSTE') != null ? mapRes.get('IMPOSTE') : 'ALTRO';
+
+        }
+    }
+
+    if(mapRes.get('ALIQUOTAIVA')!=null){
+        spNew.Vat__c  = mapRes.get('ALIQUOTAIVA');
+
+    }
 		if(spNew.MeterStatus__c  != 'Sospeso'){
             system.debug('entra in stato device');
             if(mapRes.get('STATODEVICE')== 'A'){
@@ -63,7 +78,7 @@ public with sharing class HDT_UTL_ServicePoint {
             }   
 		}
 		if(mapRes.get('PRESSIONE')!=null && !String.isBlank(mapRes.get('PRESSIONE'))){
-			spNew.Pressure__c  = integer.valueOf(mapRes.get('PRESSIONE'));
+			spNew.Pressure__c  = Decimal.valueOf(mapRes.get('PRESSIONE'));
 		}
 
 		if(mapRes.get('CODICEREMI')!=null && !String.isBlank(mapRes.get('CODICEREMI'))){
@@ -157,12 +172,12 @@ public with sharing class HDT_UTL_ServicePoint {
 				
                     if(mapRes.get('DESCRCOMM')== 'Energia elettrica'){
                         spNew.CommoditySector__c = 'Energia Elettrica';
-
+                        spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ele'); //21/08/2021 - gabriele.rota@webresults.it
                     }else
                     {
 					    spNew.CommoditySector__c = 'Gas';
+                        spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Gas'); //21/08/2021 - gabriele.rota@webresults.it
                     }
-		
 				}
                 if(mapRes.get('MOTGARANZIAFORN')==null){
 				

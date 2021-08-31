@@ -79,6 +79,13 @@ public inherited sharing class HDT_QR_Account {
         ];
     }
 
+    public List<Account> getAllAccounts() {
+        return [ SELECT Id, Name
+                 FROM Account 
+                 WITH SECURITY_ENFORCED
+                 LIMIT 10000 ];
+    }
+
     public List<Account> getAccountByVat(String vat) {
         return [
             SELECT
@@ -96,6 +103,15 @@ public inherited sharing class HDT_QR_Account {
             FROM Account 
             WHERE FiscalCode__c = :fiscalCode
             AND VATNumber__c = :vat
+            WITH SECURITY_ENFORCED
+        ];
+    }
+    public List<Account> getAccountById(String id){
+        return [
+            SELECT
+            Id,Name
+            FROM Account 
+            WHERE id = :id
             WITH SECURITY_ENFORCED
         ];
     }

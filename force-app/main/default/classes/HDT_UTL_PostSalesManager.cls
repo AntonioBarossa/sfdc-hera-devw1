@@ -69,19 +69,27 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             if(parentCase.Type == 'Variazione indirizzo di fornitura'){
 
                 if(currentCase.Phase__c == 'KO definitivo'
-                || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) > 0){
+                || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) == 0){
                     parentCase.Phase__c = 'Elaborazione Manuale';
                 } else {
                     parentCase.Phase__c = 'Completata';
                 }
-            } else if(parentCase.Type.equalsIgnoreCase('Allineamento Canone Rai')){
+            }else if(parentCase.Type.equalsIgnoreCase('Modifica Tariffa Residente/Non Residente')){
+                parentCase.Phase__c = 'Elaborazione Manuale';
+            }
+             else if(parentCase.Type.equalsIgnoreCase('Allineamento Canone Rai')){
                 if(currentCase.Phase__c.equalsIgnoreCase('KO definitivo')){
-                    wrts_prcgvr__Activity__c activity = createActivity('Elaborazione Manuale');
+                    wrts_prcgvr__Activity__c activity = createActivity('Gestione Manuale');
                     activity.Case__c = parentCase.Id;
                     HDT_UTL_DatabaseService.insertSObject(activity);
                 } else {
                     parentCase.Phase__c = 'Completata';
                 }
+            } else if(parentCase.Type.equalsIgnoreCase('Gestione Disalimentabilità')){
+                wrts_prcgvr__Activity__c activity = createActivity('Gestione Manuale SAP');
+                activity.Case__c = parentCase.Id;
+                activity.wrts_prcgvr__IsRequired__c	= true;
+                HDT_UTL_DatabaseService.insertSObject(activity);
             }
 
             HDT_UTL_DatabaseService.updateSObject(parentCase);

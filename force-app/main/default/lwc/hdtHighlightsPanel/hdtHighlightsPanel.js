@@ -20,18 +20,18 @@ export default class HdtHighlightsPanel extends LightningElement {
         var arraySize = fields.length + 2; // + 2 per i servizi attivi e per il KPI Campagne Attive
         this.gridClass = 'slds-col slds-size_1-of-' + arraySize.toString();
         console.log(this.gridClass);
-        this.doupdateKpis();
+        this.doUpdateKpis();
     }
 
-    async doupdateKpis() {
+    async doUpdateKpis() {
         const error = await updateKpis({accountId: this.recordId});
         if(error) {
-            this.dispatchEvent(new ShowToastEvent({
-                variant: 'error',
-                title: 'Errore',
-                message: 'Impossibile calcolare lo stato di Recaller.',
-            }));
-            console.log('### hdtHighlightsPanel.js - ERROR: ' + error);
+            // this.dispatchEvent(new ShowToastEvent({
+            //     variant: 'error',
+            //     title: 'Errore',
+            //     message: 'Impossibile aggiornare i KPI Recaller e Tasso Reclamosità.',
+            // }));
+            console.log('### hdtHighlightsPanel.js.doUpdatesKpis() - ERROR: ' + error);
         }
     }
 }

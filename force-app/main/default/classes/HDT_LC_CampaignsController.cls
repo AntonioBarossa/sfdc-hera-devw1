@@ -1,6 +1,7 @@
 public inherited sharing class HDT_LC_CampaignsController {
-
+    
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
+    private static HDT_QR_Account accountQr =new HDT_QR_Account();
     private static HDT_SRV_CampaignMember campaignMemberSrv = new HDT_SRV_CampaignMember();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
@@ -12,11 +13,11 @@ public inherited sharing class HDT_LC_CampaignsController {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Product productQr = new HDT_QR_Product();
     private static HDT_SRV_Product productSrv = new HDT_SRV_Product();
-
+    
     @AuraEnabled(cacheable=true)
     public static List <CampaignMember> getCampaigns(String id, String objectName, String category, String channel) {
         campaignMemberSrv.checkReadAccess('Campaign.Name,Campaign.Status,Campaign.Channel__c,Campaign.EndDate');
-
+        
         if (objectName == 'Contact') {
             //return all active campaigns related to this Contact
             return  campaignMemberQr.getActiveCampaignsByContact(id);
@@ -26,8 +27,8 @@ public inherited sharing class HDT_LC_CampaignsController {
         } else if(objectName == 'Account') {
             //return all active campaigns related to all contacts related to this Account
             List<String> contacts = contactQr.getContactsIdByAccountId(id);
-            if (category != '') {
-                if (channel != '') {
+            if (String.isNotBlank(category)) {
+                if (String.isNotBlank(channel)) {
                     return campaignMemberQr.filterCampaignsByCategoryAndChannel(contacts, category, channel);
                 }
                 return campaignMemberQr.filterCampaignsByCategory(contacts, category);
@@ -45,8 +46,8 @@ public inherited sharing class HDT_LC_CampaignsController {
     public static CampaignMember updateCampaignMemberStatus(String campaignMemberId, String statusValue){
         try {
             CampaignMember cm = new CampaignMember(
-                Id = campaignMemberId,
-                Status = statusValue
+            Id = campaignMemberId,
+            Status = statusValue
             );
             campaignMemberSrv.updateRecord(cm);
             return cm;
@@ -55,14 +56,14 @@ public inherited sharing class HDT_LC_CampaignsController {
             return null;
         }
     }
-
+    
     @AuraEnabled
     public static List<CampaignMember> updateCampaignMembersStatus(List<String> campaignMemberIds, String statusValue){
         List<CampaignMember> membersToUpdate = new List<CampaignMember> ();
         for (String id : campaignMemberIds) {
             CampaignMember cm = new CampaignMember(
-                Id = id,
-                Status = statusValue
+            Id = id,
+            Status = statusValue
             );
             membersToUpdate.add(cm);
         }
@@ -73,9 +74,9 @@ public inherited sharing class HDT_LC_CampaignsController {
             System.debug(e.getMessage());
             return null;
         }
-
+        
     }
-
+    
     @AuraEnabled
     public static Case createNewCase(Case c){
         Case newCase = caseSrv.createRecord(c);
@@ -95,27 +96,27 @@ public inherited sharing class HDT_LC_CampaignsController {
         else{
             res = null;
         }
-
+        
         return res;
     }
-
-
+    
+    
     @AuraEnabled
     public static List<CampaignMember> getUnassignedCampaignMembers(String campaignId) {
         return  campaignMemberQr.getUnassignedCampaignMembers(campaignId);
     }
-
+    
     @AuraEnabled(cacheable=true)
     public static List<Account> getAccountsforCampaignMembers() {
         return  campaignMemberQr.getAccountsforCampaignMembers();
     }
-
+    
     @AuraEnabled
     public static CampaignMember getAccountAndCampaign(String campaignMemberId) {
         campaignMemberSrv.checkReadAccess('ContactId,LeadId,CampaignId,GenericField1__c');
         return  campaignMemberQr.getAccountAndCampaign(campaignMemberId);
     }
-
+    
     @AuraEnabled
     public static List<CampaignMember> assignCampaignMemberAgency(String campaignId, List<Id> toAssignObj){
         List<CampaignMember> allUnassignedMembers = campaignMemberQr.getUnassignedCampaignMembers(campaignId);
@@ -126,17 +127,17 @@ public inherited sharing class HDT_LC_CampaignsController {
             assignedMembers.add(cm);
             allUnassignedMembers.remove(0);            
         }
-
+        
         campaignMemberSrv.updateRecords(assignedMembers);
         return assignedMembers;
     }
-
+    
     @AuraEnabled
     public static CampaignMember updateCampaignMemberSurveyResponse(String campaignMemberId, String surveyResponseId){
         try {
             CampaignMember cm = new CampaignMember(
-                Id = campaignMemberId,
-                SurveyResponse__c = surveyResponseId
+            Id = campaignMemberId,
+            SurveyResponse__c = surveyResponseId
             );
             campaignMemberSrv.updateRecord(cm);
             return cm;
@@ -145,7 +146,7 @@ public inherited sharing class HDT_LC_CampaignsController {
             return null;
         }
     }
-
+    
     @AuraEnabled
     public static CommercialCode__c createCommercialCode(String campaignId){
         Campaign cmp = campaignQr.getCommercialCodeCampaign(campaignId);
@@ -153,18 +154,18 @@ public inherited sharing class HDT_LC_CampaignsController {
         try {
             System.debug('try to create Commercial code');
             CommercialCode__c cc = new CommercialCode__c (
-                Campaign__c = campaignId,
-                FullCode__c = cmp.PrefixCode__c,
-                Name = cmp.PrefixCode__c,
-                MaximalUsesEE__c = cmp.MaxNumberEECodeUse__c,
-                MaximalUsesGAS__c = cmp.MaxNumberGASCodeUse__c,
-                MaximalUsesVAS__c = cmp.MaxNumberVASCodeUse__c,
-                ActualUsesEE__c = 0,
-                ActualUsesGAS__c = 0,
-                ActualUsesVAS__c = 0,
-                RecoveryUsesEE__c = 0,
-                RecoveryUsesGAS__c = 0,
-                RecoveryUsesVAS__c = 0
+            Campaign__c = campaignId,
+            FullCode__c = cmp.PrefixCode__c,
+            Name = cmp.PrefixCode__c,
+            MaximalUsesEE__c = cmp.MaxNumberEECodeUse__c,
+            MaximalUsesGAS__c = cmp.MaxNumberGASCodeUse__c,
+            MaximalUsesVAS__c = cmp.MaxNumberVASCodeUse__c,
+            ActualUsesEE__c = 0,
+            ActualUsesGAS__c = 0,
+            ActualUsesVAS__c = 0,
+            RecoveryUsesEE__c = 0,
+            RecoveryUsesGAS__c = 0,
+            RecoveryUsesVAS__c = 0
             );
             CommercialCode__c res = commercialCodeSrv.createRecord(cc);
             return res;
@@ -173,7 +174,7 @@ public inherited sharing class HDT_LC_CampaignsController {
             return null;
         }
     }
-
+    
     @AuraEnabled(cacheable=true)
     public static Boolean checkCommercialCodeUniqueness(String commercialCode, String campaignId) {
         List<Campaign> campaignsList = campaignQr.getCommercialCode(commercialCode, campaignId);
@@ -182,7 +183,7 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         return true;
     }
-
+    
     @AuraEnabled
     public static Boolean cancelAssignments(String recordId){
         Campaign camp = campaignQr.getRecordById(recordId);
@@ -194,8 +195,8 @@ public inherited sharing class HDT_LC_CampaignsController {
                 for (CampaignMember cm : cmList) {
                     if (cm.Agency__c != null) {
                         CampaignMember newCm = new CampaignMember(
-                            Id = cm.Id,
-                            Agency__c = null
+                        Id = cm.Id,
+                        Agency__c = null
                         );
                         updateMembers.add(newCm);
                         System.debug(updateMembers);
@@ -212,7 +213,7 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         return false;
     }
-
+    
     @AuraEnabled
     public static Boolean incrementCommercialCode(String recordId, String commodity){
         CommercialCode__c commCode = commercialCodeQr.getRecordById(recordId);
@@ -233,16 +234,16 @@ public inherited sharing class HDT_LC_CampaignsController {
                 isValid = true;
             }            
         }
-
+        
         System.debug(commCode);
-
+        
         if (isValid) {
             commercialCodeSrv.updateRecord(commCode);
         }
-
+        
         return isValid;
     }
-
+    
     @AuraEnabled
     public static Boolean bulkIncrementCommercialCode(String recordId, Map<String,Integer> commodityQuantity){
         CommercialCode__c commCode = commercialCodeQr.getRecordById(recordId);
@@ -266,15 +267,15 @@ public inherited sharing class HDT_LC_CampaignsController {
                 }            
             }
         }
-
+        
         System.debug(commCode);
-
+        
         if (isValid) {
             commercialCodeSrv.updateRecord(commCode);
         }
         return isValid;
     }
-
+    
     @AuraEnabled
     public static Boolean cancelAssignmentsOrder(String recordId){
         Order order = orderQr.getOrderbyId(recordId);
@@ -296,7 +297,7 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         return false;
     }
-
+    
     @AuraEnabled(cacheable=true)
     public static List<Product2> getAllProducts(String IdGruppoEleggibilitCampagne)  {
         try {
@@ -307,26 +308,26 @@ public inherited sharing class HDT_LC_CampaignsController {
             return null;
         }
     }
-
+    
     @AuraEnabled
     public static String assignSelectedProducts(String IdGruppoEleggibilitCampagne, List<Id> productIds, List<Id> deselectProductIds) {
         List<Product2> productList = new List<Product2> ();
         for (String id : productIds) {
             Product2 prod = new Product2(
-                Id = id,
-                CampaignEleggibilityGroup__c = IdGruppoEleggibilitCampagne
+            Id = id,
+            CampaignEleggibilityGroup__c = IdGruppoEleggibilitCampagne
             );
             productList.add(prod);
         }
-
+        
         for (String id : deselectProductIds) {
             Product2 prod = new Product2(
-                Id = id,
-                CampaignEleggibilityGroup__c = null
+            Id = id,
+            CampaignEleggibilityGroup__c = null
             );
             productList.add(prod);
         }
-
+        
         try {
             productSrv.updateRecords(productList);
             return 'success';
@@ -335,7 +336,7 @@ public inherited sharing class HDT_LC_CampaignsController {
             return e.getMessage();
         }
     }
-
+    
     @AuraEnabled(cacheable=true)
     public static string getUserRole(String userId){
         try {
@@ -347,4 +348,71 @@ public inherited sharing class HDT_LC_CampaignsController {
             throw new AuraHandledException(e.getMessage());
         }
     }
+    
+    @AuraEnabled
+    public static Boolean methodClosedTab(String id, String objectName, String category, String channel){
+        List <CampaignMember> cm= getCampaigns( id,  objectName,  category,  channel);
+        
+        List<String> campaignMemberIds = new List<String>();
+        if (cm!=null &&cm.size()>0 ) {
+            
+            
+            for (CampaignMember tempCm : cm) {
+                if(tempCm.Campaign.Required__c == true && tempCm.Campaign.Category__c == 'Campagna CRM') {
+                    
+                    campaignMemberIds.add(tempCm.Id);
+                }
+            }
+            System.debug('campaignMemberIds '+campaignMemberIds);
+            List<CampaignMember>campMemUp =updateCampaignMembersStatus(campaignMemberIds, 'Non Proposto Auto');
+            System.debug('campMemUp : '+campMemUp);
+            System.debug('campMemUp!=null : '+String.valueOf(campMemUp!=null));
+            System.debug('campMemUp.size()>0 : '+String.valueOf(campMemUp.size()>0));
+            return campMemUp!=null && campMemUp.size()>0?true:false;
+        }
+        
+        return false;
+        
+    }
+    @AuraEnabled
+    public static  List <CampaignMember> requiredCampaignCheck(String id){
+        System.debug('id : '+id);
+        if (String.isBlank(id)) {
+            return null;
+        }
+        List <CampaignMember> cm= getCampaigns( id,  'Account',  'Campagna CRM',  '');
+        
+        
+        List<CampaignMember> campaignMemberIds = new List<CampaignMember>();
+        
+        
+        
+        for (CampaignMember tempCm : cm) {
+            if(tempCm.Campaign.Required__c == true && tempCm.Campaign.Category__c == 'Campagna CRM') {
+                
+                campaignMemberIds.add(tempCm);
+            }
+        }
+        System.debug('campaignMemberIds '+campaignMemberIds);
+        //  List<CampaignMember>campMemUp =updateCampaignMembersStatus(campaignMemberIds, 'Non Proposto Auto');
+        
+        return campaignMemberIds;
+        
+        
+    }
+    @AuraEnabled
+    public static  Account getCurrentAccount(String id){
+        System.debug('######id :' +id);
+        if (String.isBlank(id)) {
+            return null;
+        }
+        List<String> listFiels = new List<String>{'name'};
+        List<Account> listAcc =accountQr.getAccountById(id);
+        Account currentAccount = listAcc.get(0);
+        
+        return currentAccount ;
+        
+        
+    }
+    
 }

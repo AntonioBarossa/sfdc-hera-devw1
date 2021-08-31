@@ -1,3 +1,10 @@
+/**
+* @author Fatjola Memishaj (fatjola.memishaj@dunegroup.it)
+* @date 18/03/2021
+* @description HDT_UTL_CampaignMember
+* @history Fatjola Memishaj – 18/03/2021 – Created class
+*/
+
 public with sharing class HDT_UTL_CampaignMember {
 
     public static void createCampaignMemberStatus(List<Campaign> newCampaigns, List<Campaign> oldCampaigns){
@@ -91,43 +98,50 @@ public with sharing class HDT_UTL_CampaignMember {
         }
 
         List<CampaignMemberAssigmentItem__c> query = [
-            SELECT Id, Agency__c, PercentageAllocation__c FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c IN (SELECT CampaignMemberAssigment__c FROM Campaign WHERE Id IN :campaignIds AND AssignmentType__c = 'Peso Percentuale') WITH SECURITY_ENFORCED ORDER BY PercentageAllocation__c DESC
-        ];
-        
-        Map<String,Decimal> agencyPercentage = new Map<String,Decimal>();
-        for (CampaignMemberAssigmentItem__c row : query) {
-            agencyPercentage.put((String)row.get('Agency__c'), (Decimal)row.get('PercentageAllocation__c'));
-        }
-
-        List<AggregateResult> campaignMembers = [
-            SELECT COUNT(Id) members, Agency__c from CampaignMember WHERE CampaignId IN :campaignIds WITH SECURITY_ENFORCED GROUP BY Agency__c
+            SELECT Id, Agency__c, PercentageAllocation__c, CampaingMemberAssigment__c  FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c IN (SELECT CampaignMemberAssigment__c FROM Campaign WHERE Id IN :campaignIds AND AssignmentType__c = 'Peso Percentuale') WITH SECURITY_ENFORCED ORDER BY PercentageAllocation__c DESC
         ];
 
-        Map<String,Decimal> agencyCampaignMembers = new Map<String,Decimal>();
-        Decimal totalMembers = 0;
-        for (AggregateResult row : campaignMembers) {
-            agencyCampaignMembers.put((String)row.get('Agency__c'), (Decimal)row.get('members'));
-            totalMembers += (Decimal)row.get('members');
-        }
-        List<String> agencies = new List<String>(agencyPercentage.keySet());
+        if (query.size()>0 && query[0].CampaingMemberAssigment__c!=null) {
+            String campaignMemberAssigmentId = query[0].CampaingMemberAssigment__c;
+ 
+            List<AggregateResult> totalPercentageQuery = [
+                SELECT SUM(PercentageAllocation__c) totalPercentage FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c = :campaignMemberAssigmentId WITH SECURITY_ENFORCED
+            ];
 
-        Integer totalAssigned = 0;
-        Decimal total = totalMembers + newCampaignMember.size();
+            Decimal totalPercentage = (Decimal)totalPercentageQuery[0].get('totalPercentage');
 
-        for (String agency : agencies) {
-            Decimal oldMembers = 0;
-            if (agencyCampaignMembers.get(agency) != null) {
-                oldMembers = agencyCampaignMembers.get(agency);
-            }
-            Decimal toAssign =  total * (Decimal)agencyPercentage.get(agency) / 100;
-            toAssign = toAssign.round(System.RoundingMode.HALF_UP) - oldMembers;
-            if ((totalAssigned + toAssign) <= newCampaignMember.size()) {
-                //assign agencies to the new campaign members
-                for (Integer i = 0; i < toAssign; i++) {
-                    Integer index = i + totalAssigned;
-                    newCampaignMember[index].Agency__c = agency;
+            Map<String,Decimal> agencyPercentage = new Map<String,Decimal>();
+            if (totalPercentage < 100) {
+                for (CampaignMemberAssigmentItem__c row : query) {
+                    Decimal perc = (Decimal)row.get('PercentageAllocation__c');
+                    perc = perc/totalPercentage * 100;
+                    agencyPercentage.put((String)row.get('Agency__c'), perc.round(System.RoundingMode.HALF_UP));
                 }
-                totalAssigned += (Integer)toAssign;
+            } else {
+                for (CampaignMemberAssigmentItem__c row : query) {
+                    agencyPercentage.put((String)row.get('Agency__c'), (Decimal)row.get('PercentageAllocation__c'));
+                }
+            }
+
+            List<String> agencies = new List<String>(agencyPercentage.keySet());
+
+            Integer totalAssigned = 0;
+            Decimal total = newCampaignMember.size();
+
+            for (String agency : agencies) {
+                Decimal toAssign =  total * (Decimal)agencyPercentage.get(agency) / 100;
+                toAssign = toAssign.round(System.RoundingMode.HALF_UP);
+                if ((totalAssigned + toAssign) == (newCampaignMember.size() + 1)) {
+                    toAssign = toAssign - 1;
+                }
+                if ((totalAssigned + toAssign) <= newCampaignMember.size()) {
+                    //assign agencies to the new campaign members
+                    for (Integer i = 0; i < toAssign; i++) {
+                        Integer index = i + totalAssigned;
+                        newCampaignMember[index].Agency__c = agency;
+                    }
+                    totalAssigned += (Integer)toAssign;
+                }
             }
         }
     }
@@ -155,14 +169,16 @@ public with sharing class HDT_UTL_CampaignMember {
             }
             allMembers.put(cmpId, newCmList);            
         }        
+        
+        if (!system.isBatch()) { // Keltin - added this because it cases error 'Database.executeBatch cannot be called from a batch start, batch execute, or future method' when called from HDT_BA_QualityCall
+            //execute batch for each campaign
+            for(String cmpId : allMembers.keySet()){
+                List<String> cmpMembers = allMembers.get(cmpId);
 
-        //execute batch for each campaign
-        for(String cmpId : allMembers.keySet()){
-            List<String> cmpMembers = allMembers.get(cmpId);
-
-            HDT_BA_CommercialCode ccBatch = new HDT_BA_CommercialCode(cmpId, cmpMembers);
-            ID batchProcessId = Database.executeBatch(ccBatch, 500000);
-            System.debug('batchProcessId - ' + batchProcessId);
+                HDT_BA_CommercialCode ccBatch = new HDT_BA_CommercialCode(cmpId, cmpMembers);
+                ID batchProcessId = Database.executeBatch(ccBatch, 500000);
+                System.debug('batchProcessId - ' + batchProcessId);
+            }
         }
     }
 

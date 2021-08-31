@@ -32,6 +32,7 @@ export default class HdtSelfReading extends LightningElement {
     @api servicePointId;
     @api isVolture;
     @api isRetroactive;
+    @api isProcessReading;
     @api availableActions = [];
     @api saveDraft;
     @api cancelCase;
@@ -52,6 +53,7 @@ export default class HdtSelfReading extends LightningElement {
     @api isRettificaConsumi;
     @api tipizzazioneRettificaConsumi;
     @api showReadingWindows;
+    @api isMono;
 
     @track isLoading = false;
     @track windowColumns;
@@ -178,6 +180,7 @@ export default class HdtSelfReading extends LightningElement {
 
         checkLastReadings({servicePointId:this.servicePointId})
         .then(result =>{
+            let lastReadings = [];
             console.log('checkLastReadings results: ' + result);
             if (result == null) {
                 this.isLoading = false;
@@ -186,17 +189,21 @@ export default class HdtSelfReading extends LightningElement {
                 this.showToastMessage(this.errorAdvanceMessage);
                 return;
             }
-            const parsedResult = JSON.parse(result);
-            // Verifichiamo se la response contiene un errore da SAP.
-            if ("errorDetails" in parsedResult && "message" in parsedResult.errorDetails[0]) {
-                this.isLoading = false;
-                this.buttonDisabled = false;
-                this.errorAdvanceMessage = 'Errore da SAP: ' + parsedResult.errorDetails[0].message;
-                this.showToastMessage(this.errorAdvanceMessage);
-                return;
+            if (result === 'ERROR_NO_ASSET_NUMBER') {
+                lastReadings = this.emptyArrayAutoletturaDaProcesso();
+            } else {
+                const parsedResult = JSON.parse(result);
+                // Verifichiamo se la response contiene un errore da SAP.
+                if ("errorDetails" in parsedResult && "message" in parsedResult.errorDetails[0]) {
+                    this.isLoading = false;
+                    this.buttonDisabled = false;
+                    this.errorAdvanceMessage = 'Errore da SAP: ' + parsedResult.errorDetails[0].message;
+                    this.showToastMessage(this.errorAdvanceMessage);
+                    return;
+                }
+                lastReadings = this.fillLastReadingsArray(parsedResult);
             }
             this.isLoading = false;
-            const lastReadings = this.fillLastReadingsArray(parsedResult);
             console.log('isLoading?: ' + this.isLoading);
             console.log('filled obj: ' + JSON.stringify( lastReadings));
             console.log('querySelectorAll #: ' + this.template.querySelectorAll('c-hdt-self-reading-register').length);
@@ -226,6 +233,54 @@ export default class HdtSelfReading extends LightningElement {
         this.callLastReadings();
 
     }
+
+    // Per le autoletture da processo che non possono richiamare il VerificaUltimaLettura creiamo degli array vuoti.
+    // Assumiamo come default 3 registri per l'ELE e uno solo per il GAS.
+    emptyArrayAutoletturaDaProcesso(){
+        let emptyRegisters = [];
+
+        if (this.commodity === 'Energia Elettrica') {
+            for (let i = 1; i <= 3; i++) {
+                emptyRegisters.push({
+                    register: i,
+                    readingType: null,
+                    readingSerialNumber: null,
+                    readingDate: null,
+                    readingOldValue: null,
+                    readingUnit: null,
+                    readingRegister: null,
+                    readingDigitNumber: null
+                });
+            }
+        } else {
+            emptyRegisters.push({
+                register: 'Misuratore',
+                readingType: null,
+                readingSerialNumber: null,
+                readingDate: null,
+                readingOldValue: null,
+                readingUnit: null,
+                readingRegister: null,
+                readingDigitNumber: null
+            });
+            emptyRegisters.push({
+                register: 'Correttore',
+                readingType: null,
+                readingSerialNumber: null,
+                readingDate: null,
+                readingOldValue: null,
+                readingUnit: null,
+                readingRegister: null,
+                readingDigitNumber: null
+            });
+        }
+
+        return emptyRegisters;
+    }
+
+
+
+
 
     /**
      * Effettua il parsing del JSON della response del WS di Verifica Ultima Lettura,
@@ -262,6 +317,7 @@ export default class HdtSelfReading extends LightningElement {
 
         let registers = [];
         let finalRegisters = []
+        let isBiorario = false;
 
         try {
             for (const key in lastReadings) {
@@ -313,16 +369,27 @@ export default class HdtSelfReading extends LightningElement {
                 }
             }
 
-            // Lasciamo solo i registri che hanno una lettura, ovvero quelli che hanno la property readingDate.
             registers.forEach(register => {
+                // Lasciamo solo i registri che hanno una lettura, ovvero quelli che hanno la property readingDate.
                 if ('readingDate' in register) {
                     finalRegisters.push(register);
+                    
+                    // Se la response contiene almeno un registro con banda=F1|F2|F3, vuol dire che l'impianto supporta letture bi-orarie.
+                    // Diversmente assumiamo che l'impianto è mono-orario (tutti i registri valorizzati dovrebbero avere banda=M)
+                    if (this.commodity === 'Energia Elettrica' && register.readingBand != null && register.readingBand.startsWith('F')) {
+                        console.log('lettura bi-oraria');
+                        isBiorario = true;
+                    }
                 }
             });
+        } catch (error) {
+        console.error(error);
+        }
 
-          } catch (error) {
-            console.error(error);
-          }
+        if (this.commodity === 'Energia Elettrica') {
+            this.isMono = !isBiorario;
+            console.log('mono orario? ' + this.isMono);
+        }
 
         return finalRegisters;
     }
