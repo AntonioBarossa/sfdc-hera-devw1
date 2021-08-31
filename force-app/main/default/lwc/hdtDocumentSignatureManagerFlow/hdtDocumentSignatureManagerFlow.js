@@ -67,6 +67,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     @api nextLabel;
     @api nextVariant;
     @api documents;
+    @api disableSignMode;
     caseRecord;
     @track inputParams;
     @track enableNext = false;
