@@ -16,7 +16,7 @@ CASE(TEXT(CustomerMarking__c),
 0) = 1,
 TRUE, FALSE)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Marcatura Digitale</label>
+    <label>Marcatura Digital</label>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>
