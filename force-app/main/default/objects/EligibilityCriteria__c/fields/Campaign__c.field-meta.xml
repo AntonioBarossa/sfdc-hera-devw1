@@ -4,10 +4,10 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Campo di configurazione usato per indicare la capagna di riferimento per il record di criterio nella funzionalità di Configurazione Offerta Tecnica</description>
     <externalId>false</externalId>
-    <label>Campagna</label>
-    <referenceTo>Campaign</referenceTo>
-    <relationshipLabel>Criteri di Eleggibilita</relationshipLabel>
-    <relationshipName>Criteri_di_Eleggibilita</relationshipName>
+    <label>Gruppo Campagne</label>
+    <referenceTo>CampaignEligibilityGroup__c</referenceTo>
+    <relationshipLabel>Gruppo campagne</relationshipLabel>
+    <relationshipName>CampaignGroups</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
