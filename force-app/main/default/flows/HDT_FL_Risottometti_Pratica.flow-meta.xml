@@ -10,7 +10,7 @@
             <assignToReference>getCase.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Comunicazione verso Heroku</stringValue>
+                <stringValue>Comunicazione verso Heroku OK</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -52,8 +52,8 @@
     <assignments>
         <name>phaseAssignCase_5</name>
         <label>phaseAssignCase_5</label>
-        <locationX>979</locationX>
-        <locationY>1091</locationY>
+        <locationX>985</locationX>
+        <locationY>1113</locationY>
         <assignmentItems>
             <assignToReference>getCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -132,8 +132,8 @@
     <assignments>
         <name>phaseAssignOrder_5</name>
         <label>phaseAssignOrder_5</label>
-        <locationX>1067</locationX>
-        <locationY>1144</locationY>
+        <locationX>1119</locationX>
+        <locationY>1109</locationY>
         <assignmentItems>
             <assignToReference>getOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -148,8 +148,8 @@
     <assignments>
         <name>phaseAssignOrder_5_0</name>
         <label>phaseAssignOrder_5</label>
-        <locationX>591</locationX>
-        <locationY>1225</locationY>
+        <locationX>520</locationX>
+        <locationY>1202</locationY>
         <assignmentItems>
             <assignToReference>getOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -291,8 +291,8 @@
     <decisions>
         <name>parentDecision_4</name>
         <label>parentDecision_4</label>
-        <locationX>958</locationX>
-        <locationY>1239</locationY>
+        <locationX>1022</locationX>
+        <locationY>1258</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>case_4</name>
@@ -372,10 +372,10 @@
             <name>Order</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getActivity.Order__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>getActivity.Case__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue></stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -387,10 +387,10 @@
             <name>Case</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getActivity.Case__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>getActivity.Order__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue></stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>

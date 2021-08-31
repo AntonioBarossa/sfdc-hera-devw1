@@ -220,6 +220,11 @@ export default class HdtAdvancedSearch extends LightningElement {
     closeModal() {
         this.confirmButtonDisabled=true;
         this.openmodel = false;
+        if(this.serviceRequestId != null){
+            this.dispatchEvent(new CustomEvent('servicepointselection', {
+                detail: this.rowToSend
+            }));
+        }
     }
 
     /**
@@ -381,6 +386,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.submitButtonStatus = true;
                 this.openmodel = true;
                 this.isLoaded = true;
+                this.serviceRequestId = null;
             } else {
                 this.alert('Dati tabella','Nessun record trovato','warn')
                 this.tableData = data;
@@ -588,9 +594,11 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.preloading = true;
         this.closeModal();
         console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
+        if(this.serviceRequestId == null){
             this.dispatchEvent(new CustomEvent('servicepointselection', {
                 detail: this.rowToSend
-            }));       
+            }));
+        }       
         this.confirmButtonDisabled = true;
         this.preloading = false;
 
