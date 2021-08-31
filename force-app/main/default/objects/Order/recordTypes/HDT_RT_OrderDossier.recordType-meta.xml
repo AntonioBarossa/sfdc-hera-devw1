@@ -2469,6 +2469,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>VASBillingMode__c</picklist>
+        <values>
+            <fullName>A-Rate fisse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Canone fisso</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>VAT__c</picklist>
         <values>
             <fullName>Iva 10%25 %28Cod%2E 01%29</fullName>
