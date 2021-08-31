@@ -374,7 +374,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>TBD</label>
+        <label>Ulteriori Dettagli</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
