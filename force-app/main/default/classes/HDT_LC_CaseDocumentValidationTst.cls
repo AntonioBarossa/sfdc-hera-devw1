@@ -6,8 +6,10 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
     
     
     //TEST SETUP
-    @TestSetup
-    static void setup(){
+    //NOTA: skipping @testSetup per ragioni di flessibilità del setup
+    
+    //SETUP WITH CASE MOROSITà
+    private static void setupMorosità(){
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
@@ -16,6 +18,12 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
     }
+    
+    //SETUP WITH CASE MOROSITà
+    
+    
+    
+    
     
     //TESTS
     
@@ -26,6 +34,9 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         //DEBUG
         String debugString = TEST_NAME + ' - ' + 'isValidPhaseTest';
         System.debug(debugString);
+        
+        //SETUP
+        setupMorosità();
         
         //TESTING
         Case myCase = [SELECT Id FROM Case];
@@ -39,7 +50,7 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
     
     //saveValidation
     @isTest
-    private static void saveValidationTest(){
+    private static void saveValidationTest_inAttesa(){
         
         //DEBUG
         String debugString = TEST_NAME + ' - ' + 'saveValidationTest';
@@ -48,6 +59,14 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         //TESTING
         Case myCase = [SELECT Id FROM Case];
         
+        //PROCESS CLICK
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        
+        //PHASE TRANSITION
+        HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
+        String rtName = constantsUtl.CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO;
+        String rtId = constantsUtl.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In attesa Documentazione', 'Bozza', rtId, rtName,'A','','','');
         
         //TODO: ANALIZZARE IL TRIGGER HANDLER HDT_TRH_Case, POSSIBILE INTERVENTO LEGATO A METADATO MANCANTE PhaseManagerIntegration
         
@@ -56,7 +75,7 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         Case myCase_Check1 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
         System.assertEquals('In attesa Documentazione', myCase_Check1.Phase__c);
         
-        
+        /*
         //ELAB MANUALE
         HDT_LC_CaseDocumentValidation.saveValidation(myCase.Id, 'Accise - Energia Elettrica', true);
         Case myCase_Check2 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
@@ -67,6 +86,7 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         HDT_LC_CaseDocumentValidation.saveValidation(myCase.Id, 'Test', true);
         Case myCase_Check3 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
         System.assertEquals('Da Inviare', myCase_Check3.Phase__c);
+        */
         
     }
     
