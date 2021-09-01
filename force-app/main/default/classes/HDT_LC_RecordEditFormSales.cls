@@ -57,24 +57,24 @@ public with sharing class HDT_LC_RecordEditFormSales {
     }
 
     @AuraEnabled
-    public static void savePractice(String caseId, String accountId, Map<String,Object> caseob){
+    public static String savePractice(String caseId, String accountId, Map<String,Object> caseob){
         try {
-            Case cs= new Case(Id=caseId, Phase__c='In Lavorazione');
+            Case cs= new Case(Id=caseId,status='Closed', Phase__c='Completata');
             if(caseob.containsKey('OperationSubType__c')){
                 cs.put('OperationSubType__c',String.valueOf(caseob.get('OperationSubType__c')));
             }
             if(caseob.containsKey('Contract__c')){
                 cs.put('Contract__c',String.valueOf(caseob.get('Contract__c')));
             }
-            if(caseob.containsKey('ReassignmentReason__c')){
+           /* if(caseob.containsKey('ReassignmentReason__c')){
                 cs.put('ReassignmentReason__c',String.valueOf(caseob.get('ReassignmentReason__c')));
-            }
+            }*/
             if(caseob.containsKey('OperationType__c')){
                 cs.put('OperationType__c',String.valueOf(caseob.get('OperationType__c')));
             }
-            caseSRV.updateRecord(cs); 
+           // caseSRV.updateRecord(cs); 
             List<wrts_prcgvr__Activity__c> activities= HDT_QR_ActivityCustom.getRecordByCaseId(caseId);
-            if(activities != null && activities.isEmpty()){
+            if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Chiusa' && activities[0].approved__c = 'Si'){
                 caseSRV.updateRecord(cs); 
                 Id recTypeId= null;
                 RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
@@ -84,11 +84,13 @@ public with sharing class HDT_LC_RecordEditFormSales {
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Contratti/Bonus Commerciale');
                 System.debug(activity);
                 activitySrv.createRecord(activity);
+                return 'success';
             }
-            else if(activities != null && activities[0].wrts_prcgvr__status__c == 'Completed'){
-                cs.status = 'closed';
-                cs.phase__c = 'Completata';
-                caseSRV.updateRecord(cs); 
+            else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Chiusa' && activities[0].approved__c = 'No'){
+                return 'annulla';
+            }
+            else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c != 'Chiusa'){
+                return 'aperta';
             }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

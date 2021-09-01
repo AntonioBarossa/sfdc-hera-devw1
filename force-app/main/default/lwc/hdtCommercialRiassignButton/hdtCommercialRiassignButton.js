@@ -7,25 +7,37 @@ export default class HdtCommercialRiassignButton extends LightningElement {
 
 
     @api isRiassignButton = false;
+    @api loading = false;
+    @api isShowButtonRiassign = false;
     @api isApproveFase = false;
     @api recordId;
+    @api causale = '';
     @api caseid;
 
-
+    handleReassignmentReasonChange(event){
+        if(event.detail.value !=undefined &&event.detail.value !=""){
+            this.isShowButtonRiassign= true;
+            this.causale = event.detail.value;
+        }else{
+            this.isShowButtonRiassign= false;
+        }
+    }
     connectedCallback(){
+        this.loading = true;
         console.log('IDDDDD:' + this.recordId);
         getRecord({
             activityId: this.recordId
         }).then(result => {
             console.log('enter::::' + JSON.stringify(result));
             this.caseid = result.Case__c;
-            if(result.Case__r.Phase__c == 'In Lavorazione'){
+            if(result.Case__r.Phase__c != 'In Attesa Approvazione'){
                 console.log('enter::::INLAV');
                 this.isRiassignButton = true;
             }
             else if(result.Case__r.Phase__c == 'In Attesa Approvazione'){
                 this.isApproveFase = true;
             }
+            this.loading = false;
             /*
             const event = new ShowToastEvent({
                 title: 'Successo',
@@ -39,7 +51,8 @@ export default class HdtCommercialRiassignButton extends LightningElement {
 
     handleSave(){
         riassegna({
-            recordId : this.recordId
+            recordId : this.recordId,
+            causale : this.causale
         }).then(result => {
             if(result){
                 const event = new ShowToastEvent({
@@ -58,10 +71,10 @@ export default class HdtCommercialRiassignButton extends LightningElement {
             recordId : this.recordId,
             causale : 'Si'
         }).then(result => {
-            if(result){
+            if(result == true){
                 const event = new ShowToastEvent({
                     title: 'Successo',
-                    message: 'Arprovato',
+                    message: 'Approvato',
                     variant: 'success',
                 });
                 this.dispatchEvent(event);
