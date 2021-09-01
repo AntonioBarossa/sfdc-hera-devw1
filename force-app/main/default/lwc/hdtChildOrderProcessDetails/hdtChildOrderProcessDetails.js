@@ -2301,7 +2301,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'value': this.order.ParentOrder__r.SignedDate__c,
                         'processVisibility': ''
                     },
-                    {
+                    /*{
                         'label': 'Data Massima Ripensamento',
                         'apiname': 'MaxAfterthoughtDate__c',
                         'typeVisibility': this.typeVisibility('both'),
@@ -2309,7 +2309,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'disabled': true,
                         'value': '',
                         'processVisibility': ''
-                    },
+                    },*/
                     {
                         'label': 'Attivazione Posticipata',
                         'apiname': 'IsActivationDeferred__c',
