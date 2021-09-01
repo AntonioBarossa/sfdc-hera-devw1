@@ -173,4 +173,12 @@ public with sharing class HDT_UTL_Constants {
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_CUSTOMER = 'Customer';
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_EX_CUSTOMER = 'Ex-Customer';
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_PROSPECT = 'Prospect';
+    
+    //Knowledge Article Record Types
+    @AuraEnabled
+    public final String KNOWLEDGEARTICLE_RECORDTYPE_DEVELOPERNAME_FAQ = 'HDT_RT_FAQ';
+    @AuraEnabled
+    public final String KNOWLEDGEARTICLE_RECORDTYPEID_FAQ =
+    Schema.SObjectType.Knowledge__kav.getRecordTypeInfosByDeveloperName().get(KNOWLEDGEARTICLE_RECORDTYPE_DEVELOPERNAME_FAQ).getRecordTypeId();
+    
 }
