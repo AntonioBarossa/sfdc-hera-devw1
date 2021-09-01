@@ -74,7 +74,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
             }
            // caseSRV.updateRecord(cs); 
             List<wrts_prcgvr__Activity__c> activities= HDT_QR_ActivityCustom.getRecordByCaseId(caseId);
-            if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Chiusa' && activities[0].approved__c = 'Si'){
+            if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Chiusa' && activities[0].approved__c == 'Si'){
                 caseSRV.updateRecord(cs); 
                 Id recTypeId= null;
                 RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
@@ -86,7 +86,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
                 activitySrv.createRecord(activity);
                 return 'success';
             }
-            else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Chiusa' && activities[0].approved__c = 'No'){
+            else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Chiusa' && activities[0].approved__c == 'No'){
                 return 'annulla';
             }
             else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c != 'Chiusa'){
@@ -97,7 +97,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
             }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
-            return 'errore';
+           // return 'errore';
         }
     }
     @AuraEnabled
