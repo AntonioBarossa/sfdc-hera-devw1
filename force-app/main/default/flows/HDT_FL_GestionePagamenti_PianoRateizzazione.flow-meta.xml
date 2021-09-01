@@ -943,8 +943,8 @@
         <dataType>Boolean</dataType>
         <expression>OR( 
      {!GetCaseDocumentale.InstallmentNumberRequired__c} &gt; 3,
-      {!CaseInput.AmountToPayInInstallments__c} &gt; 2000,
-        CONTAINS(TEXT({!CaseInput.Reason__c}),&quot;Disagio Economico&quot;)
+      {!GetCaseDocumentale.AmountToPayInInstallments__c} &gt; 2000,
+        CONTAINS(TEXT({!GetCaseDocumentale.Reason__c}),&quot;Disagio Economico&quot;)
 )</expression>
     </formulas>
     <formulas>
