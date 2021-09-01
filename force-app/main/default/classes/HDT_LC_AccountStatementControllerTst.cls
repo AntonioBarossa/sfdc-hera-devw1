@@ -12,12 +12,9 @@ public class HDT_LC_AccountStatementControllerTst {
 
     @testSetup
     static void setup() {
-        Account a = new Account();
-        a.CustomerCode__c = '0001';
-        a.Name = 'accountTest';
-        insert a;
+        HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
     }
-
+    
     @isTest
     static void getTabsMetaData(){
         HDT_WRP_AccountStatement.HDT_WRP_Tabs tabMetadata;

@@ -98,7 +98,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             ///////////// instanzio e effettuo la chiamata con la request
             Map<String,Object> inputClientFunction = new Map<String,Object>();
             inputClientFunction.put('endpoint',endpoint);
-            inputClientFunction.put('timeout',120);
+            inputClientFunction.put('timeout',2000);
             inputClientFunction.put('payload',multirequestObj);
             inputClientFunction.put('clientType','REST');
             inputClientFunction.put('contentType','application/json');
