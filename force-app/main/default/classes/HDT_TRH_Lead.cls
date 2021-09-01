@@ -26,7 +26,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         List<Lead> listNew = trigger.new;
        // List<Lead> leadToCheck = new List<Lead>();
         //Map<String,String> leadDomain = new Map<String,String>();
-        for(Lead L : listNew){
+        for(Lead l : listNew){
             if(l.email != null){
                 String s = l.email.split('@')[1];
                 if(mapResBlacklist.get(s.toUpperCase()) != null){
@@ -155,10 +155,38 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     for(Contact c : conList){
                         contId.add(c.id);
                     }
-                    List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(accId, contId, 'Id');
-                    
+                    List<AccountContactRelation> listAccCon= accoContRelQr.getContactsByAccountWithRoles(accId);
+                    List<Contact> listContactToClean = new List<Contact>();
+                    Set<id> setInd = new Set<id>();
                     for(AccountContactRelation acc : listAccCon){
-                        acc.Roles='Azienda'; 
+                        if (contId.contains(acc.ContactId)) {
+                            acc.Roles='Azienda'; 
+                        }
+                        else {
+                            //contatti da sbiancare #HRAWRM-387 01/09/2021
+                            Contact tempContact=new Contact();
+                            tempContact.Id=acc.ContactId;
+                            tempContact.Email=null;
+                            tempContact.MobilePhone=null;
+                            tempContact.phone=null;
+                            listContactToClean.add(tempContact);
+                            setInd.add(acc.Contact.IndividualId);
+                        }  
+                    }
+                    if (setInd.size()>0) {
+                        //Start #HRAWRM-387 01/09/2021
+                        List< ContactPointEmail> listToDeleteEm = HDT_QR_ContactPoint.getIndividualContactEmailList(setInd);
+                        List<ContactPointPhone> listToDeletePh  = HDT_QR_ContactPoint.getIndividualContactsPhoneList(setInd);
+                        List<sObject> listToDelete = new List<sObject>();
+                        listToDelete.addAll(listToDeleteEm);
+                        listToDelete.addAll(listToDeletePh);
+                        if (listToDelete.size()>0) {
+                          delete listToDelete;
+                        }
+                        update listContactToClean;
+                        //End #HRAWRM-387 01/09/2021
+
+
                     }
                     accoContRelSrv.upsertRecord(listAccCon);
                     HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
