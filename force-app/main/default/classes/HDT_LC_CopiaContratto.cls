@@ -28,6 +28,7 @@ public with sharing class HDT_LC_CopiaContratto {
         String res = '';
         c.id = caseId;
         c.CopyType__c = tipoFirma; 
+        c.Status='In Lavorazione'; //HRAWRM-344 01/09/2021
         if(rc !=null){
             recTypeId= rc.Id;
         }
