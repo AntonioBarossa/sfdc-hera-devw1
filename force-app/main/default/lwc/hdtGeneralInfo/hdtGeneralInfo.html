@@ -8,9 +8,9 @@
                     <lightning-record-edit-form record-id={saleRecord.Id} object-api-name="Sale__c">
                         <div class="slds-grid slds-wrap slds-m-top_small">
 
-                            <lightning-input-field required disabled={disabledInput} onchange={handleDataCollection}
+                            <lightning-input-field required disabled={channelDisabled} onchange={handleDataCollection}
                                 class="slds-size_1-of-3" field-name="Channel__c" data-id="Channel__c" data-name="Channel__c"
-                                variant="label-stacked"></lightning-input-field>
+                                variant="label-stacked"  value={channelValue}></lightning-input-field>
                             <lightning-input-field disabled onchange={handleDataCollection} class="slds-size_1-of-3"
                                 field-name="CreatedBy__c" value={currentUserName} variant="label-stacked">
                             </lightning-input-field>
