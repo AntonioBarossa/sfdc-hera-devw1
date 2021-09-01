@@ -33,4 +33,19 @@ public with sharing class HDT_LC_HighlightsPanelTst {
         
     }
     
+    //exception coverage tests
+    
+    @isTest
+    private static void exceptionCoverage(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'exceptionCoverage';
+        System.debug(debugString);
+        
+        //TESTING - updateKpis
+        String result = HDT_LC_HighlightsPanel.updateKpis('');
+        System.assert(String.isNotBlank(result));
+        
+    }
+    
 }
