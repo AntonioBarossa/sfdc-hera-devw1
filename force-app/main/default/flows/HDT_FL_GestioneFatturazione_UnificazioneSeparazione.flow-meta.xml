@@ -848,7 +848,7 @@
             <choiceReferences>NoChoice</choiceReferences>
             <dataType>String</dataType>
             <defaultSelectedChoiceReference>NoChoice</defaultSelectedChoiceReference>
-            <fieldText>Necessario selezionare un contratto?</fieldText>
+            <fieldText>È necessario selezionare ulteriori contratti?</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>false</isRequired>
         </fields>

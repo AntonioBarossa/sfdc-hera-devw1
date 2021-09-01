@@ -185,4 +185,19 @@ public inherited sharing class HDT_QR_Case {
         return nonReqContr;
     }
 
+    public List<Case> getChildCasesReclamo(String note, String recordId)
+    {
+        List<String> childIds = note.split(';');
+        List<Case> childCases = new List<Case>();
+        try
+        {
+            childCases = [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
+        }
+        catch(Exception e)
+        {
+            System.Debug('Errore: ' + e.getMessage() + '. Alla riga: ' + e.getLineNumber());
+        }
+        return childCases;
+    }
+
 }
