@@ -23,6 +23,9 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 
         //cancel orders from quality call activities with 'No esito' and ActiveMonitoring__c = true
         HDT_UTL_ActivityCustomProcess.cancelQualityNoResult(trigger.new,trigger.old);
+        
+        // marco.arci@webresults.it 01/09/2021 gestione scarti documentali
+        HDT_UTL_Scarti.updatePraticaForScartoDocumentale(trigger.new,trigger.oldMap);
 
     }
 
