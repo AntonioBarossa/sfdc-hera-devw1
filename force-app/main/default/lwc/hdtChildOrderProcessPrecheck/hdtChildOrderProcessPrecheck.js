@@ -511,8 +511,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(this.order.Catalog__c !== undefined){
             offerType = this.order.Catalog__c;
         }
-        if(new RegExp("/D\d - ").test(this.order.Account.CustomerMarking__c)){
-            bpClass=this.order.Account.CustomerMarking__c.replace("/D\d - ", "");
+        if(new RegExp("D[0-9] - ").test(this.order.Account.CustomerMarking__c)){
+            bpClass=this.order.Account.CustomerMarking__c.replace(new RegExp("D[0-9] - "), "");
         }else{
             bpClass=this.order.Account.CustomerMarking__c;
         }

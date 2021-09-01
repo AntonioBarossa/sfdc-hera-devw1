@@ -121,6 +121,33 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>Cambio Contatore Non Registrato</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ChangeDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>VulturePracticeReference__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>MeterCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CorrectorCode__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Dettaglio Bolletta</label>
         <layoutColumns>
             <layoutItems>
@@ -357,8 +384,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>CancellationHerokuPracticeCode__c
-                </field>
+                <field>CancellationHerokuPracticeCode__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -469,11 +495,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Case.Escalation</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>99</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Case.HDT_SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -492,6 +513,11 @@
             <actionName>HDT_SendCertifiedEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Escalation</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>4</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -546,11 +572,8 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.SUBJECT</fields>
-        <fields>CASES.PRIORITY</fields>
-        <fields>CASES.CREATED_DATE</fields>
-        <fields>CASES.STATUS</fields>
-        <fields>OWNER_NAME</fields>
+        <fields>CASES.TYPE</fields>
+        <fields>Phase__c</fields>
         <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -559,6 +582,14 @@
         <fields>CASES.CREATED_DATE</fields>
         <fields>CASES.PRIORITY</fields>
         <relatedList>Case.RelatedCase__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Reading__c.CaseEle__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Reading__c.CaseGas__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
@@ -590,7 +621,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1x000001a1FO</masterLabel>
+        <masterLabel>00h1j000002FKyL</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

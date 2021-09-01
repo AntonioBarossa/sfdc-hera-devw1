@@ -16,40 +16,40 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Status__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Account__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Lead__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Interaction__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Cluster__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Process__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Contact__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Note__c</field>
             </layoutItems>
         </layoutColumns>

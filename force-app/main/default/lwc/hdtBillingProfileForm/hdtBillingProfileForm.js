@@ -145,6 +145,9 @@ export default class hdtBillingProfileForm extends LightningElement {
                         case 'SignatoryType__c':
                             required = true;
                             break;
+                        case 'OtherPayer__c':
+                            required = true;
+                        break;
                         default:
                             break;
                     }
@@ -347,6 +350,7 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.fields[this.fields.findIndex(el => el.fieldName === 'SendCertifiedEmailConsentDate__c')].visibility = event.target.value === 'Invio tramite PEC';
 
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].required = event.target.value.includes('e-mail');
+            this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].visibility = event.target.value.includes('e-mail');
         }
 
         if(event.target.fieldName === 'IbanIsForeign__c'){
@@ -470,7 +474,7 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri');
         }
 
-        if ((this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value !== 'XML + carta/email')
+        if ((this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null)
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']") !== null && this.template.querySelector("[data-id='SubjectCode__c']") !== null)
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === '')
             && (this.template.querySelector("[data-id='SubjectCode__c']").value === null || this.template.querySelector("[data-id='SubjectCode__c']").value === '')) {
@@ -533,6 +537,19 @@ export default class hdtBillingProfileForm extends LightningElement {
             && this.template.querySelector("[data-id='SignatoryType__c']").value === '') {
             concatBillingErrorFields = concatBillingErrorFields.concat('Tipo Sottoscrittore, ');
         }
+
+        if (this.template.querySelector("[data-id='SignatoryType__c']") !== null 
+        && this.template.querySelector("[data-id='SignatoryType__c']").value === 'Pagatore Alternativo'
+        && this.template.querySelector("[data-id='OtherPayer__c']") !== null && this.template.querySelector("[data-id='OtherPayer__c']").value === '' ) {
+        concatBillingErrorFields = concatBillingErrorFields.concat('Pagatore Alternativo, ');
+        } 
+
+        if (this.template.querySelector("[data-id='SignatoryType__c']") !== null 
+        && this.template.querySelector("[data-id='SignatoryType__c']").value === 'Legale Rappresentante'
+        && this.template.querySelector("[data-id='LegalAgent__c']") !== null 
+        && (this.template.querySelector("[data-id='LegalAgent__c']").value === '' || this.template.querySelector("[data-id='LegalAgent__c']").value === null) ) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Legale Rapresentante, ');
+        } 
 
         if (this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']") !== null 
             && this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']").value === null) {

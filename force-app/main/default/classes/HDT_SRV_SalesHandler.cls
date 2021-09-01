@@ -159,7 +159,15 @@ public with sharing class HDT_SRV_SalesHandler {
                                         utlTechData.handle300Flow(mapRequestFields, ord);
                                     }
                                 }
-                                new HDT_SRV_ServicePoint().updateRecord(utlTechData.sp);
+                            }
+                            when 'Errore tecnico invio a SAP', 'Flusso bloccato in assenza del precedente', 'Errore invio a DL/SII' {
+                                system.debug('previousPhase '+previousPhase);
+                                String finalPhase = ord.phase__c;
+                                if('Errore tecnico invio a SAP'.equalsIgnoreCase(finalPhase)) finalPhase = 'Errore comunicazione SAP';
+                            	ord.TrackingDiscardPhase__c = finalPhase;
+                                ord.phase__c=previousPhase; //perchè queste 3 non sono ammesse nel campo phase__c
+                                system.debug('phase__c '+ord.phase__c);
+                                system.debug('TrackingDiscardPhase__c '+ord.TrackingDiscardPhase__c);
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
@@ -246,7 +254,14 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Completata' {
 
-                                if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti')){
+                                Boolean redirectPreventivo = false;
+                                switch on ordRetrieved.ProcessType__c{
+                                    when 'Connessione con Attivazione', 'Temporanea Nuova Attivazione', 'Attivazione con Modifica'{
+                                        redirectPreventivo=true;
+                                    }
+                                }
+
+                                if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') && redirectPreventivo){
                                     ord.Phase__c = 'Inviare preventivo';
                                 }else{
                                     ord.Description = mapRequestFields.get('NOTA_HK');
@@ -254,6 +269,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.OrderODV__c = mapRequestFields.get('VBELN');
                                     ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                    ord.Status='Activated';
                                     
                                     if(mapRequestFields.get('VKONT') != null) {
                                         ord.ContractAccountCode__c = mapRequestFields.get('VKONT');
@@ -270,6 +286,9 @@ public with sharing class HDT_SRV_SalesHandler {
                                             throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
                                         }
                                     }
+                                    HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
+                                    utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
+                                    utlTechData.handleCompletata(mapRequestFields);
                                 }
                             }
                             when 'Annullamento SII - Ricezione'{
@@ -284,6 +303,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                         }
 
+                        system.debug('cost2 '+ord.phase__c);
                         orderSrv.updateRecord(ord);
                     	responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
@@ -478,5 +498,14 @@ public with sharing class HDT_SRV_SalesHandler {
         HDT_UTL_DatabaseService.updateSObject(recordOrder);
     }
     //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+
+    private static void updateServicePoint(ServicePoint__c sp){
+        try{
+            new HDT_SRV_ServicePoint().updateRecord(sp);
+        }catch(Exception e){
+            system.debug('Exception Update ServicePoint');
+            throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating ServicePoint - '+e.getMessage());
+        }
+    }
 
 }

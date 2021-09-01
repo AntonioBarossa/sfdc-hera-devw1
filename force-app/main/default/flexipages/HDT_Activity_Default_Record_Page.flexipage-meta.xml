@@ -7,7 +7,7 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.Completa_Attivit</value>
+                            <value>wrts_prcgvr__Activity__c.CompleteActivity</value>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Reminder</value>
@@ -323,9 +323,9 @@
                         <rightValue>Sportello</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Chiamata</rightValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>Call</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

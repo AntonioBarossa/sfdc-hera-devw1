@@ -140,16 +140,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Account.Catalogo_Servizi</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.HDT_AccountStatement</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Account.HDT_AccountReadings</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
@@ -193,6 +183,16 @@
             <actionName>Account.Escalation</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>10</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.Catalogo_Servizi</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.HDT_AccountStatement</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -245,9 +245,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
         <fields>SBQQ__Status__c</fields>
         <relatedList>SBQQ__Quote__c.SBQQ__Account__c</relatedList>
-        <sortField>NAME</sortField>
+        <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
@@ -369,11 +370,13 @@
         <fields>Cluster__c</fields>
         <fields>CASES.TYPE</fields>
         <fields>Subprocess__c</fields>
+        <fields>ComplaintEntryChannel__c</fields>
         <fields>Phase__c</fields>
-        <fields>CASES.ORIGIN</fields>
         <fields>CREATEDBY_USER.ALIAS</fields>
         <fields>CASES.CLOSED_DATE</fields>
         <relatedList>RelatedCaseList</relatedList>
+        <sortField>CASES.CREATED_DATE_DATE_ONLY</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
@@ -401,6 +404,7 @@
         <fields>SupplyAddress__c</fields>
         <fields>MeterSN__c</fields>
         <fields>CommoditySector__c</fields>
+        <fields>DistributorNameFormula__c</fields>
         <relatedList>ServicePoint__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -500,7 +504,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002MyGI</masterLabel>
+        <masterLabel>00h1X0000027QgN</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

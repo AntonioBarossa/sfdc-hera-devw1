@@ -25,7 +25,7 @@ public inherited sharing class HDT_QR_OrderItem {
             OrderItem 
             WHERE
             OrderId IN :listOrderId 
-            AND (Product2.Name IN ('PDR','POD') OR (Product2.Family IN  ('VAS Opzione prodotto', 'VAS Fatturabili', 'VAS Prodotto') AND (NOT Product2.Description LIKE '%Sconto%')))
+            AND (Product2.Name IN ('PDR','POD') OR (Product2.Family IN  ('VAS Opzione prodotto', 'VAS Fatturabili', 'VAS Prodotto', 'VAS Servizio') AND (NOT Product2.Description LIKE '%Sconto%')))
             WITH SECURITY_ENFORCED
         ];
     }
@@ -84,7 +84,7 @@ public inherited sharing class HDT_QR_OrderItem {
             WHERE
             OrderId IN :listOrderId  
             AND Order.SBQQ__Quote__r.SBQQ__Type__c = 'Amendment'
-            AND (Product2.Name IN ('PDR','POD') OR Product2.Family IN  ('VAS Opzione prodotto', 'VAS Fatturabili', 'VAS Prodotto'))
+            AND (Product2.Name IN ('PDR','POD') OR Product2.Family IN  ('VAS Opzione prodotto', 'VAS Fatturabili', 'VAS Prodotto', 'VAS Servizio'))
             WITH SECURITY_ENFORCED
         ];
     }
@@ -98,7 +98,8 @@ public inherited sharing class HDT_QR_OrderItem {
             Product2.Family,
             Product2.Version__c,
             Product2.ProductCode,
-            Product2.Name
+            Product2.Name,
+            VASBillingMode__c
             FROM 
             OrderItem 
             WHERE OrderId = :orderId

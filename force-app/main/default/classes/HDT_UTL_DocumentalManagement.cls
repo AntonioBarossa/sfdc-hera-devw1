@@ -349,7 +349,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 
     public static String manageAmountDot(String valString){
 		String res = valString;
-		Integer df = valString.indexOf('\\.');
+		Integer df = valString.indexOf('.');
 		String intero = '';
 		if(df>=0){
 			if(df==0){
@@ -363,7 +363,6 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 			res=intero+','+dec;
 		}
-
 		else{
 			if(valString=='' || valString == null){
 				valString='0';
@@ -397,6 +396,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		text = text.replaceAll('[’‘“”]','\'');
 		text = text.replaceAll('·', '-');
 		text = text.replaceAll('\u00A0', ' ');  // 00A0 = carattere unicode "No-Break Space"
+		text = text.replaceAll('\u2026', '...');  // 2026 = carattere unicode "horizontal ellipsis"
 
 		return text;
 	}

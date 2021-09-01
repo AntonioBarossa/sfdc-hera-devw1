@@ -201,6 +201,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.ExternalUserCompany__c = reqWrp.requestMap.get('CMP');
         }
         //END>> 27/07/2021 costanzo.lomele@webresults.it - campo company
+        //START>> 23/08/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
+        if(!String.isBlank(reqWrp.requestMap.get('FASE'))){
+            currentCase.TrackingDiscardPhase__c = reqWrp.requestMap.get('FASE');
+        }
+        //END>> 23/08/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
         if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita') && !method.equalsIgnoreCase('aggiornaRCU')){
             //gestione scarti
             return caseUpdate;
@@ -258,10 +263,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.CancellationReasonCode__c = reqWrp.requestMap.get('COD_CAUSALE');
             }
             if(reqWrp.requestMap.get('ANNOTAZIONI_ANN') != null && reqWrp.requestMap.get('ANNOTAZIONI_ANN') != ''){
-                currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('ANNOTAZIONI_ANN');
+                String noteAnn = recordCase.CancellationNote__c != null?recordCase.CancellationNote__c:'';
+                currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('ANNOTAZIONI_ANN') + '\n' + noteAnn;
             }
             if(reqWrp.requestMap.get('NOTE_ANN') != null && reqWrp.requestMap.get('NOTE_ANN') != ''){
-                String noteAnn = currentCase.CancellationNote__c != null?currentCase.CancellationNote__c:'';
+                String noteAnn = recordCase.CancellationNote__c != null?recordCase.CancellationNote__c:'';
+                System.debug('NoteAnn: '  + noteAnn);
                 currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
             }
             if(currentPhase.indexOf('Annull') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
@@ -299,7 +306,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(currentPhase.equalsIgnoreCase('Validazione OK DL simulata') && activity != null && activity.equalsIgnoreCase('Esito ricevuto su richiesta chiusa')){
                 currentCase.Phase__c = currentPhase; // non sono previsti cambi di fase.
                 String currentDescription = recordCase.Description != null?recordCase.Description:'';
-                String newDescription = nowDateFormat + ': + ' + activity + '\n';
+                String newDescription = nowDateFormat + ': ' + activity + '\n';
                 currentCase.Description = newDescription + '\n' + currentDescription;
             }
         }else if(method.equalsIgnoreCase('esito_finale')){
@@ -313,6 +320,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 //no action needed
             }else if(currentPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && nextPhase.equalsIgnoreCase('Completata')){
                 currentCase.Phase__c = 'Inviare preventivo';
+            }else if(recordCase.Type.equalsIgnoreCase('Fiscale') && nextPhase.equalsIgnoreCase('Completata') && recordCase.CalculationBlock__c){
+                currentCase.Phase__c = 'Elaborazione Manuale';
             }else{
                 currentCase.Phase__c = nextPhase;
                 Map<String, Object> extraParams = new Map<String,Object>();
@@ -340,10 +349,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String message = reqWrp.requestMap.get('MESSAGGIO');
             if(String.isNotBlank(type) 
                 && String.isNotBlank(recordCase.Type) 
-                && (recordCase.Type.equals('Prescrizione Fatture') || recordCase.Type.equalsIgnoreCase('Piano Rateizzazione'))
+                && (recordCase.Type.equals('Prescrizione Fatture') || recordCase.Type.equalsIgnoreCase('Piano Rateizzazione') || recordCase.Type.equalsIgnoreCase('Comunicazione Pagamento')) 
                 && !(type.containsIgnoreCase('Esito Rateizzazione OK'))){
                     if(type.equalsIgnoreCase('Piano rate OK Acc. pagato')){
                         type = 'Acconto paperless pagato';
+                    }
+                    else if(type.equalsIgnoreCase('KO Acc No pag rate Annullate')){
+                        type = 'Acconto Paperless Non Pagato';
                     }
                 currentCase.Phase__c = type; 
             }
@@ -361,6 +373,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
             }
             updateFuture(JSON.serialize(currentCase));
+            if(currentCase.Phase__c == 'Acconto Paperless Non Pagato'){
+                currentCase.Phase__c = 'Piano Rata Annullato';
+                updateFuture(JSON.serialize(currentCase));
+            }
             return caseUpdate;
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
@@ -371,7 +387,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if(expectedExec != null && expectedExec != ''){
             System.debug('#QUOTATIONTYPE -> ' + quotationType);
             System.debug('#NEXTPHASE -> ' +nextPhase);
-            if(quotationType.equalsIgnoreCase('Analitico') && nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti')){
+            if(quotationType.equalsIgnoreCase('Analitico') && (nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti') || nextPhase.containsIgnoreCase('Ammissibilità OK'))){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
             }else if(!quotationType.equalsIgnoreCase('Analitico')){
                 currentCase.ExpectedExecutionTime__c = expectedExec;

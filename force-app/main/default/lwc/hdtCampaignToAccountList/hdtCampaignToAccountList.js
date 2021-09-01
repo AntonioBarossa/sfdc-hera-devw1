@@ -18,6 +18,8 @@ export default class PopoverContainer extends NavigationMixin(LightningElement) 
     @api entityId;
     @api campaignCategory;
     @api campaignChannel;
+    @api title = '';
+    @api showTag = false;
     @track allCampaigns = [];
     @track rowdata = [];
     @track isSale = false;
@@ -56,6 +58,7 @@ export default class PopoverContainer extends NavigationMixin(LightningElement) 
                         isVisible: this.listResults
                     }
                 }));
+                this.showTag = true;
             }
         }
     }

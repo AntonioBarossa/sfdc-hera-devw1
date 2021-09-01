@@ -16,6 +16,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
     private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
+    private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
+    private static HDT_UTL_Utils utils = new HDT_UTL_Utils();
     private static List<Contract> contractsForAmendmentCheck = new List<Contract>();
     private static final String READPERMISSION = 'read';
     private static final String CREATEPERMISSION = 'create';
@@ -72,7 +74,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         //Get sale data start
         saleSrv.checkReadAccess('Account__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
-        Sale__c existingSale = saleQr.getRecordById(sale.id, 'Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
+        Sale__c existingSale = saleQr.getRecordById(sale.id, 'Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
         sale = existingSale;
         //Get sale data end
         
@@ -186,7 +188,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 AccountId = sale.Account__c
             ));
 
-            SBQQ__Quote__c newQuote = quoteService.createRecord(new SBQQ__Quote__c(
+            SBQQ__Quote__c newQuote = new SBQQ__Quote__c(
                 Sale__c = sale.Id,
                 SBQQ__Status__c = 'In Review',
                 SBQQ__Opportunity2__c = newOpportunity.Id,
@@ -219,11 +221,30 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 Login__c = UserInfo.getUserName(),
                 LoginGroup__c = groupLoginString,
                 Role__c = userRoleProfile[0].UserRole.Name,
-                Profile__c = userRoleProfile[0].Profile.Name,
+                // Profile__c = userRoleProfile[0].Profile.Name,
                 NewClient__c = newClient,
                 SuperUser__c = helperMethods.isSuperUser() ? 'Y' : 'N',
                 SBQQ__PricebookId__c = getPricebookId(servicePoint)
-            ));
+            );
+
+            /** Andrei Necsulescu - 27/08/2021
+             *  New quote Profile__c logic using custom permission
+             */
+            System.debug('HDT_SRV_SaleServiceItem.createRecord Quote-Profile__c');
+            if (utils.isAssignedCustomPermission(constantsUtl.CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN)) {
+                System.debug('HDT_SRV_SaleServiceItem.createRecord is CPQ Admin ');
+                newQuote.Profile__c = constantsUtl.QUOTE_PROFILEFIELD_SALESFORCECPQADMIN;
+
+            } else {
+                System.debug('HDT_SRV_SaleServiceItem.createRecord is NOT CPQ Admin ');
+                newQuote.Profile__c = userRoleProfile[0].Profile.Name;
+                
+            }
+
+            /** Andrei Necsulescu - 30/08/2021
+             *  Moved actual quote creation to account for profile logic
+             */
+            quoteService.createRecord(newQuote);
 
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
 
@@ -340,36 +361,24 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     }
 
 
-    /**
-    * @description 
-    * @author federico.defelice@webresults.it | 23-08-2021 
-    * @param sp 
-    * @return Id 
-    **/
     private Id getPricebookId(ServicePoint__c sp){
         List<Pricebook2> lp = HDT_QR_PriceBook.getRecordByName(getPricebookName(sp));
         return lp.isEmpty()? null : lp.get(0).Id;
     }
 
 
-    /**
-    * @description 
-    * @author federico.defelice@webresults.it | 23-08-2021 
-    * @param sp 
-    * @return String 
-    **/
     private String getPricebookName(ServicePoint__c sp){
         String name='';
         switch on sp.commoditySector__c{
             when 'Gas'{
-                if(sp.SupplyType__c.endsWithIgnoreCase('Domestico') || sp.SupplyType__c=='A-Domestico'){
+                if(sp.SupplyType__c=='Domestico' || sp.SupplyType__c=='A-Domestico'){
                     Name = 'Gas Domestico (A-Domestico)';
                 }else{
                     Name = 'Gas Non Domestico (B-Condominio, C-Aziende di pubblica utilità, D-Altri usi)';
                 }
             }
             when 'Energia Elettrica'{
-                if(sp.SupplyType__c.endsWithIgnoreCase('Domestico') || sp.SupplyType__c=='A-Domestico'){
+                if(sp.SupplyType__c=='Domestico' || sp.SupplyType__c=='A-Domestico'){
                     Name = 'Energia Elettrica Domestico';
                 }else{
                     Name = 'Energia Elettrica Non Domestico';
