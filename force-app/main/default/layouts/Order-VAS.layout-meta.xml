@@ -261,6 +261,10 @@
                 <behavior>Readonly</behavior>
                 <field>BillingProvince__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>VASBillingMode__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
