@@ -8,7 +8,6 @@ public with sharing class HDT_LC_HighlightsPanelTst {
     //TEST SETUP
     
     
-    
     //TESTS
     
     @isTest
@@ -20,12 +19,23 @@ public with sharing class HDT_LC_HighlightsPanelTst {
         
         //SETUP
         Account acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME')[0];
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         
+        //CASE WITH VALID ORIGIN
+        Case originCase = HDT_UTL_DataFactoryTst.createCase(1, false, acc.id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        originCase.Origin='Web';
+        insert originCase;
+        
+        //CASE RECLAMI
+        Case reclamoCase = HDT_UTL_DataFactoryTst.createCase(1, false, acc.id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        reclamoCase.Cluster__c='Reclami';
+        insert reclamoCase;
         
         //TESTING
         String result = HDT_LC_HighlightsPanel.updateKpis(acc.Id);
-        //Recaller__c
-        //ComplaintRateNum__c
         
         //ASSERTS
         System.assertEquals(null, result);
