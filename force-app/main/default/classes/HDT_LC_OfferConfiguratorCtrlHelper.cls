@@ -596,7 +596,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             obj.header.profilo = techOff.Version__c;
             obj.header.categoriaTariffa = techOff.RateCategory__r.Name;
             obj.header.descrizioneOfferta = techOff.Product__r.DescriptionSAP__c;
-            obj.header.descrizioneProfilo = techOff.Product__r.DescriptionSAP__c;
+            obj.header.descrizioneProfilo = techOff.Product__r.Version__c;
             obj.header.mercato = techOff.Market__c;
             obj.header.tipoProcesso = techOff.ProcessType__c;
             obj.header.isOffertaPLACET = convertYesNoFromString(techOff.PlacetOffer__c);

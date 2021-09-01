@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>StatoFornitura__c</field>
-        <value xsi:type="xsd:string">Attivo,Cessato,Sospeso</value>
+        <value xsi:type="xsd:string">Attivo,Inattivo,Sospeso</value>
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Comportamento altri venditori</value>
+        <value xsi:type="xsd:string">Comportamento Altri Venditori</value>
     </values>
     <values>
         <field>TipoServizio__c</field>
