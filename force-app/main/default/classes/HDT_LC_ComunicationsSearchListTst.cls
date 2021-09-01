@@ -3,10 +3,9 @@ public class HDT_LC_ComunicationsSearchListTst {
 
     @testSetup
     static void setup() {
-        Account a = new Account();
-        a.CustomerCode__c = '0001';
-        a.Name = 'accountTest';
-        insert a;
+    
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+
     }
 
     @isTest
@@ -16,11 +15,16 @@ public class HDT_LC_ComunicationsSearchListTst {
         Test.setMock(HttpCalloutMock.class, new HDT_LC_ComunicationsSearchListTstMock());
 
         Test.startTest();
-        Object obj = HDT_LC_ComunicationsSearchList.getWsData(wrapperObj);
-        Test.stopTest();
+        
+        // Object obj = HDT_LC_ComunicationsSearchList.getWsData(wrapperObj);
 
-        //System.assertEquals(true, tabMetadata.success, '');
-        //System.assertEquals(10, tabMetadata.tabDetail.size(), '');
+        HDT_WRP_ComunicationsSearchList.HDT_WRP_WebServiceObj obj = (HDT_WRP_ComunicationsSearchList.HDT_WRP_WebServiceObj) JSON.deserialize((String)HDT_LC_ComunicationsSearchList.getWsData(wrapperObj), HDT_WRP_ComunicationsSearchList.HDT_WRP_WebServiceObj.class);
+        
+        System.assertEquals(true, obj.success, 'Si è verificato un errore in fase di chiamata al WS');
+        String expectedBody = '{"status": "success","correlationId": "92293250-df3b-11eb-a73c-0200a41fc6da","timestamp": "2021-07-07T17:54:13","data": []}';
+        System.assertEquals(expectedBody, obj.body, 'Si è verificato un errore in fase di ricezione del body della response');
+
+        Test.stopTest();
         
     }
 
@@ -34,8 +38,8 @@ public class HDT_LC_ComunicationsSearchListTst {
         HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj response = HDT_LC_ComunicationsSearchList.sendFileToPrint(requestObj);
         Test.stopTest();
 
-        //System.assertEquals(true, tabMetadata.success, '');
-        //System.assertEquals(10, tabMetadata.tabDetail.size(), '');
+        System.assertEquals(true, response.success, 'Si è verificato un errore in fase di ricezione della response');
+        System.assertEquals('', response.message);
         
     }
 
@@ -51,6 +55,19 @@ public class HDT_LC_ComunicationsSearchListTst {
         responseObj.message = 'message';
         responseObj.dataError = true;
         responseObj.bodyBase64 = 'base64';
+
+        System.assert(webServiceObj != null);
+        System.assert(responseObj != null);
+
+    }
+
+    @isTest
+    static void testGetCompanyCode(){
+
+        String companyCode = HDT_LC_ComunicationsSearchList.getCompanyCode('Hera Comm S.p.A.');
+
+        System.assertEquals('1070', companyCode, 'Si è verificato un errore in fase di get del Company Code');
+
     }
 
 }

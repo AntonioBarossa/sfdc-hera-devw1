@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>MobilePhone</fullName>
+    <inlineHelpText>In caso di Lead Azienda i dati di contatto si riferiscono ai contatti dell’azienda stessa. In fase di conversione in Account business tali dati verranno relazionati al Referente con Ruolo= Azienda</inlineHelpText>
+    <securityClassification>Confidential</securityClassification>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
 </CustomField>

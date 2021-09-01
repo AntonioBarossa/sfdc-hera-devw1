@@ -25,6 +25,7 @@ import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendD
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import { NavigationMixin } from 'lightning/navigation';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
+import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
 const FIELDS = ['Case.ContactMobile', 
                 'Case.ContactEmail',
                 'Case.DeliveryAddress__c',
@@ -56,6 +57,12 @@ const FIELDS = ['Case.ContactMobile',
                 'Case.InvoicingProvince__c'];
 
 export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(LightningElement) {
+    
+    //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+    oldPhoneValue;
+    oldEmailValue;
+    //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+
     @api processType;
     @api quoteType;
     @api recordId;
@@ -150,6 +157,12 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 } else{
                     phone = contactPhone;
                 }
+
+                //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+                this.oldPhoneValue = phone;
+                this.oldEmailValue = email;
+                //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+
                 var completeAddress = '';
                 var caseAddress = this.caseRecord.fields.DeliveryAddress__c.value;
                 if(caseAddress != null && caseAddress != ''){
@@ -320,6 +333,12 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
 
             updateRecord(recordInput)
                 .then(() => {
+                    //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+                    updateContactForScartoDocumentale({oldPhone: oldPhoneValue,
+                                                       oldEmail: oldEmailValue,
+                                                       newPhone: resultWrapper.phone,
+                                                       newMail: resultWrapper.email});
+                    //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
                     // Display fresh data in the form
                     console.log('Record aggiornato');
                     this.enableNext = true;
