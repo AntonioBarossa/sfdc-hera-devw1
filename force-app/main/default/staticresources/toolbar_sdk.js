@@ -11,7 +11,9 @@ function TOOLBAR_LOAD_CALLBACK() {
     return {
       JQ : null,
       SocketObj : null,
+	  DeferredObject: [],
       Connect: function () {
+		try {
         window.TOOLBAR.SocketObj = io.connect("wss://localhost:2337");
         window.TOOLBAR.SocketObj.on("connect",
           function(data) {
@@ -24,16 +26,41 @@ function TOOLBAR_LOAD_CALLBACK() {
             if (typeof data === "string") {
               dataObj = JSON.parse(data);
             }
-            //console.log("[ELECTRON TOOLBAR SDK] Received Event [AGENTDESKTOP_CONTACT_CALLBACK] with data", dataObj);
+				if (typeof data === "object") {
+					dataObj = data;
+				}
+				//console.log("[ELECTRON TOOLBAR SDK] Received Event [AGENTDESKTOP_CONTACT_CALLBACK]", dataObj);
             window.TOOLBAR.CONTACT.triggerContactCallback(dataObj);
           }
         );
+			window.TOOLBAR.SocketObj.on("SDK_GETPARAMETER_CALLBACK",
+			  function(response) {
+				var dataObj = null;
+				if (typeof response.data === "string") {
+					try {
+						dataObj = JSON.parse(response.data);
+					} catch (errJsonParse) {
+						dataObj = response.data;
+					}
+				} else {
+					dataObj = response.data;
+				}
+				console.log("[ELECTRON TOOLBAR SDK] Received Event [SDK_GETPARAMETER_CALLBACK]", response);
+				if ( typeof window.TOOLBAR.DeferredObject[response.method] !== "undefined" ) {
+					window.TOOLBAR.DeferredObject[response.method].resolve(dataObj);
+				}
+			  }
+			);
+
+		} catch (err) {
+
+		}
       },
       emit_Action: function (className, method, params) {
         var marshallObj = {};
         marshallObj.className = className;
         marshallObj.method = method;
-        marshallObj.params = new Array();
+        marshallObj.params = [];
         if (typeof params !== "undefined") {
           if (params) {
             if (params.length > 0) {
@@ -48,10 +75,151 @@ function TOOLBAR_LOAD_CALLBACK() {
         targetObject.data = JSON.stringify(marshallObj);
         window.TOOLBAR.SocketObj.emit(targetObject.action, targetObject);
       },
+	  emit_getParameter: function (className, method, params) {
+		var MarshallObj = null;
+		var targetObject = null;
+		var i = 0;
+
+		MarshallObj = {};
+		MarshallObj.className = className;
+		MarshallObj.method = method;
+		MarshallObj.params = [];
+		if (typeof params !== "undefined") {
+			if (params) {
+				if (params.length > 0) {
+					for (i = 0; i < params.length; i++) {
+						MarshallObj.params.push(params[i]);
+					}
+				}
+			}
+		}
+		targetObject = {};
+		targetObject.action = "SDK_GETPARAMETER";
+		targetObject.data = JSON.stringify(MarshallObj);
+		window.TOOLBAR.SocketObj.emit(targetObject.action, targetObject);
+	  },
+	  EASYCIM: (function () {
+		return {
+			openScript: function (ContactID, ECID, isManual) {
+				if ( typeof window.TOOLBAR.DeferredObject["openScript"] !== "undefined") {
+				delete window.TOOLBAR.DeferredObject["openScript"];
+				}
+				window.TOOLBAR.DeferredObject["openScript"] = window.TOOLBAR.JQ.Deferred();
+				window.TOOLBAR.emit_getParameter( "EASYCIM", "openScript", new Array( ContactID, ECID, isManual) );
+				return window.TOOLBAR.DeferredObject["openScript"].promise();
+				},
+			openScriptInbound: function (ContactID) {
+				if ( typeof window.TOOLBAR.DeferredObject["openScriptInbound"] !== "undefined") {
+					delete window.TOOLBAR.DeferredObject["openScriptInbound"];
+				}
+				window.TOOLBAR.DeferredObject["openScriptInbound"] = window.TOOLBAR.JQ.Deferred();
+				window.TOOLBAR.emit_getParameter( "EASYCIM", "openScriptInbound", new Array( ContactID ) );
+				return window.TOOLBAR.DeferredObject["openScriptInbound"].promise();
+			},
+			saveScript: function (ContactID, outcomeResult, offlineEnd) {
+				if ( typeof window.TOOLBAR.DeferredObject["saveScript"] !== "undefined") {
+					delete window.TOOLBAR.DeferredObject["saveScript"];
+				}
+				window.TOOLBAR.DeferredObject["saveScript"] = window.TOOLBAR.JQ.Deferred();
+				window.TOOLBAR.emit_getParameter( "EASYCIM", "saveScript", new Array( ContactID, outcomeResult, offlineEnd ) );
+				return window.TOOLBAR.DeferredObject["saveScript"].promise();
+			},
+			getContactInfo: function (ContactID) {
+				if ( typeof window.TOOLBAR.DeferredObject["getContactInfo"] !== "undefined") {
+					delete window.TOOLBAR.DeferredObject["getContactInfo"];
+				}
+				window.TOOLBAR.DeferredObject["getContactInfo"] = window.TOOLBAR.JQ.Deferred();
+				window.TOOLBAR.emit_getParameter( "EASYCIM", "getContactInfo", new Array( ContactID ) );
+				return window.TOOLBAR.DeferredObject["getContactInfo"].promise();
+				
+			}
+		};
+	  }) (),
+	  AGENT: (function () {
+		return {
+			Login: function () {
+				window.TOOLBAR.emit_Action( "X2L", "AD_Agent_Login", new Array(  ) );
+			},
+			Pause: function () {
+				window.TOOLBAR.emit_Action( "X2L", "AD_Agent_Pause", new Array(  ) );
+			},
+			PauseSubState: function (SubStateCode) {
+				window.TOOLBAR.emit_Action( "X2L", "AD_Agent_PauseSubState", new Array( SubStateCode ) );
+			},
+			Logout: function() {
+				window.TOOLBAR.emit_Action( "X2L", "AD_Agent_Logout", new Array( SubStateCode ) );
+			},
+			getAgentGroups: function () {
+				if ( typeof window.TOOLBAR.DeferredObject["getAgentQueues"] !== "undefined" ) {
+					delete window.TOOLBAR.DeferredObject["getAgentQueues"];
+				}
+				window.TOOLBAR.DeferredObject["getAgentQueues"] = window.TOOLBAR.JQ.Deferred();
+				window.TOOLBAR.emit_getParameter( "X2L", "getAgentQueues", new Array() );
+				return window.TOOLBAR.DeferredObject["getAgentQueues"].promise();
+			},
+			getAgentLoggedInGroups: function () {
+				if ( typeof window.TOOLBAR.DeferredObject["getAgentLoginQueues"] !== "undefined") {
+					delete window.TOOLBAR.DeferredObject["getAgentLoginQueues"];
+				}
+				window.TOOLBAR.DeferredObject["getAgentLoginQueues"] = window.TOOLBAR.JQ.Deferred();
+				window.TOOLBAR.emit_getParameter( "X2L", "getAgentLoginQueues", new Array() );
+				return window.TOOLBAR.DeferredObject["getAgentLoginQueues"].promise();
+			},
+			setAgentGroups: function (Groups) {
+				window.TOOLBAR.emit_Action( "X2L", "setAgentGroups", new Array( Groups ) );
+			},
+			getAgentState: function () {
+				if ( typeof window.TOOLBAR.DeferredObject["getAgentState"] !== "undefined") {
+					delete window.TOOLBAR.DeferredObject["getAgentState"];
+				}
+				window.TOOLBAR.DeferredObject["getAgentState"] = window.TOOLBAR.JQ.Deferred();
+				window.TOOLBAR.emit_getParameter( "X2L", "getAgentState", new Array() );
+				return window.TOOLBAR.DeferredObject["getAgentState"].promise();
+			},
+			getAgentID: function () {
+				if ( typeof window.TOOLBAR.DeferredObject["getAgentID"] !== "undefined") {
+					delete window.TOOLBAR.DeferredObject["getAgentID"];
+				}
+				window.TOOLBAR.DeferredObject["getAgentID"] = window.TOOLBAR.JQ.Deferred();
+				window.TOOLBAR.emit_getParameter( "X2L", "getAgentID", new Array() );
+				return window.TOOLBAR.DeferredObject["getAgentID"].promise();
+			}
+		};
+      }) (),
       CONTACT: (function () {
         return {
-          MakeCall : function(PhoneNumber, ResourceType, ServiceID, CallProfileID, CallData) {
-            window.TOOLBAR.emit_Action( "X2L", "AD_Contact_MakeCall", new Array( PhoneNumber, ResourceType, ServiceID, CallProfileID, CallData ) );
+          MakeCall : function(DestinationNumber, ResourceType, ServiceID, CallProfileID, CallData) {
+            window.TOOLBAR.emit_Action( "X2L", "AD_Contact_MakeCall", new Array( DestinationNumber, ResourceType, ServiceID, CallProfileID, CallData ) );
+          },
+		  MakeJob : function (DestinationNumber, ResourceType, ServiceID, CallProfileID, CallData, ContentDescription) {
+			window.TOOLBAR.emit_Action( "X2L", "AD_Contact_MakeJob", new Array( DestinationNumber, ResourceType, ServiceID, CallProfileID, CallData, ContentDescription ) );
+		  },
+          Hangup: function (ContactID) {
+            window.TOOLBAR.emit_Action( "X2L", "AD_Contact_Hangup", new Array( ContactID ) );
+          },
+		  Hold: function (ContactID) {
+			window.TOOLBAR.emit_Action( "X2L", "Hold", new Array( ContactID ) );
+		  },
+		  Answer: function (ContactID) {
+			window.TOOLBAR.emit_Action( "X2L", "Answer", new Array( ContactID ) );
+		  },
+		  OfflineEnd: function (ContactID) {
+			window.TOOLBAR.emit_Action( "X2L", "AD_Contact_JobFinish", new Array( ContactID ) );
+		  },
+		  SetCallData: function (ContactID, CallData) {
+			window.TOOLBAR.emit_Action( "X2L", "AD_Contact_SetCallData", new Array( ContactID, CallData ) );
+		  },
+		  PlayDTMF: function (ContactID, DTMFs) {
+			window.TOOLBAR.emit_Action( "X2L", "AD_Media_PlayDTMF", new Array( ContactID, DTMFs ) );
+		  },
+		  StartRecording: function (ContactID, CallRecorders, CallData, Message) {
+			window.TOOLBAR.emit_Action( "X2L", "CheckRecordingCustomImplementation", new Array( ContactID, CallRecorders, CallData, Message ) );
+		  },
+		  StopRecording: function (ContactID, CallRecorders) {
+			window.TOOLBAR.emit_Action( "X2L", "StopRecording", new Array( ContactID, CallRecorders ) );
+		  },
+		  Transfer_Direct: function (ContactID, Destination, ResourceType, CallData) {
+			window.TOOLBAR.emit_Action( "X2L", "Transfer_Direct", new Array( ContactID, Destination, ResourceType, CallData ) );
           },
           Hangup: function () {
             window.TOOLBAR.emit_Action( "X2L", "AD_Contact_Hangup", new Array( ) );
@@ -76,6 +244,38 @@ function TOOLBAR_LOAD_CALLBACK() {
             } catch (err) {
               console.error(err);
             }            
+          },
+          GetCallDataValueByName: function (ContactObj, CallDataName)  {
+            var CallDataArrayLen = 0;
+            var CallDataItem = null;
+            var retValue = "";
+  
+            try {
+              if ( typeof ContactObj !== "undefined" ) {
+                if ( typeof ContactObj.CallData !== "undefined" ) {
+                  if (ContactObj.CallData) {
+                    CallDataArrayLen = ContactObj.CallData.length;
+                  }
+                } else {
+                  CallDataArrayLen = 0;
+                }
+                if (CallDataArrayLen > 0) {
+                  for( var i = 0; i < CallDataArrayLen; i = i + 1 ) {
+                    CallDataItem = ContactObj.CallData[i]; 
+                    if (typeof CallDataItem !== "undefined") {
+                      if (CallDataItem) {
+                        if (CallDataName == CallDataItem.name) {
+                          retValue = CallDataItem.value;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              return retValue;
+            } catch (err) {
+              return "";
+            }
           }
         }; 
       }) ()          

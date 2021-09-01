@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Spostamento Contatore - Spostamento Cavi</value>
+        <value xsi:type="xsd:string">Spostamento Contatore - Cavi</value>
     </values>
     <values>
         <field>TipoServizio__c</field>

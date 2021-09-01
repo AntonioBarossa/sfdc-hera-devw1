@@ -84,6 +84,27 @@
                 <stringValue>{!Aggiorna_Case_Contenuti.Id};</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.CustomerRequestAccomplished__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.CustomerRequestAccomplished__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Elaborazione Risposta</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.MotivatedResponseSendMode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.MotivatedResponseSendMode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assegna_Case_Contenuti</targetReference>
         </connector>
@@ -500,6 +521,12 @@
                     <elementReference>RequestAccomplished</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -597,6 +624,12 @@
                 <name>processType</name>
                 <value>
                     <elementReference>RequestAccomplished</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

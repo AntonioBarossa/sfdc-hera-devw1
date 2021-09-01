@@ -384,8 +384,11 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             let fifthLevel = this.selector('FithLevelComplaintClassification__c');
             console.log('#Valore quinto livello -->' +fifthLevel.value)
             if(fifthLevel != null){
-                if(fifthLevel.value != '' && fifthLevel.value != undefined && fifthLevel != null){
-                    let soldBy = this.selector('SoldBy__c');
+                let soldBy = this.selector('SoldBy__c');
+                if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
+                    soldBy.disabled = false;
+                }else{
+                    soldBy.disabled = true;
                 }
             }
         } else if(!(Object.keys(channel).length === 0)){

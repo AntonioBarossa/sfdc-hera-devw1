@@ -95,7 +95,8 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, true, false),
             new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, true, false),
-            new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','', new Set<String>{'Inattivo','Bozza','Attivo'}, new Set<String>(), 'Si', false, false, false, false, null, false, false, false),
+            new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VT1', new Set<String>{'Inattivo','Bozza','Attivo'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VTG', new Set<String>{'Inattivo','Bozza','Attivo'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Switch in Reseller', 'HDT_RT_SwitchIn','', new Set<String>{'Attivo'}, new Set<String>(), 'Si', false, false, false, false, null, false, false, true),//temporarily commented
             new HDT_WRP_Process('Voltura Ele', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Voltura Gas', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero','Regolamentato'}, null, false, false, false, false, 'HDT_RT_Gas', false, false, false)
@@ -158,7 +159,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             }
         }
 
-        return availableProcesses;
+        return utilityOrderProcessAssignment(availableProcesses);
     }
     
     public static Boolean isCambioOfferta(Order ord){
@@ -316,4 +317,45 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         }
     }
 
+   /**
+   * @description filtra la lista lProcess in base al CustomSetting HDT_Process_Sale_Partner_Community__c 
+   * per aggiungere un processo alla lista inserire un nuovo campo boolean nel CustomSetting HDT_Process_Sale_Partner_Community__c,
+   * la label del campo deve essere uguale al nome del processo.
+   * @param lProcess 
+   * @return List<HDT_WRP_Process> 
+   **/
+
+   public  static List<HDT_WRP_Process> utilityOrderProcessAssignment(List<HDT_WRP_Process> lProcess){
+        System.debug('HDT_UTL_OrderProcessAssignment.utilityOrderProcessAssignment');
+        List<HDT_WRP_Process> toReturn = new List<HDT_WRP_Process>();
+        String type='HDT_Process_Sale_Partner_Community__c';
+        Map<String, String> mapLabelToApi = new Map<String, String>();
+        Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+        Schema.SObjectType objSchema = schemaMap.get(type);
+        Map<String, Schema.SObjectField> fieldMap = objSchema.getDescribe().fields.getMap();
+
+        for (String fieldName: fieldMap.keySet()) { 
+            mapLabelToApi.put(fieldMap.get(fieldName).getDescribe().getLabel(),fieldName);
+        }
+
+        Id pid=userinfo.getProfileId();
+        HDT_Process_Sale_Partner_Community__c mhc = HDT_Process_Sale_Partner_Community__c.getInstance(pid);
+        Map<String,Object> objectToMap = (Map<String,Object>) JSON.deserializeUntyped(JSON.serialize(mhc));
+        map<string,string> newMap= new Map<string,string>();
+
+        for(String strKey: objectToMap.keyset()){
+            newMap.put(strKey, String.valueof(objectToMap.get(strKey)));
+        }
+        
+        System.debug(newMap);
+       
+        for (HDT_WRP_Process proc : lProcess) {
+            if (newMap.get(proc.processType)!=null && 'true'.equalsIgnoreCase(newMap.get(proc.processType)) ) {
+                toReturn.add(proc);
+            }
+        }
+        System.debug('toReturn : '+toReturn.size() );
+        return toReturn;
+
+   }
 }
