@@ -35,8 +35,8 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         HDT_QR_SaleServiceItem qrSaleServItem = new HDT_QR_SaleServiceItem();
         
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.queryExsistingCityAndType(tSale, tServicePoint, tMapString, tMapDecimal);
-        System.assertEquals(false, tQuote.AmendmentAllowed__c, 'tQuote AmendmentAllowed__c not populated correctly');
-        System.assertNotEquals(true, tQuote.AmendmentAllowed__c);
+        System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
+        System.assertNotEquals(true, testSaleServItem.isEmpty());
         Test.stopTest();
         }
     @isTest
@@ -48,8 +48,8 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         HDT_QR_SaleServiceItem qrSaleServItem = new HDT_QR_SaleServiceItem();
 
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getRecordsBySaleId(tSale.Id);
-        System.assert(tSale != null);
-        System.assertNotEquals(null, tSale, 'tSale is null');
+        System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
+        System.assertNotEquals(true, testSaleServItem.isEmpty());
         Test.stopTest();
     }
     @isTest
@@ -61,8 +61,8 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         HDT_QR_SaleServiceItem qrSaleServItem = new HDT_QR_SaleServiceItem();
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getRecordsBySaleIdFilter(tSale.Id);
-        System.assert(tSale != null);
-        System.assertNotEquals(null, tSale, 'tSale is null');
+        System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
+        System.assertNotEquals(true, testSaleServItem.isEmpty());
         Test.stopTest();
     }
     @isTest
@@ -74,8 +74,8 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         HDT_QR_SaleServiceItem qrSaleServItem = new HDT_QR_SaleServiceItem();
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getSaleByServicePoint(tServicePoint.Id);
-        System.assert(tServicePoint != null);
-        System.assertNotEquals(null, tServicePoint, 'tServicePoint is null');
+        System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
+        System.assertNotEquals(true, testSaleServItem.isEmpty());
         Test.stopTest();
     }
     @isTest
@@ -87,8 +87,8 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         HDT_QR_SaleServiceItem qrSaleServItem = new HDT_QR_SaleServiceItem();
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getSaleByServicePointFilter(tServicePoint.Id);
-        System.assert(tServicePoint != null);
-        System.assertNotEquals(null, tServicePoint, 'tServicePoint is null');
+        System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
+        System.assertNotEquals(true, testSaleServItem.isEmpty());
         Test.stopTest();
     }
     @isTest
@@ -100,8 +100,8 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         HDT_QR_SaleServiceItem qrSaleServItem = new HDT_QR_SaleServiceItem();
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getSaleByServicePointFilterCode(tServicePoint.ServicePointCode__c);
-        System.assert(tServicePoint != null);
-        System.assertNotEquals(null, tServicePoint, 'tServicePoint is null');
+        System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
+        System.assertNotEquals(true, testSaleServItem.isEmpty());
         Test.stopTest();
     }
     @isTest
@@ -113,8 +113,8 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         HDT_QR_SaleServiceItem qrSaleServItem = new HDT_QR_SaleServiceItem();
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getActiveRecordsBySaleId(tSale.Id);
-        System.assert(tSale != null);
-        System.assertNotEquals(null, tSale, 'tSale is null');
+        System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
+        System.assertNotEquals(true, testSaleServItem.isEmpty());
         Test.stopTest();
     }
     @isTest
@@ -126,8 +126,8 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         HDT_QR_SaleServiceItem qrSaleServItem = new HDT_QR_SaleServiceItem();
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getRecordsByOpportunityId(tOpportunity.Id);
-        System.assert(tOpportunity != null);
-        System.assertNotEquals(null, tOpportunity, 'tOpportunity is null');
+        System.assertEquals(false, testSaleServItem.isEmpty(), 'tOpportunity not populated correctly');
+        System.assertNotEquals(true, testSaleServItem.isEmpty());
         Test.stopTest();
     }
     @isTest
@@ -139,8 +139,8 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         HDT_QR_SaleServiceItem qrSaleServItem = new HDT_QR_SaleServiceItem();
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getRecordsByQuote(tQuote.Id);
-        System.assert(tQuote != null);
-        System.assertNotEquals(null, tQuote, 'tQuote is null');
+        System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
+        System.assertNotEquals(true, testSaleServItem.isEmpty());
         Test.stopTest();
     }
     @isTest
@@ -153,8 +153,8 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         HDT_QR_SaleServiceItem qrSaleServItem = new HDT_QR_SaleServiceItem();
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getRecordsByContract(tContract.Id, tSale.Id);
-        System.assert(tSale != null);
-        System.assertNotEquals(null, tSale, 'tSale is null');
+        System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
+        System.assertNotEquals(true, testSaleServItem.isEmpty());
         Test.stopTest();
     }
     @isTest
@@ -167,8 +167,8 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         HDT_QR_SaleServiceItem qrSaleServItem = new HDT_QR_SaleServiceItem();
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getRecordsWithContractsByServicePointAndAccount(tServicePoint.Id, tAccount.Id);
-        System.assert(tServicePoint != null);
-        System.assertNotEquals(null, tServicePoint, 'tServicePoint is null');
+        System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
+        System.assertNotEquals(true, testSaleServItem.isEmpty());
         Test.stopTest();
     }
     @isTest
@@ -181,8 +181,8 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         HDT_QR_SaleServiceItem qrSaleServItem = new HDT_QR_SaleServiceItem();
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getActiveRecordsByQuoteAndOpportunity(tLstQuote, tLstOpportunity);
-        System.assert(tLstQuote != null);
-        System.assertNotEquals(null, tLstQuote, 'tLstQuote is null');
+        System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
+        System.assertNotEquals(true, testSaleServItem.isEmpty());
         Test.stopTest();
     }
 }
