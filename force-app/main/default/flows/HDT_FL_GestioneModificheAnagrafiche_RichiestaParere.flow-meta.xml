@@ -7,7 +7,7 @@
         <locationX>314</locationX>
         <locationY>758</locationY>
         <defaultConnector>
-            <targetReference>Set_In_Attesa_Risposta_Parere</targetReference>
+            <targetReference>Get_Templare_Richiesta_Parere</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
         <rules>
@@ -59,6 +59,32 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Crea_Activity_Richiesta_Parere</name>
+        <label>Crea Activity Richiesta Parere</label>
+        <locationX>578</locationX>
+        <locationY>1118</locationY>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__ActivityTemplate__c</field>
+            <value>
+                <elementReference>Get_Templare_Richiesta_Parere.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Description__c</field>
+            <value>
+                <elementReference>Get_Templare_Richiesta_Parere.wrts_prcgvr__Subject__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordCreates>
         <name>Crea_Richiesta_Parere</name>
         <label>Crea Richiesta Parere</label>
@@ -166,6 +192,27 @@
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Templare_Richiesta_Parere</name>
+        <label>Get Templare Richiesta Parere</label>
+        <locationX>578</locationX>
+        <locationY>878</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_In_Attesa_Risposta_Parere</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__ActivityTemplate__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Annulla_Richiesta_Parere</name>
         <label>Annulla Richiesta Parere</label>
@@ -191,7 +238,10 @@
         <name>Set_In_Attesa_Risposta_Parere</name>
         <label>Set In Attesa Risposta Parere</label>
         <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
+        <connector>
+            <targetReference>Crea_Activity_Richiesta_Parere</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
