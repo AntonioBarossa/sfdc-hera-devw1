@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Modifica Tariffa Residente/ Non resident</value>
+        <value xsi:type="xsd:string">Modifica Tariffa Residente/Non Residente</value>
     </values>
     <values>
         <field>TipoServizio__c</field>

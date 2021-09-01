@@ -47,6 +47,20 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornato.PaidAmount__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.TotalCover__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AmountDifference</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiornamento_Case_Fine_Bozza</targetReference>
         </connector>
@@ -57,17 +71,24 @@
         <locationX>314</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
-            <assignToReference>CaseInput.Phase__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>CaseInput.Status</assignToReference>
+            <assignToReference>GetCaseAggiornato.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.TotalCover__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AmountDifference</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -199,6 +220,12 @@
         </rules>
     </decisions>
     <description>SubFlow per la gestione del processo &quot;Comunicazione Pagamento&quot;</description>
+    <formulas>
+        <name>AmountDifference</name>
+        <dataType>Currency</dataType>
+        <expression>{!GetCaseAggiornato.TotalResidue__c} - {!GetCaseAggiornato.PaidAmount__c}</expression>
+        <scale>2</scale>
+    </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_ComunicazionePagamento {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Comunicazione Pagamento</label>
     <processMetadataValues>

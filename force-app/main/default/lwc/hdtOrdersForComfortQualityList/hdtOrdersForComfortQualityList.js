@@ -118,6 +118,18 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         });
     }
 
+    isRedirectEnabled(){
+        let count = 0;
+
+        this.ordersList.forEach(el => {
+            if (!el.disabledActionButton) {
+                count++;
+            }
+        });
+
+        return count == 1;
+    }
+
     confirmContractAction(type){
         this.loading = true;
         confirmContract({ordId: this.orderId, activityId: this.activityId, type: type}).then(data =>{
@@ -129,7 +141,9 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
             });
             this.dispatchEvent(toastSuccessMessage);
 
-            this.dispatchEvent(new CustomEvent('resultevent',{detail: {orderId: this.orderId}}));
+            if(this.isRedirectEnabled()){
+                this.dispatchEvent(new CustomEvent('resultevent',{detail: {orderId: this.orderId}}));
+            }
 
         }).catch(error => {
             this.loading = false;

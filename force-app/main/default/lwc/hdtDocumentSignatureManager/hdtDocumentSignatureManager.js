@@ -21,6 +21,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track documents;
     @api params;
     @api disableinput;
+    @api disableSignMode;
     buttonStatefulState = false;
     @track enableEdit = false;
     @track emailRequired;
@@ -42,6 +43,10 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track documents;
     @track tipoPlico='';
 
+    get disableSignModeInternal(){
+        return this.disableSignMode === true || this.disableinput === true;
+    }
+
     connectedCallback(){
         try{
             if(this.params){
@@ -60,6 +65,11 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.address = inputWrapper.addressWrapper.completeAddress;
                 this.signMode = inputWrapper.signMode;
                 this.sendMode = inputWrapper.sendMode;
+                if(this.disableSignMode === true){
+                    this.signMode = 'Cartacea'; // Pre-default se la modalità di firma viene disabilitata.
+                    inputWrapper.signMode = 'Cartacea'; // Modifichiamo anche inputWrapper.signMode poichè è usato dopo in this.signSendMap.find() 
+                    console.log('predefault sign mode: ' +  this.signMode);
+                }
                 if(inputWrapper.tipoPlico){
                     this.tipoPlico = inputWrapper.tipoPlico;
                 }
@@ -102,11 +112,11 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     });
                     this.signSendMap = signSendModeList; 
                     this.modalitaFirma = signMode;
-                    console.log(signSendModeList);
+                    console.log('this.signSendMap ' + JSON.stringify( this.signSendMap));
                     console.log(this.sendMode);
                     try{
                         if(this.signMode != null && this.signMode != ''){
-                            console.log('IN')
+                            console.log('IN: looking for ' + inputWrapper.signMode)
                             var temp = this.signSendMap.find(function(post, index) {
                                 if(post.signMode == inputWrapper.signMode)
                                     return true;

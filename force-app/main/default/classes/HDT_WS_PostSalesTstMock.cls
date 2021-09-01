@@ -17,19 +17,28 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         HttpResponse response = new HttpResponse();
         String recordId = '';
         String body = request.getBody();
-        List<HDT_WRP_MrrRequest.HDT_WRP_Request> mrrRequest = (List<HDT_WRP_MrrRequest.HDT_WRP_Request>) JSON.deserialize(body, List<HDT_WRP_MrrRequest.HDT_WRP_Request>.class);
-        for(HDT_WRP_MrrRequest.HDT_WRP_Field field : mrrRequest[0].objects[0].fields){
+        //System.debug('RecordIdIndex ' + body.indexOf('RECORD_ID'));
+        //System.debug('RecordId ' + body.substring(body.indexOf('RECORD_ID')));
+        String substring = body.substring(body.indexOf('RECORD_ID'));
+        String valueSub = substring.substring(substring.indexOf('"value":'));
+        List<String> split = valueSub.split('}');
+        split = split[0].split(':');
+        //System.debug('RECORD_ID ' + split[1]);
+        recordId = split[1];
+        /* Da errore nel deserialize
+        HDT_WRP_MrrRequest.HDT_WRP_Request mrrRequest = (HDT_WRP_MrrRequest.HDT_WRP_Request) JSON.deserialize(body, HDT_WRP_MrrRequest.HDT_WRP_Request.class);
+        for(HDT_WRP_MrrRequest.HDT_WRP_Field field : mrrRequest.objects[0].fields){
             if(field.name == 'RECORD_ID'){
                 recordId = field.value;
             }
-        }
+        }*/
         String responseStr = '{"responses":[{"header":{"requestId":"","requestTimestamp":null,"requestType":"CREA_RIC","fields":'
             +'[{"fieldType": "TEXT","name": "PROCESS_CATEGORY","value": "postsales"}]'
             +'},"code":null,"description":null,'
             +'"objects":[{"fields":[{"fieldType":"TEXT","name":"result","value":"OK"},'
-            +'{"fieldType":"TEXT","name":"requestId","value":""},'
+            +'{"fieldType":"TEXT","name":"requestId","value":"00002349"},'
             +'{"fieldType":"TEXT","name":"errorMessage","value":""},'
-            +'{"fieldType":"TEXT","name":"rifRich","value":"00002349"},'
+            +'{"fieldType":"TEXT","name":"rifRich","value":""},'
             +'{"fieldType":"TEXT","name":"RECORD_ID","value":'+ recordId +'},'
             +'{"fieldType":"TEXT","name":"FASE","value":"Comunicazione verso Heroku OK"},'
             +'{"fieldType":"TEXT","name":"comunicationChannel","value":null}],'
@@ -76,5 +85,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         response.setStatus('OK');
         return response;
     }
+
+
     
 }

@@ -26,6 +26,8 @@ export default class HdtGeneralInfo extends LightningElement {
     selectedFromCompleteList = {};
     saleContactRoles = '';
     @track isCampaignTableVisible = false;
+    @track isServiceCommissioning = false;
+   // @api isDisableCampaignSelection = false;
     @api categoriacampagna = 'Campagna Outbound';
     @api canalecampagna ='Telefonico Outbound';
     @track isCampaignTableCommissioningVisible = false;
@@ -61,10 +63,11 @@ export default class HdtGeneralInfo extends LightningElement {
 
     completeListcolumns = [];
     get isCampaignVisible() {
-        return this.isCampaignTableVisible || this.saleRecord.Campaign__c !== undefined;
+        return (this.isCampaignTableVisible && !this.disabledInput)  || (this.saleRecord.Campaign__c !== undefined && this.disabledInput);
     }
+    
     get isCampaignCommissioningVisible(){
-        return this.isCampaignTableCommissioningVisible || this.saleRecord.CommissioningCampaign__c !== undefined;
+        return !this.disabledInput || (this.saleRecord.CommissioningCampaign__c !== undefined && this.disabledInput);
     }
 
     get isCampaignInputVisible() {
@@ -73,6 +76,10 @@ export default class HdtGeneralInfo extends LightningElement {
 
     get isCampaignInputVisibleCommissioning(){
         return this.disabledInput || (this.campaignCommissioningId !== '' && this.campaignCommissioningId !== undefined);
+    }
+
+    get isCommissioningVisiEnter(){
+        return this.isoutbound || this.isServiceCommissioning;
     }
 
     toggle(){
@@ -129,6 +136,12 @@ export default class HdtGeneralInfo extends LightningElement {
                 this.createTable([]);
 
             }
+            if(Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound'){
+                this.isServiceCommissioning = true;
+            }
+            else{
+                this.isServiceCommissioning = false;
+            }
 
             if (this.userRole !== 'HDT_BackOffice' && (Channel == 'Telefono' || Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound' || Channel == 'Sportello' )) {
                 //this.hiddenFilterAgent = true;
@@ -168,10 +181,12 @@ export default class HdtGeneralInfo extends LightningElement {
     }
 
     handleEmitCampaignIdEvent(event) {
+        console.log('Try:******' + JSON.stringify(event));
         this.dataToSubmit['Campaign__c'] = event.detail.campaignId;
     }
 
     handleEmitCampaignIdEvent2(event){
+        console.log('Try:******' + JSON.stringify(event.detail.campaignId));
         this.dataToSubmit['CommissioningCampaign__c'] = event.detail.campaignId;
     }
 
@@ -311,15 +326,26 @@ export default class HdtGeneralInfo extends LightningElement {
         this.updateSaleRecord(this.dataToSubmit);
         this.toggle();
         this.disabledAgency = true;
+       // this.isDisableCampaignSelection = true;
     }
 
     handleEdit() {
         this.updateSaleRecord({ Id: this.saleRecord.Id, CurrentStep__c: this.currentStep });
         this.toggle();
         this.disabledAgency = false;
+        //this.isDisableCampaignSelection = false;
     }
 
     connectedCallback() {
+
+        console.log('Channel:::::::' + this.saleRecord.Channel__c);
+       if(this.saleRecord.Channel__c == 'Teleselling Inbound' || this.saleRecord.Channel__c == 'Teleselling Outbound'){
+            this.isServiceCommissioning = true;
+            console.log('Channel:::::::true');
+        }
+        else{
+            this.isServiceCommissioning = false;
+        }
         console.log('hdtGeneralInfo - connectedCallback - campaignId: ', this.campaignId);
 
         this.initCompAction();
@@ -335,6 +361,8 @@ export default class HdtGeneralInfo extends LightningElement {
         if (this.saleRecord.CurrentStep__c != this.currentStep) {
             this.toggle();
         }
+
+      // let Channel = this.template.querySelector('[data-id=="Channel__c"]').value;
 
     }
 
@@ -681,6 +709,12 @@ export default class HdtGeneralInfo extends LightningElement {
         } else {
             return this.currentPage2 + 1;
         }
+    }
+    get tabClass(){
+        return this.disabledInput ? this.isCampaignInputVisible ?  'class1'  : 'slds-hidden' : '';
+    }
+    get tabClass2(){
+        return this.disabledInput ? (this.isCampaignInputVisibleCommissioning ?  'class1'  : 'slds-hidden' ) : '';
     }
 
     nextPage2() {
