@@ -57,46 +57,10 @@
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>D1 - Persona fisica</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D2 - Ditta individuale</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D3 - Azienda</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D4 - Parti comuni</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D5 - Condominio</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D6 - Associazione</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D7 - BP Doppio</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D8 - Marcatura nulla</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -136,46 +100,10 @@
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D1 - Persona fisica</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D2 - Ditta individuale</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D3 - Azienda</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D4 - Parti comuni</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D5 - Condominio</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D6 - Associazione</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D7 - BP Doppio</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D8 - Marcatura nulla</rightValue>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

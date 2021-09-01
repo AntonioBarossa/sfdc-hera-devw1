@@ -357,6 +357,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 recordId - Id of a record
     * @return void
     */
+    @AuraEnabled
     public static void updatePraticaForScartoDocumentale(Id activityId){
         String oldPhone, oldEmail;
         wrts_prcgvr__Activity__c activity = [SELECT Id, NewEmail__c, NewMobile__c, Case__c, Order__c
@@ -392,6 +393,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @param1 recordId - Id of a record
     * @return void
     */
+    @AuraEnabled
     public static void updateContactForScartoDocumentale(String oldPhone, String oldEmail, String newPhone, String newMail){
         List<sObject> recordsForDML = new List<SObject>();
         if(String.isNotBlank(oldPhone)){
