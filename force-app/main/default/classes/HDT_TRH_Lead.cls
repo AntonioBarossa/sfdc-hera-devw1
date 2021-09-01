@@ -166,19 +166,46 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
             
         }
         public override void   beforeUpdate(){
+            System.debug('HDT_TRH_Lead.beforeUpdate');
+            Set<String> setFiscalCodes = new Set<String>();
             Map<String,String> mapResBlacklist = HDT_UTL_Lead.getBlackListMap();
             List<Lead> listNew = trigger.new;
-        // List<Lead> leadToCheck = new List<Lead>();
+            List<Lead> leadToCheck = new List<Lead>();
             //Map<String,String> leadDomain = new Map<String,String>();
-            for(Lead L : listNew){
+            for(Lead l : listNew){
                 if(l.email != null){
                     String s = l.email.split('@')[1];
                     if(mapResBlacklist.get(s.toUpperCase()) != null){
                         l.addError('Error:' + mapResBlacklist.get(s.toUpperCase()));
                     }
                 }
+                if (String.isNotBlank(l.FiscalCode__c) && mapOld.get(l.Id)!=null && (mapOld.get(l.Id).FiscalCode__c!=l.FiscalCode__c)     ) {
+                    setFiscalCodes.add(l.FiscalCode__c);
+                    leadToCheck.add(l);
+                }
+            }   
+            // Start 27-08-2021 HRAWRM-351
+            if (leadToCheck.size()>0) {
+                
+            
+                Map<String,HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject> mapCodeToCheck = HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCode(setFiscalCodes);
+                for (Lead tempLead : leadToCheck) {
+                    HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject wrp = new HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject();
+                    if (mapCodeToCheck.get(tempLead.FiscalCode__c)!=null ) {
+                        wrp=mapCodeToCheck.get(tempLead.FiscalCode__c);
+                       
+                        if ( wrp.isValid) {
+                            Date myDate = Date.newInstance(Integer.valueOf( wrp.year),Integer.valueOf(wrp.month),Integer.valueOf( wrp.day));
+                            tempLead.Birthdate__c=tempLead.Birthdate__c==null?myDate:tempLead.Birthdate__c;
+                            tempLead.Birthcity__c=String.isBlank( tempLead.Birthcity__c)? wrp.city: tempLead.Birthcity__c;
+                            tempLead.Gender__c=String.isBlank( tempLead.Gender__c)? wrp.gender: tempLead.Gender__c;
+                        }
+                        else{
+                            tempLead.addError('Inserire un codice fiscale valido');
+                        }
+                    }
+                }
             }
-            System.debug('beforeUpdate');
-           
         }
+        // End 27-08-2021 HRAWRM-351
 }

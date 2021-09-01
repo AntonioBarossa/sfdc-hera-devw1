@@ -195,7 +195,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.InstanceSelfCertification__c = 'SI';
         orderToUpdate.ConnectionMandate__c = 'SI';
         orderToUpdate.SelfCertificationConnection__c = '02';
-        orderToUpdate.RequestOption__c = calculateRequestedOption(servicePoint.ImplantType__c, servicePoint.PowerContractual__c);
+        orderToUpdate.RequestOption__c = calculateRequestedOption(servicePoint.ImplantType__c, servicePoint.PowerRequested__c);
         orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
         orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? (servicePoint.WithdrawalClass__c != null ? servicePoint.WithdrawalClass__c : '001-7 giorni') : null;
         orderToUpdate.SupplyType__c = servicePoint.SupplyType__c;
@@ -227,7 +227,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
                 if (orderOld.ServicePoint__r.Vat__c == null || orderOld.ServicePoint__r.Vat__c == '') {
                     // 26/08/2021 - gabriele.rota@webresults.it - Calcolo IVA
-                    //orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
                     orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
                 }
 
@@ -252,12 +251,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 if (orderOld.ServicePoint__r.Vat__c == null || orderOld.ServicePoint__r.Vat__c == '') {
 
                     // 26/08/2021 - gabriele.rota@webresults.it - Calcolo IVA
-                    if (orderOld.ServicePoint__r.Resident__c==true) {
-                        orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
-                    }
-                    else {
-                        orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
-                    }
+                    orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
                 }
 
                 if ((orderOld.ServicePoint__r.ExciseEle__c == null || orderOld.ServicePoint__r.ExciseEle__c == '') && orderOld.ServicePoint__r.RecordType.DeveloperName == 'HDT_RT_Ele') {
