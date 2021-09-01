@@ -113,15 +113,15 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 List<String> accId = new List<String>();
                 List<String> contId = new List<String>();
                 Recordtype r = recordtypeQr.getRecordType('HDT_RT_Business', 'Account');  
-                accounts = accPerson.getRecordsById(accountIdList,'id,Name, firstname__c,LastName__c,PrimaryEmail__c,Description,FiscalCode__c,recordtypeid,Phone,FAX__c' );
+                accounts = accPerson.getRecordsById(accountIdList,'id,Name, firstname__c,LastName__c,PrimaryEmail__c,Description,FiscalCode__c,recordtypeid,Phone,FAX__c,MobilePhone__c' );
+                
                 for(Account a : accounts){
                     accId.add(a.id);
                     if(mapAccountLead.get(a.id) != null){
                         String lastName = (a.LastName__c != null && a.LastName__c != '' ? a.LastName__c : a.Name);
                         if ( a.LastName__c==null) {
                             if(r.id == a.recordtypeid){
-                                Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone= a.Phone, Email= a.PrimaryEmail__c, Fax= a.FAX__c);
-                                conList.add(contact);
+
                                 Lead li = mapAccountLead.get(a.id);
                                // a.FirstName__c = li.FirstName;
                             
@@ -129,6 +129,8 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                                 a.Name=li.Company;
                                 a.PrimaryEmail__c= li.Email;
                                 a.Description= li.Description;
+                                Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone=mapAccountLead.get(a.id).Phone, Email=mapAccountLead.get(a.id).email ,MobilePhone= mapAccountLead.get(a.id).MobilePhone, Fax= a.FAX__c);
+                                conList.add(contact);
                                 accToUpdate.add(a);
 
                             }
@@ -154,8 +156,9 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         contId.add(c.id);
                     }
                     List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(accId, contId, 'Id');
+                    
                     for(AccountContactRelation acc : listAccCon){
-                        acc.Roles='Azienda';
+                        acc.Roles='Azienda'; 
                     }
                     accoContRelSrv.upsertRecord(listAccCon);
                     HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
