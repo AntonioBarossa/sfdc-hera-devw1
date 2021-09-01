@@ -92,8 +92,12 @@ public with sharing class HDT_LC_RecordEditFormSales {
             else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c != 'Chiusa'){
                 return 'aperta';
             }
+            else{
+                return 'errore';
+            }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
+            return 'errore';
         }
     }
     @AuraEnabled
