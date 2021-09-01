@@ -2078,6 +2078,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>
         </values>
@@ -2709,6 +2713,25 @@
         </values>
         <values>
             <fullName>Ville rifugi simili%28Perm Part%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VASBillingMode__c</picklist>
+        <values>
+            <fullName>A-Rate fisse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Canone fisso</fullName>
             <default>false</default>
         </values>
     </picklistValues>

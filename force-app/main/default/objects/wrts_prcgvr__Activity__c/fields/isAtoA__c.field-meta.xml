@@ -5,7 +5,7 @@
     <description>Indica se l&apos;Activity traccia un appuntamento gestito in AtoA o no</description>
     <externalId>false</externalId>
     <label>AtoA</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

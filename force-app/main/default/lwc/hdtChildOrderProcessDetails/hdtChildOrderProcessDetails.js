@@ -569,7 +569,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
-                        message: 'Popolare il campo Pressione fornitura',
+                        message: 'Popolare il campo Livello pressione',
                         variant: 'error',
                         mode: 'sticky'
                     });
@@ -1053,7 +1053,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'SAPImplantCode__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true,
+                        'disabled': true, //UAT 25/08/2021 JIRA 336
                         'value': '',
                         'processVisibility': ''
                     },
@@ -1213,7 +1213,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), false, true, '',''),
+                // Jira 354 30/08
+                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), false, (this.order.ProcessType__c=='Prima Attivazione Ele')?false:true, '',''),
                 {
                     'label': 'Consumi Anno',
                     'apiname': 'AnnualConsumption__c',
@@ -1397,24 +1398,26 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                // {
-                //     'label': 'ConnectionMandate__c',
-                //     'apiname': 'ConnectionMandate__c',
-                //     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'),
-                //     'required': true,
-                //     'disabled': false,
-                //     'value': '',
-                //     'processVisibility': ''
-                // },
-                // {
-                //     'label': 'Autocert. contr connessione',
-                //     'apiname': 'SelfCertificationConnection__c',
-                //     'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
-                //     'required': true,
-                //     'disabled': false,
-                //     'value': '',
-                //     'processVisibility': ''
-                // },
+                //25/08/2021 - gabriele.rota@webresults.it - Reso nuovamente visibile - Jira 354
+                {
+                    'label': 'ConnectionMandate__c',
+                    'apiname': 'ConnectionMandate__c',
+                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'),
+                    'required': true,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                //25/08/2021 - gabriele.rota@webresults.it - Reso nuovamente visibile, default per Prima Attivazione Ele Jira 354
+                {
+                    'label': 'Autocert. contr connessione',
+                    'apiname': 'SelfCertificationConnection__c',
+                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
+                    'required': true,
+                    'disabled': false,
+                    'value': (this.order.ProcessType__c=='Prima Attivazione Ele')?'02':'',
+                    'processVisibility': ''
+                },
                 // {
                 //     'label': 'ConnectionType__c',
                 //     'apiname': 'ConnectionType__c',
@@ -1424,7 +1427,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 //     'value': '',
                 //     'processVisibility': ''
                 // },
-                new fieldData('ConnectionType__c','ConnectionType__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, true, '',''),
+                new fieldData('ConnectionType__c','ConnectionType__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, false, '',''),
                 new fieldData('Esecuzione Anticipata','RecessNotice__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
                 new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, this.order.ProcessType__c == 'Switch in Ripristinatorio', '',''),
                 new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
@@ -1455,7 +1458,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'RequestPhase__c',
                     'typeVisibility': this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta',
                     'required': true,
-                    'disabled': true,
+                    'disabled': false,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1491,7 +1494,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'SAPImplantCode__c',
                     'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'),
                     'required': false,
-                    'disabled': false,
+                    'disabled': true, //UAT 25/08/2021 JIRA 336
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1533,7 +1536,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Pressione fornitura',
+                    'label': 'Livello pressione',
                     'apiname': 'PressureLevel__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
@@ -1608,12 +1611,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     ), 
                     new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
                     new fieldData(
-                        'Sottotipo Vas','VASSubtype__c', 
+                        'Sottotipo Vas','VasSubtype__c', 
                         this.typeVisibility('both'), 
                         false, true, '',''
                     ),
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
-                    new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, true, ''),
+                    new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, false, ''),
                     new fieldData('Soc Vendita','SalesCompany__c', true, false, true, ''),
 
                     
@@ -1883,7 +1886,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
                     new fieldData('POD/PDR','ServicePointCode__c', true, false, true, ''),
                     new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
-                    new fieldData('Sottotipo VAS','VASSubtype__c', true, false, true, ''),
+                    new fieldData('Sottotipo VAS','VasSubtype__c', true, false, true, ''),
                     new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, false, ''),
                     new fieldData('Azione Commerciale','CommercialAction__c', true, false, false, '')
                 ]
@@ -1918,7 +1921,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'fatturazione',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable
+                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable || this.order.RecordType.DeveloperName=="HDT_RT_ScontiBonus"
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
@@ -2159,7 +2162,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'metodoPagamento',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable
+                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable 
+                || this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'

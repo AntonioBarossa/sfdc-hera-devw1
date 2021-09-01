@@ -16,18 +16,18 @@
     </values>
     <values>
         <field>StatoContratto__c</field>
-        <value xsi:type="xsd:string">Cessato</value>
+        <value xsi:type="xsd:string">Inattivo</value>
     </values>
     <values>
         <field>StatoFornitura__c</field>
-        <value xsi:type="xsd:string">Cessato</value>
+        <value xsi:type="xsd:string">Inattivo</value>
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Rimozione impianto EE - Preventivo Prede</value>
+        <value xsi:type="xsd:string">Rimozione Impianto</value>
     </values>
     <values>
         <field>TipoServizio__c</field>
-        <value xsi:type="xsd:string">Energia Elettrica</value>
+        <value xsi:type="xsd:string">Energia Elettrica,Gas</value>
     </values>
 </CustomMetadata>
