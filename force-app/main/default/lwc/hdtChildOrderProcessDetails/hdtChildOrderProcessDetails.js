@@ -2281,7 +2281,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'disabled': true,
                         'value': '',
                         'processVisibility': ''
-                    }
+                    },
+                    new fieldData(
+                        'Modalità di Fatturazione VAS','VASBillingMode__c',
+                        this.typeVisibility('both'), 
+                        false, true, '',''
+                    ), 
                 ]
             },
             {
