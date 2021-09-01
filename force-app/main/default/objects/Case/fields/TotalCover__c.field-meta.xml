@@ -3,7 +3,7 @@
     <fullName>TotalCover__c</fullName>
     <description>Totale Copertina</description>
     <externalId>false</externalId>
-    <label>Totale Copertina</label>
+    <label>Differenza Importi</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

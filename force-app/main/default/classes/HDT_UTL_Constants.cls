@@ -114,6 +114,14 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String CASE_RECORDTYPEID_MOROSITA =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA).getRecordTypeId();
+
+    //@anbuzzi 31/08 Case RecordType Documentale/Copia Contratto
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO = 'HDT_RT_DocCopiaContratto';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO =
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO).getRecordTypeId();
+    
     
     //ServicePoint RecordType Punto Elettrico
     @AuraEnabled
@@ -165,4 +173,17 @@ public with sharing class HDT_UTL_Constants {
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_CUSTOMER = 'Customer';
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_EX_CUSTOMER = 'Ex-Customer';
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_PROSPECT = 'Prospect';
+
+    //Custom Permissions
+    @AuraEnabled
+    public final string CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN = 'HDT_CP_SalesforceCPQAdmin';
+
+    //User Roles
+    @AuraEnabled
+    public final string USERROLE_DEVELOPERNAME_BACKOFFICE = 'HDT_BackOffice';
+
+    //Other
+    @AuraEnabled
+    public final string QUOTE_PROFILEFIELD_SALESFORCECPQADMIN = 'Amministratore CPQ';
+
 }

@@ -98,6 +98,13 @@
                 <stringValue>Elaborazione Risposta</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.MotivatedResponseSendMode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.MotivatedResponseSendMode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assegna_Case_Contenuti</targetReference>
         </connector>
@@ -514,6 +521,12 @@
                     <elementReference>RequestAccomplished</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -611,6 +624,12 @@
                 <name>processType</name>
                 <value>
                     <elementReference>RequestAccomplished</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

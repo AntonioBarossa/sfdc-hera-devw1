@@ -132,6 +132,10 @@
                 <behavior>Readonly</behavior>
                 <field>ValidityDateEstimate__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PowerRequested__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

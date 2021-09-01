@@ -6,15 +6,19 @@ public inherited sharing class HDT_LC_ConfigurePaymentMethods {
     public HDT_LC_ConfigurePaymentMethods() {}
 
      @AuraEnabled
-     public static Boolean disableBotton(String idAcc,Object o){
+     public static Boolean disableBotton(String idAcc, Object o){
 
-        wrts_prcgvr__Activity__c activity = activityQr.getLastActivity(idAcc,o);
-        if(activity.Approved__c != null){
-            if(activity.Approved__c != 'Si'){
-                return false;
+        if (o != null) {
+        
+            wrts_prcgvr__Activity__c activity = activityQr.getLastActivity(idAcc,o);
+            if(activity.Approved__c != null){
+                if(activity.Approved__c != 'Si'){
+                    return false;
+                }
             }
         }
-            return true;
+        
+        return true;
 
      }
 

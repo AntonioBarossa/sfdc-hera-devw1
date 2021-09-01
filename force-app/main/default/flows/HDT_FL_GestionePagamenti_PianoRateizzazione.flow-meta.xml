@@ -66,7 +66,7 @@
         <name>Sottometti_ad_Approvazione</name>
         <label>Sottometti ad Approvazione</label>
         <locationX>578</locationX>
-        <locationY>3566</locationY>
+        <locationY>3902</locationY>
         <actionName>HDT_UTL_CaseApprovalProcess</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -82,7 +82,7 @@
         <name>Assegna_Fase</name>
         <label>Assegna Fase</label>
         <locationX>1106</locationX>
-        <locationY>3326</locationY>
+        <locationY>3662</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -112,7 +112,7 @@
         <name>Assegna_Fase_0</name>
         <label>Assegna Fase</label>
         <locationX>578</locationX>
-        <locationY>3326</locationY>
+        <locationY>3662</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -132,6 +132,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>InstallmentAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -165,7 +172,7 @@
         <name>Assegna_Fase_0_0_0</name>
         <label>Assegna Fase</label>
         <locationX>842</locationX>
-        <locationY>3446</locationY>
+        <locationY>3782</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -232,7 +239,7 @@
         <name>AssegnaCodiceCausale</name>
         <label>AssegnaCodiceCausale</label>
         <locationX>842</locationX>
-        <locationY>3086</locationY>
+        <locationY>3422</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -367,6 +374,15 @@
         </connector>
     </assignments>
     <choices>
+        <description>--None--</description>
+        <name>EmptyString</name>
+        <choiceText>--None--</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue/>
+        </value>
+    </choices>
+    <choices>
         <name>RadioButtonKOChoice</name>
         <choiceText>Passa in KO Rilavorato</choiceText>
         <dataType>Boolean</dataType>
@@ -398,6 +414,31 @@
             <stringValue>Cliente revoca la domiciliazione</stringValue>
         </value>
     </choices>
+    <decisions>
+        <name>Documentale</name>
+        <label>Documentale?</label>
+        <locationX>1238</locationX>
+        <locationY>2846</locationY>
+        <defaultConnector>
+            <targetReference>ScreenDocumentale</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Documentale</defaultConnectorLabel>
+        <rules>
+            <name>Non_Documentale</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DocumentalFormula</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Salva_o_Conferma_0</targetReference>
+            </connector>
+            <label>Non Documentale</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
@@ -562,7 +603,7 @@
         <locationX>578</locationX>
         <locationY>2366</locationY>
         <defaultConnector>
-            <targetReference>Inserimento_Allegato_Obbligatorio</targetReference>
+            <targetReference>GetCaseDocumentale</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>OK</defaultConnectorLabel>
         <rules>
@@ -592,14 +633,14 @@
         <name>Processo_Approvativo</name>
         <label>Processo Approvativo?</label>
         <locationX>842</locationX>
-        <locationY>3206</locationY>
+        <locationY>3542</locationY>
         <defaultConnector>
             <targetReference>Assegna_Fase</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Da Approvare</defaultConnectorLabel>
         <rules>
             <name>Da_Approvare</name>
-            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditionLogic>1 OR ((4 OR 5 OR 6 OR 7 OR 8 OR 9) AND 2 AND 3)</conditionLogic>
             <conditions>
                 <leftValueReference>RentProcessRuleOutput.ApprovalProcess__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -619,6 +660,48 @@
                 <operator>GreaterThan</operator>
                 <rightValue>
                     <elementReference>RentProcessRuleOutput.MaxInstallmentsNumber__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Disguido Hera</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Disoccupato/Cassintegrato</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Doc. ricevuto dopo scadenza</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Fattura SD</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Disagio Economico</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Bolletta Fuga H2O</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -747,20 +830,20 @@
         <name>Salva_o_Conferma_0</name>
         <label>Salva o Conferma?</label>
         <locationX>1238</locationX>
-        <locationY>2846</locationY>
+        <locationY>3182</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>hdtDocumentalSignatureFlow.cancelCase</leftValueReference>
+                <leftValueReference>hdtDocumentManagerFlow.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtDocumentalSignatureFlow.cancelCase</leftValueReference>
+                <leftValueReference>hdtDocumentManagerFlow.cancelCase</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -773,9 +856,9 @@
         </rules>
         <rules>
             <name>Annulla_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>hdtDocumentalSignatureFlow.cancelCase</leftValueReference>
+                <leftValueReference>hdtDocumentManagerFlow.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -791,7 +874,7 @@
         <name>Salva_o_Conferma_0_0</name>
         <label>Salva o Conferma?</label>
         <locationX>1106</locationX>
-        <locationY>2606</locationY>
+        <locationY>2726</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla_0_0</name>
@@ -833,7 +916,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>ScreenDocumentale</targetReference>
+                <targetReference>Documentale</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -850,9 +933,29 @@
         <expression>DATEVALUE({!CaseInput.CreatedDate})+20</expression>
     </formulas>
     <formulas>
+        <name>DepositAmount</name>
+        <dataType>Currency</dataType>
+        <expression>IF(ISNULL({!Get_Case.DepositAmount__c}),0.0,{!Get_Case.DepositAmount__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>DocumentalFormula</name>
+        <dataType>Boolean</dataType>
+        <expression>OR( 
+     {!GetCaseDocumentale.InstallmentNumberRequired__c} &gt; 3,
+      {!GetCaseDocumentale.AmountToPayInInstallments__c} &gt; 2000,
+        CONTAINS(TEXT({!GetCaseDocumentale.Reason__c}),&quot;Disagio Economico&quot;)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>DocumentalFormulaButtons</name>
+        <dataType>String</dataType>
+        <expression>IF({!DocumentalFormula},&quot;Avanti&quot;,&quot;Conferma Pratica&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>InstallmentAmount</name>
         <dataType>Currency</dataType>
-        <expression>{!Get_Case.AmountToPayInInstallments__c}/{!Get_Case.InstallmentNumberRequired__c}</expression>
+        <expression>({!Get_Case.AmountToPayInInstallments__c} - {!DepositAmount})/{!Get_Case.InstallmentNumberRequired__c}</expression>
         <scale>2</scale>
     </formulas>
     <interviewLabel>Gestione Pagamenti - Piano Rateizzazione {!$Flow.CurrentDateTime}</interviewLabel>
@@ -884,6 +987,27 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>InterrogaRegoleRateizzazione</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseDocumentale</name>
+        <label>GetCaseDocumentale</label>
+        <locationX>1106</locationX>
+        <locationY>2486</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Inserimento_Allegato_Obbligatorio</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -943,7 +1067,7 @@
         <name>GetCodiceCausale</name>
         <label>GetCodiceCausale</label>
         <locationX>842</locationX>
-        <locationY>2966</locationY>
+        <locationY>3302</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaCodiceCausale</targetReference>
@@ -985,7 +1109,7 @@
         <name>GetSuspensioDays</name>
         <label>GetSuspensioDays</label>
         <locationX>842</locationX>
-        <locationY>3326</locationY>
+        <locationY>3662</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Fase_0_0_0</targetReference>
@@ -1030,7 +1154,7 @@
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>1106</locationX>
-        <locationY>3446</locationY>
+        <locationY>3782</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1047,7 +1171,7 @@
         <name>Passa_In_Attesa_Approvazione</name>
         <label>Passa &quot;In Attesa Approvazione&quot;</label>
         <locationX>578</locationX>
-        <locationY>3446</locationY>
+        <locationY>3782</locationY>
         <connector>
             <targetReference>Sottometti_ad_Approvazione</targetReference>
         </connector>
@@ -1057,14 +1181,14 @@
         <name>Passa_In_Attesa_Approvazione_0</name>
         <label>Passa &quot;In Attesa Approvazione&quot;</label>
         <locationX>842</locationX>
-        <locationY>3566</locationY>
+        <locationY>3902</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <screens>
         <name>Inserimento_Allegato_Obbligatorio</name>
         <label>Inserimento Allegato Obbligatorio</label>
         <locationX>1106</locationX>
-        <locationY>2486</locationY>
+        <locationY>2606</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1080,8 +1204,10 @@
             <name>AdditionalInfo</name>
             <choiceReferences>RevokeValue</choiceReferences>
             <choiceReferences>RejectValue</choiceReferences>
+            <choiceReferences>EmptyString</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Informazioni Aggiuntive</fieldText>
+            <defaultSelectedChoiceReference>EmptyString</defaultSelectedChoiceReference>
+            <fieldText>Se il cliente è domiciliato, inserire le seguenti informazioni aggiuntive</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
         </fields>
@@ -1098,7 +1224,7 @@
             <inputParameters>
                 <name>cancelButton</name>
                 <value>
-                    <elementReference>AttachmentManagementFormula</elementReference>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1110,7 +1236,7 @@
             <inputParameters>
                 <name>draftButton</name>
                 <value>
-                    <elementReference>AttachmentManagementFormula</elementReference>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1128,7 +1254,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <elementReference>DocumentalFormulaButtons</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1140,7 +1266,7 @@
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <elementReference>AttachmentManagementFormula</elementReference>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1158,7 +1284,7 @@
             <inputParameters>
                 <name>saveButton</name>
                 <value>
-                    <elementReference>AttachmentManagementFormula</elementReference>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1578,9 +1704,9 @@
     </screens>
     <screens>
         <name>ScreenDocumentale</name>
-        <label>ScreenDocumentale</label>
-        <locationX>1238</locationX>
-        <locationY>2726</locationY>
+        <label>Screen Documentale</label>
+        <locationX>1326</locationX>
+        <locationY>2966</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1588,18 +1714,18 @@
             <targetReference>Salva_o_Conferma_0</targetReference>
         </connector>
         <fields>
-            <name>DisplayHeadeDocumental</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <name>DisplayHeader</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtDocumentalSignatureFlow</name>
+            <name>hdtDocumentManagerFlow</name>
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>accountId</name>
                 <value>
-                    <elementReference>Get_Case.AccountId</elementReference>
+                    <elementReference>CaseInput.AccountId</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1611,19 +1737,19 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>Get_Case.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <stringValue>RICH_RATEIZZAZIONE</stringValue>
+                    <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>quoteType</name>
                 <value>
                     <stringValue>Rapido</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>RICH_RATEIZZAZIONE</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1670,7 +1796,7 @@
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>1370</locationX>
-        <locationY>2966</locationY>
+        <locationY>3302</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1720,7 +1846,7 @@
         <name>Annullamento_Prestazione_0_0_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>314</locationX>
-        <locationY>2726</locationY>
+        <locationY>2846</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

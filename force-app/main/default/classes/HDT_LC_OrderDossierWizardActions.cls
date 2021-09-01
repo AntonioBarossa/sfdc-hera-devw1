@@ -41,7 +41,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 );
             }
         }
-
+        
         ordersToUpdate.add(orderToUpdate);
 
         //update child orders
