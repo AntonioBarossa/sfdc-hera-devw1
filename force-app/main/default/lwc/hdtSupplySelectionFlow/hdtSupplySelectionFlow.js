@@ -23,7 +23,7 @@ export default class HdtSupplySelectionFlow extends LightningElement {
         this.serviceRequestId = event.detail["serviceRequestId"];
         this.isCompatible = event.detail["isCompatible"];
         console.log('isCompatibile ' + this.isCompatible);
-        if(!this.isCompatible)
+        if(this.isCompatible === false)
         {
             this.cancelDisabled = false;
         }
