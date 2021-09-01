@@ -45,8 +45,6 @@
     &quot;Required&quot;: true,
     &quot;Column&quot;: 2
   },
-
-
 {
     &quot;FieldName&quot;: &quot;AccountholderTypeBeneficiary__c&quot;,
     &quot;Required&quot;: true,
@@ -74,29 +72,29 @@
   },
 {
     &quot;FieldName&quot;: &quot;OfficeSubjectCode__c&quot;,
-    &quot;Required&quot;: true,
+    &quot;Required&quot;: false,
     &quot;Column&quot;: 1
   },
   {
     &quot;FieldName&quot;: &quot;ElectronicInvoiceCertifiedEmailAddress__c&quot;,
-    &quot;Required&quot;: true,
+    &quot;Required&quot;: false,
     &quot;Column&quot;: 2
   },
   {
     &quot;FieldName&quot;: &quot;ElectronicInvoicingMethod__c&quot;,
-    &quot;Required&quot;: true,
+    &quot;Required&quot;: false,
     &quot;Column&quot;: 1
   },
  {
     &quot;FieldName&quot;: &quot;XMLType__c&quot;,
-    &quot;Required&quot;: true,
+    &quot;Required&quot;: false,
     &quot;Column&quot;: 2
   }
 ]</value>
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Modifica Contr Preattivazione Pagamento Non Residenziale</value>
+        <value xsi:type="xsd:string">Modifica Contr Preattivazione Pagamento Residenziale</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
