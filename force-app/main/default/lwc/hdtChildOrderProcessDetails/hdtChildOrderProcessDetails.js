@@ -2295,7 +2295,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'dateOrdine',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta') && this.order.ParentOrder__r.ContractSigned__c,
+                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta') && this.order.ParentOrder__r.ContractSigned__c,
                 data: [
                     {
                         'label': 'Data Firma',
