@@ -30,13 +30,16 @@
                     </div>
                 </template>
                 <lightning-input-field field-name="Phase__c" class="slds-hide"></lightning-input-field>
-                <lightning-record-view-form record-id={recordid} object-api-name='Case'>
+               <!-- <lightning-record-view-form record-id={recordid} object-api-name='Case'>
                     <div class="slds-form-element slds-m-top_small">
                         <lightning-output-field field-name="PODPDRFormula__c"></lightning-output-field>
                     </div>
-                </lightning-record-view-form>
+                </lightning-record-view-form>-->
                 <div class="slds-form-element slds-m-top_small">
                     <lightning-input-field field-name="Contract__c" required></lightning-input-field>
+                </div>
+                <div class="slds-form-element slds-m-top_small">
+                    <lightning-input-field field-name="Note__c"></lightning-input-field>
                 </div>
                <!-- <div class="slds-form-element slds-m-top_small">
                     <lightning-input-field field-name="ReassignmentReason__c" onchange={handleReassignmentReasonChange} >
