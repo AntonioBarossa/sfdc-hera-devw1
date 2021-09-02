@@ -310,6 +310,16 @@
                 <default>false</default>
                 <label>Scarto transitorio</label>
             </value>
+            <value>
+                <fullName>Esito KO da DL</fullName>
+                <default>false</default>
+                <label>Esito KO da DL</label>
+            </value>
+            <value>
+                <fullName>KO Fornitore</fullName>
+                <default>false</default>
+                <label>KO Fornitore</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

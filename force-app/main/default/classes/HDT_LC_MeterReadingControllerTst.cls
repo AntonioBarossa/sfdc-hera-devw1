@@ -80,10 +80,15 @@ public class HDT_LC_MeterReadingControllerTst {
 
     @isTest
     public static void getAccountDataEnrichment(){
+
+        Test.startTest();
+
         List<HDT_AccountDataEnrichment__mdt> contractMetadataList;
         contractMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(contractMetadataList, 'contract');
-
         System.assert(contractMetadataList != null, 'Si è verificato un errore in fase di scaricamento dei records');
+    
+        Test.stopTest();
+        
     }
 
 }
