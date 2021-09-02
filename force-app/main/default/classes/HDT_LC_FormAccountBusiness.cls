@@ -138,10 +138,36 @@ public with sharing class HDT_LC_FormAccountBusiness {
             Date birthdate = (dataAccount.get('birthDate') != null && dataAccount.get('birthDate') != '' ? Date.valueOf(dataAccount.get('birthDate')) : null );
             String namePerson= dataAccount.get('firstName') + ' '+ dataAccount.get('lastName');
             System.debug('marcatura : '+dataAccount.get('companyOwner'));
+            //? fix UAT 31/08/2021 verrà definita una logica in wave 3 come da feedback Analisi
+            String varMarking;
+            if ('Reseller'.equalsIgnoreCase(dataAccount.get('companyOwner'))){
+                List<String> listSoc =dataAccount.get('customerMarking').split('-');
+                if (listSoc.size()>0) {
+                    varMarking=listSoc.get(0)+'-Persona fisica';
+                }  
+            }
+            else {
+                varMarking= mapTranscodifica.get(dataAccount.get('companyOwner'));
+            }
+            //? fix UAT 31/08/2021 verrà definita una logica in wave 3 come da feedback Analisi
             
-            
-            
-            Account accountPerson= new Account(Name= namePerson, LastName__c= dataAccount.get('lastName') , FirstName__c= dataAccount.get('firstName'),RecordTypeId= recordTypeResId , FiscalCode__c= dataAccount.get('personFiscalCode'),PhonePrefix__c= dataAccount.get('phonePrefix'), PrimaryEmail__c= dataAccount.get('contactEmail'),FAX__c= dataAccount.get('contactFax'),MobilePhonePrefix__c= dataAccount.get('mobilePhonePrefix'), MobilePhone__c= dataAccount.get('mobilePhone'),Phone= dataAccount.get('contactPhoneNumber'),Profession__c= dataAccount.get('profession'),Gender__c= dataAccount.get('gender'),DegreeOfStudies__c= dataAccount.get('education'), CompanyOwner__c=dataAccount.get('companyOwner'), CustomerMarking__c=mapTranscodifica.get(dataAccount.get('companyOwner')) , Category__c='Famiglie');
+            Account accountPerson= new Account(Name= namePerson, 
+            LastName__c= dataAccount.get('lastName') , 
+            FirstName__c= dataAccount.get('firstName'),
+            RecordTypeId= recordTypeResId ,
+            FiscalCode__c= dataAccount.get('personFiscalCode'),
+            PhonePrefix__c= dataAccount.get('phonePrefix'),
+            PrimaryEmail__c= dataAccount.get('contactEmail'),
+            FAX__c= dataAccount.get('contactFax'),
+            MobilePhonePrefix__c= dataAccount.get('mobilePhonePrefix'),
+            MobilePhone__c= dataAccount.get('mobilePhone'),
+            Phone= dataAccount.get('contactPhoneNumber'),
+            Profession__c= dataAccount.get('profession'),
+            Gender__c= dataAccount.get('gender'),
+            DegreeOfStudies__c= dataAccount.get('education'),
+            CompanyOwner__c=dataAccount.get('companyOwner'), 
+            CustomerMarking__c=varMarking ,
+            Category__c='Famiglie');
             for(String s: accountAddress.keySet()){
                 if('BillingIsAddressVerified__c' == s){
                     accountPerson.put(s, accountAddress.get(s) == 'true' ? true : false);

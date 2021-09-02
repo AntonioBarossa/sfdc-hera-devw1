@@ -220,7 +220,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     closeModal() {
         this.confirmButtonDisabled=true;
         this.openmodel = false;
-        if(this.serviceRequestId != null){
+        if(this.serviceRequestId != null && !this.isIncompatible){
             this.dispatchEvent(new CustomEvent('servicepointselection', {
                 detail: this.rowToSend
             }));
@@ -594,7 +594,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.preloading = true;
         this.closeModal();
         console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
-        if(this.serviceRequestId == null){
+        if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
             this.dispatchEvent(new CustomEvent('servicepointselection', {
                 detail: this.rowToSend
             }));

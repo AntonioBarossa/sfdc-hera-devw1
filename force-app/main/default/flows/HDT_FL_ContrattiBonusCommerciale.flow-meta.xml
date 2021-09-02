@@ -28,7 +28,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Selezione_Fornitura</targetReference>
+                <targetReference>Get_RT_Generiche_Attivazioni</targetReference>
             </connector>
             <label>Cluster Generiche Attivazioni</label>
         </rules>
@@ -60,7 +60,7 @@
         <locationX>50</locationX>
         <locationY>638</locationY>
         <connector>
-            <targetReference>Edit_Form</targetReference>
+            <targetReference>createActitivy</targetReference>
         </connector>
         <inputAssignments>
             <field>AccountId</field>
@@ -105,18 +105,47 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>ServicePoint__c</field>
-            <value>
-                <elementReference>ServicePointId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Type</field>
             <value>
                 <elementReference>ProcessType</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>createActitivy</name>
+        <label>createActitivy</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <connector>
+            <targetReference>Edit_Form</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>Crea_Case</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>getActivityRecordtype.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <stringValue>Approvazione Bonus Commerciale</stringValue>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
@@ -158,10 +187,10 @@
         <name>Get_RT_Generiche_Attivazioni</name>
         <label>Get RT Generiche Attivazioni</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Crea_Case</targetReference>
+            <targetReference>getActivityRecordtype</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -175,11 +204,39 @@
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>getActivityRecordtype</name>
+        <label>getActivityRecordtype</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_AttivitaGestionali</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>wrts_prcgvr__Activity__c</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>Edit_Form</name>
         <label>Edit Form</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -266,46 +323,6 @@
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Selezione_Fornitura</name>
-        <label>Selezione Fornitura</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
-        <connector>
-            <targetReference>Get_RT_Generiche_Attivazioni</targetReference>
-        </connector>
-        <flowName>HDT_FL_SupplySelection</flowName>
-        <inputAssignments>
-            <name>AccountId</name>
-            <value>
-                <elementReference>AccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ProcessType</name>
-            <value>
-                <elementReference>ProcessType</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>TargetObject</name>
-            <value>
-                <stringValue>Fornitura</stringValue>
-            </value>
-        </inputAssignments>
-        <outputAssignments>
-            <assignToReference>Commodity</assignToReference>
-            <name>Commodity</name>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>Contract</assignToReference>
-            <name>Contract</name>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>ServicePointId</assignToReference>
-            <name>ServicePointId</name>
-        </outputAssignments>
-    </subflows>
     <variables>
         <name>AccountId</name>
         <dataType>String</dataType>
@@ -347,6 +364,13 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>rtActivity</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>ServicePointId</name>

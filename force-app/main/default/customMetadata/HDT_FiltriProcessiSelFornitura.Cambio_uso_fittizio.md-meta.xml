@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>ContrattiCliente__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">NO</value>
     </values>
     <values>
         <field>Disalimentabile__c</field>
@@ -12,11 +12,11 @@
     </values>
     <values>
         <field>FornitureCliente__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">SI</value>
     </values>
     <values>
         <field>StatoContratto__c</field>
-        <value xsi:type="xsd:string">Attivo,Bozza</value>
+        <value xsi:type="xsd:string">Attivo,Draft</value>
     </values>
     <values>
         <field>StatoFornitura__c</field>
@@ -24,10 +24,10 @@
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Cambio uso fittizio</value>
+        <value xsi:type="xsd:string">Cambio Uso Tecnico</value>
     </values>
     <values>
         <field>TipoServizio__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Gas,Energia Elettrica</value>
     </values>
 </CustomMetadata>
