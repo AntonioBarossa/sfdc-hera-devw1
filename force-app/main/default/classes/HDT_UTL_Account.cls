@@ -38,7 +38,11 @@ public with sharing class HDT_UTL_Account {
 
         Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
         Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
-
+        
+       //Start HRAWRM-437 02/09/2021
+        req.account.nome=a.Name;
+        req.account.alias=a.Name;
+        //End HRAWRM-437 02/09/2021
         if(a.recordtypeId == accRecordTypeIdResidenziale){
             recordType = 'Persona fisica';
         } 

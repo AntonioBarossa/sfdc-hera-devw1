@@ -12,6 +12,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         try {
             System.debug(servReq);
             Map<String,Object> resMap = new Map<String,Object>();
+            List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
             ServiceRequest__c srRequest = new ServiceRequest__c();
             srRequest.ServicePointCode__c = String.valueOf(servReq.get('servicePointCode')); 
             srRequest.Status__c = 'Bozza';
@@ -51,7 +52,17 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             if(!result.incompatibilities.isEmpty()){
                 resMap.put('compatibility', getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities));
                 if(isPostSales!= null &&isPostSales){
-                    HDT_SRV_ServiceRequest.deleteRecord(sReq);
+                    try {
+                        List<ServiceRequest__c> srToDeletes = [SELECT ID FROM ServiceRequest__c WHERE Status__c = 'Annullato' AND ServicePointCode__c =: sReq.ServicePointCode__c];
+                        for(ServiceRequest__c srToDelete : srToDeletes){
+                            HDT_SRV_ServiceRequest.deleteRecord(srToDelete);
+                        }
+                    } catch (Exception err) {
+                        System.debug(err.getMessage());
+                    }
+                    sReq.Status__c = 'Annullato';
+                    srList.add(sReq);
+                    HDT_SRV_ServiceRequest.updateRecord(srList);
                 }
             }else{
                 resMap.put('compatibility', '');

@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Modifica Portale SOL Gestione Energia </value>
+        <value xsi:type="xsd:string">Modifica Portale SOL Gestione Energia</value>
     </values>
     <values>
         <field>TipoServizio__c</field>

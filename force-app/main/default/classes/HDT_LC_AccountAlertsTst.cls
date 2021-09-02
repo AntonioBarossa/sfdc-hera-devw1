@@ -8,24 +8,6 @@ public with sharing class HDT_LC_AccountAlertsTst {
     //TEST SETUP
     
     
-    //TODO: NOTA AI POSTERI
-    /*
-    Relativamente alla porzione di codice seguente:
-    HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-    
-    Da una veloce analisi del codice degli Apex Test risulta che numerose invocazioni di questi metodi usino (come è infatti buona practice) 
-    gli stessi parametri in contesti diversi.
-    
-    Potrebbe pertanto essere utile realizzare un'altra classe Utility che velocizza ulteriormente la stesura e il debug dei test andando a wrappare questi 
-    metodi factory in modo che non sia più necessario passare argomenti espliciti quando vengono invocate nei test setup. 
-    
-    In questo modo, in caso sia necessario manutenere un test setup a causa di evoluzioni del progetto, si ridurrebbe il numero di interventi manuali 
-    necessari ad aggiustare le porzioni di codice ora non più.
-    
-    Come bonus, si potrebbero realizzare anche dei metodi che realizzano "bulk" di dati / predispongono i dati per processi conosciuti e frequentemente utilizzati.
-    
-    */
-    
     //TESTS
     
     //getAccountAlerts

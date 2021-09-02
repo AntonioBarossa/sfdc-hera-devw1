@@ -57,6 +57,8 @@ export default class HdtGeneralInfo extends LightningElement {
     @track additionalData=[];
     @track agentListForFilter = [];
     userRole = '';
+    @track channelDisabled = false;
+    @track channelValue = '';
 
 
 
@@ -632,6 +634,10 @@ export default class HdtGeneralInfo extends LightningElement {
 
     renderedCallback() {
         let Channel = this.template.querySelector('[data-name="Channel__c"]').value;
+        if (this.saleRecord.CreatedBy.LoginChannel__c == 'Sportello') {
+            this.channelValue = 'Sportello';
+            this.channelDisabled = true;
+        }
 
         if (this.saleRecord.Agency__c != null && Channel != 'Telefono' && Channel != 'Teleselling Inbound' && Channel != 'Teleselling Outbound') {
             //this.hiddenFilterAgent = false;
