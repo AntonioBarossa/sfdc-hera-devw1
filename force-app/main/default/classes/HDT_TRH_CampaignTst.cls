@@ -35,8 +35,10 @@ public with sharing class HDT_TRH_CampaignTst{
 
 			update campaigns;
 
-			System.assertEquals('In Corso', campaigns[0].Status, 'Campaign Not Updated');
-			System.assertNotEquals('Pianificata', campaigns[0].Status);
+			List<Campaign> updatedCampaign = [SELECT Id, Status FROM Campaign WHERE Status = 'In Corso' LIMIT 1];
+
+			System.assertEquals('In Corso', updatedCampaign[0].Status, 'Campaign Not Updated');
+			System.assertNotEquals('Pianificata', updatedCampaign[0].Status);
 
 			Test.stopTest();
 		}
