@@ -1560,6 +1560,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return documents;
 	}
+	
 	public static List<DocumentalActivity__c> createDocumentalActivity(Integer numberRecords, Id orderId, Id caseId){
 		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
 		for(Integer i=0; i<numberRecords;i++){
@@ -1574,6 +1575,20 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		insert docActList;
 		return docActList;
 	}
+	
+	public static list<DocumentSendTracking__c> createDocumentSendTracking(Integer numberRecords, Id orderId, Id caseId){
+		List<DocumentSendTracking__c> docTrackList = new List<DocumentSendTracking__c>();
+		for(Integer i=0; i<numberRecords;i++){
+			DocumentSendTracking__c docTrack = new DocumentSendTracking__c();
+			docTrack.Order__c = String.isNotBlank(orderId)?orderId:null;
+			docTrack.Case__c = String.isNotBlank(caseId)?caseId:null;
+			docTrack.EnvelopeId__c = 'idPlico_' + i;
+			docTrackList.add(docTrack);
+		}
+		insert docTrackList;
+		return docTrackList;
+	}
+	
 
 	public static List<AtecoMatrix__c> createAtecoMatrix(Integer amount, Boolean doInsert, String name){
 
