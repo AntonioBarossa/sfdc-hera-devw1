@@ -171,7 +171,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             });
     }
 
-    saveScript(esito, isResponsed) {
+    @api saveScript(esito, isResponsed) {
         window.TOOLBAR.EASYCIM.saveScript(this.uuid, esito, isResponsed);
     }
 

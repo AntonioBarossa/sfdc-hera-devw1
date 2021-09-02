@@ -3,8 +3,20 @@
     <label>DPV56</label>
     <protected>false</protected>
     <values>
+        <field>AdditionalConfiguration__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Description__c</field>
         <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>HasAssetSelection__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>HasSubSelection__c</field>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Has_Attachment__c</field>
