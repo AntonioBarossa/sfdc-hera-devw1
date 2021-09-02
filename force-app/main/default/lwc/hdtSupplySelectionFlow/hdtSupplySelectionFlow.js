@@ -26,6 +26,7 @@ export default class HdtSupplySelectionFlow extends LightningElement {
         if(this.isCompatible === false)
         {
             this.cancelDisabled = false;
+            this.cancelCase = true;
         }
         console.log('forn '+ this.selectedServicePointFlow);
     }
