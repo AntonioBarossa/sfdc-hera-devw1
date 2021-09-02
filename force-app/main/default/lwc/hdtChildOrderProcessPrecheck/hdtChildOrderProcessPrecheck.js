@@ -68,7 +68,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causale = '';
 
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
-            this.disabledDeliberation = this.order.Step__c !== undefined || selectedProcess.processType == 'Prima Attivazione Fuori delibera' || selectedProcess.processType == 'Prima Attivazione In delibera';
+            this.disabledDeliberation = this.order.Step__c !== undefined;
         }
         else if(selectedProcess.recordType === 'HDT_RT_RiattivazioniNonMorose'){
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
@@ -175,7 +175,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causaleCompatibilita = compatibility;
 
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
-            this.disabledDeliberation = this.order.Step__c !== undefined || selectedProcess.processType == 'Prima Attivazione Fuori delibera' || selectedProcess.processType == 'Prima Attivazione In delibera';
+            this.disabledDeliberation = this.order.Step__c !== undefined;
         }
         else if(selectedProcess.recordType === 'HDT_RT_RiattivazioniNonMorose'){
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
@@ -270,17 +270,17 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     handleSelectProcess(event){
         
-        if(event.target.value == 'Prima Attivazione In delibera') {
-            console.log('handleSelectProcess: ' + JSON.stringify(event.detail.value));
-            this.deliberation = 'In Delibera';
-            this.disabledDeliberation = true;
-        }
+        // if(event.target.value == 'Prima Attivazione In delibera') {
+        //     console.log('handleSelectProcess: ' + JSON.stringify(event.detail.value));
+        //     this.deliberation = 'In Delibera';
+        //     this.disabledDeliberation = true;
+        // }
 
-        if(event.target.value == 'Prima Attivazione Fuori delibera') {
-            console.log('handleSelectProcess: ' + JSON.stringify(event.detail.value));
-            this.deliberation = 'Fuori delibera';
-            this.disabledDeliberation = true;
-        }
+        // if(event.target.value == 'Prima Attivazione Fuori delibera') {
+        //     console.log('handleSelectProcess: ' + JSON.stringify(event.detail.value));
+        //     this.deliberation = 'Fuori delibera';
+        //     this.disabledDeliberation = true;
+        // }
 
         this.selectedProcessObject = this.processesReference.filter(el => el.processType === event.target.value)[0];
         this.checkCompatibilityProcess();
@@ -354,6 +354,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if (this.showDeliberation === true) {
             if (this.deliberation !== '') {
                 this.goToNextStep(extraParams);
+                this.disabledDeliberation = true;
             } else {
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',

@@ -155,11 +155,11 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
                 }else{
                     validated= false;        
                 }
-            }/*else if(element.fieldName=="ReassignmentReason__c"){
+            }else if(element.fieldName=="Note__c"){
                 if(element.value!= null){
-                    cs.ReassignmentReason__c=element.value;
+                    cs.Note__c=element.value;
                 }
-            }*/
+            }
         },this);
         if(this.selectedOperationType != null && this.selectedOperationType != undefined && this.selectedOperationType!= "" ){
             cs.OperationType__c = this.selectedOperationType;
@@ -180,15 +180,34 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
             savePractice({caseId: this.recordid, accountId: this.accountId, caseob: cs}).then(result => {
                 // const redirect= new CustomEvent('closeTab');
                 // this.dispatchEvent(redirect);
-                const event = new ShowToastEvent({
-                    message: 'Case Confermato',
-                    variant: 'success',
-                    mode: 'dismissable'
-                    });
-                    this.dispatchEvent(event);
-                    const closeclickedevt = new CustomEvent('closeaction');
-                    this.dispatchEvent(closeclickedevt); 
-                console.log(result);
+                if(result == 'success'){
+                    const event = new ShowToastEvent({
+                        message: 'Case Confermato',
+                        variant: 'success',
+                        mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
+                        const closeclickedevt = new CustomEvent('closeaction');
+                        this.dispatchEvent(closeclickedevt); 
+                    console.log(result);
+                }
+                else if(result == 'annulla'){
+                    const event = new ShowToastEvent({
+                        message: 'l\'approvazione ha dato esito KO, annulla il caso',
+                        variant: 'warning',
+                        mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
+                }
+                else if(result == 'aperta'){
+                    const event = new ShowToastEvent({
+                        message: 'l\activity di approvazione è ancora aperta, attendi la sua chiusura',
+                        variant: 'warning',
+                        mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
+                }
+                
                 }).catch(error => {
                     console.log(error);
                 });

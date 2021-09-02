@@ -34,8 +34,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>assign_Conferma_Fase</name>
-        <label>assign Conferma Fase</label>
+        <name>Assign_Conferma_Fase</name>
+        <label>Assign Conferma Fase</label>
         <locationX>600</locationX>
         <locationY>2102</locationY>
         <assignmentItems>
@@ -135,8 +135,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_ProcessType_From_Case</name>
-        <label>Set ProcessType From Case</label>
+        <name>Set_ProcessType_And_Case</name>
+        <label>Set ProcessType And Case</label>
         <locationX>2250</locationX>
         <locationY>1070</locationY>
         <assignmentItems>
@@ -144,6 +144,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>getCaseToRestore.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCaseToRestore</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -270,7 +277,7 @@
         <name>Next_Step</name>
         <label>Next Step?</label>
         <locationX>1546</locationX>
-        <locationY>2414</locationY>
+        <locationY>2558</locationY>
         <defaultConnector>
             <targetReference>Set_Fase_in_lavorazione</targetReference>
         </defaultConnector>
@@ -403,7 +410,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_ProcessType_From_Case</targetReference>
+                <targetReference>Set_ProcessType_And_Case</targetReference>
             </connector>
             <label>Riprendi Processo</label>
         </rules>
@@ -1044,6 +1051,9 @@
         <connector>
             <targetReference>Set_CaseId</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>ErrorScreen2</targetReference>
+        </faultConnector>
         <inputReference>Case</inputReference>
     </recordCreates>
     <recordLookups>
@@ -1469,7 +1479,7 @@
         <name>Set_Fase_in_lavorazione</name>
         <label>Set Fase in lavorazione</label>
         <locationX>1810</locationX>
-        <locationY>2534</locationY>
+        <locationY>2678</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1497,6 +1507,22 @@
         <inputReference>get_Case</inputReference>
     </recordUpdates>
     <screens>
+        <name>ErrorScreen2</name>
+        <label>ErrorScreen</label>
+        <locationX>2734</locationX>
+        <locationY>1982</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Non è stato possibile salvare il Caso a causa del seguente errore:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
         <locationX>3042</locationX>
@@ -1521,7 +1547,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>assign_Conferma_Fase</targetReference>
+            <targetReference>Assign_Conferma_Fase</targetReference>
         </connector>
         <fields>
             <name>headerDatiVotiva_0</name>
@@ -1816,7 +1842,7 @@
         <name>Screen_Disattivazione</name>
         <label>Screen Disattivazione</label>
         <locationX>2382</locationX>
-        <locationY>2198</locationY>
+        <locationY>2342</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1872,7 +1898,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>ProcessType</elementReference>
+                    <elementReference>UserInputFlow</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2141,7 +2167,7 @@
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>1282</locationX>
-        <locationY>2534</locationY>
+        <locationY>2678</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

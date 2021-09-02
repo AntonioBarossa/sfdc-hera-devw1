@@ -17,7 +17,7 @@
   },
   {
     &quot;FieldName&quot;: &quot;IbanIsForeign__c&quot;,
-    &quot;Required&quot;: true,
+    &quot;Required&quot;: false,
     &quot;Column&quot;: 1
   },
  {
@@ -96,7 +96,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Modifica Contr Preattivazione Pagamento</value>
+        <value xsi:type="xsd:string">Modifica Contr Preattivazione Pagamento Non Residenziale</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
