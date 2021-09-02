@@ -25,7 +25,6 @@
   },
   {
     &quot;FieldName&quot;: &quot;VasStatus__c&quot;,
-    &quot;Required&quot;: true,
     &quot;Column&quot;: 2
   },
   {
