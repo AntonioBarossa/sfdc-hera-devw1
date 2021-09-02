@@ -114,8 +114,6 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String CASE_RECORDTYPEID_MOROSITA =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA).getRecordTypeId();
-<<<<<<< Updated upstream
-=======
 
     // Order RecordType Connessione Con Attivazione
     @AuraEnabled
@@ -130,7 +128,6 @@ public with sharing class HDT_UTL_Constants {
      @AuraEnabled
      public final String ORDER_RECORDTYPEID_TEMPORANEANUOVAATT =
      Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT).getRecordTypeId();
-	 
 
     //@anbuzzi 31/08 Case RecordType Documentale/Copia Contratto
     @AuraEnabled
@@ -139,15 +136,12 @@ public with sharing class HDT_UTL_Constants {
     public final String CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO).getRecordTypeId();
     
->>>>>>> Stashed changes
-    
     //ServicePoint RecordType Punto Elettrico
     @AuraEnabled
     public final String SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PELETRICCO = 'HDT_RT_Ele';
     @AuraEnabled
     public final String SERVICEPOINT_RECORDTYPEID_PELETRICCO =
     Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PELETRICCO).getRecordTypeId();
-
 
     //Hera internal Profiles
     @AuraEnabled
