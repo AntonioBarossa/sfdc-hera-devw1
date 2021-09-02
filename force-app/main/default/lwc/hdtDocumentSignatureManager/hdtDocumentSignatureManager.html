@@ -6,7 +6,7 @@
     <div class="slds-grid">
         <div class="slds-col slds-size_1-of-3">
             <lightning-combobox name="modalitaFirma" label="Modalità di firma" value={signMode} placeholder="Seleziona una Modalità" onchange={handleChangeSignMode}
-                options={modalitaFirma} read-only={disableinput} data-id="modalitaFirma" required></lightning-combobox>
+                options={modalitaFirma} read-only={disableSignModeInternal} data-id="modalitaFirma" required></lightning-combobox>
             <lightning-input type="email" data-id="email" required={emailRequired} label="Indirizzo Email" value={email} disabled={disableinput} pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"></lightning-input>
         </div>
         <div class="slds-col slds-size_1-of-8 slds-grow-none">

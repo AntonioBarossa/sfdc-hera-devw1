@@ -85,9 +85,11 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             amountInstallment = totalResidue;
         }
 
+        //Utilizzato per mostrare a video il totale senza canone rai
         currentCase.AmountToPayInInstallments__c = amountInstallment - totalRaiFeeResidual;
         //Viene poi diviso per il numero di rate
         currentCase.InstallmentAmount__c = amountInstallment;
+        //Importo che viene utiizzato per inviare a sap
         currentCase.Amount__c = amountInstallment;
 
         //Set CustomerAssisted

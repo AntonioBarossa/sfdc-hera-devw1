@@ -406,7 +406,7 @@ public class HDT_QR_OrderTst{
 	@isTest
 	static void testgetRoleNameByRoleId(){
 
-		id userRoleId=HDT_UTL_DataFactoryTst.getUserRole('Back Office');
+		id userRoleId=HDT_UTL_DataFactoryTst.getUserRoleId(utlConstants.USERROLE_DEVELOPERNAME_BACKOFFICE);
 
 		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(utlConstants.SYSTEM_ADMINISTRATOR_NAME);
 
