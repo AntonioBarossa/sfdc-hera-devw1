@@ -17,6 +17,7 @@ public without sharing class HDT_LC_CanaleIVRNoShare {
         Map<String,String> mapReturn = (Map<String,String>)JSON.deserialize(s, Map<String,String>.class);
         return mapReturn;
     }
+    
     public static String showOriginalDocument(String recordId){
         String context;
         String baseSixtyFour = '';
@@ -42,7 +43,11 @@ public without sharing class HDT_LC_CanaleIVRNoShare {
         }
         return JSON.serialize(resultMap);
     }
+    
     public static SObject getDocumentalObjectById(Id recordId){
+        
+        System.debug('getDocumentalObjectById - recordId: ' + recordId);
+        
         if (String.isBlank(recordId)) {
             return null;
         }

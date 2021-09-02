@@ -145,23 +145,16 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
         String debugString = TEST_NAME + ' - ' + 'getPlicoTest_Null';
         System.debug(debugString);
         
-        //NO SETUP
+        //SETUP
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         
         //WEBSERVICE MOCK
         Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
         
-        //TESTING - Blank
-        HDT_LC_CanaleIVRNoShare myChannel = new HDT_LC_CanaleIVRNoShare();
-        Map<String,String> result_empty = myChannel.getPlico('');
-        
-        //ASSERTS
-        System.assertNotEquals(null, result_empty);
-        System.assertEquals('KO', result_empty.get('outcome'));
-        System.assertEquals('Errore interno nel recupero del documento archiviato.', result_empty.get('errorMessage'));
-        
         //TESTING - Wrong Id
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        HDT_LC_CanaleIVRNoShare myChannel = new HDT_LC_CanaleIVRNoShare();
         Map<String,String> result_wrong = myChannel.getPlico(accList[0].Id);
+        Map<String,String> result_null = myChannel.getPlico(null);
         
         //ASSERTS
         System.assertNotEquals(null, result_wrong);
