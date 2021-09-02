@@ -87,7 +87,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
       list<HDT_UTL_FlowOutputs> listOutputs= new list<HDT_UTL_FlowOutputs>();
       HDT_UTL_FlowOutputs output= new HDT_UTL_FlowOutputs();
         try{
-            ///
             switch on inputParam[0].methodName{
                 when 'chiudiAttivita'{
                     chiudiAttivita(inputParam[0].objectId);
@@ -103,7 +102,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                     insert act;
                 }
             }
-            ///
             output.esito='OK';
             output.dettaglioEsito='OK';
         }catch(Exception e){
