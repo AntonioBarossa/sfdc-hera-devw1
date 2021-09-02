@@ -68,6 +68,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
             postelResponse.responseStatus =  res.getStatus();
         }catch(Exception ex){
             System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            System.debug('ex StackTraceString: ' + ex.getStackTraceString());
         }
         return postelResponse;
     }

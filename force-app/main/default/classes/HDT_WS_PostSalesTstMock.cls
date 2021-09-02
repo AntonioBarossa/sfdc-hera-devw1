@@ -10,7 +10,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         if(endpoint.equalsIgnoreCase('ArricchimentoDatiTemp')){
             return creaEnrichResposne(request);
         //Pagamenti
-        }else if(endpoint.equalsIgnoreCase('Callout:GetAttachmentPostel')){
+        }else if(endpoint.equalsIgnoreCase('Callout:GetEnvelopePostel')){
             return creaPostelResponse(request);
         }else if(endpoint.containsIgnoreCase('HDT_')){
             return creaPaymentsResponse(request);

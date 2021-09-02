@@ -86,8 +86,10 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
         Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
         
         //TESTING - DocumentalActivity__c
-        HDT_LC_CanaleIVRNoShare myChannel = new HDT_LC_CanaleIVRNoShare();
-        Map<String,String> result = myChannel.getPlico(myDoc.Id);
+        Test.startTest();
+            HDT_LC_CanaleIVRNoShare myChannel = new HDT_LC_CanaleIVRNoShare();
+            Map<String,String> result = myChannel.getPlico(myDoc.Id);
+        Test.stopTest();
         
         //ASSERTS
         System.assertNotEquals(null, result);
