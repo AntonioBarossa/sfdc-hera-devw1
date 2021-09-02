@@ -944,7 +944,7 @@
         <expression>OR( 
      {!GetCaseDocumentale.InstallmentNumberRequired__c} &gt; 3,
       {!GetCaseDocumentale.AmountToPayInInstallments__c} &gt; 2000,
-        CONTAINS(TEXT({!GetCaseDocumentale.Reason__c}),&quot;Disagio Economico&quot;)
+        CONTAINS(TEXT({!GetCaseDocumentale.Reason__c}),&quot;Disoccupato/Cassintegrato&quot;)
 )</expression>
     </formulas>
     <formulas>
