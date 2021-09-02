@@ -51,9 +51,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         //dinamicamente, con substring, si vede il prefisso (checkActivityCreation) e poi si estrae il nome del template dalle parentesi tonde
         
         if(method.startsWith('checkActivityCreation')){
-            checkActivityCreation((Id)sender.get('Id'), method.substringAfter('___'));
+            return !checkActivityCreation((Id)sender.get('Id'), method.substringAfter('___'));
         }
-
+        if(method.startsWith('checkAnnullment')){
+            return checkActivityCreation((Id)sender.get('Id'), method.substringAfter('___'));
+        }
         return null;
     }
 
@@ -272,9 +274,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @date 22/07/2021
     * @description HDT_UTL_Scarti.checkActivityCreation - Check on activity creation
     * @param1 recordId - Id of a record
-    * @return void
+    * @return Boolean
     */
-    public static void checkActivityCreation(Id recordId, String templateName){
+    public static Boolean checkActivityCreation(Id recordId, String templateName){
         System.debug('checkActivityCreation_start_' + recordId + '_' + templateName);
         Map<String, wrts_prcgvr__ActivityTemplate__c> templateMap = getTemplatesMapByName(new Set<String>{templateName});
         if(!templateMap.isEmpty()){
@@ -286,6 +288,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 if('{!Type__c}'.equalsIgnoreCase(curAction.wrts_prcgvr__Field__c))
                     activityType = curAction.wrts_prcgvr__Value__c;
             Boolean toDoAnnullment = checkDiscardAnnullmentRule(recordId, activityType);
+            /*
             System.debug('checkActivityCreation_toDoAnnullment_' + toDoAnnullment);
             if(toDoAnnullment) annullaPratica(recordId);
             else if(Schema.Case.SObjectType == recordId.getSobjectType() || Schema.Order.SObjectType == recordId.getSobjectType()){
@@ -293,7 +296,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 System.debug('checkActivityCreation_newAct_' + newAct);
                 if(newAct != null) HDT_UTL_DatabaseService.insertSObject(newAct);
             }
+            */
+            return toDoAnnullment;
         }
+        return false;
     }
 
     /**
