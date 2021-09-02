@@ -639,38 +639,31 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase = qrClass.getCaseRecord(currentCase.Id);
             System.debug('Commodity: ' + currentCase.CommodityFormula__c);
             //CompatibilityCheck
-            if(cluster == 'Morosita')
-            {   
-                String compatibility = '';
-                //Prova per bypassare l'handled exception
-                /*
-                List<HDT_UTL_Case.HDT_UTL_FlowInputs> inputs = new  List<HDT_UTL_Case.HDT_UTL_FlowInputs>();
-                List<HDT_UTL_Case.HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_Case.HDT_UTL_FlowOutputs>();
-                HDT_UTL_Case.HDT_UTL_FlowInputs input = new HDT_UTL_Case.HDT_UTL_FlowInputs();
-                input.currentCase = currentCase;
-                input.process = 'Compatibilita';
-                inputs.add(input);
-                outputs = HDT_UTL_Case.caseFlowPredefaults(inputs);
-                //checkCompatibility Method Call
-                compatibility = outputs[0].isCompatible;
-                */
+            String compatibility = '';
+            //checkCompatibility Method Call
+            try
+            {
                 compatibility = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(currentCase);
-                //Check Compatibility Output
-                if(String.isEmpty(compatibility))
-                {
-                    System.debug('Compatibilita superata con successo ' + compatibility);
+            }
+            catch(Exception e)
+            {
+                throw new HDT_UTL_RichPassException('Errore nella verifica della compatibilita', '04');
+            }
+            //Check Compatibility Output
+            if(String.isEmpty(compatibility))
+            {
+                System.debug('Compatibilita superata con successo ' + compatibility);
+            }
+            else
+            {
+                System.debug('Compatibilita non superata ' + compatibility);
+                for(Case c : caseInsertList){
+                    c.Phase__c = 'Bozza Annullata';
+                    c.Status = 'Closed';
+                    c.CancellationReason__c = 'Processo incompatibile';
                 }
-                else
-                {
-                    System.debug('Compatibilita non superata ' + compatibility);
-                    for(Case c : caseInsertList){
-                        c.Phase__c = 'Bozza Annullata';
-                        c.Status = 'Closed';
-                        c.CancellationReason__c = 'Processo incompatibile';
-                    }
-                    HDT_UTL_DatabaseService.updateSObject(caseInsertList);
-                    throw new HDT_UTL_RichPassException('Processo Incompatibile', '04');
-                }
+                HDT_UTL_DatabaseService.updateSObject(caseInsertList);
+                throw new HDT_UTL_RichPassException('Processo Incompatibile', '04');
             }
             if(cluster == 'Morosita'){
                 if(currentCase.ParentId == null){
