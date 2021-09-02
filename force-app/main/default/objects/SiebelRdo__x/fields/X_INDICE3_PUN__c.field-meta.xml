@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Indice puntatore 3</label>
+    <label>Indice 3 PUN (€/MWh)</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

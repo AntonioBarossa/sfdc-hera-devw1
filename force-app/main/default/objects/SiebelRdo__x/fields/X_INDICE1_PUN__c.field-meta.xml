@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Indice puntatore 1</label>
+    <label>Indice 1 PUN (€/MWh)</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
