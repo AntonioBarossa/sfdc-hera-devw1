@@ -129,6 +129,10 @@
                 <behavior>Readonly</behavior>
                 <field>BillingProfile__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>VASBillingMode__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

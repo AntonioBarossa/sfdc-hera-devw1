@@ -805,7 +805,35 @@
     <picklistValues>
         <picklist>ChannelOfPayment__c</picklist>
         <values>
+            <fullName>ATM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Banca BONIFICO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Banca SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bollettino postale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carta di credito online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cassa COOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>POS Sportello</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Posta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -813,7 +841,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Rate</fullName>
+            <fullName>Ricevitoria</fullName>
             <default>false</default>
         </values>
         <values>
