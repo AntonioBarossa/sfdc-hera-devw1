@@ -135,6 +135,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         newCase.SupplyProvince__c = parentOrder.SupplyState__c;
         newCase.SupplyStreetName__c = parentOrder.SupplyStreetName__c;
         newCase.SupplyStreetNumber__c = parentOrder.SupplyStreetNumber__c;
+        newCase.SupplyType__c = parentOrder.SupplyType__c;
         // Campi sezione Tributi e Dati Commerciali
         newCase.TaxRate__c = parentOrder.VAT__c;
         newCase.AtecoCode__c = parentOrder.AtecoCode__c;
