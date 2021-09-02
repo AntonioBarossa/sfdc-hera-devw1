@@ -135,8 +135,53 @@
         <label>AggiornaInputCase</label>
         <locationX>50</locationX>
         <locationY>638</locationY>
+        <connector>
+            <targetReference>Screen_Incompatibilita</targetReference>
+        </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
+    <screens>
+        <name>Screen_Incompatibilita</name>
+        <label>Screen Incompatibilita</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>DisplayHeader</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Il processo risulta &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;Incompatibile&lt;/b&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;. Alla pressione del tasto &quot;Conferma Pratica&quot; la prestazione verrà &lt;/span&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;annullata&lt;/b&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>flowNavButton</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
