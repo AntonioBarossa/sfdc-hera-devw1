@@ -656,17 +656,19 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 */
                 compatibility = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(currentCase);
                 //Check Compatibility Output
-                if(!String.isEmpty(compatibility))
+                if(String.isEmpty(compatibility))
                 {
                     System.debug('Compatibilita superata con successo ' + compatibility);
                 }
                 else
                 {
                     System.debug('Compatibilita non superata ' + compatibility);
-                    currentCase.Phase__c = 'Bozza Annullata';
-                    currentCase.Status = 'Closed';
-                    currentCase.CancellationReason__c = 'Processo incompatibile';
-                    HDT_UTL_DatabaseService.updateSObject(currentCase);
+                    for(Case c : caseInsertList){
+                        c.Phase__c = 'Bozza Annullata';
+                        c.Status = 'Closed';
+                        c.CancellationReason__c = 'Processo incompatibile';
+                    }
+                    HDT_UTL_DatabaseService.updateSObject(caseInsertList);
                     throw new HDT_UTL_RichPassException('Processo Incompatibile', '04');
                 }
             }
