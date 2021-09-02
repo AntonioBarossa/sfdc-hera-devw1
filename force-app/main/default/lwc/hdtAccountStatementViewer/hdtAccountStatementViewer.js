@@ -238,6 +238,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             this.focusOnButton('home');
         }
     }
+
+    @api getInvoiceSelection() {
+        return idlist.map(e => {
+            return this.accountData.find(ele  => ele[this.uniqueId] === e);
+        });
+    }
+
     //button handler section --- START ---
     buttonHandler(event){
         try {

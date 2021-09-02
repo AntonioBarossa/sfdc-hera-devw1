@@ -216,6 +216,9 @@
         <searchResultsAdditionalFields>ORDERS.EFFECTIVE_DATE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ORDERS.STATUS</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTRACT.CONTRACT_NUMBER</searchResultsAdditionalFields>
+         <!--Start HRAWRM-366 31-08-2021 -->
+        <searchResultsAdditionalFields>EffectiveDate__c</searchResultsAdditionalFields>
+         <!--End HRAWRM-366 31-08-2021 -->
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
 </CustomObject>

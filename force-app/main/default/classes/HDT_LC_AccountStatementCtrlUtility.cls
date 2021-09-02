@@ -255,7 +255,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         }
 
         serviceCatalog.IsInstallment__c = (!String.isEmpty(record.rateizzato) && record.rateizzato.equalsIgnoreCase('SI')) ? true : false;
-        serviceCatalog.SameCA__c = false;
+        serviceCatalog.SameCA__c = true;
 
         return serviceCatalog;
 

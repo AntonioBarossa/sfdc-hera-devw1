@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Localita Remi SME</label>
+    <label>Località / Codice remi</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

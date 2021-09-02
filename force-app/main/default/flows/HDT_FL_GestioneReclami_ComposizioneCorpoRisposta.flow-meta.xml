@@ -5,7 +5,7 @@
         <name>Assegna_Case_Contenuti</name>
         <label>Assegna Case Contenuti</label>
         <locationX>138</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>CaseContenutiRecord</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>AssegnaParentCaseToCollection</name>
         <label>AssegnaParentCaseToCollection</label>
         <locationX>50</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>CaseContenutiRecord</assignToReference>
             <operator>Add</operator>
@@ -37,7 +37,7 @@
         <name>AssegnaStringCaseContenuti</name>
         <label>AssegnaStringCaseContenuti</label>
         <locationX>50</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Contenitore.Note__c</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +53,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -69,7 +69,7 @@
         <name>Popola_risposta_template</name>
         <label>Popola risposta template</label>
         <locationX>138</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>Aggiorna_Case_Contenuti.ComplaintBodyResponse__c</assignToReference>
             <operator>Assign</operator>
@@ -82,6 +82,41 @@
             <operator>Add</operator>
             <value>
                 <stringValue>{!Aggiorna_Case_Contenuti.Id};</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.CustomerRequestAccomplished__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.CustomerRequestAccomplished__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Elaborazione Risposta</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.MotivatedResponseSendMode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.MotivatedResponseSendMode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.CorrectionRight__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.CorrectionRight__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.CorrectionDocumentEmissionDay__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.CorrectionDocumentEmissionDay__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -117,7 +152,7 @@
         <name>Fase_Elaborazione_Risposta</name>
         <label>Fase: Elaborazione Risposta?</label>
         <locationX>446</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>GetCaseAggiornato</targetReference>
         </defaultConnector>
@@ -139,7 +174,7 @@
         <name>Il_Case_Contenuto_stato_selezionato</name>
         <label>Il Case Contenuto è stato selezionato?</label>
         <locationX>270</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case_Contenuti</targetReference>
         </defaultConnector>
@@ -203,7 +238,7 @@
         <name>Aggiorna_Case_Contenuti</name>
         <label>Aggiorna Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <collectionReference>Get_Case_Contenuti</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -236,7 +271,7 @@
         <name>Get_Case_Contenitore</name>
         <label>Get Case Contenitore</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Case_Contenuti</targetReference>
@@ -257,7 +292,7 @@
         <name>Get_Case_Contenuti</name>
         <label>Get Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Aggiorna_Case_Contenuti</targetReference>
@@ -299,7 +334,7 @@
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori</targetReference>
@@ -320,14 +355,14 @@
         <name>Aggiorna_Case_Contenuti_0</name>
         <label>Aggiorna Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>1790</locationY>
+        <locationY>1910</locationY>
         <inputReference>CaseContenutiRecord</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <screens>
@@ -339,7 +374,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Case_Contenitore</targetReference>
+            <targetReference>ScreenInput_0</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_0</name>
@@ -359,7 +394,7 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -378,7 +413,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Fase_Elaborazione_Risposta</targetReference>
+            <targetReference>ScreenInput</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_0_0</name>
@@ -398,7 +433,217 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ScreenInput</name>
+        <label>ScreenInput</label>
+        <locationX>446</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Fase_Elaborazione_Risposta</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compilare manualmente i dati sottostanti&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtRecordEditForm</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
                     <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>Get_Input_Case.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>RequestAccomplished</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ScreenInput_0</name>
+        <label>ScreenInput</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Get_Case_Contenitore</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di Reclamo Scritto/Rich. Info&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compilare manualmente i dati sottostanti&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtRecordEditForm_0</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>Get_Input_Case.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>RequestAccomplished</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -467,6 +712,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RequestAccomplished</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Richiesta Accolta</stringValue>
+        </value>
     </variables>
     <variables>
         <name>ResumeFromDraft</name>

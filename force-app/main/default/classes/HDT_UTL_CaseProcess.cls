@@ -89,7 +89,7 @@ public with sharing class HDT_UTL_CaseProcess {
 			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
 				caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
                 //Variazione Indirizzzo di Fornitura
-                if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura')){
+                if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura') || caseNew.Type.containsIgnoreCase('Marcatura/Uso PdR')){
                     System.debug('Inside Condition');
                     createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento');
                 }
@@ -112,33 +112,37 @@ public with sharing class HDT_UTL_CaseProcess {
                             }
                         }
                         if(caseIds != null){
-                            HDT_QR_Knowledge knowledgeQr = new HDT_QR_Knowledge();
-                            CustomNotificationType customNotif = new CustomNotificationType();
-                            customNotif = knowledgeQr.getCustomNotificationType();
-                            activities = caseQr.getCaseActivities(caseIds);
-                            if(activities != null){
-                                for(wrts_prcgvr__Activity__c activity : activities){
-                                    activitiesOwnerId.clear();
-                                    if(activity.OwnedByUser__c != null && String.isNotBlank(activity.OwnedByUser__c)){
-                                        activityId = activity.OwnedByUser__c;
-                                    }else{
-                                        activityId = activity.OwnerId;
-                                    }
-                                    activitiesOwnerId.add(activityId);
-                                    activity.wrts_prcgvr__Status__c = 'Completed';
-                                    activity.Status__c = 'Annullata';
-                                    //Notification Fire to activity's owner
-                                    try{
-                                        if(customNotif != null && activitiesOwnerId.size() > 0){
-                                            String title = 'Activity Annullata';
-                                            String body = 'L\'Activity ' + activity.wrts_prcgvr__ActivityTemplate__r.Name + ' è stata annullata';
-                                            HDT_UTL_NewsNotificationCenter.fireNotification(title,body,activity.Id,activitiesOwnerId);
+                            try{
+                                HDT_QR_Knowledge knowledgeQr = new HDT_QR_Knowledge();
+                                CustomNotificationType customNotif = new CustomNotificationType();
+                                customNotif = knowledgeQr.getCustomNotificationType();
+                                activities = caseQr.getCaseActivities(caseIds);
+                                if(activities != null){
+                                    for(wrts_prcgvr__Activity__c activity : activities){
+                                        activitiesOwnerId.clear();
+                                        if(activity.OwnedByUser__c != null && String.isNotBlank(activity.OwnedByUser__c)){
+                                            activityId = activity.OwnedByUser__c;
+                                        }else{
+                                            activityId = activity.OwnerId;
                                         }
-                                    } catch(Exception e){
-                                        System.debug('Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
+                                        activitiesOwnerId.add(activityId);
+                                        activity.wrts_prcgvr__Status__c = 'Completed';
+                                        activity.Status__c = 'Annullata';
+                                        //Notification Fire to activity's owner
+                                        try{
+                                            if(customNotif != null && activitiesOwnerId.size() > 0){
+                                                String title = 'Activity Annullata';
+                                                String body = 'L\'Activity ' + activity.wrts_prcgvr__ActivityTemplate__r.Name + ' è stata annullata';
+                                                HDT_UTL_NewsNotificationCenter.fireNotification(title,body,activity.Id,activitiesOwnerId);
+                                            }
+                                        } catch(Exception e){
+                                            System.debug('Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
+                                        }
                                     }
+                                    updateList.addAll(activities);
                                 }
-                                updateList.addAll(activities);
+                            }catch(Exception e){
+                                System.Debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                             }
                         }
                         updateList.addAll(childCases);

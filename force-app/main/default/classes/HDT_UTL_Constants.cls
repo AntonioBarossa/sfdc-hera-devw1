@@ -181,4 +181,17 @@ public with sharing class HDT_UTL_Constants {
     public final String KNOWLEDGEARTICLE_RECORDTYPEID_FAQ =
     Schema.SObjectType.Knowledge__kav.getRecordTypeInfosByDeveloperName().get(KNOWLEDGEARTICLE_RECORDTYPE_DEVELOPERNAME_FAQ).getRecordTypeId();
     
+
+    //Custom Permissions
+    @AuraEnabled
+    public final string CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN = 'HDT_CP_SalesforceCPQAdmin';
+
+    //User Roles
+    @AuraEnabled
+    public final string USERROLE_DEVELOPERNAME_BACKOFFICE = 'HDT_BackOffice';
+
+    //Other
+    @AuraEnabled
+    public final string QUOTE_PROFILEFIELD_SALESFORCECPQADMIN = 'Amministratore CPQ';
+
 }

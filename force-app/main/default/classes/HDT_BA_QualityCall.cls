@@ -82,7 +82,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                                 RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
                                 Account__c = ord.AccountId,
                                 Type__c = 'Quality Call',
-                                Status__c = 'Creata'
+                                Status__c = 'Creata',
+                                OwnerId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id
                         );
         
                         if (ord.QualityCallUnique__c) {
@@ -134,17 +135,19 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             system.debug('>> campaignMembersBulk: ' + campaignMembersBulk);
         }
 
-        system.debug('keltin: ' + orderActivityMap.keySet());
+        system.debug('>> orderActivityMap.keySet: ' + orderActivityMap.keySet());
+
+        List<Campaign> qualityCampaign = HDT_QR_Campaign.getCampaignIds('Quality Campaign');
 
         for (String ordId : orderActivityMap.keySet()) {
-            if ( orderMap.get(ordId).Contact__c != null && orderMap.get(ordId).CommissioningCampaign__c != null) {
+            if ( orderMap.get(ordId).Contact__c != null && !qualityCampaign.isEmpty()) {
 
                 Boolean isCmAlready = false;
                 String cmAlreadyId = null;
 
                 if (!campaignMembersBulk.isEmpty()) {
                     for (CampaignMember cmAlready : campaignMembersBulk) {
-                        if (cmAlready.CampaignId == orderMap.get(ordId).CommissioningCampaign__c 
+                        if (cmAlready.CampaignId == qualityCampaign[0].Id 
                             && cmAlready.ContactId == orderMap.get(ordId).Contact__c) {
                             isCmAlready = true;
                             cmAlreadyId = cmAlready.Id;
@@ -164,7 +167,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 } else {
                     campaignMembersInsert.add(new CampaignMember(
                         ContactId = orderMap.get(ordId).Contact__c,
-                        CampaignId = orderMap.get(ordId).CommissioningCampaign__c,
+                        CampaignId = qualityCampaign[0].Id,
                         PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
                         RelatedActivity__c = orderActivityMap.get(ordId).Id
                     ));
