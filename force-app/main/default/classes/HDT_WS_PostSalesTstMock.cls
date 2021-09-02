@@ -7,12 +7,16 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         if(endpoint.equalsIgnoreCase('ArricchimentoDatiTemp')){
             return creaEnrichResposne(request);
         //Pagamenti
+        }else if(endpoint.equalsIgnoreCase('Callout:GetAttachmentPostel')){
+            return creaPostelResponse(request);
         }else if(endpoint.containsIgnoreCase('HDT_')){
             return creaPaymentsResponse(request);
         }else{
             return creaRicResponse(request);
         }
     }
+    
+    
     public static HttpResponse creaRicResponse(HTTPRequest request){
         HttpResponse response = new HttpResponse();
         String recordId = '';
@@ -49,7 +53,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         response.setStatus('OK');
         return response;
     }
-
+    
     public static HttpResponse creaEnrichResposne(HttpRequest request){
         HttpResponse response = new HttpResponse();
         String body = request.getBody();
@@ -73,7 +77,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         response.setStatus('OK');
         return response;
     }
-
+    
     public static HttpResponse creaPaymentsResponse(HttpRequest request){
         HttpResponse response = new HttpResponse();
         String body = request.getBody();
@@ -86,6 +90,24 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         return response;
     }
 
-
+    public static HttpResponse creaPostelResponse(HttpRequest request){
+        HttpResponse response = new HttpResponse();
+        String body = request.getBody();
+        //successResponse
+        
+        /*
+        public Integer responseCode;
+        public String responseStatus;
+        public String content;
+        */
+        
+        String bodyResponse = '{"status": "success","correlationId": "eb9117b0-04e1-11ec-89bb-06c8ff345e9a","timestamp": "2021-08-24T15:48:13","data": {"responseCode": "200","responseStatus": "Test","content": "Test Content"}}';
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
     
 }
