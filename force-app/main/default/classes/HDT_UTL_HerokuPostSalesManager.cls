@@ -619,38 +619,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }else {
                 throw new HDT_UTL_RichPassException('POD non valorizzato', '01');
             }
-            //CompatibilityCheck
-            if(cluster == 'Morosita')
-            {   
-                String compatibility = '';
-                //Prova per bypassare l'handled exception
-                /*
-                List<HDT_UTL_Case.HDT_UTL_FlowInputs> inputs = new  List<HDT_UTL_Case.HDT_UTL_FlowInputs>();
-                List<HDT_UTL_Case.HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_Case.HDT_UTL_FlowOutputs>();
-                HDT_UTL_Case.HDT_UTL_FlowInputs input = new HDT_UTL_Case.HDT_UTL_FlowInputs();
-                input.currentCase = currentCase;
-                input.process = 'Compatibilita';
-                inputs.add(input);
-                outputs = HDT_UTL_Case.caseFlowPredefaults(inputs);
-                //checkCompatibility Method Call
-                compatibility = outputs[0].isCompatible;
-                */
-                compatibility = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(currentCase);
-                //Check Compatibility Output
-                if(String.isEmpty(compatibility))
-                {
-                    System.debug('Compatibilita superata con successo ' + compatibility);
-                }
-                else
-                {
-                    System.debug('Compatibilita non superata ' + compatibility);
-                    currentCase.Phase__c = 'Bozza Annullata';
-                    currentCase.Status = 'Closed';
-                    currentCase.CancellationReason__c = 'Processo incompatibile';
-                    HDT_UTL_DatabaseService.insertSObject(currentCase);
-                    throw new HDT_UTL_RichPassException('Processo Incompatibile', '04');
-                }
-            }
 
             //It is not possible to perform DML operations before a callout
             try{
@@ -669,6 +637,39 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 createActivity(currentCase.Id,null, '', 'Recesso Anticipato');
             }
             currentCase = qrClass.getCaseRecord(currentCase.Id);
+            System.debug('Commodity: ' + currentCase.CommodityFormula__c);
+            //CompatibilityCheck
+            if(cluster == 'Morosita')
+            {   
+                String compatibility = '';
+                //Prova per bypassare l'handled exception
+                /*
+                List<HDT_UTL_Case.HDT_UTL_FlowInputs> inputs = new  List<HDT_UTL_Case.HDT_UTL_FlowInputs>();
+                List<HDT_UTL_Case.HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_Case.HDT_UTL_FlowOutputs>();
+                HDT_UTL_Case.HDT_UTL_FlowInputs input = new HDT_UTL_Case.HDT_UTL_FlowInputs();
+                input.currentCase = currentCase;
+                input.process = 'Compatibilita';
+                inputs.add(input);
+                outputs = HDT_UTL_Case.caseFlowPredefaults(inputs);
+                //checkCompatibility Method Call
+                compatibility = outputs[0].isCompatible;
+                */
+                compatibility = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(currentCase);
+                //Check Compatibility Output
+                if(!String.isEmpty(compatibility))
+                {
+                    System.debug('Compatibilita superata con successo ' + compatibility);
+                }
+                else
+                {
+                    System.debug('Compatibilita non superata ' + compatibility);
+                    currentCase.Phase__c = 'Bozza Annullata';
+                    currentCase.Status = 'Closed';
+                    currentCase.CancellationReason__c = 'Processo incompatibile';
+                    HDT_UTL_DatabaseService.updateSObject(currentCase);
+                    throw new HDT_UTL_RichPassException('Processo Incompatibile', '04');
+                }
+            }
             if(cluster == 'Morosita'){
                 if(currentCase.ParentId == null){
                     currentCase.ParentId = containerCase.Id;
