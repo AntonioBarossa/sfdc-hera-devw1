@@ -313,15 +313,23 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                                                 FROM DiscardAnnullmentRule__c
                                                 WHERE ParentObject__c = :parentObj
                                                 AND ActivityType__c = :activityType];
-
+		
         if(!rules.isEmpty()){
-            String logicFields;
+            String logicFields = '';
+            //START>>>modifica marco.arci@webresults.it
+            set<string> logicFieldsSet = new set<String>();
             for(DiscardAnnullmentRule__c curRule : rules){
-                logicFields += ',' + curRule.ControllingField__c;
-                logicFields += ',' + curRule.ProcessField__c;
+                logicFieldsSet.add(curRule.ControllingField__c);
+                logicFieldsSet.add(curRule.ProcessField__c);
             }
+            for(string currString : logicFieldsSet){
+                logicFields += ','+currString;
+            }
+			//END>>>modifica modifica marco.arci@webresults.it
             if(Schema.Case.SObjectType == recordId.getSobjectType()){
+                //system.debug('logicFields: '+logicFields);
                 String queryString = 'SELECT Id' + logicFields + ' FROM Case WHERE Id = \'' + recordId + '\'';
+                //system.debug('queryString: '+queryString);
                 List<Case> parentCase = Database.query(queryString);
                 if(!parentCase.isEmpty()){
                     for(DiscardAnnullmentRule__c curRule : rules){
