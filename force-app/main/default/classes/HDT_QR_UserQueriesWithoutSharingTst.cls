@@ -13,13 +13,9 @@ public with sharing class HDT_QR_UserQueriesWithoutSharingTst {
     static void setup(){
         
         Id adminUserProfileId = HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
- 
         User internalUser = HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
- 
         internalUser.UserPermissionsMarketingUser=true;
- 
         insert internalUser;
- 
         System.runAs(internalUser) {
             //your testSetup       
         }
@@ -30,11 +26,9 @@ public with sharing class HDT_QR_UserQueriesWithoutSharingTst {
         User tUser = [SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1]; 
         System.runAs(tUser){
             Test.startTest(); 
-
             List<User> testUser = HDT_QR_UserQueriesWithoutSharing.getRoleAndProfile(tUser.Id);
-            System.assertEquals(false, tUser.Id == null, 'tUser not populated correctly');
-            System.assertNotEquals(true, tUser.Id == null);
-            
+            System.assertEquals(false, testUser == null, 'testUser not populated correctly');
+            System.assertNotEquals(true, testUser == null);
             Test.stopTest();
         }
     }
