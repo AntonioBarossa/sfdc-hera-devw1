@@ -4,12 +4,14 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 	public String runId;
 	public String status;
 	public String errorMessage;
+	public Integer fileNumber;
 	public List<Id> listIdContentVersion = new List<Id>();
 	public Set<String> setEmailContactProcessed = new Set<String>();
 	
 	
 	public HDT_BA_AttributesLead(String paramRunId){
 		this.runId = paramRunId;
+		this.fileNumber=0;
 		
 	}
 	
@@ -345,12 +347,13 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 				cv.VersionData = generateFileBlob;
 				Date runDate= Date.today();
 				// il nome heradmp_firstpartydata_ potrebbe essere reso dinamico 
-				cv.Title = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day());
-				cv.PathOnClient = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day())+'.csv';
+				cv.Title = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day())+'_'+String.valueOf(fileNumber);
+				cv.PathOnClient = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day())+'_'+String.valueOf(fileNumber)+'.csv';
 				insert cv;
-				
+				this.fileNumber=this.fileNumber+1;
 				listIdContentVersion.add(cv.Id);
 			}
+			
 		}
 		catch (Exception e) {
 			System.debug('Exception : '+e.getMessage());
@@ -363,7 +366,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 	
 	public void finish(Database.BatchableContext bc){
 		System.debug('Finish HDT_BA_AttributesLead ');
-		HDT_BA_AttributesContact attrContact = new HDT_BA_AttributesContact(runId,status,errorMessage,listIdContentVersion,setEmailContactProcessed); 
+		HDT_BA_AttributesContact attrContact = new HDT_BA_AttributesContact(fileNumber,runId,status,errorMessage,listIdContentVersion,setEmailContactProcessed); 
 		Id batchprocessid = Database.executeBatch(attrContact,1000);
 
 	}
