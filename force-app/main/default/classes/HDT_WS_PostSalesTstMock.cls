@@ -1,7 +1,10 @@
 @isTest
 global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
+    
+    
     global HTTPResponse  respond(HTTPRequest request){
         String endpoint = request.getEndpoint();
+        System.debug('HDT_WS_PostSalesTstMock - respond');
         System.debug(endpoint);
         //Arricchimento Dati
         if(endpoint.equalsIgnoreCase('ArricchimentoDatiTemp')){
@@ -91,6 +94,8 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
     }
 
     public static HttpResponse creaPostelResponse(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaPostelResponse');
         HttpResponse response = new HttpResponse();
         String body = request.getBody();
         //successResponse
