@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Prz Qt</label>
+    <label>Prz QT (€/Gj)</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>
