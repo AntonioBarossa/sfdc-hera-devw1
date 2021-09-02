@@ -5,7 +5,7 @@
         <name>AssignOutput</name>
         <label>AssignOutput</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -41,7 +41,8 @@
     <formulas>
         <name>Formula_Field_Form</name>
         <dataType>String</dataType>
-        <expression>&quot;Modifica Contr Preattivazione&quot; &amp; CASE({!Modifiche_Desiderate_0}, 1, &quot; Anagr&quot;, 2, &quot; Pagamento&quot;, 3, &quot; Bolletta&quot;, &quot;&quot;)</expression>
+        <expression>&quot;Modifica Contr Preattivazione&quot; &amp; CASE({!Modifiche_Desiderate_0}, 1, &quot; Anagr&quot;, 2, 
+IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quot;, &quot; Pagamento Residenziale&quot;, &quot; Pagamento Non Residenziale&quot;), 3, &quot; Bolletta&quot;, &quot;&quot;)</expression>
     </formulas>
     <interviewLabel>HDT_FL_ModificaContrattoInPreAttivazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_ModificaContrattoInPreAttivazione</label>
@@ -64,11 +65,32 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>CaseRecived</name>
+        <label>CaseRecived</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Selezione_Modifiche</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>UpdateCase</name>
         <label>UpdateCase</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <connector>
             <targetReference>AssignOutput</targetReference>
         </connector>
@@ -92,7 +114,7 @@
         <name>Selezione_Modifiche</name>
         <label>Selezione Modifiche</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -117,7 +139,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Selezione_Modifiche</targetReference>
+            <targetReference>CaseRecived</targetReference>
         </connector>
     </start>
     <status>Active</status>

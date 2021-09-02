@@ -76,8 +76,9 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Subentro Gas', 'HDT_RT_Subentro','A01', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Subentro Ele', 'HDT_RT_Subentro','A10', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Prima Attivazione Ele', 'HDT_RT_Attivazione','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Prima Attivazione In delibera', 'HDT_RT_Attivazione','A40', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
-            new HDT_WRP_Process('Prima Attivazione Fuori delibera', 'HDT_RT_Attivazione','A01', new Set<String>{'Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
+            new HDT_WRP_Process('Prima Attivazione', 'HDT_RT_Attivazione','', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
+            // new HDT_WRP_Process('Prima Attivazione In delibera', 'HDT_RT_Attivazione','A40', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
+            // new HDT_WRP_Process('Prima Attivazione Fuori delibera', 'HDT_RT_Attivazione','A01', new Set<String>{'Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Prima Attivazione con modifica', 'HDT_RT_AttivazioneConModifica','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, true, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Connessione con Attivazione', 'HDT_RT_ConnessioneConAttivazione','PN1', new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Temporanea - Nuova Attivazione', 'HDT_RT_TemporaneaNuovaAtt', getTempNewActivationCode(), new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false, false),
@@ -91,10 +92,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Switch In Fittizio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', true, false, false, false, null, false, false, false),
             new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', false, true, false),
             new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', false, true, false),
-            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
-            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, true, false),
-            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, true, false),
+            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
+            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', false, true, false),
+            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, true, false),
             new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VT1', new Set<String>{'Inattivo','Bozza','Attivo'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VTG', new Set<String>{'Inattivo','Bozza','Attivo'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Switch in Reseller', 'HDT_RT_SwitchIn','', new Set<String>{'Attivo'}, new Set<String>(), 'Si', false, false, false, false, null, false, false, true),//temporarily commented
@@ -159,7 +160,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             }
         }
 
-        return availableProcesses;
+        return utilityOrderProcessAssignment(availableProcesses);
     }
     
     public static Boolean isCambioOfferta(Order ord){
@@ -247,26 +248,26 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         List<SaleServiceItem__c> transitionlist =saleItQr.getRecordsBySaleIdFilter(sale.id);
         System.debug('*****MAVUOIANNA:'+ transitionlist);
         if(sal.isTransition__c){
-            //Map<String,
-        String sub = 'Subentro';
-        boolean r = false;
-        for(SaleServiceItem__c ser :transitionlist ){
-            if((ser.ServicePoint__r.PlugPresence__c== 'NO')||(ser.ServicePoint__r.PowerRequested__c != null && (ser.ServicePoint__r.PowerRequested__c!= ser.ServicePoint__r.PowerContractual__c))){
-               //Sale__c s = new Sale__c(Id=sale.Id);
-                s.isTransition__c=true;
-                check = true;
-                listRes.add(ser.ServicePoint__r.ServicePointCode__c);
+                //Map<String,
+            String sub = 'Subentro';
+            boolean r = false;
+            for(SaleServiceItem__c ser :transitionlist ){
+                if((ser.ServicePoint__r.PlugPresence__c== 'NO')||(ser.ServicePoint__r.PowerRequested__c != null && (ser.ServicePoint__r.PowerRequested__c!= ser.ServicePoint__r.PowerContractual__c))){
+                //Sale__c s = new Sale__c(Id=sale.Id);
+                    s.isTransition__c=true;
+                    check = true;
+                    listRes.add(ser.ServicePoint__r.ServicePointCode__c);
+                }
+                if(ser.ServicePoint__r.CommoditySector__c == 'Gas' && ser.ServicePoint__r.MeterStatus__c != 'Attivo'){
+                    r = true;
+                }
             }
-            if(ser.ServicePoint__r.CommoditySector__c == 'Gas' && ser.ServicePoint__r.MeterStatus__c != 'Attivo'){
-                r = true;
+            if(check){
+                saleSrv.updateRecord(s);
             }
-        }
-        if(check){
-            saleSrv.updateRecord(s);
-        }
-        res = String.join(listRes,',');
-        if(r){
-            res = 'Subentro';
+            res = String.join(listRes,',');
+            if(r){
+                res = 'Subentro';
             }
         }
         if(res == null || res == '' || res == 'Subentro'){
@@ -278,28 +279,70 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             }
             List<ServicePoint__c> spList = srQr.getRecordByIdList(spListId,'id,CommoditySector__c,SupplyCity__c,distributor__r.code__c');
             Map<String,HDT_WRP_RemiUbd> mapRemiCode = new Map<String,HDT_WRP_RemiUbd>();
-            List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRecord();
+            Map<String,String> mapRemi = new Map<String,String>();
+            Set<String> comuniToUdb = new set<String>(); 
+            List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiConfiguration();
             for(MatriceRemiCode__c m : remiList){
-                //mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, m.RemiCode__c);
-                HDT_WRP_RemiUbd wrp = new HDT_WRP_RemiUbd(m.RemiCode__c, m.VATNumberUdb__c);
-                mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, wrp);
+                if(mapRemi.get(m.Comune__c.toUpperCase()) == null){
+                    mapRemi.put(m.Comune__c.toUpperCase(),m.RemiCode__c);
+                }
             }
-            Map<String,String> serviceSocieta = HDT_UTL_Sales.getAgentNameAndCodeList(spList,sal.Account__r.customerMarking__c);
+
             for(ServicePoint__c sr :spList){
-                if(mapRemiCode.get(sr.SupplyCity__c + '_' + serviceSocieta.get(sr.id)) != null){
-                    HDT_WRP_RemiUbd wrp = mapRemiCode.get(sr.SupplyCity__c + '_' + serviceSocieta.get(sr.id));
-                    sr.RemiCode__c = wrp.remiCode;
+               /* String remi = '';
+                if(mapRemi.get(sr.SupplyCity__c.toUpperCase()) != null){
+                    remi = mapRemi.get(sr.SupplyCity__c.toUpperCase());
+                    sr.RemiCode__c = remi;
+                }
+                else{
+                    res += '_Remi';
+                }*/
+                comuniToUdb.add(sr.SupplyCity__c);
+                /*if(mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id)) != null){
+                    HDT_WRP_RemiUbd wrp = mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id));
+                   // sr.RemiCode__c = wrp.remiCode;
                     sr.VATNumberUdb__c = wrp.vatUbd;
                     system.debug(wrp);
                     system.debug('SP to Update '+sr.VATNumberUdb__c);
                 }
                 else{
+                    sr.VATNumberUdb__c = '02060500390';
+                   // res += '_Remi';
+                }*/
+            }
+            List<MatriceRemiCode__c> partitaUdbList = HDT_QR_MatriceRemiCode.getAllPartitaUdbConfiguration(comuniToUdb);
+            
+            for(MatriceRemiCode__c m : partitaUdbList){
+                //mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, m.RemiCode__c);
+                HDT_WRP_RemiUbd wrp = new HDT_WRP_RemiUbd(m.RemiCode__c, m.VATNumberUdb__c);
+                mapRemiCode.put(m.RemiCode__c.toUpperCase() + '_' + m.Comune__c.toUpperCase() + '_' + m.SalesCompany__c, wrp);
+            }
+
+            Map<String,String> serviceSocieta = HDT_UTL_Sales.getAgentNameAndCodeList(spList,sal.Account__r.customerMarking__c);
+            for(ServicePoint__c sr :spList){
+                String remi = '';
+                if(mapRemi.get(sr.SupplyCity__c.toUpperCase()) != null){
+                    remi = mapRemi.get(sr.SupplyCity__c.toUpperCase());
+                    sr.RemiCode__c = remi;
+                }
+                else{
                     res += '_Remi';
                 }
+                if(mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id)) != null){
+                    HDT_WRP_RemiUbd wrp = mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id));
+                   // sr.RemiCode__c = wrp.remiCode;
+                    sr.VATNumberUdb__c = wrp.vatUbd;
+                    system.debug(wrp);
+                    system.debug('SP to Update '+sr.VATNumberUdb__c);
+                }
+                else{
+                    sr.VATNumberUdb__c = '02060500390';
+                   // res += '_Remi';
+                }
             }
-            if(res != '_Remi' && res !='Subentro_Remi'){
+           // if(res != '_Remi' && res !='Subentro_Remi'){
                 servicePointSrv.updateRecordRemiCode(spList);
-            }
+           // }
         }
 
 
@@ -317,4 +360,46 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         }
     }
 
+   /**
+   * @description filtra la lista lProcess in base al CustomSetting HDT_Process_Sale_Partner_Community__c 
+   * per aggiungere un processo alla lista inserire un nuovo campo boolean nel CustomSetting HDT_Process_Sale_Partner_Community__c,
+   * la label del campo deve essere uguale al nome del processo.
+   * @param lProcess 
+   * @return List<HDT_WRP_Process> 
+   **/
+
+   public  static List<HDT_WRP_Process> utilityOrderProcessAssignment(List<HDT_WRP_Process> lProcess){
+        System.debug('HDT_UTL_OrderProcessAssignment.utilityOrderProcessAssignment');
+        List<HDT_WRP_Process> toReturn = new List<HDT_WRP_Process>();
+        String type='HDT_Process_Sale_Partner_Community__c';
+        Map<String, String> mapLabelToApi = new Map<String, String>();
+        Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+        Schema.SObjectType objSchema = schemaMap.get(type);
+        Map<String, Schema.SObjectField> fieldMap = objSchema.getDescribe().fields.getMap();
+
+        for (String fieldName: fieldMap.keySet()) { 
+            mapLabelToApi.put(fieldMap.get(fieldName).getDescribe().getLabel(),fieldName);
+        }
+
+        Id pid=userinfo.getProfileId();
+        HDT_Process_Sale_Partner_Community__c mhc = HDT_Process_Sale_Partner_Community__c.getInstance(pid);
+        Map<String,Object> objectToMap = (Map<String,Object>) JSON.deserializeUntyped(JSON.serialize(mhc));
+        map<string,string> newMap= new Map<string,string>();
+
+        for(String strKey: objectToMap.keyset()){
+            newMap.put(strKey, String.valueof(objectToMap.get(strKey)));
+        }
+        
+        System.debug(newMap);
+       
+        for (HDT_WRP_Process proc : lProcess) {
+            if (newMap.get(proc.processType)!=null && 'true'.equalsIgnoreCase(newMap.get(proc.processType)) ) {
+                toReturn.add(proc);
+            }
+        }
+        System.debug('toReturn : '+toReturn.size() );
+        return toReturn;
+
+   }
 }
+

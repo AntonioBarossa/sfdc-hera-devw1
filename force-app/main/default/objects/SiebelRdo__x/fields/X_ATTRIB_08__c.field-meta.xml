@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Potenza Tecnica MM</label>
+    <label>Potenza richiesta</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

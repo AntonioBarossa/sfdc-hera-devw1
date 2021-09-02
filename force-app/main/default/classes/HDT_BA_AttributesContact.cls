@@ -3,12 +3,14 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
     public String runId;
     public String status;
 	public String errorMessage;
+	public Integer fileNumber;
     public List<Id> listIdContentVersion = new List<Id>();
 	public Set<String> setEmailContactProcessed = new Set<String>();
 
     public Set<String> setEmailProcessed = new Set<String>();
-    public HDT_BA_AttributesContact(String paramRunId,String paramStatus,String paramErrorMessage,List<id> paramListIdContentVersion,Set<String> paramSetEmailProcessed ){
-       this.runId=paramRunId;
+    public HDT_BA_AttributesContact(Integer varFileNumber, String paramRunId,String paramStatus,String paramErrorMessage,List<id> paramListIdContentVersion,Set<String> paramSetEmailProcessed ){
+       this.fileNumber=varFileNumber!=null?varFileNumber:0;
+	   this.runId=paramRunId;
 	   this.errorMessage=paramErrorMessage;
 	   this.status=String.isBlank(paramStatus)?'success':paramStatus;
        this.listIdContentVersion.addAll(paramListIdContentVersion);
@@ -298,10 +300,10 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 				cv.VersionData = generateFileBlob;
 				Date runDate= Date.today();
 				// il nome heradmp_firstpartydata_ potrebbe essere reso dinamico 
-				cv.Title = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day());
-				cv.PathOnClient = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day())+'.csv';
+				cv.Title = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day())+'_'+String.valueOf(fileNumber);
+				cv.PathOnClient = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day())+'_'+String.valueOf(fileNumber)+'.csv';
 				insert cv;
-				
+				fileNumber=fileNumber+1;
 				listIdContentVersion.add(cv.Id);
 		
 			}

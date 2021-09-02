@@ -18,6 +18,7 @@ export default class HdtSupplySelectionFlow extends LightningElement {
     cancelDisabled = true;
 
     handleServicePointSelection(event){
+        console.log('SUPPLYSELECTIONFLOW_event ' +JSON.stringify(event.detail));
         this.selectedServicePointFlow = event.detail["Codice Punto"];
         this.serviceRequestId = event.detail["serviceRequestId"];
         this.isCompatible = event.detail["isCompatible"];
@@ -31,6 +32,7 @@ export default class HdtSupplySelectionFlow extends LightningElement {
 
     handleConfirmServicePoint(event){
         console.log('forn '+ this.selectedServicePointFlow);
+        console.log('SUPPLYSELECTIONFLOW_IsCompatible ' + this.isCompatible);
         this.handleSave(event);
     }
     handleSave(event){
