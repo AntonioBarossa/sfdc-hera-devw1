@@ -1,8 +1,8 @@
 /**
- * @author Lucas da Silva Fernandes (lorenzo.gulotta@webresults.it)
+ * @author Lorenzo Gulotta (lorenzo.gulotta@webresults.it)
  * @date 21/06/2021
  * @description HDT_QR_ServiceCatalog Class
- * @history Lucas da Silva Fernandes – 21/06/2021 – Created Class
+ * @history Lorenzo Gulotta – 21/06/2021 – Created Class
  */
 
 public with sharing class HDT_QR_ServiceCatalog {
