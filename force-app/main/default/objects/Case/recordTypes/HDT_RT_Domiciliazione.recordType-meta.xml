@@ -845,6 +845,10 @@ q<?xml version="1.0" encoding="UTF-8"?>
             <default>false</default>
         </values>
         <values>
+            <fullName>Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Standard</fullName>
             <default>false</default>
         </values>

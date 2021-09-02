@@ -1773,6 +1773,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Standard</fullName>
             <default>false</default>
         </values>

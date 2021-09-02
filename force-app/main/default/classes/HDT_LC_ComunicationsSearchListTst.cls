@@ -36,10 +36,12 @@ public class HDT_LC_ComunicationsSearchListTst {
 
         Test.startTest();
         HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj response = HDT_LC_ComunicationsSearchList.sendFileToPrint(requestObj);
-        Test.stopTest();
 
         System.assertEquals(true, response.success, 'Si è verificato un errore in fase di ricezione della response');
         System.assertEquals('', response.message);
+
+        Test.stopTest();
+
         
     }
 
@@ -64,9 +66,12 @@ public class HDT_LC_ComunicationsSearchListTst {
     @isTest
     static void testGetCompanyCode(){
 
-        String companyCode = HDT_LC_ComunicationsSearchList.getCompanyCode('Hera Comm S.p.A.');
+        Test.startTest();
 
+        String companyCode = HDT_LC_ComunicationsSearchList.getCompanyCode('Hera Comm S.p.A.');
         System.assertEquals('1070', companyCode, 'Si è verificato un errore in fase di get del Company Code');
+
+        Test.stopTest();
 
     }
 
