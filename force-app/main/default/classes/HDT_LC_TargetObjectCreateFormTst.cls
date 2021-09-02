@@ -24,6 +24,8 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
 
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
+            HDT_UTL_DataFactoryTst.createWebServiceConfiguration();
+            HDT_UTL_DataFactoryTst.createWebServiceCredential();
 
             List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'Reseller', 'GENESI-Altro', 'Reseller - Gruppo');
             
@@ -48,22 +50,6 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
             insert quotes;
 
             List<SaleServiceItem__c> ssItem = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, oppList[0].Id, quotes[0].Id, spList[0].Id);
-            
-            HDT_WebServiceConfiguration__c wsConfig = new HDT_WebServiceConfiguration__c(
-                Name = 'TransitorioWinback',
-                Endpoint__c = 'end',
-                Method__c = 'method',
-                User__c = 'testUser'         
-            );
-            insert wsConfig;
-
-            HDT_WebServiceCredential__c wsCredential = new HDT_WebServiceCredential__c(
-                Name = 'testUser',
-                Password__c = '12345',
-                Username__c = 'usernameTest'
-            );
-
-            insert wsCredential;
         }
     }
 

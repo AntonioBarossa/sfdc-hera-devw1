@@ -98,7 +98,8 @@ public inherited sharing class HDT_QR_OrderItem {
             Product2.Family,
             Product2.Version__c,
             Product2.ProductCode,
-            Product2.Name
+            Product2.Name,
+            VASBillingMode__c
             FROM 
             OrderItem 
             WHERE OrderId = :orderId

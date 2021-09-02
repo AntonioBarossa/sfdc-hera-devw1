@@ -69,9 +69,11 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
         callActivities = mapActivities.values();
         insert callActivities;
 
+        List<Campaign> comfortCampaign = HDT_QR_Campaign.getCampaignIds('Comfort Campaign');
+
         for (String ordId : orderActivityMap.keySet()) {
-            if ( orderMap.get(ordId).Contact__c != null && orderMap.get(ordId).CommissioningCampaign__c != null) {
-                List<CampaignMember> campaignMembers = campaignMemberQr.getCampaignMemberByCampaingAndContact(orderMap.get(ordId).CommissioningCampaign__c, orderMap.get(ordId).Contact__c);
+            if ( orderMap.get(ordId).Contact__c != null && !comfortCampaign.isEmpty()) {
+                List<CampaignMember> campaignMembers = campaignMemberQr.getCampaignMemberByCampaingAndContact(comfortCampaign[0].Id, orderMap.get(ordId).Contact__c);
                 CampaignMember campaignMember = new CampaignMember();
                 
                 if (!campaignMembers.isEmpty()) {
@@ -85,7 +87,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
                 } else {
                     campaignMembersInsert.add(new CampaignMember(
                         ContactId = orderMap.get(ordId).Contact__c,
-                        CampaignId = orderMap.get(ordId).CommissioningCampaign__c,
+                        CampaignId = comfortCampaign[0].Id,
                         PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
                         RelatedActivity__c = orderActivityMap.get(ordId).Id
                     ));

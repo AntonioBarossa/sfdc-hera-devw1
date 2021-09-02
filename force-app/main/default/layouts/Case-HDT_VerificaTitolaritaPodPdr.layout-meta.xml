@@ -311,6 +311,28 @@
         <fields>UPDATEDBY_USER</fields>
         <relatedList>wrts_prcgvr__Activity__c.Case__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>MessageText__c</fields>
+        <fields>Delivered__c</fields>
+        <fields>Sent__c</fields>
+        <fields>ContactID__c</fields>
+        <relatedList>SMSTracking__c.CaseID__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>MessageText__c</fields>
+        <fields>MessageOpened__c</fields>
+        <fields>ContactID__c</fields>
+        <relatedList>PushTracking__c.CaseID__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>et4ae5__DateSent__c</fields>
+        <fields>et4ae5__DateOpened__c</fields>
+        <fields>et4ae5__Contact_ID__c</fields>
+        <relatedList>et4ae5__IndividualEmailResult__c.CaseID__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>

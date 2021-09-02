@@ -9,7 +9,7 @@
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
             <property name="accountId" type="String" role="inputOnly" />
-            <property name="groupOptions" type="String" role="inputOnly"/>
+            <property name="groupOptions" type="String" role="inputOnly" description="ORDERS_IN_PROGRESS_VAS;ORDERS_ELE;ASSETS_ACTIVATED;SUBS_ANALISI_CONSUMI;CONTRACT_ELE_ACTIVE"/>
 
             <property name="recordId" type="String" role="outputOnly"/>
             <property name="sObjectName" type="String" role="outputOnly"/>
