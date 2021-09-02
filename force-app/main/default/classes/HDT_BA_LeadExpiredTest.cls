@@ -1,36 +1,35 @@
+/**
+* @author Elfrida Kora (elfrida.kora@dunegroup.it)
+* @date 01/09/2021
+* @description HDT_BA_LeadExpired for Test Classes
+* @history Elfrida Kora – 01/09/2021 – Created class
+*/
+
+
 @IsTest
 public class HDT_BA_LeadExpiredTest {
     @TestSetup
-    static void makeData() 
+    static void createLead() 
     {
-        List<Lead> lstLead= new List<Lead>();
-        for(Integer i=0 ;i <10;i++)
-        {
-            Lead lead = new Lead();
-            lead.LastName ='Name'+i;
-            lead.CustomerMarking__c='Persona fisica';
-            lead.Category__c='Famiglie';
-            lead.FirstName ='Frida';
-            lead.FiscalCode__c='SMTLVR75C02H501Y';
-            lead.CompanyOwner__c='HERA COMM';
-            lead.Email='justtest2@gmail.com';
-            lead.Company='istest';
-            lstLead.add(lead);
+        
+        List<Lead> leadList = HDT_UTL_DataFactoryTst.createLead(1, true);
+
+            
         }
-        
-        insert lstLead;
-        
-        
-    }
     
      @isTest
     public static void testConsentLead(){
-        Test.StartTest();
-         HDT_BA_LeadExpired obj =new HDT_BA_LeadExpired(); 
-        Id batchprocessid = Database.executeBatch(obj);
-        Test.StopTest();
-        
-               
+         Test.startTest();
+        HDT_BA_LeadExpired le = new HDT_BA_LeadExpired();
+        Id batchId = Database.executeBatch(le);
+
+
+          List<Lead> myLeads = [SELECT Id, FirstName,LastName,CompanyOwner__c,Company,Status,Birthdate__c,Gender__c from Lead];
+
+           system.debug(myLeads);
+           system.assertEquals('New', myLeads[0].Status,'We have a new Status');
+           System.assertNotEquals('Expired', myLeads[0].Status,'We have expired Status');
+                Test.stopTest();
         
     }
 }
