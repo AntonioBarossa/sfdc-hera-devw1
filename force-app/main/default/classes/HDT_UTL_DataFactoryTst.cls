@@ -1876,4 +1876,32 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		insert wsCredential;
 	}
+
+	public static List<CommunicationLog__c> createCommunicationLog (Integer amount, Boolean doInsert, Id accId, Id contactId){
+
+		List<CommunicationLog__c> commLogList=new List<CommunicationLog__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CommunicationLog__c testCommLog=new CommunicationLog__c();
+			testCommLog.AccountID__c = accid;
+			testCommLog.ContactID__c = contactId;
+			testCommLog.Causale__c='testCausale';
+			testCommLog.Company__c='testCompany';
+			testCommLog.Cluster__c='testCluster';
+			testCommLog.CompanyOwner__c='TestCompOwner';
+			testCommLog.Fase__c='testFase';
+			testCommLog.Processo__c='testProcesso';
+			testCommLog.Stato__c='testStato';
+
+			commLogList.add(testCommLog);
+		}
+
+		if (doInsert){
+
+			insert commLogList;
+		}
+
+		return commLogList;
+	}
 }
