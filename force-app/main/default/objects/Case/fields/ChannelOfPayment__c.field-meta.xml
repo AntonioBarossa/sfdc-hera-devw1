@@ -68,6 +68,11 @@
                 <default>false</default>
                 <label>Standard</label>
             </value>
+            <value>
+                <fullName>Rate</fullName>
+                <default>false</default>
+                <label>Rate</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
