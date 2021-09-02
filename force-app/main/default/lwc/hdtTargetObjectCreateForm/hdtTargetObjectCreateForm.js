@@ -93,6 +93,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     booleanFormDistributor=false;
     @api retrievedDistributor={};
     @api commodity='';
+    @api processtype;
     oldServicePoint = {}; //keltin used for change use check
    // showForm=false;
 
@@ -192,7 +193,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         fieldsData.forEach(element => {
             
-           if(this.selectedservicepoint != undefined){
+           if(this.selectedservicepoint != undefined&&this.processtype==''){
            
             if(element == 'CommoditySector__c')
             {
@@ -230,24 +231,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                 ) 
             }
-            else if(element === 'Resident__c'){
-                console.log('entra in resident');
-                let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
-                console.log('entra in resident:' +resValue );
-                this.allSubmitedFields.Resident__c = resValue;
-                
-                fieldsDataObject.push(
-                    {
-                        fieldname: element,
-                        required : mapFieldReq.get(element),
-                        value:resValue,
-                        disabled: false
-                    }
-                ) 
-            }
             else if(element=='SAPImplantCode__c')
             {
-
+                
                 fieldsDataObject.push(
                     {
                         fieldname: element,
@@ -269,17 +255,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                 ) 
             }
-            else if(element=='PowerRequested__c'){
-                this.allSubmitedFields.PowerRequested__c = null;
-                fieldsDataObject.push(
-                    {
-                        fieldname: element,
-                        required : mapFieldReq.get(element),
-                        value: '',
-                        disabled: false
-                    }
-                ) 
-            }
             else
             {
                 console.log('entra in else ++++' + JSON.stringify(element));
@@ -294,6 +269,33 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 ) 
             }
 
+
+            }else if(this.selectedservicepoint != undefined && this.processtype!=''){
+
+                if(( element == 'DisconnectibilityType__c' && this.servicePointRetrievedData['Disconnectable__c']=='SI'))
+                {
+    
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : mapFieldReq.get(element),
+                        value: '',
+                            disabled: true
+                    }
+                ) 
+            }
+            else
+            {
+    
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : mapFieldReq.get(element),
+                        value: this.servicePointRetrievedData[element],
+                            disabled: true
+                    }
+                ) 
+            }
 
             }
             else {
@@ -358,19 +360,14 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     ) 
                 }
-                else if(element === 'Resident__c'){
-
+                else if(this.recordtype.label === 'Punto Elettrico' && element === 'Resident__c'){
                     console.log('entra in resident');
-                    let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
-                    console.log('entra in resident:' +resValue );
-                    this.allSubmitedFields.Resident__c = resValue;
-
-                    
+                    this.allSubmitedFields.Resident__c = true;
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required : mapFieldReq.get(element),
-                            value:resValue,
+                            value:true,
                             disabled: false
                         }
                     ) 
