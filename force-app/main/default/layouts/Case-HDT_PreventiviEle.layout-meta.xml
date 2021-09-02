@@ -535,6 +535,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>AttachmentCode__c</fields>
+        <fields>Description__c</fields>
+        <fields>Version__c</fields>
+        <fields>Required__c</fields>
         <relatedList>DocumentalEnvelopeAttachment__c.Case__c</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
