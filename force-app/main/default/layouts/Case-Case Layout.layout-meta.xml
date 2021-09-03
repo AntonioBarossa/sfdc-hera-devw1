@@ -191,10 +191,6 @@
                 <behavior>Edit</behavior>
                 <field>OperationSubType__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Note__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
