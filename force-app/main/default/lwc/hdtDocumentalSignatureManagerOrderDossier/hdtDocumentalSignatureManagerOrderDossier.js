@@ -385,8 +385,8 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             updateRecord(recordInput)
                 .then(() => {
                     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
-                    updateContactForScartoDocumentale({oldPhone: oldPhoneValue,
-                                                       oldEmail: oldEmailValue,
+                    updateContactForScartoDocumentale({oldPhone: this.oldPhoneValue,
+                                                       oldEmail: this.oldEmailValue,
                                                        newPhone: resultWrapper.phone,
                                                        newMail: resultWrapper.email}).then(data=>{
                     //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
@@ -414,6 +414,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 })
                 .catch(error => {
                     console.log('Errore in aggiornamento');
+                    console.log('Errore: ' + error);
                     this.loading = false;
                     this.dispatchEvent(
                         new ShowToastEvent({
