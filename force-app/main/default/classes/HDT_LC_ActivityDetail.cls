@@ -11,7 +11,7 @@ public with sharing class HDT_LC_ActivityDetail {
 
         HDT_WRP_ObjectFieldData(){}
     }
-
+    ///
     @AuraEnabled
     public static map<string,HDT_WRP_ObjectFieldData> getObjectFields(Id idActivity){
 
