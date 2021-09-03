@@ -249,7 +249,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
     private String formattingErrorMessage(String errorMessage, String fieldLabel, Object criteriaField, Object ruleField){
         String fineTuningCriteria = '';
         String fineTuningRule = '';
-        if(errorMessage.indexOf(fieldLabel) > -1){
+        if(errorMessage.indexOf(fieldLabel) > -1 || fieldLabel.containsIgnoreCase('CA con')){
             //Skip 
         } else {
             if(criteriaField instanceOf Boolean && Boolean.valueOf(criteriaField) == true){
