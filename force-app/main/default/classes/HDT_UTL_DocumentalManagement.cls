@@ -224,6 +224,30 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
+	public static void createDocumentalActivityForError(String errorMessage, Id requestId, String envelopeId,sObject processRecord){
+		try {
+			String sObjName = requestId.getSObjectType().getDescribe().getName();
+			DocumentalActivity__c documentalActivity = new DocumentalActivity__c ();
+			switch on sObjName {
+				when 'Case' {
+					documentalActivity.CaseId__c = (Id) requestId;
+					System.debug('### Account Id: '+processRecord.get('AccountId'));
+				}
+				when 'Order' {
+					documentalActivity.OrderId__c = (Id) requestId;
+				}
+				when else {
+
+				}
+			}
+			documentalActivity.EnvelopeId__c = envelopeId;
+			documentalActivity.ErrorDescription__c = errorMessage;
+
+			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalActivity);
+		} catch (Exception ex) {
+			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+		}
+	}
 	private static List<Map<String,List<sObject>>> getRecordObjectsListContext2(List<SObject> recordsList){
 		Case caseObject = (Case) recordsList[0];
 		Account accountObject = (Account) caseObject.Account;

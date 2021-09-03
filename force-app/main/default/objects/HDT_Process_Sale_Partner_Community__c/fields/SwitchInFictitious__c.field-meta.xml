@@ -3,7 +3,7 @@
     <fullName>SwitchInFictitious__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Switch In Fittizio</label>
+    <label>Switch_In_Fittizio</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

@@ -3,7 +3,7 @@
     <fullName>SwitchInWinback__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Switch In Winback</label>
+    <label>Switch_In_Winback</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

@@ -1,3 +1,9 @@
+/**
+* @author Fatjola Memishaj (fatjola.memishaj@dunegroup.it)
+* @date 18/03/2021
+* @description HDT_TRH_TriggerHandler
+* @history Fatjola Memishaj – 18/03/2021 – Created class
+*/
 public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
     
     // public override void afterInsert(){  
