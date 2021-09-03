@@ -820,10 +820,10 @@
             <fullName>Banca SPORTELLO</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Bollettino postale</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Carta di credito online</fullName>
             <default>false</default>
@@ -840,22 +840,22 @@
             <fullName>Posta</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>RID</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Ricevitoria</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Rate</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Standard</fullName>
             <default>false</default>
-        </values>
+        </values> -->
     </picklistValues>
     <picklistValues>
         <picklist>Charge__c</picklist>
