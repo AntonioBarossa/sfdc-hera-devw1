@@ -3,7 +3,7 @@
     <fullName>VoltureGas__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Voltura Gas</label>
+    <label>Voltura_Gas</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

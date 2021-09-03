@@ -3,7 +3,7 @@
     <fullName>SwitchInEle__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Switch In Ele</label>
+    <label>Switch_In_Ele</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
