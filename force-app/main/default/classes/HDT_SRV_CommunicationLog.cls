@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 19/05/2021
+* @description HDT_SRV_CommunicationLog
+* @history Lorenzo – 19/05/2021 – created class
+*/
 public inherited sharing class HDT_SRV_CommunicationLog {
 	private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static final String READPERMISSION = 'read';
