@@ -1905,4 +1905,50 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return commLogList;
 	}
+
+	public static List<SBQQ__Subscription__c> createSubscription (Integer amount, Boolean doInsert, Id accountId, Id contractId, Id servicePointId) {
+
+		List<SBQQ__Subscription__c> subcriptionList = new List<SBQQ__Subscription__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SBQQ__Subscription__c subscription = new SBQQ__Subscription__c(
+				SBQQ__Account__c = accountId,
+				SBQQ__Contract__c = contractId,
+				ServicePoint__c = servicePointId,
+				SBQQ__Quantity__c = 1.0
+			);
+
+			subcriptionList.add(subscription);
+		}
+
+		if (doInsert){
+
+			insert subcriptionList;
+		}
+
+		return subcriptionList;
+
+	}
+
+	public static List<CS_SelezioneFornitura__c> createSelezioneFornitura(Integer amount, Boolean doInsert) {
+
+		List<CS_SelezioneFornitura__c> selezioneList = new List<CS_SelezioneFornitura__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CS_SelezioneFornitura__c selezione = new CS_SelezioneFornitura__c(
+				Name = 'selezioneTestName'
+			);
+
+			selezioneList.add(selezione);
+		}
+
+		if (doInsert){
+
+			insert selezioneList;
+		}
+
+		return selezioneList;
+	}
 }
