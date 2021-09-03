@@ -9,6 +9,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
     public static HDT_SRV_Case caseSRV= new HDT_SRV_Case();
     public static HDT_SRV_ActivityCustom activitySrv= new HDT_SRV_ActivityCustom();
     public static HDT_QR_RecordType rctype= new HDT_QR_RecordType();
+    public static HDT_QR_Case caseQr = new HDT_QR_Case();
     @AuraEnabled
     public static void cancelCase(String caseId){
         try {
@@ -19,11 +20,13 @@ public with sharing class HDT_LC_RecordEditFormSales {
         }
     }
     @AuraEnabled
-    public static wrts_prcgvr__Activity__c getActivity(String caseId){
-        List<wrts_prcgvr__Activity__c> obbList = HDT_QR_ActivityCustom.getRecordByCaseId(caseid);
-        wrts_prcgvr__Activity__c res;
-        if(obbList != null && !obbList.isEmpty()){
-            res = obbList[0];
+    public static Case getActivity(String caseId){
+        List<Case> caseList = caseQr.getRecordsById(new List<String>{caseId},'id,OperationSubType__c,OperationType__c');
+        Case res = new Case();
+        //List<wrts_prcgvr__Activity__c> obbList = HDT_QR_ActivityCustom.getRecordByCaseId(caseid);
+      //  wrts_prcgvr__Activity__c res;
+        if(caseList != null && !caseList.isEmpty()){
+            res = caseList[0];
         }
         return res;
 
@@ -86,10 +89,10 @@ public with sharing class HDT_LC_RecordEditFormSales {
                 activitySrv.createRecord(activity);
                 return 'success';
             }
-            else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Chiusa' && activities[0].approved__c == 'No'){
+            else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Completed' && activities[0].approved__c == 'No'){
                 return 'annulla';
             }
-            else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c != 'Chiusa'){
+            else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c != 'Completed'){
                 return 'aperta';
             }
             else{

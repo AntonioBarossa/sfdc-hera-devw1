@@ -22,6 +22,7 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
     @api isRunFromFlow= false;
     @track showOperationSubType= false;
     @track selectedOperationType;
+    @track selectedOperationSubType;
     @track showSubmitForApprovalButton=false;
     @track disableConfirmButton= false;
     @track preloading= false;
@@ -73,6 +74,11 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
             }else if(element.fieldName=="ReassignmentReason__c"){
                 if(element.value!= null){
                     cs.ReassignmentReason__c=element.value;
+                }
+            }
+            else if(element.fieldName=="Note__c"){
+                if(element.value!= null){
+                    cs.Note__c=element.value;
                 }
             }
         },this);
@@ -231,14 +237,8 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
         getActivity({caseId: this.recordid}).then(result => {
             console.log("resu" + JSON.stringify(result));
             if(result != null ){
-                if(result.Approved__c == 'SI'){
-                    this.statoApp = 'APPROVATO';
-                }else if (result.Approved__c == 'NO'){
-                    this.statoApp = 'RIFIUTATO';
-                }
-                else{
-                    this.statoApp = 'IN ATTESA DI APPROVAZIONE';
-                }
+                this.selectedOperationSubType = result.OperationSubType__c;
+                this.selectedOperationType = result.OperationType__c;
             }
             console.log("SONO RIGA 222");
 
