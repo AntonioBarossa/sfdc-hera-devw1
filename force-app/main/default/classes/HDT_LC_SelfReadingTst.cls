@@ -107,7 +107,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         
         setupMorosita();
         
-        Order myOrder = [SELECT Id FROM Order];
+        Order myOrder = [SELECT Id, Phase__c, RecordTypeId, RecordType.DeveloperName FROM Order];
         String serialOrder = JSON.serialize(myOrder);
         String recordId = myOrder.Id;
         Boolean isRetroactive = true;
@@ -115,8 +115,15 @@ public with sharing class HDT_LC_SelfReadingTst {
         Date rcd = Date.today().addDays(-1);
         Boolean completed = true;
         
-        //PHASE MANAGER
+        System.debug(debugString + ' - myOrder: ' + myOrder);
         
+        //PROCESS CLICK
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        
+        //PHASE MANAGER
+        String rtId = myOrder.RecordTypeId;
+        String rtName = myOrder.RecordType.DeveloperName;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Accettazione Voltura', 'Bozza', rtId, rtName,'A','','','');
         
         //TESTING
         String result = HDT_LC_SelfReading.updateOrder(serialOrder, recordId, isRetroactive, isReading, rcd, completed);
@@ -136,13 +143,23 @@ public with sharing class HDT_LC_SelfReadingTst {
         //SETUP
         setupMorosita();
         
-        Order myOrder = [SELECT Id FROM Order];
+        Order myOrder = [SELECT Id, Phase__c, RecordTypeId, RecordType.DeveloperName FROM Order];
         String serialOrder = JSON.serialize(myOrder);
         String recordId = myOrder.Id;
         Boolean isRetroactive = true;
         Boolean isReading = true;
         Date rcd = Date.today().addDays(-1);
         Boolean completed = false;
+        
+        System.debug(debugString + ' - myOrder: ' + myOrder);
+        
+        //PROCESS CLICK
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        
+        //PHASE MANAGER
+        String rtId = myOrder.RecordTypeId;
+        String rtName = myOrder.RecordType.DeveloperName;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Accettazione Voltura', 'Bozza', rtId, rtName,'A','','','');
         
         //TESTING
         String result = HDT_LC_SelfReading.updateOrder(serialOrder, recordId, isRetroactive, isReading, rcd, completed);
