@@ -396,25 +396,24 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
 
                     //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
                     // Display fresh data in the form
-                        console.log('Record aggiornato');
-                        next({orderUpdates: this.dataToSubmit}).then(data =>{
-                            this.loading = false;
-                            this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
-                            this.dispatchEvent(new CustomEvent('tablerefresh'));
-                            this.loading = false;
-                            getRecordNotifyChange([{recordId: this.recordId}]);
-                        }).catch(error => {
-                            this.loading = false;
-                            console.log((error.body.message !== undefined) ? error.body.message : error.message);
-                            const toastErrorMessage = new ShowToastEvent({
-                                title: 'Errore',
-                                message: (error.body.message !== undefined) ? error.body.message : error.message,
-                                variant: 'error',
-                                mode: 'sticky'
-                            });
-                            this.dispatchEvent(toastErrorMessage);
-                            this.loading = false;
+                    console.log('Record aggiornato');
+                    next({orderUpdates: this.dataToSubmit}).then(data =>{
+                        this.loading = false;
+                        this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
+                        this.dispatchEvent(new CustomEvent('tablerefresh'));
+                        this.loading = false;
+                        getRecordNotifyChange([{recordId: this.recordId}]);
+                    }).catch(error => {
+                        this.loading = false;
+                        console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: (error.body.message !== undefined) ? error.body.message : error.message,
+                            variant: 'error',
+                            mode: 'sticky'
                         });
+                        this.dispatchEvent(toastErrorMessage);
+                        this.loading = false;
                     });
                 })
                 .catch(error => {
