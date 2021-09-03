@@ -3,7 +3,7 @@
     <fullName>FirstActivationEle__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Prima Attivazione Ele</label>
+    <label>Prima_Attivazione_Ele</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
