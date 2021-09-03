@@ -8,7 +8,7 @@
             <template if:true={saveButton}> 
                 <lightning-button
                     class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                    variant="brand" type="button" name="save" label={labelSaveButton} onclick={handleSave}>
+                    variant="brand" type="button" name="save" label={labelSaveButton} onclick={handleSave} disabled={saveDisabled}>
                 </lightning-button>
             </template>
             <template if:true={cancelButton}>

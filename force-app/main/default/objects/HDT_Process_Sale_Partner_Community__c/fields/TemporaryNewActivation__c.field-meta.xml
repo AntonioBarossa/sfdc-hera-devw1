@@ -3,7 +3,7 @@
     <fullName>TemporaryNewActivation__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Temporanea - Nuova Attivazione</label>
+    <label>Temporanea_-_Nuova_Attivazione</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

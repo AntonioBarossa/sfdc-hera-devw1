@@ -3,7 +3,7 @@
     <fullName>SwitchToRestorative__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Switch in Ripristinatorio</label>
+    <label>Switch_in_Ripristinatorio</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

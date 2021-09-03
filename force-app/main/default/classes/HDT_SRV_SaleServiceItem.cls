@@ -6,6 +6,7 @@
 */
 public inherited sharing class HDT_SRV_SaleServiceItem {
     
+    
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static HDT_SRV_Opportunity opportunityService = new HDT_SRV_Opportunity();
     private static HDT_SRV_Quote quoteService = new HDT_SRV_Quote();
