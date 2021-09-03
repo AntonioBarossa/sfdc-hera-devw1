@@ -3,7 +3,7 @@
     <fullName>ChangeOfGasOffer__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Cambio Offerta Gas</label>
+    <label>Cambio_Offerta_Gas</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
