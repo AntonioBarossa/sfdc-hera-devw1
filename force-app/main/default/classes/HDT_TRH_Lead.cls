@@ -55,6 +55,9 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     }
                     }
             }
+            if (String.isBlank(l.ContactReason__c)) {
+                l.ContactReason__c='Info commerciali';
+            }
         }
       /*  for(Lead l : listlead){
             if('Default'.equals(l.company)){
