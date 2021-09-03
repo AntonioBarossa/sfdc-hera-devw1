@@ -619,6 +619,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }else {
                 throw new HDT_UTL_RichPassException('POD non valorizzato', '01');
             }
+
             //It is not possible to perform DML operations before a callout
             try{
                 currentCase = dataEnrichment(pod,sapContractCode,currentCase);
@@ -636,6 +637,34 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 createActivity(currentCase.Id,null, '', 'Recesso Anticipato');
             }
             currentCase = qrClass.getCaseRecord(currentCase.Id);
+            System.debug('Commodity: ' + currentCase.CommodityFormula__c);
+            //CompatibilityCheck
+            String compatibility = '';
+            //checkCompatibility Method Call
+            try
+            {
+                compatibility = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(currentCase);
+            }
+            catch(Exception e)
+            {
+                throw new HDT_UTL_RichPassException('Errore nella verifica della compatibilita', '04');
+            }
+            //Check Compatibility Output
+            if(String.isEmpty(compatibility))
+            {
+                System.debug('Compatibilita superata con successo ' + compatibility);
+            }
+            else
+            {
+                System.debug('Compatibilita non superata ' + compatibility);
+                for(Case c : caseInsertList){
+                    c.Phase__c = 'Bozza Annullata';
+                    c.Status = 'Closed';
+                    c.CancellationReason__c = 'Processo incompatibile';
+                }
+                HDT_UTL_DatabaseService.updateSObject(caseInsertList);
+                throw new HDT_UTL_RichPassException('Processo Incompatibile', '04');
+            }
             if(cluster == 'Morosita'){
                 if(currentCase.ParentId == null){
                     currentCase.ParentId = containerCase.Id;
@@ -646,10 +675,20 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 HDT_UTL_DatabaseService.updateSObject(caseUpdateList);
             }
         } catch (Exception ex) {
-            throw new HDT_UTL_RichPassException('Errore nella gestione della richiesta', '04');
+            if(ex instanceof HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException)
+            {
+                HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException customEx = (HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException) ex;
+                throw new HDT_UTL_RichPassException(customEx.getMessage(), customEx.code);
+            }
+            else 
+            {
+                throw new HDT_UTL_RichPassException('Errore nella gestione della richiesta', '04');
+            }
         }
         //FinalQuery to get parentCase
-        currentCase = qrClass.getCaseRecord(currentCase.Id);
+        if(currentCase.Id != null){
+            currentCase = qrClass.getCaseRecord(currentCase.Id);
+        }
         return currentCase;
     }
 
