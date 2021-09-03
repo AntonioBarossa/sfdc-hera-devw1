@@ -8,8 +8,121 @@
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
+        <controllingField>ChannelOperator__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_SalesChannel</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Telefono</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Back office</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Sportello</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>HC Point</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Vendita Condomini</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Vendita TopBusiness</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Business Agent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Agenzie SME</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Agenzie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Punti Hera</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Teleselling Inbound</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Teleselling Outbound</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Web</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Consip</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Reseller</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesAll</controllingFieldValue>
+            <controllingFieldValue>excludesAll</controllingFieldValue>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Associazioni</valueName>
+        </valueSettings>
     </valueSet>
     <visibleLines>3</visibleLines>
 </CustomField>
