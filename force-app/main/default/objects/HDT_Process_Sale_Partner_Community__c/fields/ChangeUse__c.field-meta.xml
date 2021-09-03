@@ -3,7 +3,7 @@
     <fullName>ChangeUse__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Cambio Uso</label>
+    <label>Cambio_Uso</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

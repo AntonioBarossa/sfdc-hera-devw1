@@ -1790,4 +1790,118 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return userRoleId;
 	}
 
+	public static List<DistributorPointCode__c> createDistributorPointCode (Integer amount, Boolean doInsert, Id accountId){
+
+		List<DistributorPointCode__c> dpcList = new List<DistributorPointCode__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			DistributorPointCode__c dpc = new DistributorPointCode__c(
+				Account__c = accountId
+			);
+
+			dpcList.add(dpc);
+		}
+
+		if (doInsert) {
+
+			insert dpcList;
+
+		}
+
+		return dpcList;
+	}
+
+	public static List<wrts_prcgvr__ServiceLink__c> createServiceLink (Integer amount, Boolean doInsert) {
+
+		List<wrts_prcgvr__ServiceLink__c> serviceLinkList = new List<wrts_prcgvr__ServiceLink__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			wrts_prcgvr__ServiceLink__c sl = new wrts_prcgvr__ServiceLink__c(
+				wrts_prcgvr__IsActive__c = true
+			);
+
+			serviceLinkList.add(sl);
+		}
+
+		if (doInsert) {
+
+			insert serviceLinkList;
+		}
+
+		return serviceLinkList;
+	}
+
+	public static List<wrts_prcgvr__ServiceLinkItem__c> createServiceLinkItem (Integer amount, Boolean doInsert, Id serviceLinkId) {
+
+		List<wrts_prcgvr__ServiceLinkItem__c> serviceLinkItemList = new List<wrts_prcgvr__ServiceLinkItem__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			wrts_prcgvr__ServiceLinkItem__c sli = new wrts_prcgvr__ServiceLinkItem__c(
+				wrts_prcgvr__ServiceLink__c = serviceLinkId
+			);
+
+			serviceLinkItemList.add(sli);
+		}
+
+		if (doInsert) {
+
+			insert serviceLinkItemList;
+		}
+
+		return serviceLinkItemList;
+	}
+
+	public static void createWebServiceConfiguration () {
+
+		HDT_WebServiceConfiguration__c wsConfig = new HDT_WebServiceConfiguration__c(
+			Name = 'TransitorioWinback',
+			Endpoint__c = 'end',
+			Method__c = 'method',
+			User__c = 'testUser'         
+		);
+		
+		insert wsConfig;
+	}
+
+	public static void createWebServiceCredential () {
+
+		HDT_WebServiceCredential__c wsCredential = new HDT_WebServiceCredential__c(
+			Name = 'testUser',
+			Password__c = '12345',
+			Username__c = 'usernameTest'
+		);
+
+		insert wsCredential;
+	}
+
+	public static List<CommunicationLog__c> createCommunicationLog (Integer amount, Boolean doInsert, Id accId, Id contactId){
+
+		List<CommunicationLog__c> commLogList=new List<CommunicationLog__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CommunicationLog__c testCommLog=new CommunicationLog__c();
+			testCommLog.AccountID__c = accid;
+			testCommLog.ContactID__c = contactId;
+			testCommLog.Causale__c='testCausale';
+			testCommLog.Company__c='testCompany';
+			testCommLog.Cluster__c='testCluster';
+			testCommLog.CompanyOwner__c='TestCompOwner';
+			testCommLog.Fase__c='testFase';
+			testCommLog.Processo__c='testProcesso';
+			testCommLog.Stato__c='testStato';
+
+			commLogList.add(testCommLog);
+		}
+
+		if (doInsert){
+
+			insert commLogList;
+		}
+
+		return commLogList;
+	}
 }
