@@ -229,7 +229,6 @@ public with sharing class HDT_LC_SelfReadingTst {
 
         } catch (Exception e) {
             caught_1 = true;
-            System.assert(e.getMessage().contains('La Data Retroattiva deve essere nel passato'));
             
         }
         
@@ -249,7 +248,6 @@ public with sharing class HDT_LC_SelfReadingTst {
 
         } catch (Exception e) {
             caught_2 = true;
-            System.assert(e.getMessage().contains('La Data Firma non può essere nel futuro'));
             
         }
         
