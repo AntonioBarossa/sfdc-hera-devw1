@@ -1854,24 +1854,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return serviceLinkItemList;
 	}
 
-	public static void createWebServiceConfiguration () {
+	
+	public static void createWebServiceConfiguration (String name, String endpoint, String method, String user) {
 
 		HDT_WebServiceConfiguration__c wsConfig = new HDT_WebServiceConfiguration__c(
-			Name = 'TransitorioWinback',
-			Endpoint__c = 'end',
-			Method__c = 'method',
-			User__c = 'testUser'         
+			Name = name,
+			Endpoint__c = endpoint,
+			Method__c = method,
+			User__c = user         
 		);
 		
 		insert wsConfig;
 	}
 
-	public static void createWebServiceCredential () {
+	public static void createWebServiceCredential (String name , String password, String username) {
 
 		HDT_WebServiceCredential__c wsCredential = new HDT_WebServiceCredential__c(
-			Name = 'testUser',
-			Password__c = '12345',
-			Username__c = 'usernameTest'
+			Name = name,
+			Password__c = password,
+			Username__c = username
 		);
 
 		insert wsCredential;
