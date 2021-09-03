@@ -18,6 +18,10 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
         List<Contract> contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[0].Id,billingProfileList[0].ContractAccountCode__c);
+        List<RentProcessRule__c> ruleOne = HDT_UTL_DataFactoryTst.createRentProcessRule(1, true, true, true);
+        List<RentProcessRule__c> ruleTwo = HDT_UTL_DataFactoryTst.createRentProcessRule(1, true, false, true);
+        List<RentProcessRule__c> ruleThree = HDT_UTL_DataFactoryTst.createRentProcessRule(1, true, true, false);
+        List<RentProcessRule__c> ruleFour = HDT_UTL_DataFactoryTst.createRentProcessRule(1, true, false, false);
     }
 
     @isTest
@@ -30,7 +34,7 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
         //5. Valorizzare il campo del Customer Assisted su Account
         //6. Assert sugli ammontare
         Case testCase = [SELECT Id, TotalToPay__c FROM Case LIMIT 1];
-        Account testAccount = [SELECT Id, CustomerCode__c FROM Account];
+        Account testAccount = [SELECT Id, CustomerCode__c FROM Account LIMIT 1];
         Test.startTest();
         List<HDT_SRV_InstallmentPlans.HDT_UTL_FlowInputs> inputs = new List<HDT_SRV_InstallmentPlans.HDT_UTL_FlowInputs>();
         HDT_SRV_InstallmentPlans.HDT_UTL_FlowInputs input = new HDT_SRV_InstallmentPlans.HDT_UTL_FlowInputs();
@@ -61,21 +65,88 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
     @isTest
     static void createRequestBody()
     {
-
+        HDT_SRV_InstallmentPlans srvInstallments = new HDT_SRV_InstallmentPlans();
+        String body = '';
+        Case testCase = [SELECT Id, TotalToPay__c FROM Case LIMIT 1];
+        testCase.Amount__c = 100;
+        testCase.InstallmentNumberRequired__c = 2;
+        testCase.ExpirationDate__c = System.today();
+        testCase.DepositAmount__c = 20;
+        testCase.DepositPaymentMode__c = 'Paperless';
+        update testCase;
+        Test.startTest();
+        body = srvInstallments.createRequestBody(testCase.Id);
+        Test.stopTest();
+        System.Assert(body != '');
     }
     @isTest
     static void transcodeInstallmentPlanTst()
     {
-
+        HDT_SRV_InstallmentPlans srvInstallments = new HDT_SRV_InstallmentPlans();
+        Test.startTest();
+        String testOne = srvInstallments.transcodeInstallmentPlan(null,false);
+        String testTwo = srvInstallments.transcodeInstallmentPlan('Autorita',false);
+        String testThree = srvInstallments.transcodeInstallmentPlan('Piano Bonus',true);
+        String testFour = srvInstallments.transcodeInstallmentPlan('Piano Bonus',false);
+        String testFive = srvInstallments.transcodeInstallmentPlan('Autorita idrico',true);
+        String testSix = srvInstallments.transcodeInstallmentPlan('Autorita idrico',false);
+        String testSeven = srvInstallments.transcodeInstallmentPlan('Altro',true);
+        String testEight = srvInstallments.transcodeInstallmentPlan('Altro',false);
+        Test.stopTest();
+        System.AssertEquals('', testOne);
+        System.AssertEquals('Z001', testTwo);
+        System.AssertEquals('Z010', testThree);
+        System.AssertEquals('Z011', testFour);
+        System.AssertEquals('Z012', testFive);
+        System.AssertEquals('Z013', testSix);
+        System.AssertEquals('Z002', testSeven);
+        System.AssertEquals('Z003', testEight);
     }
     @isTest 
     static void evaluateRuleListTst()
     {
-
-    }
-    @isTest
-    static void formattingErrorMessage()
-    {
-
+        HDT_SRV_InstallmentPlans srvInstallments = new HDT_SRV_InstallmentPlans();
+        HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs output = new HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs();
+        Case testCase = [SELECT Id, TotalToPay__c FROM Case LIMIT 1];
+        testCase.ApplicationInterests__c = true;
+        testCase.CAWithOrWithoutSEPA__c = false;
+        testCase.SuspensionInThePastTwelveMonths__c = false;
+        testCase.Deposit__c = false;
+        testCase.RefundableEscape__c = false;
+        testCase.WorkStatus__c = 'In Corso';
+        update testCase;
+        Set<String> criteriaFields = new Set<String>{
+            'ApplicationInterests__c',
+            'CAWithOrWithoutSEPA__c',
+            'SuspensionInThePastTwelveMonths__c',
+            'Deposit__c',
+            'RefundableEscape__c',
+            'WorkStatus__c'};
+        Map<String, Object> criteriaMap = new Map<String, Object>();
+        for(String fieldName : criteriaFields){
+            criteriaMap.put(fieldName, testCase.get(fieldName));
+        }
+        List<RentProcessRule__c> ruleList = [SELECT Id, 
+        AmountToPayInInstallmentsFrom__c,
+        AmountToPayInInstallmentsTo__c,
+        ApplicationInterests__c,
+        ApprovalProcess__c,
+        AttachmentManagement__c,
+        CAWithOrWithoutSEPA__c,
+        Deposit__c,
+        ExistingInstallmentPlanUnpaidFrom__c,
+        ExistingInstallmentPlanUnpaidTo__c,
+        InstallmentPlanReason__c,
+        MaxInstallmentsNumber__c,
+        Category__c,
+        SuspensionInPastTwelveMonths__c,
+        RefundableEscape__c,
+        WorkStatus__c
+        FROM RentProcessRule__c];
+        Test.startTest();
+        output = srvInstallments.evaluateRuleList(ruleList, criteriaMap);
+        Test.stopTest();
+        System.Assert(output.errorMessage != '' && output.errorMessage != null);
+    
     }
 }
