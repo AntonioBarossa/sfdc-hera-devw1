@@ -85,6 +85,7 @@ export default class HdtCommercialRiassignButton extends LightningElement {
     }
 
     reject(){
+        console.log('rigettata');
         cambia({
             recordId : this.recordId,
             causale : 'No'
