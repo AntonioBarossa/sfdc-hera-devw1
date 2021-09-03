@@ -4,14 +4,28 @@ public with sharing class HDT_LC_SelfReadingTst {
     //DEBUG
     public static final String TEST_NAME = 'HDT_LC_SelfReadingTst';
     
+    //DATA
+    private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+    
     //TEST SETUP
     
     //SETUP WITH CASE MOROSITà
     private static void setupMorosita(){
+        
+        //SETUP
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+        
+        //VOLTURA ORDER
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
+        Order myOrder = ordList[0];
+        myOrder.recordTypeId = utlConstants.ORDER_RECORDTYPEID_VOLTURA;
+        myOrder.ProcessType__c = 'Voltura';
+        myOrder.Contact__c = contactList[0].Id;
+        
+        insert ordList;
+        
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
@@ -100,14 +114,14 @@ public with sharing class HDT_LC_SelfReadingTst {
     private static void updateOrderTest_true() {
         
         //DEBUG
-        String debugString = TEST_NAME + ' - ' + 'updateOrderTest';
+        String debugString = TEST_NAME + ' - ' + 'updateOrderTest_true';
         System.debug(debugString);
         
         //SETUP
-        
         setupMorosita();
         
         Order myOrder = [SELECT Id, Phase__c, RecordTypeId, RecordType.DeveloperName FROM Order];
+        
         String serialOrder = JSON.serialize(myOrder);
         String recordId = myOrder.Id;
         Boolean isRetroactive = true;
@@ -118,11 +132,14 @@ public with sharing class HDT_LC_SelfReadingTst {
         System.debug(debugString + ' - myOrder: ' + myOrder);
         
         //PROCESS CLICK
-        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
         
         //PHASE MANAGER
-        String rtId = myOrder.RecordTypeId;
-        String rtName = myOrder.RecordType.DeveloperName;
+        String rtId = utlConstants.ORDER_RECORDTYPEID_VOLTURA;
+        String rtName = utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA;
+        
+        System.debug(debugString + ' - Record Type: ' + rtId + ' ' + rtName);
+        
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Accettazione Voltura', 'Bozza', rtId, rtName,'A','','','');
         
         //TESTING
@@ -144,6 +161,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         setupMorosita();
         
         Order myOrder = [SELECT Id, Phase__c, RecordTypeId, RecordType.DeveloperName FROM Order];
+        
         String serialOrder = JSON.serialize(myOrder);
         String recordId = myOrder.Id;
         Boolean isRetroactive = true;
@@ -154,11 +172,14 @@ public with sharing class HDT_LC_SelfReadingTst {
         System.debug(debugString + ' - myOrder: ' + myOrder);
         
         //PROCESS CLICK
-        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
         
         //PHASE MANAGER
-        String rtId = myOrder.RecordTypeId;
-        String rtName = myOrder.RecordType.DeveloperName;
+        String rtId = utlConstants.ORDER_RECORDTYPEID_VOLTURA;
+        String rtName = utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA;
+        
+        System.debug(debugString + ' - Record Type: ' + rtId + ' ' + rtName);
+        
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Accettazione Voltura', 'Bozza', rtId, rtName,'A','','','');
         
         //TESTING
