@@ -6,6 +6,16 @@ public with sharing class HDT_LC_SelfReadingTst {
     
     //TEST SETUP
     
+    //SETUP WITH CASE MOROSITà
+    private static void setupMorosita(){
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        
+    }
     
     
     //TESTS
@@ -68,17 +78,23 @@ public with sharing class HDT_LC_SelfReadingTst {
         System.debug(debugString);
         
         //SETUP
+        setupMorosita();
+        Case myCase = [SELECT Id FROM Case];
+        
         Reading__c myReading = new Reading__c();
+        myReading.CaseGas__c = myCase.Id;
         insert myReading;
         String myReadingSTR = JSON.serialize(myReading);
         
         //TESTING
-        Id result = HDT_LC_SelfReading.getReadingId('Reading__c', myReading.Id, 'Gas');
+        Id result = HDT_LC_SelfReading.getReadingId('Case', myReading.Id, 'Gas');
         
         //ASSERTS
-        System.assertEquals(null, result);
+        System.assertNotEquals(null, result);
+        System.assertEquals(myReading.Id, result);
         
     }
+    
     
     //updateOrder
     
