@@ -680,7 +680,7 @@
     </picklistValues>
     <picklistValues>
         <picklist>Category__c</picklist>
-        <values>
+        <!-- <values>
             <fullName>Accedi</fullName>
             <default>false</default>
         </values>
@@ -691,16 +691,16 @@
         <values>
             <fullName>Aziende SME</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Aziende Soho</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Aziende TOP</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>Banca centrale</fullName>
             <default>false</default>
         </values>
@@ -723,32 +723,32 @@
         <values>
             <fullName>FUI non domestico</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Famiglie</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Grandi Condomini</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Intercompany</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>NRI</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Personale</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Piccoli Condomini</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Reseller - Extra Gruppo</fullName>
             <default>false</default>
         </values>
@@ -771,7 +771,7 @@
         <values>
             <fullName>VIP</fullName>
             <default>false</default>
-        </values>
+        </values> -->
     </picklistValues>
     <picklistValues>
         <picklist>CausalIncorrectBehavior__c</picklist>
