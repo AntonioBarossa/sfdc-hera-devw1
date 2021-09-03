@@ -3,7 +3,7 @@
     <fullName>SwitchInReseller__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Switch in Reseller</label>
+    <label>Switch_in_Reseller</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
