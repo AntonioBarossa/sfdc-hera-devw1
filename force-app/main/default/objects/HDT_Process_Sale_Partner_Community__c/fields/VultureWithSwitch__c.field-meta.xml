@@ -3,7 +3,7 @@
     <fullName>VultureWithSwitch__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Voltura con Switch</label>
+    <label>Voltura_con_Switch</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

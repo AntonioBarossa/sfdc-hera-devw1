@@ -3,7 +3,7 @@
     <fullName>FirstActivationInresolution__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Prima Attivazione In delibera</label>
+    <label>Prima_Attivazione_In_delibera</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

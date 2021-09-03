@@ -115,13 +115,26 @@ public with sharing class HDT_UTL_Constants {
     public final String CASE_RECORDTYPEID_MOROSITA =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA).getRecordTypeId();
 
+    // Order RecordType Connessione Con Attivazione
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE = 'HDT_RT_ConnessioneConAttivazione';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE).getRecordTypeId();
+
+     // Order RecordType Temporanea Nuova Att
+     @AuraEnabled
+     public final String ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT = 'HDT_RT_TemporaneaNuovaAtt';
+     @AuraEnabled
+     public final String ORDER_RECORDTYPEID_TEMPORANEANUOVAATT =
+     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT).getRecordTypeId();
+
     //@anbuzzi 31/08 Case RecordType Documentale/Copia Contratto
     @AuraEnabled
     public final String CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO = 'HDT_RT_DocCopiaContratto';
     @AuraEnabled
     public final String CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO).getRecordTypeId();
-    
     
     //ServicePoint RecordType Punto Elettrico
     @AuraEnabled
@@ -163,6 +176,10 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String PERMISSIONSET_HDT_APEXCLASSES = 'HDT_ApexClasses';
 
+    //Voltura Retroattiva Permission set
+    @AuraEnabled
+    public final string PERMISSIONSET_HDT_VOLTURARETROATTIVA = 'HDT_VolturaRetroattiva';
+
     //Contact Point picklist domains
     @AuraEnabled
     public final String CONTACTPOINT_STATUS_VERIFICATO = 'Verificato';
@@ -182,6 +199,7 @@ public with sharing class HDT_UTL_Constants {
     Schema.SObjectType.Knowledge__kav.getRecordTypeInfosByDeveloperName().get(KNOWLEDGEARTICLE_RECORDTYPE_DEVELOPERNAME_FAQ).getRecordTypeId();
     
 
+     
     //Custom Permissions
     @AuraEnabled
     public final string CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN = 'HDT_CP_SalesforceCPQAdmin';

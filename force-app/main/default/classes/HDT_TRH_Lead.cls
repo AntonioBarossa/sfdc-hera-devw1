@@ -54,7 +54,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         l.company = l.firstname + ' '  + l.lastname; 
                     }
                     }
-            }
+            } 
         }
       /*  for(Lead l : listlead){
             if('Default'.equals(l.company)){

@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 23/06/2021
+* @description HDT_QR_MatriceAgenti
+* @history Lorenzo – 23/06 – created class
+*/
 public with sharing class HDT_QR_MatriceAgenti {
     public static List<HDT_MatriceSocietaVendita__mdt> getAgente(String fornitura,String comune,string marcatura,String offerta){
         return [SELECT Service__c, isActive__c, Marcatura__c, Comune__c, SellerCompany__c, SalesCompanyCode__c, Offerta__c, QualifiedApiName, Label, NamespacePrefix, DeveloperName, Id 
