@@ -436,13 +436,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCaseNuovoImpianto.ConnectionType__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Permanente</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>GetCaseNuovoImpianto.Contract__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -454,6 +447,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>getContract.BillingProfile__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NuovoImpAggAttButton</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -698,6 +698,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Predefaults</name>
+        <label>Predefaults</label>
+        <locationX>1789</locationX>
+        <locationY>541</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Gas</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.ConnectionType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Permanente</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaPredefaults</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1438,10 +1461,10 @@
     <decisions>
         <name>Riprendi_Case</name>
         <label>Riprendi Case</label>
-        <locationX>1519</locationX>
-        <locationY>454</locationY>
+        <locationX>1548</locationX>
+        <locationY>490</locationY>
         <defaultConnector>
-            <targetReference>CommodityScreen</targetReference>
+            <targetReference>Predefaults</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Creazione</defaultConnectorLabel>
         <rules>
@@ -1455,7 +1478,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Processo_Screen</targetReference>
+                <targetReference>CommodityScreen</targetReference>
             </connector>
             <label>Riprendi</label>
         </rules>
@@ -1814,6 +1837,11 @@
         <expression>IF(NOT(ISBLANK({!Get_Input_Case_0.CommodityFormula__c})),{!Get_Input_Case_0.CommodityFormula__c},TEXT({!Get_Input_Case_0.Commodity__c}))</expression>
     </formulas>
     <formulas>
+        <name>NuovoImpAggAttCommodity</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!Get_Input_Case.Type}) &amp; &quot; &quot; &amp; &quot;commodity&quot;</expression>
+    </formulas>
+    <formulas>
         <name>OperationCodeFormula</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!Calcola_Info_Preventivo.OperationCode__c}), &quot;&quot;,{!Calcola_Info_Preventivo.OperationCode__c})</expression>
@@ -2145,12 +2173,22 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         </connector>
         <inputReference>GetCaseNuovoImpianto</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaPredefaults</name>
+        <label>AggiornaPredefaults</label>
+        <locationX>1697</locationX>
+        <locationY>650</locationY>
+        <connector>
+            <targetReference>CommodityScreen</targetReference>
+        </connector>
+        <inputReference>Get_Input_Case</inputReference>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>CommodityScreen</name>
         <label>CommodityAddressScreen</label>
-        <locationX>1679</locationX>
-        <locationY>764</locationY>
+        <locationX>1660</locationX>
+        <locationY>770</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2243,7 +2281,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Nuovo Impianto - Aggiunta Attacco commodity</stringValue>
+                    <elementReference>NuovoImpAggAttCommodity</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2478,7 +2516,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <elementReference>PreviousButtonFormula</elementReference>
+                    <elementReference>NuovoImpAggAttButton</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -3073,6 +3111,16 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <isOutput>false</isOutput>
         <value>
             <stringValue>LocalDispatcher__c</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>NuovoImpAggAttButton</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>
