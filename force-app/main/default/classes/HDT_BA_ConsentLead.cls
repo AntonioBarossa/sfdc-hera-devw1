@@ -3,6 +3,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 
 		public String runId;
 		public String status;
+		public Integer fileNumber;
 		public String errorMessage;
 		public List<Id> listIdContentVersion = new List<Id>();
 		public Set<String> setEmailContactProcessed = new Set<String>();
@@ -10,6 +11,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 		
 		public HDT_BA_ConsentLead(String paramRunId){
 		   this.runId=paramRunId;
+		   this.fileNumber=0;
 		}
 	
 		public Database.QueryLocator start(Database.BatchableContext bc) {
@@ -144,12 +146,12 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 					cv.VersionData = generateFileBlob;
 					Date runDate= Date.today();
 					// il nome heradmp_firstpartydata_ potrebbe essere reso dinamico 
-					cv.Title = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day());
-					cv.PathOnClient = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day())+'.csv';
+					cv.Title = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day())+'_'+String.valueOf(fileNumber);
+					cv.PathOnClient = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day())+'_'+String.valueOf(fileNumber)+'.csv';
 					insert cv;
-
+					fileNumber=fileNumber+1;
 					listIdContentVersion.add(cv.Id);
-		  		}
+		  		}	  
 			} catch (Exception e) {
 				System.debug('Exception : '+e.getMessage());
 				status='failed';
@@ -160,7 +162,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 		public void finish(Database.BatchableContext bc){
 			
 			System.debug('Finish HDT_BA_ConsentLead ');
-			HDT_BA_ConsentContact consentContact = new HDT_BA_ConsentContact(runId,status,errorMessage,listIdContentVersion,setEmailContactProcessed); 
+			HDT_BA_ConsentContact consentContact = new HDT_BA_ConsentContact(fileNumber,runId,status,errorMessage,listIdContentVersion,setEmailContactProcessed); 
 			Id batchprocessid = Database.executeBatch(consentContact,1000);
 
 		}

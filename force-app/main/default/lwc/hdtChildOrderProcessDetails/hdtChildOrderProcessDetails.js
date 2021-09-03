@@ -2281,7 +2281,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'disabled': true,
                         'value': '',
                         'processVisibility': ''
-                    }
+                    },
+                    new fieldData(
+                        'Modalità di Fatturazione VAS','VASBillingMode__c',
+                        this.typeVisibility('both'), 
+                        false, true, '',''
+                    )
                 ]
             },
             {
@@ -2290,7 +2295,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'dateOrdine',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta') && this.order.ParentOrder__r.ContractSigned__c,
+                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta') && this.order.ParentOrder__r.ContractSigned__c,
                 data: [
                     {
                         'label': 'Data Firma',
@@ -2301,7 +2306,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'value': this.order.ParentOrder__r.SignedDate__c,
                         'processVisibility': ''
                     },
-                    {
+                    /*{
                         'label': 'Data Massima Ripensamento',
                         'apiname': 'MaxAfterthoughtDate__c',
                         'typeVisibility': this.typeVisibility('both'),
@@ -2309,7 +2314,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'disabled': true,
                         'value': '',
                         'processVisibility': ''
-                    },
+                    },*/
                     {
                         'label': 'Attivazione Posticipata',
                         'apiname': 'IsActivationDeferred__c',

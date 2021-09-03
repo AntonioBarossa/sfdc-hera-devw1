@@ -7,7 +7,7 @@
     </customValue>
     <customValue>
         <fullName>Info commerciali</fullName>
-        <default>false</default>
+        <default>true</default>
         <label>Info commerciali</label>
     </customValue>
     <customValue>

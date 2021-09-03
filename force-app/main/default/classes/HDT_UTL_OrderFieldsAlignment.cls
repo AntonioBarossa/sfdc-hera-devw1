@@ -362,6 +362,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.VASType__c=mainItems[0].Product2.Family;
             orderToUpdate.VASSubtype__c=mainItems[0].Product2.Name.abbreviate(30);
             orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
+            orderToUpdate.VASBillingMode__c= mainItems[0].VASBillingMode__c;
         }
     }
 

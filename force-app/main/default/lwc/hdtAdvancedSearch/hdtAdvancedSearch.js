@@ -220,7 +220,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     closeModal() {
         this.confirmButtonDisabled=true;
         this.openmodel = false;
-        if(this.serviceRequestId != null && this.isIncompatible){
+        if(this.serviceRequestId != null && !this.isIncompatible){
             this.dispatchEvent(new CustomEvent('servicepointselection', {
                 detail: this.rowToSend
             }));
