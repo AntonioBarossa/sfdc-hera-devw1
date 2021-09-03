@@ -200,6 +200,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         setupMorosita();
         
         Order myOrder = [SELECT Id, Phase__c, RecordTypeId, RecordType.DeveloperName FROM Order];
+        myOrder.RetroactiveDate__c = Date.today();
         
         String serialOrder = JSON.serialize(myOrder);
         String recordId = myOrder.Id;
