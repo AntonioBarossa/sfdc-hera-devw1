@@ -203,7 +203,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         
         String serialOrder = JSON.serialize(myOrder);
         String recordId = myOrder.Id;
-        Boolean isRetroactive = false;
+        Boolean isRetroactive = true;
         Boolean isReading = false;
         Date rcd = Date.today();
         Boolean completed = false;
