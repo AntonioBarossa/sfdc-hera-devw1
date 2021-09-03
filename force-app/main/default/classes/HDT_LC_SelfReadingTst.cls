@@ -164,7 +164,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         
         String serialOrder = JSON.serialize(myOrder);
         String recordId = myOrder.Id;
-        Boolean isRetroactive = true;
+        Boolean isRetroactive = false;
         Boolean isReading = true;
         Date rcd = Date.today().addDays(-1);
         Boolean completed = false;
@@ -198,6 +198,62 @@ public with sharing class HDT_LC_SelfReadingTst {
         
         //SETUP
         setupMorosita();
+        
+        Order myOrder = [SELECT Id, Phase__c, RecordTypeId, RecordType.DeveloperName FROM Order];
+        
+        String serialOrder = JSON.serialize(myOrder);
+        String recordId = myOrder.Id;
+        Boolean isRetroactive = false;
+        Boolean isReading = false;
+        Date rcd = Date.today();
+        Boolean completed = false;
+        
+        System.debug(debugString + ' - myOrder: ' + myOrder);
+        
+        //PROCESS CLICK
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        
+        //PHASE MANAGER
+        String rtId = utlConstants.ORDER_RECORDTYPEID_VOLTURA;
+        String rtName = utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA;
+        
+        System.debug(debugString + ' - Record Type: ' + rtId + ' ' + rtName);
+        
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Accettazione Voltura', 'Bozza', rtId, rtName,'A','','','');
+        
+        //TESTING EXCEPTION 1
+        Boolean caught_1 = false;
+        try{
+            String result = HDT_LC_SelfReading.updateOrder(serialOrder, recordId, isRetroactive, isReading, rcd, completed);
+
+        } catch (Exception e) {
+            caught_1 = true;
+            System.assert(e.getMessage().contains('La Data Retroattiva deve essere nel passato'));
+            
+        }
+        
+        //ASSERTS EXCEPTION 1
+        System.assert(caught_1);
+        
+        
+       
+        //TESTING EXCEPTION 2
+        Boolean caught_2 = false;
+        rcd = Date.today().addDays(-1);
+        myOrder.SignedDate__c = Date.today().addDays(1);
+        serialOrder = JSON.serialize(myOrder);
+        
+        try{
+            String result = HDT_LC_SelfReading.updateOrder(serialOrder, recordId, isRetroactive, isReading, rcd, completed);
+
+        } catch (Exception e) {
+            caught_2 = true;
+            System.assert(e.getMessage().contains('La Data Firma non può essere nel futuro'));
+            
+        }
+        
+        //ASSERTS EXCEPTION 2
+        System.assert(caught_2);
         
     }
     
