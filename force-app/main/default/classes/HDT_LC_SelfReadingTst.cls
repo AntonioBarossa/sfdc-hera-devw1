@@ -87,7 +87,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         String myReadingSTR = JSON.serialize(myReading);
         
         //TESTING
-        Id result = HDT_LC_SelfReading.getReadingId('Case', myReading.Id, 'Gas');
+        Id result = HDT_LC_SelfReading.getReadingId('Case', myCase.Id, 'Gas');
         
         //ASSERTS
         System.assertNotEquals(null, result);
@@ -95,8 +95,75 @@ public with sharing class HDT_LC_SelfReadingTst {
         
     }
     
-    
     //updateOrder
+    @isTest
+    private static void updateOrderTest_true() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'updateOrderTest';
+        System.debug(debugString);
+        
+        //SETUP
+        
+        setupMorosita();
+        
+        Order myOrder = [SELECT Id FROM Order];
+        String serialOrder = JSON.serialize(myOrder);
+        String recordId = myOrder.Id;
+        Boolean isRetroactive = true;
+        Boolean isReading = true;
+        Date rcd = Date.today().addDays(-1);
+        Boolean completed = true;
+        
+        //PHASE MANAGER
+        
+        
+        //TESTING
+        String result = HDT_LC_SelfReading.updateOrder(serialOrder, recordId, isRetroactive, isReading, rcd, completed);
+        
+        //ASSERTS
+        System.assertEquals(null, result);
+        
+    }
+    
+    @isTest
+    private static void updateOrderTest_false() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'updateOrderTest_false';
+        System.debug(debugString);
+        
+        //SETUP
+        setupMorosita();
+        
+        Order myOrder = [SELECT Id FROM Order];
+        String serialOrder = JSON.serialize(myOrder);
+        String recordId = myOrder.Id;
+        Boolean isRetroactive = true;
+        Boolean isReading = true;
+        Date rcd = Date.today().addDays(-1);
+        Boolean completed = false;
+        
+        //TESTING
+        String result = HDT_LC_SelfReading.updateOrder(serialOrder, recordId, isRetroactive, isReading, rcd, completed);
+        
+        //ASSERTS
+        System.assertEquals(null, result);
+    }
+    
+    @isTest
+    private static void updateOrderTest_causingExcpts() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'updateOrderTest_causingExcpts';
+        System.debug(debugString);
+        
+        //SETUP
+        setupMorosita();
+        
+    }
+    
+    
     
     
     //getRecordTypeId
@@ -108,13 +175,6 @@ public with sharing class HDT_LC_SelfReadingTst {
     /*
     
     @AuraEnabled
-    public static void updateSelfReading(String fields){
-    }
-
-    @AuraEnabled
-    public static Id getReadingId(String objectName, Id objectId, String commodity){
-    }
-
     @AuraEnabled
     public static string updateOrder(String fields, String recordId, Boolean isRetroactive, Boolean isReading, Date readingCustomerDate,Boolean completed){
 
