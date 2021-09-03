@@ -257,27 +257,45 @@ public with sharing class HDT_LC_SelfReadingTst {
     }
     
     
-    
-    
     //getRecordTypeId
+    @isTest
+    private static void getRecordTypeIdTest() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'getRecordTypeIdTest';
+        System.debug(debugString);
+        
+        //TESTING
+        Id result = HDT_LC_SelfReading.getRecordTypeId('Gas');
+        
+        //RETRIEVING DATA
+        RecordType recType = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_LetturaGas' WITH SECURITY_ENFORCED];
+        
+        //ASSERTS
+        System.assertEquals(recType.Id, result);
+        
+    }
     
     
     //checkLastReadings
+    @isTest
+    private static void checkLastReadingsTest() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'checkLastReadingsTest';
+        System.debug(debugString);
+        
+        //SETUP
+        setupMorosita();
+        
+        //SERVICE POINT
+        
+        
+        
+    }
     
     
     /*
-    
-    @AuraEnabled
-    @AuraEnabled
-    public static string updateOrder(String fields, String recordId, Boolean isRetroactive, Boolean isReading, Date readingCustomerDate,Boolean completed){
-
-    }
-
-
-    @AuraEnabled
-    public static string getRecordTypeId(String commodity){
-
-    }
 
     @AuraEnabled
     public static String checkLastReadings(String servicePointId){
