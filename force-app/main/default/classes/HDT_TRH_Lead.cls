@@ -54,10 +54,10 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         l.company = l.firstname + ' '  + l.lastname; 
                     }
                     }
-            }
+            } //HRAWRM-388 03/09/2021
             if (String.isBlank(l.ContactReason__c)) {
                 l.ContactReason__c='Info commerciali';
-            }
+            }//HRAWRM-388 03/09/2021
         }
       /*  for(Lead l : listlead){
             if('Default'.equals(l.company)){
