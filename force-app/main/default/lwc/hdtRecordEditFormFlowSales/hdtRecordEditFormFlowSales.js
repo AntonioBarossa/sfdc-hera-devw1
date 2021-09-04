@@ -18,10 +18,12 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
     @api acceptedFormats = ['.pdf', '.png'];
     @api statoApp = 'Nessuna Richiesta Inviata';
     @api saveInDraft;
+    @api disabledInp = false;
     @api cancelCase;
     @api isRunFromFlow= false;
     @track showOperationSubType= false;
     @track selectedOperationType;
+    @track selectedOperationSubType;
     @track showSubmitForApprovalButton=false;
     @track disableConfirmButton= false;
     @track preloading= false;
@@ -66,6 +68,8 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
         let casefields = this.template.querySelectorAll('lightning-input-field');
         let cs ={}; 
         casefields.forEach(function(element){
+            console.log('******:' + element.value);
+            console.log('******:' + element.fieldName);
             if(element.fieldName=="Contract__c"){
                 if(element.value!= null && element.value!= ""){
                     cs.Contract__c=element.value;
@@ -73,6 +77,11 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
             }else if(element.fieldName=="ReassignmentReason__c"){
                 if(element.value!= null){
                     cs.ReassignmentReason__c=element.value;
+                }
+            }
+            else if(element.fieldName=="Note__c"){
+                if(element.value!= null && element.value!= ""){
+                    cs.Note__c=element.value;
                 }
             }
         },this);
@@ -231,13 +240,13 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
         getActivity({caseId: this.recordid}).then(result => {
             console.log("resu" + JSON.stringify(result));
             if(result != null ){
-                if(result.Approved__c == 'SI'){
-                    this.statoApp = 'APPROVATO';
-                }else if (result.Approved__c == 'NO'){
-                    this.statoApp = 'RIFIUTATO';
-                }
-                else{
-                    this.statoApp = 'IN ATTESA DI APPROVAZIONE';
+                let cas = result.c;
+                this.disabledInp= result.disabled;
+                this.selectedOperationSubType = cas.OperationSubType__c;
+                this.selectedOperationType = cas.OperationType__c;
+                if(this.selectedOperationType == 'Bonus commerciale'){
+                    this.showOperationSubType = true;
+                    this.selectedOperationSubType = cas.OperationSubType__c;
                 }
             }
             console.log("SONO RIGA 222");

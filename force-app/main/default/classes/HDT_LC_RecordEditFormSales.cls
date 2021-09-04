@@ -9,6 +9,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
     public static HDT_SRV_Case caseSRV= new HDT_SRV_Case();
     public static HDT_SRV_ActivityCustom activitySrv= new HDT_SRV_ActivityCustom();
     public static HDT_QR_RecordType rctype= new HDT_QR_RecordType();
+    public static HDT_QR_Case caseQr = new HDT_QR_Case();
     @AuraEnabled
     public static void cancelCase(String caseId){
         try {
@@ -19,15 +20,25 @@ public with sharing class HDT_LC_RecordEditFormSales {
         }
     }
     @AuraEnabled
-    public static wrts_prcgvr__Activity__c getActivity(String caseId){
-        List<wrts_prcgvr__Activity__c> obbList = HDT_QR_ActivityCustom.getRecordByCaseId(caseid);
-        wrts_prcgvr__Activity__c res;
-        if(obbList != null && !obbList.isEmpty()){
-            res = obbList[0];
-        }
-        return res;
+    public static wrapReturn getActivity(String caseId){
+        List<Case> caseList = caseQr.getRecordsById(new List<String>{caseId},'id,OperationSubType__c,OperationType__c');
+        List<wrts_prcgvr__Activity__c> listActiv = HDT_QR_ActivityCustom.getRecordByCaseId(caseId);
+        Case res = new Case();
+        wrapReturn wrp = new wrapReturn();
+        wrp.c = res;
 
+        //List<wrts_prcgvr__Activity__c> obbList = HDT_QR_ActivityCustom.getRecordByCaseId(caseid);
+      //  wrts_prcgvr__Activity__c res;
+        if(caseList != null && !caseList.isEmpty()){
+            res = caseList[0];
+        } 
+        if(listActiv != null && !listActiv.isEmpty() && listActiv[0].approved__c != null){
+            wrp.disabled = true;
+        }
+        wrp.c = res;
+        return wrp;
     }
+
     
     @AuraEnabled
     public static Boolean confirmForApproval(String caseId, String accountId){
@@ -72,9 +83,12 @@ public with sharing class HDT_LC_RecordEditFormSales {
             if(caseob.containsKey('OperationType__c')){
                 cs.put('OperationType__c',String.valueOf(caseob.get('OperationType__c')));
             }
+            if(caseob.containsKey('Note__c')){
+                cs.put('Note__c',String.valueOf(caseob.get('Note__c')));
+            }
            // caseSRV.updateRecord(cs); 
             List<wrts_prcgvr__Activity__c> activities= HDT_QR_ActivityCustom.getRecordByCaseId(caseId);
-            if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Chiusa' && activities[0].approved__c == 'Si'){
+            if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Completed' && activities[0].approved__c == 'Si'){
                 caseSRV.updateRecord(cs); 
                 Id recTypeId= null;
                 RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
@@ -86,10 +100,10 @@ public with sharing class HDT_LC_RecordEditFormSales {
                 activitySrv.createRecord(activity);
                 return 'success';
             }
-            else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Chiusa' && activities[0].approved__c == 'No'){
+            else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Completed' && activities[0].approved__c == 'No'){
                 return 'annulla';
             }
-            else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c != 'Chiusa'){
+            else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c != 'Completed'){
                 return 'aperta';
             }
             else{
@@ -116,9 +130,17 @@ public with sharing class HDT_LC_RecordEditFormSales {
             if(caseob.containsKey('OperationType__c')){
                 cs.put('OperationType__c',String.valueOf(caseob.get('OperationType__c')));
             }
+            if(caseob.containsKey('Note__c')){
+                cs.put('Note__c',String.valueOf(caseob.get('Note__c')));
+            }
             caseSRV.updateRecord(cs); 
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
+    }
+   
+    public class wrapReturn{
+        @AuraEnabled public Case c {get;set;}
+        @AuraEnabled public boolean disabled = false;
     }
 }

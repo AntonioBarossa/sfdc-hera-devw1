@@ -1,6 +1,7 @@
 import { LightningElement,api,wire } from 'lwc';
 import getRecord from '@salesforce/apex/HDT_QR_ActivityCustom.getRecordByIdS';
 import riassegna from '@salesforce/apex/HDT_UTL_ActivityCustom.riassegnaComCod';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import cambia from '@salesforce/apex/HDT_UTL_ActivityCustom.cambiaphaseComm';
 
 export default class HdtCommercialRiassignButton extends LightningElement {
@@ -84,6 +85,7 @@ export default class HdtCommercialRiassignButton extends LightningElement {
     }
 
     reject(){
+        console.log('rigettata');
         cambia({
             recordId : this.recordId,
             causale : 'No'
