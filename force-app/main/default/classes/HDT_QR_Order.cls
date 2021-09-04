@@ -633,6 +633,41 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    public List<Order> getRecordsNotActivated(String accountId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            OrderNumber,
+            Status,
+            SalesCompany__c,
+            Agency__c,
+            Market__c,
+            Channel__c,
+            FriendCode__c,
+            CampaignCode__c,
+            CreatedBy__c,
+            SBQQ__Quote__c,
+            SBQQ__Quote__r.IsVAS__c,
+            SBQQ__Quote__r.AmendmentAllowed__c,
+            RecordTypeId,
+            RecordType.DeveloperName,
+            ProcessType__c,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            ServicePoint__r.SupplyAddress__c
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND RecordType.DeveloperName != null
+            AND RecordType.DeveloperName != 'HDT_RT_OrderDossier'
+            AND SBQQ__Quote__r.IsVAS__c != true
+            AND SBQQ__Quote__r.AmendmentAllowed__c != true
+            AND Status NOT IN ('Activated', 'Annullato')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     public List<Order> getRecordByOrderNumber(String orderNumber){
         return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
