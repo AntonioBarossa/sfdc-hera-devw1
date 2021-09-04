@@ -76,8 +76,9 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Subentro Gas', 'HDT_RT_Subentro','A01', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Subentro Ele', 'HDT_RT_Subentro','A10', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Prima Attivazione Ele', 'HDT_RT_Attivazione','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Prima Attivazione In delibera', 'HDT_RT_Attivazione','A40', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
-            new HDT_WRP_Process('Prima Attivazione Fuori delibera', 'HDT_RT_Attivazione','A01', new Set<String>{'Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
+            new HDT_WRP_Process('Prima Attivazione', 'HDT_RT_Attivazione','', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
+            // new HDT_WRP_Process('Prima Attivazione In delibera', 'HDT_RT_Attivazione','A40', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
+            // new HDT_WRP_Process('Prima Attivazione Fuori delibera', 'HDT_RT_Attivazione','A01', new Set<String>{'Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Prima Attivazione con modifica', 'HDT_RT_AttivazioneConModifica','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', false, false, false, true, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Connessione con Attivazione', 'HDT_RT_ConnessioneConAttivazione','PN1', new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Temporanea - Nuova Attivazione', 'HDT_RT_TemporaneaNuovaAtt', getTempNewActivationCode(), new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false, false),
@@ -91,10 +92,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Switch In Fittizio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', true, false, false, false, null, false, false, false),
             new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', false, true, false),
             new HDT_WRP_Process('Switch In Winback', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', false, true, false),
-            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, false, false),
-            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, true, false),
-            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, false, false, false, false, 'HDT_RT_Gas', false, true, false),
+            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', false, false, false),
+            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
+            new HDT_WRP_Process('Switch In Ele', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', false, true, false),
+            new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, true, false),
             new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VT1', new Set<String>{'Inattivo','Bozza','Attivo'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VTG', new Set<String>{'Inattivo','Bozza','Attivo'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Switch in Reseller', 'HDT_RT_SwitchIn','', new Set<String>{'Attivo'}, new Set<String>(), 'Si', false, false, false, false, null, false, false, true),//temporarily commented
@@ -362,12 +363,12 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
    /**
    * @description filtra la lista lProcess in base al CustomSetting HDT_Process_Sale_Partner_Community__c 
    * per aggiungere un processo alla lista inserire un nuovo campo boolean nel CustomSetting HDT_Process_Sale_Partner_Community__c,
-   * la label del campo deve essere uguale al nome del processo.
+   * la label del campo deve essere uguale al nome del processo e gli spazzi devono essere sostituiti dal carattere "_".
    * @param lProcess 
    * @return List<HDT_WRP_Process> 
    **/
 
-   public  static List<HDT_WRP_Process> utilityOrderProcessAssignment(List<HDT_WRP_Process> lProcess){
+  public  static List<HDT_WRP_Process> utilityOrderProcessAssignment(List<HDT_WRP_Process> lProcess){
         System.debug('HDT_UTL_OrderProcessAssignment.utilityOrderProcessAssignment');
         List<HDT_WRP_Process> toReturn = new List<HDT_WRP_Process>();
         String type='HDT_Process_Sale_Partner_Community__c';
@@ -375,30 +376,38 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
         Schema.SObjectType objSchema = schemaMap.get(type);
         Map<String, Schema.SObjectField> fieldMap = objSchema.getDescribe().fields.getMap();
+        Map<String, HDT_WRP_Process> mapProcess = new Map<String, HDT_WRP_Process>();
 
         for (String fieldName: fieldMap.keySet()) { 
-            mapLabelToApi.put(fieldMap.get(fieldName).getDescribe().getLabel(),fieldName);
+            String tempKey=(String)fieldMap.get(fieldName).getDescribe().getLabel().toUppercase().replace('_', ''); 
+            mapLabelToApi.put(tempKey,String.valueOf(fieldName));
         }
-
+ 
         Id pid=userinfo.getProfileId();
         HDT_Process_Sale_Partner_Community__c mhc = HDT_Process_Sale_Partner_Community__c.getInstance(pid);
-        Map<String,Object> objectToMap = (Map<String,Object>) JSON.deserializeUntyped(JSON.serialize(mhc));
-        map<string,string> newMap= new Map<string,string>();
-
-        for(String strKey: objectToMap.keyset()){
-            newMap.put(strKey, String.valueof(objectToMap.get(strKey)));
-        }
-        
-        System.debug(newMap);
-       
-        for (HDT_WRP_Process proc : lProcess) {
-            if (newMap.get(proc.processType)!=null && 'true'.equalsIgnoreCase(newMap.get(proc.processType)) ) {
-                toReturn.add(proc);
+        System.debug('mhc : '+mhc);
+        if (mhc.name!=null) {
+            Map<String,Object> objectToMap = (Map<String,Object>) JSON.deserializeUntyped(JSON.serialize(mhc));
+            map<string,string> newMap= new Map<string,string>();
+            for(String strKey: objectToMap.keyset()){
+                newMap.put(strKey.removeEnd('__c').toUpperCase(), String.valueof(objectToMap.get(strKey)));
             }
+
+            for (HDT_WRP_Process proc : lProcess) {
+                String key=String.valueOf(proc.processType).toUppercase().deleteWhitespace();
+                System.debug('key : '+key); 
+                if (mapLabelToApi.get(key)!=null &&newMap.get(mapLabelToApi.get(key).removeEnd('__c').toUpperCase()) !=null && 'true'.equalsIgnoreCase(newMap.get(mapLabelToApi.get(key).removeEnd('__c').toUpperCase()) ) ) {
+                    System.debug('if ok');
+                    toReturn.add(proc);
+                }
+            }
+            System.debug('toReturn : '+toReturn.size() );
         }
-        System.debug('toReturn : '+toReturn.size() );
+        else {
+                toReturn=lProcess;
+        }
+        System.debug('toReturn :' + toReturn);
+
         return toReturn;
-
-   }
+    }
 }
-

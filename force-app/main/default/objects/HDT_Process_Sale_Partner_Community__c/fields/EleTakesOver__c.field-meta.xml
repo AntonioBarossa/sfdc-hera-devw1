@@ -3,7 +3,7 @@
     <fullName>EleTakesOver__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Subentro Ele</label>
+    <label>Subentro_Ele</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

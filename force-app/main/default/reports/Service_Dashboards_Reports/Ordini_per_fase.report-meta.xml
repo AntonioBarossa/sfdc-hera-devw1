@@ -11,9 +11,9 @@
         <chartType>HorizontalBar</chartType>
         <enableHoverLabels>false</enableHoverLabels>
         <expandOthers>true</expandOthers>
-        <groupingColumn>Case.Phase__c</groupingColumn>
+        <groupingColumn>Order.Phase__c</groupingColumn>
         <location>CHART_BOTTOM</location>
-        <showAxisLabels>true</showAxisLabels>
+        <showAxisLabels>false</showAxisLabels>
         <showPercentage>false</showPercentage>
         <showTotal>false</showTotal>
         <showValues>false</showValues>
@@ -25,49 +25,44 @@
         <titleSize>18</titleSize>
     </chart>
     <columns>
-        <field>CASE_NUMBER</field>
+        <field>ORDER_NUMBER</field>
     </columns>
     <columns>
-        <field>CREATED_DATE</field>
+        <field>ORDER_CREATED_DATE</field>
     </columns>
     <columns>
-        <field>LAST_UPDATE</field>
+        <field>ORDER_LAST_UPDATE</field>
     </columns>
     <columns>
-        <field>LAST_UPDATE_BY</field>
+        <field>UPDATEDBY.NAME</field>
     </columns>
     <filter>
         <criteriaItems>
-            <column>Case.Phase__c</column>
+            <column>Order.Phase__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>Comunicazione verso Heroku KO,Errore invio a DL/SII,Flusso bloccato in assenza del precedente</value>
+            <value>Comunicazione verso Heroku KO,Comunicazione verso Motore VAS KO</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>Case.Phase__c</field>
+        <field>Order.Phase__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Casi per fase</name>
-    <params>
-        <name>units</name>
-        <value>h</value>
-    </params>
+    <name>Ordini per fase</name>
     <params>
         <name>co</name>
         <value>1</value>
     </params>
-    <reportType>CaseList</reportType>
-    <scope>organization</scope>
+    <reportType>OrderList</reportType>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
-        <dateColumn>CREATED_DATEONLY</dateColumn>
+        <dateColumn>ORDER_EFFECTIVE_DATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
     </timeFrameFilter>
 </Report>
