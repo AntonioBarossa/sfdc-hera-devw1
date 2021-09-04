@@ -45,10 +45,8 @@
     &quot;Required&quot;: true,
     &quot;Column&quot;: 2
   },
-
-
 {
-    &quot;FieldName&quot;: &quot;AccountholderTypeBeneficiary__c&quot;,
+    &quot;FieldName&quot;: &quot;SignatoryType__c&quot;,
     &quot;Required&quot;: true,
     &quot;Column&quot;: 1
   },
@@ -66,11 +64,6 @@
     &quot;FieldName&quot;: &quot;BankAccountSignatoryLastName__c&quot;,
     &quot;Required&quot;: true,
     &quot;Column&quot;: 1
-  },
- {
-    &quot;FieldName&quot;: &quot;BillingProfile__c&quot;,
-    &quot;Required&quot;: true,
-    &quot;Column&quot;: 2
   },
 {
     &quot;FieldName&quot;: &quot;OfficeSubjectCode__c&quot;,
@@ -101,11 +94,16 @@
     <values>
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[
-    {
-        &quot;FieldName&quot; : &quot;ServicePointCodeFormula__c&quot;,
-        &quot;Required&quot;   : true,
-        &quot;Column&quot;   : 1
-    }
+{
+&quot;FieldName&quot; : &quot;ServicePointCode__c&quot;,
+&quot;Required&quot; : true,
+&quot;Column&quot; : 1
+},
+ {
+    &quot;FieldName&quot;: &quot;BillingProfile__c&quot;,
+    &quot;Required&quot;: true,
+    &quot;Column&quot;: 2
+  }
 ]</value>
     </values>
     <values>
