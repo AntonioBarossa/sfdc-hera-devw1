@@ -3,7 +3,7 @@
     <fullName>ChangeOfEleOffer__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Cambio Offerta Ele</label>
+    <label>Cambio_Offerta_Ele</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

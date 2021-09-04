@@ -334,10 +334,14 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
             updateRecord(recordInput)
                 .then(() => {
                     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
-                    updateContactForScartoDocumentale({oldPhone: oldPhoneValue,
-                                                       oldEmail: oldEmailValue,
-                                                       newPhone: resultWrapper.phone,
-                                                       newMail: resultWrapper.email});
+                    try {
+                        updateContactForScartoDocumentale({oldPhone: this.oldPhoneValue,
+                            oldEmail: this.oldEmailValue,
+                            newPhone: resultWrapper.phone,
+                            newMail: resultWrapper.email});
+                    } catch (error) {
+                      console.error('updateContactForScartoDocumentale exception: ',JSON.stringify(error));
+                    }
                     //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
                     // Display fresh data in the form
                     console.log('Record aggiornato');

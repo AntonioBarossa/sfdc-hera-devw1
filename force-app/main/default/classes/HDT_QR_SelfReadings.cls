@@ -22,6 +22,7 @@ public inherited sharing class HDT_QR_SelfReadings {
             List<String> queryParameters = new List<String> { relationshipName, objectName };
             String query = String.format(queryTemplate, queryParameters);
 
+            System.debug('Query: ' + query);
             List<SObject> objects = Database.query(query);
 
             List<Reading__c> objReadings = objects[0].getSObjects(relationshipName);

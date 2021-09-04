@@ -677,6 +677,10 @@
             <fullName>Gestione Scarto</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Processo incompatibile</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Category__c</picklist>

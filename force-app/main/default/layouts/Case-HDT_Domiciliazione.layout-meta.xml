@@ -323,6 +323,7 @@
         <fields>AttachmentCode__c</fields>
         <fields>AttachmentDescription__c</fields>
         <fields>CREATED_DATE</fields>
+        <fields>ErrorDescription__c</fields>
         <relatedList>DocumentalActivity__c.CaseId__c</relatedList>
     </relatedLists>
     <relatedLists>
