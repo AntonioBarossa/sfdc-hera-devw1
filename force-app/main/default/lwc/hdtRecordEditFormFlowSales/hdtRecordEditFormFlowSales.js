@@ -111,6 +111,14 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
                     mode: 'dismissable'
                     });
                     this.dispatchEvent(event);
+                    this[NavigationMixin.Navigate]({
+                        type: 'standard__recordPage',
+                        attributes: {
+                            recordId: this.recordid,
+                            objectApiName: 'Case',
+                            actionName: 'view'
+                        }
+                    });
                 const closeclickedevt = new CustomEvent('closeaction');
                 this.dispatchEvent(closeclickedevt); 
                 console.log(result);
@@ -129,6 +137,14 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
                 mode: 'dismissable'
                 });
                 this.dispatchEvent(event);
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: this.recordid,
+                        objectApiName: 'Case',
+                        actionName: 'view'
+                    }
+                });
                     const closeclickedevt = new CustomEvent('closeaction');
                     this.dispatchEvent(closeclickedevt); 
             }).catch(error => {
@@ -205,6 +221,14 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
                         mode: 'dismissable'
                         });
                         this.dispatchEvent(event);
+                        this[NavigationMixin.Navigate]({
+                            type: 'standard__recordPage',
+                            attributes: {
+                                recordId: this.recordid,
+                                objectApiName: 'Case',
+                                actionName: 'view'
+                            }
+                        });
                         const closeclickedevt = new CustomEvent('closeaction');
                         this.dispatchEvent(closeclickedevt); 
                     console.log(result);
