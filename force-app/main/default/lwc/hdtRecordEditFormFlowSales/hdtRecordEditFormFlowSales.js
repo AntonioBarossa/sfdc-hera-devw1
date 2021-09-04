@@ -39,6 +39,15 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
         {label:'Rimborso parziale bollette', value:'Rimborso parziale bollette'}
     ];
 
+    get disabledContract(){
+        if(this.isBonus) return true;
+        return this.disabledInp;
+    }
+
+    get isBonus(){
+        return this.processtype=="Contratti/Bonus Commerciale";
+    }
+
     @wire(CurrentPageReference)
     setCurrentPageReference(currentPageReference) {
         this.currentPageReference = currentPageReference;
