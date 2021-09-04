@@ -121,6 +121,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
             List<Case> caseList = caseQr.getRecordsById(new List<String>{caseId},'id,Phase__c');
             if(caseList != null && !caseList.isEmpty() && caseList[0].Phase__c == 'Bozza'){
                 cs.phase__c = 'In Lavorazione';
+                cs.status = 'In Lavorazione';
             }
            // Case cs= new Case(Id=caseId);
 
