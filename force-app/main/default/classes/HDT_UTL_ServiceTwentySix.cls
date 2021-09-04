@@ -42,7 +42,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         }
     }
 
-    public class HDT_WRP_DtoServiceTwentySix{
+    public class HDT_WRP_DtoServiceTwentySix extends HDT_WS_Request{
         public String rdsRdo;
         public String pod;
         public String documentKey;
@@ -115,6 +115,8 @@ public with sharing class HDT_UTL_ServiceTwentySix {
 
 
     private List<HDT_WRP_Position> getPositions(List<Service26Config__c> configs, Map<String, List<OrderItem>> familyToOccurrencies){
+        Set<String> prodFields = ((SObject)Type.forName('Schema','Product2').newInstance())
+                                    .getSObjectType().getDescribe().fields.getMap().keySet();//Set of all order api name fields
         List<String> fieldsToQuery = new List<String>();
         Set<Id> productIds = new Set<Id>();
         Map<String, List<Service26Config__c>> familyToOperando = new Map<String, List<Service26Config__c>>(); 
@@ -130,7 +132,9 @@ public with sharing class HDT_UTL_ServiceTwentySix {
                     productIds.add(item.Product2Id);
                 }
                 for(Service26Config__c position : Operando.Service26Configs__r){
-                    fieldsToQuery.add(Position.Field__c);
+                    if(prodFields.contains(Position.Field__c.toLowerCase())){
+                        fieldsToQuery.add(Position.Field__c);
+                    }
                 }
             }
         }
@@ -162,7 +166,15 @@ public with sharing class HDT_UTL_ServiceTwentySix {
                     new HDT_WRP_Position(operando.SapCode__c, operando.Field__c)//operando field is just a string
                 );
                 for(Service26Config__c position : Operando.Service26Configs__r){//Operando has childs
-                    String value = STRING.isBlank(position.Field__c) ? '' : STRING.valueOf(relatedProduct.get(position.Field__c));
+                    String value;
+                    if(STRING.isBlank(position.Field__c)){
+                        value='';
+                    }else if(prodFields.contains(position.Field__c.toLowerCase())){
+                        value=STRING.valueOf(relatedProduct.get(position.Field__c));
+                    }else{
+                        value=position.Field__c;
+                    }
+                    //String value = STRING.isBlank(position.Field__c) ? '' : STRING.valueOf(relatedProduct.get(position.Field__c));
                     positionsToReturn.add( 
                         new HDT_WRP_Position(position.SapCode__c, value)
                         //child field is the api name of Product field to get value

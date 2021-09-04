@@ -116,14 +116,38 @@ public inherited sharing class HDT_LC_SaleVas {
                     WHERE RecordType.DeveloperName='HDT_RT_VAS' AND Status='In Lavorazione' AND SBQQ__Quote__r.IsVAS__c = true
                     AND SBQQ__Quote__r.AmendmentAllowed__c != true AND AccountId=:accountId WITH SECURITY_ENFORCED];
             }
+            when 'ORDERS_ELE'{
+                records = [SELECT Type, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                    FROM Order
+                    WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:accountId WITH SECURITY_ENFORCED];
+            }
             when 'ASSETS_ACTIVATED'{
                 records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
                     FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:accountId WITH SECURITY_ENFORCED];
+            }
+            when 'ASSETS_ACTIVATED_VAS'{
+                records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
+                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:accountId
+                    AND RecordType.DeveloperName IN ('HDT_RT_CompositionVASproductsnotbillable','HDT_RT_VASConsumptionanalysis',
+                    'HDT_RT_VASPoductsnotbillable','HDT_RT_VASServicesnotbillable') WITH SECURITY_ENFORCED];
             }
             when 'SUBS_ANALISI_CONSUMI'{ 
                 records = [SELECT SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
                     FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:accountId WITH SECURITY_ENFORCED];
+            }
+            when 'SUBS_VAS'{ 
+                records = [SELECT SBQQ__Contract__r.ContractNumber,
+                    SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Account__c=:accountId
+                    AND RecordType.DeveloperName IN ('HDT_RT_CompositionVASproductsnotbillable','HDT_RT_VASConsumptionanalysis',
+                    'HDT_RT_VASPoductsnotbillable','HDT_RT_VASServicesnotbillable') WITH SECURITY_ENFORCED];
+            }
+            when 'CONTRACT_ELE_ACTIVE'{
+                records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                    FROM Contract WHERE Status IN ('Attivo','Activated') AND AccountId=:accountId
+                    AND (ServicePoint__r.CommoditySector__c='Energia Elettrica' OR SBQQ__Order__r.ServicePoint__r.CommoditySector__c='Energia Elettrica')
+                    WITH SECURITY_ENFORCED];
             }
         }
         return records;

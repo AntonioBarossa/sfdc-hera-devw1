@@ -1253,7 +1253,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
         console.log('allSubmitedFields'+JSON.stringify(this.servicePointRetrievedData));
 
-        if((this.allSubmitedFields['ServicePointCode__c']!= undefined && (JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length < 14 || JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length > 16 ))){
+        if((this.allSubmitedFields['ServicePointCode__c']!= undefined && (JSON.stringify(this.allSubmitedFields['ServicePointCode__c'].trim()).length < 14 || JSON.stringify(this.allSubmitedFields['ServicePointCode__c'].trim()).length > 16 ))){
             isValid = false;
             this.isValidFields = false;
             console.log('lenght field'+JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length);
@@ -1264,6 +1264,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         //(JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).substring(0,2)!='IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica')
 
         if(this.allSubmitedFields['ServicePointCode__c']!=undefined){
+            this.allSubmitedFields['ServicePointCode__c']= this.allSubmitedFields['ServicePointCode__c'].trim();
             if(this.allSubmitedFields['ServicePointCode__c'].substring(0,2)!='IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica'){
                 isValid = false;
                 this.isValidFields = false;
@@ -1277,6 +1278,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
 
         }else{
+            this.servicePointRetrievedData['ServicePointCode__c']= this.servicePointRetrievedData['ServicePointCode__c'].trim();
+
             if(this.servicePointRetrievedData['ServicePointCode__c'].substring(0,2)!='IT' && this.servicePointRetrievedData['CommoditySector__c'] == 'Energia Elettrica'){
                 isValid = false;
                 this.isValidFields = false;

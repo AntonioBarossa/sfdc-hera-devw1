@@ -88,6 +88,9 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField38__c = mapRequestFields.get('CAMPO_38');
                     newLead.WebFormField39__c = mapRequestFields.get('CAMPO_39');
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
+                    //HRAWRM-388 03/09/2021
+                    newLead.ContactReason__c='Info commerciali';
+                    //HRAWRM-388 03/09/2021
                     System.debug('PROVA WSFORM6');
                     
                     
@@ -259,6 +262,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField38__c = mapRequestFields.get('CAMPO_38');
                     newLead.WebFormField39__c = mapRequestFields.get('CAMPO_39');
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
+                    newLead.ContactReason__c='Info commerciali';//HRAWRM-388 03-09-2021
                     if(mapRequestFields.get('D_O_RICONTATTO') != null){
                         newLead.ContactDate__c=getDateTimeFromString(mapRequestFields.get('D_O_RICONTATTO'));
                     }
@@ -427,6 +431,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField38__c = mapRequestFields.get('CAMPO_38');
                     newLead.WebFormField39__c = mapRequestFields.get('CAMPO_39');
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
+                    newLead.ContactReason__c='Info commerciali';//HRAWRM-388 03-09-2021
                     if(mapRequestFields.get('D_O_RICONTATTO') != null){
                         newLead.ContactDate__c=getDateTimeFromString(mapRequestFields.get('D_O_RICONTATTO'));
                     }
@@ -602,6 +607,8 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField38__c = mapRequestFields.get('CAMPO_38');
                     newLead.WebFormField39__c = mapRequestFields.get('CAMPO_39');
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
+                    newLead.ContactReason__c='Info commerciali';//HRAWRM-388 03-09-2021
+
                     if(mapRequestFields.get('D_O_RICONTATTO') != null){
                         newLead.ContactDate__c=getDateTimeFromString(mapRequestFields.get('D_O_RICONTATTO'));
                     }
@@ -807,6 +814,8 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
                     newLead.CustomerMarking__c= mapRequestFields.get('MARCATURA');
                     newLead.Category__c= mapRequestFields.get('CATEGORIA');
+                    newLead.ContactReason__c='Info commerciali';//HRAWRM-388 03-09-2021
+
                     newLead.Company= newLead.FirstName+ ' '+newLead.LastName;
                     
                     HDT_SRV_Lead.checkCreateAccess(newLead);

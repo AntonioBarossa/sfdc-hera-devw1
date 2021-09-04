@@ -18,10 +18,12 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
     @api acceptedFormats = ['.pdf', '.png'];
     @api statoApp = 'Nessuna Richiesta Inviata';
     @api saveInDraft;
+    @api disabledInp = false;
     @api cancelCase;
     @api isRunFromFlow= false;
     @track showOperationSubType= false;
     @track selectedOperationType;
+    @track selectedOperationSubType;
     @track showSubmitForApprovalButton=false;
     @track disableConfirmButton= false;
     @track preloading= false;
@@ -66,6 +68,8 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
         let casefields = this.template.querySelectorAll('lightning-input-field');
         let cs ={}; 
         casefields.forEach(function(element){
+            console.log('******:' + element.value);
+            console.log('******:' + element.fieldName);
             if(element.fieldName=="Contract__c"){
                 if(element.value!= null && element.value!= ""){
                     cs.Contract__c=element.value;
@@ -73,6 +77,11 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
             }else if(element.fieldName=="ReassignmentReason__c"){
                 if(element.value!= null){
                     cs.ReassignmentReason__c=element.value;
+                }
+            }
+            else if(element.fieldName=="Note__c"){
+                if(element.value!= null && element.value!= ""){
+                    cs.Note__c=element.value;
                 }
             }
         },this);
@@ -155,11 +164,11 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
                 }else{
                     validated= false;        
                 }
-            }/*else if(element.fieldName=="ReassignmentReason__c"){
+            }else if(element.fieldName=="Note__c"){
                 if(element.value!= null){
-                    cs.ReassignmentReason__c=element.value;
+                    cs.Note__c=element.value;
                 }
-            }*/
+            }
         },this);
         if(this.selectedOperationType != null && this.selectedOperationType != undefined && this.selectedOperationType!= "" ){
             cs.OperationType__c = this.selectedOperationType;
@@ -180,15 +189,34 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
             savePractice({caseId: this.recordid, accountId: this.accountId, caseob: cs}).then(result => {
                 // const redirect= new CustomEvent('closeTab');
                 // this.dispatchEvent(redirect);
-                const event = new ShowToastEvent({
-                    message: 'Case Confermato',
-                    variant: 'success',
-                    mode: 'dismissable'
-                    });
-                    this.dispatchEvent(event);
-                    const closeclickedevt = new CustomEvent('closeaction');
-                    this.dispatchEvent(closeclickedevt); 
-                console.log(result);
+                if(result == 'success'){
+                    const event = new ShowToastEvent({
+                        message: 'Case Confermato',
+                        variant: 'success',
+                        mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
+                        const closeclickedevt = new CustomEvent('closeaction');
+                        this.dispatchEvent(closeclickedevt); 
+                    console.log(result);
+                }
+                else if(result == 'annulla'){
+                    const event = new ShowToastEvent({
+                        message: 'l\'approvazione ha dato esito KO, annulla il caso',
+                        variant: 'warning',
+                        mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
+                }
+                else if(result == 'aperta'){
+                    const event = new ShowToastEvent({
+                        message: 'l\activity di approvazione è ancora aperta, attendi la sua chiusura',
+                        variant: 'warning',
+                        mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
+                }
+                
                 }).catch(error => {
                     console.log(error);
                 });
@@ -212,13 +240,13 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
         getActivity({caseId: this.recordid}).then(result => {
             console.log("resu" + JSON.stringify(result));
             if(result != null ){
-                if(result.Approved__c == 'SI'){
-                    this.statoApp = 'APPROVATO';
-                }else if (result.Approved__c == 'NO'){
-                    this.statoApp = 'RIFIUTATO';
-                }
-                else{
-                    this.statoApp = 'IN ATTESA DI APPROVAZIONE';
+                let cas = result.c;
+                this.disabledInp= result.disabled;
+                this.selectedOperationSubType = cas.OperationSubType__c;
+                this.selectedOperationType = cas.OperationType__c;
+                if(this.selectedOperationType == 'Bonus commerciale'){
+                    this.showOperationSubType = true;
+                    this.selectedOperationSubType = cas.OperationSubType__c;
                 }
             }
             console.log("SONO RIGA 222");

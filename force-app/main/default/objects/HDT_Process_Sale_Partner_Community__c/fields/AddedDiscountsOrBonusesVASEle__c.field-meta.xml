@@ -3,7 +3,7 @@
     <fullName>AddedDiscountsOrBonusesVASEle__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Aggiunta Sconti o Bonus VAS Ele</label>
+    <label>Aggiunta_Sconti_o_Bonus_VAS_Ele</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

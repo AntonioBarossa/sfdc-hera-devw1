@@ -35,7 +35,16 @@ public inherited sharing class HDT_UTL_Case {
         } 
         else if(process.equalsIgnoreCase('Compatibilita'))
         {
-            output.isCompatible = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(currentCase);
+            try 
+            {
+                output.isCompatible = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(currentCase);   
+            } 
+            catch (Exception e) 
+            {   
+                output.isCompatible = '';
+                System.debug('Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());    
+            }
+            
         }
         else if(process.equalsIgnoreCase('Contenitore'))
         {
