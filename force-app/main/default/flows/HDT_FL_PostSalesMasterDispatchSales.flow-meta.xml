@@ -94,9 +94,7 @@
     <assignments>
         <name>Set_CaseId</name>
         <label>Set CaseId</label>
-
         <locationX>2778</locationX>
-
         <locationY>1982</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -627,9 +625,6 @@
         <label>Riprendi Processo</label>
 
         <locationX>1700</locationX>
-
-        <locationX>1414</locationX>
-
         <locationY>950</locationY>
         <defaultConnector>
             <targetReference>Screen_Selezione_Fornitura_0</targetReference>
