@@ -27,17 +27,16 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         Id objectId = (Id) sender.get('Id');
 
         switch on method{
-            when 'activation'{
-                system.enqueueJob(new HDT_QBL_AsycnronousCallout(
-                        objectId, 'activation'
-                    )
-                );
-            }
-            when 'deactivation'{
-                system.enqueueJob(new HDT_QBL_AsycnronousCallout(
-                        objectId, 'deactivation'
-                    )
-                );
+            when 'activation', 'deactivation'{
+                if(system.isQueueable()){
+                    asyncCalloutFuture(objectId, method);
+                }else{
+                    system.enqueueJob(new HDT_QBL_AsycnronousCallout(
+                        objectId, method
+                        )
+                    );
+                }
+                
             }
             when 'updatePhase'{
                 Id orderId = objectId;
@@ -55,6 +54,39 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         return null;
     }
 
+    @future(callout=true)
+    private static void asyncCalloutFuture(Id sobjectId, String method){
+        system.debug('asyncCalloutFuture ');
+        asyncCallout(sobjectId, method);
+    }
+
+
+
+    private static void asyncCallout(Id sobjectId, String method){
+        HDT_WS_Response res;
+        String newPhase;
+
+        switch on method{
+            when 'activation'{
+                res = HDT_WS_MotoreVas.activationCallout(sobjectId);
+                Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
+                newPhase = isSuccess?'Comunicazione verso Motore VAS OK':'Comunicazione verso Motore VAS KO';
+            }
+            when 'deactivation'{
+                res = HDT_WS_MotoreVas.deactivationCallout(sobjectId);
+                Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
+                newPhase = isSuccess?'Comunicazione verso Motore VAS OK':'Comunicazione verso Motore VAS KO';
+            }
+        }
+
+        system.debug('***HDT_QBL_AsycnronousCallout'+res);
+
+        //do UpdatePhase
+
+        if(String.isNotBlank(newPhase)){ 
+            new HDT_QBL_AsycnronousUpdate().asyncronousUpdate(SobjectId, newPhase);
+        }
+    }
 
     public class HDT_QBL_AsycnronousCallout implements Queueable, Database.AllowsCallouts{
         private Id sobjectId{get;set;}
@@ -70,30 +102,7 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         }
 
         public void execute(QueueableContext context){
-            HDT_WS_Response res;
-            String newPhase;
-
-            switch on method{
-                when 'activation'{
-                    res = HDT_WS_MotoreVas.activationCallout(sobjectId);
-                    Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
-                    newPhase = isSuccess?'Comunicazione verso Motore VAS OK':'Comunicazione verso Motore VAS KO';
-                }
-                when 'deactivation'{
-                    res = HDT_WS_MotoreVas.deactivationCallout(sobjectId);
-                    Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
-                    newPhase = isSuccess?'Comunicazione verso Motore VAS OK':'Comunicazione verso Motore VAS KO';
-                }
-            }
-
-            system.debug('***HDT_QBL_AsycnronousCallout'+res);
-
-            //do UpdatePhase
-
-            if(String.isNotBlank(newPhase)){ 
-                new HDT_QBL_AsycnronousUpdate().asyncronousUpdate(SobjectId, newPhase);
-            }
-
+            asyncCallout(sobjectId, method);
         }
     }
     
@@ -135,6 +144,21 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         }
     }
 
-    
+    public class HDT_QBL_BulkUpdate implements Queueable {
+        private Map<Id, String> vasOrdersToUpdate {get;set;}
+        public HDT_QBL_BulkUpdate(Map<Id, String> vasOrdersToUpdate){
+            this.vasOrdersToUpdate=vasOrdersToUpdate;
+        }
+
+        public void execute(QueueableContext context){
+            List<Order> childOrdersToUpdate= new List<Order>();
+            for(Id ordId : vasOrdersToUpdate.keySet() ){
+                childOrdersToUpdate.add(
+                    new Order(Id=ordId, Phase__c=vasOrdersToUpdate.get(ordId))
+                );
+            }
+            new HDT_SRV_Order().updateRecords(childOrdersToUpdate);
+        }
+    }
 
 }
