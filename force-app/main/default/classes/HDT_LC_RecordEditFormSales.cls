@@ -21,7 +21,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
     }
     @AuraEnabled
     public static wrapReturn getActivity(String caseId){
-        List<Case> caseList = caseQr.getRecordsById(new List<String>{caseId},'id,OperationSubType__c,OperationType__c');
+        List<Case> caseList = caseQr.getRecordsById(new List<String>{caseId},'id,OperationSubType__c,OperationType__c,Contract__c');
         List<wrts_prcgvr__Activity__c> listActiv = HDT_QR_ActivityCustom.getRecordByCaseId(caseId);
         Case res = new Case();
         wrapReturn wrp = new wrapReturn();

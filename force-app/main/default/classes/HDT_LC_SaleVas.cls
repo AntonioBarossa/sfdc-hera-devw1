@@ -71,6 +71,13 @@ public inherited sharing class HDT_LC_SaleVas {
         return orderQr.getRecordsForVasSelection(accountId);
     }
 
+    @AuraEnabled
+    public static List<Order> getOrdersListNotActive(String accountId){
+        //Orders with status "Draft" or "In Lavorazione"
+        orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
+        return orderQr.getRecordsNotActivated(accountId);
+    }
+
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
