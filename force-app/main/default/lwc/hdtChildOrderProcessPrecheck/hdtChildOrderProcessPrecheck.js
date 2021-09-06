@@ -336,9 +336,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_ConnessioneConAttivazione, HDT_RT_TemporaneaNuovaAtt, HDT_RT_Voltura, 
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
+         console.log('****12');
         if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcessObject.recordType === 'HDT_RT_Voltura' ||this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcessObject.recordType === 'HDT_RT_SwitchIn' && this.order.ProcessType__c != 'Switch in Ripristinatorio') || this.selectedProcessObject.recordType === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcessObject.recordType === 'HDT_RT_TemporaneaNuovaAtt'){
             this.callCreditCheckSAP();
         }
+        console.log('****13');
         
 
         let extraParams = {};
@@ -350,12 +352,15 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
             extraParams['switchInRipristinatorio'] = 'true';
         }
-
+        console.log('****1');
         if (this.showDeliberation === true) {
+            console.log('****2');
             if (this.deliberation !== '') {
+                console.log('****4');
                 this.goToNextStep(extraParams);
                 this.disabledDeliberation = true;
             } else {
+                console.log('****5');
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: 'Devi compilare il campo delibera.',
@@ -365,6 +370,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
             }
         } else {
+            console.log('****3');
             this.goToNextStep(extraParams);
         }
 
@@ -546,6 +552,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 commodity:typeOfCommodity
             }]		
         }
+        console.log("this.2"); 
 
         if(this.selectedProcessObject.recordType !== 'HDT_RT_VAS'){
             data["address"] = this.order.ServicePoint__r.SupplyStreetName__c;
@@ -555,19 +562,24 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
             data["details"]["annualConsumption"] = this.order.ServicePoint__r.AnnualConsumptionStandardM3__c;
         }
-        
+        console.log("this.3"); 
 
         if(this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_Voltura'){
-            
-            if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
-                fiscalData = this.order.ServicePoint__r.Account__r.FiscalCode__c;
-            }else if(this.order.ServicePoint__r.Account__r.VATNumber__c != null){
-                fiscalData = this.order.ServicePoint__r.Account__r.VATNumber__c;
+            console.log("this.31:" + JSON.stringify(this.order.Account.RecordType.DeveloperName)); 
+            console.log("this.310:" + JSON.stringify(this.order.ServicePoint__r)); 
+            if(this.order.ServicePoint__r?.Account__r?.RecordType?.DeveloperName === 'HDT_RT_Residenziale'){
+                console.log("this.32:"); 
+                fiscalData = this.order.ServicePoint__r?.Account__r?.FiscalCode__c;
+            }else if(this.order.ServicePoint__r?.Account__r?.VATNumber__c != null){
+                console.log("this.33:"); 
+                fiscalData = this.order.ServicePoint__r?.Account__r?.VATNumber__c;
             }
+            console.log("this.34"); 
             
-            data["bpAlternative"] = this.order.ServicePoint__r.Account__r.CustomerCode__c;
-            data["alternativeCustomerId"] = fiscalData;            
+            data["bpAlternative"] = this.order.ServicePoint__r?.Account__r?.CustomerCode__c;
+            data["alternativeCustomerId"] = fiscalData;
         }
+        console.log("this.4"); 
 
         return data; 
     }

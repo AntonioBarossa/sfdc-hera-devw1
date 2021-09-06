@@ -559,6 +559,58 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }        
     // FINE @Picchiri Credit check Date 04.06.21
 
+
+
+    // FIX METODO DEFELICE
+    public static void creditCheckManager2(Map<Id,SObject>  newOrdersMap, Map<Id,SObject> oldOrdersMap) {
+        system.debug('start creditCheckManager2');
+        Map<Id,Schema.RecordTypeInfo> rtMap = Order.sobjectType.getDescribe().getRecordTypeInfosById();
+        Map<String,List<Order>> orderMapNew = new Map<String,List<Order>>();
+        List<Order> orderListOldCustomer = new List<Order>();                        
+        List<Order> orderListNewCustomer = new List<Order>();   
+        List<Order> orderListcreditCheckPhaseManager = new List<Order>();                        
+        List<Order> orderList = new List<Order>();                                
+
+        for (Order newOrder : (List<Order>) newOrdersMap.values()) {
+            Order oldOrder = (Order) oldOrdersMap.get(newOrder.id); 
+            String recordTypeName = rtMap.get(newOrder.RecordTypeId).getDeveloperName();
+            system.debug('recordTypeName -->  : ' + recordTypeName);  
+            if((recordTypeName == 'HDT_RT_VAS' && newOrder.OrderReferenceNumber == null && newOrder.ContractReference__c == null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt'){                             
+                system.debug('xxx 1 ---->');
+                if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
+                    system.debug('xxx 2 ---->');
+                    if(newOrder.OutgoingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){                        
+                        system.debug('xxx 3 ---->');
+                        orderListOldCustomer.add(newOrder);
+                    }
+                    if(newOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){                        
+                        system.debug('xxx 4 ---->');
+                        orderListNewCustomer.add(newOrder);
+                    }                                      
+                }
+                if((oldOrder.IncomingCreditCheckResult__c!=null && oldOrder.IncomingCreditCheckResult__c.contains('KO')) && (newOrder.IncomingCreditCheckResult__c != null && newOrder.IncomingCreditCheckResult__c.contains('OK'))){
+                    orderListcreditCheckPhaseManager.add(newOrder);
+                }
+            }
+
+        }
+
+        orderMapNew.put('oldCustomer',orderListOldCustomer);
+        orderMapNew.put('newCustomer',orderListNewCustomer);   
+        
+        system.debug('gestioneEsitiCreditCheck trigger --> orderMapNew : ' + JSON.serializePretty(orderMapNew));
+        
+        if(!orderMapNew.isEmpty()){
+            HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
+        }
+        
+        if(!orderListcreditCheckPhaseManager.isEmpty()){
+            system.debug('creditCheckPhaseManager ----> : ' + JSON.serializePretty(orderListcreditCheckPhaseManager));
+            creditCheckPhaseManager(orderListcreditCheckPhaseManager);                     
+        }        
+    }        
+    // FINE @Picchiri Credit check Date 04.06.21
+
     // @Picchiri 16.06.21 chiamata Mulesoft // Lista di ordini per nuovo cliente dove si è ricevuto un ok dopo un ko
     public static void creditCheckPhaseManager(List<Order> orderList){ 
 
