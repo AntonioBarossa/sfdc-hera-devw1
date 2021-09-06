@@ -30,6 +30,10 @@
                 <behavior>Edit</behavior>
                 <field>SAPContractCode__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ContractType__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -55,6 +59,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BillingProfile__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DL155Place__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

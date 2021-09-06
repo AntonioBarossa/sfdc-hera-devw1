@@ -4,6 +4,7 @@
 * @description Apex controller for hdtGeneralInfo.js component
 * @history Keltin Mesonjesi – 11/11/2020 – Created class
 */
+
 public inherited sharing class HDT_LC_GeneralInfo {
 
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
