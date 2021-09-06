@@ -392,6 +392,7 @@
         <enabled>true</enabled>
         <name>HDT_FulfillmentDateMatrix__c</name>
     </customSettingAccesses>
+    <description>Identico al profilo Hera Standard User, ha la possibilità di inviare comunicazione One Shot grazie al Publisher Layout</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>RateCategory__c.CalculatedValue__c</field>
