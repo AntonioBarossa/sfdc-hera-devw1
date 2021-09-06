@@ -146,7 +146,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 			// OLD VALUE → acc.CustomerCode__c='1003616210';
         	acc.IsWrongFiscalData__c = false;
-        	acc.BillingIsAddressVerified__c = true;
 			acc.CustomerCode__c = stringResult;
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
