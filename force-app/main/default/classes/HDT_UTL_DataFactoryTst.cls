@@ -1966,4 +1966,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return selezioneList;
 	}
+
+	public static List<CommercialCode__c> createCommCode(Integer amount, Boolean doInsert) {
+
+		List<CommercialCode__c> commCodeList = new List<CommercialCode__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CommercialCode__c commCode = new CommercialCode__c(
+				Name = 'testCommCode'
+			);
+
+			commCodeList.add(commCode);
+		}
+
+		if (doInsert){
+
+			insert commCodeList;
+		}
+
+		return commCodeList;
+	}
 }
