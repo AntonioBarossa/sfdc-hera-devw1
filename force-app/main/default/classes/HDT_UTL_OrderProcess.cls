@@ -324,9 +324,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         
         orderSrv.checkReadAccess('Phase__c');
         List<Order> childOrders = orderQr.getChildOrdersByParentIds(parentOrderIds);
-       
+
         for (Order childOrder : childOrders) {
-            if (childOrder.Phase__c == currentPhase) {
+            //@frpanico 06/09/2021 added voltura condition
+            if (childOrder.Phase__c == currentPhase && childOrder.ProcessType__c != 'Voltura') {
                 Order orderToUpdate = new Order(
                     Id = childOrder.Id,
                     Phase__c = newPhase
@@ -372,7 +373,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     System.debug('***********4');
                     if (childOrder.Phase__c == currentPhase
                         && !childOrder.QualityCall__c
-                        && !isMonitoringList.contains(childOrder.AgencyCode__c)) {
+                        && !isMonitoringList.contains(childOrder.AgencyCode__c)
+                        //@frpanico 06/09/2021 added voltura condition
+                        && childOrder.ProcessType__c != 'Voltura' ) {
                         System.debug('***********5');
                         Order orderToUpdate = new Order(
                             Id = childOrder.Id,
