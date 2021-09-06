@@ -37,7 +37,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-    <picklistValues>
         <picklist>ManualCheckResult__c</picklist>
         <values>
             <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>
