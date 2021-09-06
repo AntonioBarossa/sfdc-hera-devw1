@@ -148,8 +148,8 @@ public inherited sharing class HDT_LC_GenericTable {
         public String apiName;
     }
     public class HDT_WRP_Ouput{
-        List<HDT_WRP_Columns> columns;
-        List<Map<String,Object>> rowData;
+        public List<HDT_WRP_Columns> columns;
+        public List<Map<String,Object>> rowData;
     }
 
 }
