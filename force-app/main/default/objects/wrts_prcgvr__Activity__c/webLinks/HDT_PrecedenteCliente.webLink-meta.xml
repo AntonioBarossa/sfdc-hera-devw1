@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>/lightning/cmp/c__HDT_LCP_OpenAccountStatementTab?c__accountid={!wrts_prcgvr__Activity__c.AccountId__c}&amp;c__tab=EC1</url>
+    <url>/lightning/cmp/c__HDT_LCP_OpenAccountStatementTab?c__accountid={!wrts_prcgvr__Activity__c.OldCustomerAccount__c}&amp;c__tab=EC1</url>
 </WebLink>
