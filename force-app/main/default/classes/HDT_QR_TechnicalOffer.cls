@@ -38,7 +38,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
 
     public static TechnicalOffer__c queryTechnicalOfferForWebService(TechnicalOffer__c techOff, Id recId){
         techOff = [
-            SELECT Id, Name, Product__r.ProductCode, Product__r.DescriptionSAP__c, RateCategory__r.Name, Market__c, ProcessType__c, PlacetOffer__c, ServiceProduct__c, StepAllowed__c, StartDate__c, EndDate__c,
+            SELECT Id, Name, Product__r.ProductCode,Product__r.Version__c, Product__r.DescriptionSAP__c, RateCategory__r.Name, Market__c, ProcessType__c, PlacetOffer__c, ServiceProduct__c, StepAllowed__c, StartDate__c, EndDate__c,
                    ContractId__c, NumberTimeExtension__c, UnitTimeExtension__c, CancellationAllowed__c, NumberDaysMonthsYears__c,
                    UnitTerminationTime__c, RecessAdmitted__c, NumberOfTimeUnits__c, UnitOfTimeMeasurement__c, AdmittingProfileModification__c,
                    OfferToBeModified__c,Version__c,

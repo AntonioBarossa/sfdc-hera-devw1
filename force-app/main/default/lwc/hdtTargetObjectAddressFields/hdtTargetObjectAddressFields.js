@@ -86,6 +86,8 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     boolCivico = false;
     statusCodeComune='';
     localit='';
+    @api processtype;
+    disableAll=false;
     
 
     get options() {
@@ -1474,6 +1476,17 @@ disabledverifyFieldsAddressDisabled(){
 
         console.log('connectedCallback indirizzo estero : ' + JSON.stringify(this.IndEstero));
         this.disableFieldByIndEstero();
+        if(this.processtype !== undefined && this.processtype!= null && this.processtype!=''){
+            this.disableAll=true;
+            this.disableCodComuneSap=true;
+            this.disableCap=true;
+            this.disableCodViaSap=true;
+            this.disableFlagVerificato=true;
+            this.disableLocalita=true;
+            this.disableProvincia=true;
+            this.disableStato=true;
+            
+        }
         
     }
 

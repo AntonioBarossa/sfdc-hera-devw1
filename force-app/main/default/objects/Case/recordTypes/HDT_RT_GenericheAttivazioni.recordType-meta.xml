@@ -1165,6 +1165,10 @@
             <fullName>Gestione Scarto</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Processo incompatibile</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Category__c</picklist>
@@ -1675,7 +1679,71 @@
     <picklistValues>
         <picklist>CemeteryName__c</picklist>
         <values>
-            <fullName>TBD</fullName>
+            <fullName>Albareto Vecchio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggiovara Nuovo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggiovara Vecchio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cittanova</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Collegara</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ganaceto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lesignana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marzaglia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saliceto Panaro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Cataldo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Cesario sul Panaro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Donnino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Matteo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Santa Maria di Mugnano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Villanova</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1689,11 +1757,43 @@
     <picklistValues>
         <picklist>ChannelOfPayment__c</picklist>
         <values>
+            <fullName>ATM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Banca BONIFICO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Banca SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bollettino postale</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Carta di credito online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cassa COOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>POS Sportello</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Posta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ricevitoria</fullName>
             <default>false</default>
         </values>
         <values>

@@ -58,7 +58,7 @@ public class HDT_LC_MeterReadingControllerTst {
         contractObj = HDT_LC_MeterReadingController.getContractRecords(account.Id);
 
         System.assertEquals(true, contractObj.success, 'Si è verificato un errore non previsto');
-        System.assert(contractObj.contractList != null, 'Si è verificato un errore in fase di scaricamento dei records');
+        System.assert(contractObj.contractList.size() > 0, 'Si è verificato un errore in fase di scaricamento dei records');
 
         Test.stopTest();
     }
@@ -80,10 +80,15 @@ public class HDT_LC_MeterReadingControllerTst {
 
     @isTest
     public static void getAccountDataEnrichment(){
+
+        Test.startTest();
+
         List<HDT_AccountDataEnrichment__mdt> contractMetadataList;
         contractMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(contractMetadataList, 'contract');
-
-        System.assert(contractMetadataList != null, 'Si è verificato un errore in fase di scaricamento dei records');
+        System.assert(contractMetadataList.size() > 0, 'Si è verificato un errore in fase di scaricamento dei records');
+    
+        Test.stopTest();
+        
     }
 
 }

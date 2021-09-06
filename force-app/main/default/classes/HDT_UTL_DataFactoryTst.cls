@@ -520,9 +520,17 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return contractList;
 	}
-
+	
+	
+	//CASE
+	
+	//CASE MOROSITà
 	public static List<Case> createCase(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
-
+		return createCaseMorosita(amount, doInsert, accId, contactId, servPointId, contractId, orderId);
+	}
+	
+	public static List<Case> createCaseMorosita(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
+		
 		List<Case> caseList=new List<Case>();
 		
 		String rtId=utlConstants.CASE_RECORDTYPEID_MOROSITA;
@@ -555,6 +563,44 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return caseList;
 	}
+	
+	//CASE DOCUMENTALE/COPIA CONTRATTO
+	public static List<Case> createCaseDocumentale(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
+		
+		List<Case> caseList=new List<Case>();
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
+
+		for (Integer i=0; i<amount; i++){
+
+			Case testCase=new Case();
+			testCase.AccountId=accId;
+			testCase.Status='In Lavorazione';
+			testCase.Phase__c='Bozza';
+			testCase.Subject='test';
+			testCase.Type='Allineamento Anagrafica';
+			testCase.Subprocess__c='Account';
+			testCase.HerokuPracticeCode__c='21313232132132';
+			testCase.ContactId=contactId;
+			testCase.ServicePoint__c=servPointId;
+			testCase.Contract__c=contractId;
+			//testCase.VulturePracticeReference__c=orderId;
+			testCase.Cluster__c='Pagamenti';
+			testCase.RecordTypeId=rtId;
+			testCase.CompanyOwner__c='HERA COMM';
+
+			caseList.add(testCase);
+		}
+
+		if (doInsert){
+
+			insert caseList;
+		}
+
+		return caseList;
+	}
+	
+	
 
 	public static List<OrderItem> createOrderItem(Integer amount, Boolean doInsert, Id orderId, Id servicePointId, Id product2Id, Id pricebookEntryId){
 
@@ -1514,6 +1560,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return documents;
 	}
+	
 	public static List<DocumentalActivity__c> createDocumentalActivity(Integer numberRecords, Id orderId, Id caseId){
 		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
 		for(Integer i=0; i<numberRecords;i++){
@@ -1528,6 +1575,20 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		insert docActList;
 		return docActList;
 	}
+	
+	public static list<DocumentSendTracking__c> createDocumentSendTracking(Integer numberRecords, Id orderId, Id caseId){
+		List<DocumentSendTracking__c> docTrackList = new List<DocumentSendTracking__c>();
+		for(Integer i=0; i<numberRecords;i++){
+			DocumentSendTracking__c docTrack = new DocumentSendTracking__c();
+			docTrack.Order__c = String.isNotBlank(orderId)?orderId:null;
+			docTrack.Case__c = String.isNotBlank(caseId)?caseId:null;
+			docTrack.EnvelopeId__c = 'idPlico_' + i;
+			docTrackList.add(docTrack);
+		}
+		insert docTrackList;
+		return docTrackList;
+	}
+	
 
 	public static List<AtecoMatrix__c> createAtecoMatrix(Integer amount, Boolean doInsert, String name){
 
@@ -1744,4 +1805,165 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return userRoleId;
 	}
 
+	public static List<DistributorPointCode__c> createDistributorPointCode (Integer amount, Boolean doInsert, Id accountId){
+
+		List<DistributorPointCode__c> dpcList = new List<DistributorPointCode__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			DistributorPointCode__c dpc = new DistributorPointCode__c(
+				Account__c = accountId
+			);
+
+			dpcList.add(dpc);
+		}
+
+		if (doInsert) {
+
+			insert dpcList;
+
+		}
+
+		return dpcList;
+	}
+
+	public static List<wrts_prcgvr__ServiceLink__c> createServiceLink (Integer amount, Boolean doInsert) {
+
+		List<wrts_prcgvr__ServiceLink__c> serviceLinkList = new List<wrts_prcgvr__ServiceLink__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			wrts_prcgvr__ServiceLink__c sl = new wrts_prcgvr__ServiceLink__c(
+				wrts_prcgvr__IsActive__c = true
+			);
+
+			serviceLinkList.add(sl);
+		}
+
+		if (doInsert) {
+
+			insert serviceLinkList;
+		}
+
+		return serviceLinkList;
+	}
+
+	public static List<wrts_prcgvr__ServiceLinkItem__c> createServiceLinkItem (Integer amount, Boolean doInsert, Id serviceLinkId) {
+
+		List<wrts_prcgvr__ServiceLinkItem__c> serviceLinkItemList = new List<wrts_prcgvr__ServiceLinkItem__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			wrts_prcgvr__ServiceLinkItem__c sli = new wrts_prcgvr__ServiceLinkItem__c(
+				wrts_prcgvr__ServiceLink__c = serviceLinkId
+			);
+
+			serviceLinkItemList.add(sli);
+		}
+
+		if (doInsert) {
+
+			insert serviceLinkItemList;
+		}
+
+		return serviceLinkItemList;
+	}
+
+	
+	public static void createWebServiceConfiguration (String name, String endpoint, String method, String user) {
+
+		HDT_WebServiceConfiguration__c wsConfig = new HDT_WebServiceConfiguration__c(
+			Name = name,
+			Endpoint__c = endpoint,
+			Method__c = method,
+			User__c = user         
+		);
+		
+		insert wsConfig;
+	}
+
+	public static void createWebServiceCredential (String name , String password, String username) {
+
+		HDT_WebServiceCredential__c wsCredential = new HDT_WebServiceCredential__c(
+			Name = name,
+			Password__c = password,
+			Username__c = username
+		);
+
+		insert wsCredential;
+	}
+
+	public static List<CommunicationLog__c> createCommunicationLog (Integer amount, Boolean doInsert, Id accId, Id contactId){
+
+		List<CommunicationLog__c> commLogList=new List<CommunicationLog__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CommunicationLog__c testCommLog=new CommunicationLog__c();
+			testCommLog.AccountID__c = accid;
+			testCommLog.ContactID__c = contactId;
+			testCommLog.Causale__c='testCausale';
+			testCommLog.Company__c='testCompany';
+			testCommLog.Cluster__c='testCluster';
+			testCommLog.CompanyOwner__c='TestCompOwner';
+			testCommLog.Fase__c='testFase';
+			testCommLog.Processo__c='testProcesso';
+			testCommLog.Stato__c='testStato';
+
+			commLogList.add(testCommLog);
+		}
+
+		if (doInsert){
+
+			insert commLogList;
+		}
+
+		return commLogList;
+	}
+
+	public static List<SBQQ__Subscription__c> createSubscription (Integer amount, Boolean doInsert, Id accountId, Id contractId, Id servicePointId) {
+
+		List<SBQQ__Subscription__c> subcriptionList = new List<SBQQ__Subscription__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SBQQ__Subscription__c subscription = new SBQQ__Subscription__c(
+				SBQQ__Account__c = accountId,
+				SBQQ__Contract__c = contractId,
+				ServicePoint__c = servicePointId,
+				SBQQ__Quantity__c = 1.0
+			);
+
+			subcriptionList.add(subscription);
+		}
+
+		if (doInsert){
+
+			insert subcriptionList;
+		}
+
+		return subcriptionList;
+
+	}
+
+	public static List<CS_SelezioneFornitura__c> createSelezioneFornitura(Integer amount, Boolean doInsert) {
+
+		List<CS_SelezioneFornitura__c> selezioneList = new List<CS_SelezioneFornitura__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CS_SelezioneFornitura__c selezione = new CS_SelezioneFornitura__c(
+				Name = 'selezioneTestName'
+			);
+
+			selezioneList.add(selezione);
+		}
+
+		if (doInsert){
+
+			insert selezioneList;
+		}
+
+		return selezioneList;
+	}
 }

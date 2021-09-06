@@ -111,32 +111,35 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     }
 
    // @future(callout=true)
-    public static void updateServicePoint(ServicePoint__c servicePo)
-    {   
+    public static void updateServicePoint(ServicePoint__c servicePo) {   
         
         //List<ServicePoint__c> listServ = servicePointQuery.getRecordById(id,'Id, OwnerId, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, SupplyAddress__c, Distributor__c, ServicePointCode__c, SupplyCity__c, SupplyCountry__c, SupplyPlace__c, SupplyPostalCode__c, SupplyProvince__c, SupplySAPCityCode__c, SupplySAPStreetCode__c, SupplyStreetNumberExtension__c, SupplyStreetNumber__c, SupplyStreet__c, Account__c, CommoditySector__c, MeterSN__c, TemporaryContractCode__c, BrandLogo__c, BuildingCode__c, ActivationEleExternalDistributor__c, ImplantTypeGen__c, RowIdSiebel__c, SAPImplantCode__c, SupplyType_Deprecate__c, UseCategory__c, PlugPresence__c, ImplantInstallationDate__c, IsRemoteManaged__c, LockInformation__c, SwitchInWinback__c, CurrentYearConsumption__c, RemiCode__c, AnnualConsumption__c, Resident__c, MeterType__c, PowerAvailable__c, MarketOrigin__c, PowerContractual__c, FlowComputerSN__c, VoltageLevel__c, DisconnectibilityPhone__c, SupplyIsAddressVerified__c, SupplyType__c, Potentiality__c, Pressure__c, SupplyAddessIsForeign__c, UseTypeEnergy__c, WithdrawalClass__c, RequestPhase__c, MaxRequiredPotential__c, PreviousYearConsumption__c, Status__c, GlobalMigrationKey__c, Disconnectable__c, DisconnectibilityType__c, IsMigrated__c, AnnualConsumptionStandardM3__c, ElectricConsumptionZone1__c, ElectricConsumptionZone2__c, ElectricConsumptionZone3__c, Excises__c, RegionalAdditional__c, SupplyCityCode__c, SupplyStreetCode__c, ImplantType__c, Vendor__c, MeterClass__c, Company__c, SupplyPlaceCode__c, MeterStatus__c, PowerRequested__c, SupplyStreetName__c, PressureLevel__c');
        // ServicePoint__c servicePo = listServ[0];if()
-       System.debug('******1');
-       if(servicePo.ServicePointCode__c != null){
-        System.debug('******2');
-        List<SaleServiceItem__c> listSale = saleServItem.getSaleByServicePointFilterCode(servicePo.ServicePointCode__c);
-        Sale__c s = new Sale__c();
-        HDT_QR_Sale saQr = new HDT_QR_Sale();
-        if(listSale != null && !listSale.isEmpty()){
-            System.debug('******3');
-            s.id = listSale[0].opportunity__r.Sale__c;
-            System.debug('******4');
-            s = saQr.getRecordById(listSale[0].opportunity__r.Sale__c,'id,Account__r.Category__c,Account__r.CompanyOwner__c');
-            System.debug('******5');
-            boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
-            System.debug('******6:' +isTransitorio);
-            if(isTransitorio){
-                System.debug('******7');
-                HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
-                System.debug('******8:' + resp);
-                if(resp != null && resp.result!=null && !resp.result.isEmpty()){
-                    if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
-                        servicePo.SwitchInWinback__c = true;
+        System.debug('******1');
+        if(servicePo.ServicePointCode__c != null){
+            System.debug('******2');
+            List<SaleServiceItem__c> listSale = saleServItem.getSaleByServicePointFilterCode(servicePo.ServicePointCode__c);
+            Sale__c s = new Sale__c();
+            HDT_QR_Sale saQr = new HDT_QR_Sale();
+            if(listSale != null && !listSale.isEmpty()){
+                System.debug('******3');
+                s.id = listSale[0].opportunity__r.Sale__c;
+                System.debug('******4');
+                s = saQr.getRecordById(listSale[0].opportunity__r.Sale__c,'id,Account__r.Category__c,Account__r.CompanyOwner__c');
+                System.debug('******5');
+                boolean isTransitorio = HDT_UTL_Sales.isTransitionNoUp(servicePo,s);
+                System.debug('******6:' +isTransitorio);
+                if(isTransitorio){
+                    System.debug('******7');
+                    HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
+                    System.debug('******8:' + resp);
+                    if(resp != null && resp.result!=null && !resp.result.isEmpty()){
+                        if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
+                            servicePo.SwitchInWinback__c = true;
+                        }
+                        else{
+                            servicePo.SwitchInWinback__c = false;
+                        }
                     }
                     else{
                         servicePo.SwitchInWinback__c = false;
@@ -144,26 +147,21 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                 }
                 else{
                     servicePo.SwitchInWinback__c = false;
-                }
+                }    
             }
-            else{
-                servicePo.SwitchInWinback__c = false;
-            }
-            
-        }
         }
         serviceSp.updateRecord(servicePo);
         /*s.id = id;
         s.SwitchInWinback__c = true;
         serviceSp.updateRecord(s);*/
     }
-    public static void updateServicePoint2(ServicePoint__c servicePo,Sale__c sa)
-    {   
+    
+    public static void updateServicePoint2(ServicePoint__c servicePo,Sale__c sa){   
         
         //List<ServicePoint__c> listServ = servicePointQuery.getRecordById(id,'Id, OwnerId, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, SupplyAddress__c, Distributor__c, ServicePointCode__c, SupplyCity__c, SupplyCountry__c, SupplyPlace__c, SupplyPostalCode__c, SupplyProvince__c, SupplySAPCityCode__c, SupplySAPStreetCode__c, SupplyStreetNumberExtension__c, SupplyStreetNumber__c, SupplyStreet__c, Account__c, CommoditySector__c, MeterSN__c, TemporaryContractCode__c, BrandLogo__c, BuildingCode__c, ActivationEleExternalDistributor__c, ImplantTypeGen__c, RowIdSiebel__c, SAPImplantCode__c, SupplyType_Deprecate__c, UseCategory__c, PlugPresence__c, ImplantInstallationDate__c, IsRemoteManaged__c, LockInformation__c, SwitchInWinback__c, CurrentYearConsumption__c, RemiCode__c, AnnualConsumption__c, Resident__c, MeterType__c, PowerAvailable__c, MarketOrigin__c, PowerContractual__c, FlowComputerSN__c, VoltageLevel__c, DisconnectibilityPhone__c, SupplyIsAddressVerified__c, SupplyType__c, Potentiality__c, Pressure__c, SupplyAddessIsForeign__c, UseTypeEnergy__c, WithdrawalClass__c, RequestPhase__c, MaxRequiredPotential__c, PreviousYearConsumption__c, Status__c, GlobalMigrationKey__c, Disconnectable__c, DisconnectibilityType__c, IsMigrated__c, AnnualConsumptionStandardM3__c, ElectricConsumptionZone1__c, ElectricConsumptionZone2__c, ElectricConsumptionZone3__c, Excises__c, RegionalAdditional__c, SupplyCityCode__c, SupplyStreetCode__c, ImplantType__c, Vendor__c, MeterClass__c, Company__c, SupplyPlaceCode__c, MeterStatus__c, PowerRequested__c, SupplyStreetName__c, PressureLevel__c');
         System.debug('******1');
         if(servicePo.ServicePointCode__c != null){
-         System.debug('******2');
+        System.debug('******2');
         // List<SaleServiceItem__c> listSale = saleServItem.getSaleByServicePointFilterCode(servicePo.ServicePointCode__c);
         Sale__c s = new Sale__c();
         HDT_QR_Sale saQr = new HDT_QR_Sale();
@@ -208,13 +206,12 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         s.SwitchInWinback__c = true;
         serviceSp.updateRecord(s);*/
     }
-    public static void updateServicePoint3(ServicePoint__c servicePo,Sale__c sa)
-    {   
+    public static void updateServicePoint3(ServicePoint__c servicePo,Sale__c sa) {   
         
         //List<ServicePoint__c> listServ = servicePointQuery.getRecordById(id,'Id, OwnerId, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, SupplyAddress__c, Distributor__c, ServicePointCode__c, SupplyCity__c, SupplyCountry__c, SupplyPlace__c, SupplyPostalCode__c, SupplyProvince__c, SupplySAPCityCode__c, SupplySAPStreetCode__c, SupplyStreetNumberExtension__c, SupplyStreetNumber__c, SupplyStreet__c, Account__c, CommoditySector__c, MeterSN__c, TemporaryContractCode__c, BrandLogo__c, BuildingCode__c, ActivationEleExternalDistributor__c, ImplantTypeGen__c, RowIdSiebel__c, SAPImplantCode__c, SupplyType_Deprecate__c, UseCategory__c, PlugPresence__c, ImplantInstallationDate__c, IsRemoteManaged__c, LockInformation__c, SwitchInWinback__c, CurrentYearConsumption__c, RemiCode__c, AnnualConsumption__c, Resident__c, MeterType__c, PowerAvailable__c, MarketOrigin__c, PowerContractual__c, FlowComputerSN__c, VoltageLevel__c, DisconnectibilityPhone__c, SupplyIsAddressVerified__c, SupplyType__c, Potentiality__c, Pressure__c, SupplyAddessIsForeign__c, UseTypeEnergy__c, WithdrawalClass__c, RequestPhase__c, MaxRequiredPotential__c, PreviousYearConsumption__c, Status__c, GlobalMigrationKey__c, Disconnectable__c, DisconnectibilityType__c, IsMigrated__c, AnnualConsumptionStandardM3__c, ElectricConsumptionZone1__c, ElectricConsumptionZone2__c, ElectricConsumptionZone3__c, Excises__c, RegionalAdditional__c, SupplyCityCode__c, SupplyStreetCode__c, ImplantType__c, Vendor__c, MeterClass__c, Company__c, SupplyPlaceCode__c, MeterStatus__c, PowerRequested__c, SupplyStreetName__c, PressureLevel__c');
         System.debug('******1');
         if(servicePo.ServicePointCode__c != null){
-         System.debug('******2');
+        System.debug('******2');
         // List<SaleServiceItem__c> listSale = saleServItem.getSaleByServicePointFilterCode(servicePo.ServicePointCode__c);
         Sale__c s = new Sale__c();
         HDT_QR_Sale saQr = new HDT_QR_Sale();
@@ -250,6 +247,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         s.SwitchInWinback__c = true;
         serviceSp.updateRecord(s);*/
     }
+
     @AuraEnabled
     public static ServicePoint__c confirmServicePoint2(ServicePoint__c servicePoint, Boolean sap,Sale__c sale){
         system.debug('HDT_LC_TargetObjectCreateForm confirmServicePoint START');
@@ -356,26 +354,26 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     }
 
     @AuraEnabled
-public static List<DistributorPointCode__c> getDistributorPointCode(String code,String commodity)
-{
-    system.debug('HDT_LC_TargetObjectCreateForm getDistributorPointCode START');
-    system.debug('code : '+ code);
+    public static List<DistributorPointCode__c> getDistributorPointCode(String code,String commodity) {
+        
+        system.debug('HDT_LC_TargetObjectCreateForm getDistributorPointCode START');
+        system.debug('code : '+ code);
 
-    HDT_QR_DistributorPointCode queryClass = new HDT_QR_DistributorPointCode();
-    List<Map<String,Object>> listCustomDistributorPoint = new List<Map<String,Object>>();
-	//Map<String,String> customDistributorPoint = new Map<String,String>();
+        HDT_QR_DistributorPointCode queryClass = new HDT_QR_DistributorPointCode();
+        List<Map<String,Object>> listCustomDistributorPoint = new List<Map<String,Object>>();
+        //Map<String,String> customDistributorPoint = new Map<String,String>();
 
-    String[] splitCode = code.split('');
-    system.debug('splitCode : '+ splitCode);
-    String finalCode = splitCode[0]+splitCode[1]+splitCode[2]+splitCode[3]+splitCode[4];
-    system.debug('finalCode : '+ finalCode);
-	List<DistributorPointCode__c> listDistributorPoint = queryClass.getDistributorPointCode(finalCode,commodity);
-    system.debug('listDistributorPoint : '+ listDistributorPoint);
-    Map<String,Object> row = new Map<String,Object>();
-    
-    system.debug('HDT_LC_TargetObjectCreateForm getDistributorPointCode END');
-    return listDistributorPoint;
-}
+        // String[] splitCode = code.split('');
+        // system.debug('splitCode : '+ splitCode);
+        // String finalCode = splitCode[0]+splitCode[1]+splitCode[2]+splitCode[3]+splitCode[4];
+        // system.debug('finalCode : '+ finalCode);
 
-
+        String finalCode = code.left(5);
+        List<DistributorPointCode__c> listDistributorPoint = queryClass.getDistributorPointCode(finalCode,commodity);
+        // system.debug('listDistributorPoint : '+ listDistributorPoint);
+        // Map<String,Object> row = new Map<String,Object>();
+        
+        system.debug('HDT_LC_TargetObjectCreateForm getDistributorPointCode END');
+        return listDistributorPoint;
+    }
 }

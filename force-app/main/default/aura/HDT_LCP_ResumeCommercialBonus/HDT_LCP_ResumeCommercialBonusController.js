@@ -46,7 +46,7 @@
                     });
                     toastEvent.fire();
                     return;
-                }else if(phase == 'In Lavorazione'){
+                }/*else if(phase == 'In Lavorazione'){
                     var toastEvent = $A.get("e.force:showToast");
                     toastEvent.setParams({
                         "title": "Error!",
@@ -55,7 +55,7 @@
                     });
                     toastEvent.fire();
                     return;
-                }else{
+                }*/else{
                     
                         workspaceAPI.getFocusedTabInfo().then(function(response2) {
 

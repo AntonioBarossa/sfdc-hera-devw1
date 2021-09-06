@@ -37,7 +37,7 @@ export default class HdtAccountSelector extends LightningElement {
 		return this.contacts;
 	}
 	get searchResults() {
-		return this.leads || this.accounts || this.contacts;
+		return (this.leads && this.leads.length > 0) || (this.accounts && this.accounts.length > 0) || (this.contacts && this.contacts.length > 0);
 	}
 	get showAccountSearchPanel() {
 		return !this.accountId && this.accounts;

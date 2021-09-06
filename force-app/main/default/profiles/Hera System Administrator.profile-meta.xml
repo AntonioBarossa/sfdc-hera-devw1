@@ -252,6 +252,10 @@
     </customMetadataTypeAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
+        <name>HDT_Process_Sale_Partner_Community__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
         <name>CS_SelezioneFornitura__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
@@ -27170,6 +27174,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServiceRequest__c.isMigrated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>ServiceRequest__c.GlobalMigrationKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServiceRequest__c.NextPhase__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31286,6 +31300,11 @@
 	<fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.MalfunctionsCount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ManualCheckResult__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

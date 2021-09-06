@@ -33,17 +33,10 @@
         <locationX>473</locationX>
         <locationY>518</locationY>
         <assignmentItems>
-            <assignToReference>Case.AccountholderTypeBeneficiary__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Tipologia_Intestatario2</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Case.AlternativeAddress__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Indirizzo.addressLabel</elementReference>
+                <elementReference>IndirizzoFormula</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -72,13 +65,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Contact_di_riferimento.recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Case.Contract__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Numero_Contratto2.recordId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -193,26 +179,59 @@
                 <elementReference>P_IVA</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.CarType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Tipologia_Auto</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Causal__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Causale</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.ContractCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Numero_Contratto</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.ClientCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Categoria_Cliente</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.ContractSubscriptionDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Data_Firma_Contratto</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.CustomerInterest__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Interesse_espresso_dal_cliente</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.SignatoryType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Tipo_Intestatario</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Causale_Autoelettrica2</targetReference>
         </connector>
     </assignments>
-    <choices>
-        <name>Heraricarica</name>
-        <choiceText>Heraricarica</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Heraricarica</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>Noleggio</name>
-        <choiceText>Noleggio</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Noleggio</stringValue>
-        </value>
-    </choices>
     <decisions>
         <name>Causale_Autoelettrica2</name>
         <label>Causale Autoelettrica?</label>
@@ -226,7 +245,7 @@
                 <leftValueReference>Causale_Autoelettrica</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Noleggio</elementReference>
+                    <stringValue>Noleggio</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -283,13 +302,26 @@
         </rules>
     </decisions>
     <dynamicChoiceSets>
-        <name>TipologiaIntestatarioValues</name>
+        <name>CausaleAutoelettricaValues</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
-        <picklistField>AccountholderTypeBeneficiary__c</picklistField>
+        <picklistField>ReasonAutoeletric__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>TipoIntestatarioValues</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>SignatoryType__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <formulas>
+        <name>IndirizzoFormula</name>
+        <dataType>String</dataType>
+        <expression>{!Indirizzo.street} &amp; &apos;, &apos; &amp; {!Indirizzo.city} &amp; &apos;, &apos; &amp; {!Indirizzo.province} &amp; &apos;, &apos; &amp; {!Indirizzo.postalCode} &amp; &apos;, &apos; &amp; {!Indirizzo.country}</expression>
+    </formulas>
     <interviewLabel>HDT_FL_Autoelettrica {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_Autoelettrica</label>
     <processMetadataValues>
@@ -350,7 +382,7 @@
                 <fields>
                     <name>Interesse_espresso_dal_cliente</name>
                     <dataType>String</dataType>
-                    <fieldText>Interesse espresso dal cliente (?)</fieldText>
+                    <fieldText>Interesse espresso dal cliente</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -383,30 +415,11 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Numero_Contratto2</name>
-                    <extensionName>flowruntime:lookup</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>label</name>
-                        <value>
-                            <stringValue>Numero Contratto</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>fieldApiName</name>
-                        <value>
-                            <stringValue>Contract__c</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>objectApiName</name>
-                        <value>
-                            <stringValue>Case</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <name>Numero_Contratto</name>
+                    <dataType>String</dataType>
+                    <fieldText>Numero Contratto</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -436,7 +449,7 @@
                 <fields>
                     <name>Tipologia_Auto</name>
                     <dataType>String</dataType>
-                    <fieldText>Tipologia Auto (?)</fieldText>
+                    <fieldText>Tipologia Auto</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -458,18 +471,17 @@
                 <fields>
                     <name>Causale</name>
                     <dataType>String</dataType>
-                    <fieldText>Causale (?)</fieldText>
+                    <fieldText>Causale</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
                     <name>Causale_Autoelettrica</name>
-                    <choiceReferences>Noleggio</choiceReferences>
-                    <choiceReferences>Heraricarica</choiceReferences>
+                    <choiceReferences>CausaleAutoelettricaValues</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Causale Autoelettrica</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -482,7 +494,7 @@
             <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Dati_Pagamento</name>
@@ -509,9 +521,64 @@
                 <fields>
                     <name>Modalit_di_pagamento</name>
                     <dataType>String</dataType>
-                    <fieldText>Modalità di pagamento (?)</fieldText>
+                    <fieldText>Modalità di pagamento</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Numero_conto_corrente</name>
+                    <dataType>String</dataType>
+                    <fieldText>Numero conto corrente</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Lunghezza Max: 12&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Numero_conto_corrente})&lt;=12</formulaExpression>
+                    </validationRule>
+                </fields>
+                <fields>
+                    <name>Numeri_di_Controllo</name>
+                    <dataType>String</dataType>
+                    <fieldText>Numeri di Controllo</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Lunghezza Max: 2&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Numeri_di_Controllo})&lt;=2</formulaExpression>
+                    </validationRule>
+                </fields>
+                <fields>
+                    <name>CIN</name>
+                    <dataType>String</dataType>
+                    <fieldText>CIN</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Lunghezza Max: 1&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!CIN})&lt;=1</formulaExpression>
+                    </validationRule>
+                </fields>
+                <fields>
+                    <name>CAB</name>
+                    <dataType>String</dataType>
+                    <fieldText>CAB</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Lunghezza Max: 5&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!CAB})&lt;=5</formulaExpression>
+                    </validationRule>
+                </fields>
+                <fields>
+                    <name>ABI</name>
+                    <dataType>String</dataType>
+                    <fieldText>ABI</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Lunghezza Max: 5&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!ABI})&lt;=5</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>IBAN</name>
@@ -521,22 +588,26 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>CIN</name>
-                    <dataType>String</dataType>
-                    <fieldText>CIN</fieldText>
+                    <name>IBAN_Estero</name>
+                    <dataType>Boolean</dataType>
+                    <fieldText>IBAN Estero</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                 </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Dati_Pagamento_Section1_Column2</name>
+                <fieldType>Region</fieldType>
                 <fields>
-                    <name>CAB</name>
-                    <dataType>String</dataType>
-                    <fieldText>CAB</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Tipologia_Intestatario2</name>
-                    <choiceReferences>TipologiaIntestatarioValues</choiceReferences>
+                    <name>Tipo_Intestatario</name>
+                    <choiceReferences>TipoIntestatarioValues</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Tipologia Intestatario</fieldText>
                     <fieldType>DropdownBox</fieldType>
@@ -546,6 +617,20 @@
                     <name>Nome_Intestatario_c_c</name>
                     <dataType>String</dataType>
                     <fieldText>Nome Intestatario c/c</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Cognome_Intestario_c_c</name>
+                    <dataType>String</dataType>
+                    <fieldText>Cognome Intestario c/c</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Codice_Fiscale_intestatario_c_c</name>
+                    <dataType>String</dataType>
+                    <fieldText>Codice Fiscale intestatario c/c</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -574,59 +659,6 @@
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Dati_Pagamento_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>IBAN_Estero</name>
-                    <dataType>Boolean</dataType>
-                    <fieldText>IBAN Estero</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>true</isRequired>
-                </fields>
-                <fields>
-                    <name>Numeri_di_Controllo</name>
-                    <dataType>String</dataType>
-                    <fieldText>Numeri di Controllo</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>ABI</name>
-                    <dataType>String</dataType>
-                    <fieldText>ABI</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Numero_conto_corrente</name>
-                    <dataType>String</dataType>
-                    <fieldText>Numero conto corrente</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Codice_Fiscale_intestatario_c_c</name>
-                    <dataType>String</dataType>
-                    <fieldText>Codice Fiscale intestatario c/c</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Cognome_Intestario_c_c</name>
-                    <dataType>String</dataType>
-                    <fieldText>Cognome Intestario c/c</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
                 </fields>
                 <fields>
                     <name>Indirizzo</name>
@@ -687,7 +719,7 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>50</locationX>
@@ -696,7 +728,7 @@
             <targetReference>Quale_Processo</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>AccountId</name>
         <dataType>String</dataType>
