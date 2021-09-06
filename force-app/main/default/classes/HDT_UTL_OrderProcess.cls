@@ -168,8 +168,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         vasOrdersToUpdate.putAll(
             updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS')
         );
-
-        system.enqueueJob(new HDT_SRV_SalesManager.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
+        if(!vasOrdersToUpdate.isEmpty()){
+            system.enqueueJob(new HDT_SRV_SalesManager.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
+        }
 
         insertLogForOrderChangedPhase(orderMapOld,orderMapNew);
     }
