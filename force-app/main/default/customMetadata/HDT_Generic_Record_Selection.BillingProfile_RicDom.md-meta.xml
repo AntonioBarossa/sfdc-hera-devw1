@@ -22,7 +22,7 @@
     </values>
     <values>
         <field>Fields__c</field>
-        <value xsi:type="xsd:string">Status__c,ContractAccountCode__c,ActivationDate__c,PaymentMethod__c,InvoicingAddressFormula__c,BillSendingMethod__c</value>
+        <value xsi:type="xsd:string">ContractAccountCode__c,ActivationDate__c,PaymentMethod__c,InvoicingAddressFormula__c,BillSendingMethod__c</value>
     </values>
     <values>
         <field>Max_Rows__c</field>

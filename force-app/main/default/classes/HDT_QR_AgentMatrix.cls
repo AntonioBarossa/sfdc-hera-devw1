@@ -5,7 +5,6 @@
 * @history Frida1995 – 18/06/2021 – Created class
 */
 
-
 public inherited sharing class HDT_QR_AgentMatrix {
 
     public static List<AgentMatrix__c> getRecordsByChannel(String Channel){
