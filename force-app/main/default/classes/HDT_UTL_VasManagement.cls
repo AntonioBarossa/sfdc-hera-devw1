@@ -218,7 +218,7 @@ public with sharing class HDT_UTL_VasManagement {
             dataDecorrenza = parentOrderItem?.VasActivationDate__c;
             dataFirma = currentOrder.SignedDate__c;
             durataServizioGg = parentOrderItem?.DurationDay__c;
-            modalitaPagamento = parentOrderItem?.PaymentMode__c;
+            //modalitaPagamento = parentOrderItem?.PaymentMode__c;
             
             isVasStandAlone = (currentOrder.SBQQ__Quote__r?.SBQQ__PriceBook__r?.Name?.toUpperCase() == VAS_STANDALONE_PRICEBOOK);
             

@@ -95,16 +95,13 @@ const DATA_ACCESS_MAP = {
         ]
     },
     'SUBS_VAS':{
-        label : 'Subscriptions VAS',
-        sObjectName: 'SBQQ__Subscription__c',
-        emptyMessage: 'Non ci sono subscriptions',
+        label : 'Contratti',
+        sObjectName: 'Contract',
+        emptyMessage: 'Non ci sono contratti',
         dataProcessFunction: (data) => {
             data.forEach((item) => {
-                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.ContractNumber : '';
-                item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
-                    item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
-                item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
-                    item.SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c : '';
+                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__r !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
             });
         },
         columns: [
