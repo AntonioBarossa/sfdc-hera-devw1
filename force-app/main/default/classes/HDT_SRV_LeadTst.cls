@@ -6,89 +6,138 @@
  */
 @isTest
 public class HDT_SRV_LeadTst{
+	private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
+	@TestSetup
+	static void makeData(){
+
+		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+		insert internalUser;
+	}
+
 	@isTest
 	static void testCheckAccessInit(){
 
-		Test.startTest();
+		User u=[SELECT Id
+		        FROM User
+		        WHERE Alias='crmuser'
+		        LIMIT 1];
 
-		HDT_SRV_Lead.checkAccessInit('CodIstat__c, AgeGroup__c', 'create');
+		System.runAs(u){
 
-		Test.stopTest();
+			Test.startTest();
 
-		// Method Return is VOID
-		// System.assertEquals('', '', '');
-		// System.assertNotEquals('', '');
+			HDT_SRV_Lead.checkAccessInit('CodIstat__c, AgeGroup__c', 'create');
+
+			Test.stopTest();
+
+			// Method Return is VOID
+			// System.assertEquals('', '', '');
+			// System.assertNotEquals('', '');
+		}
 	}
 
 	@isTest
 	static void testCheckCreateAccess(){
 
-		Test.startTest();
+		User u=[SELECT Id
+		        FROM User
+		        WHERE Alias='crmuser'
+		        LIMIT 1];
 
-		List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, false);
+		System.runAs(u){
 
-		HDT_SRV_Lead.checkCreateAccess(leads[0]);
+			Test.startTest();
 
-		Test.stopTest();
+			List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, false);
 
-		// Method Return is VOID
-		// System.assertEquals('', '', '');
-		// System.assertNotEquals('', '');
+			HDT_SRV_Lead.checkCreateAccess(leads[0]);
+
+			Test.stopTest();
+
+			// Method Return is VOID
+			// System.assertEquals('', '', '');
+			// System.assertNotEquals('', '');
+		}
 	}
 
 	@isTest
 	static void testCreateRecord(){
 
-		Test.startTest();
+		User u=[SELECT Id
+		        FROM User
+		        WHERE Alias='crmuser'
+		        LIMIT 1];
 
-		List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, false);
+		System.runAs(u){
 
-		HDT_SRV_Lead.createRecord(leads[0]);
+			Test.startTest();
 
-		Lead createdLead=[SELECT Id, FirstName
-		                  FROM Lead
-		                  WHERE FirstName='FirstNameTest0'];
+			List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, false);
 
-		Test.stopTest();
+			HDT_SRV_Lead.createRecord(leads[0]);
 
-		System.assertEquals(false, createdLead.Id==null, 'Lead not created');
-		System.assertNotEquals(true, createdLead.Id==null);
+			Lead createdLead=[SELECT Id, FirstName
+			                  FROM Lead
+			                  WHERE FirstName='FirstNameTest0'];
+
+			Test.stopTest();
+
+			System.assertEquals(false, createdLead.Id==null, 'Lead not created');
+			System.assertNotEquals(true, createdLead.Id==null);
+		}
 	}
 
 	@isTest
 	static void testCheckUpdateAccess(){
 
-		Test.startTest();
+		User u=[SELECT Id
+		        FROM User
+		        WHERE Alias='crmuser'
+		        LIMIT 1];
 
-		List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, false);
+		System.runAs(u){
 
-		HDT_SRV_Lead.checkUpdateAccess(leads[0]);
+			Test.startTest();
 
-		Test.stopTest();
+			List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, false);
 
-		// Method Return is VOID
-		// System.assertEquals('', '', '');
-		// System.assertNotEquals('', '');
+			HDT_SRV_Lead.checkUpdateAccess(leads[0]);
+
+			Test.stopTest();
+
+			// Method Return is VOID
+			// System.assertEquals('', '', '');
+			// System.assertNotEquals('', '');
+		}
 	}
 
 	@isTest
 	static void testUpdateRecord(){
 
-		Test.startTest();
+		User u=[SELECT Id
+		        FROM User
+		        WHERE Alias='crmuser'
+		        LIMIT 1];
 
-		List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, true);
+		System.runAs(u){
 
-		leads[0].MobilePhone='1234567906';
+			Test.startTest();
 
-		HDT_SRV_Lead.updateRecord(leads[0]);
+			List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, true);
 
-		Lead updatedLead=[SELECT Id, MobilePhone
-		                  FROM Lead
-		                  WHERE MobilePhone='1234567906'];
+			leads[0].MobilePhone='1234567906';
 
-		Test.stopTest();
+			HDT_SRV_Lead.updateRecord(leads[0]);
 
-		System.assertEquals(true, updatedLead.MobilePhone=='1234567906', 'Lead not updated');
-		System.assertNotEquals(true, updatedLead.MobilePhone==null);
+			Lead updatedLead=[SELECT Id, MobilePhone
+			                  FROM Lead
+			                  WHERE MobilePhone='1234567906'];
+
+			Test.stopTest();
+
+			System.assertEquals(true, updatedLead.MobilePhone=='1234567906', 'Lead not updated');
+			System.assertNotEquals(true, updatedLead.MobilePhone==null);
+		}
 	}
 }
