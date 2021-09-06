@@ -37,6 +37,7 @@
             <!--Data Lettura-->
             <property name="selectedReadingDate" type="Date" label="Data Lettura Selezionata" description="Data Lettura Selezionata" role="outputOnly"/>
             <property name="selectedReadingDateString" type="String" label="Data Lettura Selezionata (Stringa)" description="Data Lettura Selezionata" role="outputOnly"/>
+            <property name="disputedReading" type="Integer" label="Lettura Contestata" description="Valore lettura contestata" role="outputOnly"/>
 
             <property name="cancelCase" type="Boolean" label="cancelCase" description="if true case has to be cancelled" role="outputOnly"/>
             
