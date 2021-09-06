@@ -71,6 +71,13 @@ public inherited sharing class HDT_LC_SaleVas {
         return orderQr.getRecordsForVasSelection(accountId);
     }
 
+    @AuraEnabled
+    public static List<Order> getOrdersListNotActive(String accountId){
+        //Orders with status "Draft" or "In Lavorazione"
+        orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
+        return orderQr.getRecordsNotActivated(accountId);
+    }
+
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
@@ -137,11 +144,12 @@ public inherited sharing class HDT_LC_SaleVas {
                     FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:accountId WITH SECURITY_ENFORCED];
             }
             when 'SUBS_VAS'{ 
-                records = [SELECT SBQQ__Contract__r.ContractNumber,
+                /*records = [SELECT SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
                     FROM SBQQ__Subscription__c WHERE SBQQ__Account__c=:accountId
                     AND RecordType.DeveloperName IN ('HDT_RT_CompositionVASproductsnotbillable','HDT_RT_VASConsumptionanalysis',
-                    'HDT_RT_VASPoductsnotbillable','HDT_RT_VASServicesnotbillable') WITH SECURITY_ENFORCED];
+                    'HDT_RT_VASPoductsnotbillable','HDT_RT_VASServicesnotbillable') WITH SECURITY_ENFORCED];*/
+                records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract WHERE AccountId=:accountId AND SBQQ__Order__r.RecordType.DeveloperName='HDT_RT_VAS'];
             }
             when 'CONTRACT_ELE_ACTIVE'{
                 records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c

@@ -39,6 +39,15 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
         {label:'Rimborso parziale bollette', value:'Rimborso parziale bollette'}
     ];
 
+    get disabledContract(){
+        if(this.isBonus) return true;
+        return this.disabledInp;
+    }
+
+    get isBonus(){
+        return this.processtype=="Contratti/Bonus Commerciale";
+    }
+
     @wire(CurrentPageReference)
     setCurrentPageReference(currentPageReference) {
         this.currentPageReference = currentPageReference;
@@ -102,6 +111,14 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
                     mode: 'dismissable'
                     });
                     this.dispatchEvent(event);
+                    this[NavigationMixin.Navigate]({
+                        type: 'standard__recordPage',
+                        attributes: {
+                            recordId: this.recordid,
+                            objectApiName: 'Case',
+                            actionName: 'view'
+                        }
+                    });
                 const closeclickedevt = new CustomEvent('closeaction');
                 this.dispatchEvent(closeclickedevt); 
                 console.log(result);
@@ -120,6 +137,14 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
                 mode: 'dismissable'
                 });
                 this.dispatchEvent(event);
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: this.recordid,
+                        objectApiName: 'Case',
+                        actionName: 'view'
+                    }
+                });
                     const closeclickedevt = new CustomEvent('closeaction');
                     this.dispatchEvent(closeclickedevt); 
             }).catch(error => {
@@ -196,6 +221,14 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
                         mode: 'dismissable'
                         });
                         this.dispatchEvent(event);
+                        this[NavigationMixin.Navigate]({
+                            type: 'standard__recordPage',
+                            attributes: {
+                                recordId: this.recordid,
+                                objectApiName: 'Case',
+                                actionName: 'view'
+                            }
+                        });
                         const closeclickedevt = new CustomEvent('closeaction');
                         this.dispatchEvent(closeclickedevt); 
                     console.log(result);
