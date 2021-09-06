@@ -604,7 +604,14 @@
             <name>Conferma</name>
             <conditionLogic>(1 AND 2) OR (3 AND 4)</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditFormFlow_0_0.saveInDraft</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -615,20 +622,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>hdtRecordEditForm_0_0.cancelCase</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>hdtRecordEditForm_0_0.saveInDraft</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -638,7 +638,7 @@
         </rules>
         <rules>
             <name>Annulla</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 AND 2) OR (3 AND 4)</conditionLogic>
             <conditions>
                 <leftValueReference>hdtRecordEditForm_0_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
@@ -648,6 +648,20 @@
             </conditions>
             <conditions>
                 <leftValueReference>hdtRecordEditForm_0_0.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -1085,7 +1099,7 @@
             <inputParameters>
                 <name>variantSaveButton</name>
                 <value>
-                    <stringValue>success</stringValue>
+                    <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1121,7 +1135,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
