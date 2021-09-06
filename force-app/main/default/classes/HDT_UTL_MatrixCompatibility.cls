@@ -102,7 +102,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                 
             return compatibility;   
         }catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            throw e;
         }
     }
 

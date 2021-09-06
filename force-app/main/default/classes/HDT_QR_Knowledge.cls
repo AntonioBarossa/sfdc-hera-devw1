@@ -96,16 +96,21 @@ public inherited sharing class HDT_QR_Knowledge {
     public NewsNotificationCenter__c getDuplicateNews(NewsNotificationCenter__c news){
 
         NewsNotificationCenter__c newsDup = new NewsNotificationCenter__c();
-        
-        newsDup = [ SELECT Id, 
-        Name
-        FROM NewsNotificationCenter__c
-        WHERE Cluster__c = :news.Cluster__c
-        AND EntryChannel__c = :news.EntryChannel__c
-        AND Active__c = true
-        WITH SECURITY_ENFORCED
-        LIMIT 1
-        ];
+        try{
+            newsDup = [ SELECT Id, 
+            Name
+            FROM NewsNotificationCenter__c
+            WHERE Cluster__c = :news.Cluster__c
+            AND EntryChannel__c = :news.EntryChannel__c
+            AND Active__c = true
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+            ];
+        }
+        catch(Exception e)
+        {
+            System.debug('Exception: ' + e.getMessage() + '. At line' + e.getLineNumber());
+        }
 
 
         return newsDup;

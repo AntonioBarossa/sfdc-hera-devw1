@@ -3,7 +3,7 @@
     <fullName>VoltureEle__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Voltura Ele</label>
+    <label>Voltura_Ele</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

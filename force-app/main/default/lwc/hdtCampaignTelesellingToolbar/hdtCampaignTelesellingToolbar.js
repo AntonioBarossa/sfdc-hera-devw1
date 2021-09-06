@@ -185,6 +185,8 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
            // this.isSelectedDate
         this.template.querySelector("c-hdt-ct-toolbar-container").postAppointmentRequest(this.isSelectedDate);
         //}
+        this.showModal = false;
+
         console.log('saved');
     }
 
@@ -193,7 +195,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
         if (event.detail.status) {
             status = event.detail.status;
             console.log('submitHandlerNegativeOutcome - ' + status);
-            this.template.querySelector("c-hdt-ct-toolbar").saveScript(status, true);
+            this.template.querySelector("c-hdt-ct-toolbar-container").saveScript(status, true);
         }
     }
 }

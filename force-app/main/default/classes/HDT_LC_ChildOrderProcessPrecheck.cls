@@ -147,6 +147,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.SignedDate__c = Date.today();
                     newOrder.WaiverRightAfterthought__c = 'Si';
                 }
+                when 'Prima Attivazione'{
+                    processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
+                    processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
+                }
             }
 
             //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT

@@ -6,6 +6,7 @@ import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinish
 export default class HdtTargetObjectAddressForFlow extends LightningElement {
 
     theRecord;
+    @api cancelCase;
     isValidFields;
     @api theCase;
     
@@ -117,10 +118,14 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
     }
 
     handleCancell(event){
-        
+        console.log('******1');
         this.cancelCase = true;
-        const NavigationBackEvent = new FlowNavigationBackEvent();
-        this.dispatchEvent(NavigationBackEvent);
-
+        console.log('******2');
+        /*const attributeChangeEvent = new FlowAttributeChangeEvent('cancelCase', this.cancelCase);
+        this.dispatchEvent(attributeChangeEvent);*/
+        /*const NavigationBackEvent = new FlowNavigationBackEvent();
+        this.dispatchEvent(NavigationBackEvent);*/
+        const navigateNextEvent = new FlowNavigationNextEvent();
+        this.dispatchEvent(navigateNextEvent);
     }
 }

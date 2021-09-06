@@ -3,7 +3,7 @@
     <fullName>AddedDiscountsOrBonusesVASGas__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Aggiunta Sconti o Bonus VAS Gas</label>
+    <label>Aggiunta_Sconti_o_Bonus_VAS_Gas</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
