@@ -150,7 +150,7 @@
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
@@ -162,7 +162,9 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Matrici Agenti</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <listViewButtons>Rapporto_Matrici_Agenti</listViewButtons>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
