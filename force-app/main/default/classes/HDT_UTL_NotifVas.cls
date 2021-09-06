@@ -21,6 +21,7 @@ public with sharing class HDT_UTL_NotifVas {
     public static void handleVasNotify(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem) {
 
         Map<String, String> requestMap = new Map<String, String>();
+        system.debug(json.serialize(request));
         for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
             requestMap.put(field.name, field.value);
         }
@@ -28,11 +29,12 @@ public with sharing class HDT_UTL_NotifVas {
         Exception processExc;
         
         try {
-            switch on requestMap.get('TIPO_OPERAZIONE') {
-                when 'ATT' {
+            system.debug(request.header.fields.get(0).value);
+            switch on request.header.fields.get(0).value {
+                when 'sales' {
                     handleVasActivation(request, requestMap);
                 }
-                when 'DIS' {
+                when 'postsales' {
                     handleVasDeactivation(request, requestMap);
                 }
                 when else{

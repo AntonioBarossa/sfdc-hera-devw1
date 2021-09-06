@@ -1,3 +1,10 @@
+/**
+ * @author Lorenzo Gulotta (lorenzo.gulotta@webresults.it)
+ * @date 12/05/2021
+ * @description HDT_QR_ServiceCatalog Class
+ * @history Lorenzo Gulotta – 12/05/2021 – Created Class
+ */
+
 public with sharing class HDT_QR_City {
     public static String getCityCode(String city){
 

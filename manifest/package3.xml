@@ -1,176 +1,167 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Case.HDT_RT_AlertDisassociazioneUtenteWeb</members>
-        <members>Case.HDT_RT_AllineamentoAnagrafica</members>
-        <members>Case.HDT_RT_AltreInformative</members>
-        <members>Case.HDT_RT_AltriProcessiPagamenti</members>
-        <members>Case.HDT_RT_Annullamento</members>
-        <members>Case.HDT_RT_AttivazionePODVariazionePDR</members>
-        <members>Case.HDT_RT_Autolettura</members>
-        <members>Case.HDT_RT_CambioUsoTec</members>
-        <members>Case.HDT_RT_CanoneRai</members>
-        <members>Case.HDT_RT_ComportamentoVenditori</members>
-        <members>Case.HDT_RT_ComunicazionePagamento</members>
-        <members>Case.HDT_RT_Disattivazioni</members>
-        <members>Case.HDT_RT_DocCopiaContratto</members>
-        <members>Case.HDT_RT_Domiciliazione</members>
-        <members>Case.HDT_RT_FatturazioneConsumi</members>
-        <members>Case.HDT_RT_FlyingRequest</members>
-        <members>Case.HDT_RT_GenericheAttivazioni</members>
-        <members>Case.HDT_RT_GenericheVas</members>
-        <members>Case.HDT_RT_GestioneBolletta</members>
-        <members>Case.HDT_RT_GestioneBonusSociale</members>
-        <members>Case.HDT_RT_GestionePrivacy</members>
-        <members>Case.HDT_RT_Indennizzo</members>
-        <members>Case.HDT_RT_Informative</members>
-        <members>Case.HDT_RT_InversioneContatore</members>
-        <members>Case.HDT_RT_ModContrattoPreAtt</members>
-        <members>Case.HDT_RT_Morosita</members>
-        <members>Case.HDT_RT_PianoRateizzazione</members>
-        <members>Case.HDT_RT_PostSalesVAS</members>
-        <members>Case.HDT_RT_PreventiviEle</members>
-        <members>Case.HDT_RT_PreventiviGas</members>
-        <members>Case.HDT_RT_ProrogaTemporanea</members>
-        <members>Case.HDT_RT_ReclamiScrittiRichiesteInfo</members>
-        <members>Case.HDT_RT_RiattivazioniNonMorose</members>
-        <members>Case.HDT_RT_RichiestaParere</members>
-        <members>Case.HDT_RT_Rimborso</members>
-        <members>Case.HDT_RT_SospensioneRiattivazione</members>
-        <members>Case.HDT_RT_Subentro_EE</members>
-        <members>Case.HDT_RT_Subentro_GAS</members>
-        <members>Case.HDT_RT_UnificazioneSeparazioneCABolletta</members>
-        <members>Case.HDT_RT_VariazioneAmministratore</members>
-        <members>Case.HDT_RT_VariazioneAnagraficaCliente</members>
-        <members>Case.HDT_RT_VariazioniEle</members>
-        <members>Case.HDT_RT_VariazioniGas</members>
-        <members>Case.HDT_RT_VerificaDatiAlDl</members>
-        <members>Case.HDT_RT_VerificaTitolaritaPodPdr</members>
-        <members>Case.HDT_RT_VerificheEle</members>
-        <members>Case.HDT_RT_VerificheGas</members>
-        <members>Case.HDT_RT_VolturaTecnica</members>
-        <members>Case.HDT_RT_VotiveModena</members>
-        <name>RecordType</name>
+        <members>HDT_Activity_Default_Record_Page</members>
+        <members>HDT_General_Case_Record_Page</members>
+        <name>FlexiPage</name>
     </types>
     <types>
-        <members>Case-HDT_ComunicazionePagamento</members>
-        <members>Case-HDT_Domiciliazione</members>
-        <members>Case-HDT_GestionePrivacy</members>
-        <members>Case-HDT_PianoRateizzazione</members>
-        <members>Case-HDT_PreventiviEle</members>
-        <members>Case-HDT_PreventiviGas</members>
-        <members>Case-HDT_Rimborso</members>
-        <members>Case-HDT_VerificaDatiAlDl</members>
-        <members>Case-HDT_VerificheEle</members>
-        <members>Case-HDT_VerificheGas</members>
-        <name>Layout</name>
+        <members>Asset</members>
+        <name>CustomObject</name>
     </types>
     <types>
-        <members>HDT_BA_LeadExpired</members>
-        <members>HDT_BA_LeadExpiredTest</members>
-        <members>HDT_LC_AccountStatementPickerTst</members>
-        <members>HDT_LC_ActivityDetail</members>
-        <members>HDT_LC_ChildOrderProcessDetails</members>
-        <members>HDT_LC_ChildOrderProcessDetailsTst</members>
-        <members>HDT_LC_ConfigureProductTst</members>
-        <members>HDT_LC_GenericTable</members>
-        <members>HDT_LC_GenericTableTst</members>
-        <members>HDT_LC_MeterReadingControllerTst</members>
-        <members>HDT_LC_OrderDossierWizard</members>
-        <members>HDT_LC_ProcessesContainer</members>
-        <members>HDT_LC_TargetObjectCreateForm</members>
-        <members>HDT_LC_TargetObjectCreateFormTst</members>
-        <members>HDT_QR_EligibilityCriteria</members>
-        <members>HDT_QR_HerokuPostSalesManager</members>
-        <members>HDT_QR_Knowledge</members>
-        <members>HDT_QR_MatriceAgenti</members>
-        <members>HDT_QR_MatriceAgentiTst</members>
-        <members>HDT_QR_QuoteTst</members>
-        <members>HDT_QR_SaleServiceItemTst</members>
-        <members>HDT_QR_SearchPlug</members>
-        <members>HDT_QR_SelfReadings</members>
-        <members>HDT_QR_ServiceCatalog</members>
-        <members>HDT_QR_ServiceCatalogTst</members>
-        <members>HDT_QR_UserQueriesTst</members>
-        <members>HDT_QR_UserQueriesWithoutSharing</members>
-        <members>HDT_QR_UserQueriesWithoutSharingTst</members>
-        <members>HDT_QR_Variations</members>
-        <members>HDT_QR_VariationsTst</members>
-        <members>HDT_SRV_CommunicationLog</members>
-        <members>HDT_SRV_CommunicationLogTst</members>
-        <members>HDT_SRV_DocumentalManagement</members>
-        <members>HDT_SRV_DocumentalManagementFacade</members>
-        <members>HDT_SRV_SaleServiceItem</members>
-        <members>HDT_TRH_ActivityCustom</members>
-        <members>HDT_TRH_AlertAccountConfigurationTst</members>
-        <members>HDT_TRH_Campaign</members>
-        <members>HDT_TRH_CampaignTst</members>
-        <members>HDT_TRH_Lead</members>
-        <members>HDT_TRH_NewsNotificationCenterTst</members>
-        <members>HDT_UTL_Constants</members>
-        <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_DocumentalManagement</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_LeadProcess</members>
-        <members>HDT_UTL_OrderProcessAssignment</members>
-        <members>HDT_UTL_Scarti</members>
-        <members>HDT_UTL_SobjectUtils</members>
-        <members>HDT_UTL_SobjectUtilsTst</members>
-        <members>HDT_WS_HTTPServiceCallMock</members>
-        <name>ApexClass</name>
+        <members>CampaignEligibilityGroup__c</members>
+        <name>CustomTab</name>
     </types>
     <types>
-        <members>EligibilityCriteria__c.Campaign__c</members>
-        <members>EligibilityCriteria__c.Channel__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.AddedDiscountsOrBonusesVASEle__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.AddedDiscountsOrBonusesVASGas__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.ChangeOfEleOffer__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.ChangeOfGasOffer__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.ChangeUse__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.ConnectionWithActivation__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.EleTakesOver__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.FirstActivationEle__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.FirstActivationInresolution__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.FirstActivationWithModification__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.GasTakesOver__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.SwitchInEle__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.SwitchInFictitious__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.SwitchInGas__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.SwitchInReseller__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.SwitchInWinback__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.SwitchToRestorative__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.TemporaryNewActivation__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.VoltureEle__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.VoltureGas__c</members>
-        <members>HDT_Process_Sale_Partner_Community__c.VultureWithSwitch__c</members>
-        <members>Lead.InterestProduct__c</members>
-        <members>Order.DocumentalProcessType__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>HDT_LCP_ChildOrderProcess</members>
-        <members>HDT_LCP_OrderDossierWizard</members>
-        <members>HDT_LCP_ProcessesContainer</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>hdtApplyBillingProfileModal</members>
-        <members>hdtConfirmationDialogDropdown</members>
-        <members>hdtDocumentSignatureManagerFlow</members>
+        <members>hdtBillingProfileForm</members>
+        <members>hdtCampaignTelesellingToolbar</members>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtCommercialRiassignButton</members>
         <members>hdtDocumentalSignatureManagerOrderDossier</members>
-        <members>hdtSupplySelectionFlow</members>
+        <members>hdtEligibilityCriteriaParameters</members>
+        <members>hdtRecordEditFormFlowSales</members>
+        <members>hdtSelezFornituraFlow</members>
+        <members>hdtSelezioneFornituraFlow</members>
+        <members>hdtTargetObjectAddressFields</members>
+        <members>hdtTargetObjectAddressForFlow</members>
         <members>hdtTargetObjectCreateForm</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_NewsNotificationCenter</members>
-        <name>ApexTrigger</name>
+        <members>wrts_prcgvr__Activity__c.HDT_PrecedenteCliente</members>
+        <name>WebLink</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneVariazioni</members>
-        <members>HDT_FL_PostSalesMasterDispatch</members>
-        <members>HDT_FL_SubFlowCompatibility</members>
+        <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User OneShot</members>
+        <members>Hera Standard User ReadOnly</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>HDT_FL_Autoelettrica</members>
+        <members>HDT_FL_GestionePagamenti</members>
+        <members>HDT_FL_GestionePagamenti_RichiestaDomiciliazione</members>
+        <members>HDT_FL_ModificaContrattoInPreAttivazione</members>
+        <members>HDT_FL_PostSalesMasterDispatchSales</members>
+        <members>HDT_FL_SegnalazioniVAS</members>
         <name>Flow</name>
+    </types>
+    <types>
+        <members>Task.HDT_VR_OneShotPermission</members>
+        <name>ValidationRule</name>
+    </types>
+    <types>
+        <members>Case.HDT_RT_GenericheAttivazioni</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Call</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_ComfortQualityCall</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationAccountLead</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationCase</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationGeneric</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationInteraction</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOpportunity</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOrder</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_GestioneIvaAccise</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Sportello</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_ValidazioneDocumentale</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>Case-Case Layout</members>
+        <members>Contract-Contract Layout</members>
+        <members>Contract-SBQQ__CPQ Contract Layout</members>
+        <members>Global-Global Layout</members>
+        <members>Global-One Shot Layout</members>
+        <members>wrts_prcgvr__Activity__c-HDT_GestioneAppuntamento</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_LC_AdvancedSearch</members>
+        <members>HDT_LC_CanaleIVRNoShare</members>
+        <members>HDT_LC_CanaleIVRNoShareTst</members>
+        <members>HDT_LC_CloneArticleTst</members>
+        <members>HDT_LC_DocusignQrCodeTst</members>
+        <members>HDT_LC_GeneralInfo</members>
+        <members>HDT_LC_GeneralInfoTst</members>
+        <members>HDT_LC_GenericRecordSelectionTst</members>
+        <members>HDT_LC_HighlightsPanelTst</members>
+        <members>HDT_LC_RecordEditFormSales</members>
+        <members>HDT_LC_SaleActions</members>
+        <members>HDT_LC_SaleVas</members>
+        <members>HDT_LC_SelfReadingTst</members>
+        <members>HDT_LC_TargetObjectCreateFormTst</members>
+        <members>HDT_QR_AgentMatrix</members>
+        <members>HDT_QR_Case</members>
+        <members>HDT_QR_City</members>
+        <members>HDT_QR_CityTst</members>
+        <members>HDT_QR_HerokuPostSalesManager</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_SearchPlug</members>
+        <members>HDT_QR_ServicePoint</members>
+        <members>HDT_QR_ServicePointTst</members>
+        <members>HDT_SRV_InstallmentPlans</members>
+        <members>HDT_SRV_InstallmentPlansTst</members>
+        <members>HDT_SRV_SalesManager</members>
+        <members>HDT_TRH_Order</members>
+        <members>HDT_UTL_ActivityCustom</members>
+        <members>HDT_UTL_ActivityCustomProcess</members>
+        <members>HDT_UTL_CaseValidations</members>
+        <members>HDT_UTL_CompanyOwner</members>
+        <members>HDT_UTL_Constants</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_UTL_NotifVas</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_PayloadManagement</members>
+        <members>HDT_UTL_SearchPlug</members>
+        <members>HDT_UTL_SelfReadings</members>
+        <members>HDT_UTL_VasManagement</members>
+        <members>HDT_WS_DocumentalIntegration</members>
+        <members>HDT_WS_PostSalesTstMock</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>AgentMatrix__c.Channel__c</members>
+        <members>AgentMatrix__c.LowerChannelAgency__c</members>
+        <members>AgentMatrix__c.UpperChannelAgency__c</members>
+        <members>City__c.Province__c</members>
+        <members>EligibilityCriteria__c.Campaign__c</members>
+        <members>EligibilityCriteria__c.Channel__c</members>
+        <members>TechnicalOffer__c.Market__c</members>
+        <members>wrts_prcgvr__Activity__c.ManualCheckResult__c</members>
+        <members>wrts_prcgvr__Activity__c.OldCustomerAccount__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>HDT_Generic_Record_Selection.BillingProfile_RevDom</members>
+        <members>HDT_Generic_Record_Selection.BillingProfile_RicDom</members>
+        <members>HDT_Generic_Record_Selection.BillingProfile_VarDom</members>
+        <members>HDT_UserInputFlow.Modifica_Contr_Preattivazione_Bolletta</members>
+        <members>HDT_UserInputFlow.Modifica_Contr_Preattivazione_Pag_Res</members>
+        <members>HDT_UserInputFlow.Modifica_Contr_Preattivazione_Pagamento</members>
+        <members>HDT_UserInputFlow.Modifica_Contratto_Preattivazione</members>
+        <members>HDT_UserInputFlow.Modifica_Contratto_Preattivazione_Res</members>
+        <members>HDT_UserInputFlow.Pagamenti_Richiesta_Domiciliazione_3</members>
+        <members>HDT_UserInputFlow.Votive_Modena_Intervento_Riattivazione</members>
+        <name>CustomMetadata</name>
     </types>
     <version>49</version>
 </Package>
