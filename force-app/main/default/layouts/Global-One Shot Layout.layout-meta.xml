@@ -53,6 +53,23 @@
             <sortOrder>9</sortOrder>
         </platformActionListItems>
     </platformActionList>
+    <quickActionList>
+        <quickActionListItems>
+            <quickActionName>Escalation</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>HDT_InformativeCallNotification</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>HDT_SendSms</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>HDT_SendCertifiedEmail</quickActionName>
+        </quickActionListItems>
+    </quickActionList>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
