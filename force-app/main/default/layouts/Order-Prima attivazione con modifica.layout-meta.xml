@@ -122,6 +122,10 @@
                 <behavior>Readonly</behavior>
                 <field>EstimatedVAT__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>QuotationType__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -135,6 +139,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>PowerRequested__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>WorkableFileNumberDay__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
