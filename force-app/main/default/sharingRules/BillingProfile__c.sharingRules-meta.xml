@@ -53,6 +53,19 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>HDT_SR_BillingProfileOutboundD2D</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>HDT_SR_BillingProfileOutboundD2D</label>
+        <sharedTo>
+            <roleAndSubordinates>HDT_FrontOffice_HERA_COMM</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>CompanyOwner__c</field>
+            <operation>equals</operation>
+            <value>HERA COMM</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>HDT_SR_BillingProfileReseller</fullName>
         <accessLevel>Edit</accessLevel>
         <label>HDT_SR_BillingProfileReseller</label>

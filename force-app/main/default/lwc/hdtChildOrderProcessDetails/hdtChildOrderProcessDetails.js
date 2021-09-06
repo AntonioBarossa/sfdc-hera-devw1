@@ -445,10 +445,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.template.querySelector('c-hdt-accordion-with-click').refreshValues(this.order.Id);
         }).catch(error => {
             this.loading = false;
-            console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            console.log((error.body?.message) ? error.body.message : error.message);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                message: (error.body?.message) ? error.body.message : error.message,
                 variant: 'error'
             });
             this.dispatchEvent(toastErrorMessage);
@@ -880,7 +880,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
                 || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
-                || (this.isNotBillable)
+                || (this.isNotBillable && !this.order.OrderReferenceNumber && !this.order.ContractReference__c)
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
                 ,
@@ -2295,7 +2295,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'dateOrdine',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta') && this.order.ParentOrder__r.ContractSigned__c,
+                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta') && this.order.ParentOrder__r.ContractSigned__c,
                 data: [
                     {
                         'label': 'Data Firma',
@@ -2306,7 +2306,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'value': this.order.ParentOrder__r.SignedDate__c,
                         'processVisibility': ''
                     },
-                    {
+                    /*{
                         'label': 'Data Massima Ripensamento',
                         'apiname': 'MaxAfterthoughtDate__c',
                         'typeVisibility': this.typeVisibility('both'),
@@ -2314,7 +2314,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'disabled': true,
                         'value': '',
                         'processVisibility': ''
-                    },
+                    },*/
                     {
                         'label': 'Attivazione Posticipata',
                         'apiname': 'IsActivationDeferred__c',

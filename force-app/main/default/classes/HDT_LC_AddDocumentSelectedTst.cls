@@ -37,11 +37,15 @@ public class HDT_LC_AddDocumentSelectedTst {
         ];
         Case cas = [SELECT Id FROM Case WHERE AccountId =: account.Id WITH SECURITY_ENFORCED LIMIT 1];
 
+        Test.startTest();
+
         HDT_LC_AddDocumentSelected.insertDocuments(documents, cas.Id);
 
         DocumentSelected__c document = [SELECT Id FROM DocumentSelected__c WHERE Name = '0000411709364963' WITH SECURITY_ENFORCED LIMIT 1];
 
         System.assert(document != null, 'Si è verificato un errore in fase di inserimento del documento');
+
+        Test.stopTest();
 
     }
 
@@ -59,9 +63,13 @@ public class HDT_LC_AddDocumentSelectedTst {
 
         Case cas = [SELECT Id FROM Case WHERE AccountId =: account.Id WITH SECURITY_ENFORCED LIMIT 1];
 
+        Test.startTest();
+
         List<string> documentsRetrieved = HDT_LC_AddDocumentSelected.checkExistingDocuments(documents, cas.Id);
 
         System.assert(documentsRetrieved.size() != 0, 'Si è verificato un errore in fase di retrieve dei documenti esistenti');
+
+        Test.stopTest();
 
     }
 

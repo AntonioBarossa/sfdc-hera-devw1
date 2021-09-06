@@ -4823,7 +4823,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Case.ChannelOfPayment__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -24790,6 +24790,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ServiceRequest__c.isClosed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ServiceRequest__c.isMigrated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>ServiceRequest__c.GlobalMigrationKey__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

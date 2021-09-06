@@ -1,9 +1,22 @@
 <template>
+    <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large">
+    </lightning-spinner>
     <template if:true={isRiassignButton}>
-        <lightning-button onclick={handleSave} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Riassegna Pratica" title="Riassegna"></lightning-button>
-    </template>
+        <lightning-record-edit-form record-id={caseid}
+                                object-api-name='Case'
+                                >
+
+            <lightning-input-field field-name="ReassignmentReason__c" onchange={handleReassignmentReasonChange} >
+            </lightning-input-field>
+
+        </lightning-record-edit-form>
+
+        <template if:true ={isShowButtonRiassign}>
+            <lightning-button onclick={handleSave} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Sottoponi ad Approvazione" title="Riassegna"></lightning-button>
+        </template>
+          </template>
     <template if:true={isApproveFase}>
         <lightning-button onclick={approve} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Approva" title="Riassegna"></lightning-button>
-        <lightning-button onclick={notapprove} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Rigetta" title="Riassegna"></lightning-button>
+        <lightning-button onclick={reject} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Rigetta" title="Riassegna"></lightning-button>
     </template>
 </template>

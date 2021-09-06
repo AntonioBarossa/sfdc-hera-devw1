@@ -35,7 +35,7 @@ public inherited sharing class HDT_QR_Order {
         Map<Id, Order> mapIdOrder=new  Map<Id, Order>([
             SELECT
             Name, AccountId,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
-            Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c  
+            Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c  
             FROM Order 
             WHERE Id IN :orderId
             WITH SECURITY_ENFORCED
@@ -223,7 +223,8 @@ public inherited sharing class HDT_QR_Order {
             EffectiveDate__c ,                              // [ 13/08/2021 gabriele.rota@webresults.it - Calcolo Data Invio al SII ]
             ConfirmCustomerContract__c,
             IsVAS__c,
-            ServicePoint__r.Resident__c                     // [ 26/08/2021 gabriele.rota@webresults.it - Calcolo IVA ]
+            ServicePoint__r.Resident__c,                     // [ 26/08/2021 gabriele.rota@webresults.it - Calcolo IVA ]
+            ServicePoint__r.Account__r.VATNumber__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -629,6 +630,41 @@ public inherited sharing class HDT_QR_Order {
             AND SBQQ__Quote__r.IsVAS__c != true
             AND SBQQ__Quote__r.AmendmentAllowed__c != true
             AND Status IN ('In Lavorazione')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Order> getRecordsNotActivated(String accountId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            OrderNumber,
+            Status,
+            SalesCompany__c,
+            Agency__c,
+            Market__c,
+            Channel__c,
+            FriendCode__c,
+            CampaignCode__c,
+            CreatedBy__c,
+            SBQQ__Quote__c,
+            SBQQ__Quote__r.IsVAS__c,
+            SBQQ__Quote__r.AmendmentAllowed__c,
+            RecordTypeId,
+            RecordType.DeveloperName,
+            ProcessType__c,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            ServicePoint__r.SupplyAddress__c
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND RecordType.DeveloperName != null
+            AND RecordType.DeveloperName != 'HDT_RT_OrderDossier'
+            AND SBQQ__Quote__r.IsVAS__c != true
+            AND SBQQ__Quote__r.AmendmentAllowed__c != true
+            AND Status NOT IN ('Activated', 'Annullato')
             WITH SECURITY_ENFORCED
         ];
     }

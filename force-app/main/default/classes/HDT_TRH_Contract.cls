@@ -33,7 +33,8 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         List<Contract> listContract = new List<Contract>();
         for (Contract tempContract : (List<Contract>)Trigger.new) {
             if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c))&& 
-            (String.isBlank( String.valueOf(tempContract.ServicePoint__c)) ||String.isBlank( String.valueOf(tempContract.BillingProfile__c)) || String.isBlank( tempContract.Market__c  ) )     
+            (String.isBlank( String.valueOf(tempContract.ServicePoint__c)) ||String.isBlank( String.valueOf(tempContract.BillingProfile__c)) || String.isBlank( tempContract.Market__c  ) 
+            || String.isBlank( tempContract.VAT__c))     
             ) {
               listOrderId.add(tempContract.SBQQ__Order__c);
               listContract.add(tempContract);
@@ -48,7 +49,9 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                     if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c)) &&mapOrder.get(tempContract.SBQQ__Order__c)!=null ) {
                         tempContract.ServicePoint__c   = mapOrder.get(tempContract.SBQQ__Order__c).ServicePoint__c;
                         tempContract.BillingProfile__c = mapOrder.get(tempContract.SBQQ__Order__c).BillingProfile__c;
-                        tempContract.Market__c         = mapOrder.get(tempContract.SBQQ__Order__c).Market__c;     
+                        tempContract.Market__c         = mapOrder.get(tempContract.SBQQ__Order__c).Market__c; 
+                        tempContract.VAT__c            = mapOrder.get(tempContract.SBQQ__Order__c).VAT__c ;  //02/09/2021 Email Fix Campo VAT__c su Contratto   
+    
                     }
                 }
             }

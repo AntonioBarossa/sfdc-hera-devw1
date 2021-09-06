@@ -1476,7 +1476,7 @@ disabledverifyFieldsAddressDisabled(){
 
         console.log('connectedCallback indirizzo estero : ' + JSON.stringify(this.IndEstero));
         this.disableFieldByIndEstero();
-        if(this.processtype!=''){
+        if(this.processtype !== undefined && this.processtype!= null && this.processtype!=''){
             this.disableAll=true;
             this.disableCodComuneSap=true;
             this.disableCap=true;

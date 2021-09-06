@@ -21,18 +21,25 @@ public class HDT_LC_OmniChannelReplacerControllerTst {
     @isTest
     static void testGetSigmaLogin() {
 
-        String sigmaLogin = HDT_LC_OmniChannelReplacerController.getSigmaLogin();
+        Test.startTest();
 
+        String sigmaLogin = HDT_LC_OmniChannelReplacerController.getSigmaLogin();
         System.assert(!String.isBlank(sigmaLogin), 'Si è verificato un errore in fase di get del SigmaLogin');
+
+        Test.stopTest();
 
     }
 
     @isTest
     static void testGetUserChannel(){
 
+        Test.startTest();
+
         String userChannel = HDT_LC_OmniChannelReplacerController.getUserChannel();
 
         System.assert(!String.isBlank(userChannel), 'Si è verificato un errore in fase di get dell\' UserChannel');
+
+        Test.stopTest();
 
     }
 
@@ -41,9 +48,12 @@ public class HDT_LC_OmniChannelReplacerControllerTst {
 
         String qAdLoginString = 'QAdLoginTest';
 
-        List<wrts_prcgvr__Activity__c> activities = HDT_LC_OmniChannelReplacerController.getActivities(qAdLoginString);
+        Test.startTest();
 
+        List<wrts_prcgvr__Activity__c> activities = HDT_LC_OmniChannelReplacerController.getActivities(qAdLoginString);
         System.assert(activities.size() != 0, 'Si è verificato un errore in fase di get delle activities');
+
+        Test.stopTest();
 
     }
 
