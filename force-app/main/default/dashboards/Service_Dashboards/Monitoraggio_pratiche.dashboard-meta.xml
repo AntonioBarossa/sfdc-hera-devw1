@@ -34,7 +34,8 @@
                 </groupingSortProperties>
                 <header>Casi per fase</header>
                 <legendPosition>Right</legendPosition>
-                <report>Service_Dashboards_Reports/CasePhase_vAh</report>
+                <maxValuesDisplayed>6</maxValuesDisplayed>
+                <report>Service_Dashboards_Reports/Casi_per_fase</report>
                 <showPercentage>false</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
@@ -54,18 +55,6 @@
                     <decimalPrecision>-1</decimalPrecision>
                     <flexTableColumn>
                         <reportColumn>CASE_NUMBER</reportColumn>
-                        <showSubTotal>false</showSubTotal>
-                        <showTotal>false</showTotal>
-                        <type>detail</type>
-                    </flexTableColumn>
-                    <flexTableColumn>
-                        <reportColumn>CONTACT.ACCOUNT</reportColumn>
-                        <showSubTotal>false</showSubTotal>
-                        <showTotal>false</showTotal>
-                        <type>detail</type>
-                    </flexTableColumn>
-                    <flexTableColumn>
-                        <reportColumn>Case.Phase__c</reportColumn>
                         <showSubTotal>false</showSubTotal>
                         <showTotal>false</showTotal>
                         <type>detail</type>
@@ -96,7 +85,7 @@
                 </flexComponentProperties>
                 <groupingSortProperties/>
                 <header>Report Case per fase</header>
-                <report>Service_Dashboards_Reports/CasePhase_vAh</report>
+                <report>Service_Dashboards_Reports/Casi_per_fase</report>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
             <rowSpan>7</rowSpan>
@@ -127,7 +116,8 @@
                 </groupingSortProperties>
                 <header>Ordini per fase</header>
                 <legendPosition>Right</legendPosition>
-                <report>Service_Dashboards_Reports/New_Orders_Report_xpa</report>
+                <maxValuesDisplayed>6</maxValuesDisplayed>
+                <report>Service_Dashboards_Reports/Ordini_per_fase</report>
                 <showPercentage>false</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
@@ -147,18 +137,6 @@
                     <decimalPrecision>-1</decimalPrecision>
                     <flexTableColumn>
                         <reportColumn>ORDER_NUMBER</reportColumn>
-                        <showSubTotal>false</showSubTotal>
-                        <showTotal>false</showTotal>
-                        <type>detail</type>
-                    </flexTableColumn>
-                    <flexTableColumn>
-                        <reportColumn>ACCOUNT_NAME</reportColumn>
-                        <showSubTotal>false</showSubTotal>
-                        <showTotal>false</showTotal>
-                        <type>detail</type>
-                    </flexTableColumn>
-                    <flexTableColumn>
-                        <reportColumn>Order.Phase__c</reportColumn>
                         <showSubTotal>false</showSubTotal>
                         <showTotal>false</showTotal>
                         <type>detail</type>
@@ -189,7 +167,7 @@
                 </flexComponentProperties>
                 <groupingSortProperties/>
                 <header>Report Ordini per fase</header>
-                <report>Service_Dashboards_Reports/New_Orders_Report_xpa</report>
+                <report>Service_Dashboards_Reports/Ordini_per_fase</report>
             </dashboardComponent>
             <rowIndex>7</rowIndex>
             <rowSpan>7</rowSpan>

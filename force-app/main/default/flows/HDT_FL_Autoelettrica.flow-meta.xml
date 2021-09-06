@@ -494,7 +494,7 @@
             <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Dati_Pagamento</name>
@@ -719,7 +719,7 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>50</locationX>

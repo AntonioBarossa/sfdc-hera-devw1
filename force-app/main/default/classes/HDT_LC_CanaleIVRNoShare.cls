@@ -17,6 +17,7 @@ public without sharing class HDT_LC_CanaleIVRNoShare {
         Map<String,String> mapReturn = (Map<String,String>)JSON.deserialize(s, Map<String,String>.class);
         return mapReturn;
     }
+    
     public static String showOriginalDocument(String recordId){
         String context;
         String baseSixtyFour = '';
@@ -28,7 +29,7 @@ public without sharing class HDT_LC_CanaleIVRNoShare {
         HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
         try{
             SObject documentalObject = getDocumentalObjectById(recordId);
-            System.debug('*******' + documentalObject);
+            System.debug('showOriginalDocument - documentalObject: ' + documentalObject);
             String documentType = HDT_SRV_DocumentalManagement.getDocumentType(documentalObject);
             body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject);
             postelResponse = HDT_SRV_DocumentalManagement.executeGetEnvelopeCalloutRequest(body, documentType);
@@ -42,7 +43,11 @@ public without sharing class HDT_LC_CanaleIVRNoShare {
         }
         return JSON.serialize(resultMap);
     }
+    
     public static SObject getDocumentalObjectById(Id recordId){
+        
+        System.debug('getDocumentalObjectById - recordId: ' + recordId);
+        
         if (String.isBlank(recordId)) {
             return null;
         }

@@ -3,7 +3,7 @@
     <fullName>FirstActivationWithModification__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Prima Attivazione con modifica</label>
+    <label>Prima_Attivazione_con_modifica</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

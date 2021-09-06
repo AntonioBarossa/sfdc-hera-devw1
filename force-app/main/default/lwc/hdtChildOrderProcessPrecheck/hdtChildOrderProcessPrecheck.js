@@ -478,7 +478,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     getRequest(){ 
         var typeOfCommodity = 'ENERGIAELETTRICA';
-        var companyName = null;
+        let companyName = this.order.Account.FirstName__c? `${this.order.Account.FirstName__c} ${this.order.Account.LastName__c}` : this.order.Account.LastName__c;
+        let companyGroup;
         var secondaryCustomerId = null;
         var bpType = null;
         var operation = null;
@@ -495,7 +496,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             }
         }
         if(this.order.SalesCompany__c !== undefined){
-            companyName = this.order.SalesCompany__c;
+            companyGroup = this.order.SalesCompany__c;
         }
         if(this.order.Account.VATNumber__c !== undefined){
             secondaryCustomerId = this.order.Account.VATNumber__c;
@@ -530,7 +531,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             account:"AccountCommercialePRM", //this.order.Owner.Username (parte prima @)
             jobTitle:this.order.ChannelTransCode__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
-            companyName:companyName,//this.order.SalesCompany__c
+            companyName:companyName,
             externalCustomerId:this.order.Account.FiscalCode__c,
             secondaryCustomerId:secondaryCustomerId,
             bpClass:bpClass,
@@ -538,7 +539,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             bpType:bpType,
             customerType:"CT0", //da definire campo SF con business            
             operation:operation,
-            companyGroup:companyName,
+            companyGroup:companyGroup,//this.order.SalesCompany__c
             market:market,
             offerType:offerType,
             details:[{
@@ -556,7 +557,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         
 
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        if(this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_Voltura'){
             
             if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
                 fiscalData = this.order.ServicePoint__r.Account__r.FiscalCode__c;
