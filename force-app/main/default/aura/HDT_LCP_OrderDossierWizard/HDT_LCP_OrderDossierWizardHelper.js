@@ -266,38 +266,59 @@
 
         redirectToSObjectSubtabFix : function(component,objectId,objectApiname){
             var workspaceAPI = component.find("workspace");
+            var navService = component.find("navService");
             console.log("Begin Redirect");
-            workspaceAPI.getFocusedTabInfo().then(function(response) {
-                console.log("Begin Redirect_2_: " + JSON.stringify(response));
-                var focusedTabId = response.parentTabId;
-                var focusedTab = response.tabId;
-                
-                console.log("Begin Redirect_3_: " + focusedTabId);
-                console.log("Begin Redirect_4_: " + objectId);
-                console.log("Begin Redirect_5_: " + objectApiname);
-                workspaceAPI.openSubtab({//Subtab({
-                    parentTabId: focusedTabId,
-                    //recordId : venditaid,
-                    pageReference: {
-                        type: 'standard__recordPage',
-                        attributes: {
-                            recordId: objectId,
-                            objectApiName:objectApiname,
-                            actionName : 'view'
-                        }
-                    },
-                    focus: true
-                }).then(function(response2){
-                    workspaceAPI.closeTab({tabId: focusedTab});
+
+            /** HRAWRM-451 - Modified redirects for community pages 
+             *  Andrei Necsulescu - andrei.necsulescu@webresults.it
+            */
+            if (component.get("v.isCommunity") == true) {
+
+                var pageReference = {
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: objectId,
+                        objectApiName:objectApiname,
+                        actionName : 'view'
+                    }
+                };
+
+                navService.navigate(pageReference);
+
+            } else {
+
+                workspaceAPI.getFocusedTabInfo().then(function(response) {
+                    console.log("Begin Redirect_2_: " + JSON.stringify(response));
+                    var focusedTabId = response.parentTabId;
+                    var focusedTab = response.tabId;
+                    
+                    console.log("Begin Redirect_3_: " + focusedTabId);
+                    console.log("Begin Redirect_4_: " + objectId);
+                    console.log("Begin Redirect_5_: " + objectApiname);
+
+                    workspaceAPI.openSubtab({//Subtab({
+                        parentTabId: focusedTabId,
+                        //recordId : venditaid,
+                        pageReference: {
+                            type: 'standard__recordPage',
+                            attributes: {
+                                recordId: objectId,
+                                objectApiName:objectApiname,
+                                actionName : 'view'
+                            }
+                        },
+                        focus: true
+                    }).then(function(response2){
+                        workspaceAPI.closeTab({tabId: focusedTab});
+                    })
+                    .catch(function(error) {
+                        console.log('******' + error);
+                    });
                 })
                 .catch(function(error) {
                     console.log('******' + error);
                 });
-            })
-            .catch(function(error) {
-                console.log('******' + error);
-            });
-            
+            }
         },
 
     getOrderParentRecord : function(component){

@@ -322,6 +322,16 @@ public class HDT_SRV_DocumentalManagement{
 		}
 	}
 
+	public static void logDocusignError(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
+		if(record != null && requestBody != null){
+			String status = requestBody.status;
+			String processType = (String)record.get('DocumentalProcessType__c');
+			String cluster = (String)record.get('Cluster__c');
+			Id recordId = (Id)record.get('Id');
+			HDT_UTL_DocumentalManagement.createDocumentalActivityForError(requestBody.outcomeDescription, recordId, requestBody.envelopeId, record);
+		}
+	}
+
 	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
 		if(listOfRadio != null && listOfRadio.size()>=0){
 			String individualId;

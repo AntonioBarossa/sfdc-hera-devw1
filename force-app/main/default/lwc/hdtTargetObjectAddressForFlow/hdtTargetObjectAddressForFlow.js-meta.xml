@@ -8,6 +8,7 @@
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
             <property name="theCase" type="@salesforce/schema/Case"/>
+            <property name="cancelCase" type="boolean"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
