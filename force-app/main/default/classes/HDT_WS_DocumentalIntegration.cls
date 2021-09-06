@@ -48,6 +48,8 @@ public with sharing class HDT_WS_DocumentalIntegration {
     }
 
     public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse submitGetEnvelopePostelRequest(String body){
+        
+        System.debug('HDT_WS_DocumentalIntegration - submitGetEnvelopePostelRequest');
         HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
         try{
             HttpRequest req = new HttpRequest();
@@ -66,6 +68,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
             postelResponse.responseStatus =  res.getStatus();
         }catch(Exception ex){
             System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            System.debug('ex StackTraceString: ' + ex.getStackTraceString());
         }
         return postelResponse;
     }

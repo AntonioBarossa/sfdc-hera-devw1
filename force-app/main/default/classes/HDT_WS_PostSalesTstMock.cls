@@ -1,12 +1,17 @@
 @isTest
 global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
+    
+    
     global HTTPResponse  respond(HTTPRequest request){
         String endpoint = request.getEndpoint();
+        System.debug('HDT_WS_PostSalesTstMock - respond');
         System.debug(endpoint);
         //Arricchimento Dati
         if(endpoint.equalsIgnoreCase('ArricchimentoDatiTemp')){
             return creaEnrichResposne(request);
         //Pagamenti
+        }else if(endpoint.equalsIgnoreCase('Callout:GetEnvelopePostel')){
+            return creaPostelResponse(request);
         }else if(endpoint.containsIgnoreCase('HDT_')){
             return creaPaymentsResponse(request);
         }else if(endpoint.containsIgnoreCase('Credit')){
@@ -15,6 +20,8 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
             return creaRicResponse(request);
         }
     }
+    
+    
     public static HttpResponse creaRicResponse(HTTPRequest request){
         HttpResponse response = new HttpResponse();
         String recordId = '';
@@ -51,7 +58,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         response.setStatus('OK');
         return response;
     }
-
+    
     public static HttpResponse creaEnrichResposne(HttpRequest request){
         HttpResponse response = new HttpResponse();
         String body = request.getBody();
@@ -75,7 +82,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         response.setStatus('OK');
         return response;
     }
-
+    
     public static HttpResponse creaPaymentsResponse(HttpRequest request){
         HttpResponse response = new HttpResponse();
         String body = request.getBody();
@@ -88,8 +95,26 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         return response;
     }
 
-    public static HttpResponse creaCreditViewsResponse(HttpRequest request)
-    {
+    public static HttpResponse creaPostelResponse(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaPostelResponse');
+        HttpResponse response = new HttpResponse();
+        String body = request.getBody();
+        //successResponse
+        
+        /*
+        public Integer responseCode;
+        public String responseStatus;
+        public String content;
+        */
+        
+        String bodyResponse = '{"status": "success","correlationId": "eb9117b0-04e1-11ec-89bb-06c8ff345e9a","timestamp": "2021-08-24T15:48:13","data": {"responseCode": "200","responseStatus": "Test","content": "Test Content"}}';
+        
+        return response;
+    }
+    
+    
+    public static HttpResponse creaCreditViewsResponse(HttpRequest request){
         HttpResponse response = new HttpResponse();
         String bodyResponse = '{"status": "success","correlationId": "b40f74a0-0cd2-11ec-9bbe-06c86cee6034","timestamp": "2021-09-03T18:19:28",'
         +'"data": [{"contoContrattuale": "200008284449","codiceCliente": "1002647967","dataEmissione": "31/08/2021","dataScadenza": "20/10/2021",'
@@ -107,6 +132,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         response.setBody(bodyResponse);
         response.setStatusCode(200);
         response.setStatus('OK');
+        
         return response;
     }
 
