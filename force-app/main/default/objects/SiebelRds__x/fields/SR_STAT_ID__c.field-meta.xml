@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SR_STAT_ID__c</fullName>
-    <description>SR_STAT_ID</description>
+    <description>Stato RDS</description>
     <externalDeveloperName>SR_STAT_ID</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
