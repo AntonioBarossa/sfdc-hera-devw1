@@ -12,10 +12,12 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         //Pagamenti
         }else if(endpoint.equalsIgnoreCase('Callout:GetEnvelopePostel')){
             return creaPostelResponse(request);
-        }else if(endpoint.containsIgnoreCase('HDT_')){
+        }else if(endpoint.containsIgnoreCase('HDT_PaymentCommunication')){
             return creaPaymentsResponse(request);
         }else if(endpoint.containsIgnoreCase('Credit')){
             return creaCreditViewsResponse(request);
+        }else if(endpoint.containsIgnoreCase('HDT_AccountBalance')){
+            return creaAccountBalanceResponse(request);
         }else{
             return creaRicResponse(request);
         }
@@ -131,6 +133,21 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         response.setHeader('Content-Type', 'application/json');
         response.setBody(bodyResponse);
         response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
+
+    public static HttpResponse creaAccountBalanceResponse(HttpRequest request)
+    {
+        HttpResponse response = new HttpResponse();
+        String bodyResponse = '{"status": "failed","correlationId": "c5fb0140-0fc8-11ec-9bbe-06c86cee6034","timestamp": "2021-09-07T12:45:54","errorDetails": [{'
+        +'"code": "HTTP:INTERNAL_SERVER_ERROR","message": "HTTP POST on resource \'http://isudbq.service.intra:8121/sap/bc/srt/rfc/sap/z_ws_saldo_bp/150/z_ws_saldo_bp/z_ws_saldo_bp\''
+        +' failed: internal server error (500).","additionalInfo": "HTTP POST on resource \'http://isudbq.service.intra:8121/sap/bc/srt/rfc/sap/z_ws_saldo_bp/150/z_ws_saldo_bp/z_ws_saldo_bp\''
+        +' failed: internal server error (500)."}]}';
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(500);
         response.setStatus('OK');
         
         return response;
