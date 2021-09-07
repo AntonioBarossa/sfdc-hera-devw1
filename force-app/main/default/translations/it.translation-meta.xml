@@ -100,4 +100,8 @@
         <label>La richiesta di certificazione è stata creata con successo</label>
         <name>SuccessfulCertificationRequest</name>
     </customLabels>
+    <customLabels>
+        <label>Tipo Oggetto non supportato per questa azione</label>
+        <name>UnsupportedObjectType</name>
+    </customLabels>
 </Translations>

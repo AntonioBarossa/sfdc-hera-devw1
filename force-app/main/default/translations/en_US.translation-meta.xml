@@ -100,4 +100,8 @@
         <label><!-- SuccessfulCertificationRequest --></label>
         <name>SuccessfulCertificationRequest</name>
     </customLabels>
+    <customLabels>
+        <label><!-- UnsupportedObjectType --></label>
+        <name>UnsupportedObjectType</name>
+    </customLabels>
 </Translations>

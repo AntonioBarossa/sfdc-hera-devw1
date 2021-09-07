@@ -444,6 +444,9 @@
                         <valueListItems>
                             <value>Order.Escalation</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Order.HDT_CreateDistributorApointment</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
