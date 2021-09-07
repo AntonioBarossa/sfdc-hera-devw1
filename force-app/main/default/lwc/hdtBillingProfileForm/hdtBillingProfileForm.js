@@ -382,7 +382,6 @@ export default class hdtBillingProfileForm extends LightningElement {
            // this.refreshField = false;
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceCertifiedEmailAddress__c')].visibility = event.target.value === 'Invio tramite PEC';
             this.fields[this.fields.findIndex(el => el.fieldName === 'SendCertifiedEmailConsentDate__c')].visibility = event.target.value === 'Invio tramite PEC';
-            this.fields[this.fields.findIndex(el => el.fieldName === 'IbanCIN_IBAN__c')].value ='';
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].required = event.target.value.includes('e-mail');
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].visibility = event.target.value.includes('e-mail');
            // this.refreshField = true;
