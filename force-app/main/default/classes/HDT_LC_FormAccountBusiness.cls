@@ -182,6 +182,12 @@ public with sharing class HDT_LC_FormAccountBusiness {
             Contact personContact= new Contact(AccountId= accPerson.Id,LastName= accountPerson.LastName__c,FirstName=accountPerson.FirstName__c ,Birthcity__c= dataAccount.get('birthplace'),Birthdate= birthdate,FiscalCode__c= accountPerson.FiscalCode__c,Email= accountPerson.PrimaryEmail__c,Fax= accountPerson.FAX__c,MobilePhonePrefix__c= accountPerson.MobilePhonePrefix__c, MobilePhone= accountPerson.MobilePhone__c ,PhonePrefix__c= accountPerson.PhonePrefix__c, Phone= accountPerson.Phone ,Profession__c= accountPerson.Profession__c);
             contactSrv.checkCreateAccess(personContact);
             Contact personCont= contactSrv.createRecord(personContact);
+            //Start HRDTR-00_HRAWRM-455 07/09/2021
+
+            Id jobID = System.enqueueJob(new HDT_QBL_BpCaRequest(accPerson,personCont));
+            System.debug('jobId: '+jobID);
+            //End HRDTR-00_HRAWRM-455 07/09/2021
+
             //List<AccountContactRelation> listAccCon3 = accoContRelQr.getAccountContactRelation(accPerson.Id, personCont.Id, 'Id');
             AccountContactRelation ac = new AccountContactRelation();
             ac.accountId = acct.id;
