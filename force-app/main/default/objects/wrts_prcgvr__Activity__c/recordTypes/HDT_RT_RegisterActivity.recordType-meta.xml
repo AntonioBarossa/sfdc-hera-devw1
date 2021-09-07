@@ -457,10 +457,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento Prestazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Attivazione Click%26Pay</fullName>
             <default>false</default>
         </values>
