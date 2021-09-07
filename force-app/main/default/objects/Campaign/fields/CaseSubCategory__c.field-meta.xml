@@ -546,6 +546,17 @@
                 <label>Votive Modena/Cessazione</label>
             </value>
             <value>
+                <fullName>Annullamento Prestazione</fullName>
+                <default>false</default>
+                <label>Annullamento Prestazione</label>
+            </value>
+            <value>
+                <fullName>Recesso per altri motivi</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Recesso per altri motivi</label>
+            </value>
+            <value>
                 <fullName>Recesso per altri motivi</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -711,10 +722,6 @@
         <valueSettings>
             <controllingFieldValue>Disattivazioni</controllingFieldValue>
             <valueName>Chiusura contatore</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Disattivazioni</controllingFieldValue>
-            <valueName>Recesso per altri motivi</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Disattivazioni</controllingFieldValue>
@@ -927,6 +934,10 @@
         <valueSettings>
             <controllingFieldValue>Preventivi</controllingFieldValue>
             <valueName>Variazione Tensione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <valueName>Annullamento Prestazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifiche</controllingFieldValue>
