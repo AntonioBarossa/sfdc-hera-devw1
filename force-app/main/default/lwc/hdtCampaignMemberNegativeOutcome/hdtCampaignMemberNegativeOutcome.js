@@ -33,7 +33,7 @@ export default class HdtCampaignMemberNegativeOutcome extends LightningElement {
             console.log("ok" + JSON.stringify(data));
             this.isModalOpen = false;
             let status = this.value;
-            this.dispatchEvent(new CustomEvent('afterSubmit', { detail: {status} }));
+            this.dispatchEvent(new CustomEvent('aftersubmit', { detail: {status} }));
         }).catch(err => {
             console.log(err);
         });

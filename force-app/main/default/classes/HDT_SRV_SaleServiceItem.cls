@@ -6,6 +6,7 @@
 */
 public inherited sharing class HDT_SRV_SaleServiceItem {
     
+    
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static HDT_SRV_Opportunity opportunityService = new HDT_SRV_Opportunity();
     private static HDT_SRV_Quote quoteService = new HDT_SRV_Quote();
@@ -16,6 +17,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
     private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
+    private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
+    private static HDT_UTL_Utils utils = new HDT_UTL_Utils();
     private static List<Contract> contractsForAmendmentCheck = new List<Contract>();
     private static final String READPERMISSION = 'read';
     private static final String CREATEPERMISSION = 'create';
@@ -186,7 +189,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 AccountId = sale.Account__c
             ));
 
-            SBQQ__Quote__c newQuote = quoteService.createRecord(new SBQQ__Quote__c(
+            SBQQ__Quote__c newQuote = new SBQQ__Quote__c(
                 Sale__c = sale.Id,
                 SBQQ__Status__c = 'In Review',
                 SBQQ__Opportunity2__c = newOpportunity.Id,
@@ -219,11 +222,30 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 Login__c = UserInfo.getUserName(),
                 LoginGroup__c = groupLoginString,
                 Role__c = userRoleProfile[0].UserRole.Name,
-                Profile__c = userRoleProfile[0].Profile.Name,
+                // Profile__c = userRoleProfile[0].Profile.Name,
                 NewClient__c = newClient,
                 SuperUser__c = helperMethods.isSuperUser() ? 'Y' : 'N',
                 SBQQ__PricebookId__c = getPricebookId(servicePoint)
-            ));
+            );
+
+            /** Andrei Necsulescu - 27/08/2021
+             *  New quote Profile__c logic using custom permission
+             */
+            System.debug('HDT_SRV_SaleServiceItem.createRecord Quote-Profile__c');
+            if (utils.isAssignedCustomPermission(constantsUtl.CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN)) {
+                System.debug('HDT_SRV_SaleServiceItem.createRecord is CPQ Admin ');
+                newQuote.Profile__c = constantsUtl.QUOTE_PROFILEFIELD_SALESFORCECPQADMIN;
+
+            } else {
+                System.debug('HDT_SRV_SaleServiceItem.createRecord is NOT CPQ Admin ');
+                newQuote.Profile__c = userRoleProfile[0].Profile.Name;
+                
+            }
+
+            /** Andrei Necsulescu - 30/08/2021
+             *  Moved actual quote creation to account for profile logic
+             */
+            quoteService.createRecord(newQuote);
 
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
 

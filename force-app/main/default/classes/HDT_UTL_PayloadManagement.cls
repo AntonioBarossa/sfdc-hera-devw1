@@ -26,6 +26,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return generateSectionReclami(inputs,formParams);
                 }when 'handleFlagDeliveryAddress'{
                     return handleFlagDeliveryAddress(inputs,formParams);
+                }when 'handleFlagPaperless' {
+                    return handleFlagPaperless(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -49,6 +51,19 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         if(supplyAddress.equalsIgnoreCase(accountAddress)) return 'SL';
 
         return '';
+    }
+
+    private String handleFlagPaperless(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String isPaperless = 'N';
+        String context = (String) formParams.get('Contesto');
+        if(!context.equalsIgnoreCase('Case')) return isPaperless;
+        String processType = HDT_UTL_DocumentalManagement.getValue('Case', 'Type', 0, inputs, formParams);
+        String depositPaymentMode = HDT_UTL_DocumentalManagement.getValue('Case', 'DepositPaymentMode__c', 0, inputs, formParams);
+        if(String.isBlank(processType)) return isPaperless;
+        if (processType == 'Paperless' || (processType == 'Piano Rateizzazione' && depositPaymentMode == 'Paperless')){
+            isPaperless = 'Y';
+        }
+        return isPaperless;
     }
 
     private String calculateCompanyCode(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
@@ -596,17 +611,41 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
         String plainTextResponse = htmlResponse.stripHtmlTags();
         String[] splittedResponse = plainTextResponse.split('\n');
-        
-        // Sezione ricorsiva 310|100 con il corpo della risposta.
+
+        List<String> cleanedResponseLines = new List<String>();
         for (Integer i = 0; i < splittedResponse.size(); i++) {
+            String cleanResponseLine = HDT_UTL_DocumentalManagement.removeSpecialChar(splittedResponse[i]);
+            List<String> splittedLine = new List<String>();  // array in caso la riga sia troppo lunga e debba essere splittata.
+            // Split righe più di lunghe di 150 caratteri, altrimenti Engage1 non riesce a calcolare lo spazio necessario nel PDF.
+            if (cleanResponseLine.length() > 150) {
+                System.debug('Riga troppo lunga per Engage1: ' + cleanResponseLine);
+                // https://stackoverflow.com/a/10735971/16766541
+                // regex per splittare in base al word boundary (\b) se la riga supera 150 caratteri
+                Pattern splitPattern = Pattern.compile('.{1,150}\\b'); 
+                Matcher splitMatcher = splitPattern.matcher(cleanResponseLine);
+                while (splitMatcher.find()) {
+                    splittedLine.add(splitMatcher.group(0).trim());
+                }
+                System.debug('splitted line: ' + splittedLine);
+            }
+
+            if (!splittedLine.isEmpty()) {
+                cleanedResponseLines.addAll(splittedLine);
+            } else {
+                cleanedResponseLines.add(cleanResponseLine);
+            }
+        }
+
+        // Sezione ricorsiva 310|100 con il corpo della risposta.
+        for (Integer i = 0; i < cleanedResponseLines.size(); i++) {
             String[] record = new List<String>();
             // Il primo 310|100 è già presente, evitiamo di aggiungerlo una seconda volta.
             if (i > 0) {
                 record.add('00310');
                 record.add('100');
             }
-            String cleanResponseLine = HDT_UTL_DocumentalManagement.removeSpecialChar(splittedResponse[i]);
-            record.add(cleanResponseLine);
+
+            record.add(cleanedResponseLines[i]);
             record.add(endLine);
 
             payloadSection += String.join(record, div);

@@ -10,59 +10,71 @@
         let saleId;
         let orderParentId;
 
-        var checkprocess = component.get("c.checkCommunityLogin");
+        /** HRAWRM-451 - Modified community check 
+         *  Andrei Necsulescu - andrei.necsulescu@webresults.it
+        */
+        var checkprocess = component.get("c.isCommunity");
 
         checkprocess.setCallback(this, function (response) {
             var state = response.getState();
             if (state == 'SUCCESS') {
                 var res = response.getReturnValue();
                 console.log('res: ', res);
-                component.set('v.isCommunity', res);
-                if (res) {
-                    console.log('community');
+                component.set('v.isCommunity', res.isCommunity);
+                if (res.error == false) {
+                    
+                    if (res.isCommunity) {
+                        console.log('community');
 
-                    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-                    sURLVariables = sPageURL.split('&'),
-                    testParam = '';
-
-                    for (let i = 0; i < sURLVariables.length; i++) {
+                        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                        sURLVariables = sPageURL.split('&'),
                         testParam = '';
-                        testParam = sURLVariables[i].split('=');
-                        console.log('sURL ' + testParam);
-                        if (testParam[0] == 'c__accountId') {
-                            accountId = testParam[1];
+
+                        for (let i = 0; i < sURLVariables.length; i++) {
+                            testParam = '';
+                            testParam = sURLVariables[i].split('=');
+                            console.log('sURL ' + testParam);
+                            if (testParam[0] == 'c__accountId') {
+                                accountId = testParam[1];
+                            }
+                            if (testParam[0] == 'c__venditaId') {
+                                saleId = testParam[1];
+                            }
+                            if (testParam[0] == 'c__orderParent') {
+                                orderParentId = testParam[1];
+                            }
+                        
                         }
-                        if (testParam[0] == 'c__venditaId') {
-                            saleId = testParam[1];
+
+                        if(orderParentId !== undefined){
+                            component.set("v.orderParentId", orderParentId);
+                            component.set("v.check", true);
+                        } else {
+                            component.set("v.check", false);
                         }
-                        if (testParam[0] == 'c__orderParent') {
-                            orderParentId = testParam[1];
+                    }
+                    else
+                    {
+                        console.log('crm');
+
+                        let pageRef = component.get("v.pageReference");
+                        saleId = pageRef.state.c__venditaId;
+                        accountId = pageRef.state.c__accountId;
+
+                        if (pageRef.state.c__orderParent !== undefined) {
+                            orderParentId = pageRef.state.c__orderParent;
+                            component.set("v.orderParentId", orderParentId);
+                            component.set("v.check", true);
+                        } else {
+                            component.set("v.check", false);
                         }
-                       
                     }
 
-                    if(orderParentId !== undefined){
-                        component.set("v.orderParentId", orderParentId);
-                        component.set("v.check", true);
-                    } else {
-                        component.set("v.check", false);
-                    }
-                }
-                else
-                {
-                    console.log('crm');
+                } else {
 
-                    let pageRef = component.get("v.pageReference");
-        			saleId = pageRef.state.c__venditaId;
-        			accountId = pageRef.state.c__accountId;
+                    console.log('HDT_LCP_OrderDossierWizard init error ' + res.errorMessage);
+                    console.error(res.errorStackTrace);
 
-                    if (pageRef.state.c__orderParent !== undefined) {
-                        orderParentId = pageRef.state.c__orderParent;
-                        component.set("v.orderParentId", orderParentId);
-                        component.set("v.check", true);
-                    } else {
-                        component.set("v.check", false);
-                    }
                 }
                 console.log('saleId: ', saleId);
                 console.log('accountId: ', accountId);
@@ -95,46 +107,73 @@
         var navService = component.find("navService");
         var workspaceAPI = component.find("workspace");
         console.log('c__orderId : '+c__orderId);
-         if(action === "Avvia Processo"){
-        action2.setParams({ orderid: c__orderId});
+        if(action === "Avvia Processo"){
+
+            action2.setParams({ orderid: c__orderId});
+
             action2.setCallback(this, function (response) {
-                console.log(response);
-                workspaceAPI.getFocusedTabInfo().then(function(response2) {
-                    var focusedTabId;
-                    if(response2.parentTabId){
-                        focusedTabId = response2.parentTabId;
-                    }
-                    else{
-                        focusedTabId = response2.tabId;
-                    }
-                        // /lightning/cmp/HDT_LCP_ChildOrderProcess' open in new subTab;
-                    workspaceAPI.openSubtab({
-                        parentTabId: focusedTabId,
-                        pageReference: {
-                            type: 'standard__component',
-                            attributes: {
-                                componentName: 'c:HDT_LCP_ChildOrderProcess',
+
+                console.log('Response **** ' + JSON.stringify(response));
+
+                /** HRAWRM-451 - Added logic for community 
+                 *  Andrei Necsulescu - andrei.necsulescu@webresults.it
+                */
+                if (component.get("v.isCommunity") == true) {
+                            
+                    var pageReference = {
+                                            type: 'comm__namedPage',
+                                            attributes: {
+                                                name: 'ChildOrderProcess__c',
+                                            },
+                                            state: {
+                                                "c__orderParent": c__orderParent,
+                                                "c__orderId" : c__orderId
+                                            }
+                                        };
+                    
+                    navService.navigate(pageReference);
+
+                } else {
+
+                    workspaceAPI.getFocusedTabInfo().then(function(response2) {
+                        var focusedTabId;
+                        if(response2.parentTabId){
+                            focusedTabId = response2.parentTabId;
+                        }
+                        else{
+                            focusedTabId = response2.tabId;
+                        }
+                            // /lightning/cmp/HDT_LCP_ChildOrderProcess' open in new subTab;
+                        workspaceAPI.openSubtab({
+                            parentTabId: focusedTabId,
+                            pageReference: {
+                                type: 'standard__component',
+                                attributes: {
+                                    componentName: 'c:HDT_LCP_ChildOrderProcess',
+                                },
+                                state: {
+                                    "c__orderParent": c__orderParent,
+                                    "c__orderId" : c__orderId
+                                }
                             },
-                            state: {
-                                "c__orderParent": c__orderParent,
-                                "c__orderId" : c__orderId
-                            }
-                        },
-                        focus: true
-                    }).then(function(response2) {
-                        workspaceAPI.setTabLabel({
-                            tabId: response2,
-                            label: "Processo ordine individuale"
+                            focus: true
+                        }).then(function(response2) {
+                            workspaceAPI.setTabLabel({
+                                tabId: response2,
+                                label: "Processo ordine individuale"
+                            });
+                            
+                        })
+                        .catch(function(error) {
+                            console.log('******' + error);
                         });
-                        
                     })
                     .catch(function(error) {
                         console.log('******' + error);
                     });
-                })
-                .catch(function(error) {
-                    console.log('******' + error);
-                });
+
+                }
+
             });
             $A.enqueueAction(action2);
 

@@ -3,12 +3,16 @@ public without sharing class HDT_BA_ConsentContact  implements Database.Batchabl
 	
 	public String runId;
 	public String status;
+	public Integer fileNumber;
+	public String errorMessage;
 	public List<Id> listIdContentVersion = new List<Id>();
 	public Set<String> setEmailContactProcessed = new Set<String>();
 	
 	
-	public HDT_BA_ConsentContact(String paramRunId,String paramStatus,List<Id> paramListIdContentVersion,Set<String> paramsetEmailContactProcessed){
+	public HDT_BA_ConsentContact(Integer varFileNumber,String paramRunId,String paramStatus,String paramErrorMessage,List<Id> paramListIdContentVersion,Set<String> paramsetEmailContactProcessed){
 		this.runId = paramRunId;
+		this.errorMessage=paramErrorMessage;
+		this.fileNumber=varFileNumber!=null?varFileNumber:0;
 		this.status=String.isBlank(paramStatus)?'success':paramStatus;
 		this.listIdContentVersion.addAll(paramListIdContentVersion);
 		this.setEmailContactProcessed=paramsetEmailContactProcessed;
@@ -64,7 +68,7 @@ public without sharing class HDT_BA_ConsentContact  implements Database.Batchabl
 					(tempContact.Individual.PrivacyProfilingChoiceDate__c>actualContact.Individual.PrivacyProfilingChoiceDate__c)) {
 						mapContactByEmail.remove(tempContact.Email);
 					}
-					else if(tempContact.CreatedDate>actualContact.CreatedDate) {
+					else if(actualContact!=null&&tempContact.CreatedDate>actualContact.CreatedDate) {
 						mapContactByEmail.remove(tempContact.Email);
 					}
 				}
@@ -93,22 +97,23 @@ public without sharing class HDT_BA_ConsentContact  implements Database.Batchabl
 				cv.ContentLocation = 'S';
 				cv.VersionData = generateFileBlob;
 				Date runDate= Date.today();
-				cv.Title = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day());
-				cv.PathOnClient = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day())+'.csv';
+				cv.Title = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day())+'_'+String.valueOf(this.fileNumber);
+				cv.PathOnClient = 'heradmp_firstpartydata_'+String.valueOf( runDate.year())+String.valueOf( runDate.month())+String.valueOf( runDate.day())+'_'+String.valueOf(fileNumber)+'.csv';
 				insert cv;
-				
+				fileNumber=fileNumber+1;
 				listIdContentVersion.add(cv.Id);
 			}
 		} 
 		catch (Exception e) {
 			System.debug('Exception : '+e.getMessage());
 			status='failed';
+			errorMessage=e.getMessage();
 		}
 	}
 	
 	public void finish(Database.BatchableContext bc){
 		System.debug('Finish HDT_BA_ConsentContact ');
 		
-		HDT_WS_CampagenDmDmp.callService(runId,status,'consensi',listIdContentVersion);
+		HDT_WS_CampagenDmDmp.callService(runId,status,'CMPDMP_PRV',errorMessage,listIdContentVersion);
 	}
 }

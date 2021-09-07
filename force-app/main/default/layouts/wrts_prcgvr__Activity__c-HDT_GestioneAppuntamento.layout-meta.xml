@@ -34,12 +34,16 @@
                 <field>AppointmentCompetence__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IsAppointmentToEdit__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Mobile__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Type__c</field>
+                <field>Note__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -65,11 +69,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Note__c</field>
+                <field>Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Email__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Distributor__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -83,6 +91,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>AppointmentDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DistributorFirstDate__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -112,6 +124,9 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
         <fields>Type__c</fields>
@@ -124,10 +139,23 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>DateTimeRef__c</fields>
+        <fields>et4ae5__FromAddress__c</fields>
+        <fields>et4ae5__DateSent__c</fields>
+        <fields>et4ae5__DateOpened__c</fields>
+        <fields>et4ae5__Clicked__c</fields>
+        <fields>et4ae5__Opened__c</fields>
+        <fields>et4ae5__DateBounced__c</fields>
+        <fields>BounceSubCategory__c</fields>
+        <fields>BounceType__c</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.Activity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>DateTimeRef__c</fields>
+        <fields>Delivered__c</fields>
+        <fields>Sent__c</fields>
+        <fields>MessageText__c</fields>
         <relatedList>SMSTracking__c.Activity__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

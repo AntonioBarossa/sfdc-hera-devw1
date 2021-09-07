@@ -22,6 +22,7 @@ import ShippingProvince from '@salesforce/schema/Order.ShippingProvince__c';
 import ShippingCountry from '@salesforce/schema/Order.ShippingCountry__c';
 import ShippingStreetName from '@salesforce/schema/Order.ShippingStreetName__c';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
+import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
 const FIELDS = [
     'Order.Id',
     'Order.ContractSigned__c',
@@ -82,6 +83,12 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     @track disabled = false;
     @api recordId;
     //FINE EVERIS DOCUMENTALE
+    
+    //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+    oldPhoneValue;
+    oldEmailValue;
+    //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+
     get mailClasses(){
         return this.isMailVisible ? 'slds-size_1-of-2 slds-show' : 'slds-size_1-of-2 slds-hide';
     }
@@ -183,6 +190,12 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 } else{
                     phone = contactPhone;
                 }
+
+                //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+                this.oldPhoneValue = phone;
+                this.oldEmailValue = email;
+                //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+
                 var completeAddress = '';
                 var orderAddress = this.orderRecord.fields.ShippingStreetName__c.value;
                 if(orderAddress != null && orderAddress != ''){
@@ -371,29 +384,39 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
            
             updateRecord(recordInput)
                 .then(() => {
+                    //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+
+                    updateContactForScartoDocumentale({oldPhone: this.oldPhoneValue,
+                                                       oldEmail: this.oldEmailValue,
+                                                       newPhone: resultWrapper.phone,
+                                                       newMail: resultWrapper.email}).then(data=>{
+
+                    //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
                     // Display fresh data in the form
-                    console.log('Record aggiornato');
-                    next({orderUpdates: this.dataToSubmit}).then(data =>{
-                        this.loading = false;
-                        this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
-                        this.dispatchEvent(new CustomEvent('tablerefresh'));
-                        this.loading = false;
-                        getRecordNotifyChange([{recordId: this.recordId}]);
-                    }).catch(error => {
-                        this.loading = false;
-                        console.log((error.body.message !== undefined) ? error.body.message : error.message);
-                        const toastErrorMessage = new ShowToastEvent({
-                            title: 'Errore',
-                            message: (error.body.message !== undefined) ? error.body.message : error.message,
-                            variant: 'error',
-                            mode: 'sticky'
-                        });
-                        this.dispatchEvent(toastErrorMessage);
-                        this.loading = false;
-                    });
+                      console.log('Record aggiornato');
+                      next({orderUpdates: this.dataToSubmit}).then(data =>{
+                          this.loading = false;
+                          this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
+                          this.dispatchEvent(new CustomEvent('tablerefresh'));
+                          this.loading = false;
+                          getRecordNotifyChange([{recordId: this.recordId}]);
+                      }).catch(error => {
+                          this.loading = false;
+                          console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                          const toastErrorMessage = new ShowToastEvent({
+                              title: 'Errore',
+                              message: (error.body.message !== undefined) ? error.body.message : error.message,
+                              variant: 'error',
+                              mode: 'sticky'
+                          });
+                          this.dispatchEvent(toastErrorMessage);
+                          this.loading = false;
+                      });
+                   });
                 })
                 .catch(error => {
                     console.log('Errore in aggiornamento');
+                    console.log('Errore: ' + error);
                     this.loading = false;
                     this.dispatchEvent(
                         new ShowToastEvent({

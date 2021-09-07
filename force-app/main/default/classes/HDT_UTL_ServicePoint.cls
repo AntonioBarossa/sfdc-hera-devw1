@@ -26,6 +26,8 @@ public with sharing class HDT_UTL_ServicePoint {
 				}
 	
 			}
+            system.debug('*******responseArrichh:' +  response);
+            system.debug('*******responseArrichhMap:' +  mapRes);
 
 		
 					
@@ -269,6 +271,14 @@ public with sharing class HDT_UTL_ServicePoint {
                 if(mapRes.get('CODICEPAESE')!=null && !String.isBlank(mapRes.get('CODICEPAESE'))){
 					spNew.SupplyCountry__c = mapRes.get('CODICEPAESE') == 'IT' ? 'Italia' : 'Estero';
 				}
+                if(mapRes.get('LOCALITA')!=null && !String.isBlank(mapRes.get('LOCALITA'))
+                && mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))
+                && mapRes.get('CODIFICALOCALITA')!=null && !String.isBlank(mapRes.get('CODIFICALOCALITA'))
+                && mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))
+                && mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA'))
+                ){
+                    spNew.SupplyisAddressVerified__c = true;
+                }
 
 
 		system.debug('spNew*****************' + spNew);

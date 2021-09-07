@@ -68,7 +68,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causale = '';
 
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
-            this.disabledDeliberation = this.order.Step__c !== undefined || selectedProcess.processType == 'Prima Attivazione Fuori delibera' || selectedProcess.processType == 'Prima Attivazione In delibera';
+            this.disabledDeliberation = this.order.Step__c !== undefined;
         }
         else if(selectedProcess.recordType === 'HDT_RT_RiattivazioniNonMorose'){
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
@@ -175,7 +175,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causaleCompatibilita = compatibility;
 
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
-            this.disabledDeliberation = this.order.Step__c !== undefined || selectedProcess.processType == 'Prima Attivazione Fuori delibera' || selectedProcess.processType == 'Prima Attivazione In delibera';
+            this.disabledDeliberation = this.order.Step__c !== undefined;
         }
         else if(selectedProcess.recordType === 'HDT_RT_RiattivazioniNonMorose'){
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
@@ -270,17 +270,17 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     handleSelectProcess(event){
         
-        if(event.target.value == 'Prima Attivazione In delibera') {
-            console.log('handleSelectProcess: ' + JSON.stringify(event.detail.value));
-            this.deliberation = 'In Delibera';
-            this.disabledDeliberation = true;
-        }
+        // if(event.target.value == 'Prima Attivazione In delibera') {
+        //     console.log('handleSelectProcess: ' + JSON.stringify(event.detail.value));
+        //     this.deliberation = 'In Delibera';
+        //     this.disabledDeliberation = true;
+        // }
 
-        if(event.target.value == 'Prima Attivazione Fuori delibera') {
-            console.log('handleSelectProcess: ' + JSON.stringify(event.detail.value));
-            this.deliberation = 'Fuori delibera';
-            this.disabledDeliberation = true;
-        }
+        // if(event.target.value == 'Prima Attivazione Fuori delibera') {
+        //     console.log('handleSelectProcess: ' + JSON.stringify(event.detail.value));
+        //     this.deliberation = 'Fuori delibera';
+        //     this.disabledDeliberation = true;
+        // }
 
         this.selectedProcessObject = this.processesReference.filter(el => el.processType === event.target.value)[0];
         this.checkCompatibilityProcess();
@@ -336,9 +336,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_ConnessioneConAttivazione, HDT_RT_TemporaneaNuovaAtt, HDT_RT_Voltura, 
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
+         console.log('****12');
         if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcessObject.recordType === 'HDT_RT_Voltura' ||this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcessObject.recordType === 'HDT_RT_SwitchIn' && this.order.ProcessType__c != 'Switch in Ripristinatorio') || this.selectedProcessObject.recordType === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcessObject.recordType === 'HDT_RT_TemporaneaNuovaAtt'){
             this.callCreditCheckSAP();
         }
+        console.log('****13');
         
 
         let extraParams = {};
@@ -350,11 +352,15 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
             extraParams['switchInRipristinatorio'] = 'true';
         }
-
+        console.log('****1');
         if (this.showDeliberation === true) {
+            console.log('****2');
             if (this.deliberation !== '') {
+                console.log('****4');
                 this.goToNextStep(extraParams);
+                this.disabledDeliberation = true;
             } else {
+                console.log('****5');
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: 'Devi compilare il campo delibera.',
@@ -364,6 +370,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
             }
         } else {
+            console.log('****3');
             this.goToNextStep(extraParams);
         }
 
@@ -477,7 +484,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     getRequest(){ 
         var typeOfCommodity = 'ENERGIAELETTRICA';
-        var companyName = null;
+        let companyName = this.order.Account.FirstName__c? `${this.order.Account.FirstName__c} ${this.order.Account.LastName__c}` : this.order.Account.LastName__c;
+        let companyGroup;
         var secondaryCustomerId = null;
         var bpType = null;
         var operation = null;
@@ -494,7 +502,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             }
         }
         if(this.order.SalesCompany__c !== undefined){
-            companyName = this.order.SalesCompany__c;
+            companyGroup = this.order.SalesCompany__c;
         }
         if(this.order.Account.VATNumber__c !== undefined){
             secondaryCustomerId = this.order.Account.VATNumber__c;
@@ -511,8 +519,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(this.order.Catalog__c !== undefined){
             offerType = this.order.Catalog__c;
         }
-        if(new RegExp("/D\d - ").test(this.order.Account.CustomerMarking__c)){
-            bpClass=this.order.Account.CustomerMarking__c.replace("/D\d - ", "");
+        if(new RegExp("D[0-9] - ").test(this.order.Account.CustomerMarking__c)){
+            bpClass=this.order.Account.CustomerMarking__c.replace(new RegExp("D[0-9] - "), "");
         }else{
             bpClass=this.order.Account.CustomerMarking__c;
         }
@@ -529,7 +537,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             account:"AccountCommercialePRM", //this.order.Owner.Username (parte prima @)
             jobTitle:this.order.ChannelTransCode__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
-            companyName:companyName,//this.order.SalesCompany__c
+            companyName:companyName,
             externalCustomerId:this.order.Account.FiscalCode__c,
             secondaryCustomerId:secondaryCustomerId,
             bpClass:bpClass,
@@ -537,13 +545,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             bpType:bpType,
             customerType:"CT0", //da definire campo SF con business            
             operation:operation,
-            companyGroup:companyName,
+            companyGroup:companyGroup,//this.order.SalesCompany__c
             market:market,
             offerType:offerType,
             details:[{
                 commodity:typeOfCommodity
             }]		
         }
+        console.log("this.2"); 
 
         if(this.selectedProcessObject.recordType !== 'HDT_RT_VAS'){
             data["address"] = this.order.ServicePoint__r.SupplyStreetName__c;
@@ -553,19 +562,24 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
             data["details"]["annualConsumption"] = this.order.ServicePoint__r.AnnualConsumptionStandardM3__c;
         }
-        
+        console.log("this.3"); 
 
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            
-            if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
-                fiscalData = this.order.ServicePoint__r.Account__r.FiscalCode__c;
-            }else if(this.order.ServicePoint__r.Account__r.VATNumber__c != null){
-                fiscalData = this.order.ServicePoint__r.Account__r.VATNumber__c;
+        if(this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_Voltura'){
+            console.log("this.31:" + JSON.stringify(this.order.Account.RecordType.DeveloperName)); 
+            console.log("this.310:" + JSON.stringify(this.order.ServicePoint__r)); 
+            if(this.order.ServicePoint__r?.Account__r?.RecordType?.DeveloperName === 'HDT_RT_Residenziale'){
+                console.log("this.32:"); 
+                fiscalData = this.order.ServicePoint__r?.Account__r?.FiscalCode__c;
+            }else if(this.order.ServicePoint__r?.Account__r?.VATNumber__c != null){
+                console.log("this.33:"); 
+                fiscalData = this.order.ServicePoint__r?.Account__r?.VATNumber__c;
             }
+            console.log("this.34"); 
             
-            data["bpAlternative"] = this.order.ServicePoint__r.Account__r.CustomerCode__c;
-            data["alternativeCustomerId"] = fiscalData;            
+            data["bpAlternative"] = this.order.ServicePoint__r?.Account__r?.CustomerCode__c;
+            data["alternativeCustomerId"] = fiscalData;
         }
+        console.log("this.4"); 
 
         return data; 
     }
@@ -585,7 +599,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             sRequest["isBillableVas"]=this.order.IsBillableVas__c;
         }
         checkCompatibility({servReq: sRequest}).then(data =>{
-            if(data.compatibility == ''){
+            if(data.compatibility == '' || data.compatibility == this.order.OrderNumber){
                 this.applySelectionLogic(this.selectedProcessObject);
                 this.serviceRequest= data.ServiceRequest;
             }else{

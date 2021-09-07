@@ -224,6 +224,30 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
+	public static void createDocumentalActivityForError(String errorMessage, Id requestId, String envelopeId,sObject processRecord){
+		try {
+			String sObjName = requestId.getSObjectType().getDescribe().getName();
+			DocumentalActivity__c documentalActivity = new DocumentalActivity__c ();
+			switch on sObjName {
+				when 'Case' {
+					documentalActivity.CaseId__c = (Id) requestId;
+					System.debug('### Account Id: '+processRecord.get('AccountId'));
+				}
+				when 'Order' {
+					documentalActivity.OrderId__c = (Id) requestId;
+				}
+				when else {
+
+				}
+			}
+			documentalActivity.EnvelopeId__c = envelopeId;
+			documentalActivity.ErrorDescription__c = errorMessage;
+
+			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalActivity);
+		} catch (Exception ex) {
+			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+		}
+	}
 	private static List<Map<String,List<sObject>>> getRecordObjectsListContext2(List<SObject> recordsList){
 		Case caseObject = (Case) recordsList[0];
 		Account accountObject = (Account) caseObject.Account;
@@ -349,7 +373,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 
     public static String manageAmountDot(String valString){
 		String res = valString;
-		Integer df = valString.indexOf('\\.');
+		Integer df = valString.indexOf('.');
 		String intero = '';
 		if(df>=0){
 			if(df==0){
@@ -363,7 +387,6 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 			res=intero+','+dec;
 		}
-
 		else{
 			if(valString=='' || valString == null){
 				valString='0';
@@ -397,6 +420,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		text = text.replaceAll('[’‘“”]','\'');
 		text = text.replaceAll('·', '-');
 		text = text.replaceAll('\u00A0', ' ');  // 00A0 = carattere unicode "No-Break Space"
+		text = text.replaceAll('\u2026', '...');  // 2026 = carattere unicode "horizontal ellipsis"
 
 		return text;
 	}

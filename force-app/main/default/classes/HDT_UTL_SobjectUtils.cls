@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 03/11/2020
+* @description HDT_UTL_SobjectUtils
+* @history Lorenzo – 03/11/2020 – created class
+*/
 public with sharing class HDT_UTL_SobjectUtils {
         public static String getSobjectTypeName(final List<sObject> sObjectList) {
             return sObjectList.get(0).getSObjectType().getDescribe().getName();

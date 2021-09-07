@@ -19,15 +19,20 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     */
     
     @AuraEnabled
-    public static boolean riassegnaComCod(string recordId){
+    public static boolean riassegnaComCod(string recordId,String causale){
         try{
             HDT_QR_Case caseQr = new HDT_QR_Case();
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
-            Case c = caseQr.getRecordById(s.case__c);
+          //  Case c = caseQr.getRecordById(s.case__c);
+            Case c = new Case();
+            c.id = s.case__c;
             c.phase__c	='In Attesa Approvazione';
+            c.ReassignmentReason__c = causale;
             caseSrv.updateRecord(c);
+            system.debug('*******trueComm');
             return true;
         }catch(exception e){
+            system.debug('*******falseComm:' + e);
             return false;
         }
         
@@ -42,10 +47,12 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             activityCustomSrv.updateRecord(s);
             Case c = caseQr.getRecordById(s.case__c);
             c.phase__c	='In Lavorazione';
-            caseSrv.updateRecord(c);
+            update c;
+           // caseSrv.updateRecord(c);
             return true;
         }
         catch(Exception e){
+            system.debug(e);
             return false;
         }
     }

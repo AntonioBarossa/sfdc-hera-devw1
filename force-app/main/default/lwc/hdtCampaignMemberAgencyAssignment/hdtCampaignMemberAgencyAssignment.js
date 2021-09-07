@@ -142,14 +142,21 @@ export default class HdtCampaignMemberAgencyAssignment extends LightningElement 
             console.log(val);
             if (val > 0) {
                 totalValues += val * 1;
-                for (let i = 0; i < val; i++) {
-                    assignedObj.push(agency.id);
+                if (totalValues <= this.totalResults) {
+                    for (let i = 0; i < val; i++) {
+                        assignedObj.push(agency.id);
+                    }
+                } else if (totalValues == this.totalResults + 1) {
+                    totalValues -= 1;
+                    for (let i = 0; i < val - 1; i++) {
+                        assignedObj.push(agency.id);
+                    }
                 }
             }
         });
         console.log(JSON.stringify(assignedObj));
         console.log(totalValues + ' - ' + this.totalResults);
-        if (totalValues => 0 && totalValues <= this.totalResults) {
+        if (totalValues > 0 && totalValues <= this.totalResults) {
             //update the agencies
             assignCampaignMemberAgency({ campaignId: this.recordId, toAssignObj: assignedObj }).then((result) => {
                 //console.log(JSON.stringify(result));
@@ -157,11 +164,15 @@ export default class HdtCampaignMemberAgencyAssignment extends LightningElement 
                     this.totalResults -= result.length;
                     let msg = 'Numerazioni assegnati con successo: ' + result.length;
                     this.dispatchEvent(
-                        new CustomEvent('showSuccess',{detail: { msg }})
+                        new CustomEvent('showSuccess', { detail: { msg } })
                     );
                 }
             }).catch((err) => {
                 console.log(JSON.stringify(err));
+                let errmsg = err.body.message;
+                this.dispatchEvent(
+                    new CustomEvent('showError', { detail: { errmsg } })
+                );
             });
             console.log("submited");
         }

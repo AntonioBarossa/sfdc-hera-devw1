@@ -85,8 +85,12 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             amountInstallment = totalResidue;
         }
 
+        //Utilizzato per mostrare a video il totale senza canone rai
         currentCase.AmountToPayInInstallments__c = amountInstallment - totalRaiFeeResidual;
+        //Viene poi diviso per il numero di rate
         currentCase.InstallmentAmount__c = amountInstallment;
+        //Importo che viene utiizzato per inviare a sap
+        currentCase.Amount__c = amountInstallment;
 
         //Set CustomerAssisted
         customerAssisted = installmentsQr.getCustomerAssistedKpi(accountId);
@@ -118,9 +122,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
         Decimal total;
         if(currentCase.DepositAmount__c != null){
-            total = currentCase.InstallmentAmount__c - currentCase.DepositAmount__c;
+            total = currentCase.Amount__c - currentCase.DepositAmount__c;
         }else{
-            total = currentCase.InstallmentAmount__c;
+            total = currentCase.Amount__c;
         }
        
 
@@ -175,6 +179,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
      * Transcodifica il tipo di piano rata inserito su SFDC nel codice attesa da SAP.
      * Input richiesti: tipo piano rata e applicazione interessi.
      */
+    @TestVisible
     private String transcodeInstallmentPlan(String typeInstallmentPlan, Boolean applyInterests) {
         if (typeInstallmentPlan == null) {
             return '';
@@ -245,7 +250,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
     private String formattingErrorMessage(String errorMessage, String fieldLabel, Object criteriaField, Object ruleField){
         String fineTuningCriteria = '';
         String fineTuningRule = '';
-        if(errorMessage.indexOf(fieldLabel) > -1){
+        if(errorMessage.indexOf(fieldLabel) > -1 || fieldLabel.containsIgnoreCase('CA con')){
             //Skip 
         } else {
             if(criteriaField instanceOf Boolean && Boolean.valueOf(criteriaField) == true){

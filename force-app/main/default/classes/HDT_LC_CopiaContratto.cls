@@ -28,10 +28,11 @@ public with sharing class HDT_LC_CopiaContratto {
         String res = '';
         c.id = caseId;
         c.CopyType__c = tipoFirma; 
+        c.Status='In Lavorazione'; //HRAWRM-344 01/09/2021
         if(rc !=null){
             recTypeId= rc.Id;
         }
-        if('Copia della registrazione'.equalsIgnoreCase(tipoAttivita)){
+        if('Copia della registrazione'.equalsIgnoreCase(tipoFirma)){
   
             wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Invio registrazione');
             System.debug(activity);

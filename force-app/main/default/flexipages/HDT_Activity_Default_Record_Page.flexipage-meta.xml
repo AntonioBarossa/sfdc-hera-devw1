@@ -97,6 +97,43 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>hdtCommercialRiassignButton</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Approvazione Bonus Commerciale</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-f4064101-e9bf-4d96-b0b2-8267c88b08d1</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-f4064101-e9bf-4d96-b0b2-8267c88b08d1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Bonus Commerciale</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-73fb4124-f919-4f29-ab41-9819f01ae6f5</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentName>hdtActivityIvaAccise</componentName>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
@@ -212,12 +249,22 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtCommercialRiassignButton</componentName>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-73fb4124-f919-4f29-ab41-9819f01ae6f5</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Contratti/Bonus Commerciale</rightValue>
+                        <rightValue>Approvazione Bonus Commerciale</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Completed</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -323,9 +370,9 @@
                         <rightValue>Sportello</rightValue>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Chiamata</rightValue>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>Call</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

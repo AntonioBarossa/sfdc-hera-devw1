@@ -111,8 +111,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 : null;
 
             if(attachmentManagement != null ){
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-                /*if(attachmentManagement){
+                //result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                if(attachmentManagement){
                     List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
                     if(attachedDocument.size() == 0){
                         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
@@ -121,7 +121,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     }
                 }else{
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-                }*/
+                }
 
             } else {
             
@@ -244,7 +244,18 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
             }
-
+        }else if(caseType == 'Richiesta Domiciliazione')
+        {
+            string fiscalCode =  getFieldValue(fields, 'BankAccountSignatoryFiscalCode__c');
+            string outcome = validateFiscalCode(fiscalCode);
+            if(!String.isEmpty(outcome))
+            {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', outcome));
+            }
+            else
+            {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+            }
         }else{
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));

@@ -75,9 +75,6 @@ public with sharing class HDT_SRV_SalesHandler {
                         Order ord = new Order();
                         ord.Id = ordRetrieved.Id;
                         ord.Phase__c = mapRequestFields.get('FASE');
-                        //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
-                        ord.TrackingDiscardPhase__c = mapRequestFields.get('FASE');
-                        //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
                         //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
                         ord.ExternalUserCompany__c = mapRequestFields.get('CMP');
                         //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
@@ -162,6 +159,15 @@ public with sharing class HDT_SRV_SalesHandler {
                                         utlTechData.handle300Flow(mapRequestFields, ord);
                                     }
                                 }
+                            }
+                            when 'Errore tecnico invio a SAP', 'Flusso bloccato in assenza del precedente', 'Errore invio a DL/SII' {
+                                system.debug('previousPhase '+previousPhase);
+                                String finalPhase = ord.phase__c;
+                                if('Errore tecnico invio a SAP'.equalsIgnoreCase(finalPhase)) finalPhase = 'Errore comunicazione SAP';
+                            	ord.TrackingDiscardPhase__c = finalPhase;
+                                ord.phase__c=previousPhase; //perchè queste 3 non sono ammesse nel campo phase__c
+                                system.debug('phase__c '+ord.phase__c);
+                                system.debug('TrackingDiscardPhase__c '+ord.TrackingDiscardPhase__c);
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
@@ -248,7 +254,14 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Completata' {
 
-                                if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti')){
+                                Boolean redirectPreventivo = false;
+                                switch on ordRetrieved.ProcessType__c{
+                                    when 'Connessione con Attivazione', 'Temporanea Nuova Attivazione', 'Attivazione con Modifica'{
+                                        redirectPreventivo=true;
+                                    }
+                                }
+
+                                if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') && redirectPreventivo){
                                     ord.Phase__c = 'Inviare preventivo';
                                 }else{
                                     ord.Description = mapRequestFields.get('NOTA_HK');
@@ -256,6 +269,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.OrderODV__c = mapRequestFields.get('VBELN');
                                     ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                    ord.Status='Activated';
                                     
                                     if(mapRequestFields.get('VKONT') != null) {
                                         ord.ContractAccountCode__c = mapRequestFields.get('VKONT');
@@ -289,6 +303,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                         }
 
+                        system.debug('cost2 '+ord.phase__c);
                         orderSrv.updateRecord(ord);
                     	responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';

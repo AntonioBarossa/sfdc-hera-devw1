@@ -10,6 +10,7 @@ public with sharing class HDT_LC_GeneralInfoTst {
 
     @testSetup
     static void setup(){
+        
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         HDT_UTL_DataFactoryTst.createSale(1, true, acc[0].Id, 'Attiva');
         HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);

@@ -5,7 +5,11 @@
  * @history Luca Belometti -WR – 05/08/2021 – Created Merhods for creation CampaingMemberAssignment and its relative Item
  * @history Lucas Fernandes 05/08/2021 – Created 'createAccountShare' method
  */
+
 public with sharing class HDT_UTL_DataFactoryTst{
+
+	private staTIC HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+
 	//Method to avoid 'ObjectCompatibility' errors from ProcessClick
 	public static void pClickInstance(){
 
@@ -113,9 +117,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Account> accList=new List<Account>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ACCOUNT_RECORDTYPEID_BUSINESS;
+		Id rt=utlConstants.ACCOUNT_RECORDTYPEID_BUSINESS;
 
 		for (Integer i=0; i<amount; i++){
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
@@ -166,9 +168,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Account> accList=new List<Account>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ACCOUNT_RECORDTYPEID_RESINDEZIALE;
+		Id rt=utlConstants.ACCOUNT_RECORDTYPEID_RESINDEZIALE;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -217,13 +217,31 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return accList;
 	}
 
+	public static List<Account> createAccountPartner(Integer amount, Boolean doInsert, String name) {
+
+		List<Account> partnerAccounts = new List<Account>();		
+
+		for (Integer i = 0; i < amount; i++) {
+			
+			partnerAccounts.add(
+				new Account(Name = name, RecordTypeId = utlConstants.ACCOUNT_RECORDTYPEID_PARTNER)
+			);
+		}
+
+		if (doInsert) {
+			
+			insert partnerAccounts;
+
+		}
+
+		return partnerAccounts;
+	}
+
 	public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, String phase){
 
 		List<Order> orderList=new List<Order>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ORDER_RECORDTYPEID_DEFAULT;
+		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -266,9 +284,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Order> orderList=new List<Order>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ORDER_RECORDTYPEID_DEFAULT;
+		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -312,9 +328,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Order> orderList=new List<Order>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rtVoltura=constRecordType.ORDER_RECORDTYPEID_VOLTURA;
+		Id rtVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -361,9 +375,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Order> orderList=new List<Order>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ORDER_RECORDTYPEID_DEFAULT;
+		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -509,12 +521,20 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return contractList;
 	}
-
+	
+	
+	//CASE
+	
+	//CASE MOROSITà
 	public static List<Case> createCase(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
-
+		return createCaseMorosita(amount, doInsert, accId, contactId, servPointId, contractId, orderId);
+	}
+	
+	public static List<Case> createCaseMorosita(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
+		
 		List<Case> caseList=new List<Case>();
-		HDT_UTL_Constants constUtl=new HDT_UTL_Constants();
-		String rtId=constUtl.CASE_RECORDTYPEID_MOROSITA;
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_MOROSITA;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -544,6 +564,44 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return caseList;
 	}
+	
+	//CASE DOCUMENTALE/COPIA CONTRATTO
+	public static List<Case> createCaseDocumentale(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
+		
+		List<Case> caseList=new List<Case>();
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
+
+		for (Integer i=0; i<amount; i++){
+
+			Case testCase=new Case();
+			testCase.AccountId=accId;
+			testCase.Status='In Lavorazione';
+			testCase.Phase__c='Bozza';
+			testCase.Subject='test';
+			testCase.Type='Allineamento Anagrafica';
+			testCase.Subprocess__c='Account';
+			testCase.HerokuPracticeCode__c='21313232132132';
+			testCase.ContactId=contactId;
+			testCase.ServicePoint__c=servPointId;
+			testCase.Contract__c=contractId;
+			//testCase.VulturePracticeReference__c=orderId;
+			testCase.Cluster__c='Pagamenti';
+			testCase.RecordTypeId=rtId;
+			testCase.CompanyOwner__c='HERA COMM';
+
+			caseList.add(testCase);
+		}
+
+		if (doInsert){
+
+			insert caseList;
+		}
+
+		return caseList;
+	}
+	
+	
 
 	public static List<OrderItem> createOrderItem(Integer amount, Boolean doInsert, Id orderId, Id servicePointId, Id product2Id, Id pricebookEntryId){
 
@@ -1503,6 +1561,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return documents;
 	}
+	
 	public static List<DocumentalActivity__c> createDocumentalActivity(Integer numberRecords, Id orderId, Id caseId){
 		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
 		for(Integer i=0; i<numberRecords;i++){
@@ -1517,6 +1576,20 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		insert docActList;
 		return docActList;
 	}
+	
+	public static list<DocumentSendTracking__c> createDocumentSendTracking(Integer numberRecords, Id orderId, Id caseId){
+		List<DocumentSendTracking__c> docTrackList = new List<DocumentSendTracking__c>();
+		for(Integer i=0; i<numberRecords;i++){
+			DocumentSendTracking__c docTrack = new DocumentSendTracking__c();
+			docTrack.Order__c = String.isNotBlank(orderId)?orderId:null;
+			docTrack.Case__c = String.isNotBlank(caseId)?caseId:null;
+			docTrack.EnvelopeId__c = 'idPlico_' + i;
+			docTrackList.add(docTrack);
+		}
+		insert docTrackList;
+		return docTrackList;
+	}
+	
 
 	public static List<AtecoMatrix__c> createAtecoMatrix(Integer amount, Boolean doInsert, String name){
 
@@ -1645,5 +1718,253 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return cpeList;
+	}
+
+	public static List<RentProcessRule__c> createRentProcessRule (Integer amount, Boolean doInsert, boolean applicationInterests, boolean deposit)
+	{
+		List<RentProcessRule__c> rules = new List<RentProcessRule__c>();
+		for(Integer i=0; i < amount; ++i)
+		{
+			RentProcessRule__c rule = new RentProcessRule__c();
+			rule.AmountToPayInInstallmentsFrom__c 		= 0.01;
+			rule.AmountToPayInInstallmentsTo__c			= 2000;
+			rule.ApplicationInterests__c				= applicationInterests;    //input
+			rule.ApprovalProcess__c						= false;
+			rule.AttachmentManagement__c				= false;
+			rule.CAWithOrWithoutSEPA__c					= false;
+			rule.Deposit__c								= deposit; //input
+			rule.ExistingInstallmentPlanUnpaidFrom__c 	= 0;
+			rule.ExistingInstallmentPlanUnpaidTo__c		= 3;
+			rule.InstallmentPlanReason__c				= 'Fattura SD'; 
+			rule.MaxInstallmentsNumber__c				= 6;
+			rule.Category__c							= 'Famiglie';
+			rules.add(rule);	
+		}
+		if(doInsert)
+		{
+			insert rules;
+		}
+		return rules;
+	}
+	public static List<SBQQ__QuoteProcess__c> createQuoteProcess(Integer amount, Boolean doInsert) {
+
+		List<SBQQ__QuoteProcess__c> qProcessList = new List<SBQQ__QuoteProcess__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SBQQ__QuoteProcess__c qp = new SBQQ__QuoteProcess__c(
+            	Name = 'testQuoteProcess'+i,
+				SBQQ__Default__c = true,
+				SBQQ__GuidedOnly__c = true,
+				SBQQ__ProductAutoSelected__c = true,
+				SBQQ__ProductConfigurationInitializer__c = 'initializerTest',
+				SBQQ__ProductSearchExecutor__c = 'Executor',
+				SBQQ__SortOrder__c = 1
+        	);
+
+			qProcessList.add(qp);
+		}
+
+		if (doInsert){
+
+			insert qProcessList;
+		}
+
+		return qProcessList;
+	}
+
+	public static List<PaperProcessing__c> createPaperProcessing(Integer amount, Boolean doInsert, String name, String campaignId) {
+
+		List<PaperProcessing__c> paperProcessings = new List<PaperProcessing__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+			paperProcessings.add(
+				new PaperProcessing__c(Name = name, Campaign__c = campaignId)
+			);
+		}
+
+		if (doInsert) {
+			insert paperProcessings;
+		}
+
+		return paperProcessings;
+
+	}
+
+	public static String getUserRoleId (String userRoleDeveloperName){
+		String userRoleId='';
+
+		if (!String.isEmpty(userRoleDeveloperName)){
+
+			userRoleId=[SELECT Id
+			FROM UserRole
+			WHERE DeveloperName = :userRoleDeveloperName
+			LIMIT 1].Id;
+
+		}
+
+		return userRoleId;
+	}
+
+	public static List<DistributorPointCode__c> createDistributorPointCode (Integer amount, Boolean doInsert, Id accountId){
+
+		List<DistributorPointCode__c> dpcList = new List<DistributorPointCode__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			DistributorPointCode__c dpc = new DistributorPointCode__c(
+				Account__c = accountId
+			);
+
+			dpcList.add(dpc);
+		}
+
+		if (doInsert) {
+
+			insert dpcList;
+
+		}
+
+		return dpcList;
+	}
+
+	public static List<wrts_prcgvr__ServiceLink__c> createServiceLink (Integer amount, Boolean doInsert) {
+
+		List<wrts_prcgvr__ServiceLink__c> serviceLinkList = new List<wrts_prcgvr__ServiceLink__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			wrts_prcgvr__ServiceLink__c sl = new wrts_prcgvr__ServiceLink__c(
+				wrts_prcgvr__IsActive__c = true
+			);
+
+			serviceLinkList.add(sl);
+		}
+
+		if (doInsert) {
+
+			insert serviceLinkList;
+		}
+
+		return serviceLinkList;
+	}
+
+	public static List<wrts_prcgvr__ServiceLinkItem__c> createServiceLinkItem (Integer amount, Boolean doInsert, Id serviceLinkId) {
+
+		List<wrts_prcgvr__ServiceLinkItem__c> serviceLinkItemList = new List<wrts_prcgvr__ServiceLinkItem__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			wrts_prcgvr__ServiceLinkItem__c sli = new wrts_prcgvr__ServiceLinkItem__c(
+				wrts_prcgvr__ServiceLink__c = serviceLinkId
+			);
+
+			serviceLinkItemList.add(sli);
+		}
+
+		if (doInsert) {
+
+			insert serviceLinkItemList;
+		}
+
+		return serviceLinkItemList;
+	}
+
+	
+	public static void createWebServiceConfiguration (String name, String endpoint, String method, String user) {
+
+		HDT_WebServiceConfiguration__c wsConfig = new HDT_WebServiceConfiguration__c(
+			Name = name,
+			Endpoint__c = endpoint,
+			Method__c = method,
+			User__c = user         
+		);
+		
+		insert wsConfig;
+	}
+
+	public static void createWebServiceCredential (String name , String password, String username) {
+
+		HDT_WebServiceCredential__c wsCredential = new HDT_WebServiceCredential__c(
+			Name = name,
+			Password__c = password,
+			Username__c = username
+		);
+
+		insert wsCredential;
+	}
+
+	public static List<CommunicationLog__c> createCommunicationLog (Integer amount, Boolean doInsert, Id accId, Id contactId){
+
+		List<CommunicationLog__c> commLogList=new List<CommunicationLog__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CommunicationLog__c testCommLog=new CommunicationLog__c();
+			testCommLog.AccountID__c = accid;
+			testCommLog.ContactID__c = contactId;
+			testCommLog.Causale__c='testCausale';
+			testCommLog.Company__c='testCompany';
+			testCommLog.Cluster__c='testCluster';
+			testCommLog.CompanyOwner__c='TestCompOwner';
+			testCommLog.Fase__c='testFase';
+			testCommLog.Processo__c='testProcesso';
+			testCommLog.Stato__c='testStato';
+
+			commLogList.add(testCommLog);
+		}
+
+		if (doInsert){
+
+			insert commLogList;
+		}
+
+		return commLogList;
+	}
+
+	public static List<SBQQ__Subscription__c> createSubscription (Integer amount, Boolean doInsert, Id accountId, Id contractId, Id servicePointId) {
+
+		List<SBQQ__Subscription__c> subcriptionList = new List<SBQQ__Subscription__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SBQQ__Subscription__c subscription = new SBQQ__Subscription__c(
+				SBQQ__Account__c = accountId,
+				SBQQ__Contract__c = contractId,
+				ServicePoint__c = servicePointId,
+				SBQQ__Quantity__c = 1.0
+			);
+
+			subcriptionList.add(subscription);
+		}
+
+		if (doInsert){
+
+			insert subcriptionList;
+		}
+
+		return subcriptionList;
+
+	}
+
+	public static List<CS_SelezioneFornitura__c> createSelezioneFornitura(Integer amount, Boolean doInsert) {
+
+		List<CS_SelezioneFornitura__c> selezioneList = new List<CS_SelezioneFornitura__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CS_SelezioneFornitura__c selezione = new CS_SelezioneFornitura__c(
+				Name = 'selezioneTestName'
+			);
+
+			selezioneList.add(selezione);
+		}
+
+		if (doInsert){
+
+			insert selezioneList;
+		}
+
+		return selezioneList;
 	}
 }
