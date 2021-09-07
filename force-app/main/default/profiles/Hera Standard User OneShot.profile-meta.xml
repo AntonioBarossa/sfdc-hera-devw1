@@ -117,10 +117,6 @@
     </applicationVisibilities>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
-        <name>HDT_ObjectRecordType__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>true</enabled>
         <name>AccountDataEnrichment__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -130,6 +126,10 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_AdminServiceDispatcher__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_ObjectRecordType__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -392,6 +392,7 @@
         <enabled>true</enabled>
         <name>HDT_FulfillmentDateMatrix__c</name>
     </customSettingAccesses>
+    <description>Identico al profilo Hera Standard User, ha la possibilità di inviare comunicazione One Shot grazie al Publisher Layout</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>RateCategory__c.CalculatedValue__c</field>
@@ -1483,12 +1484,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>VasSupplierTable__c.ErrorDescription__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>VasSupplierTable__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4758,7 +4759,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.CarType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4778,7 +4779,7 @@
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.Causal__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4818,12 +4819,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.Channel__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.ChannelOfPayment__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5044,12 +5045,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.CustomerComunicationDate__c</field>
+        <field>Case.CustomerInterest__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.CustomerInterest__c</field>
+        <editable>true</editable>
+        <field>Case.CustomerComunicationDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6864,12 +6865,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.VasPracticeDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.VasSupplierStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6953,7 +6954,12 @@
         <field>City__c.BelfioreCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.Province__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>City__c.ServiceEle__c</field>
         <readable>true</readable>
@@ -13989,7 +13995,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Order.VASBillingMode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -14086,6 +14092,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.XMLType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ReminderComfortCall__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24793,12 +24804,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ServiceRequest__c.isMigrated__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ServiceRequest__c.GlobalMigrationKey__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28508,7 +28519,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28678,7 +28689,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Cluster__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28708,7 +28719,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28898,7 +28909,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Interaction__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28933,7 +28944,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Lead__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28964,6 +28975,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ManualCheckResult__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Mobile__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28978,7 +28994,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Note__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29048,7 +29064,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Process__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29193,7 +29209,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30425,7 +30441,7 @@
         <layout>GeneralTermsCondition__c-Condizioni Generali di Contratto Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Global-Global Layout</layout>
+        <layout>Global-One Shot Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>HDT_AccountDataEnrichment__mdt-Account data enrichment Layout</layout>
@@ -33852,7 +33868,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -34470,6 +34486,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>ImportCustomObjects</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>LightningConsoleAllowedForUser</name>
     </userPermissions>
     <userPermissions>
@@ -34504,10 +34524,11 @@
         <enabled>true</enabled>
         <name>SelectFilesFromSalesforce</name>
     </userPermissions>
-    <userPermissions>
+    <!-- Commented until Emails are enabled again -->
+    <!-- <userPermissions>
         <enabled>true</enabled>
         <name>SendExternalEmailAvailable</name>
-    </userPermissions>
+    </userPermissions> -->
     <userPermissions>
         <enabled>true</enabled>
         <name>ShowCompanyNameAsUserBadge</name>

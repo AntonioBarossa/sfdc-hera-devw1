@@ -185,6 +185,8 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
            // this.isSelectedDate
         this.template.querySelector("c-hdt-ct-toolbar-container").postAppointmentRequest(this.isSelectedDate);
         //}
+        this.showModal = false;
+
         console.log('saved');
     }
 

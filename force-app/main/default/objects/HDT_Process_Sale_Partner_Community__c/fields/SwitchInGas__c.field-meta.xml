@@ -3,7 +3,7 @@
     <fullName>SwitchInGas__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Switch In Gas</label>
+    <label>Switch_In_Gas</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

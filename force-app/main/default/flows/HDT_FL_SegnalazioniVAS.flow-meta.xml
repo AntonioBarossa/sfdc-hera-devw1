@@ -4,7 +4,7 @@
     <assignments>
         <name>Add_House_Data</name>
         <label>Add House Data</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>Case.Surface__c</assignToReference>
@@ -76,9 +76,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Link_Contract</name>
+        <label>Link Contract</label>
+        <locationX>578</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>Case.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelezAssetSub.recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Primary_Contact_Relation</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Link_Subscription_0</name>
         <label>Link Subscription</label>
-        <locationX>710</locationX>
+        <locationX>974</locationX>
         <locationY>1694</locationY>
         <assignmentItems>
             <assignToReference>Case.Subscription__c</assignToReference>
@@ -122,7 +138,7 @@
     <assignments>
         <name>Set_Case</name>
         <label>Set Case</label>
-        <locationX>765</locationX>
+        <locationX>963</locationX>
         <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>Case.SignalType__c</assignToReference>
@@ -173,7 +189,7 @@
     <assignments>
         <name>Set_Invoices</name>
         <label>Set Invoices</label>
-        <locationX>633</locationX>
+        <locationX>831</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>Case.BillNumber__c</assignToReference>
@@ -189,7 +205,7 @@
     <assignments>
         <name>Set_Output</name>
         <label>Set Output</label>
-        <locationX>407</locationX>
+        <locationX>506</locationX>
         <locationY>2918</locationY>
         <assignmentItems>
             <assignToReference>UserInputFlow</assignToReference>
@@ -202,7 +218,7 @@
     <decisions>
         <name>Additional_Config</name>
         <label>Additional Config?</label>
-        <locationX>710</locationX>
+        <locationX>974</locationX>
         <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Get_Primary_Contact_Relation</targetReference>
@@ -227,7 +243,7 @@
     <decisions>
         <name>Additional_Config0</name>
         <label>Additional Config?</label>
-        <locationX>765</locationX>
+        <locationX>963</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Has_Sub_Asset_Selection</targetReference>
@@ -252,7 +268,7 @@
     <decisions>
         <name>Has_Sub_Asset_Selection</name>
         <label>Has Sub/Asset Selection?</label>
-        <locationX>765</locationX>
+        <locationX>963</locationX>
         <locationY>1334</locationY>
         <defaultConnector>
             <targetReference>Get_Primary_Contact_Relation</targetReference>
@@ -261,13 +277,6 @@
         <rules>
             <name>Has_Selection</name>
             <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>HasAssetSelection</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>HasSubSelection</leftValueReference>
                 <operator>EqualTo</operator>
@@ -284,7 +293,7 @@
     <decisions>
         <name>Resume_Process_decision</name>
         <label>Resume Process?</label>
-        <locationX>407</locationX>
+        <locationX>506</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Reporting_Type_Selection</targetReference>
@@ -309,7 +318,7 @@
     <decisions>
         <name>Which_sObject_0</name>
         <label>Which sObject?</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>1454</locationY>
         <defaultConnector>
             <targetReference>Get_Subscription</targetReference>
@@ -329,6 +338,21 @@
                 <targetReference>Get_Asset</targetReference>
             </connector>
             <label>Asset</label>
+        </rules>
+        <rules>
+            <name>Contract</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SelezAssetSub.sObjectName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Contract</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Link_Contract</targetReference>
+            </connector>
+            <label>Contract</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -461,7 +485,7 @@
     <formulas>
         <name>GroupOptions</name>
         <dataType>String</dataType>
-        <expression>IF({!HasAssetSelection},&apos;ASSETS_ACTIVATED_VAS;&apos;,&apos;&apos;) &amp; IF({!HasSubSelection},&apos;SUBS_VAS;&apos;,&apos;&apos;)</expression>
+        <expression>IF({!HasSubSelection},&apos;SUBS_VAS;&apos;,&apos;&apos;)</expression>
     </formulas>
     <formulas>
         <name>IsReasonRequired</name>
@@ -518,7 +542,7 @@
     <recordLookups>
         <name>Get_Primary_Contact</name>
         <label>Get Primary Contact</label>
-        <locationX>765</locationX>
+        <locationX>963</locationX>
         <locationY>2462</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -539,7 +563,7 @@
     <recordLookups>
         <name>Get_Primary_Contact_Relation</name>
         <label>Get Primary Contact Relation</label>
-        <locationX>765</locationX>
+        <locationX>963</locationX>
         <locationY>2342</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -574,7 +598,7 @@
     <recordLookups>
         <name>Get_Reporting_Reason_Records</name>
         <label>Get Reporting Reason Records</label>
-        <locationX>765</locationX>
+        <locationX>963</locationX>
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -609,7 +633,7 @@
     <recordLookups>
         <name>Get_Subscription</name>
         <label>Get Subscription</label>
-        <locationX>710</locationX>
+        <locationX>974</locationX>
         <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -630,7 +654,7 @@
     <recordLookups>
         <name>Get_UserInputFlow_0</name>
         <label>Get UserInputFlow</label>
-        <locationX>407</locationX>
+        <locationX>506</locationX>
         <locationY>2798</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -701,7 +725,7 @@
     <screens>
         <name>Description_And_Reason</name>
         <label>Description And Reason</label>
-        <locationX>765</locationX>
+        <locationX>963</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -754,13 +778,6 @@
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>HasAssetSelection</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
                     <leftValueReference>HasSubSelection</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
@@ -775,7 +792,7 @@
     <screens>
         <name>Reporting_Category_Selection</name>
         <label>Reporting Category Selection</label>
-        <locationX>765</locationX>
+        <locationX>963</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -797,7 +814,7 @@
     <screens>
         <name>Reporting_Type_Selection</name>
         <label>Reporting Type Selection</label>
-        <locationX>765</locationX>
+        <locationX>963</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -819,7 +836,7 @@
     <screens>
         <name>ScreenSelezFatture</name>
         <label>ScreenSelezFatture</label>
-        <locationX>633</locationX>
+        <locationX>831</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -852,7 +869,7 @@
     <screens>
         <name>Subcategory_Selection</name>
         <label>Subcategory_Selection</label>
-        <locationX>765</locationX>
+        <locationX>963</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -872,7 +889,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>281</locationX>
+        <locationX>380</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Resume_Process_decision</targetReference>

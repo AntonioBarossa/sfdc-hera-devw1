@@ -47,10 +47,12 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             activityCustomSrv.updateRecord(s);
             Case c = caseQr.getRecordById(s.case__c);
             c.phase__c	='In Lavorazione';
-            caseSrv.updateRecord(c);
+            update c;
+           // caseSrv.updateRecord(c);
             return true;
         }
         catch(Exception e){
+            system.debug(e);
             return false;
         }
     }

@@ -15,7 +15,9 @@ export default class HdtSupplySelectionFlow extends LightningElement {
     @api isCompatible;
     @api serviceRequestId;
 
+
     cancelDisabled = true;
+    saveDisabled = true;
 
     handleServicePointSelection(event){
         console.log('SUPPLYSELECTIONFLOW_event ' +JSON.stringify(event.detail));
@@ -26,6 +28,11 @@ export default class HdtSupplySelectionFlow extends LightningElement {
         if(this.isCompatible === false)
         {
             this.cancelDisabled = false;
+            this.cancelCase = true;
+        }
+        else if(this.isCompatible === true)
+        {
+            this.saveDisabled = false;
         }
         console.log('forn '+ this.selectedServicePointFlow);
     }

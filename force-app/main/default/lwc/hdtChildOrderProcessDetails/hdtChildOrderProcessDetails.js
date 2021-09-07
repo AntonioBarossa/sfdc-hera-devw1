@@ -345,7 +345,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         || section.name === 'riepilogoDatiAmend'
         || section.name === 'dateOrdine'));
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
-        console.log('PENDING HOLA:' + this.pendingSteps);
+        console.log('PENDING HOLA:' + JSON.stringify(this.pendingSteps));
     }
 
     @api
@@ -880,7 +880,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
                 || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
-                || (this.isNotBillable)
+                || (this.isNotBillable && !this.order.OrderReferenceNumber && !this.order.ContractReference__c)
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
                 ,

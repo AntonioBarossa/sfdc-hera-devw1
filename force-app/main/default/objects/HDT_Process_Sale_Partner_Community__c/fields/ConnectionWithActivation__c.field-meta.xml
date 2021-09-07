@@ -3,7 +3,7 @@
     <fullName>ConnectionWithActivation__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Connessione con Attivazione</label>
+    <label>Connessione_con_Attivazione</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

@@ -54,10 +54,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         l.company = l.firstname + ' '  + l.lastname; 
                     }
                     }
-            } //HRAWRM-388 03/09/2021
-            if (String.isBlank(l.ContactReason__c)) {
-                l.ContactReason__c='Info commerciali';
-            }//HRAWRM-388 03/09/2021
+            } 
         }
       /*  for(Lead l : listlead){
             if('Default'.equals(l.company)){
@@ -189,13 +186,21 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         update listContactToClean;
                         //End #HRAWRM-387 01/09/2021
 
-
+                        accoContRelSrv.upsertRecord(listAccCon);
                     }
-                    accoContRelSrv.upsertRecord(listAccCon);
-                    HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
-                    ba.dtos = accToUpdate;  
-                    Database.executeBatch(ba,80);
+                   
                 }
+            System.debug('before Call Batch ');
+        // Start HRAWRM-450 07/09/2021 
+
+            //Start  Lorenzo 
+            HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
+            ba.dtos = accToUpdate;  
+            Database.executeBatch(ba,80);
+            //End  Lorenzo 
+
+        // End HRAWRM-450 07/09/2021
+    
             }
             
         }

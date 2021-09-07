@@ -3,7 +3,7 @@
     <fullName>GasTakesOver__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Subentro Gas</label>
+    <label>Subentro_Gas</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
