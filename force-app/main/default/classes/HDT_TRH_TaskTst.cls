@@ -52,6 +52,7 @@ public with sharing class HDT_TRH_TaskTst {
         Task myTask3 = new Task();
         myTask3.WhoId = myContact.Id;
         myTask3.IsSms__c = true;
+        myTask3.Description = 'My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.';
 
         //TESTING
         Test.startTest();
