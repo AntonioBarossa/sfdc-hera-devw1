@@ -200,6 +200,28 @@ public with sharing class HDT_UTL_ServicePoint {
                 else{
                     spNew.isReseller__c = false;
                 }
+                if(mapRes.get('DATACESSAZIONE')!=null && !String.isBlank(mapRes.get('DATACESSAZIONE'))){
+                    if(mapRes.get('DATACESSAZIONE') != '99991231' && mapRes.get('DATACESSAZIONE').length()== 8 ){
+                        Date d = Date.valueOf(mapRes.get('DATACESSAZIONE').substring(0,4)+'-'+mapRes.get('DATACESSAZIONE').substring(4,6)+'-'+mapRes.get('DATACESSAZIONE').substring(6,8));
+                        if(d > date.today()){
+                            spNew.SwitchInWinback__c = true;
+                            spNew.SwitchOutDate__c = d;
+                        }
+                        else{
+                            spNew.SwitchInWinback__c = false;
+                            spNew.SwitchOutDate__c = null;
+                        }
+                        system.debug(d);
+                    }
+                    else{
+                        spNew.SwitchInWinback__c = false;
+                        spNew.SwitchOutDate__c = null;
+                    }
+                }
+                else{
+                    spNew.SwitchInWinback__c = false;
+                    spNew.SwitchOutDate__c = null;
+                }
 				if(mapRes.get('TIPOIMPIANTO')!=null && !String.isBlank(mapRes.get('TIPOIMPIANTO'))){
 		
 					spNew.ImplantType__c  = mapRes.get('TIPOIMPIANTO')+'-'+mapRes.get('DESCRTIPOIMP');		
