@@ -283,7 +283,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.TechnicalFeasibility__c = false;
                 }
             }
-            if(nextPhase != null && nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
+            if(reqWrp.requestMap.get('NOTE') != null && reqWrp.requestMap.get('NOTE') != ''){
                 String distributorNote = recordCase.DistributorNote__c != null?recordCase.DistributorNote__c:'';
                 currentCase.DistributorNote__c =  nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE') + '\n' + distributorNote;
             }
