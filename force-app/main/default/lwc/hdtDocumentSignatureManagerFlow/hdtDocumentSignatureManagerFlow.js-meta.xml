@@ -35,6 +35,8 @@
             <property name="source" type="String" label="Source" description="Source" role="inputOnly"/>
 
             <property name="disableSignMode" type="Boolean" label="Disable Sign Mode" description="Disable Sign Mode field" role="inputOnly"/>
+
+            <property name="entryChannel" type="String" label="Entry Channel (Reclami)" description="Entry Channel (Reclami)" role="inputOnly" />
             
         </targetConfig>
         
