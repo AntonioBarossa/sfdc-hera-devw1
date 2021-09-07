@@ -229,6 +229,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
+                else if (element == 'Resident__c') {
+                    let resValue = this.recordTypeAccount === 'Residenziale' ? true : false;
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: false,
+                            value: resValue,
+                            disabled: false
+                        }
+                    )
+                }
                 else if (element == 'SAPImplantCode__c') {
 
                     fieldsDataObject.push(
@@ -248,6 +259,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             required: mapFieldReq.get(element),
                             value: this.servicePointRetrievedData[element],
                             disabled: true
+                        }
+                    )
+                }
+                else if (element == 'PowerRequested__c') {
+
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: null,
+                            disabled: false
                         }
                     )
                 }
@@ -352,17 +374,30 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
-                else if (this.recordtype.label === 'Punto Elettrico' && element === 'Resident__c') {
+                else if (element === 'Resident__c') {
                     console.log('entra in resident');
-                    this.allSubmitedFields.Resident__c = true;
-                    fieldsDataObject.push(
-                        {
-                            fieldname: element,
-                            required: mapFieldReq.get(element),
-                            value: true,
-                            disabled: false
-                        }
-                    )
+                    if(this.recordTypeAccount == 'Residente'){
+                        this.allSubmitedFields.Resident__c = true;
+                        fieldsDataObject.push(
+                            {
+                                fieldname: element,
+                                required: false,
+                                value: true,
+                                disabled: false
+                            }
+                        )
+                    }
+                    else{
+                        this.allSubmitedFields.Resident__c = false;
+                        fieldsDataObject.push(
+                            {
+                                fieldname: element,
+                                required: false,
+                                value: false,
+                                disabled: false
+                            }
+                        )
+                    }
                 }
                 else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas') && element === 'MeterStatus__c') {
                     console.log('entra in MeterStatus__c');
@@ -1302,8 +1337,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             "title": "Attenzione!",
             "message": `Questo Pod/Pdr risulta nei seguenti Ticket di modifica contratti in Preattivazione ${cNums}!`,
             "variant": variant,
-            "mode": "sticky"
-        });
+            "mode": "sticky"       
+         });
         this.dispatchEvent(event);
     }
 
