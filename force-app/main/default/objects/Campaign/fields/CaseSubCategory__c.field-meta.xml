@@ -556,12 +556,6 @@
                 <isActive>false</isActive>
                 <label>Recesso per altri motivi</label>
             </value>
-            <value>
-                <fullName>Recesso per altri motivi</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Recesso per altri motivi</label>
-            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Reclami</controllingFieldValue>
