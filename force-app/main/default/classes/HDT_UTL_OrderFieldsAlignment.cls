@@ -144,7 +144,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                         };
 
         servicePointSrv.checkReadAccess('CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,SwitchInWinback__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c,MeterStatus__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'SwitchOutDate__c,exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,SwitchInWinback__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c,MeterStatus__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
         
@@ -165,6 +165,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
         orderToUpdate.isWinback__c = servicePoint.SwitchInWinback__c;
+        orderToUpdate.SwitchOutDate__c = servicePoint.SwitchOutDate__c;
         orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
         orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
