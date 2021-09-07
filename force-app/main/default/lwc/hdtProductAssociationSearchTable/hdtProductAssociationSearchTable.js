@@ -1,16 +1,18 @@
 import { LightningElement, api, track } from 'lwc';
+import getProductList from '@salesforce/apex/HDT_LC_ProductAssociation.getProductList';
 import runProductOptionAssociation from '@salesforce/apex/HDT_LC_ProductAssociation.runProductOptionAssociation';
 
 const columns = [
-    { label: 'Decrsizione prodotto', fieldName: 'productDescription' },
-    { label: 'Versione', fieldName: 'version' },
-    { label: 'Codice prodotto', fieldName: 'productCode' },
-    { label: 'Nome Prodotto', fieldName: 'productName' },
-    { label: 'Famiglia', fieldName: 'productFamily'}
+    { label: 'Decrsizione prodotto', fieldName: 'DescriptionSAP__c' },
+    { label: 'Versione', fieldName: 'Version__c' },
+    { label: 'Codice prodotto', fieldName: 'ProductCode' },
+    { label: 'Nome Prodotto', fieldName: 'Name' },
+    { label: 'Famiglia', fieldName: 'Family'}
 ];
 
 export default class HdtProductAssociationSearchTable extends LightningElement {
 
+    @api productOptionId;
     label = {
         confirmSelectedTitle: 'Conferma i prodotti selezionati',
         confirmSelectedBody: 'Attenzione! il prodotto opzione verrà associato a tutti i prodotti selezionati.',
@@ -19,16 +21,16 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         confirmAllTitle: 'Conferma tutti prodotti a sistema',
         confirmAllBody: 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti a catalogo, vuoi procedere?'
     };
-
-    @api productOptionId;
+    illustrationMessage = 'I risultati verranno mostrati qui';
+    
     productId = '';
     data = [
-        {id: '1', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
-        {id: '2', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
-        {id: '3', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
-        {id: '4', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
-        {id: '5', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
-        {id: '6', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'}
+        //{id: '1', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
+        //{id: '2', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
+        //{id: '3', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
+        //{id: '4', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
+        //{id: '5', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
+        //{id: '6', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'}
     ];
     columns = columns;
     fieldsList = [
@@ -57,7 +59,8 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
         var jsonRecord = JSON.stringify(criteriaObj);
         console.log(jsonRecord);
-        this.showResultTable = true;
+        this.getData(jsonRecord);
+        
         //const saverecord = new CustomEvent("saverecord", {
         //  detail: {record: jsonRecord}
         //});
@@ -65,6 +68,40 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         //// Dispatches the event.
         //this.dispatchEvent(saverecord);
 
+    }
+
+    getData(filter){
+        
+        getProductList({filterString: filter})
+        .then(result => {
+            console.log('# response #');
+            console.log('>>> RESPONSE: ' + JSON.stringify(result));
+
+            if(result.success){
+
+                if(result.prodList.length===0){
+                    this.illustrationMessage = 'Non è stato trovato nessun prodotto';
+                } else {
+                    console.log('>>> recordCounter: ' + result.recordCounter);
+                    this.data = result.prodList;
+                    this.showResultTable = true;
+                }
+
+            } else {
+                this.illustrationMessage = result.message;
+            }
+
+        })
+        .catch(error => {
+            console.log('# save error #');
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error while saving Record',
+                    message: error.message,
+                    variant: 'error',
+                }),
+            );
+        });
     }
 
     handleSuccess(event) {

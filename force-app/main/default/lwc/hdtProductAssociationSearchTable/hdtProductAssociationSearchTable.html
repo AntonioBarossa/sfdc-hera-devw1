@@ -20,36 +20,44 @@
         </div>
 
         <div class="slds-card__body slds-card__body_inner">
-            <div class="slds-border_top slds-border_bottom slds-m-top_small slds-m-bottom_small">
-                <lightning-record-edit-form
-                    record-id={productId}
-                    object-api-name="Product2"
-                    density="compact"
-                    onsuccess={handleSuccess}
-                    onload={handleLoad}
-                    onerror={handleError}
-                    onsubmit={handleSubmit}
-                >
-                    <div class="slds-grid slds-wrap slds-m-top_small slds-m-bottom_small">
-                        <template iterator:it={fieldsList}>
-                            <div key={it.value} class="slds-col slds-size_1-of-4">
-                                <div class="slds-m-around_x-small">
-                                    <lightning-input-field key={it.value} field-name={it.value} ></lightning-input-field>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
 
-                    <div class="slds-m-bottom_small">
-                        <lightning-button label="Applica filtro" name="applyFilter" onclick={applyFilter} variant="neutral" icon-name="utility:search"></lightning-button>
-                    </div>
-                    
-                </lightning-record-edit-form>
+            <div class="slds-section slds-is-open slds-border_top slds-border_bottom slds-m-top_small slds-m-bottom_small">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small" title="filtro">Usa questi campi per filtrare i prodotti</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+
+                <!--<div class="slds-border_top slds-border_bottom slds-m-top_small slds-m-bottom_small">-->
+                    <lightning-record-edit-form
+                        record-id={productId}
+                        object-api-name="Product2"
+                        density="compact"
+                        onsuccess={handleSuccess}
+                        onload={handleLoad}
+                        onerror={handleError}
+                        onsubmit={handleSubmit}
+                    >
+                        <div class="slds-grid slds-wrap slds-m-top_small slds-m-bottom_small">
+                            <template iterator:it={fieldsList}>
+                                <div key={it.value} class="slds-col slds-size_1-of-4">
+                                    <div class="slds-m-around_x-small">
+                                        <lightning-input-field key={it.value} field-name={it.value} ></lightning-input-field>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div class="slds-m-bottom_small">
+                            <lightning-button label="Applica filtro" name="applyFilter" onclick={applyFilter} variant="neutral" icon-name="utility:search"></lightning-button>
+                        </div>
+                        
+                    </lightning-record-edit-form>
+                </div>
             </div>
 
             <div if:false={showResultTable} class="slds-box" >
                 <c-hdt-custom-illustration
-                    message="I risultati verranno mostrati qui"
+                    message={illustrationMessage}
                     style-class="slds-text-heading_large"
                 ></c-hdt-custom-illustration>
             </div>
