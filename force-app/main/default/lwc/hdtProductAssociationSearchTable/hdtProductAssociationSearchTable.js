@@ -45,6 +45,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         body: '',
         operation: ''
     }
+    spinner = false;
 
     connectedCallback(){
         console.log('>>> ON SEARCH TABLE: ' + this.productOptionId);
@@ -52,6 +53,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     applyFilter(event){
         console.log('>>>> handleSubmitButtonClick > ');
+        this.spinner = true;
         var criteriaObj = {};
         this.template.querySelectorAll('lightning-input-field').forEach((field) => {
           criteriaObj[field.fieldName] = field.value;
@@ -75,7 +77,6 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         getProductList({filterString: filter})
         .then(result => {
             console.log('# response #');
-            console.log('>>> RESPONSE: ' + JSON.stringify(result));
 
             if(result.success){
 
@@ -90,6 +91,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
             } else {
                 this.illustrationMessage = result.message;
             }
+            this.spinner = false;
 
         })
         .catch(error => {

@@ -55,21 +55,26 @@
                 </div>
             </div>
 
-            <div if:false={showResultTable} class="slds-box" >
-                <c-hdt-custom-illustration
-                    message={illustrationMessage}
-                    style-class="slds-text-heading_large"
-                ></c-hdt-custom-illustration>
+            <div>
+                <div if:true={spinner} class="progress">
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </div>
+
+                <div if:false={showResultTable} class="slds-box" >
+                    <c-hdt-custom-illustration
+                        message={illustrationMessage}
+                        style-class="slds-text-heading_large"
+                    ></c-hdt-custom-illustration>
+                </div>
+
+                <div if:true={showResultTable} style="height: 300px;">
+                    <lightning-datatable
+                            key-field="id"
+                            data={data}
+                            columns={columns}>
+                    </lightning-datatable>
+                </div> 
             </div>
-
-            <div if:true={showResultTable} style="height: 300px;">
-                <lightning-datatable
-                        key-field="id"
-                        data={data}
-                        columns={columns}>
-                </lightning-datatable>
-            </div> 
-
         </div>
 
     </lightning-card>
