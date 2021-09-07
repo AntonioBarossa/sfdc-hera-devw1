@@ -111,13 +111,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtHighlightsPanel</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -657,33 +650,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtHighlightsTab</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p&gt;Tab Indicatori non disponibile per questo cliente.&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-676b5a0d-5b1f-466f-a2d8-bacfcee2d032</name>
