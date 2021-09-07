@@ -27,6 +27,8 @@ public inherited sharing class HDT_LC_SaleVas {
      * @param String accountId
      * @param Sale sale
      */
+
+     
     @AuraEnabled
     public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId, Sale__c sale){
         switch on selectedOption {
@@ -49,13 +51,56 @@ public inherited sharing class HDT_LC_SaleVas {
         //HDT_UTL_Sales.isTransitionNoUp()
         //System.debug('*****MAVUOIANNA:'+ transitionlist);
         //ServicePoint__c sa = new ServicePoint__c(SupplyProvince__c = 'AQ');
+        wrapReturn wrpRes = new wrapReturn();
+
+
+
+
         if(HDT_UTL_Sales.isTransitionNoUp(sal)){
             check = false;
+            wrpRes.messRes = 'transitorio';
         }
 
+        wrpRes.res = check;
 
         System.debug('*****VUOIANNA2:' + check);
         return check;
+    }
+    @AuraEnabled
+    public static wrapReturn transitionCheck2(String salesId,String comune,string tipologia){
+        Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
+        boolean check = true;
+        //HDT_UTL_Sales.isTransitionNoUp()
+        //System.debug('*****MAVUOIANNA:'+ transitionlist);
+        //ServicePoint__c sa = new ServicePoint__c(SupplyProvince__c = 'AQ');
+        String com = comune.toUpperCase();
+        wrapReturn wrpRes = new wrapReturn();
+        if(tipologia == 'VAS stand alone'){
+            List<City__c> listCity = HDT_QR_City.getRecordByComune(com);
+            if(listCity != null && !listCity.isEmpty() && listCity[0].Province__c != null){
+                String provin = listCity[0].Province__c;
+                Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+                if(!stabbedData.contains(provin)){
+                    check = false;
+                    wrpRes.messRes = 'transitorio';
+                }
+            }
+            else{
+                check = false;
+                wrpRes.messRes = 'city';
+            }
+        }
+        if(HDT_UTL_Sales.isTransitionNoUp(sal)){
+            check = false;
+            wrpRes.messRes = 'transitorio';
+        }
+        wrpRes.res = check;
+        System.debug('*****VUOIANNA2:' + check);
+        return wrpRes;
+    }
+    public class wrapReturn{
+        @AuraEnabled public boolean res = true;
+        @AuraEnabled public string messRes {get;set;}
     }
 
     /**
@@ -70,14 +115,12 @@ public inherited sharing class HDT_LC_SaleVas {
         orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
         return orderQr.getRecordsForVasSelection(accountId);
     }
-
     @AuraEnabled
     public static List<Order> getOrdersListNotActive(String accountId){
         //Orders with status "Draft" or "In Lavorazione"
         orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
         return orderQr.getRecordsNotActivated(accountId);
     }
-
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
