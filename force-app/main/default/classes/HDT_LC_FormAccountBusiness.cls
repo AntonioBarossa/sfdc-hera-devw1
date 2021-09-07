@@ -184,8 +184,8 @@ public with sharing class HDT_LC_FormAccountBusiness {
             Contact personCont= contactSrv.createRecord(personContact);
             //Start HRDTR-00_HRAWRM-455 07/09/2021
 
-            Id jobID = System.enqueueJob(new HDT_QBL_BpCaRequest(accPerson,personCont));
-            System.debug('jobId: '+jobID);
+            Id jobId1 = System.enqueueJob(new HDT_QBL_BpCaRequest(accPerson,personCont));
+            System.debug('jobId: '+jobId1);
             //End HRDTR-00_HRAWRM-455 07/09/2021
 
             //List<AccountContactRelation> listAccCon3 = accoContRelQr.getAccountContactRelation(accPerson.Id, personCont.Id, 'Id');
@@ -203,7 +203,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
             // HDT_UTL_GestionePrivacy.createDefaultPrivacyContact(cont.Id, emails, phones);
         }
         //HDT_UTL_Account.makeRequest(account,contact);
-        Id jobID = System.enqueueJob(new HDT_QBL_BpCaRequest(account,contact));
+        Id jobId = System.enqueueJob(new HDT_QBL_BpCaRequest(account,contact));
         System.debug('jobId: '+jobID);
 
     
