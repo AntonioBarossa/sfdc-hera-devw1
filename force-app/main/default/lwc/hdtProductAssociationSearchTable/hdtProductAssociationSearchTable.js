@@ -1,6 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import getProductList from '@salesforce/apex/HDT_LC_ProductAssociation.getProductList';
 import runProductOptionAssociation from '@salesforce/apex/HDT_LC_ProductAssociation.runProductOptionAssociation';
+import { deleteRecord } from 'lightning/uiRecordApi';
 
 const columns = [
     { label: 'Decrsizione prodotto', fieldName: 'DescriptionSAP__c' },
@@ -222,12 +223,29 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     closeModal(event){
         console.log('### closeModal ###');
+        this.delete();
         const closeEvent = new CustomEvent("closemodal", {
             detail:  ''
         });
 
         // Dispatches the event.
         this.dispatchEvent(closeEvent);
+    }
+
+    delete(event) {
+        deleteRecord(this.productOptionId)
+            .then(() => {
+                console.log('>>>> RECORD DELETED');
+            })
+            .catch(error => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error deleting record',
+                        message: error.body.message,
+                        variant: 'error'
+                    })
+                );
+            });
     }
 
 }
