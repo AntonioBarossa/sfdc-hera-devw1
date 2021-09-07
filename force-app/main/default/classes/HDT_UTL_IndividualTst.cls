@@ -49,7 +49,7 @@ public class HDT_UTL_IndividualTst {
         
         
         System.assertEquals(4,indvl.size(),'This is the right value');
-        System.assertNotEquals(2,indvl.size(),'Size is four');
+        //System.assertNotEquals(2,indvl.size(),'Size is four');
         Test.stopTest();
         
             
@@ -65,7 +65,7 @@ public class HDT_UTL_IndividualTst {
         List<Individual> indvl =[SELECT Id FROM Individual];
         
         System.assertEquals(4,indvl.size(),'This is the right value');
-        System.assertNotEquals(2,indvl.size(),'Size is two');
+        //System.assertNotEquals(2,indvl.size(),'Size is two');
         Test.stopTest();
     }
     
@@ -79,7 +79,7 @@ public class HDT_UTL_IndividualTst {
                  List<Individual> indvFour =[SELECT Id,MarketingPrivacyVersion__c FROM Individual];
 
         System.assertEquals(indv[0].Id,indvFour[0].Id,'This is the right value');
-        System.assertNotEquals(2,indv.size(),'Size is two');
+        //System.assertNotEquals(2,indv.size(),'Size is two');
         Test.stopTest();
     }
         
@@ -91,7 +91,7 @@ public class HDT_UTL_IndividualTst {
           HDT_UTL_Individual.updateConsensoProfilazionePrivacy(indv[0],'Frida','SOL','plico contrattuale',todayD,'MMS');
          List<Individual> indvUpdates =[SELECT Id,ProfilingPrivacyVersion__c FROM Individual];
         System.assertEquals(indv[0].Id,indvUpdates[0].Id,'This is the right value');
-        System.assertNotEquals(2,indv.size(),'Size is two');
+        //System.assertNotEquals(2,indv.size(),'Size is two');
         Test.stopTest();
     }
     
@@ -104,7 +104,7 @@ public class HDT_UTL_IndividualTst {
         System.debug('indvReturn' +indvReturn);
          List<Individual> indvUpdate =[SELECT Id,MarketingPrivacyVersion__c,PrivacyMarketingConsentInitiative__c FROM Individual];
         System.assertEquals(indv[0].Id,indvReturn.Id,'This is the right value');
-        System.assertNotEquals(2,indv.size(),'Size is two');
+        //System.assertNotEquals(2,indv.size(),'Size is two');
                 Test.stopTest();
     }
         
@@ -116,7 +116,7 @@ public class HDT_UTL_IndividualTst {
           Individual indvOne = HDT_UTL_Individual.modifyContentPrivacyProfiling(indv[0],'Kora','App','APP My Hera',todayD,'NEWCO');
         List<Individual> indvUp =[SELECT Id,ProfilingPrivacyVersion__c FROM Individual];
         System.assertEquals(indv[0].Id,indvOne.Id,'This is the right value');
-        System.assertNotEquals(2,indv.size(),'Size is two');
+        //System.assertNotEquals(2,indv.size(),'Size is two');
         Test.stopTest();
     }
         
@@ -128,7 +128,7 @@ public class HDT_UTL_IndividualTst {
           Individual indvTwo = HDT_UTL_Individual.modifyContentPrivacyThirdParty(indv[0],'Italy','Call Center','landing page standard',todayD,'EB');
         List<Individual> indvUps =[SELECT Id,ThirdPartyPrivacyVersion__c FROM Individual];
         System.assertEquals(indv[0].Id,indvTwo.Id,'This is the right value');
-        System.assertNotEquals(2,indv.size(),'Size is two');
+        //System.assertNotEquals(2,indv.size(),'Size is two');
         Test.stopTest();
     }
         
@@ -161,7 +161,7 @@ public class HDT_UTL_IndividualTst {
           HDT_UTL_Individual.convertLeadToContact(contactList[0].Id, indv[0].Id);
         
         System.assertEquals(3,indv.size(),'This is the right value');
-        System.assertNotEquals(2,indv.size(),'Size is two');
+        //System.assertNotEquals(2,indv.size(),'Size is two');
           Test.stopTest();
         
     }
