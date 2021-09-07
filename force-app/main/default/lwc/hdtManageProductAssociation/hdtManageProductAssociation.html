@@ -24,13 +24,16 @@
 
     <template if:true={showCreateRecord} >
         <c-hdt-product-option-edit-form
+            configured-sku-id={productid}
+            oncloseeditform={closeEditForm}
             onsaverecord={saveRecord}
         ></c-hdt-product-option-edit-form>
     </template>
 
     <template if:true={showSearchTable} >
         <c-hdt-product-association-search-table
-        
+            product-option-id={productOptionId}
+            onclosemodal={closeModal}
         ></c-hdt-product-association-search-table>
     </template>
 

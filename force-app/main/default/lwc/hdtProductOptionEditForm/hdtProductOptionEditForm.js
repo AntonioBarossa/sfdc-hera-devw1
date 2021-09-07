@@ -1,11 +1,15 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 export default class HdtProductOptionEditForm extends LightningElement {
 
+    @api configuredSkuId;
     productOptionId;
 
     fieldsList = [
-        'SBQQ__Number__c', 'SBQQ__Quantity__c'
+        'SBQQ__Number__c', 'SBQQ__Quantity__c',
+        'SBQQ__QuantityEditable__c', 'SBQQ__Selected__c',
+        'SBQQ__Feature__c', 'SBQQ__Type__c'
     ];
 
     handleLoad(event){
@@ -21,14 +25,26 @@ export default class HdtProductOptionEditForm extends LightningElement {
     }
 
     handleSuccess(event) {
+        try{
         console.log('>>>> handleSuccess');
+        console.log('>>>> PRODUCT OPTION ID: ' + event.detail.id);
 
         const evt = new ShowToastEvent({
-            title: "Product created",
-            message: "Record ID: " + event.detail.id,
+            title: "Prodotto opzione",
+            message: "Configurazione eseguita correttamente",
             variant: "success"
         });
         this.dispatchEvent(evt);
+
+        const saverecord = new CustomEvent("saverecord", {
+            detail: {productOptionId: event.detail.id}
+          });
+    
+          // Dispatches the event.
+          this.dispatchEvent(saverecord);
+        } catch (e){
+            console.log('>>> ' + JSON.stringify(e));
+        }
     }
 
     handleError(event){
@@ -37,7 +53,17 @@ export default class HdtProductOptionEditForm extends LightningElement {
         console.log(JSON.stringify(event.detail.output.fieldErrors));
     }
 
-    handleSubmitButtonClick(){
+    closeEditForm(){
+        console.log('>>> closeEditForm');
+        const closeEditForm = new CustomEvent("closeeditform", {
+            detail: ''
+          });
+    
+          // Dispatches the event.
+          this.dispatchEvent(closeEditForm);
+    }
+
+    /*handleSubmitButtonClick(){
       console.log('>>>> handleSubmitButtonClick > ');
       var criteriaObj = {};
       this.template.querySelectorAll('lightning-input-field').forEach((field) => {
@@ -95,10 +121,6 @@ export default class HdtProductOptionEditForm extends LightningElement {
       checkResult.error = false;
       
       return checkResult;
-    }
-
-    closeEditForm(){
-        console.log('>>> closeEditForm');
-    }
+    }*/
 
 }

@@ -5,6 +5,7 @@ import { getRecord } from 'lightning/uiRecordApi';
 export default class HdtManageProductAssociation extends NavigationMixin(LightningElement) {
 
     @api productid;
+    productOptionId;
     showWelcom = false;
     showSearchOffer = false;
     showCreateRecord = false;
@@ -90,10 +91,16 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
     }
 
     saveRecord(event){
-        console.log('>>> RECORD CONFIGURED -> ' + event.detail.record);
-        this.showSearchTable = true;
-        this.showWelcom = false;
+        console.log('>>> RECORD CONFIGURED -> ' + event.detail.productOptionId);
+        this.productOptionId = event.detail.productOptionId;
+        //this.showWelcom = false;
         this.showCreateRecord = false;
+        this.showSearchTable = true;
+    }
+
+    closeEditForm(event){
+        this.showCreateRecord = false;
+        this.showWelcom = true;
     }
 
     goToRecord(recId, objName){
