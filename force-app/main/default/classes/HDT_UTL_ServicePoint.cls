@@ -194,6 +194,12 @@ public with sharing class HDT_UTL_ServicePoint {
 		
 					spNew.SAPImplantCode__c = mapRes.get('IMPIANTO');
 				}
+                if(mapRes.get('RESELLER')!=null && !String.isBlank(mapRes.get('RESELLER'))){
+					spNew.isReseller__c = mapRes.get('RESELLER') == 'X';
+				}
+                else{
+                    spNew.isReseller__c = false;
+                }
 				if(mapRes.get('TIPOIMPIANTO')!=null && !String.isBlank(mapRes.get('TIPOIMPIANTO'))){
 		
 					spNew.ImplantType__c  = mapRes.get('TIPOIMPIANTO')+'-'+mapRes.get('DESCRTIPOIMP');		
