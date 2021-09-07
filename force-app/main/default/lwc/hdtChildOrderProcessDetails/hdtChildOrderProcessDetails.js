@@ -345,7 +345,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         || section.name === 'riepilogoDatiAmend'
         || section.name === 'dateOrdine'));
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
-        console.log('PENDING HOLA:' + this.pendingSteps);
+        console.log('PENDING HOLA:' + JSON.stringify(this.pendingSteps));
     }
 
     @api
@@ -445,10 +445,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.template.querySelector('c-hdt-accordion-with-click').refreshValues(this.order.Id);
         }).catch(error => {
             this.loading = false;
-            console.log((error.body?.message) ? error.body.message : error.message);
+            console.log((error.body.message !== undefined) ? error.body.message : error.message);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: (error.body?.message) ? error.body.message : error.message,
+                message: (error.body.message !== undefined) ? error.body.message : error.message,
                 variant: 'error'
             });
             this.dispatchEvent(toastErrorMessage);
