@@ -142,7 +142,9 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.ContactId = acr.ContactId;
         c.Contract__c = inputContract.Id;
         c.ServicePoint__c = inputContract.ServicePoint__c;
-        c.Origin = request.origin;
+        if(String.isNotBlank(request.origin)){
+            c.Origin = request.origin;
+        }
         c.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_Autolettura');
         c.Cluster__c = String.isNotBlank(request.cluster) ? request.cluster : 'Autolettura';
         c.Type = String.isNotBlank(request.type) ? request.type : 'Autolettura da cliente';

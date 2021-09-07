@@ -4,7 +4,7 @@ import getOrdersList from '@salesforce/apex/HDT_LC_SaleVas.getOrdersList';
 import getContractsList from '@salesforce/apex/HDT_LC_SaleVas.getContractsList';
 import getContractsAndOrdersMap from '@salesforce/apex/HDT_LC_SaleVas.getContractsAndOrdersMap';
 import confirmAction from '@salesforce/apex/HDT_LC_SaleVas.confirmAction';
-import checkTransition from '@salesforce/apex/HDT_LC_SaleVas.transitionCheck';
+import checkTransition from '@salesforce/apex/HDT_LC_SaleVas.transitionCheck2';
 
 export default class hdtSaleVas extends LightningElement {
 
@@ -254,12 +254,17 @@ export default class hdtSaleVas extends LightningElement {
     handleConfirmEvent(){
         this.isLoading = true;
         console.log('********' + JSON.stringify(this.sale));
+        
         checkTransition({
 
-            salesId : this.sale.Id
+            salesId : this.sale.Id,
+            comune : this.inputText,
+            tipologia : this.selectedOption
 
         }).then(data =>{
-            if(data){
+            let dat = data;
+
+            if(dat.res){
                 confirmAction({
                     selectedOption:this.confirmedSelectedOption,
                     order:this.selectedOrder,
@@ -303,14 +308,26 @@ export default class hdtSaleVas extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                 });
             }else{
-                this.isLoading = false;
-                //this.dispatchEvent(new CustomEvent('createvas'));
-                const toastSuccessMessage = new ShowToastEvent({
-                    title: 'Error',
-                    message: 'VAS Non innescabile per Transitorio',
-                    variant: 'Error'
-                });
-                this.dispatchEvent(toastSuccessMessage);
+                if(dat.messRes == 'city'){
+                    this.isLoading = false;
+                    //this.dispatchEvent(new CustomEvent('createvas'));
+                    const toastSuccessMessage = new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Inserisci un Comune Valido',
+                        variant: 'Error'
+                    });
+                    this.dispatchEvent(toastSuccessMessage);
+                }
+                else{
+                    this.isLoading = false;
+                    //this.dispatchEvent(new CustomEvent('createvas'));
+                    const toastSuccessMessage = new ShowToastEvent({
+                        title: 'Error',
+                        message: 'VAS Non innescabile per Transitorio',
+                        variant: 'Error'
+                    });
+                    this.dispatchEvent(toastSuccessMessage);
+                }
             }
         });
        
