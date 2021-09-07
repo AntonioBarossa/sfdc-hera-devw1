@@ -1975,7 +1975,7 @@
     <formulas>
         <name>DistributorNoteFormula</name>
         <dataType>String</dataType>
-        <expression>TEXT({!GetCaseAggiornato.ChangeDate__c}) &amp; &quot;;&quot; &amp; {!GetCaseAggiornato.Reading__c} &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.NewMeterCode__c})</expression>
+        <expression>TEXT({!GetCaseAggiornato.ChangeDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.ReadingDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.NewMeterCode__c})</expression>
     </formulas>
     <formulas>
         <name>NextLabel</name>
