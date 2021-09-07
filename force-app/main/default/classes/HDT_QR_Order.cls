@@ -225,7 +225,10 @@ public inherited sharing class HDT_QR_Order {
             IsVAS__c,
             ServicePoint__r.Resident__c,                     // [ 26/08/2021 gabriele.rota@webresults.it - Calcolo IVA ]
             ServicePoint__r.Account__r.VATNumber__c,
-            ServicePoint__r.Account__r.RecordType.DeveloperName
+            ServicePoint__r.Account__r.RecordType.DeveloperName,
+            OutgoingCreditCheckResult__c,
+            IncomingCreditCheckResult__c,
+            CreditCheckDescription__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

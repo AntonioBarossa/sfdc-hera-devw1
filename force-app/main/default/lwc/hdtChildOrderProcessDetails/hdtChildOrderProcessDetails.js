@@ -80,6 +80,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         return this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.IsBillableVas__c;
     }
 
+    get isCreditCheckVisible(){
+        return this.order.Step__c === 2;
+    }
+
     //INIZIO SVILUPPI EVERIS
     @track readingCustomerDate;
     @track disabledReadingDate;
@@ -868,52 +872,52 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     }
                 ]
             },
-            {
-                step: 3,
-                label: 'Credit check',
-                name: 'creditCheck',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
-                || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
-                || (this.isNotBillable && !this.order.OrderReferenceNumber && !this.order.ContractReference__c)
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
-                ,
-                data: [
-                    {
-                        'label': 'Esito credit Check Entrante',
-                        'apiname': 'IncomingCreditCheckResult__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Esito credit Check Uscente',
-                        'apiname': 'OutgoingCreditCheckResult__c',
-                        'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && (!this.isNotBillable),
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('OutgoingCreditCheckResult__c'),
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Descrizione esito',
-                        'apiname': 'CreditCheckDescription__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('CreditCheckDescription__c'),
-                        'processVisibility': ''
-                    }
-                ]
-            },
+            // {
+            //     step: 3,
+            //     label: 'Credit check',
+            //     name: 'creditCheck',
+            //     objectApiName: 'Order',
+            //     recordId: this.order.Id,
+            //     processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+            //     || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
+            //     || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
+            //     || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
+            //     || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
+            //     || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
+            //     || (this.isNotBillable && !this.order.OrderReferenceNumber && !this.order.ContractReference__c)
+            //     || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+            //     || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
+            //     ,
+            //     data: [
+            //         {
+            //             'label': 'Esito credit Check Entrante',
+            //             'apiname': 'IncomingCreditCheckResult__c',
+            //             'typeVisibility': this.typeVisibility('both'),
+            //             'required': false,
+            //             'disabled': true,
+            //             'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
+            //             'processVisibility': ''
+            //         },
+            //         {
+            //             'label': 'Esito credit Check Uscente',
+            //             'apiname': 'OutgoingCreditCheckResult__c',
+            //             'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && (!this.isNotBillable),
+            //             'required': false,
+            //             'disabled': true,
+            //             'value': this.applyCreditCheckLogic('OutgoingCreditCheckResult__c'),
+            //             'processVisibility': ''
+            //         },
+            //         {
+            //             'label': 'Descrizione esito',
+            //             'apiname': 'CreditCheckDescription__c',
+            //             'typeVisibility': this.typeVisibility('both'),
+            //             'required': false,
+            //             'disabled': true,
+            //             'value': this.applyCreditCheckLogic('CreditCheckDescription__c'),
+            //             'processVisibility': ''
+            //         }
+            //     ]
+            // },
             {
                 step: 3,
                 label: 'Variabili di Processo',
@@ -2512,6 +2516,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
         //EVERIS
         console.log('CheckVariables');
+
+        if (this.isCreditCheckVisible) {
+            this.dispatchEvent(new CustomEvent('execute_credit_check_poll'));
+        }
+
+        console.log('hdtChildOrderProcessDetails - connectedCallback - END');
     }
 
     renderedCallback(){
