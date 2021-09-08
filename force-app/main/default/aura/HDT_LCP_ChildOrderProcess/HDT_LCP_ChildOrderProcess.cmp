@@ -37,14 +37,14 @@
     </aura:if>
 
     <aura:if isTrue="{!v.order}">
-        <c:hdtChildOrderProcessPrecheck order="{!v.order}" onrefreshorderchild="{!c.handleRefreshOrderChild}"></c:hdtChildOrderProcessPrecheck>
+        <c:hdtChildOrderProcessPrecheck aura:id="precheckComp" order="{!v.order}" onrefreshorderchild="{!c.handleRefreshOrderChild}"></c:hdtChildOrderProcessPrecheck>
     </aura:if>
     
     <br/>
 
     <aura:if isTrue="{!v.order}">
         <aura:if isTrue="{!v.order.RecordType.DeveloperName != 'HDT_RT_Default'}">
-            <c:hdtChildOrderProcessDetails aura:id="detailsComp" order="{!v.order}" mainOrderItem="{!v.mainOrderItem}" analisiConsumi="{!v.analisiConsumi}" onrefreshorderchild="{!c.handleRefreshOrderChild}" onemitlaststep="{!c.handleEmitLastStep}" onemitdraftdata="{!c.handleEmitDraftData}" onemitdiffdraftdata="{!c.handleEmitDiffDraftData}"></c:hdtChildOrderProcessDetails>
+            <c:hdtChildOrderProcessDetails aura:id="detailsComp" order="{!v.order}" mainOrderItem="{!v.mainOrderItem}" analisiConsumi="{!v.analisiConsumi}" onrefreshorderchild="{!c.handleRefreshOrderChild}" onemitlaststep="{!c.handleEmitLastStep}" onemitdraftdata="{!c.handleEmitDraftData}" onemitdiffdraftdata="{!c.handleEmitDiffDraftData}" onexecute_credit_check_poll="{!c.handleCreditCheckPoll}"></c:hdtChildOrderProcessDetails>
         </aura:if>
     </aura:if>
 

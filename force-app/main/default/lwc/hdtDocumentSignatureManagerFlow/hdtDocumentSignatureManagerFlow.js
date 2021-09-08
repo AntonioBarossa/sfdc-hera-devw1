@@ -75,6 +75,8 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     @api nextVariant;
     @api documents;
     @api disableSignMode;
+    //@frpanico 07/09 added EntryChannel
+    @api entryChannel;
     caseRecord;
     @track inputParams;
     @track enableNext = false;
@@ -210,6 +212,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                     accountId : this.accountId,
                     quoteType : this.quoteType,
                     tipoPlico : tempTipoPlico,
+                    entryChannel : this.entryChannel,
                     addressWrapper : {
                         completeAddress : completeAddress,
                         Stato : stato,

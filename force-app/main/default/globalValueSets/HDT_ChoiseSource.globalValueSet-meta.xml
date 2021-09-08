@@ -270,6 +270,61 @@
         <default>false</default>
         <label>Web-MMS</label>
     </customValue>
+    <customValue>
+        <fullName>Back office</fullName>
+        <default>false</default>
+        <label>Back office</label>
+    </customValue>
+    <customValue>
+        <fullName>Callback</fullName>
+        <default>false</default>
+        <label>Callback</label>
+    </customValue>
+    <customValue>
+        <fullName>Helpdesk</fullName>
+        <default>false</default>
+        <label>Helpdesk</label>
+    </customValue>
+    <customValue>
+        <fullName>Staff</fullName>
+        <default>false</default>
+        <label>Staff</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto agenzie</fullName>
+        <default>false</default>
+        <label>Supporto agenzie</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto GDA</fullName>
+        <default>false</default>
+        <label>Supporto GDA</label>
+    </customValue>
+    <customValue>
+        <fullName>Telefono Inbound</fullName>
+        <default>false</default>
+        <label>Telefono Inbound</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita Business</fullName>
+        <default>false</default>
+        <label>Vendita Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita MM</fullName>
+        <default>false</default>
+        <label>Vendita MM</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita TopBusiness</fullName>
+        <default>false</default>
+        <label>Vendita TopBusiness</label>
+    </customValue>
+    <customValue>
+        <fullName>Social</fullName>
+        <default>false</default>
+        <label>Social</label>
+    </customValue>
     <masterLabel>Fonti Consenso</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
