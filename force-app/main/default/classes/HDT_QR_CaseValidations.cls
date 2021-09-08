@@ -19,7 +19,8 @@ public inherited sharing class HDT_QR_CaseValidations {
         AlternativeAddress__c,
         AccountId,
         Account.CustomerMarking__c,
-        ContactId
+        ContactId,
+        Contract__r.StartDate
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED

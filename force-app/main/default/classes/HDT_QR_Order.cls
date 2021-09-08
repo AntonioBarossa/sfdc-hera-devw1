@@ -35,7 +35,8 @@ public inherited sharing class HDT_QR_Order {
         Map<Id, Order> mapIdOrder=new  Map<Id, Order>([
             SELECT
             Name, AccountId,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
-            Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c, SBQQ__Quote__r.SBQQ__PriceBook__c  
+            Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c, SBQQ__Quote__r.SBQQ__PriceBook__c,  
+            CommercialProduct__c  
             FROM Order 
             WHERE Id IN :orderId
             WITH SECURITY_ENFORCED
@@ -101,6 +102,7 @@ public inherited sharing class HDT_QR_Order {
             Account.FirstName__c,
             Account.LastName__c,
             Account.CompanyOwner__c,
+            Sale__r.SalesContact__c,
             SwitchOutDate__c,
             Vat__c,
             ExciseGas__c,

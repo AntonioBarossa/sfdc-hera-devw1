@@ -81,6 +81,10 @@
                 <behavior>Readonly</behavior>
                 <field>ExciseGas__c</field>
             </layoutItems>
+            <layoutItems><!--Start  HRAWRM-251 08/09/2021 -->
+                <behavior>Edit</behavior>
+                <field>CommercialProduct__c</field>
+            </layoutItems><!--End  HRAWRM-251 08/09/2021 -->
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

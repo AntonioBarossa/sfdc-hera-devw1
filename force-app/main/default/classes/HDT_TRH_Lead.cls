@@ -232,16 +232,22 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject wrp = new HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject();
                     if (mapCodeToCheck.get(tempLead.FiscalCode__c)!=null ) {
                         wrp=mapCodeToCheck.get(tempLead.FiscalCode__c);
-                       
-                        if ( wrp.isValid) {
-                            Date myDate = Date.newInstance(Integer.valueOf( wrp.year),Integer.valueOf(wrp.month),Integer.valueOf( wrp.day));
-                            tempLead.Birthdate__c=tempLead.Birthdate__c==null?myDate:tempLead.Birthdate__c;
-                            tempLead.Birthcity__c=String.isBlank( tempLead.Birthcity__c)? wrp.city: tempLead.Birthcity__c;
-                            tempLead.Gender__c=String.isBlank( tempLead.Gender__c)? wrp.gender: tempLead.Gender__c;
+                       try { // Start RDTR-00_HRAWRM-491 08/09/2021
+                            if ( wrp.isValid) {
+                                Date myDate = Date.newInstance(Integer.valueOf( wrp.year),Integer.valueOf(wrp.month),Integer.valueOf( wrp.day));
+                                tempLead.Birthdate__c=tempLead.Birthdate__c==null?myDate:tempLead.Birthdate__c;
+                                tempLead.Birthcity__c=String.isBlank( tempLead.Birthcity__c)? wrp.city: tempLead.Birthcity__c;
+                                tempLead.Gender__c=String.isBlank( tempLead.Gender__c)? wrp.gender: tempLead.Gender__c;
+                            }
+                            else{
+                                tempLead.addError('Inserire un codice fiscale valido');
+                            }
                         }
-                        else{
+                        catch (Exception e) {
+                           System.debug('errore: '+e.getMessage());
                             tempLead.addError('Inserire un codice fiscale valido');
-                        }
+                       }// End RDTR-00_HRAWRM-491 08/09/2021
+                       
                     }
                 }
             }
