@@ -614,6 +614,33 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAccountAlerts</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;Per questo cliente gli Alert sono gestiti su Siebel.&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-7de11b02-55bd-4945-9c3a-5a51e258a2ee</name>
@@ -938,6 +965,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtLastBill</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
