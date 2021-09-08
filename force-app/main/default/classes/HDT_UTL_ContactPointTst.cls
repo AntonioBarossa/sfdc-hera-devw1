@@ -5,13 +5,17 @@
 * @history Elfrida Kora – 07/09/2021 – Created class
 */
 
+      
+
 @IsTest
 public class HDT_UTL_ContactPointTst {
+    
+        public static List<Individual> indList = HDT_UTL_DataFactoryTst.createIndividual(1, true);
+        public static Id indId = indList[0].Id;
+       
     @TestSetup
     static void allData(){
-        List<Individual> indList = new List<Individual>();
-        indList = HDT_UTL_DataFactoryTst.createIndividual(1, true);
-        Id indId = indList[0].Id;
+        
          List<ContactPointPhone> cpp = new List<ContactPointPhone>();
         cpp = HDT_UTL_DataFactoryTst.createContactPointPhone(1, true, indId);
         List<ContactPointEmail> cpe = new List<ContactPointEmail>();
@@ -35,14 +39,12 @@ public class HDT_UTL_ContactPointTst {
      @isTest
     public static void verifyContactPointPhone(){
           Test.startTest();
-        List<Individual> indList = new List<Individual>();
-        indList = HDT_UTL_DataFactoryTst.createIndividual(1, true);
-        Id ind = indList[0].Id;
+       
         List<String> pointPhone = new List<String>();
         pointPhone.add('06958659787');
         pointPhone.add('06958652687');
 
-        List<ContactPointPhone> cpp = HDT_UTL_ContactPoint.verifyContactPointPhone(ind,pointPhone);
+        List<ContactPointPhone> cpp = HDT_UTL_ContactPoint.verifyContactPointPhone(indId,pointPhone);
          System.assertEquals(pointPhone.size(), 2, 'Acceptable');
           System.assertNotEquals(pointPhone.size(), 0, 'Unacceptable');
                 Test.stopTest();     
@@ -51,15 +53,12 @@ public class HDT_UTL_ContactPointTst {
     
     @IsTest
     public static void verifyContactPointEmail(){
-           Test.startTest();
-        List<Individual> indList = new List<Individual>();
-        indList = HDT_UTL_DataFactoryTst.createIndividual(1, true);
-        Id indv = indList[0].Id;         
+           Test.startTest();        
         List<String> mails = new List<String>();
         mails.add('elfrida.kora@dunegroup.it');
         mails.add('frida.kora@dunegroup.it');
         
-        List<ContactPointEmail> cpe = HDT_UTL_ContactPoint.verifyContactPointEmail(indv,mails);
+        List<ContactPointEmail> cpe = HDT_UTL_ContactPoint.verifyContactPointEmail(indId,mails);
         System.assertEquals(mails.size(), 2, 'YES');
         System.assertNotEquals(mails.size(), 0, 'NO');
            Test.stopTest();     
@@ -69,20 +68,21 @@ public class HDT_UTL_ContactPointTst {
     @IsTest
     public static void createContactPointPhone(){
             Test.startTest();
+
         Map<String,String> maps = new Map<String,String>();
-            maps.put('0PK1X000003KZ7JWAW','069985859');
-            maps.put('0PK1X000003Ke3CWAS','069125859');
+            maps.put(indId,'069985859');
+            maps.put(indId,'069125859');
         
         List<String> phoneL = new List<String>();
         phoneL.add('003987785445');
         phoneL.add('0659887716');
         
         Map<String,List<String>> params = new Map<String,List<String>>();
-        params.put('0PK1X000003KZ7JWAW',phoneL);
+        params.put(indId,phoneL);
         
          Map<String,String> prefix = new Map<String,String>();
-            prefix.put('0PK1X000003KZ7JWAW','+39');
-            prefix.put('0PK1X000003Ke3CWAS','+39');
+            prefix.put(indId,'+39');
+            prefix.put(indId,'+39');
         
         HDT_UTL_ContactPoint.createContactPointPhone(maps,params,prefix,'Casa');
         
@@ -96,24 +96,25 @@ public class HDT_UTL_ContactPointTst {
     @IsTest
     public static void createContactPointPhoneContact(){
         Test.startTest();
+       
         Map<String,String> mymap = new Map<String,String>();
-            mymap.put('0PK1X000003EOXpWAO','069985859');
-            mymap.put('0PK1X000003JK9WWAW','069125369');
+            mymap.put(indId,'069985859');
+            mymap.put(indId,'069125369');
         
         List<String> phoneList = new List<String>();
         phoneList.add('003987785445');
         phoneList.add('0659887716');
         
         Map<String,List<String>> parimary = new Map<String,List<String>>();
-        parimary.put('0PK1X000003KZ7JWAW',phoneList);
+        parimary.put(indId,phoneList);
         
          Map<String,String> myNumb = new Map<String,String>();
-            myNumb.put('0PK1X000003S6iPWAS','+39');
-            myNumb.put('0PK1X000003S6iPWAS','+39');
+            myNumb.put(indId,'+39');
+            myNumb.put(indId,'+39');
         
         Map<String,String> firstMap = new Map<String,String>();
-        firstMap.put('0PK1X000003S99AWAS','069985859');
-        firstMap.put('0PK1X000003Ke3CWAS','069125456');
+         firstMap.put('069985859',indId);
+         firstMap.put('0691256',indId);
 
         
         HDT_UTL_ContactPoint.createContactPointPhoneContact(mymap,parimary,myNumb,'Casa',firstMap);
@@ -128,16 +129,17 @@ public class HDT_UTL_ContactPointTst {
      @IsTest
     public static void createContactPointEmail(){
          Test.startTest();
+        
          Map<String,String> mapOne = new Map<String,String>();
-            mapOne.put('0PK1X000003EOXpWAO','test@test.com');
-            mapOne.put('0PK1X000003JK9WWAW','one@two.it');
+            mapOne.put(indId,'test@test.com');
+            mapOne.put(indId,'one@two.it');
         
         List<String> emailList = new List<String>();
         emailList.add('test@test.com');
         emailList.add('one@two.it');
         
         Map<String,List<String>> second = new Map<String,List<String>>();
-        second.put('0PK1X000003KZ7JWAW',emailList);
+        second.put(indId,emailList);
         
          HDT_UTL_ContactPoint.createContactPointEmail(mapOne,second);
         
@@ -150,26 +152,27 @@ public class HDT_UTL_ContactPointTst {
     @IsTest
     public static void testCreateContactPointEmailContact(){
         Test.startTest();
+        
          Map<String,String> mapTwo = new Map<String,String>();
-            mapTwo.put('0PK1X000003S99AWAS','anna@comparsi.com');
-            mapTwo.put('0PK1X000003JK9WWAW','one@two.com');
+            mapTwo.put(indId,'anna@comparsi.com');
+            mapTwo.put(indId,'one@two.com');
         
         List<String> emailTwo = new List<String>();
         emailTwo.add('paolo@maldini.com');
         emailTwo.add('luciano@pavarotti.it');
         
         Map<String,List<String>> myEmail = new Map<String,List<String>>();
-        myEmail.put('0PK1X000003KZ7JWAW',emailTwo);
+        myEmail.put(indId,emailTwo);
         
         Map<String,String> fourMap = new Map<String,String>();
-        fourMap.put('0PK1X000003SARWWA4','paolo.bonolis@yahoo.com');
-        fourMap.put('0PK1X000003Ke3CWAS','maria.defilippi@dunegroup.it');
+        fourMap.put('paolo.bonolis@yahoo.com',indId);
+        fourMap.put('maria@dunegroup.it',indId);
         System.debug('listContactPointEmail'+[SELECT Id FROM ContactPointEmail]);
         
          List<ContactPointEmail> listReturn = HDT_UTL_ContactPoint.createContactPointEmailContact(mapTwo,myEmail,fourMap); 
         System.debug('listReturn'+listReturn);
         
-         System.assertEquals(listReturn.size(),4, 'This is the right size of emails');
+         System.assertEquals(listReturn.size(),3, 'This is the right size of emails');
          System.assertNotEquals(listReturn.size(),2, 'Size of email are two and not one');
            Test.stopTest();
         
