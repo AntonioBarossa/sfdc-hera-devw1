@@ -20,7 +20,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
      */
     @AuraEnabled
     public static void save(Order order, Map<String,Object> lastStepData){
-        system.debug('START SAVE ORDER');        
+        system.debug('START SAVE ORDER');
+
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;
         orderToUpdate.Status = 'In lavorazione';
@@ -43,8 +44,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
             // Calculate Date @Picchiri 20/05/21
             when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn   
-                system.debug('HDT_LC_ChildOrderProcessActions - save - HDT_RT_SwitchIn order : ' + JSON.serializepretty(order));             
-
+                system.debug('HDT_LC_ChildOrderProcessActions - save - HDT_RT_SwitchIn order : ' + JSON.serializepretty(order)); 
+                List<Order> listOrd = new List<Order>{order};            
+                Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(listOrd);
                 //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
                 orderToUpdate.IsActivationDeferred__c = order.IsActivationDeferred__c;
 
@@ -67,7 +69,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             
                             // START 1 Calcolo Data Max Ripensamento       
                             try { 
-                                if(order.SignedDate__c != null){
+                                if(order.SignedDate__c != null && mapAccountRes.get(order.AccountId)){
                                     orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
                                     system.debug('Calcolo data max di ripensamento xxx 1');             
                                 }                                                            

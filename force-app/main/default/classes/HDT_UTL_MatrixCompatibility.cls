@@ -39,6 +39,12 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                     srRequest.ProcessType__c= getProcessType(String.valueOf(servReq.get('processType')), 'Order', String.valueOf(servReq.get('commoditySector')));
                 }
             }
+            if(isPostSales== true && srRequest.ProcessType__c != null){
+                List<ServiceRequest__c> srvCheck = [Select id from ServiceRequest__c where type__c = 'Case' AND isClosed__c = false AND Case__c = null AND ServicePointCode__c = :srRequest.ServicePointCode__c AND processtype__c = :srRequest.ProcessType__c];
+                if(srvCheck != null && !srvCheck.isEmpty()){
+                    HDT_SRV_ServiceRequest.deleteRecord(srvCheck[0]);
+                }
+            }
 
             ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(srRequest);
             System.debug(srRequest);
