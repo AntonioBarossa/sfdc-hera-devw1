@@ -9,8 +9,9 @@
 public class HDT_UTL_ContactPointTst {
     @TestSetup
     static void allData(){
-        
-        Id indId = '0PK1X000003C0FhWAK';
+        List<Individual> indList = new List<Individual>();
+        indList = HDT_UTL_DataFactoryTst.createIndividual(1, true);
+        Id indId = indList[0].Id;
          List<ContactPointPhone> cpp = new List<ContactPointPhone>();
         cpp = HDT_UTL_DataFactoryTst.createContactPointPhone(1, true, indId);
         List<ContactPointEmail> cpe = new List<ContactPointEmail>();
@@ -34,7 +35,9 @@ public class HDT_UTL_ContactPointTst {
      @isTest
     public static void verifyContactPointPhone(){
           Test.startTest();
-        Id ind = '0PK1X000003JQ66WAG';
+        List<Individual> indList = new List<Individual>();
+        indList = HDT_UTL_DataFactoryTst.createIndividual(1, true);
+        Id ind = indList[0].Id;
         List<String> pointPhone = new List<String>();
         pointPhone.add('06958659787');
         pointPhone.add('06958652687');
@@ -49,8 +52,10 @@ public class HDT_UTL_ContactPointTst {
     @IsTest
     public static void verifyContactPointEmail(){
            Test.startTest();
-         Id indv = '0PK1X000003JjFoWAK';
-         List<String> mails = new List<String>();
+        List<Individual> indList = new List<Individual>();
+        indList = HDT_UTL_DataFactoryTst.createIndividual(1, true);
+        Id indv = indList[0].Id;         
+        List<String> mails = new List<String>();
         mails.add('elfrida.kora@dunegroup.it');
         mails.add('frida.kora@dunegroup.it');
         
@@ -173,7 +178,9 @@ public class HDT_UTL_ContactPointTst {
      @IsTest
     public static void  testCreateContactPointEmail(){
         Test.startTest();
-        Id indv = '0PK1X000003FBnOWAW';
+        List<Individual> indList = new List<Individual>();
+        indList = HDT_UTL_DataFactoryTst.createIndividual(1, true);
+        Id indv = indList[0].Id;
         String emailPrimary = 'elfrida.kora@gmail.com';
         List<String> otherMails = new List<String>();
         otherMails.add('paolo@maldini.com');
