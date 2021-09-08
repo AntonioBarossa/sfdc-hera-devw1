@@ -51,7 +51,8 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                         tempContract.BillingProfile__c = mapOrder.get(tempContract.SBQQ__Order__c).BillingProfile__c;
                         tempContract.Market__c         = mapOrder.get(tempContract.SBQQ__Order__c).Market__c; 
                         tempContract.VAT__c            = mapOrder.get(tempContract.SBQQ__Order__c).VAT__c ;  //02/09/2021 Email Fix Campo VAT__c su Contratto   
-    
+                        tempContract.Pricebook2Id = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
+                        tempContract.SBQQ__AmendmentPricebookId__c = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
                     }
                 }
             }
