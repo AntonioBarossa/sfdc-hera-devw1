@@ -19,7 +19,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         }else if(endpoint.containsIgnoreCase('HDT_AccountBalance')){
             return creaAccountBalanceResponse(request);
         }else if(endpoint.containsIgnoreCase('Endpoint_HDT_LC_SelfReadingTst')){
-            return creacheckLastReadingsResponse(request);
+            return creaCheckLastReadingsResponse(request);
         }else{
             return creaRicResponse(request);
         }
@@ -154,9 +154,9 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         return response;
     }
     
-    public static HttpResponse creacheckLastReadingsResponse(HttpRequest request){
+    public static HttpResponse creaCheckLastReadingsResponse(HttpRequest request){
         
-        System.debug('HDT_WS_PostSalesTstMock - creacheckLastReadingsResponse');
+        System.debug('HDT_WS_PostSalesTstMock - creaCheckLastReadingsResponse');
         HttpResponse response = new HttpResponse();
         
         String bodyResponse = '';//TODO: IMPLEMENT
