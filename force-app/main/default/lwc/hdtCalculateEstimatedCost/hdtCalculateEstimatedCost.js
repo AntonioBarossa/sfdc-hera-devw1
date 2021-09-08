@@ -11,6 +11,9 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
     estimateAmount;
     powerQuote;
     administrativeBurden;
+    get administrativeBurdenDisplay(){
+        return this.administrativeBurden.toFixed(2);
+    }
     estimatedVAT;
     validityDateEstimate; //DD-MM-YYYY format
     //change date to YYYY-MM-DD format

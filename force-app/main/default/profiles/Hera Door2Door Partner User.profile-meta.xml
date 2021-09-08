@@ -11950,6 +11950,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.IntegrationId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.IsWinback__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16531,6 +16536,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.CommodityFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Reading__c.DisputedMeterValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Reading__c.DisputedReadingValue1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Reading__c.DisputedReadingValue2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Reading__c.DisputedReadingValue3__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
