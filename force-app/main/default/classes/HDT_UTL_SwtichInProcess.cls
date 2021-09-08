@@ -6,7 +6,22 @@
 public with sharing class HDT_UTL_SwtichInProcess {
     
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
+    private static HDT_QR_Account accountQr = new HDT_QR_Account();
 
+    public static Map<String,Boolean> checkAccountOrderIsResidential(List<Order> listOrder){
+        List<String> accountIdList = new List<String>();
+        Map<String,Boolean> mapRes = new Map<String,boolean>();
+        for(Order ord : listOrder){
+            accountIdList.add(ord.AccountId);
+        }
+        List<Account> ListAccount = accountQr.getRecordsById(accountIdList,'Id,Recordtype.Developername');
+        for(Accoutn a : ListAccount){
+            if(mapRes.get(a.id) == null){
+                mapRes.put(a.id,a.recordtype.developername == 'HDT_RT_Residenziale');
+            }
+        }
+        return mapRes;
+    }
     // Calcolo Data Max Ripensamento(MaxAfterthoughtDate__c)  // Solo per clienti residenziali
     public static Date getMaxAfterthoughtDate(Order order) {
 
