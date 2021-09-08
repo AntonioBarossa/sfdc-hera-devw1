@@ -793,6 +793,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 if ((boxType == '1' || boxType == '5') && indemnityDueSendResponse != null && Decimal.valueOf(indemnityDueSendResponse) > 0) {
                     record.add(indemnityDueSendResponse);
                 } else if (boxType == '2' && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+                    record.add(''); // campo vuoto per l'indemnityDueSendResponse, l'indemnityDueBillingCorrection deve stare in seconda posizione.
                     record.add(indemnityDueBillingCorrection);
                 } else if (boxType == '4' && indemnityDueSendResponse != null && Decimal.valueOf(indemnityDueSendResponse) > 0 && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
                     record.add(indemnityDueSendResponse);
