@@ -1,8 +1,8 @@
 public inherited sharing class HDT_LC_ProductAssociation {
 
     @AuraEnabled
-    public static Object getProductList(String filterString){
-        return HDT_SRV_ProductAssociation.getProductList(filterString);
+    public static Object getProductList(String filterString, String optionalSkuId){
+        return HDT_SRV_ProductAssociation.getProductList(filterString, optionalSkuId);
     }
 
     @AuraEnabled

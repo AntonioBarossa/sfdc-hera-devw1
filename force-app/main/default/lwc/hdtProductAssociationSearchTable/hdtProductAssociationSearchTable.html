@@ -13,8 +13,9 @@
 
         <div slot="actions">
             <lightning-button-group>
-                <lightning-button label="Conferma selezione" name="confirmSelected" onclick={openConfirmation} variant="neutral" icon-name="utility:record_create"></lightning-button>
-                <lightning-button label="Conferma tutti" name="confirmAll" onclick={openConfirmation} variant="neutral" icon-name="utility:save"></lightning-button>
+                <lightning-button label="Conferma selezione" name="confirmSelected" onclick={openConfirmation} variant="neutral" icon-name="utility:multi_select_checkbox"></lightning-button>
+                <lightning-button label="Conferma filtro" name="confirmFilter" onclick={openConfirmation} variant="neutral" icon-name="utility:filterList"></lightning-button>
+                <lightning-button label="Conferma tutti" name="confirmAll" onclick={openConfirmation} variant="neutral" icon-name="utility:database"></lightning-button>
                 <lightning-button label="Chiudi" name="closeModal" onclick={openConfirmation} variant="neutral" icon-name="utility:close"></lightning-button>
             </lightning-button-group>
         </div>
@@ -47,9 +48,18 @@
                             </template>
                         </div>
 
-                        <div class="slds-m-bottom_small">
-                            <lightning-button label="Applica filtro" name="applyFilter" onclick={applyFilter} variant="neutral" icon-name="utility:search"></lightning-button>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-12">
+                                <div class="slds-m-bottom_small">
+                                    <lightning-button label="Applica filtro" name="applyFilter" onclick={applyFilter} variant="neutral" icon-name="utility:search"></lightning-button>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_2-of-12 slds-text-heading_small slds-border_bottom">
+                              <span>{counter}</span>
+                            </div>
                         </div>
+
+
                         
                     </lightning-record-edit-form>
                 </div>
@@ -72,8 +82,8 @@
                             key-field="id"
                             data={data}
                             columns={columns}
-                            onrowselection={getSelectedRow}
                     ></lightning-datatable>
+                    <!--onrowselection={getSelectedRow}-->
                 </div> 
             </div>
         </div>

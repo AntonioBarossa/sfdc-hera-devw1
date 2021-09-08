@@ -34,14 +34,19 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
         if (data) {
             console.log('#### Family -> ' + data.fields.Family.value);
             
-            if(data.fields.Family.value.includes("Bonus") ||
-               data.fields.Family.value.includes("Contributo") ||
-               data.fields.Family.value.includes("VAS") ||
-               data.fields.Family.value.includes("Promozione")){
-                this.showWelcom = true;
-            } else {
+            var availableType = ['Bonus', 'Contributo', 'VAS', 'Promozione'];
+            var notAvailableType = [];
+
+            notAvailableType.push('Offerta commerciale');
+            notAvailableType.push('VAS Prodotto');
+            notAvailableType.push('VAS Servizio');
+
+
+            if(notAvailableType.includes(data.fields.Family.value)){
                 this.showError = true;
                 this.errorMessage = 'Questa funzionalità è riservata a Bonus, Contributi, VAS, Promozioni';
+            } else {
+                this.showWelcom = true;
             }
 
         } else if (error) {

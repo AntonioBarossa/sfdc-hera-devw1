@@ -32,6 +32,7 @@
 
     <template if:true={showSearchTable} >
         <c-hdt-product-association-search-table
+            optional-sku-id={productid}
             product-option-id={productOptionId}
             onclosemodal={closeModal}
         ></c-hdt-product-association-search-table>

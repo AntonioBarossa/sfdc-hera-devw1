@@ -17,13 +17,18 @@ const recordIdList = [];
 export default class HdtProductAssociationSearchTable extends LightningElement {
 
     @api productOptionId;
+    @api optionalSkuId;
+    counter;
+
     label = {
         confirmSelectedTitle: 'Conferma i prodotti selezionati',
         confirmSelectedBody: 'Attenzione! il prodotto opzione verrà associato a tutti i prodotti selezionati.',
         closeTitle: 'Chiudi la ricerca',
         closeBody: 'Attenzione! Vuoi annullare l\'associazione dell\'opzione prodotto?',
         confirmAllTitle: 'Conferma tutti prodotti a sistema',
-        confirmAllBody: 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti a catalogo, vuoi procedere?'
+        confirmAllBody: 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti a catalogo, vuoi procedere?',
+        confirmFilterTitle: 'Conferma tutti prodotti ottenuti dal filtro',
+        confirmFilterBody: 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?'
     };
     illustrationMessage = 'I risultati verranno mostrati qui';
     
@@ -71,7 +76,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     getData(filter){
         
-        getProductList({filterString: filter})
+        getProductList({filterString: filter, optionalSkuId: this.optionalSkuId})
         .then(result => {
             console.log('# response #');
 
@@ -83,6 +88,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                     console.log('>>> recordCounter: ' + result.recordCounter);
                     this.data = result.prodList;
                     this.showResultTable = true;
+                    this.counter = 'Risultati trovati: ' + result.recordCounter;
                 }
 
             } else {
@@ -135,7 +141,10 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                 case 'confirmAll':
                     this.modalObj.header = this.label.confirmAllTitle;
                     this.modalObj.body = this.label.confirmAllBody;
-
+                    break;
+                case 'confirmFilter':
+                    this.modalObj.header = this.label.confirmFilterTitle;
+                    this.modalObj.body = this.label.confirmFilterBody;
             }
 
             this.modalObj.isVisible = true;
@@ -161,27 +170,31 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         }
     }
 
-    getSelectedRow(event) {
-        const selectedRows = event.detail.selectedRows;
+    //getSelectedRow(event) {
+    //    const selectedRows = event.detail.selectedRows;
 
-        for (let i = 0; i < selectedRows.length; i++){
-            console.log("You selected: " + JSON.stringify(selectedRows[i]));
-        }
+    //    for (let i = 0; i < selectedRows.length; i++){
+    //        console.log("You selected: " + JSON.stringify(selectedRows[i]));
+    //    }
 
-        console.log('>>> selectedRows ' + selectedRows.length);
+    //    console.log('>>> selectedRows ' + selectedRows.length);
 
-    }
+    //}
 
     confirmSelected(event){
         console.log('>>>> confirmSelected ');
         this.spinner = true;
         var el = this.template.querySelector('lightning-datatable');
         var selected = el.getSelectedRows();
+
         console.log('>>> selectedRows ' + selected.length);
+
         for (let i = 0; i < selected.length; i++){
             console.log("You selected: " + JSON.stringify(selected[i]));
             recordIdList.push(selected[i].Id);
         }
+
+        console.log('>>>> recordIdList ' + JSON.stringify(recordIdList));
         this.runProductOptionAssociation('select');
     }
 
@@ -190,7 +203,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         this.runProductOptionAssociation('all');
     }
 
-    confirmFiltered(event){
+    confirmFilter(event){
         console.log('>>>> confirmFiltered ');
         this.runProductOptionAssociation('filter');
     }
@@ -219,6 +232,8 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                 toastObj.variant = 'warning';
             }
 
+            recordIdList.splice(0, recordIdList.length);
+            this.closeModal();
             this.spinner = false;
 
             this.dispatchEvent(

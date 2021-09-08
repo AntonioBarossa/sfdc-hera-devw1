@@ -1,36 +1,30 @@
 public inherited sharing class HDT_QR_ProductAssociation {
     
-    public static Integer getNonConfiguredProduct2(String whereCondition){
+    public static Integer getCountOfNonConfiguredProduct2(String whereCondition, String optionalSkuId, List<String> familyList, String queryString){
     
         SObjectType objtype = Schema.getGlobalDescribe().get('Product2');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-        String queryString = '';
+        String selectQuery = '';
 
         if(objRes.isAccessible()){
-            queryString += 'SELECT count() ';
-            queryString += 'FROM Product2';
-            queryString += whereCondition;
+            selectQuery = 'SELECT count() ' + queryString;
         }
 
-        return Database.countQuery(queryString);
+        return Database.countQuery(selectQuery);
     }
 
-    public static List<Product2> getNonConfiguredProduct2(List<Product2> prodList, String whereCondition){
+    public static List<Product2> getIdsNonConfiguredProduct2(List<Product2> prodList, String whereCondition, String optionalSkuId, List<String> familyList, String queryString){
         prodList = new List<Product2>();
 
         SObjectType objtype = Schema.getGlobalDescribe().get('Product2');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+        String selectQuery = '';
 
         if(objRes.isAccessible()){
+            selectQuery = 'SELECT Id, DescriptionSAP__c, ProductCode, Version__c, Name, Family ' + queryString;
+            System.debug('>>> queryString: ' + selectQuery);
 
-            String queryString = '';
-            queryString += 'SELECT Id, DescriptionSAP__c, ProductCode, Version__c, Name, Family ';
-            queryString += 'FROM Product2';
-            queryString += whereCondition;
-
-            System.debug('>>> queryString: ' + queryString);
-
-            prodList = Database.query(queryString);
+            prodList = Database.query(selectQuery);
         }
 
         return prodList;
@@ -38,7 +32,7 @@ public inherited sharing class HDT_QR_ProductAssociation {
 
     public static SBQQ__ProductOption__c getProductOptionRecordById(Id productOptionId){
         return [
-            SELECT Id
+            SELECT Id, SBQQ__Number__c,SBQQ__OptionalSKU__c
             FROM SBQQ__ProductOption__c
             WHERE Id = :productOptionId
         ];
