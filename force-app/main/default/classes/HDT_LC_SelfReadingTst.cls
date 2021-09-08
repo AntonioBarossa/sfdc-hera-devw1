@@ -288,19 +288,93 @@ public with sharing class HDT_LC_SelfReadingTst {
         //SETUP
         setupMorosita();
         
+        
+        
         //SERVICE POINT
+        ServicePoint__c servPoint = new ServicePoint__c();
+        insert servPoint;
         
+        //TESTING ERROR_NO_ASSET_NUMBER
+        String result = HDT_LC_SelfReading.checkLastReadings(servPoint.Id);
+        
+        //ASSERTS
+        System.assertEquals('ERROR_NO_ASSET_NUMBER', result);
+        
+        //TESTING REGULAR
+        servPoint.SAPImplantCode__c = 'Test_Implant_Code';
+        update servPoint;
+        
+        
+        //WEBSERVICE MOCKS
+        //TODO: IMPLEMENT
+        
+        /*
+
+            queryParameters.childs = childs;
+            queryParameters.fields = setupParameters.fields;
+            queryParameters.objectName = setupParameters.objectName;
+            queryParameters.conditions = 'Id = \'' + recordId + '\'';
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return queryParameters;
+    }
+    
+    //IN SOSTANZA: POPOLARE CAMPI DI OGGETTI IN MODO DA RENDERE POSSIBILE UNA QUERY
+    
+    
+    private static Map<String,List<SObject>> getGenericRecords(HDT_WRP_QueryParameter queryParameters){
+        Map<String,List<SObject>> recordMap = new Map<String,List<SObject>>();
+        HDT_QR_GenericSapIntegrationAdapter queryClass = new HDT_QR_GenericSapIntegrationAdapter();
+        try {
+            List<SObject> records = queryClass.getGenericRecords(queryParameters.fields, queryParameters.objectName, queryParameters.conditions);
+            recordMap.put('parent', records);
+            for(HDT_WRP_QueryParameter child : queryParameters.childs){
+                recordMap.put(child.relationName, queryClass.getGenericRecords(child.fields, child.objectName, child.conditions));
+            }
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return recordMap;
+    }
+
+        */
+        
+        //HDT_WRP_SapFields
+        HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapFields childField_1 = new HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapFields();
+        
+        //HDT_WRP_SapChildObjects
+        HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapChildObjects childObj_1 = new HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapChildObjects();
+        childObj_1.fields = new List<HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapFields> {childField_1};
+        
+        //HDT_WRP_SapParentObjects
+        HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapParentObjects parentObj_1 = new HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapParentObjects();
+        parentObj_1.childObjects = new List<HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapParentObjects> {childObj_1};
+        
+        //HDT_WRP_SapRequest
+        HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapRequest mySAPRequest = new HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapRequest();
+        mySAPRequest.requestType = 'VerificaUltimaLettura';                
+        mySAPRequest.objects = new List<HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapParentObjects> {parentObj_1};
+        
+        
+        //METADATA TYPE HDT_SapWsConfiguration__mdt
+        HDT_SapWsConfiguration__mdt myMetaData = new HDT_SapWsConfiguration__mdt();
+        myMetaData.DeveloperName = 'VerificaUltimaLettura';
+        myMetaData.JSON__c = JSON.serialize(mySAPRequest);
+        myMetaData.NamedCredential__c = 'Endpoint_HDT_LC_SelfReadingTst';
+        
+        
+        //TESTING
+        Test.startTest();
+            
+            result = HDT_LC_SelfReading.checkLastReadings(servPoint.Id);
+            
+            
+        Test.stopTest();
+        
+        //ASSERTS
         
         
     }
     
-    
-    /*
-
-    @AuraEnabled
-    public static String checkLastReadings(String servicePointId){
-
-    }
-    
-    */
 }
