@@ -155,6 +155,8 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
     }
     
     public static HttpResponse creacheckLastReadingsResponse(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creacheckLastReadingsResponse');
         HttpResponse response = new HttpResponse();
         
         String bodyResponse = '';//TODO: IMPLEMENT
