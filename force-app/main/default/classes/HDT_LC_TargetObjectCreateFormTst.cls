@@ -24,8 +24,8 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
 
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
-            HDT_UTL_DataFactoryTst.createWebServiceConfiguration();
-            HDT_UTL_DataFactoryTst.createWebServiceCredential();
+            HDT_UTL_DataFactoryTst.createWebServiceConfiguration('TransitorioWinback', 'end', 'method', 'testUser');
+            HDT_UTL_DataFactoryTst.createWebServiceCredential('testUser', '12345', 'usernameTest');
 
             List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'Reseller', 'GENESI-Altro', 'Reseller - Gruppo');
             

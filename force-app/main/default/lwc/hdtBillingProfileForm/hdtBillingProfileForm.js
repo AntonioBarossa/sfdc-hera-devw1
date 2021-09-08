@@ -13,7 +13,7 @@ export default class hdtBillingProfileForm extends LightningElement {
     @api recordId;
     loading = false;
     @track fields = [];
-    @track refreshField = true;
+  //  @track refreshField = true;
     @track fatturazioneElettronicaFields = [];
     isfatturazioneElettronicaVisible = false;
     @track tipologiaIntestatarioFields = [];
@@ -379,13 +379,12 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if (event.target.fieldName === 'BillSendingMethod__c') {
-            this.refreshField = false;
+           // this.refreshField = false;
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceCertifiedEmailAddress__c')].visibility = event.target.value === 'Invio tramite PEC';
             this.fields[this.fields.findIndex(el => el.fieldName === 'SendCertifiedEmailConsentDate__c')].visibility = event.target.value === 'Invio tramite PEC';
-            this.fields[this.fields.findIndex(el => el.fieldName === 'IbanCIN_IBAN__c')].value ='';
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].required = event.target.value.includes('e-mail');
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].visibility = event.target.value.includes('e-mail');
-            this.refreshField = true;
+           // this.refreshField = true;
             console.log('*******123:' + JSON.stringify(this.fields));
         }
 
