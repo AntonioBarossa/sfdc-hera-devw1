@@ -323,7 +323,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.confirmedSteps = this.availableStepsFirst.filter(section => (
         section.name !== 'reading'
         && section.name !== 'processVariables' 
-        && section.name !== 'creditCheck'
         && section.name !== 'Switchout' 
         && section.name !== 'dettaglioImpianto' 
         && section.name !== 'fatturazione' 
@@ -340,7 +339,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log("PREFILTER:" + this.availableStepsFirst); 
         this.pendingSteps = this.availableStepsFirst.filter(section => (section.name === 'reading' 
         || section.name === 'processVariables'
-        || section.name === 'creditCheck' 
         || section.name === 'Switchout'
         || section.name === 'dettaglioImpianto' 
         || section.name === 'fatturazione' 
@@ -874,52 +872,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     }
                 ]
             },
-            // {
-            //     step: 3,
-            //     label: 'Credit check',
-            //     name: 'creditCheck',
-            //     objectApiName: 'Order',
-            //     recordId: this.order.Id,
-            //     processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
-            //     || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
-            //     || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
-            //     || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
-            //     || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
-            //     || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
-            //     || (this.isNotBillable && !this.order.OrderReferenceNumber && !this.order.ContractReference__c)
-            //     || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
-            //     || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
-            //     ,
-            //     data: [
-            //         {
-            //             'label': 'Esito credit Check Entrante',
-            //             'apiname': 'IncomingCreditCheckResult__c',
-            //             'typeVisibility': this.typeVisibility('both'),
-            //             'required': false,
-            //             'disabled': true,
-            //             'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
-            //             'processVisibility': ''
-            //         },
-            //         {
-            //             'label': 'Esito credit Check Uscente',
-            //             'apiname': 'OutgoingCreditCheckResult__c',
-            //             'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && (!this.isNotBillable),
-            //             'required': false,
-            //             'disabled': true,
-            //             'value': this.applyCreditCheckLogic('OutgoingCreditCheckResult__c'),
-            //             'processVisibility': ''
-            //         },
-            //         {
-            //             'label': 'Descrizione esito',
-            //             'apiname': 'CreditCheckDescription__c',
-            //             'typeVisibility': this.typeVisibility('both'),
-            //             'required': false,
-            //             'disabled': true,
-            //             'value': this.applyCreditCheckLogic('CreditCheckDescription__c'),
-            //             'processVisibility': ''
-            //         }
-            //     ]
-            // },
             {
                 step: 3,
                 label: 'Switch out in corso',
@@ -1183,7 +1135,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 hasCalculateButton: this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica',
-                hasCodiceAtecoButton: this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
+                hasCodiceAtecoButton: this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business' || (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' && this.order.ServicePoint__r.SupplyType__c === 'Non Domestico'),
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
@@ -1346,7 +1298,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'Conferma contratto cliente',
                     'apiname': 'ConfirmCustomerContract__c', //3
-                    'typeVisibility': this.typeVisibility('ele') &&  (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'),
+                    'typeVisibility': this.typeVisibility('ele') &&  (this.order.Account.RecordType.DeveloperName !== 'HDT_RT_Business' && this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'),
                     'required': false,
                     'disabled': true,
                     'value': '',
@@ -1579,10 +1531,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
+                new fieldData(
+                    'Tipo Apparechiatura','MeterType__c',
+                    this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt') ,
+                    true, true, '',''
+                ),
                 {
                     'label': 'Tipo Apparechiatura',
                     'apiname': 'MeterType__c',
-                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt') ,
+                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt') ,
                     'required': true,
                     'disabled': true,
                     'value': '',

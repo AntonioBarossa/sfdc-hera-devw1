@@ -477,7 +477,7 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if (this.template.querySelector("[data-id='InvoiceEmailAddress__c']") !== null 
-            && (this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value === null || this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value === '') 
+            && (this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value === null || this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value.trim() === '') 
             && (this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail' || this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail + Carta')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Email Invio Bolletta, ');
         }
@@ -587,17 +587,17 @@ export default class hdtBillingProfileForm extends LightningElement {
         } 
 
         if (this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']") !== null 
-            && this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']").value === null) {
+            && (this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']").value === null || this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Codice Fiscale Sottoscrittore CC, ');
         }
 
         if (this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']") !== null 
-            && this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']").value === null) {
+            && (this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']").value === null || this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Nome sottoscrittore CC, ');
         }
 
         if (this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']") !== null 
-            && this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']").value === null) {
+            && (this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']").value === null || this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Cognome sottoscrittore CC, ');
         }
         //check required fields end
