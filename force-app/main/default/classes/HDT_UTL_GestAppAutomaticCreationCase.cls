@@ -37,7 +37,8 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements w
             wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
             w.case__c = ca.id;
             w.Distributor__c = ca.servicePoint__r.distributor__c;
-            w.account__c = ca.ServicePoint__r.Account__c;
+            w.account__c = ca.AccountId;
+            w.Contact__c = ca.ContactId;
             w.isAtoa__c = isAtoa;
             w.recordtypeid = rec;
             w.status__c = 'Creata';

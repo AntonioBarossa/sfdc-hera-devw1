@@ -659,10 +659,12 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     // END @Picchiri 07/06/21 Credit Check
     checkCompatibilityProcess(){
         this.loaded = false;
+        console.log('**********:12' + this.order.AccountId);
         let sRequest= {
             'servicePoint': this.order.ServicePoint__c,
             'servicePointCode': this.order.ServicePoint__r?.ServicePointCode__c,
             'status': this.order.Status,
+            'account' : this.order.AccountId,
             'order': this.order.Id,
             'commoditySector': this.order.ServicePoint__r?.CommoditySector__c,
             'type': 'Order',
