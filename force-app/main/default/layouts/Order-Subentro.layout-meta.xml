@@ -54,6 +54,10 @@
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>HerokuPracticeCode__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ContractId</field>
             </layoutItems>
