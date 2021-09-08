@@ -822,8 +822,13 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {
             boxType = '4';
         }
-        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && String.isBlank(correctionDocumentEmissionDate)) {
-            // TODO: come capire se lo SLA è superato o meno?
+        // Emissione rettifica prevista ma data emissione ancora non presente e ho superato lo SLA, indennizzo per solo ritardo nella risposta + avviso eventuale indennizzo rettifica
+        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && String.isBlank(correctionDocumentEmissionDate) && expiredCorrection) {
+            boxType = '5';
+        }
+        // Emissione rettifica prevista ma data emissione ancora non presente e NON ho superato lo SLA, indennizzo per solo ritardo nella risposta
+        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && String.isBlank(correctionDocumentEmissionDate) && !expiredCorrection) {
+            boxType = '1';
         }
         // Emissione rettifica prevista ma data emissione ancora non presente
         else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isBlank(correctionDocumentEmissionDate)) {
