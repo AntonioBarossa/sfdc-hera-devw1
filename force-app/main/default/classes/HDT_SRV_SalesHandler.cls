@@ -140,6 +140,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                  )){
                                      ord.TecnicalPhase__c = 'Annullato';
                                      ord.Status = 'Annullato';
+                                     ord.Phase__c = 'Annullato'; //HRAWRM-460
                                  }
                             }
                             when 'Dati Tecnici Ricevuti'{

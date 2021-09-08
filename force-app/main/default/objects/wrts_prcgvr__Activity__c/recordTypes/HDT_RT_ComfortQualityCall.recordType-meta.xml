@@ -261,6 +261,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ManualCheckResult__c</picklist>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso inserito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti dal DL</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PraxidiaPostWorkAction__c</picklist>
         <values>
             <fullName>Contattare tramite email</fullName>
@@ -315,6 +330,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Process__c</picklist>
+        <values><!--HRAWRM-446 07/09/2021-->
+            <fullName>Annullamento Prestazione</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Aggiunta Attacco</fullName>
             <default>false</default>

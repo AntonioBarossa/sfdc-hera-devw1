@@ -69,7 +69,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>842</locationX>
-        <locationY>4334</locationY>
+        <locationY>4358</locationY>
         <assignmentItems>
             <assignToReference>GetCaseFinale.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -145,7 +145,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>aggiornaCase_0_0</targetReference>
+            <targetReference>GetLetture</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -371,7 +371,7 @@
         <name>Dati_Tecnici_M03_0</name>
         <label>Dati Tecnici M03?</label>
         <locationX>710</locationX>
-        <locationY>3974</locationY>
+        <locationY>3998</locationY>
         <defaultConnector>
             <targetReference>GetCaseFinale</targetReference>
         </defaultConnector>
@@ -558,7 +558,7 @@
         <name>Salva_in_Bozza_o_Conferma</name>
         <label>Salva in Bozza o Conferma?</label>
         <locationX>1040</locationX>
-        <locationY>3854</locationY>
+        <locationY>3878</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -777,7 +777,7 @@
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
         <locationX>842</locationX>
-        <locationY>4214</locationY>
+        <locationY>4238</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori</targetReference>
@@ -931,7 +931,7 @@
         <name>GetCaseFinale</name>
         <label>GetCaseFinale</label>
         <locationX>842</locationX>
-        <locationY>4094</locationY>
+        <locationY>4118</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CalcoloCodiceCausale</targetReference>
@@ -946,6 +946,34 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetLetture</name>
+        <label>GetLetture</label>
+        <locationX>842</locationX>
+        <locationY>3542</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>aggiornaCase_0_0</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>CaseEle__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CaseGas__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Reading__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -1013,7 +1041,7 @@
         <name>aggiornaCase_0_0</name>
         <label>aggiornaCase</label>
         <locationX>1040</locationX>
-        <locationY>3734</locationY>
+        <locationY>3758</locationY>
         <connector>
             <targetReference>Salva_in_Bozza_o_Conferma</targetReference>
         </connector>
@@ -1023,7 +1051,7 @@
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a Da Inviare</label>
         <locationX>842</locationX>
-        <locationY>4454</locationY>
+        <locationY>4478</locationY>
         <inputReference>GetCaseFinale</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1624,7 +1652,7 @@
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1106</locationX>
-        <locationY>3974</locationY>
+        <locationY>3998</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

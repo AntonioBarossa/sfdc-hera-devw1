@@ -283,8 +283,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.TechnicalFeasibility__c = false;
                 }
             }
-            if(nextPhase != null && nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
-                currentCase.ComplexCategory__c = reqWrp.requestMap.get('NOTE');
+            if(reqWrp.requestMap.get('NOTE') != null && reqWrp.requestMap.get('NOTE') != ''){
+                String note = recordCase.Note__c != null?recordCase.Note__c:'';
+                currentCase.Note__c =  nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE') + '\n' + note;
             }
             if(reqWrp.requestMap.get('DT_MAX_PREV') != null){
                 try{
