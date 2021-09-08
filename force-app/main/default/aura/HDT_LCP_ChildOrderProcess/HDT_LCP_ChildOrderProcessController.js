@@ -58,5 +58,12 @@
 
         console.log('handleEmitDiffDraftData: ', component.get("v.diffDraftObjectApiName"));
         console.log('handleEmitDiffDraftData: ', JSON.stringify(component.get("v.diffFields")));
+    },
+
+    handleCreditCheckPoll : function(component, event, helper){
+        console.log('HDT_LCP_ChildOrderProcessController - handleCreditCheckPoll - START');
+        var precheckComp = component.find("precheckComp");
+        precheckComp.executeCreditCheckPoll();
+        console.log('HDT_LCP_ChildOrderProcessController - handleCreditCheckPoll - END');
     }
 })

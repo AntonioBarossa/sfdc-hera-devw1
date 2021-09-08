@@ -546,11 +546,6 @@
                 <label>Votive Modena/Cessazione</label>
             </value>
             <value>
-                <fullName>Annullamento Prestazione</fullName>
-                <default>false</default>
-                <label>Annullamento Prestazione</label>
-            </value>
-            <value>
                 <fullName>Recesso per altri motivi</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -928,10 +923,6 @@
         <valueSettings>
             <controllingFieldValue>Preventivi</controllingFieldValue>
             <valueName>Variazione Tensione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Preventivi</controllingFieldValue>
-            <valueName>Annullamento Prestazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifiche</controllingFieldValue>

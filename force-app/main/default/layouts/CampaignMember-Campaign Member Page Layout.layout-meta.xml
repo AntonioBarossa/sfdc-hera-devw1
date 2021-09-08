@@ -21,7 +21,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior> <!--HRAWRM-475 08/09/2021  -->
                 <field>RelatedActivity__c</field>
             </layoutItems>
         </layoutColumns>
@@ -34,21 +34,21 @@
         <label>Informazioni utili</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior><!--HRAWRM-475 08/09/2021  -->
                 <field>GenericField2__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior><!--HRAWRM-475 08/09/2021  -->
                 <field>GenericField3__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior><!--HRAWRM-475 08/09/2021  -->
                 <field>GenericField4__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior><!--HRAWRM-475 08/09/2021  -->
                 <field>GenericField5__c</field>
             </layoutItems>
         </layoutColumns>

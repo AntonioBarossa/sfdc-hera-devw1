@@ -221,7 +221,7 @@
             <assignToReference>GetCaseAggiornato.Iban__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Iban</elementReference>
+                <elementReference>UpperIban</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -229,6 +229,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>IbanIsForeign</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.IbanCIN__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpperCINFormula</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -867,12 +874,22 @@
         <description>IT{!Numeri_Controllo}{!CIN}{!ABI}{!CAB}{!Numero_Conto_Corrente}</description>
         <name>ItalianIbanFormula</name>
         <dataType>String</dataType>
-        <expression>&quot;IT&quot;&amp;{!GetCaseAggiornato.IbanCIN_IBAN__c}&amp;{!GetCaseAggiornato.IbanCIN__c}&amp;{!GetCaseAggiornato.IbanABI__c}&amp;{!GetCaseAggiornato.IbanCAB__c}&amp;{!GetCaseAggiornato.IbanCodeNumber__c}</expression>
+        <expression>&quot;IT&quot;&amp;{!GetCaseAggiornato.IbanCIN_IBAN__c}&amp;UPPER({!GetCaseAggiornato.IbanCIN__c})&amp;{!GetCaseAggiornato.IbanABI__c}&amp;{!GetCaseAggiornato.IbanCAB__c}&amp;{!GetCaseAggiornato.IbanCodeNumber__c}</expression>
     </formulas>
     <formulas>
         <name>ProcessTypeFormula</name>
         <dataType>String</dataType>
         <expression>IF({!IbanIsForeign} = false, &quot;Richiesta Domiciliazione - Italiano&quot;,&quot;Richiesta Domiciliazione - Estero&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>UpperCINFormula</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!GetCaseAggiornato.IbanCIN__c})</expression>
+    </formulas>
+    <formulas>
+        <name>UpperIban</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!Iban})</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_RichiestaDomiciliazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Richiesta Domiciliazione/Attivazione Click&amp;Pay</label>

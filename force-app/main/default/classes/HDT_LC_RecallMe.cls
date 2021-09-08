@@ -78,7 +78,7 @@ public with sharing class HDT_LC_RecallMe {
         CampaignMember cm = campaignMemberQr.getEcidById(campaignMemberId);
         System.debug('HOAHOAHOAO:' + campaignMemberId);
         try{
-            postAppointmentEcid(appointment,appointmentType, null, cm.reitekAgentUserId__c,cm.Ecid__c);
+            postAppointmentEcid(appointment,appointmentType, null, cm.reitekAgentUserId__c,cm.Ecid__c,campaignMemberId);
             return true;
         }catch(exception e){
             return false;
@@ -86,7 +86,7 @@ public with sharing class HDT_LC_RecallMe {
     }
   // String campaignMemberId
     @AuraEnabled
-    public static String postAppointmentEcid(DateTime appointment, String appointmentType, Long idUser, String username, String ecid){
+    public static String postAppointmentEcid(DateTime appointment, String appointmentType, Long idUser, String username, String ecid,String campaignId){
         String nomeApi = 'postAppointment';
         Long timestamp = appointment.getTime();
        // Long endDate = endRange.getTime();
@@ -103,7 +103,12 @@ public with sharing class HDT_LC_RecallMe {
        HDT_WS_Response wsCall = HDT_WS_RecallMe.postRecallMeAppointment(nomeApi, req);
 
         if (wsCall.status == 'success') {
-          System.debug('- - - - - ' + wsCall.status); 
+          System.debug('- - - - - ' + wsCall.status);
+          CampaignMember cm = new CampaignMember();
+          cm.id = campaignId;
+          cm.status = 'Appuntamento telefonico personale';
+          cm.isToSendStatusReitek__c = true;
+          update cm;
             return wsCall.status;
         } else {
             System.debug('Error: ' + wsCall.errorDetails);

@@ -1,0 +1,92 @@
+<template>
+
+    <template if:true={modalObj.isVisible} >
+        <c-hdt-confirmation-modal
+            modal-header={modalObj.header}
+            modal-body={modalObj.body}
+            operation={modalObj.operation}
+            onconfirm={modalResponse}
+        ></c-hdt-confirmation-modal>
+    </template>
+
+    <lightning-card title="Offerte Commerciali non configurate" variant="narrow" icon-name="standard:bundle_config">
+
+        <div slot="actions">
+            <lightning-button-group>
+                <lightning-button label="Conferma selezione" name="confirmSelected" onclick={openConfirmation} variant="neutral" icon-name="utility:multi_select_checkbox"></lightning-button>
+                <lightning-button label="Conferma filtro" name="confirmFilter" onclick={openConfirmation} variant="neutral" icon-name="utility:filterList"></lightning-button>
+                <lightning-button label="Conferma tutti" name="confirmAll" onclick={openConfirmation} variant="neutral" icon-name="utility:database"></lightning-button>
+                <lightning-button label="Chiudi" name="closeModal" onclick={openConfirmation} variant="neutral" icon-name="utility:close"></lightning-button>
+            </lightning-button-group>
+        </div>
+
+        <div class="slds-card__body slds-card__body_inner">
+
+            <div class="slds-section slds-is-open slds-border_top slds-border_bottom slds-m-top_small slds-m-bottom_small">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small" title="filtro">Usa questi campi per filtrare i prodotti</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+
+                <!--<div class="slds-border_top slds-border_bottom slds-m-top_small slds-m-bottom_small">-->
+                    <lightning-record-edit-form
+                        record-id={productId}
+                        object-api-name="Product2"
+                        density="compact"
+                        onsuccess={handleSuccess}
+                        onload={handleLoad}
+                        onerror={handleError}
+                        onsubmit={handleSubmit}
+                    >
+                        <div class="slds-grid slds-wrap slds-m-top_small slds-m-bottom_small">
+                            <template iterator:it={fieldsList}>
+                                <div key={it.value} class="slds-col slds-size_1-of-4">
+                                    <div class="slds-m-around_x-small">
+                                        <lightning-input-field key={it.value} field-name={it.value} ></lightning-input-field>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-12">
+                                <div class="slds-m-bottom_small">
+                                    <lightning-button label="Applica filtro" name="applyFilter" onclick={applyFilter} variant="neutral" icon-name="utility:search"></lightning-button>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_2-of-12 slds-text-heading_small slds-border_bottom">
+                              <span>{counter}</span>
+                            </div>
+                        </div>
+
+
+                        
+                    </lightning-record-edit-form>
+                </div>
+            </div>
+
+            <div>
+                <div if:true={spinner} class="progress">
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </div>
+
+                <div if:false={showResultTable} class="slds-box" >
+                    <c-hdt-custom-illustration
+                        message={illustrationMessage}
+                        style-class="slds-text-heading_large"
+                    ></c-hdt-custom-illustration>
+                </div>
+
+                <div if:true={showResultTable} style="height: 300px;">
+                    <lightning-datatable
+                            key-field="id"
+                            data={data}
+                            columns={columns}
+                    ></lightning-datatable>
+                    <!--onrowselection={getSelectedRow}-->
+                </div> 
+            </div>
+        </div>
+
+    </lightning-card>
+</template>
