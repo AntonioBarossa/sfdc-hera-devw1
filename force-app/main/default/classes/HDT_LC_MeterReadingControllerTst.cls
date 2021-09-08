@@ -84,7 +84,7 @@ public class HDT_LC_MeterReadingControllerTst {
         contractObj = HDT_LC_MeterReadingController.getContractRecords(account.Id);
 
         System.assertEquals(false, contractObj.success, 'success != false');
-        System.assert(contractObj.contractList == null, 'contractList.size() != null');
+        System.assert(contractObj.contractList == null, 'contractList != null');
 
         Test.stopTest();
     }
