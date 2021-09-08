@@ -2,7 +2,7 @@
 * @author Elfrida Kora (elfrida.kora@dunegroup.it)
 * @date 02/09/2021
 * @description HDT_UTL_Individual for Test Classes
-* @history Elfrida Kora – 02/09/2021 – Created class
+* @history Luca Belometti WR (luca.belometti@w) – 08/09/2021 – MOdified class
 */
 
 @IsTest
@@ -33,23 +33,21 @@ public class HDT_UTL_IndividualTst {
         List<String> lstString = new List<String>();
         
         lstString.add(String.valueOf(leadId[0].Id));
-        List<Individual> indv =[SELECT Id,PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c,PrivacyThirdPartyChoiceSource__c, 
-                                PrivacyMarketingChoiceDate__c,LastName,FirstName,ProfilingCompanyConsent__c,ThirdPartyPrivacyVersion__c,PrivacyThirdPartyConsentInitiative__c,
-                                ProfilingPrivacyVersion__c,PrivacyProfilingChoiceSource__c,PrivacyProfilingConsentInitiative__c,PrivacyProfilingChoiceDate__c,
-                                MarketingPrivacyVersion__c,MarketingCompanyConsent__c,ThirdPartyCompanyConsent__c,PrivacyThirdPartyChoiceDate__c FROM Individual];
+        List<Individual> indv =[SELECT Id FROM Individual];
         Individual ind = (Individual)indv[0];
         Date todayD = date.today(); 
 
         
-        HDT_UTL_Individual.createIndividualContact(listString);
-        List<Individual> indvl =[SELECT Id FROM Individual];
-        System.debug('size:' +indvl.size());
-        System.debug('listaInd:' +indvl);
+        List<Individual> individualReturnedFromMethod = HDT_UTL_Individual.createIndividualContact(listString);
+        Id indIdRet = individualReturnedFromMethod[0].Id;
+        List<Individual> indvl =[SELECT Id FROM Individual WHERE Id = :indIdRet];
+        System.debug('@@@@RETURNED INDIVIDUAL FROM METHOD: ' + individualReturnedFromMethod);
+        System.debug('@@@@RETURNED INDIVIDUAL FROM METHOD - SIZE:  ' + individualReturnedFromMethod.size());
 
         
         
-        System.assertEquals(4,indvl.size(),'This is the right value');
-        //System.assertNotEquals(2,indvl.size(),'Size is four');
+        System.assertEquals(indvl[0].Id,individualReturnedFromMethod[0].Id,'The method worked on the right Id of the Individual');
+        System.assertNotEquals(null,individualReturnedFromMethod[0].Id,'The method worked on the recordId of the Individual, in fact it is not null');
         Test.stopTest();
         
             
@@ -60,109 +58,48 @@ public class HDT_UTL_IndividualTst {
         List<Lead> leadId =[SELECT Id FROM Lead];
         List<String> lstString = new List<String>();
          lstString.add(String.valueOf(leadId[0].Id));
-         HDT_UTL_Individual.createIndividualLead(lstString);
-         List<Lead> l =[SELECT Id FROM Lead];
-        List<Individual> indvl =[SELECT Id FROM Individual];
-        
-        System.assertEquals(4,indvl.size(),'This is the right value');
-        //System.assertNotEquals(2,indvl.size(),'Size is two');
-        Test.stopTest();
-    }
-    
-     @isTest
-    public static void updateConsensoMarketingPrivacy(){
-                Test.startTest();
-         List<Individual> indv =[SELECT Id,MarketingPrivacyVersion__c FROM Individual];
-        Date todayD = date.today(); 
-        
-           HDT_UTL_Individual.updateConsensoMarketingPrivacy(indv[0],'test','Evento','chat',todayD,'HCM');
-                 List<Individual> indvFour =[SELECT Id,MarketingPrivacyVersion__c FROM Individual];
+         List<Individual> returnedIndv = HDT_UTL_Individual.createIndividualLead(lstString);
+         List<Id> listaIdFromReturnedIndv = new List<Id>();
+         for (Individual ind : returnedIndv) {
+           listaIdFromReturnedIndv.add(ind.Id);
+         }
 
-        System.assertEquals(indv[0].Id,indvFour[0].Id,'This is the right value');
-        //System.assertNotEquals(2,indv.size(),'Size is two');
-        Test.stopTest();
-    }
+         System.debug('#### RETURNED ID : ' + listaIdFromReturnedIndv);
+         List<Lead> leads =[SELECT Id,IndividualId FROM Lead WHERE IndividualId IN :listaIdFromReturnedIndv];
+         System.debug('@@@@LISTA DEI LEAD: ' + leads);
+         List<Individual> indvl =[SELECT Id FROM Individual WHERE Id IN :listaIdFromReturnedIndv];
+
         
-    @isTest
-    public static void updateConsensoProfilazionePrivacy(){
-        Test.startTest();
-        List<Individual> indv =[SELECT Id,ProfilingPrivacyVersion__c FROM Individual];
-        Date todayD = date.today();
-          HDT_UTL_Individual.updateConsensoProfilazionePrivacy(indv[0],'Frida','SOL','plico contrattuale',todayD,'MMS');
-         List<Individual> indvUpdates =[SELECT Id,ProfilingPrivacyVersion__c FROM Individual];
-        System.assertEquals(indv[0].Id,indvUpdates[0].Id,'This is the right value');
-        //System.assertNotEquals(2,indv.size(),'Size is two');
+        System.assertEquals(indvl[0].Id,leads[0].IndividualId,'The method updated the lead with the correct Individial Id');
+        System.assertNotEquals(null,leads[0].IndividualId, 'The method correctly updated the Individual Id of The lead');
         Test.stopTest();
     }
     
-     @isTest
-    public static void modifyContentPrivacyMarketing(){
-        Test.startTest();
-        List<Individual> indv =[SELECT Id,MarketingPrivacyVersion__c FROM Individual];
-        Date todayD = date.today();
-         Individual indvReturn = HDT_UTL_Individual.modifyContentPrivacyMarketing(indv[0],'Elfrida','Agenzia','APP My Hera',todayD ,'AAA');
-        System.debug('indvReturn' +indvReturn);
-         List<Individual> indvUpdate =[SELECT Id,MarketingPrivacyVersion__c,PrivacyMarketingConsentInitiative__c FROM Individual];
-        System.assertEquals(indv[0].Id,indvReturn.Id,'This is the right value');
-        //System.assertNotEquals(2,indv.size(),'Size is two');
-                Test.stopTest();
-    }
-        
-     @isTest
-    public static void modifyContentPrivacyProfiling(){
-                Test.startTest();
-        List<Individual> indv =[SELECT Id,ProfilingPrivacyVersion__c FROM Individual];
-        Date todayD = date.today();
-          Individual indvOne = HDT_UTL_Individual.modifyContentPrivacyProfiling(indv[0],'Kora','App','APP My Hera',todayD,'NEWCO');
-        List<Individual> indvUp =[SELECT Id,ProfilingPrivacyVersion__c FROM Individual];
-        System.assertEquals(indv[0].Id,indvOne.Id,'This is the right value');
-        //System.assertNotEquals(2,indv.size(),'Size is two');
-        Test.stopTest();
-    }
-        
-     @isTest
-    public static void modifyContentPrivacyThirdParty(){
-        Test.startTest();
-        List<Individual> indv =[SELECT Id,ThirdPartyPrivacyVersion__c FROM Individual];
-        Date todayD = date.today();
-          Individual indvTwo = HDT_UTL_Individual.modifyContentPrivacyThirdParty(indv[0],'Italy','Call Center','landing page standard',todayD,'EB');
-        List<Individual> indvUps =[SELECT Id,ThirdPartyPrivacyVersion__c FROM Individual];
-        System.assertEquals(indv[0].Id,indvTwo.Id,'This is the right value');
-        //System.assertNotEquals(2,indv.size(),'Size is two');
-        Test.stopTest();
-    }
-        
       @isTest
-    public static void modifyFieldValue(){
-                Test.startTest();
-        List<Individual> indv =[SELECT Id,PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c,PrivacyThirdPartyChoiceSource__c, 
-                                PrivacyMarketingChoiceDate__c,LastName,FirstName,ProfilingCompanyConsent__c,ThirdPartyPrivacyVersion__c,PrivacyThirdPartyConsentInitiative__c,
-                                ProfilingPrivacyVersion__c,PrivacyProfilingChoiceSource__c,PrivacyProfilingConsentInitiative__c,PrivacyProfilingChoiceDate__c,
-                                MarketingPrivacyVersion__c,MarketingCompanyConsent__c,ThirdPartyCompanyConsent__c,PrivacyThirdPartyChoiceDate__c FROM Individual];
-        Date todayD = date.today();
+    public static void testModifyFieldValue(){
+      Test.startTest();
+        List<Individual> indv =[SELECT Id,LastName FROM Individual];
         Map<String,object> params= new Map<String, object>();
         params.put('LastName',indv[0].LastName);
         
-                        HDT_UTL_Individual.modifyFieldValue(params, indv[0].Id);
+        Individual returnedIndivudual = HDT_UTL_Individual.modifyFieldValue(params, indv[0].Id);
+        System.debug('@@@testModifyFieldValue: ' + returnedIndivudual); 
         
-        System.assertEquals(3,indv.size(),'This is the right value');
-             Test.stopTest();
+        System.assertEquals('Guzzo',returnedIndivudual.LastName,'LastNameField correctly taken from method Guzzo');
+        System.assertNotEquals('Test',returnedIndivudual.LastName,'LastName not equal in Test LastNameField in Guzzo, correclty taken from method');
+      Test.stopTest();
     }
     
     @isTest
-    public static void convertLeadToContact(){
-            Test.startTest();
-        List<Individual> indv =[SELECT Id,PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c,PrivacyThirdPartyChoiceSource__c, 
-                                PrivacyMarketingChoiceDate__c,LastName,FirstName,ProfilingCompanyConsent__c,ThirdPartyPrivacyVersion__c,PrivacyThirdPartyConsentInitiative__c,
-                                ProfilingPrivacyVersion__c,PrivacyProfilingChoiceSource__c,PrivacyProfilingConsentInitiative__c,PrivacyProfilingChoiceDate__c,
-                                MarketingPrivacyVersion__c,MarketingCompanyConsent__c,ThirdPartyCompanyConsent__c,PrivacyThirdPartyChoiceDate__c FROM Individual];
-       
-		 List<Contact> contactList = [SELECT Id FROM Contact];
-          HDT_UTL_Individual.convertLeadToContact(contactList[0].Id, indv[0].Id);
+    public static void testConvertLeadToContact(){
+      Test.startTest();
+        List<Individual> indv =[SELECT Id FROM Individual];
+		    List<Contact> contactList = [SELECT Id FROM Contact];
+        Contact returnedContact =  HDT_UTL_Individual.convertLeadToContact(contactList[0].Id, indv[0].Id);
         
-        System.assertEquals(3,indv.size(),'This is the right value');
-        //System.assertNotEquals(2,indv.size(),'Size is two');
-          Test.stopTest();
+        System.assertEquals(indv[0].Id,returnedContact.IndividualId,'The Method updated correctly the Contact IndividualId');
+        System.assertNotEquals(null,returnedContact.IndividualId,'The Method updated correctly the Contact IndividualId, it is not null');
+      Test.stopTest();
         
     }
 
