@@ -338,12 +338,14 @@ public with sharing class HDT_LC_SelfReadingTst {
         Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
         
         //METADATA TYPE HDT_SapWsConfiguration__mdt
+        /*
         HDT_SapWsConfiguration__mdt myMetaData = new HDT_SapWsConfiguration__mdt();
         myMetaData.DeveloperName = 'VerificaUltimaLettura';
         myMetaData.JSON__c = myJSON;
         myMetaData.NamedCredential__c = 'Callout:CheckLastReading';
         
         insert myMetaData;
+        */
         
         //TESTING
         Test.startTest();
