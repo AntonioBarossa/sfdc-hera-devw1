@@ -102,6 +102,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
 
                 queue = queuesMap.get((String) rule.get(assignataryQueue));
                 queueUsage = queueUsageMap.get(queue.QueueId__c);
+                if(queueUsage == null) queueUsage = 0;
 
                 if(queue.DailyCapacity__c == null || queue.DailyCapacity__c > queueUsage) {
                     processedActivity = new wrts_prcgvr__Activity__c(
