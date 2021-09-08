@@ -288,8 +288,6 @@ public with sharing class HDT_LC_SelfReadingTst {
         //SETUP
         setupMorosita();
         
-        
-        
         //SERVICE POINT
         ServicePoint__c servPoint = new ServicePoint__c();
         insert servPoint;
@@ -300,45 +298,48 @@ public with sharing class HDT_LC_SelfReadingTst {
         //ASSERTS
         System.assertEquals('ERROR_NO_ASSET_NUMBER', result);
         
+        
+        
         //TESTING REGULAR
+        
+        
+        
+        //JSON
+        /*
+        {
+            "requestType": "VerificaUltimaLettura",
+            "objects": [
+                {
+                    "objectLabel": "ServicePoint",
+                    "objectName": "ServicePoint__c",
+                    "fields": [
+                        {
+                            "fieldType": "",
+                            "apiName": "ServicePointCode__c",
+                            "label": "herPodPdr"
+                        },
+                        {
+                            "fieldType": "",
+                            "apiName": "SAPImplantCode__c",
+                            "label": "assetNumber"
+                        }
+                    ],
+                    "childObjects":[]
+                }
+            ]
+        }
+        */
+        String myJSON = '{"requestType": "VerificaUltimaLettura","objects": [{"objectLabel": "ServicePoint","objectName": "ServicePoint__c","fields": [{"fieldType": "","apiName": "ServicePointCode__c","label": "herPodPdr"},{"fieldType": "","apiName": "SAPImplantCode__c","label": "assetNumber"}],"childObjects":[]}]}';
+        
+        
         servPoint.SAPImplantCode__c = 'Test_Implant_Code';
         update servPoint;
         
         
         //WEBSERVICE MOCKS
-        //TODO: IMPLEMENT
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
         
-        /*
-
-            queryParameters.childs = childs;
-            queryParameters.fields = setupParameters.fields;
-            queryParameters.objectName = setupParameters.objectName;
-            queryParameters.conditions = 'Id = \'' + recordId + '\'';
-        } catch (Exception ex) {
-            throw ex;
-        }
-        return queryParameters;
-    }
-    
-    //IN SOSTANZA: POPOLARE CAMPI DI OGGETTI IN MODO DA RENDERE POSSIBILE UNA QUERY
-    
-    
-    private static Map<String,List<SObject>> getGenericRecords(HDT_WRP_QueryParameter queryParameters){
-        Map<String,List<SObject>> recordMap = new Map<String,List<SObject>>();
-        HDT_QR_GenericSapIntegrationAdapter queryClass = new HDT_QR_GenericSapIntegrationAdapter();
-        try {
-            List<SObject> records = queryClass.getGenericRecords(queryParameters.fields, queryParameters.objectName, queryParameters.conditions);
-            recordMap.put('parent', records);
-            for(HDT_WRP_QueryParameter child : queryParameters.childs){
-                recordMap.put(child.relationName, queryClass.getGenericRecords(child.fields, child.objectName, child.conditions));
-            }
-        } catch (Exception ex) {
-            throw ex;
-        }
-        return recordMap;
-    }
-
-        */
+        
         
         //HDT_WRP_SapFields
         HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapFields childField_1 = new HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapFields();
@@ -360,8 +361,10 @@ public with sharing class HDT_LC_SelfReadingTst {
         //METADATA TYPE HDT_SapWsConfiguration__mdt
         HDT_SapWsConfiguration__mdt myMetaData = new HDT_SapWsConfiguration__mdt();
         myMetaData.DeveloperName = 'VerificaUltimaLettura';
-        myMetaData.JSON__c = JSON.serialize(mySAPRequest);
-        myMetaData.NamedCredential__c = 'Endpoint_HDT_LC_SelfReadingTst';
+        
+        myMetaData.JSON__c = myJSON;//JSON.serialize(mySAPRequest);
+        
+        myMetaData.NamedCredential__c = 'Callout:CheckLastReading';
         
         
         //TESTING

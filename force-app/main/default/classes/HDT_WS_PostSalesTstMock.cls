@@ -18,7 +18,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
             return creaCreditViewsResponse(request);
         }else if(endpoint.containsIgnoreCase('HDT_AccountBalance')){
             return creaAccountBalanceResponse(request);
-        }else if(endpoint.containsIgnoreCase('Endpoint_HDT_LC_SelfReadingTst')){
+        }else if(endpoint.containsIgnoreCase('Callout:CheckLastReading')){
             return creaCheckLastReadingsResponse(request);
         }else{
             return creaRicResponse(request);
