@@ -26,15 +26,25 @@ public with sharing class HDT_UTL_MorositaTst {
         //TESTING
         Test.startTest();
         Try{
-            result = HDT_UTL_Morosita.transcodeProcess(process);
+
+            HDT_UTL_Morosita myClass1 = new HDT_UTL_Morosita();
+            result = myClass1.transcodeProcess(process);
+
             process = 'Sospensione Fornitura';
-            result = HDT_UTL_Morosita.transcodeProcess(process);
+            HDT_UTL_Morosita myClass2 = new HDT_UTL_Morosita();
+            result = myClass2.transcodeProcess(process);
+            
             process = 'Riattivazione Fornitura';
-            result = HDT_UTL_Morosita.transcodeProcess(process);
+            HDT_UTL_Morosita myClass3 = new HDT_UTL_Morosita();
+            result = myClass3.transcodeProcess(process);
+
             process = 'Risoluzione no sospensione';
-            result = HDT_UTL_Morosita.transcodeProcess(process);
+            HDT_UTL_Morosita myClass4 = new HDT_UTL_Morosita();
+            result = myClass4.transcodeProcess(process);
+
             process = 'Risoluzione no disalimentabile';
-            result = HDT_UTL_Morosita.transcodeProcess(process);            
+            HDT_UTL_Morosita myClass5 = new HDT_UTL_Morosita();
+            result = myClass5.transcodeProcess(process);            
             
         }catch(DmlException e) {
             System.debug('The following exception has occurred: ' + e.getMessage());
@@ -69,7 +79,8 @@ public with sharing class HDT_UTL_MorositaTst {
         //TESTING
         Test.startTest();
         Try{
-            containerId = HDT_UTL_Morosita.handleContainer(myCase);
+            HDT_UTL_Morosita myClass = new HDT_UTL_Morosita();
+            containerId = myClass.handleContainer(myCase);
             
         }catch(DmlException e) {
             System.debug('The following exception has occurred: ' + e.getMessage());
