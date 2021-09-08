@@ -127,7 +127,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         String plugPresence = ord.ServicePoint__r.PlugPresence__c;
         Boolean isChangeUse = ord.SBQQ__Quote__r.AllowChangeUse__c;
         Boolean isAmendmentAllowed = ord.SBQQ__Quote__r.AmendmentAllowed__c;
-        Boolean isReseller = ord.Account.CompanyOwner__c.equalsIgnoreCase('reseller');
+        Boolean isReseller = ord.ServicePoint__r.isReseller__c;//ord.Account.CompanyOwner__c.equalsIgnoreCase('reseller') || ord.ServicePoint__r.isReseller__c;
         //isReseller=false;
 
         system.debug('getAvailableProcesses - isOwnAccount: ' + isOwnAccount);
