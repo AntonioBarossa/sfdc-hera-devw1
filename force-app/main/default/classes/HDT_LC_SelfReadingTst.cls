@@ -289,18 +289,75 @@ public with sharing class HDT_LC_SelfReadingTst {
         setupMorosita();
         
         //SERVICE POINT
+        ServicePoint__c servPoint = new ServicePoint__c();
+        insert servPoint;
         
+        //TESTING ERROR_NO_ASSET_NUMBER
+        String result = HDT_LC_SelfReading.checkLastReadings(servPoint.Id);
+        
+        //ASSERTS
+        System.assertEquals('ERROR_NO_ASSET_NUMBER', result);
+        
+        
+        
+        //TESTING REGULAR
+        
+        //JSON (ESTRAPOLATO DA RECORD ESISTENTE)
+        /*
+        {
+            "requestType": "VerificaUltimaLettura",
+            "objects": [
+                {
+                    "objectLabel": "ServicePoint",
+                    "objectName": "ServicePoint__c",
+                    "fields": [
+                        {
+                            "fieldType": "",
+                            "apiName": "ServicePointCode__c",
+                            "label": "herPodPdr"
+                        },
+                        {
+                            "fieldType": "",
+                            "apiName": "SAPImplantCode__c",
+                            "label": "assetNumber"
+                        }
+                    ],
+                    "childObjects":[]
+                }
+            ]
+        }
+        */
+        String myJSON = '{"requestType": "VerificaUltimaLettura","objects": [{"objectLabel": "ServicePoint","objectName": "ServicePoint__c","fields": [{"fieldType": "","apiName": "ServicePointCode__c","label": "herPodPdr"},{"fieldType": "","apiName": "SAPImplantCode__c","label": "assetNumber"}],"childObjects":[]}]}';
+        
+        
+        servPoint.SAPImplantCode__c = 'Test_Implant_Code';
+        update servPoint;
+        
+        
+        //WEBSERVICE MOCKS
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
+        
+        //METADATA TYPE HDT_SapWsConfiguration__mdt
+        /*
+        HDT_SapWsConfiguration__mdt myMetaData = new HDT_SapWsConfiguration__mdt();
+        myMetaData.DeveloperName = 'VerificaUltimaLettura';
+        myMetaData.JSON__c = myJSON;
+        myMetaData.NamedCredential__c = 'Callout:CheckLastReading';
+        
+        insert myMetaData;
+        */
+        
+        //TESTING
+        Test.startTest();
+            
+            result = HDT_LC_SelfReading.checkLastReadings(servPoint.Id);
+            System.assertEquals('Response_Body_Test_Success', result);
+            
+        Test.stopTest();
+        
+        //ASSERTS
         
         
     }
     
-    
-    /*
-
-    @AuraEnabled
-    public static String checkLastReadings(String servicePointId){
-
-    }
-    
-    */
 }

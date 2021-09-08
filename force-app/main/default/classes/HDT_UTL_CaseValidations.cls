@@ -85,10 +85,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         } else if(caseType == 'Voltura Tecnica'){
 
             result = validateVolturaTecnica(fields);
-        
-        } else if(caseType == 'Allineamento Canone Rai')
-        {
-            result = validateCanoneRai(currentCase, fields);
+ 
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -247,16 +244,20 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
             }
-        }else if(caseType == 'Richiesta Domiciliazione')
+        }else if(caseType == 'Richiesta Domiciliazione' || caseType == 'Attivazione Click&Pay' || caseType == 'Variazione Domiciliazione')
         {
             string fiscalCode =  getFieldValue(fields, 'BankAccountSignatoryFiscalCode__c');
-            string outcome = validateFiscalCode(fiscalCode);
-            if(!String.isEmpty(outcome))
-            {
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', outcome));
-            }
-            else
-            {
+            if(!String.isEmpty(fiscalCode)){
+                string outcome = validateFiscalCode(fiscalCode);
+                if(!String.isEmpty(outcome))
+                {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', outcome));
+                }
+                else
+                {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+                }
+            } else {
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
             }
         }else{
@@ -1095,21 +1096,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }
 
         return outcome;
-    }
-
-    public String validateCanoneRai(Case currentCase, string fields)
-    {
-        string result = '';
-        Date validityDate = Date.valueOf(getFieldValue(fields, 'ResidenceChangeDate__c'));
-        if(validityDate < currentCase.Contract__r.StartDate)
-        {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile inserire una data inferiore a quella di decorrenza del contratto'));
-        }
-        else 
-        {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-        }
-        return result;
     }
 
     // Validazione CF numerico. Se il CF è vuoto lo consideriamo valido.
