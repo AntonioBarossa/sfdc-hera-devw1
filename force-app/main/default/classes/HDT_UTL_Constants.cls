@@ -59,6 +59,13 @@ public with sharing class HDT_UTL_Constants {
     public final String ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE =
     Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_KOPRECEDETECLIENTE).getRecordTypeId();
 
+    //Activity Custom RecordType Credit Check KO
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORAPPOINTMENT = 'HDT_RT_DistributorAppointment';
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPEID_DISTRIBUTORAPPOINTMENT =
+    Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORAPPOINTMENT).getRecordTypeId();
+
     //Order RecordType Default
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Default';

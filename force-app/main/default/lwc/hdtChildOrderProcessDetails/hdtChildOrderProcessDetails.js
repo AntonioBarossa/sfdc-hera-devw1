@@ -80,6 +80,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         return this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.IsBillableVas__c;
     }
 
+    get isCreditCheckVisible(){
+        return this.order.Step__c === 2;
+    }
+
     //INIZIO SVILUPPI EVERIS
     @track readingCustomerDate;
     @track disabledReadingDate;
@@ -319,7 +323,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.confirmedSteps = this.availableStepsFirst.filter(section => (
         section.name !== 'reading'
         && section.name !== 'processVariables' 
-        && section.name !== 'creditCheck' 
+        && section.name !== 'creditCheck'
+        && section.name !== 'Switchout' 
         && section.name !== 'dettaglioImpianto' 
         && section.name !== 'fatturazione' 
         && section.name !== 'datiPrecedenteIntestatario' 
@@ -336,6 +341,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.pendingSteps = this.availableStepsFirst.filter(section => (section.name === 'reading' 
         || section.name === 'processVariables'
         || section.name === 'creditCheck' 
+        || section.name === 'Switchout'
         || section.name === 'dettaglioImpianto' 
         || section.name === 'fatturazione' 
         || section.name === 'datiPrecedenteIntestatario' 
@@ -345,7 +351,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         || section.name === 'riepilogoDatiAmend'
         || section.name === 'dateOrdine'));
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
-        console.log('PENDING HOLA:' + this.pendingSteps);
+        console.log('PENDING HOLA:' + JSON.stringify(this.pendingSteps));
     }
 
     @api
@@ -445,10 +451,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.template.querySelector('c-hdt-accordion-with-click').refreshValues(this.order.Id);
         }).catch(error => {
             this.loading = false;
-            console.log((error.body?.message) ? error.body.message : error.message);
+            console.log((error.body.message !== undefined) ? error.body.message : error.message);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: (error.body?.message) ? error.body.message : error.message,
+                message: (error.body.message !== undefined) ? error.body.message : error.message,
                 variant: 'error'
             });
             this.dispatchEvent(toastErrorMessage);
@@ -868,48 +874,68 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     }
                 ]
             },
+            // {
+            //     step: 3,
+            //     label: 'Credit check',
+            //     name: 'creditCheck',
+            //     objectApiName: 'Order',
+            //     recordId: this.order.Id,
+            //     processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+            //     || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
+            //     || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
+            //     || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
+            //     || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
+            //     || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
+            //     || (this.isNotBillable && !this.order.OrderReferenceNumber && !this.order.ContractReference__c)
+            //     || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+            //     || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
+            //     ,
+            //     data: [
+            //         {
+            //             'label': 'Esito credit Check Entrante',
+            //             'apiname': 'IncomingCreditCheckResult__c',
+            //             'typeVisibility': this.typeVisibility('both'),
+            //             'required': false,
+            //             'disabled': true,
+            //             'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
+            //             'processVisibility': ''
+            //         },
+            //         {
+            //             'label': 'Esito credit Check Uscente',
+            //             'apiname': 'OutgoingCreditCheckResult__c',
+            //             'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && (!this.isNotBillable),
+            //             'required': false,
+            //             'disabled': true,
+            //             'value': this.applyCreditCheckLogic('OutgoingCreditCheckResult__c'),
+            //             'processVisibility': ''
+            //         },
+            //         {
+            //             'label': 'Descrizione esito',
+            //             'apiname': 'CreditCheckDescription__c',
+            //             'typeVisibility': this.typeVisibility('both'),
+            //             'required': false,
+            //             'disabled': true,
+            //             'value': this.applyCreditCheckLogic('CreditCheckDescription__c'),
+            //             'processVisibility': ''
+            //         }
+            //     ]
+            // },
             {
                 step: 3,
-                label: 'Credit check',
-                name: 'creditCheck',
+                label: 'Switch out in corso',
+                name: 'Switchout',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
-                || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
-                || (this.isNotBillable && !this.order.OrderReferenceNumber && !this.order.ContractReference__c)
-                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' != this.order.SwitchOutDate__c != null
                 ,
                 data: [
                     {
-                        'label': 'Esito credit Check Entrante',
-                        'apiname': 'IncomingCreditCheckResult__c',
+                        'label': 'Data Cessazione Switchout',
+                        'apiname': 'SwitchOutDate__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
-                        'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Esito credit Check Uscente',
-                        'apiname': 'OutgoingCreditCheckResult__c',
-                        'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && (!this.isNotBillable),
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('OutgoingCreditCheckResult__c'),
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Descrizione esito',
-                        'apiname': 'CreditCheckDescription__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('CreditCheckDescription__c'),
+                        'value': '',
                         'processVisibility': ''
                     }
                 ]
@@ -2512,6 +2538,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
         //EVERIS
         console.log('CheckVariables');
+
+        if (this.isCreditCheckVisible) {
+            this.dispatchEvent(new CustomEvent('execute_credit_check_poll'));
+        }
+
+        console.log('hdtChildOrderProcessDetails - connectedCallback - END');
     }
 
     renderedCallback(){

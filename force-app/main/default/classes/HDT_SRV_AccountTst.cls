@@ -116,11 +116,13 @@ public with sharing class HDT_SRV_AccountTst {
 
             srvAccount.updateRecord(acc);
 
+            Account account = [SELECT Id, BillingCityCode__c FROM Account WHERE CustomerMarking__c = 'Azienda'];
+
             Test.stopTest();
 
-            System.assertEquals('Cartago', acc.BillingCityCode__c, 'Account successfully updated');
+            System.assertEquals('Cartago', account.BillingCityCode__c, 'Account successfully updated');
 
-            System.assertNotEquals('Roma', acc.BillingCityCode__c, 'Account was not updated');
+            System.assertNotEquals('Roma', account.BillingCityCode__c, 'Account was not updated');
         }
     }
 
@@ -138,11 +140,13 @@ public with sharing class HDT_SRV_AccountTst {
 
             srvAccount.updateRecords(acc);
 
+            Account account = [SELECT Id, BillingCityCode__c FROM Account WHERE CustomerMarking__c = 'Azienda'];
+
             Test.stopTest();
 
-            System.assertEquals('Cartago', acc[0].BillingCityCode__c, 'Account successfully updated');
+            System.assertEquals('Cartago', account.BillingCityCode__c, 'Account successfully updated');
 
-            System.assertNotEquals('Roma', acc[0].BillingCityCode__c, 'Account was not updated');
+            System.assertNotEquals('Roma', account.BillingCityCode__c, 'Account was not updated');
         }
     }
 
@@ -160,11 +164,13 @@ public with sharing class HDT_SRV_AccountTst {
 
             srvAccount.updateRecordsNoShare(acc);
 
+            Account account = [SELECT Id, BillingCityCode__c FROM Account WHERE CustomerMarking__c = 'Azienda'];
+
             Test.stopTest();
 
-            System.assertEquals('Cartago', acc[0].BillingCityCode__c, 'Account successfully updated');
+            System.assertEquals('Cartago', account.BillingCityCode__c, 'Account successfully updated');
 
-            System.assertNotEquals('Roma', acc[0].BillingCityCode__c, 'Account was not updated');
+            System.assertNotEquals('Roma', account.BillingCityCode__c, 'Account was not updated');
         }
     }
 }
