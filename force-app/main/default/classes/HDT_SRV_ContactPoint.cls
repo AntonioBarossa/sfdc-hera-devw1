@@ -1,16 +1,26 @@
+/**
+ * @author Sabina Levonja (sabinalevonja@dunegroup.it)
+ * @date 21/04/2021
+ * @description HDT_SRV_ContactPoint Test Classes
+ * @history Sabina Levonja 21/04/2021 – Created Class
+ */
+
 public with sharing class HDT_SRV_ContactPoint {
     private static final String UPDATEPERMISSION = 'update';
     private static final String UPSERTPERMISSION = 'upsert';
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
 
-    public static void checkAccessInit(String fields, String crud){
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('ContactPoint', fields, crud);
-        securityAccess.checkSecurityAccess();
-    }
+    // the following method was commented due to a reference to 'ContactPoint' (Line 17) which is a
+    // non existing SObject
 
-    public void checkUpsertAccess(String fields){
-        checkAccessInit(fields, UPSERTPERMISSION);
-    }
+    // public static void checkAccessInit(String fields, String crud){
+    //     HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('ContactPoint', fields, crud);
+    //     securityAccess.checkSecurityAccess();
+    // }
+
+    // public void checkUpsertAccess(String fields){
+    //     checkAccessInit(fields, UPSERTPERMISSION);
+    // }
 
     /**
      * @author Elfrida Kora(elfrida.kora@dunegroup.it)
