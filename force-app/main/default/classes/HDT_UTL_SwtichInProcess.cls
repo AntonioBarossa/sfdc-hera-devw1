@@ -15,7 +15,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
             accountIdList.add(ord.AccountId);
         }
         List<Account> ListAccount = accountQr.getRecordsById(accountIdList,'Id,Recordtype.Developername');
-        for(Accoutn a : ListAccount){
+        for(Account a : ListAccount){
             if(mapRes.get(a.id) == null){
                 mapRes.put(a.id,a.recordtype.developername == 'HDT_RT_Residenziale');
             }
