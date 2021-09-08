@@ -31,11 +31,21 @@ public inherited sharing class HDT_QR_ProductAssociation {
     }
 
     public static SBQQ__ProductOption__c getProductOptionRecordById(Id productOptionId){
-        return [
-            SELECT Id, SBQQ__Number__c,SBQQ__OptionalSKU__c
-            FROM SBQQ__ProductOption__c
-            WHERE Id = :productOptionId
-        ];
+        
+        SObjectType objtype = Schema.getGlobalDescribe().get('SBQQ__ProductOption__c');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+        String selectQuery = '';
+
+        if(objRes.isAccessible()){
+
+            return [
+                SELECT Id, SBQQ__Number__c,SBQQ__OptionalSKU__c
+                FROM SBQQ__ProductOption__c
+                WHERE Id = :productOptionId
+            ];
+        } else {
+            return null;
+        }
     }
 
 }

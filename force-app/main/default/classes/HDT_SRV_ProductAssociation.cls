@@ -143,7 +143,7 @@ public inherited sharing class HDT_SRV_ProductAssociation {
             productOptionList.add(newRecord);
         }
         System.debug('>>> record to insert: ' + String.valueOf(productOptionList));
-        insert productOptionList;
+        //insert productOptionList;
     }
 
     public static List<String> getFamilyList(){
