@@ -343,10 +343,12 @@ public with sharing class HDT_LC_SelfReadingTst {
         
         //HDT_WRP_SapFields
         HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapFields childField_1 = new HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapFields();
+        //NOTA: JSON INDICA 0 CHILDREN
         
         //HDT_WRP_SapChildObjects
         HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapChildObjects childObj_1 = new HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapChildObjects();
         childObj_1.fields = new List<HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapFields> {childField_1};
+        //NOTA: JSON INDICA 0 CHILDREN
         
         //HDT_WRP_SapParentObjects
         HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapParentObjects parentObj_1 = new HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapParentObjects();
@@ -361,17 +363,16 @@ public with sharing class HDT_LC_SelfReadingTst {
         //METADATA TYPE HDT_SapWsConfiguration__mdt
         HDT_SapWsConfiguration__mdt myMetaData = new HDT_SapWsConfiguration__mdt();
         myMetaData.DeveloperName = 'VerificaUltimaLettura';
-        
         myMetaData.JSON__c = myJSON;//JSON.serialize(mySAPRequest);
-        
         myMetaData.NamedCredential__c = 'Callout:CheckLastReading';
         
+        insert myMetaData;
         
         //TESTING
         Test.startTest();
             
-            result = HDT_LC_SelfReading.checkLastReadings(servPoint.Id);
-            
+            HDT_WRP_GenericSapIntegration result = HDT_LC_SelfReading.checkLastReadings(servPoint.Id);
+            System.assertEquals('Response_Body_Test_Success', result.bodyResponse);
             
         Test.stopTest();
         

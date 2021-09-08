@@ -159,7 +159,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         System.debug('HDT_WS_PostSalesTstMock - creaCheckLastReadingsResponse');
         HttpResponse response = new HttpResponse();
         
-        String bodyResponse = '';//TODO: IMPLEMENT
+        String bodyResponse = 'Response_Body_Test_Success';
         
         response.setHeader('Content-Type', 'application/json');
         response.setBody(bodyResponse);
