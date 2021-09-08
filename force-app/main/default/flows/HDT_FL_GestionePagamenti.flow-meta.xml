@@ -395,7 +395,7 @@
         <name>AssegnaFase</name>
         <label>AssegnaFase</label>
         <locationX>2404</locationX>
-        <locationY>1550</locationY>
+        <locationY>1910</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -458,6 +458,22 @@
         </assignmentItems>
         <connector>
             <targetReference>AggiornaCase_3</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaPredefault</name>
+        <label>AssegnaPredefault</label>
+        <locationX>2668</locationX>
+        <locationY>1310</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseBillingProfile.ExtremeLastDomiciliation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseBillingProfile.BillingProfile__r.IBAN__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCaseBillingProfile</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -711,7 +727,7 @@
         <locationX>2668</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Screen_Inserimento_Dati_0_0_0</targetReference>
+            <targetReference>GetCaseBillingProfile</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Assegnato</defaultConnectorLabel>
         <rules>
@@ -1300,7 +1316,7 @@
         <name>Salva_in_bozza_o_Conferma_0_0</name>
         <label>Salva in bozza o Conferma?</label>
         <locationX>2668</locationX>
-        <locationY>1310</locationY>
+        <locationY>1670</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0</name>
@@ -1532,7 +1548,7 @@
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>2404</locationX>
-        <locationY>1430</locationY>
+        <locationY>1790</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaFase</targetReference>
@@ -1662,6 +1678,27 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseBillingProfile</name>
+        <label>GetCaseBillingProfile</label>
+        <locationX>2668</locationX>
+        <locationY>1190</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaPredefault</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1890,7 +1927,7 @@
         <locationX>2602</locationX>
         <locationY>878</locationY>
         <connector>
-            <targetReference>Screen_Inserimento_Dati_0_0_0</targetReference>
+            <targetReference>GetCaseBillingProfile</targetReference>
         </connector>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
@@ -1922,6 +1959,16 @@
         <inputReference>GetCaseAggiornato_1</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>AggiornaCaseBillingProfile</name>
+        <label>AggiornaCaseBillingProfile</label>
+        <locationX>2668</locationX>
+        <locationY>1430</locationY>
+        <connector>
+            <targetReference>Screen_Inserimento_Dati_0_0_0</targetReference>
+        </connector>
+        <inputReference>GetCaseBillingProfile</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a Da Inviare</label>
         <locationX>4428</locationX>
@@ -1945,7 +1992,7 @@
         <name>Passa_a_Elaborazione_Manuale</name>
         <label>Passa a Elaborazione Manuale</label>
         <locationX>2404</locationX>
-        <locationY>1670</locationY>
+        <locationY>2030</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2583,7 +2630,7 @@
         <name>Screen_Inserimento_Dati_0_0_0</name>
         <label>Screen Inserimento Dati</label>
         <locationX>2668</locationX>
-        <locationY>1190</locationY>
+        <locationY>1550</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3196,7 +3243,7 @@
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
         <locationX>2668</locationX>
-        <locationY>1430</locationY>
+        <locationY>1790</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

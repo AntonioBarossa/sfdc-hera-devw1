@@ -35,7 +35,8 @@ public inherited sharing class HDT_QR_Order {
         Map<Id, Order> mapIdOrder=new  Map<Id, Order>([
             SELECT
             Name, AccountId,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
-            Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c  
+            Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c,
+            CommercialProduct__c  
             FROM Order 
             WHERE Id IN :orderId
             WITH SECURITY_ENFORCED
@@ -101,6 +102,8 @@ public inherited sharing class HDT_QR_Order {
             Account.FirstName__c,
             Account.LastName__c,
             Account.CompanyOwner__c,
+            Sale__r.SalesContact__c,
+            SwitchOutDate__c,
             Vat__c,
             ExciseGas__c,
             ExciseEle__c,
@@ -129,6 +132,7 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.Account__c,
             ServicePoint__r.distributor__r.name,
             ServicePoint__r.distributor__c,
+            ServicePoint__r.isReseller__c,
             ServicePoint__r.distributor__r.code__c,
             ServicePoint__r.MeterClass__c,
             ServicePoint__r.MeterStatus__c,
@@ -224,7 +228,12 @@ public inherited sharing class HDT_QR_Order {
             ConfirmCustomerContract__c,
             IsVAS__c,
             ServicePoint__r.Resident__c,                     // [ 26/08/2021 gabriele.rota@webresults.it - Calcolo IVA ]
-            ServicePoint__r.Account__r.VATNumber__c
+            ServicePoint__r.Account__r.VATNumber__c,
+            ServicePoint__r.Account__r.RecordType.DeveloperName,
+            Contact__c, //HRAWRM-418
+            OutgoingCreditCheckResult__c,
+            IncomingCreditCheckResult__c,
+            CreditCheckDescription__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

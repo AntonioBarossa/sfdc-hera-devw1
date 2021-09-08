@@ -2,17 +2,20 @@
     <template if:true={theCase.AccountId}>
         <c-hdt-target-object-address-fields accountid={theCase.AccountId} ></c-hdt-target-object-address-fields>
     </template>
-    <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
-        <div class="actionsLeft">
+
+    <template if:false={hideNavigationButtons}>
+        <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+            <div class="actionsLeft">
+            </div>
+            <div class="actionsRight">
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="brand" type="button" name="save" label="Avanti" onclick={handleNext}>
+                </lightning-button>
+                <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
+                    variant="brand" type="button" name="cancel" label="Annulla" onclick={handleCancell}>
+                </lightning-button>
+            </div>
         </div>
-        <div class="actionsRight">
-            <lightning-button
-                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                variant="brand" type="button" name="save" label="Avanti" onclick={handleNext}>
-            </lightning-button>
-            <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
-                variant="brand" type="button" name="cancel" label="Annulla" onclick={handleCancell}>
-            </lightning-button>
-        </div>
-    </div>
+    </template>
 </template>

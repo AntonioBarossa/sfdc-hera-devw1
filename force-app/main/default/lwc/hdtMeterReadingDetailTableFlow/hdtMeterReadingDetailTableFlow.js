@@ -14,6 +14,7 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
     @api selectedReadingsConcatenated;
     @api selectedReadingDate; //UNUSED
     @api selectedReadingDateString;
+    @api disputedReading;
 
     //buttons
     @api nonStandAlone = false;
@@ -75,11 +76,15 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
         if(event.detail != null){
             console.log('Event' + event.detail);
             console.log('Data Lettura ->' + event.detail.dataLetturaPianificata);
+            console.log('LetturaContestata -> ' + event.detail.posizioniPrecedentiLaVirgola);
             let readingDate = event.detail.dataLetturaPianificata;
+            let disputedValue = event.detail.posizioniPrecedentiLaVirgola;
             let dateParse = readingDate.split("/");
             readingDate = dateParse[2] + '-' + dateParse[1] + '-' + dateParse[0];
             const attributeChangeEvent = new FlowAttributeChangeEvent('selectedReadingDateString', readingDate);
             this.dispatchEvent(attributeChangeEvent);
+            const attributeChangeEventDisputed = new FlowAttributeChangeEvent('disputedReading', disputedValue);
+            this.dispatchEvent(attributeChangeEventDisputed);
         }
     }
 

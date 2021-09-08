@@ -118,12 +118,22 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
             if(restMessage.status != 'success'){
                 meterReadingObj.success = false;
-                meterReadingObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
-                meterReadingObj.message += ']; Detail: ' + restMessage.errorDetails.message;
-                meterReadingObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
+
+                meterReadingObj.message += '[CODE: ' + restMessage.errorDetails[0].code + ']; DETAILS: ';
+                for(Integer n=0; n < restMessage.errorDetails.size(); n++){
+                    meterReadingObj.message += restMessage.errorDetails[n].message;
+                    if(n < (restMessage.errorDetails.size()-1)){
+                        meterReadingObj.message += ', ';
+                    }
+                }
+
+                //meterReadingObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
+                //meterReadingObj.message += ']; Detail: ' + restMessage.errorDetails.message;
+                //meterReadingObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
+
                 return meterReadingObj;
             }
-    
+
             meterReadingObj.success = true;
             HDT_WRP_EstrattoLettureResponse responseWrapper = (HDT_WRP_EstrattoLettureResponse) JSON.deserialize(responseCtrl.body, HDT_WRP_EstrattoLettureResponse.class);
 

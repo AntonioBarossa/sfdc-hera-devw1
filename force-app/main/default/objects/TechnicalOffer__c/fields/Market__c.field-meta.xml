@@ -14,12 +14,12 @@
             <value>
                 <fullName>mm</fullName>
                 <default>false</default>
-                <label>mm</label>
+                <label>MM</label>
             </value>
             <value>
                 <fullName>sme</fullName>
                 <default>false</default>
-                <label>sme</label>
+                <label>SME</label>
             </value>
         </valueSetDefinition>
     </valueSet>
