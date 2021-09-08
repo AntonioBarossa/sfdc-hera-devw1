@@ -194,31 +194,34 @@ public with sharing class HDT_UTL_NotifVas {
     **/
     private static void mapPhaseAndStatus(HDT_StatoMotoreVas__mdt statusMapping, Map<String,SObject> sObjMap) {
         try {
-            if (String.isNotBlank(statusMapping.OrderPhase__c)) {
+            if (sObjMap.containsKey('Order')) {
                 Order currentOrder = (Order)sObjMap.get('Order');
-                currentOrder.Phase__c = statusMapping.OrderPhase__c;
-            }
+                if (String.isNotBlank(statusMapping.OrderPhase__c)) {
+                    currentOrder.Phase__c = statusMapping.OrderPhase__c;
+                }
 
-            if (String.isNotBlank(statusMapping.OrderStatus__c)) {
-                Order currentOrder = (Order)sObjMap.get('Order');
-                currentOrder.Status = statusMapping.OrderStatus__c;
+                if (String.isNotBlank(statusMapping.OrderStatus__c)) {
+                    currentOrder.Status = statusMapping.OrderStatus__c;
+                }
             }
     
-            if (String.isNotBlank(statusMapping.CasePhase__c)) {
+            if (sObjMap.containsKey('Case')) {
                 Case currentCase = (Case)sObjMap.get('Case');
-                currentCase.Phase__c = statusMapping.CasePhase__c;
-            }
+                if (String.isNotBlank(statusMapping.CasePhase__c)) {
+                    currentCase.Phase__c = statusMapping.CasePhase__c;
+                }
 
-            if (String.isNotBlank(statusMapping.CaseStatus__c)) {
-                Case currentCase = (Case)sObjMap.get('Case');
-                currentCase.Status = statusMapping.CaseStatus__c;
+                if (String.isNotBlank(statusMapping.CaseStatus__c)) {
+                    currentCase.Status = statusMapping.CaseStatus__c;
+                }
             }
     
-            if (String.isNotBlank(statusMapping.AssetStatus__c)) {
+            if (sObjMap.containsKey('Asset')) {
                 Asset currentAsset = (Asset)sObjMap.get('Asset');
-                currentAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
+                if (String.isNotBlank(statusMapping.AssetStatus__c)) {
+                    currentAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
+                }
             }
-
 
         } catch (Exception e) {
             System.debug(LoggingLevel.ERROR, e.getMessage());
