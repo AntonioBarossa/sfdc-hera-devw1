@@ -51,7 +51,7 @@
         <actionName>HDT_SRV_DocumentSelectedManager</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>GetContractFatturazione_0_0</targetReference>
+            <targetReference>Compatibilita_0_0_0_0_0</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -699,36 +699,6 @@
                 <elementReference>Crea_Case_Voltura_0_0</elementReference>
             </value>
         </assignmentItems>
-    </assignments>
-    <assignments>
-        <name>Assegna_variabili</name>
-        <label>Assegna variabili</label>
-        <locationX>8014</locationX>
-        <locationY>1238</locationY>
-        <assignmentItems>
-            <assignToReference>GetRecord.Contract__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Contract</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetRecord.ServicePoint__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>ServicePointId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetRecord.BillingProfile__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>billingProfile</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AggiornaCase</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Assegna_variabili_fatturazione_0</name>
@@ -1947,7 +1917,7 @@
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
         <locationX>8014</locationX>
-        <locationY>1598</locationY>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>Gestione_Canone_Rai_Subflow</targetReference>
         </defaultConnector>
@@ -6686,37 +6656,6 @@
         </outputAssignments>
     </recordLookups>
     <recordLookups>
-        <name>GetContractFatturazione_0_0</name>
-        <label>GetContractFatturazione</label>
-        <locationX>8014</locationX>
-        <locationY>998</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>GetRecord</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>SAPContractCode__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>ManageDocument.contractCode</elementReference>
-            </value>
-        </filters>
-        <object>Contract</object>
-        <outputAssignments>
-            <assignToReference>billingProfile</assignToReference>
-            <field>BillingProfile__c</field>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>Contract</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>ServicePointId</assignToReference>
-            <field>ServicePoint__c</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
         <name>GetEleRecordType</name>
         <label>GetEleRecordType</label>
         <locationX>10390</locationX>
@@ -6758,27 +6697,6 @@
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>GetRecord</name>
-        <label>GetRecord</label>
-        <locationX>8014</locationX>
-        <locationY>1118</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Assegna_variabili</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>CaseId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Case_Fatturazione_0</name>
         <label>Aggiorna Case Fatturazione</label>
@@ -6788,16 +6706,6 @@
             <targetReference>Check_Arricchimento_Dati_Fatturazione</targetReference>
         </connector>
         <inputReference>CaseFatturazione_0</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>AggiornaCase</name>
-        <label>AggiornaCase</label>
-        <locationX>8014</locationX>
-        <locationY>1358</locationY>
-        <connector>
-            <targetReference>Compatibilita_0_0_0_0_0</targetReference>
-        </connector>
-        <inputReference>GetRecord</inputReference>
     </recordUpdates>
     <screens>
         <name>ErrorScreen_0</name>
@@ -7305,7 +7213,7 @@
         <name>Compatibilita_0_0_0_0_0</name>
         <label>Compatibilita</label>
         <locationX>8014</locationX>
-        <locationY>1478</locationY>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
@@ -7397,7 +7305,7 @@
         <name>Gestione_Canone_Rai_Subflow</name>
         <label>Gestione Canone Rai Subflow</label>
         <locationX>8234</locationX>
-        <locationY>2030</locationY>
+        <locationY>1550</locationY>
         <flowName>HDT_FL_GestioneCanoneRai</flowName>
         <inputAssignments>
             <name>InputCase</name>
