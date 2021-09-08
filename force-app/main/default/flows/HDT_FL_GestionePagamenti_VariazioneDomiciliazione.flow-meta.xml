@@ -605,7 +605,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Conferma</defaultConnectorLabel>
         <rules>
-            <name>ConfermaDocumentale</name>
+            <name>Annuulla</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>

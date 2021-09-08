@@ -20,11 +20,14 @@ public class HDT_LC_AccountStatementControllerTst {
         HDT_WRP_AccountStatement.HDT_WRP_Tabs tabMetadata;
 
         Test.startTest();
+        
         tabMetadata = HDT_LC_AccountStatementController.getTabsMetaData();
-        Test.stopTest();
-
+        
         System.assertEquals(true, tabMetadata.success, '');
         System.assertEquals(10, tabMetadata.tabDetail.size(), '');
+        
+        Test.stopTest();
+
     }
 
     @isTest
@@ -33,10 +36,16 @@ public class HDT_LC_AccountStatementControllerTst {
 
         Test.startTest();
         secLevColumnsObj = HDT_LC_AccountStatementController.getSecondLevelColumns('EC');
-        Test.stopTest();
-
+        
         System.debug('>>> columnObj ' + secLevColumnsObj.columnObj.size());
         System.debug('>>> buttonList ' + secLevColumnsObj.buttonList.size());
+
+        System.assertEquals(true, secLevColumnsObj.success, 'success != true');
+        System.assert(secLevColumnsObj.columnObj.size() > 0, 'columnObj.size() == 0');
+        System.assert(secLevColumnsObj.buttonList.size() > 0, 'buttonList.size() == 0');
+
+        Test.stopTest();
+
     }
 
     @isTest
@@ -48,6 +57,11 @@ public class HDT_LC_AccountStatementControllerTst {
 
         Test.startTest();
         colObj = HDT_LC_AccountStatementController.getTabConfiguration('EC', accountId);
+
+        System.assertEquals(true, colObj.success, 'success != true');
+        System.assert(colObj.confObj != null , 'confObj != null');
+        System.assert(colObj.columnObj.size() > 0, 'columnObj.size() == 0');
+
         Test.stopTest();
 
     }
@@ -55,7 +69,10 @@ public class HDT_LC_AccountStatementControllerTst {
     @isTest
     static void getPicklistValue(){
         Test.startTest();
+
         String picklistValue = HDT_LC_AccountStatementController.getPicklistValue('EC', 'StepValues');
+        System.assert(!String.isBlank(picklistValue), 'picklistValue == null');
+
         Test.stopTest();
 
     }
@@ -66,6 +83,12 @@ public class HDT_LC_AccountStatementControllerTst {
 
         Test.startTest();
         picklist = HDT_LC_AccountStatementController.getFieldValues('EC');
+
+        System.assertEquals(true, picklist.success, 'success != true');
+        System.assert(String.isBlank(picklist.message), 'message != null');
+        System.assert(picklist.companyList.size() > 0, 'companyList.size() == 0');
+        System.assert(picklist.joinLevelList.size() > 0, 'joinLevelList.size() == 0');
+
         Test.stopTest();
 
     }
@@ -75,6 +98,8 @@ public class HDT_LC_AccountStatementControllerTst {
         Test.setMock(HttpCalloutMock.class, new HDT_LC_AccountStatementControllerTstMock());
 
         HDT_WRP_AccountStatement.HDT_WRP_TechObj techObj;
+
+        List<String> tabCodes = new List<String> { 'EC' , 'EC1' , 'EC3', 'EC4', 'EC6', 'EC7', 'EC9', 'paperless'};
 
         List<String> requestTypeList = new List<String>();
         requestTypeList.add('home');
@@ -96,18 +121,28 @@ public class HDT_LC_AccountStatementControllerTst {
         ];
 
         Test.startTest();
-        techObj = new HDT_WRP_AccountStatement.HDT_WRP_TechObj();
-        techObj.recordId = String.valueOf(account.Id);
-        techObj.customerCode = String.valueOf(account.CustomerCode__c);
-        techObj.tabCode = 'EC';
-        techObj.statementType = 'ORDINARIO';
-        techObj.aggregation = '03';
 
-        Object obj;
-        for(String s : requestTypeList){
-            techObj.requestType = s;
-            obj = HDT_LC_AccountStatementController.callMulesoft(JSON.serialize(techObj, true), null);
+        for (String code : tabCodes){
+
+            techObj = new HDT_WRP_AccountStatement.HDT_WRP_TechObj();
+            techObj.recordId = String.valueOf(account.Id);
+            techObj.customerCode = String.valueOf(account.CustomerCode__c);
+            techObj.tabCode = code;
+            techObj.statementType = 'ORDINARIO';
+            techObj.aggregation = '03';
+    
+            String reqObj = '{"tipoTransazione":"EC2","tipoEstrattoConto":"ORDINARIO","loginId":"0-1","dataInizio":"2016-09-08","dataFine":"2021-09-08","codiceCliente":"1003616210","applicativo":"ML","aggregazione":"03"}';
+    
+            Object obj;
+            for(String s : requestTypeList){
+                techObj.requestType = s;
+                obj = HDT_LC_AccountStatementController.callMulesoft(JSON.serialize(techObj, true), reqObj);
+    
+                System.assert(obj != null, 'obj == null');
+            }
+
         }
+
 
         Test.stopTest();
 
@@ -149,8 +184,15 @@ public class HDT_LC_AccountStatementControllerTst {
         objList.add(obj1);
         serviceCatalogResponse = HDT_LC_AccountStatementController.serviceCatalogBackendHandler('EC', account.Id, JSON.serialize(objList, true), '1');
 
+        System.assertEquals(true, serviceCatalogResponse.success, 'success != true');
+        System.assert(!String.isBlank(serviceCatalogResponse.serviceCatalogId), 'serviceCatalogId == null');
+
         objList.add(obj2);
         serviceCatalogResponse = HDT_LC_AccountStatementController.serviceCatalogBackendHandler('EC', account.Id, JSON.serialize(objList, true), '1');
+
+        System.assertEquals(true, serviceCatalogResponse.success, 'success != true');
+        System.assert(!String.isBlank(serviceCatalogResponse.serviceCatalogId), 'serviceCatalogId == null');
+
         Test.stopTest();
     }
 
