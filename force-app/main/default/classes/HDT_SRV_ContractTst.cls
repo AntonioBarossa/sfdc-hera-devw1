@@ -73,11 +73,13 @@ public with sharing class HDT_SRV_ContractTst {
 
             srvContract.updateRecords(ctt);
 
+            Contract contract = [SELECT Id, Name FROM Contract WHERE SAPContractCode__c='3011913470'];
+
             Test.stopTest();
 
-            System.assertEquals('updateName', ctt[0].Name, 'Contact successfully updated');
+            System.assertEquals('updateName', contract.Name, 'Contact successfully updated');
 
-            System.assertNotEquals('', ctt[0].Name, 'Contact was not updated');
+            System.assertNotEquals('', contract.Name, 'Contact was not updated');
         }
     }
 }

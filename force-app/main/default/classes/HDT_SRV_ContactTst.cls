@@ -153,9 +153,11 @@ public with sharing class HDT_SRV_ContactTst {
 
             Test.stopTest();
 
-            System.assertEquals('updateName', ctt[0].FirstName, 'Contact successfully updated');
+            Contact contact = [SELECT Id, FirstName FROM Contact WHERE CompanyOwner__c='HERA COMM'];
 
-            System.assertNotEquals('test tester', ctt[0].FirstName, 'Contact was not updated');
+            System.assertEquals('updateName', contact.FirstName, 'Contact successfully updated');
+
+            System.assertNotEquals('test tester', contact.FirstName, 'Contact was not updated');
         }
     }
 }
