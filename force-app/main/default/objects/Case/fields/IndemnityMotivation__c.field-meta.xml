@@ -5,7 +5,8 @@
     <formula>IF(AND(
 				ISPICKVAL(ComplaintType__c,&quot;Reclamo Scritto&quot;),
 				OR(IndemnityDueSendResponse__c &gt; 0, IndemnityDueBilllingCorrection__c &gt; 0), 
-			IndemnityConfirmed__c),
+			!IndemnityConfirmed__c,
+    OR(CONTAINS(TEXT(Phase__c),&quot;Risposta Inviata&quot;))),
 			&quot;Altro indennizzo stesso anno solare&quot;,
 			null)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
