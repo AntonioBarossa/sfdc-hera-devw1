@@ -323,7 +323,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.confirmedSteps = this.availableStepsFirst.filter(section => (
         section.name !== 'reading'
         && section.name !== 'processVariables' 
-        && section.name !== 'creditCheck' 
+        && section.name !== 'creditCheck'
+        && section.name !== 'Switchout' 
         && section.name !== 'dettaglioImpianto' 
         && section.name !== 'fatturazione' 
         && section.name !== 'datiPrecedenteIntestatario' 
@@ -340,6 +341,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.pendingSteps = this.availableStepsFirst.filter(section => (section.name === 'reading' 
         || section.name === 'processVariables'
         || section.name === 'creditCheck' 
+        || section.name === 'Switchout'
         || section.name === 'dettaglioImpianto' 
         || section.name === 'fatturazione' 
         || section.name === 'datiPrecedenteIntestatario' 
@@ -918,6 +920,26 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             //         }
             //     ]
             // },
+            {
+                step: 3,
+                label: 'Switch out in corso',
+                name: 'Switchout',
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' != this.order.SwitchOutDate__c != null
+                ,
+                data: [
+                    {
+                        'label': 'Data Cessazione Switchout',
+                        'apiname': 'SwitchOutDate__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    }
+                ]
+            },
             {
                 step: 3,
                 label: 'Variabili di Processo',

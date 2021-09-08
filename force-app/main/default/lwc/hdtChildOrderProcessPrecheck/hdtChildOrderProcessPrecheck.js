@@ -790,7 +790,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             && !(this.creditCheckResult.IncomingCreditCheckResult__c !== undefined || this.creditCheckResult.OutgoingCreditCheckResult__c !== undefined || this.creditCheckResult.CreditCheckDescription__c !== undefined)
             ){
 
-            if (count > 2) {
+            if (count > 1) {
                 time = 3000;
             }
 

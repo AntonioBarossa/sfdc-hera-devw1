@@ -3803,6 +3803,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>CampaignMember.Ecid__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMember.isToSendStatusReitek__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMember.reitekAgentUserId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -14307,6 +14317,11 @@
         <field>Order.ReminderComfortCall__c</field>
         <readable>true</readable>
     </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SwitchOutDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.Activity__c</field>
@@ -24560,6 +24575,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.isReseller__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SwitchOutDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
