@@ -50,4 +50,11 @@ public with sharing class HDT_QR_City {
         }
         return cities;
     }
+    public static List<City__c> getRecordByComune(String comune){
+       
+        String query = 'SELECT Name, BelfioreCode__c, Province__c FROM City__c WHERE Name = :comune WITH SECURITY_ENFORCED';
+        List<City__c>  municipalities= Database.query(query);
+       
+        return municipalities;
+    }
 }

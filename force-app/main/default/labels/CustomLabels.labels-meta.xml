@@ -624,4 +624,11 @@
         <shortDescription>SuccessfulCertificationRequest</shortDescription>
         <value>The certification request was created successfully</value>
     </labels>
+    <labels>
+        <fullName>UnsupportedObjectType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UnsupportedObjectType</shortDescription>
+        <value>Object Type not supported for this action</value>
+    </labels>
 </CustomLabels>

@@ -27,7 +27,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
 
             if (t.IsSms__c == True) {
                 // TODO: rendere parametrica la lunghezza.
-                if (t.Description.length() > 320) {
+                if (t.Description != null && t.Description.length() > 320) {
                     t.addError('È necessario inserire un testo inferiore a 320 caratteri.');
                 }
                 
@@ -164,7 +164,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
 
     // Rimuove il WhoId, qualora presente, se l'operatore ha inserito un destinatario alternativo (cellulare o PEC).
     // DA FIXARE - al momento rimuovere sempre il WhoId, invece dovrebbe toglierlo solo se il numero alternativo è diverso dal numero del Contact.
-    private void removeWhoId() {
+    /*private void removeWhoId() {
 
         Set<Id> taskIds = new Set<Id>();
         for (Task t : (List<Task>) Trigger.new) {
@@ -185,7 +185,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
             HDT_UTL_DatabaseService.updateSObject(tasksToUpdate);
         }
 
-    }
+    }*/
 
     private Integer doxeeTemplateCode(String doxeeTemplate) {
 
