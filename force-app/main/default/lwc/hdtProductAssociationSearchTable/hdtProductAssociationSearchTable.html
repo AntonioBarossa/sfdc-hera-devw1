@@ -71,8 +71,9 @@
                     <lightning-datatable
                             key-field="id"
                             data={data}
-                            columns={columns}>
-                    </lightning-datatable>
+                            columns={columns}
+                            onrowselection={getSelectedRow}
+                    ></lightning-datatable>
                 </div> 
             </div>
         </div>

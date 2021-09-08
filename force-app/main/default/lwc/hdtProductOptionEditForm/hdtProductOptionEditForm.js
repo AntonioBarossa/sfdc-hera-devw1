@@ -3,7 +3,7 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 export default class HdtProductOptionEditForm extends LightningElement {
 
-    @api configuredSkuId;
+    @api optionalSkuId;
     productOptionId;
 
     fieldsList = [

@@ -5,7 +5,7 @@ public inherited sharing class HDT_QR_ProductAssociation {
         SObjectType objtype = Schema.getGlobalDescribe().get('Product2');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
         String queryString = '';
-        
+
         if(objRes.isAccessible()){
             queryString += 'SELECT count() ';
             queryString += 'FROM Product2';
@@ -24,7 +24,7 @@ public inherited sharing class HDT_QR_ProductAssociation {
         if(objRes.isAccessible()){
 
             String queryString = '';
-            queryString += 'SELECT DescriptionSAP__c, ProductCode, Version__c, Name, Family ';
+            queryString += 'SELECT Id, DescriptionSAP__c, ProductCode, Version__c, Name, Family ';
             queryString += 'FROM Product2';
             queryString += whereCondition;
 
@@ -34,6 +34,14 @@ public inherited sharing class HDT_QR_ProductAssociation {
         }
 
         return prodList;
+    }
+
+    public static SBQQ__ProductOption__c getProductOptionRecordById(Id productOptionId){
+        return [
+            SELECT Id
+            FROM SBQQ__ProductOption__c
+            WHERE Id = :productOptionId
+        ];
     }
 
 }

@@ -2,6 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import getProductList from '@salesforce/apex/HDT_LC_ProductAssociation.getProductList';
 import runProductOptionAssociation from '@salesforce/apex/HDT_LC_ProductAssociation.runProductOptionAssociation';
 import { deleteRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const columns = [
     { label: 'Decrsizione prodotto', fieldName: 'DescriptionSAP__c' },
@@ -10,6 +11,8 @@ const columns = [
     { label: 'Nome Prodotto', fieldName: 'Name' },
     { label: 'Famiglia', fieldName: 'Family'}
 ];
+
+const recordIdList = [];
 
 export default class HdtProductAssociationSearchTable extends LightningElement {
 
@@ -25,14 +28,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     illustrationMessage = 'I risultati verranno mostrati qui';
     
     productId = '';
-    data = [
-        //{id: '1', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
-        //{id: '2', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
-        //{id: '3', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
-        //{id: '4', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
-        //{id: '5', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'},
-        //{id: '6', productDescription: 'text', version: 'text', productCode: 'text', productName: 'text', productFamily: 'text'}
-    ];
+    data = [];
     columns = columns;
     fieldsList = [
         'Name',       'TypeOffer__c',   'ProductCode',       'Family',
@@ -132,7 +128,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                     this.modalObj.header = this.label.confirmSelectedTitle;
                     this.modalObj.body = this.label.confirmSelectedBody;
                     break;
-                case 'goBackToRecord':
+                case 'closeModal':
                     this.modalObj.header = this.label.closeTitle;
                     this.modalObj.body = this.label.closeBody;
                     break;
@@ -165,10 +161,44 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         }
     }
 
+    getSelectedRow(event) {
+        const selectedRows = event.detail.selectedRows;
+
+        for (let i = 0; i < selectedRows.length; i++){
+            console.log("You selected: " + JSON.stringify(selectedRows[i]));
+        }
+
+        console.log('>>> selectedRows ' + selectedRows.length);
+
+    }
+
     confirmSelected(event){
         console.log('>>>> confirmSelected ');
+        this.spinner = true;
+        var el = this.template.querySelector('lightning-datatable');
+        var selected = el.getSelectedRows();
+        console.log('>>> selectedRows ' + selected.length);
+        for (let i = 0; i < selected.length; i++){
+            console.log("You selected: " + JSON.stringify(selected[i]));
+            recordIdList.push(selected[i].Id);
+        }
+        this.runProductOptionAssociation('select');
+    }
 
-        runProductOptionAssociation({productOptionId: this.productOptionId, recordList: '', selectedAll: false})
+    confirmAll(event){
+        console.log('>>>> confirmAll ');
+        this.runProductOptionAssociation('all');
+    }
+
+    confirmFiltered(event){
+        console.log('>>>> confirmFiltered ');
+        this.runProductOptionAssociation('filter');
+    }
+
+    runProductOptionAssociation(executionType){
+        console.log('>>>> runProductOptionAssociation ');
+
+        runProductOptionAssociation({productOptionId: this.productOptionId, recordList: recordIdList, executionType: executionType})
         .then(result => {
             console.log('# response #');
             console.log('# resp -> ' + result.success);
@@ -186,20 +216,30 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
             } else {
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
-                toastObj.variant = 'warning';                    
+                toastObj.variant = 'warning';
             }
 
-            setTimeout(() => {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: toastObj.title,
-                        message: toastObj.message,
-                        variant: toastObj.variant
-                    }),
-                );
-                this.spinnerObj.spinner = false;
-                this.goBackToRecord();
-            }, 2000);
+            this.spinner = false;
+
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: toastObj.title,
+                    message: toastObj.message,
+                    variant: toastObj.variant
+                }),
+            );
+
+            //setTimeout(() => {
+            //    this.dispatchEvent(
+            //        new ShowToastEvent({
+            //            title: toastObj.title,
+            //            message: toastObj.message,
+            //            variant: toastObj.variant
+            //        }),
+            //    );
+            //    this.spinnerObj.spinner = false;
+            //    this.goBackToRecord();
+            //}, 2000);
 
         })
         .catch(error => {
@@ -215,10 +255,6 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                 }),
             );
         });
-    }
-
-    confirmAll(event){
-        console.log('>>>> confirmAll ');
     }
 
     closeModal(event){
