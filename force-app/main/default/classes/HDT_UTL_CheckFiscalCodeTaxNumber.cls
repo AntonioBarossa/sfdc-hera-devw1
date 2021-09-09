@@ -75,7 +75,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 list <String> stringCharacters = fiscalCode.toUpperCase().split('');
                 System.debug('stringCharacters: '+stringCharacters);
                 Boolean isValid=true;
-                for (Integer i = 0; i < 6; i++) {
+                for (Integer i = 0; i < 15; i++) {
                     if (i<6 && !listAlf.contains(stringCharacters.get(i))) {
                         System.debug('prime 6 lettere : '+stringCharacters.get(i));
                         isValid=false;
@@ -227,7 +227,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                
                 list <String> stringCharacters = fiscalCode.toUpperCase().split('');
                 System.debug('stringCharacters: '+stringCharacters);
-                for (Integer i = 0; i < 6; i++) {
+                for (Integer i = 0; i < 15; i++) {
                     if (i<6 && !listAlf.contains(stringCharacters.get(i))) {
                         System.debug('prime 6 lettere : '+stringCharacters.get(i));
                         isValid=false;
