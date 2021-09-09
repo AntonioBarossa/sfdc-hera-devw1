@@ -45,10 +45,10 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
     
     //controllerHandler
     @isTest
-    private static void getDocumentTest() {
+    private static void controllerHandlerTest() {
         
         //DEBUG
-        String debugString = TEST_NAME + ' - ' + 'isValidPhaseTest';
+        String debugString = TEST_NAME + ' - ' + 'controllerHandlerTest';
         System.debug(debugString);
         
         //SETUP 
@@ -68,6 +68,7 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         docPA1.Type__C = 'Test_Type';
         DocumentalPayloadAdministration__c docPA2 = new DocumentalPayloadAdministration__c();
         docPA2.Context1__c = true;
+        docPA2.Iterative__c = 'NotEmpty';
         docPA2.Type__C = 'Test_Type';
         
         DocumentalPayloadAdministration__c docPA3 = new DocumentalPayloadAdministration__c();
@@ -75,6 +76,7 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         docPA3.Type__C = 'Test_Type';
         DocumentalPayloadAdministration__c docPA4 = new DocumentalPayloadAdministration__c();
         docPA4.Context2__c = true;
+        docPA4.Iterative__c = 'NotEmpty';
         docPA4.Type__C = 'Test_Type';
         
         DocumentalPayloadAdministration__c docPA5 = new DocumentalPayloadAdministration__c();
@@ -82,13 +84,16 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         docPA5.Type__C = 'Test_Type';
         DocumentalPayloadAdministration__c docPA6 = new DocumentalPayloadAdministration__c();
         docPA6.Context3__c = true;
+        docPA6.Iterative__c = 'NotEmpty';
         docPA6.Type__C = 'Test_Type';
         
         DocumentalPayloadAdministration__c docPA7 = new DocumentalPayloadAdministration__c();
         docPA7.Context4__c = true;
         docPA7.Type__C = 'Test_Type';
+        
         DocumentalPayloadAdministration__c docPA8 = new DocumentalPayloadAdministration__c();
         docPA8.Context4__c = true;
+        docPA8.Iterative__c = 'NotEmpty';
         docPA8.Type__C = 'Test_Type';
         
         
