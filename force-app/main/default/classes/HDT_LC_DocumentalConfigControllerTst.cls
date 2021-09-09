@@ -43,4 +43,71 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         
     }
     
+    //controllerHandler
+    @isTest
+    private static void getDocumentTest() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'isValidPhaseTest';
+        System.debug(debugString);
+        
+        //SETUP 
+        Document myDoc = new Document();
+        myDoc.Name = 'TestDoc';
+        myDoc.FolderId = folderId;
+        
+        insert myDoc;
+        
+        
+        //(no insert)
+        DocumentalPayloadAdministration__c docPA1 = new DocumentalPayloadAdministration__c();
+        docPA1.Context1__c = true;
+        docPA1.Type__C = 'Test_Type';
+        DocumentalPayloadAdministration__c docPA2 = new DocumentalPayloadAdministration__c();
+        docPA2.Context1__c = true;
+        docPA2.Type__C = 'Test_Type';
+        
+        DocumentalPayloadAdministration__c docPA3 = new DocumentalPayloadAdministration__c();
+        docPA3.Context2__c = true;
+        docPA3.Type__C = 'Test_Type';
+        DocumentalPayloadAdministration__c docPA4 = new DocumentalPayloadAdministration__c();
+        docPA4.Context2__c = true;
+        docPA4.Type__C = 'Test_Type';
+        
+        DocumentalPayloadAdministration__c docPA5 = new DocumentalPayloadAdministration__c();
+        docPA5.Context3__c = true;
+        docPA5.Type__C = 'Test_Type';
+        DocumentalPayloadAdministration__c docPA6 = new DocumentalPayloadAdministration__c();
+        docPA6.Context3__c = true;
+        docPA6.Type__C = 'Test_Type';
+        
+        DocumentalPayloadAdministration__c docPA7 = new DocumentalPayloadAdministration__c();
+        docPA7.Context4__c = true;
+        docPA7.Type__C = 'Test_Type';
+        DocumentalPayloadAdministration__c docPA8 = new DocumentalPayloadAdministration__c();
+        docPA8.Context4__c = true;
+        docPA8.Type__C = 'Test_Type';
+        
+        
+        DocumentalPayloadAdministration__c docPATDRV = new DocumentalPayloadAdministration__c();
+        docPATDRV.Type__C = 'TDRV';
+        
+        //TESTING NO RECORDS
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult result = HDT_LC_DocumentalConfigController.controllerHandler();
+        
+        //ASSERTS
+        System.assert(!response.success);
+        System.assertEquals('No records found', response.message);
+        
+        //TESTING WITH RECORDS
+        insert new List<SObject>{docPA1, docPA2, docPA3, docPA4, docPA5, docPA6, docPA7, docPA8, docPATDRV};
+        result = HDT_LC_DocumentalConfigController.controllerHandler();
+        
+        //ASSERTS
+        
+        
+        
+    }
+    
+    
 }
