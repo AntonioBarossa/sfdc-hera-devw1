@@ -26,6 +26,10 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>HDT_LC_ReportNavigatorController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_TRH_Case</apexClass>
         <enabled>false</enabled>
     </classAccesses>
