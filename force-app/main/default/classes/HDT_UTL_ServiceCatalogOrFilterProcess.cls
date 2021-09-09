@@ -215,28 +215,28 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Gestione Calamità'}
+                {'Gestione Calamità','Esercizio Diritti Privacy'}
         },
     'Richiestaparere' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Gestione Calamità', 'Errore di Fatturazione'}
+                {'Gestione Calamità', 'Errore di Fatturazione','Esercizio Diritti Privacy'}
         },
     'VariazioneAnagraficaCliente' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta'}
+                {'Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta','Esercizio Diritti Privacy'}
         },
     'VariazionesuAmministratore' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta'}
+                {'Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta','Esercizio Diritti Privacy'}
         },
     'GestioneDisalimentabilità' => new Map<String,List<String>>
         {
