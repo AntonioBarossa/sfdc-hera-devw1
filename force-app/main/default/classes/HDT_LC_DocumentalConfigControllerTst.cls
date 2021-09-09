@@ -65,6 +65,7 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         //(no insert)
         DocumentalPayloadAdministration__c docPA1 = new DocumentalPayloadAdministration__c();
         docPA1.Context1__c = true;
+        docPA1.IsData__c = true;
         docPA1.Type__C = 'Test_Type';
         DocumentalPayloadAdministration__c docPA2 = new DocumentalPayloadAdministration__c();
         docPA2.Context1__c = true;
@@ -73,6 +74,7 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         
         DocumentalPayloadAdministration__c docPA3 = new DocumentalPayloadAdministration__c();
         docPA3.Context2__c = true;
+        docPA1.IsData__c = true;
         docPA3.Type__C = 'Test_Type';
         DocumentalPayloadAdministration__c docPA4 = new DocumentalPayloadAdministration__c();
         docPA4.Context2__c = true;
@@ -81,6 +83,7 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         
         DocumentalPayloadAdministration__c docPA5 = new DocumentalPayloadAdministration__c();
         docPA5.Context3__c = true;
+        docPA1.IsData__c = false;
         docPA5.Type__C = 'Test_Type';
         DocumentalPayloadAdministration__c docPA6 = new DocumentalPayloadAdministration__c();
         docPA6.Context3__c = true;
@@ -89,8 +92,8 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         
         DocumentalPayloadAdministration__c docPA7 = new DocumentalPayloadAdministration__c();
         docPA7.Context4__c = true;
+        docPA1.IsData__c = false;
         docPA7.Type__C = 'Test_Type';
-        
         DocumentalPayloadAdministration__c docPA8 = new DocumentalPayloadAdministration__c();
         docPA8.Context4__c = true;
         docPA8.Iterative__c = 'NotEmpty';
