@@ -31,8 +31,8 @@ public class HDT_UTL_ContactPointTst {
         emailsList.add('test@test.com');
         List<ContactPointEmail> cpe = HDT_UTL_ContactPoint.instanceMultiContactPointEmail(emailsList,true);
         
-        System.assertEquals(cpe.size(), 1, 'Success');
-        System.assertNotEquals(cpe.size(), 0, 'Error');
+        System.assertEquals(emailsList[0],cpe[0].EmailAddress,'The methoed return correctly the mail passed parameter as string: test@test.com');
+        System.assertNotEquals(null,cpe[0].EmailAddress,'The methoed return corretly the mail passed parameter as string,as we can see its not null');
         Test.stopTest();     
         
     }
@@ -45,8 +45,8 @@ public class HDT_UTL_ContactPointTst {
         pointPhone.add('06958652687');
 
         List<ContactPointPhone> cpp = HDT_UTL_ContactPoint.verifyContactPointPhone(indId,pointPhone);
-         System.assertEquals(pointPhone.size(), 2, 'Acceptable');
-          System.assertNotEquals(pointPhone.size(), 0, 'Unacceptable');
+        System.assertEquals(pointPhone[0], cpp[0].TelephoneNumber, 'The method return correctly the number passed parameter as string: 06958659787');
+        System.assertNotEquals(null,cpp[0].TelephoneNumber, 'The methoed return correctly the numbers passed parameter as string as we can see its not null');
                 Test.stopTest();     
    
     }
@@ -58,9 +58,9 @@ public class HDT_UTL_ContactPointTst {
         mails.add('elfrida.kora@dunegroup.it');
         mails.add('frida.kora@dunegroup.it');
         
-        List<ContactPointEmail> cpe = HDT_UTL_ContactPoint.verifyContactPointEmail(indId,mails);
-        System.assertEquals(mails.size(), 2, 'YES');
-        System.assertNotEquals(mails.size(), 0, 'NO');
+        List<ContactPointEmail> cpee = HDT_UTL_ContactPoint.verifyContactPointEmail(indId,mails);
+        System.assertEquals(mails[0],cpee[0].EmailAddress,'The methoed return correctly the mail passed parameter as string:elfrida.kora@dunegroup.it');
+        System.assertNotEquals(null,cpee[0], 'The methoed return correctly the mail passed parameter as string as we can see its not null');
            Test.stopTest();     
         
     }
@@ -85,10 +85,11 @@ public class HDT_UTL_ContactPointTst {
             prefix.put(indId,'+39');
         
         HDT_UTL_ContactPoint.createContactPointPhone(maps,params,prefix,'Casa');
+        System.debug('phoneL' +phoneL);
         
 
-        System.assertEquals(phoneL.size(), 2, 'This is my number of phone');
-        System.assertNotEquals(phoneL.size(), 0, 'This number is null');
+        System.assertEquals(phoneL.size(), 2, 'The method return correctly the number passed parameter as string');
+        System.assertNotEquals(phoneL.size(), 0, 'The methoed return correctly the number passed parameter as string as we can see its not null');
            Test.stopTest();
         
     }
@@ -120,8 +121,8 @@ public class HDT_UTL_ContactPointTst {
         HDT_UTL_ContactPoint.createContactPointPhoneContact(mymap,parimary,myNumb,'Casa',firstMap);
         
 
-        System.assertEquals(phoneList.size(),2, 'Phone List with numbers');
-        System.assertNotEquals(phoneList.size(),0, 'Phone List without numbers');
+        System.assertEquals(phoneList.size(),2, 'The method return correctly the number passed parameter as string');
+        System.assertNotEquals(phoneList.size(),0, 'The methoed return correctly the number passed parameter as string as we can see its not null');
            Test.stopTest();
                 
     }
@@ -143,8 +144,8 @@ public class HDT_UTL_ContactPointTst {
         
          HDT_UTL_ContactPoint.createContactPointEmail(mapOne,second);
         
-         System.assertEquals(emailList.size(),2, 'Email List with address');
-         System.assertNotEquals(emailList.size(),0, 'Email List without emails');
+         System.assertEquals(emailList.size(),2, 'The method return correctly the mail passed parameter as string');
+         System.assertNotEquals(emailList.size(),0, 'The methoed return correctly the mail passed parameter as string as we can see its not null');
            Test.stopTest();
 
     }
@@ -172,8 +173,8 @@ public class HDT_UTL_ContactPointTst {
          List<ContactPointEmail> listReturn = HDT_UTL_ContactPoint.createContactPointEmailContact(mapTwo,myEmail,fourMap); 
         System.debug('listReturn'+listReturn);
         
-         System.assertEquals(listReturn.size(),3, 'This is the right size of emails');
-         System.assertNotEquals(listReturn.size(),2, 'Size of email are two and not one');
+         System.assertEquals(listReturn.size(),3, 'The method return correctly the mail passed parameter as string, has the right size');
+         System.assertNotEquals(listReturn.size(),2, 'Size of emails are two and not one');
            Test.stopTest();
         
     }
@@ -193,7 +194,7 @@ public class HDT_UTL_ContactPointTst {
         List<ContactPointEmail> listReturns =  HDT_UTL_ContactPoint.createContactPointEmail(emailPrimary,indv,otherMails);
         System.debug('listReturn'+listReturns);
         
-        System.assertEquals(listReturns.size(),3, 'This is the right size of emails');
+        System.assertEquals(listReturns.size(),3, 'The method return correctly the mail passed parameter as string, has the right size');
          System.assertNotEquals(listReturns.size(),2, 'Size of email are two and not one');
            Test.stopTest();
     }
