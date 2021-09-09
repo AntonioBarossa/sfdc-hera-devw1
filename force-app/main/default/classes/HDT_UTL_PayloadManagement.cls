@@ -71,22 +71,34 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String context = (String) formParams.get('Contesto');
         String companyDesc = '';
         String city = '';
+        String distributorName = '';
         switch on context {
             when 'Order' {
-                companyDesc = 'Hera Comm S.p.A.';
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Order', 'SalesCompany__c', 0, inputs, formParams);
                 city = HDT_UTL_DocumentalManagement.getValue('Order', 'SupplyCity__c', 0, inputs, formParams);
+                distributorName = HDT_UTL_DocumentalManagement.getValue('Case', 'DistributorFormula__c', 0, inputs, formParams);
                 List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city);
                 if (cityExceptionList != null && cityExceptionList.size()>0) {
-                    companyDesc = 'Hera Comm S.p.A.';
+                    List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
+                    if (distributorList != null && distributorList.size()>0) {
+                        companyDesc = 'Hera Comm S.p.A.';
+                    } else {
+                        companyDesc = 'Hera Comm Marche';
+                    }
                 }
             }
             when 'Case'{
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Case', 'SalesCompany__c', 0, inputs, formParams);
                 city = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyCity__c', 0, inputs, formParams);
+                distributorName = HDT_UTL_DocumentalManagement.getValue('Case', 'DistributorName__c', 0, inputs, formParams);
                 List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city);
                 if (cityExceptionList != null && cityExceptionList.size()>0) {
-                    companyDesc = 'Hera Comm S.p.A.';
+                    List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
+                    if (distributorList != null && distributorList.size()>0) {
+                        companyDesc = 'Hera Comm S.p.A.';
+                    } else {
+                        companyDesc = 'Hera Comm Marche';
+                    }
                 }
             }
             when 'Account'{
