@@ -43,7 +43,23 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate);
         System.assertEquals('4', boxType);
 
-        // TODO: test cases for SLA
+        complaintClassification = 'Reclamo Scritto';
+        indemnityConfirmed = True;
+        indemnityMotivation = null;
+        correctionRight = 'Si';
+        expiredCorrection = True;
+        correctionDocumentEmissionDate = null;
+        boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate);
+        System.assertEquals('5', boxType);
+
+        complaintClassification = 'Reclamo Scritto';
+        indemnityConfirmed = True;
+        indemnityMotivation = null;
+        correctionRight = 'Si';
+        expiredCorrection = False;
+        correctionDocumentEmissionDate = null;
+        boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate);
+        System.assertEquals('1', boxType);
 
         complaintClassification = 'Rettifica Doppia Fatturazione';
         indemnityConfirmed = True;

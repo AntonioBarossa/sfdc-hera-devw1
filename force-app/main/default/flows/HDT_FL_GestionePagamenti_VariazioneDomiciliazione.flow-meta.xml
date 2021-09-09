@@ -603,20 +603,13 @@
         <defaultConnector>
             <targetReference>CalcolaCodiceCausale</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Annulla</defaultConnectorLabel>
+        <defaultConnectorLabel>Conferma</defaultConnectorLabel>
         <rules>
-            <name>ConfermaDocumentale</name>
+            <name>Annuulla</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
-                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
@@ -624,7 +617,7 @@
             <connector>
                 <targetReference>Annulla_Prestazione_0_0_0</targetReference>
             </connector>
-            <label>Conferma</label>
+            <label>Annulla</label>
         </rules>
     </decisions>
     <decisions>

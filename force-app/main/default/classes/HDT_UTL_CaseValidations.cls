@@ -244,16 +244,20 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
             }
-        }else if(caseType == 'Richiesta Domiciliazione')
+        }else if(caseType == 'Richiesta Domiciliazione' || caseType == 'Attivazione Click&Pay' || caseType == 'Variazione Domiciliazione')
         {
             string fiscalCode =  getFieldValue(fields, 'BankAccountSignatoryFiscalCode__c');
-            string outcome = validateFiscalCode(fiscalCode);
-            if(!String.isEmpty(outcome))
-            {
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', outcome));
-            }
-            else
-            {
+            if(!String.isEmpty(fiscalCode)){
+                string outcome = validateFiscalCode(fiscalCode);
+                if(!String.isEmpty(outcome))
+                {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', outcome));
+                }
+                else
+                {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+                }
+            } else {
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
             }
         }else{

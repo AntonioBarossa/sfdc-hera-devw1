@@ -245,7 +245,21 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 
 			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalActivity);
 		} catch (Exception ex) {
-			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+		}
+	}
+	public static void createLandRegistryData(Id requestId,sObject processRecord){
+		try {
+			String sObjName = requestId.getSObjectType().getDescribe().getName();
+			if (sObjName != 'Order'){
+				System.debug('Necessario passare un Order per procedere con la creazione dei dati catastali.');
+				return;
+			}
+
+			// TODO DLM
+
+		} catch (Exception ex) {
+			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createLandRegistryData ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
 	private static List<Map<String,List<sObject>>> getRecordObjectsListContext2(List<SObject> recordsList){

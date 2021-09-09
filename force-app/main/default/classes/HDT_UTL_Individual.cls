@@ -163,14 +163,15 @@
         HDT_SRV_Individual.updateRecord(ind);
 
     }
-
+//** [START MOD 2021-09-08] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Commented becasue the methods are not used
+/*
     public static void updateConsensoMarketingPrivacy(Individual indv,String VersioneInformativaMarketing,String FonteConsensoMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing ) {
         Individual ind =new Individual(Id = indv.id ,  MarketingPrivacyVersion__c = VersioneInformativaMarketing ,PrivacyMarketingChoiceSource__c = FonteConsensoMarketing ,
          PrivacyMarketingConsentInitiative__c = IniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = DataConsensoMarketing ,MarketingCompanyConsent__c = CompanyConsensoMarketing);
         
                 
         HDT_SRV_Individual.checkCreateAccess(indv);
-        /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(indv);
+       // /*Individual indvid= HDT_SRV_Individual.updateRecord(indv);
 
     }
 
@@ -180,7 +181,7 @@
         
 
         HDT_SRV_Individual.checkCreateAccess(indv);
-        /*Individual individ=*/ HDT_SRV_Individual.updateRecord(indv);
+        ///*Individual individ= HDT_SRV_Individual.updateRecord(indv);
      }
 
      public static Individual modifyContentPrivacyMarketing(Individual indv,String VersioneInformativaMarketing,String FonteConsensoMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing ){
@@ -207,7 +208,8 @@
          return indv;
 
      }
-
+     */
+//** [END MOD 2021-09-08] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Commented becasue the methods are not used
 
      private static Individual instanceDefaultIndividual(){
 

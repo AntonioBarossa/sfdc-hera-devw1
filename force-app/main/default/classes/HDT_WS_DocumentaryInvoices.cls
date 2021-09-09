@@ -40,7 +40,7 @@ public inherited sharing class HDT_WS_DocumentaryInvoices {
             }
 
             returnObj.success = true;
-            returnObj.bodyBase64 = responseObj.bodyBase64;
+            returnObj.bodyBase64 = responseObj.data.invoice;
             returnObj.message = '';
         } catch (Exception ex){
             System.debug('ERROR: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
@@ -61,7 +61,11 @@ public inherited sharing class HDT_WS_DocumentaryInvoices {
         String correlationId;
         String timestamp;
         String message;
-        String bodyBase64;
+        HDT_WRP_DataObj data;
+    }
+
+    public class HDT_WRP_DataObj {
+        String invoice;
     }
 
 }

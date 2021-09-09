@@ -367,6 +367,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>GetParentRecord.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
