@@ -3812,6 +3812,11 @@
         <field>CampaignEasyCIM__c.MacroActivity__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions><!--UAT Lorenzo 09/09/2021 -->
+        <editable>true</editable>
+        <field>CampaignMember.isWsBollettaInvoked__c</field>
+        <readable>true</readable>
+    </fieldPermissions><!--UAT Lorenzo 09/09/2021 -->
     <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMember.Agency__c</field>
