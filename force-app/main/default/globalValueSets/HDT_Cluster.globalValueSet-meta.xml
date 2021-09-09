@@ -105,6 +105,11 @@
         <default>false</default>
         <label>PostSales VAS</label>
     </customValue>
+    <customValue>
+        <fullName>Attivazioni</fullName>
+        <default>false</default>
+        <label>Attivazioni</label>
+    </customValue>
     <masterLabel>Cluster</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
