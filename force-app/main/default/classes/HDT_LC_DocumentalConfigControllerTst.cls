@@ -51,7 +51,7 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         String debugString = TEST_NAME + ' - ' + 'controllerHandlerTest';
         System.debug(debugString);
         
-        //SETUP 
+        //SETUP
         Id folderId = [SELECT Id FROM Folder WHERE DeveloperName  =: 'DocumentalPayloadAdministration' LIMIT 1].Id;
         System.debug(debugString + ' - folderId: ' + folderId);
         

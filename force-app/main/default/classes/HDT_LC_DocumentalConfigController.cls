@@ -7,8 +7,8 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
 
     @AuraEnabled
     public static HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult controllerHandler(){
-
-        HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult response;
+        
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult response = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult();
 
         try{
 
