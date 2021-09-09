@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Bollettino postale</fullName>
+        <fullName>Bollettino</fullName>
         <default>false</default>
-        <label>Bollettino postale</label>
+        <label>Bollettino</label>
     </customValue>
     <customValue>
         <fullName>Rate</fullName>
@@ -19,6 +19,11 @@
         <fullName>Standard</fullName>
         <default>false</default>
         <label>Standard</label>
+    </customValue>
+    <customValue>
+        <fullName>Bonifico</fullName>
+        <default>false</default>
+        <label>Bonifico</label>
     </customValue>
     <masterLabel>Modalità di Pagamento</masterLabel>
     <sorted>false</sorted>

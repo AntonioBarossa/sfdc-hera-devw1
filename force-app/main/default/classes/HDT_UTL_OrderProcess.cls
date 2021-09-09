@@ -213,7 +213,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         system.debug('Ricalcolo delle date da Trigger sugli ordini --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
         system.debug('Ricalcolo delle date da Trigger sugli ordini --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
         List<Order> orderList = new List<Order>();                        
-
+        Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(newOrdersList);
         Boolean ricalculateDate = false;
         //IsSequanzialized__c
         for (Order newOrder : newOrdersList) {
@@ -238,9 +238,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 if(ricalculateDate == true){
                     system.debug('Esecuzione ricalcolo delle date');
                     Order orderToUpdate = new Order();
-                    orderToUpdate.id = newOrder.Id;                                        
+                    orderToUpdate.id = newOrder.Id;
+                    if(mapAccountRes.get(newOrder.AccountId)){                                        
+                        orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
                     orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
-                    
+                        orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
+                    }
                     if(newOrder.ProcessType__c != 'Cambio Offerta'){ // Solo per Cambio Offerta
                         orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(newOrder);
                     }                             
