@@ -114,9 +114,13 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         insert new List<SObject>{docPA1, docPA2, docPA3, docPA4, docPA5, docPA6, docPA7, docPA8, docPATDRV};
         result = HDT_LC_DocumentalConfigController.controllerHandler();
         
+        //RETRIEVING DATA
+        List<Document> docOld = [SELECT Id FROM Document WHERE Id = :myDoc.Id];
+        List<Document> docs = [SELECT Id FROM Document];
+        
         //ASSERTS
-        
-        
+        System.assertEquals(0, docOld.size());
+        System.assertEquals(4, docOld.size());
         
     }
     
