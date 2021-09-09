@@ -1,4 +1,5 @@
 public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchable<sObject> {
+    
     private static final String PLACEHOLDER = '###';
     private static final Map<String,String> MAPPINGS = new Map<String,String> {
         'SAPStep__c' => 'SAPStep__c IN (###)',
