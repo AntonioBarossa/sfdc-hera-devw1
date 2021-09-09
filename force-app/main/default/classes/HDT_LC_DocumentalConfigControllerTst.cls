@@ -52,6 +52,9 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         System.debug(debugString);
         
         //SETUP 
+        Id folderId = [SELECT Id FROM Folder WHERE DeveloperName  =: 'DocumentalPayloadAdministration' LIMIT 1].Id;
+        System.debug(debugString + ' - folderId: ' + folderId);
+        
         Document myDoc = new Document();
         myDoc.Name = 'TestDoc';
         myDoc.FolderId = folderId;
@@ -96,8 +99,8 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult result = HDT_LC_DocumentalConfigController.controllerHandler();
         
         //ASSERTS
-        System.assert(!response.success);
-        System.assertEquals('No records found', response.message);
+        System.assert(!result.success);
+        System.assertEquals('No records found', result.message);
         
         //TESTING WITH RECORDS
         insert new List<SObject>{docPA1, docPA2, docPA3, docPA4, docPA5, docPA6, docPA7, docPA8, docPATDRV};
