@@ -38,7 +38,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     get isCreditCheckVisible(){
-        return this.order.Step__c === 2 && 
+        return this.order.Step__c >= 2 && 
         (
             this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
