@@ -99,6 +99,8 @@ export default class HdtFlowNavigationButton extends LightningElement {
 
         console.log('#ButtonName --> '+event.target.name);
 
+        console.log('AVAILABLE_ACTIONS --> ' +this.availableActions);
+
         if(this.standAlone){
 
             if(event.target.name === 'save'){
