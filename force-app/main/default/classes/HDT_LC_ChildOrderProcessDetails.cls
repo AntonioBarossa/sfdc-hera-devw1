@@ -65,6 +65,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                     throw new AuraHandledException('Necessario completare un Case di \'Cambio Contatore Non Registrato\'');
                 }
             }
+            //@frpanico check "Tipo Voltura"
+            if(order.VoltureType__c != null && String.isBlank(order.VoltureType__c))
+            {
+                throw new AuraHandledException('Valorizzare campi obbligatori');
+            }
             //@frpanico check "Data Decorrenza"
             if(order.EffectiveDate__c != null)
             {
@@ -73,7 +78,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                     if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
                     {
                         throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
-                    } 
+                    }
+                    else if(order.VoltureType__c != null && order.VoltureType__c == 'Recupero' && order.EffectiveDate__c > Date.newInstance(2015, 10, 31))
+                    {
+                        throw new AuraHandledException('Per Voltura di tipo \"Recupero\" è necessario inserire una data antecedente al 31/10/2015');
+                    }
                     else
                     {    
                         order.RetroactiveDate__c = order.EffectiveDate__c;
@@ -95,19 +104,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             if(readingDate != null && (isReading != null && isReading == true))
             {
                 order.ReadingCustomerDate__c = readingDate;
-            }
-            //@frpanico check "Tipo Voltura"
-            if(order.VoltureType__c != null && String.isBlank(order.VoltureType__c))
-            {
-                throw new AuraHandledException('Valorizzare campi obbligatori');
-            }
-            //@frpanico Check "Tipo Voltura: Recupero"
-            if(order.VoltureType__c != null && order.VoltureType__c == 'Recupero')
-            {
-                if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
-                {
-                    throw new AuraHandledException('Permessi Insufficienti');
-                }
             }
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
