@@ -111,7 +111,9 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
 
         HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult;
         databaseResult = databaseInsert(docList, databaseResult);
-
+        
+        System.debug('generateJsonObject - databaseResult errordata size: ' + databaseResult.errorData.size());
+        
         if(!databaseResult.success){
             System.debug('databaseInsert failed.');
             if(Document.SObjectType.getDescribe().isAccessible())
@@ -194,6 +196,9 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
         databaseResult.errorData = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError>();
         if (Document.SObjectType.getDescribe().isAccessible() && Document.SObjectType.getDescribe().isCreateable()) {
             List<Database.SaveResult> insertResults = Database.insert(docList, false);
+            System.debug('databaseInsert - insertResults size:' + insertResults.size());
+            System.debug('databaseInsert - insertResults:' + insertResults);
+            
             for(Integer n=0; n<insertResults.size(); n++){
                 Database.SaveResult sr = insertResults[n];
                 
@@ -212,6 +217,7 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
             }
     
             if(databaseResult.errorData.size()>0){
+                System.debug('databaseInsert - has errors.');
                 databaseResult.success = false;
                 databaseResult.message = '>> Error during database insert';
                 databaseResult.dataError = true;
