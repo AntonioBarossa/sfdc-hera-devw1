@@ -786,7 +786,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             record.add('00310');
             record.add('130');
             // Calcolo tipologia di indennizzo attesa da Engage1.
-            String boxType = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate);
+            String boxType = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, Decimal.valueOf(indemnityDueSendResponse));
             if (String.isNotBlank(boxType)) {
                 record.add(boxType);
                 // Importo indennizzo, se necessario.
@@ -808,7 +808,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         return payloadSection;
     }
 
-    public static String calculateIndemnityBox(String complaintClassification, Boolean indemnityConfirmed, String indemnityMotivation, String correctionRight, Boolean expiredCorrection, String correctionDocumentEmissionDate) {
+    public static String calculateIndemnityBox(String complaintClassification, Boolean indemnityConfirmed, String indemnityMotivation, String correctionRight, Boolean expiredCorrection, String correctionDocumentEmissionDate, Decimal indemnityDueSendResponse) {
         String boxType = '';
 
         // Emissione rettifica non prevista, indennizzo per solo ritardo nella risposta
@@ -819,8 +819,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && !expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {
             boxType = '1';
         }
+        // Emissione rettifica prevista e scaduta, indennizzo per sola rettifica
+        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate) && indemnityDueSendResponse == 0) {
+            boxType = '2';
+        }
         // Emissione rettifica prevista e scaduta, indennizzi per ritardo nella risposta e nella rettifica
-        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {
+        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate) && indemnityDueSendResponse > 0) {
             boxType = '4';
         }
         // Emissione rettifica prevista ma data emissione ancora non presente e ho superato lo SLA, indennizzo per solo ritardo nella risposta + avviso eventuale indennizzo rettifica
@@ -849,6 +853,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             boxType = '6';
         }
 
+        System.debug('calculateIndemnityBox inputs: ' + complaintClassification + ', ' + indemnityConfirmed + ', ' + indemnityMotivation + ', ' + correctionRight + ', ' + expiredCorrection + ', ' + correctionDocumentEmissionDate + ', ' + indemnityDueSendResponse);
+        System.debug('calculateIndemnityBox boxType output: ' + boxType);
         return boxType;
     }
 
