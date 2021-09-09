@@ -201,7 +201,75 @@ public class HDT_LC_AccountStatementControllerTst {
 
     @isTest
     static void callMulesoftFail(){
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AccountStatementControllerTstMockFail());
+
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"status": "failed","correlationId": "92293250-df3b-11eb-a73c-0200a41fc6da","timestamp": "2021-07-07T17:54:13","errorDetails":[{"code":"HTTP:INTERNAL_SERVER_ERROR","message":"HTTPPOSTonresource\'http://isuprq.service.intra:8002/sap/bc/srt/rfc/sap/zurvmc_ws_estratto_letture/150/zurvmc_ws_estratto_letture/zurvmc_ws_estratto_letture\'failed:internalservererror(500).","additionalInfo":"HTTPPOSTonresource\'http://isuprq.service.intra:8002/sap/bc/srt/rfc/sap/zurvmc_ws_estratto_letture/150/zurvmc_ws_estratto_letture/zurvmc_ws_estratto_letture\'failed:internalservererror(500)."}],"data": []}');
+        response.setStatusCode(200);
+        response.setStatus('OK');
+
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_AccountStatementControllerTstMockFail(response));
+
+        HDT_WRP_AccountStatement.HDT_WRP_TechObj techObj;
+
+        List<String> tabCodes = new List<String> { 'EC' , 'EC1' , 'EC3', 'EC4', 'EC6', 'EC7', 'EC9', 'paperless', 'noCustomer'};
+
+        List<String> requestTypeList = new List<String>();
+        requestTypeList.add('home');
+        requestTypeList.add('allRecentItems');
+        requestTypeList.add('joinFilter');
+        requestTypeList.add('filters');
+        requestTypeList.add('viewResult');
+        requestTypeList.add('expired');
+        requestTypeList.add('creditRecovery');
+        requestTypeList.add('expiredFromDay');
+        requestTypeList.add('manageableItems');
+        requestTypeList.add('contractService');
+
+        Account account = [
+            SELECT Id, CustomerCode__c
+            FROM Account
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
+        Test.startTest();
+
+        for (String code : tabCodes){
+
+            techObj = new HDT_WRP_AccountStatement.HDT_WRP_TechObj();
+            techObj.recordId = String.valueOf(account.Id);
+            techObj.customerCode = 'noCustomer'.equals(code) ? '' : String.valueOf(account.CustomerCode__c);
+            techObj.tabCode = code;
+            techObj.statementType = 'ORDINARIO';
+            techObj.aggregation = '03';
+    
+            String reqObj = '{"tipoTransazione":"EC2","tipoEstrattoConto":"ORDINARIO","loginId":"0-1","dataInizio":"2016-09-08","dataFine":"2021-09-08","codiceCliente":"1003616210","applicativo":"ML","aggregazione":"03"}';
+    
+            Object obj;
+            for(String s : requestTypeList){
+                techObj.requestType = s;
+                obj = HDT_LC_AccountStatementController.callMulesoft(JSON.serialize(techObj, true), reqObj);
+    
+                System.assert(obj != null, 'obj == null');
+            }
+
+        }
+
+        Test.stopTest();
+
+    }
+
+    @isTest
+    static void callMulesoftFailWithStatusKO(){
+
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"status": "failed","correlationId": "92293250-df3b-11eb-a73c-0200a41fc6da","timestamp": "2021-07-07T17:54:13","errorDetails":[{"code":"HTTP:INTERNAL_SERVER_ERROR","message":"HTTPPOSTonresource\'http://isuprq.service.intra:8002/sap/bc/srt/rfc/sap/zurvmc_ws_estratto_letture/150/zurvmc_ws_estratto_letture/zurvmc_ws_estratto_letture\'failed:internalservererror(500).","additionalInfo":"HTTPPOSTonresource\'http://isuprq.service.intra:8002/sap/bc/srt/rfc/sap/zurvmc_ws_estratto_letture/150/zurvmc_ws_estratto_letture/zurvmc_ws_estratto_letture\'failed:internalservererror(500)."}],"data": []}');
+        response.setStatusCode(500);
+        response.setStatus('KO');
+
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_AccountStatementControllerTstMockFail(response));
 
         HDT_WRP_AccountStatement.HDT_WRP_TechObj techObj;
 
@@ -326,17 +394,16 @@ public class HDT_LC_AccountStatementControllerTst {
         Test.stopTest();
     }
 
-    public class HDT_LC_AccountStatementControllerTstMockFail implements HttpCalloutMock {
-        // Implement this interface method
+
+    public class HDT_LC_AccountStatementControllerTstMockFail implements HttpCalloutMock{
+        HttpResponse response;
+        HDT_LC_AccountStatementControllerTstMockFail(HttpResponse r){
+            response = r;
+        }
         public HTTPResponse respond(HTTPRequest request) {
-            // Create a fake response
-            HttpResponse response = new HttpResponse();
-            response.setHeader('Content-Type', 'application/json');
-            response.setBody('{"status": "failed","correlationId": "92293250-df3b-11eb-a73c-0200a41fc6da","timestamp": "2021-07-07T17:54:13","errorDetails":[{"code":"HTTP:INTERNAL_SERVER_ERROR","message":"HTTPPOSTonresource\'http://isuprq.service.intra:8002/sap/bc/srt/rfc/sap/zurvmc_ws_estratto_letture/150/zurvmc_ws_estratto_letture/zurvmc_ws_estratto_letture\'failed:internalservererror(500).","additionalInfo":"HTTPPOSTonresource\'http://isuprq.service.intra:8002/sap/bc/srt/rfc/sap/zurvmc_ws_estratto_letture/150/zurvmc_ws_estratto_letture/zurvmc_ws_estratto_letture\'failed:internalservererror(500)."}],"data": []}');
-            response.setStatusCode(200);
-            response.setStatus('OK');
             return response; 
         }
+    
     }
 
 }
