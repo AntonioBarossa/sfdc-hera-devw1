@@ -120,7 +120,7 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         
         //ASSERTS
         System.assertEquals(0, docOld.size());
-        System.assertEquals(4, docOld.size());
+        System.assertEquals(4, result.docIdList.size());
         
     }
     
