@@ -113,6 +113,7 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
         databaseResult = databaseInsert(docList, databaseResult);
 
         if(!databaseResult.success){
+            System.debug('databaseInsert failed.');
             if(Document.SObjectType.getDescribe().isAccessible())
                 Database.rollback(sp);
         }
@@ -183,7 +184,9 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
     }
 
     public static HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseInsert(List<Document> docList, HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult){
-
+        
+        System.debug('databaseInsert - docList size:' + docList.size() + ' - databaseResult: ' + databaseResult);
+        
         databaseResult = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult();
         databaseResult.docIdList = new List<Id>();
         databaseResult.errorData = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError>();
@@ -191,7 +194,7 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
             List<Database.SaveResult> insertResults = Database.insert(docList, false);
             for(Integer n=0; n<insertResults.size(); n++){
                 Database.SaveResult sr = insertResults[n];
-
+                
                 if (!sr.isSuccess()) {
                     // Operation failed
                     String errorString = '';
