@@ -17,11 +17,12 @@
             delete-title-label={label.deleteTitleLabel}
             association-title-label={label.associationTitleLabel}
             onclosemodal={closeModal}
-            oncreatenew={createNew}
-            onsearch={search}
+            oncreateassociation={createAssociation}
+            ondeleteassociation={deleteAssociation}
         ></c-hdt-choose-association-operation>
     </template>
 
+    <!--<div if:true={showCreateRecord} ></div>-->
     <template if:true={showCreateRecord} >
         <c-hdt-product-option-edit-form
             optional-sku-id={productid}
@@ -32,7 +33,9 @@
 
     <template if:true={showSearchTable} >
         <c-hdt-product-association-search-table
+            find-method={findMethod}
             optional-sku-id={productid}
+            product-option-obj={productOptionObj}
             product-option-id={productOptionId}
             onclosemodal={closeModal}
         ></c-hdt-product-association-search-table>

@@ -1,7 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import getProductList from '@salesforce/apex/HDT_LC_ProductAssociation.getProductList';
 import runProductOptionAssociation from '@salesforce/apex/HDT_LC_ProductAssociation.runProductOptionAssociation';
-import { deleteRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const columns = [
@@ -18,17 +17,29 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     @api productOptionId;
     @api optionalSkuId;
+    @api productOptionObj;
+    @api findMethod;
     counter;
+    filterString;
+    mainTitle;
 
     label = {
-        confirmSelectedTitle: 'Conferma i prodotti selezionati',
-        confirmSelectedBody: 'Attenzione! il prodotto opzione verrà associato a tutti i prodotti selezionati.',
-        closeTitle: 'Chiudi la ricerca',
-        closeBody: 'Attenzione! Vuoi annullare l\'associazione dell\'opzione prodotto?',
-        confirmAllTitle: 'Conferma tutti prodotti a sistema',
-        confirmAllBody: 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti a catalogo, vuoi procedere?',
-        confirmFilterTitle: 'Conferma tutti prodotti ottenuti dal filtro',
-        confirmFilterBody: 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?'
+        confirmSelectedTitle: '',
+        confirmSelectedBody: '',
+        closeTitle: '',
+        closeBody: '',
+        confirmAllTitle: '',
+        confirmAllBody: '',
+        confirmFilterTitle: '',
+        confirmFilterBody: ''
+        //confirmSelectedTitle: 'Conferma i prodotti selezionati',
+        //confirmSelectedBody: 'Attenzione! il prodotto opzione verrà associato a tutti i prodotti selezionati.',
+        //closeTitle: 'Chiudi la ricerca',
+        //closeBody: 'Attenzione! Vuoi annullare l\'associazione dell\'opzione prodotto?',
+        //confirmAllTitle: 'Conferma tutti prodotti a sistema',
+        //confirmAllBody: 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti a catalogo, vuoi procedere?',
+        //confirmFilterTitle: 'Conferma tutti prodotti ottenuti dal filtro',
+        //confirmFilterBody: 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?'
     };
     illustrationMessage = 'I risultati verranno mostrati qui';
     
@@ -51,6 +62,32 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     connectedCallback(){
         console.log('>>> ON SEARCH TABLE: ' + this.productOptionId);
+        console.log('>>> ON SEARCH TABLE: ' + this.productOptionObj);
+        //this.findMethod = 'insert';
+        switch (this.findMethod) {
+            case 'delete':
+                this.mainTitle = 'Rimozione Massiva del prodotto opzione';             
+                this.label.confirmSelectedTitle = 'Conferma i prodotti selezionati';
+                this.label.confirmSelectedBody = 'Attenzione! il prodotto opzione verrà rimosso da tutti i prodotti selezionati.';
+                this.label.closeTitle = 'Chiudi la ricerca';
+                this.label.closeBody = 'Attenzione! Vuoi annullare la rimozione dell\'opzione prodotto?';
+                this.label.confirmAllTitle = 'Conferma tutti prodotti a sistema';
+                this.label.confirmAllBody = 'Attenzione! In questo modo l\'opzione verrà eliminata da tutti i prodotti a catalogo, vuoi procedere?';
+                this.label.confirmFilterTitle = 'Conferma tutti prodotti ottenuti dal filtro';
+                this.label.confirmFilterBody = 'Attenzione! In questo modo l\'opzione verrà eliminata da tutti i prodotti ottenuti applicando il filtro, vuoi procedere?';
+                break;
+            case 'insert':
+                this.mainTitle = 'Associazione Massiva del prodotto opzione';
+                this.label.confirmSelectedTitle = 'Conferma i prodotti selezionati';
+                this.label.confirmSelectedBody = 'Attenzione! il prodotto opzione verrà associato a tutti i prodotti selezionati.';
+                this.label.closeTitle = 'Chiudi la ricerca';
+                this.label.closeBody = 'Attenzione! Vuoi annullare l\'associazione dell\'opzione prodotto?';
+                this.label.confirmAllTitle = 'Conferma tutti prodotti a sistema';
+                this.label.confirmAllBody = 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti a catalogo, vuoi procedere?';
+                this.label.confirmFilterTitle = 'Conferma tutti prodotti ottenuti dal filtro';
+                this.label.confirmFilterBody = 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?';
+        }
+
     }
 
     applyFilter(event){
@@ -63,8 +100,10 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
         var jsonRecord = JSON.stringify(criteriaObj);
         console.log(jsonRecord);
+        this.filterString = jsonRecord;
+        console.log('>>>> this.filterString ' + this.filterString);
         this.getData(jsonRecord);
-        
+
         //const saverecord = new CustomEvent("saverecord", {
         //  detail: {record: jsonRecord}
         //});
@@ -76,7 +115,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     getData(filter){
         
-        getProductList({filterString: filter, optionalSkuId: this.optionalSkuId})
+        getProductList({filterString: filter, optionalSkuId: this.optionalSkuId, findMethod: this.findMethod})
         .then(result => {
             console.log('# response #');
 
@@ -210,8 +249,9 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     runProductOptionAssociation(executionType){
         console.log('>>>> runProductOptionAssociation ');
+        console.log('>>>> this.filterString ' + this.filterString);
 
-        runProductOptionAssociation({productOptionId: this.productOptionId, recordList: recordIdList, executionType: executionType})
+        runProductOptionAssociation({productOptionObj: this.productOptionObj, recordList: recordIdList, executionType: executionType, filterString: this.filterString, findMethod: this.findMethod})
         .then(result => {
             console.log('# response #');
             console.log('# resp -> ' + result.success);
@@ -274,29 +314,13 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     closeModal(event){
         console.log('### closeModal ###');
-        this.delete();
+        //this.delete();
         const closeEvent = new CustomEvent("closemodal", {
             detail:  ''
         });
 
         // Dispatches the event.
         this.dispatchEvent(closeEvent);
-    }
-
-    delete(event) {
-        deleteRecord(this.productOptionId)
-            .then(() => {
-                console.log('>>>> RECORD DELETED');
-            })
-            .catch(error => {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error deleting record',
-                        message: error.body.message,
-                        variant: 'error'
-                    })
-                );
-            });
     }
 
 }

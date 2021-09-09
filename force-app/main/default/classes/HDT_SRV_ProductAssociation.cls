@@ -6,30 +6,22 @@ public inherited sharing class HDT_SRV_ProductAssociation {
         AsyncApexJob job = [SELECT Id, Status, JobItemsProcessed, TotalJobItems, NumberOfErrors FROM AsyncApexJob WHERE ID = '' ];
     }
 
-    public static Object getProductList(String filterString, String optionalSkuId){
+    public static Object getProductList(String filterString, String optionalSkuId, String findMethod){
 
         System.debug('>>> filterString: ' + filterString);
         System.debug('>>> optionalSkuId: ' + optionalSkuId);
-        HDT_WRP_RespQueryObj respObj = new HDT_WRP_RespQueryObj();
+        HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj respObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj();
 
         try{
-            String whereCondition = generateWhereCondition(filterString, 'AND');
-            System.debug('>>> whereCondition: ' + whereCondition);
+            String queryString = generateQueryString(filterString, 'AND', optionalSkuId, findMethod);
+            System.debug('>>> queryString: ' + queryString);
             
-            List<String> familyList = getFamilyList();
-
-            String queryString = '';
-            queryString += 'FROM Product2';
-            queryString += whereCondition;
-            queryString += ' AND Id NOT IN (SELECT SBQQ__ConfiguredSKU__c FROM SBQQ__ProductOption__c WHERE SBQQ__OptionalSKU__c = :optionalSkuId)';
-            queryString += ' AND Family IN: familyList';
-
-            Integer recordCounter = HDT_QR_ProductAssociation.getCountOfNonConfiguredProduct2(whereCondition, optionalSkuId, familyList, queryString);
+            Integer recordCounter = HDT_QR_ProductAssociation.getCountOfNonConfiguredProduct2(queryString);
             System.debug('>>> recordCounter: ' + recordCounter);
 
             respObj.success = true;
             respObj.recordCounter = String.valueOf(recordCounter);
-            respObj.prodList = HDT_QR_ProductAssociation.getIdsNonConfiguredProduct2(respObj.prodList, whereCondition, optionalSkuId, familyList, queryString);
+            respObj.prodList = HDT_QR_ProductAssociation.getIdsNonConfiguredProduct2(respObj.prodList, queryString);
             System.debug('>>> RECORDS TOT: ' + respObj.prodList.size());
 
         } catch (Exception ex){
@@ -40,9 +32,11 @@ public inherited sharing class HDT_SRV_ProductAssociation {
         return respObj;
     }
 
-    public static String generateWhereCondition(String filterString, String operator){
+    public static String generateQueryString(String filterString, String operator, String optionalSkuId, String findMethod){
         
         String op = ' ' + operator + ' ';
+        String queryString = '';
+        List<String> familyList = getFamilyList();
 
         Product2 filterProduct = (Product2)JSON.deserialize(filterString, Product2.class);
         System.debug('>>> FILTER PRODUCT: ' + String.valueOf(filterProduct));
@@ -79,18 +73,37 @@ public inherited sharing class HDT_SRV_ProductAssociation {
         if(!String.isEmpty(filterProduct.CategoryFamily__c)){
             whereConditionList.add('CategoryFamily__c=\'' + filterProduct.CategoryFamily__c + '\'');
         }
-        return ' WHERE ' + String.join(whereConditionList, op);
+
+        queryString += 'FROM Product2 ';
+        queryString += 'WHERE ' + String.join(whereConditionList, op) + ' ';
+        queryString += 'AND Id ';
+
+        switch on findMethod {
+            when 'insert' {
+                queryString += 'NOT IN';
+            }
+            when 'delete' {
+                queryString += 'IN';
+            }
+        }
+
+        queryString +=  ' (SELECT SBQQ__ConfiguredSKU__c FROM SBQQ__ProductOption__c WHERE SBQQ__OptionalSKU__c = \'' + optionalSkuId + '\') ';
+        queryString += 'AND Family IN (\'' + String.join(familyList, '\',\'') + '\')';
+        
+        return queryString;
     }
 
-    public static Object runProductOptionAssociation(String productOptionId, List<String> recordList, String executionType){
+    public static Object runProductOptionAssociation(String productOptionObj, List<String> recordList, String executionType, String filterString, String findMethod){
         
         System.debug('>>> executionType: ' + executionType);
-        System.debug('>>> productOptionId: ' + productOptionId);
+        System.debug('>>> productOptionObj: ' + productOptionObj);
         System.debug('>>> recordList: ' + recordList);
 
-        HDT_WRP_RespRunBatchObj respRunBatchObj = new HDT_WRP_RespRunBatchObj();
+        HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj respRunBatchObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj();
 
         try{
+
+            SBQQ__ProductOption__c productOptionToClone = (SBQQ__ProductOption__c)JSON.deserialize(productOptionObj, SBQQ__ProductOption__c.class);
 
             switch on executionType {
                 when 'select' {
@@ -98,23 +111,36 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
                     if(recordList.size() < batchLimit){
                         // NO BATCH NEEDED, YOU CAN UPDATE HERE
-                        associateProductOption(productOptionId, recordList);
-                        respRunBatchObj.message = 'L\'associazione è stata eseguita correttamente';
+                        HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertReult = associateProductOption(productOptionToClone, recordList);
+
+                        if(insertReult.success){
+                            respRunBatchObj.message = 'L\'associazione è stata eseguita correttamente';
+                        } else {
+                            respRunBatchObj.message = insertReult.message;
+                        }
+                        
                     } else {
-                        HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(productOptionId, recordList);
+                        
+                        HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(productOptionToClone, recordList);
                         Id batchId = Database.executeBatch(createAssociationBatch);
                         respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
                     }
                 }	
                 when 'all' {
                     //run batch for all Product2 record -> recordList == 0
-                    HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(productOptionId);
+                    HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(productOptionToClone);
                     Id batchId = Database.executeBatch(createAssociationBatch);
                     respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
                 }
                 when 'filter' {
                     //run batch for all Product2 using where condition
-                    HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(productOptionId, '');
+
+                    //SBQQ__ProductOption__c productOptionToClone = HDT_QR_ProductAssociation.getProductOptionRecordById(productOptionId);
+
+                    String queryString = generateQueryString(filterString, 'AND', productOptionToClone.SBQQ__OptionalSKU__c, findMethod);
+                    System.debug('>>> queryString: ' + queryString);
+
+                    HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(productOptionToClone, queryString);
                     Id batchId = Database.executeBatch(createAssociationBatch);
                     respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
                 }
@@ -130,20 +156,66 @@ public inherited sharing class HDT_SRV_ProductAssociation {
         return respRunBatchObj;
     }
 
-    public static void associateProductOption(String productOptionId, List<String> recordList){
+    public static HDT_WRP_ProductAssociation.HDT_WRP_InsertResult associateProductOption(SBQQ__ProductOption__c productOptionToClone, List<String> recordList){
 
         List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
-        SBQQ__ProductOption__c productOptionToClone = HDT_QR_ProductAssociation.getProductOptionRecordById(productOptionId);
+        //HDT_QR_ProductAssociation.getProductOptionRecordById(productOptionId);
+        HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertResult = new HDT_WRP_ProductAssociation.HDT_WRP_InsertResult();
         
-        SBQQ__ProductOption__c newRecord;
-        for(String productId : recordList){
-            newRecord = new SBQQ__ProductOption__c();
-            newRecord = productOptionToClone.clone(false, true, false, false);
-            newRecord.SBQQ__ConfiguredSKU__c = productId;
-            productOptionList.add(newRecord);
+        if(productOptionToClone != null){
+            SBQQ__ProductOption__c newRecord;
+            for(String productId : recordList){
+                newRecord = new SBQQ__ProductOption__c();
+                newRecord = productOptionToClone.clone(false, true, false, false);
+                newRecord.SBQQ__ConfiguredSKU__c = productId;
+                productOptionList.add(newRecord);
+            }
+            System.debug('>>> record to insert: ' + String.valueOf(productOptionList));
+            List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData = new List<HDT_WRP_ProductAssociation.HDT_WRP_LineError>();
+            errorData = databaseInsert(productOptionList, errorData);
+
+            if(errorData.size() > 0){
+                insertResult.success = false;
+                insertResult.message = 'Error during product option insert';
+            } else {
+                insertResult.success = true;
+                //insertResult.message = 'No product option record found';
+            }
+        } else {
+            insertResult.success = false;
+            insertResult.message = 'No product option record found';
         }
-        System.debug('>>> record to insert: ' + String.valueOf(productOptionList));
-        //insert productOptionList;
+
+        return insertResult;
+
+    }
+
+    public static List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> databaseInsert(List<SBQQ__ProductOption__c> itemList, List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData){
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('SBQQ__ProductOption__c');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isCreateable() && objRes.isUpdateable()){
+
+            List<Database.UpsertResult> insertResults = Database.upsert(itemList, false);
+
+            for(Integer n=0; n<insertResults.size(); n++){
+                Database.UpsertResult sr = insertResults[n];
+
+                if (!sr.isSuccess()) {
+                    // Operation failed
+                    String errorString = '';
+                    HDT_WRP_ProductAssociation.HDT_WRP_LineError lineError = new HDT_WRP_ProductAssociation.HDT_WRP_LineError();
+                    for(Database.Error err : sr.getErrors()) {
+                        lineError.rowId = itemList[n].SBQQ__ConfiguredSKU__c;
+                        lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
+                    }
+                    errorData.add(lineError);
+                }
+            }
+        }
+
+        return errorData;
     }
 
     public static List<String> getFamilyList(){
@@ -152,18 +224,6 @@ public inherited sharing class HDT_SRV_ProductAssociation {
         sl.add('VAS Prodotto');
         sl.add('VAS Servizio');
         return sl;
-    }
-
-    public class HDT_WRP_RespQueryObj {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public String recordCounter;
-        @AuraEnabled public List<Product2> prodList;
-    }
-
-    public class HDT_WRP_RespRunBatchObj {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
     }
 
 }

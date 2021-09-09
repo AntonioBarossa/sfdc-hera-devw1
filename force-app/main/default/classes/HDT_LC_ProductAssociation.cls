@@ -1,13 +1,13 @@
 public inherited sharing class HDT_LC_ProductAssociation {
 
     @AuraEnabled
-    public static Object getProductList(String filterString, String optionalSkuId){
-        return HDT_SRV_ProductAssociation.getProductList(filterString, optionalSkuId);
+    public static Object getProductList(String filterString, String optionalSkuId, String findMethod){
+        return HDT_SRV_ProductAssociation.getProductList(filterString, optionalSkuId, findMethod);
     }
 
     @AuraEnabled
-    public static Object runProductOptionAssociation(String productOptionId, List<String> recordList, String executionType){
-        return HDT_SRV_ProductAssociation.runProductOptionAssociation(productOptionId, recordList, executionType);
+    public static Object runProductOptionAssociation(String productOptionObj, List<String> recordList, String executionType, String filterString, String findMethod){
+        return HDT_SRV_ProductAssociation.runProductOptionAssociation(productOptionObj, recordList, executionType, filterString, findMethod);
     }
 
 }

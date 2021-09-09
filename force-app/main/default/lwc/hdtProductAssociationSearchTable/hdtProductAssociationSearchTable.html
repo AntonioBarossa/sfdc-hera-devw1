@@ -9,13 +9,13 @@
         ></c-hdt-confirmation-modal>
     </template>
 
-    <lightning-card title="Offerte Commerciali non configurate" variant="narrow" icon-name="standard:bundle_config">
+    <lightning-card title={mainTitle} variant="narrow" icon-name="standard:bundle_config">
 
         <div slot="actions">
             <lightning-button-group>
-                <lightning-button label="Conferma selezione" name="confirmSelected" onclick={openConfirmation} variant="neutral" icon-name="utility:multi_select_checkbox"></lightning-button>
-                <lightning-button label="Conferma filtro" name="confirmFilter" onclick={openConfirmation} variant="neutral" icon-name="utility:filterList"></lightning-button>
-                <lightning-button label="Conferma tutti" name="confirmAll" onclick={openConfirmation} variant="neutral" icon-name="utility:database"></lightning-button>
+                <lightning-button label="Conferma selezione" name="confirmSelected" onclick={openConfirmation} variant="neutral" icon-name="utility:multi_select_checkbox" ></lightning-button>
+                <lightning-button label="Conferma filtro" name="confirmFilter" onclick={openConfirmation} variant="neutral" icon-name="utility:filterList" ></lightning-button>
+                <lightning-button label="Conferma catalogo" name="confirmAll" onclick={openConfirmation} variant="neutral" icon-name="utility:database"></lightning-button>
                 <lightning-button label="Chiudi" name="closeModal" onclick={openConfirmation} variant="neutral" icon-name="utility:close"></lightning-button>
             </lightning-button-group>
         </div>
@@ -54,7 +54,7 @@
                                     <lightning-button label="Applica filtro" name="applyFilter" onclick={applyFilter} variant="neutral" icon-name="utility:search"></lightning-button>
                                 </div>
                             </div>
-                            <div class="slds-col slds-size_2-of-12 slds-text-heading_small slds-border_bottom">
+                            <div if:true={showResultTable} class="slds-col slds-size_2-of-12 slds-text-heading_small slds-border_bottom">
                               <span>{counter}</span>
                             </div>
                         </div>

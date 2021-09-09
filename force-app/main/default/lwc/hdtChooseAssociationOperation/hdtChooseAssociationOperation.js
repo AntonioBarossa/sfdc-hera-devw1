@@ -17,24 +17,24 @@ export default class HdtChooseAssociationOperation extends LightningElement {
         this.dispatchEvent(closeEvent);
     }
 
-    onDelete(event){
-        console.log('### createNew ###');
-        const createnewEvent = new CustomEvent("createnew", {
-            detail:  ''
-        });
-
-        // Dispatches the event.
-        this.dispatchEvent(createnewEvent);
-    }
-
     createAssociation(event){
-        console.log('### search ###');
-        const searchEvent = new CustomEvent("search", {
+        console.log('### createAssociation ###');
+        const searchEvent = new CustomEvent("createassociation", {
             detail:  ''
         });
 
         // Dispatches the event.
         this.dispatchEvent(searchEvent);        
+    }
+
+    onDelete(event){
+        console.log('### createNew ###');
+        const createnewEvent = new CustomEvent("deleteassociation", {
+            detail:  ''
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(createnewEvent);
     }
 
 }
