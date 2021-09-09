@@ -186,6 +186,8 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
     public static HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseInsert(List<Document> docList, HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult){
         
         System.debug('databaseInsert - docList size:' + docList.size() + ' - databaseResult: ' + databaseResult);
+        System.debug('databaseInsert - Document.SObjectType.getDescribe().isAccessible()' + Document.SObjectType.getDescribe().isAccessible());  
+        System.debug('databaseInsert - Document.SObjectType.getDescribe().isCreateable()' + Document.SObjectType.getDescribe().isCreateable());        
         
         databaseResult = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult();
         databaseResult.docIdList = new List<Id>();
