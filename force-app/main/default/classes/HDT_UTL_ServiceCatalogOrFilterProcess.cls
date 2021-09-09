@@ -229,7 +229,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta','Esercizio Diritti Privacy'}
+                {'Condizioni Contrattuali Errate','Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta','Esercizio Diritti Privacy'}
         },
     'VariazionesuAmministratore' => new Map<String,List<String>>
         {
