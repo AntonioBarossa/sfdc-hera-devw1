@@ -168,6 +168,10 @@
                 <behavior>Readonly</behavior>
                 <field>InvoicingPlace__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>InvoicingCityCode__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -183,12 +187,12 @@
                 <field>InvoicingStreetNumber__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>InvoicingPostalCode__c</field>
+                <behavior>Edit</behavior>
+                <field>InvoicingStreetNumberExtension__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>InvoicingCityCode__c</field>
+                <field>InvoicingPostalCode__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -283,7 +287,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002T62P</masterLabel>
+        <masterLabel>00h3N000002SmK5</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

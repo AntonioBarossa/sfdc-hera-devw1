@@ -9,3 +9,10 @@
 .slds-modal__close_btn{
     float:right;
 }
+
+@media screen and (max-width: 600px) {
+    .slds-modal__container {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
