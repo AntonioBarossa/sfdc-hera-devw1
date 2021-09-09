@@ -285,7 +285,7 @@
             <assignToReference>GetCaseAggiornato.Iban__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Iban</elementReference>
+                <elementReference>UpperIban</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -293,6 +293,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>IbanIsForeign</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.IbanCIN__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpperCINFormula</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -440,21 +447,21 @@
             <name>Uguale_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>IbanABI_CC</leftValueReference>
+                <leftValueReference>GetCaseAggiornato2.IbanABI__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>CaseInput.BillingProfile__r.IbanABI__c</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>IbanCAB_CC</leftValueReference>
+                <leftValueReference>GetCaseAggiornato2.IbanCAB__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>CaseInput.BillingProfile__r.IbanCAB__c</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>IbanContoCorrente_CC</leftValueReference>
+                <leftValueReference>GetCaseAggiornato2.IbanCodeNumber__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>CaseInput.BillingProfile__r.IbanCodeNumber__c</elementReference>
@@ -596,20 +603,13 @@
         <defaultConnector>
             <targetReference>CalcolaCodiceCausale</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Annulla</defaultConnectorLabel>
+        <defaultConnectorLabel>Conferma</defaultConnectorLabel>
         <rules>
-            <name>ConfermaDocumentale</name>
+            <name>Annuulla</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
-                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
@@ -617,7 +617,7 @@
             <connector>
                 <targetReference>Annulla_Prestazione_0_0_0</targetReference>
             </connector>
-            <label>Conferma</label>
+            <label>Annulla</label>
         </rules>
     </decisions>
     <decisions>
@@ -900,6 +900,13 @@
                     <stringValue>Cambio Conto</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato2.IbanIsForeign__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>GetAbiCode</targetReference>
             </connector>
@@ -915,6 +922,13 @@
                     <stringValue>Cambio Banca</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato2.IbanIsForeign__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>GetAbiCode_0</targetReference>
             </connector>
@@ -928,6 +942,13 @@
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Cambio da Click</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato2.IbanIsForeign__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1065,12 +1086,22 @@
     <formulas>
         <name>ItalianIbanFormula</name>
         <dataType>String</dataType>
-        <expression>&quot;IT&quot;&amp;{!GetCaseAggiornato.IbanCIN_IBAN__c}&amp;{!GetCaseAggiornato.IbanCIN__c}&amp;{!GetCaseAggiornato.IbanABI__c}&amp;{!GetCaseAggiornato.IbanCAB__c}&amp;{!GetCaseAggiornato.IbanCodeNumber__c}</expression>
+        <expression>&quot;IT&quot;&amp;{!GetCaseAggiornato.IbanCIN_IBAN__c}&amp;UPPER({!GetCaseAggiornato.IbanCIN__c})&amp;{!GetCaseAggiornato.IbanABI__c}&amp;{!GetCaseAggiornato.IbanCAB__c}&amp;{!GetCaseAggiornato.IbanCodeNumber__c}</expression>
     </formulas>
     <formulas>
         <name>ProcessTypeFormula</name>
         <dataType>String</dataType>
         <expression>IF({!IbanIsForeign} = false, &quot;Variazione Domiciliazione - Italiano&quot;,&quot;Variazione Domiciliazione - Estero&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>UpperCINFormula</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!GetCaseAggiornato.IbanCIN__c})</expression>
+    </formulas>
+    <formulas>
+        <name>UpperIban</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!Iban})</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_VariazioneDomiciliazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Variazione Domiciliazione</label>
@@ -1503,7 +1534,7 @@
             <inputParameters>
                 <name>isPrevious</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1572,7 +1603,7 @@
             <inputParameters>
                 <name>isPrevious</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1641,7 +1672,7 @@
             <inputParameters>
                 <name>isPrevious</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1710,7 +1741,7 @@
             <inputParameters>
                 <name>isPrevious</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>

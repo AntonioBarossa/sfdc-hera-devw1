@@ -14,7 +14,7 @@ public inherited sharing class HDT_UTL_CaseApprovalProcess {
 
             Approval.ProcessResult result = Approval.process(req);
 
-            System.assert(result.isSuccess());
+            //System.assert(result.isSuccess());
 
         }
 

@@ -430,7 +430,7 @@
         <name>Quale_Fase</name>
         <label>Quale Fase</label>
         <locationX>776</locationX>
-        <locationY>1622</locationY>
+        <locationY>1624</locationY>
         <defaultConnector>
             <targetReference>AssegnaFase_0_0</targetReference>
         </defaultConnector>
@@ -470,13 +470,6 @@
             <conditions>
                 <leftValueReference>CaseToLoop.CorrectionDocumentEmissionDay__c</leftValueReference>
                 <operator>WasSet</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>CaseToLoop.IndemnityConfirmed__c</leftValueReference>
-                <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
@@ -859,6 +852,12 @@
                 <name>disableSignMode</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>entryChannel</name>
+                <value>
+                    <elementReference>GetInputCase.ComplaintEntryChannel__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

@@ -22,6 +22,7 @@ public with sharing class HDT_TRH_DocumentalActivityTst{
 		docActivity.OrderId__c=orders[0].id;
 		docActivity.CaseId__c=cases[0].Id;
 		docActivity.ParentProcessId__c=cases[0].Id;
+		docActivity.ProcessId__c=orders[0].Id;
 
 		docActivities.add(docActivity);
 

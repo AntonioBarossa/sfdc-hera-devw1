@@ -21,6 +21,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
         'T'=>'12'
     };
     private static List<String> listAlf = new List<String>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S' ,'T' ,'U', 'V', 'W', 'X', 'Y' ,'Z'};
+    private static  List<String> listNum = new List<String>{'0','1','2','3','4','5','6','7','8','9'};
 
     @AuraEnabled
     public static Map<String,Object> getDataFromFiscalCodeData(String fiscalCodes){
@@ -49,7 +50,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 String year = '19' + fiscalCode.substring(6,8);
                 String month = fiscalCode.substring(8,9);
                 String day = fiscalCode.substring(9,11);
-                month =  monthsLetters.get(month);
+                month =  monthsLetters.get(month.toUpperCase());
                 if(month== null || month == ''){
                     throw new AuraHandledException('Inserire un codice fiscale valido');
                 }
@@ -60,9 +61,14 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                     gender= 'Femmina';
                 }
                 birthDate = year +'-'+ month +'-'+day;
-                city= cities.get(fiscalCode.substring(11,15));
+                System.debug('city Code: '+fiscalCode.substring(11,15));
+                city= cities.get(fiscalCode.substring(11,15).toUpperCase());
 
                 if (String.isBlank(gender)||String.isBlank(city) || String.isBlank(day) || String.isBlank(year)) {
+                    System.debug('gender: '+gender);
+                    System.debug('city: '+city);
+                    System.debug('day: '+day);
+                    System.debug('year: '+year);
                     throw new AuraHandledException('Inserire un codice fiscale valido');
                 }
                 if (!listAlf.contains(fiscalCode.substring(15,16).toUpperCase()) 
@@ -70,11 +76,48 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                     throw new AuraHandledException('Inserire un codice fiscale valido');
 
                 }
+                //Start HRAWRM-491 08/09/2021
+                list <String> stringCharacters = fiscalCode.toUpperCase().split('');
+                System.debug('stringCharacters: '+stringCharacters);
+                Boolean isValid=true;
+                for (Integer i = 0; i < 15; i++) {
+                    if (i<6 && !listAlf.contains(stringCharacters.get(i))) {
+                        System.debug('prime 6 lettere : '+stringCharacters.get(i));
+                        isValid=false;
+                    }
+                    else if ( i>=6 && i<=7  && !listNum.contains(stringCharacters.get(i))) {
+                        System.debug('7° e 8° numeri : ' +stringCharacters.get(i));
+                        isValid=false;
+                    }
+                    else if(i==8 && !listAlf.contains(stringCharacters.get(i))) {
+                        System.debug('9° lettere : ' +stringCharacters.get(i));
+                        isValid=false;
+                    }
+                    else if( i>=9 && i<=10  && !listNum.contains(stringCharacters.get(i))) {
+                        System.debug('10° e 11°  numeri : ' +stringCharacters.get(i));
+                        isValid=false;
+                    }
+                    else if( i==11  && !stringCharacters.contains(stringCharacters.get(i))) {
+                        System.debug('12°  lettere : ' +stringCharacters.get(i));
+                        isValid=false;
+                    }
+                    else if( i==15  && !stringCharacters.contains(stringCharacters.get(i))) {
+                        System.debug('12° e 15°  lettere : ' +stringCharacters.get(i));
+                        isValid=false;
+                    }
+
+                }
+                if (!isValid) {
+                    throw new AuraHandledException('Inserire un codice fiscale valido');
+
+                }
+                //End HRAWRM-491 08/09/2021
 
                 dataFromFiscalCode.put('gender', gender);
                 dataFromFiscalCode.put('birthDate', birthDate);
                 dataFromFiscalCode.put('birthPlace', city);
                 res.put(fiscalCode,dataFromFiscalCode);
+           
             } catch (Exception e) {
                // e.setMessage('Inserire un codice fiscale valido');
                 throw new AuraHandledException('Inserire un codice fiscale valido');
@@ -186,8 +229,43 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 if (String.isBlank(gender)||String.isBlank(city) || String.isBlank(day) || String.isBlank(year)|| String.isBlank(month)) {
                     isValid=false;
                 }
+                //Start HRAWRM-491 08/09/2021
+               
+                list <String> stringCharacters = fiscalCode.toUpperCase().split('');
+                System.debug('stringCharacters: '+stringCharacters);
+                for (Integer i = 0; i < 15; i++) {
+                    if (i<6 && !listAlf.contains(stringCharacters.get(i))) {
+                        System.debug('prime 6 lettere : '+stringCharacters.get(i));
+                        isValid=false;
+                    }
+                    else if ( i>=6 && i<=7  && !listNum.contains(stringCharacters.get(i))) {
+                        System.debug('7° e 8° numeri : ' +stringCharacters.get(i));
+                        isValid=false;
+                    }
+                    else if(i==8 && !listAlf.contains(stringCharacters.get(i))) {
+                        System.debug('9° lettere : ' +stringCharacters.get(i));
+                        isValid=false;
+                    }
+                    else if( i>=9 && i<=10  && !listNum.contains(stringCharacters.get(i))) {
+                        System.debug('10° e 11°  lettere : ' +stringCharacters.get(i));
+                        isValid=false;
+                    }
+                    else if( i==11  && !stringCharacters.contains(stringCharacters.get(i))) {
+                        System.debug('12°  lettere : ' +stringCharacters.get(i));
+                        isValid=false;
+                    }
+                    else if( i==15  && !stringCharacters.contains(stringCharacters.get(i))) {
+                        System.debug('12° e 15°  lettere : ' +stringCharacters.get(i));
+                        isValid=false;
+                    }
 
-                if (!    listAlf.contains(s.substring(15,16).toUpperCase()) 
+                }
+                //End HRAWRM-491 08/09/2021
+                if (String.isBlank(gender)||String.isBlank(city) || String.isBlank(day) || String.isBlank(year)|| String.isBlank(month)) {
+                    isValid=false;
+                }
+
+                if (!listAlf.contains(s.substring(15,16).toUpperCase()) 
                 ) {
                     isValid=false;
                 }
