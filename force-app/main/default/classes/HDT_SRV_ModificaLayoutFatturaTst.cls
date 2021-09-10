@@ -42,8 +42,6 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         
         //TESTING
         String method_OK = 'ModificaLayoutFattura';//NOTA: in verità è endpoint.
-        String method_dataNull = 'ModificaLayoutFattura_null';//NOTA: in verità è endpoint.
-        String method_notOK = 'ModificaLayoutFattura_notOK';//NOTA: in verità è endpoint.
         
         Case obj = [SELECT Id, CaseNumber, ContractCode__c, ElementDetail__c FROM Case];
         System.debug(debugString + ' - case obj: ' + obj);
@@ -80,7 +78,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         
         ///AUTORIZZARE CAMBI DI FASE SUL CASE
         Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
-        HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', rt, 'HDT_RT_Morosita');
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Errore Lavorazione SAP', 'Bozza', rt, 'HDT_RT_Morosita');
         
         //TESTING
         String method_dataNull = 'ModificaLayoutFattura_null';//NOTA: in verità è endpoint.
