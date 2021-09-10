@@ -3909,7 +3909,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         </fields>
         <fields>
             <name>DisplayInfo_0</name>
-            <fieldText>&lt;p&gt;Indirizzo di fornitura selezionata e indirizzo di residenza differiscono tra loro.&lt;/p&gt;&lt;p&gt;Alla chiusura del Wizard è necessario innescare un Case di &quot;Modifica Residenza&quot;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Indirizzo di fornitura selezionata e indirizzo di residenza differiscono tra loro.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Alla chiusura del Wizard è necessario innescare un Case di &quot;Modifica Residenza&quot;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3924,7 +3924,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         </fields>
         <fields>
             <name>DisplayInfo1</name>
-            <fieldText>&lt;p&gt;Alla chiusura del Wizard innescare un Case di &quot;Autolettura&quot; e/o &quot;Modifica consumo Annuo&quot;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Alla chiusura del Wizard innescare un Case di &quot;Autolettura&quot; e/o &quot;Modifica consumo Annuo&lt;/span&gt;&quot;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
