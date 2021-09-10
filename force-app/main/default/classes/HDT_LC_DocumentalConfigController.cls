@@ -187,17 +187,19 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
 
     public static HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseInsert(List<Document> docList, HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult){
         
-        System.debug('databaseInsert - docList size:' + docList.size() + ' - databaseResult: ' + databaseResult);
-        System.debug('databaseInsert - Document.SObjectType.getDescribe().isAccessible()' + Document.SObjectType.getDescribe().isAccessible());  
-        System.debug('databaseInsert - Document.SObjectType.getDescribe().isCreateable()' + Document.SObjectType.getDescribe().isCreateable());        
+        //DEBUG
+        String debugString = 'HDT_LC_DocumentalConfigController - databaseInsert - ';
+        System.debug(debugString + 'docList size:' + docList.size() + ' - databaseResult: ' + databaseResult);
+        System.debug(debugString + 'Document.SObjectType.getDescribe().isAccessible(): ' + Document.SObjectType.getDescribe().isAccessible());  
+        System.debug(debugString + 'Document.SObjectType.getDescribe().isCreateable(): ' + Document.SObjectType.getDescribe().isCreateable());        
         
         databaseResult = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult();
         databaseResult.docIdList = new List<Id>();
         databaseResult.errorData = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError>();
         if (Document.SObjectType.getDescribe().isAccessible() && Document.SObjectType.getDescribe().isCreateable()) {
             List<Database.SaveResult> insertResults = Database.insert(docList, false);
-            System.debug('databaseInsert - insertResults size:' + insertResults.size());
-            System.debug('databaseInsert - insertResults:' + insertResults);
+            System.debug(debugString + 'insertResults size:' + insertResults.size());
+            System.debug(debugString + 'insertResults:' + insertResults);
             
             for(Integer n=0; n<insertResults.size(); n++){
                 Database.SaveResult sr = insertResults[n];
@@ -217,7 +219,7 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
             }
     
             if(databaseResult.errorData.size()>0){
-                System.debug('databaseInsert - has errors.');
+                System.debug(debugString + 'has errors.');
                 databaseResult.success = false;
                 databaseResult.message = '>> Error during database insert';
                 databaseResult.dataError = true;
