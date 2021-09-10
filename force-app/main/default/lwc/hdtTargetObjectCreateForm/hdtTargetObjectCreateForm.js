@@ -203,7 +203,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: this.servicePointRetrievedData[element],
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 }
@@ -214,7 +214,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: '',
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 }
@@ -225,7 +225,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: this.servicePointRetrievedData[element],
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 }
@@ -247,7 +247,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: this.servicePointRetrievedData[element],
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 }
@@ -258,7 +258,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: this.servicePointRetrievedData[element],
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 }
@@ -296,7 +296,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: '',
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 }
@@ -307,7 +307,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: this.servicePointRetrievedData[element],
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 }
@@ -325,7 +325,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: 'Energia Elettrica',
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 } else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas') && element === 'SAPImplantCode__c') {
@@ -335,7 +335,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: this.servicePointRetrievedData[element],
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 }
@@ -347,7 +347,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: 'Gas',
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 }
@@ -359,7 +359,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: this.servicePointRetrievedData[element],
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 }
@@ -370,7 +370,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: this.servicePointRetrievedData[element],
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 }
@@ -407,7 +407,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: 'Bozza',
-                            disabled: true
+                            disabled: !mapFieldReq.get(element)
                         }
                     )
                 }
