@@ -20,6 +20,8 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
             return creaAccountBalanceResponse(request);
         }else if(endpoint.containsIgnoreCase('Callout:CheckLastReading')){
             return creaCheckLastReadingsResponse(request);
+        }else if(endpoint.containsIgnoreCase('Callout:ModificaLayoutFattura')){
+            return creaModificaLayoutFatturaResponse(request);
         }else{
             return creaRicResponse(request);
         }
@@ -160,6 +162,33 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         HttpResponse response = new HttpResponse();
         
         String bodyResponse = 'Response_Body_Test_Success';
+        
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
+    
+    public static HttpResponse creaModificaLayoutFatturaResponse(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaModificaLayoutFatturaResponse');
+        HttpResponse response = new HttpResponse();
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
+        wrpDATA.rds = '';
+        wrpDATA.attivita = 'Esito OK da SAP';
+        //TODO: TESTARE ANCHE ELSE SU ATTIVITà
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
+        bodyResp.status;
+        bodyResp.correlationId;
+        bodyResp.timestamp; 
+        bodyResp.data = wrpDATA;//TODO: TESTARE ANCHE ELSE SU .data
+        
+        
+        String bodyResponse = JSON.serialize(bodyResp);
         
         response.setHeader('Content-Type', 'application/json');
         response.setBody(bodyResponse);
