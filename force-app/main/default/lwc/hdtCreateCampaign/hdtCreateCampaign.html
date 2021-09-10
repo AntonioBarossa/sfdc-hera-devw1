@@ -22,9 +22,13 @@
                             </lightning-input-field>
                         </div>
                         <div class="slds-col slds-size_1-of-2 slds-p-around--x-small channelField">
-                            <lightning-input-field field-name="Channel__c" onchange={handleChangeChannel}
-                                required={channelFieldRequired} value={channelValues}>
-                            </lightning-input-field>
+                            <template if:true={channelFieldRequired}>
+                                <lightning-input-field field-name="Channel__c" onchange={handleChangeChannel}
+                                    required={channelFieldRequired} value={channelValues}>
+                                </lightning-input-field>
+
+                            </template>
+
                         </div>
                     </div>
                     <div class="slds-grid">
@@ -46,10 +50,10 @@
                     </div>
                     <div class="slds-grid">
                         <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                            <lightning-input-field field-name="Priority__c"></lightning-input-field>
+                            <lightning-input-field field-name="Priority__c" required={requiredPriority} ></lightning-input-field>
                         </div>
                         <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                            <lightning-input-field field-name="Required__c"></lightning-input-field>
+                            <lightning-input-field field-name="Required__c" data-id="req" onchange={handleChangeReq}></lightning-input-field>
                         </div>
                     </div>
                     <div class="slds-grid">
@@ -71,8 +75,8 @@
                         </div>
                     </div>
                     <div class="slds-grid">
-                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                            <lightning-input-field field-name="ProcessType__c" required={processTypeFieldRequired}>
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small processType">
+                            <lightning-input-field field-name="ProcessType__c" required={processTypeFieldRequired} onchange={handleChangeProcessType}>
                             </lightning-input-field>
                         </div>
                         <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
@@ -93,10 +97,10 @@
                     <template if:true={campaignInboundFields}>
                         <div class="slds-grid slds-wrap">
                             <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                <lightning-input-field field-name="CaseCategory__c"></lightning-input-field>
+                                <lightning-input-field field-name="CaseCategory__c" required={campaignInboundFields}></lightning-input-field>
                             </div>
                             <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                <lightning-input-field field-name="CaseSubCategory__c"></lightning-input-field>
+                                <lightning-input-field field-name="CaseSubCategory__c" required={campaignInboundFields}></lightning-input-field>
                             </div>
                         </div>
                     </template>
@@ -111,10 +115,12 @@
                         </div>
                         <div class="slds-grid slds-wrap">
                             <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                <lightning-input-field field-name="MacroActivityEasyCIM__c"></lightning-input-field>
+                                <lightning-input-field field-name="MacroActivityEasyCIM__c"
+                                    required={easyRequired}></lightning-input-field>
                             </div>
                             <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                <lightning-input-field field-name="CampaignEasyCIM__c"></lightning-input-field>
+                                <lightning-input-field field-name="CampaignEasyCIM__c"
+                                    required={easyRequired}></lightning-input-field>
                             </div>
                         </div>
                         <div class="slds-grid slds-wrap">
@@ -181,31 +187,38 @@
                                 </div>
                                 <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
                                     <lightning-input-field field-name="CodeGenerationRule__c"
-                                        onchange={handleChangeCodeGenerationRule}></lightning-input-field>
+                                        onchange={handleChangeCodeGenerationRule} required={codeGenerationRuleRequired}>
+                                    </lightning-input-field>
                                 </div>
                             </div>
                             <div class="slds-grid">
                                 <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                    <lightning-input-field field-name="PrefixCode__c"></lightning-input-field>
+                                    <lightning-input-field field-name="PrefixCode__c" required={prefixCodeRequired}>
+                                    </lightning-input-field>
                                 </div>
                                 <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                    <lightning-input-field field-name="CodeValidityEndDate__c"></lightning-input-field>
-                                </div>
-                            </div>
-                            <div class="slds-grid">
-                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                    <lightning-input-field field-name="MaxNumberEECodeUse__c"></lightning-input-field>
-                                </div>
-                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                    <lightning-input-field field-name="MaxNumberGASCodeUse__c"></lightning-input-field>
+                                    <lightning-input-field field-name="CodeValidityEndDate__c"
+                                        required={codeValidityEndDateRequired}></lightning-input-field>
                                 </div>
                             </div>
                             <div class="slds-grid">
                                 <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                    <lightning-input-field field-name="MaxNumberVASCodeUse__c"></lightning-input-field>
+                                    <lightning-input-field field-name="MaxNumberEECodeUse__c"
+                                        required={maxNumberEECodeUseRequired}></lightning-input-field>
                                 </div>
                                 <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                    <lightning-input-field field-name="CodeConventionQuantity__c">
+                                    <lightning-input-field field-name="MaxNumberGASCodeUse__c"
+                                        required={maxNumberGASCodeUseRequired}></lightning-input-field>
+                                </div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                    <lightning-input-field field-name="MaxNumberVASCodeUse__c"
+                                        required={maxNumberVASCodeUseRequired}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                    <lightning-input-field field-name="CodeConventionQuantity__c"
+                                        required={codeConventionQuantityRequired}>
                                     </lightning-input-field>
                                 </div>
                             </div>

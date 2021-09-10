@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_ConnessioneConAttivazione</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Order_Compact_Layout</compactLayoutAssignment>
     <label>Connessione con Attivazione</label>
     <picklistValues>
         <picklist>AccountholderTypeBeneficiary__c</picklist>
@@ -365,6 +366,10 @@
             <fullName>Volontà estorta</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Gestione Scarto</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>ChamberCommerceRegistration__c</picklist>
@@ -504,7 +509,7 @@
     <picklistValues>
         <picklist>ConventionAssociation__c</picklist>
         <values>
-            <fullName>%C2%A05%2F3%2F21</fullName>
+            <fullName>UISMO-UISP MODENA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2192,6 +2197,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Preventivo scaduto</fullName>
             <default>false</default>
         </values>
@@ -2245,6 +2258,10 @@
         </values>
         <values>
             <fullName>Ripensato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2775,6 +2792,25 @@
         </values>
         <values>
             <fullName>Ville rifugi simili%28Perm Part%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VASBillingMode__c</picklist>
+        <values>
+            <fullName>A-Rate fisse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Canone fisso</fullName>
             <default>false</default>
         </values>
     </picklistValues>

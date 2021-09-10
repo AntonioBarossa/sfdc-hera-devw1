@@ -1,0 +1,57 @@
+public with sharing class HDT_LC_ActivityIvaAccise {
+    
+    private static HDT_SRV_ActivityCustom activitySRV = new HDT_SRV_ActivityCustom();
+
+    @AuraEnabled
+    public static wrts_prcgvr__Activity__c getInitActivity(String recordId){
+        return HDT_QR_ActivityCustom.getRecordByIdAccise(recordId);
+    }
+
+    @AuraEnabled
+    public static void saveActivity(wrts_prcgvr__Activity__c act,boolean closeActivity){
+        system.debug('********::' + act);
+        if(closeActivity){
+            act.wrts_prcgvr__Status__c = 'Completed';
+            act.ageing__c =  ((system.today()).daysBetween(Date.valueOf(act.CreatedDate)))*-1;
+            act.CompletationDateDocument__c = system.today();
+        }
+        update act;
+    }
+    @AuraEnabled
+    public static boolean sospendiActivity(String actid){
+        try{
+            wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
+            w.id = actid;
+            w.wrts_prcgvr__Status__c = 'Sospeso';
+            activitySRV.updateRecord(w); 
+            return true;    
+        }catch(Exception e){
+            return false;
+        }
+    
+    }
+    @AuraEnabled
+    public static boolean riprendiActivity(String actid){
+        try{
+            wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
+            w.id = actid;
+            w.wrts_prcgvr__Status__c = 'Not Started';
+            activitySRV.updateRecord(w);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+    @AuraEnabled
+    public static boolean saveAttempt(String actid, Integer attempt){
+        try{
+            wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
+            w.id = actid;
+            w.NumberOfAttempt__c = attempt;
+            activitySRV.updateRecord(w);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+}

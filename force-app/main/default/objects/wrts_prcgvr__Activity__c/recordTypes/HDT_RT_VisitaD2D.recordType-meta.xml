@@ -37,6 +37,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ManualCheckResult__c</picklist>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso inserito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti dal DL</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
             <fullName>Dimostrata Estraneità</fullName>
@@ -128,6 +143,10 @@
             <fullName>Presa appuntamento in corso</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SuspensionReason__c</picklist>
@@ -167,7 +186,7 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
-            <fullName>Approvazione Quote</fullName>
+            <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
         <values>

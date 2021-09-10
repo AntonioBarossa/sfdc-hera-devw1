@@ -5,29 +5,6 @@
     <description>Indica degli account di tipologia diversa da cliente e partner. Utilizzato per classificare i distributori e in futuro i trader</description>
     <label>Altro</label>
     <picklistValues>
-        <picklist>AccountRatingCtrl__c</picklist>
-        <values>
-            <fullName>01%2EEXCELLENT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>02%2EGOOD</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>03%2EFAIR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>04%2EPOOR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>05%2EBAD</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>AccountSource</picklist>
         <values>
             <fullName>Advertisement</fullName>

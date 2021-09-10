@@ -157,6 +157,10 @@
                 <behavior>Readonly</behavior>
                 <field>ActivatedDate</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -213,6 +217,11 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>Order.Escalation</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>99</sortOrder>
+        </platformActionListItems>
         <platformActionListItems>
             <actionName>NewEvent</actionName>
             <actionType>QuickAction</actionType>
@@ -378,14 +387,14 @@
         <fields>ORDERS.TOTAL_AMOUNT</fields>
         <relatedList>Order.OrderReference__c</relatedList>
     </relatedLists>
-    <relatedLists>
+    <!-- <relatedLists>
         <fields>NAME</fields>
         <fields>SBQQ__NetAmount__c</fields>
         <fields>SBQQ__Status__c</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>SBQQ__Primary__c</fields>
         <relatedList>SBQQ__Quote__c.OrderReference__c</relatedList>
-    </relatedLists>
+    </relatedLists> -->
     <relatedObjects>ContractId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

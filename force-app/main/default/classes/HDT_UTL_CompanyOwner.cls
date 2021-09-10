@@ -7,13 +7,16 @@ public inherited sharing class HDT_UTL_CompanyOwner {
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
 
 
-    public static void feedCompanOwner(List<SObject> objs){
+    public static void feedCompanyOwner(List<SObject> objs){
         List<String> owners=new List<String>();
         String userId= System.UserInfo.getUserId();
         User currentUser= HDT_QR_UserQueriesWithoutSharing.getRoleAndProfile(userId)[0];
         String objectApiName='';
-        if(String.isNotBlank(currentUser.UserRole.DeveloperName)){
-            if('HDT_BackOffice'.equals(currentUser.UserRole.DeveloperName)){
+        // if(String.isNotBlank(currentUser.UserRole.DeveloperName)){
+            /** Andrei Necsulescu - 27/08/2021
+             * When the user doesn't have a Role the Company Owner is filled based on the object relationships
+             */
+            if('HDT_BackOffice'.equals(currentUser.UserRole.DeveloperName) || String.isBlank(currentUser.UserRole.DeveloperName)){
 
                 List<String> accountIds= new List<String>();
                 List<String> caseIds= new List<String>();
@@ -173,7 +176,7 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                         if(leadsMap.containsKey(String.valueOf(s.get('et4ae5__Lead__c')))){
                             Lead lead= leadsMap.get(String.valueOf(s.get('et4ae5__Lead__c')));
                             s.put('CompanyOwner__c', lead.CompanyOwner__c);
-                        }else{
+                        }else if(contactsMap.containsKey(String.valueOf(s.get('et4ae5__Contact__c')))) { // Added check making sure the contactsMap contains the id from the IndividualEmailResult
                             Contact cont= contactsMap.get(String.valueOf(s.get('et4ae5__Contact__c')));
                             s.put('CompanyOwner__c', cont.CompanyOwner__c);
                         }
@@ -183,7 +186,7 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                             if (caseObj != null){
                                 s.put('Account__c', caseObj.AccountId);
                             }
-                        }else{
+                        }else if(ordersMap.containsKey(String.valueOf(s.get('OrderID__c')))) { // Added check making sure the ordersMap contains the id from the IndividualEmailResult
                             Order orderObj = ordersMap.get(String.valueOf(s.get('OrderID__c')));
                             if (orderObj != null){
                                 s.put('Account__c', orderObj.AccountId);
@@ -200,9 +203,9 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                     }
                 }
             }
-        }else{
-            //objs[0].addError('Your UserRole is empty');
-        }
+        // }else{
+        //     objs[0].addError('Your UserRole is empty');
+        // }
        
     }
 

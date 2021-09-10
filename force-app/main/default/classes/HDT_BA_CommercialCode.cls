@@ -23,12 +23,13 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
         //get existing campaginMembers
         Database.QueryLocator query = Database.getQueryLocator('Select Id, FirstName, LastName, CampaignId, PromoCommercialCode__c, Campaign.CodeManagementModel__c, Campaign.PrefixCode__c, Campaign.CodeGenerationRule__c, PromoCommercialCode__r.FullCode__c FROM CampaignMember WHERE CampaignId = :campaignId AND Campaign.CodeGenerationRule__c != \'Manuale\' AND PromoCommercialCode__c  != \'\' AND Campaign.CodeManagementModel__c IN (\'Per singolo Campaign Member\',\'Porta un amico\')');
         Database.QueryLocatorIterator existingMembers =  query.iterator();
+        System.debug('HDT_BA_CommercialCode');
+        set<Integer> codeList = new set<Integer>();
 
         while (existingMembers.hasNext()){
             CampaignMember cm = (CampaignMember)existingMembers.next();
             String code = cm.PromoCommercialCode__r.FullCode__c;
             Integer maxNumber = 0;
-            List<Integer> codeList = new List<Integer>();
             if (cm.Campaign.CodeGenerationRule__c == 'PrefissoProgressivo') {
                 code = code.removeStart(cm.Campaign.PrefixCode__c);
             } else if (cm.Campaign.CodeGenerationRule__c == 'Prefisso + Nome + Cognome + Progressivo') {
@@ -37,14 +38,16 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
             }
             this.numberLength = code.length();
             codeList.add(Integer.valueOf(code));
-
-            if (codeList.size() > 0) {
-                codeList.sort();
-                maxNumber = codeList[codeList.size() - 1];
-            }
-            this.startNumber = maxNumber + 1;
-            System.debug('maxNumber ----' + maxNumber);
         }
+    
+
+        if (codeList.size() > 0) {
+            integer maxNumber=0;
+            maxNumber =codeList.size()+1;
+            System.debug('maxNumber ----' + maxNumber);
+            this.startNumber = maxNumber;
+        }
+        
         List<CampaignMember> membersToUpdate = new List<CampaignMember>();
         List<CommercialCode__c> ccList = new List<CommercialCode__c>();
         Map<String,String> memberCode = new Map<String,String>();

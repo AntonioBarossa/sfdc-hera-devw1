@@ -21,6 +21,8 @@
                 </header>
                 <!-- Modal LWC body starts here -->
                 <div class="slds-modal__content slds-p-around_large" id="modal-content-id-1">
+                    <template if:true={isRapido}>
+                        <template if:true={estimateAmount}>
                     <p>
                         Il preventivo è pari ad euro {estimateAmount} ed è costituito dalle seguenti voci:
                     </p>
@@ -29,7 +31,7 @@
                             Quota Potenza: Euro {powerQuote}
                         </li>
                         <li>
-                            Onere Amministrativo: Euro {administrativeBurden}
+                            Onere Amministrativo: Euro {administrativeBurdenDisplay}
                         </li>
                         <li>
                             IVA: {estimatedVAT}%
@@ -38,6 +40,16 @@
                     <p>
                         Il preventivo ha validita {validityDateEstimate}
                     </p>
+                </template>
+                <template if:false={estimateAmount}>
+                    Errore nel calcolare il preventivo Rapido
+                </template>
+                </template>
+                <template if:false={isRapido}>
+                    <p>
+                        Non è possibile calcolare il preventivo in questa fase dell'order con quoteType {quoteType}
+                    </p>
+                </template>
                 </div>
                 <!-- Modal LWC footer starts here -->
                 <footer class="slds-modal__footer">

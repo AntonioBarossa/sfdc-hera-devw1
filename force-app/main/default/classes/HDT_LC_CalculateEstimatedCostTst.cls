@@ -2,7 +2,7 @@
 * @author Luis Bispo (luis.bispo@engdb.com.br)
 * @date 12/07/2021
 * @description HDT_LC_CalculateEstimatedCost for Test Classes
-* @history Luis Bispo – 12/07/2021 – Created class
+* @history Luca Belometti WR (luca.belometti@webresults.it) – 03/08/2021 – Added Test Methods
 */
 
 @isTest
@@ -33,4 +33,35 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
 
         Test.stopTest();
     }
+
+//** [START MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Added this Test Method
+
+/**
+* Header of the method "testGetExtimatedCost"
+* @author: Luca Belometti - WR (luca.belometti@webresults.it)
+* @version 1.0
+* @description: 
+* @history
+* Created: 2021-08-03
+* Modified By:
+**/    
+    @isTest
+    public static void testGetExtimatedCost(){
+        Test.startTest();
+        
+        Order updateOrder = [SELECT id, Status, EstimateAmount__c, PowerQuote__c, AdministrativeBurden__c, EstimatedVAT__c, ValidityDateEstimate__c, Phase__c
+                            FROM Order
+                            WHERE Status = 'Draft'
+                            LIMIT 1];
+
+        HDT_LC_CalculateEstimatedCost.getExtimatedCost(updateOrder);
+
+        
+        System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
+
+        System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c);
+
+        Test.stopTest();
+    }
+//** [END MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Added this Test Method
 }

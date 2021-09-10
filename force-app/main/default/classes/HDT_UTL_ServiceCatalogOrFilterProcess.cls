@@ -1,0 +1,567 @@
+public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
+    public static Map<String,Map<String,List<String>>> mapCaseFilter = new Map<String,Map<String,List<String>>>
+    { 
+    'Fiscale' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Fatturazione'}
+        },
+    'AnnullamentoContratti' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Preventivi', 'Variazioni', 'Generiche Attivazioni'},
+            'Type' => new List<String>
+                {'Gestione Calamità', 'Informative', 'Comportamento Venditori HC'}
+        },
+    'ContrattoNonRichiesto' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Preventivi', 'Generiche Attivazioni'},
+            'Type' => new List<String>
+                {'Comportamento Venditori HC'}
+        },
+    'Autoletturadacliente' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Verifica Dati al DL', 'Rettifica Consumi', 'Reclamo Scritto/Rich. Info'}
+        },
+    'AllineamentoCanoneRai' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Preventivi'},
+            'Type' => new List<String>
+                {'Gestione Calamità', 'Reclamo Scritto/Rich. Info'}
+        },
+    'SospensioneCanoneRaiCalamità' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Preventivi'},
+            'Type' => new List<String>
+                {'Gestione Calamità', 'Reclamo Scritto/Rich. Info'}
+        },
+    'VerificaPareggioFittizioCanoneRai' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info'}
+        },
+    'Contratti/BonusCommerciale' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Fatturazione', 'Variazioni', 'Annullamento', 'Disattivazioni'}, 
+            'Type' => new List<String>
+                {'Comportamento Venditori HC'}
+        },
+    'ChiusuraContatore' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi', 'Variazioni'}, 
+            'Type' => new List<String>
+                {'Comportamento Venditori HC', 'Gestione Calamità', 'Informative', 'Annullamento Contratti'}
+        },
+    'RecessoperAltriMotivi' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi', 'Morosità'}
+        },
+    'RecessoperRifiutoVoltura' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'RecessosuRichestaCliente' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}, 
+            'Type' => new List<String>
+                {'Comportamento Venditori HC'}
+        },
+    'VotiveModenaCessazione' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'GestioneBonusSociale' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'InversionedelContatore' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'RicostruzioneConsumi' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità', 'Verifica GDM'}
+        },
+    'RitornoaFatturazioneBimestrale/Mensile' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'SollecitoEmissioneBolletta' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'TestoContrattoinBolletta' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info'}
+        },
+    'Unificazione/SeparazioneBP-CA-Bolletta' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'VerificaTitolaritàPOD/PDR' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'ErrorediFatturazione' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'PrescrizioneFatture' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'RettificaConsumi' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'CadutaLinea/ChiamataMuta' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'ComunicazionediFallimento' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'ErroreChiamata' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'PagamentoClickPay' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'PagamentoOnline' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'ModificaAlert' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità', 'Errore di Fatturazione'}
+        },
+    'AllineamentoAnagrafica' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi', 'Morosità'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità', 'Errore di Fatturazione', 'Variazione Anagrafica Cliente', 'Fiscale', 'Modifica Tariffa Residente/Non Residente'}
+        },
+    'DisassociazioneUtenteWeb' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità', 'Errore di Fatturazione'}
+        },
+    'EsercizioDirittiPrivacy' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità', 'Errore di Fatturazione'}
+        },
+    'ModificaPrivacy' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità','Esercizio Diritti Privacy'}
+        },
+    'Richiestaparere' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità', 'Errore di Fatturazione','Esercizio Diritti Privacy'}
+        },
+    'VariazioneAnagraficaCliente' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Condizioni Contrattuali Errate','Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta','Esercizio Diritti Privacy'}
+        },
+    'VariazionesuAmministratore' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta','Esercizio Diritti Privacy'}
+        },
+    'GestioneDisalimentabilità' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi', 'Morosità'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'Riattivazione Fornitura' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'BloccoSollecito/Interessi' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'ComunicazionePagamento' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info'}
+        },
+    'ContenziosoInCorso' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'CopiaBolletta/Bollettino' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info'}
+        },
+    'DoppiPagamenti/Incassi' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'AttivazioneClick&Pay' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Gestione Calamità'}
+        },
+    'Paperless' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info'}
+        },
+    'PianoRateizzazione' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info'}
+        },
+    'Rimborso' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'RevocaDomiciliazione' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'RichiestaDomiciliazione' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Unificazione/Separazione BP-CA-Bolletta'}
+        },
+    'VariazioneDomiciliazione' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'SegnalazioniVAS' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}, 
+            'Type' => new List<String>
+                {'Autoelettrica', 'HVAC'}
+        },
+    'AggiuntaAttacco' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'Esecuzionelavori' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'SpostamentoVotiveModena' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'NuovoImpianto' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'RipristinoFornituraInterrotta' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'SpostamentoContatore' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'UnificazionePOD' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'VariazioneFase' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'RimozioneImpianto' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'VariazionePortata' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'VariazionePotenza' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'VariazioneTensione' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'ComportamentoAltriVenditori' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info', 'Switch Out SII','Recesso su Richesta Cliente'}
+        },
+    'ComportamentoVenditoriHC' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Fatturazione'},
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info', 'Condizioni Contrattuali Errate', 'Recesso su Richesta Cliente'}
+        },
+    'RichiestaParere' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Reclamo Scritto/Rich. Info'}
+        },
+    'ReclamoScritto/Rich.Info' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Ricostruzione Consumi'}
+        },
+    'VerificaDatialDL' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi', 'Morosità', 'Variazioni', 'Annullamento', 'Verifiche'},
+            'Type' => new List<String>
+                {'Ricostruzione Consumi', 'Gestione Calamità', 'Rettifica Consumi', 'Prescrizione Fatture', 'Inversione del Contatore'}
+        },
+    'VotiveModenaContestazioneFattura' => new Map<String,List<String>>
+        {
+            'Type' => new List<String>
+                {'Ricostruzione Consumi', 'Reclamo Scritto/Rich. Info'}
+        },
+    'Cambiocontatorenonregistrato' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi', 'Fatturazione'}
+        },
+    'CondizioniContrattualiErrate' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi', 'Fatturazione'}
+        },
+    'Dichiarazionediintento' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Fatturazione'}
+        },
+    'GestioneCalamità' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'MancataTelelettura/lettura' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi', 'Fatturazione'}
+        },
+    'Marcatura/UsoPdR' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'ModificaLayoutdidettaglio' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+            {'Reclami', 'Fatturazione'}
+        },
+    'ModificaPortaleSOLGestioneEnergia' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+            {'Reclami'}
+        },
+    'ModificaTariffaResidente/Non Residente' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi', 'Variazioni'},
+            'Type' => new List<String>
+                {'Condizioni Contrattuali Errate'}
+        },
+    'Modifica/AzzeramentoConsumoAnnuo' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'},
+            'Type' => new List<String>
+                {'Gestione Calamità', 'Marcatura/Uso PdR', 'Modifica Tariffa Residente/Non Residente' }
+        },
+    'BP/CA-erratacategoria' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'DettaglioBolletta' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Fatturazione'}
+        },
+    'SplitPayment' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami'}
+        },
+    'Variazioneindirizzodifornitura' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Fatturazione'}
+        },
+    'ConsegnacopiachiaveGdM' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'VerificaTensione-Pressione' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi', 'Fatturazione'}
+        },
+    'VolturaTecnica' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi', 'Fatturazione', 'Morosità', 'Variazioni'},
+            'Type' => new List<String>
+                {'Unificazione/Separazione BP-CA-Bolletta'}
+        }
+    };
+
+    public static Map<String,Map<String,List<String>>> mapAccountStatementFilter = new Map<String,Map<String,List<String>>>
+    { 
+    'ComunicazionePagamento' => new Map<String,List<String>>
+        {
+            'Context__c' => new List<String>
+                {'EC1L','InstallmentsView'}
+        }
+    };
+
+    public static Boolean caseFilter(sObject sb, String method){
+        boolean res = true;
+        if(mapCaseFilter.get(method) != null){
+            Map<String,List<String>> condictionOr = mapCaseFilter.get(method);
+            if(condictionOr != null && !condictionOr.keyset().isEmpty()){
+                Boolean r = false;
+                for(String key : condictionOr.keyset()){
+                    if(!r){
+                        List<String> valori = condictionOr.get(key);
+                        if(sb.get(key) != null && valori.contains((String) sb.get(key))){
+                            r = true;
+                            break;
+                        }
+                    }else{
+                        break;
+                    }
+                }
+                res = r;
+            }
+        }
+        return res;
+    }
+
+    public static Boolean accountStatementFilter(sObject sb, String method){
+        boolean res = true;
+        if(mapAccountStatementFilter.get(method) != null){
+            Map<String,List<String>> condictionOr = mapAccountStatementFilter.get(method);
+            if(condictionOr != null && !condictionOr.keyset().isEmpty()){
+                Boolean r = false;
+                for(String key : condictionOr.keyset()){
+                    if(!r){
+                        List<String> valori = condictionOr.get(key);
+                        if(sb.get(key) != null && valori.contains((String) sb.get(key))){
+                            r = true;
+                            break;
+                        }
+                    }else{
+                        break;
+                    }
+                }
+                res = r;
+            }
+        }
+        return res;
+    }
+}

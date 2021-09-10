@@ -134,6 +134,11 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         saleServiceItemSrv.checkReadAccess('Opportunity__c,Opportunity__r.Sale__c,Opportunity__r.Name,Opportunity__r.CreatedDate,Quote__c,Quote__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.RecordType.Name,ServicePoint__r.RecordType.DeveloperName,ServicePoint__r.SupplyCity__c');
         List<SaleServiceItem__c> saleServiceItems = saleServiceItemQr.getActiveRecordsBySaleId(sale.Id);
 
+        system.debug('keltin saleServiceItems: ' + saleServiceItems);
+        system.debug('keltin saleServiceItems size: ' + saleServiceItems.size());
+        system.debug('keltin quoteLinePods: ' + quoteLinePods);
+        system.debug('keltin quoteLinePods size: ' + quoteLinePods.size());
+
         if (quoteLinePods.size() != saleServiceItems.size()) {
             throw new AuraHandledException('Configurare i prodotti per tutti i Service Point!');
         }
@@ -245,6 +250,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
 
     @AuraEnabled
     public static wrapReturnValidity checkApprovedProduct(Sale__c sale){
+        system.debug('sale******************************* '+sale);
         list<String> listId = new List<String>();
         list<String> idToCreateActivity = new List<String>();
         map<String,boolean> checkIsPresent = new Map<string,boolean>();
@@ -292,8 +298,9 @@ public inherited sharing class HDT_LC_ConfigureProduct {
                     }
                     List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
                     for(String s : idToCreateActivity){
-                        listActivityToCreate.add(new wrts_prcgvr__Activity__c(QuoteLine__c=s, RecordTypeId= recTypeId, Type__c= 'Approvazione Quote'));
+                        listActivityToCreate.add(new wrts_prcgvr__Activity__c(QuoteLine__c=s, RecordTypeId= recTypeId, Type__c= 'Approvazione Offerte',Account__c=sale.Account__r.Id,Sale__c=sale.id,Status__c='Creata'));
                     }
+                    System.debug('listActivityToCreate : ' + listActivityToCreate);
                     actSrv.createRecord(listActivityToCreate);
                 }
             }else{

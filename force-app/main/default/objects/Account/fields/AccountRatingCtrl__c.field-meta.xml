@@ -3,39 +3,11 @@
     <fullName>AccountRatingCtrl__c</fullName>
     <description>Campo tecnico nascosto. Necessario per calcolo KPI Bontà Cliente.</description>
     <externalId>false</externalId>
+    <formula>TEXT(KpiTracking__r.AccountRatingCtrl__c) </formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Bontà Cliente</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
-    <type>Picklist</type>
-    <valueSet>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>01.EXCELLENT</fullName>
-                <default>false</default>
-                <label>01.EXCELLENT</label>
-            </value>
-            <value>
-                <fullName>02.GOOD</fullName>
-                <default>false</default>
-                <label>02.GOOD</label>
-            </value>
-            <value>
-                <fullName>03.FAIR</fullName>
-                <default>false</default>
-                <label>03.FAIR</label>
-            </value>
-            <value>
-                <fullName>04.POOR</fullName>
-                <default>false</default>
-                <label>04.POOR</label>
-            </value>
-            <value>
-                <fullName>05.BAD</fullName>
-                <default>false</default>
-                <label>05.BAD</label>
-            </value>
-        </valueSetDefinition>
-    </valueSet>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

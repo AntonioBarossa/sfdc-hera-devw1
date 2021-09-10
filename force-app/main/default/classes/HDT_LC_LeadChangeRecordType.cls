@@ -8,8 +8,9 @@
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
 	private static HDT_QR_Recordtype qrRecordtype = new HDT_QR_Recordtype();
     @AuraEnabled
-    public static String changeRecordTypeOfLead(Id leadId){
-
+    public static Map<String,String> changeRecordTypeOfLead(Id leadId){
+        Map<String,String> mapRes = new Map<String,String>();
+        boolean check = false;
         HDT_QR_RecordType recordtypeQr= new HDT_QR_RecordType();
         Lead lead=new Lead(Id= leadId);
         lead.RecordTypeId= recordtypeQr.getRecordType('HDT_RT_Main', 'Lead').Id;
@@ -21,6 +22,15 @@
            // res = s.replace('&c__accid={!Id}','');
            res = s.replace('&c__accid={!Id}','&c__leadId='+ leadId);
         }
-        return res;
+        mapRes.put('url',res);
+        String us= userinfo.getUserType();
+        
+        system.debug(us);
+
+        if (!'Standard'.Equals(us)){
+            check = true;
+        }
+        mapRes.put('comm',check +'');
+        return mapRes;
     }
 }

@@ -8,9 +8,10 @@ import updateCampaignMembersStatus from '@salesforce/apex/HDT_LC_CampaignsContro
 
 const columns = [
     { label: 'Campagna', fieldName: 'Name' },
-    { label: 'Stato', fieldName: 'Status' },
+    { label: 'Stato', fieldName: 'Campaign.Status' },
     { label: 'Canale', fieldName: 'Channel__c' },
     { label: 'Close Date', fieldName: 'EndDate', type: 'date' },
+    { label: 'Stato Membro campagna', fieldName: 'Status' },
 ];
 export default class PopoverContainer extends NavigationMixin(LightningElement) {
     @api campaignType;
@@ -89,7 +90,7 @@ export default class PopoverContainer extends NavigationMixin(LightningElement) 
             },
         });
     }
-
+    
     @api updateCampaignMemberStatus() {
         let statusValue = 'Non Proposto Auto';
         let membersToUpdate = [];

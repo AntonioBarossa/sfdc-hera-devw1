@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customLabels>
+        <label><!-- AccountCantBeCertified --></label>
+        <name>AccountCantBeCertified</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CertificationAlreadyInProgress --></label>
+        <name>CertificationAlreadyInProgress</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ContactPointAlreadyCertified --></label>
+        <name>ContactPointAlreadyCertified</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Error --></label>
         <name>Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LeadCantBeCertified --></label>
+        <name>LeadCantBeCertified</name>
     </customLabels>
     <customLabels>
         <label><!-- MassiveLoader --></label>
@@ -73,7 +89,19 @@
         <name>MassiveLoaderReset</name>
     </customLabels>
     <customLabels>
+        <label><!-- ObjectNotAllowedForCertification --></label>
+        <name>ObjectNotAllowedForCertification</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Success --></label>
         <name>Success</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SuccessfulCertificationRequest --></label>
+        <name>SuccessfulCertificationRequest</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- UnsupportedObjectType --></label>
+        <name>UnsupportedObjectType</name>
     </customLabels>
 </Translations>

@@ -135,6 +135,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }
         if(currentCase.Phase__c  == 'Da Inviare' 
         || currentCase.Phase__c == 'Preventivo accettato' 
+        || currentCase.Phase__c == 'Esito OK da SAP' // per le autoletture da cliente.
         || currentCase.Phase__c == 'Comunicazione verso Heroku KO'
         || currentCase.Phase__c == 'Annullamento - Da inviare'){
 
@@ -200,6 +201,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.ExternalUserCompany__c = reqWrp.requestMap.get('CMP');
         }
         //END>> 27/07/2021 costanzo.lomele@webresults.it - campo company
+        //START>> 23/08/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
+        if(!String.isBlank(reqWrp.requestMap.get('FASE'))){
+            currentCase.TrackingDiscardPhase__c = reqWrp.requestMap.get('FASE');
+        }
+        //END>> 23/08/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
         if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita') && !method.equalsIgnoreCase('aggiornaRCU')){
             //gestione scarti
             return caseUpdate;
@@ -257,10 +263,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.CancellationReasonCode__c = reqWrp.requestMap.get('COD_CAUSALE');
             }
             if(reqWrp.requestMap.get('ANNOTAZIONI_ANN') != null && reqWrp.requestMap.get('ANNOTAZIONI_ANN') != ''){
-                currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('ANNOTAZIONI_ANN');
+                String noteAnn = recordCase.CancellationNote__c != null?recordCase.CancellationNote__c:'';
+                currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('ANNOTAZIONI_ANN') + '\n' + noteAnn;
             }
             if(reqWrp.requestMap.get('NOTE_ANN') != null && reqWrp.requestMap.get('NOTE_ANN') != ''){
-                String noteAnn = currentCase.CancellationNote__c != null?currentCase.CancellationNote__c:'';
+                String noteAnn = recordCase.CancellationNote__c != null?recordCase.CancellationNote__c:'';
+                System.debug('NoteAnn: '  + noteAnn);
                 currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
             }
             if(currentPhase.indexOf('Annull') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
@@ -275,8 +283,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.TechnicalFeasibility__c = false;
                 }
             }
-            if(nextPhase != null && nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
-                currentCase.ComplexCategory__c = reqWrp.requestMap.get('NOTE');
+            if(reqWrp.requestMap.get('NOTE') != null && reqWrp.requestMap.get('NOTE') != ''){
+                String note = recordCase.Note__c != null?recordCase.Note__c:'';
+                currentCase.Note__c =  nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE') + '\n' + note;
             }
             if(reqWrp.requestMap.get('DT_MAX_PREV') != null){
                 try{
@@ -294,7 +303,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     System.debug('DATA Exception -> ' + e.getMessage());
                 }
             }
-            
+            // Esito dal DL ricevuto su autolettura chiusa, non prevediamo un cambio di fase ma solo una nota sul Case.
+            if(currentPhase.equalsIgnoreCase('Validazione OK DL simulata') && activity != null && activity.equalsIgnoreCase('Esito ricevuto su richiesta chiusa')){
+                currentCase.Phase__c = currentPhase; // non sono previsti cambi di fase.
+                String currentDescription = recordCase.Description != null?recordCase.Description:'';
+                String newDescription = nowDateFormat + ': ' + activity + '\n';
+                currentCase.Description = newDescription + '\n' + currentDescription;
+            }
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
@@ -306,9 +321,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 //no action needed
             }else if(currentPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && nextPhase.equalsIgnoreCase('Completata')){
                 currentCase.Phase__c = 'Inviare preventivo';
+            }else if(recordCase.Type.equalsIgnoreCase('Fiscale') && nextPhase.equalsIgnoreCase('Completata') && recordCase.CalculationBlock__c){
+                currentCase.Phase__c = 'Elaborazione Manuale';
             }else{
                 currentCase.Phase__c = nextPhase;
-                handleEntityUpdate(reqWrp);
+                Map<String, Object> extraParams = new Map<String,Object>();
+                extraParams.put('oldContractCode',recordCase?.ContractCode__c); 
+                handleEntityUpdate(reqWrp, extraParams);
             }
 
             if(noteSap != null && noteSap != ''){
@@ -331,10 +350,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String message = reqWrp.requestMap.get('MESSAGGIO');
             if(String.isNotBlank(type) 
                 && String.isNotBlank(recordCase.Type) 
-                && (recordCase.Type.equals('Prescrizione Fatture') || recordCase.Type.equalsIgnoreCase('Piano Rateizzazione'))
+                && (recordCase.Type.equals('Prescrizione Fatture') || recordCase.Type.equalsIgnoreCase('Piano Rateizzazione') || recordCase.Type.equalsIgnoreCase('Comunicazione Pagamento')) 
                 && !(type.containsIgnoreCase('Esito Rateizzazione OK'))){
                     if(type.equalsIgnoreCase('Piano rate OK Acc. pagato')){
                         type = 'Acconto paperless pagato';
+                    }
+                    else if(type.equalsIgnoreCase('KO Acc No pag rate Annullate')){
+                        type = 'Acconto Paperless Non Pagato';
                     }
                 currentCase.Phase__c = type; 
             }
@@ -352,6 +374,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
             }
             updateFuture(JSON.serialize(currentCase));
+            if(currentCase.Phase__c == 'Acconto Paperless Non Pagato'){
+                currentCase.Phase__c = 'Piano Rata Annullato';
+                updateFuture(JSON.serialize(currentCase));
+            }
             return caseUpdate;
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
@@ -362,7 +388,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if(expectedExec != null && expectedExec != ''){
             System.debug('#QUOTATIONTYPE -> ' + quotationType);
             System.debug('#NEXTPHASE -> ' +nextPhase);
-            if(quotationType.equalsIgnoreCase('Analitico') && nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti')){
+            if(quotationType.equalsIgnoreCase('Analitico') && (nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti') || nextPhase.containsIgnoreCase('Ammissibilità OK'))){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
             }else if(!quotationType.equalsIgnoreCase('Analitico')){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
@@ -568,8 +594,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             currentCase.Phase__c = 'Bozza';
                             currentCase.Status = 'New';
-                        }when 'Voltura'{
+                        }when 'Volture'{
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
+                            currentCase.Cluster__c = 'Voltura';
                             if(dataDecorrenza != null){
                                 currentCase.SwitchOutDate__c = Date.valueOf(dataDecorrenza);
                                 if(contract != null && contract.EndDate !=null) {
@@ -579,6 +606,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                                     }
                                 }
                             }
+                            currentCase.Status = 'In Lavorazione';
+                            currentCase.Phase__c = 'In Lavorazione SAP';
                         }
                         when else{
                             throw new HDT_UTL_RichPassException('Errore tecnico nella definizione del RecordType', '04');
@@ -591,6 +620,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }else {
                 throw new HDT_UTL_RichPassException('POD non valorizzato', '01');
             }
+
             //It is not possible to perform DML operations before a callout
             try{
                 currentCase = dataEnrichment(pod,sapContractCode,currentCase);
@@ -608,6 +638,34 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 createActivity(currentCase.Id,null, '', 'Recesso Anticipato');
             }
             currentCase = qrClass.getCaseRecord(currentCase.Id);
+            System.debug('Commodity: ' + currentCase.CommodityFormula__c);
+            //CompatibilityCheck
+            String compatibility = '';
+            //checkCompatibility Method Call
+            try
+            {
+                compatibility = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(currentCase);
+            }
+            catch(Exception e)
+            {
+                throw new HDT_UTL_RichPassException('Errore nella verifica della compatibilita', '04');
+            }
+            //Check Compatibility Output
+            if(String.isEmpty(compatibility))
+            {
+                System.debug('Compatibilita superata con successo ' + compatibility);
+            }
+            else
+            {
+                System.debug('Compatibilita non superata ' + compatibility);
+                for(Case c : caseInsertList){
+                    c.Phase__c = 'Bozza Annullata';
+                    c.Status = 'Closed';
+                    c.CancellationReason__c = 'Processo incompatibile';
+                }
+                HDT_UTL_DatabaseService.updateSObject(caseInsertList);
+                throw new HDT_UTL_RichPassException('Processo Incompatibile', '04');
+            }
             if(cluster == 'Morosita'){
                 if(currentCase.ParentId == null){
                     currentCase.ParentId = containerCase.Id;
@@ -618,10 +676,20 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 HDT_UTL_DatabaseService.updateSObject(caseUpdateList);
             }
         } catch (Exception ex) {
-            throw new HDT_UTL_RichPassException('Errore nella gestione della richiesta', '04');
+            if(ex instanceof HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException)
+            {
+                HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException customEx = (HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException) ex;
+                throw new HDT_UTL_RichPassException(customEx.getMessage(), customEx.code);
+            }
+            else 
+            {
+                throw new HDT_UTL_RichPassException('Errore nella gestione della richiesta', '04');
+            }
         }
         //FinalQuery to get parentCase
-        currentCase = qrClass.getCaseRecord(currentCase.Id);
+        if(currentCase.Id != null){
+            currentCase = qrClass.getCaseRecord(currentCase.Id);
+        }
         return currentCase;
     }
 
@@ -708,9 +776,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     }
 
-    private void handleEntityUpdate(HDT_WRP_HerokuPostSalesManager wrapper){
+    private void handleEntityUpdate(HDT_WRP_HerokuPostSalesManager wrapper, Map<String, Object> extraParams){
         String contractCode = wrapper.requestMap.get('VERTRAG');
         String contractStatus = wrapper.requestMap.get('VERTRAG_ST');
+        String oldContractCode = (String) extraParams.get('oldContractCode');
         Date contractEndDate;
         try{
             contractEndDate = Date.valueOf(wrapper.requestMap.get('DT_FINE_VERT'));
@@ -718,13 +787,18 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug('UTL_CLASS_ContractEndDate_error--> '+e.getMessage());
         }
         if(contractCode != null){
-           handleContractUpdate(contractCode,contractStatus,contractEndDate);
+           handleContractUpdate(contractCode, oldContractCode,contractStatus,contractEndDate);
         }
     }
 
-    private void handleContractUpdate(String contractCode,String contractStatus, Date contractEndDate){
+    private void handleContractUpdate(String contractCode, String oldContractCode,String contractStatus, Date contractEndDate){
         try{
-            String queryString = 'SELECT Id, Status, SAPContractCode__c FROM Contract WHERE SAPContractCode__c = \''+contractCode+'\'';
+            String queryString = '';
+            if(oldContractCode != null && oldContractCode != contractCode){
+                queryString = 'SELECT Id, Status, SAPContractCode__c FROM Contract WHERE SAPContractCode__c = \''+oldContractCode+'\'';
+            } else{
+                queryString = 'SELECT Id, Status, SAPContractCode__c FROM Contract WHERE SAPContractCode__c = \''+contractCode+'\'';
+            }
             String objectq = 'Contract';
             List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectq);
             Contract contracRecord = (Contract) recordList[0];

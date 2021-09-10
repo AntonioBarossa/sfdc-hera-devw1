@@ -1,4 +1,4 @@
-global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_prcgvr.Interfaces_1_2.IApexAction{
+global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_prcgvr.Interfaces_1_0.IApexAction{
     
     Map<String,Map<String,Boolean>> mapDistributorProcess = new Map<String,Map<String,Boolean>>
     { 'Subentro su GdM chiuso' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
@@ -35,7 +35,8 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
             wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
             w.order__c = ord.id;
             w.Distributor__c = ord.servicePoint__r.distributor__c;
-            w.account__c = ord.ServicePoint__r.Account__c;
+            w.account__c = ord.AccountId;
+            w.contact__c = ord.Sale__r.SalesContact__c ;
             w.isAtoa__c = isAtoa;
             w.recordtypeid = rec;
             w.status__c = 'Creata';

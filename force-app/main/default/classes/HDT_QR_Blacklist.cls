@@ -8,6 +8,10 @@ public with sharing class HDT_QR_Blacklist {
         return [Select id,Domain__c,ErrorMessage__c,Note__c from Blacklist__c];
     }
 
+    public static List<BlackList__c> getAllBlacklistEmail(){
+        return [Select id,Domain__c,ErrorMessage__c,Note__c from Blacklist__c where domain__c != null];
+    }
+
     public Blacklist__c getBlacklist(String pod) {
 
         accountSrv.checkReadAccess('id, POD__C, isActive__c');

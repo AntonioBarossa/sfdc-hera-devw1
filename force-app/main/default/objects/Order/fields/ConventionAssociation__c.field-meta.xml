@@ -746,9 +746,15 @@
                 <label>FEDMO-FEDERALBERGHI</label>
             </value>
             <value>
-                <fullName> 5/3/21</fullName>
+                <fullName>UISMO-UISP MODENA</fullName>
                 <default>false</default>
                 <label> 5/3/21</label>
+            </value>
+            <value>
+                <fullName> 5/3/21</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label> 5/3/21 - old</label>
             </value>
         </valueSetDefinition>
     </valueSet>

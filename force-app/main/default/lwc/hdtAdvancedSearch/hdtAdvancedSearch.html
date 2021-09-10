@@ -104,7 +104,7 @@
                         </lightning-layout>
                         <lightning-layout>
                             <lightning-layout-item padding="around-small" size="12">
-                                <lightning-datatable max-row-selection={maxRowSelected} class="table-section" key-field="id" data={tableData} columns={tableColumns} onrowselection={getSelectedServicePoint}></lightning-datatable>
+                                <lightning-datatable max-row-selection={maxRowSelected} class="table-section" key-field="Id" data={tableData} columns={tableColumns} onrowselection={getSelectedServicePoint} selected-rows={preSelectedRows}></lightning-datatable>
                             </lightning-layout-item>
                         </lightning-layout>
                     </div>

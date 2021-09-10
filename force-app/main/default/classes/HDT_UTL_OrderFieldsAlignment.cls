@@ -4,6 +4,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
+    private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
@@ -14,6 +15,35 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_SRV_QuoteLine quoteLineSrv = new HDT_SRV_QuoteLine();
     private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
+    private static HDT_WRP_Data mixedData = new HDT_WRP_Data();
+
+    private static Map<String,String> mapIvaIdToValue = new Map<String,String>{
+    '01' => 'Iva 10% (Cod. 01)',
+'02' => 'Iva 22% (Cod. 02)',
+'03' => 'Iva 10% Soc. Controllate (Cod. 03)',
+'04' => 'Iva 22% Soc. Controllate (Cod. 04)',
+'05' => 'Iva 10% Soc. Collegate (Cod. 05)',
+'06' => 'Iva 22% Soc. Collegate (Cod. 06)',
+'07' => 'Iva 10% Soc. Controllanti (Cod. 07)',
+'08' => 'Iva 22% Soc. Controllanti (Cod. 08)',
+'09' => 'Iva 10% Soc. del Gruppo (Cod. 09)',
+'10' => 'Iva 22% Soc. del Gruppo (Cod. 10)',
+'12' => 'Iva esente-non imp Art 72 (Cod. 12)',
+'13' => 'Iva Fuori Campo Autofatt. Art 2 (Cod. 13)',
+'14' => 'Iva 10% Soc. Partecipate (Cod. 14)',
+'17' => 'Iva esente-non imp art 8 S. Marino (Cod. 17)',
+'19' => 'Iva Fuori Campo Livigno (Cod. 19)',
+'25' => 'Iva Reverse Charge (Cod. 25)',
+'26' => 'Iva Reseller esente (Cod. 26)',
+'27' => 'Iva 10% Consociate (Cod. 27)',
+'28' => 'Iva 22% Consociate (Cod. 28)',
+'S1' => 'Iva Split payment 10% (Cod. S1)',
+'S2' => 'Iva Split payment 22% (Cod. S2)',
+'S3' => 'Iva Split payment 10% Soc. del Gruppo (Cod. S3)',
+'S4' => 'Iva Split payment 22% Soc. del Gruppo (Cod. S4)'
+    };
+
+
 
     private static void alignBillingProfileFields(Order orderToUpdate, String billingProfileId){
 
@@ -52,16 +82,112 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     }
 
     private static void alignServicePointFields(Order orderToUpdate, String servicePointId) {
-        
-        servicePointSrv.checkReadAccess('CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c,SwitchInWinback__c');
+        Map<String,String> mapIvaIdToValue2 = new Map<String,String>{
+            '01' => 'Iva 10% (Cod. 01)',
+        '02' => 'Iva 22% (Cod. 02)',
+        '03' => 'Iva 10% Soc. Controllate (Cod. 03)',
+        '04' => 'Iva 22% Soc. Controllate (Cod. 04)',
+        '05' => 'Iva 10% Soc. Collegate (Cod. 05)',
+        '06' => 'Iva 22% Soc. Collegate (Cod. 06)',
+        '07' => 'Iva 10% Soc. Controllanti (Cod. 07)',
+        '08' => 'Iva 22% Soc. Controllanti (Cod. 08)',
+        '09' => 'Iva 10% Soc. del Gruppo (Cod. 09)',
+        '10' => 'Iva 22% Soc. del Gruppo (Cod. 10)',
+        '12' => 'Iva esente-non imp Art 72 (Cod. 12)',
+        '13' => 'Iva Fuori Campo Autofatt. Art 2 (Cod. 13)',
+        '14' => 'Iva 10% Soc. Partecipate (Cod. 14)',
+        '17' => 'Iva esente-non imp art 8 S. Marino (Cod. 17)',
+        '19' => 'Iva Fuori Campo Livigno (Cod. 19)',
+        '25' => 'Iva Reverse Charge (Cod. 25)',
+        '26' => 'Iva Reseller esente (Cod. 26)',
+        '27' => 'Iva 10% Consociate (Cod. 27)',
+        '28' => 'Iva 22% Consociate (Cod. 28)',
+        'S1' => 'Iva Split payment 10% (Cod. S1)',
+        'S2' => 'Iva Split payment 22% (Cod. S2)',
+        'S3' => 'Iva Split payment 10% Soc. del Gruppo (Cod. S3)',
+        'S4' => 'Iva Split payment 22% Soc. del Gruppo (Cod. S4)'
+            };
+
+            Map<String,String> mapAcciseEle = new Map<String,String>{
+            'E_IE_M04' => 'Imposta ordinaria Altri Usi (Cod. E_IE_M04)',
+            'E_IE_14A' => 'Imposta C En>50% unità prod (Cod. E_IE_14A)',
+            'E_IE_L11' => 'Imposta Usi Chim Elettrol Metal No Sog. Obbl. (Cod. E_IE_L11)',
+            'E_IE_L10' => 'Imposta Esente Forze Armate NATO (Cod. E_IE_L10)',
+            'E_IE_L03' => 'Imposta FFSS (Cod. E_IE_L03)',
+            'E_IE_L98' => 'Imposta Grossiti EE Non Domest (Cod. E_IE_L98)',
+            'E_IE_L01' => 'Imposta Illum Pubbl (Cod. E_IE_L01)',
+            'E_IE_06C' => 'No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C)',
+            'E_IE_L13' => 'Imposta Opifici (Cod. E_IE_L13)',
+            'E_IE_L06' => 'Imposta esente Prod.EE (Cod. E_IE_L06)',
+            'E_IE_L02' => 'Imposta Sedi Diplomatiche (Cod.E_IE_L02)',
+            'E_IE_L04' => 'Imposta Trasp Urb. (Cod. E_IE_L04)',
+            'E_IE_11D' => 'Imposta % Usi Chim Metall No Sog. Obbl. (Cod. E_IE_11D)',
+            'E_IE_11C' => 'Imposta % Usi Mineral No Sog. Obbl. (Cod. E_IE_11C)',
+            'E_IE_11A' => 'Imposta Usi Mineral No Sog. Obbl. (Cod. E_IE_11A)',
+            'ALTRO' => 'Imposta usi domestici'
+                };
+            
+                Map<String,String> mapAcciseGas = new Map<String,String>{
+                    'G_I09' => 'Imposta Autotrazione (Cod. G_I09)',
+                    'G_I15' => 'Imosta Autopr-Prod EE Industr (Cod. G_I15)',
+                    'G_I22' => 'Imposta Processi Metallurgici (Cod. G_I22)',
+                    'G_I23' => 'Imposta Processi Mineralogici (Cod. G_I23)',
+                    'G_I24' => 'Imposta Forze Armate Nazionali (Cod. G_I24)',
+                    'G_ICD' => 'Imposta Usi Domestici (Cod. G_ICD)',
+                    'G_ICC10' => 'Imposta usi non domestici iva 10% (Cod. G_ICC10)',
+                    'G_ICC' => 'Imposta usi non domestici iva 22% (Cod. G_ICC)',
+                    'G_I04' => 'Imposta usi industriali (Cod. G_I04)',
+                    'G_I21' => 'Imposta Processi Elettrolitici (Cod. G_I21)',
+                    'G_I25' => 'Imposta Forze Armate NATO (Cod. G_I25)',
+                    'G_I26' => 'Imposta Sedi Diplomatiche - Art.22 (Cod. G_I26)',
+                    'ALTRO' => 'Altro'
+                        };
+
+        servicePointSrv.checkReadAccess('CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'SwitchOutDate__c,exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,SwitchInWinback__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c,MeterStatus__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
+        
+        if(servicePoint.CommoditySector__c == 'Energia Elettrica'){
+            orderToUpdate.exciseEle__c =  mapAcciseEle.get(servicePoint.exciseEle__c) != null ? mapAcciseEle.get(servicePoint.exciseEle__c) : mapAcciseEle.get('ALTRO');
 
-        orderToUpdate.exciseEle__c =  servicePoint.exciseEle__c;
-        orderToUpdate.ExciseGas__c =  ServicePoint.ExciseGas__c;
-        orderToUpdate.vat__c = ServicePoint.Vat__c;
+            if ((servicePoint.exciseEle__c == null || servicePoint.exciseEle__c == '') //HRAWRM-498
+                && servicePoint.SupplyType__c == 'Non Domestico') {
+                orderToUpdate.ExciseEle__c = 'Imposta ordinaria Altri Usi (Cod. E_IE_M04)';
+            } else if ((servicePoint.exciseEle__c == null || servicePoint.exciseEle__c == '')
+            && servicePoint.SupplyType__c == 'Domestico') {
+                orderToUpdate.ExciseEle__c = 'Imposta usi domestici';
+            }
+        }
+        else if(servicePoint.CommoditySector__c == 'Gas'){
+            orderToUpdate.ExciseGas__c =  mapAcciseGas.get(servicePoint.ExciseGas__c) != null ? mapAcciseGas.get(servicePoint.ExciseGas__c) : mapAcciseGas.get('ALTRO');
+
+            if ((servicePoint.ExciseGas__c == null || servicePoint.ExciseGas__c == '') //HRAWRM-498
+                && servicePoint.SupplyType__c == 'Non Domestico') {
+
+                    if(orderToUpdate.VAT__c == 'Iva 22% (Cod. 02)'){
+                        orderToUpdate.ExciseGas__c = 'Imposta usi non domestici iva 22% (Cod. G_ICC)';
+                    } else if(orderToUpdate.VAT__c == 'Iva 10% (Cod. 01)'){
+                        orderToUpdate.ExciseGas__c = 'Imposta usi non domestici iva 10% (Cod. G_ICC10)';
+                    }
+
+            } else if ((servicePoint.ExciseGas__c == null || servicePoint.ExciseGas__c == '') 
+                && servicePoint.SupplyType__c == 'Domestico') {
+                orderToUpdate.ExciseGas__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+            }
+        } 
+/*
+        if((servicePoint.exciseEle__c != null && servicePoint.exciseEle__c != '') || (servicePoint.ExciseGas__c != null && servicePoint.ExciseGas__c != '')){
+            orderToUpdate.exciseEle__c =  servicePoint.exciseEle__c == 'ALTRO' ? 'Imposta usi domestici' : mapAcciseEle.get(servicePoint.exciseEle__c);
+            orderToUpdate.ExciseGas__c =  ServicePoint.ExciseGas__c == 'ALTRO' ? 'Altro' : mapAcciseGas.get(ServicePoint.ExciseGas__c);
+        }*/
+        if (servicePoint.Vat__c != null && servicePoint.Vat__c != '') {
+            orderToUpdate.vat__c = mapIvaIdToValue2.get(ServicePoint.Vat__c);
+        }
+
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
+        orderToUpdate.isWinback__c = servicePoint.SwitchInWinback__c;
+        orderToUpdate.SwitchOutDate__c = servicePoint.SwitchOutDate__c;
         orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
         orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
@@ -73,6 +199,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.MeterSN__c = servicePoint.MeterSN__c;
         orderToUpdate.Resident__c = servicePoint.Resident__c;
         orderToUpdate.RemiCode__c = servicePoint.RemiCode__c;
+        orderToUpdate.VATNumberUdb__c = servicePoint.VATNumberUdb__c;
         orderToUpdate.SupplyCity__c = servicePoint.SupplyCity__c;
         orderToUpdate.SupplyStreetName__c = servicePoint.SupplyStreet__c;
         orderToUpdate.SupplyStreetNumber__c = servicePoint.SupplyStreetNumber__c;
@@ -107,30 +234,38 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CustomerRequestDate__c = Date.today();
         //Aggiunta valorizzazione Commodity
         orderToUpdate.Commodity__c = servicePoint.CommoditySector__c;
-        orderToUpdate.IsWinback__c = servicePoint.SwitchInWinback__c;
+        mixedData.servicePointStatus=servicePoint.MeterStatus__c;
     }
 
-    private static void alignAccountFields(Order orderToUpdate, String accountId){
+    private static void alignAccountFields(Order orderToUpdate, String accountId, Order orderOld){
 
         accountSrv.checkReadAccess('CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
         Account account = accountQr.getRecordById(accountId, 'CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
-
+        // Order toCheck = orderQr.getRecordById(orderToUpdate.id);
         String customerName = null;
         String customerLastName = null;
+        // if(toCheck.vat__c == null || toCheck.vat__c == ''){
+            if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
+                orderToUpdate.CustomerCompanyName__c = account.LastName__c;
 
-        if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
-            orderToUpdate.CustomerCompanyName__c = account.LastName__c;
+                if (orderOld.ServicePoint__c != null && (orderOld.ServicePoint__r.Vat__c == null || orderOld.ServicePoint__r.Vat__c == '')) {
+                    // 26/08/2021 - gabriele.rota@webresults.it - Calcolo IVA
+                    orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
+                }
 
-            orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
-        } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
-            orderToUpdate.CustomerName__c = account.FirstName__c;
-            orderToUpdate.CustomerLastName__c = account.LastName__c;
+            } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
+                orderToUpdate.CustomerName__c = account.FirstName__c;
+                orderToUpdate.CustomerLastName__c = account.LastName__c;
 
-            orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
+                if (orderOld.ServicePoint__c != null && (orderOld.ServicePoint__r.Vat__c == null || orderOld.ServicePoint__r.Vat__c == '')) {
 
-            orderToUpdate.AtecoCode__c = '999999';
-        }
+                    // 26/08/2021 - gabriele.rota@webresults.it - Calcolo IVA
+                    orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
+                }
 
+                orderToUpdate.AtecoCode__c = '999999';
+            }
+        // }
         orderToUpdate.CustomerFiscalCode__c = account.FiscalCode__c;
         orderToUpdate.CustomerVATNumber__c = account.VATNumber__c;
         orderToUpdate.Email__c = account.PrimaryEmail__c;
@@ -153,7 +288,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static void alignSaleFields(Order orderToUpdate, String saleId){
 
         saleSrv.checkReadAccess('Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone');
+        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c');
 
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
@@ -170,6 +305,16 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CommercialId__c = sale.CommercialId__c;
         orderToUpdate.AgencyCode__c = sale.AgencyCode__c;
         orderToUpdate.Agency__c = sale.Agency__c;
+
+        orderToUpdate.LoginChannel__c=sale.CreatedBy.LoginChannel__c;
+        orderToUpdate.LoginWorkstation__c= sale.CreatedBy.Station__c;
+        orderToUpdate.CreatorGroup__c= sale.CreatedBy.CreatorGroup__c;
+
+        try {
+            HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate.Id);
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+        }
     }
 
     private static void alignPrimaryProduct(Order orderToUpdate, String quoteId) {
@@ -197,7 +342,29 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if (order.SalesCompany__c == null) {
             orderToUpdate.SalesCompany__c = quote.SalesCompany__c;
         }
+        if(quote.IsVAS__c){
+            orderToUpdate.IsVAS__c=quote.IsVAS__c;
+        }
+        orderToUpdate.isBillableVas__c=quote.isBillableVas__c;
+        mixedData.quoteAmendmentAllow=quote.AmendmentAllowed__c;
+        mixedData.contrNumb=quote.SBQQ__MasterContract__r?.ContractNumber;
+        mixedData.billProf=quote.SBQQ__MasterContract__r?.BillingProfile__c;
+        system.debug('quote aligned');
+    }
 
+    private static void alignOrderItem(Order orderToUpdate) {
+
+        List<OrderItem> mainItems = orderItemQr.getMainItem(orderToUpdate.Id);
+
+        if (!mainItems.isEmpty()) {
+            orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
+            orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
+            orderToUpdate.CommercialProduct__c = mainItems[0].Product2.Name;
+            orderToUpdate.VASType__c=mainItems[0].Product2.Family;
+            orderToUpdate.VASSubtype__c=mainItems[0].Product2.Name.abbreviate(30);
+            orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
+            orderToUpdate.VASBillingMode__c= mainItems[0].VASBillingMode__c;
+        }
     }
 
     public static String calculateRequestedOption(String implantType, Decimal powerContractual){
@@ -253,7 +420,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;
 
-        alignAccountFields(orderToUpdate, order.AccountId);
+        alignAccountFields(orderToUpdate, order.AccountId, order);
 
         alignSaleFields(orderToUpdate, order.Sale__c);
 
@@ -270,6 +437,18 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             alignServicePointFields(orderToUpdate, order.ServicePoint__c);
         }
 
+        if(order.ServicePoint__c == null || (mixedData.quoteAmendmentAllow && mixedData.servicePointStatus.equals('Attivo') )){
+            //Enter here for VAS or BonusESconti
+            alignOrderItem(orderToUpdate);
+            if(mixedData.quoteAmendmentAllow && mixedData.servicePointStatus.equals('Attivo')){
+                //only for Bonus
+                orderToUpdate.ConfirmCustomerContract__c=mixedData.contrNumb;
+                orderToUpdate.BillingProfile__c=mixedData.billProf;
+                if(orderToUpdate.BillingProfile__c!=null)
+                    alignBillingProfileFields(orderToUpdate, orderToUpdate.BillingProfile__c);
+            }
+        }
+
         orderSrv.updateRecord(orderToUpdate);
 
         if (order.ServicePoint__c != null) {
@@ -278,5 +457,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 PowerRequested__c = null
             ));
         }
+    }
+
+    private inherited sharing class HDT_WRP_Data{
+        public String servicePointStatus ='';
+        public String contrNumb ='';
+        public Id billProf =null;
+        public Boolean quoteAmendmentAllow = false;
     }
 }

@@ -4,7 +4,7 @@
         <name>email_send</name>
         <label>Invia Email</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -40,7 +40,7 @@
         <name>notification_action</name>
         <label>Invia Notifica</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <connector>
@@ -83,7 +83,7 @@
         <name>activity_set</name>
         <label>Processa Activity</label>
         <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>activity_get.ReminderLastDate__c</assignToReference>
             <operator>Assign</operator>
@@ -110,10 +110,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>error_message_set</name>
+        <label>Restituisci Messaggio d&apos;Errore</label>
+        <locationX>578</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>error_message</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>not_remindable</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>notification_recipients_set</name>
         <label>Imposta Destinatario Notifica</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>notification_recipient</assignToReference>
             <operator>Add</operator>
@@ -126,10 +139,42 @@
         </connector>
     </assignments>
     <decisions>
+        <name>remindable_decision</name>
+        <label>Sollecitabile?</label>
+        <locationX>380</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>error_message_set</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>remindable_yes_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>activity_get.CreatedDate</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>today</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>activity_get.ReminderLastDate__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>today</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>activity_set</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>user_or_queue_decision</name>
         <label>Utente o Coda?</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>queue_get</targetReference>
         </defaultConnector>
@@ -160,6 +205,11 @@
         <dataType>DateTime</dataType>
         <expression>NOW()</expression>
     </formulas>
+    <formulas>
+        <name>today</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
     <interviewLabel>Activity - Notifica Sollecito {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Notifica Sollecito</label>
     <processMetadataValues>
@@ -184,11 +234,11 @@
     <recordLookups>
         <name>activity_get</name>
         <label>Activity</label>
-        <locationX>182</locationX>
+        <locationX>380</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>activity_set</targetReference>
+            <targetReference>remindable_decision</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -204,13 +254,15 @@
         <queriedFields>ReminderCount__c</queriedFields>
         <queriedFields>OwnerId</queriedFields>
         <queriedFields>Name</queriedFields>
+        <queriedFields>CreatedDate</queriedFields>
+        <queriedFields>ReminderLastDate__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>notification_get</name>
         <label>Notifica</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>notification_action</targetReference>
@@ -220,7 +272,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>activityReminder</stringValue>
+                <stringValue>HDT_ActivityReminder</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -232,7 +284,7 @@
         <name>queue_get</name>
         <label>Coda</label>
         <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>email_send</targetReference>
@@ -255,11 +307,11 @@
         <name>activity_update</name>
         <label>Update Activity</label>
         <locationX>182</locationX>
-        <locationY>974</locationY>
+        <locationY>1094</locationY>
         <inputReference>activity_get</inputReference>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>activity_get</targetReference>
@@ -271,6 +323,13 @@
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>&lt;p&gt;Gentile utente,&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;l&apos;attività {!activity_get.Name} è stata recentemente sollecitata: l&apos;attuale numero di solleciti è: {!activity_get.ReminderCount__c}. &lt;span style=&quot;background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255)); color: var(--lwc-colorTextWeak,rgb(62, 62, 60)); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Helvetica, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;);&quot;&gt;Si prega di evadere l&apos;attività in questione il prima possibile.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Non rispondere a questa email, in quanto è stata generata automaticamente.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie,&lt;/p&gt;&lt;p&gt;Salesforce Admin&lt;/p&gt;</text>
     </textTemplates>
+    <variables>
+        <name>error_message</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>notification_recipient</name>
         <dataType>String</dataType>

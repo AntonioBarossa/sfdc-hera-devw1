@@ -6,6 +6,7 @@ public with sharing class HDT_LC_ReletedListAccount {
     private static HDT_SRV_AccountContactRelation accoContRelSrv = new HDT_SRV_AccountContactRelation();
     private static HDT_SRV_Contact contactSrv = new HDT_SRV_Contact();
     private static HDT_QR_RecordType recordtypeQR = new HDT_QR_RecordType();
+    private static HDT_QR_Account accountQr = new HDT_QR_Account();
 
     @AuraEnabled
     public static Contact insertContact(Map<String,String> dataContact, Map<String,String> contactAddress){
@@ -25,26 +26,33 @@ public with sharing class HDT_LC_ReletedListAccount {
         Contact contact= new Contact(AccountId= dataContact.get('accountId'), DegreeOfStudies__c= dataContact.get('education'),LastName= account.LastName__c,Gender__c= account.Gender__c ,FirstName=account.FirstName__c ,Birthdate=birthdate, FiscalCode__c= account.FiscalCode__c,Birthcity__c=dataContact.get('birthplace') ,Phone= account.Phone, Email= account.PrimaryEmail__c,MobilePhonePrefix__c= account.MobilePhonePrefix__c, MobilePhone= account.MobilePhone__c, PhonePrefix__c= account.PhonePrefix__c, Fax= account.FAX__c,Profession__c= account.Profession__c, MailingCity= account.BillingCity, MailingCityCode__c= account.BillingCityCode__c, MailingCountry= account.BillingCountry, MailingPostalCode= account.BillingPostalCode, MailingState= account.BillingState, MailingStreet= account.BillingStreet, MailingStreetName__c= account.BillingStreetName__c, MailingStreetCode__c= account.BillingStreetCode__c, MailingStreetNumber__c= account.BillingStreetNumber__c, MailingStreetNumberExtension__c= account.BillingStreetNumberExtension__c, MailingStreetToponym__c= account.BillingStreetToponym__c, MailingRegion__c= account.BillingRegion__c,MailingPlace__c = account.BillingPlace__c ,MailingPlaceCode__c = account.BillingPlaceCode__c , MailingIsAddressVerified__c = account.BillingIsAddressVerified__c);
         contactSrv.checkCreateAccess(contact);
         Contact cont= contactSrv.createRecord(contact);
+        if(dataContact.get('role')!=null){
+            List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(dataContact.get('accountId'), cont.Id, 'Id');
+            if(listAccCon != null && listAccCon.size() > 0){
+                AccountContactRelation acr= new AccountContactRelation(Id= listAccCon[0].Id,ContactId= cont.Id, AccountId= dataContact.get('accountId'), Roles= dataContact.get('role'));
+                accoContRelSrv.updateRecord(acr);
+            }
+
+        }
         return contact;
     }
 
     @AuraEnabled
-    public static List<Contact> getContList(String accountId) {
+    public static List<AccountContactRelation> getContList(String accountId) {
         System.debug('getContactList accId: '+accountId);
         if (String.isBlank(accountId)) {
             return null;
         }
-        HDT_QR_Contact qr=new HDT_QR_Contact();
-        return qr.getContactsByAccount(accountId);
-      
+        return accoContRelQr.getContactsByAccountWithRoles(accountId);
+
     }
-    // @AuraEnabled
-    // public static String getRecordTypeAccount(String accountId) {
-    //     System.debug('getContactList accId: '+accountId);
-    //     if (String.isBlank(accountId)) {
-    //         return null;
-    //     }
-    //     return [SELECT Id, Name,RecordtypeId FROM Account WHERE id=:accountId WITH SECURITY_ENFORCED].RecordtypeId;
-      
-    // }
+    @AuraEnabled
+    public static String getRecordTypeAccount(String accountId) {
+        System.debug('getContactList accId: '+accountId);
+        if (String.isBlank(accountId)) {
+            return null;
+        }
+        Account acc= accountQr.getRecordById(accountId,'recordType.developerName');
+        return acc.recordType.developerName;
+    }
 }

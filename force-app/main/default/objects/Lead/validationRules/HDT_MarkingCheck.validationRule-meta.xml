@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_MarkingCheck</fullName>
+    <active>true</active>
+    <description>Sul record Lead, se &quot;Marcatura cliente&quot; assume uno dei valori elencati sotto, i campi *PIVA *e *CF *devono essere compilati per poter salvare il record (si ipotizza creazione validation rule sul Lead).
+Ditta individuale,AAS Ditta individuale,MMS Ditta</description>
+    <errorConditionFormula>IF( (ISPICKVAL(CustomerMarking__c , &apos;Ditta individuale&apos; ) || ISPICKVAL(CustomerMarking__c , &apos;AAS Ditta individuale&apos; ) || ISPICKVAL(CustomerMarking__c , &apos;MMS Ditta individuale&apos; ))&amp;&amp;
+ (ISBLANK(VATNumber__c) || ISBLANK(FiscalCode__c) ), true, false)</errorConditionFormula>
+    <errorMessage>La ditta individuale necessita di Partita Iva e Codice Fiscale valorizzati</errorMessage>
+</ValidationRule>

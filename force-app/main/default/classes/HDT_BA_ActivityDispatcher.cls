@@ -1,4 +1,5 @@
 public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchable<sObject> {
+    
     private static final String PLACEHOLDER = '###';
     private static final Map<String,String> MAPPINGS = new Map<String,String> {
         'SAPStep__c' => 'SAPStep__c IN (###)',
@@ -16,13 +17,13 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'SAPStep__c' => 'SAPStep__c IN (###)',
         'FirstLevelOpinion__c' => 'Case__r.FirstLevelOpinion__c IN (###)',
         'SecondLevelOpinion__c' => 'Case__r.SecondLevelOpinion__c IN (###)',
-        'UserCreatorAgency__c' => 'Order__r.CreatedBy.UserCompany__c IN (###)',
+        'CreatorAgency__c' => 'Order__r.CreatedBy.UserCompany__c IN (###)',
         'UserCreatorGroup__c' => 'Order__r.CreatedBy.CreatorGroup__c IN (###)',
         'SalesChannel__c' => 'Order__r.Channel__c IN (###)',
         'OfferType__c' => 'Order__r.OfferType__c IN (###)',
         'Distributor__c' => '(Case__r.DistributorName__c IN (###) OR Order__r.DistributorFormula__c IN (###))',
         'Market__c' => '(Case__r.Market__c IN (###) OR Order__r.Market__c IN (###))',
-        'SalesCompany__c' => '(Case__r.SalesCompany__c IN (###) OR Order__r.SalesCompany__c IN (###))',
+        'Vendor__c' => '(Case__r.SalesCompany__c IN (###) OR Order__r.SalesCompany__c IN (###))',
         'SalesAgency__c' => 'Order__r.Agency__c IN (###)',
         'MacroProcess__c' => '(Case__r.Cluster__c IN (###) OR Order__r.Cluster__c IN (###))',
         'Process__c' => '(Case__r.Type IN (###) OR Order__r.ProcessType__c IN (###))',
@@ -34,28 +35,39 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         return [
             SELECT
                 Id,
+                Type__c,
+                BPCode__c,
                 ArrearsOffice__c,
-                ClientCategory__c,
-                ClientMarking__c,
-                Commodity__c,
-                CompanyOwner__c,
-                ComplaintSeverity__c,
+                Segment__c,
                 Distributor__c,
-                HighPriorityQueue__c,
-                LowPriorityQueue__c,
-                MacroProcess__c,
-                Market__c,
-                MediumPriorityQueue__c,
-                Priority__c,
-                Process__c,
+                SAPStep__c,
                 QuoteType__c,
                 SalesChannel__c,
-                SubProcess__c,
-                Type__c,
-                Vendor__c
+                SalesAgency__c,
+                CompanyOwner__c,
+                MacroProcess__c,
+                Process__c,
+                Subprocess__c,
+                Priority__c,
+                ClientMarking__c,
+                ClientCategory__c,
+                Commodity__c,
+                ComplaintSeverity__c,
+                Market__c,
+                UserCreatorChannel__c,
+                CreatorAgency__c,
+                UserCreatorGroup__c,
+                OfferType__c,
+                FirstLevelOpinion__c,
+                SecondLevelOpinion__c,
+                Vendor__c,
+                SupplyType__c,
+                HighPriorityQueue__c,
+                MediumPriorityQueue__c,
+                LowPriorityQueue__c
             FROM AssignmentRule__c
             WHERE
-                RuleStartDate__c < TOMORROW AND RuleEndDate__c > TODAY
+                (RuleStartDate__c < TOMORROW OR RuleStartDate__c = null) AND (RuleEndDate__c > TODAY OR RuleEndDate__c = null)
             ORDER BY RulePriority__c ASC
         ];
     }
@@ -74,7 +86,6 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
 
         for(AssignmentRule__c rule : rules) {
             for(wrts_prcgvr__Activity__c activity : Database.query(getQuery(rule))) {
-                if(activity.wrts_prcgvr__Priority__c == null) continue; // DO NOT PROCESS DEFECTIVE ACTIVITIES
                 if(processedActivitiesMap.containsKey(activity.Id)) continue; // IF ACTIVITY ALREADY ASSIGNED BY ANOTHER, HIGHER PRIORITY RULE IN THE SAME BATCH DO NOT RE-PROCESS
 
                 assignataryQueue = null;
@@ -92,6 +103,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
 
                 queue = queuesMap.get((String) rule.get(assignataryQueue));
                 queueUsage = queueUsageMap.get(queue.QueueId__c);
+                if(queueUsage == null) queueUsage = 0;
 
                 if(queue.DailyCapacity__c == null || queue.DailyCapacity__c > queueUsage) {
                     processedActivity = new wrts_prcgvr__Activity__c(
@@ -101,8 +113,8 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                         Agency__c = queue.Agency__c,
                         WorkGroup__c = queue.Group__c,
                         AssigneeType__c = 'Coda',
-                        Queue__c = (Id) queue.QueueId__c,
-                        RuleChosenQueue__c = (Id) queue.QueueId__c,
+                        Queue__c = queue.Id,
+                        RuleChosenQueue__c = queue.Id,
                         OwnerId = (Id) queue.QueueId__c
                     );
                     if(queue.DailyCapacity__c != null) queueUsageMap.put(queue.QueueId__c, ++queueUsage);
@@ -114,7 +126,13 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         }
 
         if(!processedActivitiesMap.isEmpty()) {
-            Database.update(processedActivitiesMap.values(), false);
+            List<Database.SaveResult> results = Database.update(processedActivitiesMap.values(), false);
+
+            for(Database.SaveResult result : results) {
+                if(!result.isSuccess()) {
+                    System.debug(result.getErrors());
+                }
+            }
         }
     }
 
@@ -137,7 +155,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     public String getQuery(AssignmentRule__c rule) {
         Map<String,Object> ruleMap = rule.getPopulatedFieldsAsMap();
         // INITIALIZING QUERY'S STATIC PART
-        List<String> query = new List<String> {'SELECT Id, wrts_prcgvr__Priority__c FROM wrts_prcgvr__Activity__c WHERE Queued__c = false'};
+        List<String> query = new List<String> {'SELECT Id, wrts_prcgvr__Priority__c FROM wrts_prcgvr__Activity__c WHERE Queued__c = false AND wrts_prcgvr__Priority__c != null'};
         String mapping;
         String value;
         String condition;

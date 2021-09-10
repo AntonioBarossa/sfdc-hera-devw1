@@ -22,6 +22,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
 
         //custom logic ...
+
+        system.debug(json.serialize(transition));
        
         System.debug('********INPUTFIELD:' + argsMap);
         
@@ -33,7 +35,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         //FINE SVILUPPI EVERIS
         // Aggiungere if basato su Method e parte static nell header struttura ad oggetto
         
-        if('Annullamento'.equalsIgnoreCase(method) || 'Ripensamento'.equalsIgnoreCase(method) || 'SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method) || 'SubentroEECreaRich'.equalsIgnoreCase(method) || 'AttivazioneEECreaRich'.equalsIgnoreCase(method) || 'PrecheckEECreaRich'.equalsIgnoreCase(method) || 'SubentroGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneInDeliberaCreaRich'.equalsIgnoreCase(method) || 'AttivazioneFuoriDeliberaCreaRich'.equalsIgnoreCase(method) || 'PrecheckGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneConModCreaRich'.equalsIgnoreCase(method) || 'PreventivoAccettatoSales'.equalsIgnoreCase(method) || 'PreventivoRifiutatoSales'.equalsIgnoreCase(method) || 'CambioOffertaGasCreaRich'.equalsIgnoreCase(method) || 'CambioOffertaEleCreaRich'.equalsIgnoreCase(method) || 'CambioUsoCreaRich'.equalsIgnoreCase(method) || 'ConnessioneConAttCreaRich'.equalsIgnoreCase(method) || 'TempNuovaAttivazionCereaRich'.equalsIgnoreCase(method) || 'SConVEECreaRich'.equalsIgnoreCase(method) || 'SConVGasCreaRich'.equalsIgnoreCase(method) || /*Everis: Aggiunto metodo Voltura*/ 'Voltura'.equalsIgnoreCase(method)) {
+        if( 'TemporaneaNuovaAttivazioneCreaRich'.equalsIgnoreCase(method) || 'Annullamento'.equalsIgnoreCase(method) || 'Ripensamento'.equalsIgnoreCase(method) || 'SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method) || 'SubentroEECreaRich'.equalsIgnoreCase(method) || 'AttivazioneEECreaRich'.equalsIgnoreCase(method) || 'PrecheckEECreaRich'.equalsIgnoreCase(method) || 'SubentroGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneInDeliberaCreaRich'.equalsIgnoreCase(method) || 'AttivazioneFuoriDeliberaCreaRich'.equalsIgnoreCase(method) || 'PrecheckGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneConModCreaRich'.equalsIgnoreCase(method) || 'PreventivoAccettatoSales'.equalsIgnoreCase(method) || 'PreventivoRifiutatoSales'.equalsIgnoreCase(method) || 'CambioOffertaGasCreaRich'.equalsIgnoreCase(method) || 'CambioOffertaEleCreaRich'.equalsIgnoreCase(method) || 'CambioUsoCreaRich'.equalsIgnoreCase(method) || 'ConnessioneConAttCreaRich'.equalsIgnoreCase(method) || 'TempNuovaAttivazionCereaRich'.equalsIgnoreCase(method) || 'SConVEECreaRich'.equalsIgnoreCase(method) || 'SConVGasCreaRich'.equalsIgnoreCase(method) || 'EsecuzioneLavori'.equalsIgnoreCase(method) || 'ConfPrev'.equalsIgnoreCase(method) || 'SWRipristinatorioEle'.equalsIgnoreCase(method) || 'SWRipristinatorioGas'.equalsIgnoreCase(method) || /*Everis: Aggiunto metodo Voltura*/ 'Voltura'.equalsIgnoreCase(method)) {
             //////////// Recupero endpoint in base a contesto di oggetto
             wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = ( wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration)  wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
             String endpoint = endpointUtils.getEndpoint(obj);
@@ -59,7 +61,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             List<Integer> indexOfObjectToRemove = new List<Integer>();
             Map<Integer,Integer> indexOffieldToRemove = new Map<Integer,Integer>();
             for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
-                    
+                system.debug('obj '+w.objectType);
                 if(w.objectType == 'OrderItem'){
                     boolean find = false;
                     Integer k = 0;
@@ -96,7 +98,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             ///////////// instanzio e effettuo la chiamata con la request
             Map<String,Object> inputClientFunction = new Map<String,Object>();
             inputClientFunction.put('endpoint',endpoint);
-            inputClientFunction.put('timeout',120);
+            inputClientFunction.put('timeout',60000);
             inputClientFunction.put('payload',multirequestObj);
             inputClientFunction.put('clientType','REST');
             inputClientFunction.put('contentType','application/json');
@@ -109,7 +111,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
 
                 System.debug('********MRRequest:' + responseService);
                 System.debug('********description:' + responseService.responses[0].description);
-                System.debug('********objects:' + responseService.responses[0].objects);
+                System.debug('********objects:' + responseService.responses[0].objects);            
                 //for()
              //   responseService.responses[0].objects[0].objects[0].objectType == 'OrderItem'
              //   responseService.responses[0].objects[0].objects[0].fields[0].name = 'TEMPLATENAME'
@@ -137,6 +139,9 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                         
                         fieldValueResponse.put(field.name,field.value);
                     }
+                    if(String.isNotBlank(fieldValueResponse.get('COD_PRAT_UTENTE'))){
+                        ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                    }
                     if(fieldValueResponse.get('result') != null){
                         
                         if('OK'.equalsIgnoreCase(fieldValueResponse.get('result'))){
@@ -150,7 +155,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                 }else{
                                    
                                     ord.TecnicalPhase__c = fieldValueResponse.get('FASE');
-                                    ord.HerokuPracticeCode__c = fieldValueResponse.get('requestId');
+                                    //ord.HerokuPracticeCode__c = fieldValueResponse.get('requestId');//Comment bug 462
 
                                     HDT_QR_Order orderQr = new HDT_QR_Order();
                                     Order ordRetrieved = orderQr.getOrderByIdForSalesCallout(ord.id)[0];
@@ -159,20 +164,20 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                         when 'Ammissibilità KO' {
                                             ord.DiscardReason__c = fieldValueResponse.get('DES_ERR_AEEG');
                                             ord.CausalCode__c = fieldValueResponse.get('CODERR');
-                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             ord.Description = fieldValueResponse.get('ANNOTAZIONI');
 
-                                            // if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
-                                            //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                            //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                            //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                            // )){
-                                            //     ord.TecnicalPhase__c = 'Annullato';
-                                            // }
+                                             if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
+                                                 && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                                     || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                                     || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                             )){
+                                                 ord.TecnicalPhase__c = 'Annullato';
+                                             }
                                         }
                                         when 'Ammissibilità OK' {
-                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             if( fieldValueResponse.get('DES_ERR_AEEG') != null) {
                                                 ord.DiscardReason__c = fieldValueResponse.get('DES_ERR_AEEG');
@@ -185,31 +190,31 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                                 ord.EstimateAmount__c = Decimal.valueOf(fieldValueResponse.get('IMP_PREV_DIST'));
                                             }
 
-                                            // if(ord.CausalCode__c == '034' 
-                                            //     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                            //         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                            //         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                            // )){
-                                            //     ord.TecnicalPhase__c = 'Annullato';
-                                            // }
+                                             if(ord.CausalCode__c == '034' 
+                                                 && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                                     || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                                     || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                             )){
+                                                 ord.TecnicalPhase__c = 'Annullato';
+                                             }
                                         }
                                         when 'Esito KO da DL' {
                                             ord.ReasonDL__c = fieldValueResponse.get('TESTO_ERRR');
-                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Esito OK da DL' {
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             ord.SapContractActivationDate__c = fieldValueResponse.get('DT_INIZIO_VERT') != null ? Date.valueOf(fieldValueResponse.get('DT_INIZIO_VERT')) : null;
-                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                             ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Amm. Precheck KO SII' {
                                             ord.PrecheckReasonSII__c = fieldValueResponse.get('DES_ERR_ES');
                                             ord.CausalCode__c = fieldValueResponse.get('CODERR_ES');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
-                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
 
                                             if(fieldValueResponse.get('CODERR_ES') == '003' || fieldValueResponse.get('CODERR_ES') == '103'){
                                                 ord.IsTechnicalTransfer__c = true;
@@ -217,7 +222,9 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                         }
                                         when 'Amm. Precheck OK SII' {
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
-                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            ord.RemiCode__c = fieldValueResponse.get('EXT_CABINA_REMI');
+                                            ord.VATNumberUdb__c = fieldValueResponse.get('EXT_PIVA_DISTR');
                                             if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                                 ord.PrecheckResultSII__c = 'OK';
                                             }
@@ -225,24 +232,24 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                         when 'Esito KO da SII' {
                                             ord.PrecheckReasonSII__c = fieldValueResponse.get('TESTO_ERRR');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
-                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
 			                                ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Esito OK da SII' {
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
-                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
 			                                ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Errore lavorazione SAP' {
                                             ord.DiscardReason__c = fieldValueResponse.get('NOTE_ERR');
-                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                         }
                                         when 'Completata' {
                                             ord.Description = fieldValueResponse.get('NOTA_HK');
                                             ord.SAPImplantCode__c = fieldValueResponse.get('ANLAGE');
                                             ord.OrderODV__c = fieldValueResponse.get('VBELN');
                                             ord.SapContractCode__c = fieldValueResponse.get('VERTRAG');
-                                            ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                                            //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
     
                                             if(fieldValueResponse.get('VKONT') != null) {
                                                 ord.ContractAccountCode__c = fieldValueResponse.get('VKONT');
@@ -261,7 +268,10 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                             }else if(method.equalsIgnoreCase('Annullamento') || method.equalsIgnoreCase('Ripensamento')){
                                 ord.TecnicalPhase__c = method + ' - Comunicazione verso Heroku OK';
                                 ord.CancellationHerokuPracticeCode__c = responseService.responses[0].header.requestId;
-                            } 
+                            }
+                            else{
+                                //ord.HerokuPracticeCode__c = responseService.responses[0].header.requestId;
+                            }
                         }
                         else{
                             //INIZIO SVILUPPI EVERIS

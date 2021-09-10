@@ -23,9 +23,9 @@
                 </div>
             </div>
             <div>
-               <!--rowdatarowdata <lightning-datatable data-id="campaignsDT" data={rowdata} columns={columns} key-field="Id"
-                     hidecheckboxcolumn="true">
-                </lightning-datatable> -->
+                <!--rowdatarowdata <lightning-datatable data-id="campaignsDT" data={rowdata} columns={columns} key-field="Id"
+                        hidecheckboxcolumn="true">
+                    </lightning-datatable> -->
             </div>
         </template>
     </template>
@@ -49,69 +49,43 @@
                                     </h1>
                                 </div>
                             </div>
-                        </div> 
-                    </div>
-                </div>
-            </div>
-            <!-- End Header -->
-            <div class="slds-page-header__row slds-page-header__row_gutters">
-                <div class="slds-page-header__col-details">
-                    <div class="slds-page-header__detail-row dblock">
-                       <!-- <div class="slds-media__body slds-m-top_xx-small ">
-                            <div class="slds-page-header__name">
-                                <div class="slds-page-header__name-title">
-                                    <h1>
-                                        <span class="slds-page-header__title slds-truncate" title="Campaigns">Campagne
-                                            ({campaignsNumber})</span>
-                                    </h1>
-                                </div>
-                            </div>
-                        </div> -->
-                 <!--       <lightning-datatable data-id="campaignsDT" data={rowdata} columns={columns} key-field="Id"
-                     hidecheckboxcolumn="true">
-                     </lightning-datatable> -->
-                        <template if:true={listResults}>
-                            <template for:each={allCampaigns} for:item="c">
-                                <div class="slds-m-around_xx-small" key={c.Id}>
-                                    
-                                        <div data-id={c.Id}>
-                                            <h3 class="slds-tile__title slds-truncate campaignName"
-                                                data-required={c.Campaign.Required__c} data-id={c.Id}
-                                                title={c.Campaign.Name}>
-                                                <a onclick={redirectToCampaign}
-                                                    data-id={c.Id}>{c.Campaign.Name}</a>
-                                            </h3>
-                                            <h2 class="slds-truncate "
-                                                data-required={c.Campaign.Required__c} data-id={c.Id}
-                                                title={c.Status}>
-                                                {c.Status}
-                                            </h2>
-                                            <h2 class="slds-truncate "
-                                                data-required={c.Campaign.Required__c} data-id={c.Id}
-                                                title={c.Campaign.Channel__c}>
-                                                {c.Campaign.Channel__c}
-                                            </h2>
-                                            <h2 class="slds-truncate "
-                                                data-required={c.Campaign.Required__c} data-id={c.Id}
-                                                title={c.Campaign.EndDate}>
-                                                {c.Campaign.EndDate}
-                                            </h2>
-                                            <br/>
-                                         <!--   <c-hdt-popover campaign-id={c.CampaignId} record-id={entityId}
-                                                campaign-member-id={c.Id} data-id={c.Id}
-                                                process-type={c.Campaign.ProcessType__c}
-                                                case-cluster={c.Campaign.CaseCategory__c}
-                                                case-type={c.Campaign.CaseSubCategory__c}
-                                                onstatusupdate={handleCampaignsUpdate}>
-                                            </c-hdt-popover>  -->
-                                        </div>
-                                   
-                                </div>
-                            </template>
-                        </template>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- End Header -->
+
+        <!-- <div class="slds-media__body slds-m-top_xx-small ">
+                    <div class="slds-page-header__name">
+                        <div class="slds-page-header__name-title">
+                            <h1>
+                                <span class="slds-page-header__title slds-truncate" title="Campaigns">Campagne
+                                    ({campaignsNumber})</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div> -->
+        <!--       <lightning-datatable data-id="campaignsDT" data={rowdata} columns={columns} key-field="Id"
+                        hidecheckboxcolumn="true">
+                    </lightning-datatable> -->
+        <template if:true={listResults}>
+            <lightning-layout multiple-rows="true" pull-to-boundary="small">
+
+
+
+                <template for:each={allCampaigns} for:item="c">
+                    <lightning-layout-item  padding="around-small" key={c.Id} size="4">
+
+
+                        <c-hdt-contact-campaign-tab campaignmember={c}  redirect=true></c-hdt-contact-campaign-tab>
+                    </lightning-layout-item>
+
+
+                </template>
+            </lightning-layout>
+        </template>
+
+
     </template>
 </template>

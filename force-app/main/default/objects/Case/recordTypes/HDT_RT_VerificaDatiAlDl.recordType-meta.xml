@@ -673,6 +673,10 @@
             <fullName>Gestione Scarto</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Processo incompatibile</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Category__c</picklist>
@@ -805,11 +809,43 @@
     <picklistValues>
         <picklist>ChannelOfPayment__c</picklist>
         <values>
+            <fullName>ATM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Banca BONIFICO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Banca SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bollettino postale</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Carta di credito online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cassa COOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>POS Sportello</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Posta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ricevitoria</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7917,6 +7953,10 @@
             <fullName>Elaborazione Manuale</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
@@ -7932,15 +7972,15 @@
     <picklistValues>
         <picklist>Priority</picklist>
         <values>
-            <fullName>High</fullName>
+            <fullName>1</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Low</fullName>
+            <fullName>2</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Medium</fullName>
+            <fullName>3</fullName>
             <default>true</default>
         </values>
     </picklistValues>

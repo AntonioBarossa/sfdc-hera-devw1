@@ -1,0 +1,80 @@
+<template>
+    <lightning-card  title="Nuova attività manuale">
+
+        <div if:true={showSpinner} class="slds-is-relative">
+            <lightning-spinner></lightning-spinner>
+        </div>
+
+        <div if:true={showToast} class="slds-notify_container slds-is-relative">
+            <div class={toastClass} role="status">
+                <!--ERROR ICON-->
+                <span if:true={inError} class="slds-icon_container slds-icon-utility-error slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                    <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#error"></use>
+                    </svg>
+                </span>
+                <!--SUCCESS ICON-->
+                <span if:false={inError} class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                    <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#success"></use>
+                    </svg>
+                </span>
+                <div class="slds-notify__content">
+                    <h2 class="slds-text-heading_small ">{toastMessage}</h2>
+                </div>
+            </div>
+        </div>
+
+
+
+        <lightning-layout horizontal-align="center" multiple-rows>
+            <lightning-layout-item size="12" padding="horizontal-large">
+                <lightning-layout horizontal-align="center">
+                    <lightning-layout-item size="4" padding="horizontal-large">
+                        <lightning-input label="Filtro cliente"
+                                        type="search"
+                                        onchange={handleFilterChange}></lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="horizontal-large">
+                <lightning-layout horizontal-align="center">
+                    <lightning-layout-item size="4" padding="horizontal-large">
+                        <lightning-combobox label="Cliente"
+                                            options={accountOptions}
+                                            onchange={handleAccountChange}
+                                            required
+                                            data-id="accountCombobox"></lightning-combobox>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="horizontal-large">
+                <lightning-layout horizontal-align="center">
+                    <lightning-layout-item size="4" padding="horizontal-large">
+                        <lightning-combobox label="Tipo attività"
+                                            options={activityOptions}
+                                            onchange={handleTypeChange}
+                                            required></lightning-combobox>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <div slot="footer">
+            <lightning-layout horizontal-align="center">
+                <lightning-layout-item size="3">
+                    <lightning-button label="Cancel"
+                                        disabled={cancelDisabled}
+                                        onclick={handleCancel}></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <lightning-button label="Save"
+                                        disabled={saveDisabled}
+                                        onclick={handleSave}
+                                        variant="brand"></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+
+    </lightning-card>
+</template>

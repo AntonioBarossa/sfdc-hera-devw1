@@ -1,0 +1,48 @@
+<aura:component
+    implements="flexipage:availableForAllPageTypes,lightning:isUrlAddressable,force:hasRecordId,force:hasSObjectName,flexipage:availableForRecordHome"
+    controller="HDT_LC_CampaignsController" access="global">
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="loaded" type="Boolean" default="true" />
+    <aura:attribute name="varId" type="String" />
+    <aura:attribute name="varTabId" type="String" />
+
+
+    <!--Boolean attribute to indicate if modal is open or not 
+       default value is false as modal is closed when page is loaded 
+    -->
+    <aura:attribute name="isModalOpen" type="boolean" default="false" />
+
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <lightning:icon iconName="standard:account" alternativeText="Account" title="Account" />
+                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate"> &nbsp; Chiusura Tab </h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <c:hdtConfirmationAccount aura:id="childlwc" />
+
+            </div>
+            <aura:if isTrue="{!v.loaded}">
+
+                <lightning:spinner alternativeText="Loading" size="large" />
+
+            </aura:if>
+            <footer class="slds-modal__footer">
+                <lightning:button label="Chiudi" title="Chiudi" onclick="{!c.closedNow}" />
+                <lightning:button label="Annulla" title="Annulla" onclick="{!c.goBack}" />
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+
+
+
+
+
+
+</aura:component>

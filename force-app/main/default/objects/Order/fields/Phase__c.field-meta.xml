@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <label>Phase</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
@@ -496,19 +496,34 @@
                 <label>Esportazione VS Siebel</label>
             </value>
             <value>
-                <fullName>Caricamento Siebel OK</fullName>
+                <fullName>Caricamento OK</fullName>
                 <default>false</default>
-                <label>Caricamento Siebel OK</label>
+                <label>Caricamento OK</label>
             </value>
             <value>
-                <fullName>Caricamento Siebel KO</fullName>
+                <fullName>Caricamento KO</fullName>
                 <default>false</default>
-                <label>Caricamento Siebel KO</label>
+                <label>Caricamento KO</label>
             </value>
             <value>
                 <fullName>Sequenzializzato</fullName>
                 <default>false</default>
                 <label>Sequenzializzato</label>
+            </value>
+            <value>
+                <fullName>Preventivo rifiutato – Amm KO</fullName>
+                <default>false</default>
+                <label>Preventivo rifiutato – Amm KO</label>
+            </value>
+            <value>
+                <fullName>Preventivo rifiutato – Amm OK</fullName>
+                <default>false</default>
+                <label>Preventivo rifiutato – Amm OK</label>
+            </value>
+            <value>
+                <fullName>Annullamento per Switch-out</fullName>
+                <default>false</default>
+                <label>Annullamento per Switch-out</label>
             </value>
             <value>
                 <fullName>BL010</fullName>

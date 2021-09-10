@@ -568,7 +568,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Screen_Input_Dati</targetReference>
+            <targetReference>AggiornaOrder_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -862,6 +862,13 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrder.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Amm. Precheck OK SII</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1519,6 +1526,16 @@
         <label>AggiornaOrder</label>
         <locationX>4322</locationX>
         <locationY>1146</locationY>
+        <inputReference>GetOrder</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaOrder_0</name>
+        <label>AggiornaOrder</label>
+        <locationX>3818</locationX>
+        <locationY>1120</locationY>
+        <connector>
+            <targetReference>Screen_Input_Dati</targetReference>
+        </connector>
         <inputReference>GetOrder</inputReference>
     </recordUpdates>
     <recordUpdates>

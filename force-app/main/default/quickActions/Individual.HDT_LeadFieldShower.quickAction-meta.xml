@@ -22,6 +22,11 @@
                 <field>HasOptedOutSoftSpam__c</field>
                 <uiBehavior>Readonly</uiBehavior>
             </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>HasOptedOutOfEmail__c</field>
+                <uiBehavior>Readonly</uiBehavior>
+            </quickActionLayoutItems>
         </quickActionLayoutColumns>
     </quickActionLayout>
     <type>Update</type>

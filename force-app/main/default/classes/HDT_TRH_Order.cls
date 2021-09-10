@@ -18,14 +18,16 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         }
         
         //Checks Mandatory Activity
-        ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
-                .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
+        //((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
+        //        .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
         
         
 
-        HDT_UTL_OrderProcess.salesProcessManagementBefore(trigger.new,trigger.old);          
+        HDT_UTL_OrderProcess.salesProcessManagementBefore(trigger.new,trigger.old); 
 
         HDT_UTL_OrderProcess.updateServiceRequest(trigger.new, trigger.old);
+        
+        HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Order'); 
         
         
     }
@@ -50,7 +52,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         // END @Picchiri HRADTR-77 Calcolo Date 01.06.21
 
         // START @Picchiri Credit Check 04.06.21
-        HDT_UTL_OrderProcess.creditCheckManager(trigger.new,trigger.old);
+        HDT_UTL_OrderProcess.creditCheckManager2(trigger.newMap,trigger.oldMap);
         // END @Picchiri Credit Check 04.06.21
     }
 

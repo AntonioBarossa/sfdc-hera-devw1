@@ -21,8 +21,44 @@ const DATA_ACCESS_MAP = {
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
     },
+    'ORDERS_ELE':{
+        label: 'Ordini Energia Elettrica',
+        sObjectName: 'Order',
+        emptyMessage: 'Non ci sono ordini',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.PodPdr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Tipo', fieldName: 'Type', type: 'text'},
+            {label: 'Numero Ordine', fieldName: 'OrderNumber', type: 'text'},
+            {label: 'Processo', fieldName: 'ProcessType__c', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
     'ASSETS_ACTIVATED':{
         label : 'Asset attivati',
+        sObjectName: 'Asset',
+        emptyMessage: 'Non ci sono asset attivi',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.ContactName = item.Contact !== undefined ? item.Contact.Name : '';
+                item.ProductName = item.Product2 !== undefined ? item.Product2.Name : '';
+            });
+        },
+        columns: [
+            {label: 'Nome', fieldName: 'Name', type: 'text'},
+            {label: 'Numero serial', fieldName: 'SerialNumber', type: 'text'},
+            {label: 'Data installazione', fieldName: 'InstallDate', type: 'date'},
+            {label: 'Referente', fieldName: 'ContactName', type: 'text'},
+            {label: 'Prodotto', fieldName: 'ProductName', type: 'text'},
+        ]
+    },
+    'ASSETS_ACTIVATED_VAS':{
+        label : 'Asset attivati VAS',
         sObjectName: 'Asset',
         emptyMessage: 'Non ci sono asset attivi',
         dataProcessFunction: (data) => {
@@ -50,6 +86,38 @@ const DATA_ACCESS_MAP = {
                     item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
                 item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
                     item.SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
+    'SUBS_VAS':{
+        label : 'Contratti',
+        sObjectName: 'Contract',
+        emptyMessage: 'Non ci sono contratti',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__r !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
+    'CONTRACT_ELE_ACTIVE':{
+        label : 'Contratti Attivi (Energia Elettrica)',
+        sObjectName: 'Contract',
+        emptyMessage: 'Non ci sono contratti attivi',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__r !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
             });
         },
         columns: [

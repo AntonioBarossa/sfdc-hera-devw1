@@ -4,9 +4,37 @@
     <description>Campo tecnico nascosto. Necessario per calcolo KPI Bontà Cliente.</description>
     <externalId>false</externalId>
     <label>Bontà Cliente</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>01.EXCELLENT</fullName>
+                <default>false</default>
+                <label>01.EXCELLENT</label>
+            </value>
+            <value>
+                <fullName>02.GOOD</fullName>
+                <default>false</default>
+                <label>02.GOOD</label>
+            </value>
+            <value>
+                <fullName>03.FAIR</fullName>
+                <default>false</default>
+                <label>03.FAIR</label>
+            </value>
+            <value>
+                <fullName>04.POOR</fullName>
+                <default>false</default>
+                <label>04.POOR</label>
+            </value>
+            <value>
+                <fullName>05.BAD</fullName>
+                <default>false</default>
+                <label>05.BAD</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

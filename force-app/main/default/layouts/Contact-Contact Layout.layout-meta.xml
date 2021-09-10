@@ -200,7 +200,6 @@
         <fields>et4ae5__DateSent__c</fields>
         <fields>et4ae5__DateOpened__c</fields>
         <fields>CampaignID__c</fields>
-        <fields>BounceType__c</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.et4ae5__Contact__c</relatedList>
     </relatedLists>
     <relatedLists>

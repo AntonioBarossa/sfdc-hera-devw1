@@ -6,6 +6,7 @@
 */
 
 public with sharing class HDT_QR_PermissionSet {
+
     public List<PermissionSetAssignment> getPermissionSetAssignment(String permissionsetid,String assigneeId){
         return [SELECT Id FROM PermissionSetAssignment where permissionsetid = :permissionsetid AND assigneeId = :assigneeId];  
     }
@@ -33,7 +34,39 @@ public with sharing class HDT_QR_PermissionSet {
             FROM PermissionSetAssignment 
             WHERE PermissionSet.Name = :permissionSetName //ex. 'HDT_SuperUserCPQ'
             AND AssigneeId = :assigneeId //userId
-            WITH SECURITY_ENFORCED
         ];
     }
+
+    /**​
+    * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
+    * @date 27/08/2021
+    * @description HDT_QR_PermissionSet.getCustomPermissionsByUserId() – Get all CustomPermission records assigned to a User
+    * @param userId Id of the user to filter the CustomPermissions
+    * @return List of extracted CustomPermissions
+    */
+    public List<CustomPermission> getCustomPermissionsByUserId(Id userId) {
+
+        Set<Id> assigned = new Map<Id, PermissionSet>(
+            [
+                SELECT Id
+                FROM PermissionSet
+                WHERE Id IN (
+                    SELECT PermissionSetId
+                    FROM PermissionSetAssignment
+                    WHERE AssigneeId = :userId
+                )
+                // WITH SECURITY_ENFORCED
+            ]).keySet();
+    
+        return [
+                SELECT DeveloperName
+                FROM CustomPermission
+                WHERE Id IN (
+                    SELECT SetupEntityId
+                    FROM SetupEntityAccess
+                    WHERE SetupEntityType = 'CustomPermission' AND ParentId IN :assigned)
+                // WITH SECURITY_ENFORCED
+                ];
+    }
+    
 }

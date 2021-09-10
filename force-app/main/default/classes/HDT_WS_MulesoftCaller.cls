@@ -50,6 +50,7 @@ public without sharing class HDT_WS_MulesoftCaller {
                 }
                 respObj.success = false;
                 respObj.message += '; [CODE: ' + String.valueOf(res.getStatusCode() + ' - STATUS: ' + res.getStatus() + ']; ');
+                respObj.body = res.getBody();
 
             } else {
                 respObj.success = true;

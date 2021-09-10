@@ -9,11 +9,13 @@ public inherited sharing class HDT_QR_CampaignMember {
     public List<CampaignMember> getActiveCampaignsByContact(String contactId){
         return [
             SELECT 
+            id,
             CampaignId,
             Campaign.Name,
             Campaign.Status,
             Campaign.Channel__c,
-            Campaign.EndDate
+            Campaign.EndDate,
+            Status
             FROM CampaignMember
             where ContactId = :contactId
             AND Campaign.isActive = true
@@ -84,6 +86,7 @@ public inherited sharing class HDT_QR_CampaignMember {
             CampaignId,
             Campaign.Name,
             Status,
+            Campaign.Status,
             Campaign.Category__c,
             Campaign.Channel__c,
             Campaign.EndDate,
@@ -191,6 +194,31 @@ public inherited sharing class HDT_QR_CampaignMember {
             CampaignMember
             where ContactId IN :contacts
             WITH SECURITY_ENFORCED];
+    }
+
+    public CampaignMember getByEcid(String ecid) {
+        List<CampaignMember> cmList = [
+            SELECT
+            Id, 
+            Status  
+            FROM CampaignMember 
+            WHERE Ecid__c = :ecid
+            AND isToSendStatusReitek__c = true
+            WITH SECURITY_ENFORCED
+        ];
+        return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
+    }
+
+    public CampaignMember getEcidById(String id) {
+        List<CampaignMember> cmList = [
+            SELECT
+            Id,
+            reitekAgentUserId__c , 
+            Ecid__c
+            FROM CampaignMember 
+            WHERE id = :id
+        ];
+        return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
     }
 
     
@@ -342,16 +370,55 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
-public List<CampaignMember> getCampaignMemberByCampaingAndContact(String campaign, String contact){
-    return [
-        SELECT Id,
-        Contact.AccountId,
-        CampaignId,
-        Status
-        FROM CampaignMember 
-        WHERE ContactId = :contact
-        AND CampaignId = :campaign
-        WITH SECURITY_ENFORCED
-    ];
-}
+    public List<CampaignMember> getCampaignMemberByCampaingAndContact(String campaign, String contact){
+        return [
+            SELECT Id,
+            Contact.AccountId,
+            CampaignId,
+            Status
+            FROM CampaignMember 
+            WHERE ContactId = :contact
+            AND CampaignId = :campaign
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<CampaignMember> getCampaignMemberByCampaingAndContactInBulk(List<String> campaign, List<String> contact){
+        return [
+            SELECT Id,
+            ContactId,
+            Contact.AccountId,
+            CampaignId,
+            Status
+            FROM CampaignMember 
+            WHERE ContactId IN :contact
+            AND CampaignId IN :campaign
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public static List<CampaignMember> getSiblingMembersByAccountId(List<String> accountIds, String campaignChannel) {
+        List<CampaignMember> allMembers = [
+            SELECT CampaignId 
+            FROM CampaignMember 
+            WHERE Campaign.Required__c = true
+            AND Campaign.Channel__c = :campaignChannel
+            AND Contact.AccountId IN :accountIds
+            WITH SECURITY_ENFORCED
+        ];
+        List<String> cmpList = new List<String>();
+        for (CampaignMember cm : allMembers) {
+            if (!cmpList.contains(cm.CampaignId)) {
+                cmpList.add(cm.CampaignId);
+            }
+        }
+        return [
+            SELECT Id
+            FROM CampaignMember
+            WHERE CampaignId IN :cmpList
+            AND HasResponded = false
+            AND Status != 'Non Proposto Auto'
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

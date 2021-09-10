@@ -88,8 +88,8 @@ public with sharing class HDT_UTL_VasManagement {
     }
 
     private static String getCompanyCode(String salesCompany){
-        List<HDT_HeraCompany__mdt> companies = [select SalesCompany__c from HDT_HeraCompany__mdt where SalesCompany__c=:salesCompany WITH SECURITY_ENFORCED];
-        return companies.isEmpty()? null : companies?.get(0)?.SalesCompany__c;
+        List<HDT_HeraCompany__mdt> companies = [select CompanyCode__c from HDT_HeraCompany__mdt where SalesCompany__c=:salesCompany WITH SECURITY_ENFORCED];
+        return companies.isEmpty()? null : companies?.get(0)?.CompanyCode__c;
     }
 
     public virtual class HDT_WRP_VasReq extends HDT_WS_Request{
@@ -218,7 +218,7 @@ public with sharing class HDT_UTL_VasManagement {
             dataDecorrenza = parentOrderItem?.VasActivationDate__c;
             dataFirma = currentOrder.SignedDate__c;
             durataServizioGg = parentOrderItem?.DurationDay__c;
-            modalitaPagamento = parentOrderItem?.PaymentMode__c;
+            //modalitaPagamento = parentOrderItem?.PaymentMode__c;
             
             isVasStandAlone = (currentOrder.SBQQ__Quote__r?.SBQQ__PriceBook__r?.Name?.toUpperCase() == VAS_STANDALONE_PRICEBOOK);
             
@@ -239,7 +239,7 @@ public with sharing class HDT_UTL_VasManagement {
         Decimal PercentualeIva;
 
         public HDT_WRP_VASActivationReqItem(OrderItem ordItem) {
-            ItemProdotto = ordItem.Product2?.Name;
+            ItemProdotto = ordItem.Product2?.Name.abbreviate(33).removeEnd('...');
             Quantita = ordItem.Quantity;
             PrezzoNetto = ordItem.PriceNet__c;
             PrezzoNettoScontato = ordItem.PriceNetDiscounted__c;

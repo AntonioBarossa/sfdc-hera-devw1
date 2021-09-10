@@ -165,6 +165,11 @@
         <default>false</default>
         <label>Cliente Non Trovato</label>
     </customValue>
+    <customValue>
+        <fullName>Autolettura non acquisibile</fullName>
+        <default>false</default>
+        <label>Autolettura non acquisibile</label>
+    </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

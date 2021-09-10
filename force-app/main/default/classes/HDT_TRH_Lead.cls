@@ -4,6 +4,11 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
     //public override void afterInsert(){}
     //public override void afterUndelete(){}
     private static HDT_QR_AccountContactRelation accoContRelQr = new HDT_QR_AccountContactRelation();
+    private static HDT_QR_Account accountQr = new HDT_QR_Account();
+    private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
+    private static Map<Id, Lead> mapOld =(Map<Id, Lead>)Trigger.oldMap;
+    private static Map<Id, Lead> mapNew =(Map<Id, Lead>)Trigger.newMap;
+
 
     public override void afterInsert(){
         List<Lead> listlead = Trigger.New;
@@ -12,7 +17,6 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         // for(Lead lead :listlead){
         //     HDT_UTL_GestionePrivacy.setPrivacyForLead(lead);
         // }
-
     HDT_UTL_GestionePrivacy.setPrivacyForLead(listlead);
     }
 
@@ -22,11 +26,11 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         List<Lead> listNew = trigger.new;
        // List<Lead> leadToCheck = new List<Lead>();
         //Map<String,String> leadDomain = new Map<String,String>();
-        for(Lead L : listNew){
+        for(Lead l : listNew){
             if(l.email != null){
                 String s = l.email.split('@')[1];
-                if(mapResBlacklist.get(s) != null){
-                    l.addError('Error:' + mapResBlacklist.get(s));
+                if(mapResBlacklist.get(s.toUpperCase()) != null){
+                    l.addError('Error:' + mapResBlacklist.get(s.toUpperCase()));
                 }
                 else{
                     if('Default'.equals(l.company)){
@@ -50,7 +54,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         l.company = l.firstname + ' '  + l.lastname; 
                     }
                     }
-            }
+            } 
         }
       /*  for(Lead l : listlead){
             if('Default'.equals(l.company)){
@@ -63,11 +67,20 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 }
                 }
         }*/
-        HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
-
+        HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         }
           
         public override void afterUpdate(){
+            System.debug('afterUpdate');
+            for (Lead tempLead :   (List<Lead> ) Trigger.New) {
+
+                if (tempLead.IndividualId==null&& mapOld.get(tempLead.id)!=null &&
+                mapOld.get(tempLead.id).IndividualId!=null && !tempLead.IsConverted) {
+                    tempLead.addError('Operazione non consentita');
+                  
+                }
+                
+            }
 
             List<Lead> listslead = trigger.New;
             HDT_QR_Account accPerson = new HDT_QR_Account();
@@ -78,11 +91,18 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
             List<Account> accounts=new List<Account>();
             List<String> accountIdList = new List<String>();
             Map<String,Lead> mapAccountLead = new Map<String,Lead>();
+            
             for(Lead l : listslead){
                 if(l.IsConverted){
                     if (l.ConvertedAccountId != null) {
                         accountIdList.add(l.ConvertedAccountId);
                         mapAccountLead.put(l.ConvertedAccountId,l);
+                        String leadName = l.FirstName + ' ' + l.LastName;
+                        Account acc = accountQr.getRecordById(l.ConvertedAccountId, 'Name');
+                        Contact con = contactQr.getRecordById(l.ConvertedContactId);
+                        if(leadName == acc.Name && leadName != con.Name){
+                            l.addError('Non è possibile creare un nuovo Account e selezionare un Contact già esistente!');
+                        }
                   	}  
                             
                 }
@@ -92,46 +112,145 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 List<Contact> conList = new List<Contact>();
                 List<String> accId = new List<String>();
                 List<String> contId = new List<String>();
-                Recordtype r = recordtypeQr.getRecordType('HDT_RT_Business', 'Account');
-            
-                accounts = accPerson.getRecordsById(accountIdList,'id,Name, firstname__c,LastName__c,PrimaryEmail__c,Description,FiscalCode__c,recordtypeid,Phone,FAX__c' );
-                For(Account a : accounts){
+                Recordtype r = recordtypeQr.getRecordType('HDT_RT_Business', 'Account');  
+                accounts = accPerson.getRecordsById(accountIdList,'id,Name, firstname__c,LastName__c,PrimaryEmail__c,Description,FiscalCode__c,recordtypeid,Phone,FAX__c,MobilePhone__c' );
+                
+                for(Account a : accounts){
                     accId.add(a.id);
                     if(mapAccountLead.get(a.id) != null){
                         String lastName = (a.LastName__c != null && a.LastName__c != '' ? a.LastName__c : a.Name);
-            
-                        if(r.id == a.recordtypeid){
-                            Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone= a.Phone, Email= a.PrimaryEmail__c, Fax= a.FAX__c);
-                            conList.add(contact);
-            
+                        if ( a.LastName__c==null) {
+                            if(r.id == a.recordtypeid){
+
+                                Lead li = mapAccountLead.get(a.id);
+                               // a.FirstName__c = li.FirstName;
+                            
+                                a.LastName__c = li.Company;
+                                a.Name=li.Company;
+                                a.PrimaryEmail__c= li.Email;
+                                a.Description= li.Description;
+                                Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone=mapAccountLead.get(a.id).Phone, Email=mapAccountLead.get(a.id).email ,MobilePhone= mapAccountLead.get(a.id).MobilePhone, Fax= a.FAX__c);
+                                conList.add(contact);
+                                accToUpdate.add(a);
+
+                            }
+                            else{       
+                                Lead li = mapAccountLead.get(a.id);
+                                a.FirstName__c = li.FirstName;
+                                a.LastName__c = li.LastName;
+                                a.PrimaryEmail__c= li.Email;
+                                a.Description= li.Description;
+                                String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
+                                a.Name=expectedNewName;
+                                accToUpdate.add(a);
+                            }
                         }
-                                
-                                
-                        Lead li = mapAccountLead.get(a.id);
-            
-                        a.FirstName__c = li.FirstName;
-                        a.LastName__c = li.LastName;
-                        a.PrimaryEmail__c= li.Email;
-                        a.Description= li.Description;
-                        accToUpdate.add(a);
+                    }     
+                }
+                if (accToUpdate.size()>0) {
+                    update accToUpdate;
+                }
+                if (conList.size()>0) {
+                    insert conList;
+                    for(Contact c : conList){
+                        contId.add(c.id);
                     }
-                        
+                    List<AccountContactRelation> listAccCon= accoContRelQr.getContactsByAccountWithRoles(accId);
+                    List<Contact> listContactToClean = new List<Contact>();
+                    Set<id> setInd = new Set<id>();
+                    for(AccountContactRelation acc : listAccCon){
+                        if (contId.contains(acc.ContactId)) {
+                            acc.Roles='Azienda'; 
+                        }
+                        else {
+                            //contatti da sbiancare #HRAWRM-387 01/09/2021
+                            Contact tempContact=new Contact();
+                            tempContact.Id=acc.ContactId;
+                            tempContact.Email=null;
+                            tempContact.MobilePhone=null;
+                            tempContact.phone=null;
+                            listContactToClean.add(tempContact);
+                            setInd.add(acc.Contact.IndividualId);
+                        }  
+                    }
+                    if (setInd.size()>0) {
+                        //Start #HRAWRM-387 01/09/2021
+                        List< ContactPointEmail> listToDeleteEm = HDT_QR_ContactPoint.getIndividualContactEmailList(setInd);
+                        List<ContactPointPhone> listToDeletePh  = HDT_QR_ContactPoint.getIndividualContactsPhoneList(setInd);
+                        List<sObject> listToDelete = new List<sObject>();
+                        listToDelete.addAll(listToDeleteEm);
+                        listToDelete.addAll(listToDeletePh);
+                        if (listToDelete.size()>0) {
+                          delete listToDelete;
+                        }
+                        update listContactToClean;
+                        //End #HRAWRM-387 01/09/2021
+
+                        accoContRelSrv.upsertRecord(listAccCon);
+                    }
+                   
                 }
-            
-                update accToUpdate;
-                insert conList;
-                for(Contact c : conList){
-                    contId.add(c.id);
-                }
-                List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(accId, contId, 'Id');
-                for(AccountContactRelation acc : listAccCon){
-                    acc.Roles='Azienda';
-                }
-                accoContRelSrv.upsertRecord(listAccCon);
-                HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
-                ba.dtos = accToUpdate;  
-                Database.executeBatch(ba,80);
+            System.debug('before Call Batch ');
+        // Start HRAWRM-450 07/09/2021 
+
+            //Start  Lorenzo 
+            HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
+            ba.dtos = accToUpdate;  
+            Database.executeBatch(ba,80);
+            //End  Lorenzo 
+
+        // End HRAWRM-450 07/09/2021
+    
             }
             
         }
+        public override void   beforeUpdate(){
+            System.debug('HDT_TRH_Lead.beforeUpdate');
+            Set<String> setFiscalCodes = new Set<String>();
+            Map<String,String> mapResBlacklist = HDT_UTL_Lead.getBlackListMap();
+            List<Lead> listNew = trigger.new;
+            List<Lead> leadToCheck = new List<Lead>();
+            //Map<String,String> leadDomain = new Map<String,String>();
+            for(Lead l : listNew){
+                if(l.email != null){
+                    String s = l.email.split('@')[1];
+                    if(mapResBlacklist.get(s.toUpperCase()) != null){
+                        l.addError('Error:' + mapResBlacklist.get(s.toUpperCase()));
+                    }
+                }
+                if (String.isNotBlank(l.FiscalCode__c) && mapOld.get(l.Id)!=null && (mapOld.get(l.Id).FiscalCode__c!=l.FiscalCode__c)     ) {
+                    setFiscalCodes.add(l.FiscalCode__c);
+                    leadToCheck.add(l);
+                }
+            }   
+            // Start 27-08-2021 HRAWRM-351
+            if (leadToCheck.size()>0) {
+                
+            
+                Map<String,HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject> mapCodeToCheck = HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCode(setFiscalCodes);
+                for (Lead tempLead : leadToCheck) {
+                    HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject wrp = new HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject();
+                    if (mapCodeToCheck.get(tempLead.FiscalCode__c)!=null ) {
+                        wrp=mapCodeToCheck.get(tempLead.FiscalCode__c);
+                       try { // Start RDTR-00_HRAWRM-491 08/09/2021
+                            if ( wrp.isValid) {
+                                Date myDate = Date.newInstance(Integer.valueOf( wrp.year),Integer.valueOf(wrp.month),Integer.valueOf( wrp.day));
+                                tempLead.Birthdate__c=tempLead.Birthdate__c==null?myDate:tempLead.Birthdate__c;
+                                tempLead.Birthcity__c=String.isBlank( tempLead.Birthcity__c)? wrp.city: tempLead.Birthcity__c;
+                                tempLead.Gender__c=String.isBlank( tempLead.Gender__c)? wrp.gender: tempLead.Gender__c;
+                            }
+                            else{
+                                tempLead.addError('Inserire un codice fiscale valido');
+                            }
+                        }
+                        catch (Exception e) {
+                           System.debug('errore: '+e.getMessage());
+                            tempLead.addError('Inserire un codice fiscale valido');
+                       }// End RDTR-00_HRAWRM-491 08/09/2021
+                       
+                    }
+                }
+            }
+        }
+        // End 27-08-2021 HRAWRM-351
 }

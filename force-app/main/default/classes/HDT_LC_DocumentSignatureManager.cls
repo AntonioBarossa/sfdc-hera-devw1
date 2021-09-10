@@ -20,6 +20,15 @@ public with sharing class HDT_LC_DocumentSignatureManager {
         }
         return jsonReturn;
     }
+
+    @AuraEnabled
+    public static void sendAdvanceDocumentation(String recordId,String context,String formParams){
+        try {
+            HDT_SRV_DocumentalManagementFacade.sendAdvanceDocumentation(recordId, context, formParams);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
     @AuraEnabled
     public static string getInfoAccountStatement(String accountId){
         String jsonReturn;
@@ -40,6 +49,12 @@ public with sharing class HDT_LC_DocumentSignatureManager {
     @AuraEnabled
     public static string showArchivedAttachment(String recordId){
         String serializedOutput = HDT_SRV_DocumentalManagementFacade.showArchivedAttachment(recordId);
+        return serializedOutput;
+    }
+
+    @AuraEnabled
+    public static string resendDocusignEnvelope(String recordId){
+        String serializedOutput = HDT_SRV_DocumentalManagementFacade.resendDocusignEnvelope(recordId);
         return serializedOutput;
     }
 }

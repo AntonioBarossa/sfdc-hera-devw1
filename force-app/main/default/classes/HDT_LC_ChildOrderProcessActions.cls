@@ -19,8 +19,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
      * @description Execute child order process save actions
      */
     @AuraEnabled
-    public static void save(Order order){
-        system.debug('START SAVE ORDER');        
+    public static void save(Order order, Map<String,Object> lastStepData){
+        system.debug('START SAVE ORDER');
+
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;
         orderToUpdate.Status = 'In lavorazione';
@@ -37,15 +38,29 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Documenti relativi alla Legge 80.
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
-                orderToUpdate.ServiceCost__c = getFixedFee(order.id, order.RecordType.DeveloperName).setScale(2);
+                System.debug('order.RecordType.DeveloperName' + order.RecordType.DeveloperName);
+                Decimal serCost = getFixedFee(order.id, order.RecordType.DeveloperName);
+                orderToUpdate.ServiceCost__c = serCost != null ? serCost.setScale(2) : null;
             }
             // Calculate Date @Picchiri 20/05/21
             when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn   
-                system.debug('HDT_LC_ChildOrderProcessActions - save - HDT_RT_SwitchIn order : ' + JSON.serializepretty(order));             
+                system.debug('HDT_LC_ChildOrderProcessActions - save - HDT_RT_SwitchIn order : ' + JSON.serializepretty(order)); 
+                List<Order> listOrd = new List<Order>{order};            
+                Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(listOrd);
+                //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
+                orderToUpdate.IsActivationDeferred__c = order.IsActivationDeferred__c;
+
+                try {         
+                    if(order.SignedDate__c != null){                    
+                        orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);  // Data di decorrenza
+                        system.debug('Calcolo data max di decorrenza x 1');             
+                    }
+                } catch (Exception e) { 
+                    throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
+                }
                 
                 if (order.ProcessType__c == 'Switch in Ripristinatorio') {
                     orderToUpdate.DateSentToSII__c = Date.today();
-                    orderToUpdate.EffectiveDate__c = Date.today();
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
                 } else {
                     if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') { // @Picchiri Only for residential customer
@@ -54,7 +69,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             
                             // START 1 Calcolo Data Max Ripensamento       
                             try { 
-                                if(order.SignedDate__c != null){
+                                if(order.SignedDate__c != null && mapAccountRes.get(order.AccountId)){
                                     orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
                                     system.debug('Calcolo data max di ripensamento xxx 1');             
                                 }                                                            
@@ -84,15 +99,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             //orderToUpdate.ActivatedDate = HDT_UTL_SwtichInProcess.getActivatedDate(order);
                             // END Calcolo data inizio (Data attivazione contratto)
     
-                            // START 3 Calcolo Data Decorrenza (EffectiveDate__c)     
-                            try {         
-                                if(order.SignedDate__c != null){                    
-                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);  // Data di decorrenza
-                                    system.debug('Calcolo data max di decorrenza x 1');             
-                                }
-                            } catch (Exception e) { 
-                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
-                            }                     
+                            // START 3 Calcolo Data Decorrenza (EffectiveDate__c)                      
                             
                             // END Calcolo Data Decorrenza (EffectiveDate__c) 
     
@@ -161,7 +168,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Istanza 326.
                     orderToUpdate.Instance326__c = 'Richiesto';
                 }
-                orderToUpdate.ServiceCost__c = getFixedFee(order.Id, order.RecordType.DeveloperName).setScale(2);
+                Decimal serCost = getFixedFee(order.id, order.RecordType.DeveloperName);
+                orderToUpdate.ServiceCost__c = serCost != null ? serCost.setScale(2) : null;
             }
             when 'HDT_RT_AttivazioneConModifica' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
@@ -223,7 +231,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         system.debug('quality log 1 CustomerCategory__c: ' + order.CustomerCategory__c);
         system.debug('quality log 1 MarketOrigin__c: ' + order.MarketOrigin__c);
         system.debug('quality log 1 SignatureMethod__c: ' + order.SignatureMethod__c);
-        List<ComfortQualityCall__c> comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
+        List<ComfortQualityCall__c> comfortQualityList = order.RecordType.DeveloperName == 'HDT_RT_VAS' ? HDT_QR_ComfortQualityCall.getRecordByOrderParamsVas(order) : HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
 
         system.debug('quality log 2: ' + comfortQualityList);
 
@@ -237,11 +245,38 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 orderToUpdate.QualityCallUnique__c = true;
             }
 
-            orderToUpdate.ComfortCallDaysDue__c = comfortQualityList[0].DaysComfort__c;
-            orderToUpdate.DateComfortCall__c = Date.today();
+            ComfortQualityCall__c comforQualityRes = comfortQualityList[0];
+
+            if (comfortQualityList.size() > 1) {
+                system.debug('HDT_LC_ChildOrderProcessActions - Vas case enter');
+                for (ComfortQualityCall__c cqc : comfortQualityList) {
+                    if (cqc.ComfortDocSendingChannel__c == order.DocSendingMethod__c) {
+                        comforQualityRes = cqc;
+                        break;
+                    }
+                }
+                system.debug('HDT_LC_ChildOrderProcessActions - Vas case end: ' + comforQualityRes);
+            }
+
+            if (comforQualityRes.ComfortEnabled__c) {
+                orderToUpdate.ComfortCallDaysDue__c = comforQualityRes.DaysComfort__c;
+                orderToUpdate.DateComfortCall__c = Date.today();
+            }
+
         }
 
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);
+        system.debug('HDT_LC_ChildOrderProcessActions - lastStepData: ' + lastStepData);
+
+
+        if (lastStepData != null) {
+            for (String lastStepField : lastStepData.keySet()) {
+                orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+            }
+        }
+        
+        system.debug('HDT_LC_ChildOrderProcessActions - lastStepData - after: ' + orderToUpdate);
+
         orderSrv.updateRecord(orderToUpdate);
 
         if (order.ParentOrder__r.Status == 'Draft') {

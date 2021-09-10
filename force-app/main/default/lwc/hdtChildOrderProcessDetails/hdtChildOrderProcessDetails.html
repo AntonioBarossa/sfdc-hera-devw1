@@ -3,9 +3,9 @@
         <lightning-card title={title}>
             <div class="slds-clearfix slds-p-horizontal_small">
                 <div class="slds-float_right">
-                    <lightning-button if:true={showModuloInformativo} label="Modulo informativo" variant="brand"></lightning-button>
-                    <lightning-button if:true={showInviaModulistica} label="Invia modulistica" variant="brand" class="slds-m-left_x-small"></lightning-button>
-                    <lightning-button if:true={showDelibera40} label="Delibera 40" variant="brand" class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button if:true={showModuloInformativo} label="Modulo informativo" variant="brand" onclick={handleDocAnticipata}></lightning-button>
+                    <lightning-button if:true={showInviaModulistica} label="Invia modulistica" variant="brand" class="slds-m-left_x-small" onclick={handleDocAnticipata}></lightning-button>
+                    <lightning-button if:true={showDelibera40} label="Delibera 40" variant="brand" class="slds-m-left_x-small" onclick={handleDocAnticipata}></lightning-button>
                 </div>
             </div>
             <lightning-layout>
@@ -22,7 +22,7 @@
                                 </template>
 
                                 <template if:true={section.hasAddrComp}>
-                                    <c-hdt-target-object-address-fields objectapiname="Order" wrapaddressobject={wrapAddressObjectAttivazione}></c-hdt-target-object-address-fields>
+                                    <c-hdt-target-object-address-fields objectapiname="Order" accountid={order.Account.Id} wrapaddressobject={wrapAddressObjectAttivazione}></c-hdt-target-object-address-fields>
                                 </template>
 
                                 <template if:false={section.hasAddrComp}>
@@ -82,12 +82,12 @@
                                     reading-customer-date={readingCustomerDate}
                                     disabled-reading-date={disabledReadingDate}></c-hdt-self-reading>
 
-                                </template>
-
+                                </template> 
+                            
                                 <div class="slds-clearfix slds-p-around_small">
                                     <div class="slds-float_right">
                                         <template if:true={section.hasCalculateButton}>
-                                            <c-hdt-calculate-estimated-cost record-id={section.recordId}></c-hdt-calculate-estimated-cost>
+                                            <c-hdt-calculate-estimated-cost record-id={section.recordId} order={orderWithData} ></c-hdt-calculate-estimated-cost>
                                         </template>
                                         <template if:true={section.hasIvaAcciseUploadButton}>
                                             <c-hdt-upload-documents title="Carica Documenti Iva e Accise" record-id={order.Id} accepted-formats={acceptedFormatsIvaAcciseUpload}></c-hdt-upload-documents>

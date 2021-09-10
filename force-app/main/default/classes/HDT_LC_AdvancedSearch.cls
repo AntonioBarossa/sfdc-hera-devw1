@@ -5,6 +5,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 	private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
 	private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
 	private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
+	private static HDT_QR_Case caseQr = new HDT_QR_Case();
 	private static CS_SelezioneFornitura__c customSetting = servicePointQr.getCustomSetting();
 
 	@AuraEnabled
@@ -16,6 +17,13 @@ public with sharing class HDT_LC_AdvancedSearch {
 			response = true;
 		}
 		return response;
+	}
+
+
+	@AuraEnabled
+	public static List<case> searchModificaContratti(String podPdr){
+		List<case> modificaContratti = caseQr.getCaseModificaContratti(podPdr);
+		return modificaContratti;
 	}
 
 	@AuraEnabled
@@ -620,6 +628,10 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 					if(con.ServicePoint__r.ServicePointCode__c== sp.ServicePointCode__c){
 						label='Codice Contratto';
 						value=(String) con.SAPContractCode__c;
+						row.put(label,value);
+					}else{
+						label='Codice Contratto';
+						value=' ';
 						row.put(label,value);
 					}
 

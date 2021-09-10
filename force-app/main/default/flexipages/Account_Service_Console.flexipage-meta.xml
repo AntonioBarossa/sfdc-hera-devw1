@@ -30,6 +30,52 @@
                         <valueListItems>
                             <value>Account.Scheda_Cliente</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Account.Escalation</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>collapsed</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableActionsConfiguration</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableActionsInNative</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideChatterActions</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numVisibleActions</name>
+                    <value>9</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Account.Catalogo_Servizi</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Escalation</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -53,6 +99,13 @@
                     <value>8</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -561,6 +614,33 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAccountAlerts</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;Per questo cliente gli Alert sono gestiti su Siebel.&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-7de11b02-55bd-4945-9c3a-5a51e258a2ee</name>
@@ -808,6 +888,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.HDT_CP_OneShotUser}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-4aef154f-25e4-4d25-a35c-09d8dabe36c8</name>
@@ -878,6 +965,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtLastBill</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

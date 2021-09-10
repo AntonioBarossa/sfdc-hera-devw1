@@ -261,6 +261,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ManualCheckResult__c</picklist>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso inserito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti dal DL</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PetitionerAssigneeStructure__c</picklist>
         <values>
             <fullName>CRM</fullName>
@@ -354,6 +369,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Process__c</picklist>
+        <values><!--HRAWRM-446 07/09/2021-->
+            <fullName>Annullamento Prestazione</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Aggiunta Attacco</fullName>
             <default>false</default>
@@ -1226,6 +1245,10 @@
             <fullName>Presa appuntamento in corso</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Subject__c</picklist>
@@ -1772,7 +1795,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Approvazione Quote</fullName>
+            <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
         <values>

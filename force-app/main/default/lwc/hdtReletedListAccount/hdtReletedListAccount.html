@@ -1,21 +1,10 @@
 <template>
 
     <article class="slds-card">
-        <div class="slds-card__header slds-grid">
-            <header class="slds-media slds-media_center slds-has-flexi-truncate">
 
-                <div class="slds-media__body">
-                    <h2 class="slds-card__header-title">
-                        <a href="#" class="slds-card__header-link slds-truncate">
-                            <span></span>
-                        </a>
-                    </h2>
-                </div>
-            </header>
-        </div>
         <div class="slds-card__body slds-card__body_inner">
             <article class="slds-card slds-card_boundary">
-                <div class="slds-card__header slds-grid">
+                <div class="slds-page-header slds-page-header_joined slds-page-header_bleed slds-shrink-none test-headerRegion slds-is-relative slds-page-header-no-border">
                     <header class="slds-media slds-media_center slds-has-flexi-truncate">
                         <div class="slds-media__figure">
                             <span class="slds-icon_container slds-icon-standard-account" title="account">
@@ -27,7 +16,7 @@
                         <div class="slds-media__body">
                             <h2 class="slds-card__header-title">
                                 <a href="#" class="slds-card__header-link slds-truncate" title="Referenti">
-                                    <span>Referenti</span>
+                                    <span>Referenti ({numberOfContacts})</span>
                                 </a>
 
                             </h2>
@@ -44,9 +33,20 @@
                     </a>
                 </footer>
 
-                <lightning-datatable key-field="Id"
-                data={contacts} columns={columns} hide-checkbox-column="true" onrowaction={handleRowActions}
-                show-row-number-column="true"></lightning-datatable>
+                <lightning-layout multiple-rows="true" pull-to-boundary="small">
+
+
+
+                    <template for:each={contacts} for:item="c">
+                        <lightning-layout-item  padding="around-small" key={c.Id} size="5">
+    
+    
+                            <c-hdt-contact-tab accountcontactrel={c}></c-hdt-contact-tab>
+                        </lightning-layout-item>
+    
+    
+                    </template>
+                </lightning-layout>
 
             </article>
         </div>
@@ -115,7 +115,7 @@
                             <div class="slds-col slds-grid">
                                 <div
                                     class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <lightning-input type="text" data-id="fiscalCode" label="Codice Fiscale" required>
+                                    <lightning-input type="text" data-id="fiscalCode" label="Codice Fiscale" required  max-length="16"	>
                                     </lightning-input>
                                 </div>
                                 <div
@@ -129,7 +129,7 @@
                                 <div
                                     class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-combobox data-id="role" name="role" label="Ruolo"
-                                        placeholder="Seleziona Ruolo" options={roleOptions}>
+                                        placeholder="Seleziona Ruolo" options={roleOptions} required>
                                     </lightning-combobox>
                                 </div>
 

@@ -149,6 +149,10 @@
                 <behavior>Readonly</behavior>
                 <field>IndemnityMotivation__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CustomerRequestAccomplished__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -230,6 +234,10 @@
         <editHeading>true</editHeading>
         <label>Informazioni aggiuntive</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Status</field>
@@ -338,6 +346,11 @@
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Escalation</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>5</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <quickActionList/>
     <relatedContent>
@@ -389,6 +402,28 @@
         <relatedList>Case.RelatedCase__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>MessageText__c</fields>
+        <fields>Delivered__c</fields>
+        <fields>Sent__c</fields>
+        <fields>ContactID__c</fields>
+        <relatedList>SMSTracking__c.CaseID__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>MessageText__c</fields>
+        <fields>MessageOpened__c</fields>
+        <fields>ContactID__c</fields>
+        <relatedList>PushTracking__c.CaseID__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>et4ae5__DateSent__c</fields>
+        <fields>et4ae5__DateOpened__c</fields>
+        <fields>et4ae5__Contact_ID__c</fields>
+        <relatedList>et4ae5__IndividualEmailResult__c.CaseID__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -403,7 +438,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1x000001Y7ft</masterLabel>
+        <masterLabel>00h3N000002WP39</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

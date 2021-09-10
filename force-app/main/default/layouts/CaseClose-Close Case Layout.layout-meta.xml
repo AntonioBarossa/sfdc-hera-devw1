@@ -178,6 +178,10 @@
                 <behavior>Edit</behavior>
                 <field>VatNumber__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
