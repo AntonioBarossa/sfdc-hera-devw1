@@ -815,6 +815,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 diffRecordId: this.order.Id,
                 processVisibility: this.order.ServicePoint__c !== undefined && this.order.ServicePoint__r.Account__c !== this.order.AccountId && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'),
                 data: [
+                    //@frpanico 09/09/21 utilizzato oggetto per snellire il codice dove possibile
+                    //constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
                     {
                         'label': '',
                         'apiname': 'Subprocess__c',
@@ -824,52 +826,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'value': '',
                         'processVisibility': '',
                         'diffObjApi' : 'Order'
-                        },
-                    {
-                        'label': 'Nome',
-                        'apiname': 'FirstName__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
                     },
-                    {
-                        'label': 'Cognome',
-                        'apiname': 'LastName__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Codice Fiscale',
-                        'apiname': 'FiscalCode__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Partita IVA',
-                        'apiname': 'VATNumber__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Ragione sociale',
-                        'apiname': 'Name',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    }
+                    new fieldData('Nome','FirstName__c',this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura', false, true,'',''),
+                    new fieldData('Cognome','LastName__c',this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura', false, true,'',''),
+                    new fieldData('Codice Fiscale','FiscalCode__c',this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura', false, true,'',''),
+                    new fieldData('Partita IVA','VATNumber__c',this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business' && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura', false, true,'',''),
+                    new fieldData('Ragione Sociale','Name',this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business' && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura', false, true,'','')
                 ]
             },
             {
@@ -893,149 +855,24 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 readingButton:true,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
                 data:[
-                    {
-                        'label': 'Tipo Voltura',
-                        'apiname': 'VoltureType__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': true,
-                        'disabled': false,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '', 
-                        'apiname': 'EffectiveDate__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': true,
-                        'disabled': false,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '', 
-                        'apiname': 'SignedDate__c',
-                        'typeVisibility': this.order.ParentOrder__r.SignedDate__c != null,
-                        'required': true,
-                        'disabled': true,
-                        'value': this.order.ParentOrder__r.SignedDate__c,
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'NotRegisteredMeterCase__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': false,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'AccountId',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'PhoneNumber__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'Email__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'WithdrawalClass__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'AnnualConsumption__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'Market__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'SupplyType__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'Commodity__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'ServicePointCode__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'ImplantType__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },                    {
-                        'label': '',
-                        'apiname': 'SAPImplantCode__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true, //UAT 25/08/2021 JIRA 336
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'CustomerCategory__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    }
+                    //@frpanico 09/09/21 utilizzato oggetto per snellire il codice dove possibile
+                    //constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
+                    new fieldData('Tipo Voltura','VoltureType__c',this.typeVisibility('both'),true,false,'',''),
+                    new fieldData('','EffectiveDate__c',this.typeVisibility('both'),true,false,'',''),
+                    new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
+                    new fieldData('','NotRegisteredMeterCase__c',this.typeVisibility('both'),false,false,'',''),
+                    new fieldData('','AccountId',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','PhoneNumber__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','WithdrawalClass__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','AnnualConsumption__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','Market__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','SupplyType__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','Commodity__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','ServicePointCode__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','ImplantType__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','SAPImplantCode__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','CustomerCategory__c',this.typeVisibility('both'),false,true,'','')
                 ]
             },
             {
