@@ -54,7 +54,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         l.company = l.firstname + ' '  + l.lastname; 
                     }
                     }
-            }
+            } 
         }
       /*  for(Lead l : listlead){
             if('Default'.equals(l.company)){
@@ -186,13 +186,21 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         update listContactToClean;
                         //End #HRAWRM-387 01/09/2021
 
-
+                        accoContRelSrv.upsertRecord(listAccCon);
                     }
-                    accoContRelSrv.upsertRecord(listAccCon);
-                    HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
-                    ba.dtos = accToUpdate;  
-                    Database.executeBatch(ba,80);
+                   
                 }
+            System.debug('before Call Batch ');
+        // Start HRAWRM-450 07/09/2021 
+
+            //Start  Lorenzo 
+            HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
+            ba.dtos = accToUpdate;  
+            Database.executeBatch(ba,80);
+            //End  Lorenzo 
+
+        // End HRAWRM-450 07/09/2021
+    
             }
             
         }
@@ -224,16 +232,22 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject wrp = new HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject();
                     if (mapCodeToCheck.get(tempLead.FiscalCode__c)!=null ) {
                         wrp=mapCodeToCheck.get(tempLead.FiscalCode__c);
-                       
-                        if ( wrp.isValid) {
-                            Date myDate = Date.newInstance(Integer.valueOf( wrp.year),Integer.valueOf(wrp.month),Integer.valueOf( wrp.day));
-                            tempLead.Birthdate__c=tempLead.Birthdate__c==null?myDate:tempLead.Birthdate__c;
-                            tempLead.Birthcity__c=String.isBlank( tempLead.Birthcity__c)? wrp.city: tempLead.Birthcity__c;
-                            tempLead.Gender__c=String.isBlank( tempLead.Gender__c)? wrp.gender: tempLead.Gender__c;
+                       try { // Start RDTR-00_HRAWRM-491 08/09/2021
+                            if ( wrp.isValid) {
+                                Date myDate = Date.newInstance(Integer.valueOf( wrp.year),Integer.valueOf(wrp.month),Integer.valueOf( wrp.day));
+                                tempLead.Birthdate__c=tempLead.Birthdate__c==null?myDate:tempLead.Birthdate__c;
+                                tempLead.Birthcity__c=String.isBlank( tempLead.Birthcity__c)? wrp.city: tempLead.Birthcity__c;
+                                tempLead.Gender__c=String.isBlank( tempLead.Gender__c)? wrp.gender: tempLead.Gender__c;
+                            }
+                            else{
+                                tempLead.addError('Inserire un codice fiscale valido');
+                            }
                         }
-                        else{
+                        catch (Exception e) {
+                           System.debug('errore: '+e.getMessage());
                             tempLead.addError('Inserire un codice fiscale valido');
-                        }
+                       }// End RDTR-00_HRAWRM-491 08/09/2021
+                       
                     }
                 }
             }

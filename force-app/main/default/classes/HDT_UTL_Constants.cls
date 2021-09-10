@@ -59,6 +59,13 @@ public with sharing class HDT_UTL_Constants {
     public final String ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE =
     Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_KOPRECEDETECLIENTE).getRecordTypeId();
 
+    //Activity Custom RecordType Credit Check KO
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORAPPOINTMENT = 'HDT_RT_DistributorAppointment';
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPEID_DISTRIBUTORAPPOINTMENT =
+    Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORAPPOINTMENT).getRecordTypeId();
+
     //Order RecordType Default
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Default';
@@ -128,7 +135,10 @@ public with sharing class HDT_UTL_Constants {
      @AuraEnabled
      public final String ORDER_RECORDTYPEID_TEMPORANEANUOVAATT =
      Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT).getRecordTypeId();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 31c107024df6d69a31b23b5f3e36d6922b55218a
 
     //@anbuzzi 31/08 Case RecordType Documentale/Copia Contratto
     @AuraEnabled
@@ -136,7 +146,10 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO).getRecordTypeId();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 31c107024df6d69a31b23b5f3e36d6922b55218a
     
     //ServicePoint RecordType Punto Elettrico
     @AuraEnabled
@@ -192,6 +205,14 @@ public with sharing class HDT_UTL_Constants {
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_CUSTOMER = 'Customer';
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_EX_CUSTOMER = 'Ex-Customer';
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_PROSPECT = 'Prospect';
+    
+    //Knowledge Article Record Types
+    @AuraEnabled
+    public final String KNOWLEDGEARTICLE_RECORDTYPE_DEVELOPERNAME_FAQ = 'HDT_RT_FAQ';
+    @AuraEnabled
+    public final String KNOWLEDGEARTICLE_RECORDTYPEID_FAQ =
+    Schema.SObjectType.Knowledge__kav.getRecordTypeInfosByDeveloperName().get(KNOWLEDGEARTICLE_RECORDTYPE_DEVELOPERNAME_FAQ).getRecordTypeId();
+    
 
      
     //Custom Permissions

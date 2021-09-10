@@ -6,7 +6,22 @@
 public with sharing class HDT_UTL_SwtichInProcess {
     
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
+    private static HDT_QR_Account accountQr = new HDT_QR_Account();
 
+    public static Map<String,Boolean> checkAccountOrderIsResidential(List<Order> listOrder){
+        List<String> accountIdList = new List<String>();
+        Map<String,Boolean> mapRes = new Map<String,boolean>();
+        for(Order ord : listOrder){
+            accountIdList.add(ord.AccountId);
+        }
+        List<Account> listAccount = accountQr.getRecordsById(accountIdList,'Id,Recordtype.Developername');
+        for(Account a : ListAccount){
+            if(mapRes.get(a.id) == null){
+                mapRes.put(a.id,a.recordtype.developername == 'HDT_RT_Residenziale');
+            }
+        }
+        return mapRes;
+    }
     // Calcolo Data Max Ripensamento(MaxAfterthoughtDate__c)  // Solo per clienti residenziali
     public static Date getMaxAfterthoughtDate(Order order) {
 
@@ -83,6 +98,40 @@ public with sharing class HDT_UTL_SwtichInProcess {
 
         Date dateSentToSii= null;
         if(signedDate != null  && order.ProcessType__c != 'Cambio Offerta'){
+
+            /*
+                09/09/2021 - gabriele.rota@webresults.it
+                Aggiornamento calcolo Data Invio al SII (HRAWRM-234)
+                Stessa logica sia per residenziale che per non residenziale
+            */
+            dateSentToSii = Date.valueOf(date.today());
+
+            if (effDate!=null) {
+                String processType = PROCESSTYPEBYRRECORDTYPEMAP.get(order.RecordType.DeveloperName);
+
+                List<HDT_FulfillmentDateMatrix__c> fulfillmentRows = [SELECT FulfillmentDateFrom__c 
+                    FROM HDT_FulfillmentDateMatrix__c 
+                    WHERE OriginMarket__c =: order.MarketOrigin__c   
+                    AND Commodity__c =: order.ServicePoint__r.CommoditySector__c   
+                    AND VoltageLevel__c =: order.VoltageLevel__c 
+                    AND ProcessType__c = :processType
+                    AND SupplyType__c =: order.SupplyType__c 
+                    AND ActivationDate__c =: effDate
+                    WITH SECURITY_ENFORCED
+                ];
+
+                if (fulfillmentRows.isEmpty()) {
+                    throw new HDT_UTL_HeraException('No rows found in HDT_FulfillmentDateMatrix__c');
+                }
+
+                dateSentToSii = fulfillmentRows.get(0).FulfillmentDateFrom__c;
+
+                if (order.RecessNotice__c!=null) {
+                    dateSentToSii = dateSentToSii.addDays(-10).toStartOfMonth().addMonths(order.RecessNotice__c.intValue()*-1).addMonths(1);
+                }
+            }
+
+            /*
             if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
 
                 // DIRITTO DI RINUNCIA DI RIPENSAMENTO
@@ -97,44 +146,14 @@ public with sharing class HDT_UTL_SwtichInProcess {
                         dateSentToSii= getMaxAfterthoughtDate(order).addDays(1);
                     }                    
                 }
-            
-            }else{
-                dateSentToSii = Date.valueOf(date.today());      
-                
-                /*
+            }
+
                 La data invio richiesta al SII deve essere ricalcolata nel caso in cui il sistema riceva degli esiti di rilavorazione.  
                 Alla rilavorazione, la data di invio richiesta deve assumere la data di rilavorazione della richiesta (la data di ultimo aggiornamento fase).  
                 Tale ricalcolo potrà essere possibile fino all’esito di ammissibilità ok.  
                 Da quel momento in poi il sistema non dovrà più ricalcolare la data invio richiesta al SII. 
-                */          
-
-                //13/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Invio al SII - START
-                if (effDate!=null) {
-                    String processType = PROCESSTYPEBYRRECORDTYPEMAP.get(order.RecordType.DeveloperName);
-
-                    List<HDT_FulfillmentDateMatrix__c> fulfillmentRows = [SELECT FulfillmentDateFrom__c 
-                        FROM HDT_FulfillmentDateMatrix__c 
-                        WHERE OriginMarket__c =: order.MarketOrigin__c   
-                        AND Commodity__c =: order.ServicePoint__r.CommoditySector__c   
-                        AND VoltageLevel__c =: order.VoltageLevel__c 
-                        AND ProcessType__c = :processType
-                        AND SupplyType__c =: order.SupplyType__c 
-                        AND ActivationDate__c =: effDate
-                        WITH SECURITY_ENFORCED
-                    ];
-
-                    if (fulfillmentRows.isEmpty()) {
-                        throw new HDT_UTL_HeraException('No rows found in HDT_FulfillmentDateMatrix__c');
-                    }
-
-                    dateSentToSii = fulfillmentRows.get(0).FulfillmentDateFrom__c;
-
-                    if (order.RecessNotice__c!=null) {
-                        dateSentToSii = dateSentToSii.addDays(-10).toStartOfMonth().addMonths(order.RecessNotice__c.intValue()*-1).addMonths(1);
-                    }
-                }
-                //13/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Invio al SII - END
             }
+            */
         }
         
         system.debug('HDT_UTL_SwtichInProcess - getDateSentToSii: ' + dateSentToSII);

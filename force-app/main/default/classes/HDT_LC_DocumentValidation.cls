@@ -11,7 +11,7 @@ public inherited sharing class HDT_LC_DocumentValidation {
     @AuraEnabled
     public static Boolean isValidPhase(String recordId){
         Order ord = orderQr.getRecordById(recordId);
-        return ('Da Inviare'.equalsIgnoreCase(ord.phase__c) || 'In Attesa Validazione'.equalsIgnoreCase(ord.phase__c));
+        return ('Da Inviare'.equalsIgnoreCase(ord.phase__c) || 'In Attesa Validazione'.equalsIgnoreCase(ord.phase__c) || 'Documentazione da validare'.equalsIgnoreCase(ord.Phase__c));
     }
     
     @AuraEnabled
@@ -42,6 +42,9 @@ public inherited sharing class HDT_LC_DocumentValidation {
             if(ord.AutorizationVolturaThirdTrader__c != null && !'Validato'.EqualsIgnoreCase(ord.AutorizationVolturaThirdTrader__c)){
                 check = false;
             }
+            if(ord.DocumentPackage__c != null && !'Validato'.EqualsIgnoreCase(ord.DocumentPackage__c)){
+                check = false;
+            }
             
         }
         if(check){
@@ -59,6 +62,10 @@ public inherited sharing class HDT_LC_DocumentValidation {
                 }
             } else {
                 ord.Phase__c = 'Documentazione Validata';
+            }
+
+            if(orderRetrive.ParentOrder__c == null){
+                ord.Phase__c = 'Documentazione Gestita';
             }
 
         }

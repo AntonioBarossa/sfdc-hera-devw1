@@ -673,6 +673,10 @@ q<?xml version="1.0" encoding="UTF-8"?>
             <fullName>Gestione Scarto</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Processo incompatibile</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Category__c</picklist>
@@ -7951,6 +7955,10 @@ q<?xml version="1.0" encoding="UTF-8"?>
         </values>
         <values>
             <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Lavorazione SAP</fullName>
             <default>false</default>
         </values>
     </picklistValues>

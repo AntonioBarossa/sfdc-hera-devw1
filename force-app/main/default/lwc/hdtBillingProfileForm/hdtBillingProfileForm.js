@@ -13,6 +13,7 @@ export default class hdtBillingProfileForm extends LightningElement {
     @api recordId;
     loading = false;
     @track fields = [];
+  //  @track refreshField = true;
     @track fatturazioneElettronicaFields = [];
     isfatturazioneElettronicaVisible = false;
     @track tipologiaIntestatarioFields = [];
@@ -68,6 +69,9 @@ export default class hdtBillingProfileForm extends LightningElement {
                             value = 'IT';
                             disable = true;
                             break;
+                        case 'IbanCIN_IBAN__c':
+                            value = '';
+                            break;
                         case 'BillSendingMethod__c':
                             required = true;
                             break;
@@ -98,16 +102,45 @@ export default class hdtBillingProfileForm extends LightningElement {
                         default:
                             break;
                     }
-
-                    this.fields.push({
+                    switch (el) {
+                        case 'CreateContractAccount__c':
+                            this.fields.push({
+                                fieldName: el,
+                                visibility: (el !== 'InvoiceCertifiedEmailAddress__c' && el !== 'SendCertifiedEmailConsentDate__c' && el !== 'IBAN__c'),
+                                disabled: disable,
+                                value: false,
+                                required: required
+                            });
+                            break;
+                        case 'IbanIsForeign__c':
+                            this.fields.push({
+                                fieldName: el,
+                                visibility: (el !== 'InvoiceCertifiedEmailAddress__c' && el !== 'SendCertifiedEmailConsentDate__c' && el !== 'IBAN__c'),
+                                disabled: disable,
+                                value: false,
+                                required: required
+                            });
+                            break;
+                            default:
+                            this.fields.push({
+                                fieldName: el,
+                                visibility: (el !== 'InvoiceCertifiedEmailAddress__c' && el !== 'SendCertifiedEmailConsentDate__c' && el !== 'IBAN__c'),
+                                disabled: disable,
+                                value: value,
+                                required: required
+                            });
+                                break;
+                    }
+                   /* this.fields.push({
                         fieldName: el,
                         visibility: (el !== 'InvoiceCertifiedEmailAddress__c' && el !== 'SendCertifiedEmailConsentDate__c' && el !== 'IBAN__c'),
                         disabled: disable,
                         value: value,
                         required: required
-                    });
+                    }); */
                     value = '';
                 });
+                console.log('*******:' + JSON.stringify(this.fields));
             }
 
             if(data.fatturazioneElettronica !== undefined){
@@ -346,11 +379,13 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if (event.target.fieldName === 'BillSendingMethod__c') {
+           // this.refreshField = false;
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceCertifiedEmailAddress__c')].visibility = event.target.value === 'Invio tramite PEC';
             this.fields[this.fields.findIndex(el => el.fieldName === 'SendCertifiedEmailConsentDate__c')].visibility = event.target.value === 'Invio tramite PEC';
-
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].required = event.target.value.includes('e-mail');
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].visibility = event.target.value.includes('e-mail');
+           // this.refreshField = true;
+            console.log('*******123:' + JSON.stringify(this.fields));
         }
 
         if(event.target.fieldName === 'IbanIsForeign__c'){
@@ -442,7 +477,7 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if (this.template.querySelector("[data-id='InvoiceEmailAddress__c']") !== null 
-            && (this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value === null || this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value === '') 
+            && (this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value === null || this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value.trim() === '') 
             && (this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail' || this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail + Carta')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Email Invio Bolletta, ');
         }
@@ -552,17 +587,17 @@ export default class hdtBillingProfileForm extends LightningElement {
         } 
 
         if (this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']") !== null 
-            && this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']").value === null) {
+            && (this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']").value === null || this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Codice Fiscale Sottoscrittore CC, ');
         }
 
         if (this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']") !== null 
-            && this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']").value === null) {
+            && (this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']").value === null || this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Nome sottoscrittore CC, ');
         }
 
         if (this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']") !== null 
-            && this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']").value === null) {
+            && (this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']").value === null || this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Cognome sottoscrittore CC, ');
         }
         //check required fields end

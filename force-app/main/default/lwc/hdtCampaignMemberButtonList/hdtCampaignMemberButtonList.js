@@ -1,7 +1,92 @@
 import { LightningElement, track, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
+import createNewCase from '@salesforce/apex/HDT_LC_CampaignsController.getServiceCatalogUrlByCaseType';
+import getCampaignAndAccountByMember from '@salesforce/apex/HDT_LC_CampaignsController.getCampaignAndAccountByMember';
 export default class hdtCampaignMemberButtonList extends NavigationMixin(LightningElement) {
     @api recordId;
+    caseObj = null;
+
+    connectedCallback() {
+        getCampaignAndAccountByMember({ campaignMemberId: this.recordId }).then(data => {
+            console.log(JSON.stringify(data));
+
+            this.caseObj = {
+                'Subject': 'PostVendita',
+                'AccountId': data.GenericField1__c,
+                'Cluster__c': data.Campaign.CaseCategory__c,
+                'Type': data.Campaign.CaseSubCategory__c,
+                'Campaign__c': data.CampaignId
+            };
+            console.log(JSON.stringify(this.caseObj));
+        }).catch(error => {
+            console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: `${error.status}`,
+                    message: `${error.body.message}`,
+                    variant: "error"
+                })
+            );
+        });
+    }
+
+    newCaseClick() {
+        if(this.caseObj.AccountId != null && this.caseObj != null){
+            createNewCase({ c: this.caseObj }).then(data => {
+                console.log(JSON.stringify(data));
+                
+                //navigate to new created case
+                if (data != null) {
+                    let query = data.split('?')[1];
+
+
+
+
+                    let params = query.split('&');
+                    let obj = {};
+                    params.forEach(param => {
+                        let elem = param.split('=');
+                        obj[elem[0]] = elem[1];
+                    });
+
+                   // console.log(JSON.stringify(obj));
+                  //  window.open('/post-sale-process-new-case?' + query);
+                    this[NavigationMixin.GenerateUrl]({
+                        type: "comm__namedPage",
+                        attributes: {
+                            name: "PostSaleProcessNewCase__c"
+                        },
+                        state: {
+                            c__processType: obj['c__processType'].replace('+',' '),
+                            c__recordTypeName: obj['c__recordTypeName'],
+                            c__accid: obj['c__accid'],
+                            c__flowName: obj['c__flowName'],
+                            c__campaignId: obj['c__campaignId']
+                        }
+                    }).then(url => {
+                       window.open(url, "_blank");
+                    });
+                }
+            }).catch(error => {
+                console.log(error);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: `${error.status}`,
+                        message: `${error.body.message}`,
+                        variant: "error"
+                    })
+                );
+            });
+        }
+        else{
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: `error`,
+                    message: 'Innesca il Processo dalla Pagina dell\'account',
+                    variant: "error"
+                })
+            );
+        }
+    }
 }

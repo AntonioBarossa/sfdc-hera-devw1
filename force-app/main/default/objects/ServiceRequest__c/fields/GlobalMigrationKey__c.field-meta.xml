@@ -3,7 +3,7 @@
     <fullName>GlobalMigrationKey__c</fullName>
     <caseSensitive>true</caseSensitive>
     <description>Chiave Globale Migrazione</description>
-    <externalId>false</externalId>
+    <externalId>true</externalId>
     <label>Chiave Globale Migrazione</label>
     <length>255</length>
     <required>false</required>

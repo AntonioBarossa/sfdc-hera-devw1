@@ -115,6 +115,10 @@
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
+    <classAccesses>
+        <apexClass>HDT_LC_ReportNavigatorController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>AccountDataEnrichment__mdt</name>
@@ -2856,6 +2860,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AssignmentRule__c.Distributor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AssignmentRule__c.FirstLevelOpinion__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3739,9 +3748,24 @@
         <field>CampaignEasyCIM__c.MacroActivity__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions><!--UAT Lorenzo 09/09/2021 -->
+        <editable>true</editable>
+        <field>CampaignMember.isWsBollettaInvoked__c</field>
+        <readable>true</readable>
+    </fieldPermissions><!--UAT Lorenzo 09/09/2021 -->
     <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMember.Agency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMember.Ecid__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMember.isToSendStatusReitek__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6875,6 +6899,11 @@
         <field>City__c.BelfioreCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.Province__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
         <fieldPermissions>
         <editable>true</editable>
         <field>City__c.ServiceEle__c</field>
@@ -7775,6 +7804,13 @@
         <field>ContactPointTypeConsent.EngagementChannelTypeId</field>
         <readable>true</readable>
     </fieldPermissions>
+    <!--Start HRAWRM-251 08/09/2021 -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.CommercialProduct__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <!--Start HRAWRM-251 08/09/2021 -->
     <fieldPermissions>
         <editable>false</editable>
         <field>Contract.ExciseEle__c</field>
@@ -11902,6 +11938,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.IntegrationId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.IsWinback__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12628,6 +12669,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.DocumentLow80__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.DocumentPackage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13968,6 +14014,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.WizardCompletedDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SwitchOutDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16488,6 +16539,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Reading__c.CommodityFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Reading__c.DisputedMeterValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Reading__c.DisputedReadingValue1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Reading__c.DisputedReadingValue2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Reading__c.DisputedReadingValue3__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24086,6 +24157,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.isReseller__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SwitchOutDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.ActivationEleExternalDistributor__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -24505,7 +24586,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ServicePoint__c.SupplyPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28711,6 +28792,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ManualCheckResult__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Mobile__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30243,59 +30329,59 @@
         <layout>Info3GroupList__c-Lista Gruppo Info 3 Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_CompetitivoScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_Competitivo</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_FaqScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_FAQ</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_FormazioneScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_Formazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_GenericoScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_Generico</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_GestionePraticheScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_GestionePratiche</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_NewsScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_News</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_PraticheDiScartoScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_PraticheDiScarto</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_SchedaComuneScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_SchedaComunce</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_Template</layout>
         <recordType>Knowledge__kav.HDT_RT_Template</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_TroubleshootingDiFrontPrincipaleScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingFrontPrincipale</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_TroubleshootingDiFrontSecondarioScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingFrontSecondario</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_TroubleshootingReclamiPrincipaleScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiPrincipale</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_TroubleshootingReclamiSecondarioScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiSecondario</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Lead-Acquisizione Lead Layout</layout>
@@ -31347,9 +31433,9 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Knowledge__kav</object>
@@ -32300,15 +32386,15 @@
         <object>SurveyCRM__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
+    <objectPermissions><!--Start  HRAWRM-546 10/09/2021  -->
+        <allowCreate>true</allowCreate> 
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>SurveyResponse__c</object>
         <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
+    </objectPermissions> <!--End  HRAWRM-546 10/09/2021  -->
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
@@ -34101,10 +34187,10 @@
         <enabled>true</enabled>
         <name>SelectFilesFromSalesforce</name>
     </userPermissions>
-    <userPermissions>
+    <!-- <userPermissions>
         <enabled>true</enabled>
         <name>SendExternalEmailAvailable</name>
-    </userPermissions>
+    </userPermissions> --> <!-- commentato per deploy in UAT -->
     <userPermissions>
         <enabled>true</enabled>
         <name>ShowCompanyNameAsUserBadge</name>

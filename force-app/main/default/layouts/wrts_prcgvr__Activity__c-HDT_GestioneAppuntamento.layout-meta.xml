@@ -75,6 +75,10 @@
                 <behavior>Readonly</behavior>
                 <field>Email__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Distributor__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -87,6 +91,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>AppointmentDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DistributorFirstDate__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

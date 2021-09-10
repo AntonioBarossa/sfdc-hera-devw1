@@ -5,6 +5,7 @@
  * @history Luca Belometti -WR – 05/08/2021 – Created Merhods for creation CampaingMemberAssignment and its relative Item
  * @history Lucas Fernandes 05/08/2021 – Created 'createAccountShare' method
  */
+
 public with sharing class HDT_UTL_DataFactoryTst{
 
 	private staTIC HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
@@ -146,7 +147,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 			// OLD VALUE → acc.CustomerCode__c='1003616210';
         	acc.IsWrongFiscalData__c = false;
-        	acc.BillingIsAddressVerified__c = true;
 			acc.CustomerCode__c = stringResult;
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
@@ -1560,6 +1560,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return documents;
 	}
+	
 	public static List<DocumentalActivity__c> createDocumentalActivity(Integer numberRecords, Id orderId, Id caseId){
 		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
 		for(Integer i=0; i<numberRecords;i++){
@@ -1574,6 +1575,20 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		insert docActList;
 		return docActList;
 	}
+	
+	public static list<DocumentSendTracking__c> createDocumentSendTracking(Integer numberRecords, Id orderId, Id caseId){
+		List<DocumentSendTracking__c> docTrackList = new List<DocumentSendTracking__c>();
+		for(Integer i=0; i<numberRecords;i++){
+			DocumentSendTracking__c docTrack = new DocumentSendTracking__c();
+			docTrack.Order__c = String.isNotBlank(orderId)?orderId:null;
+			docTrack.Case__c = String.isNotBlank(caseId)?caseId:null;
+			docTrack.EnvelopeId__c = 'idPlico_' + i;
+			docTrackList.add(docTrack);
+		}
+		insert docTrackList;
+		return docTrackList;
+	}
+	
 
 	public static List<AtecoMatrix__c> createAtecoMatrix(Integer amount, Boolean doInsert, String name){
 
@@ -1854,26 +1869,122 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return serviceLinkItemList;
 	}
 
-	public static void createWebServiceConfiguration () {
+	
+	public static void createWebServiceConfiguration (String name, String endpoint, String method, String user) {
 
 		HDT_WebServiceConfiguration__c wsConfig = new HDT_WebServiceConfiguration__c(
-			Name = 'TransitorioWinback',
-			Endpoint__c = 'end',
-			Method__c = 'method',
-			User__c = 'testUser'         
+			Name = name,
+			Endpoint__c = endpoint,
+			Method__c = method,
+			User__c = user         
 		);
 		
 		insert wsConfig;
 	}
 
-	public static void createWebServiceCredential () {
+	public static void createWebServiceCredential (String name , String password, String username) {
 
 		HDT_WebServiceCredential__c wsCredential = new HDT_WebServiceCredential__c(
-			Name = 'testUser',
-			Password__c = '12345',
-			Username__c = 'usernameTest'
+			Name = name,
+			Password__c = password,
+			Username__c = username
 		);
 
 		insert wsCredential;
+	}
+
+	public static List<CommunicationLog__c> createCommunicationLog (Integer amount, Boolean doInsert, Id accId, Id contactId){
+
+		List<CommunicationLog__c> commLogList=new List<CommunicationLog__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CommunicationLog__c testCommLog=new CommunicationLog__c();
+			testCommLog.AccountID__c = accid;
+			testCommLog.ContactID__c = contactId;
+			testCommLog.Causale__c='testCausale';
+			testCommLog.Company__c='testCompany';
+			testCommLog.Cluster__c='testCluster';
+			testCommLog.CompanyOwner__c='TestCompOwner';
+			testCommLog.Fase__c='testFase';
+			testCommLog.Processo__c='testProcesso';
+			testCommLog.Stato__c='testStato';
+
+			commLogList.add(testCommLog);
+		}
+
+		if (doInsert){
+
+			insert commLogList;
+		}
+
+		return commLogList;
+	}
+
+	public static List<SBQQ__Subscription__c> createSubscription (Integer amount, Boolean doInsert, Id accountId, Id contractId, Id servicePointId) {
+
+		List<SBQQ__Subscription__c> subcriptionList = new List<SBQQ__Subscription__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SBQQ__Subscription__c subscription = new SBQQ__Subscription__c(
+				SBQQ__Account__c = accountId,
+				SBQQ__Contract__c = contractId,
+				ServicePoint__c = servicePointId,
+				SBQQ__Quantity__c = 1.0
+			);
+
+			subcriptionList.add(subscription);
+		}
+
+		if (doInsert){
+
+			insert subcriptionList;
+		}
+
+		return subcriptionList;
+
+	}
+
+	public static List<CS_SelezioneFornitura__c> createSelezioneFornitura(Integer amount, Boolean doInsert) {
+
+		List<CS_SelezioneFornitura__c> selezioneList = new List<CS_SelezioneFornitura__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CS_SelezioneFornitura__c selezione = new CS_SelezioneFornitura__c(
+				Name = 'selezioneTestName'
+			);
+
+			selezioneList.add(selezione);
+		}
+
+		if (doInsert){
+
+			insert selezioneList;
+		}
+
+		return selezioneList;
+	}
+
+	public static List<CommercialCode__c> createCommCode(Integer amount, Boolean doInsert) {
+
+		List<CommercialCode__c> commCodeList = new List<CommercialCode__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CommercialCode__c commCode = new CommercialCode__c(
+				Name = 'testCommCode'
+			);
+
+			commCodeList.add(commCode);
+		}
+
+		if (doInsert){
+
+			insert commCodeList;
+		}
+
+		return commCodeList;
 	}
 }
