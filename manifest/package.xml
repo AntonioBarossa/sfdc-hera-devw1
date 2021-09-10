@@ -7,6 +7,8 @@
 		<members>HDT_QR_MassiveLoaderRequest</members>
 		<members>HDT_SRV_MassiveLoaderRequest</members>
 		<members>HDT_UTL_ProcessExecution</members>
+		<members>HDT_UTL_ProcessTakeOver</members>
+		
 		<name>ApexClass</name>
 	</types>
 	<types>
@@ -22,7 +24,6 @@
 	</types>
 	<types>
 		<members>HDT_MassiveLoaderProcess__mdt-HDT Massive Loader Process Layout</members>
-		<members>MassiveLoaderRequestItem__c-Massive Loader Request Request Item Layout</members>
 		<members>MassiveLoaderRequest__c-Richiesta Caricatore Massivo Layout</members>
 		<name>Layout</name>
 	</types>
