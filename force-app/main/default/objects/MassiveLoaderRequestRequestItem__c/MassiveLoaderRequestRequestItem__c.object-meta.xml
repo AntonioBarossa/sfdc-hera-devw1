@@ -156,9 +156,10 @@
     <gender>Feminine</gender>
     <label>Elemento Della Richiesta</label>
     <nameField>
+        <displayFormat>ITM-{0000}</displayFormat>
         <label>Elemento Della Richiesta Name</label>
         <trackHistory>false</trackHistory>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Elementi Della Richiesta</pluralLabel>
     <searchLayouts></searchLayouts>
