@@ -55,7 +55,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         if(!result.incompatibilities.isEmpty()){
             compatibility = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
             HDT_SRV_ServiceRequest.deleteRecord(srvReq);
-        }else{
+        }
+        if(compatibility == '' || compatibility == order.OrderNumber){
             system.debug('extraParams: ' + extraParams);
 
             String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcessObject.get('recordType'));
