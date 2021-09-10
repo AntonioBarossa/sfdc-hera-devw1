@@ -17,7 +17,6 @@
 	</types>
 	<types>
 		<members>MassiveLoader</members>
-		<members>MassiveLoaderRequestRequestItem__c</members>
 		<members>MassiveLoaderRequest__c</members>
 		<name>CustomTab</name>
 	</types>
