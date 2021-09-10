@@ -154,13 +154,13 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
     <gender>Feminine</gender>
-    <label>Esito Caricamento</label>
+    <label>Richiesta di Caricamento</label>
     <nameField>
         <displayFormat>MLR-{00000000}</displayFormat>
         <label>Id Pratica</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Esito Caricamenti</pluralLabel>
+    <pluralLabel>Richieste di Caricamento</pluralLabel>
     <searchLayouts>
         <searchResultsAdditionalFields>ProcessType__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Phase__c</searchResultsAdditionalFields>
