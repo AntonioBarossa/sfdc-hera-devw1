@@ -129,11 +129,13 @@ public with sharing class HDT_SRV_ContactTst {
 
             srvContact.updateRecord(ctt);
 
+            Contact updatedCtt = [SELECT Id, FirstName FROM Contact WHERE FirstName='updateName'];
+
             Test.stopTest();
 
-            System.assertEquals('updateName', ctt.FirstName, 'Contact successfully updated');
+            System.assertEquals('updateName', updatedCtt.FirstName, 'Contact successfully updated');
 
-            System.assertNotEquals('test tester', ctt.FirstName, 'Contact was not updated');
+            System.assertNotEquals('test tester', updatedCtt.FirstName, 'Contact was not updated');
         }
     }
 
