@@ -766,6 +766,31 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
         }
 
+        // Info allegati al reclamo, se presenti.
+        HDT_QR_CaseValidations docQueryHandler = new HDT_QR_CaseValidations();
+        List<ContentDocumentLink> docList = docQueryHandler.getDocumentByCaseId(HDT_UTL_DocumentalManagement.getValue('Case', 'Id', 0, inputs, formParams));
+        if (!docList.isEmpty()) {
+            payloadSection += emptyLine;
+            String[] record = new List<String>();
+            record.add('00310');
+            record.add('120');
+            record.add('Insieme a questa lettera le inviamo i documenti indicati qui sotto:');
+            record.add(endLine);
+            payloadSection += String.join(record, div);
+
+            for (Integer i = 0; i < docList.size(); i++) {
+                ContentDocumentLink doc = docList[0];
+                if (doc.ContentDocument != null) {
+                    record = new List<String>();
+                    record.add('00310');
+                    record.add('120');
+                    record.add(String.valueOf(i + 1) + ') ' + doc.ContentDocument.title);
+                    record.add(endLine);
+                    payloadSection += String.join(record, div);
+                }
+            }
+        }
+
         // Info sulle date ricezione del reclamo (incluse sempre nella sezione 310|120)
         for (Integer i = 0; i < 4; i++) {
             payloadSection += emptyLine;
