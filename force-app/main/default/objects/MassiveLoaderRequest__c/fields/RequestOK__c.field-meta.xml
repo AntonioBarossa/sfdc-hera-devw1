@@ -4,11 +4,11 @@
     <externalId>false</externalId>
     <label>Numero Pratiche Con Esito Positivo</label>
     <summaryFilterItems>
-        <field>MassiveLoaderRequestRequestItem__c.Status__c</field>
+        <field>MassiveLoaderRequestItem__c.Status__c</field>
         <operation>equals</operation>
         <value>Chiuso</value>
     </summaryFilterItems>
-    <summaryForeignKey>MassiveLoaderRequestRequestItem__c.MassiveLoaderRequest__c</summaryForeignKey>
+    <summaryForeignKey>MassiveLoaderRequestItem__c.MassiveLoaderRequest__c</summaryForeignKey>
     <summaryOperation>count</summaryOperation>
     <trackTrending>false</trackTrending>
     <type>Summary</type>
