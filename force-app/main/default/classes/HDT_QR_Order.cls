@@ -234,7 +234,8 @@ public inherited sharing class HDT_QR_Order {
             Contact__c, //HRAWRM-418
             OutgoingCreditCheckResult__c,
             IncomingCreditCheckResult__c,
-            CreditCheckDescription__c
+            CreditCheckDescription__c,
+            DocumentPackage__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -382,6 +383,7 @@ public inherited sharing class HDT_QR_Order {
             CIAccoutn__c,
             QuickQuote__c,
             ChamberCommerceRegistration__c,
+            DocumentPackage__c,
             Instance326__c,
             DocumentLow80__c,
             QualityCall__c,
