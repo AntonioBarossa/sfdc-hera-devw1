@@ -17,6 +17,7 @@ public inherited sharing class HDT_UTL_Case {
         Decimal powerRequested = inputs[0].powerRequested;
         String salesCompany = inputs[0].salesCompany;
         Case currentCase = inputs[0].currentCase;
+        String cancellationNote = inputs[0].cancellationNote;
         
 
         if(process == 'Voltura Tecnica'){
@@ -50,6 +51,13 @@ public inherited sharing class HDT_UTL_Case {
         {
             output.childCases = caseQr.getChildCasesReclamo(currentCase.Note__c, currentCase.Id);
         }
+        else if(process.equalsIgnoreCase('Annullamento'))
+        {
+            Datetime nowDate = Datetime.now();
+            String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+            output.cancellationNote = nowDateFormat + ': ' + cancellationNote;
+            
+        }
 
         outputs.add(output);
 
@@ -74,6 +82,8 @@ public inherited sharing class HDT_UTL_Case {
         public String salesCompany;
         @InvocableVariable
         public Case currentCase;
+        @InvocableVariable
+        public String cancellationNote;
 
 
     }
@@ -90,6 +100,8 @@ public inherited sharing class HDT_UTL_Case {
         public String isCompatible;
         @InvocableVariable
         public List<Case> childCases;
+        @InvocableVariable
+        public String cancellationNote;
 
     }
 

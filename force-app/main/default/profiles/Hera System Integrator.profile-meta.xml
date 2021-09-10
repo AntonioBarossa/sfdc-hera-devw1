@@ -12881,6 +12881,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.DocumentPackage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.DocumentReceiptDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30690,6 +30695,61 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Individual-Prototipo_2</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_CompetitivoScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_Competitivo</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_FaqScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_FAQ</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_FormazioneScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_Formazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_GenericoScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_Generico</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_GestionePraticheScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_GestionePratiche</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_NewsScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_News</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_PraticheDiScartoScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_PraticheDiScarto</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_SchedaComuneScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_SchedaComunce</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_Template</layout>
+        <recordType>Knowledge__kav.HDT_RT_Template</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_TroubleshootingDiFrontPrincipaleScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_TroubleshootingFrontPrincipale</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_TroubleshootingDiFrontSecondarioScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_TroubleshootingFrontSecondario</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_TroubleshootingReclamiPrincipaleScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiPrincipale</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_TroubleshootingReclamiSecondarioScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiSecondario</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Lead-Acquisizione Lead Layout</layout>
