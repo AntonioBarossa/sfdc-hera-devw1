@@ -13,7 +13,16 @@ public with sharing class HDT_SRV_PrescrizioneFatturaTst {
     
     
     //TESTS
-    
+    //execute
+    private static void executeTest(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - executeTest_ok';
+        
+        //SETUP
+        
+        
+    }
     
     
     
