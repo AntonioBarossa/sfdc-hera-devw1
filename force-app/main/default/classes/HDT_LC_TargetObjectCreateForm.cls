@@ -138,15 +138,15 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                             servicePo.SwitchInWinback__c = true;
                         }
                         else{
-                            servicePo.SwitchInWinback__c = false;
+                           // servicePo.SwitchInWinback__c = false;
                         }
                     }
                     else{
-                        servicePo.SwitchInWinback__c = false;
+                      //  servicePo.SwitchInWinback__c = false;
                     }
                 }
                 else{
-                    servicePo.SwitchInWinback__c = false;
+                  //  servicePo.SwitchInWinback__c = false;
                 }    
             }
         }
@@ -188,15 +188,15 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                         System.debug('******7:' + resp.result[0].status);
                     }
                     else{
-                        servicePo.SwitchInWinback__c = false;
+                      //  servicePo.SwitchInWinback__c = false;
                     }
                 }
                 else{
-                    servicePo.SwitchInWinback__c = false;
+                   // servicePo.SwitchInWinback__c = false;
                 }
             }
             else{
-                servicePo.SwitchInWinback__c = false;
+               // servicePo.SwitchInWinback__c = false;
             }
             
         

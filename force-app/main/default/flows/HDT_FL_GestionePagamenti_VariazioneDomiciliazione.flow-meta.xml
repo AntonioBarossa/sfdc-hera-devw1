@@ -447,21 +447,21 @@
             <name>Uguale_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>IbanABI_CC</leftValueReference>
+                <leftValueReference>GetCaseAggiornato2.IbanABI__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>CaseInput.BillingProfile__r.IbanABI__c</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>IbanCAB_CC</leftValueReference>
+                <leftValueReference>GetCaseAggiornato2.IbanCAB__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>CaseInput.BillingProfile__r.IbanCAB__c</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>IbanContoCorrente_CC</leftValueReference>
+                <leftValueReference>GetCaseAggiornato2.IbanCodeNumber__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>CaseInput.BillingProfile__r.IbanCodeNumber__c</elementReference>
@@ -900,6 +900,13 @@
                     <stringValue>Cambio Conto</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato2.IbanIsForeign__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>GetAbiCode</targetReference>
             </connector>
@@ -915,6 +922,13 @@
                     <stringValue>Cambio Banca</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato2.IbanIsForeign__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>GetAbiCode_0</targetReference>
             </connector>
@@ -928,6 +942,13 @@
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Cambio da Click</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato2.IbanIsForeign__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1513,7 +1534,7 @@
             <inputParameters>
                 <name>isPrevious</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1582,7 +1603,7 @@
             <inputParameters>
                 <name>isPrevious</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1651,7 +1672,7 @@
             <inputParameters>
                 <name>isPrevious</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1720,7 +1741,7 @@
             <inputParameters>
                 <name>isPrevious</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>

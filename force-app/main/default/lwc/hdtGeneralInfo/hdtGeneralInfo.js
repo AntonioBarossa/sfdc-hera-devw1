@@ -98,7 +98,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.saleContactRoles = '';
             getSaleContactRole({ accountId: this.saleRecord.Account__c, contactId: event.target.value }).then(data => {
 
-                if (data[0].Roles !== undefined) {
+                if (data.length>0 && data[0].Roles !== undefined) {
                     this.saleContactRoles = data[0].Roles;
                     this.template.querySelector('[data-name="SalesContactRole__c"]').value = this.saleContactRoles;
                     this.dataToSubmit['SalesContactRole__c'] = this.saleContactRoles;
