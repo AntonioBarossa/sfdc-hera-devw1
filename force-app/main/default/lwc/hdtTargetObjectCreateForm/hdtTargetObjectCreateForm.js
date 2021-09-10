@@ -308,7 +308,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 required: mapFieldReq.get(element),
                                 value: this.servicePointRetrievedData[element],
                                 disabled: !(this.servicePointRetrievedData[element] == null && mapFieldReq.get(element))
-                            }
+                            } 
                         )
                     } else {
                         var readonlyfields = ['CommoditySector__c','ServicePointCode__c','SAPImplantCode__c','MeterStatus__c'];
