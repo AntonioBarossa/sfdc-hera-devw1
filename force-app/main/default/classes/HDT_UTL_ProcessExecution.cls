@@ -1,9 +1,24 @@
 public without sharing virtual class HDT_UTL_ProcessExecution {
-    public void checks(){}
-    public void getRecords(){}
-    public void registryCreation(){}
-    public void postSalesCreation(){}
-    public void finalUpdate(){}
+    private static HDT_QR_StaticResource staticResourceQr = new HDT_QR_StaticResource();
+
+    public virtual void checks(){}
+    public virtual void getRecords(){}
+    public virtual void registryCreation(){}
+    public virtual void postSalesCreation(){}
+    public virtual void finalUpdate(){}
+
+
+    public Map<Integer,String> getTemplateHeader(String process){
+        System.debug('HDT_UTL_ProcessExecution.getTemplateHeader: '+process);
+        List<StaticResource> staticResources = staticResourceQr.getRecordByName(process);
+        Map<Integer, String> mapHeaderByPosition = new Map<Integer, String>();
+        Integer count=0;
+        for (String temp : staticResources.get(0).Body.toString().split(',')) {
+            mapHeaderByPosition.put(count,temp);
+            count++;
+        }
+        return mapHeaderByPosition ;
+    }
 
    public class HDT_WRP_ProcessEntities{
         Account               currentAccount         ;
