@@ -101,6 +101,13 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
         this.dispatchEvent(event);
       }
     });
+    //Start  HRAWRM-544 10-09-2021
+    console.log('surveysize: '+this.surveys.length);
+    const selectedEvent = new CustomEvent("surveysize", {
+      detail: this.surveys.length
+    });
+    this.dispatchEvent(selectedEvent);
+    //End  HRAWRM-544 10-09-2021
   }
 
   @wire(getCampaignIdAndContactIdByMember, { campaignMemberId: '$recordId' }) campaign({ error, data }) {
@@ -233,7 +240,7 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
       );
     }
   }
-
+  
   closeModal() {
     this.showModal = false;
   }
