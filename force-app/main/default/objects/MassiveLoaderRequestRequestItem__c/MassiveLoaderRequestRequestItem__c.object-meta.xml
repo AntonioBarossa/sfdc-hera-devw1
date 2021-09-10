@@ -154,13 +154,13 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <gender>Feminine</gender>
-    <label>Massive Loader Request Request Item</label>
+    <label>Elemento Della Richiesta</label>
     <nameField>
         <label>MassiveLoaderRequestRequestItem Name</label>
         <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Massive Loader Request Request Item</pluralLabel>
+    <pluralLabel>Elementi Della Richiesta</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
