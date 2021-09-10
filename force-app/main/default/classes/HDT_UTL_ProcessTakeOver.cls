@@ -1,5 +1,5 @@
 public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExecution {
-   private HDT_WRP_ProcessEntities currentProcess=new HDT_WRP_ProcessEntities();
+   private HDT_WRP_ProcessEntities currentProcess;
    private MassiveLoaderRequestRequestItem__c myRequestItem;
    private Map<Integer,String> mapHeaderByPosition;
 
@@ -9,6 +9,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             throw new HDT_WRP_ProcessEntitiesException('Null Pointer Exceptions','varRequestItem can\'t be null');
         } 
         this.myRequestItem=varRequestItem;   
+        currentProcess=new HDT_WRP_ProcessEntities();
    }
 
     public override void registryCreation(){
@@ -39,12 +40,13 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         if ( String.isNotBlank( myRequestItem.Data__c)) {
             mapHeaderByPosition=getTemplateHeader('Subentro');
             Integer count=0;
+           
             for (String tempField : myRequestItem.Data__c.split(',')) {
               
                 if (mapAccountFields.get(mapHeaderByPosition.get(count))!=null) {
                     // Account
                     System.debug('column N° :'+count+' FieldapiName : '+mapAccountFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
-
+                    currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),tempField);
                 }
               
                
