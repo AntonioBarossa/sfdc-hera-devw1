@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 30/06/2021
+* @description Class HDT_SRV_CampaignMember
+* @history Keltin Mesonjesi – 30/06/2021 – Created class
+*/
 public inherited sharing class HDT_SRV_CampaignMember {
     
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();

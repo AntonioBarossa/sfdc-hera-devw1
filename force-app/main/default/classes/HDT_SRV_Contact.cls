@@ -1,3 +1,10 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 19/11/2020
+ * @description HDT_SRV_Contact Class
+ * @history Keltin Mesonjesi 19/11/2020 – Created 'createAccountShare' method
+ */
+
 public inherited sharing class HDT_SRV_Contact {
 
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();

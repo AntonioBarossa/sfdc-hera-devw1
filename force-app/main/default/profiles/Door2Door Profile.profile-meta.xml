@@ -4160,6 +4160,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Order.DocumentPackage__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.DocumentReceiptDate__c</field>
         <readable>false</readable>
     </fieldPermissions>
