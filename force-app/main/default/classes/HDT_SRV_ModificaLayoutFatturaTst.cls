@@ -39,8 +39,6 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         ///AUTORIZZARE CAMBI DI FASE SUL CASE
         Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
         HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', rt, 'HDT_RT_Morosita');
-        //HDT_UTL_DataFactoryTst.newPhaseTransition('Errore Lavorazione SAP', 'Bozza', rt, 'HDT_RT_Morosita');
-        
         
         //TESTING
         String method_OK = 'ModificaLayoutFattura';//NOTA: in verità è endpoint.
