@@ -20,5 +20,11 @@
 		<members>MassiveLoaderRequest__c</members>
 		<name>CustomTab</name>
 	</types>
+	<types>
+		<members>HDT_MassiveLoaderProcess__mdt-HDT Massive Loader Process Layout</members>
+		<members>MassiveLoaderRequestRequestItem__c-Massive Loader Request Request Item Layout</members>
+		<members>MassiveLoaderRequest__c-Richiesta Caricatore Massivo Layout</members>
+		<name>Layout</name>
+	</types>
 	<version>51.0</version>
 </Package>
