@@ -16,7 +16,7 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
     @api objectApiName;
     data = [];
     columns = columns;
-    parentOrderId;
+    @track parentOrderId;
     @track sendMode;
     @track signMode;
     @track email;
@@ -24,6 +24,19 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
     @track address;
     @track dataLoaded=false;
     @track showSpinner = false;
+
+    get targetId(){
+        let targetId = '';
+
+        if(this.objectApiName && this.objectApiName.localeCompare('Order') === 0 && this.parentOrderId != null){
+            targetId = this.parentOrderId;
+        }else{
+            targetId = this.recordId;
+        }
+
+        console.log('target id: ' + targetId);
+        return targetId;
+    }
 
     connectedCallback(){
         console.log(this.recordId + ' ' + this.objectApiName);
@@ -85,12 +98,7 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
     handlePreview(){
         try{
             this.showSpinner = true;
-            let targetId = '';
-            if(this.objectApiName && this.objectApiName.localeCompare('Order') === 0){
-                targetId = this.parentOrderId;
-            }else{
-                targetId = this.recordId;
-            }
+            let targetId = this.targetId;
 
             const formParams = {
                 mode : 'Preview',
