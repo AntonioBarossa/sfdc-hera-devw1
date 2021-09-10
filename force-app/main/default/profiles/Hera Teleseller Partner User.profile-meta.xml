@@ -32395,8 +32395,7 @@
         <object>SurveyResponse__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions> <!--End  HRAWRM-546 10/09/2021  -->
-
-    </objectPermissions>
+    <objectPermissions>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
