@@ -162,7 +162,7 @@ public with sharing class HDT_LC_MassiveLoader {
         System.debug('selectedProcessName: '+selectedProcessName );
         System.debug('massiveLoaderRequestId: '+massiveLoaderRequestId );
         Map<String, Object> response = new Map<String, Object>();
-
+        List<MassiveLoaderRequestRequestItem__c> listRequestItem = new List<MassiveLoaderRequestRequestItem__c>();
         try {
 
             HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(selectedProcessName);
@@ -190,7 +190,14 @@ public with sharing class HDT_LC_MassiveLoader {
                             parsingError = true;
                             break;
                         }
-
+                       if (fileLines>0) {
+                        //no header
+                        MassiveLoaderRequestRequestItem__c tempRequestItem=new MassiveLoaderRequestRequestItem__c();
+                        tempRequestItem.Data__c                 =   fileRow;
+                        tempRequestItem.MassiveLoaderRequest__c =   massiveLoaderRequestId;
+                        listRequestItem.add(tempRequestItem);
+                       }
+                       
                         fileLines ++;
                         
                     }
@@ -210,6 +217,9 @@ public with sharing class HDT_LC_MassiveLoader {
                                                                                       Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO);
                                                                                       
                         massiveLoaderRequestSrv.updateRequestRecord(new List<MassiveLoaderRequest__c>{request});
+                        if (listRequestItem!=null && listRequestItem.size()>0) {
+                            insert listRequestItem;
+                        }
 
                         response.put('error', false);
 
