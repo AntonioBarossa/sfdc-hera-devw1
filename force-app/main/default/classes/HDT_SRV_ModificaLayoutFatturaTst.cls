@@ -101,7 +101,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         //ASSERTS
         System.assert(result.success);
         System.assertEquals('OK', result.message);
-        System.assertEquals('Completata', myCase.Phase__c);//TODO: 'Errore Lavorazione SAP'
+        System.assertEquals('Errore Lavorazione SAP', myCase.Phase__c);//TODO: 'Errore Lavorazione SAP'
         
     }
     
@@ -141,7 +141,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         //ASSERTS
         System.assert(result.success);
         System.assertEquals('OK', result.message);
-        System.assertEquals('Completata', myCase.Phase__c);//TODO: 'Errore Lavorazione SAP'
+        System.assertEquals('Errore Lavorazione SAP', myCase.Phase__c);//TODO: 'Errore Lavorazione SAP'
         
     }
     
