@@ -206,6 +206,12 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
           console.log("ok" + JSON.stringify(data));
           //close the modal
           this.showModal = false; //HRAWRM-544 extra Bolzon
+          const event = new ShowToastEvent({
+            message: 'Survey salvata con successo!',
+            variant: 'success',
+            mode: 'dismissable'
+          });
+          this.dispatchEvent(event);
           //navigate to new created SurveyResponse
           // this[NavigationMixin.Navigate]({
           //   type: 'standard__recordPage',
