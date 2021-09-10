@@ -22,11 +22,14 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
             return creaCheckLastReadingsResponse(request);
         }else if(endpoint.containsIgnoreCase('Callout:ModificaLayoutFattura')){
             return creaModificaLayoutFatturaResponse(request);
+        }else if(endpoint.containsIgnoreCase('Callout:ModificaLayoutFattura_null')){
+            return creaModificaLayoutFatturaResponseNull(request);
+        }else if(endpoint.containsIgnoreCase('Callout:ModificaLayoutFattura_notOK')){
+            return creaModificaLayoutFatturaResponseNotOK(request);
         }else{
             return creaRicResponse(request);
         }
     }
-    
     
     public static HttpResponse creaRicResponse(HTTPRequest request){
         HttpResponse response = new HttpResponse();
@@ -182,9 +185,9 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         //TODO: TESTARE ANCHE ELSE SU ATTIVITà
         
         HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
-        bodyResp.status;
-        bodyResp.correlationId;
-        bodyResp.timestamp; 
+        bodyResp.status = '';
+        bodyResp.correlationId = '';
+        bodyResp.timestamp = '';
         bodyResp.data = wrpDATA;//TODO: TESTARE ANCHE ELSE SU .data
         
         
@@ -198,5 +201,51 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         return response;
     }
     
+    public static HttpResponse creaModificaLayoutFatturaResponseNull(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaModificaLayoutFatturaResponseNull');
+        HttpResponse response = new HttpResponse();
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
+        bodyResp.status = '';
+        bodyResp.correlationId = '';
+        bodyResp.timestamp = '';
+        bodyResp.data = null;
+        
+        
+        String bodyResponse = JSON.serialize(bodyResp);
+        
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
+    
+    public static HttpResponse creaModificaLayoutFatturaResponseNotOK(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaModificaLayoutFatturaResponseNotOK');
+        HttpResponse response = new HttpResponse();
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
+        wrpDATA.rds = '';
+        wrpDATA.attivita = 'Test';
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
+        bodyResp.status = '';
+        bodyResp.correlationId = '';
+        bodyResp.timestamp = '';
+        bodyResp.data = wrpDATA;
+        
+        String bodyResponse = JSON.serialize(bodyResp);
+        
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
     
 }

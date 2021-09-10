@@ -24,7 +24,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
     
     
     @isTest
-    private static void executeTest() {
+    private static void executeTest_ok() {
         
         //DEBUG
         String debugString = 'HDT_SRV_ModificaLayoutFatturaTst - executeTest';
@@ -38,14 +38,14 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         ///AUTORIZZARE CAMBI DI FASE SUL CASE
         Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
         HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', rt, 'HDT_RT_Morosita');
-        HDT_UTL_DataFactoryTst.newPhaseTransition('Errore Lavorazione SAP', 'Bozza', rt, 'HDT_RT_Morosita');
+        //HDT_UTL_DataFactoryTst.newPhaseTransition('Errore Lavorazione SAP', 'Bozza', rt, 'HDT_RT_Morosita');
         
         
         //TESTING
         String method_OK = 'ModificaLayoutFattura';//NOTA: in verità è endpoint.
         String method_dataNull = 'ModificaLayoutFattura_null';//NOTA: in verità è endpoint.
         String method_notOK = 'ModificaLayoutFattura_notOK';//NOTA: in verità è endpoint.
-
+        
         Case obj = [SELECT Id, CaseNumber, ContractCode__c, ElementDetail__c FROM Case];
         System.debug(debugString + ' - case obj: ' + obj);
         
@@ -53,8 +53,16 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         argsMap.put('method', method_OK);
         argsMap.put('sender', obj);
         
+        HDT_SRV_ModificaLayoutFattura myObjectToTest = new HDT_SRV_ModificaLayoutFattura();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) myObjectToTest.execute(argsMap);
         
+        //RETRIEVING DATA
+        Case myCase = [SELECT Id, Phase__c FROM Case];
         
+        //ASSERTS
+        System.assert(result.success);
+        System.assertEquals('OK', result.message);
+        System.assertEquals('Completata', myCase.Phase__c);//TODO: 'Errore Lavorazione SAP'
         
     }
     
