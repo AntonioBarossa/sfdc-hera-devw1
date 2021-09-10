@@ -512,7 +512,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
 
     public static Map<String,Map<String,List<String>>> mapAccountStatementFilter = new Map<String,Map<String,List<String>>>
     { 
-    'Context' => new Map<String,List<String>>
+    'ComunicazionePagamento' => new Map<String,List<String>>
         {
             'Context__c' => new List<String>
                 {'EC1L','InstallmentsView'}
