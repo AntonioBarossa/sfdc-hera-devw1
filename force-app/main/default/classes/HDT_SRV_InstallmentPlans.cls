@@ -250,7 +250,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
     private String formattingErrorMessage(String errorMessage, String fieldLabel, Object criteriaField, Object ruleField){
         String fineTuningCriteria = '';
         String fineTuningRule = '';
-        if(errorMessage.indexOf(fieldLabel) > -1 || fieldLabel.containsIgnoreCase('CA con')){
+        if(errorMessage.indexOf(fieldLabel) > -1 || fieldLabel.containsIgnoreCase('Domiciliato')){
             //Skip 
         } else {
             if(criteriaField instanceOf Boolean && Boolean.valueOf(criteriaField) == true){
