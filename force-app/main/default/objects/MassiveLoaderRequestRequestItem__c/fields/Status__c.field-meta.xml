@@ -31,6 +31,30 @@
                 <default>false</default>
                 <label>Errore</label>
             </value>
+            <value>
+                <fullName>Done</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Done</label>
+            </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Error</label>
+            </value>
+            <value>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>In Progress</label>
+            </value>
+            <value>
+                <fullName>Ready To Run</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ready To Run</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

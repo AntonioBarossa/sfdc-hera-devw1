@@ -14,5 +14,11 @@
 		<members>MassiveLoaderRequest__c</members>
 		<name>CustomObject</name>
 	</types>
+	<types>
+		<members>MassiveLoader</members>
+		<members>MassiveLoaderRequestRequestItem__c</members>
+		<members>MassiveLoaderRequest__c</members>
+		<name>CustomTab</name>
+	</types>
 	<version>51.0</version>
 </Package>
