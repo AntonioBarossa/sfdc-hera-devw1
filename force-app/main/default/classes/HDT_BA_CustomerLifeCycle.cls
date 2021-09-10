@@ -12,7 +12,7 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
     private static Date today = Date.today();
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
-        String query = 'SELECT' +
+        String query = 'SELECT ' +
                 'Id,' +
                 'ActiveServicesEle__c,' +
                 'ActiveServicesGas__c,' +
@@ -27,7 +27,7 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
                 'CustomerLifeCycleVAS__c,' +
                 'CustomerLifeCycleWaste__c,' +
                 'CustomerLifeCycleWater__c' +
-            'FROM Account'
+            ' FROM Account'
         ;
         return Database.getQueryLocator(query);
     }
@@ -47,6 +47,7 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
         for(Contract contract : [
             SELECT
                 Id,
+                AccountId,
                 (SELECT Id FROM Assets__r WHERE Product2.family = 'VAS Prodotto'),
                 (SELECT Id FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.family in ('VAS Fatturabili','VAS Servizio')),
                 CustomerSignedDate,
@@ -69,7 +70,7 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
                 processedAccountMap.put(contract.AccountId, account);
             }
 
-            if(contract.EndDate >= today) {
+            if(contract.EndDate <= today) {
                 status = 'LOST';
             } else if(isEnergy(commodity) && (caseMap.get(contract.Id).CancellationRequestDate__c <= today)) {
                 status = 'LEAVING';
