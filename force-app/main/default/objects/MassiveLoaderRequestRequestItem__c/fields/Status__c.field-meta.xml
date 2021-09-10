@@ -2,8 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Status__c</fullName>
     <externalId>false</externalId>
-    <label>Stato</label>
+    <label>Status</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -26,9 +27,9 @@
                 <label>Chiuso</label>
             </value>
             <value>
-                <fullName>In attesa di lavorazione</fullName>
+                <fullName>Errore</fullName>
                 <default>false</default>
-                <label>In attesa di lavorazione</label>
+                <label>Errore</label>
             </value>
         </valueSetDefinition>
     </valueSet>

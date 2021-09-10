@@ -23,7 +23,7 @@ public with sharing class HDT_LC_MassiveLoader {
 
     @AuraEnabled
     public static Map<String, Object> getCsvBody(String selectedProcessName) {
-
+        System.debug('HDT_LC_MassiveLoader.getCsvBody : '+selectedProcessName);
         Map<String, Object> response = new Map<String, Object>();
         
         try {
@@ -156,7 +156,11 @@ public with sharing class HDT_LC_MassiveLoader {
 
     @AuraEnabled
     public static Map<String, Object> checkCsv(String fileName, String contentVersionId, String selectedProcessName, String massiveLoaderRequestId){
-
+        System.debug('HDT_LC_MassiveLoader.checkCsv');
+        System.debug('fileName: '+fileName);
+        System.debug('contentVersionId: '+contentVersionId);
+        System.debug('selectedProcessName: '+selectedProcessName );
+        System.debug('massiveLoaderRequestId: '+massiveLoaderRequestId );
         Map<String, Object> response = new Map<String, Object>();
 
         try {
@@ -201,7 +205,7 @@ public with sharing class HDT_LC_MassiveLoader {
                     } else {
                         
                         MassiveLoaderRequest__c request = new MassiveLoaderRequest__c(Id = massiveLoaderRequestId, 
-                                                                                      TotalRequest__c = fileLines,
+                                                                                      TotalRequest__c = fileLines-1,
                                                                                       Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE, 
                                                                                       Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO);
                                                                                       
