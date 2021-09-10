@@ -205,16 +205,16 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
         updateCampaignMemberSurveyResponse({ campaignMemberId: this.recordId, surveyResponseId: response.Id }).then(data => {
           console.log("ok" + JSON.stringify(data));
           //close the modal
-          this.showModal = false;
+          this.showModal = false; //HRAWRM-544 extra Bolzon
           //navigate to new created SurveyResponse
-          this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
-            attributes: {
-              recordId: response.Id,
-              objectApiName: 'SurveyResponse__c',
-              actionName: 'view'
-            },
-          });
+          // this[NavigationMixin.Navigate]({
+          //   type: 'standard__recordPage',
+          //   attributes: {
+          //     recordId: response.Id,
+          //     objectApiName: 'SurveyResponse__c',
+          //     actionName: 'view'
+          //   },
+          // });//HRAWRM-544 extra
         }).catch(err => {
           console.log(err.body.message);
         });
