@@ -26,6 +26,10 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>HDT_LC_ReportNavigatorController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_TRH_Case</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -3811,6 +3815,11 @@
         <field>CampaignEasyCIM__c.MacroActivity__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions><!--UAT Lorenzo 09/09/2021 -->
+        <editable>true</editable>
+        <field>CampaignMember.isWsBollettaInvoked__c</field>
+        <readable>true</readable>
+    </fieldPermissions><!--UAT Lorenzo 09/09/2021 -->
     <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMember.Agency__c</field>
@@ -12877,6 +12886,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.DocumentLow80__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.DocumentPackage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

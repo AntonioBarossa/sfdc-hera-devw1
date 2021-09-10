@@ -38,7 +38,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     get isCreditCheckVisible(){
-        return this.order.Step__c === 2 && 
+        return this.order.Step__c >= 2 && 
         (
             this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
@@ -525,11 +525,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             console.log(JSON.parse(JSON.stringify(result)));
 
             if(result.status == 'failed'){
+                let message = Object.values(result.errorDetails[0].message).reduce((testoFinale, elem ,index, array)=>{
+                    return `${testoFinale}\n${elem}`;
+                }, result.errorDetails[0].code);
                 let toastErrorMessage = new ShowToastEvent({
                     title: 'CreditCheck KO',
-                    message: result.errorDetails[0].code + ' ' + JSON.stringify(result.errorDetails[0].message),
+                    message: message,
                     variant: 'warning', 
-                    mode:'dismissible'
+                    mode:'sticky'
                 });
                 this.dispatchEvent(toastErrorMessage);
                 //throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}

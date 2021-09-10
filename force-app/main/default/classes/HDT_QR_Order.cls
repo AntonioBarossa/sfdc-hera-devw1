@@ -198,7 +198,8 @@ public inherited sharing class HDT_QR_Order {
             Market__c,                                      // @Picchiri 26/05/21
             MarketOrigin__c,                                // @Picchiri 27/05/21
             VoltageLevel__c,                                // @Picchiri 27/05/21 
-            SupplyType__c,                                  // @Picchiri 27/05/21 
+            SupplyType__c,
+            supplyTypeTechnical__c,                                  // @Picchiri 27/05/21 
             CreatedById,                                    // @Picchiri 31/05/21 
             Account.CustomerCode__c,                        // @Picchiri 31/05/21             
             Account.CustomerMarking__c,                     // @Picchiri 31/05/21             
@@ -233,7 +234,8 @@ public inherited sharing class HDT_QR_Order {
             Contact__c, //HRAWRM-418
             OutgoingCreditCheckResult__c,
             IncomingCreditCheckResult__c,
-            CreditCheckDescription__c
+            CreditCheckDescription__c,
+            DocumentPackage__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -381,6 +383,7 @@ public inherited sharing class HDT_QR_Order {
             CIAccoutn__c,
             QuickQuote__c,
             ChamberCommerceRegistration__c,
+            DocumentPackage__c,
             Instance326__c,
             DocumentLow80__c,
             QualityCall__c,

@@ -176,7 +176,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Compatibilita</targetReference>
+            <targetReference>BillingProfileInput</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -921,6 +921,38 @@
                 <targetReference>Selezione_Fornitura_Notifiche_0</targetReference>
             </connector>
             <label>Arricchimento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>BillingProfileInput</name>
+        <label>BillingProfileInput?</label>
+        <locationX>1238</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Account</defaultConnectorLabel>
+        <rules>
+            <name>Innesco_da_BillingProfile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>BillingProfileId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>BillingProfileId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue/>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Compatibilita</targetReference>
+            </connector>
+            <label>BillingProfile</label>
         </rules>
     </decisions>
     <decisions>
@@ -1772,7 +1804,7 @@
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
         <locationX>1238</locationX>
-        <locationY>878</locationY>
+        <locationY>1094</locationY>
         <defaultConnector>
             <targetReference>SubFlowGestionePagamenti</targetReference>
         </defaultConnector>
@@ -7112,8 +7144,8 @@
     <subflows>
         <name>Compatibilita</name>
         <label>Compatibilita</label>
-        <locationX>1238</locationX>
-        <locationY>758</locationY>
+        <locationX>1106</locationX>
+        <locationY>878</locationY>
         <connector>
             <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
@@ -8178,7 +8210,7 @@
         <name>SubFlowGestionePagamenti</name>
         <label>SubFlow Gestione Pagamenti</label>
         <locationX>1370</locationX>
-        <locationY>998</locationY>
+        <locationY>1214</locationY>
         <flowName>HDT_FL_GestionePagamenti</flowName>
         <inputAssignments>
             <name>createDocuments</name>
