@@ -32386,8 +32386,8 @@
         <object>SurveyCRM__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <objectPermissions> <!--HRAWRM-546 -->
-        <allowCreate>true</allowCreate>
+    <objectPermissions><!--Start  HRAWRM-546 10/09/2021  -->
+        <allowCreate>true</allowCreate> 
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
