@@ -673,7 +673,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         }).then((response) => {
                             console.log("LOG15");
                             const event = new ShowToastEvent({
-                                message: 'Account '+response.name+' creato con successo!',
+                                message: 'Account creato con successo!', // ambiguita in caso si creano due account //? In accordo con lorenzo viene rimosso il Nome dell Account
                                 variant: 'success',
                                 mode: 'dismissable'
                             });
@@ -760,7 +760,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         accountAddress: this.fieldsToUpdate
                     }).then((response) => {
                         const event = new ShowToastEvent({
-                            message: 'Account '+response.name +' creato con successo!',
+                            message: 'Account creato con successo!', // ambiguita in caso si creano due account //? In accordo con lorenzo viene rimosso il Nome dell Account
                             variant: 'success',
                             mode: 'dismissable'
                         });
