@@ -21,6 +21,7 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
   @track contactId;
   @track results;
   connectedCallback() {
+    this.imgShow();//HRAWRM-544 10-09-2021
     if (this.objectApiName == "campaignmember") {
       this.isCampaignMember = true;
     }
@@ -87,6 +88,7 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
             this.surveys.push({ "surveyQuestions": surveyQuestions, "id": 0 });
           //}
           console.log("ECCOLO:" + JSON.stringify(this.surveys));
+          this.imgShow();//HRAWRM-544 10-09-2021
          // this.showModal = !this.isCampaignMember;
         }
       } else if (error) {
@@ -101,15 +103,16 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
         this.dispatchEvent(event);
       }
     });
-    //Start  HRAWRM-544 10-09-2021
-    console.log('surveysize: '+this.surveys.length);
-    const selectedEvent = new CustomEvent("surveysize", {
-      detail: this.surveys.length
-    });
-    this.dispatchEvent(selectedEvent);
-    //End  HRAWRM-544 10-09-2021
-  }
 
+  }
+  imgShow(){
+     //Start  HRAWRM-544 10-09-2021
+     console.log('surveySize: '+this.surveys.length);
+     const selectedEvent = new CustomEvent("surveysize", {
+     detail: this.surveys.length});
+     this.dispatchEvent(selectedEvent);
+     //End  HRAWRM-544 10-09-2021
+  }
   @wire(getCampaignIdAndContactIdByMember, { campaignMemberId: '$recordId' }) campaign({ error, data }) {
     if (data) {
       this.campaignId = data.CampaignId;
