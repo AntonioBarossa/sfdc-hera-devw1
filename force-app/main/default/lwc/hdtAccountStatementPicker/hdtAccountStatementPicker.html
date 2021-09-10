@@ -24,7 +24,15 @@
                         variant="label-stacked"
                     ></lightning-input>
                     </div>
-                    <div class="slds-col slds-size_1-of-4"></div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input 
+                        type="number"
+                        label="Totale Residuo Fatture Selezionate"
+                        value={documentResiudal}
+                        disabled="true"
+                        variant="label-stacked"
+                    ></lightning-input>
+                    </div>
                     <div class="slds-col slds-size_1-of-4"></div>
                 </div>
                 <template if:true={documents}>
