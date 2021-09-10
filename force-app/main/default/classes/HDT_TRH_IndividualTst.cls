@@ -1,8 +1,8 @@
 /**
 * @author Luis Bispo (luis.bispo@engdb.com.br)
-* @date 01/09/2021
-* @description HDT_QR_UserQueriesWithoutSharing for Test Classes
-* @history Luis Bispo – 01/09/2021 – Created class
+* @date 10/09/2021
+* @description HDT_TRH_IndividualTst for Test Classes
+* @history Luis Bispo – 10/09/2021 – Created class
 */
 @isTest
 public with sharing class HDT_TRH_IndividualTst {
