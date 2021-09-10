@@ -13,8 +13,8 @@
 
         <div slot="actions">
             <lightning-button-group>
-                <lightning-button label="Conferma selezione" name="confirmSelected" onclick={openConfirmation} variant="neutral" icon-name="utility:multi_select_checkbox" ></lightning-button>
-                <lightning-button label="Conferma filtro" name="confirmFilter" onclick={openConfirmation} variant="neutral" icon-name="utility:filterList" ></lightning-button>
+                <lightning-button disabled label="Conferma selezione" name="confirmSelected" onclick={openConfirmation} variant="neutral" icon-name="utility:multi_select_checkbox" ></lightning-button>
+                <lightning-button disabled label="Conferma filtro" name="confirmFilter" onclick={openConfirmation} variant="neutral" icon-name="utility:filterList" ></lightning-button>
                 <lightning-button label="Conferma catalogo" name="confirmAll" onclick={openConfirmation} variant="neutral" icon-name="utility:database"></lightning-button>
                 <lightning-button label="Chiudi" name="closeModal" onclick={openConfirmation} variant="neutral" icon-name="utility:close"></lightning-button>
             </lightning-button-group>
@@ -82,8 +82,9 @@
                             key-field="id"
                             data={data}
                             columns={columns}
+                            onrowselection={getSelectedRow}
                     ></lightning-datatable>
-                    <!--onrowselection={getSelectedRow}-->
+                    <!---->
                 </div> 
             </div>
         </div>

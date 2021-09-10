@@ -1,57 +1,37 @@
 public without sharing class HDT_BA_ProductAssociation implements Database.Batchable<sObject>, Database.Stateful {
 
-    //HDT_BA_ProductAssociation deepClone = new HDT_BA_ProductAssociation();
-    //Id batchId = Database.executeBatch(deepClone, 20);
-
-    public Integer recordsProcessed = 0;
-    public Map<String, String> errorCloneMap;
     public SBQQ__ProductOption__c productOptionToClone;
     public String queryString;
     public String batchType = '';
     public List<String> idList;
+    public String filterString;
 
-    // 1 - RUN BATCH FOR ALL PRODUCT2
-    public HDT_BA_ProductAssociation(SBQQ__ProductOption__c prodOptToClone){
-        productOptionToClone = prodOptToClone;//HDT_QR_ProductAssociation.getProductOptionRecordById(productOptionId);
-        List<String> familyList = HDT_SRV_ProductAssociation.getFamilyList();
-
-        queryString = 'SELECT Id ';
-        queryString += 'FROM Product2 ';
-        queryString += 'WHERE Status__c=\'In Sviluppo\' AND Family IN (\'' + String.join(familyList, '\',\'') + '\')';
-        batchType = 'all';
-    }
-
-    // 2 - RUN BATCH FOR SELECTED PRODUCT2 LIST
-    public HDT_BA_ProductAssociation(SBQQ__ProductOption__c prodOptToClone, List<String> productIdList){
-        //productOptionToClone = HDT_QR_ProductAssociation.getProductOptionRecordById(productOptionId);
+    public HDT_BA_ProductAssociation(String type, SBQQ__ProductOption__c prodOptToClone, List<String> productIdList, String filter){
         productOptionToClone = prodOptToClone;
         idList = productIdList;
-        batchType = 'select';
-    }
-
-    // 3 - RUN BATCH FOR PRODUCT2 TO FILTER WITH WHERE CONDITION
-    public HDT_BA_ProductAssociation(SBQQ__ProductOption__c prodOptToClone, String filterString){
-
-        productOptionToClone = prodOptToClone;//HDT_QR_ProductAssociation.getProductOptionRecordById(productOptionId);
-        //String whereCondition = '';//HDT_SRV_ProductAssociation.generateWhereCondition(filterString, 'AND');
-        queryString = 'SELECT Id ';
-        queryString += filterString;
-        batchType = 'filter';
+        batchType = type;
+        filterString = filter;
     }
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
+        queryString = 'SELECT Id ';
+
         switch on batchType {
             when 'select' {
-                queryString = 'SELECT Id ';
+                // 1 - RUN BATCH FOR SELECTED PRODUCT2 LIST
                 queryString += 'FROM Product2 ';
                 queryString += 'WHERE Id IN :idList';
             }
             when 'all' {
-                
+                // 2 - RUN BATCH FOR ALL PRODUCT2
+                List<String> familyList = HDT_UTL_ProductAssociation.getFamilyList();
+                queryString += 'FROM Product2 ';
+                queryString += 'WHERE Status__c=\'In Sviluppo\' AND Family IN :familyList';
             }
             when 'filter' {
-                
+                // 3 - RUN BATCH FOR PRODUCT2 TO FILTER WITH WHERE CONDITION
+                queryString += filterString;
             }
         }
 
@@ -87,6 +67,8 @@ public without sharing class HDT_BA_ProductAssociation implements Database.Batch
 
     }
 
-    public void finish(Database.BatchableContext bc){}
+    public void finish(Database.BatchableContext bc){
+        //METHOD TO SEND EMAIL NOTIFICATION
+    }
 
 }

@@ -32,14 +32,6 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         confirmAllBody: '',
         confirmFilterTitle: '',
         confirmFilterBody: ''
-        //confirmSelectedTitle: 'Conferma i prodotti selezionati',
-        //confirmSelectedBody: 'Attenzione! il prodotto opzione verrà associato a tutti i prodotti selezionati.',
-        //closeTitle: 'Chiudi la ricerca',
-        //closeBody: 'Attenzione! Vuoi annullare l\'associazione dell\'opzione prodotto?',
-        //confirmAllTitle: 'Conferma tutti prodotti a sistema',
-        //confirmAllBody: 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti a catalogo, vuoi procedere?',
-        //confirmFilterTitle: 'Conferma tutti prodotti ottenuti dal filtro',
-        //confirmFilterBody: 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?'
     };
     illustrationMessage = 'I risultati verranno mostrati qui';
     
@@ -104,12 +96,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         console.log('>>>> this.filterString ' + this.filterString);
         this.getData(jsonRecord);
 
-        //const saverecord = new CustomEvent("saverecord", {
-        //  detail: {record: jsonRecord}
-        //});
-    //
-        //// Dispatches the event.
-        //this.dispatchEvent(saverecord);
+        this.disableButton('confirmFilter', false);
 
     }
 
@@ -209,16 +196,22 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         }
     }
 
-    //getSelectedRow(event) {
-    //    const selectedRows = event.detail.selectedRows;
+    getSelectedRow(event) {
+        const selectedRows = event.detail.selectedRows;
 
-    //    for (let i = 0; i < selectedRows.length; i++){
-    //        console.log("You selected: " + JSON.stringify(selectedRows[i]));
-    //    }
+        //for (let i = 0; i < selectedRows.length; i++){
+        //    console.log("You selected: " + JSON.stringify(selectedRows[i]));
+        //}
 
-    //    console.log('>>> selectedRows ' + selectedRows.length);
+        console.log('>>> selectedRows ' + selectedRows.length);
 
-    //}
+        if(selectedRows.length > 0){
+            this.disableButton('confirmSelected', false);
+        } else {
+            this.disableButton('confirmSelected', true);
+        }
+
+    }
 
     confirmSelected(event){
         console.log('>>>> confirmSelected ');
@@ -251,7 +244,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         console.log('>>>> runProductOptionAssociation ');
         console.log('>>>> this.filterString ' + this.filterString);
 
-        runProductOptionAssociation({productOptionObj: this.productOptionObj, recordList: recordIdList, executionType: executionType, filterString: this.filterString, findMethod: this.findMethod})
+        runProductOptionAssociation({optionalSkuId: this.optionalSkuId, productOptionObj: this.productOptionObj, recordList: recordIdList, executionType: executionType, filterString: this.filterString, findMethod: this.findMethod})
         .then(result => {
             console.log('# response #');
             console.log('# resp -> ' + result.success);
@@ -284,18 +277,6 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                 }),
             );
 
-            //setTimeout(() => {
-            //    this.dispatchEvent(
-            //        new ShowToastEvent({
-            //            title: toastObj.title,
-            //            message: toastObj.message,
-            //            variant: toastObj.variant
-            //        }),
-            //    );
-            //    this.spinnerObj.spinner = false;
-            //    this.goBackToRecord();
-            //}, 2000);
-
         })
         .catch(error => {
             console.log('# save error #');
@@ -314,7 +295,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     closeModal(event){
         console.log('### closeModal ###');
-        //this.delete();
+
         const closeEvent = new CustomEvent("closemodal", {
             detail:  ''
         });
@@ -323,4 +304,14 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         this.dispatchEvent(closeEvent);
     }
 
+    disableButton(buttonName, disable){
+        console.log('>>> disableButton');
+        this.template.querySelectorAll('lightning-button').forEach(c => {
+            if(c.name===buttonName){
+                console.log('>>> disableButton ' + disable);
+                c.disabled = disable;
+            }
+        });
+    }
+    
 }

@@ -1,0 +1,184 @@
+public inherited sharing class HDT_UTL_ProductAssociation {
+
+    public static String generateQueryString(String filterString, String operator, String optionalSkuId, String findMethod){
+        
+        String op = ' ' + operator + ' ';
+        String queryString = '';
+        List<String> familyList = getFamilyList();
+
+        Product2 filterProduct = (Product2)JSON.deserialize(filterString, Product2.class);
+        System.debug('>>> FILTER PRODUCT: ' + String.valueOf(filterProduct));
+
+        List<String> whereConditionList = new List<String>();
+        if(!String.isEmpty(filterProduct.Name)){
+            whereConditionList.add('Name LIKE \'%' + filterProduct.Name + '%\'');
+        }
+
+        if(!String.isEmpty(filterProduct.TypeOffer__c)){
+            whereConditionList.add('TypeOffer__c = \'' + filterProduct.TypeOffer__c + '\'');
+        }
+
+        if(!String.isEmpty(filterProduct.ProductCode)){
+            whereConditionList.add('ProductCode LIKE \'%' + filterProduct.ProductCode + '%\'');
+        }
+
+        if(!String.isEmpty(filterProduct.Family)){
+            whereConditionList.add('Family = \'' + filterProduct.Family + '\'');
+        }
+
+        if(!String.isEmpty(filterProduct.Version__c)){
+            whereConditionList.add('Version__c LIKE \'%' + filterProduct.Version__c + '%\'');
+        }
+
+        if(!String.isEmpty(filterProduct.Status__c)){
+            whereConditionList.add('Status__c=\'' + filterProduct.Status__c + '\'');
+        }
+
+        if(!String.isEmpty(filterProduct.DescriptionSAP__c)){
+            whereConditionList.add('DescriptionSAP__c LIKE \'%' + filterProduct.DescriptionSAP__c + '%\'');
+        }
+
+        if(!String.isEmpty(filterProduct.CategoryFamily__c)){
+            whereConditionList.add('CategoryFamily__c=\'' + filterProduct.CategoryFamily__c + '\'');
+        }
+
+        queryString += 'FROM Product2 ';
+        queryString += 'WHERE ' + String.join(whereConditionList, op) + ' ';
+        queryString += 'AND Id ';
+
+        switch on findMethod {
+            when 'insert' {
+                queryString += 'NOT IN';
+            }
+            when 'delete' {
+                queryString += 'IN';
+            }
+        }
+
+        queryString +=  ' (SELECT SBQQ__ConfiguredSKU__c FROM SBQQ__ProductOption__c WHERE SBQQ__OptionalSKU__c = \'' + optionalSkuId + '\') ';
+        queryString += 'AND Family IN (\'' + String.join(familyList, '\',\'') + '\')';
+        
+        return queryString;
+    }
+    
+    public static HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj createProductOptionAssociation(HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj respRunBatchObj, String productOptionObj, List<String> recordList, String executionType, String filterString, String findMethod){
+        
+        System.debug('>>> createProductOptionAssociation');
+
+        respRunBatchObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj();
+
+        SBQQ__ProductOption__c productOptionToClone = (SBQQ__ProductOption__c)JSON.deserialize(productOptionObj, SBQQ__ProductOption__c.class);
+
+        switch on executionType {
+            when 'select' {
+                //run batch for selected record -> recordList > 0
+
+                if(recordList.size() < 1){
+                    // NO BATCH NEEDED, YOU CAN UPDATE HERE
+                    HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertReult = HDT_SRV_ProductAssociation.associateProductOption(productOptionToClone, recordList);
+
+                    if(insertReult.success){
+                        respRunBatchObj.message = 'L\'associazione è stata eseguita correttamente';
+                    } else {
+                        respRunBatchObj.message = insertReult.message;
+                    }
+                    
+                } else {
+                    HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, productOptionToClone, recordList, '');
+                    Id batchId = Database.executeBatch(createAssociationBatch);
+                    respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+                }
+            }	
+            when 'all' {
+                //run batch for all Product2 record -> recordList == 0
+                HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, productOptionToClone, new List<String>(), '');
+                Id batchId = Database.executeBatch(createAssociationBatch);
+                respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+            }
+            when 'filter' {
+                //run batch for all Product2 using where condition
+
+                String queryString = HDT_UTL_ProductAssociation.generateQueryString(filterString, 'AND', productOptionToClone.SBQQ__OptionalSKU__c, findMethod);
+                System.debug('>>> queryString: ' + queryString);
+                
+                HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, productOptionToClone, new List<String>(), queryString);
+                Id batchId = Database.executeBatch(createAssociationBatch);
+                respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+            }
+        }
+
+        respRunBatchObj.success = true;
+
+        return respRunBatchObj;
+    }
+
+    public static HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj deleteProductOptionAssociation(HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj respRunBatchObj, String optionalSkuId, List<String> recordList, String executionType, String filterString, String findMethod){
+        
+        System.debug('>>> deleteProductOptionAssociation');
+        
+        respRunBatchObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj();
+
+        switch on executionType {
+            when 'select' {
+                //run batch for selected record -> recordList > 0
+
+                if(recordList.size() < 2){
+                    // NO BATCH NEEDED, YOU CAN DELETE HERE
+                    List<SBQQ__ProductOption__c> productOptionToDelete;
+                    productOptionToDelete = HDT_QR_ProductAssociation.getProductOptionByOptionalSkuAndConfiguredSku(productOptionToDelete, optionalSkuId, recordList);
+
+                    SObjectType objtype = Schema.getGlobalDescribe().get('SBQQ__ProductOption__c');
+                    Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+             
+                    if(objRes.isDeletable ()){
+                        try{
+
+                            List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;
+                            errorData = HDT_SRV_ProductAssociation.deleteProductOption(productOptionToDelete, errorData);
+
+                            respRunBatchObj.message = 'L\'associazione è stata eliminata correttamente';
+
+                        } catch(Exception ex){
+                            respRunBatchObj.message = ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']';
+                        }
+                        
+                    }
+                    
+                } else {
+                    HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, recordList, '');
+                    Id batchId = Database.executeBatch(deleteAssociationBatch);
+                    respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+                }
+            }	
+            when 'all' {
+                //run batch for all Product2 record -> recordList == 0
+                HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, new List<String>(), '');
+                Id batchId = Database.executeBatch(deleteAssociationBatch);
+                respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+            }
+            when 'filter' {
+                //run batch for all Product2 using where condition
+
+                String queryString = HDT_UTL_ProductAssociation.generateQueryString(filterString, 'AND', optionalSkuId, findMethod);
+                System.debug('>>> queryString: ' + queryString);
+
+                HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, new List<String>(), queryString);
+                Id batchId = Database.executeBatch(deleteAssociationBatch);
+                respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+            }
+        }
+
+        respRunBatchObj.success = true;
+
+        return respRunBatchObj;
+    }
+
+    public static List<String> getFamilyList(){
+        List<String> sl = new List<String>();
+        sl.add('Offerta commerciale');
+        sl.add('VAS Prodotto');
+        sl.add('VAS Servizio');
+        return sl;
+    }
+
+}
