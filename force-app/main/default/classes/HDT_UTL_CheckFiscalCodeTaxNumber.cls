@@ -50,7 +50,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 String year = '19' + fiscalCode.substring(6,8);
                 String month = fiscalCode.substring(8,9);
                 String day = fiscalCode.substring(9,11);
-                month =  monthsLetters.get(month);
+                month =  monthsLetters.get(month.toUpperCase());
                 if(month== null || month == ''){
                     throw new AuraHandledException('Inserire un codice fiscale valido');
                 }
@@ -61,9 +61,14 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                     gender= 'Femmina';
                 }
                 birthDate = year +'-'+ month +'-'+day;
-                city= cities.get(fiscalCode.substring(11,15));
+                System.debug('city Code: '+fiscalCode.substring(11,15));
+                city= cities.get(fiscalCode.substring(11,15).toUpperCase());
 
                 if (String.isBlank(gender)||String.isBlank(city) || String.isBlank(day) || String.isBlank(year)) {
+                    System.debug('gender: '+gender);
+                    System.debug('city: '+city);
+                    System.debug('day: '+day);
+                    System.debug('year: '+year);
                     throw new AuraHandledException('Inserire un codice fiscale valido');
                 }
                 if (!listAlf.contains(fiscalCode.substring(15,16).toUpperCase()) 
@@ -75,7 +80,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 list <String> stringCharacters = fiscalCode.toUpperCase().split('');
                 System.debug('stringCharacters: '+stringCharacters);
                 Boolean isValid=true;
-                for (Integer i = 0; i < 6; i++) {
+                for (Integer i = 0; i < 15; i++) {
                     if (i<6 && !listAlf.contains(stringCharacters.get(i))) {
                         System.debug('prime 6 lettere : '+stringCharacters.get(i));
                         isValid=false;
@@ -84,12 +89,12 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                         System.debug('7° e 8° numeri : ' +stringCharacters.get(i));
                         isValid=false;
                     }
-                    else if(i==8 && !listNum.contains(stringCharacters.get(i))) {
+                    else if(i==8 && !listAlf.contains(stringCharacters.get(i))) {
                         System.debug('9° lettere : ' +stringCharacters.get(i));
                         isValid=false;
                     }
                     else if( i>=9 && i<=10  && !listNum.contains(stringCharacters.get(i))) {
-                        System.debug('10° e 11°  lettere : ' +stringCharacters.get(i));
+                        System.debug('10° e 11°  numeri : ' +stringCharacters.get(i));
                         isValid=false;
                     }
                     else if( i==11  && !stringCharacters.contains(stringCharacters.get(i))) {
@@ -112,6 +117,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                 dataFromFiscalCode.put('birthDate', birthDate);
                 dataFromFiscalCode.put('birthPlace', city);
                 res.put(fiscalCode,dataFromFiscalCode);
+           
             } catch (Exception e) {
                // e.setMessage('Inserire un codice fiscale valido');
                 throw new AuraHandledException('Inserire un codice fiscale valido');
@@ -227,7 +233,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                
                 list <String> stringCharacters = fiscalCode.toUpperCase().split('');
                 System.debug('stringCharacters: '+stringCharacters);
-                for (Integer i = 0; i < 6; i++) {
+                for (Integer i = 0; i < 15; i++) {
                     if (i<6 && !listAlf.contains(stringCharacters.get(i))) {
                         System.debug('prime 6 lettere : '+stringCharacters.get(i));
                         isValid=false;
@@ -236,7 +242,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                         System.debug('7° e 8° numeri : ' +stringCharacters.get(i));
                         isValid=false;
                     }
-                    else if(i==8 && !listNum.contains(stringCharacters.get(i))) {
+                    else if(i==8 && !listAlf.contains(stringCharacters.get(i))) {
                         System.debug('9° lettere : ' +stringCharacters.get(i));
                         isValid=false;
                     }

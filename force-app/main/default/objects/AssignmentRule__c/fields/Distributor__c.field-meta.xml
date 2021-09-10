@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Distributor__c</fullName>
-    <description>campo activity da matchare.</description>
+    <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Distributore</label>
-    <length>255</length>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Regole di Assegnazione</relationshipLabel>
+    <relationshipName>Regole_di_Assegnazione</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Lookup</type>
 </CustomField>
