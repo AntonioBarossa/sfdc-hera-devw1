@@ -135,10 +135,6 @@ public with sharing class HDT_UTL_Constants {
      @AuraEnabled
      public final String ORDER_RECORDTYPEID_TEMPORANEANUOVAATT =
      Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT).getRecordTypeId();
-<<<<<<< HEAD
-
-=======
->>>>>>> 31c107024df6d69a31b23b5f3e36d6922b55218a
 
     //@anbuzzi 31/08 Case RecordType Documentale/Copia Contratto
     @AuraEnabled
@@ -146,10 +142,6 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO).getRecordTypeId();
-<<<<<<< HEAD
-
-=======
->>>>>>> 31c107024df6d69a31b23b5f3e36d6922b55218a
     
     //ServicePoint RecordType Punto Elettrico
     @AuraEnabled
