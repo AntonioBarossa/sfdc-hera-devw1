@@ -180,15 +180,14 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         HttpResponse response = new HttpResponse();
         
         HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
-        wrpDATA.rds = '';
+        wrpDATA.rds = 'rds';
         wrpDATA.attivita = 'Esito OK da SAP';
-        //TODO: TESTARE ANCHE ELSE SU ATTIVITà
         
         HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
-        bodyResp.status = '';
-        bodyResp.correlationId = '';
-        bodyResp.timestamp = '';
-        bodyResp.data = wrpDATA;//TODO: TESTARE ANCHE ELSE SU .data
+        bodyResp.status = 'TST_Status';
+        bodyResp.correlationId = 'TST_CorrelId';
+        bodyResp.timestamp = 'TST_TimeStamp';
+        bodyResp.data = wrpDATA;
         
         
         String bodyResponse = JSON.serialize(bodyResp);
@@ -207,10 +206,10 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         HttpResponse response = new HttpResponse();
         
         HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
-        bodyResp.status = '';
-        bodyResp.correlationId = '';
-        bodyResp.timestamp = '';
-        bodyResp.data = null;
+        bodyResp.status = 'TST_Status';
+        bodyResp.correlationId = 'TST_CorrelId';
+        bodyResp.timestamp = 'TST_TimeStamp';
+        bodyResp.data = null;//TARGET
         
         
         String bodyResponse = JSON.serialize(bodyResp);
@@ -229,13 +228,13 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         HttpResponse response = new HttpResponse();
         
         HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
-        wrpDATA.rds = '';
-        wrpDATA.attivita = 'Test';
+        wrpDATA.rds = 'rds';
+        wrpDATA.attivita = 'Test';//TARGET
         
         HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
-        bodyResp.status = '';
-        bodyResp.correlationId = '';
-        bodyResp.timestamp = '';
+        bodyResp.status = 'TST_Status';
+        bodyResp.correlationId = 'TST_CorrelId';
+        bodyResp.timestamp = 'TST_TimeStamp';
         bodyResp.data = wrpDATA;
         
         String bodyResponse = JSON.serialize(bodyResp);
