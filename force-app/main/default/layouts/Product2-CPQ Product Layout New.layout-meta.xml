@@ -313,10 +313,10 @@
                 <behavior>Edit</behavior>
                 <field>FreqRenewable__c</field>
             </layoutItems>
-            <layoutItems>
+            <!--<layoutItems>
                 <behavior>Edit</behavior>
                 <field>UdMCanone__c</field>
-            </layoutItems>
+            </layoutItems>-->
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
