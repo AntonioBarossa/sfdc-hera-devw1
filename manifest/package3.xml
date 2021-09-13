@@ -1,41 +1,119 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>AssignmentRule__c-Regola di Assegnazione Layout</members>
-        <members>Reading__c-HDT_LetturaEle</members>
-        <members>Reading__c-HDT_LetturaGas</members>
+        <members>HDT_Activity_Default_Record_Page</members>
+        <members>HDT_ComunicazioniDistributore</members>
+        <members>HDT_CreditCheckNew</members>
+        <members>HDT_CreditCheckOld</members>
+        <members>HDT_GestioneAppuntamento</members>
+        <members>HDT_Scarti</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>Asset.HDT_RT_CompositionVASproductsnotbillable</members>
+        <members>Asset.HDT_RT_SectionBonusforEEservice</members>
+        <members>Asset.HDT_RT_SectionBonusforGasservice</members>
+        <members>Asset.HDT_RT_SectionContributesforEEservice</members>
+        <members>Asset.HDT_RT_SectionContributesforGasservice</members>
+        <members>Asset.HDT_RT_VASConsumptionanalysis</members>
+        <members>Asset.HDT_RT_VASPoductsnotbillable</members>
+        <members>Asset.HDT_RT_VASServicesnotbillable</members>
+        <members>Order.HDT_RT_VolturaConSwitch</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>AlertAccountConfiguration__c-Abilitazioni Alert Layout</members>
+        <members>Asset-Asset Layout</members>
+        <members>BillingProfile__c-Billing Profile Layout</members>
+        <members>BillingProfile__c-Profilo di fatturazione</members>
+        <members>ContactPointPhone-Layout Telefono punto di contatto</members>
+        <members>Contract-Contract Layout</members>
+        <members>Contract-SBQQ__CPQ Contract Layout</members>
+        <members>Individual-Individual Layout</members>
+        <members>Individual-Prototipo_2</members>
+        <members>ServicePoint__c-Service Point Ele</members>
+        <members>ServicePoint__c-Service Point Gas</members>
+        <members>SiebelCustomer__x-SiebelCustomer Layout</members>
+        <members>SurveyCRM__c-Survey CRM Layout</members>
+        <members>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali</members>
+        <members>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali2</members>
+        <members>wrts_prcgvr__Activity__c-HDT_CCheckNew</members>
+        <members>wrts_prcgvr__Activity__c-HDT_CCheckOld</members>
+        <members>wrts_prcgvr__Activity__c-HDT_ComfortQuality</members>
+        <members>wrts_prcgvr__Activity__c-HDT_ComunicazioniDistributore</members>
+        <members>wrts_prcgvr__Activity__c-HDT_GestioneAppuntamento</members>
+        <members>wrts_prcgvr__Activity__c-HDT_Protocollo</members>
+        <members>wrts_prcgvr__Activity__c-HDT_Scarti</members>
+        <members>wrts_prcgvr__Activity__c-Visita_D2D</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_BA_ActivityDispatcher</members>
-        <members>HDT_LC_AccountStatementControllerTst</members>
-        <members>HDT_SRV_ActivityToQueueAssigner</members>
-        <members>HDT_UTL_AmountQuoteTst</members>
-        <members>HDT_UTL_CaseApprovalProcess</members>
-        <members>HDT_UTL_CaseApprovalProcessTst</members>
-        <members>HDT_UTL_CheckFiscalCodeTaxNumber</members>
-        <members>HDT_UTL_CommunicationLog</members>
-        <members>HDT_UTL_QuoteManagementTst</members>
+        <members>HDT_ApexClasses</members>
+        <members>HDT_UtentiPubblicatoriKnowledge</members>
+        <members>HDT_UtentiScrittoriKnowledge</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_BA_PaperCampaignTargeting</members>
+        <members>HDT_LC_ChildOrderProcessActions</members>
+        <members>HDT_LC_ChildOrderProcessDetails</members>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_LC_RecallMe</members>
+        <members>HDT_LC_TargetObjectCreateForm</members>
+        <members>HDT_QR_Contract</members>
+        <members>HDT_SRV_ActivityCustom</members>
+        <members>HDT_SRV_CampaignMember</members>
+        <members>HDT_SRV_Contact</members>
+        <members>HDT_SRV_ContactPoint</members>
+        <members>HDT_SRV_ContactPointEmail</members>
+        <members>HDT_SRV_ContactPointPhone</members>
+        <members>HDT_SRV_Individual</members>
+        <members>HDT_SRV_Lead</members>
+        <members>HDT_SRV_OpportunityTst</members>
+        <members>HDT_SRV_SalesManager</members>
+        <members>HDT_TRH_Individual</members>
+        <members>HDT_TRH_IndividualTst</members>
+        <members>HDT_TRH_Opportunity</members>
+        <members>HDT_TRH_PaperProcessing</members>
+        <members>HDT_TRH_Quote</members>
+        <members>HDT_TRH_SmsTracking</members>
+        <members>HDT_UTL_CaseValidations</members>
+        <members>HDT_UTL_ContactPointTst</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_OrderProcessAssignment</members>
+        <members>HDT_UTL_Scarti</members>
+        <members>HDT_UTL_ServiceCatalogOrFilterProcess</members>
+        <members>HDT_UTL_SwtichInProcess</members>
+        <members>HDT_UTL_VasManagement</members>
+        <members>HDT_WS_RecallMeRequest</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_Cluster</members>
-        <name>GlobalValueSet</name>
-    </types>
-    <types>
-        <members>AssignmentRule__c.Distributor__c</members>
-        <members>AssignmentRule__c.Process__c</members>
-        <members>AssignmentRule__c.SubProcess__c</members>
+        <members>Asset.PriceNetTotalDiscount__c</members>
+        <members>Asset.PriceNetTotal__c</members>
+        <members>Campaign.Channel__c</members>
+        <members>Campaign.CodeGenerationRule__c</members>
+        <members>Product2.FreeVas__c</members>
+        <members>ServicePoint__c.SupplyType__c</members>
+        <members>wrts_prcgvr__Activity__c.Process__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>hdtFlowNavigationButton</members>
-        <members>hdtGeneralInfo</members>
+        <members>hdtAccountStatementPicker</members>
+        <members>hdtCampaignMemberButtonList2</members>
+        <members>hdtCampaignSurvey</members>
+        <members>hdtCampaignTelesellingToolbar</members>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtFormAccountBusiness</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
+        <members>HDT_Knowledge</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
         <members>Admin</members>
-        <members>Door2Door Profile</members>
         <members>Hera Door2Door Partner User</members>
         <members>Hera M2M Integration User</members>
         <members>Hera Standard User OneShot</members>
@@ -43,12 +121,16 @@
         <members>Hera System Administrator</members>
         <members>Hera System Integrator</members>
         <members>Hera Teleseller Partner User</members>
-        <members>Partner Community User</members>
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_FL_GestionePagamenti_VariazioneDomiciliazione</members>
-        <name>Flow</name>
+        <members>HDT_FiltriProcessiSelFornitura.Verifica_Tensione_Pressione</members>
+        <members>HDT_Generic_Record_Selection.BillingProfile</members>
+        <members>HDT_Generic_Record_Selection.BillingProfile_RevDom</members>
+        <members>HDT_Generic_Record_Selection.BillingProfile_RicDom</members>
+        <members>HDT_Generic_Record_Selection.BillingProfile_VarDom</members>
+        <members>HDT_UserInputFlow.Variazioni_BP_CA_Errata_Categoria_New</members>
+        <name>CustomMetadata</name>
     </types>
     <version>49</version>
 </Package>

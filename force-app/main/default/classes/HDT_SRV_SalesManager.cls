@@ -65,17 +65,20 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     private static void asyncCallout(Id sobjectId, String method){
         HDT_WS_Response res;
         String newPhase;
+        String vasStatus;
 
         switch on method{
             when 'activation'{
                 res = HDT_WS_MotoreVas.activationCallout(sobjectId);
                 Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
                 newPhase = isSuccess?'Comunicazione verso Motore VAS OK':'Comunicazione verso Motore VAS KO';
+                vasStatus = isSuccess?null:res.errorDetails;
             }
             when 'deactivation'{
                 res = HDT_WS_MotoreVas.deactivationCallout(sobjectId);
                 Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
                 newPhase = isSuccess?'Comunicazione verso Motore VAS OK':'Comunicazione verso Motore VAS KO';
+                vasStatus = isSuccess?null:res.errorDetails;
             }
         }
 
@@ -84,7 +87,7 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         //do UpdatePhase
 
         if(String.isNotBlank(newPhase)){ 
-            new HDT_QBL_AsycnronousUpdate().asyncronousUpdate(SobjectId, newPhase);
+            new HDT_QBL_AsycnronousUpdate().asyncronousUpdate(SobjectId, newPhase, vasStatus);
         }
     }
 
@@ -121,10 +124,10 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         }
 
         public void execute(QueueableContext context){
-            asyncronousUpdate(sobjectId, newPhase);
+            asyncronousUpdate(sobjectId, newPhase, null);
         }
         
-        public void asyncronousUpdate(Id sobjectId, String newPhase){
+        public void asyncronousUpdate(Id sobjectId, String newPhase, String vasStatus){
             Sobject sender;
             switch on sobjectId.getSobjectType().getDescribe().getName() {
                 when 'Case' {
@@ -140,6 +143,9 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
             
             sender.put('Id', sobjectId);
             sender.put('Phase__c', newPhase);
+            if (String.isNotBlank(vasStatus)) {
+                sender.put('VasStatusDescription__c', vasStatus);
+            }
             Database.update(sender);
         }
     }

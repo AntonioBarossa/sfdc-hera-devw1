@@ -2285,6 +2285,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.PriceNetTotalDiscount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.PriceNetTotal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.PriceNet__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2336,11 +2346,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Asset.Quote__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Asset.Range__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12877,6 +12882,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ExciseRate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.ExternalUserCompany__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13465,6 +13475,11 @@
         <field>Order.RecessSent__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Order.RegionalAdditional__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.RemiCode__c</field>
@@ -13978,6 +13993,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SurveySource__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.TaxRate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15563,6 +15583,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.ForExport__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.FreeVas__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30593,6 +30618,61 @@
         <layout>Individual-Prototipo_2</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Knowledge__kav-HDT_CompetitivoScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_Competitivo</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_FaqScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_FAQ</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_FormazioneScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_Formazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_GenericoScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_Generico</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_GestionePraticheScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_GestionePratiche</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_NewsScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_News</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_PraticheDiScartoScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_PraticheDiScarto</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_SchedaComuneScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_SchedaComunce</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_Template</layout>
+        <recordType>Knowledge__kav.HDT_RT_Template</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_TroubleshootingDiFrontPrincipaleScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_TroubleshootingFrontPrincipale</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_TroubleshootingDiFrontSecondarioScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_TroubleshootingFrontSecondario</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_TroubleshootingReclamiPrincipaleScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiPrincipale</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-HDT_TroubleshootingReclamiSecondarioScrittore</layout>
+        <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiSecondario</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Lead-Lead Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -34212,7 +34292,7 @@
     <!-- <userPermissions>
         <enabled>true</enabled>
         <name>SendExternalEmailAvailable</name>
-    </userPermissions> -->
+    </userPermissions> --> <!-- commentato per deploy in UAT -->
     <userPermissions>
         <enabled>true</enabled>
         <name>SendSitRequests</name>

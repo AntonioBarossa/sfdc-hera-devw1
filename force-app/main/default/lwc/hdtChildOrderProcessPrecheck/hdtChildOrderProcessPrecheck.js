@@ -324,7 +324,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         //EVERIS: Aggiunta variabile Order
         next({order: this.order,orderId: this.order.Id, selectedProcessObject: this.selectedProcessObject, deliberate: this.deliberation, extraParams: extraParams, srRequest: this.serviceRequest}).then(data =>{
-            if(data != ''){
+            if(data != '' && data != this.order.OrderNumber){
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: 'Processo incompatibile!',
@@ -525,11 +525,15 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             console.log(JSON.parse(JSON.stringify(result)));
 
             if(result.status == 'failed'){
+                let message = Object.values(result.errorDetails[0].message).reduce((testoFinale, elem ,index, array)=>{
+                    return `${testoFinale}\n${elem}`;
+                }, result.errorDetails[0].code);
+                console.log(message);
                 let toastErrorMessage = new ShowToastEvent({
                     title: 'CreditCheck KO',
-                    message: result.errorDetails[0].code + ' ' + JSON.stringify(result.errorDetails[0].message),
+                    message: message,
                     variant: 'warning', 
-                    mode:'dismissible'
+                    mode:'sticky'
                 });
                 this.dispatchEvent(toastErrorMessage);
                 //throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}

@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 24/06/2021
+* @description HDT_TRH_PaperProcessing
+* @history Lorenzo – 24/06/2021 – created class
+*/
 public class HDT_TRH_PaperProcessing extends HDT_TRH_TriggerHandler {
     public override void beforeInsert(){
         System.debug('beforeInsert');
