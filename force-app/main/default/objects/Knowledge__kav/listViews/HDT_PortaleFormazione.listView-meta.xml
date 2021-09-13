@@ -19,5 +19,10 @@
         <operation>equals</operation>
         <value>Knowledge__kav.HDT_RT_Formazione</value>
     </filters>
-    <label>Portale Formazione</label>
+    <filters>
+        <field>FormationDocumentationType__c</field>
+        <operation>equals</operation>
+        <value>Procedure e tecniche di vendita</value>
+    </filters>
+    <label>Portale Formazione - Proc. e Tecn. Vend.</label>
 </ListView>

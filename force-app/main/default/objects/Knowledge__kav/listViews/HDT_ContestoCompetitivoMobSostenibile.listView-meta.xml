@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_ContestoCompetitivo</fullName>
+    <fullName>HDT_ContestoCompetitivoMobSostenibile</fullName>
     <columns>TITLE</columns>
     <columns>ARTICLE_TOTAL_VIEW_COUNT</columns>
     <columns>ARTICLE_CASE_ATTACH_COUNT</columns>
@@ -22,7 +22,7 @@
     <filters>
         <field>CommercialDocumentationType__c</field>
         <operation>equals</operation>
-        <value>Offerta Commerciale</value>
+        <value>Mobilità Sostenibile</value>
     </filters>
-    <label>Contesto Competitivo-Offerta Commerciale</label>
+    <label>Contesto Competitivo-Mob. Sostenibile</label>
 </ListView>
