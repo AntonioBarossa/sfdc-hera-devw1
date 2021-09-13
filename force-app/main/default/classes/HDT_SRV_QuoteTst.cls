@@ -1,7 +1,7 @@
 /**
  * @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
  * @date 13/09/2021
- * @description HDT_SRV_Sale Test Classes
+ * @description HDT_SRV_Quote Test Classes
  * @history Lucas da Silva Fernandes – 13/09/2021 – Created Class
  */
 @isTest
