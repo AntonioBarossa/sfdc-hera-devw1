@@ -27,7 +27,7 @@ public with sharing class HDT_LC_DocumentalPhaseHistory {
         
         Order parentOrder = HDT_QR_DocumentalConfiguration.getParentOrder(orderId);
         if (parentOrder != null) {
-            return parentOrder.Id;
+            return parentOrder.ParentOrder__c;
         }
 
         return null;

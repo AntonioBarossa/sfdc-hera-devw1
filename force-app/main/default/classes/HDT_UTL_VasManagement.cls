@@ -66,7 +66,7 @@ public with sharing class HDT_UTL_VasManagement {
             SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
             (SELECT Quantity, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
                 DurationDay__c, PaymentMode__c, IVA__c,
-                Product2.Name, Product2.NumberRateMonthly__c
+                Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c
                 FROM OrderItems)
             FROM Order WHERE Id = :orderId WITH SECURITY_ENFORCED];
     }
@@ -239,7 +239,7 @@ public with sharing class HDT_UTL_VasManagement {
         Decimal PercentualeIva;
 
         public HDT_WRP_VASActivationReqItem(OrderItem ordItem) {
-            ItemProdotto = ordItem.Product2?.Name.abbreviate(33).removeEnd('...');
+            ItemProdotto = ordItem.Product2?.DescriptionSAP__c?.abbreviate(33)?.removeEnd('...');
             Quantita = ordItem.Quantity;
             PrezzoNetto = ordItem.PriceNet__c;
             PrezzoNettoScontato = ordItem.PriceNetDiscounted__c;
