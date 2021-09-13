@@ -1987,4 +1987,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return commCodeList;
 	}
+
+	public static List<ServiceRequest__c> createServiceRequest(Integer amount, Boolean doInsert) {
+
+		List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ServiceRequest__c sr = new ServiceRequest__c(
+				ProcessType__c = 'Alert'
+			);
+
+			srList.add(sr);
+		}
+
+		if (doInsert){
+
+			insert srList;
+		}
+
+		return srList;
+	}
 }
