@@ -6,6 +6,7 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
 
     @api productid;
     productOptionId;
+    productOptionObj;
     showWelcom = false;
     showSearchOffer = false;
     showCreateRecord = false;
@@ -14,6 +15,7 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
     showError = false;
     errorHeader = '';
     errorMessage = '';
+    dmlContext;
 
     errorHeader = 'Associazione';
     errorMessage = '';
@@ -74,16 +76,19 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
 
     }
 
-    createNew(event){
-        console.log('### Parent createNew ###');
+    createAssociation(event){
+        console.log('### Parent createAssociation ###');
+        this.dmlContext = 'insert';
         this.showWelcom = false;
         this.showCreateRecord = true;
     }
 
-    search(event){
-        console.log('### Parent search ###');
+    deleteAssociation(event){
+        console.log('### Parent deleteAssociation ###');
+        this.dmlContext = 'delete';
         this.showWelcom = false;
-        this.showCreateRecord = true;
+        //this.showCreateRecord = true;
+        this.showSearchTable = true;
     }
 
     closeSearch(event){
@@ -96,9 +101,12 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
     }
 
     saveRecord(event){
-        console.log('>>> RECORD CONFIGURED -> ' + event.detail.productOptionId);
-        this.productOptionId = event.detail.productOptionId;
-        //this.showWelcom = false;
+        //console.log('>>> RECORD CONFIGURED -> ' + event.detail.productOptionId);
+        //this.productOptionId = event.detail.productOptionId;
+        
+        console.log('>>> RECORD CONFIGURED -> ' + event.detail.productOptionObj);
+        this.productOptionObj = event.detail.productOptionObj;
+
         this.showCreateRecord = false;
         this.showSearchTable = true;
     }

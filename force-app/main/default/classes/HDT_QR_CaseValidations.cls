@@ -36,7 +36,7 @@ public inherited sharing class HDT_QR_CaseValidations {
 
         try{
 
-            attachedDocument = [SELECT Id 
+            attachedDocument = [SELECT Id, ContentDocument.Title
             FROM ContentDocumentLink 
             WHERE LinkedEntityId = :recordId 
             WITH SECURITY_ENFORCED];

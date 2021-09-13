@@ -1,115 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_Activity_Default_Record_Page</members>
-        <members>HDT_ComunicazioniDistributore</members>
-        <members>HDT_CreditCheckNew</members>
-        <members>HDT_CreditCheckOld</members>
-        <members>HDT_GestioneAppuntamento</members>
-        <members>HDT_Scarti</members>
-        <name>FlexiPage</name>
+        <members>HDT_DistributorExceptionHC__mdt</members>
+        <name>CustomObject</name>
     </types>
     <types>
-        <members>Asset.HDT_RT_CompositionVASproductsnotbillable</members>
-        <members>Asset.HDT_RT_SectionBonusforEEservice</members>
-        <members>Asset.HDT_RT_SectionBonusforGasservice</members>
-        <members>Asset.HDT_RT_SectionContributesforEEservice</members>
-        <members>Asset.HDT_RT_SectionContributesforGasservice</members>
-        <members>Asset.HDT_RT_VASConsumptionanalysis</members>
-        <members>Asset.HDT_RT_VASPoductsnotbillable</members>
-        <members>Asset.HDT_RT_VASServicesnotbillable</members>
-        <members>Order.HDT_RT_VolturaConSwitch</members>
-        <name>RecordType</name>
-    </types>
-    <types>
-        <members>AlertAccountConfiguration__c-Abilitazioni Alert Layout</members>
         <members>Asset-Asset Layout</members>
-        <members>BillingProfile__c-Billing Profile Layout</members>
-        <members>BillingProfile__c-Profilo di fatturazione</members>
-        <members>ContactPointPhone-Layout Telefono punto di contatto</members>
-        <members>Contract-Contract Layout</members>
-        <members>Contract-SBQQ__CPQ Contract Layout</members>
-        <members>Individual-Individual Layout</members>
-        <members>Individual-Prototipo_2</members>
-        <members>ServicePoint__c-Service Point Ele</members>
-        <members>ServicePoint__c-Service Point Gas</members>
-        <members>SiebelCustomer__x-SiebelCustomer Layout</members>
-        <members>SurveyCRM__c-Survey CRM Layout</members>
-        <members>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali</members>
-        <members>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali2</members>
-        <members>wrts_prcgvr__Activity__c-HDT_CCheckNew</members>
-        <members>wrts_prcgvr__Activity__c-HDT_CCheckOld</members>
-        <members>wrts_prcgvr__Activity__c-HDT_ComfortQuality</members>
-        <members>wrts_prcgvr__Activity__c-HDT_ComunicazioniDistributore</members>
-        <members>wrts_prcgvr__Activity__c-HDT_GestioneAppuntamento</members>
-        <members>wrts_prcgvr__Activity__c-HDT_Protocollo</members>
-        <members>wrts_prcgvr__Activity__c-HDT_Scarti</members>
-        <members>wrts_prcgvr__Activity__c-Visita_D2D</members>
+        <members>HDT_DistributorExceptionHC__mdt-Distributor Exception HC Layout</members>
+        <members>Product2-CPQ Product Layout New</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_ApexClasses</members>
-        <members>HDT_UtentiPubblicatoriKnowledge</members>
-        <members>HDT_UtentiScrittoriKnowledge</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>HDT_BA_PaperCampaignTargeting</members>
-        <members>HDT_LC_ChildOrderProcessActions</members>
-        <members>HDT_LC_ChildOrderProcessDetails</members>
-        <members>HDT_LC_ChildOrderProcessPrecheck</members>
-        <members>HDT_LC_RecallMe</members>
-        <members>HDT_LC_TargetObjectCreateForm</members>
-        <members>HDT_QR_Contract</members>
-        <members>HDT_SRV_ActivityCustom</members>
-        <members>HDT_SRV_CampaignMember</members>
-        <members>HDT_SRV_Contact</members>
-        <members>HDT_SRV_ContactPoint</members>
-        <members>HDT_SRV_ContactPointEmail</members>
-        <members>HDT_SRV_ContactPointPhone</members>
-        <members>HDT_SRV_Individual</members>
-        <members>HDT_SRV_Lead</members>
-        <members>HDT_SRV_OpportunityTst</members>
-        <members>HDT_SRV_SalesManager</members>
-        <members>HDT_TRH_Individual</members>
-        <members>HDT_TRH_IndividualTst</members>
-        <members>HDT_TRH_Opportunity</members>
-        <members>HDT_TRH_PaperProcessing</members>
-        <members>HDT_TRH_Quote</members>
-        <members>HDT_TRH_SmsTracking</members>
-        <members>HDT_UTL_CaseValidations</members>
-        <members>HDT_UTL_ContactPointTst</members>
-        <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_OrderProcessAssignment</members>
-        <members>HDT_UTL_Scarti</members>
-        <members>HDT_UTL_ServiceCatalogOrFilterProcess</members>
-        <members>HDT_UTL_SwtichInProcess</members>
-        <members>HDT_UTL_VasManagement</members>
-        <members>HDT_WS_RecallMeRequest</members>
+        <members>HDT_BA_DeleteProductAssociation</members>
+        <members>HDT_BA_ProductAssociation</members>
+        <members>HDT_LC_AccountStatementCtrlUtility</members>
+        <members>HDT_LC_DocumentalConfigController</members>
+        <members>HDT_LC_DocumentalConfigControllerTst</members>
+        <members>HDT_LC_DocumentalPhaseHistory</members>
+        <members>HDT_LC_ProductAssociation</members>
+        <members>HDT_QR_CaseValidations</members>
+        <members>HDT_QR_InformativeManager</members>
+        <members>HDT_QR_PayloadManagement</members>
+        <members>HDT_QR_ProductAssociation</members>
+        <members>HDT_SRV_InformativeManager</members>
+        <members>HDT_SRV_ModificaLayoutFattura</members>
+        <members>HDT_SRV_ModificaLayoutFatturaTst</members>
+        <members>HDT_SRV_PaymentCommunication</members>
+        <members>HDT_SRV_PrescrizioneFattura</members>
+        <members>HDT_SRV_PrescrizioneFatturaTst</members>
+        <members>HDT_SRV_ProductAssociation</members>
+        <members>HDT_TRH_IndividualEmailResult</members>
+        <members>HDT_UTL_PayloadManagement</members>
+        <members>HDT_UTL_PayloadManagementTst</members>
+        <members>HDT_UTL_ProductAssociation</members>
+        <members>HDT_WRP_ProductAssociation</members>
+        <members>HDT_WS_PostSalesTstMock</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Asset.PriceNetTotalDiscount__c</members>
-        <members>Asset.PriceNetTotal__c</members>
-        <members>Campaign.Channel__c</members>
-        <members>Campaign.CodeGenerationRule__c</members>
-        <members>Product2.FreeVas__c</members>
-        <members>ServicePoint__c.SupplyType__c</members>
-        <members>wrts_prcgvr__Activity__c.Process__c</members>
+        <members>HDT_DistributorExceptionHC__mdt.DistributorName__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>hdtAccountStatementPicker</members>
-        <members>hdtCampaignMemberButtonList2</members>
-        <members>hdtCampaignSurvey</members>
-        <members>hdtCampaignTelesellingToolbar</members>
-        <members>hdtChildOrderProcessDetails</members>
-        <members>hdtChildOrderProcessPrecheck</members>
-        <members>hdtFormAccountBusiness</members>
+        <members>hdtAccountStatementViewer</members>
+        <members>hdtChooseAssociationOperation</members>
+        <members>hdtComunicationsSearchList</members>
+        <members>hdtDocumentSignatureManager</members>
+        <members>hdtDocumentalPhaseHistory</members>
+        <members>hdtLeadAddress</members>
+        <members>hdtManageProductAssociation</members>
+        <members>hdtPdfViewerHandler</members>
+        <members>hdtProductAssociationSearchTable</members>
+        <members>hdtProductOptionEditForm</members>
+        <members>hdtTargetObjectCreateForm</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_Knowledge</members>
+        <members>HDT_IndividualEmailResult</members>
         <name>ApexTrigger</name>
     </types>
     <types>
@@ -124,12 +71,10 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_FiltriProcessiSelFornitura.Verifica_Tensione_Pressione</members>
-        <members>HDT_Generic_Record_Selection.BillingProfile</members>
-        <members>HDT_Generic_Record_Selection.BillingProfile_RevDom</members>
-        <members>HDT_Generic_Record_Selection.BillingProfile_RicDom</members>
-        <members>HDT_Generic_Record_Selection.BillingProfile_VarDom</members>
-        <members>HDT_UserInputFlow.Variazioni_BP_CA_Errata_Categoria_New</members>
+        <members>HDT_DistributorExceptionHC.DIRETTO_EDISON_10R0000051</members>
+        <members>HDT_DistributorExceptionHC.DIRETTO_SGM_10R0000230</members>
+        <members>HDT_DistributorExceptionHC.DIRETTO_SNAM_10R0000020</members>
+        <members>HDT_IntegrationObject.Documentale_Context2</members>
         <name>CustomMetadata</name>
     </types>
     <version>49</version>

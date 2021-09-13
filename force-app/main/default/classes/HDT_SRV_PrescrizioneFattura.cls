@@ -75,8 +75,9 @@ global with sharing class HDT_SRV_PrescrizioneFattura implements wrts_prcgvr.Int
 
         }
     }
-
-    @Future
+    
+    @Future 
+    @TestVisible
     private static void updateFuture(String inputString) {
 
         Case c = (Case) JSON.deserialize(inputString, Case.class);
