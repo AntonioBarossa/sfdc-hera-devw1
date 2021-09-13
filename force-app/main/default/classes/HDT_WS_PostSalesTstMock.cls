@@ -20,11 +20,11 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
             return creaAccountBalanceResponse(request);
         }else if(endpoint.containsIgnoreCase('Callout:CheckLastReading')){
             return creaCheckLastReadingsResponse(request);
-        }else if(endpoint.containsIgnoreCase('Callout:ModificaLayoutFattura')){
+        }else if(endpoint.equalsIgnoreCase('Callout:ModificaLayoutFattura')){
             return creaModificaLayoutFatturaResponse(request);
-        }else if(endpoint.containsIgnoreCase('Callout:ModificaLayoutFattura_null')){
+        }else if(endpoint.equalsIgnoreCase('Callout:ModificaLayoutFattura_null')){
             return creaModificaLayoutFatturaResponseNull(request);
-        }else if(endpoint.containsIgnoreCase('Callout:ModificaLayoutFattura_notOK')){
+        }else if(endpoint.equalsIgnoreCase('Callout:ModificaLayoutFattura_notOK')){
             return creaModificaLayoutFatturaResponseNotOK(request);
         }else{
             return creaRicResponse(request);
