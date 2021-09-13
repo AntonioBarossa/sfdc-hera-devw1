@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_ContestoCompetitivo</fullName>
+    <fullName>HDT_PortaleFormazioneProdottiEOfferte</fullName>
     <columns>TITLE</columns>
     <columns>ARTICLE_TOTAL_VIEW_COUNT</columns>
     <columns>ARTICLE_CASE_ATTACH_COUNT</columns>
@@ -17,12 +17,12 @@
     <filters>
         <field>RECORDTYPE</field>
         <operation>equals</operation>
-        <value>Knowledge__kav.HDT_RT_Competitivo</value>
+        <value>Knowledge__kav.HDT_RT_Formazione</value>
     </filters>
     <filters>
-        <field>CommercialDocumentationType__c</field>
+        <field>FormationDocumentationType__c</field>
         <operation>equals</operation>
-        <value>Offerta Commerciale</value>
+        <value>Prodotto / Offerte</value>
     </filters>
-    <label>Contesto Competitivo-Offerta Commerciale</label>
+    <label>Portale Formazione - Prodotti e Offerte</label>
 </ListView>
