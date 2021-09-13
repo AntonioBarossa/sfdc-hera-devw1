@@ -40,7 +40,6 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
         HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', rt, 'HDT_RT_Morosita');
         
-        //TESTING
         String method_OK = 'ModificaLayoutFattura';//NOTA: in verità è endpoint.
         
         Case obj = [SELECT Id, CaseNumber, ContractCode__c, ElementDetail__c FROM Case];
@@ -50,8 +49,14 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         argsMap.put('method', method_OK);
         argsMap.put('sender', obj);
         
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
+        
+        //TESTING
+        Test.startTest();
         HDT_SRV_ModificaLayoutFattura myObjectToTest = new HDT_SRV_ModificaLayoutFattura();
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) myObjectToTest.execute(argsMap);
+        Test.stopTest();
         
         //RETRIEVING DATA
         Case myCase = [SELECT Id, Phase__c FROM Case];
@@ -90,8 +95,14 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         argsMap.put('method', method_dataNull);
         argsMap.put('sender', obj);
         
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
+        
+        //TESTING
+        Test.startTest();
         HDT_SRV_ModificaLayoutFattura myObjectToTest = new HDT_SRV_ModificaLayoutFattura();
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) myObjectToTest.execute(argsMap);
+        Test.stopTest();
         
         //RETRIEVING DATA
         Case myCase = [SELECT Id, Phase__c FROM Case];
@@ -130,8 +141,14 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         argsMap.put('method', method_notOK);
         argsMap.put('sender', obj);
         
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
+        
+        //TESTING
+        Test.startTest();
         HDT_SRV_ModificaLayoutFattura myObjectToTest = new HDT_SRV_ModificaLayoutFattura();
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) myObjectToTest.execute(argsMap);
+        Test.stopTest();
         
         //RETRIEVING DATA
         Case myCase = [SELECT Id, Phase__c FROM Case];
