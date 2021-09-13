@@ -20,11 +20,16 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
             return creaAccountBalanceResponse(request);
         }else if(endpoint.containsIgnoreCase('Callout:CheckLastReading')){
             return creaCheckLastReadingsResponse(request);
-        }else{
+        }else if(endpoint.equalsIgnoreCase('Callout:ModificaLayoutFattura')){
+            return creaModificaLayoutFatturaResponse(request);
+        }else if(endpoint.equalsIgnoreCase('Callout:ModificaLayoutFattura_null')){
+            return creaModificaLayoutFatturaResponseNull(request);
+        }else if(endpoint.equalsIgnoreCase('Callout:ModificaLayoutFattura_notOK')){
+            return creaModificaLayoutFatturaResponseNotOK(request);
+        } else{
             return creaRicResponse(request);
         }
     }
-    
     
     public static HttpResponse creaRicResponse(HTTPRequest request){
         HttpResponse response = new HttpResponse();
@@ -169,5 +174,77 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         return response;
     }
     
+    public static HttpResponse creaModificaLayoutFatturaResponse(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaModificaLayoutFatturaResponse');
+        HttpResponse response = new HttpResponse();
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
+        wrpDATA.rds = 'rds';
+        wrpDATA.attivita = 'Esito OK da SAP';
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
+        bodyResp.status = 'TST_Status';
+        bodyResp.correlationId = 'TST_CorrelId';
+        bodyResp.timestamp = 'TST_TimeStamp';
+        bodyResp.data = wrpDATA;
+        
+        
+        String bodyResponse = JSON.serialize(bodyResp);
+        
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
+    
+    public static HttpResponse creaModificaLayoutFatturaResponseNull(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaModificaLayoutFatturaResponseNull');
+        HttpResponse response = new HttpResponse();
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
+        bodyResp.status = 'TST_Status';
+        bodyResp.correlationId = 'TST_CorrelId';
+        bodyResp.timestamp = 'TST_TimeStamp';
+        bodyResp.data = null;//TARGET
+        
+        
+        String bodyResponse = JSON.serialize(bodyResp);
+        
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
+    
+    public static HttpResponse creaModificaLayoutFatturaResponseNotOK(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaModificaLayoutFatturaResponseNotOK');
+        HttpResponse response = new HttpResponse();
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
+        wrpDATA.rds = 'rds';
+        wrpDATA.attivita = 'Test';//TARGET
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
+        bodyResp.status = 'TST_Status';
+        bodyResp.correlationId = 'TST_CorrelId';
+        bodyResp.timestamp = 'TST_TimeStamp';
+        bodyResp.data = wrpDATA;
+        
+        String bodyResponse = JSON.serialize(bodyResp);
+        
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
     
 }
