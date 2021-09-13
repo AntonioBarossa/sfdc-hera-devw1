@@ -283,7 +283,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
         if (lastStepData != null) {
             for (String lastStepField : lastStepData.keySet()) {
-                orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+                system.debug('keltin - lastStepField: ' + lastStepField);
+                system.debug('keltin - lastStepData.get(lastStepField): ' + lastStepData.get(lastStepField));
+
+                if (lastStepField == 'EffectiveDate__c') {
+                    String dateString = String.valueOf(lastStepData.get(lastStepField));
+                    orderToUpdate.put(lastStepField, date.valueOf(dateString));
+                } else {
+                    orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+                }
             }
         }
         
