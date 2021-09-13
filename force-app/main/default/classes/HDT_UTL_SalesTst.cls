@@ -1,6 +1,6 @@
 /**
  * @author Valere (valere@noeli-it.net)
- * @date 10/09/2021
+ * @date 13/09/2021
  * @description HDT_QR_RateCategory Test Classes
  * @history valere - 10/09/2021– Created Class
  */
