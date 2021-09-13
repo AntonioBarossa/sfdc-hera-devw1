@@ -1,3 +1,10 @@
+/**
+ * @author Lorenzo Gulotta (lorenzo.gulotta@webresults.it)
+ * @date 06/05/2021
+ * @description Data Factory for Test Classes
+ * @history Lorenzo Gulotta – 06/05/2021 – Created Class
+ */
+
 public inherited sharing class HDT_SRV_Product {
     
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
