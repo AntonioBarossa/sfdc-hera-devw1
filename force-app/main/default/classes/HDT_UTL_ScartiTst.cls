@@ -9,14 +9,14 @@ public with sharing class HDT_UTL_ScartiTst {
     @TestSetup
     static void makeData(){
         List<wrts_prcgvr__ActivityTemplate__c> multipleTemplates= new list<wrts_prcgvr__ActivityTemplate__c>();
-        wrts_prcgvr__ActivityTemplate__c CanoneTemplate= new wrts_prcgvr__ActivityTemplate__c(Name='CBS_CAR002__CANONE_RAI');
-        wrts_prcgvr__ActivityTemplate__c BonusTemplate= new wrts_prcgvr__ActivityTemplate__c(Name='CBS_FAT011__BONUS_SOCIALE');
-        wrts_prcgvr__ActivityTemplate__c DocumentalTemplatePost= new wrts_prcgvr__ActivityTemplate__c(Name='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES');
-        wrts_prcgvr__ActivityTemplate__c DocumentalTemplateSales= new wrts_prcgvr__ActivityTemplate__c(Name='CBS_CRP003__SCARTI_DOCUMENTALI_SALES');
-        multipleTemplates.add(CanoneTemplate);
-        multipleTemplates.add(BonusTemplate);
-        multipleTemplates.add(DocumentalTemplatePost);
-        multipleTemplates.add(DocumentalTemplateSales);
+        wrts_prcgvr__ActivityTemplate__c canoneTemplate= new wrts_prcgvr__ActivityTemplate__c(Name='CBS_CAR002__CANONE_RAI');
+        wrts_prcgvr__ActivityTemplate__c bonusTemplate= new wrts_prcgvr__ActivityTemplate__c(Name='CBS_FAT011__BONUS_SOCIALE');
+        wrts_prcgvr__ActivityTemplate__c documentalTemplatePost= new wrts_prcgvr__ActivityTemplate__c(Name='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES');
+        wrts_prcgvr__ActivityTemplate__c documentalTemplateSales= new wrts_prcgvr__ActivityTemplate__c(Name='CBS_CRP003__SCARTI_DOCUMENTALI_SALES');
+        multipleTemplates.add(canoneTemplate);
+        multipleTemplates.add(bonusTemplate);
+        multipleTemplates.add(documentalTemplatePost);
+        multipleTemplates.add(documentalTemplateSales);
         insert(multipleTemplates);
 
         List<Account> multipleAccounts= new list<Account>();
@@ -26,12 +26,13 @@ public with sharing class HDT_UTL_ScartiTst {
         multipleAccounts.add(BonusAccount);
         insert(multipleAccounts);
     }
+
     @isTest private static void setLookupFieldsTst(){
-        wrts_prcgvr__Activity__c CanoneActivity= new wrts_prcgvr__Activity__c(BPCode__c='clienteidcanone', Type__c='Canone RAI');
-        wrts_prcgvr__Activity__c BonusActivity= new wrts_prcgvr__Activity__c(BPCode__c='clienteidbonus', Type__c='Bonus sociale');
+        wrts_prcgvr__Activity__c canoneActivity= new wrts_prcgvr__Activity__c(BPCode__c='clienteidcanone', Type__c='Canone RAI');
+        wrts_prcgvr__Activity__c bonusActivity= new wrts_prcgvr__Activity__c(BPCode__c='clienteidbonus', Type__c='Bonus sociale');
         list<wrts_prcgvr__Activity__c> dataActivities= new list<wrts_prcgvr__Activity__c>();
-        dataActivities.add(CanoneActivity);
-        dataActivities.add(BonusActivity);
+        dataActivities.add(canoneActivity);
+        dataActivities.add(bonusActivity);
         List<wrts_prcgvr__Activity__c> results=HDT_UTL_Scarti.setLookupFields(dataActivities);
         Account canoneId=[SELECT Id FROM Account WHERE CustomerCode__c='clienteidcanone'];
         Account bonusId=[SELECT Id FROM Account WHERE CustomerCode__c='clienteidbonus'];
@@ -75,5 +76,12 @@ public with sharing class HDT_UTL_ScartiTst {
         toInsert.add(smsScarto);
         insert toInsert;
         HDT_UTL_Scarti.createScartoForMarketingCloud(toInsert);
+
+        list<wrts_prcgvr__Activity__c> verifyActivity = [SELECT Id, wrts_prcgvr__ObjectId__c
+                                                         FROM wrts_prcgvr__Activity__c
+                                                         WHERE (wrts_prcgvr__ObjectId__c = :fakeOrder.Id 
+                                                         OR wrts_prcgvr__ObjectId__c = :fakeCase.Id)];
+
+        system.assert(verifyActivity.size()==2);
     }
 }
