@@ -92,6 +92,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Campagna Outbound</controllingFieldValue>
+            <valueName>Cartaceo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
             <valueName>Bolletta</valueName>
         </valueSettings>
         <valueSettings>

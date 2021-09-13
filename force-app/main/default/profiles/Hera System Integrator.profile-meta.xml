@@ -2333,6 +2333,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.PriceNetTotalDiscount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.PriceNetTotal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.PriceNet__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2384,11 +2394,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Asset.Quote__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Asset.Range__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12946,6 +12951,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ExciseRate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.ExternalUserCompany__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13634,6 +13644,11 @@
         <field>Order.RecessSent__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Order.RegionalAdditional__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.RemiCode__c</field>
@@ -14147,6 +14162,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SurveySource__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.TaxRate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15737,6 +15757,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.ForExport__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.FreeVas__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
