@@ -2,6 +2,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public static HDT_QR_StaticResource staticResourceQr       = new HDT_QR_StaticResource();
     public HDT_QR_Account qrAcc                                = new HDT_QR_Account();
     public static HDT_QR_AccountContactRelation accoContRelQr  = new HDT_QR_AccountContactRelation();
+    public static HDT_QR_Contact qrCont                        = new HDT_QR_Contact();
     public String processName;
     public  Map<Integer, String> mapHeaderByPosition; 
     public  Map<Integer, String> mapRequiredByPosition; 

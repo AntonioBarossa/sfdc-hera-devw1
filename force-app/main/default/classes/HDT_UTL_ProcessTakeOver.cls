@@ -63,26 +63,32 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         if ( String.isNotBlank( currentProcess.currentRequestItem.Data__c)) {
          
             Integer count=0;
-           
+            // currentProcess.currentRequestItem.Data__c= currentProcess.currentRequestItem.Data__c.replace(',,',',null,' );
             for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
                 
-                
+                System.debug('column N° :'+count+' FieldapiName : '+mapAccountFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+
                 // Controllo campi required
                 // if (mapRequiredByPosition.get(count)!=null && String.isBlank(tempField) ) {
                 //     throw new HDT_WRP_ProcessEntitiesException( 'Missing required field',mapHeaderByPosition.get(count)+' can\'t be null');
                 // }
-
+                // if ('null'.equalsIgnoreCase(tempField)) {
+                //     count++;
+                //     continue;
+                // }
                 // Start AccountContactRelation
                 if ( 'Ruolo'.equalsIgnoreCase(mapHeaderByPosition.get(count))) {
+
                     currentProcess.role=tempField;
                 }
                 // fine AccountContactRelation
 
                 // Creazione Accoun
                 if (mapAccountFields.get(mapHeaderByPosition.get(count))!=null) {
-                    System.debug('column N° :'+count+' FieldapiName : '+mapAccountFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
                     if ('ShippingAddressIsForeign__c'.equalsIgnoreCase(mapAccountFields.get(mapHeaderByPosition.get(count))) ||'BillingIsAddressVerified__c'.equalsIgnoreCase(mapAccountFields.get(mapHeaderByPosition.get(count)))   ) {
-                        currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),'true'.equalsIgnoreCase(tempField)?true:false);
+                        System.debug('isverificato '+mapAccountFields.get(mapHeaderByPosition.get(count)));
+                        System.debug('isverificatotempField '+tempField);
+                        //currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),'true'.equalsIgnoreCase(tempField)?true:false);
                     }
                     else if('Tipo di Account'.equalsIgnoreCase(mapHeaderByPosition.get(count))){
                             // selezione recordtype Account 
@@ -97,7 +103,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                             }
                     }
                     else if('BirthDate__c'.equalsIgnoreCase(mapAccountFields.get(mapHeaderByPosition.get(count)))){
-                       currentProcess.currentAccount.put('BirthDate__c',Date.valueOf(tempField));
+                       currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
                      
                     }
                     else {
@@ -131,31 +137,66 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             
         }
         if (lAccount!=null && lAccount.size()>0) {
+            System.debug('Update Account esistente');
             currentProcess.currentAccount.Id=lAccount.get(0).Id;  
             System.debug('currentProcess.currentAccount: '+currentProcess.currentAccount); 
+            String filterContact='FiscalCode__c=\''+currentProcess.currentAccount.FiscalCode__c+ '\' AND AccountId=\''+ currentProcess.currentAccount.Id+'\' LIMIT 10';
+            List<Contact> listContact = qrCont.getContactList(filterContact);
+            if (listContact!=null && listContact.size()>0) {
+                currentProcess.currentPrimaryContact.Id=listContact.get(0).Id;
+            }
+            
         }
        
     }
 
     public override void registryCreation(){
+        List<SObject> listUpdateGeneric = new List<SObject>();
         if (currentProcess.currentAccount!=null &&currentProcess.currentAccount.Id==null ) {
+            // solo se non esiste
+            System.debug('Creazione Account');
+            String expectedNewName = String.isBlank( currentProcess.currentAccount.FirstName__c) ?  currentProcess.currentAccount.LastName__c :  currentProcess.currentAccount.FirstName__c + ' ' +  currentProcess.currentAccount.LastName__c;
+            currentProcess.currentAccount.Name=expectedNewName;
+            currentProcess.currentAccount.BillingIsAddressVerified__c=true; // TODO  verificare se implementare il servizio
+            System.debug('Silos : '+currentProcess.currentAccount.CompanyOwner__c);
+            System.debug('Marcatura : '+currentProcess.currentAccount.CustomerMarking__c);
+            System.debug('Categoria : '+currentProcess.currentAccount.Category__c);
+            System.debug('Partita iva : '+currentProcess.currentAccount.VATNumber__c);
+            System.debug('BillingIsAddressVerified__c : '+currentProcess.currentAccount.BillingIsAddressVerified__c);
+            System.debug('IsWrongFiscalData__c : '+currentProcess.currentAccount.IsWrongFiscalData__c);
+
             insert currentProcess.currentAccount;
             currentProcess.currentPrimaryContact.AccountId=currentProcess.currentAccount.id;
-            insert currentProcess.currentPrimaryContact;
-            if(currentProcess.role!=null){
-                List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(currentProcess.currentPrimaryContact.AccountId,currentProcess.currentPrimaryContact.Id, 'Id');
-                if(listAccCon != null && listAccCon.size() > 0){
-                    currentProcess.currentAccountContactRelation = new AccountContactRelation(Id= listAccCon[0].Id,ContactId= currentProcess.currentPrimaryContact.Id, AccountId=currentProcess.currentPrimaryContact.AccountId, Roles=currentProcess.role );
-                    insert currentProcess.currentAccountContactRelation;
-                   
-                }
-    
+            insert currentProcess.currentPrimaryContact;   
+        }
+        else {
+          
+            listUpdateGeneric.add(currentProcess.currentAccount);
+            listUpdateGeneric.add(currentProcess.currentPrimaryContact);
+
+        }
+
+        if(currentProcess.role!=null){
+            System.debug('currentProcess.currentAccount.id '+currentProcess.currentAccount.id);
+            System.debug('currentProcess.currentPrimaryContact.Id '+currentProcess.currentPrimaryContact.Id);
+            List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(currentProcess.currentAccount.id,currentProcess.currentPrimaryContact.Id, 'Id');
+            if(listAccCon != null && listAccCon.size() > 0){
+                currentProcess.currentAccountContactRelation = new AccountContactRelation(Id= listAccCon[0].Id,Roles=currentProcess.role );
+                System.debug('listAccCon '+ currentProcess.currentAccountContactRelation);
+                listUpdateGeneric.add(currentProcess.currentAccountContactRelation);
+               
             }
+        }
+        if (listUpdateGeneric.size()>0) {
+            update listUpdateGeneric;
         }
 
     }
 
-
+    public override void finalUpdate(){
+        System.debug('finalUpdate');
+        update currentProcess.currentRequestItem;
+    }
 
     //public void postSalesCreation(){}
    // public void finalUpdate(){}
