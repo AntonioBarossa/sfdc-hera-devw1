@@ -2048,4 +2048,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			insert srList;
 	}
+	return srList;
+}
 }
