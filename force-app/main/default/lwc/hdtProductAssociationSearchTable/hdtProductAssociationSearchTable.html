@@ -57,46 +57,50 @@
                             </div>
                             <!-- counter -->
                             <div class="slds-col slds-size_2-of-12">
-                              <div if:true={showResultTable} class="slds-text-heading_small slds-border_bottom" >{counter}</div>
+                              <div if:true={showResultTable} class="slds-text-heading_small slds-border_bottom" >{counterText}{counter}</div>
                             </div>
                             <!-- Pagination buttons -->
                             <div if:true={showPagination} class="slds-col slds-size_4-of-12 slds-m-left_large">
                                 <lightning-button-group>
-                                    <lightning-button icon-name="utility:jump_to_left"
-                                                      data-id="leftArrow"
-                                                      variant="base"
-                                                      title="prima pagina"
-                                                      onclick={paginationClick}
-                                    ></lightning-button>
-                                    <lightning-button icon-name="utility:left"
-                                                      data-id="leftArrow"
-                                                      variant="base"
-                                                      title="precedente"
-                                                      onclick={paginationClick}
-                                    ></lightning-button>
-                                    <template for:each={pagesList} for:item="pageNumber">
-                                        <lightning-button data-name="pagination"
-                                                          data-id={pageNumber}
-                                                          variant="neutral"
-                                                          label={pageNumber}
-                                                          title={pageNumber}
-                                                          onclick={onPageClick}
-                                                          key={pageNumber}
-                                        ></lightning-button>
+                                    <template if:true={hasPrev}>
+                                            <lightning-button icon-name="utility:jump_to_left"
+                                                              data-id="leftArrow"
+                                                              variant="base"
+                                                              title="First"
+                                                              onclick ={onFirst}
+                                            ></lightning-button>
+                                            <lightning-button icon-name="utility:left"
+                                                              data-id="leftArrow"
+                                                              variant="base"
+                                                              title="Prev"
+                                                              onclick ={onPrev}
+                                            ></lightning-button>
                                     </template>
-                                    <lightning-button icon-name="utility:right"
-                                                      data-id="rightArrow"
-                                                      variant="base"
-                                                      title="prossima"
-                                                      class="slds-m-left_x-small"
-                                                      onclick={paginationClick}
-                                    ></lightning-button>
-                                    <lightning-button icon-name="utility:jump_to_right"
-                                                      data-id="rightArrow"
-                                                      variant="base"
-                                                      title="ultima pagina"
-                                                      onclick={paginationClick}
-                                    ></lightning-button>  
+                                    <template for:each={pagesList} for:item= "pageNumber">
+                                            <lightning-button data-name="pagination"
+                                                              data-id={pageNumber}
+                                                              variant="neutral"
+                                                              label={pageNumber}
+                                                              title="pagination"
+                                                              onclick={onPageClick}
+                                                              key={pageNumber}
+                                            ></lightning-button>
+                                    </template>
+                                    <template if:true={hasNext}>
+                                            <lightning-button icon-name="utility:right"
+                                                              data-id="rightArrow"
+                                                              variant="base"
+                                                              title="Next"
+                                                              class="slds-m-left_x-small"
+                                                              onclick ={onNext}
+                                            ></lightning-button>
+                                            <lightning-button icon-name="utility:jump_to_right"
+                                                              data-id="rightArrow"
+                                                              variant="base"
+                                                              title="Last"
+                                                              onclick ={onLast}
+                                            ></lightning-button>         
+                                    </template>
                                 </lightning-button-group>
                             </div>
                         </div>

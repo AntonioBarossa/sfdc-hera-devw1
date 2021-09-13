@@ -20,6 +20,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     @api optionalSkuId;
     @api productOptionObj;
     @api dmlContext;
+    counterText;
     counter;
     filterString;
     mainTitle;
@@ -60,12 +61,23 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     }
     spinner = false;
     showPagination = false;
-    pagesList = ['1', '2', '3', '4', '5'];
+    //pagesList = ['1', '2', '3', '4', '5'];
+    currentPageNumber;
+
+    @track page = 1;//pagination
+    @track pages = [];//pagination
+    @track pagesList;//pagination
+    perpage = 50;//pagination
+    set_size = 5;//pagination
+    totRecs;//pagination
+    fromRec;//pagination
+    toRec;//pagination
 
     connectedCallback(){
         console.log('>>> PRODUCT OPTION OBJ: ' + this.productOptionObj);
 
         this.illustrationMessage = 'I risultati verranno mostrati qui';
+        this.currentPageNumber = 1;
 
         switch (this.dmlContext) {
             case 'delete':
@@ -107,10 +119,11 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         console.log(jsonRecord);
         this.filterString = jsonRecord;
         console.log('>>>> FILTER STRING: ' + this.filterString);
+        this.showPagination = false;
         this.getData(jsonRecord);
 
         this.disableButton('confirmFilter', false);
-        this.showPagination = true;
+        
     }
 
     getData(filter){
@@ -127,7 +140,10 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                     console.log('>>> RECORD COUNTER: ' + result.recordCounter);
                     this.data = result.prodList;
                     this.showResultTable = true;
-                    this.counter = 'Risultati trovati: ' + result.recordCounter;
+                    this.counterText = 'Risultati trovati: ';
+                    this.counter = result.recordCounter;
+                    this.setPages(this.counter);
+                    this.showPagination = true;
                 }
 
             } else {
@@ -206,15 +222,6 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
             console.error('# Name => ' + e.name );
             console.error('# Message => ' + e.message );
             console.error('# Stack => ' + e.stack );
-        }
-    }
-
-    paginationClick(){
-        var el = this.template.querySelector('lightning-datatable');
-        var selected = el.getSelectedRows();
-
-        for (let i = 0; i < selected.length; i++){
-            selectedIdList.push(selected[i].Id);
         }
     }
 
@@ -329,4 +336,158 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         });
     }
     
+    //Pagination --- START ---
+
+    paginationClick(event){
+
+        console.log('>>> PAGE NUMBER ' + this.currentPageNumber);
+
+        /*var el = this.template.querySelector('lightning-datatable');
+        var selected = el.getSelectedRows();
+
+        for (let i = 0; i < selected.length; i++){
+            selectedIdList.push(selected[i].Id);
+        }
+
+        this.spinner = true;
+        this.getData(this.filterString);
+        //this.disableButton('confirmFilter', false);
+        this.showPagination = true;*/
+    }
+
+    setPages(dataLength){
+        this.pages = [];
+        let numberOfPages = Math.ceil(dataLength / this.perpage);
+        console.log('>> tot recs: ' + dataLength + ', numberOfPages: ' + numberOfPages);
+
+        for (let index = 1; index <= numberOfPages; index++) {
+            this.pages.push(index);
+        }
+
+        if(this.pages.length == 1){
+            this.showPagination = false;
+            return;
+        }
+
+        let mid = Math.floor(this.set_size / 2) + 1;
+
+        if (this.page > mid) {
+            this.pagesList = this.pages.slice(this.page - mid, this.page + mid - 1);
+        } else {
+            this.pagesList = this.pages.slice(0, this.set_size);
+        }
+
+    }
+
+    onPageClick(event){
+        this.page = parseInt(event.target.dataset.id, 10);
+        this.pageData();
+    }
+
+    get hasPrev() {
+        this.template.querySelectorAll('[data-id="leftArrow"]').forEach((but) => {
+            if(this.page > 1){
+                but.disabled = false; 
+            } else {
+                but.disabled = true; 
+            }
+        });        
+        //return this.page > 1;
+        return true;
+    }
+
+    get hasNext() {
+        this.template.querySelectorAll('[data-id="rightArrow"]').forEach((but) => {
+            if(this.page < this.pages.length){
+                but.disabled = false; 
+            } else {
+                but.disabled = true; 
+            }
+        });
+               
+        return true;
+        //return this.page < this.pages.length
+    }
+
+    onNext(){
+        this.page++;
+        let mid = Math.floor(this.set_size / 2) + 1;
+
+        if (this.page > mid) {
+            this.pagesList = this.pages.slice(this.page - mid, this.page + mid - 1);
+        } else {
+            this.pagesList = this.pages.slice(0, this.set_size);
+        }
+        this.pageData();
+    }
+
+    onLast(){
+        this.page = this.pages[this.pages.length-1];
+        let mid = Math.floor(this.set_size / 2) + 1;
+
+        if (this.page > mid) {
+            this.pagesList = this.pages.slice(this.page - mid, this.page + mid - 1);
+        } else {
+            this.pagesList = this.pages.slice(0, this.set_size);
+        }
+        this.pageData();
+    }
+
+    onFirst(){
+        this.page = this.pages[0];
+        let mid = Math.floor(this.set_size / 2) + 1;
+
+        if (this.page > mid) {
+            this.pagesList = this.pages.slice(this.page - mid, this.page + mid - 1);
+        } else {
+            this.pagesList = this.pages.slice(0, this.set_size);
+        }
+        this.pageData();
+    }
+
+    onPrev(){
+        this.page--;
+        let mid = Math.floor(this.set_size / 2) + 1;
+
+        if (this.page > mid) {
+            this.pagesList = this.pages.slice(this.page - mid, this.page + mid - 1);
+        } else {
+            this.pagesList = this.pages.slice(0, this.set_size);
+        }
+        this.pageData();
+    }
+
+    pageData(){
+        let page = this.page;
+        let perpage = this.perpage;
+        let startIndex = (page * perpage) - perpage;
+        let endIndex = (page * perpage);
+
+        /*if(this.filterPagination){
+            if(this.allDataFiltered != undefined){
+                this.accountData = this.allDataFiltered.slice(startIndex, endIndex);
+                this.firstLevel = this.allDataFiltered[0];
+                this.secondLevelList = this.allDataFiltered[0][this.detailTable];
+            }
+        } else {
+            if(this.allData != undefined && this.accountData[0] != undefined){
+                this.accountData = this.allData.slice(startIndex, endIndex);
+                this.firstLevel = this.accountData[0];
+                this.secondLevelList = this.accountData[0][this.detailTable];
+            }
+        }
+
+        this.fromRec = (startIndex == 0) ? 1 : startIndex+1;
+        this.toRec = this.fromRec + this.accountData.length - 1 ;
+        try{
+            this.template.querySelector('.scrolltop').scrollTop = 0;
+            this.template.querySelector('.tableScroll').scrollLeft = 0;
+        } catch (error){
+            console.log('# scrollTop or scrollLeft not found');
+        }
+        this.refreshSortButton();
+        this.refreshHeaderCheckbox();*/
+    }
+    //Pagination --- END ---
+
 }
