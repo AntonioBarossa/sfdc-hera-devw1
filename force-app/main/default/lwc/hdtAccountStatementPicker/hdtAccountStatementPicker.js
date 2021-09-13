@@ -356,10 +356,11 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 }
             }
             console.log(row['bmEndDt'] + ' ' + this.formatDateForInsert(row['bmEndDt']));
+            console.log('ROW >>>' + JSON.stringify(row));
             var fields = {
                 'Name' : row.xblnr,
                 'DocumentNumber__c' : row.xblnr, 
-                'Bill__c' : row.boll, 
+                'Bill__c' : row.bollo, 
                 'Type__c' : row.tipoDocDesc,
                 'IssueDate__c' : this.formatDateForInsert(row.bmItemDt),
                 'ExpirationDate__c' : this.formatDateForInsert(row.bmEndDt),
@@ -437,7 +438,10 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 console.log('#CalculateAmount: TvFeeResidual__c -> ' + document.TvFeeResidual__c);
                 console.log('#CalculateAmount: DocumentResidue__c -> ' + document.DocumentResidue__c);
                 amount += document.Amount__c;
-                amountFee += document.TvFeeResidual__c;
+                if(document.TvFeeResidual__c !== null && document.TvFeeResidual__c !== undefined)
+                {
+                    amountFee += document.TvFeeResidual__c;
+                }
                 documentResidue += document.DocumentResidue__c;
             });
         }
