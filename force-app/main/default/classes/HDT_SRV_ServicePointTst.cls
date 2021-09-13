@@ -26,7 +26,7 @@ public with sharing class HDT_SRV_ServicePointTst {
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         }
     }
-	//SERÁ QUE PRECISA MESMO DESTE MÉTODO? OUTROS MÉTODOS JÁ O CHAMAM DURANTE EXECUÇÃO DO MÉTODO
+	
 	@isTest
     public static void testCheckReadAccess() {
  
