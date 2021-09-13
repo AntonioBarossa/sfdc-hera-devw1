@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 18/03/2021
+* @description Class HDT_TRH_Quote
+* @history Keltin Mesonjesi 18/03/2021 – Created class
+*/
 public inherited sharing class HDT_TRH_Quote extends HDT_TRH_TriggerHandler {
     
     public override void beforeInsert(){
