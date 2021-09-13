@@ -22,8 +22,12 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         String debugString = TEST_NAME + ' - getOptionsTest';
         System.debug(debugString);
         
+        //SETUP
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        
         //TEST ServicePoint__c
-        String myId = '';
+        ServicePoint__c myServPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, true)[0];
+        String myId = myServPoint.Id;
         
         Map<String, Object> paramsMap = new Map<String, Object>();
         paramsMap.put('method', 'cluster');
@@ -31,13 +35,28 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         
         
         //TESTING
+        System.debug(debugString + ' - Testing ServicePoint__c');
         HDT_SRV_InformativeManager myTstObj = new HDT_SRV_InformativeManager();
         String result = myTstObj.getOptions(JSON.serialize(paramsMap));
         
         //ASSERTS
         
         
+        
+        
+        
         //TEST BillingProfile__c
+        BillingProfile__c myBillingProfile = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
+        myId = myBillingProfile.Id;
+        
+        //TESTING
+        System.debug(debugString + ' - Testing BillingProfile__c');
+        paramsMap = new Map<String, Object>();
+        paramsMap.put('method', 'cluster');
+        paramsMap.put('context', myId);
+        
+        //ASSERTS
+        
         
         
     }
