@@ -2026,10 +2026,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			insert matriceRemiCode;
 		}
-	}
 
 		return matriceRemiCode;
-	}
+}
 
 
 	public static List<ServiceRequest__c> createServiceRequest(Integer amount, Boolean doInsert) {
@@ -2048,4 +2047,5 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		if (doInsert){
 
 			insert srList;
+	}
 }
