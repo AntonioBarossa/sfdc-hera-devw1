@@ -22,9 +22,9 @@ public inherited sharing class HDT_UTL_ProductAssociation {
             whereConditionList.add('ProductCode LIKE \'%' + filterProduct.ProductCode + '%\'');
         }
 
-        if(!String.isEmpty(filterProduct.Family)){
-            whereConditionList.add('Family = \'' + filterProduct.Family + '\'');
-        }
+        //if(!String.isEmpty(filterProduct.Family)){
+        //    whereConditionList.add('Family = \'' + filterProduct.Family + '\'');
+        //}
 
         if(!String.isEmpty(filterProduct.Version__c)){
             whereConditionList.add('Version__c LIKE \'%' + filterProduct.Version__c + '%\'');
@@ -58,6 +58,12 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         queryString +=  ' (SELECT SBQQ__ConfiguredSKU__c FROM SBQQ__ProductOption__c WHERE SBQQ__OptionalSKU__c = \'' + optionalSkuId + '\') ';
         queryString += 'AND Family IN (\'' + String.join(familyList, '\',\'') + '\')';
         
+        //if(!String.isEmpty(filterProduct.Family)){
+        //    queryString += ',\'' + filterProduct.Family + '\'';
+        //}
+
+        //queryString += ;
+
         return queryString;
     }
     

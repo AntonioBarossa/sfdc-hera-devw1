@@ -15,7 +15,7 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
     showError = false;
     errorHeader = '';
     errorMessage = '';
-    findMethod;
+    dmlContext;
 
     errorHeader = 'Associazione';
     errorMessage = '';
@@ -78,14 +78,14 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
 
     createAssociation(event){
         console.log('### Parent createAssociation ###');
-        this.findMethod = 'insert';
+        this.dmlContext = 'insert';
         this.showWelcom = false;
         this.showCreateRecord = true;
     }
 
     deleteAssociation(event){
         console.log('### Parent deleteAssociation ###');
-        this.findMethod = 'delete';
+        this.dmlContext = 'delete';
         this.showWelcom = false;
         //this.showCreateRecord = true;
         this.showSearchTable = true;

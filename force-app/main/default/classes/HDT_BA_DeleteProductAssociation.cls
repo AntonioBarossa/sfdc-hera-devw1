@@ -49,8 +49,8 @@ public without sharing class HDT_BA_DeleteProductAssociation implements Database
             System.debug('>>> ' + prodOpt.Id);
         }
 
-        //List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;
-        //errorData = HDT_SRV_ProductAssociation.deleteProductOption(chunkList, errorData);
+        List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;
+        errorData = HDT_SRV_ProductAssociation.deleteProductOption(chunkList, errorData);
 
     }
 

@@ -33,7 +33,7 @@
 
     <template if:true={showSearchTable} >
         <c-hdt-product-association-search-table
-            find-method={findMethod}
+            dml-context={dmlContext}
             optional-sku-id={productid}
             product-option-obj={productOptionObj}
             product-option-id={productOptionId}

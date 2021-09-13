@@ -2,14 +2,14 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
     public static Integer batchLimit = 1;
 
-    public static Object getProductList(String filterString, String optionalSkuId, String findMethod){
+    public static Object getProductList(String filterString, String optionalSkuId, String dmlContext){
 
         System.debug('>>> filterString: ' + filterString);
         System.debug('>>> optionalSkuId: ' + optionalSkuId);
         HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj respObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj();
 
         try{
-            String queryString = HDT_UTL_ProductAssociation.generateQueryString(filterString, 'AND', optionalSkuId, findMethod);
+            String queryString = HDT_UTL_ProductAssociation.generateQueryString(filterString, 'AND', optionalSkuId, dmlContext);
             System.debug('>>> queryString: ' + queryString);
             
             Integer recordCounter = HDT_QR_ProductAssociation.getCountOfNonConfiguredProduct2(queryString);
@@ -28,22 +28,22 @@ public inherited sharing class HDT_SRV_ProductAssociation {
         return respObj;
     }
 
-    public static Object runProductOptionAssociation(String optionalSkuId, String productOptionObj, List<String> recordList, String executionType, String filterString, String findMethod){
+    public static Object runProductOptionAssociation(String optionalSkuId, String productOptionObj, List<String> recordList, String executionType, String filterString, String dmlContext){
         
         System.debug('>>> productOptionObj: ' + productOptionObj);
         System.debug('>>> recordList: ' + recordList);
         System.debug('>>> executionType: ' + executionType);
         System.debug('>>> filterString: ' + filterString);
-        System.debug('>>> findMethod: ' + findMethod);   
+        System.debug('>>> dmlContext: ' + dmlContext);   
 
         HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj respRunBatchObj;
 
         try{
 
-            if(findMethod.equalsIgnoreCase('insert')){
-                respRunBatchObj = HDT_UTL_ProductAssociation.createProductOptionAssociation(respRunBatchObj, productOptionObj, recordList, executionType, filterString, findMethod);
-            } else if(findMethod.equalsIgnoreCase('delete')){
-                respRunBatchObj = HDT_UTL_ProductAssociation.deleteProductOptionAssociation(respRunBatchObj, optionalSkuId, recordList, executionType, filterString, findMethod);
+            if(dmlContext.equalsIgnoreCase('insert')){
+                respRunBatchObj = HDT_UTL_ProductAssociation.createProductOptionAssociation(respRunBatchObj, productOptionObj, recordList, executionType, filterString, dmlContext);
+            } else if(dmlContext.equalsIgnoreCase('delete')){
+                respRunBatchObj = HDT_UTL_ProductAssociation.deleteProductOptionAssociation(respRunBatchObj, optionalSkuId, recordList, executionType, filterString, dmlContext);
             }
             
 
