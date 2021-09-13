@@ -7,7 +7,7 @@
         <div class="slds-col slds-size_1-of-3">
             <lightning-combobox name="modalitaFirma" label="Modalità di firma" value={signMode} placeholder="Seleziona una Modalità" onchange={handleChangeSignMode}
                 options={modalitaFirma} read-only={disableSignModeInternal} data-id="modalitaFirma" required></lightning-combobox>
-            <lightning-input type="email" data-id="email" required={emailRequired} label="Indirizzo Email" value={email} disabled={disableinput} pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"></lightning-input>
+            <lightning-input type="email" data-id="email" required={emailRequired} label="Indirizzo Email" value={email} disabled={disableinput} pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" message-when-pattern-mismatch="Inserire un indirizzo e-mail valido."></lightning-input>
         </div>
         <div class="slds-col slds-size_1-of-8 slds-grow-none">
         </div>
@@ -15,7 +15,7 @@
             <lightning-combobox name="modalitaInvio" label="Modalità di invio documentazione" value={sendMode}
                 placeholder="Seleziona una Modalità" options={modalitaInvio} onchange={handleChange}
                 disabled={disableinput} data-id="modalitaSpedizione" required></lightning-combobox>
-            <lightning-input type="tel" disabled={disableinput} required={phoneRequired} label="Cellulare" data-id="telefono" name="phone3" value={phone} pattern="[0-9]{10}">
+            <lightning-input type="tel" disabled={disableinput} required={phoneRequired} label="Cellulare" data-id="telefono" name="phone3" value={phone} pattern="[0-9]{9,10}" message-when-pattern-mismatch="Il cellulare deve contenere 9 o 10 cifre.">
             </lightning-input>
 
         </div>
