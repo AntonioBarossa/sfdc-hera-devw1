@@ -1,41 +1,41 @@
 public without sharing class HDT_BA_ProductAssociation implements Database.Batchable<sObject>, Database.Stateful {
 
-    //HDT_BA_ProductAssociation deepClone = new HDT_BA_ProductAssociation();
-    //Id batchId = Database.executeBatch(deepClone, 20);
-
-    public Integer recordsProcessed = 0;
-    public Map<String, String> errorCloneMap;
     public SBQQ__ProductOption__c productOptionToClone;
     public String queryString;
+    public String batchType = '';
+    public List<String> idList;
+    public String filterString;
 
-    // 1 - RUN BATCH FOR ALL PRODUCT2
-    public HDT_BA_ProductAssociation(Id productOptionId){
-        productOptionToClone = HDT_QR_ProductAssociation.getProductOptionRecordById(productOptionId);
-        queryString += 'SELECT Id ';
-        queryString += 'FROM Product2 ';
-    }
-
-    // 2 - RUN BATCH FOR FILTERED PRODUCT2 LIST
-    public HDT_BA_ProductAssociation(Id productOptionId, List<Id> productIdList){
-        productOptionToClone = HDT_QR_ProductAssociation.getProductOptionRecordById(productOptionId);
-
-        queryString += 'SELECT Id ';
-        queryString += 'FROM Product2 ';
-        queryString += 'WHERE Id IN :productIdList';
-    }
-
-    // 3 - RUN BATCH FOR PRODUCT2 TO FILTER WITH WHERE CONDITION
-    public HDT_BA_ProductAssociation(Id productOptionId, String filterString){
-        productOptionToClone = HDT_QR_ProductAssociation.getProductOptionRecordById(productOptionId);
-
-        String whereCondition = HDT_SRV_ProductAssociation.generateWhereCondition(filterString, 'AND');
-
-        queryString += 'SELECT Id ';
-        queryString += 'FROM Product2 ';
-        queryString += whereCondition;
+    public HDT_BA_ProductAssociation(String type, SBQQ__ProductOption__c prodOptToClone, List<String> productIdList, String filter){
+        productOptionToClone = prodOptToClone;
+        idList = productIdList;
+        batchType = type;
+        filterString = filter;
     }
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
+
+        queryString = 'SELECT Id ';
+
+        switch on batchType {
+            when 'select' {
+                // 1 - RUN BATCH FOR SELECTED PRODUCT2 LIST
+                queryString += 'FROM Product2 ';
+                queryString += 'WHERE Id IN :idList';
+            }
+            when 'all' {
+                // 2 - RUN BATCH FOR ALL PRODUCT2
+                List<String> familyList = HDT_UTL_ProductAssociation.getFamilyList();
+                queryString += 'FROM Product2 ';
+                queryString += 'WHERE Status__c=\'In Sviluppo\' AND Family IN :familyList';
+            }
+            when 'filter' {
+                // 3 - RUN BATCH FOR PRODUCT2 TO FILTER WITH WHERE CONDITION
+                queryString += filterString;
+            }
+        }
+
+        System.debug('>>> QUERY: ' + queryString);
         return Database.getQueryLocator(queryString);
     }
 
@@ -49,8 +49,26 @@ public without sharing class HDT_BA_ProductAssociation implements Database.Batch
             productOptionList.add(newRecord);
         }
         System.debug('>>> record to insert: ' + productOptionList.size());
+
+        HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertResult = new HDT_WRP_ProductAssociation.HDT_WRP_InsertResult();
+        
+        if(productOptionList.size() > 0){
+            List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData = new List<HDT_WRP_ProductAssociation.HDT_WRP_LineError>();
+            errorData = HDT_SRV_ProductAssociation.databaseInsert(productOptionList, errorData);
+
+            if(errorData.size() > 0){
+                insertResult.success = false;
+                insertResult.message = 'Error during product option insert';
+            } else {
+                insertResult.success = true;
+                //insertResult.message = 'No product option record found';
+            }
+        }
+
     }
 
-    public void finish(Database.BatchableContext bc){}
+    public void finish(Database.BatchableContext bc){
+        //METHOD TO SEND EMAIL NOTIFICATION
+    }
 
 }
