@@ -1459,7 +1459,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             channel: 'CRM',
             //date: selected.dataEmissione,
             date: date[2] + '-' + date[1] + '-' + date[0],
-            documentType: 'Bolletta',
+            type: 'Bolletta',
             company: selected.societa
         }
 
