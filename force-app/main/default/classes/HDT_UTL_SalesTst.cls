@@ -9,6 +9,9 @@ public class HDT_UTL_SalesTst {
     @TestSetup
     static void makeData(){
 
+        
+        insert new City__c(Name='city0',SDV__c='svd0',ServiceEle__c=true);
+
         Account acc0=new Account();
 		acc0.Name='test account0';
 		acc0.CompanyOwner__c='AAA-EBT';
@@ -24,6 +27,7 @@ public class HDT_UTL_SalesTst {
         acc0.IsWrongFiscalData__c = false;
         acc0.BillingIsAddressVerified__c = true;
 		acc0.CustomerCode__c = '0000000';
+		acc0.code__c = '00';
         
         Account acc1=new Account();
 		acc1.Name='test account1';
@@ -45,7 +49,7 @@ public class HDT_UTL_SalesTst {
         insert new Sale__c(Name='sale0',Account__c=acc0.Id);
         insert new Sale__c(Name='sale1',Account__c=acc1.Id);
 
-        insert new ServicePoint__c(SupplyProvince__c='AQ',GlobalMigrationKey__c='1123255');
+        insert new ServicePoint__c(SupplyProvince__c='AQ',GlobalMigrationKey__c='1123255',SupplyCity__c='city0',CommoditySector__c='Energia Elettrica',Distributor__c=acc0.Id);
     }
 
     @IsTest
@@ -68,6 +72,22 @@ public class HDT_UTL_SalesTst {
         ServicePoint__c sp=[SELECT Id FROM ServicePoint__c WHERE GlobalMigrationKey__c='1123255' LIMIT 1];
         Test.startTest();
         System.assert(!HDT_UTL_Sales.isWinback(sp.Id));
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void getAgentNameAndCodeListTest(){
+        List<ServicePoint__c> serviceList=[SELECT Id,SupplyCity__c,CommoditySector__c,Distributor__r.code__c FROM ServicePoint__c WHERE GlobalMigrationKey__c='1123255'];
+        Test.startTest();
+        System.assert(HDT_UTL_Sales.getAgentNameAndCodeList(serviceList,'').get(serviceList[0].Id)=='');//because there are no custom metadatas
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void getAgentNameAndCodeTest(){
+        ServicePoint__c sp=[SELECT Id,SupplyCity__c,CommoditySector__c,Distributor__r.code__c FROM ServicePoint__c WHERE GlobalMigrationKey__c='1123255' LIMIT 1];
+        Test.startTest();
+        System.assert(HDT_UTL_Sales.getAgentNameAndCode(sp,'').size()==0);//because there are no custom metadatas
         Test.stopTest();
     }
 }
