@@ -736,10 +736,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             if(billingProblem == 'Si' 
             && (
                 (customerAggreement == null || customerAggreement == '')
-                )
-            ){
+                || (String.IsBlank(dlNote) || String.isEmpty(dlNote) || dlNote == '' || dlNote == null)
+            	)
+               )
+            {
 
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizzare: Accordi con il Cliente'));
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizzare: Accordi con il Cliente e Note'));
 
             } else {
 
