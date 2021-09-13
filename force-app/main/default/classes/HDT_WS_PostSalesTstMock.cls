@@ -26,9 +26,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
             return creaModificaLayoutFatturaResponseNull(request);
         }else if(endpoint.equalsIgnoreCase('Callout:ModificaLayoutFattura_notOK')){
             return creaModificaLayoutFatturaResponseNotOK(request);
-        } else if (endpoint.equalsIgnoreCase('Callout:BillingsBlockReminder')){
-            return creaBillingsBlockReminder(request);
-        }else{
+        } else{
             return creaRicResponse(request);
         }
     }
@@ -248,24 +246,5 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         
         return response;
     }
-    
-    public static HttpResponse creaBillingsBlockReminder (HttpRequest request){
-        
-        System.debug('HDT_WS_PostSalesTstMock - creaBillingsBlockReminder');
-        HttpResponse response = new HttpResponse();
-        
-        String responseOutcome = 'OK';
-        
-        Map<String, Object> bodyResp = new Map<String, Object>();
-        bodyResp.put('note', responseOutcome);
-        
-        response.setHeader('Content-Type', 'application/json');
-        response.setBody(JSON.serialize(bodyResp));
-        response.setStatusCode(200);
-        response.setStatus('OK');
-        
-        return response;
-    }
-    
     
 }
