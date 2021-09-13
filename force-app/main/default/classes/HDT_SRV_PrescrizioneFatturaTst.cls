@@ -170,6 +170,7 @@ public with sharing class HDT_SRV_PrescrizioneFatturaTst {
         
         //SETUP
         mySetup();
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
         
         Case obj = [SELECT Id, CaseNumber, ContractCode__c, ElementDetail__c FROM Case];
         System.debug(debugString + ' - case obj: ' + obj);
