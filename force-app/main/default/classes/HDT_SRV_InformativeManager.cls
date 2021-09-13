@@ -33,9 +33,9 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
             context = contextId.getSObjectType().getDescribe().getName();
             
         }
-        System.debug('getCluster - context: ' + context);
         
-        List<HDT_ClusterProcess__mdt> clusterList =  HDT_QR_InformativeManager.getClusterProcess(context);
+        System.debug('getCluster - context: ' + context);
+        List<HDT_Informative_Configuration__mdt> clusterList =  HDT_QR_InformativeManager.getClusterProcess(context);
         return JSON.serialize(convertToListMap(distinctRecords(clusterList,'Cluster__c'),'Cluster__c'));
     }
     private String getProcess(Map<String, Object> paramsMap){
