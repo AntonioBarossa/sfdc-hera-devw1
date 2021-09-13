@@ -1608,6 +1608,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>DocumentPackage__c</picklist>
+        <values>
+            <fullName>Non Validato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ElectronicInvoicingMethod__c</picklist>
         <values>
             <fullName>Estero</fullName>

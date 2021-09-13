@@ -9,18 +9,18 @@
         ></c-hdt-confirmation-modal>
     </template>
 
-    <lightning-card title="Offerte Commerciali non configurate" variant="narrow" icon-name="standard:bundle_config">
+    <lightning-card title={mainTitle} variant="narrow" icon-name="standard:bundle_config">
 
         <div slot="actions">
             <lightning-button-group>
-                <lightning-button label="Conferma selezione" name="confirmSelected" onclick={openConfirmation} variant="neutral" icon-name="utility:multi_select_checkbox"></lightning-button>
-                <lightning-button label="Conferma filtro" name="confirmFilter" onclick={openConfirmation} variant="neutral" icon-name="utility:filterList"></lightning-button>
-                <lightning-button label="Conferma tutti" name="confirmAll" onclick={openConfirmation} variant="neutral" icon-name="utility:database"></lightning-button>
+                <lightning-button disabled label="Conferma selezione" name="confirmSelected" onclick={openConfirmation} variant="neutral" icon-name="utility:multi_select_checkbox" ></lightning-button>
+                <lightning-button disabled label="Conferma filtro" name="confirmFilter" onclick={openConfirmation} variant="neutral" icon-name="utility:filterList" ></lightning-button>
+                <lightning-button label="Conferma catalogo" name="confirmAll" onclick={openConfirmation} variant="neutral" icon-name="utility:database"></lightning-button>
                 <lightning-button label="Chiudi" name="closeModal" onclick={openConfirmation} variant="neutral" icon-name="utility:close"></lightning-button>
             </lightning-button-group>
         </div>
 
-        <div class="slds-card__body slds-card__body_inner">
+        <div class="slds-card__body slds-card__body_inner" style="height: 80vh;" >
 
             <div class="slds-section slds-is-open slds-border_top slds-border_bottom slds-m-top_small slds-m-bottom_small">
                 <h3 class="slds-section__title slds-theme_shade">
@@ -49,13 +49,55 @@
                         </div>
 
                         <div class="slds-grid slds-wrap">
-                            <div class="slds-col slds-size_2-of-12">
+                            <!-- Filter Button -->
+                            <div class="slds-col slds-size_2-of-12 slds-m-left_small">
                                 <div class="slds-m-bottom_small">
                                     <lightning-button label="Applica filtro" name="applyFilter" onclick={applyFilter} variant="neutral" icon-name="utility:search"></lightning-button>
                                 </div>
                             </div>
-                            <div class="slds-col slds-size_2-of-12 slds-text-heading_small slds-border_bottom">
-                              <span>{counter}</span>
+                            <!-- counter -->
+                            <div class="slds-col slds-size_2-of-12">
+                              <div if:true={showResultTable} class="slds-text-heading_small slds-border_bottom" >{counter}</div>
+                            </div>
+                            <!-- Pagination buttons -->
+                            <div if:true={showPagination} class="slds-col slds-size_4-of-12 slds-m-left_large">
+                                <lightning-button-group>
+                                    <lightning-button icon-name="utility:jump_to_left"
+                                                      data-id="leftArrow"
+                                                      variant="base"
+                                                      title="prima pagina"
+                                                      onclick={paginationClick}
+                                    ></lightning-button>
+                                    <lightning-button icon-name="utility:left"
+                                                      data-id="leftArrow"
+                                                      variant="base"
+                                                      title="precedente"
+                                                      onclick={paginationClick}
+                                    ></lightning-button>
+                                    <template for:each={pagesList} for:item="pageNumber">
+                                        <lightning-button data-name="pagination"
+                                                          data-id={pageNumber}
+                                                          variant="neutral"
+                                                          label={pageNumber}
+                                                          title={pageNumber}
+                                                          onclick={onPageClick}
+                                                          key={pageNumber}
+                                        ></lightning-button>
+                                    </template>
+                                    <lightning-button icon-name="utility:right"
+                                                      data-id="rightArrow"
+                                                      variant="base"
+                                                      title="prossima"
+                                                      class="slds-m-left_x-small"
+                                                      onclick={paginationClick}
+                                    ></lightning-button>
+                                    <lightning-button icon-name="utility:jump_to_right"
+                                                      data-id="rightArrow"
+                                                      variant="base"
+                                                      title="ultima pagina"
+                                                      onclick={paginationClick}
+                                    ></lightning-button>  
+                                </lightning-button-group>
                             </div>
                         </div>
 
@@ -65,7 +107,6 @@
                 </div>
             </div>
 
-            <div>
                 <div if:true={spinner} class="progress">
                     <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
                 </div>
@@ -77,15 +118,24 @@
                     ></c-hdt-custom-illustration>
                 </div>
 
-                <div if:true={showResultTable} style="height: 300px;">
-                    <lightning-datatable
-                            key-field="id"
-                            data={data}
-                            columns={columns}
-                    ></lightning-datatable>
-                    <!--onrowselection={getSelectedRow}-->
+                <div if:true={showResultTable} class="slds-section slds-is-open slds-m-top_small slds-m-bottom_small">
+                    <h3 class="slds-section__title slds-theme_shade">
+                        <span class="slds-truncate slds-p-horizontal_small" title="filtro">{sectionTitle}</span>
+                    </h3>
+                    <div aria-hidden="false" class="slds-section__content slds-border_bottom" style="height: 50vh;">
+
+                        <lightning-datatable
+                                key-field="id"
+                                data={data}
+                                columns={columns}
+                                onrowselection={getSelectedRow}
+                        ></lightning-datatable>
+                    
+                    
+                    </div>
+                    
                 </div> 
-            </div>
+        
         </div>
 
     </lightning-card>

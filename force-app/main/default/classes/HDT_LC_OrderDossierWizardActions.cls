@@ -31,6 +31,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             orderToUpdate.Phase__c = 'Documentazione da validare';
         }
 
+        orderToUpdate.DocumentPackage__c = 'Richiesto';
+
         for (Order childOrd : childOrders) {
             if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
                 ordersToUpdate.add(

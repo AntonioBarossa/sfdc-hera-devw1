@@ -349,6 +349,11 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+  <!--HRAWRM-544  extra bozon -->
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>SurveyResponse__c.SurveyCRM__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>CAMPAIGN.NAME</fields>
         <fields>CAMPAIGN.STATUS</fields>
@@ -361,7 +366,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002LiVF</masterLabel>
+        <masterLabel>00h1j0000020aBd</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
