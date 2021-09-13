@@ -161,17 +161,4 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
     }
     
     
-    //submitRequest
-    @isTest
-    private static void executeTest_NotOk() {
-        
-        //DEBUG
-        String debugString = 'HDT_SRV_ModificaLayoutFatturaTst - executeTest_NotOk';
-        
-        //SETUP
-        
-        
-    }
-    
-    
 }
