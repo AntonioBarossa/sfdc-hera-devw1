@@ -20,10 +20,10 @@ public with sharing class HDT_SRV_PrescrizioneFatturaTst {
         
     }
     
-    
-    
     //TESTS
+    
     //execute
+    @isTest
     private static void executeTest(){
         
         //DEBUG
@@ -31,6 +31,15 @@ public with sharing class HDT_SRV_PrescrizioneFatturaTst {
         
         //SETUP
         mySetup();
+        
+        //SUB-SETUP
+        ///CLICK
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        
+        ///AUTORIZZARE CAMBI DI FASE SUL CASE
+        Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Blocco Effettuato', 'Bozza', rt, 'HDT_RT_Morosita');
+        
         
         Case obj = [SELECT Id, CaseNumber, ContractCode__c, ElementDetail__c FROM Case];
         System.debug(debugString + ' - case obj: ' + obj);
@@ -44,10 +53,13 @@ public with sharing class HDT_SRV_PrescrizioneFatturaTst {
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) myObject.execute(argsMap);
         
         //ASSERTS
-        System.assertEquals(Successo_Test, result.getBody());
+        System.assert(result.success);
+        System.assertEquals('OK', result.message);
         
     }
     
+    //TODO: TEST CASE sapIntegration.responseCode == 200 FALSE ---- 'Errore Lavorazione SAP'
+    //TODO: TEST CASE responseOutcome == 'KO' ---- 'Blocco Non Effettuato'
     
     
 }

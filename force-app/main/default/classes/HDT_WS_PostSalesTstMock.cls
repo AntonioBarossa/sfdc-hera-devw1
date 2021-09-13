@@ -254,7 +254,10 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         System.debug('HDT_WS_PostSalesTstMock - creaBillingsBlockReminder');
         HttpResponse response = new HttpResponse();
         
-        String bodyResp = 'Successo_Test';
+        String responseOutcome = 'OK';
+        
+        Map<String, Object> bodyResp = new Map<String, Object>();
+        bodyResp.put('note', responseOutcome);
         
         response.setHeader('Content-Type', 'application/json');
         response.setBody(JSON.serialize(bodyResp));
