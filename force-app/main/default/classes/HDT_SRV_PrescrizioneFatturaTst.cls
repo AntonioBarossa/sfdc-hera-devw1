@@ -161,6 +161,27 @@ public with sharing class HDT_SRV_PrescrizioneFatturaTst {
     }
     
     
+    //updateFuture
+    @isTest
+    private static void updateFutureTest(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - updateFutureTest';
+        
+        //SETUP
+        mySetup();
+        
+        Case obj = [SELECT Id, CaseNumber, ContractCode__c, ElementDetail__c FROM Case];
+        System.debug(debugString + ' - case obj: ' + obj);
+        
+        //TESTING
+        Test.startTest();
+        HDT_SRV_PrescrizioneFattura.updateFuture(JSON.serialize(obj));
+        Test.stopTest();
+        
+    }
+    
+    
     
     
     //WEBSERVICE MOCKS
