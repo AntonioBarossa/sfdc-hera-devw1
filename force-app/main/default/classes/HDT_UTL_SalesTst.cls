@@ -87,7 +87,8 @@ public class HDT_UTL_SalesTst {
     static void getAgentNameAndCodeTest(){
         ServicePoint__c sp=[SELECT Id,SupplyCity__c,CommoditySector__c,Distributor__r.code__c FROM ServicePoint__c WHERE GlobalMigrationKey__c='1123255' LIMIT 1];
         Test.startTest();
-        System.assert(HDT_UTL_Sales.getAgentNameAndCode(sp,'').size()==0);//because there are no custom metadatas
+        System.assert(HDT_UTL_Sales.getAgentNameAndCode(sp,'').get('nomeAgente')=='');//because there are no custom metadatas
+        System.assert(HDT_UTL_Sales.getAgentNameAndCode(sp,'').get('codiceAgente')=='');//because there are no custom metadatas
         Test.stopTest();
     }
 }
