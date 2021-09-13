@@ -18,10 +18,16 @@ D-Altri usi</description>
         <valueSetName>HDT_SupplyType</valueSetName>
         <valueSettings>
             <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <controllingFieldValue>Teleriscaldamento</controllingFieldValue>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <controllingFieldValue>Ambiente</controllingFieldValue>
             <valueName>Domestico</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <controllingFieldValue>Teleriscaldamento</controllingFieldValue>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <controllingFieldValue>Ambiente</controllingFieldValue>
             <valueName>Non Domestico</valueName>
         </valueSettings>
         <valueSettings>
