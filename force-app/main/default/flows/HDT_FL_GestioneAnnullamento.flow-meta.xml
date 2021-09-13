@@ -124,6 +124,31 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <name>NoteAnnullamento</name>
+        <label>NoteAnnullamento</label>
+        <locationX>799</locationX>
+        <locationY>2024</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssegnaFormattazioneNote</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cancellationNote</name>
+            <value>
+                <elementReference>GetCaseAggiornato.CancellationNote__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>Annullamento</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare</name>
@@ -168,14 +193,14 @@
         <locationX>965</locationX>
         <locationY>2320</locationY>
         <assignmentItems>
-            <assignToReference>GetCase.Phase__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullamento - Da inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.NotCancellable__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -191,28 +216,28 @@
         <locationX>1493</locationX>
         <locationY>2896</locationY>
         <assignmentItems>
-            <assignToReference>GetCase.Phase__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.Status</assignToReference>
+            <assignToReference>GetCaseAggiornato.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Closed</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.NotCancellable__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
@@ -305,7 +330,7 @@
         <locationX>965</locationX>
         <locationY>2200</locationY>
         <assignmentItems>
-            <assignToReference>GetCase.PreviousPhase__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.PreviousPhase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetCase.Phase__c</elementReference>
@@ -540,6 +565,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaFormattazioneNote</name>
+        <label>AssegnaFormattazioneNote</label>
+        <locationX>966</locationX>
+        <locationY>2052</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.CancellationNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NoteAnnullamento.cancellationNote</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>InviataHeroku</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>1467</locationX>
@@ -577,28 +618,28 @@
         <locationX>1229</locationX>
         <locationY>2896</locationY>
         <assignmentItems>
-            <assignToReference>GetCase.Phase__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Bozza Annullata</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.Status</assignToReference>
+            <assignToReference>GetCaseAggiornato.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Closed</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.NotCancellable__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
@@ -1109,6 +1150,11 @@
         <expression>DATE( Year(ADDMONTHS({!GetRecord.Contract__r.EndDate},2)),MONTH( ADDMONTHS({!GetRecord.Contract__r.EndDate},2)),1 ) -1</expression>
     </formulas>
     <formulas>
+        <name>NoteAnnullamentoFormula</name>
+        <dataType>String</dataType>
+        <expression>TEXT(NOW()) &amp; &quot;: &quot; &amp; {!GetCaseAggiornato.CancellationNote__c}</expression>
+    </formulas>
+    <formulas>
         <name>OrderCancellationPhase</name>
         <dataType>String</dataType>
         <expression>IF({!ProcessType}=&quot;Ripensamento&quot;,&quot;Ripensamento - Da Inviare&quot;,&quot;Annullamento - Da Inviare&quot;)</expression>
@@ -1296,6 +1342,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetCaseAggiornato</name>
+        <label>GetCaseAggiornato</label>
+        <locationX>733</locationX>
+        <locationY>1918</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>NoteAnnullamento</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCase.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetOrder</name>
         <label>GetOrder</label>
         <locationX>3803</locationX>
@@ -1408,7 +1475,7 @@
         <label>Aggiorna Case</label>
         <locationX>1162</locationX>
         <locationY>3208</locationY>
-        <inputReference>GetCase</inputReference>
+        <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Causale</name>
@@ -1416,7 +1483,7 @@
         <locationX>1162</locationX>
         <locationY>1841</locationY>
         <connector>
-            <targetReference>InviataHeroku</targetReference>
+            <targetReference>GetCaseAggiornato</targetReference>
         </connector>
         <inputReference>GetCase</inputReference>
     </recordUpdates>
@@ -1443,8 +1510,8 @@
     <recordUpdates>
         <name>Aggiorna_Fase</name>
         <label>Aggiorna Fase</label>
-        <locationX>1634</locationX>
-        <locationY>1995</locationY>
+        <locationX>1915</locationX>
+        <locationY>2053</locationY>
         <inputReference>GetRecord</inputReference>
     </recordUpdates>
     <recordUpdates>

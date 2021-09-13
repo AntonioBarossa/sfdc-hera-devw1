@@ -6,10 +6,10 @@
         <div>
             <lightning-button label="Survey" title="Survey" onclick={surveyClick} class="slds-m-right_xx-small">
             </lightning-button>
-            <div class="slds-p-top--x-small">
+            <div class="slds-p-top--x-small" data-id="divImg" ><!-- Start  HRAWRM-544 10-09-2021 -->
                 <img class="slds-p-horizontal--large" src={surveyIcon} style="height: 30px; width: auto;" />
             </div>
         </div>
-        <c-hdt-campaign-survey object-api-name={objectApiName} record-id={recordId}></c-hdt-campaign-survey>
+        <c-hdt-campaign-survey object-api-name={objectApiName}  onsurveysize={hanldeSurveySize} record-id={recordId}></c-hdt-campaign-survey><!-- Start  HRAWRM-544 10-09-2021 -->
     </div>
 </template>

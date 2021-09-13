@@ -1,10 +1,12 @@
 import { LightningElement, api } from 'lwc';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import { deleteRecord } from 'lightning/uiRecordApi';
 
 export default class HdtProductOptionEditForm extends LightningElement {
 
     @api optionalSkuId;
     productOptionId;
+    productOptionObj;
 
     fieldsList = [
         'SBQQ__Number__c', 'SBQQ__Quantity__c',
@@ -26,22 +28,33 @@ export default class HdtProductOptionEditForm extends LightningElement {
 
     handleSuccess(event) {
         try{
-        console.log('>>>> handleSuccess');
-        console.log('>>>> PRODUCT OPTION ID: ' + event.detail.id);
+          console.log('>>>> handleSuccess');
+          console.log('>>>> PRODUCT OPTION ID: ' + event.detail.id);
 
-        const evt = new ShowToastEvent({
-            title: "Prodotto opzione",
-            message: "Configurazione eseguita correttamente",
-            variant: "success"
-        });
-        this.dispatchEvent(evt);
+          this.productOptionId = event.detail.id;
 
-        const saverecord = new CustomEvent("saverecord", {
-            detail: {productOptionId: event.detail.id}
+          const evt = new ShowToastEvent({
+              title: "Prodotto opzione",
+              message: "Configurazione eseguita correttamente",
+              variant: "success"
           });
-    
+          this.dispatchEvent(evt);
+
+          var criteriaObj = {};
+          this.template.querySelectorAll('lightning-input-field').forEach((field) => {
+            criteriaObj[field.fieldName] = field.value;
+          });
+  
+          var jsonRecord = JSON.stringify(criteriaObj);
+
+          const saverecord = new CustomEvent("saverecord", {
+            //detail: {productOptionId: event.detail.id}
+            detail: {productOptionObj: jsonRecord}
+          });
+      
           // Dispatches the event.
           this.dispatchEvent(saverecord);
+          this.delete();
         } catch (e){
             console.log('>>> ' + JSON.stringify(e));
         }
@@ -61,6 +74,22 @@ export default class HdtProductOptionEditForm extends LightningElement {
     
           // Dispatches the event.
           this.dispatchEvent(closeEditForm);
+    }
+
+    delete(event) {
+      deleteRecord(this.productOptionId)
+          .then(() => {
+              console.log('>>>> RECORD DELETED');
+          })
+          .catch(error => {
+              this.dispatchEvent(
+                  new ShowToastEvent({
+                      title: 'Error deleting record',
+                      message: error.body.message,
+                      variant: 'error'
+                  })
+              );
+          });
     }
 
     /*handleSubmitButtonClick(){
