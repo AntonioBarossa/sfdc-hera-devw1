@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DistributorName__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Distributor Name</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>DIRETTO SNAM-10R0000020</fullName>
+                <default>true</default>
+                <label>DIRETTO SNAM-10R0000020</label>
+            </value>
+            <value>
+                <fullName>DIRETTO SGM-10R0000230</fullName>
+                <default>false</default>
+                <label>DIRETTO SGM-10R0000230</label>
+            </value>
+            <value>
+                <fullName>DIRETTO EDISON-10R0000051</fullName>
+                <default>false</default>
+                <label>DIRETTO EDISON-10R0000051</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
