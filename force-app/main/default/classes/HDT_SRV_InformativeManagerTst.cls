@@ -46,7 +46,7 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         
         
         //TEST BillingProfile__c
-        BillingProfile__c myBillingProfile = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
+        BillingProfile__c myBillingProfile = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id)[0];
         myId = myBillingProfile.Id;
         
         //TESTING
