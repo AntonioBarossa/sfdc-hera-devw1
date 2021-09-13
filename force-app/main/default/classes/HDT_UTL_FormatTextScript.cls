@@ -136,6 +136,13 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     private String overwriteValue(String fieldValue, String sobjectApiName, String fieldApiName){
         //controlla su CS o CMT se il valore va sovrascritto (ossia se c'è una corrispondenza tra fieldApiName e ObjectApiName),
         // se sì converti in decimal, aumenta, riconverti in stringa, altrimenti rimanda indietro il valore che ti è arrivato
+
+        if (sobjectApiName=='Order' && fieldApiName=='SalesCompany__c') {
+            if (fieldValue=='Hera Comm S.p.A.') {
+                fieldValue += ' con sede a Via Molino Rosso, 8 40026 Imola (BO)';
+            }
+        }
+
         return fieldValue;
     }
 
