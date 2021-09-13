@@ -312,7 +312,7 @@
         <locationX>1601</locationX>
         <locationY>2510</locationY>
         <assignmentItems>
-            <assignToReference>GetCaseSottoscrittore.BankAccountSignatoryFirstName__c</assignToReference>
+            <assignToReference>GetCaseSottoscrittore.BankAccountSignatoryFiscalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>UpperCaseCFSott</elementReference>
@@ -2770,7 +2770,7 @@
             <targetReference>Il_Case_in_Bozza</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
