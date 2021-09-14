@@ -29753,6 +29753,10 @@
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Account-Account Distributori</layout>
+        <recordType>Account.HDT_RT_Distributore</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Account-Partner Community</layout>
         <recordType>Account.HDT_RT_Business</recordType>
     </layoutAssignments>
