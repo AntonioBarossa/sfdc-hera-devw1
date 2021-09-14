@@ -1,8 +1,8 @@
 /**
  * @author Valere (valere@noeli-it.net)
  * @date 13/09/2021
- * @description HDT_QR_RateCategory Test Classes
- * @history valere - 10/09/2021– Created Class
+ * @description HDT_UTL_Sales Test Class
+ * @history valere - 13/09/2021– Created Class
  */
 @IsTest
 public class HDT_UTL_SalesTst {
