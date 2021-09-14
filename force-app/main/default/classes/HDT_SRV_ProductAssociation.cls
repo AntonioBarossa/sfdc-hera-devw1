@@ -2,22 +2,28 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
     public static Integer batchLimit = 1;
 
-    public static Object getProductList(String filterString, String optionalSkuId, String dmlContext){
+    public static Object getProductList(String filterString, String optionalSkuId, String dmlContext, Boolean usePagination, String pageNumber){
 
         System.debug('>>> filterString: ' + filterString);
         System.debug('>>> optionalSkuId: ' + optionalSkuId);
+        System.debug('>>> dmlContext: ' + dmlContext);
+        System.debug('>>> usePagination: ' + usePagination);
+        System.debug('>>> pageNumber: ' + pageNumber);
+
         HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj respObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj();
 
         try{
             String queryString = HDT_UTL_ProductAssociation.generateQueryString(filterString, 'AND', optionalSkuId, dmlContext);
-            System.debug('>>> queryString: ' + queryString);
-            
-            Integer recordCounter = HDT_QR_ProductAssociation.getCountOfNonConfiguredProduct2(queryString);
-            System.debug('>>> recordCounter: ' + recordCounter);
 
-            respObj.success = true;
-            respObj.recordCounter = String.valueOf(recordCounter);
+            if(!usePagination){
+                Integer recordCounter = HDT_QR_ProductAssociation.getCountOfNonConfiguredProduct2(queryString);
+                System.debug('>>> recordCounter: ' + recordCounter);
+                respObj.recordCounter = String.valueOf(recordCounter);
+            }
+            
+            queryString += generateOffSetString(pageNumber);
             respObj.prodList = HDT_QR_ProductAssociation.getIdsNonConfiguredProduct2(respObj.prodList, queryString);
+            respObj.success = true;
             System.debug('>>> RECORDS TOT: ' + respObj.prodList.size());
 
         } catch (Exception ex){
@@ -26,6 +32,16 @@ public inherited sharing class HDT_SRV_ProductAssociation {
         }
 
         return respObj;
+    }
+
+    public static String generateOffSetString(String pageNumberString){
+        String offSetString = ' LIMIT 200';
+
+        Integer pageNumber = Integer.valueOf(pageNumberString);
+        //offSetString += String.valueOf((pageNumber*200)) + ' OFFSET ' + String.valueOf(((pageNumber-1)*200));
+        offSetString += ' OFFSET ' + String.valueOf(((pageNumber-1)*200));
+
+        return offSetString;
     }
 
     public static Object runProductOptionAssociation(String optionalSkuId, String productOptionObj, List<String> recordList, String executionType, String filterString, String dmlContext){

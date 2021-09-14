@@ -12,8 +12,6 @@ const columns = [
     { label: 'Categoria Famiglia', fieldName: 'CategoryFamily__c'}
 ];
 
-const selectedIdList = [];
-
 export default class HdtProductAssociationSearchTable extends LightningElement {
 
     @api productOptionId;
@@ -25,6 +23,8 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     filterString;
     mainTitle;
     sectionTitle;
+
+    @track selectedIdList = [];
 
     label = {
         confirmSelectedTitle: '',
@@ -38,6 +38,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     };
     illustrationMessage;
     
+    currentSelectedRows;
     productId = '';
     data = [];
     columns = columns;
@@ -60,14 +61,12 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         operation: ''
     }
     spinner = false;
+    
     showPagination = false;
-    //pagesList = ['1', '2', '3', '4', '5'];
-    currentPageNumber;
-
     @track page = 1;//pagination
     @track pages = [];//pagination
     @track pagesList;//pagination
-    perpage = 50;//pagination
+    perpage = 200;//pagination
     set_size = 5;//pagination
     totRecs;//pagination
     fromRec;//pagination
@@ -77,7 +76,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         console.log('>>> PRODUCT OPTION OBJ: ' + this.productOptionObj);
 
         this.illustrationMessage = 'I risultati verranno mostrati qui';
-        this.currentPageNumber = 1;
+        this.page = 1;
 
         switch (this.dmlContext) {
             case 'delete':
@@ -107,6 +106,18 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     }
 
+    renderedCallback() {
+
+        this.template.querySelectorAll('[data-name="pagination"]').forEach((but) => {
+            if(this.page == but.dataset.id){
+                but.variant = 'brand';
+            } else {
+                but.variant = 'neutral';
+            }
+        });
+
+    }
+
     applyFilter(event){
         console.log('>>>> APPLY FILTER');
         this.spinner = true;
@@ -120,15 +131,15 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         this.filterString = jsonRecord;
         console.log('>>>> FILTER STRING: ' + this.filterString);
         this.showPagination = false;
-        this.getData(jsonRecord);
+        this.getData(jsonRecord, false, '1');
 
         this.disableButton('confirmFilter', false);
         
     }
 
-    getData(filter){
+    getData(filter, usePagination, pageNumber){
         
-        getProductList({filterString: filter, optionalSkuId: this.optionalSkuId, dmlContext: this.dmlContext})
+        getProductList({filterString: filter, optionalSkuId: this.optionalSkuId, dmlContext: this.dmlContext, usePagination: usePagination, pageNumber: pageNumber})
         .then(result => {
             console.log('>>> GET PRODUCT LIST');
 
@@ -137,13 +148,21 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                 if(result.prodList.length===0){
                     this.illustrationMessage = 'Non è stato trovato nessun prodotto';
                 } else {
-                    console.log('>>> RECORD COUNTER: ' + result.recordCounter);
+                    console.log('>>> RECORD RETRIEVED: ' + result.prodList.length);
                     this.data = result.prodList;
                     this.showResultTable = true;
-                    this.counterText = 'Risultati trovati: ';
-                    this.counter = result.recordCounter;
-                    this.setPages(this.counter);
-                    this.showPagination = true;
+
+                    if(!usePagination){
+                        console.log('>>> RECORD COUNTER: ' + result.recordCounter);
+                        this.counterText = 'Risultati trovati: ';
+                        this.counter = result.recordCounter;
+                        this.setPages(this.counter);
+
+                        if(this.counter > this.perpage){
+                            this.showPagination = true;
+                        }
+                    }
+
                 }
 
             } else {
@@ -228,8 +247,6 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     getSelectedRow(event) {
         const selectedRows = event.detail.selectedRows;
 
-        //console.log('>>> selectedIdList ' + JSON.stringify(selectedIdList));
-
         if(selectedRows.length > 0){
             this.disableButton('confirmSelected', false);
         } else {
@@ -238,7 +255,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     }
 
-    confirmSelected(event){
+    updateSelectedRows(){
         console.log('>>>> confirmSelected ');
         this.spinner = true;
         var el = this.template.querySelector('lightning-datatable');
@@ -247,11 +264,16 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         console.log('>>> selectedRows ' + selected.length);
 
         for (let i = 0; i < selected.length; i++){
-            console.log("You selected: " + JSON.stringify(selected[i]));
-            selectedIdList.push(selected[i].Id);
+            //if(!this.selectedIdList.contains(selected[i].Id)){
+                console.log("You selected: " + JSON.stringify(selected[i]));
+                this.selectedIdList.push(selected[i].Id);
+            //}
         }
+        console.log('>>>> selectedIdList ' + JSON.stringify(this.selectedIdList));
+    }
 
-        console.log('>>>> selectedIdList ' + JSON.stringify(selectedIdList));
+    confirmSelected(event){
+        this.updateSelectedRows();
         this.runProductOptionAssociation('select');
     }
 
@@ -268,7 +290,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     runProductOptionAssociation(executionType){
         console.log('>>>> RUN PRODUCT OPTION ASSOCIATION');
 
-        runProductOptionAssociation({optionalSkuId: this.optionalSkuId, productOptionObj: this.productOptionObj, recordList: selectedIdList, executionType: executionType, filterString: this.filterString, dmlContext: this.dmlContext})
+        runProductOptionAssociation({optionalSkuId: this.optionalSkuId, productOptionObj: this.productOptionObj, recordList: this.selectedIdList, executionType: executionType, filterString: this.filterString, dmlContext: this.dmlContext})
         .then(result => {
             console.log('# response #');
             console.log('# resp -> ' + result.success);
@@ -289,7 +311,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                 toastObj.variant = 'warning';
             }
 
-            selectedIdList.splice(0, selectedIdList.length);
+            this.selectedIdList.splice(0, this.selectedIdList.length);
             this.closeModal();
             this.spinner = false;
 
@@ -337,24 +359,6 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     }
     
     //Pagination --- START ---
-
-    paginationClick(event){
-
-        console.log('>>> PAGE NUMBER ' + this.currentPageNumber);
-
-        /*var el = this.template.querySelector('lightning-datatable');
-        var selected = el.getSelectedRows();
-
-        for (let i = 0; i < selected.length; i++){
-            selectedIdList.push(selected[i].Id);
-        }
-
-        this.spinner = true;
-        this.getData(this.filterString);
-        //this.disableButton('confirmFilter', false);
-        this.showPagination = true;*/
-    }
-
     setPages(dataLength){
         this.pages = [];
         let numberOfPages = Math.ceil(dataLength / this.perpage);
@@ -463,30 +467,15 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         let startIndex = (page * perpage) - perpage;
         let endIndex = (page * perpage);
 
-        /*if(this.filterPagination){
-            if(this.allDataFiltered != undefined){
-                this.accountData = this.allDataFiltered.slice(startIndex, endIndex);
-                this.firstLevel = this.allDataFiltered[0];
-                this.secondLevelList = this.allDataFiltered[0][this.detailTable];
-            }
-        } else {
-            if(this.allData != undefined && this.accountData[0] != undefined){
-                this.accountData = this.allData.slice(startIndex, endIndex);
-                this.firstLevel = this.accountData[0];
-                this.secondLevelList = this.accountData[0][this.detailTable];
-            }
-        }
-
         this.fromRec = (startIndex == 0) ? 1 : startIndex+1;
-        this.toRec = this.fromRec + this.accountData.length - 1 ;
-        try{
-            this.template.querySelector('.scrolltop').scrollTop = 0;
-            this.template.querySelector('.tableScroll').scrollLeft = 0;
-        } catch (error){
-            console.log('# scrollTop or scrollLeft not found');
-        }
-        this.refreshSortButton();
-        this.refreshHeaderCheckbox();*/
+        this.toRec = (this.fromRec + perpage)-1;
+
+        console.log('>>> TOT: ' + this.counter + ' - FROM: ' + this.fromRec + ' - TO: ' + this.toRec + ' # pageNumber: ' + this.page);
+        this.spinner = true;
+        this.updateSelectedRows();
+        this.data = [];
+        this.getData(this.filterString, true, this.page.toString());
+
     }
     //Pagination --- END ---
 

@@ -56,7 +56,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         }
 
         queryString +=  ' (SELECT SBQQ__ConfiguredSKU__c FROM SBQQ__ProductOption__c WHERE SBQQ__OptionalSKU__c = \'' + optionalSkuId + '\') ';
-        queryString += 'AND Family IN (\'' + String.join(familyList, '\',\'') + '\')';
+        //queryString += 'AND Family IN (\'' + String.join(familyList, '\',\'') + '\')';
         
         //if(!String.isEmpty(filterProduct.Family)){
         //    queryString += ',\'' + filterProduct.Family + '\'';
@@ -95,12 +95,12 @@ public inherited sharing class HDT_UTL_ProductAssociation {
                     respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
                 }
             }	
-            when 'all' {
-                //run batch for all Product2 record -> recordList == 0
-                HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, productOptionToClone, new List<String>(), '');
-                Id batchId = Database.executeBatch(createAssociationBatch);
-                respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
-            }
+            //when 'all' {
+            //    //run batch for all Product2 record -> recordList == 0
+            //    HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, productOptionToClone, new List<String>(), '');
+            //    Id batchId = Database.executeBatch(createAssociationBatch);
+            //    respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+            //}
             when 'filter' {
                 //run batch for all Product2 using where condition
 
@@ -156,12 +156,12 @@ public inherited sharing class HDT_UTL_ProductAssociation {
                     respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
                 }
             }	
-            when 'all' {
-                //run batch for all Product2 record -> recordList == 0
-                HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, new List<String>(), '');
-                Id batchId = Database.executeBatch(deleteAssociationBatch);
-                respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
-            }
+            //when 'all' {
+            //    //run batch for all Product2 record -> recordList == 0
+            //    HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, new List<String>(), '');
+            //    Id batchId = Database.executeBatch(deleteAssociationBatch);
+            //    respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+            //}
             when 'filter' {
                 //run batch for all Product2 using where condition
 

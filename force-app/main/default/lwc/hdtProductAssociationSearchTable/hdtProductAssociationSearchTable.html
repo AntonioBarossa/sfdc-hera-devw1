@@ -13,9 +13,9 @@
 
         <div slot="actions">
             <lightning-button-group>
-                <lightning-button disabled label="Conferma selezione" name="confirmSelected" onclick={openConfirmation} variant="neutral" icon-name="utility:multi_select_checkbox" ></lightning-button>
-                <lightning-button disabled label="Conferma filtro" name="confirmFilter" onclick={openConfirmation} variant="neutral" icon-name="utility:filterList" ></lightning-button>
-                <lightning-button label="Conferma catalogo" name="confirmAll" onclick={openConfirmation} variant="neutral" icon-name="utility:database"></lightning-button>
+                <lightning-button disabled label="Conferma la selezione" name="confirmSelected" onclick={openConfirmation} variant="neutral" icon-name="utility:multi_select_checkbox" ></lightning-button>
+                <lightning-button disabled label="Conferma tutti" name="confirmFilter" onclick={openConfirmation} variant="neutral" icon-name="utility:filterList" ></lightning-button>
+                <!--<lightning-button label="Conferma catalogo" name="confirmAll" onclick={openConfirmation} variant="neutral" icon-name="utility:database"></lightning-button>-->
                 <lightning-button label="Chiudi" name="closeModal" onclick={openConfirmation} variant="neutral" icon-name="utility:close"></lightning-button>
             </lightning-button-group>
         </div>
@@ -68,12 +68,14 @@
                                                               variant="base"
                                                               title="First"
                                                               onclick ={onFirst}
+                                                              disabled
                                             ></lightning-button>
                                             <lightning-button icon-name="utility:left"
                                                               data-id="leftArrow"
                                                               variant="base"
                                                               title="Prev"
                                                               onclick ={onPrev}
+                                                              disabled
                                             ></lightning-button>
                                     </template>
                                     <template for:each={pagesList} for:item= "pageNumber">
@@ -126,13 +128,14 @@
                     <h3 class="slds-section__title slds-theme_shade">
                         <span class="slds-truncate slds-p-horizontal_small" title="filtro">{sectionTitle}</span>
                     </h3>
-                    <div aria-hidden="false" class="slds-section__content slds-border_bottom" style="height: 50vh;">
+                    <div if:false={spinner} aria-hidden="false" class="slds-section__content slds-border_bottom" style="height: 50vh;">
 
                         <lightning-datatable
-                                key-field="id"
+                                key-field="Id"
                                 data={data}
                                 columns={columns}
                                 onrowselection={getSelectedRow}
+                                selected-rows={selectedIdList}
                         ></lightning-datatable>
                     
                     

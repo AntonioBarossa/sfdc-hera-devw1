@@ -36,7 +36,7 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
         if (data) {
             console.log('#### Family -> ' + data.fields.Family.value);
             
-            var availableType = ['Bonus', 'Contributo', 'VAS', 'Promozione'];
+            //var availableType = ['Bonus', 'Contributo', 'VAS', 'Promozione'];
             var notAvailableType = [];
 
             notAvailableType.push('Offerta commerciale');

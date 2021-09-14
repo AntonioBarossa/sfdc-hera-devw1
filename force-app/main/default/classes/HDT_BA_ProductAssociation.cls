@@ -23,12 +23,12 @@ public without sharing class HDT_BA_ProductAssociation implements Database.Batch
                 queryString += 'FROM Product2 ';
                 queryString += 'WHERE Id IN :idList';
             }
-            when 'all' {
-                // 2 - RUN BATCH FOR ALL PRODUCT2
-                List<String> familyList = HDT_UTL_ProductAssociation.getFamilyList();
-                queryString += 'FROM Product2 ';
-                queryString += 'WHERE Status__c=\'In Sviluppo\' AND Family IN :familyList';
-            }
+            //when 'all' {
+            //    // 2 - RUN BATCH FOR ALL PRODUCT2
+            //    List<String> familyList = HDT_UTL_ProductAssociation.getFamilyList();
+            //    queryString += 'FROM Product2 ';
+            //    queryString += 'WHERE Status__c=\'In Sviluppo\' AND Family IN :familyList';
+            //}
             when 'filter' {
                 // 3 - RUN BATCH FOR PRODUCT2 TO FILTER WITH WHERE CONDITION
                 queryString += filterString;
