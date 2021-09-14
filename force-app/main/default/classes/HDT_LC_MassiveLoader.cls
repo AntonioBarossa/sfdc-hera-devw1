@@ -218,7 +218,7 @@ public with sharing class HDT_LC_MassiveLoader {
                                                                                       
                         if (listRequestItem!=null && listRequestItem.size()>0) {
                             insert listRequestItem;
-                            integer  numberRequestProcessing= database.countQuery('select count() from MassiveLoaderRequest__c Status__c =\'In Lavorazione\'');
+                            integer  numberRequestProcessing= database.countQuery('SELECT count() FROM MassiveLoaderRequest__c WHERE  Status__c =\'In Lavorazione\'');
 
                             if (numberRequestProcessing==0) {
                                 request.Status__c = constantsUtl.MASSIVLOADER_STATUS_INLAVORAZIONE;
