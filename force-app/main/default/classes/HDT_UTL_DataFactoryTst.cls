@@ -2096,4 +2096,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 	return rateCatList;
 	}
+
+	public static List<SurveyCRM__c> createSurveyCrm (Integer amount, Boolean doInsert) {
+
+		List<SurveyCRM__c> surveyCrmList = new List<SurveyCRM__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SurveyCRM__c surveyCrm = new SurveyCRM__c(
+				Name = 'testName'
+			);
+
+			surveyCrmList.add(surveyCrm);
+		}
+
+		if (doInsert){
+
+			insert surveyCrmList;
+		}
+
+		return surveyCrmList;
+	}
 }
