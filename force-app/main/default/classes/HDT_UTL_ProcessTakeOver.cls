@@ -2,6 +2,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
     private  Map<String, String> mapAccountFields;
     private Map<String, String> mapSaleFields;
     private Map<String, String> mapServicePointFields;
+    private Map<String, String> mapBillingProfileFields;
        //final String PROCESS_NAME='Subentro';
 
    public  HDT_UTL_ProcessTakeOver(){
@@ -71,6 +72,9 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 }
                 else if(mapServicePointFields.get(mapHeaderByPosition.get(count))!=null ){
                     currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),tempField);
+                }
+                else if(mapBillingProfileFields.get(mapHeaderByPosition.get(count))!=null ){
+                    currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),tempField);
                 }
                 count++;
             }
@@ -290,6 +294,31 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             'SP_Via'=>'SupplyStreetName__c',
             'SP_Civico'=>'SupplyStreetNumber__c',
             'SP_Indirizzo Estero'=>'SupplyAddessIsForeign__c'
+        };
+        mapBillingProfileFields=new Map<String, String>{
+            'Modalità di Pagamento'=>'PaymentMethod__c ',
+            'Modalità invio bolletta'=>'BillSendingMethod__c ',
+            'Email invio Bolletta'=>'InvoiceEmailAddress__c ',
+            'Destinatario Divergente'=>'DivergentSubject__c',
+            'Tiplo XML'=>'XMLType__c',
+            'IBAN Estero'=>'IbanIsForeign__c',
+            'IBAN'=>'IBAN__c',
+            'Paese'=>'IbanCountry__c',
+            'CIN-IBAN'=>'IbanCIN_IBAN__c ',
+            'CIN'=>'IbanCIN__c ',
+            'ABI'=>'IbanABI__c',
+            'CAB'=>'IbanCAB__c',
+            'Numero Conto'=>'IbanCodeNumber__c',
+            'Tipo Sottoscrittore'=>'SignatoryType__c',
+            'Nome Sottoscrittore CC'=>'BankAccountSignatoryFirstName__c',
+            'Cognome Sottoscrittore CC'=>'BankAccountSignatoryLastName__c', 
+            'Codice Fiscale sottoscrittore CC'=>'BankAccountSignatoryFiscalCode__c',
+            'Modalità invio Fatturazion Elettronica'=>'ElectronicInvoicingMethod__c',
+            'Pec Fatturazione Elettronica'=>'ElectronicInvoiceCertifiedEmailAddress__c',
+            'Codice Destinatario'=>'SubjectCode__c',
+            'BP_Comune'=>'InvoicingCity__c',
+            'BP_Via'=>'InvoicingStreetName__c',
+            'BP_Civico'=>'InvoicingStreetNumber__c'
         };
     } 
 }
