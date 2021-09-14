@@ -26,15 +26,19 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
         deleteTitleLabel: 'Rimozione massiva del Prodotto Opzione'
     };
 
+    enableCreate;
+    enableDelete;
+
     connectedCallback(){
         console.log('#### productid > ' + this.productid);
 
     }
 
-    @wire(getRecord, { recordId: '$productid', fields: ['Product2.Family'] })
+    @wire(getRecord, { recordId: '$productid', fields: ['Product2.Family', 'Product2.Status__c'] })
     wiredProduct({ error, data }) {
         if (data) {
-            console.log('#### Family -> ' + data.fields.Family.value);
+            console.log('>>> PRODUCT OPTION Family -> ' + data.fields.Family.value);
+            console.log('>>> PRODUCT OPTION  status -> ' + data.fields.Status__c.value);
             
             //var availableType = ['Bonus', 'Contributo', 'VAS', 'Promozione'];
             var notAvailableType = [];
@@ -50,6 +54,9 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
             } else {
                 this.showWelcom = true;
             }
+
+            this.enableCreate = true;
+            this.enableDelete = true;
 
         } else if (error) {
             for(var key in error){

@@ -12,6 +12,8 @@
 
     <template if:true={showWelcom} >
         <c-hdt-choose-association-operation
+            enable-create={enableCreate}
+            enable-delete={enableDelete}
             icon-name="standard:product_service_campaign"
             main-title-label={label.mainTitle}
             delete-title-label={label.deleteTitleLabel}
