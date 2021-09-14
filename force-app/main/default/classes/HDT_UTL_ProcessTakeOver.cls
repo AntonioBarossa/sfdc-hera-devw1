@@ -27,7 +27,8 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 // if (mapRequiredByPosition.get(count)!=null && String.isBlank(tempField) ) {
                 //     throw new HDT_WRP_ProcessEntitiesException( 'Missing required field',mapHeaderByPosition.get(count)+' can\'t be null');
                 // }
-                if ('null'.equalsIgnoreCase(tempField)) {
+
+                if ('null'.equalsIgnoreCase(tempField) || String.isBlank(tempField)) {
                     count++;
                     continue;
                 }
@@ -100,7 +101,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
 
                     currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),tempField);
                 }
-                
+
                 else if(mapOrderFields.get(mapHeaderByPosition.get(count))!=null ){
                     System.debug('column N° :'+count+' FieldapiName : '+mapOrderFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
 
@@ -192,11 +193,11 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         currentProcess.currentServicePoint.Account__c   = currentProcess.currentAccount.Id;
         currentProcess.currentBillingProfile.Account__c = currentProcess.currentAccount.Id;
         currentProcess.currentOrder.AccountId           = currentProcess.currentAccount.Id;
-        
+        currentProcess.currentRequestItem.Account__c    = currentProcess.currentAccount.Id;
         listUpdateGeneric.add(currentProcess.currentSale);
         listUpdateGeneric.add(currentProcess.currentServicePoint);
-        listUpdateGeneric.add(currentProcess.currentBillingProfile);
-        listUpdateGeneric.add(currentProcess.currentOrder);
+       // listUpdateGeneric.add(currentProcess.currentBillingProfile);
+       // listUpdateGeneric.add(currentProcess.currentOrder);
 
 
         if (listUpdateGeneric.size()>0) {
