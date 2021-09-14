@@ -30792,15 +30792,15 @@
         <layout>ScriptConfig__c-HDT Layout BSN</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ServicePoint__c-Service Point Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ServicePoint__c-Service Point Layout</layout>
+        <layout>ServicePoint__c-Service Point Ele</layout>
         <recordType>ServicePoint__c.HDT_RT_Ele</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ServicePoint__c-Service Point Layout</layout>
+        <layout>ServicePoint__c-Service Point Gas</layout>
         <recordType>ServicePoint__c.HDT_RT_Gas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ServicePoint__c-Service Point Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>SocialPersona-Social Persona Layout</layout>
