@@ -112,7 +112,7 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         System.debug(debugString + ' - Testing PROCESS');
         
         paramsMap = new Map<String, Object>();
-        paramsMap.put('cluster', 'Ambiente');
+        paramsMap.put('cluster', 'Autolettura');
         
         result = myTstObj.getOptions(JSON.serialize(paramsMap));//RETURNA STRING DIRETTO
         //resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
