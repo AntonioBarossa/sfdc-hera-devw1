@@ -53,7 +53,7 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
             context = contextId.getSObjectType().getDescribe().getName();
         }
         
-        System.debug('getCluster - context: ' + context);
+        System.debug('getTopic - context: ' + context);
         List<HDT_Informative_Configuration__mdt> topic = HDT_QR_InformativeManager.getTopicByCluster((String) paramsMap.get('cluster'),context);
         return JSON.serialize(convertToListMap(distinctRecords(topic,'MacroTopic__c'),'MacroTopic__c'));
     }
@@ -68,13 +68,13 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
             context = contextId.getSObjectType().getDescribe().getName();
         }
         
-        System.debug('getCluster - context: ' + context);
+        System.debug('getInfo - context: ' + context);
         
         String myTopic = (String) paramsMap.get('topic');
-        System.debug('getCluster - context: ' + context);
+        System.debug('getInfo - myTopic: ' + myTopic);
         
         String myCluster = (String) paramsMap.get('cluster');
-        System.debug('getCluster - context: ' + context);
+        System.debug('getInfo - myCluster: ' + myCluster);
         
         List<HDT_Informative_Configuration__mdt> topic = HDT_QR_InformativeManager.getInfoByTopicCluster(myTopic, myCluster, context);
         List<Map<String,String>> listMapInfo = convertToListMap(topic,'InformationDetail__c');
