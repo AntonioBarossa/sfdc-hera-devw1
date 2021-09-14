@@ -1,5 +1,8 @@
 public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_ComboboxOptionsInterface {
     public String getOptions(String params) {
+        
+        System.debug('getOptions - params: ' + params);
+        
         Map<String, Object> paramsMap = (Map<String, Object>) JSON.deserializeUntyped(params);
         String method = (String) paramsMap.get('method');
 
@@ -23,6 +26,7 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
     }
 
     private String getCluster(Map<String, Object> paramsMap){
+        
         String result;
         String context = (String) paramsMap.get('context');
         String sObjName;
@@ -38,12 +42,15 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
     }
     
     private String getProcess(Map<String, Object> paramsMap){
+        
         String result;
         String process = HDT_QR_InformativeManager.getProcessByCluster((String) paramsMap.get('cluster'));
+        
         return process;
     }
     
     private String getTopic(Map<String, Object> paramsMap){
+        
         String result;
         String context = (String) paramsMap.get('context');
         String sObjName;
@@ -59,6 +66,7 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
     }
     
     private String getInfo(Map<String, Object> paramsMap){
+        
         String result;
         String context = (String) paramsMap.get('context');
         String sObjName;
@@ -86,20 +94,31 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         return JSON.serialize(listMapInfo);
     }
    
-    private List<Map<String,String>> convertToListMap(List<SObject> records,String field){
+    private List<Map<String,String>> convertToListMap(List<SObject> records, String field){
+        
+        System.debug('convertToListMap - records: ' + records);
+        System.debug('convertToListMap - field: ' + field);
+        
         Map<String,String> resultMap = new Map<String,String>();
         List<Map<String,String>> resultList = new List<Map<String,String>>();
+        
         for(SObject singleRecord : records){
             resultMap.put('label', (String) singleRecord.get(field));
             resultMap.put('value', (String) singleRecord.get(field));
             resultList.add(new Map<String,String>(resultMap));
         }
+        
         return resultList;
     }
-    private List<SObject> distinctRecords(List<SObject> records,String field){
+    
+    private List<SObject> distinctRecords(List<SObject> records, String field){
+        System.debug('distinctRecords - records: ' + records);
+        System.debug('distinctRecords - field: ' + field);
+        
         Set<String> setValue = new Set<String>();
         List<SObject> distinctRecords = new List<SObject>();
         Map<String,String> mapRecords = new Map<String,String>();
+        
         for(SObject singleRecord : records){
             System.debug('field ' +(String)singleRecord.get(field) );
             System.debug('mappa ' + mapRecords.get((String)singleRecord.get(field)));
@@ -111,6 +130,8 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
                 mapRecords.put((String)singleRecord.get(field), (String)singleRecord.get(field));
             }
         }
+        
         return distinctRecords;
     }
+    
 }
