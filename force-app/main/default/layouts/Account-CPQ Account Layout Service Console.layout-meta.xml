@@ -460,13 +460,17 @@
         <fields>ReceptionDate__c</fields>
         <relatedList>Interaction__c.Account__c</relatedList>
     </relatedLists>
-    <relatedLists>
+        <relatedLists><!--Start  HRAWRM-258   14-09-2021 Dom -->
+        <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>CONTRACT.NAME</fields>
-        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>SAPContractCode__c</fields>
+        <fields>ServicePoint__c</fields>
+        <fields>BillingProfile__c</fields>
         <fields>CONTRACT.STATUS</fields>
-        <relatedList>Contract.BillingAccount__c</relatedList>
-    </relatedLists>
+        <fields>CONTRACT.START_DATE</fields>
+        <fields>CONTRACT.END_DATE</fields>
+        <relatedList>RelatedContractList</relatedList>
+    </relatedLists><!--End  HRAWRM-258   14-09-2021  -->
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>CampaignMemberAssigmentItem__c.Agency__c</relatedList>
