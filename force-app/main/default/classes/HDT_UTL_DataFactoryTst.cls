@@ -2028,8 +2028,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return matriceRemiCode;
-}
-
+	}
 
 	public static List<ServiceRequest__c> createServiceRequest(Integer amount, Boolean doInsert) {
 
@@ -2047,7 +2046,29 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		if (doInsert){
 
 			insert srList;
+		}
+
+		return srList;
 	}
-	return srList;
-}
+	
+	public static List<SurveyResponse__c> createSurveyResponse(Integer amount, Boolean doInsert) {
+
+		List<SurveyResponse__c> srList = new List<SurveyResponse__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SurveyResponse__c sr = new SurveyResponse__c(
+				Name = 'testName'
+			);
+
+			srList.add(sr);
+		}
+
+		if (doInsert){
+
+			insert srList;
+		}
+
+		return srList;
+	}
 }
