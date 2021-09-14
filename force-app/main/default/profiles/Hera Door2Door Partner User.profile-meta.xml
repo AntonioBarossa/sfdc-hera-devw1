@@ -127,7 +127,6 @@
         <enabled>true</enabled>
         <name>AccountDataEnrichment__mdt</name>
     </customMetadataTypeAccesses>
-
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_AccountDataEnrichment__mdt</name>
@@ -175,6 +174,10 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_Dependant_Picklist_VAS__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_DistributorExceptionHC__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
