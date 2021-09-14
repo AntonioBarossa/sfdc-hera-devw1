@@ -3,7 +3,9 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public HDT_QR_Account qrAcc                                = new HDT_QR_Account();
     public static HDT_QR_AccountContactRelation accoContRelQr  = new HDT_QR_AccountContactRelation();
     public static HDT_QR_Contact qrCont                        = new HDT_QR_Contact();
-    public  MassiveLoaderRequestItem__c varRequestItem;
+    public HDT_WRP_ProcessEntities currentProcess;
+
+    //public  MassiveLoaderRequestItem__c varRequestItem;
     public  String processName;
     public  Map<Integer, String> mapHeaderByPosition; 
     public  Map<Integer, String> mapRequiredByPosition; 
@@ -11,13 +13,19 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public  Id recordTypeRes;
 
     public void setMassiveLoaderRequestItem(MassiveLoaderRequestItem__c requestItem){
-        this.varRequestItem=requestItem;
-        if (varRequestItem==null || String.isBlank(varRequestItem.MassiveLoaderRequest__r.ProcessType__c)) {
+
+        currentProcess=new HDT_WRP_ProcessEntities();
+        this.currentProcess.currentRequestItem=requestItem;   
+       
+
+        if ( String.isBlank( this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c)) {
             throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessType can\'t be null');
         }
     
-        this.processName=varRequestItem.MassiveLoaderRequest__r.ProcessType__c;
+        this.processName= this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c;
         List<StaticResource> staticResources = staticResourceQr.getRecordByName(processName);
+       
+
         mapHeaderByPosition = new Map<Integer, String>();
         Integer count=0;
         for (String temp : staticResources.get(0).Body.toString().split(',')) {

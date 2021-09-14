@@ -33,7 +33,7 @@ public with sharing class HDT_QR_MassiveLoaderProcess {
 
     public HDT_MassiveLoaderProcess__mdt getRecordByName(String name) {
 
-        return [SELECT DeveloperName, MasterLabel, Priority__c, IsActive__c 
+        return [SELECT DeveloperName, MasterLabel, Priority__c, IsActive__c,ApexClass__c 
                 FROM HDT_MassiveLoaderProcess__mdt 
                 WHERE DeveloperName =: name AND IsActive__c = true];
 

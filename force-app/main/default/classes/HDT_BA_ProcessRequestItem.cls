@@ -10,13 +10,15 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
             HDT_QR_Helper qrObj=new HDT_QR_Helper();
             qrObj.setObj('MassiveLoaderRequestItem__c');
             qrObj.setNestedFields(new list<String>{'MassiveLoaderRequest__r.ProcessType__c'});
-            qrObj.setFilter('WHERE MassiveLoaderRequest__c ='+  this.idLoaderRequest+'Order by CreatedDate DESC');
+            qrObj.setFilter('MassiveLoaderRequest__c =\''+this.idLoaderRequest+'\' Order by CreatedDate DESC');
 			String query =  qrObj.getQeryString();
+            System.debug('query:  '+query);
 			return Database.getQueryLocator(query);
 	}
     public void execute(Database.BatchableContext BC, List<MassiveLoaderRequestItem__c> scope) {
         System.debug('HDT_BA_ProcessRequestItem execute ' );
         MassiveLoaderRequestItem__c massiveItem=scope.get(0);
+        System.debug('massiveItem:  '+massiveItem);
         System.debug('ProcessType: '+massiveItem.MassiveLoaderRequest__r.ProcessType__c);
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(massiveItem.MassiveLoaderRequest__r.ProcessType__c);
         System.debug('Apex Class : '+selectedProcess.ApexClass__c);

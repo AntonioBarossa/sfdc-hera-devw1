@@ -1,17 +1,13 @@
 public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExecution {
-   private HDT_WRP_ProcessEntities currentProcess;
 
    final String PROCESS_NAME='Subentro';
 
-   public  HDT_UTL_ProcessTakeOver(){}
+   public  HDT_UTL_ProcessTakeOver(){
+
+   }
+
    public  HDT_UTL_ProcessTakeOver(MassiveLoaderRequestItem__c varRequestItem){
-        System.debug('HDT_UTL_ProcessTakeOver : '+varRequestItem);
-        if (varRequestItem==null) {
-            throw new HDT_WRP_ProcessEntitiesException('Null Pointer Exceptions','varRequestItem can\'t be null');
-        } 
-        
-        currentProcess=new HDT_WRP_ProcessEntities();
-        this.currentProcess.currentRequestItem=varRequestItem;   
+     
    }
 
     public override void checks(){
@@ -60,10 +56,10 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
 
 
         };
-        if ( String.isNotBlank( currentProcess.currentRequestItem.Data__c)) {
+        if (String.isNotBlank( currentProcess.currentRequestItem.Data__c)) {
          
             Integer count=0;
-            //currentProcess.currentRequestItem.Data__c= currentProcess.currentRequestItem.Data__c.replace(',,',',null,' );
+            currentProcess.currentRequestItem.Data__c= currentProcess.currentRequestItem.Data__c.replace(',,',',null,' );
             for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
                 
                 System.debug('column N° :'+count+' FieldapiName : '+mapAccountFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
@@ -72,10 +68,10 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 // if (mapRequiredByPosition.get(count)!=null && String.isBlank(tempField) ) {
                 //     throw new HDT_WRP_ProcessEntitiesException( 'Missing required field',mapHeaderByPosition.get(count)+' can\'t be null');
                 // }
-                // if ('null'.equalsIgnoreCase(tempField)) {
-                //     count++;
-                //     continue;
-                // }
+                if ('null'.equalsIgnoreCase(tempField)) {
+                    count++;
+                    continue;
+                }
                 // Start AccountContactRelation
                 if ( 'Ruolo'.equalsIgnoreCase(mapHeaderByPosition.get(count))) {
 
