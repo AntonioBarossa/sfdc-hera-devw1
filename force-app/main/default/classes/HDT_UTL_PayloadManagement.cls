@@ -816,6 +816,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             String indemnityDueSendResponse = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueSendResponse__c', 0, inputs, formParams);
             Decimal indemnityDueSendResponseDecimal = String.isNotBlank(indemnityDueSendResponse) ? Decimal.valueOf(indemnityDueSendResponse) : 0;
             String indemnityDueBillingCorrection = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueBilllingCorrection__c', 0, inputs, formParams);
+            Decimal indemnityDueBillingCorrectionDecimal = String.isNotBlank(indemnityDueBillingCorrection) ? Decimal.valueOf(indemnityDueBillingCorrection) : 0;
             String correctionRight = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionRight__c', 0, inputs, formParams);
             String correctionDocumentEmissionDate = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionDocumentEmissionDay__c', 0, inputs, formParams);
             Boolean expiredCorrection = indemnityDueBillingCorrection != null;
@@ -828,12 +829,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             if (String.isNotBlank(boxType)) {
                 record.add(boxType);
                 // Importo indennizzo, se necessario.
-                if ((boxType == '1' || boxType == '5') && indemnityDueSendResponse != null && indemnityDueSendResponseDecimal > 0) {
+                if ((boxType == '1' || boxType == '5') && indemnityDueSendResponseDecimal > 0) {
                     record.add(indemnityDueSendResponse);
-                } else if (boxType == '2' && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+                } else if (boxType == '2' && indemnityDueBillingCorrectionDecimal > 0) {
                     record.add(''); // campo vuoto per l'indemnityDueSendResponse, l'indemnityDueBillingCorrection deve stare in seconda posizione.
                     record.add(indemnityDueBillingCorrection);
-                } else if (boxType == '4' && indemnityDueSendResponse != null && indemnityDueSendResponseDecimal > 0 && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+                } else if (boxType == '4' && indemnityDueSendResponse != null && indemnityDueSendResponseDecimal > 0 && indemnityDueBillingCorrectionDecimal > 0) {
                     record.add(indemnityDueSendResponse);
                     record.add(indemnityDueBillingCorrection);
                 }
