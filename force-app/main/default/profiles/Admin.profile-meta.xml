@@ -32399,6 +32399,10 @@
         <recordType>Account.HDT_RT_Residenziale</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Account-Account Distributori</layout>
+        <recordType>Account.HDT_RT_Distributore</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>AccountBalance__c-Estratto Conto Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
