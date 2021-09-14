@@ -16,7 +16,7 @@ public with sharing class HDT_SRV_InformativeManagerTst {
     
     //getOptions
     @isTest
-    private static void getOptions_Cluster_Test() {
+    private static void getOptionsTest() {
         
         //DEBUG
         String debugString = TEST_NAME + ' - getOptionsTest';
@@ -35,10 +35,12 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         
         
         //TESTING
+        System.debug(debugString + ' - Testing CLUSTER');
         System.debug(debugString + ' - Testing ServicePoint__c');
         HDT_SRV_InformativeManager myTstObj = new HDT_SRV_InformativeManager();
+        
         String result = myTstObj.getOptions(JSON.serialize(paramsMap));
-        List<Map<String,String>> resultProcessed = JSON.deserialize(result, List<Map<String,String>>.class);
+        List<Map<String,String>> resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
         
         //ASSERTS
         System.assert(resultProcessed.size() > 0);
@@ -57,27 +59,122 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         //TESTING
         System.debug(debugString + ' - Testing BillingProfile__c');
         result = myTstObj.getOptions(JSON.serialize(paramsMap));
-        resultProcessed = JSON.deserialize(result, List<Map<String,String>>.class);
+        resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
         
         //ASSERTS
         System.assert(resultProcessed.size() > 0);
         System.assertNotEquals(null, resultProcessed[0].get('label'));
         System.assertNotEquals(null, resultProcessed[0].get('value'));
         
+        
+        
+        //Topic
+        //TESTING
+        System.debug(debugString + ' - Testing TOPIC');
+        System.debug(debugString + ' - Testing ServicePoint__c');
+        myId = myServPoint.Id;
+        
+        paramsMap = new Map<String, Object>();
+        paramsMap.put('method', 'topic');
+        paramsMap.put('context', myId);
+        
+        result = myTstObj.getOptions(JSON.serialize(paramsMap));
+        resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
+        
+        //ASSERTS
+        System.assert(resultProcessed.size() > 0);
+        System.assertNotEquals(null, resultProcessed[0].get('label'));
+        System.assertNotEquals(null, resultProcessed[0].get('value'));
+        
+        
+        //TESTING
+        System.debug(debugString + ' - Testing BillingProfile__c');
+        myId = myBillingProfile.Id;
+        
+        paramsMap = new Map<String, Object>();
+        paramsMap.put('method', 'topic');
+        paramsMap.put('context', myId);
+        
+        result = myTstObj.getOptions(JSON.serialize(paramsMap));
+        resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
+        
+        //ASSERTS
+        System.assert(resultProcessed.size() > 0);
+        System.assertNotEquals(null, resultProcessed[0].get('label'));
+        System.assertNotEquals(null, resultProcessed[0].get('value'));
+        
+        
+        
+        //process
+        //TESTING
+        System.debug(debugString + ' - Testing PROCESS');
+        
+        paramsMap = new Map<String, Object>();
+        paramsMap.put('cluster', 'Ambiente');
+        
+        result = myTstObj.getOptions(JSON.serialize(paramsMap));//RETURNA STRING DIRETTO
+        //resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
+        
+        //ASSERTS
+        System.assertNotEquals(null, result);
+        
+        
+        
+        //info
+        //TESTING
+        System.debug(debugString + ' - Testing INFO');
+        System.debug(debugString + ' - Testing ServicePoint__c');
+        myId = myServPoint.Id;
+        
+        paramsMap = new Map<String, Object>();
+        paramsMap.put('method', 'info');
+        paramsMap.put('context', myId);
+        paramsMap.put('topic', 'Info stato pratica');
+        paramsMap.put('cluster', 'Disattivazioni');
+        
+        result = myTstObj.getOptions(JSON.serialize(paramsMap));
+        resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
+        
+        //ASSERTS
+        System.assert(resultProcessed.size() > 0);
+        System.assertNotEquals(null, resultProcessed[0].get('label'));
+        System.assertNotEquals(null, resultProcessed[0].get('value'));
+        
+        
+        //TESTING
+        System.debug(debugString + ' - Testing BillingProfile__c');
+        myId = myBillingProfile.Id;
+        
+        paramsMap = new Map<String, Object>();
+        paramsMap.put('method', 'info');
+        paramsMap.put('context', myId);
+        paramsMap.put('topic', 'Info modalità');
+        paramsMap.put('cluster', 'Pagamenti');
+        
+        result = myTstObj.getOptions(JSON.serialize(paramsMap));
+        resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
+        
+        //ASSERTS
+        System.assert(resultProcessed.size() > 0);
+        System.assertNotEquals(null, resultProcessed[0].get('label'));
+        System.assertNotEquals(null, resultProcessed[0].get('value'));
+        
+        
+        //else
+        //TESTING
+        System.debug(debugString + ' - Testing ELSE');
+        System.debug(debugString + ' - Testing ServicePoint__c');
+        myId = myServPoint.Id;
+        
+        paramsMap = new Map<String, Object>();
+        paramsMap.put('method', 'else');
+        paramsMap.put('context', myId);
+        
+        result = myTstObj.getOptions(JSON.serialize(paramsMap));
+        
+        //ASSERTS
+        System.assertEquals(null, result);
+        
     }
-    
-    //Topic
-    //getOptions_Topic_Test
-    
-    
-    //Process
-    //getOptions_Process_Test
-    
-    
-    //Info
-    //getOptions_Info_Test
-    
-    
-    
     
 }

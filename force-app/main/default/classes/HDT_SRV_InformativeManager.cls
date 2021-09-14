@@ -26,50 +26,59 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         String result;
         String context = (String) paramsMap.get('context');
         String sObjName;
+        
         if(context instanceOf Id){
-
             Id contextId= (Id) Context;
-
             context = contextId.getSObjectType().getDescribe().getName();
-            
         }
         
         System.debug('getCluster - context: ' + context);
         List<HDT_Informative_Configuration__mdt> clusterList =  HDT_QR_InformativeManager.getClusterProcess(context);
         return JSON.serialize(convertToListMap(distinctRecords(clusterList,'Cluster__c'),'Cluster__c'));
     }
+    
     private String getProcess(Map<String, Object> paramsMap){
         String result;
         String process = HDT_QR_InformativeManager.getProcessByCluster((String) paramsMap.get('cluster'));
         return process;
     }
+    
     private String getTopic(Map<String, Object> paramsMap){
         String result;
         String context = (String) paramsMap.get('context');
         String sObjName;
+        
         if(context instanceOf Id){
-
             Id contextId= (Id) Context;
-
             context = contextId.getSObjectType().getDescribe().getName();
-
         }
+        
+        System.debug('getCluster - context: ' + context);
         List<HDT_Informative_Configuration__mdt> topic = HDT_QR_InformativeManager.getTopicByCluster((String) paramsMap.get('cluster'),context);
         return JSON.serialize(convertToListMap(distinctRecords(topic,'MacroTopic__c'),'MacroTopic__c'));
     }
+    
     private String getInfo(Map<String, Object> paramsMap){
         String result;
         String context = (String) paramsMap.get('context');
         String sObjName;
+        
         if(context instanceOf Id){
-
             Id contextId= (Id) Context;
-
             context = contextId.getSObjectType().getDescribe().getName();
-
         }
-        List<HDT_Informative_Configuration__mdt> topic = HDT_QR_InformativeManager.getInfoByTopicCluster((String) paramsMap.get('topic'),(String) paramsMap.get('cluster'),context);
+        
+        System.debug('getCluster - context: ' + context);
+        
+        String myTopic = (String) paramsMap.get('topic');
+        System.debug('getCluster - context: ' + context);
+        
+        String myCluster = (String) paramsMap.get('cluster');
+        System.debug('getCluster - context: ' + context);
+        
+        List<HDT_Informative_Configuration__mdt> topic = HDT_QR_InformativeManager.getInfoByTopicCluster(myTopic, myCluster, context);
         List<Map<String,String>> listMapInfo = convertToListMap(topic,'InformationDetail__c');
+        
         Map<String,String> mapInfo = new Map<String,String>();
         mapInfo.put('label','Info non Censita');
         mapInfo.put('value','Info non Censita');
