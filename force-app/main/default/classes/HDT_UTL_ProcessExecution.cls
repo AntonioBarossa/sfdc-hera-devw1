@@ -79,6 +79,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
       public BillingProfile__c            currentBillingProfile         ;
       public MassiveLoaderRequestItem__c  currentRequestItem            ;
       public AccountContactRelation       currentAccountContactRelation ;
+      public Sale__c                      currentSale                   ;
       public String                       role ;
 
 
@@ -93,6 +94,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
             currentBillingProfile           =   new  BillingProfile__c           ();
             currentRequestItem              =   new  MassiveLoaderRequestItem__c ();
             currentAccountContactRelation   =   new  AccountContactRelation      ();
+            currentSale                     =   new  Sale__c                     ();
         }
    }
    //---------- Gestione Errore -------------

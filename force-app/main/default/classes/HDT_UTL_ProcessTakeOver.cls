@@ -1,6 +1,7 @@
 public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExecution {
-
-   //final String PROCESS_NAME='Subentro';
+    private  Map<String, String> mapAccountFields;
+    private Map<String, String> mapSaleFields;
+       //final String PROCESS_NAME='Subentro';
 
    public  HDT_UTL_ProcessTakeOver(){
        System.debug('HDT_UTL_ProcessTakeOver');
@@ -9,50 +10,9 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
 
     public override void checks(){
         
+        mapFieldsObject();
+
        
-
-        Map<String, String> mapAccountFields = new Map<String, String>{
-            'Nome'=>'FirstName__c',
-            'Cognome/Ragione Sociale'=>'LastName__c',
-            'Codice Fiscale'=>'FiscalCode__c',
-            'P.IVA'=>'VATNumber__c',
-            'BP'=>'BPSAPModel__c',
-            'Marcatura'=>'CustomerMarking__c',
-            'Categoria'=>'Category__c',
-            //'Ruolo'=>'role',
-            'Silos'=>'CompanyOwner__c',
-           // 'Barrato'=>'',
-            'Prefisso Cellulare'=>'MobilePhonePrefix__c',
-            'Cellulare'=>'MobilePhone__c',
-            'Prefisso telefono fisso'=>'PhonePrefix__c',
-            'Telefono fisso'=>'Phone',
-            'Altro Telefono'=>'OtherPhone__c',
-            'Email'=>'PrimaryEmail__c',
-            'FAX'=>'FAX__c',
-            'Data nascita'=>'BirthDate__c',
-            'Comune di nascita'=>'BirthProvince__c',
-            'Sesso'=>'Gender__c',
-            'Tipo di Account'=>'RecordTypeId',
-            'Titolo di studio'=>'DegreeOfStudies__c',
-            'Professione'=>'Profession__c',
-            // indirizzo
-            'Nome Via [Residenziale/Sede Legale]'=>'BillingStreetName__c',
-            'Comune'=>'BillingCity',
-            'CAP'=>'BillingPostalCode',
-            'Stato'=>'BillingCountry',
-            'Provincia'=>'BillingState',
-            'Codice Via Stradario SAP'=>'BillingStreetCode__c',
-            'Estens.Civico'=>'BillingStreetNumberExtension__c',
-            'Civico'=>'BillingStreetNumber__c',
-            'Indirizzo Estero'=>'ShippingAddressIsForeign__c',
-            'Localita'=>'BillingPlace__c',
-            'Codice Localita'=>'BillingPlaceCode__c',
-            'Flag Verificato'=>'BillingIsAddressVerified__c'
-            // inserire domicilio
-
-
-
-        };
         if (String.isNotBlank( currentProcess.currentRequestItem.Data__c)) {
          
             Integer count=0;
@@ -76,7 +36,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 }
                 // fine AccountContactRelation
 
-                // Creazione Accoun
+                // Creazione Account
                 if (mapAccountFields.get(mapHeaderByPosition.get(count))!=null) {
                     if ('ShippingAddressIsForeign__c'.equalsIgnoreCase(mapAccountFields.get(mapHeaderByPosition.get(count))) ||'BillingIsAddressVerified__c'.equalsIgnoreCase(mapAccountFields.get(mapHeaderByPosition.get(count)))   ) {
                         System.debug('isverificato '+mapAccountFields.get(mapHeaderByPosition.get(count)));
@@ -104,6 +64,10 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                     } 
                 }
                 //Fine Creazione Account
+                // Creazione Sales
+                else if(mapSaleFields.get(mapHeaderByPosition.get(count))!=null ){
+                    currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),tempField);
+                }
                 count++;
             }
         }
@@ -175,13 +139,18 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(currentProcess.currentAccount.id,currentProcess.currentPrimaryContact.Id, 'Id');
             if(listAccCon != null && listAccCon.size() > 0){
                 currentProcess.currentAccountContactRelation = new AccountContactRelation(Id= listAccCon[0].Id,Roles=currentProcess.role );
-                System.debug('listAccCon '+ currentProcess.currentAccountContactRelation);
+                System.debug('listAccCon '+ currentProcess.currentAccountContactRelation);     
                 listUpdateGeneric.add(currentProcess.currentAccountContactRelation);
                
             }
         }
+
+        currentProcess.currentSale.Account__c=currentProcess.currentAccount.Id;
+        listUpdateGeneric.add(currentProcess.currentSale);
+
+
         if (listUpdateGeneric.size()>0) {
-            update listUpdateGeneric;
+            upsert listUpdateGeneric;
         }
 
     }
@@ -198,7 +167,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
 
 
 
-    
+
     //public void postSalesCreation(){}
    // public void finalUpdate(){}
    private void makeContact(){
@@ -236,5 +205,55 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         currentProcess.currentPrimaryContact.MailingIsAddressVerified__c        = currentProcess.currentAccount.BillingIsAddressVerified__c          ;                           
    }
    
-   
+   private void mapFieldsObject(){
+        mapAccountFields = new Map<String, String>{
+            'Nome'=>'FirstName__c',
+            'Cognome/Ragione Sociale'=>'LastName__c',
+            'Codice Fiscale'=>'FiscalCode__c',
+            'P.IVA'=>'VATNumber__c',
+            'BP'=>'BPSAPModel__c',
+            'Marcatura'=>'CustomerMarking__c',
+            'Categoria'=>'Category__c',
+            //'Ruolo'=>'role',
+            'Silos'=>'CompanyOwner__c',
+           // 'Barrato'=>'',
+            'Prefisso Cellulare'=>'MobilePhonePrefix__c',
+            'Cellulare'=>'MobilePhone__c',
+            'Prefisso telefono fisso'=>'PhonePrefix__c',
+            'Telefono fisso'=>'Phone',
+            'Altro Telefono'=>'OtherPhone__c',
+            'Email'=>'PrimaryEmail__c',
+            'FAX'=>'FAX__c',
+            'Data nascita'=>'BirthDate__c',
+            'Comune di nascita'=>'BirthProvince__c',
+            'Sesso'=>'Gender__c',
+            'Tipo di Account'=>'RecordTypeId',
+            'Titolo di studio'=>'DegreeOfStudies__c',
+            'Professione'=>'Profession__c',
+            // indirizzo
+            'Nome Via [Residenziale/Sede Legale]'=>'BillingStreetName__c',
+            'Comune'=>'BillingCity',
+            'CAP'=>'BillingPostalCode',
+            'Stato'=>'BillingCountry',
+            'Provincia'=>'BillingState',
+            'Codice Via Stradario SAP'=>'BillingStreetCode__c',
+            'Estens.Civico'=>'BillingStreetNumberExtension__c',
+            'Civico'=>'BillingStreetNumber__c',
+            'Indirizzo Estero'=>'ShippingAddressIsForeign__c',
+            'Localita'=>'BillingPlace__c',
+            'Codice Localita'=>'BillingPlaceCode__c',
+            'Flag Verificato'=>'BillingIsAddressVerified__c'
+            // inserire domicilio
+        };
+        mapSaleFields = new Map<String, String>{
+            'Canale'=>'Channel__c',
+            'Codice Amico'=>'FriendCode__c ',
+            'Agenzia'=>'Agency__c',
+            'Venduto Da'=>'SaleBy__c',
+            'Nome Agente'=>'VendorFirstName__c',
+            'Cognome Agente'=>'VendorLastName__c',
+            'Campagna'=>'Campaign__c',
+            'Campagna Commissioning'=>'CommissioningCampaign__c'
+        };
+    } 
 }
