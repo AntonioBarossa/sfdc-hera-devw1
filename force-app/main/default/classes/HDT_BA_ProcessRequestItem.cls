@@ -1,5 +1,7 @@
 public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchable<SObject>, Database.Stateful,Database.AllowsCallouts {
     private id idLoaderRequest;
+    private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
+
     private static HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr = new HDT_QR_MassiveLoaderProcess();
     public HDT_BA_ProcessRequestItem(Id varIdLoaderRequest) {
         System.debug('HDT_BA_ProcessRequestItem : '+varIdLoaderRequest);
@@ -30,6 +32,11 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
     }
     public void finish(Database.BatchableContext bc){
         System.debug('HDT_BA_ProcessRequestItem finish ');
+        List<MassiveLoaderRequest__c> listmsr = [SELECT Id FROM MassiveLoaderRequest__c WHERE Status__c=:constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE ORDER BY CreatedDate DESC LIMIT 10];
+        if (listmsr!=null && listmsr.size()>0 ) {
+            HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listmsr.get(0).id); 
+            Id batchprocessid = Database.executeBatch(processReq,1);
+        }
         
 
 
