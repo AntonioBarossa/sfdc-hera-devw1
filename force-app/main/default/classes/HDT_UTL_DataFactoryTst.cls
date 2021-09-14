@@ -2117,4 +2117,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return surveyCrmList;
 	}
+
+	public static List<VisitAssignmentRules__c> createVisitAssignmentRules (Integer amount, Boolean doInsert) {
+
+		List<VisitAssignmentRules__c> visitAssigRulesList = new List<VisitAssignmentRules__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			VisitAssignmentRules__c visitAssigRule = new VisitAssignmentRules__c(
+				Name = 'testName'
+			);
+
+			visitAssigRulesList.add(visitAssigRule);
+		}
+
+		if (doInsert){
+
+			insert visitAssigRulesList;
+		}
+
+		return visitAssigRulesList;
+	}
 }
