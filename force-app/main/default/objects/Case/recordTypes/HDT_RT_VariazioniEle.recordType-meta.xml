@@ -9839,15 +9839,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Account</fullName>
+            <fullName>BP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Account e Billing Profile</fullName>
+            <fullName>BP e CA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Billing Profile</fullName>
+            <fullName>CA</fullName>
             <default>false</default>
         </values>
         <values>
