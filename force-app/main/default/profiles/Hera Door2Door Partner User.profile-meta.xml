@@ -30491,17 +30491,6 @@
         <layout>RoleGroup__c-Role Group Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ServicePoint__c-Service Point Ele</layout>
-        <recordType>ServicePoint__c.HDT_RT_Ele</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ServicePoint__c-Service Point Gas</layout>
-        <recordType>ServicePoint__c.HDT_RT_Gas</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ServicePoint__c-Service Point Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>SMSTracking__c-SMS Tracking Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -30529,15 +30518,15 @@
         <layout>ScorecardMetric-Scorecard Metric Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ServicePoint__c-Service Point Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ServicePoint__c-Service Point Layout</layout>
+        <layout>ServicePoint__c-Service Point Ele</layout>
         <recordType>ServicePoint__c.HDT_RT_Ele</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ServicePoint__c-Service Point Layout</layout>
+        <layout>ServicePoint__c-Service Point Gas</layout>
         <recordType>ServicePoint__c.HDT_RT_Gas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ServicePoint__c-Service Point Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>SocialPersona-Social Persona Layout</layout>
