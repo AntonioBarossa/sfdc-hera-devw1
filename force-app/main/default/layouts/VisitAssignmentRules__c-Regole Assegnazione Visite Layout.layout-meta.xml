@@ -61,6 +61,12 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Agency__c</fields>
+        <fields>PercentageOfAssignment__c</fields>
+        <relatedList>PercentageRulesForAssigningVisits__c.VisitAssignmentRules__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
