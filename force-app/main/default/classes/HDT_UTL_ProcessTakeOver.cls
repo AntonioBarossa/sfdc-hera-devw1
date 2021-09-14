@@ -1,13 +1,10 @@
 public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExecution {
 
-   final String PROCESS_NAME='Subentro';
+   //final String PROCESS_NAME='Subentro';
 
    public  HDT_UTL_ProcessTakeOver(){
+       System.debug('HDT_UTL_ProcessTakeOver');
 
-   }
-
-   public  HDT_UTL_ProcessTakeOver(MassiveLoaderRequestItem__c varRequestItem){
-     
    }
 
     public override void checks(){
@@ -194,6 +191,14 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         update currentProcess.currentRequestItem;
     }
 
+
+
+
+
+
+
+
+    
     //public void postSalesCreation(){}
    // public void finalUpdate(){}
    private void makeContact(){

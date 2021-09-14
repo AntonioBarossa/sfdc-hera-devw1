@@ -32,6 +32,8 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
     }
     public void finish(Database.BatchableContext bc){
         System.debug('HDT_BA_ProcessRequestItem finish ');
+        MassiveLoaderRequest__c oldReq=new MassiveLoaderRequest__c(id=idLoaderRequest,Status__c=constantsUtl.MASSIVLOADER_STATUS_CHIUSO,Phase__c=constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO);
+        update oldReq;
         List<MassiveLoaderRequest__c> listmsr = [SELECT Id FROM MassiveLoaderRequest__c WHERE Status__c=:constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE ORDER BY CreatedDate DESC LIMIT 10];
         if (listmsr!=null && listmsr.size()>0 ) {
             HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listmsr.get(0).id); 
