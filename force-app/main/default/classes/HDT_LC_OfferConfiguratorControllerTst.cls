@@ -17,6 +17,10 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         productList[0].Version__c = '01V1';
         productList[0].Family = Label.HDT_ProductFamilyTrigger;
 
+        productList[1].ProductCode = 'pCode02';
+        productList[1].Version__c = '01V1';
+        productList[1].Family = '';
+
         insert productList;
 
         List<OperandTemplate__c> operandTemplateList = new List<OperandTemplate__c>();
@@ -89,6 +93,7 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         Product2 p = [
             SELECT Id
             FROM Product2
+            WHERE ProductCode <> 'pCode02'
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];
@@ -99,6 +104,22 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         System.assertEquals(true, responseTecOffer.success, 'success != true');
         System.assert(String.isBlank(responseTecOffer.errorMessage), 'responseTecOffer.errorMessage != null');
         System.assert(responseTecOffer.data != null, 'data == null');
+
+        //Product with Family = ''
+
+        Product2 p2 = [
+            SELECT Id, ProductCode, Version__c 
+            FROM Product2
+            WHERE ProductCode = 'pCode02'
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
+        responseTecOffer = HDT_LC_OfferConfiguratorController.getExistingOffer(p2.Id);
+
+        System.assertEquals(false, responseTecOffer.success, 'success != true');
+        System.assert(!String.isBlank(responseTecOffer.errorMessage), 'responseTecOffer.errorMessage == null');
+        System.assert(Label.HDT_OfferConfig_OfferType.equals(responseTecOffer.errorMessage), 'responseTecOffer.errorMessage != Label.HDT_OfferConfig_OfferType');
 
         Test.stopTest();
     }
