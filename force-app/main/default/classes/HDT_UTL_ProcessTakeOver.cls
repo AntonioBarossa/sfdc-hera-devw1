@@ -15,7 +15,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
    }
 
     public override void checks(){
-        setProcessName(PROCESS_NAME);
+        
        
 
         Map<String, String> mapAccountFields = new Map<String, String>{
@@ -63,7 +63,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         if ( String.isNotBlank( currentProcess.currentRequestItem.Data__c)) {
          
             Integer count=0;
-            // currentProcess.currentRequestItem.Data__c= currentProcess.currentRequestItem.Data__c.replace(',,',',null,' );
+            //currentProcess.currentRequestItem.Data__c= currentProcess.currentRequestItem.Data__c.replace(',,',',null,' );
             for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
                 
                 System.debug('column N° :'+count+' FieldapiName : '+mapAccountFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );

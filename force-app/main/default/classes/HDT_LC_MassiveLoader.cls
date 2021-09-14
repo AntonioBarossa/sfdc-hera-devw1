@@ -216,10 +216,18 @@ public with sharing class HDT_LC_MassiveLoader {
                                                                                       Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE, 
                                                                                       Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO);
                                                                                       
-                        massiveLoaderRequestSrv.updateRequestRecord(new List<MassiveLoaderRequest__c>{request});
                         if (listRequestItem!=null && listRequestItem.size()>0) {
                             insert listRequestItem;
+                            integer  numberRequestProcessing= database.countQuery('select count() from MassiveLoaderRequest__c Status__c =\'In Lavorazione\'');
+
+                            if (numberRequestProcessing==0) {
+                                request.Status__c = constantsUtl.MASSIVLOADER_STATUS_INLAVORAZIONE;
+                                HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listRequestItem.get(0).MassiveLoaderRequest__c); 
+                                Id batchprocessid = Database.executeBatch(processReq,1);
+                            }
                         }
+                        massiveLoaderRequestSrv.updateRequestRecord(new List<MassiveLoaderRequest__c>{request});
+
 
                         response.put('error', false);
 

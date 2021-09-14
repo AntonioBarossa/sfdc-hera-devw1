@@ -3,11 +3,34 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public HDT_QR_Account qrAcc                                = new HDT_QR_Account();
     public static HDT_QR_AccountContactRelation accoContRelQr  = new HDT_QR_AccountContactRelation();
     public static HDT_QR_Contact qrCont                        = new HDT_QR_Contact();
-    public String processName;
+    public  MassiveLoaderRequestItem__c varRequestItem;
+    public  String processName;
     public  Map<Integer, String> mapHeaderByPosition; 
     public  Map<Integer, String> mapRequiredByPosition; 
     public  Id recordTypeBus;
     public  Id recordTypeRes;
+
+    public void setMassiveLoaderRequestItem(MassiveLoaderRequestItem__c requestItem){
+        this.varRequestItem=requestItem;
+        if (varRequestItem==null || String.isBlank(varRequestItem.MassiveLoaderRequest__r.ProcessType__c)) {
+            throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessType can\'t be null');
+        }
+    
+        this.processName=varRequestItem.MassiveLoaderRequest__r.ProcessType__c;
+        List<StaticResource> staticResources = staticResourceQr.getRecordByName(processName);
+        mapHeaderByPosition = new Map<Integer, String>();
+        Integer count=0;
+        for (String temp : staticResources.get(0).Body.toString().split(',')) {
+            if (temp.containsIgnoreCase('*')) {
+                temp=temp.remove('*');
+                mapRequiredByPosition.put(count,temp);
+            }
+            mapHeaderByPosition.put(count,temp);
+            count++;
+        }
+        recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+        recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
+    }
 
     public virtual void checks(){
         System.debug('checks');
@@ -33,26 +56,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         finalUpdate();
 
     }
-    public void setProcessName(String prName){
-        if ( String.isBlank(prName)) {
-            throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessName can\'t be null');
-        }
-        this.processName=prName;
-        List<StaticResource> staticResources = staticResourceQr.getRecordByName(prName);
-        mapHeaderByPosition = new Map<Integer, String>();
-        Integer count=0;
-        for (String temp : staticResources.get(0).Body.toString().split(',')) {
-            if (temp.containsIgnoreCase('*')) {
-                temp=temp.remove('*');
-                mapRequiredByPosition.put(count,temp);
-            }
-            mapHeaderByPosition.put(count,temp);
-            count++;
-        }
-        recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
-        recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
-
-    }
+   
 
 
 
