@@ -1,7 +1,7 @@
 /**
 * @author alessandro.picchiri@eng.it
 * @date 20/05/2021
-* @description Apex controller that returns list of customer in archive and in sf
+* @description HDT_LC_StoricizzazioneCliente - Apex controller that returns list of customer in archive and in sf
 */
 
 public with sharing class HDT_LC_StoricizzazioneCliente {
@@ -12,52 +12,105 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
         'HDT_FrontOffice_MMS' => new List<String>{'MMS Persona fisica','MMS Ditta individuale','MMS Azienda','MMS Parti comuni','MMS Condominio','MMS Associazione'}
     };
 
+    /**
+     * @description HDT_LC_Link
+     */
     public class HDT_LC_Link{
         @AuraEnabled public String label;
         @AuraEnabled public String value;
-
+        /**
+         * @description HDT_LC_Link
+         * param label - String
+         * param value - String
+         */
         public HDT_LC_Link(String label, String value){
             this.label = label;
             this.value = value;
         }
     }
     // Start Refactoring post intervento Andrea
+
+    /**
+     * @description HDT_LC_Customer
+     */
     public class HDT_LC_Customer {
-     
-        @AuraEnabled public String Nome {get;set;}
-        @AuraEnabled public String CodiceFiscale {get;set;}
-        @AuraEnabled public String IVA {get;set;}
-        @AuraEnabled public String CodiceCliente {get;set;}
-        @AuraEnabled public String Id {get;set;}
+        
+        /**
+         * @description name - String variable
+         */
+        @AuraEnabled public String nome {get;set;}
+
+        /**
+         * @description codiceFiscale - String variable
+         */
+        @AuraEnabled public String codiceFiscale {get;set;}
+
+        /**
+         * @description iVA - String variable
+         */
+        @AuraEnabled public String iVA {get;set;}
+
+        /**
+         * @description codiceCliente - String variable
+         */
+        @AuraEnabled public String codiceCliente {get;set;}
+
+        /**
+         * @description id - String variable
+         */
+        @AuraEnabled public String id {get;set;}
+
+        /**
+         * @description isStoricizzato - String variable
+         */
         @AuraEnabled public String isStoricizzato {get;set;}
-        @AuraEnabled public String NomeProprio {get;set;}
- 
-        public HDT_LC_Customer(String Nome,
-                        String CodiceFiscale,
-                        String IVA,
-                        String CodiceCliente,
-                        String Id,
+
+        /**
+         * @description nomeProprio - String variable
+         */
+        @AuraEnabled public String nomeProprio {get;set;}
+        
+        /**
+         * @description HDT_LC_Customer
+         * param nome - String
+         * param codiceFiscale - String
+         * param iva - String
+         * param codiceCliente - String
+         * param id - String
+         * param isStoricizzato - String
+         * param nomeProprio - String
+         */
+        public HDT_LC_Customer(String nome,
+                        String codiceFiscale,
+                        String iva,
+                        String codiceCliente,
+                        String id,
                         String isStoricizzato,
-                        String NomeProprio
+                        String nomeProprio
                         ){
-                        this.Nome	        = Nome;	
-                        this.CodiceFiscale	= CodiceFiscale;	
-                        this.IVA	        = IVA;
-                        this.CodiceCliente	= CodiceCliente;
-                        this.Id	            = Id;
+                        this.nome	        = nome;	
+                        this.codiceFiscale	= codiceFiscale;	
+                        this.iva	        = ova;
+                        this.codiceCliente	= codiceCliente;
+                        this.id	            = id;
                         this.isStoricizzato = isStoricizzato;
-                        this.NomeProprio    = NomeProprio;
+                        this.nomeProprio    = nomeProprio;
                 }             
      }
      // End Refactoring post intervento Andrea
 
-    /*  La funzione restituisce la lista di marcature consentite in base al role dell'account in uso attualmente
-    *
-    *   return:
-    *   null -> il role non è presente nella mappa, nessu risultato consentito
-    *   List<String> vuoto: l'utente non ha alcun filtro
-    *   List<String> popolato: la query verrà filtrata per le marcature restituite
-    */
+    /**
+     * @description HDT_LC_StoricizzazioneCliente.getMarcatureFromRole - La funzione restituisce la lista 
+     *                                                                   di marcature consentite in base al 
+     *                                                                     role dell'account in uso attualmente
+     * param1 searchKey - String
+     * param2 sortBy - String
+     * param3 sortDirection - String
+     * param4 filterby - String
+     * @return null -> il role non è presente nella mappa, nessu risultato consentito
+     * @return List<String> vuoto: l'utente non ha alcun filtro
+     * @return List<String> popolato: la query verrà filtrata per le marcature restituite
+     */
     public static List<String> getMarcatureFromRole(){
         String uRoleId = UserInfo.getUserRoleId();
 
@@ -70,6 +123,14 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
         return mappingRoleToMarcatura.get(roleDevName);
     }
     
+    /**
+     * @description HDT_LC_StoricizzazioneCliente.getExternalCustomer
+     * param1 searchKey - String
+     * param2 sortBy - String
+     * param3 sortDirection - String
+     * param4 filterby - String
+     * @return List<HDT_LC_Customer>
+     */
     @AuraEnabled
     public static List<HDT_LC_Customer> getExternalCustomer( String searchKey, String sortBy, String sortDirection, String filterby) {
        System.debug('getExternalCustomer');
@@ -80,9 +141,9 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
 
             List<String> marcaturePermesse = getMarcatureFromRole();
             // se il ruolo non è presente nella mappa allora non ha alcun permesso di visualizzazione sugli account
-            if(marcaturePermesse == null)
-            return wrapperToreturn;
-            
+            if(marcaturePermesse == null){
+                return wrapperToreturn;
+            }
             String queryStoricizzati = 'select Id, ALIAS_NAME__c, TAX_IDEN_NUM__c ,VAT_REGN_NUM__c,NAME_1__c , OU_NUM__c FROM SiebelCustomer__x ';   
             if(filterby=='Codice Fiscale'){
                 queryStoricizzati +=' WHERE TAX_IDEN_NUM__c = :searchKey';
@@ -93,9 +154,9 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
             }     
             // filtro marcatura
             // queryStoricizzati += getQueryMarcaturaString(marcaturePermesse, 'SiebelCustomer__x');
-            if (marcaturePermesse.size() > 0)
+            if (marcaturePermesse.size() > 0){
                 queryStoricizzati += ' AND X_MARCATURA_CLIENTE__c = :marcaturePermesse ';
-
+            }
             if (sortBy != null && sortDirection != null ) {
                 queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             }
@@ -110,25 +171,25 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
                 queryNonStoricizzati += ' WHERE CustomerCode__c = :searchKey';
             }     
             // filtro marcatura
-            if (marcaturePermesse.size() > 0)
+            if (marcaturePermesse.size() > 0){
                 queryNonStoricizzati += ' AND CustomerMarking__c = :marcaturePermesse ';
-
+            }
             if (sortBy != null && sortDirection != null ) {
                 queryNonStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             } 
             List<Account> listAccount =  Database.query( String.escapeSingleQuotes(queryNonStoricizzati) );
           
 
-            for(SiebelCustomer__x SiebelCustomer:listSiebelCustomer){
+            for(SiebelCustomer__x siebelCustomer:listSiebelCustomer){
                 wrapperToreturn.add(
                     new HDT_LC_Customer(
-                        SiebelCustomer.ALIAS_NAME__c,                       
-                        SiebelCustomer.TAX_IDEN_NUM__c,
-                        SiebelCustomer.VAT_REGN_NUM__c,
-                        SiebelCustomer.OU_NUM__c,
-                        SiebelCustomer.Id,
+                        siebelCustomer.ALIAS_NAME__c,                       
+                        siebelCustomer.TAX_IDEN_NUM__c,
+                        siebelCustomer.VAT_REGN_NUM__c,
+                        siebelCustomer.OU_NUM__c,
+                        siebelCustomer.Id,
                         'SI',
-                        SiebelCustomer.NAME_1__c
+                        siebelCustomer.NAME_1__c
                         )
                 );
             }
