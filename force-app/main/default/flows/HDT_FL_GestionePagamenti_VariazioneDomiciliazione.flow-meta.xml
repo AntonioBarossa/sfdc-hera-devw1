@@ -312,7 +312,7 @@
         <locationX>1601</locationX>
         <locationY>2510</locationY>
         <assignmentItems>
-            <assignToReference>GetCaseSottoscrittore.BankAccountSignatoryFirstName__c</assignToReference>
+            <assignToReference>GetCaseSottoscrittore.BankAccountSignatoryFiscalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>UpperCaseCFSott</elementReference>
@@ -1100,7 +1100,7 @@
     <formulas>
         <name>ProcessTypeFormula</name>
         <dataType>String</dataType>
-        <expression>IF({!IbanIsForeign} = false, &quot;Variazione Domiciliazione - Italiano&quot;,&quot;Variazione Domiciliazione - Estero&quot;)</expression>
+        <expression>IF({!IbanIsForeign} = false, &quot;Variazione Domiciliazione&quot;,&quot;Variazione Domiciliazione - Estero&quot;)</expression>
     </formulas>
     <formulas>
         <name>UpperCaseCFSott</name>
@@ -2262,7 +2262,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Variazione Domiciliazione</stringValue>
+                    <elementReference>ProcessTypeFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
