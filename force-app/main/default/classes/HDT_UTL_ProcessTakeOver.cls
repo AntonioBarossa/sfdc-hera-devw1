@@ -150,7 +150,9 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         }
 
         currentProcess.currentSale.Account__c=currentProcess.currentAccount.Id;
+        currentProcess.currentServicePoint.Account__c=currentProcess.currentAccount.Id;
         listUpdateGeneric.add(currentProcess.currentSale);
+        listUpdateGeneric.add(currentProcess.currentServicePoint);
 
 
         if (listUpdateGeneric.size()>0) {
