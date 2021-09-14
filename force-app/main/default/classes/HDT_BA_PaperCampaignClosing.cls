@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 25/06/2021
+* @description HDT_BA_PaperCampaignClosing
+* @history Lorenzo – 25/06/2021 – created class
+*/
 public with sharing class HDT_BA_PaperCampaignClosing implements Database.Batchable<sObject> {
 
 
