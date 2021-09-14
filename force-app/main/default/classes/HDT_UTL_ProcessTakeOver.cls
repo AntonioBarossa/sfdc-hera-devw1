@@ -3,6 +3,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
     private Map<String, String> mapSaleFields;
     private Map<String, String> mapServicePointFields;
     private Map<String, String> mapBillingProfileFields;
+    private Map<String, String> mapOrderFields;
        //final String PROCESS_NAME='Subentro';
 
    public  HDT_UTL_ProcessTakeOver(){
@@ -21,7 +22,6 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             currentProcess.currentRequestItem.Data__c= currentProcess.currentRequestItem.Data__c.replace(',,',',null,' );
             for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
                 
-                System.debug('column N° :'+count+' FieldapiName : '+mapAccountFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
 
                 // Controllo campi required
                 // if (mapRequiredByPosition.get(count)!=null && String.isBlank(tempField) ) {
@@ -40,6 +40,8 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
 
                 // Creazione Account
                 if (mapAccountFields.get(mapHeaderByPosition.get(count))!=null) {
+                    System.debug('column N° :'+count+' FieldapiName : '+mapAccountFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+
                     if ('ShippingAddressIsForeign__c'.equalsIgnoreCase(mapAccountFields.get(mapHeaderByPosition.get(count))) ||'BillingIsAddressVerified__c'.equalsIgnoreCase(mapAccountFields.get(mapHeaderByPosition.get(count)))   ) {
                         System.debug('isverificato '+mapAccountFields.get(mapHeaderByPosition.get(count)));
                         System.debug('isverificatotempField '+tempField);
@@ -68,13 +70,46 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 //Fine Creazione Account
                 // Creazione Sales
                 else if(mapSaleFields.get(mapHeaderByPosition.get(count))!=null ){
+                    System.debug('column N° :'+count+' FieldapiName : '+mapSaleFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+
                     currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),tempField);
                 }
                 else if(mapServicePointFields.get(mapHeaderByPosition.get(count))!=null ){
-                    currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),tempField);
+                    System.debug('column N° :'+count+' FieldapiName : '+mapServicePointFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+
+                    if ('ContractSigned__c'.equalsIgnoreCase(mapServicePointFields.get(mapHeaderByPosition.get(count))) || 'Resident__c'.equalsIgnoreCase(mapServicePointFields.get(mapHeaderByPosition.get(count))) 
+                    ||'SupplyAddessIsForeign__c'.equalsIgnoreCase(mapServicePointFields.get(mapHeaderByPosition.get(count)))
+                    ) {
+                        currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),'true'.equalsIgnoreCase(tempField)?true:false);
+                    }
+                    else if ('PowerContractual__c'.equalsIgnoreCase(mapServicePointFields.get(mapHeaderByPosition.get(count)))) {
+                        System.debug('yuppi');
+                        currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
+                    }
+                    else if ('AnnualConsumption__c'.equalsIgnoreCase(mapServicePointFields.get(mapHeaderByPosition.get(count)))||'PowerAvailable__c'.equalsIgnoreCase(mapServicePointFields.get(mapHeaderByPosition.get(count))) )                
+                     {
+                        currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
+
+                    }
+                    else {
+                        currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),tempField);
+                    }
                 }
                 else if(mapBillingProfileFields.get(mapHeaderByPosition.get(count))!=null ){
+                    System.debug('column N° :'+count+' FieldapiName : '+mapBillingProfileFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+
                     currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),tempField);
+                }
+                
+                else if(mapOrderFields.get(mapHeaderByPosition.get(count))!=null ){
+                    System.debug('column N° :'+count+' FieldapiName : '+mapOrderFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+
+                    if ('ContractSigned__c'.equalsIgnoreCase(mapAccountFields.get(mapHeaderByPosition.get(count)))) {
+                        currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),'true'.equalsIgnoreCase(tempField)?true:false);
+                    }
+                    else {
+                        currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),tempField);
+                    }
                 }
                 count++;
             }
@@ -153,10 +188,15 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             }
         }
 
-        currentProcess.currentSale.Account__c=currentProcess.currentAccount.Id;
-        currentProcess.currentServicePoint.Account__c=currentProcess.currentAccount.Id;
+        currentProcess.currentSale.Account__c           = currentProcess.currentAccount.Id;
+        currentProcess.currentServicePoint.Account__c   = currentProcess.currentAccount.Id;
+        currentProcess.currentBillingProfile.Account__c = currentProcess.currentAccount.Id;
+        currentProcess.currentOrder.AccountId           = currentProcess.currentAccount.Id;
+        
         listUpdateGeneric.add(currentProcess.currentSale);
         listUpdateGeneric.add(currentProcess.currentServicePoint);
+        listUpdateGeneric.add(currentProcess.currentBillingProfile);
+        listUpdateGeneric.add(currentProcess.currentOrder);
 
 
         if (listUpdateGeneric.size()>0) {
@@ -256,44 +296,44 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             // inserire domicilio
         };
         mapSaleFields = new Map<String, String>{
-            'Canale'=>'Channel__c',
-            'Codice Amico'=>'FriendCode__c ',
-            'Agenzia'=>'Agency__c',
-            'Venduto Da'=>'SaleBy__c',
-            'Nome Agente'=>'VendorFirstName__c',
-            'Cognome Agente'=>'VendorLastName__c',
-            'Campagna'=>'Campaign__c',
-            'Campagna Commissioning'=>'CommissioningCampaign__c'
+            'Canale'                    =>  'Channel__c',
+            'Codice Amico'              =>  'FriendCode__c ',
+            'Agenzia'                   =>  'Agency__c',
+            'Venduto Da'                =>  'SaleBy__c',
+            'Nome Agente'               =>  'VendorFirstName__c',
+            'Cognome Agente'            =>  'VendorLastName__c',
+            'Campagna'                  =>  'Campaign__c',
+            'Campagna Commissioning'    =>  'CommissioningCampaign__c'
         };
-        mapServicePointFields=new Map<String, String>{
-            'Servizio'=>'CommoditySector__c',
-            'Distributore'=>'Distributor__c',
-            'Tipo Fornitura'=>'SupplyType__c',
-            'Tipologia Impianto'=>'ImplantType__c',
-            'Consumo annuo'=>'AnnualConsumption__c',
-            'Mercato di provenienza'=>'MarketOrigin__c',
-            'Classe Contatore'=>'MeterClass__c',
-            'Categoria D\'Uso'=>'UseCategory__c',
-            'Disalimentabile'=>'Disconnectable__c',
-            'Tipologia Disalimentabilità'=>'DisconnectibilityType__c',
-            'Telefono non disalimentabilità'=>'DisconnectibilityPhone__c',
-            'Residente'=>'Resident__c',
-            'Potenza contrattuale'=>'PowerContractual__c',
-            'Potenza disponibile'=>'PowerAvailable__c',
-            'Tensione di Consegna'=>'VoltageLevel__c',
-            'Presenza Allaccio'=>'PlugPresence__c',
-            'Fase Richiesta'=>'RequestPhase__c',
-            'Tipo Apparecchiatura'=>'MeterType__c',
-            'Potenza Richiesta'=>'PowerRequested__c',
-            'Matricola Contatore'=>'MeterSN__c',
-            'Codice Remi'=>'RemiCode__c',
-            'Livello pressione'=>'PressureLevel__c',
-            'Classe di prelievo'=>'WithdrawalClass__c',
-            'Potenzialità massima richiestaMaxRequiredPotential__c'=>'MaxRequiredPotential',
-            'SP_Comune'=>'SupplyCountry__c',
-            'SP_Via'=>'SupplyStreetName__c',
-            'SP_Civico'=>'SupplyStreetNumber__c',
-            'SP_Indirizzo Estero'=>'SupplyAddessIsForeign__c'
+        mapServicePointFields=new Map<String, String>{  
+            'Servizio'                                              =>  'CommoditySector__c',
+            'Distributore'                                          =>  'Distributor__c',
+            'Tipo Fornitura'                                        =>  'SupplyType__c',
+            'Tipologia Impianto'                                    =>  'ImplantType__c',
+            'Consumo annuo'                                         =>  'AnnualConsumption__c',
+            'Mercato di provenienza'                                =>  'MarketOrigin__c',
+            'Classe Contatore'                                      =>  'MeterClass__c',
+            'Categoria D\'Uso'                                      =>  'UseCategory__c',
+            'Disalimentabile'                                       =>  'Disconnectable__c',
+            'Tipologia Disalimentabilità'                           =>  'DisconnectibilityType__c',
+            'Telefono non disalimentabilità'                        =>  'DisconnectibilityPhone__c',
+            'Residente'                                             =>  'Resident__c',
+            'Potenza contrattuale'                                  =>  'PowerContractual__c',
+            'Potenza disponibile'                                   =>  'PowerAvailable__c',
+            'Tensione di Consegna'                                  =>  'VoltageLevel__c',
+            'Presenza Allaccio'                                     =>  'PlugPresence__c',
+            'Fase Richiesta'                                        =>  'RequestPhase__c',
+            'Tipo Apparecchiatura'                                  =>  'MeterType__c',
+            'Potenza Richiesta'                                     =>  'PowerRequested__c',
+            'Matricola Contatore'                                   =>  'MeterSN__c',
+            'Codice Remi'                                           =>  'RemiCode__c',
+            'Livello pressione'                                     =>  'PressureLevel__c',
+            'Classe di prelievo'                                    =>  'WithdrawalClass__c',
+            'Potenzialità massima richiesta'                        =>  'MaxRequiredPotential__c',
+            'SP_Comune'                                             =>  'SupplyCity__c',
+            'SP_Via'                                                =>  'SupplyStreetName__c',
+            'SP_Civico'                                             =>  'SupplyStreetNumber__c',
+            'SP_Indirizzo Estero'                                   =>  'SupplyAddessIsForeign__c'
         };
         mapBillingProfileFields=new Map<String, String>{
             'Modalità di Pagamento'=>'PaymentMethod__c ',
@@ -319,6 +359,27 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             'BP_Comune'=>'InvoicingCity__c',
             'BP_Via'=>'InvoicingStreetName__c',
             'BP_Civico'=>'InvoicingStreetNumber__c'
+        };
+        mapOrderFields=new Map<String, String>{
+            'Contratto Firmato'=>'ContractSigned__c',
+            'Data Firma'=>'SignedDate__c',
+            'Metodo Firma'=>'SignatureMethod__c',
+            'Modalità invio doc'=>'DocSendingMethod__c',
+            'Uso Energia'=>'UseTypeEnergy__c',
+            'Mandato di Connessione'=>'ConnectionMandate__c',
+            'Autocert.Contr.Connessione'=>'SelfCertificationConnection__c ',
+            'Tipo di Connessione'=>'ConnectionType__c',
+            'Opzione di distribuzione'=>'RequestOption__c ',
+            'Recapito Telefonico'=>'PhoneNumber__c',
+            'Azione Commerciale'=>'CommercialAction__c',
+            'Codice ISTAT/Ateco'=>'AtecoCode__c',
+            'Autocert.Istanza'=>'InstanceSelfCertification__c',
+            'Note per il DL'=>'CommentForDL__c ',
+            'Convenzione/Associazione'=>'ConventionAssociation__c',
+            'Superficie Servita'=>'SurfaceServed__c',
+            'Esclusione Deposito cauzionale'=>'SecurityDepositExcluded__c',
+            'Fatturazione Aggregata'=>'AggregateBilling__c',
+            'IVA'=>'AggregateBilling__c' 
         };
     } 
 }
