@@ -1,7 +1,7 @@
 public with sharing class HDT_QR_InformativeManager {
 
     //modificare prendendo i cluster dall'oggetto HDT_Informative_Configuration__mdt in base al punto d'innesco.
-    public static List<HDT_ClusterProcess__mdt> getClusterProcess(String context)
+    public static List<HDT_Informative_Configuration__mdt> getClusterProcess(String context)
     {
 
         context = context == 'ServicePoint__c' || context == 'BillingProfile__c' ? context : context + '__c';

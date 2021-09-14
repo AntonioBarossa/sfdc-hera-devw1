@@ -1100,7 +1100,7 @@
     <formulas>
         <name>ProcessTypeFormula</name>
         <dataType>String</dataType>
-        <expression>IF({!IbanIsForeign} = false, &quot;Variazione Domiciliazione - Italiano&quot;,&quot;Variazione Domiciliazione - Estero&quot;)</expression>
+        <expression>IF({!IbanIsForeign} = false, &quot;Variazione Domiciliazione&quot;,&quot;Variazione Domiciliazione - Estero&quot;)</expression>
     </formulas>
     <formulas>
         <name>UpperCaseCFSott</name>
@@ -2262,7 +2262,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Variazione Domiciliazione</stringValue>
+                    <elementReference>ProcessTypeFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2770,7 +2770,7 @@
             <targetReference>Il_Case_in_Bozza</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
