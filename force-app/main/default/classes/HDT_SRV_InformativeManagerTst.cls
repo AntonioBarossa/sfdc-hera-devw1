@@ -38,26 +38,31 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         System.debug(debugString + ' - Testing ServicePoint__c');
         HDT_SRV_InformativeManager myTstObj = new HDT_SRV_InformativeManager();
         String result = myTstObj.getOptions(JSON.serialize(paramsMap));
+        List<Map<String,String>> resultProcessed = JSON.deserialize(result, List<Map<String,String>>.class);
         
         //ASSERTS
-        
-        
-        
+        System.assert(resultProcessed.size() > 0);
+        System.assertNotEquals(null, resultProcessed[0].get('label'));
+        System.assertNotEquals(null, resultProcessed[0].get('value'));
         
         
         //TEST BillingProfile__c
         BillingProfile__c myBillingProfile = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id)[0];
         myId = myBillingProfile.Id;
         
-        //TESTING
-        System.debug(debugString + ' - Testing BillingProfile__c');
         paramsMap = new Map<String, Object>();
         paramsMap.put('method', 'cluster');
         paramsMap.put('context', myId);
         
+        //TESTING
+        System.debug(debugString + ' - Testing BillingProfile__c');
+        result = myTstObj.getOptions(JSON.serialize(paramsMap));
+        resultProcessed = JSON.deserialize(result, List<Map<String,String>>.class);
+        
         //ASSERTS
-        
-        
+        System.assert(resultProcessed.size() > 0);
+        System.assertNotEquals(null, resultProcessed[0].get('label'));
+        System.assertNotEquals(null, resultProcessed[0].get('value'));
         
     }
     
