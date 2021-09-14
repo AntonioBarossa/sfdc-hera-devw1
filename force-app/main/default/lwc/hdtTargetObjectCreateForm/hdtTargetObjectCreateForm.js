@@ -1109,6 +1109,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.allSubmitedFields['VoltageLevel__c'] === undefined || this.allSubmitedFields['VoltageLevel__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Tensione di Consegna, ');
             }
+            if (this.allSubmitedFields['AnnualConsumption__c'] === undefined || this.allSubmitedFields['AnnualConsumption__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Consumo Annuo, ');
+            }
         }
         else {
 
@@ -1129,6 +1132,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if (this.allSubmitedFields['Disconnectable__c'] === 'No' && (this.allSubmitedFields['DisconnectibilityType__c'] === undefined || this.allSubmitedFields['DisconnectibilityType__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+            }
+            if (this.allSubmitedFields['AnnualConsumption__c'] === undefined || this.allSubmitedFields['AnnualConsumption__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Consumo Annuo, ');
+            }
+            if (this.allSubmitedFields['MaxRequiredPotential__c'] === undefined || this.allSubmitedFields['MaxRequiredPotential__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Potenzialità Massima Richiesta, ');
             }
         }
         if (concatPointErrorFields !== '') {
@@ -1183,6 +1192,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.allSubmitedFields['VoltageLevel__c'] === undefined || this.allSubmitedFields['VoltageLevel__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Tensione di Consegna, ');
             }
+            if (this.allSubmitedFields['AnnualConsumption__c'] === undefined || this.allSubmitedFields['AnnualConsumption__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Consumo Annuo, ');
+            }
         }
         else {
 
@@ -1209,6 +1221,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if (this.allSubmitedFields['Disconnectable__c'] === 'No' && (this.allSubmitedFields['DisconnectibilityType__c'] === undefined || this.allSubmitedFields['DisconnectibilityType__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+            }
+            if (this.allSubmitedFields['AnnualConsumption__c'] === undefined || this.allSubmitedFields['AnnualConsumption__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Consumo Annuo, ');
+            }
+            if (this.allSubmitedFields['MaxRequiredPotential__c'] === undefined || this.allSubmitedFields['MaxRequiredPotential__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Potenzialità Massima Richiesta, ');
             }
         }
         if (concatPointErrorFields !== '') {
