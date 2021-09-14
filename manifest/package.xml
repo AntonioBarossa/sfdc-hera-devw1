@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-	<types>
+<!--	<types>
 		<members>HDT_BA_MassiveLoader</members>
 		<members>HDT_LC_MassiveLoader</members>
 		<members>HDT_QR_MassiveLoaderProcess</members>
@@ -10,14 +10,14 @@
 		<members>HDT_UTL_ProcessTakeOver</members>
 		
 		<name>ApexClass</name>
-	</types>
+	</types>-->
 	<types>
 		<members>HDT_MassiveLoaderProcess__mdt</members>
 		<members>MassiveLoaderRequestItem__c</members>
 		<members>MassiveLoaderRequest__c</members>
 		<name>CustomObject</name>
 	</types>
-	<types>
+	<!--<types>
 		<members>MassiveLoader</members>
 		<members>MassiveLoaderRequest__c</members>
 		<name>CustomTab</name>
@@ -26,6 +26,6 @@
 		<members>HDT_MassiveLoaderProcess__mdt-HDT Massive Loader Process Layout</members>
 		<members>MassiveLoaderRequest__c-Richiesta Caricatore Massivo Layout</members>
 		<name>Layout</name>
-	</types>
+	</types>-->
 	<version>51.0</version>
 </Package>

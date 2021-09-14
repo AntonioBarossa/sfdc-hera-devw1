@@ -12,9 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Pronto A Partire</fullName>
+                <fullName>In attesa di lavorazione</fullName>
                 <default>true</default>
-                <label>Pronto A Partire</label>
+                <label>In attesa di lavorazione</label>
             </value>
             <value>
                 <fullName>In Lavorazione</fullName>
