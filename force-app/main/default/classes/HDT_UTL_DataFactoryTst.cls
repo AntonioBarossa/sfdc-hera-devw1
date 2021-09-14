@@ -1146,6 +1146,26 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return internalUser;
 	}
 
+	public static User createCommunityUser(Contact contact, String profileId ,Boolean doInsert) {
+        User communityUser = new User(
+                Alias = 'commuser',
+                FirstName = 'FirstName',
+                LastName = 'LastName',
+                Email = 'commuser@test.com',
+                EmailEncodingKey = 'UTF-8',
+                LanguageLocaleKey = 'it',
+                LocaleSidKey = 'it',
+                ProfileId = profileId,
+                ContactId = contact.Id,
+                TimeZoneSidKey = 'Europe/Rome',
+                UserName = 'commuser@test.com' + DateTime.now().getTime()
+        );
+        if(doInsert) {
+            insert communityUser;
+        }
+        return communityUser;
+    }
+
 	public static PermissionSetAssignment assignPermissionSet(User u, String permissionSet, Boolean doInsert){
 
 		PermissionSetAssignment psa=new PermissionSetAssignment(PermissionSetId=getPermissionSetId(permissionSet), AssigneeId=u.Id);
@@ -1987,4 +2007,47 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return commCodeList;
 	}
+
+	public static List<MatriceRemiCode__c> createMatriceRemiCode(Integer amount, Boolean doInsert){
+
+		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			MatriceRemiCode__c mRemiCode=new MatriceRemiCode__c();
+
+			mRemiCode.RemiCode__c='test';
+
+			matriceRemiCode.add(mRemiCode);
+
+		}
+
+		if (doInsert){
+
+			insert matriceRemiCode;
+		}
+
+		return matriceRemiCode;
+}
+
+
+	public static List<ServiceRequest__c> createServiceRequest(Integer amount, Boolean doInsert) {
+
+		List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ServiceRequest__c sr = new ServiceRequest__c(
+				ProcessType__c = 'Alert'
+			);
+
+			srList.add(sr);
+		}
+
+		if (doInsert){
+
+			insert srList;
+	}
+	return srList;
+}
 }

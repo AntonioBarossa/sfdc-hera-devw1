@@ -1348,7 +1348,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     // )
                     new fieldData(
                         'Numero Contratto','ConfirmCustomerContract__c',
-                        this.order.ConfirmCustomerContract__c !== undefined, 
+                        true, 
                         false, true, '',''
                     ), 
                     new fieldData(
@@ -1367,11 +1367,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         false, false, '',''
                     ), 
                     new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
-                    new fieldData(
-                        'Sottotipo Vas','VasSubtype__c', 
+                    /*new fieldData(
+                        'Sottotipo Vas','VasSubtype__c', //BUG 68
                         this.typeVisibility('both'), 
                         false, true, '',''
-                    ),
+                    ),*/
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
                     new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, false, ''),
                     new fieldData('Soc Vendita','SalesCompany__c', true, false, true, ''),
