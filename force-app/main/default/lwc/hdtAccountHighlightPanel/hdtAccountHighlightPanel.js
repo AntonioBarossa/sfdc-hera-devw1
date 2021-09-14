@@ -43,7 +43,7 @@ export default class HdtAccountHighlightPanel extends LightningElement {
                     this.iconStatus = this.requiredCampaignsIcon;
                     this.dispatchEvent(
                         new ShowToastEvent({
-                            title: 'Sul Cliente sono presenti Campagne Obbligatorie',
+                            title: 'Sono presenti Campagne Obbligatorie',
                             message: 'Clicca {0}',
                             messageData: [
                                 {
