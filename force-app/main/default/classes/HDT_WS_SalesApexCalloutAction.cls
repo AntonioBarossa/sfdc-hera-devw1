@@ -141,6 +141,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                     }
                     if(String.isNotBlank(fieldValueResponse.get('COD_PRAT_UTENTE'))){
                         ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+                    }else if(String.isNotBlank(responseService.responses[0].header.requestId)){
+                        ord.HerokuPracticeCode__c = responseService.responses[0].header.requestId;
                     }
                     if(fieldValueResponse.get('result') != null){
                         
