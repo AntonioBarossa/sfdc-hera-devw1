@@ -77,6 +77,7 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         paramsMap = new Map<String, Object>();
         paramsMap.put('method', 'topic');
         paramsMap.put('context', myId);
+        paramsMap.put('cluster', 'Disattivazioni');
         
         result = myTstObj.getOptions(JSON.serialize(paramsMap));
         resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
@@ -94,6 +95,7 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         paramsMap = new Map<String, Object>();
         paramsMap.put('method', 'topic');
         paramsMap.put('context', myId);
+        paramsMap.put('cluster', 'Pagamenti');
         
         result = myTstObj.getOptions(JSON.serialize(paramsMap));
         resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
