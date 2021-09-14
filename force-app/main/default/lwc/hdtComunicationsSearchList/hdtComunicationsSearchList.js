@@ -48,7 +48,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         billNumber: '',
         channel: '',
         date: '',
-        documentType: '',
+        type: '',
         company: ''
     };
     recordValue;
@@ -255,7 +255,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         const date = selected[0].issueDate.split(" ");
 
         this.docInvoiceObj.date = date[0];
-        this.docInvoiceObj.documentType = this.muleRequest.documentCategory;
+        this.docInvoiceObj.type = this.muleRequest.documentCategory;
 
         this.sendToApex(JSON.stringify(this.docInvoiceObj));
     }

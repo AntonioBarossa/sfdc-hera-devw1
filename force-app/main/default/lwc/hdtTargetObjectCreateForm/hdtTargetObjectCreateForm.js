@@ -301,15 +301,27 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
                 else {
+                    if (location.href.includes('HDT_FL_PostSalesMasterDispatch')) {
+                        fieldsDataObject.push(
+                            {
+                                fieldname: element,
+                                required: mapFieldReq.get(element),
+                                value: this.servicePointRetrievedData[element],
+                                disabled: !(this.servicePointRetrievedData[element] == null && mapFieldReq.get(element))
+                            } 
+                        )
+                    } else {
+                        var readonlyfields = ['CommoditySector__c','ServicePointCode__c','SAPImplantCode__c','MeterStatus__c'];
+                        fieldsDataObject.push(
+                            {
+                                fieldname: element,
+                                required: mapFieldReq.get(element),
+                                value: this.servicePointRetrievedData[element],
+                                disabled: readonlyfields.includes(element) ? true : false
+                            }
+                        )
+                    }
 
-                    fieldsDataObject.push(
-                        {
-                            fieldname: element,
-                            required: mapFieldReq.get(element),
-                            value: this.servicePointRetrievedData[element],
-                            disabled: true
-                        }
-                    )
                 }
 
             }

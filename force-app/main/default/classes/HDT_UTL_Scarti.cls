@@ -4,7 +4,7 @@
  * @description HDT_UTL_Scarti - Utility scarti
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
-global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.IApexAction{
+global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.IApexCriteria{
     static final string CANONERAITEMPLATENAME='CBS_CAR002__CANONE_RAI';
     static final string BONUSSOCIALETEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
     static final string SCARTODOCUMENTALEPOSTSALESTEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
@@ -36,28 +36,41 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                                                                                    'CreatedByUsername__c' => 'UTENZA',
                                                                                    'StartDate__c' => 'DATA_EVENTO',
                                                                                    'DiscardDescription__c' => 'ERROR_MESSAGE'};
+    /*
     global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
         SObject transition = (SObject) argsMap.get('transition');
         SObject action = (SObject) argsMap.get('action');
         String method = (String) argsMap.get('method');
-        SObject sender = (SObject) argsMap.get('sender');
+        SObject sender = (SObject) argsMap.get('sender');		
+		
+    }
+	*/
 
-        //c'è annullamento automatico a partire dal singolo scarto, per singolo processo, per singolo cluster
+	global boolean evaluate(Object args){
+		Map<String, Object> argsMap = (Map<String, Object>) args;
+        SObject transition = (SObject) argsMap.get('transition');
+        SObject condition = (SObject) argsMap.get('condition');
+        String method = (String) argsMap.get('method');
+        SObject record = (SObject) argsMap.get('record');
+		
+		//c'è annullamento automatico a partire dal singolo scarto, per singolo processo, per singolo cluster
         //non si riescono a passare tutte queste info tramite method, servirebbero una marea di method
         //non sembra esserci un modo per passare i dati tramite "parametri" alla action
         //l'unica via, per ora, sembra quella di mettere il nome del template nel method. ES: 'checkActivityCreation___CBS_ATT006__AMMISSIBILITA_KO'
         //di conseguenza lo switch è poco funzionale, perchè bisognerebbe scrivere n righe per quanti template vengono rigchiesti... è anche poco manutenibile
         //dinamicamente, con substring, si vede il prefisso (checkActivityCreation) e poi si estrae il nome del template dalle parentesi tonde
-        
-        if(method.startsWith('checkActivityCreation')){
-            return !checkActivityCreation((Id)sender.get('Id'), method.substringAfter('___'));
+		boolean check;
+		check = checkActivityCreation((Id)record.get('Id'), method.substringAfter('___'));
+		
+		if(method.startsWith('checkActivityCreation')){
+            return !check;
         }
         if(method.startsWith('checkAnnullment')){
-            return checkActivityCreation((Id)sender.get('Id'), method.substringAfter('___'));
+            return check;
         }
         return null;
-    }
+	}
 
     public class HDT_UTL_FlowInputs{
         @InvocableVariable
