@@ -3,7 +3,7 @@ public class HDT_LC_OfferConfiguratorControllerTst {
 
     /*
         HDT_LC_OfferConfiguratorController  76%
-        HDT_LC_OfferConfiguratorCtrlHelper  65%
+        HDT_LC_OfferConfiguratorCtrlHelper  81%
         HDT_WRP_TechnicalOffer              0% 
         HDT_QR_TechnicalOffer               82%
         HDT_WS_MulesoftCallerCpq            87%     
@@ -11,13 +11,12 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         
     @testSetup
     static void setup() {
-        List<Product2> productList = new List<Product2>();
-        Product2 p = new Product2();
-        p.ProductCode = 'pCode01';
-        p.Version__c = '01V1';
-        p.Name = 'ExampleProduct';
-        p.Family = Label.HDT_ProductFamilyTrigger;
-        productList.add(p);
+        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(2, false);
+
+        productList[0].ProductCode = 'pCode01';
+        productList[0].Version__c = '01V1';
+        productList[0].Family = Label.HDT_ProductFamilyTrigger;
+
         insert productList;
 
         List<OperandTemplate__c> operandTemplateList = new List<OperandTemplate__c>();
@@ -29,6 +28,11 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         RateTemplate__c rateTemplate = new RateTemplate__c(Name = 'EVVUD', ContractTemplate__c = 'ZELE_DOMES', ServiceProduct__c = 'ELE_DOMES', Visibile__c = true);
         rateList.add(rateTemplate);
         insert rateList;
+
+        List<Info1GroupList__c> infoList = new List<Info1GroupList__c>();
+        Info1GroupList__c inf = new Info1GroupList__c(Name = 'E650_CCE', FilterTypeCategory__c = 'ELVND_FC0L', DetTariffa__c = 'DetTariffa__c');
+        infoList.add(inf);
+        insert infoList;
 
     }
 
@@ -48,7 +52,19 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         Test.startTest();
         for(String s : objList){
             tableDataList = HDT_LC_OfferConfiguratorController.getTableData(s, '', '', '', '');
+
+            System.assert(tableDataList.size() == 0, 'tableDataList.size() > 0 or tableDataList == Null');
         }
+
+        List<DiscountListaA__c> discList = new List<DiscountListaA__c>();
+        DiscountListaA__c dl = new DiscountListaA__c(Description__c = 'EE Sconto su Amount 10');
+        discList.add(dl);
+        insert discList;
+
+        tableDataList = HDT_LC_OfferConfiguratorController.getTableData('DiscountListaA__c', 'ELVND_FC0L', 'E650_CCE', 'Description__c', 'EE Sconto su Amount 10%');
+
+        System.assert(tableDataList.size() > 0, 'tableDataList.size() == 0 or tableDataList == Null');
+
         Test.stopTest();
 
     }
@@ -59,6 +75,9 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         List<RateTemplate__c> rateList;
         Test.startTest();
         rateList = HDT_LC_OfferConfiguratorController.getRateList('example');
+
+        System.assert(rateList.size() == 0, 'rateList.size() > 0 or rateList == null');
+
         Test.stopTest();
 
     }
@@ -76,6 +95,11 @@ public class HDT_LC_OfferConfiguratorControllerTst {
 
         Test.startTest();
         responseTecOffer = HDT_LC_OfferConfiguratorController.getExistingOffer(p.Id);
+
+        System.assertEquals(true, responseTecOffer.success, 'success != true');
+        System.assert(String.isBlank(responseTecOffer.errorMessage), 'responseTecOffer.errorMessage != null');
+        System.assert(responseTecOffer.data != null, 'data == null');
+
         Test.stopTest();
     }
 
@@ -130,10 +154,21 @@ public class HDT_LC_OfferConfiguratorControllerTst {
 
         Test.startTest();
         offerMatrix = HDT_LC_OfferConfiguratorController.getOfferMatrix(p.Id, '', 'ZELE_PREZZO');
+
+        System.assertEquals(true, offerMatrix.success, 'offerMatrix != false');
+        System.assert(offerMatrix.rowList.size() > 0, 'rowList.size() == 0 or rowList == null');
+
         offerMatrix = HDT_LC_OfferConfiguratorController.getOfferMatrix(p.Id, technicalOffer.Id, 'ZELE_PREZZO');
 
+        System.assertEquals(true, offerMatrix.success, 'offerMatrix != true');
+        System.assert(offerMatrix.rowList.size() > 0, 'rowList.size() == 0 or rowList == null');
+
         HDT_WRP_TechnicalOffer.HDT_WRP_TechnicalOfferWebService obj;
-        HDT_LC_OfferConfiguratorCtrlHelper.generateHttpBody(obj, technicalOffer);
+        obj = HDT_LC_OfferConfiguratorCtrlHelper.generateHttpBody(obj, technicalOffer);
+
+        System.assertEquals(true, obj.success, 'success != true');
+        System.debug('obj content: ' + obj);
+
         Test.stopTest();
 
     }
@@ -254,10 +289,15 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         insert techOffeItems;
 
         //update
-        saveResponse = HDT_LC_OfferConfiguratorController.saveNewOfferConfigured(JSON.serialize(technicalOffer), null, '', p.Id, newTechnicalOffer.Id, 'EVVUD');
+        String offerJson = '[{"definition":"EE-Perd.reteperCert.GO","discountCode":{"enabled":true,"relatedTo":"DiscountListP__c"},"flag":{"enabled":false,"relatedTo":""},"g":false,"id":"0","infoGroup":{"enabled":false,"relatedTo":""},"m":false,"numValue":{"enabled":false,"relatedTo":""},"priceCode":{"enabled":false,"relatedTo":""},"rateType":{"enabled":false,"relatedTo":""},"s":"x","stringValue":{"enabled":false,"relatedTo":""},"tecName":"ES_ADG_GO","type":"PDISCNT","v":true}]';
+        saveResponse = HDT_LC_OfferConfiguratorController.saveNewOfferConfigured(JSON.serialize(technicalOffer), null, offerJson, p.Id, newTechnicalOffer.Id, 'EVVUD');
+
+        System.assertEquals(true, saveResponse.success, 'success != true');
         
         List<TechnicalOfferItem__c> techOffList;
         techOffList = HDT_LC_OfferConfiguratorController.getTechnicalOfferRecords(newTechnicalOffer.Id);
+
+        System.assert(techOffList.size() > 0, 'techOffList.size() == 0 or techOffList == null');
         
         Test.stopTest();
 
@@ -332,10 +372,65 @@ public class HDT_LC_OfferConfiguratorControllerTst {
 
         Test.startTest();
         saveResponse = HDT_LC_OfferConfiguratorController.sendTechOfferToSap(newTechnicalOffer.Id);
+
+        System.assertEquals(true, saveResponse.success, 'success != true');
+        System.assert(!String.isBlank(saveResponse.bodyResponse), 'saveResponse.bodyResponse == null');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    static void sendTechOfferToSapFail(){
+        HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
+        
+        
+        Product2 p = [
+            SELECT Id, ProductCode, Version__c
+            FROM Product2
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
+        RateTemplate__c rate = [
+            SELECT Id
+            FROM RateTemplate__c
+            WITH SECURITY_ENFORCED
+            LIMIT 1    
+        ];
+
+        TechnicalOffer__c newTechnicalOffer = new TechnicalOffer__c();
+        newTechnicalOffer.Name = p.ProductCode + ' [' + p.Version__c + '] [EVVUD]';
+        newTechnicalOffer.NameExternalId__c = newTechnicalOffer.Name;
+        newTechnicalOffer.Product__c = p.Id;
+        newTechnicalOffer.RateCategory__c = rate.Id;
+        newTechnicalOffer.Market__c = 'mm';
+        newTechnicalOffer.StartDate__c = Date.today();
+        newTechnicalOffer.EndDate__c = Date.today().addDays(1);
+        newTechnicalOffer.StepAllowed__c = 'N';
+        newTechnicalOffer.ContractId__c = '1';
+        newTechnicalOffer.NumberTimeExtension__c = '1';
+        newTechnicalOffer.UnitTimeExtension__c = '1';
+        newTechnicalOffer.NumberDaysMonthsYears__c = '1';
+        newTechnicalOffer.UnitTerminationTime__c = '3';
+        newTechnicalOffer.CancellationAllowed__c = 'N';
+        newTechnicalOffer.RecessAdmitted__c = 'N';
+        newTechnicalOffer.NumberOfTimeUnits__c = '3';
+        newTechnicalOffer.UnitOfTimeMeasurement__c = '3';
+        newTechnicalOffer.AdmittingProfileModification__c = false;
+        newTechnicalOffer.OfferToBeModified__c = false;
+        insert newTechnicalOffer;
+
+        Test.startTest();
+
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_OfferConfiguratorCtrlTstMockFail());
+
+        saveResponse = HDT_LC_OfferConfiguratorController.sendTechOfferToSap(newTechnicalOffer.Id);
+
+        System.assertEquals(false, saveResponse.success, 'success != false');
+
         Test.stopTest();
     }
     
-
     @isTest
     static void cloneRecord(){
 
@@ -388,7 +483,11 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         String s = HDT_LC_OfferConfiguratorController.cloneRecord(newTechnicalOffer.Id, p.Id);
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
         saveResponse = HDT_LC_OfferConfiguratorController.deleteTechnicalOffer(p.Id, newTechnicalOffer.Id);
-        List<TechnicalOfferItem__c> technicalOfferItemList = HDT_LC_OfferConfiguratorController.getTechnicalOfferRecords(newTechnicalOffer.Id);
+
+        System.assertEquals(true, saveResponse.success, 'success != true');
+        System.assert(saveResponse.errorData != null, 'saveResponse.errorData == null');
+        System.assert('Offerta eliminata correttamente'.equalsIgnoreCase(saveResponse.message), 'saveResponse.message != Offerta eliminata correttamente');
+
         Test.stopTest();
     }
 
@@ -400,5 +499,20 @@ public class HDT_LC_OfferConfiguratorControllerTst {
     //    
     //    Test.stopTest();
     //}
+
+
+    public class HDT_LC_OfferConfiguratorCtrlTstMockFail implements HttpCalloutMock {
+        // Implement this interface method
+        public HTTPResponse respond(HTTPRequest request) {
+            // Create a fake response
+    
+            HttpResponse response = new HttpResponse();
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody('{"status": "failed","correlationId": "92293250-df3b-11eb-a73c-0200a41fc6da","timestamp": "2021-07-07T17:54:13","errorDetails":[{"code":"HTTP:INTERNAL_SERVER_ERROR","message":"Error"}],"data": [], "esito":"KO"}');
+            response.setStatusCode(500);
+            response.setStatus('KO');
+            return response; 
+        }
+    }
 
 }
