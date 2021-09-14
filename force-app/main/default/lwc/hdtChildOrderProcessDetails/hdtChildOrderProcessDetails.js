@@ -1348,7 +1348,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     // )
                     new fieldData(
                         'Numero Contratto','ConfirmCustomerContract__c',
-                        this.order.ConfirmCustomerContract__c !== undefined, 
+                        true, 
                         false, true, '',''
                     ), 
                     new fieldData(
