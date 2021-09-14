@@ -1,6 +1,7 @@
 public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExecution {
     private  Map<String, String> mapAccountFields;
     private Map<String, String> mapSaleFields;
+    private Map<String, String> mapServicePointFields;
        //final String PROCESS_NAME='Subentro';
 
    public  HDT_UTL_ProcessTakeOver(){
@@ -67,6 +68,9 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 // Creazione Sales
                 else if(mapSaleFields.get(mapHeaderByPosition.get(count))!=null ){
                     currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),tempField);
+                }
+                else if(mapServicePointFields.get(mapHeaderByPosition.get(count))!=null ){
+                    currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),tempField);
                 }
                 count++;
             }
@@ -254,6 +258,36 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             'Cognome Agente'=>'VendorLastName__c',
             'Campagna'=>'Campaign__c',
             'Campagna Commissioning'=>'CommissioningCampaign__c'
+        };
+        mapServicePointFields=new Map<String, String>{
+            'Servizio'=>'CommoditySector__c',
+            'Distributore'=>'Distributor__c',
+            'Tipo Fornitura'=>'SupplyType__c',
+            'Tipologia Impianto'=>'ImplantType__c',
+            'Consumo annuo'=>'AnnualConsumption__c',
+            'Mercato di provenienza'=>'MarketOrigin__c',
+            'Classe Contatore'=>'MeterClass__c',
+            'Categoria D\'Uso'=>'UseCategory__c',
+            'Disalimentabile'=>'Disconnectable__c',
+            'Tipologia Disalimentabilità'=>'DisconnectibilityType__c',
+            'Telefono non disalimentabilità'=>'DisconnectibilityPhone__c',
+            'Residente'=>'Resident__c',
+            'Potenza contrattuale'=>'PowerContractual__c',
+            'Potenza disponibile'=>'PowerAvailable__c',
+            'Tensione di Consegna'=>'VoltageLevel__c',
+            'Presenza Allaccio'=>'PlugPresence__c',
+            'Fase Richiesta'=>'RequestPhase__c',
+            'Tipo Apparecchiatura'=>'MeterType__c',
+            'Potenza Richiesta'=>'PowerRequested__c',
+            'Matricola Contatore'=>'MeterSN__c',
+            'Codice Remi'=>'RemiCode__c',
+            'Livello pressione'=>'PressureLevel__c',
+            'Classe di prelievo'=>'WithdrawalClass__c',
+            'Potenzialità massima richiestaMaxRequiredPotential__c'=>'MaxRequiredPotential',
+            'SP_Comune'=>'SupplyCountry__c',
+            'SP_Via'=>'SupplyStreetName__c',
+            'SP_Civico'=>'SupplyStreetNumber__c',
+            'SP_Indirizzo Estero'=>'SupplyAddessIsForeign__c'
         };
     } 
 }
