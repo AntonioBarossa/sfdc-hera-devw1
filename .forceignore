@@ -29,3 +29,5 @@ package.xml
 **objects/Contract/fields/SBQQ__ActiveContract__c*
 **objects/SBQQ__ProductAction__c/fields/SBQQ__FilterField__c*
 **objects/WorkBadge/WorkBadge*
+
+force-app/main/default/classes/HDT_UTL_ScartiTst.cls

@@ -1,63 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_DistributorExceptionHC__mdt</members>
-        <name>CustomObject</name>
+        <members>Knowledge__kav.Copy_of_Contesto_Competitivo_Promozioni</members>
+        <members>Knowledge__kav.HDT_ContestoCompetitivo</members>
+        <members>Knowledge__kav.HDT_ContestoCompetitivoGestRischioAbb</members>
+        <members>Knowledge__kav.HDT_ContestoCompetitivoGestioneObiezioni</members>
+        <members>Knowledge__kav.HDT_ContestoCompetitivoMobSostenibile</members>
+        <members>Knowledge__kav.HDT_ContestoCompetitivoScriptContratti</members>
+        <members>Knowledge__kav.HDT_ContestoCompetitivoScriptPostVendita</members>
+        <members>Knowledge__kav.HDT_ContestoCompetitivoScriptPreveVer</members>
+        <members>Knowledge__kav.HDT_PortaleFormazione</members>
+        <members>Knowledge__kav.HDT_PortaleFormazioneProceTecnVend</members>
+        <members>Knowledge__kav.HDT_PortaleFormazioneProdottiEOfferte</members>
+        <members>Knowledge__kav.HDT_PortaleFormazioneSpecBusiness</members>
+        <members>Knowledge__kav.HDT_RT_ArticoliPubblicatiSchedularmente</members>
+        <members>Knowledge__kav.News_Archived</members>
+        <members>Knowledge__kav.Template</members>
+        <members>Knowledge__kav.archived_articles</members>
+        <members>Knowledge__kav.draft_articles</members>
+        <name>ListView</name>
     </types>
     <types>
-        <members>Asset-Asset Layout</members>
-        <members>HDT_DistributorExceptionHC__mdt-Distributor Exception HC Layout</members>
-        <members>Product2-CPQ Product Layout New</members>
+        <members>PaperCampaignParameter__c-Parametri Campagna Cartacea Layout</members>
+        <members>wrts_prcgvr__Activity__c-wrts_prcgvr__Activity Layout</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_BA_DeleteProductAssociation</members>
-        <members>HDT_BA_ProductAssociation</members>
-        <members>HDT_LC_AccountStatementCtrlUtility</members>
-        <members>HDT_LC_DocumentalConfigController</members>
-        <members>HDT_LC_DocumentalConfigControllerTst</members>
-        <members>HDT_LC_DocumentalPhaseHistory</members>
-        <members>HDT_LC_ProductAssociation</members>
-        <members>HDT_QR_CaseValidations</members>
-        <members>HDT_QR_InformativeManager</members>
-        <members>HDT_QR_PayloadManagement</members>
-        <members>HDT_QR_ProductAssociation</members>
-        <members>HDT_SRV_InformativeManager</members>
-        <members>HDT_SRV_ModificaLayoutFattura</members>
-        <members>HDT_SRV_ModificaLayoutFatturaTst</members>
-        <members>HDT_SRV_PaymentCommunication</members>
-        <members>HDT_SRV_PrescrizioneFattura</members>
-        <members>HDT_SRV_PrescrizioneFatturaTst</members>
-        <members>HDT_SRV_ProductAssociation</members>
-        <members>HDT_TRH_IndividualEmailResult</members>
-        <members>HDT_UTL_PayloadManagement</members>
-        <members>HDT_UTL_PayloadManagementTst</members>
-        <members>HDT_UTL_ProductAssociation</members>
-        <members>HDT_WRP_ProductAssociation</members>
-        <members>HDT_WS_PostSalesTstMock</members>
+        <members>HDT_BA_PaperCampaignClosing</members>
+        <members>HDT_BA_PaperCampaignClosingTst</members>
+        <members>HDT_BA_SuspendedActivitiesEmailAlert</members>
+        <members>HDT_BA_VasEngineSender</members>
+        <members>HDT_LC_BillingProfileForm</members>
+        <members>HDT_LC_OrderDossierWizardActions</members>
+        <members>HDT_QR_MatriceRemiCode</members>
+        <members>HDT_QR_MatriceRemiCodeTst</members>
+        <members>HDT_SRV_MassiveLoaderRequestTst</members>
+        <members>HDT_SRV_Product</members>
+        <members>HDT_SRV_ProductTst</members>
+        <members>HDT_SRV_QuoteTst</members>
+        <members>HDT_SRV_SaleTst</members>
+        <members>HDT_SRV_SalesManager</members>
+        <members>HDT_SRV_ServicePointTst</members>
+        <members>HDT_SRV_ServiceRequestTst</members>
+        <members>HDT_UTL_CalculateFiscalCodeTst</members>
+        <members>HDT_UTL_CampaignMemberAssigmentItem</members>
+        <members>HDT_UTL_CampaignMemberAssigmentItemTst</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_ScartiTst</members>
+        <members>HDT_UTL_VasManagement</members>
+        <members>HDT_WS_MotoreVas</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_DistributorExceptionHC__mdt.DistributorName__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>hdtAccountStatementViewer</members>
-        <members>hdtChooseAssociationOperation</members>
-        <members>hdtComunicationsSearchList</members>
-        <members>hdtDocumentSignatureManager</members>
-        <members>hdtDocumentalPhaseHistory</members>
-        <members>hdtLeadAddress</members>
-        <members>hdtManageProductAssociation</members>
-        <members>hdtPdfViewerHandler</members>
-        <members>hdtProductAssociationSearchTable</members>
-        <members>hdtProductOptionEditForm</members>
-        <members>hdtTargetObjectCreateForm</members>
+        <members>hdtAccountHighlightPanel</members>
+        <members>hdtBillingProfileForm</members>
+        <members>hdtChildOrderProcessDetails</members>
         <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>HDT_IndividualEmailResult</members>
-        <name>ApexTrigger</name>
     </types>
     <types>
         <members>Admin</members>
@@ -71,11 +70,8 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_DistributorExceptionHC.DIRETTO_EDISON_10R0000051</members>
-        <members>HDT_DistributorExceptionHC.DIRETTO_SGM_10R0000230</members>
-        <members>HDT_DistributorExceptionHC.DIRETTO_SNAM_10R0000020</members>
-        <members>HDT_IntegrationObject.Documentale_Context2</members>
-        <name>CustomMetadata</name>
+        <members>AccountContactRelation.HDT_VR_Community</members>
+        <name>ValidationRule</name>
     </types>
     <version>49</version>
 </Package>
