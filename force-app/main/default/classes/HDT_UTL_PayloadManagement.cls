@@ -814,6 +814,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             Boolean indemnityConfirmed = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityConfirmed__c', 0, inputs, formParams));
             String indemnityMotivation = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityMotivation__c', 0, inputs, formParams);
             String indemnityDueSendResponse = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueSendResponse__c', 0, inputs, formParams);
+            Decimal indemnityDueSendResponseDecimal = String.isNotBlank(indemnityDueSendResponse) ? Decimal.valueOf(indemnityDueSendResponse) : 0;
             String indemnityDueBillingCorrection = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueBilllingCorrection__c', 0, inputs, formParams);
             String correctionRight = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionRight__c', 0, inputs, formParams);
             String correctionDocumentEmissionDate = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionDocumentEmissionDay__c', 0, inputs, formParams);
@@ -823,16 +824,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             record.add('00310');
             record.add('130');
             // Calcolo tipologia di indennizzo attesa da Engage1.
-            String boxType = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, Decimal.valueOf(indemnityDueSendResponse));
+            String boxType = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponseDecimal);
             if (String.isNotBlank(boxType)) {
                 record.add(boxType);
                 // Importo indennizzo, se necessario.
-                if ((boxType == '1' || boxType == '5') && indemnityDueSendResponse != null && Decimal.valueOf(indemnityDueSendResponse) > 0) {
+                if ((boxType == '1' || boxType == '5') && indemnityDueSendResponse != null && indemnityDueSendResponseDecimal > 0) {
                     record.add(indemnityDueSendResponse);
                 } else if (boxType == '2' && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
                     record.add(''); // campo vuoto per l'indemnityDueSendResponse, l'indemnityDueBillingCorrection deve stare in seconda posizione.
                     record.add(indemnityDueBillingCorrection);
-                } else if (boxType == '4' && indemnityDueSendResponse != null && Decimal.valueOf(indemnityDueSendResponse) > 0 && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+                } else if (boxType == '4' && indemnityDueSendResponse != null && indemnityDueSendResponseDecimal > 0 && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
                     record.add(indemnityDueSendResponse);
                     record.add(indemnityDueBillingCorrection);
                 }
