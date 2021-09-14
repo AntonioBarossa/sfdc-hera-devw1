@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>IndemnityDueBilllingCorrection__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(ISPICKVAL(ComplaintType__c,&quot;Reclamo Scritto&quot;) &amp;&amp; ISPICKVAL(CorrectionRight__c,&quot;Si&quot;), IF(CorrectionDocumentEmissionDay__c &lt;= SendDate__c + 40 &amp;&amp; CorrectionDocumentEmissionDay__c &gt; SendDate__c + 20 , 25, IF(CorrectionDocumentEmissionDay__c &lt;= SendDate__c + 60 &amp;&amp; CorrectionDocumentEmissionDay__c &gt; SendDate__c + 40, 50, IF(CorrectionDocumentEmissionDay__c &gt; SendDate__c + 60, 75, 0))), null)</formula>
+    <formula>IF(ISPICKVAL(ComplaintType__c,&quot;Reclamo Scritto&quot;) &amp;&amp; ISPICKVAL(CorrectionRight__c,&quot;Si&quot;), IF(CorrectionDocumentEmissionDay__c &lt; SendDate__c + 40 &amp;&amp; CorrectionDocumentEmissionDay__c &gt;=SendDate__c + 20 , 25, IF(CorrectionDocumentEmissionDay__c &lt; SendDate__c + 60 &amp;&amp; CorrectionDocumentEmissionDay__c &gt;= SendDate__c + 40, 50, IF(CorrectionDocumentEmissionDay__c &gt;= SendDate__c + 60, 75, 0))), null)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Indennizzo per rettifica fatturazione</label>
     <precision>18</precision>
