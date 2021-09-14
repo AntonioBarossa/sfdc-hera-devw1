@@ -75,7 +75,14 @@ public with sharing class HDT_UTL_ScartiTst {
         toInsert.add(emailScarto);
         toInsert.add(smsScarto);
         insert toInsert;
-        HDT_UTL_Scarti.createScartoForMarketingCloud(toInsert);
+
+        Map<Id,SObject> oldMap = new Map<Id,SObject>(); 
+        et4ae5__IndividualEmailResult__c emailScartoOld = new et4ae5__IndividualEmailResult__c(BounceSubCategory__c='Unknown bounce',OrderID__c=fakeOrder.Id,et4ae5__Contact__c=fakeContact.Id,et4ae5__TriggeredSendDefinition__c=fakeSend.Id);
+        SMSTracking__c smsScartoOld = new SMSTracking__c(Undelivered__c=true,CaseID__c=fakeCase.Id,ActionDateTime__c=date.today(),MessageID__c=57,Mobile__c='(517)-424-5199',MobileMessageTrackingID__c=10,ModifiedDateTime__c=date.today());
+        oldMap.put(emailScartoOld.Id, emailScartoOld);
+        oldMap.put(smsScartoOld.Id, smsScartoOld);
+
+        HDT_UTL_Scarti.createScartoForMarketingCloud(toInsert,oldMap);
 
         list<wrts_prcgvr__Activity__c> verifyActivity = [SELECT Id, wrts_prcgvr__ObjectId__c
                                                          FROM wrts_prcgvr__Activity__c
