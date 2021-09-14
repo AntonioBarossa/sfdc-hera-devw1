@@ -762,6 +762,13 @@
                     <stringValue>Risposta Inviata</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueSendResponse__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>AssignVariables</targetReference>
             </connector>
@@ -769,7 +776,7 @@
         </rules>
         <rules>
             <name>X2_Ind_Conf_Diritto_Rett</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND (5 OR 6)</conditionLogic>
             <conditions>
                 <leftValueReference>getInputCase.FirstLevelComplaintClassification__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -796,6 +803,20 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Risposta Inviata</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueSendResponse__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -841,6 +862,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueSendResponse__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>AssignVariables_0_0_0</targetReference>
             </connector>
@@ -884,6 +912,13 @@
                     <stringValue>Risposta Inviata - Attesa Rettifica</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>AssignVariables_0_0_0_0</targetReference>
             </connector>
@@ -920,6 +955,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>AssignVariables_0_0_0_0_0</targetReference>
             </connector>
@@ -954,6 +996,13 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
