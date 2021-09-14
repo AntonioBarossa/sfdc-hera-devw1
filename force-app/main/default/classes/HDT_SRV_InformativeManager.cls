@@ -27,12 +27,14 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
 
     private String getCluster(Map<String, Object> paramsMap){
         
+        System.debug('getOptions - getCluster: ' + paramsMap);
+        
         String result;
         String context = (String) paramsMap.get('context');
         String sObjName;
         
         if(context instanceOf Id){
-            Id contextId= (Id) Context;
+            Id contextId = (Id) Context;
             context = contextId.getSObjectType().getDescribe().getName();
         }
         
@@ -41,22 +43,16 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         return JSON.serialize(convertToListMap(distinctRecords(clusterList,'Cluster__c'),'Cluster__c'));
     }
     
-    private String getProcess(Map<String, Object> paramsMap){
-        
-        String result;
-        String process = HDT_QR_InformativeManager.getProcessByCluster((String) paramsMap.get('cluster'));
-        
-        return process;
-    }
-    
     private String getTopic(Map<String, Object> paramsMap){
+        
+        System.debug('getOptions - getTopic: ' + paramsMap);
         
         String result;
         String context = (String) paramsMap.get('context');
         String sObjName;
         
         if(context instanceOf Id){
-            Id contextId= (Id) Context;
+            Id contextId = (Id) Context;
             context = contextId.getSObjectType().getDescribe().getName();
         }
         
@@ -65,14 +61,26 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         return JSON.serialize(convertToListMap(distinctRecords(topic,'MacroTopic__c'),'MacroTopic__c'));
     }
     
+    private String getProcess(Map<String, Object> paramsMap){
+        
+        System.debug('getOptions - getProcess: ' + paramsMap);
+        
+        String result;
+        String process = HDT_QR_InformativeManager.getProcessByCluster((String) paramsMap.get('cluster'));
+        
+        return process;
+    }
+    
     private String getInfo(Map<String, Object> paramsMap){
+        
+        System.debug('getOptions - getInfo: ' + paramsMap);
         
         String result;
         String context = (String) paramsMap.get('context');
         String sObjName;
         
         if(context instanceOf Id){
-            Id contextId= (Id) Context;
+            Id contextId = (Id) Context;
             context = contextId.getSObjectType().getDescribe().getName();
         }
         
