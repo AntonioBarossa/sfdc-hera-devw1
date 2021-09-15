@@ -7,7 +7,7 @@ import {
 import {
     ShowToastEvent
 } from 'lightning/platformShowToastEvent';
-import getOutboundCampaigns from '@salesforce/apex/HDT_LC_CampaignsController.getOutboundCampaigns';
+import getOutboundCampaigns from '@salesforce/apex/HDT_LC_CampaignsController.getOutboundCampaignsLead';
 import createCampaignMemberFromLead from '@salesforce/apex/HDT_LC_RecallMeCreateForm.createCampaignMemberFromLead';
 import {
     getFieldValue,
