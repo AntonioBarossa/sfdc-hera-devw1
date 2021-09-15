@@ -34090,6 +34090,10 @@
         <name>EditKnowledge</name>
     </userPermissions>
     <userPermissions>
+        <enabled>false</enabled>
+        <name>EditMyReports</name>
+    </userPermissions>
+    <userPermissions>
         <enabled>true</enabled>
         <name>EditOppLineItemUnitPrice</name>
     </userPermissions>
@@ -34124,6 +34128,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>MassInlineEdit</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>NewReportBuilder</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
