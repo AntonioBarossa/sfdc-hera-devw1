@@ -236,7 +236,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         // Start Controllo Service Point
         if (String.isNotBlank(currentProcess.currentServicePoint.Name)) {
             currentProcess.currentServicePoint.ServicePointCode__c=currentProcess.currentServicePoint.Name;
-            listServicePoint=qrSerPoint.getRecordByCode(currentProcess.currentServicePoint.ServicePointCode__c);
+            listServicePoint=qrSerPoint.getServicePointsByCodeWithFilter(currentProcess.currentServicePoint.ServicePointCode__c,'id','');
             if (listServicePoint!=null &&listServicePoint.size()>0 ) {
                 // se esiste il Service Point
                 currentProcess.currentServicePoint.Id=listServicePoint.get(0).Id;
@@ -309,14 +309,6 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
 
 
 
-
-
-
-
-
-
-    //public void postSalesCreation(){}
-   // public void finalUpdate(){}
    private void makeContact(){
         currentProcess.currentPrimaryContact.DegreeOfStudies__c                 =  currentProcess.currentAccount.DegreeOfStudies__c                  ;
         currentProcess.currentPrimaryContact.CompanyOwner__c                    =  currentProcess.currentAccount.CompanyOwner__c                     ;
