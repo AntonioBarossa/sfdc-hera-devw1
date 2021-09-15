@@ -39,6 +39,8 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         */
     
     //manageDocuments - EC1L
+    
+    @isTest
     private static void executeTest() {
         
         //DEBUG
