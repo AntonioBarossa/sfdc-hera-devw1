@@ -544,7 +544,25 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
 
     public static Boolean accountStatementFilter(sObject sb, String method){
         boolean res = true;
-        if(mapAccountStatementFilter.get(method) != null){
+        
+        if(method == 'Piano Rateizzazione'){
+            HDT_QR_Case caseQr = new HDT_QR_Case();
+            String accountId = (String)sb.get('Account__c');
+            List<Case> listCase = caseQr.getCaseByAccountid(accountId,'Storno Rateizzazione');
+            if(listCase != null && !listCase.isEmpty()){
+                res = true;
+            }
+            else{
+                String s = (String)sb.get('IsInstallment__c');
+                if(s == 'false'){
+                    res = true;
+                }
+                else{
+                    res = false;
+                }
+            }
+        }
+        else if(mapAccountStatementFilter.get(method) != null){
             Map<String,List<String>> condictionOr = mapAccountStatementFilter.get(method);
             if(condictionOr != null && !condictionOr.keyset().isEmpty()){
                 Boolean r = false;

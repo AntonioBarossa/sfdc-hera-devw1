@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 31/05/2021
+* @description HDT_QR_SurveyCrm
+* @history Lorenzo – 31/05/2021 – created class
+*/
 public with sharing class HDT_QR_SurveyCrm {
 
     // public static List<SurveyCRM__c> getSurveys(List<String> campaignIds, String fields) {

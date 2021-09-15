@@ -58,6 +58,24 @@ public with sharing class HDT_QR_Campaign {
         ];
     }
 
+    public List<Campaign> getOutboundCampaignsLead() {
+        Date d = Date.today();
+        return [
+            SELECT 
+            Id,
+            Name
+            FROM Campaign
+            WHERE isActive = true
+            AND StartDate <= :d
+            AND (EndDate >= :d OR EndDate = NULL)
+            AND Category__c = 'Campagna Outbound'
+            AND Channel__c INCLUDES ('Telefonico Outbound')
+            AND AssignmentType__c = 'Su Base Lead'
+            AND ReitekIntegrationTechnology__c = 'Web Service'
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     public static Campaign getCampaignId(String campaignName) {
         String query = 'SELECT Id FROM Campaign WHERE Name = :campaignName';
         List<Campaign> campaign = Database.query(query);

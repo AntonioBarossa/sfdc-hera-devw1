@@ -86,9 +86,9 @@ export default class HdtAccountStatementPicker extends LightningElement {
         getDocumentSelected({
             caseId:this.caseId
         }).then(data => {
-            console.log(JSON.parse(data));
-            console.log(data.length);
             if(data && data.length>0){
+                console.log(JSON.parse(data));
+                console.log(data.length);
                 this.documents = JSON.parse(data);
                 this.calculateAmounts(this.documents);
             }else{
