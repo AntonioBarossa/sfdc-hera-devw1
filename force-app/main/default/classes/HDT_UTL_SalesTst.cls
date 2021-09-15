@@ -8,54 +8,123 @@
 public class HDT_UTL_SalesTst {
     @TestSetup
     static void makeData(){
+        City__c city=createCity(1, true,true,'svd0')[0];
 
+        Account acc0=createAccountBusiness(1, true,new Map<String,String>{
+            'companyOwner'=>'AAA-EBT',
+            'customerMarking'=>'AAS Azienda',
+            'customerCode'=>'0000000',
+            'numCustomerCode'=>'400065',
+            'vatNumber'=>'123400',
+            'nameStart'=>'acc',
+            'code'=>'00',
+            'category'=>'Enti'
+        })[0];
         
-        insert new City__c(Name='city0',SDV__c='svd0',ServiceEle__c=true);
-
-        Account acc0=new Account();
-		acc0.Name='test account0';
-		acc0.CompanyOwner__c='AAA-EBT';
-		acc0.CustomerMarking__c='AAS Azienda';
-		acc0.Category__C='Enti';
-		acc0.VATNumber__c='123';
-		acc0.BillingCityCode__c='Roma';
-		acc0.BillingStreetName__c='via roma';
-		acc0.BillingStreetNumber__c='55';
-		acc0.LastName__c='test account0';
-		acc0.FiscalCode__c='SXSRLA45H28H501K';
-		acc0.BillingIsAddressVerified__c=true;
-        acc0.IsWrongFiscalData__c = false;
-        acc0.BillingIsAddressVerified__c = true;
-		acc0.CustomerCode__c = '0000000';
-		acc0.code__c = '00';
         
-        Account acc1=new Account();
-		acc1.Name='test account1';
-		acc1.CompanyOwner__c='AAA-EBT';
-		acc1.CustomerMarking__c='AAS Associazione';
-		acc1.Category__C='Aziende Soho';
-		acc1.VATNumber__c='12344';
-		acc1.BillingCityCode__c='Roma';
-		acc1.BillingStreetName__c='via roma';
-		acc1.BillingStreetNumber__c='55';
-		acc1.LastName__c='test account1';
-		acc1.FiscalCode__c='SXSRLA45H2';
-		acc1.BillingIsAddressVerified__c=true;
-        acc1.IsWrongFiscalData__c = false;
-        acc1.BillingIsAddressVerified__c = true;
-		acc1.CustomerCode__c = '00000001';
-        insert acc0;
-        insert acc1;
-        insert new Sale__c(Name='sale0',Account__c=acc0.Id);
-        insert new Sale__c(Name='sale1',Account__c=acc1.Id);
-
-        insert new ServicePoint__c(SupplyProvince__c='AQ',GlobalMigrationKey__c='1123255',SupplyCity__c='city0',CommoditySector__c='Energia Elettrica',Distributor__c=acc0.Id);
+        Account acc1=createAccountBusiness(1, true,new Map<String,String>{
+            'companyOwner'=>'AAA-EBT',
+            'customerMarking'=>'AAS Azienda',
+            'customerCode'=>'00000001',
+            'numCustomerCode'=>'4565465',
+            'vatNumber'=>'123456',
+            'nameStart'=>'acc0',
+            'category'=>'Aziende Soho'
+        })[0];
+        HDT_UTL_DataFactoryTst.createSale(1,true,acc0.Id,'Attiva');
+        HDT_UTL_DataFactoryTst.createSale(1,true,acc1.Id,'Attiva');
+        createServicePoint(1, true,city.Name,acc0.Id);
     }
+    
+    public static List<City__c> createCity(Integer amount, Boolean doInsert,Boolean serviceEle,String sdv){
+		List<City__c> cityList=new List<City__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			City__c ct=new City__c();
+
+			ct.Name='Roma';
+			ct.BelfioreCode__c='Bt'+i;
+            ct.ServiceEle__c=serviceEle;
+            ct.SDV__c=sdv;
+
+			cityList.add(ct);
+
+		}
+
+		if (doInsert){
+
+			insert cityList;
+		}
+
+		return cityList;
+	}
+
+    public static List<Account> createAccountBusiness(Integer amount, Boolean doInsert, Map<String,String> params){
+
+		List<Account> accList=new List<Account>();
+        HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+		Id rt=utlConstants.ACCOUNT_RECORDTYPEID_BUSINESS;
+
+		for (Integer i=0; i<amount; i++){
+			Decimal numCustomerCode = Decimal.valueOf(params.get('numCustomerCode')+i);
+			Decimal result = numCustomerCode + i;
+			String stringResult = String.valueOf(result);
+			Account acc=new Account();
+
+			acc.RecordTypeId=rt;
+			acc.Name=params.get('nameStart')+i;
+			acc.CompanyOwner__c=params.get('companyOwner');
+			acc.CustomerMarking__c=params.get('customerMarking');
+			acc.Category__C=params.get('category');
+			acc.code__c=params.get('code');
+			acc.CustomerCode__c=params.get('customerCode');
+			acc.VATNumber__c=params.get('vatNumber');
+			acc.BillingCityCode__c='Roma';
+			acc.BillingStreetName__c='via roma';
+			acc.BillingStreetNumber__c='55';
+			acc.LastName__c=params.get('nameStart')+i;
+			acc.FiscalCode__c='SXSRLA45H28H501K';
+			acc.BillingIsAddressVerified__c=true;
+        	acc.IsWrongFiscalData__c = false;
+        	acc.BillingIsAddressVerified__c = true;
+			acc.CustomerCode__c = stringResult;
+
+			accList.add(acc);
+
+		}
+
+		if (doInsert){
+
+			insert accList;
+		}
+
+		return accList;
+	}
+
+    public static List<ServicePoint__c> createServicePoint(Integer amount, Boolean doInsert,String supplyCity,String distributor){
+
+		List<ServicePoint__c> servPointList=HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+		for(ServicePoint__c sp:servPointList){
+			sp.SupplyProvince__c='AQ';
+			sp.GlobalMigrationKey__c='1123255';
+			sp.SupplyCity__c=supplyCity;
+			sp.CommoditySector__c='Energia Elettrica';
+			sp.Distributor__c=distributor;
+		}
+
+		if (doInsert){
+
+			insert servPointList;
+		}
+
+		return servPointList;
+	}
 
     @IsTest
     static void isTransitionNoUpTest(){
-        Sale__c sale0=[SELECT Account__r.CompanyOwner__c,Account__r.Category__c FROM Sale__c WHERE Name='sale0' LIMIT 1];
-        Sale__c sale1=[SELECT Account__r.CompanyOwner__c,Account__r.Category__c FROM Sale__c WHERE Name='sale1' LIMIT 1];
+        Sale__c sale0=[SELECT Account__r.CompanyOwner__c,Account__r.Category__c FROM Sale__c WHERE  Account__r.code__c!=null LIMIT 1];
+        Sale__c sale1=[SELECT Account__r.CompanyOwner__c,Account__r.Category__c FROM Sale__c WHERE  Account__r.code__c=null LIMIT 1];
         Test.startTest();
         System.assert(HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='PEP'),sale0));
         System.assert(!HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='AQ'),sale1));
