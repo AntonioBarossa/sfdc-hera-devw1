@@ -4,8 +4,8 @@
     <assignments>
         <name>Add_House_Data</name>
         <label>Add House Data</label>
-        <locationX>842</locationX>
-        <locationY>1934</locationY>
+        <locationX>578</locationX>
+        <locationY>2174</locationY>
         <assignmentItems>
             <assignToReference>Case.Surface__c</assignToReference>
             <operator>Assign</operator>
@@ -42,7 +42,7 @@
         <name>Link_Asset_0</name>
         <label>Link Asset</label>
         <locationX>314</locationX>
-        <locationY>1694</locationY>
+        <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>Case.AssetId</assignToReference>
             <operator>Assign</operator>
@@ -76,26 +76,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Link_Contract</name>
-        <label>Link Contract</label>
-        <locationX>578</locationX>
-        <locationY>1574</locationY>
-        <assignmentItems>
-            <assignToReference>Case.Contract__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>SelezAssetSub.recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Primary_Contact_Relation</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Link_Subscription_0</name>
         <label>Link Subscription</label>
-        <locationX>974</locationX>
-        <locationY>1694</locationY>
+        <locationX>710</locationX>
+        <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>Case.Subscription__c</assignToReference>
             <operator>Assign</operator>
@@ -138,8 +122,8 @@
     <assignments>
         <name>Set_Case</name>
         <label>Set Case</label>
-        <locationX>963</locationX>
-        <locationY>2582</locationY>
+        <locationX>765</locationX>
+        <locationY>2822</locationY>
         <assignmentItems>
             <assignToReference>Case.SignalType__c</assignToReference>
             <operator>Assign</operator>
@@ -187,9 +171,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Contract</name>
+        <label>Set Contract</label>
+        <locationX>512</locationX>
+        <locationY>1454</locationY>
+        <assignmentItems>
+            <assignToReference>Case.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelezContract.recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Asset_Subscription_Selection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Invoices</name>
         <label>Set Invoices</label>
-        <locationX>831</locationX>
+        <locationX>633</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>Case.BillNumber__c</assignToReference>
@@ -205,8 +205,8 @@
     <assignments>
         <name>Set_Output</name>
         <label>Set Output</label>
-        <locationX>506</locationX>
-        <locationY>2918</locationY>
+        <locationX>407</locationX>
+        <locationY>3158</locationY>
         <assignmentItems>
             <assignToReference>UserInputFlow</assignToReference>
             <operator>Assign</operator>
@@ -218,8 +218,8 @@
     <decisions>
         <name>Additional_Config</name>
         <label>Additional Config?</label>
-        <locationX>974</locationX>
-        <locationY>1814</locationY>
+        <locationX>710</locationX>
+        <locationY>2054</locationY>
         <defaultConnector>
             <targetReference>Get_Primary_Contact_Relation</targetReference>
         </defaultConnector>
@@ -243,7 +243,7 @@
     <decisions>
         <name>Additional_Config0</name>
         <label>Additional Config?</label>
-        <locationX>963</locationX>
+        <locationX>765</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Has_Sub_Asset_Selection</targetReference>
@@ -268,7 +268,7 @@
     <decisions>
         <name>Has_Sub_Asset_Selection</name>
         <label>Has Sub/Asset Selection?</label>
-        <locationX>963</locationX>
+        <locationX>765</locationX>
         <locationY>1334</locationY>
         <defaultConnector>
             <targetReference>Get_Primary_Contact_Relation</targetReference>
@@ -284,8 +284,15 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>HasAssetSelection</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Which_sObject_0</targetReference>
+                <targetReference>Set_Contract</targetReference>
             </connector>
             <label>Has Selection</label>
         </rules>
@@ -293,7 +300,7 @@
     <decisions>
         <name>Resume_Process_decision</name>
         <label>Resume Process?</label>
-        <locationX>506</locationX>
+        <locationX>407</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Reporting_Type_Selection</targetReference>
@@ -318,8 +325,8 @@
     <decisions>
         <name>Which_sObject_0</name>
         <label>Which sObject?</label>
-        <locationX>644</locationX>
-        <locationY>1454</locationY>
+        <locationX>512</locationX>
+        <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>Get_Subscription</targetReference>
         </defaultConnector>
@@ -338,21 +345,6 @@
                 <targetReference>Get_Asset</targetReference>
             </connector>
             <label>Asset</label>
-        </rules>
-        <rules>
-            <name>Contract</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>SelezAssetSub.sObjectName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Contract</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Link_Contract</targetReference>
-            </connector>
-            <label>Contract</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -485,7 +477,7 @@
     <formulas>
         <name>GroupOptions</name>
         <dataType>String</dataType>
-        <expression>IF({!HasSubSelection},&apos;SUBS_VAS;&apos;,&apos;&apos;)</expression>
+        <expression>IF({!HasSubSelection},&apos;SUBS_FROM_CONTRACT;&apos;,&apos;&apos;) &amp; IF({!HasAssetSelection},&apos;ASSETS_FROM_CONTRACT;&apos;,&apos;&apos;)</expression>
     </formulas>
     <formulas>
         <name>IsReasonRequired</name>
@@ -522,7 +514,7 @@
         <name>Get_Asset</name>
         <label>Get Asset</label>
         <locationX>314</locationX>
-        <locationY>1574</locationY>
+        <locationY>1814</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Link_Asset_0</targetReference>
@@ -542,8 +534,8 @@
     <recordLookups>
         <name>Get_Primary_Contact</name>
         <label>Get Primary Contact</label>
-        <locationX>963</locationX>
-        <locationY>2462</locationY>
+        <locationX>765</locationX>
+        <locationY>2702</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Case</targetReference>
@@ -563,8 +555,8 @@
     <recordLookups>
         <name>Get_Primary_Contact_Relation</name>
         <label>Get Primary Contact Relation</label>
-        <locationX>963</locationX>
-        <locationY>2342</locationY>
+        <locationX>765</locationX>
+        <locationY>2582</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Primary_Contact</targetReference>
@@ -598,7 +590,7 @@
     <recordLookups>
         <name>Get_Reporting_Reason_Records</name>
         <label>Get Reporting Reason Records</label>
-        <locationX>963</locationX>
+        <locationX>765</locationX>
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -633,8 +625,8 @@
     <recordLookups>
         <name>Get_Subscription</name>
         <label>Get Subscription</label>
-        <locationX>974</locationX>
-        <locationY>1574</locationY>
+        <locationX>710</locationX>
+        <locationY>1814</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Link_Subscription_0</targetReference>
@@ -654,8 +646,8 @@
     <recordLookups>
         <name>Get_UserInputFlow_0</name>
         <label>Get UserInputFlow</label>
-        <locationX>506</locationX>
-        <locationY>2798</locationY>
+        <locationX>407</locationX>
+        <locationY>3038</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Output</targetReference>
@@ -723,9 +715,43 @@
         </outputAssignments>
     </recordLookups>
     <screens>
+        <name>Asset_Subscription_Selection</name>
+        <label>Asset/Subscription Selection</label>
+        <locationX>512</locationX>
+        <locationY>1574</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Which_sObject_0</targetReference>
+        </connector>
+        <fields>
+            <name>SelezAssetSub</name>
+            <extensionName>c:hdtSelezFornituraFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Case.Contract__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>groupOptions</name>
+                <value>
+                    <elementReference>GroupOptions</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Description_And_Reason</name>
         <label>Description And Reason</label>
-        <locationX>963</locationX>
+        <locationX>765</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -757,7 +783,7 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>SelezAssetSub</name>
+            <name>SelezContract</name>
             <extensionName>c:hdtSelezFornituraFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -769,7 +795,7 @@
             <inputParameters>
                 <name>groupOptions</name>
                 <value>
-                    <elementReference>GroupOptions</elementReference>
+                    <stringValue>CONTRACTS_VAS;</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -784,6 +810,13 @@
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>HasAssetSelection</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
@@ -792,7 +825,7 @@
     <screens>
         <name>Reporting_Category_Selection</name>
         <label>Reporting Category Selection</label>
-        <locationX>963</locationX>
+        <locationX>765</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -814,7 +847,7 @@
     <screens>
         <name>Reporting_Type_Selection</name>
         <label>Reporting Type Selection</label>
-        <locationX>963</locationX>
+        <locationX>765</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -836,7 +869,7 @@
     <screens>
         <name>ScreenSelezFatture</name>
         <label>ScreenSelezFatture</label>
-        <locationX>831</locationX>
+        <locationX>633</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -869,7 +902,7 @@
     <screens>
         <name>Subcategory_Selection</name>
         <label>Subcategory_Selection</label>
-        <locationX>963</locationX>
+        <locationX>765</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -889,7 +922,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>380</locationX>
+        <locationX>281</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Resume_Process_decision</targetReference>

@@ -306,8 +306,10 @@
         <fields>STATUS</fields>
         <fields>FIRST_NAME</fields>
         <fields>LAST_NAME</fields>
-        <fields>TITLE</fields>
-        <fields>COMPANY</fields>
+        <fields>PhoneNumber__c</fields>
+        <fields>Agency__c</fields>
+        <fields>ExcludeFub__c</fields>
+        <fields>OutcomeFub__c</fields>
         <relatedList>RelatedCampaignMemberList</relatedList>
     </relatedLists>
     <relatedLists>
